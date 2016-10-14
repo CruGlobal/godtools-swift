@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="A47-HA-QUu">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="jLL-hf-7zY">
+            <objects>
+                <navigationController id="A47-HA-QUu" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5FI-cs-sJM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="K9P-0g-fM5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dHD-s4-ALc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-729" y="36"/>
+        </scene>
+        <!--God Tools-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="godtools_swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="zNF-Ka-IHm" userLabel="Background Image View">
+                                <color key="backgroundColor" red="0.43921568630000002" green="0.83921568629999999" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="zNF-Ka-IHm" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="72n-WH-riy"/>
+                            <constraint firstItem="zNF-Ka-IHm" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="kue-uU-XkB"/>
+                            <constraint firstItem="zNF-Ka-IHm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n9S-gI-eKp"/>
+                            <constraint firstItem="zNF-Ka-IHm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="oN9-kc-Trg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="God Tools" id="Vud-uy-Zy6">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="gxc-9C-jQi">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6Ps-5h-RXH" userLabel="Settings Button">
+                                <rect key="frame" x="335" y="10" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Settings Icon"/>
+                                <connections>
+                                    <action selector="settingsButtonWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SEj-lb-gAl"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="7Vm-MS-eoy" kind="show" identifier="homeToSettingsSegue" id="ntN-hb-PeJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="18Z-Ch-cyj">
+            <objects>
+                <viewController id="7Vm-MS-eoy" customClass="SettingsViewController" customModule="godtools_swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KNR-hb-PLa"/>
+                        <viewControllerLayoutGuide type="bottom" id="KB2-2K-WXS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dEt-gc-ueu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="m0O-tR-e9l" userLabel="Background Image View"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Main Language:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAF-qs-HhO" userLabel="Primary Language Label">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4X0-Qr-GRk" userLabel="Current Primary Language Label">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tob-rX-gHE" userLabel="Primary Language Selection Button">
+                                <state key="normal" image="Button Bar Teal"/>
+                                <connections>
+                                    <action selector="primaryLanguageSelectionButtonWasPressed:" destination="7Vm-MS-eoy" eventType="touchUpInside" id="D4u-zQ-Yvr"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0e-Ph-Ids" userLabel="Parallel Language Label">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQH-Ce-Jbz" userLabel="Current Parallel Language Label">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1e-Ko-KKa" userLabel="Parallel Language Selection Button">
+                                <state key="normal" image="Button Bar Teal"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxg-3l-WeC">
+                                <frame key="frameInset" minY="498" width="375" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Button Bar Orange"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sAF-qs-HhO" firstAttribute="top" secondItem="KNR-hb-PLa" secondAttribute="bottom" constant="57" id="0bI-Ng-QcN"/>
+                            <constraint firstItem="k1e-Ko-KKa" firstAttribute="top" secondItem="KNR-hb-PLa" secondAttribute="bottom" constant="198" id="AIM-mh-lBY"/>
+                            <constraint firstItem="m0O-tR-e9l" firstAttribute="height" secondItem="dEt-gc-ueu" secondAttribute="height" id="BHY-GE-fnj"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="f0e-Ph-Ids" secondAttribute="leading" id="Bp8-21-0fi"/>
+                            <constraint firstItem="m0O-tR-e9l" firstAttribute="width" secondItem="dEt-gc-ueu" secondAttribute="width" id="Esh-Bq-bpE"/>
+                            <constraint firstItem="f0e-Ph-Ids" firstAttribute="top" secondItem="KNR-hb-PLa" secondAttribute="bottom" constant="169" id="F2q-tT-uuA"/>
+                            <constraint firstItem="jQH-Ce-Jbz" firstAttribute="leading" secondItem="dEt-gc-ueu" secondAttribute="leadingMargin" constant="15" id="J8w-nj-8RN"/>
+                            <constraint firstItem="4X0-Qr-GRk" firstAttribute="centerY" secondItem="Tob-rX-gHE" secondAttribute="centerY" id="K0F-IJ-gQ7"/>
+                            <constraint firstItem="k1e-Ko-KKa" firstAttribute="centerX" secondItem="dEt-gc-ueu" secondAttribute="centerX" id="KkR-Ou-i4o"/>
+                            <constraint firstItem="4X0-Qr-GRk" firstAttribute="leading" secondItem="dEt-gc-ueu" secondAttribute="leadingMargin" constant="15" id="NKg-qz-kEH"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="sAF-qs-HhO" secondAttribute="leading" id="PLn-i3-njk"/>
+                            <constraint firstItem="m0O-tR-e9l" firstAttribute="centerX" secondItem="dEt-gc-ueu" secondAttribute="centerX" id="cr9-xD-bGE"/>
+                            <constraint firstItem="jQH-Ce-Jbz" firstAttribute="centerY" secondItem="k1e-Ko-KKa" secondAttribute="centerY" id="gjz-Ot-5vW"/>
+                            <constraint firstItem="Tob-rX-gHE" firstAttribute="top" secondItem="KNR-hb-PLa" secondAttribute="bottom" constant="86" id="jGs-tK-G9j"/>
+                            <constraint firstItem="Tob-rX-gHE" firstAttribute="centerX" secondItem="dEt-gc-ueu" secondAttribute="centerX" id="mfE-kJ-FbK"/>
+                            <constraint firstItem="k1e-Ko-KKa" firstAttribute="width" secondItem="dEt-gc-ueu" secondAttribute="width" id="nPF-Ur-zbp"/>
+                            <constraint firstItem="Tob-rX-gHE" firstAttribute="width" secondItem="dEt-gc-ueu" secondAttribute="width" id="vmp-5g-H82"/>
+                            <constraint firstItem="m0O-tR-e9l" firstAttribute="centerY" secondItem="dEt-gc-ueu" secondAttribute="centerY" id="xQ8-f5-7TT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="l35-nT-qLU">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="T2A-aZ-KXC">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Vbw-zd-r3N" kind="show" identifier="settingsToLanguagesSegue" id="GQy-01-Gt1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bre-OC-Ust" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="769" y="36"/>
+        </scene>
+        <!--Language-->
+        <scene sceneID="l4T-6z-gf2">
+            <objects>
+                <viewController id="Vbw-zd-r3N" customClass="LanguagesViewController" customModule="godtools_swift" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ra9-Sl-g7B"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bao-HT-tse"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="B5g-nv-BJU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="IJl-DO-Gtw" userLabel="Background Image View"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerX" secondItem="B5g-nv-BJU" secondAttribute="centerX" id="KuA-Wz-sjw"/>
+                            <constraint firstItem="IJl-DO-Gtw" firstAttribute="width" secondItem="B5g-nv-BJU" secondAttribute="width" id="gnk-Ei-fLv"/>
+                            <constraint firstItem="IJl-DO-Gtw" firstAttribute="height" secondItem="B5g-nv-BJU" secondAttribute="height" id="l9L-I1-QIV"/>
+                            <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerY" secondItem="B5g-nv-BJU" secondAttribute="centerY" id="nXb-8i-0gH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Language" id="xMv-XH-WZO">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="osn-G2-b4x">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rhd-Mi-fve" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1470" y="35"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Background" width="640" height="1136"/>
+        <image name="Button Bar Orange" width="375" height="52"/>
+        <image name="Button Bar Teal" width="375" height="52"/>
+        <image name="Settings Icon" width="24" height="24"/>
+    </resources>
+</document>
