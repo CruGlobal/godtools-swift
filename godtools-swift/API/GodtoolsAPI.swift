@@ -8,30 +8,26 @@
 
 import Foundation
 import Alamofire
+import PromiseKit
 
 class GodtoolsAPI: NSObject {
     
     static let sharedInstance = GodtoolsAPI()
+    let baseURL = "https://api.godtoolsapp.com/godtools-api/rest"
     
     var genericAuthorizationToken :String = ""
     
-    func getAccessToken () {
-        Alamofire.request("https://api.godtoolsapp.com/godtools-api/rest/v2/auth", method: .post).responseJSON { response in
-            for(header, value) in (response.response?.allHeaderFields)! {
-                if (header.description == "Authorization") {
-                    self.genericAuthorizationToken = "\(value)"
-                }
-            }
-        }
+    func getAccessToken () -> Promise<Any> {
+        return Alamofire.request(baseURL + "/v2/auth", method: .post).responseJSON()
     }
     
-    func getMeta() {
-        let headers = [ "Authorization" : self.genericAuthorizationToken,
-            "Accept" : "application/json"
+    func getMeta() -> Promise<Any> {
+        return Alamofire.request(baseURL + "/v2/meta", headers: self.defaultHeaders()).responseJSON()
+    }
+    
+    func defaultHeaders () -> Dictionary<String, String> {
+        return [ "Authorization" : self.genericAuthorizationToken,
+                 "Accept" : "application/json"
         ]
-        
-        Alamofire.request("https://api.godtoolsapp.com/godtools-api/rest/v2/meta", headers: headers).responseJSON { response in
-            debugPrint(response.result.value)
-        }
     }
 }

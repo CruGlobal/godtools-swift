@@ -3,17 +3,34 @@ PODS:
   - Crashlytics (3.8.1):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.8)
+  - PromiseKit (4.0.3):
+    - PromiseKit/Foundation (= 4.0.3)
+    - PromiseKit/QuartzCore (= 4.0.3)
+    - PromiseKit/UIKit (= 4.0.3)
+  - PromiseKit/Alamofire (4.0.3):
+    - Alamofire (~> 4.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/CorePromise (4.0.3)
+  - PromiseKit/Foundation (4.0.3):
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (4.0.3):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (4.0.3):
+    - PromiseKit/CorePromise
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Crashlytics
   - Fabric
+  - PromiseKit (~> 4.0)
+  - PromiseKit/Alamofire (~> 4.0)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
+  PromiseKit: dfe8fcc6445674fb23378d89990838c1cbdbf05a
 
-PODFILE CHECKSUM: a76b4a9972afd923fb91f7e4319c41f944f2b255
+PODFILE CHECKSUM: 7afb798821fd88103afaaba98ba6d204c263520a
 
 COCOAPODS: 1.0.0

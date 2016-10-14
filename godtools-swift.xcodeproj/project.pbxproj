@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0405191DB1043700B8576E /* MetaResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0405181DB1043700B8576E /* MetaResponseHandler.swift */; };
+		4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */; };
 		4F41A0C21DAE65E400CDAE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */; };
 		4F41A0C71DAE65E400CDAE50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F41A0C51DAE65E400CDAE50 /* Main.storyboard */; };
 		4F41A0CA1DAE65E400CDAE50 /* godtools_swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F41A0C81DAE65E400CDAE50 /* godtools_swift.xcdatamodeld */; };
@@ -24,6 +26,8 @@
 		134835C5A712929C9A58F5AA /* Pods-godtools-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools-swift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools-swift/Pods-godtools-swift.debug.xcconfig"; sourceTree = "<group>"; };
 		14BF616718E4AB91D6E2DAA5 /* Pods-godtools-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools-swift.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools-swift/Pods-godtools-swift.release.xcconfig"; sourceTree = "<group>"; };
 		24CFB9C0F5C04FD806F7E69F /* Pods_godtools_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F0405181DB1043700B8576E /* MetaResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetaResponseHandler.swift; path = API/MetaResponseHandler.swift; sourceTree = "<group>"; };
+		4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsPersistence.swift; path = Persistence/GodToolsPersistence.swift; sourceTree = "<group>"; };
 		4F41A0BE1DAE65E400CDAE50 /* godtools-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "godtools-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F41A0C61DAE65E400CDAE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -51,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F04053B1DB1076300B8576E /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */,
+			);
+			name = Persistence;
+			sourceTree = "<group>";
+		};
 		4F41A0B51DAE65E400CDAE50 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +89,7 @@
 				4FE8596D1DAE94AC008AF462 /* Bridging Files */,
 				4F8D318A1DAE9168007BFA7F /* API */,
 				4F41A0D61DAE689300CDAE50 /* Controllers */,
+				4F04053B1DB1076300B8576E /* Persistence */,
 				4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */,
 				4F41A0C51DAE65E400CDAE50 /* Main.storyboard */,
 				4F41A0CB1DAE65E400CDAE50 /* Assets.xcassets */,
@@ -101,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */,
+				4F0405181DB1043700B8576E /* MetaResponseHandler.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -257,7 +271,9 @@
 			files = (
 				4F8D318C1DAE917E007BFA7F /* GodtoolsAPI.swift in Sources */,
 				4F41A0C21DAE65E400CDAE50 /* AppDelegate.swift in Sources */,
+				4F0405191DB1043700B8576E /* MetaResponseHandler.swift in Sources */,
 				4F41A0CA1DAE65E400CDAE50 /* godtools_swift.xcdatamodeld in Sources */,
+				4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */,
 				4F41A0DA1DAE71D500CDAE50 /* LanguagesViewController.swift in Sources */,
 				4F41A0D81DAE68BE00CDAE50 /* SettingsViewController.swift in Sources */,
 				4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */,
