@@ -11,12 +11,12 @@ import Foundation
 class MetaResponseHandler: NSObject {
     
     func parse(data: Any) {
-        debugPrint(data)
-        var json = data as! Dictionary<AnyHashable, String>
-        
-//        for (key, value) in data {
-//            
-//        }
+
+        for(language) in (data as! NSDictionary).value(forKey: "languages") as! NSArray {
+            let languageDictionary = language as! NSDictionary
+            let name:String = languageDictionary.value(forKey: "name") as! String
+            let code:String = languageDictionary.value(forKey: "code") as! String
+            debugPrint("Language code: \(code) name: \(name)")
+        }
     }
-    
 }
