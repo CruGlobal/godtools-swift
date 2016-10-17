@@ -12,11 +12,14 @@ class MetaResponseHandler: NSObject {
     
     func parse(data: Any) {
 
-        for(language) in (data as! NSDictionary).value(forKey: "languages") as! NSArray {
+        for(language) in extractLanguages(fromData: data) {
             let languageDictionary = language as! NSDictionary
             let name:String = languageDictionary.value(forKey: "name") as! String
             let code:String = languageDictionary.value(forKey: "code") as! String
-            debugPrint("Language code: \(code) name: \(name)")
         }
+    }
+    
+    func extractLanguages(fromData: Any) -> NSArray {
+        return (fromData as! NSDictionary).value(forKey: "languages") as! NSArray;
     }
 }
