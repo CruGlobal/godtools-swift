@@ -64,6 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="30" y="35"/>
         </scene>
         <!--Settings-->
         <scene sceneID="18Z-Ch-cyj">
@@ -161,13 +162,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="IJl-DO-Gtw" userLabel="Background Image View"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Lsl-Uc-G2G">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="width" secondItem="B5g-nv-BJU" secondAttribute="width" id="1jp-Tr-5ow"/>
+                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="centerY" secondItem="B5g-nv-BJU" secondAttribute="centerY" id="4tM-ey-rq0"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerX" secondItem="B5g-nv-BJU" secondAttribute="centerX" id="KuA-Wz-sjw"/>
+                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="height" secondItem="B5g-nv-BJU" secondAttribute="height" id="LQD-T3-XAs"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="width" secondItem="B5g-nv-BJU" secondAttribute="width" id="gnk-Ei-fLv"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="height" secondItem="B5g-nv-BJU" secondAttribute="height" id="l9L-I1-QIV"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerY" secondItem="B5g-nv-BJU" secondAttribute="centerY" id="nXb-8i-0gH"/>
+                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="centerX" secondItem="B5g-nv-BJU" secondAttribute="centerX" id="tWr-S7-F57"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Language" id="xMv-XH-WZO">
@@ -175,6 +184,9 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Lsl-Uc-G2G" id="NDc-2W-R8H"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rhd-Mi-fve" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

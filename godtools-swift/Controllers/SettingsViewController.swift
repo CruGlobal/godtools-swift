@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import PromiseKit
+import CoreData
 
 class SettingsViewController: UIViewController {
 
@@ -19,8 +20,18 @@ class SettingsViewController: UIViewController {
         let titleAttributesDictionary: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = (titleAttributesDictionary as! [String : Any])
         
-        GodtoolsAPI.sharedInstance.getMeta().then() { json in
-            MetaResponseHandler.init().parse(data: json)
+        let languagesFetch: NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
+        let persistenceContext = GodToolsPersistence.init().managedObjectContext
+        
+        do {
+            if (try persistenceContext.fetch(languagesFetch).count == 0) {
+                
+                GodtoolsAPI.sharedInstance.getMeta().then() { json in
+                    MetaResponseHandler.init().parse(data: json)
+                }
+            }
+        } catch {
+            
         }
     }
     
