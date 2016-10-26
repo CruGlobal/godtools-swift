@@ -10,34 +10,51 @@ import Foundation
 import UIKit
 import CoreData
 
-class LanguagesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class LanguagesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    var languages: Array<GodToolsLanguage> = []
+    
+//    var fetchResultsController = { () -> NSFetchedResultsController<GodToolsLanguage> in
+//        
+//        let sort = NSSortDescriptor(key: "name", ascending: true)
+//        var fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
+//        
+//        fetchRequest.sortDescriptors = [sort]
+//        
+//        let frc = NSFetchedResultsController(
+//            fetchRequest: fetchRequest,
+//            managedObjectContext: GodToolsPersistence.context(),
+//            sectionNameKeyPath: nil,
+//            cacheName: nil)
+//        
+//        return frc
+//    }
+
+    var languages : Array<GodToolsLanguage> = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
+        do {
+            let sort = NSSortDescriptor(key: "name", ascending: true)
+            let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
+            fetchRequest.sortDescriptors = [sort]
+
+            languages = try GodToolsPersistence.context().fetch(fetchRequest)
+        } catch {
+            print("error...")
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        let persistenceContext = GodToolsPersistence.init()
-        let languagesFetch: NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
 
-        do {
-            let results = try persistenceContext.managedObjectContext.fetch(languagesFetch)
-            
-            for language in results {
-                languages.append(language)
-            }
-        } catch {
-            debugPrint("Error loading languages: \(error)")
-        }
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

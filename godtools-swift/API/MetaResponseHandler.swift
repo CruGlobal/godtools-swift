@@ -13,20 +13,20 @@ class MetaResponseHandler: NSObject {
     
     func parse(data: Any) {
 
-        let persistence = GodToolsPersistence.init()
+        let persistenceContext = GodToolsPersistence.context()
         
         for(language) in extractLanguages(fromData: data) {
             let languageDictionary = language as! NSDictionary
             let name:String = languageDictionary.value(forKey: "name") as! String
             let code:String = languageDictionary.value(forKey: "code") as! String
             
-            let persistentLanguage: GodToolsLanguage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsLanguage", into: persistence.managedObjectContext) as! GodToolsLanguage
+            let persistentLanguage: GodToolsLanguage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsLanguage", into: persistenceContext) as! GodToolsLanguage
             persistentLanguage.code = code
             persistentLanguage.name = name
         }
         
         do {
-            try persistence.managedObjectContext.save()
+            try persistenceContext.save()
         } catch {
             debugPrint("Failure to save: \(error)")
         }

@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = (titleAttributesDictionary as! [String : Any])
         
         let languagesFetch: NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
-        let persistenceContext = GodToolsPersistence.init().managedObjectContext
+        let persistenceContext = GodToolsPersistence.context()
         
         do {
             if (try persistenceContext.fetch(languagesFetch).count == 0) {
