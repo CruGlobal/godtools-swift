@@ -175,7 +175,7 @@
                         <constraints>
                             <constraint firstItem="Lsl-Uc-G2G" firstAttribute="width" secondItem="B5g-nv-BJU" secondAttribute="width" id="1jp-Tr-5ow"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerX" secondItem="B5g-nv-BJU" secondAttribute="centerX" id="KuA-Wz-sjw"/>
-                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="top" secondItem="ra9-Sl-g7B" secondAttribute="bottom" constant="-64" id="SfV-6H-vlL"/>
+                            <constraint firstItem="Lsl-Uc-G2G" firstAttribute="top" secondItem="ra9-Sl-g7B" secondAttribute="bottom" id="SfV-6H-vlL"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="width" secondItem="B5g-nv-BJU" secondAttribute="width" id="gnk-Ei-fLv"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="height" secondItem="B5g-nv-BJU" secondAttribute="height" id="l9L-I1-QIV"/>
                             <constraint firstItem="IJl-DO-Gtw" firstAttribute="centerY" secondItem="B5g-nv-BJU" secondAttribute="centerY" id="ppb-lC-4ls"/>

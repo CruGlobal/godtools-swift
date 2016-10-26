@@ -69,7 +69,7 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         }
 
         cell?.textLabel?.text = languageFetchController!.object(at: indexPath).name
- g        cell?.textLabel?.textColor = UIColor.white
+        cell?.textLabel?.textColor = UIColor.white
         cell?.backgroundColor = UIColor.clear
         
         return cell!
