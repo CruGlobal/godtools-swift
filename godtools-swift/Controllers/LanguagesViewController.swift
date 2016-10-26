@@ -46,7 +46,8 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        let selectedLanguage = languageFetchController!.object(at: indexPath);
+        GodToolsSettings.init().setPrimaryLanguage(code: selectedLanguage.code!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -142,6 +142,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="primaryLanguageLabel" destination="4X0-Qr-GRk" id="rs1-fK-sz4"/>
                         <segue destination="Vbw-zd-r3N" kind="show" identifier="settingsToLanguagesSegue" id="GQy-01-Gt1"/>
                     </connections>
                 </viewController>
