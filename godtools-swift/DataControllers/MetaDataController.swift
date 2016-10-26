@@ -14,15 +14,8 @@ class MetaDataController: NSObject {
     let persistenceContext = GodToolsPersistence.context()
     
     func updateFromRemote () {
-        do {
-//            if (try persistenceContext.fetch(languagesFetch).count == 0) {
-            
-                GodtoolsAPI.sharedInstance.getMeta().then() { json in
-                    MetaResponseHandler.init().parse(data: json)
-                }
-//            }
-        } catch {
-            
+        GodtoolsAPI.sharedInstance.getMeta().then() { json in
+            MetaResponseHandler.init().parse(data: json)
         }
     }
 }
