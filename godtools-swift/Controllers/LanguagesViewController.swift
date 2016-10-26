@@ -14,43 +14,35 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     
-//    var fetchResultsController = { () -> NSFetchedResultsController<GodToolsLanguage> in
-//        
-//        let sort = NSSortDescriptor(key: "name", ascending: true)
-//        var fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
-//        
-//        fetchRequest.sortDescriptors = [sort]
-//        
-//        let frc = NSFetchedResultsController(
-//            fetchRequest: fetchRequest,
-//            managedObjectContext: GodToolsPersistence.context(),
-//            sectionNameKeyPath: nil,
-//            cacheName: nil)
-//        
-//        return frc
-//    }
-
-    var languages : Array<GodToolsLanguage> = []
+    var languageFetchController : NSFetchedResultsController<GodToolsLanguage>? = nil
     
+    var languages : Array<GodToolsLanguage> = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
+        fetchLanguages()
+    }
+    
+    func fetchLanguages () {
+        let sort = NSSortDescriptor(key: "name", ascending: true)
+        let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
+        
+        fetchRequest.sortDescriptors = [sort]
+        
+        languageFetchController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: GodToolsPersistence.context(),
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
         do {
-            let sort = NSSortDescriptor(key: "name", ascending: true)
-            let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
-            fetchRequest.sortDescriptors = [sort]
-
-            languages = try GodToolsPersistence.context().fetch(fetchRequest)
+            try languageFetchController!.performFetch()
         } catch {
             print("error...")
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -58,7 +50,7 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
+        return (languageFetchController!.fetchedObjects?.count)!
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -75,9 +67,9 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         if (cell == nil) {
             cell = UITableViewCell.init()
         }
-    
-        cell?.textLabel?.text = languages[indexPath.row].name
-        cell?.textLabel?.textColor = UIColor.white
+
+        cell?.textLabel?.text = languageFetchController!.object(at: indexPath).name
+ g        cell?.textLabel?.textColor = UIColor.white
         cell?.backgroundColor = UIColor.clear
         
         return cell!
