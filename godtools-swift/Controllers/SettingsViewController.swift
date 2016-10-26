@@ -19,20 +19,6 @@ class SettingsViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
         let titleAttributesDictionary: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = (titleAttributesDictionary as! [String : Any])
-        
-        let languagesFetch: NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
-        let persistenceContext = GodToolsPersistence.context()
-        
-        do {
-            if (try persistenceContext.fetch(languagesFetch).count == 0) {
-                
-                GodtoolsAPI.sharedInstance.getMeta().then() { json in
-                    MetaResponseHandler.init().parse(data: json)
-                }
-            }
-        } catch {
-            
-        }
     }
     
     override func didReceiveMemoryWarning() {

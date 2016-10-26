@@ -16,14 +16,10 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = UIColor.white
         let titleAttributesDictionary: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = (titleAttributesDictionary as! [String : Any])
+        
+        MetaDataController.init().updateFromRemote()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        GodtoolsAPI.sharedInstance.getAccessToken()
-    }
-
     @IBAction func settingsButtonWasPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "homeToSettingsSegue", sender: self)
     }
