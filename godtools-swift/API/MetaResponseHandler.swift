@@ -15,15 +15,9 @@ class MetaResponseHandler: NSObject {
 
         let persistenceContext = GodToolsPersistence.context()
         
-        for(language) in extractLanguages(fromData: data) {
-            let languageDictionary = language as! NSDictionary
-            let name:String = languageDictionary.value(forKey: "name") as! String
-            let code:String = languageDictionary.value(forKey: "code") as! String
-            
-            let persistentLanguage: GodToolsLanguage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsLanguage", into: persistenceContext) as! GodToolsLanguage
-            persistentLanguage.code = code
-            persistentLanguage.name = name
-        }
+        extractLanguages(fromData: data).forEach({ (language) in
+            createManagedLanguage(fromDictionary: language as! NSDictionary, inContext: persistenceContext)
+        })
         
         do {
             try persistenceContext.save()
@@ -34,5 +28,37 @@ class MetaResponseHandler: NSObject {
     
     func extractLanguages(fromData: Any) -> NSArray {
         return (fromData as! NSDictionary).value(forKey: "languages") as! NSArray;
+    }
+    
+    func createManagedLanguage(fromDictionary: NSDictionary, inContext: NSManagedObjectContext) -> Void {
+        let code:String = fromDictionary.value(forKey: "code") as! String
+        
+        if (languageExistsIn(context: inContext, code: code)) {
+            return
+        }
+        
+        let name:String = fromDictionary.value(forKey: "name") as! String
+        let packages:NSArray = fromDictionary.value(forKey: "packages") as! NSArray
+        
+        let persistentLanguage: GodToolsLanguage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsLanguage", into: inContext) as! GodToolsLanguage
+        persistentLanguage.code = code
+        persistentLanguage.name = name
+        
+        packages.forEach({ (package) in
+            let persistentPackage: GodToolsPackage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsPackage", into: inContext) as! GodToolsPackage
+            persistentPackage.code = ((package as! NSDictionary).value(forKey: "code") as! String)
+            persistentLanguage.addToPackages(persistentPackage)
+        })
+    }
+    
+    func languageExistsIn(context: NSManagedObjectContext, code: String) -> Bool {
+        let languageFetch :NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
+        languageFetch.predicate = NSPredicate.init(format: "code == %@", code)
+        
+        do {
+            return try context.fetch(languageFetch).count > 0
+        } catch {
+            return false
+        }
     }
 }

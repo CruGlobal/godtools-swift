@@ -67,8 +67,12 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         if (cell == nil) {
             cell = UITableViewCell.init()
         }
-
-        cell?.textLabel?.text = languageFetchController!.object(at: indexPath).name
+        
+        let lang = languageFetchController!.object(at: indexPath)
+        let packages = lang.packages
+        let numPackages = packages?.count
+        
+        cell?.textLabel?.text = "\(lang.name!) - \(numPackages!)"
         cell?.textLabel?.textColor = UIColor.white
         cell?.backgroundColor = UIColor.clear
         

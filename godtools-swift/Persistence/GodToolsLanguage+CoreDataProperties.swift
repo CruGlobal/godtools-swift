@@ -2,13 +2,12 @@
 //  GodToolsLanguage+CoreDataProperties.swift
 //  godtools-swift
 //
-//  Created by Ryan Carlson on 10/17/16.
+//  Created by Ryan Carlson on 10/26/16.
 //  Copyright © 2016 Cru. All rights reserved.
 //
 
 import Foundation
 import CoreData
-
 
 extension GodToolsLanguage {
 
@@ -18,5 +17,23 @@ extension GodToolsLanguage {
 
     @NSManaged public var code: String?
     @NSManaged public var name: String?
+    @NSManaged public var packages: NSSet?
+
+}
+
+// MARK: Generated accessors for packages
+extension GodToolsLanguage {
+
+    @objc(addPackagesObject:)
+    @NSManaged public func addToPackages(_ value: GodToolsPackage)
+
+    @objc(removePackagesObject:)
+    @NSManaged public func removeFromPackages(_ value: GodToolsPackage)
+
+    @objc(addPackages:)
+    @NSManaged public func addToPackages(_ values: NSSet)
+
+    @objc(removePackages:)
+    @NSManaged public func removeFromPackages(_ values: NSSet)
 
 }
