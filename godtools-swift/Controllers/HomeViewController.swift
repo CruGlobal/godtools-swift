@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import PromiseKit
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -26,7 +27,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
-        MetaDataController.init().updateFromRemote()
+        MetaDataController.init().updateFromRemote().then {result -> Void in
+            self.fetchPackages()
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

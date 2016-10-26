@@ -8,13 +8,14 @@
 
 import Foundation
 import CoreData
+import PromiseKit
 
 class MetaDataController: NSObject {
     let languagesFetch: NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
     let persistenceContext = GodToolsPersistence.context()
     
-    func updateFromRemote () {
-        GodtoolsAPI.sharedInstance.getMeta().then() { json in
+    func updateFromRemote () -> Promise<Void> {
+        return GodtoolsAPI.sharedInstance.getMeta().then() { json in
             MetaResponseHandler.init().parse(data: json)
         }
     }
