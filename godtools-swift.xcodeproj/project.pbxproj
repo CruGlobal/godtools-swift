@@ -24,6 +24,7 @@
 		4F8D318C1DAE917E007BFA7F /* GodtoolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */; };
 		4F8D318E1DAE91D5007BFA7F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F8D318D1DAE91D5007BFA7F /* Podfile */; };
 		4FAC13791DC0EA5E00235457 /* MetaDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAC13781DC0EA5E00235457 /* MetaDataController.swift */; };
+		4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */; };
 		4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE859781DB018F9008AF462 /* HomeViewController.swift */; };
 		F51ABED55022C7D8BD6BCFB0 /* Pods_godtools_swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CFB9C0F5C04FD806F7E69F /* Pods_godtools_swift.framework */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodtoolsAPI.swift; path = API/GodtoolsAPI.swift; sourceTree = "<group>"; };
 		4F8D318D1DAE91D5007BFA7F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4FAC13781DC0EA5E00235457 /* MetaDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetaDataController.swift; path = DataControllers/MetaDataController.swift; sourceTree = "<group>"; };
+		4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PackageDataController.swift; path = DataControllers/PackageDataController.swift; sourceTree = "<group>"; };
 		4FE859731DAFCBD2008AF462 /* GodTools-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GodTools-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FE859781DB018F9008AF462 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Controllers/HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				4FAC13781DC0EA5E00235457 /* MetaDataController.swift */,
+				4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */,
 			);
 			name = "Data Controllers";
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				4F41A0D81DAE68BE00CDAE50 /* SettingsViewController.swift in Sources */,
 				4F5F4AC01DC109BE00B66E58 /* GodToolsSettings.swift in Sources */,
 				4F75D5A31DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift in Sources */,
+				4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */,
 				4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

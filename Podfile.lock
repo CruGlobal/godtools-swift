@@ -17,6 +17,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.0.3):
     - PromiseKit/CorePromise
+  - Zip (0.6.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
@@ -24,13 +25,15 @@ DEPENDENCIES:
   - Fabric
   - PromiseKit (~> 4.0)
   - PromiseKit/Alamofire (~> 4.0)
+  - Zip (~> 0.6.0)
 
 SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   PromiseKit: dfe8fcc6445674fb23378d89990838c1cbdbf05a
+  Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 
-PODFILE CHECKSUM: 7afb798821fd88103afaaba98ba6d204c263520a
+PODFILE CHECKSUM: 542fc1180e8a376fc69db1ae2daf068385360978
 
 COCOAPODS: 1.0.0
