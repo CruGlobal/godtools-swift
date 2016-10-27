@@ -43,17 +43,11 @@ class PackageDataController: NSObject {
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         
         let documentsDirectoryFileURL = URL.init(fileURLWithPath: paths[0])
-        let documentsDirectoryBasicURL = URL.init(string: paths[0])
         
         let GTFilesDirectoryFileURL = documentsDirectoryFileURL.appendingPathComponent("GTFiles")
-        let GTFilesDirectoryBasicURL = documentsDirectoryBasicURL!.appendingPathComponent("GTFiles")
         
-        var isDirectory : ObjCBool = false
-        
-        if (fileManager.fileExists(atPath: GTFilesDirectoryBasicURL.absoluteString, isDirectory: &isDirectory)) {
-            if (isDirectory.boolValue) {
-                return GTFilesDirectoryFileURL
-            }
+        if (fileExists(file: GTFilesDirectoryFileURL)) {
+            return GTFilesDirectoryFileURL
         }
         
         do {
@@ -92,9 +86,5 @@ class PackageDataController: NSObject {
             // URL.checkResourceIsReachable() inexplicably and seemingly returns 'true' if a file exists and throws an error if it does not.
             return false
         }
-    }
-    
-//    func directoryExists (directory: URL) -> Bool {
-//        
-//    }
+    }    
 }
