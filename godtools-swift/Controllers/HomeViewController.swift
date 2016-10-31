@@ -62,7 +62,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = UITableViewCell.init()
         }
 
-        cell?.textLabel?.text = packagesFetchController!.object(at: indexPath).code!
+        if (packagesFetchController!.object(at: indexPath).name != nil) {
+            cell?.textLabel?.text = packagesFetchController!.object(at: indexPath).name!
+        } else {
+            cell?.textLabel?.text = packagesFetchController!.object(at: indexPath).code!
+        }
+        
         cell?.textLabel?.textColor = UIColor.white
         cell?.backgroundColor = UIColor.clear
         

@@ -17,6 +17,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.0.3):
     - PromiseKit/CorePromise
+  - SWXMLHash (3.0.2)
   - Zip (0.6.0)
 
 DEPENDENCIES:
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - Fabric
   - PromiseKit (~> 4.0)
   - PromiseKit/Alamofire (~> 4.0)
+  - SWXMLHash (~> 3.0.0)
   - Zip (~> 0.6.0)
 
 SPEC CHECKSUMS:
@@ -32,8 +34,9 @@ SPEC CHECKSUMS:
   Crashlytics: 4391d8df0b125345e9f209c5db6e7f40a6a8435d
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   PromiseKit: dfe8fcc6445674fb23378d89990838c1cbdbf05a
+  SWXMLHash: e0f6935971f01b06fb228cf435510d998ecde647
   Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 
-PODFILE CHECKSUM: 542fc1180e8a376fc69db1ae2daf068385360978
+PODFILE CHECKSUM: 675591e677212157efd50c8312ab88040a102a14
 
 COCOAPODS: 1.0.0

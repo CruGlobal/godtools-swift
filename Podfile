@@ -12,6 +12,7 @@ pod 'Alamofire', '~> 4.0'
 pod 'PromiseKit', '~> 4.0'
 pod 'PromiseKit/Alamofire', '~> 4.0'
 pod 'Zip', '~> 0.6.0'
+pod 'SWXMLHash', '~> 3.0.0'
 pod 'Fabric'
 pod 'Crashlytics'
 

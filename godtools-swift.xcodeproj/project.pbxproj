@@ -23,6 +23,7 @@
 		4F75D5A31DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75D5A11DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift */; };
 		4F8D318C1DAE917E007BFA7F /* GodtoolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */; };
 		4F8D318E1DAE91D5007BFA7F /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F8D318D1DAE91D5007BFA7F /* Podfile */; };
+		4FA06C8B1DC7770F00AF4A0B /* FullPackageResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA06C8A1DC7770F00AF4A0B /* FullPackageResponseHandler.swift */; };
 		4FAC13791DC0EA5E00235457 /* MetaDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAC13781DC0EA5E00235457 /* MetaDataController.swift */; };
 		4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */; };
 		4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE859781DB018F9008AF462 /* HomeViewController.swift */; };
@@ -51,6 +52,7 @@
 		4F75D5A11DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GodToolsLanguage+CoreDataProperties.swift"; path = "Persistence/GodToolsLanguage+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodtoolsAPI.swift; path = API/GodtoolsAPI.swift; sourceTree = "<group>"; };
 		4F8D318D1DAE91D5007BFA7F /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4FA06C8A1DC7770F00AF4A0B /* FullPackageResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FullPackageResponseHandler.swift; path = API/FullPackageResponseHandler.swift; sourceTree = "<group>"; };
 		4FAC13781DC0EA5E00235457 /* MetaDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetaDataController.swift; path = DataControllers/MetaDataController.swift; sourceTree = "<group>"; };
 		4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PackageDataController.swift; path = DataControllers/PackageDataController.swift; sourceTree = "<group>"; };
 		4FE859731DAFCBD2008AF462 /* GodTools-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GodTools-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				4F8D318B1DAE917E007BFA7F /* GodtoolsAPI.swift */,
 				4F0405181DB1043700B8576E /* MetaResponseHandler.swift */,
+				4FA06C8A1DC7770F00AF4A0B /* FullPackageResponseHandler.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				4F5F4AC01DC109BE00B66E58 /* GodToolsSettings.swift in Sources */,
 				4F75D5A31DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift in Sources */,
 				4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */,
+				4FA06C8B1DC7770F00AF4A0B /* FullPackageResponseHandler.swift in Sources */,
 				4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
