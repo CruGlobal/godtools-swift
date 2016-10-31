@@ -111,13 +111,11 @@ class FullPackageResponseHandler: NSObject {
                 let status = xmlResource.element?.attribute(by: "status")?.text
                 let version = xmlResource.element?.attribute(by: "version")?.text
                 
-                let packageFetchRequest :NSFetchRequest<GodToolsPackage> = GodToolsPackage.fetchRequest()
-                packageFetchRequest.predicate = NSPredicate(format: "code = %@ AND language.code = %@", code!, forLanguage.code!)
                 
-                let packages = try context.fetch(packageFetchRequest)
+                let packages = GodToolsPackage.fetchBy(code: code!, languageCode: forLanguage.code!, context: context)
                 
-                if (packages.count == 1) {
-                    packages[0].name = name!
+                if (packages != nil && packages?.count == 1) {
+                    packages![0].name = name!
                 } else {
                     let newPackage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsPackage", into: context) as! GodToolsPackage
                     newPackage.code = code!
