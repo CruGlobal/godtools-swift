@@ -2,12 +2,12 @@
 //  GodToolsPackage+CoreDataProperties.swift
 //  godtools-swift
 //
-//  Created by Ryan Carlson on 10/26/16.
+//  Created by Ryan Carlson on 10/31/16.
 //  Copyright © 2016 Cru. All rights reserved.
 //
 
 import Foundation
-import CoreData
+import CoreData 
 
 extension GodToolsPackage {
 
@@ -15,8 +15,13 @@ extension GodToolsPackage {
         return NSFetchRequest<GodToolsPackage>(entityName: "GodToolsPackage");
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var code: String?
+    @NSManaged public var name: String?
+    @NSManaged public var iconFilename: String?
+    @NSManaged public var configFilename: String?
+    @NSManaged public var status: String?
+    @NSManaged public var majorVersion: Int16
+    @NSManaged public var minorVersion: Int16
     @NSManaged public var language: GodToolsLanguage?
 
 }

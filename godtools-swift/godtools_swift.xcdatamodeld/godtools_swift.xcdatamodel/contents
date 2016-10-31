@@ -9,11 +9,14 @@
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="configFilename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="iconFilename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="majorVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="minorVersion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GodToolsLanguage" inverseName="packages" inverseEntity="GodToolsLanguage" syncable="YES"/>
     </entity>
     <elements>
         <element name="GodToolsLanguage" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="GodToolsPackage" positionX="-45" positionY="18" width="128" height="120"/>
+        <element name="GodToolsPackage" positionX="-45" positionY="18" width="128" height="165"/>
     </elements>
 </model>

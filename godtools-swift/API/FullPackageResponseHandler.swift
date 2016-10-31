@@ -105,23 +105,28 @@ class FullPackageResponseHandler: NSObject {
             let xmlFile :Data = try Data(contentsOf: location.appendingPathComponent("contents.xml"))
             let context = GodToolsPersistence.context()
             
-            try SWXMLHash.parse(xmlFile)["content"]["resource"].forEach({ (xmlResource) in
-                let name = xmlResource.element?.attribute(by: "name")?.text
+            SWXMLHash.parse(xmlFile)["content"]["resource"].forEach({ (xmlResource) in
                 let code = xmlResource.element?.attribute(by: "package")?.text
-                let status = xmlResource.element?.attribute(by: "status")?.text
-                let version = xmlResource.element?.attribute(by: "version")?.text
-                
                 
                 let packages = GodToolsPackage.fetchBy(code: code!, languageCode: forLanguage.code!, context: context)
+                var package = packages?[0]
                 
                 if (packages != nil && packages?.count == 1) {
-                    packages![0].name = name!
+                    package = packages![0]
                 } else {
-                    let newPackage = NSEntityDescription.insertNewObject(forEntityName: "GodToolsPackage", into: context) as! GodToolsPackage
-                    newPackage.code = code!
-                    newPackage.name = name!
-                    forLanguage.addToPackages(newPackage)
+                    package = NSEntityDescription.insertNewObject(forEntityName: "GodToolsPackage", into: context) as? GodToolsPackage
+                    forLanguage.addToPackages(package!)
                 }
+                
+                let version = xmlResource.element?.attribute(by: "version")?.text
+                
+                package!.code = code!
+                package!.name = xmlResource.element?.attribute(by: "name")?.text
+                package!.status = xmlResource.element?.attribute(by: "status")?.text
+                package!.majorVersion = Int16(version!.components(separatedBy: ".")[0])!
+                package!.minorVersion = Int16(version!.components(separatedBy: ".")[1])!
+                package!.iconFilename = xmlResource.element?.attribute(by: "icon")?.text
+                package!.configFilename = xmlResource.element?.attribute(by: "config")?.text
             })
             try context.save()
         } catch {
