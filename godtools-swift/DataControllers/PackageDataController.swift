@@ -33,7 +33,7 @@ class PackageDataController: NSObject {
             }
             
         }.catch { (error) in
-            
+            debugPrint(error)
         }
     }
     
@@ -67,6 +67,10 @@ class PackageDataController: NSObject {
             
             try files.forEach({ (file) in
                 let destinationFullPath = destination.appendingPathComponent(file.lastPathComponent)
+                
+                if (file.lastPathComponent == "contents.xml") {
+                    return
+                }
                 
                 if (fileExists(file: destinationFullPath)) {
                     return
