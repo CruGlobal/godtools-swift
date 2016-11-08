@@ -6,3 +6,11 @@
 //  Copyright © 2016 Cru. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "GTViewController.h"
+#import "GTFileLoader.h"
+#import "GTAboutViewController.h"
+#import "GTShareInfo.h"
+#import "GTPageMenuViewController.h"

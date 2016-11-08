@@ -1,0 +1,14 @@
+//
+//  GTPrefixHeader.pch
+//  godtools-swift
+//
+//  Created by Ryan Carlson on 11/8/16.
+//  Copyright © 2016 Cru. All rights reserved.
+//
+
+#ifdef __OBJC__
+
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+
+#endif

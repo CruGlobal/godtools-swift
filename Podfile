@@ -16,4 +16,6 @@ pod 'SWXMLHash', '~> 3.0.0'
 pod 'Fabric'
 pod 'Crashlytics'
 
+pod 'SSCWhatsAppActivity', '~> 1.0'
+
 end

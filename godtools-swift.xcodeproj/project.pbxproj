@@ -9,10 +9,36 @@
 /* Begin PBXBuildFile section */
 		4F0405191DB1043700B8576E /* MetaResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0405181DB1043700B8576E /* MetaResponseHandler.swift */; };
 		4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */; };
-		4F2A68C91DD21C1900673FA1 /* GTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A68C31DD21C1900673FA1 /* GTAppDelegate.m */; };
-		4F2A68CA1DD21C1900673FA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F2A68C41DD21C1900673FA1 /* Main.storyboard */; };
-		4F2A68CB1DD21C1900673FA1 /* GTExampleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A68C61DD21C1900673FA1 /* GTExampleTableViewController.m */; };
-		4F2A68CC1DD21C1900673FA1 /* GTFileLoaderExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A68C81DD21C1900673FA1 /* GTFileLoaderExample.m */; };
+		4F2A69671DD21DA300673FA1 /* GTFileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A692C1DD21DA300673FA1 /* GTFileLoader.m */; };
+		4F2A69681DD21DA300673FA1 /* GTFollowupModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A692E1DD21DA300673FA1 /* GTFollowupModalView.m */; };
+		4F2A69691DD21DA300673FA1 /* GTFollowupThankYouView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69301DD21DA300673FA1 /* GTFollowupThankYouView.m */; };
+		4F2A696A1DD21DA300673FA1 /* GTInputFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69321DD21DA300673FA1 /* GTInputFieldView.m */; };
+		4F2A696B1DD21DA300673FA1 /* GTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69341DD21DA300673FA1 /* GTLabel.m */; };
+		4F2A696C1DD21DA300673FA1 /* GTMultiButtonResponseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69361DD21DA300673FA1 /* GTMultiButtonResponseView.m */; };
+		4F2A696D1DD21DA300673FA1 /* GTShareInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69381DD21DA300673FA1 /* GTShareInfo.m */; };
+		4F2A696E1DD21DA300673FA1 /* GTShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A693A1DD21DA300673FA1 /* GTShareViewController.m */; };
+		4F2A696F1DD21DA300673FA1 /* SNInstructions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A693C1DD21DA300673FA1 /* SNInstructions.m */; };
+		4F2A69701DD21DA300673FA1 /* UIDisclosureIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A693E1DD21DA300673FA1 /* UIDisclosureIndicator.m */; };
+		4F2A69711DD21DA300673FA1 /* UIRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69401DD21DA300673FA1 /* UIRoundedView.m */; };
+		4F2A69721DD21DA300673FA1 /* UISnuffleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69421DD21DA300673FA1 /* UISnuffleButton.m */; };
+		4F2A69731DD21DA300673FA1 /* UISnufflePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69441DD21DA300673FA1 /* UISnufflePanel.m */; };
+		4F2A69741DD21DA300673FA1 /* GTFollowupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69471DD21DA300673FA1 /* GTFollowupViewController.m */; };
+		4F2A69751DD21DA300673FA1 /* GTPageMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69491DD21DA300673FA1 /* GTPageMenuViewController.m */; };
+		4F2A69761DD21DA300673FA1 /* GTPageMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2A694A1DD21DA300673FA1 /* GTPageMenuViewController.xib */; };
+		4F2A69771DD21DA300673FA1 /* GTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A694C1DD21DA300673FA1 /* GTViewController.m */; };
+		4F2A69781DD21DA300673FA1 /* GTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2A694D1DD21DA300673FA1 /* GTViewController.xib */; };
+		4F2A697A1DD21DA300673FA1 /* GTAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69521DD21DA300673FA1 /* GTAboutViewController.m */; };
+		4F2A697B1DD21DA300673FA1 /* GTAboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2A69531DD21DA300673FA1 /* GTAboutViewController.xib */; };
+		4F2A697C1DD21DA300673FA1 /* GTInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69561DD21DA300673FA1 /* GTInterpreter.m */; };
+		4F2A697D1DD21DA300673FA1 /* GTPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69581DD21DA300673FA1 /* GTPage.m */; };
+		4F2A697E1DD21DA300673FA1 /* GTPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F2A69591DD21DA300673FA1 /* GTPage.xib */; };
+		4F2A697F1DD21DA300673FA1 /* GTPageInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A695B1DD21DA300673FA1 /* GTPageInterpreter.m */; };
+		4F2A69801DD21DA300673FA1 /* GTPageStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A695D1DD21DA300673FA1 /* GTPageStyle.m */; };
+		4F2A69811DD21DA300673FA1 /* GTPageStyleAmharic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A695F1DD21DA300673FA1 /* GTPageStyleAmharic.m */; };
+		4F2A69821DD21DA300673FA1 /* TBXML+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69621DD21DA300673FA1 /* TBXML+Compression.m */; };
+		4F2A69831DD21DA300673FA1 /* TBXML+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69641DD21DA300673FA1 /* TBXML+HTTP.m */; };
+		4F2A69841DD21DA300673FA1 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69661DD21DA300673FA1 /* TBXML.m */; };
+		4F2A69871DD222A100673FA1 /* HorizontalGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69861DD222A100673FA1 /* HorizontalGestureRecognizer.m */; };
 		4F41A0C21DAE65E400CDAE50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */; };
 		4F41A0C71DAE65E400CDAE50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F41A0C51DAE65E400CDAE50 /* Main.storyboard */; };
 		4F41A0CA1DAE65E400CDAE50 /* godtools_swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F41A0C81DAE65E400CDAE50 /* godtools_swift.xcdatamodeld */; };
@@ -42,13 +68,65 @@
 		24CFB9C0F5C04FD806F7E69F /* Pods_godtools_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0405181DB1043700B8576E /* MetaResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetaResponseHandler.swift; path = API/MetaResponseHandler.swift; sourceTree = "<group>"; };
 		4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsPersistence.swift; path = Persistence/GodToolsPersistence.swift; sourceTree = "<group>"; };
-		4F2A68C21DD21C1900673FA1 /* GTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAppDelegate.h; sourceTree = "<group>"; };
-		4F2A68C31DD21C1900673FA1 /* GTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAppDelegate.m; sourceTree = "<group>"; };
-		4F2A68C41DD21C1900673FA1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		4F2A68C51DD21C1900673FA1 /* GTExampleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTExampleTableViewController.h; sourceTree = "<group>"; };
-		4F2A68C61DD21C1900673FA1 /* GTExampleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTExampleTableViewController.m; sourceTree = "<group>"; };
-		4F2A68C71DD21C1900673FA1 /* GTFileLoaderExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFileLoaderExample.h; sourceTree = "<group>"; };
-		4F2A68C81DD21C1900673FA1 /* GTFileLoaderExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFileLoaderExample.m; sourceTree = "<group>"; };
+		4F2A692B1DD21DA300673FA1 /* GTFileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFileLoader.h; sourceTree = "<group>"; };
+		4F2A692C1DD21DA300673FA1 /* GTFileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFileLoader.m; sourceTree = "<group>"; };
+		4F2A692D1DD21DA300673FA1 /* GTFollowupModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFollowupModalView.h; sourceTree = "<group>"; };
+		4F2A692E1DD21DA300673FA1 /* GTFollowupModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFollowupModalView.m; sourceTree = "<group>"; };
+		4F2A692F1DD21DA300673FA1 /* GTFollowupThankYouView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFollowupThankYouView.h; sourceTree = "<group>"; };
+		4F2A69301DD21DA300673FA1 /* GTFollowupThankYouView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFollowupThankYouView.m; sourceTree = "<group>"; };
+		4F2A69311DD21DA300673FA1 /* GTInputFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTInputFieldView.h; sourceTree = "<group>"; };
+		4F2A69321DD21DA300673FA1 /* GTInputFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTInputFieldView.m; sourceTree = "<group>"; };
+		4F2A69331DD21DA300673FA1 /* GTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLabel.h; sourceTree = "<group>"; };
+		4F2A69341DD21DA300673FA1 /* GTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLabel.m; sourceTree = "<group>"; };
+		4F2A69351DD21DA300673FA1 /* GTMultiButtonResponseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMultiButtonResponseView.h; sourceTree = "<group>"; };
+		4F2A69361DD21DA300673FA1 /* GTMultiButtonResponseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMultiButtonResponseView.m; sourceTree = "<group>"; };
+		4F2A69371DD21DA300673FA1 /* GTShareInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTShareInfo.h; sourceTree = "<group>"; };
+		4F2A69381DD21DA300673FA1 /* GTShareInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTShareInfo.m; sourceTree = "<group>"; };
+		4F2A69391DD21DA300673FA1 /* GTShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTShareViewController.h; sourceTree = "<group>"; };
+		4F2A693A1DD21DA300673FA1 /* GTShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTShareViewController.m; sourceTree = "<group>"; };
+		4F2A693B1DD21DA300673FA1 /* SNInstructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNInstructions.h; sourceTree = "<group>"; };
+		4F2A693C1DD21DA300673FA1 /* SNInstructions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNInstructions.m; sourceTree = "<group>"; };
+		4F2A693D1DD21DA300673FA1 /* UIDisclosureIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIDisclosureIndicator.h; sourceTree = "<group>"; };
+		4F2A693E1DD21DA300673FA1 /* UIDisclosureIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIDisclosureIndicator.m; sourceTree = "<group>"; };
+		4F2A693F1DD21DA300673FA1 /* UIRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRoundedView.h; sourceTree = "<group>"; };
+		4F2A69401DD21DA300673FA1 /* UIRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIRoundedView.m; sourceTree = "<group>"; };
+		4F2A69411DD21DA300673FA1 /* UISnuffleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISnuffleButton.h; sourceTree = "<group>"; };
+		4F2A69421DD21DA300673FA1 /* UISnuffleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISnuffleButton.m; sourceTree = "<group>"; };
+		4F2A69431DD21DA300673FA1 /* UISnufflePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISnufflePanel.h; sourceTree = "<group>"; };
+		4F2A69441DD21DA300673FA1 /* UISnufflePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UISnufflePanel.m; sourceTree = "<group>"; };
+		4F2A69461DD21DA300673FA1 /* GTFollowupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFollowupViewController.h; sourceTree = "<group>"; };
+		4F2A69471DD21DA300673FA1 /* GTFollowupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFollowupViewController.m; sourceTree = "<group>"; };
+		4F2A69481DD21DA300673FA1 /* GTPageMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPageMenuViewController.h; sourceTree = "<group>"; };
+		4F2A69491DD21DA300673FA1 /* GTPageMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPageMenuViewController.m; sourceTree = "<group>"; };
+		4F2A694A1DD21DA300673FA1 /* GTPageMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTPageMenuViewController.xib; sourceTree = "<group>"; };
+		4F2A694B1DD21DA300673FA1 /* GTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTViewController.h; sourceTree = "<group>"; };
+		4F2A694C1DD21DA300673FA1 /* GTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTViewController.m; sourceTree = "<group>"; };
+		4F2A694D1DD21DA300673FA1 /* GTViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTViewController.xib; sourceTree = "<group>"; };
+		4F2A69511DD21DA300673FA1 /* GTAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTAboutViewController.h; sourceTree = "<group>"; };
+		4F2A69521DD21DA300673FA1 /* GTAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTAboutViewController.m; sourceTree = "<group>"; };
+		4F2A69531DD21DA300673FA1 /* GTAboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTAboutViewController.xib; sourceTree = "<group>"; };
+		4F2A69541DD21DA300673FA1 /* GTInterpreter+init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTInterpreter+init.h"; sourceTree = "<group>"; };
+		4F2A69551DD21DA300673FA1 /* GTInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTInterpreter.h; sourceTree = "<group>"; };
+		4F2A69561DD21DA300673FA1 /* GTInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTInterpreter.m; sourceTree = "<group>"; };
+		4F2A69571DD21DA300673FA1 /* GTPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPage.h; sourceTree = "<group>"; };
+		4F2A69581DD21DA300673FA1 /* GTPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPage.m; sourceTree = "<group>"; };
+		4F2A69591DD21DA300673FA1 /* GTPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTPage.xib; sourceTree = "<group>"; };
+		4F2A695A1DD21DA300673FA1 /* GTPageInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPageInterpreter.h; sourceTree = "<group>"; };
+		4F2A695B1DD21DA300673FA1 /* GTPageInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPageInterpreter.m; sourceTree = "<group>"; };
+		4F2A695C1DD21DA300673FA1 /* GTPageStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPageStyle.h; sourceTree = "<group>"; };
+		4F2A695D1DD21DA300673FA1 /* GTPageStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPageStyle.m; sourceTree = "<group>"; };
+		4F2A695E1DD21DA300673FA1 /* GTPageStyleAmharic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTPageStyleAmharic.h; sourceTree = "<group>"; };
+		4F2A695F1DD21DA300673FA1 /* GTPageStyleAmharic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTPageStyleAmharic.m; sourceTree = "<group>"; };
+		4F2A69611DD21DA300673FA1 /* TBXML+Compression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TBXML+Compression.h"; sourceTree = "<group>"; };
+		4F2A69621DD21DA300673FA1 /* TBXML+Compression.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TBXML+Compression.m"; sourceTree = "<group>"; };
+		4F2A69631DD21DA300673FA1 /* TBXML+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TBXML+HTTP.h"; sourceTree = "<group>"; };
+		4F2A69641DD21DA300673FA1 /* TBXML+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TBXML+HTTP.m"; sourceTree = "<group>"; };
+		4F2A69651DD21DA300673FA1 /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		4F2A69661DD21DA300673FA1 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		4F2A69851DD222A100673FA1 /* HorizontalGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HorizontalGestureRecognizer.h; path = "Nav Classes/HorizontalGestureRecognizer.h"; sourceTree = "<group>"; };
+		4F2A69861DD222A100673FA1 /* HorizontalGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HorizontalGestureRecognizer.m; path = "Nav Classes/HorizontalGestureRecognizer.m"; sourceTree = "<group>"; };
+		4F2A69881DD2231700673FA1 /* GTPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTPrefixHeader.pch; sourceTree = "<group>"; };
+		4F2A69891DD2265100673FA1 /* snuffyViewControllerTouchNotifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = snuffyViewControllerTouchNotifications.h; sourceTree = "<group>"; };
 		4F41A0BE1DAE65E400CDAE50 /* godtools-swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "godtools-swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F41A0C61DAE65E400CDAE50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -98,18 +176,101 @@
 			name = Persistence;
 			sourceTree = "<group>";
 		};
-		4F2A68C11DD21BC800673FA1 /* Renderer */ = {
+		4F2A69291DD21DA300673FA1 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				4F2A68C21DD21C1900673FA1 /* GTAppDelegate.h */,
-				4F2A68C31DD21C1900673FA1 /* GTAppDelegate.m */,
-				4F2A68C41DD21C1900673FA1 /* Main.storyboard */,
-				4F2A68C51DD21C1900673FA1 /* GTExampleTableViewController.h */,
-				4F2A68C61DD21C1900673FA1 /* GTExampleTableViewController.m */,
-				4F2A68C71DD21C1900673FA1 /* GTFileLoaderExample.h */,
-				4F2A68C81DD21C1900673FA1 /* GTFileLoaderExample.m */,
+				4F2A69851DD222A100673FA1 /* HorizontalGestureRecognizer.h */,
+				4F2A69861DD222A100673FA1 /* HorizontalGestureRecognizer.m */,
+				4F2A69891DD2265100673FA1 /* snuffyViewControllerTouchNotifications.h */,
+				4F2A692A1DD21DA300673FA1 /* Custom Classes */,
+				4F2A69451DD21DA300673FA1 /* Nav Classes */,
+				4F2A69501DD21DA300673FA1 /* Parsing Classes */,
+				4F2A69601DD21DA300673FA1 /* TBXML */,
 			);
-			name = Renderer;
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		4F2A692A1DD21DA300673FA1 /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4F2A692B1DD21DA300673FA1 /* GTFileLoader.h */,
+				4F2A692C1DD21DA300673FA1 /* GTFileLoader.m */,
+				4F2A692D1DD21DA300673FA1 /* GTFollowupModalView.h */,
+				4F2A692E1DD21DA300673FA1 /* GTFollowupModalView.m */,
+				4F2A692F1DD21DA300673FA1 /* GTFollowupThankYouView.h */,
+				4F2A69301DD21DA300673FA1 /* GTFollowupThankYouView.m */,
+				4F2A69311DD21DA300673FA1 /* GTInputFieldView.h */,
+				4F2A69321DD21DA300673FA1 /* GTInputFieldView.m */,
+				4F2A69331DD21DA300673FA1 /* GTLabel.h */,
+				4F2A69341DD21DA300673FA1 /* GTLabel.m */,
+				4F2A69351DD21DA300673FA1 /* GTMultiButtonResponseView.h */,
+				4F2A69361DD21DA300673FA1 /* GTMultiButtonResponseView.m */,
+				4F2A69371DD21DA300673FA1 /* GTShareInfo.h */,
+				4F2A69381DD21DA300673FA1 /* GTShareInfo.m */,
+				4F2A69391DD21DA300673FA1 /* GTShareViewController.h */,
+				4F2A693A1DD21DA300673FA1 /* GTShareViewController.m */,
+				4F2A693B1DD21DA300673FA1 /* SNInstructions.h */,
+				4F2A693C1DD21DA300673FA1 /* SNInstructions.m */,
+				4F2A693D1DD21DA300673FA1 /* UIDisclosureIndicator.h */,
+				4F2A693E1DD21DA300673FA1 /* UIDisclosureIndicator.m */,
+				4F2A693F1DD21DA300673FA1 /* UIRoundedView.h */,
+				4F2A69401DD21DA300673FA1 /* UIRoundedView.m */,
+				4F2A69411DD21DA300673FA1 /* UISnuffleButton.h */,
+				4F2A69421DD21DA300673FA1 /* UISnuffleButton.m */,
+				4F2A69431DD21DA300673FA1 /* UISnufflePanel.h */,
+				4F2A69441DD21DA300673FA1 /* UISnufflePanel.m */,
+			);
+			path = "Custom Classes";
+			sourceTree = "<group>";
+		};
+		4F2A69451DD21DA300673FA1 /* Nav Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4F2A69461DD21DA300673FA1 /* GTFollowupViewController.h */,
+				4F2A69471DD21DA300673FA1 /* GTFollowupViewController.m */,
+				4F2A69481DD21DA300673FA1 /* GTPageMenuViewController.h */,
+				4F2A69491DD21DA300673FA1 /* GTPageMenuViewController.m */,
+				4F2A694A1DD21DA300673FA1 /* GTPageMenuViewController.xib */,
+				4F2A694B1DD21DA300673FA1 /* GTViewController.h */,
+				4F2A694C1DD21DA300673FA1 /* GTViewController.m */,
+				4F2A694D1DD21DA300673FA1 /* GTViewController.xib */,
+			);
+			path = "Nav Classes";
+			sourceTree = "<group>";
+		};
+		4F2A69501DD21DA300673FA1 /* Parsing Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4F2A69511DD21DA300673FA1 /* GTAboutViewController.h */,
+				4F2A69521DD21DA300673FA1 /* GTAboutViewController.m */,
+				4F2A69531DD21DA300673FA1 /* GTAboutViewController.xib */,
+				4F2A69541DD21DA300673FA1 /* GTInterpreter+init.h */,
+				4F2A69551DD21DA300673FA1 /* GTInterpreter.h */,
+				4F2A69561DD21DA300673FA1 /* GTInterpreter.m */,
+				4F2A69571DD21DA300673FA1 /* GTPage.h */,
+				4F2A69581DD21DA300673FA1 /* GTPage.m */,
+				4F2A69591DD21DA300673FA1 /* GTPage.xib */,
+				4F2A695A1DD21DA300673FA1 /* GTPageInterpreter.h */,
+				4F2A695B1DD21DA300673FA1 /* GTPageInterpreter.m */,
+				4F2A695C1DD21DA300673FA1 /* GTPageStyle.h */,
+				4F2A695D1DD21DA300673FA1 /* GTPageStyle.m */,
+				4F2A695E1DD21DA300673FA1 /* GTPageStyleAmharic.h */,
+				4F2A695F1DD21DA300673FA1 /* GTPageStyleAmharic.m */,
+			);
+			path = "Parsing Classes";
+			sourceTree = "<group>";
+		};
+		4F2A69601DD21DA300673FA1 /* TBXML */ = {
+			isa = PBXGroup;
+			children = (
+				4F2A69611DD21DA300673FA1 /* TBXML+Compression.h */,
+				4F2A69621DD21DA300673FA1 /* TBXML+Compression.m */,
+				4F2A69631DD21DA300673FA1 /* TBXML+HTTP.h */,
+				4F2A69641DD21DA300673FA1 /* TBXML+HTTP.m */,
+				4F2A69651DD21DA300673FA1 /* TBXML.h */,
+				4F2A69661DD21DA300673FA1 /* TBXML.m */,
+			);
+			path = TBXML;
 			sourceTree = "<group>";
 		};
 		4F41A0B51DAE65E400CDAE50 = {
@@ -135,13 +296,12 @@
 			isa = PBXGroup;
 			children = (
 				4FE859731DAFCBD2008AF462 /* GodTools-Bridging-Header.h */,
-				4FE8596D1DAE94AC008AF462 /* Bridging Files */,
 				4F8D318A1DAE9168007BFA7F /* API */,
 				4FAC13771DC0EA2E00235457 /* Data Controllers */,
 				4F41A0D61DAE689300CDAE50 /* Controllers */,
 				4F04053B1DB1076300B8576E /* Persistence */,
 				4FA06C8C1DC7AD8600AF4A0B /* Views */,
-				4F2A68C11DD21BC800673FA1 /* Renderer */,
+				4F2A69291DD21DA300673FA1 /* Renderer */,
 				4F41A0C11DAE65E400CDAE50 /* AppDelegate.swift */,
 				4F5F4ABF1DC109BE00B66E58 /* GodToolsSettings.swift */,
 				4F41A0C51DAE65E400CDAE50 /* Main.storyboard */,
@@ -149,6 +309,7 @@
 				4F41A0CD1DAE65E400CDAE50 /* LaunchScreen.storyboard */,
 				4F41A0D01DAE65E400CDAE50 /* Info.plist */,
 				4F41A0C81DAE65E400CDAE50 /* godtools_swift.xcdatamodeld */,
+				4F2A69881DD2231700673FA1 /* GTPrefixHeader.pch */,
 			);
 			path = "godtools-swift";
 			sourceTree = "<group>";
@@ -189,13 +350,6 @@
 				4FDFAD7F1DC11A0400A753B2 /* PackageDataController.swift */,
 			);
 			name = "Data Controllers";
-			sourceTree = "<group>";
-		};
-		4FE8596D1DAE94AC008AF462 /* Bridging Files */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Bridging Files";
 			sourceTree = "<group>";
 		};
 		AEA421FE0190D0D1AF634683 /* Frameworks */ = {
@@ -280,11 +434,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA06C8E1DC7ADC900AF4A0B /* PackageTableViewCell.xib in Resources */,
+				4F2A697E1DD21DA300673FA1 /* GTPage.xib in Resources */,
 				4F41A0CF1DAE65E400CDAE50 /* LaunchScreen.storyboard in Resources */,
+				4F2A69761DD21DA300673FA1 /* GTPageMenuViewController.xib in Resources */,
 				4F41A0CC1DAE65E400CDAE50 /* Assets.xcassets in Resources */,
-				4F2A68CA1DD21C1900673FA1 /* Main.storyboard in Resources */,
+				4F2A697B1DD21DA300673FA1 /* GTAboutViewController.xib in Resources */,
 				4F8D318E1DAE91D5007BFA7F /* Podfile in Resources */,
 				4F41A0C71DAE65E400CDAE50 /* Main.storyboard in Resources */,
+				4F2A69781DD21DA300673FA1 /* GTViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,26 +500,49 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F2A696F1DD21DA300673FA1 /* SNInstructions.m in Sources */,
+				4F2A696D1DD21DA300673FA1 /* GTShareInfo.m in Sources */,
 				4F8D318C1DAE917E007BFA7F /* GodtoolsAPI.swift in Sources */,
 				4FAC13791DC0EA5E00235457 /* MetaDataController.swift in Sources */,
+				4F2A69691DD21DA300673FA1 /* GTFollowupThankYouView.m in Sources */,
 				4F41A0C21DAE65E400CDAE50 /* AppDelegate.swift in Sources */,
-				4F2A68C91DD21C1900673FA1 /* GTAppDelegate.m in Sources */,
+				4F2A697A1DD21DA300673FA1 /* GTAboutViewController.m in Sources */,
 				4F0405191DB1043700B8576E /* MetaResponseHandler.swift in Sources */,
+				4F2A69701DD21DA300673FA1 /* UIDisclosureIndicator.m in Sources */,
 				4F41A0CA1DAE65E400CDAE50 /* godtools_swift.xcdatamodeld in Sources */,
+				4F2A696A1DD21DA300673FA1 /* GTInputFieldView.m in Sources */,
+				4F2A697C1DD21DA300673FA1 /* GTInterpreter.m in Sources */,
 				4F5F4ABD1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataClass.swift in Sources */,
+				4F2A69681DD21DA300673FA1 /* GTFollowupModalView.m in Sources */,
+				4F2A69731DD21DA300673FA1 /* UISnufflePanel.m in Sources */,
 				4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */,
 				4F5F4ABE1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataProperties.swift in Sources */,
 				4F75D5A21DB501DE0067B383 /* GodToolsLanguage+CoreDataClass.swift in Sources */,
-				4F2A68CC1DD21C1900673FA1 /* GTFileLoaderExample.m in Sources */,
+				4F2A69741DD21DA300673FA1 /* GTFollowupViewController.m in Sources */,
+				4F2A69771DD21DA300673FA1 /* GTViewController.m in Sources */,
 				4F41A0DA1DAE71D500CDAE50 /* LanguagesViewController.swift in Sources */,
+				4F2A696B1DD21DA300673FA1 /* GTLabel.m in Sources */,
 				4F41A0D81DAE68BE00CDAE50 /* SettingsViewController.swift in Sources */,
+				4F2A69821DD21DA300673FA1 /* TBXML+Compression.m in Sources */,
 				4F5F4AC01DC109BE00B66E58 /* GodToolsSettings.swift in Sources */,
+				4F2A697D1DD21DA300673FA1 /* GTPage.m in Sources */,
 				4F75D5A31DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift in Sources */,
 				4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */,
 				4FA06C901DC7AE7300AF4A0B /* PackageTableViewCell.swift in Sources */,
 				4FA06C8B1DC7770F00AF4A0B /* FullPackageResponseHandler.swift in Sources */,
+				4F2A69751DD21DA300673FA1 /* GTPageMenuViewController.m in Sources */,
+				4F2A69721DD21DA300673FA1 /* UISnuffleButton.m in Sources */,
+				4F2A696E1DD21DA300673FA1 /* GTShareViewController.m in Sources */,
+				4F2A696C1DD21DA300673FA1 /* GTMultiButtonResponseView.m in Sources */,
+				4F2A69671DD21DA300673FA1 /* GTFileLoader.m in Sources */,
+				4F2A69831DD21DA300673FA1 /* TBXML+HTTP.m in Sources */,
+				4F2A697F1DD21DA300673FA1 /* GTPageInterpreter.m in Sources */,
+				4F2A69811DD21DA300673FA1 /* GTPageStyleAmharic.m in Sources */,
 				4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */,
-				4F2A68CB1DD21C1900673FA1 /* GTExampleTableViewController.m in Sources */,
+				4F2A69801DD21DA300673FA1 /* GTPageStyle.m in Sources */,
+				4F2A69711DD21DA300673FA1 /* UIRoundedView.m in Sources */,
+				4F2A69841DD21DA300673FA1 /* TBXML.m in Sources */,
+				4F2A69871DD222A100673FA1 /* HorizontalGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,12 +672,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/godtools-swift/GTPrefixHeader.pch";
 				INFOPLIST_FILE = "godtools-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cru.godtools-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "godtools-swift/GodTools-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools-swift/GodTools-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -512,11 +694,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${SRCROOT}/godtools-swift/GTPrefixHeader.pch";
 				INFOPLIST_FILE = "godtools-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cru.godtools-swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools-swift/GodTools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

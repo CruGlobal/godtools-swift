@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import PromiseKit
-import GTViewController
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GTAboutViewControllerDelegate, GTViewControllerMenuDelegate {
 
