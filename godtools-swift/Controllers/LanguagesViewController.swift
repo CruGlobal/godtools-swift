@@ -22,7 +22,9 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         fetchLanguages()
     }
     
@@ -46,16 +48,16 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedLanguage = languageFetchController!.object(at: indexPath);
+        let selectedLanguage = languageFetchController!.object(at: IndexPath.init(row: indexPath.section, section: indexPath.row));
         GodToolsSettings.init().setPrimaryLanguage(code: selectedLanguage.code!)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (languageFetchController!.fetchedObjects?.count)!
+        return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return (languageFetchController!.fetchedObjects?.count)!
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -69,14 +71,23 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
             cell = UITableViewCell.init()
         }
         
-        let lang = languageFetchController!.object(at: indexPath)
-        let packages = lang.packages
-        let numPackages = packages?.count
+        let lang = languageFetchController!.object(at: IndexPath.init(row: indexPath.section, section: indexPath.row))
         
-        cell?.textLabel?.text = "\(lang.name!) - \(numPackages!)"
-        cell?.textLabel?.textColor = UIColor.white
-        cell?.backgroundColor = UIColor.clear
+        cell?.textLabel?.text = "\(lang.name!)"
+        cell?.textLabel?.textColor = .white
+        cell?.backgroundColor = UIColor.white.withAlphaComponent(0.05)
         
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView.init(frame: CGRect.init(x :0, y :0, width :self.tableView.frame.width, height :10.0))
+        view.backgroundColor = .clear
+        
+        return view
     }
 }
