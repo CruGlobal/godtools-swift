@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import PromiseKit
+import GTViewController
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, GTAboutViewControllerDelegate, GTViewControllerMenuDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -25,7 +26,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let titleAttributesDictionary: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
         self.navigationController?.navigationBar.titleTextAttributes = (titleAttributesDictionary as! [String : Any])
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UINib(nibName: "PackageTableViewCell", bundle: nil), forCellReuseIdentifier: "packageCell")
         
         MetaDataController.init().updateFromRemote().then {result -> Void in
             PackageDataController.init().updateFromRemote()
@@ -43,6 +44,26 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // *********** UITableView Delegate & Datasource Methods ***********
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let package = packagesFetchController?.object(at: indexPath)
+        let fileLoader = GTFileLoader.init()
+        fileLoader.language = GodToolsSettings.init().primaryLanguage()!
+        
+        let vc :GTViewController = GTViewController .init(configFile: package?.configFilename!,
+                                                          frame: self.view.frame,
+                                                          packageCode: package?.code!,
+                                                          langaugeCode: GodToolsSettings.init().primaryLanguage()!,
+                                                          fileLoader: fileLoader,
+                                                          shareInfo: GTShareInfo.init(),
+                                                          pageMenuViewController: GTPageMenuViewController.init(),
+                                                          aboutViewController: GTAboutViewController.init(delegate: self, fileLoader: fileLoader),
+                                                          delegate: self)
+        
+        vc.loadResource(withConfigFilename: package?.configFilename!)
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (packagesFetchController?.fetchedObjects?.count)!
     }
@@ -56,24 +77,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+        let cell :PackageTableViewCell? = tableView.dequeueReusableCell(withIdentifier: "packageCell") as? PackageTableViewCell
         
-        if (cell == nil) {
-            cell = UITableViewCell.init()
-        }
-
-        if (packagesFetchController!.object(at: indexPath).name != nil) {
-            cell?.textLabel?.text = packagesFetchController!.object(at: indexPath).name!
-        } else {
-            cell?.textLabel?.text = packagesFetchController!.object(at: indexPath).code!
-        }
-        
-        cell?.textLabel?.textColor = UIColor.white
-        cell?.backgroundColor = UIColor.clear
+        let package = packagesFetchController!.object(at: indexPath)
+        cell?.configureFrom(package: package)
         
         return cell!
     }
 
+    // *********** GTAboutViewControllerDelegate Methods ***********
+    
+    func viewOfPageViewController () -> UIView {
+        return self.view
+    }
+    
     // *********** UIButton Listener Methods ***********
     
     @IBAction func settingsButtonWasPressed(_ sender: UIButton) {

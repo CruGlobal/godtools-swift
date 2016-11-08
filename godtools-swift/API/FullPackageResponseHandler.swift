@@ -45,7 +45,7 @@ class FullPackageResponseHandler: NSObject {
         
         let documentsDirectoryFileURL = URL.init(fileURLWithPath: paths[0])
         
-        let GTFilesDirectoryFileURL = documentsDirectoryFileURL.appendingPathComponent("GTFiles")
+        let GTFilesDirectoryFileURL = documentsDirectoryFileURL.appendingPathComponent("Packages")
         
         if (fileExists(file: GTFilesDirectoryFileURL)) {
             return GTFilesDirectoryFileURL
