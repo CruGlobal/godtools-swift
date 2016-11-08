@@ -30,7 +30,10 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func fetchLanguages () {
         let sort = NSSortDescriptor(key: "name", ascending: true)
+        let filter = NSPredicate.init(format: "packages.@count > 0", "")
+        
         let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
+        fetchRequest.predicate = filter
         
         fetchRequest.sortDescriptors = [sort]
         
