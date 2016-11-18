@@ -9,7 +9,7 @@
 import Foundation
 
 class GodToolsSettings: NSObject {
-    
+    static let sharedSettings = GodToolsSettings()
     
     func primaryLanguage () -> String? {
         return UserDefaults.standard.value(forKey: "primaryLanguageCode") as? String
