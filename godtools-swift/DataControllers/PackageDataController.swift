@@ -14,11 +14,7 @@ import CoreData
 class PackageDataController: NSObject {
     
     func updateFromRemote() -> Promise<GodToolsLanguage> {
-        var code = GodToolsSettings.init().primaryLanguage()
-        
-        if (code == nil) {
-            code = "en"
-        }
+        let code = GodToolsSettings.sharedSettings.primaryLanguage()
         
         let language = loadLanguage(languageCode: code!)
         

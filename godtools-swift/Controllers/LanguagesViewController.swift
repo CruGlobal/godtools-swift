@@ -65,7 +65,7 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedLanguage = languageFetchController!.object(at: IndexPath.init(row: indexPath.section, section: indexPath.row));
         
-        GodToolsSettings.init().setPrimaryLanguage(code: selectedLanguage.code!)
+        GodToolsSettings.sharedSettings.setPrimaryLanguage(code: selectedLanguage.code!)
         
         if (!selectedLanguage.downloaded) {
             PackageDataController.init().updateFromRemote().then(execute: { (language) in
