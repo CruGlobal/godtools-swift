@@ -68,11 +68,11 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         GodToolsSettings.sharedSettings.setPrimaryLanguage(code: selectedLanguage.code!)
         
         if (!selectedLanguage.downloaded) {
-            PackageDataController.init().updateFromRemote().then(execute: { (language) in
-                self.navigationController?.popViewController(animated: true)
+            _ = PackageDataController.init().updateFromRemote().then(execute: { (language) in
+                _ = self.navigationController?.popViewController(animated: true)
             })
         } else {
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
     }
     

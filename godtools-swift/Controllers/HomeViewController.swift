@@ -27,8 +27,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         tableView.register(UINib(nibName: "PackageTableViewCell", bundle: nil), forCellReuseIdentifier: "packageCell")
         
-        MetaDataController.init().updateFromRemote().then {result -> Void in
-            PackageDataController.init().updateFromRemote()
+        _ = MetaDataController.init().updateFromRemote().then {result -> Void in
+            _ = PackageDataController.init().updateFromRemote()
             self.fetchPackages()
             self.tableView.reloadData()
         }
