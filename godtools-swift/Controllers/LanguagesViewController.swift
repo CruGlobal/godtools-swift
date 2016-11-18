@@ -18,53 +18,26 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var languages : Array<GodToolsLanguage> = []
 
+    //MARK: - UIViewController lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         
-        fetchLanguages()
+        languageFetchController = MetaDataController.init().loadFromLocal()
     }
     
-    func fetchLanguages () {
-        let sort = NSSortDescriptor(key: "name", ascending: true)
-        let filter = NSPredicate.init(format: "packages.@count > 0", "")
-        
-        let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
-        fetchRequest.predicate = filter
-        
-        fetchRequest.sortDescriptors = [sort]
-        
-        languageFetchController = NSFetchedResultsController(
-            fetchRequest: fetchRequest,
-            managedObjectContext: GodToolsPersistence.context(),
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        
-        do {
-            try languageFetchController!.performFetch()
-        } catch {
-            print("error...")
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedLanguage = languageFetchController!.object(at: IndexPath.init(row: indexPath.section, section: indexPath.row));
-        GodToolsSettings.init().setPrimaryLanguage(code: selectedLanguage.code!)
-    }
+    //MARK: - UITableViewDataSource methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return (languageFetchController!.fetchedObjects?.count)!
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55.0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,6 +54,26 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         cell?.backgroundColor = UIColor.white.withAlphaComponent(0.05)
         
         return cell!
+    }
+    
+    //MARK: - UITableViewDelegate Methods
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedLanguage = languageFetchController!.object(at: IndexPath.init(row: indexPath.section, section: indexPath.row));
+        
+        GodToolsSettings.init().setPrimaryLanguage(code: selectedLanguage.code!)
+        
+        if (!selectedLanguage.downloaded) {
+            PackageDataController.init().updateFromRemote().then(execute: { (language) in
+                self.navigationController?.popViewController(animated: true)
+            })
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

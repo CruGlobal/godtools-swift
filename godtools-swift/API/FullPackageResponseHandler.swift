@@ -10,11 +10,11 @@ import Foundation
 import Zip
 import SWXMLHash
 import CoreData
+import PromiseKit
 
 class FullPackageResponseHandler: NSObject {
     
-    func extractAndProcessFileAt(location :URL?, languageCode :String) {
-        
+    func extractAndProcessFileAt(location :URL?, language :GodToolsLanguage) {
         if (location == nil) {
             return;
         }
@@ -22,13 +22,8 @@ class FullPackageResponseHandler: NSObject {
         do {
             let unzipDirectory = try Zip.quickUnzipFile(location!)
             let destinationDirectory = createGTFilesDirectoryIfNecessary()
-            let language = loadLanguage(languageCode: languageCode)
             
-            if (language == nil) {
-                //....
-            }
-            
-            updateLocalFromContents(location: unzipDirectory, forLanguage: language!)
+            updateLocalFromContents(location: unzipDirectory, forLanguage: language)
             moveDownloadedAssetsToGTFiles(source: unzipDirectory, destination: destinationDirectory)
             
             try FileManager.default.removeItem(at: unzipDirectory)
@@ -58,22 +53,6 @@ class FullPackageResponseHandler: NSObject {
         }
         
         return GTFilesDirectoryFileURL
-    }
-    
-    func loadLanguage (languageCode :String) -> GodToolsLanguage? {
-        let languageFetchRequest :NSFetchRequest<GodToolsLanguage> = GodToolsLanguage.fetchRequest()
-        languageFetchRequest.predicate = NSPredicate(format: "code = %@", languageCode)
-        
-        do {
-            let languages = try GodToolsPersistence.context().fetch(languageFetchRequest)
-            
-            if (languages.count > 0) {
-                return languages[0]
-            }
-        } catch {
-            
-        }
-        return nil
     }
     
     func moveDownloadedAssetsToGTFiles (source :URL, destination :URL) {

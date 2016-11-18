@@ -8,6 +8,7 @@
 
 import Foundation
 import PromiseKit
+import CoreData
 
 class MetaDataController: NSObject {    
     
@@ -15,5 +16,25 @@ class MetaDataController: NSObject {
         return GodtoolsAPI.sharedInstance.getMeta().then() { json in
             MetaResponseHandler.init().parse(data: json)
         }
+    }
+    
+    func loadFromLocal () -> NSFetchedResultsController<GodToolsLanguage> {
+        let fetchRequest = NSFetchRequest<GodToolsLanguage>(entityName: "GodToolsLanguage")
+        
+        fetchRequest.predicate = NSPredicate.init(format: "packages.@count > 0", "")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        let languageFetchController = NSFetchedResultsController(
+            fetchRequest: fetchRequest,
+            managedObjectContext: GodToolsPersistence.context(),
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        do {
+            try languageFetchController.performFetch()
+        } catch {
+            print("error...")
+        }
+        return languageFetchController
     }
 }

@@ -38,13 +38,13 @@ class GodtoolsAPI: NSObject {
         })
     }
     
-    func getPackages(forLanguage: String) -> Promise<URL?> {
-        let url = URL.init(string: self.baseURL + "/v2/packages/\(forLanguage)")!
+    func getPackagesFor(language: GodToolsLanguage) -> Promise<URL?> {
+        let url = URL.init(string: self.baseURL + "/v2/packages/\(language.code!)")!
         let destination: DownloadRequest.DownloadFileDestination = { _, _ in
             let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                                     .userDomainMask, true)[0]
             let documentsURL = URL(fileURLWithPath: documentsPath, isDirectory: true)
-            let fileURL = documentsURL.appendingPathComponent("\(forLanguage).zip")
+            let fileURL = documentsURL.appendingPathComponent("\(language.code!).zip")
             
             return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
         }

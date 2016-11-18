@@ -2,7 +2,7 @@
 //  GodToolsLanguage+CoreDataProperties.swift
 //  godtools-swift
 //
-//  Created by Ryan Carlson on 10/26/16.
+//  Created by Ryan Carlson on 11/8/16.
 //  Copyright © 2016 Cru. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ extension GodToolsLanguage {
 
     @NSManaged public var code: String?
     @NSManaged public var name: String?
+    @NSManaged public var downloaded: Bool
     @NSManaged public var packages: NSSet?
 
 }
