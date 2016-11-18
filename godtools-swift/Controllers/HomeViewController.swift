@@ -16,7 +16,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var packagesFetchController :NSFetchedResultsController<GodToolsPackage>? = nil
     
-    // *********** UIViewController Lifecycle Methods ***********
+    //MARK: - UIViewController lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.reloadData()
     }
     
-    // *********** UITableView Delegate & Datasource Methods ***********
+    //MARK: - UITableViewDelegate Methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let package = packagesFetchController?.object(at: indexPath)
@@ -63,16 +63,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55.0
+    }
+
+    //MARK: - UITableViewDataSource methods
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (packagesFetchController?.fetchedObjects?.count)!
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55.0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,17 +86,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell!
     }
 
-    // *********** GTAboutViewControllerDelegate Methods ***********
+    //MARK: - GTAboutViewControllerDelegate methods
     
     func viewOfPageViewController () -> UIView {
         return self.view
     }
     
-    // *********** UIButton Listener Methods ***********
+    //MARK: - UIButton Listener Methods
     
     @IBAction func settingsButtonWasPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "homeToSettingsSegue", sender: self)
     }
+    
+    //MARK: - Other methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backItem = UIBarButtonItem()
