@@ -51,8 +51,12 @@ class LanguagesViewController: UIViewController, UITableViewDelegate, UITableVie
         
         cell?.textLabel?.text = "\(lang.name!)"
         cell?.textLabel?.textColor = .white
-        cell?.backgroundColor = UIColor.white.withAlphaComponent(0.05)
         
+        if (lang.downloaded) {
+            cell?.backgroundColor = UIColor.red
+        } else {
+            cell?.backgroundColor = UIColor.white.withAlphaComponent(0.05)
+        }
         return cell!
     }
     

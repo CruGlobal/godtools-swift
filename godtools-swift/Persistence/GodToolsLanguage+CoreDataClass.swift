@@ -32,4 +32,18 @@ public class GodToolsLanguage: NSManagedObject {
     static func createIn(context :NSManagedObjectContext) -> GodToolsLanguage {
         return NSEntityDescription.insertNewObject(forEntityName: "GodToolsLanguage", into: context) as! GodToolsLanguage
     }
+    
+    func packageBy(code: String) -> GodToolsPackage? {
+        if (packages == nil || packages!.count == 0) {
+            return nil
+        }
+        
+        for package in packages! {
+            if ((package as! GodToolsPackage).code == code) {
+                return (package as! GodToolsPackage)
+            }
+        }
+        
+        return nil
+    }
 }

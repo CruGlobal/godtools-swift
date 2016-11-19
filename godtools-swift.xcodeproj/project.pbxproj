@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		4F0405191DB1043700B8576E /* MetaResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0405181DB1043700B8576E /* MetaResponseHandler.swift */; };
 		4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */; };
+		4F170FFD1DDFB2070057D693 /* GTModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F170FF91DDFB2070057D693 /* GTModel.xcdatamodeld */; };
+		4F17100B1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710001DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.m */; };
+		4F17100C1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710021DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.m */; };
+		4F17100D1DDFB36F0057D693 /* GTPackage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710041DDFB36F0057D693 /* GTPackage+CoreDataClass.m */; };
+		4F17100E1DDFB36F0057D693 /* GTPackage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710061DDFB36F0057D693 /* GTPackage+CoreDataProperties.m */; };
+		4F17100F1DDFB36F0057D693 /* GTLanguage+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710081DDFB36F0057D693 /* GTLanguage+CoreDataClass.m */; };
+		4F1710101DDFB36F0057D693 /* GTLanguage+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F17100A1DDFB36F0057D693 /* GTLanguage+CoreDataProperties.m */; };
+		4F1710121DDFB4750057D693 /* GodToolsDataMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710111DDFB4750057D693 /* GodToolsDataMigration.swift */; };
+		4F1710141DDFB5090057D693 /* GTLegacyPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1710131DDFB5090057D693 /* GTLegacyPersistence.swift */; };
 		4F2A69671DD21DA300673FA1 /* GTFileLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A692C1DD21DA300673FA1 /* GTFileLoader.m */; };
 		4F2A69681DD21DA300673FA1 /* GTFollowupModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A692E1DD21DA300673FA1 /* GTFollowupModalView.m */; };
 		4F2A69691DD21DA300673FA1 /* GTFollowupThankYouView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2A69301DD21DA300673FA1 /* GTFollowupThankYouView.m */; };
@@ -105,6 +114,23 @@
 		24CFB9C0F5C04FD806F7E69F /* Pods_godtools_swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F0405181DB1043700B8576E /* MetaResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetaResponseHandler.swift; path = API/MetaResponseHandler.swift; sourceTree = "<group>"; };
 		4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsPersistence.swift; path = Persistence/GodToolsPersistence.swift; sourceTree = "<group>"; };
+		4F170FFA1DDFB2070057D693 /* GTModel-2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GTModel-2.xcdatamodel"; sourceTree = "<group>"; };
+		4F170FFB1DDFB2070057D693 /* GTModel-3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "GTModel-3.xcdatamodel"; sourceTree = "<group>"; };
+		4F170FFC1DDFB2070057D693 /* GTModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GTModel.xcdatamodel; sourceTree = "<group>"; };
+		4F170FFF1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTFollowUpSubscription+CoreDataClass.h"; path = "Legacy/GTFollowUpSubscription+CoreDataClass.h"; sourceTree = "<group>"; };
+		4F1710001DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTFollowUpSubscription+CoreDataClass.m"; path = "Legacy/GTFollowUpSubscription+CoreDataClass.m"; sourceTree = "<group>"; };
+		4F1710011DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTFollowUpSubscription+CoreDataProperties.h"; path = "Legacy/GTFollowUpSubscription+CoreDataProperties.h"; sourceTree = "<group>"; };
+		4F1710021DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTFollowUpSubscription+CoreDataProperties.m"; path = "Legacy/GTFollowUpSubscription+CoreDataProperties.m"; sourceTree = "<group>"; };
+		4F1710031DDFB36F0057D693 /* GTPackage+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTPackage+CoreDataClass.h"; path = "Legacy/GTPackage+CoreDataClass.h"; sourceTree = "<group>"; };
+		4F1710041DDFB36F0057D693 /* GTPackage+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTPackage+CoreDataClass.m"; path = "Legacy/GTPackage+CoreDataClass.m"; sourceTree = "<group>"; };
+		4F1710051DDFB36F0057D693 /* GTPackage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTPackage+CoreDataProperties.h"; path = "Legacy/GTPackage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		4F1710061DDFB36F0057D693 /* GTPackage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTPackage+CoreDataProperties.m"; path = "Legacy/GTPackage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		4F1710071DDFB36F0057D693 /* GTLanguage+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTLanguage+CoreDataClass.h"; path = "Legacy/GTLanguage+CoreDataClass.h"; sourceTree = "<group>"; };
+		4F1710081DDFB36F0057D693 /* GTLanguage+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTLanguage+CoreDataClass.m"; path = "Legacy/GTLanguage+CoreDataClass.m"; sourceTree = "<group>"; };
+		4F1710091DDFB36F0057D693 /* GTLanguage+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTLanguage+CoreDataProperties.h"; path = "Legacy/GTLanguage+CoreDataProperties.h"; sourceTree = "<group>"; };
+		4F17100A1DDFB36F0057D693 /* GTLanguage+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTLanguage+CoreDataProperties.m"; path = "Legacy/GTLanguage+CoreDataProperties.m"; sourceTree = "<group>"; };
+		4F1710111DDFB4750057D693 /* GodToolsDataMigration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsDataMigration.swift; path = Persistence/GodToolsDataMigration.swift; sourceTree = "<group>"; };
+		4F1710131DDFB5090057D693 /* GTLegacyPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTLegacyPersistence.swift; path = Legacy/GTLegacyPersistence.swift; sourceTree = "<group>"; };
 		4F2A692B1DD21DA300673FA1 /* GTFileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFileLoader.h; sourceTree = "<group>"; };
 		4F2A692C1DD21DA300673FA1 /* GTFileLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTFileLoader.m; sourceTree = "<group>"; };
 		4F2A692D1DD21DA300673FA1 /* GTFollowupModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTFollowupModalView.h; sourceTree = "<group>"; };
@@ -241,13 +267,35 @@
 		4F04053B1DB1076300B8576E /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				4F170FFE1DDFB32E0057D693 /* Legacy */,
 				4F5F4ABB1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataClass.swift */,
 				4F5F4ABC1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataProperties.swift */,
 				4F75D5A01DB501DE0067B383 /* GodToolsLanguage+CoreDataClass.swift */,
 				4F75D5A11DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift */,
 				4F04053C1DB1078A00B8576E /* GodToolsPersistence.swift */,
+				4F1710111DDFB4750057D693 /* GodToolsDataMigration.swift */,
 			);
 			name = Persistence;
+			sourceTree = "<group>";
+		};
+		4F170FFE1DDFB32E0057D693 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				4F170FFF1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.h */,
+				4F1710001DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.m */,
+				4F1710011DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.h */,
+				4F1710021DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.m */,
+				4F1710031DDFB36F0057D693 /* GTPackage+CoreDataClass.h */,
+				4F1710041DDFB36F0057D693 /* GTPackage+CoreDataClass.m */,
+				4F1710051DDFB36F0057D693 /* GTPackage+CoreDataProperties.h */,
+				4F1710061DDFB36F0057D693 /* GTPackage+CoreDataProperties.m */,
+				4F1710071DDFB36F0057D693 /* GTLanguage+CoreDataClass.h */,
+				4F1710081DDFB36F0057D693 /* GTLanguage+CoreDataClass.m */,
+				4F1710091DDFB36F0057D693 /* GTLanguage+CoreDataProperties.h */,
+				4F17100A1DDFB36F0057D693 /* GTLanguage+CoreDataProperties.m */,
+				4F1710131DDFB5090057D693 /* GTLegacyPersistence.swift */,
+			);
+			name = Legacy;
 			sourceTree = "<group>";
 		};
 		4F2A69291DD21DA300673FA1 /* Renderer */ = {
@@ -428,6 +476,7 @@
 				4F41A0CD1DAE65E400CDAE50 /* LaunchScreen.storyboard */,
 				4F41A0D01DAE65E400CDAE50 /* Info.plist */,
 				4F41A0C81DAE65E400CDAE50 /* godtools_swift.xcdatamodeld */,
+				4F170FF91DDFB2070057D693 /* GTModel.xcdatamodeld */,
 				4F2A69881DD2231700673FA1 /* GTPrefixHeader.pch */,
 			);
 			path = "godtools-swift";
@@ -667,10 +716,13 @@
 				4F2A69701DD21DA300673FA1 /* UIDisclosureIndicator.m in Sources */,
 				4F41A0CA1DAE65E400CDAE50 /* godtools_swift.xcdatamodeld in Sources */,
 				4F2A696A1DD21DA300673FA1 /* GTInputFieldView.m in Sources */,
+				4F17100E1DDFB36F0057D693 /* GTPackage+CoreDataProperties.m in Sources */,
+				4F17100C1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataProperties.m in Sources */,
 				4F2A697C1DD21DA300673FA1 /* GTInterpreter.m in Sources */,
 				4F5F4ABD1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataClass.swift in Sources */,
 				4F2A69681DD21DA300673FA1 /* GTFollowupModalView.m in Sources */,
 				4F2A69731DD21DA300673FA1 /* UISnufflePanel.m in Sources */,
+				4F1710141DDFB5090057D693 /* GTLegacyPersistence.swift in Sources */,
 				4F04053D1DB1078A00B8576E /* GodToolsPersistence.swift in Sources */,
 				4F5F4ABE1DC0FE9D00B66E58 /* GodToolsPackage+CoreDataProperties.swift in Sources */,
 				4F75D5A21DB501DE0067B383 /* GodToolsLanguage+CoreDataClass.swift in Sources */,
@@ -680,18 +732,24 @@
 				4F2A696B1DD21DA300673FA1 /* GTLabel.m in Sources */,
 				4F41A0D81DAE68BE00CDAE50 /* SettingsViewController.swift in Sources */,
 				4F2A69821DD21DA300673FA1 /* TBXML+Compression.m in Sources */,
+				4F1710121DDFB4750057D693 /* GodToolsDataMigration.swift in Sources */,
 				4F5F4AC01DC109BE00B66E58 /* GodToolsSettings.swift in Sources */,
 				4F2A697D1DD21DA300673FA1 /* GTPage.m in Sources */,
+				4F1710101DDFB36F0057D693 /* GTLanguage+CoreDataProperties.m in Sources */,
+				4F17100B1DDFB36F0057D693 /* GTFollowUpSubscription+CoreDataClass.m in Sources */,
 				4F75D5A31DB501DE0067B383 /* GodToolsLanguage+CoreDataProperties.swift in Sources */,
 				4FDFAD801DC11A0400A753B2 /* PackageDataController.swift in Sources */,
+				4F170FFD1DDFB2070057D693 /* GTModel.xcdatamodeld in Sources */,
 				4FA06C901DC7AE7300AF4A0B /* PackageTableViewCell.swift in Sources */,
 				4FA06C8B1DC7770F00AF4A0B /* FullPackageResponseHandler.swift in Sources */,
 				4F2A69751DD21DA300673FA1 /* GTPageMenuViewController.m in Sources */,
 				4F2A69721DD21DA300673FA1 /* UISnuffleButton.m in Sources */,
 				4F2A696E1DD21DA300673FA1 /* GTShareViewController.m in Sources */,
+				4F17100F1DDFB36F0057D693 /* GTLanguage+CoreDataClass.m in Sources */,
 				4F2A696C1DD21DA300673FA1 /* GTMultiButtonResponseView.m in Sources */,
 				4F2A69671DD21DA300673FA1 /* GTFileLoader.m in Sources */,
 				4F2A69831DD21DA300673FA1 /* TBXML+HTTP.m in Sources */,
+				4F17100D1DDFB36F0057D693 /* GTPackage+CoreDataClass.m in Sources */,
 				4F2A697F1DD21DA300673FA1 /* GTPageInterpreter.m in Sources */,
 				4F2A69811DD21DA300673FA1 /* GTPageStyleAmharic.m in Sources */,
 				4FE859791DB018F9008AF462 /* HomeViewController.swift in Sources */,
@@ -840,7 +898,7 @@
 				GCC_PREFIX_HEADER = "${SRCROOT}/godtools-swift/GTPrefixHeader.pch";
 				INFOPLIST_FILE = "godtools-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cru.godtools-swift";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools-swift/GodTools-Bridging-Header.h";
@@ -862,7 +920,7 @@
 				GCC_PREFIX_HEADER = "${SRCROOT}/godtools-swift/GTPrefixHeader.pch";
 				INFOPLIST_FILE = "godtools-swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cru.godtools-swift";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools-swift/GodTools-Bridging-Header.h";
@@ -894,6 +952,18 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		4F170FF91DDFB2070057D693 /* GTModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4F170FFA1DDFB2070057D693 /* GTModel-2.xcdatamodel */,
+				4F170FFB1DDFB2070057D693 /* GTModel-3.xcdatamodel */,
+				4F170FFC1DDFB2070057D693 /* GTModel.xcdatamodel */,
+			);
+			currentVersion = 4F170FFB1DDFB2070057D693 /* GTModel-3.xcdatamodel */;
+			path = GTModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		4F41A0C81DAE65E400CDAE50 /* godtools_swift.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

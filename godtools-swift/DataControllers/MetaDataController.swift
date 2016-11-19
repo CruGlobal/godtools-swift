@@ -13,9 +13,15 @@ import CoreData
 class MetaDataController: NSObject {    
     
     func updateFromRemote () -> Promise<Void> {
-        return GodtoolsAPI.sharedInstance.getMeta().then() { json in
+        return GodtoolsAPI.sharedInstance.getMeta().then(execute: { (json) -> Void in
             MetaResponseHandler.init().parse(data: json)
-        }
+            
+            let dataMigration = GodToolsDataMigration.init()
+            
+            if (dataMigration.isRequired()) {
+                dataMigration.execute()
+            }
+        })
     }
     
     func loadFromLocal () -> NSFetchedResultsController<GodToolsLanguage> {

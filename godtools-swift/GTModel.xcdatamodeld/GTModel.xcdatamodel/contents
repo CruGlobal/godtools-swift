@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+	<entity name="GTLanguage" representedClassName="GTLanguage" syncable="YES">
+		<attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="downloaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+		<attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+		<relationship name="packages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GTPackage" inverseName="language" inverseEntity="GTPackage" syncable="YES"/>
+	</entity>
+	<entity name="GTPackage" representedClassName="GTPackage" syncable="YES">
+		<attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="configFile" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="latestVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+		<attribute name="localVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+		<attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+		<attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+		<relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GTLanguage" inverseName="packages" inverseEntity="GTLanguage" syncable="YES"/>
+	</entity>
+	<elements>
+		<element name="GTLanguage" positionX="-63" positionY="-18" width="128" height="120"/>
+		<element name="GTPackage" positionX="-54" positionY="-9" width="128" height="195"/>
+	</elements>
+</model>

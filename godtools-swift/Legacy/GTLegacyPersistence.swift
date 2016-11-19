@@ -1,22 +1,21 @@
 //
-//  GodToolsPersistence.swift
+//  GTLegacyPersistence.swift
 //  godtools-swift
 //
-//  Created by Ryan Carlson on 10/14/16.
+//  Created by Ryan Carlson on 11/18/16.
 //  Copyright © 2016 Cru. All rights reserved.
 //
 
 import Foundation
-import UIKit
 import CoreData
 
-class GodToolsPersistence: NSObject {
+class GTLegacyPersistence: NSObject {
     
     static var managedObjectContext: NSManagedObjectContext?
     
     static let context = { () -> NSManagedObjectContext in
         if (managedObjectContext == nil) {
-            guard let modelURL = Bundle.main.url(forResource: "godtools_swift", withExtension: "momd") else {
+            guard let modelURL = Bundle.main.url(forResource: "GTModel", withExtension: "momd") else {
                 fatalError("Error loading model from bundle")
             }
             
@@ -31,12 +30,12 @@ class GodToolsPersistence: NSObject {
             
             let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             let docURL = urls[urls.endIndex-1]
-            let storeURL = docURL.appendingPathComponent("GodTools5.sqlite")
+            let storeURL = docURL.appendingPathComponent("GodTools.sqlite")
             
             do {
                 try persistentStoreCoordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
             } catch {
-                fatalError("Error migrating store: \(error)")
+                
             }
         }
         return managedObjectContext!

@@ -14,3 +14,7 @@
 #import "GTAboutViewController.h"
 #import "GTShareInfo.h"
 #import "GTPageMenuViewController.h"
+
+#import "GTLanguage+CoreDataClass.h"
+#import "GTPackage+CoreDataClass.h"
+#import "GTFollowupSubscription+CoreDataClass.h"

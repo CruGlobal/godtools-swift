@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 4.3">
+    <entity name="GTFollowUpSubscription" representedClassName="GTFollowUpSubscription" syncable="YES">
+        <attribute name="apiTransmissionSuccess" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="apiTransmissionTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="contextId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emailAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="followUpId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="languageCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="routeId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="GTLanguage" representedClassName="GTLanguage" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="downloaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatesAvailable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="packages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GTPackage" inverseName="language" inverseEntity="GTPackage" syncable="YES"/>
+    </entity>
+    <entity name="GTPackage" representedClassName="GTPackage" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="configFile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latestMajorVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" elementID="latestVersion" syncable="YES"/>
+        <attribute name="latestMinorVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="latestSemanticVersion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localMajorVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" elementID="localVersion" syncable="YES"/>
+        <attribute name="localMinorVersion" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="localSemanticVersion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GTLanguage" inverseName="packages" inverseEntity="GTLanguage" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="GTFollowUpSubscription" positionX="-54" positionY="108" width="128" height="180"/>
+        <element name="GTLanguage" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="GTPackage" positionX="-54" positionY="-9" width="128" height="255"/>
+    </elements>
+</model>
