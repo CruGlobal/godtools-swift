@@ -693,7 +693,7 @@ NSString * const kAttr_listeners	= @"listeners";
     
     //configure top toolbar
     UIBarButtonItem	*helpButton				= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Help"]
-                                                                      style:UIBarButtonItemStyleBordered
+                                                                      style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(showInstructions)];
     self.navigationItem.rightBarButtonItem	= helpButton;
@@ -704,7 +704,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.shareInfo) {
         
         self.shareButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Export"]
-                                                            style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStylePlain
                                                            target:self
                                                            action:@selector(navToolbarShareSelector:)];
         [buttons addObject:self.shareButton];
@@ -713,7 +713,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.pageMenu) {
         
         self.menuButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Menu"]
-                                                           style:UIBarButtonItemStyleBordered
+                                                           style:UIBarButtonItemStylePlain
                                                           target:self
                                                           action:@selector(navToolbarMenuSelector:)];
         [buttons addObject:self.menuButton];
@@ -722,7 +722,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.aboutPage) {
         
         self.aboutButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Info"]
-                                                            style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStylePlain
                                                            target:self
                                                            action:@selector(navToolbarAboutSelector:)];
         [buttons addObject:self.aboutButton];
@@ -742,7 +742,7 @@ NSString * const kAttr_listeners	= @"listeners";
         UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshCurrentPage)];
         
         /* [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Switch"]
-         style:UIBarButtonItemStyleBordered
+         style:UIBarButtonItemStylePlain
          target:self
          action:@selector(refreshCurrentPage)];*/
         
@@ -793,7 +793,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.switchButton == nil && self.parallelConfigFilename !=nil) {
         
         UIBarButtonItem *switchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Switch"]
-                                                                         style:UIBarButtonItemStyleBordered
+                                                                         style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(navToolbarLanguageSwitch)];
         
