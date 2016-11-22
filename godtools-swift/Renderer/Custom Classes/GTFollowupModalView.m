@@ -85,7 +85,7 @@
         
         if ([modalComponentElementName isEqual:kName_FollowUp_Title]) {
             GTLabel *titleLabel = [[GTLabel alloc]initWithElement:modalComponentElement
-                                              parentTextAlignment:UITextAlignmentCenter
+                                              parentTextAlignment:NSTextAlignmentCenter
                                                              xPos:-1
                                                              yPos:currentY
                                                         container:presentingView
@@ -96,7 +96,7 @@
             [self addSubview:titleLabel];
         } else if ([modalComponentElementName isEqual:kName_FollowUp_Body]) {
             GTLabel *bodyLabel = [[GTLabel alloc]initWithElement:modalComponentElement
-                                             parentTextAlignment:UITextAlignmentLeft
+                                             parentTextAlignment:NSTextAlignmentLeft
                                                             xPos:-1
                                                             yPos:currentY
                                                        container:presentingView

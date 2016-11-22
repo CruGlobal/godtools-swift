@@ -11,7 +11,7 @@
 
 @interface GTLabel : UILabel
 
-- (instancetype)initWithElement:(TBXMLElement *)element parentTextAlignment:(UITextAlignment)panelAlign xPos:(CGFloat)xpostion yPos:(CGFloat)ypostion container:(UIView *)container style:(GTPageStyle *)style;
+- (instancetype)initWithElement:(TBXMLElement *)element parentTextAlignment:(NSTextAlignment)panelAlign xPos:(CGFloat)xpostion yPos:(CGFloat)ypostion container:(UIView *)container style:(GTPageStyle *)style;
 
-- (instancetype)initWithFrame:(CGRect)frame autoResize:(BOOL)resize text:(NSString *)text color:(UIColor *)color bgColor:(UIColor *)bgColor alpha:(CGFloat)alpha alignment:(UITextAlignment)textAlignment font:(NSString *)font size:(NSUInteger)size;
+- (instancetype)initWithFrame:(CGRect)frame autoResize:(BOOL)resize text:(NSString *)text color:(UIColor *)color bgColor:(UIColor *)bgColor alpha:(CGFloat)alpha alignment:(NSTextAlignment)textAlignment font:(NSString *)font size:(NSUInteger)size;
 @end

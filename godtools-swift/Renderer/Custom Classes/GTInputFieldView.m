@@ -82,7 +82,7 @@ NSString const *emailRegEx =
         
         if ([childElementName isEqual:kName_Input_Label]) {
             self.inputFieldLabel = [[GTLabel alloc]initWithElement:inputFieldChildElement
-                                          parentTextAlignment:UITextAlignmentLeft
+                                          parentTextAlignment:NSTextAlignmentLeft
                                                          xPos:0
                                                          yPos:0
                                                     container:self
