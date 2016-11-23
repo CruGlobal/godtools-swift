@@ -79,7 +79,7 @@ NSString * const kAttr_thumb		= @"thumb";
 NSString * const kAttr_filename		= @"filename";
 NSString * const kAttr_listeners	= @"listeners";
 
-@interface GTViewController () <MFMailComposeViewControllerDelegate, GTAboutViewControllerDelegate, SNInstructionsDelegate, HorizontalGestureRecognizerDelegate, GTPageDelegate>
+@interface GTViewController () <MFMailComposeViewControllerDelegate, GTAboutViewControllerDelegate, SNInstructionsDelegate, HorizontalGestureRecognizerDelegate, GTPageDelegate, CAAnimationDelegate>
 
 @property (nonatomic, weak)		id<GTViewControllerMenuDelegate> menuDelegate;
 @property (nonatomic, strong)	GTFileLoader *fileLoader;
