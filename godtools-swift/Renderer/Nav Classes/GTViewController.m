@@ -79,7 +79,7 @@ NSString * const kAttr_thumb		= @"thumb";
 NSString * const kAttr_filename		= @"filename";
 NSString * const kAttr_listeners	= @"listeners";
 
-@interface GTViewController () <MFMailComposeViewControllerDelegate, UIActionSheetDelegate, GTAboutViewControllerDelegate, SNInstructionsDelegate, HorizontalGestureRecognizerDelegate, GTPageDelegate>
+@interface GTViewController () <MFMailComposeViewControllerDelegate, GTAboutViewControllerDelegate, SNInstructionsDelegate, HorizontalGestureRecognizerDelegate, GTPageDelegate, CAAnimationDelegate>
 
 @property (nonatomic, weak)		id<GTViewControllerMenuDelegate> menuDelegate;
 @property (nonatomic, strong)	GTFileLoader *fileLoader;
@@ -693,7 +693,7 @@ NSString * const kAttr_listeners	= @"listeners";
     
     //configure top toolbar
     UIBarButtonItem	*helpButton				= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Help"]
-                                                                      style:UIBarButtonItemStyleBordered
+                                                                      style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(showInstructions)];
     self.navigationItem.rightBarButtonItem	= helpButton;
@@ -704,7 +704,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.shareInfo) {
         
         self.shareButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Export"]
-                                                            style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStylePlain
                                                            target:self
                                                            action:@selector(navToolbarShareSelector:)];
         [buttons addObject:self.shareButton];
@@ -713,7 +713,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.pageMenu) {
         
         self.menuButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Menu"]
-                                                           style:UIBarButtonItemStyleBordered
+                                                           style:UIBarButtonItemStylePlain
                                                           target:self
                                                           action:@selector(navToolbarMenuSelector:)];
         [buttons addObject:self.menuButton];
@@ -722,7 +722,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.aboutPage) {
         
         self.aboutButton	= [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Info"]
-                                                            style:UIBarButtonItemStyleBordered
+                                                            style:UIBarButtonItemStylePlain
                                                            target:self
                                                            action:@selector(navToolbarAboutSelector:)];
         [buttons addObject:self.aboutButton];
@@ -742,7 +742,7 @@ NSString * const kAttr_listeners	= @"listeners";
         UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshCurrentPage)];
         
         /* [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Switch"]
-         style:UIBarButtonItemStyleBordered
+         style:UIBarButtonItemStylePlain
          target:self
          action:@selector(refreshCurrentPage)];*/
         
@@ -793,7 +793,7 @@ NSString * const kAttr_listeners	= @"listeners";
     if (self.switchButton == nil && self.parallelConfigFilename !=nil) {
         
         UIBarButtonItem *switchButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Package_PopUpToolBar_Icon_Switch"]
-                                                                         style:UIBarButtonItemStyleBordered
+                                                                         style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(navToolbarLanguageSwitch)];
         
@@ -1048,17 +1048,41 @@ NSString * const kAttr_listeners	= @"listeners";
 #pragma mark - GTPageDelegate
 
 - (void)page:(GTPage *)page didReceiveTapOnURL:(NSURL *)url {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:url.absoluteString
-                                                             delegate:self
-                                                    cancelButtonTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_cancel"]
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:[self.fileLoader localizedString:@"GTViewController_urlButton_open"],
-																	  [self.fileLoader localizedString:@"GTViewController_urlButton_email"],
-																	  [self.fileLoader localizedString:@"GTViewController_urlButton_copy"], nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    __weak typeof (self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:url.absoluteString
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [actionSheet showInView:self.view];
+    UIAlertAction *copyAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_copy"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf copyLink:alertController.title];
+                                                       }];
     
+    UIAlertAction *emailAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_email"]
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            [weakSelf emailLink:alertController.title];
+                                                        }];
+    
+    UIAlertAction *openAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_open"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf openInSafari:alertController.title];
+                                                       }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_cancel"]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                                                         }];
+    
+    [alertController addAction:copyAction];
+    [alertController addAction:emailAction];
+    [alertController addAction:openAction];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)page:(GTPage *)page didReceiveTapOnPhoneNumber:(NSString *)phoneNumber {
@@ -1076,51 +1100,29 @@ NSString * const kAttr_listeners	= @"listeners";
 }
 
 - (void)page:(GTPage *)page didReceiveTapOnAllUrls:(NSArray *)urlArray {
+    __weak typeof (self) weakSelf = self;
     
     self.allURLsButtonArray	= urlArray;
     
-    // open a dialog with two custom buttons
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]
-                                                             delegate:self
-                                                    cancelButtonTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_cancel"]
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_email"],
-																	  [self.fileLoader localizedString:@"GTViewController_allUrlsButton_copy"], nil];
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *emailAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_email"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf emailAllLinks];
+                                                       }];
     
-    [actionSheet showInView:self.view];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_cancel"]
+                                                          style:UIAlertActionStyleCancel
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                                                        }];
     
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [alertController addAction:emailAction];
+    [alertController addAction:cancelAction];
     
-    if ([[actionSheet title] isEqual:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]]) {
-        switch (buttonIndex) {
-            case 0://email
-                [self emailAllLinks];
-                break;
-            case 1://copy
-                //[self copyAllLinks];
-                break;
-            default:
-                break;
-        }
-    } else {
-        switch (buttonIndex) {
-            case 0://open
-                [self openInSafari:[actionSheet title]];
-                break;
-            case 1://email
-                [self emailLink:[actionSheet title]];
-                break;
-            case 2://copy
-                [self copyLink:[actionSheet title]];
-                break;
-            default:
-                break;
-        }
-    }
-    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void)emailLink:(NSString *)website {

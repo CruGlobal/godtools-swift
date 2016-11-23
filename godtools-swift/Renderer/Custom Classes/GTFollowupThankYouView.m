@@ -61,7 +61,7 @@
         
         if ([thankYouElementName isEqual:kName_Label]) {
             UILabel *label = [[GTLabel alloc]initWithElement:thankYouElement
-                                         parentTextAlignment:UITextAlignmentLeft
+                                         parentTextAlignment:NSTextAlignmentLeft
                                                         xPos:-1
                                                         yPos:currentY
                                                    container:self

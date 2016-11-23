@@ -16,7 +16,7 @@
 @implementation GTLabel
 
 
-- (instancetype)initWithElement:(TBXMLElement *)element parentTextAlignment:(UITextAlignment)panelAlign xPos:(CGFloat)xpostion yPos:(CGFloat)ypostion container:(UIView *)container style:(GTPageStyle *)style {
+- (instancetype)initWithElement:(TBXMLElement *)element parentTextAlignment:(NSTextAlignment)panelAlign xPos:(CGFloat)xpostion yPos:(CGFloat)ypostion container:(UIView *)container style:(GTPageStyle *)style {
     
     if (!(ypostion >= 0)) {
         ypostion = DEFAULT_PANEL_OFFSET_Y;
@@ -42,7 +42,7 @@
         
         //init variables for object parameters
         CGRect			frame			= CGRectZero;
-        UITextAlignment textAlignment	= panelAlign;
+        NSTextAlignment textAlignment	= panelAlign;
         BOOL			resize			= YES;
         UIColor			*bgColor		= nil;
         NSUInteger		textSize		= DEFAULT_TEXTSIZE_LABEL;
@@ -137,7 +137,7 @@
 }
 
 //Returns a label given label attributes
-- (GTLabel *)initWithFrame:(CGRect)frame autoResize:(BOOL)resize text:(NSString *)text color:(UIColor *)color bgColor:(UIColor *)bgColor alpha:(CGFloat)alpha alignment:(UITextAlignment)textAlignment font:(NSString *)font size:(NSUInteger)size {
+- (GTLabel *)initWithFrame:(CGRect)frame autoResize:(BOOL)resize text:(NSString *)text color:(UIColor *)color bgColor:(UIColor *)bgColor alpha:(CGFloat)alpha alignment:(NSTextAlignment)textAlignment font:(NSString *)font size:(NSUInteger)size {
     GTLabel *tempLabel = [[GTLabel alloc] initWithFrame:frame];
     
     //Colors

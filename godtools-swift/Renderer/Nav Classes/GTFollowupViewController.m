@@ -304,25 +304,26 @@ NSString *const GTFollowupViewControllerFieldKeyFollowupId                      
     return NO;
 }
 
-
-#pragma mark - UIAlertViewDelegate methods
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];
-}
-
-
 #pragma mark - UISnuffleButtonTapDelegate methods
 
 - (BOOL)validateFields {
     NSArray *inputValidationErrors = [self inputValidationErrors];
-
+    __weak typeof(self) weakSelf = self;
+    
     if ([inputValidationErrors count]) {
-        [[[UIAlertView alloc] initWithTitle:[[GTFileLoader sharedInstance] localizedString:@"GTFollowupViewController_validation_title"]
-                                    message:[inputValidationErrors componentsJoinedByString:@"\n"]
-                                   delegate:self
-                          cancelButtonTitle:@"Ok"
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"GTFollowupViewController_validation_title"
+                                                                                 message:[inputValidationErrors componentsJoinedByString:@"\n"]
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Ok"
+                                                         style:UIAlertActionStyleCancel
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
         return NO;
     }
 

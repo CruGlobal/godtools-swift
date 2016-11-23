@@ -18,7 +18,7 @@ extern NSString *const GTFollowupViewControllerFieldKeyFollowupId;
 
 @class GTFollowupModalView, GTFollowupThankYouView;
 
-@interface GTFollowupViewController : UIViewController<UITextFieldDelegate, UIAlertViewDelegate, UISnuffleButtonTapDelegate>
+@interface GTFollowupViewController : UIViewController<UITextFieldDelegate,  UISnuffleButtonTapDelegate>
 
 @property (strong,nonatomic) GTFollowupModalView *followupModalView;
 @property (strong,nonatomic) GTFollowupThankYouView *followupThankYouView;

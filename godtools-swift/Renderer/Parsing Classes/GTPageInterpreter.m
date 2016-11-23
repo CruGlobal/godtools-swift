@@ -1188,7 +1188,7 @@ NSString * const kInputFieldType_text   = @"text";
 		
 		//Fetch and store the panel's text alignment
 		NSString		*panel_alignment	= [TBXML valueOfAttributeNamed:kAttr_textalign	forElement:element];
-		UITextAlignment	panelAlign;
+		NSTextAlignment	panelAlign;
 		if ([panel_alignment isEqual:kAlignment_left]) {
 			panelAlign = NSTextAlignmentLeft;
 		} else if ([panel_alignment isEqual:kAlignment_center]) {
@@ -1508,7 +1508,7 @@ NSString * const kInputFieldType_text   = @"text";
 					mode		=								(mode == nil ? @"" : mode);
 		
 		CGRect			frame			= CGRectZero;
-		UITextAlignment textAlignment	= NSTextAlignmentRight;
+		NSTextAlignment textAlignment	= NSTextAlignmentRight;
 		BOOL			resize			= YES;
 		UIColor			*bgColor		= nil;
 		NSUInteger		textSize		= DEFAULT_TEXTSIZE_QUESTION_NORMAL;
@@ -1798,7 +1798,7 @@ NSString * const kInputFieldType_text   = @"text";
 			
 			//init variables for object parameters
 			CGRect			frame			= CGRectZero;
-			UITextAlignment textAlignment	= NSTextAlignmentLeft;
+			NSTextAlignment textAlignment	= NSTextAlignmentLeft;
 			BOOL			resize			= YES;
 			UIColor			*bgColor		= nil;
 			NSUInteger		textSize		= DEFAULT_TEXTSIZE_TITLE_SUBHEADING;
@@ -1901,7 +1901,7 @@ NSString * const kInputFieldType_text   = @"text";
 		NSString	*h		=								[TBXML valueOfAttributeNamed:kAttr_height	forElement:element];
 		
 		CGRect			frame			= CGRectZero;
-		UITextAlignment textAlignment	= NSTextAlignmentRight;
+		NSTextAlignment textAlignment	= NSTextAlignmentRight;
 		BOOL			resize			= YES;
 		UIColor			*bgColor		= nil;
 		NSUInteger		textSize		= DEFAULT_TEXTSIZE_TITLE_NUMBER;
@@ -1965,7 +1965,7 @@ NSString * const kInputFieldType_text   = @"text";
 		NSString	*h		=								[TBXML valueOfAttributeNamed:kAttr_height	forElement:element];
 		
 		CGRect			frame			= CGRectZero;
-		UITextAlignment textAlignment	= ([titleMode isEqual:kTitleMode_peek] ? NSTextAlignmentRight : NSTextAlignmentLeft);
+		NSTextAlignment textAlignment	= ([titleMode isEqual:kTitleMode_peek] ? NSTextAlignmentRight : NSTextAlignmentLeft);
 		BOOL			resize			= YES;
 		UIColor			*bgColor		= nil;
 		NSUInteger		textSize		= ([titleMode isEqual:kTitleMode_peek] ? DEFAULT_TEXTSIZE_TITLE_HEADING_PEEKMODE : DEFAULT_TEXTSIZE_TITLE_HEADING_NORMALMODE );
@@ -2058,7 +2058,7 @@ NSString * const kInputFieldType_text   = @"text";
 	
 	//init title parameters with defaults
 	CGRect			frame			= CGRectZero;
-	UITextAlignment textAlignment	= ([titleMode isEqual:kTitleMode_peek] ? NSTextAlignmentLeft : NSTextAlignmentCenter);
+	NSTextAlignment textAlignment	= ([titleMode isEqual:kTitleMode_peek] ? NSTextAlignmentLeft : NSTextAlignmentCenter);
 	BOOL			resize			= YES;
 	UIColor			*bgColor		= nil;
 	NSUInteger		textSize		= DEFAULT_TEXTSIZE_TITLE_SUBHEADING;

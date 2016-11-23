@@ -9,7 +9,7 @@
 #import "GTAboutViewController.h"
 #import	"GTPage.h"
 
-@interface GTAboutViewController () <UIActionSheetDelegate, GTPageDelegate>
+@interface GTAboutViewController () <GTPageDelegate>
 
 @property (nonatomic, strong) GTPage					*aboutPage;
 @property (nonatomic, strong) id<GTAboutViewControllerDelegate>	aboutDelegate;
@@ -124,30 +124,41 @@
 }
 
 - (void)page:(GTPage *)page didReceiveTapOnURL:(NSURL *)url {
-	
-	//	UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:@[[NSURL URLWithString:website]]
-	//																			 applicationActivities:nil];
-	//
-	//	controller.excludedActivityTypes	= @[UIActivityTypePostToWeibo,
-	//											UIActivityTypePrint,
-	//											UIActivityTypeAssignToContact,
-	//											UIActivityTypeSaveToCameraRoll,
-	//											UIActivityTypePostToFlickr,
-	//											UIActivityTypePostToVimeo,
-	//											UIActivityTypePostToTencentWeibo,
-	//											UIActivityTypeAirDrop];
-	//
-	//	[self.navigationController presentViewController:controller animated:YES completion:nil];
-	
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:url.absoluteString
-															 delegate:self
-													cancelButtonTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_cancel"]
-											   destructiveButtonTitle:nil
-													otherButtonTitles:[self.fileLoader localizedString:@"GTViewController_urlButton_open"], [self.fileLoader localizedString:@"GTViewController_urlButton_email"], [self.fileLoader localizedString:@"GTViewController_urlButton_copy"], nil];
-	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-	
-	[actionSheet showInView:self.view];
-	
+    __weak typeof (self) weakSelf = self;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:url.absoluteString
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *copyAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_copy"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf copyLink:alertController.title];
+                                                       }];
+    
+    UIAlertAction *emailAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_email"]
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            [weakSelf emailLink:alertController.title];
+                                                        }];
+    
+    UIAlertAction *openAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_open"]
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           [weakSelf openInSafari:alertController.title];
+                                                       }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_urlButton_cancel"]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                                                         }];
+    
+    [alertController addAction:copyAction];
+    [alertController addAction:emailAction];
+    [alertController addAction:openAction];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)page:(GTPage *)page didReceiveTapOnPhoneNumber:(NSString *)phoneNumber {
@@ -165,50 +176,29 @@
 }
 
 - (void)page:(GTPage *)page didReceiveTapOnAllUrls:(NSArray *)urlArray {
-	
-	self.allURLsButtonArray	= urlArray;
-	
-	// open a dialog with two custom buttons
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]
-															 delegate:self
-													cancelButtonTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_cancel"]
-											   destructiveButtonTitle:nil
-													otherButtonTitles:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_email"], [self.fileLoader localizedString:@"GTViewController_allUrlsButton_copy"], nil];
-	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-	
-	[actionSheet showInView:self.view];
-	
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-	
-	if ([[actionSheet title] isEqual:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]]) {
-		switch (buttonIndex) {
-			case 0://email
-				[self emailAllLinks];
-				break;
-			case 1://copy
-				   //[self copyAllLinks];
-				break;
-			default:
-				break;
-		}
-	} else {
-		switch (buttonIndex) {
-			case 0://open
-				[self openInSafari:[actionSheet title]];
-				break;
-			case 1://email
-				[self emailLink:[actionSheet title]];
-				break;
-			case 2://copy
-				[self copyLink:[actionSheet title]];
-				break;
-			default:
-				break;
-		}
-	}
-	
+    __weak typeof (self) weakSelf = self;
+    
+    self.allURLsButtonArray	= urlArray;
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_title"]
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *emailAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_email"]
+                                                          style:UIAlertActionStyleDefault
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            [weakSelf emailAllLinks];
+                                                        }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[self.fileLoader localizedString:@"GTViewController_allUrlsButton_cancel"]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [weakSelf dismissViewControllerAnimated:YES completion:nil];
+                                                         }];
+    
+    [alertController addAction:emailAction];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void)emailLink:(NSString *)website {
