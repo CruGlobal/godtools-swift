@@ -1,0 +1,64 @@
+PODS:
+  - Alamofire (4.4.0)
+  - BrightFutures (5.1.0):
+    - Result (~> 3.0)
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.11)
+  - PromiseKit (4.1.7):
+    - PromiseKit/Foundation (= 4.1.7)
+    - PromiseKit/QuartzCore (= 4.1.7)
+    - PromiseKit/UIKit (= 4.1.7)
+  - PromiseKit/Alamofire (4.1.7):
+    - Alamofire (~> 4.0)
+    - PromiseKit/CorePromise
+  - PromiseKit/CorePromise (4.1.7)
+  - PromiseKit/Foundation (4.1.7):
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (4.1.7):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (4.1.7):
+    - PromiseKit/CorePromise
+  - Result (3.2.1)
+  - Spine (0.3):
+    - BrightFutures (~> 5.0)
+    - SwiftyJSON (~> 3.1.4)
+  - SwiftyJSON (3.1.4)
+  - SWXMLHash (3.0.4)
+  - Zip (0.6.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - Crashlytics
+  - Fabric
+  - PromiseKit (~> 4.0)
+  - PromiseKit/Alamofire (~> 4.0)
+  - Spine (from `https://github.com/wvteijlingen/Spine.git`)
+  - SwiftyJSON (~> 3.1)
+  - SWXMLHash (~> 3.0.0)
+  - Zip (~> 0.6.0)
+
+EXTERNAL SOURCES:
+  Spine:
+    :git: https://github.com/wvteijlingen/Spine.git
+
+CHECKOUT OPTIONS:
+  Spine:
+    :commit: bc82a5d7686bf663c8a37eb192423feaf0908f73
+    :git: https://github.com/wvteijlingen/Spine.git
+
+SPEC CHECKSUMS:
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
+  Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
+  Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
+
+PODFILE CHECKSUM: 76b96fad222667b5e68ef4d8d85c46a6d2bc921b
+
+COCOAPODS: 1.2.0
