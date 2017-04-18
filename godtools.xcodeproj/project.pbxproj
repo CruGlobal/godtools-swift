@@ -59,6 +59,34 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F1C95381EA6B83F007B47DB /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4F1C95391EA6B84A007B47DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		4F1C953A1EA6B850007B47DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		4F1C953B1EA6B85C007B47DB /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		4F5732801EA69CF00082035C = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +108,10 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C95391EA6B84A007B47DB /* Models */,
+				4F1C953A1EA6B850007B47DB /* Views */,
+				4F1C95381EA6B83F007B47DB /* Controllers */,
+				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4F57328E1EA69CF00082035C /* ViewController.swift */,
 				4F5732901EA69CF00082035C /* Main.storyboard */,
@@ -381,6 +413,7 @@
 				4F5732A01EA69CF00082035C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
