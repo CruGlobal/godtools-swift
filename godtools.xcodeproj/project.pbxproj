@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
+		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
+		4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */; };
+		4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */; };
+		4F1C95681EA6C204007B47DB /* Resource+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95601EA6C204007B47DB /* Resource+CoreDataClass.swift */; };
+		4F1C95691EA6C204007B47DB /* Resource+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95611EA6C204007B47DB /* Resource+CoreDataProperties.swift */; };
+		4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */; };
+		4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
 		4F57328F1EA69CF00082035C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328E1EA69CF00082035C /* ViewController.swift */; };
 		4F5732921EA69CF00082035C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732901EA69CF00082035C /* Main.storyboard */; };
@@ -18,6 +26,14 @@
 
 /* Begin PBXFileReference section */
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataClass.swift"; path = "Models/PageFile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataProperties.swift"; path = "Models/PageFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4F1C95601EA6C204007B47DB /* Resource+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Resource+CoreDataClass.swift"; path = "Models/Resource+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4F1C95611EA6C204007B47DB /* Resource+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Resource+CoreDataProperties.swift"; path = "Models/Resource+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataClass.swift"; path = "Models/Translation+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataProperties.swift"; path = "Models/Translation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F57328E1EA69CF00082035C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +85,14 @@
 		4F1C95391EA6B84A007B47DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */,
+				4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */,
+				4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */,
+				4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */,
+				4F1C95601EA6C204007B47DB /* Resource+CoreDataClass.swift */,
+				4F1C95611EA6C204007B47DB /* Resource+CoreDataProperties.swift */,
+				4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */,
+				4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -247,9 +271,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1C95691EA6C204007B47DB /* Resource+CoreDataProperties.swift in Sources */,
+				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,
+				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
+				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
+				4F1C95681EA6C204007B47DB /* Resource+CoreDataClass.swift in Sources */,
+				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
 				4F57328F1EA69CF00082035C /* ViewController.swift in Sources */,
+				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
+				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
