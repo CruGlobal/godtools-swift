@@ -9,13 +9,27 @@
 import Foundation
 import UIKit
 import Alamofire
+import PromiseKit
+import Spine
 
 class LanguagesManager: NSObject {
     static let shared = LanguagesManager()
     
+    let path = "/languages"
+    let serializer = Serializer()
+    
+    override init() {
+        super.init()
+        serializer.registerResource(LanguageResource.self)
+    }
+    
     func loadFromRemote() {
-        Alamofire.request(URL(string: "https://mobile-content-api-stage.cru.org/languages")!).responseJSON { (response) in
-            print(response)
+        Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<Data> in
+            let jsonDocument = try! self.serializer.deserializeData(data)
+            
+            return Promise(value:data)
+        }.catch { error in
+            print(error)
         }
     }
 }
