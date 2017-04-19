@@ -2,7 +2,7 @@
 //  Language+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/18/17.
+//  Created by Ryan Carlson on 4/19/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -18,6 +18,7 @@ extension Language {
 
     @NSManaged public var code: String?
     @NSManaged public var remoteId: String?
+    @NSManaged public var localizedName: String?
     @NSManaged public var translations: NSSet?
 
 }
