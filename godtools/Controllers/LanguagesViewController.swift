@@ -33,6 +33,7 @@ class LanguagesViewController: UIViewController {
             self.showAlertControllerWith(message: error.localizedDescription)
         }).always {
             self.tableView.reloadData()
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
