@@ -11,6 +11,7 @@ import UIKit
 import Alamofire
 import PromiseKit
 import Spine
+import MagicalRecord
 
 class LanguagesManager: NSObject {
     static let shared = LanguagesManager()
@@ -27,13 +28,15 @@ class LanguagesManager: NSObject {
     
     func loadFromDisk() -> Promise<[Language]> {
         languages = Language.mr_findAll() as! [Language]
-        languages = languages.sorted { (language1, language2) -> Bool in
-            let locale = NSLocale.current
-            let localizedName1 = locale.localizedString(forLanguageCode: language1.code!)!
-            let localizedName2 = locale.localizedString(forLanguageCode: language2.code!)!
-            
-            return localizedName1.compare(localizedName2).rawValue < 0
+        
+        for language in languages {
+            language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
         }
+        
+        languages = languages.sorted { (language1, language2) -> Bool in
+            return language1.localizedName!.compare(language2.localizedName!).rawValue < 0
+        }
+        
         return Promise(value:languages)
     }
     
@@ -42,11 +45,13 @@ class LanguagesManager: NSObject {
             let jsonDocument = try! self.serializer.deserializeData(data)
             
             if jsonDocument.data != nil {
-                for element in jsonDocument.data! {
-                    let languageResource = element as! LanguageResource;
-                    let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!)
-                    language.code = languageResource.code
-                }
+                MagicalRecord.save(blockAndWait: { (context) in
+                    for element in jsonDocument.data! {
+                        let languageResource = element as! LanguageResource;
+                        let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!)
+                        language.code = languageResource.code
+                    }
+                })
             }
             
             return self.loadFromDisk()
@@ -64,7 +69,7 @@ extension LanguagesManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .clear
-        cell.textLabel?.text = NSLocale.current.localizedString(forLanguageCode: languages[indexPath.row].code!)
+        cell.textLabel?.text = languages[indexPath.row].localizedName
         return cell
     }
     
