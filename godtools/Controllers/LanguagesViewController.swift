@@ -12,6 +12,7 @@ import UIKit
 class LanguagesViewController: UIViewController {
     
     let languagesManager = LanguagesManager.shared
+    let resourcesManager = DownloadedResourceManager.shared
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -35,6 +36,8 @@ class LanguagesViewController: UIViewController {
             self.tableView.reloadData()
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+        
+        _ = resourcesManager.loadFromRemote()
     }
     
     @IBAction func backButtonWasPressed(_ sender: Any) {

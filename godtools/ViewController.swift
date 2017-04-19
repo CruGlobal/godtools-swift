@@ -21,10 +21,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonWasPressed(_ sender: Any) {
-        let languagesVC = LanguagesViewController(nibName: String.init(describing: LanguagesViewController.self), bundle: nil)
+        let languagesVC = LanguagesViewController(nibName: String(describing: LanguagesViewController.self), bundle: nil)
         
         present(languagesVC, animated: true, completion: nil)
     }
 
+    @IBAction func resourceButtonWasPressed(_ sender: Any) {
+        let resourcesVC = ResourcesViewController(nibName: String(describing: ResourcesViewController.self), bundle: nil)
+        
+        present(resourcesVC, animated: true, completion: nil)
+    }
 }
 
