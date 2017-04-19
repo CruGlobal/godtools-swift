@@ -7,16 +7,20 @@
 //
 
 import UIKit
-import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var flowController: GTBaseFlowController?
+    
+    override init() {
+        super.init()
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        self.startFlowController(launchOptions: launchOptions)
+        
         return true
     }
 
@@ -41,6 +45,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+    }
+    
+    // MARK: - Flow controllers setup
+    
+    func startFlowController(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        self.window = UIWindow(frame : UIScreen.main.bounds)
+        self.flowController = GTPlatformFlowController(window: self.window!, launchOptions: launchOptions)
+        self.window?.makeKeyAndVisible()
     }
 }
 

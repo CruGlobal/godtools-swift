@@ -8,8 +8,26 @@
 
 import UIKit
 
-class GTBaseFlowController: NSObject {
-//    func initialViewController() -> GTBaseFlowController {
-//    }
-
+class GTBaseFlowController: NSObject, UINavigationControllerDelegate {
+    
+    var currentViewController: UIViewController?
+    
+    init(window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        super.init()
+        self.currentViewController = self.initialViewController()
+        let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
+        navigationController.delegate = self
+        window.rootViewController = navigationController
+    }
+    
+    func initialViewController() -> UIViewController {
+        preconditionFailure("This method must be overridden")
+    }
+    
+    func pushViewController(viewController: UIViewController) {
+        self.currentViewController?.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    // MARK: - Navigation Controller Delegate
+    
 }

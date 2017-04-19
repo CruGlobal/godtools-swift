@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GTLanguagesTableViewController" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="tableView" destination="q9u-o1-hq1" id="GaG-Bq-gKV"/>
+                <outlet property="tableView" destination="q9u-o1-hq1" id="5PS-V0-Dkl"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

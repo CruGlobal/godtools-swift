@@ -9,7 +9,7 @@
 import UIKit
 
 class GTBaseViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

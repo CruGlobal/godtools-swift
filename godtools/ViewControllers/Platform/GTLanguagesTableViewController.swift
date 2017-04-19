@@ -8,7 +8,13 @@
 
 import UIKit
 
-class GTLanguagesTableViewController: GTBaseTableViewController {
+protocol GTLanguagesTableViewControllerDelegate {
+}
+
+class GTLanguagesTableViewController: GTBaseViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var tableView: UITableView!
+    var delegate: GTLanguagesTableViewControllerDelegate?
     var languages: NSMutableArray = []
     let languageCell = "languageCell"
     
@@ -23,15 +29,15 @@ class GTLanguagesTableViewController: GTBaseTableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languages.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: self.languageCell, for: indexPath)
         return cell
     }
