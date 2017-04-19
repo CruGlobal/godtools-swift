@@ -48,15 +48,13 @@ class LanguagesManager: NSObject {
                 MagicalRecord.save(blockAndWait: { (context) in
                     for element in jsonDocument.data! {
                         let languageResource = element as! LanguageResource;
-                        let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!)
+                        let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!, in: context)
                         language.code = languageResource.code
                     }
                 })
             }
             
             return self.loadFromDisk()
-        }.catch { error in
-            print(error)
         }
     }
 }

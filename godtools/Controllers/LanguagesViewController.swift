@@ -23,12 +23,25 @@ class LanguagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        languagesManager.loadFromDisk().always {
+        languagesManager.loadFromDisk().catch(execute: { error in
+            self.showAlertControllerWith(message: error.localizedDescription)
+        }).always {
             self.tableView.reloadData()
         }
         
-//        languagesManager.loadFromRemote().always {
-//            self.tableView.reloadData()
-//        }
+        languagesManager.loadFromRemote().catch(execute: { error in
+            self.showAlertControllerWith(message: error.localizedDescription)
+        }).always {
+            self.tableView.reloadData()
+        }
+    }
+    
+    @IBAction func backButtonWasPressed(_ sender: Any) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func showAlertControllerWith(message: String?) {
+        let alert = UIAlertController(title: "Error loading languages", message: message, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
     }
 }
