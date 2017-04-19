@@ -22,6 +22,8 @@ class LanguagesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        languagesManager.loadFromRemote()
+        languagesManager.loadFromRemote().always {
+            self.tableView.reloadData()
+        }
     }
 }
