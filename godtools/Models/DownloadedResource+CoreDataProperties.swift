@@ -1,8 +1,8 @@
 //
-//  Resource+CoreDataProperties.swift
+//  DownloadedResource+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/18/17.
+//  Created by Ryan Carlson on 4/19/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -10,21 +10,21 @@ import Foundation
 import CoreData
 
 
-extension Resource {
+extension DownloadedResource {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Resource> {
-        return NSFetchRequest<Resource>(entityName: "Resource");
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<DownloadedResource> {
+        return NSFetchRequest<DownloadedResource>(entityName: "DownloadedResource");
     }
 
     @NSManaged public var code: String?
-    @NSManaged public var remoteId: String?
     @NSManaged public var name: String?
+    @NSManaged public var remoteId: String?
     @NSManaged public var translations: NSSet?
 
 }
 
 // MARK: Generated accessors for translations
-extension Resource {
+extension DownloadedResource {
 
     @objc(addTranslationsObject:)
     @NSManaged public func addToTranslations(_ value: Translation)
