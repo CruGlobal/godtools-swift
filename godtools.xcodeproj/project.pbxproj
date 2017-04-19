@@ -16,6 +16,9 @@
 		4F1C95691EA6C204007B47DB /* Resource+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95611EA6C204007B47DB /* Resource+CoreDataProperties.swift */; };
 		4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */; };
 		4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */; };
+		4F1C956D1EA70410007B47DB /* LanguagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */; };
+		4F1C956F1EA70444007B47DB /* LanguagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */; };
+		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
 		4F57328F1EA69CF00082035C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328E1EA69CF00082035C /* ViewController.swift */; };
 		4F5732921EA69CF00082035C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732901EA69CF00082035C /* Main.storyboard */; };
@@ -34,6 +37,9 @@
 		4F1C95611EA6C204007B47DB /* Resource+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Resource+CoreDataProperties.swift"; path = "Models/Resource+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataClass.swift"; path = "Models/Translation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataProperties.swift"; path = "Models/Translation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesViewController.swift; path = Controllers/LanguagesViewController.swift; sourceTree = "<group>"; };
+		4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LanguagesViewController.xib; path = Views/LanguagesViewController.xib; sourceTree = "<group>"; };
+		4F1C95701EA70582007B47DB /* LanguagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesManager.swift; path = Managers/LanguagesManager.swift; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F57328E1EA69CF00082035C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +84,7 @@
 		4F1C95381EA6B83F007B47DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -100,6 +107,7 @@
 		4F1C953A1EA6B850007B47DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -107,6 +115,7 @@
 		4F1C953B1EA6B85C007B47DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C95701EA70582007B47DB /* LanguagesManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -212,6 +221,7 @@
 			files = (
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
+				4F1C956F1EA70444007B47DB /* LanguagesViewController.xib in Resources */,
 				4F5732921EA69CF00082035C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,8 +281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				4F1C95691EA6C204007B47DB /* Resource+CoreDataProperties.swift in Sources */,
 				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,
+				4F1C956D1EA70410007B47DB /* LanguagesViewController.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
 				4F1C95681EA6C204007B47DB /* Resource+CoreDataClass.swift in Sources */,
