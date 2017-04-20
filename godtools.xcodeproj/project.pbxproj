@@ -207,7 +207,6 @@
 				4F1C959B1EA7EA8A007B47DB /* Translations */,
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
-				4F1C95701EA70582007B47DB /* LanguagesManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -215,6 +214,7 @@
 		4F1C95811EA7B03B007B47DB /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C95701EA70582007B47DB /* LanguagesManager.swift */,
 				4F1C95821EA7B05D007B47DB /* LanguageResource.swift */,
 			);
 			name = Languages;
