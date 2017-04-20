@@ -9,5 +9,5 @@
 import Foundation
 
 struct GTConstants {
-    let kApiBase = "https://mobile-content-api-stage.cru.org"
+    static let kApiBase = "https://mobile-content-api-stage.cru.org"
 }
