@@ -31,12 +31,12 @@ PODS:
   - Zip (0.6.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire (~> 4.4)
   - Crashlytics
   - Fabric
-  - MagicalRecord
-  - PromiseKit (~> 4.0)
-  - PromiseKit/Alamofire (~> 4.0)
+  - MagicalRecord (~> 2.3)
+  - PromiseKit (~> 4.1)
+  - PromiseKit/Alamofire (~> 4.1)
   - Spine (from `https://github.com/wvteijlingen/Spine.git`)
   - SWXMLHash (~> 3.0.0)
   - Zip (~> 0.6.0)
@@ -63,6 +63,6 @@ SPEC CHECKSUMS:
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
   Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 
-PODFILE CHECKSUM: 90c7c220505dac00e6b018e497fc0dda812d7bca
+PODFILE CHECKSUM: d00db1ed985a00207a2cf773f3deff57d34d4936
 
 COCOAPODS: 1.2.0
