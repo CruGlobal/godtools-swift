@@ -41,7 +41,7 @@ class LanguagesManager: NSObject {
     }
     
     func loadFromRemote() -> Promise<[Language]> {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        showNetworkingIndicator()
         
         return Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[Language]> in
             let jsonDocument = try! self.serializer.deserializeData(data)
@@ -58,6 +58,10 @@ class LanguagesManager: NSObject {
             
             return self.loadFromDisk()
         }
+    }
+    
+    fileprivate func showNetworkingIndicator() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
 }
 
