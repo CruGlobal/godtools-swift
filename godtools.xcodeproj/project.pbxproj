@@ -7,6 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4C1EA9063E000BA60D /* BlueButton.swift */; };
+		0FB73E571EA9063E000BA60D /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4D1EA9063E000BA60D /* Button.swift */; };
+		0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */; };
+		0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */; };
+		0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E541EA9063E000BA60D /* GTLabel.swift */; };
+		0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */; };
+		0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E601EA90669000BA60D /* PlatformFlowController.swift */; };
+		0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E641EA90669000BA60D /* BaseViewController.swift */; };
+		0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E661EA90669000BA60D /* LanguageSettingsViewController.swift */; };
+		0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */; };
+		0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E681EA90669000BA60D /* LanguagesTableViewController.swift */; };
+		0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */; };
+		0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */; };
+		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
 		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
@@ -14,22 +28,31 @@
 		4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */; };
 		4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */; };
 		4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */; };
-		4F1C956D1EA70410007B47DB /* LanguagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */; };
-		4F1C956F1EA70444007B47DB /* LanguagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
 		4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */; };
 		4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */; };
-		4F1C95801EA7AF46007B47DB /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957F1EA7AF46007B47DB /* GTConstants.swift */; };
 		4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95821EA7B05D007B47DB /* LanguageResource.swift */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
-		4F57328F1EA69CF00082035C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328E1EA69CF00082035C /* ViewController.swift */; };
-		4F5732921EA69CF00082035C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732901EA69CF00082035C /* Main.storyboard */; };
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0FB73E4C1EA9063E000BA60D /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		0FB73E4D1EA9063E000BA60D /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
+		0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTableViewCell.xib; sourceTree = "<group>"; };
+		0FB73E541EA9063E000BA60D /* GTLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTLabel.swift; sourceTree = "<group>"; };
+		0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFlowController.swift; sourceTree = "<group>"; };
+		0FB73E601EA90669000BA60D /* PlatformFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformFlowController.swift; sourceTree = "<group>"; };
+		0FB73E641EA90669000BA60D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		0FB73E661EA90669000BA60D /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewController.swift; sourceTree = "<group>"; };
+		0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageSettingsViewController.xib; sourceTree = "<group>"; };
+		0FB73E681EA90669000BA60D /* LanguagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesTableViewController.swift; sourceTree = "<group>"; };
+		0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguagesTableViewController.xib; sourceTree = "<group>"; };
+		0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTUIExtensions.swift; sourceTree = "<group>"; };
+		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -37,17 +60,12 @@
 		4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataProperties.swift"; path = "Models/PageFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataClass.swift"; path = "Models/Translation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataProperties.swift"; path = "Models/Translation+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesViewController.swift; path = Controllers/LanguagesViewController.swift; sourceTree = "<group>"; };
-		4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LanguagesViewController.xib; path = Views/LanguagesViewController.xib; sourceTree = "<group>"; };
 		4F1C95701EA70582007B47DB /* LanguagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesManager.swift; path = Managers/LanguagesManager.swift; sourceTree = "<group>"; };
 		4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataClass.swift"; path = "Models/DownloadedResource+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataProperties.swift"; path = "Models/DownloadedResource+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4F1C957F1EA7AF46007B47DB /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		4F1C95821EA7B05D007B47DB /* LanguageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageResource.swift; path = Managers/LanguageResource.swift; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4F57328E1EA69CF00082035C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4F5732911EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4F5732941EA69CF00082035C /* godtools.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = godtools.xcdatamodel; sourceTree = "<group>"; };
 		4F5732961EA69CF00082035C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F5732991EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,20 +95,79 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		0FB73E4B1EA9063E000BA60D /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E4D1EA9063E000BA60D /* Button.swift */,
+				0FB73E4C1EA9063E000BA60D /* BlueButton.swift */,
+			);
+			name = Buttons;
+			path = Views/Buttons;
+			sourceTree = "<group>";
+		};
+		0FB73E4E1EA9063E000BA60D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */,
+				0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */,
+			);
+			name = Cells;
+			path = Views/Cells;
+			sourceTree = "<group>";
+		};
+		0FB73E511EA9063E000BA60D /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E541EA9063E000BA60D /* GTLabel.swift */,
+			);
+			name = Labels;
+			path = Views/Labels;
+			sourceTree = "<group>";
+		};
+		0FB73E5E1EA90669000BA60D /* FlowControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
+				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
+			);
+			path = FlowControllers;
+			sourceTree = "<group>";
+		};
+		0FB73E631EA90669000BA60D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E651EA90669000BA60D /* Platform */,
+				0FB73E641EA90669000BA60D /* BaseViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0FB73E651EA90669000BA60D /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E661EA90669000BA60D /* LanguageSettingsViewController.swift */,
+				0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */,
+				0FB73E681EA90669000BA60D /* LanguagesTableViewController.swift */,
+				0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		0FB73E721EA906A7000BA60D /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */,
+				0FB73E741EA906A7000BA60D /* GTConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D61FF360D11F854476B6E206 /* Pods_godtools.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4F1C95381EA6B83F007B47DB /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				4F1C956C1EA70410007B47DB /* LanguagesViewController.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		4F1C95391EA6B84A007B47DB /* Models */ = {
@@ -111,7 +188,9 @@
 		4F1C953A1EA6B850007B47DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4F1C956E1EA70444007B47DB /* LanguagesViewController.xib */,
+				0FB73E4B1EA9063E000BA60D /* Buttons */,
+				0FB73E4E1EA9063E000BA60D /* Cells */,
+				0FB73E511EA9063E000BA60D /* Labels */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -154,14 +233,13 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
-				4F1C957F1EA7AF46007B47DB /* GTConstants.swift */,
+				0FB73E721EA906A7000BA60D /* Constants */,
+				0FB73E5E1EA90669000BA60D /* FlowControllers */,
+				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				4F1C953A1EA6B850007B47DB /* Views */,
-				4F1C95381EA6B83F007B47DB /* Controllers */,
-				4F1C953B1EA6B85C007B47DB /* Managers */,
+				0FB73E631EA90669000BA60D /* ViewControllers */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
-				4F57328E1EA69CF00082035C /* ViewController.swift */,
-				4F5732901EA69CF00082035C /* Main.storyboard */,
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
 				4F57329B1EA69CF00082035C /* Info.plist */,
@@ -234,9 +312,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
+				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
+				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
-				4F1C956F1EA70444007B47DB /* LanguagesViewController.xib in Resources */,
-				4F5732921EA69CF00082035C /* Main.storyboard in Resources */,
+				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,7 +334,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		23565315AB9417BD82C7FE1A /* [CP] Copy Pods Resources */ = {
@@ -295,35 +374,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
+				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,
 				4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */,
-				4F1C956D1EA70410007B47DB /* LanguagesViewController.swift in Sources */,
+				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				0FB73E571EA9063E000BA60D /* Button.swift in Sources */,
+				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
-				4F1C95801EA7AF46007B47DB /* GTConstants.swift in Sources */,
+				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
-				4F57328F1EA69CF00082035C /* ViewController.swift in Sources */,
+				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
+				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
+				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
+				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
+				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4F5732901EA69CF00082035C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4F5732911EA69CF00082035C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4F5732981EA69CF00082035C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
