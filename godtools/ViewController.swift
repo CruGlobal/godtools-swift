@@ -20,6 +20,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func buttonWasPressed(_ sender: Any) {
+        let languagesVC = LanguagesViewController(nibName: String.init(describing: LanguagesViewController.self), bundle: nil)
+        
+        present(languagesVC, animated: true, completion: nil)
+    }
 
 }
 
