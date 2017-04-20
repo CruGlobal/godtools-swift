@@ -17,8 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        MagicalRecord.setupCoreDataStack(withAutoMigratingSqliteStoreNamed: "godtools-5.sqlite")
+        initializeCoreDataStack()
         return true
+    }
+    
+    fileprivate func initializeCoreDataStack() {
+        MagicalRecord.setupCoreDataStack(withAutoMigratingSqliteStoreNamed: "godtools-5.sqlite")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -40,6 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        cleanupCoreData()
+    }
+    
+    fileprivate func cleanupCoreData() {
         MagicalRecord.cleanUp()
     }
 }
