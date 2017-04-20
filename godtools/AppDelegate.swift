@@ -14,10 +14,15 @@ import MagicalRecord
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    var flowController: BaseFlowController?
+    
+    override init() {
+        super.init()
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         initializeCoreDataStack()
+        self.startFlowController(launchOptions: launchOptions)
         return true
     }
     
@@ -49,6 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     fileprivate func cleanupCoreData() {
         MagicalRecord.cleanUp()
+    }
+    
+    // MARK: - Flow controllers setup
+    
+    func startFlowController(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+        self.window = UIWindow(frame : UIScreen.main.bounds)
+        self.flowController = PlatformFlowController(window: self.window!, launchOptions: launchOptions)
+        self.window?.makeKeyAndVisible()
     }
 }
 
