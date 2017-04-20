@@ -12,7 +12,7 @@ class BlueButton: Button {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.cornerRadius = 5.0
-        self.backgroundColor = GTColors.blueColor
-        self.color = GTColors.whiteColor
+        self.backgroundColor = UIColor.gtBlue
+        self.color = UIColor.gtWhite
     }
 }

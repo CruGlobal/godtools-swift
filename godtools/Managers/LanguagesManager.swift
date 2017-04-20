@@ -70,11 +70,17 @@ extension LanguagesManager: UITableViewDelegate {
 }
 
 extension LanguagesManager: UITableViewDataSource {
+    static let languageCellIdentifier = "languageCell"
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.backgroundColor = .clear
         cell.textLabel?.text = languages[indexPath.row].localizedName
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

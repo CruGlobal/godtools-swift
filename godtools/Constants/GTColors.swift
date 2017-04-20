@@ -6,10 +6,9 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-struct GTColors {
-    static let whiteColor = UIColor(colorLiteralRed: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
-    static let blueColor = UIColor(colorLiteralRed: 50.0, green: 164.0, blue: 219.0, alpha: 1.0)
+extension UIColor {
+    static let gtWhite = UIColor(colorLiteralRed: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
+    static let gtBlue = UIColor(colorLiteralRed: 50.0, green: 164.0, blue: 219.0, alpha: 1.0)
 }

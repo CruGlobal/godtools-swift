@@ -11,41 +11,60 @@ import UIKit
 protocol LanguagesTableViewControllerDelegate {
 }
 
-class LanguagesTableViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class LanguagesTableViewController: BaseViewController {
     
-    @IBOutlet weak var tableView: UITableView!
+    let languagesManager = LanguagesManager.shared
+    
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = languagesManager
+            tableView.dataSource = languagesManager
+        }
+    }
+    
     var delegate: LanguagesTableViewControllerDelegate?
-    var languages: NSMutableArray = []
-    let languageCell = "languageCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCells()
+        
+        self.loadFromDisk()
+        self.loadFromRemote()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - Table view data source
+    // MARK: - Load data
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    func loadFromDisk() {
+        languagesManager.loadFromDisk().catch(execute: { error in
+            self.showAlertControllerWith(message: error.localizedDescription)
+        }).always {
+            self.reloadTableView()
+        }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.languageCell, for: indexPath)
-        return cell
+    func loadFromRemote() {
+        languagesManager.loadFromRemote().catch(execute: { error in
+            self.showAlertControllerWith(message: error.localizedDescription)
+        }).always {
+            self.reloadTableView()
+            self.hideNetworkActivityIndicator()
+        }
     }
     
     // MARK: - Helpers
     
-    func registerCells() {
-        self.tableView .register(LanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: self.languageCell)
+    fileprivate func registerCells() {
+        self.tableView .register(
+            LanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
+    }
+    
+    fileprivate func reloadTableView() {
+        self.tableView.reloadData()
     }
     
 }
