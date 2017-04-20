@@ -50,6 +50,9 @@
                                 <constraint firstAttribute="height" constant="48" id="NA1-MT-uvL"/>
                             </constraints>
                             <state key="normal" title="Add New Tools"/>
+                            <connections>
+                                <action selector="pressAddNewToolsButton:" destination="-1" eventType="touchUpInside" id="gAs-2D-3h3"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

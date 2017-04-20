@@ -16,6 +16,12 @@ class LanguageSettingsViewController: BaseViewController {
     
     var delegate: LanguageSettingsViewControllerDelegate?
     
+    override var screenTitle: String {
+        get {
+            return "Language Settings"
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
