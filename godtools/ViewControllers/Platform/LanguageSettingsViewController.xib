@@ -18,116 +18,80 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk">
                     <rect key="frame" x="158" y="124" width="60" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="NjM-QN-f3U"/>
-                        <constraint firstAttribute="height" constant="60" id="w57-5r-CIx"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="88" y="221" width="200" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="3QV-xR-CiB"/>
-                        <constraint firstAttribute="width" constant="200" id="Oe1-4B-vnJ"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="58" y="251" width="260" height="48"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="ME9-CP-3RO"/>
-                        <constraint firstAttribute="width" constant="260" id="fYq-GJ-0Ez"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Select a Primary Language"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                             <real key="value" value="5"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                            <real key="value" value="1"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="color" keyPath="color">
-                            <color key="value" red="0.94117647059999998" green="0.94901960780000005" blue="0.98823529409999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="pressSelectPrimaryLanguage:" destination="-1" eventType="touchUpInside" id="0CS-JV-4ip"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="88" y="348" width="200" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="22" id="3MS-Or-N8H"/>
-                        <constraint firstAttribute="width" constant="200" id="Eb8-De-PpJ"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="58" y="378" width="260" height="56"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="56" id="1bM-ma-NhX"/>
-                        <constraint firstAttribute="width" constant="260" id="c5T-Am-qBn"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="58" y="442" width="260" height="48"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="48" id="kBb-sV-01H"/>
-                        <constraint firstAttribute="width" constant="260" id="npa-GM-fd9"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Select a Parallel Language"/>
                     <connections>
                         <action selector="pressSelectParallelLanguage:" destination="-1" eventType="touchUpInside" id="3iC-LE-Yfw"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="Rbi-0H-ieC">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="Rbi-0H-ieC">
                     <rect key="frame" x="166" y="513" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="cCT-xs-ttT"/>
-                        <constraint firstAttribute="width" constant="44" id="cMz-H2-K34"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="66.5" y="573" width="242" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="242" id="AkK-Zb-FtQ"/>
-                        <constraint firstAttribute="height" constant="52" id="YIT-e4-AUq"/>
-                    </constraints>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="redText"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-            <constraints>
-                <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-58.5" id="1Od-Zp-qC5"/>
-                <constraint firstItem="1hm-LH-y2y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6Sq-G7-SfO"/>
-                <constraint firstItem="iQc-Pj-d7G" firstAttribute="top" secondItem="1hm-LH-y2y" secondAttribute="bottom" constant="8" id="7hZ-aZ-B1j"/>
-                <constraint firstItem="2QP-b4-GGk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="7lg-ck-PYx"/>
-                <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="132.5" id="Epb-JK-snk"/>
-                <constraint firstItem="2QP-b4-GGk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="124" id="Ivz-HU-s78"/>
-                <constraint firstAttribute="bottom" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="42" id="J1T-JX-cMi"/>
-                <constraint firstItem="Rbi-0H-ieC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JX9-Yg-c90"/>
-                <constraint firstItem="1hm-LH-y2y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="72.5" id="L8K-Z6-jSH"/>
-                <constraint firstItem="mQB-PV-ktd" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-101.5" id="R79-MT-CKs"/>
-                <constraint firstItem="2n1-cR-Y3q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RLO-9Q-mAb"/>
-                <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Tno-sp-aPj"/>
-                <constraint firstItem="wUa-h5-W1Y" firstAttribute="top" secondItem="mQB-PV-ktd" secondAttribute="bottom" constant="8" id="X4G-Lr-HeP"/>
-                <constraint firstItem="mQB-PV-ktd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="X4x-lc-DNh"/>
-                <constraint firstItem="4sz-fA-Y1h" firstAttribute="top" secondItem="Rbi-0H-ieC" secondAttribute="bottom" constant="16" id="aMG-Eb-12X"/>
-                <constraint firstItem="1hm-LH-y2y" firstAttribute="top" secondItem="2n1-cR-Y3q" secondAttribute="bottom" constant="8" id="iWW-ys-6TF"/>
-                <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ltH-3W-Ea0"/>
-                <constraint firstItem="2n1-cR-Y3q" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="25.5" id="vru-Cu-kEw"/>
-                <constraint firstItem="4sz-fA-Y1h" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yTZ-dO-AdJ"/>
-            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <point key="canvasLocation" x="35.5" y="54.5"/>

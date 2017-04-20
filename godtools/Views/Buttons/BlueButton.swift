@@ -14,5 +14,6 @@ class BlueButton: Button {
         self.cornerRadius = 5.0
         self.backgroundColor = UIColor.gtBlue
         self.color = UIColor.gtWhite
+        self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
     }
 }
