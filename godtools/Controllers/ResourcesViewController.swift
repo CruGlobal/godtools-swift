@@ -26,6 +26,12 @@ class ResourcesViewController: UIViewController {
             }.always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
+        
+        resourcesManager.loadFromRemote().then { (resources) -> Void in
+            self.tableView.reloadData()
+            }.always {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
     }
     
     @IBAction func backButtonWasPressed(_ sender: Any) {

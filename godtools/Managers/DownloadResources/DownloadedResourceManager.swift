@@ -48,11 +48,20 @@ class DownloadedResourceManager: NSObject {
                 }
             })
             
-            let savedResources = DownloadedResource.mr_findAll() as! [DownloadedResource]
-            self.resources = savedResources
             return self.loadFromDisk()
         }.then(execute: { (resources) -> Promise<[DownloadedResource]> in
-
+            
+            for resource in resources {
+                _ = Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(self.path)/\(resource.remoteId!)")!).responseData().then { data -> Promise<Any> in
+                    let jsonDocument = try! self.serializer.deserializeData(data).included as! [TranslationResource]
+                    
+                    for element in jsonDocument {
+                        let translation = element as! TranslationResource
+                        print(translation.isPublished?.boolValue, translation.version, separator: ", ", terminator: "\n")
+                    }
+                    return Promise(value: jsonDocument)
+                }
+            }
             return Promise(value: resources)
         })
     }

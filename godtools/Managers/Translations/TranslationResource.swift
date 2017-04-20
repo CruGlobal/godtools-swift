@@ -11,8 +11,8 @@ import Spine
 
 class TranslationResource: Resource {
     
-    var version: Int?
-    var isPublished: Bool?
+    var version: NSNumber?
+    var isPublished: NSNumber?
     
     override class var resourceType: ResourceType {
         return "translation"
@@ -21,7 +21,7 @@ class TranslationResource: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "version" : Attribute(),
-            "isPublished" : Attribute().serializeAs("is-published")
+            "isPublished" : BooleanAttribute().serializeAs("is-published")
         ])
     }
 }
