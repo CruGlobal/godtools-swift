@@ -35,7 +35,7 @@ class DownloadedResourceManager: NSObject {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        return Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[DownloadedResource]> in
+        return Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[DownloadedResource]> in
             let jsonDocument = try! self.serializer.deserializeData(data)
             
             MagicalRecord.save(blockAndWait: { (context) in
@@ -52,7 +52,7 @@ class DownloadedResourceManager: NSObject {
         }.then(execute: { (resources) -> Promise<[DownloadedResource]> in
             
             for resource in resources {
-                _ = Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(self.path)/\(resource.remoteId!)")!).responseData().then { data -> Promise<Any> in
+                _ = Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(self.path)/\(resource.remoteId!)")!).responseData().then { data -> Promise<Any> in
                     let jsonDocument = try! self.serializer.deserializeData(data).included as! [TranslationResource]
                     
                     for element in jsonDocument {
