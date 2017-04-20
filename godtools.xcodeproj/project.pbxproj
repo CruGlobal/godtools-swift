@@ -7,24 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F7E13821EA7B99800814AFF /* GTBaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13811EA7B99800814AFF /* GTBaseFlowController.swift */; };
-		0F7E13841EA7BAC700814AFF /* GTPlatformFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13831EA7BAC700814AFF /* GTPlatformFlowController.swift */; };
-		0F7E13891EA7BB2000814AFF /* GTBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13881EA7BB2000814AFF /* GTBaseViewController.swift */; };
-		0F7E138B1EA7BC0700814AFF /* GTFlowControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E138A1EA7BC0700814AFF /* GTFlowControllerProtocol.swift */; };
-		0F7E13921EA7BF7800814AFF /* GTLanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13901EA7BF7800814AFF /* GTLanguageSettingsViewController.swift */; };
-		0F7E13931EA7BF7800814AFF /* GTLanguageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13911EA7BF7800814AFF /* GTLanguageSettingsViewController.xib */; };
-		0F7E13971EA7F3A500814AFF /* GTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13961EA7F3A500814AFF /* GTButton.swift */; };
-		0F7E13991EA7F3BE00814AFF /* GTBlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13981EA7F3BE00814AFF /* GTBlueButton.swift */; };
-		0F7E139E1EA7F78300814AFF /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E139D1EA7F78300814AFF /* GTConstants.swift */; };
-		0F7E13A11EA7FD4F00814AFF /* GTLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A01EA7FD4F00814AFF /* GTLabel.swift */; };
-		0F7E13A31EA7FD6600814AFF /* GTBlueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A21EA7FD6600814AFF /* GTBlueLabel.swift */; };
-		0F7E13A51EA7FD7600814AFF /* GTBlackLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A41EA7FD7600814AFF /* GTBlackLabel.swift */; };
-		0F7E13A71EA7FD8700814AFF /* GTRedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A61EA7FD8700814AFF /* GTRedLabel.swift */; };
-		0F7E13A91EA7FF1300814AFF /* GTBaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A81EA7FF1300814AFF /* GTBaseTableViewController.swift */; };
-		0F7E13AC1EA7FF6D00814AFF /* GTLanguagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13AA1EA7FF6D00814AFF /* GTLanguagesTableViewController.swift */; };
-		0F7E13AD1EA7FF6D00814AFF /* GTLanguagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13AB1EA7FF6D00814AFF /* GTLanguagesTableViewController.xib */; };
-		0F7E13B11EA8002100814AFF /* GTLanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13AF1EA8002100814AFF /* GTLanguageTableViewCell.swift */; };
-		0F7E13B21EA8002100814AFF /* GTLanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13B01EA8002100814AFF /* GTLanguageTableViewCell.xib */; };
+		0F7E13821EA7B99800814AFF /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13811EA7B99800814AFF /* BaseFlowController.swift */; };
+		0F7E13841EA7BAC700814AFF /* PlatformFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13831EA7BAC700814AFF /* PlatformFlowController.swift */; };
+		0F7E13891EA7BB2000814AFF /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13881EA7BB2000814AFF /* BaseViewController.swift */; };
+		0F7E13921EA7BF7800814AFF /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13901EA7BF7800814AFF /* LanguageSettingsViewController.swift */; };
+		0F7E13931EA7BF7800814AFF /* LanguageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13911EA7BF7800814AFF /* LanguageSettingsViewController.xib */; };
+		0F7E13971EA7F3A500814AFF /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13961EA7F3A500814AFF /* Button.swift */; };
+		0F7E13991EA7F3BE00814AFF /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13981EA7F3BE00814AFF /* BlueButton.swift */; };
+		0F7E139E1EA7F78300814AFF /* GTColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E139D1EA7F78300814AFF /* GTColors.swift */; };
+		0F7E13A11EA7FD4F00814AFF /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A01EA7FD4F00814AFF /* Label.swift */; };
+		0F7E13A31EA7FD6600814AFF /* BlueLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A21EA7FD6600814AFF /* BlueLabel.swift */; };
+		0F7E13A51EA7FD7600814AFF /* BlackLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A41EA7FD7600814AFF /* BlackLabel.swift */; };
+		0F7E13A71EA7FD8700814AFF /* RedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13A61EA7FD8700814AFF /* RedLabel.swift */; };
+		0F7E13AC1EA7FF6D00814AFF /* LanguagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13AA1EA7FF6D00814AFF /* LanguagesTableViewController.swift */; };
+		0F7E13AD1EA7FF6D00814AFF /* LanguagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13AB1EA7FF6D00814AFF /* LanguagesTableViewController.xib */; };
+		0F7E13B11EA8002100814AFF /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7E13AF1EA8002100814AFF /* LanguageTableViewCell.swift */; };
+		0F7E13B21EA8002100814AFF /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7E13B01EA8002100814AFF /* LanguageTableViewCell.xib */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
@@ -33,24 +31,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F7E13811EA7B99800814AFF /* GTBaseFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBaseFlowController.swift; path = FlowControllers/GTBaseFlowController.swift; sourceTree = "<group>"; };
-		0F7E13831EA7BAC700814AFF /* GTPlatformFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTPlatformFlowController.swift; path = FlowControllers/GTPlatformFlowController.swift; sourceTree = "<group>"; };
-		0F7E13881EA7BB2000814AFF /* GTBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBaseViewController.swift; path = ViewControllers/GTBaseViewController.swift; sourceTree = "<group>"; };
-		0F7E138A1EA7BC0700814AFF /* GTFlowControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTFlowControllerProtocol.swift; path = FlowControllers/GTFlowControllerProtocol.swift; sourceTree = "<group>"; };
-		0F7E13901EA7BF7800814AFF /* GTLanguageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTLanguageSettingsViewController.swift; path = ViewControllers/Platform/GTLanguageSettingsViewController.swift; sourceTree = "<group>"; };
-		0F7E13911EA7BF7800814AFF /* GTLanguageSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GTLanguageSettingsViewController.xib; path = ViewControllers/Platform/GTLanguageSettingsViewController.xib; sourceTree = "<group>"; };
-		0F7E13961EA7F3A500814AFF /* GTButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTButton.swift; path = Views/Buttons/GTButton.swift; sourceTree = "<group>"; };
-		0F7E13981EA7F3BE00814AFF /* GTBlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBlueButton.swift; path = Views/Buttons/GTBlueButton.swift; sourceTree = "<group>"; };
-		0F7E139D1EA7F78300814AFF /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTConstants.swift; path = Settings/GTConstants.swift; sourceTree = "<group>"; };
-		0F7E13A01EA7FD4F00814AFF /* GTLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTLabel.swift; path = Views/Labels/GTLabel.swift; sourceTree = "<group>"; };
-		0F7E13A21EA7FD6600814AFF /* GTBlueLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBlueLabel.swift; path = Views/Labels/GTBlueLabel.swift; sourceTree = "<group>"; };
-		0F7E13A41EA7FD7600814AFF /* GTBlackLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBlackLabel.swift; path = Views/Labels/GTBlackLabel.swift; sourceTree = "<group>"; };
-		0F7E13A61EA7FD8700814AFF /* GTRedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTRedLabel.swift; path = Views/Labels/GTRedLabel.swift; sourceTree = "<group>"; };
-		0F7E13A81EA7FF1300814AFF /* GTBaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTBaseTableViewController.swift; path = ViewControllers/GTBaseTableViewController.swift; sourceTree = "<group>"; };
-		0F7E13AA1EA7FF6D00814AFF /* GTLanguagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTLanguagesTableViewController.swift; path = ViewControllers/Platform/GTLanguagesTableViewController.swift; sourceTree = "<group>"; };
-		0F7E13AB1EA7FF6D00814AFF /* GTLanguagesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GTLanguagesTableViewController.xib; path = ViewControllers/Platform/GTLanguagesTableViewController.xib; sourceTree = "<group>"; };
-		0F7E13AF1EA8002100814AFF /* GTLanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTLanguageTableViewCell.swift; path = Views/Cells/GTLanguageTableViewCell.swift; sourceTree = "<group>"; };
-		0F7E13B01EA8002100814AFF /* GTLanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GTLanguageTableViewCell.xib; path = Views/Cells/GTLanguageTableViewCell.xib; sourceTree = "<group>"; };
+		0F7E13811EA7B99800814AFF /* BaseFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseFlowController.swift; path = FlowControllers/BaseFlowController.swift; sourceTree = "<group>"; };
+		0F7E13831EA7BAC700814AFF /* PlatformFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlatformFlowController.swift; path = FlowControllers/PlatformFlowController.swift; sourceTree = "<group>"; };
+		0F7E13881EA7BB2000814AFF /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = ViewControllers/BaseViewController.swift; sourceTree = "<group>"; };
+		0F7E13901EA7BF7800814AFF /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageSettingsViewController.swift; path = ViewControllers/Platform/LanguageSettingsViewController.swift; sourceTree = "<group>"; };
+		0F7E13911EA7BF7800814AFF /* LanguageSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LanguageSettingsViewController.xib; path = ViewControllers/Platform/LanguageSettingsViewController.xib; sourceTree = "<group>"; };
+		0F7E13961EA7F3A500814AFF /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Views/Buttons/Button.swift; sourceTree = "<group>"; };
+		0F7E13981EA7F3BE00814AFF /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlueButton.swift; path = Views/Buttons/BlueButton.swift; sourceTree = "<group>"; };
+		0F7E139D1EA7F78300814AFF /* GTColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTColors.swift; path = Settings/GTColors.swift; sourceTree = "<group>"; };
+		0F7E13A01EA7FD4F00814AFF /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Label.swift; path = Views/Labels/Label.swift; sourceTree = "<group>"; };
+		0F7E13A21EA7FD6600814AFF /* BlueLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlueLabel.swift; path = Views/Labels/BlueLabel.swift; sourceTree = "<group>"; };
+		0F7E13A41EA7FD7600814AFF /* BlackLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BlackLabel.swift; path = Views/Labels/BlackLabel.swift; sourceTree = "<group>"; };
+		0F7E13A61EA7FD8700814AFF /* RedLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RedLabel.swift; path = Views/Labels/RedLabel.swift; sourceTree = "<group>"; };
+		0F7E13AA1EA7FF6D00814AFF /* LanguagesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesTableViewController.swift; path = ViewControllers/Platform/LanguagesTableViewController.swift; sourceTree = "<group>"; };
+		0F7E13AB1EA7FF6D00814AFF /* LanguagesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LanguagesTableViewController.xib; path = ViewControllers/Platform/LanguagesTableViewController.xib; sourceTree = "<group>"; };
+		0F7E13AF1EA8002100814AFF /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageTableViewCell.swift; path = Views/Cells/LanguageTableViewCell.swift; sourceTree = "<group>"; };
+		0F7E13B01EA8002100814AFF /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LanguageTableViewCell.xib; path = Views/Cells/LanguageTableViewCell.xib; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,9 +82,8 @@
 		0F7E13801EA7B95400814AFF /* FlowControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E138C1EA7BCEF00814AFF /* Protocols */,
-				0F7E13811EA7B99800814AFF /* GTBaseFlowController.swift */,
-				0F7E13831EA7BAC700814AFF /* GTPlatformFlowController.swift */,
+				0F7E13811EA7B99800814AFF /* BaseFlowController.swift */,
+				0F7E13831EA7BAC700814AFF /* PlatformFlowController.swift */,
 			);
 			name = FlowControllers;
 			sourceTree = "<group>";
@@ -97,27 +92,18 @@
 			isa = PBXGroup;
 			children = (
 				0F7E138D1EA7BF3300814AFF /* Platform */,
-				0F7E13881EA7BB2000814AFF /* GTBaseViewController.swift */,
-				0F7E13A81EA7FF1300814AFF /* GTBaseTableViewController.swift */,
+				0F7E13881EA7BB2000814AFF /* BaseViewController.swift */,
 			);
 			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		0F7E138C1EA7BCEF00814AFF /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				0F7E138A1EA7BC0700814AFF /* GTFlowControllerProtocol.swift */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 		0F7E138D1EA7BF3300814AFF /* Platform */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E13901EA7BF7800814AFF /* GTLanguageSettingsViewController.swift */,
-				0F7E13911EA7BF7800814AFF /* GTLanguageSettingsViewController.xib */,
-				0F7E13AA1EA7FF6D00814AFF /* GTLanguagesTableViewController.swift */,
-				0F7E13AB1EA7FF6D00814AFF /* GTLanguagesTableViewController.xib */,
+				0F7E13901EA7BF7800814AFF /* LanguageSettingsViewController.swift */,
+				0F7E13911EA7BF7800814AFF /* LanguageSettingsViewController.xib */,
+				0F7E13AA1EA7FF6D00814AFF /* LanguagesTableViewController.swift */,
+				0F7E13AB1EA7FF6D00814AFF /* LanguagesTableViewController.xib */,
 			);
 			name = Platform;
 			sourceTree = "<group>";
@@ -135,8 +121,8 @@
 		0F7E13951EA7F37900814AFF /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E13961EA7F3A500814AFF /* GTButton.swift */,
-				0F7E13981EA7F3BE00814AFF /* GTBlueButton.swift */,
+				0F7E13961EA7F3A500814AFF /* Button.swift */,
+				0F7E13981EA7F3BE00814AFF /* BlueButton.swift */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -144,7 +130,7 @@
 		0F7E139A1EA7F6C300814AFF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E139D1EA7F78300814AFF /* GTConstants.swift */,
+				0F7E139D1EA7F78300814AFF /* GTColors.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -152,10 +138,10 @@
 		0F7E139F1EA7FD3100814AFF /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E13A01EA7FD4F00814AFF /* GTLabel.swift */,
-				0F7E13A21EA7FD6600814AFF /* GTBlueLabel.swift */,
-				0F7E13A41EA7FD7600814AFF /* GTBlackLabel.swift */,
-				0F7E13A61EA7FD8700814AFF /* GTRedLabel.swift */,
+				0F7E13A01EA7FD4F00814AFF /* Label.swift */,
+				0F7E13A21EA7FD6600814AFF /* BlueLabel.swift */,
+				0F7E13A41EA7FD7600814AFF /* BlackLabel.swift */,
+				0F7E13A61EA7FD8700814AFF /* RedLabel.swift */,
 			);
 			name = Labels;
 			sourceTree = "<group>";
@@ -163,8 +149,8 @@
 		0F7E13AE1EA7FFA600814AFF /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				0F7E13AF1EA8002100814AFF /* GTLanguageTableViewCell.swift */,
-				0F7E13B01EA8002100814AFF /* GTLanguageTableViewCell.xib */,
+				0F7E13AF1EA8002100814AFF /* LanguageTableViewCell.swift */,
+				0F7E13B01EA8002100814AFF /* LanguageTableViewCell.xib */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -274,11 +260,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F7E13931EA7BF7800814AFF /* GTLanguageSettingsViewController.xib in Resources */,
-				0F7E13AD1EA7FF6D00814AFF /* GTLanguagesTableViewController.xib in Resources */,
+				0F7E13931EA7BF7800814AFF /* LanguageSettingsViewController.xib in Resources */,
+				0F7E13AD1EA7FF6D00814AFF /* LanguagesTableViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
-				0F7E13B21EA8002100814AFF /* GTLanguageTableViewCell.xib in Resources */,
+				0F7E13B21EA8002100814AFF /* LanguageTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,23 +323,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F7E13991EA7F3BE00814AFF /* GTBlueButton.swift in Sources */,
-				0F7E13A51EA7FD7600814AFF /* GTBlackLabel.swift in Sources */,
-				0F7E13921EA7BF7800814AFF /* GTLanguageSettingsViewController.swift in Sources */,
-				0F7E13841EA7BAC700814AFF /* GTPlatformFlowController.swift in Sources */,
-				0F7E13A31EA7FD6600814AFF /* GTBlueLabel.swift in Sources */,
-				0F7E13A11EA7FD4F00814AFF /* GTLabel.swift in Sources */,
-				0F7E138B1EA7BC0700814AFF /* GTFlowControllerProtocol.swift in Sources */,
-				0F7E13A91EA7FF1300814AFF /* GTBaseTableViewController.swift in Sources */,
-				0F7E13AC1EA7FF6D00814AFF /* GTLanguagesTableViewController.swift in Sources */,
-				0F7E13891EA7BB2000814AFF /* GTBaseViewController.swift in Sources */,
+				0F7E13991EA7F3BE00814AFF /* BlueButton.swift in Sources */,
+				0F7E13A51EA7FD7600814AFF /* BlackLabel.swift in Sources */,
+				0F7E13921EA7BF7800814AFF /* LanguageSettingsViewController.swift in Sources */,
+				0F7E13841EA7BAC700814AFF /* PlatformFlowController.swift in Sources */,
+				0F7E13A31EA7FD6600814AFF /* BlueLabel.swift in Sources */,
+				0F7E13A11EA7FD4F00814AFF /* Label.swift in Sources */,
+				0F7E13AC1EA7FF6D00814AFF /* LanguagesTableViewController.swift in Sources */,
+				0F7E13891EA7BB2000814AFF /* BaseViewController.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
-				0F7E13B11EA8002100814AFF /* GTLanguageTableViewCell.swift in Sources */,
-				0F7E13A71EA7FD8700814AFF /* GTRedLabel.swift in Sources */,
+				0F7E13B11EA8002100814AFF /* LanguageTableViewCell.swift in Sources */,
+				0F7E13A71EA7FD8700814AFF /* RedLabel.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
-				0F7E139E1EA7F78300814AFF /* GTConstants.swift in Sources */,
-				0F7E13971EA7F3A500814AFF /* GTButton.swift in Sources */,
-				0F7E13821EA7B99800814AFF /* GTBaseFlowController.swift in Sources */,
+				0F7E139E1EA7F78300814AFF /* GTColors.swift in Sources */,
+				0F7E13971EA7F3A500814AFF /* Button.swift in Sources */,
+				0F7E13821EA7B99800814AFF /* BaseFlowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

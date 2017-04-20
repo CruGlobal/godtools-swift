@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct GTConstants {
+struct GTColors {
     static let whiteColor = UIColor(colorLiteralRed: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
     static let blueColor = UIColor(colorLiteralRed: 50.0, green: 164.0, blue: 219.0, alpha: 1.0)
 }

@@ -8,10 +8,10 @@
 
 import UIKit
 
-class GTPlatformFlowController: GTBaseFlowController, GTLanguageSettingsViewControllerDelegate, GTLanguagesTableViewControllerDelegate {
+class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
-        let viewController = GTLanguageSettingsViewController(nibName: "GTLanguageSettingsViewController", bundle: nil)
+        let viewController = LanguageSettingsViewController(nibName: "LanguageSettingsViewController", bundle: nil)
         viewController.delegate = self
         return viewController
     }
@@ -19,7 +19,7 @@ class GTPlatformFlowController: GTBaseFlowController, GTLanguageSettingsViewCont
     // MARK: - GTLanguageSettingsViewControllerDelegate
     
     func moveToLanguagesList(primaryLanguage: Bool) {
-        let viewController = GTLanguagesTableViewController(nibName: "GTLanguagesTableViewController", bundle: nil)
+        let viewController = LanguagesTableViewController(nibName: "LanguagesTableViewController", bundle: nil)
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }

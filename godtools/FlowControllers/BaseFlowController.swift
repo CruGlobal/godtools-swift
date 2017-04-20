@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GTBaseFlowController: NSObject, UINavigationControllerDelegate {
+class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
     var currentViewController: UIViewController?
     

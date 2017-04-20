@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol GTLanguageSettingsViewControllerDelegate {
+protocol LanguageSettingsViewControllerDelegate {
     mutating func moveToLanguagesList(primaryLanguage: Bool)
 }
 
-class GTLanguageSettingsViewController: GTBaseViewController {
+class LanguageSettingsViewController: BaseViewController {
     
-    var delegate: GTLanguageSettingsViewControllerDelegate?
+    var delegate: LanguageSettingsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

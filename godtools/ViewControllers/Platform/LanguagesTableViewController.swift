@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol GTLanguagesTableViewControllerDelegate {
+protocol LanguagesTableViewControllerDelegate {
 }
 
-class GTLanguagesTableViewController: GTBaseViewController, UITableViewDataSource, UITableViewDelegate {
+class LanguagesTableViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    var delegate: GTLanguagesTableViewControllerDelegate?
+    var delegate: LanguagesTableViewControllerDelegate?
     var languages: NSMutableArray = []
     let languageCell = "languageCell"
     
@@ -45,7 +45,7 @@ class GTLanguagesTableViewController: GTBaseViewController, UITableViewDataSourc
     // MARK: - Helpers
     
     func registerCells() {
-        self.tableView .register(GTLanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: self.languageCell)
+        self.tableView .register(LanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: self.languageCell)
     }
     
 }

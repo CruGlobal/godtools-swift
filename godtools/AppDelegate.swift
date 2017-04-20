@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var flowController: GTBaseFlowController?
+    var flowController: BaseFlowController?
     
     override init() {
         super.init()
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func startFlowController(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = GTPlatformFlowController(window: self.window!, launchOptions: launchOptions)
+        self.flowController = PlatformFlowController(window: self.window!, launchOptions: launchOptions)
         self.window?.makeKeyAndVisible()
     }
 }

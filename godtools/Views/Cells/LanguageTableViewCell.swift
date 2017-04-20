@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GTLanguageTableViewCell: UITableViewCell {
+class LanguageTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

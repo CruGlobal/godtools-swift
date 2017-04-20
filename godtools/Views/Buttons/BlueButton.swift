@@ -8,11 +8,11 @@
 
 import UIKit
 
-class GTBlueButton: GTButton {
+class BlueButton: Button {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.cornerRadius = 5.0
-        self.backgroundColor = GTConstants.blueColor
-        self.color = GTConstants.whiteColor
+        self.backgroundColor = GTColors.blueColor
+        self.color = GTColors.whiteColor
     }
 }

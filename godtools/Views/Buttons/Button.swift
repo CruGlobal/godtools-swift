@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class GTButton: UIButton {
+class Button: UIButton {
     @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius

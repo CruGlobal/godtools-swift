@@ -1,5 +1,5 @@
 //
-//  GTRedLabel.swift
+//  GTBlackLabel.swift
 //  godtools
 //
 //  Created by Devserker on 4/19/17.
@@ -8,5 +8,5 @@
 
 import UIKit
 
-class GTRedLabel: GTLabel {
+class BlackLabel: Label {
 }

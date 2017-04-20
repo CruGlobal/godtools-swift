@@ -1,5 +1,5 @@
 //
-//  GTBlueLabel.swift
+//  GTLabel.swift
 //  godtools
 //
 //  Created by Devserker on 4/19/17.
@@ -8,5 +8,5 @@
 
 import UIKit
 
-class GTBlueLabel: GTLabel {
+class Label: UILabel {
 }
