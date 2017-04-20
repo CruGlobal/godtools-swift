@@ -14,6 +14,9 @@ class GTLabel: UILabel {
     @IBInspectable var gtStyle: String = "" {
         didSet {
             switch self.gtStyle {
+            case "blueTitle":
+                self.font = UIFont.gtSemiBold(size: 28.0)
+                self.textColor = UIColor.gtBlue
             case "blueHeader1":
                 self.font = UIFont.gtSemiBold(size: 17.0)
                 self.textColor = UIColor.gtBlue

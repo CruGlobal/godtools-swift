@@ -23,6 +23,10 @@ extension UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightRegular)
     }
     
+    static func gtLight(size: CGFloat) -> UIFont {
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight)
+    }
+    
     static func gtSemiBold(size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
     }
