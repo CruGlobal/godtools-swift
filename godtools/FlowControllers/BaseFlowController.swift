@@ -16,7 +16,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         super.init()
         self.currentViewController = self.initialViewController()
         let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
-        navigationController.delegate = self
+        self.configureNavigation(navigationController: navigationController)
         window.rootViewController = navigationController
     }
     
@@ -29,5 +29,17 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     // MARK: - Navigation Controller Delegate
+    
+    // MARK: - Helpers
+    
+    func configureNavigation(navigationController: UINavigationController) {
+        navigationController.navigationBar.tintColor = UIColor.gtWhite
+        navigationController.navigationBar.barTintColor = UIColor.gtBlue
+        navigationController.navigationBar.isOpaque = true
+        navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
+                                                                  NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
+        
+        navigationController.delegate = self
+    }
     
 }
