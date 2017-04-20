@@ -8,7 +8,6 @@
 
 import Foundation
 
-class GodToolsConstants {
-    
-    static let kApiBase = "https://mobile-content-api-stage.cru.org"
+struct GTConstants {
+    let kApiBase = "https://mobile-content-api-stage.cru.org"
 }

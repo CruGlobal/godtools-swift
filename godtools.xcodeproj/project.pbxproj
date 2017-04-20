@@ -19,7 +19,7 @@
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
 		4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */; };
 		4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */; };
-		4F1C95801EA7AF46007B47DB /* GodToolsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957F1EA7AF46007B47DB /* GodToolsConstants.swift */; };
+		4F1C95801EA7AF46007B47DB /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957F1EA7AF46007B47DB /* GTConstants.swift */; };
 		4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95821EA7B05D007B47DB /* LanguageResource.swift */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
 		4F57328F1EA69CF00082035C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328E1EA69CF00082035C /* ViewController.swift */; };
@@ -42,7 +42,7 @@
 		4F1C95701EA70582007B47DB /* LanguagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesManager.swift; path = Managers/LanguagesManager.swift; sourceTree = "<group>"; };
 		4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataClass.swift"; path = "Models/DownloadedResource+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataProperties.swift"; path = "Models/DownloadedResource+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4F1C957F1EA7AF46007B47DB /* GodToolsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GodToolsConstants.swift; sourceTree = "<group>"; };
+		4F1C957F1EA7AF46007B47DB /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		4F1C95821EA7B05D007B47DB /* LanguageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageResource.swift; path = Managers/LanguageResource.swift; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
-				4F1C957F1EA7AF46007B47DB /* GodToolsConstants.swift */,
+				4F1C957F1EA7AF46007B47DB /* GTConstants.swift */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				4F1C95381EA6B83F007B47DB /* Controllers */,
@@ -301,7 +301,7 @@
 				4F1C956D1EA70410007B47DB /* LanguagesViewController.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
-				4F1C95801EA7AF46007B47DB /* GodToolsConstants.swift in Sources */,
+				4F1C95801EA7AF46007B47DB /* GTConstants.swift in Sources */,
 				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
 				4F57328F1EA69CF00082035C /* ViewController.swift in Sources */,
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,

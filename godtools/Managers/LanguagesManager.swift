@@ -43,7 +43,7 @@ class LanguagesManager: NSObject {
     func loadFromRemote() -> Promise<[Language]> {
         showNetworkingIndicator()
         
-        return Alamofire.request(URL(string: "\(GodToolsConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[Language]> in
+        return Alamofire.request(URL(string: "\(GTConstants().kApiBase)/\(path)")!).responseData().then { data -> Promise<[Language]> in
             let jsonDocument = try! self.serializer.deserializeData(data)
             
             if jsonDocument.data != nil {
