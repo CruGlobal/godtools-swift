@@ -8,10 +8,10 @@ use_frameworks!
 
 target 'godtools' do
 
-  pod 'Alamofire', '~> 4.0'
-  pod 'PromiseKit', '~> 4.0'
-  pod 'PromiseKit/Alamofire', '~> 4.0'
-  pod 'SwiftyJSON', '~> 3.1'
+  pod 'Alamofire', '~> 4.4'
+  pod 'PromiseKit', '~> 4.1'
+  pod 'PromiseKit/Alamofire', '~> 4.1'
+  pod 'MagicalRecord', '~> 2.3'
   pod 'Zip', '~> 0.6.0'
   pod 'SWXMLHash', '~> 3.0.0'
   pod 'Fabric'

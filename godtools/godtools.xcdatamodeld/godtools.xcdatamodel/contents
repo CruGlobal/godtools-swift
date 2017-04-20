@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G1108" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DownloadedResource" representedClassName="DownloadedResource" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="downloadedResource" inverseEntity="Translation" syncable="YES"/>
+    </entity>
+    <entity name="Language" representedClassName="Language" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localizedName" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="language" inverseEntity="Translation" syncable="YES"/>
+    </entity>
+    <entity name="PageFile" representedClassName="PageFile" syncable="YES">
+        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PageFile" inverseName="translations" inverseEntity="PageFile" syncable="YES"/>
+    </entity>
+    <entity name="Translation" representedClassName="Translation" syncable="YES">
+        <attribute name="localizedDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localizedName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="downloadedResource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="translations" inverseEntity="DownloadedResource" syncable="YES"/>
+        <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
+        <relationship name="pageFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PageFile" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="105"/>
+        <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="PageFile" positionX="-18" positionY="27" width="128" height="75"/>
+        <element name="Translation" positionX="-54" positionY="-9" width="128" height="135"/>
+    </elements>
 </model>
