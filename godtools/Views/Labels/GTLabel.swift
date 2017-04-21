@@ -20,6 +20,9 @@ class GTLabel: UILabel {
             case "blueHeader1":
                 self.font = UIFont.gtSemiBold(size: 17.0)
                 self.textColor = UIColor.gtBlue
+            case "blackTitle":
+                self.font = UIFont.gtLight(size: 28.0)
+                self.textColor = UIColor.gtBlack
             case "blackText":
                 self.font = UIFont.gtRegular(size: 15.0)
                 self.textColor = UIColor.gtBlack
@@ -29,6 +32,9 @@ class GTLabel: UILabel {
             case "redText":
                 self.font = UIFont.gtRegular(size: 15.0)
                 self.textColor = UIColor.gtRed
+            case "greyHeader1":
+                self.font = UIFont.gtRegular(size: 17.0)
+                self.textColor = UIColor.gtGrey
             case "greyTextSmall":
                 self.font = UIFont.gtRegular(size: 12.0)
                 self.textColor = UIColor.gtGrey
