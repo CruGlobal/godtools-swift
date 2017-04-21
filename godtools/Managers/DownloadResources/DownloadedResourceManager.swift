@@ -35,35 +35,46 @@ class DownloadedResourceManager: NSObject {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        return Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[DownloadedResource]> in
-            let jsonDocument = try! self.serializer.deserializeData(data)
-            
-            MagicalRecord.save(blockAndWait: { (context) in
-                for element in jsonDocument.data! {
-                    let resourceResource = element as! DownloadedResourceJson
-                    let resource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: resourceResource.id!, in: context)
-                    
-                    resource.code = resourceResource.abbreviation
-                    resource.name = resourceResource.name
-                }
-            })
-            
-            return self.loadFromDisk()
-        }.then(execute: { (resources) -> Promise<[DownloadedResource]> in
-            
-            for resource in resources {
-                _ = Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(self.path)/\(resource.remoteId!)")!).responseData().then { data -> Promise<Any> in
-                    let jsonDocument = try! self.serializer.deserializeData(data).included as! [TranslationResource]
-                    
-                    for element in jsonDocument {
-                        let translation = element as! TranslationResource
-                        print(translation.isPublished?.boolValue, translation.version, separator: ", ", terminator: "\n")
+        // load all resources and save them to disk
+        return Alamofire.request(self.buildURL(resourceId: nil),
+                                 method: HTTPMethod.get,
+                                 parameters: ["include" : "translations"],
+                                 encoding: URLEncoding.default,
+                                 headers: nil)
+            .responseData()
+            .then { data -> Promise<[DownloadedResource]> in
+                let remoteResources = try! self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
+                
+                MagicalRecord.save(blockAndWait: { (context) in
+                    for remoteResource in remoteResources {
+                        let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
+                        
+                        cachedResource.code = remoteResource.abbreviation
+                        cachedResource.name = remoteResource.name
+                        
+                        let remoteTranslations = remoteResource.translations!
+                        for remoteTranslationGeneric in remoteTranslations {
+                            let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                            
+                            let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
+                            
+                            cachedResource.addToTranslations(cachedTranslation)
+                        }
                     }
-                    return Promise(value: jsonDocument)
-                }
+                })
+                
+                return self.loadFromDisk()
             }
-            return Promise(value: resources)
-        })
+    }
+    
+    private func buildURL(resourceId: String?) -> String {
+        var urlString = "\(GTConstants.kApiBase)/\(self.path)"
+        
+        if resourceId != nil {
+            urlString = urlString.appending("/\(resourceId!)")
+        }
+        
+        return urlString
     }
 }
 
