@@ -16,31 +16,13 @@ extension Translation {
         return NSFetchRequest<Translation>(entityName: "Translation");
     }
 
+    @NSManaged public var isDownloaded: Bool
+    @NSManaged public var isPublished: Bool
     @NSManaged public var localizedDescription: String?
     @NSManaged public var localizedName: String?
-    @NSManaged public var version: Int16
     @NSManaged public var remoteId: String?
-    @NSManaged public var isPublished: Bool
-    @NSManaged public var isDownloaded: Bool
+    @NSManaged public var version: Int16
     @NSManaged public var downloadedResource: DownloadedResource?
     @NSManaged public var language: Language?
-    @NSManaged public var pageFiles: NSSet?
-
-}
-
-// MARK: Generated accessors for pageFiles
-extension Translation {
-
-    @objc(addPageFilesObject:)
-    @NSManaged public func addToPageFiles(_ value: PageFile)
-
-    @objc(removePageFilesObject:)
-    @NSManaged public func removeFromPageFiles(_ value: PageFile)
-
-    @objc(addPageFiles:)
-    @NSManaged public func addToPageFiles(_ values: NSSet)
-
-    @objc(removePageFiles:)
-    @NSManaged public func removeFromPageFiles(_ values: NSSet)
 
 }

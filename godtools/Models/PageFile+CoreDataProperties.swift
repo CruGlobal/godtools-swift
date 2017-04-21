@@ -2,7 +2,7 @@
 //  PageFile+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/18/17.
+//  Created by Ryan Carlson on 4/21/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -17,23 +17,6 @@ extension PageFile {
     }
 
     @NSManaged public var remoteId: String?
-    @NSManaged public var translations: NSSet?
-
-}
-
-// MARK: Generated accessors for translations
-extension PageFile {
-
-    @objc(addTranslationsObject:)
-    @NSManaged public func addToTranslations(_ value: PageFile)
-
-    @objc(removeTranslationsObject:)
-    @NSManaged public func removeFromTranslations(_ value: PageFile)
-
-    @objc(addTranslations:)
-    @NSManaged public func addToTranslations(_ values: NSSet)
-
-    @objc(removeTranslations:)
-    @NSManaged public func removeFromTranslations(_ values: NSSet)
+    @NSManaged public var resource: DownloadedResource?
 
 }
