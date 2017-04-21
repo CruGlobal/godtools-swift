@@ -78,7 +78,7 @@ class LanguagesManager: NSObject {
     }
     
     private func buildURL() -> String {
-        return "\(GTConstants.kApiBase)/\(path)"
+        return "\(GTConstants.kApiBase)\(path)"
     }
     
     fileprivate func showNetworkingIndicator() {
