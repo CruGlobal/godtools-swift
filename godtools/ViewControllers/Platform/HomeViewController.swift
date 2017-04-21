@@ -70,7 +70,6 @@ class HomeViewController: BaseViewController {
     }
     
     fileprivate func registerCells() {
-        self.tableView .register(
-            HomeToolTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+        self.tableView.register(UINib(nibName: "HomeToolTableViewCell", bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
     }
 }
