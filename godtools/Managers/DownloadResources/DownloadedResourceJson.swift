@@ -1,5 +1,5 @@
 //
-//  LanguageResource.swift
+//  DownloadedResourceJson.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/19/17.
@@ -9,20 +9,21 @@
 import Foundation
 import Spine
 
-class LanguageResource: Resource {
-
-    var code: String?
+class DownloadedResourceJson: Resource {
+    
+    var name: String?
+    var abbreviation: String?
     
     var translations: LinkedResourceCollection?
     
     override class var resourceType: ResourceType {
-        return "language"
+        return "resource"
     }
     
     override class var fields: [Field] {
         return fieldsFromDictionary([
-            "code" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self)
-            ])
+            "name" : Attribute(),
+            "abbreviation" : Attribute(),
+            "translations" : ToManyRelationship(TranslationResource.self)])
     }
 }

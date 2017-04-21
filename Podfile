@@ -16,6 +16,6 @@ target 'godtools' do
   pod 'SWXMLHash', '~> 3.0.0'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Spine', :git => 'https://github.com/wvteijlingen/Spine.git'
+  pod 'Spine', :git => 'https://github.com/CruGlobal/Spine.git', :tag => '0.3.1'
 
 end

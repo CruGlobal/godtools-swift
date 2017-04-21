@@ -43,21 +43,45 @@ class LanguagesManager: NSObject {
     func loadFromRemote() -> Promise<[Language]> {
         showNetworkingIndicator()
         
-        return Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[Language]> in
-            let jsonDocument = try! self.serializer.deserializeData(data)
-            
-            if jsonDocument.data != nil {
-                MagicalRecord.save(blockAndWait: { (context) in
-                    for element in jsonDocument.data! {
-                        let languageResource = element as! LanguageResource;
-                        let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!, in: context)
-                        language.code = languageResource.code
-                    }
-                })
-            }
-            
-            return self.loadFromDisk()
+        return issueGETRequest()
+            .responseData()
+            .then { data -> Promise<[Language]> in
+                do {
+                    let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
+                    
+                    self.saveToDisk(remoteLanguages)
+                } catch {
+                    return Promise(error: error)
+                }
+                return self.loadFromDisk()
         }
+    }
+    
+    private func saveToDisk(_ languages: [LanguageResource]) {
+        MagicalRecord.save(blockAndWait: { (context) in
+            for remoteLanguage in languages {
+                let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
+                cachedlanguage.code = remoteLanguage.code
+                
+                for relatedTranslation in remoteLanguage.translations!.linkage! {
+                    print(relatedTranslation.toDictionary())
+
+                    let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                                             withValue: relatedTranslation.id,
+                                                                             in: context)
+                    
+                    cachedlanguage.addToTranslations(cachedTranslation)
+                }
+            }
+        })
+    }
+    
+    private func issueGETRequest() -> DataRequest {
+        return Alamofire.request(self.buildURL())
+    }
+    
+    private func buildURL() -> String {
+        return "\(GTConstants.kApiBase)\(path)"
     }
     
     fileprivate func showNetworkingIndicator() {

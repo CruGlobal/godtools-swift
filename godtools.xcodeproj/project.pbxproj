@@ -42,6 +42,9 @@
 		4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */; };
 		4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */; };
 		4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95821EA7B05D007B47DB /* LanguageResource.swift */; };
+		4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */; };
+		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
+		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
 		4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F57328C1EA69CF00082035C /* AppDelegate.swift */; };
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
@@ -84,6 +87,9 @@
 		4F1C957B1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataClass.swift"; path = "Models/DownloadedResource+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DownloadedResource+CoreDataProperties.swift"; path = "Models/DownloadedResource+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C95821EA7B05D007B47DB /* LanguageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageResource.swift; path = Managers/LanguageResource.swift; sourceTree = "<group>"; };
+		4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceJson.swift; path = Managers/DownloadResources/DownloadedResourceJson.swift; sourceTree = "<group>"; };
+		4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationResource.swift; path = Managers/Translations/TranslationResource.swift; sourceTree = "<group>"; };
+		4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceManager.swift; path = Managers/DownloadResources/DownloadedResourceManager.swift; sourceTree = "<group>"; };
 		4F5732891EA69CF00082035C /* godtools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = godtools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F57328C1EA69CF00082035C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4F5732941EA69CF00082035C /* godtools.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = godtools.xcdatamodel; sourceTree = "<group>"; };
@@ -243,8 +249,9 @@
 		4F1C953B1EA6B85C007B47DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C959B1EA7EA8A007B47DB /* Translations */,
+				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
-				4F1C95701EA70582007B47DB /* LanguagesManager.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
 			);
 			name = Managers;
@@ -253,9 +260,27 @@
 		4F1C95811EA7B03B007B47DB /* Languages */ = {
 			isa = PBXGroup;
 			children = (
+				4F1C95701EA70582007B47DB /* LanguagesManager.swift */,
 				4F1C95821EA7B05D007B47DB /* LanguageResource.swift */,
 			);
 			name = Languages;
+			sourceTree = "<group>";
+		};
+		4F1C95981EA7E742007B47DB /* DownloadedResources */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */,
+				4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */,
+			);
+			name = DownloadedResources;
+			sourceTree = "<group>";
+		};
+		4F1C959B1EA7EA8A007B47DB /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */,
+			);
+			name = Translations;
 			sourceTree = "<group>";
 		};
 		4F5732801EA69CF00082035C = {
@@ -443,6 +468,9 @@
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
+				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
+				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
+				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,

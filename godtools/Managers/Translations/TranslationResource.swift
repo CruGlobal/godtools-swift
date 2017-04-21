@@ -1,5 +1,5 @@
 //
-//  LanguageResource.swift
+//  TranslationResource.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/19/17.
@@ -9,20 +9,19 @@
 import Foundation
 import Spine
 
-class LanguageResource: Resource {
-
-    var code: String?
+class TranslationResource: Resource {
     
-    var translations: LinkedResourceCollection?
+    var version: NSNumber?
+    var isPublished: NSNumber?
     
     override class var resourceType: ResourceType {
-        return "language"
+        return "translation"
     }
     
     override class var fields: [Field] {
         return fieldsFromDictionary([
-            "code" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self)
-            ])
+            "version" : Attribute(),
+            "isPublished" : BooleanAttribute().serializeAs("is-published")
+        ])
     }
 }

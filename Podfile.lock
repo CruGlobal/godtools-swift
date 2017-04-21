@@ -23,7 +23,7 @@ PODS:
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
   - Result (3.2.1)
-  - Spine (0.3):
+  - Spine (0.3.1):
     - BrightFutures (~> 5.0)
     - SwiftyJSON (~> 3.1.4)
   - SwiftyJSON (3.1.4)
@@ -37,18 +37,19 @@ DEPENDENCIES:
   - MagicalRecord (~> 2.3)
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
-  - Spine (from `https://github.com/wvteijlingen/Spine.git`)
+  - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SWXMLHash (~> 3.0.0)
   - Zip (~> 0.6.0)
 
 EXTERNAL SOURCES:
   Spine:
-    :git: https://github.com/wvteijlingen/Spine.git
+    :git: https://github.com/CruGlobal/Spine.git
+    :tag: 0.3.1
 
 CHECKOUT OPTIONS:
   Spine:
-    :commit: bc82a5d7686bf663c8a37eb192423feaf0908f73
-    :git: https://github.com/wvteijlingen/Spine.git
+    :git: https://github.com/CruGlobal/Spine.git
+    :tag: 0.3.1
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -58,11 +59,11 @@ SPEC CHECKSUMS:
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
-  Spine: 9a5076f732897dc67c0303b4b3d871cfee903efa
+  Spine: 86ff8436c21b023766a82388880864fa4ecc7431
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
   Zip: 805fc2fa9d2f05bbb7762d982d7a42ccdcc51f42
 
-PODFILE CHECKSUM: d00db1ed985a00207a2cf773f3deff57d34d4936
+PODFILE CHECKSUM: a35fc21b25f639c17ccf7c07f2be5ee0001a12e3
 
 COCOAPODS: 1.2.1
