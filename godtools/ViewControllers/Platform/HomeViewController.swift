@@ -78,6 +78,7 @@ class HomeViewController: BaseViewController, ToolsManagerDelegate {
     
     fileprivate func setupStyle() {
         self.tableView.separatorStyle = .none
+        self.tableView.contentInset = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0)
     }
     
     // MARK: - ToolsManagerDelegate
