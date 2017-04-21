@@ -13,6 +13,8 @@ protocol LanguagesTableViewControllerDelegate {
 
 class LanguagesTableViewController: BaseViewController {
     
+    var delegate: LanguagesTableViewControllerDelegate?
+    
     let languagesManager = LanguagesManager.shared
     
     
@@ -22,8 +24,6 @@ class LanguagesTableViewController: BaseViewController {
             tableView.dataSource = languagesManager
         }
     }
-    
-    var delegate: LanguagesTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

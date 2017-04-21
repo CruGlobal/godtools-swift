@@ -70,6 +70,7 @@ extension LanguagesManager: UITableViewDelegate {
 }
 
 extension LanguagesManager: UITableViewDataSource {
+    
     static let languageCellIdentifier = "languageCell"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,4 +87,5 @@ extension LanguagesManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languages.count
     }
+    
 }

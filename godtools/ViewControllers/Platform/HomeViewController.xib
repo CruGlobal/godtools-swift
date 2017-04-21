@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="emptyStateView" destination="guW-AD-oGH" id="RYF-KE-659"/>
                 <outlet property="normalStateView" destination="c27-LP-LPS" id="W9t-rg-cWG"/>
+                <outlet property="tableView" destination="ODF-04-1PB" id="XZ9-ng-9AT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -17,8 +17,16 @@ class HomeViewController: BaseViewController {
     
     var delegate: HomeViewControllerDelegate?
     
+    let toolsManager = ToolsManager.shared
+    
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var normalStateView: UIView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = toolsManager
+            tableView.dataSource = toolsManager
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +65,6 @@ class HomeViewController: BaseViewController {
     // MARK: - Helpers
     
     fileprivate func displayWorkingView() {
-        self.normalStateView.isHidden = true
+        self.emptyStateView.isHidden = true
     }
 }
