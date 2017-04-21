@@ -25,6 +25,7 @@ class DownloadedResourceManager: NSObject {
         super.init()
         serializer.registerResource(DownloadedResourceJson.self)
         serializer.registerResource(TranslationResource.self)
+        serializer.registerResource(PageResource.self)
     }
     
     func loadFromDisk() -> Promise<[DownloadedResource]> {
@@ -68,6 +69,16 @@ class DownloadedResourceManager: NSObject {
                     cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                     cachedResource.addToTranslations(cachedTranslation)
                 }
+                
+                let remotePages = remoteResource.pages!
+                for remotePageGeneric in remotePages {
+                    let remotePage = remotePageGeneric as! PageResource
+                    
+                    let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remotePage.id!, in: context)
+
+                    cachedPage.filename = remotePage.filename
+                    cachedPage.resource = cachedResource
+                }
             }
         })
     }
@@ -75,7 +86,7 @@ class DownloadedResourceManager: NSObject {
     private func issueGETRequest() -> DataRequest {
         return Alamofire.request(self.buildURL(resourceId: nil),
                                  method: HTTPMethod.get,
-                                 parameters: ["include" : "translations"],
+                                 parameters: ["include" : "translations,pages"],
                                  encoding: URLEncoding.default,
                                  headers: nil)
     }

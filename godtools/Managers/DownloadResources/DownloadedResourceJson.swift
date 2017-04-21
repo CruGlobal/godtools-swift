@@ -15,6 +15,7 @@ class DownloadedResourceJson: Resource {
     var abbreviation: String?
     
     var translations: LinkedResourceCollection?
+    var pages: LinkedResourceCollection?
     
     override class var resourceType: ResourceType {
         return "resource"
@@ -24,6 +25,7 @@ class DownloadedResourceJson: Resource {
         return fieldsFromDictionary([
             "name" : Attribute(),
             "abbreviation" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self)])
+            "translations" : ToManyRelationship(TranslationResource.self),
+            "pages" : ToManyRelationship(PageResource.self)])
     }
 }

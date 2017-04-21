@@ -17,6 +17,7 @@ extension PageFile {
     }
 
     @NSManaged public var remoteId: String?
+    @NSManaged public var filename: String?
     @NSManaged public var resource: DownloadedResource?
 
 }

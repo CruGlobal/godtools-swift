@@ -14,6 +14,7 @@
         <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="language" inverseEntity="Translation" syncable="YES"/>
     </entity>
     <entity name="PageFile" representedClassName="PageFile" syncable="YES">
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="resource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="pages" inverseEntity="DownloadedResource" syncable="YES"/>
     </entity>
@@ -30,7 +31,7 @@
     <elements>
         <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="120"/>
         <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="PageFile" positionX="-18" positionY="27" width="128" height="75"/>
+        <element name="PageFile" positionX="-18" positionY="27" width="128" height="90"/>
         <element name="Translation" positionX="-54" positionY="-9" width="128" height="165"/>
     </elements>
 </model>
