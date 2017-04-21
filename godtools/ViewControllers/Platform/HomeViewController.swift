@@ -11,9 +11,10 @@ import UIKit
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAddNewTool()
+    mutating func moveToToolDetail()
 }
 
-class HomeViewController: BaseViewController {
+class HomeViewController: BaseViewController, ToolsManagerDelegate {
     
     var delegate: HomeViewControllerDelegate?
     
@@ -32,6 +33,8 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         self.displayWorkingView()
         self.registerCells()
+        self.setupStyle()
+        self.toolsManager.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,5 +74,15 @@ class HomeViewController: BaseViewController {
     
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "HomeToolTableViewCell", bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+    }
+    
+    fileprivate func setupStyle() {
+        self.tableView.separatorStyle = .none
+    }
+    
+    // MARK: - ToolsManagerDelegate
+    
+    func didSelectTableViewRow(cell: HomeToolTableViewCell) {
+        self.delegate?.moveToToolDetail()
     }
 }

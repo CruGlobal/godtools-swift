@@ -9,7 +9,7 @@
 import UIKit
 
 class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate,
-HomeViewControllerDelegate {
+HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
         let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
@@ -26,6 +26,15 @@ HomeViewControllerDelegate {
     }
     
     func moveToAddNewTool() {
+        let viewController = AddToolsViewController(nibName: "AddToolsViewController", bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
+    }
+    
+    func moveToToolDetail() {
+        let viewController = ToolDetailViewController(nibName: "ToolDetailViewController", bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
     }
     
     // MARK: - GTLanguageSettingsViewControllerDelegate
