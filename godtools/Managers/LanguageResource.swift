@@ -13,13 +13,16 @@ class LanguageResource: Resource {
 
     var code: String?
     
+    var translations: LinkedResourceCollection?
+    
     override class var resourceType: ResourceType {
         return "language"
     }
     
     override class var fields: [Field] {
         return fieldsFromDictionary([
-            "code" : Attribute().serializeAs("abbreviation")
+            "code" : Attribute().serializeAs("abbreviation"),
+            "translations" : ToManyRelationship(TranslationResource.self)
             ])
     }
 }

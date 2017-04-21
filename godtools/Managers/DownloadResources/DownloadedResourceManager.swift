@@ -61,6 +61,8 @@ class DownloadedResourceManager: NSObject {
                     
                     let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
                     
+                    cachedTranslation.version = remoteTranslation.version!.int16Value
+                    
                     cachedResource.addToTranslations(cachedTranslation)
                 }
             }
