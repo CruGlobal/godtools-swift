@@ -46,10 +46,13 @@ class LanguagesManager: NSObject {
         return issueGETRequest()
             .responseData()
             .then { data -> Promise<[Language]> in
-                let remoteLanguages = try! self.serializer.deserializeData(data).data as! [LanguageResource]
-                
-                self.saveToDisk(remoteLanguages)
-                
+                do {
+                    let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
+                    
+                    self.saveToDisk(remoteLanguages)
+                } catch {
+                    return Promise(error: error)
+                }
                 return self.loadFromDisk()
         }
     }

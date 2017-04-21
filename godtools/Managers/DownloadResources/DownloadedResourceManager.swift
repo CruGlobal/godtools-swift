@@ -39,10 +39,13 @@ class DownloadedResourceManager: NSObject {
         return issueGETRequest()
             .responseData()
             .then { data -> Promise<[DownloadedResource]> in
-                let remoteResources = try! self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
-                
-                self.saveToDisk(remoteResources)
-                
+                do {
+                    let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
+                    
+                    self.saveToDisk(remoteResources)
+                } catch {
+                    return Promise(error: error)
+                }
                 return self.loadFromDisk()
             }
     }
