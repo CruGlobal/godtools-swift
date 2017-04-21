@@ -31,6 +31,7 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.displayWorkingView()
+        self.registerCells()
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,5 +67,10 @@ class HomeViewController: BaseViewController {
     
     fileprivate func displayWorkingView() {
         self.emptyStateView.isHidden = true
+    }
+    
+    fileprivate func registerCells() {
+        self.tableView .register(
+            HomeToolTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
     }
 }

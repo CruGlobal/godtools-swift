@@ -32,7 +32,7 @@ extension ToolsManager: UITableViewDataSource {
     static let toolCellIdentifier = "toolCell"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell:HomeToolTableViewCell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
         return cell
     }
     
