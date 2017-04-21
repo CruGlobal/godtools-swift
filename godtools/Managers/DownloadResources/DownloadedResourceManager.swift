@@ -36,11 +36,7 @@ class DownloadedResourceManager: NSObject {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // load all resources and save them to disk
-        return Alamofire.request(self.buildURL(resourceId: nil),
-                                 method: HTTPMethod.get,
-                                 parameters: ["include" : "translations"],
-                                 encoding: URLEncoding.default,
-                                 headers: nil)
+        return issueGETRequest()
             .responseData()
             .then { data -> Promise<[DownloadedResource]> in
                 let remoteResources = try! self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
@@ -65,6 +61,14 @@ class DownloadedResourceManager: NSObject {
                 
                 return self.loadFromDisk()
             }
+    }
+    
+    private func issueGETRequest() -> DataRequest {
+        return Alamofire.request(self.buildURL(resourceId: nil),
+                                 method: HTTPMethod.get,
+                                 parameters: ["include" : "translations"],
+                                 encoding: URLEncoding.default,
+                                 headers: nil)
     }
     
     private func buildURL(resourceId: String?) -> String {
