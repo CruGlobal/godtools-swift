@@ -43,21 +43,28 @@ class LanguagesManager: NSObject {
     func loadFromRemote() -> Promise<[Language]> {
         showNetworkingIndicator()
         
-        return Alamofire.request(URL(string: "\(GTConstants.kApiBase)/\(path)")!).responseData().then { data -> Promise<[Language]> in
-            let jsonDocument = try! self.serializer.deserializeData(data)
-            
-            if jsonDocument.data != nil {
+        return issueGETRequest()
+            .responseData()
+            .then { data -> Promise<[Language]> in
+                let remoteLanguages = try! self.serializer.deserializeData(data).data as! [LanguageResource]
+                
                 MagicalRecord.save(blockAndWait: { (context) in
-                    for element in jsonDocument.data! {
-                        let languageResource = element as! LanguageResource;
-                        let language = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: languageResource.id!, in: context)
-                        language.code = languageResource.code
+                    for remoteLanguage in remoteLanguages {
+                        let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
+                        cachedlanguage.code = remoteLanguage.code
                     }
                 })
-            }
-            
-            return self.loadFromDisk()
+                
+                return self.loadFromDisk()
         }
+    }
+    
+    private func issueGETRequest() -> DataRequest {
+        return Alamofire.request(self.buildURL())
+    }
+    
+    private func buildURL() -> String {
+        return "\(GTConstants.kApiBase)/\(path)"
     }
     
     fileprivate func showNetworkingIndicator() {
