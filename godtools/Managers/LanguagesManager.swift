@@ -48,15 +48,19 @@ class LanguagesManager: NSObject {
             .then { data -> Promise<[Language]> in
                 let remoteLanguages = try! self.serializer.deserializeData(data).data as! [LanguageResource]
                 
-                MagicalRecord.save(blockAndWait: { (context) in
-                    for remoteLanguage in remoteLanguages {
-                        let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
-                        cachedlanguage.code = remoteLanguage.code
-                    }
-                })
+                self.saveToDisk(remoteLanguages)
                 
                 return self.loadFromDisk()
         }
+    }
+    
+    private func saveToDisk(_ languages: [LanguageResource]) {
+        MagicalRecord.save(blockAndWait: { (context) in
+            for remoteLanguage in languages {
+                let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
+                cachedlanguage.code = remoteLanguage.code
+            }
+        })
     }
     
     private func issueGETRequest() -> DataRequest {

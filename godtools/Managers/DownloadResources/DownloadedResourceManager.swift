@@ -41,26 +41,30 @@ class DownloadedResourceManager: NSObject {
             .then { data -> Promise<[DownloadedResource]> in
                 let remoteResources = try! self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                 
-                MagicalRecord.save(blockAndWait: { (context) in
-                    for remoteResource in remoteResources {
-                        let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
-                        
-                        cachedResource.code = remoteResource.abbreviation
-                        cachedResource.name = remoteResource.name
-                        
-                        let remoteTranslations = remoteResource.translations!
-                        for remoteTranslationGeneric in remoteTranslations {
-                            let remoteTranslation = remoteTranslationGeneric as! TranslationResource
-                            
-                            let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
-                            
-                            cachedResource.addToTranslations(cachedTranslation)
-                        }
-                    }
-                })
+                self.saveToDisk(remoteResources)
                 
                 return self.loadFromDisk()
             }
+    }
+    
+    private func saveToDisk(_ resources: [DownloadedResourceJson]) {
+        MagicalRecord.save(blockAndWait: { (context) in
+            for remoteResource in resources {
+                let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
+                
+                cachedResource.code = remoteResource.abbreviation
+                cachedResource.name = remoteResource.name
+                
+                let remoteTranslations = remoteResource.translations!
+                for remoteTranslationGeneric in remoteTranslations {
+                    let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                    
+                    let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
+                    
+                    cachedResource.addToTranslations(cachedTranslation)
+                }
+            }
+        })
     }
     
     private func issueGETRequest() -> DataRequest {
