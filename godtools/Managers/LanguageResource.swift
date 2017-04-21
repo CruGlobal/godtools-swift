@@ -21,7 +21,7 @@ class LanguageResource: Resource {
     
     override class var fields: [Field] {
         return fieldsFromDictionary([
-            "code" : Attribute().serializeAs("abbreviation"),
+            "code" : Attribute(),
             "translations" : ToManyRelationship(TranslationResource.self)
             ])
     }
