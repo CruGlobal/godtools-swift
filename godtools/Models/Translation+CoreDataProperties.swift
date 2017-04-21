@@ -21,6 +21,7 @@ extension Translation {
     @NSManaged public var version: Int16
     @NSManaged public var remoteId: String?
     @NSManaged public var isPublished: Bool
+    @NSManaged public var isDownloaded: Bool
     @NSManaged public var downloadedResource: DownloadedResource?
     @NSManaged public var language: Language?
     @NSManaged public var pageFiles: NSSet?
