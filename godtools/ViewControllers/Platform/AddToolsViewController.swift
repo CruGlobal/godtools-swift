@@ -28,6 +28,10 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
         super.viewDidLoad()
         self.registerCells()
         self.setupStyle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.toolsManager.delegate = self
     }
 
