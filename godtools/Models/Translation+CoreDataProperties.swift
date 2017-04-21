@@ -2,7 +2,7 @@
 //  Translation+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/19/17.
+//  Created by Ryan Carlson on 4/21/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -19,9 +19,12 @@ extension Translation {
     @NSManaged public var localizedDescription: String?
     @NSManaged public var localizedName: String?
     @NSManaged public var version: Int16
+    @NSManaged public var remoteId: String?
+    @NSManaged public var isPublished: Bool
+    @NSManaged public var isDownloaded: Bool
+    @NSManaged public var downloadedResource: DownloadedResource?
     @NSManaged public var language: Language?
     @NSManaged public var pageFiles: NSSet?
-    @NSManaged public var downloadedResource: DownloadedResource?
 
 }
 
