@@ -17,7 +17,6 @@ class LanguagesTableViewController: BaseViewController {
     
     let languagesManager = LanguagesManager.shared
     
-    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = languagesManager

@@ -27,23 +27,23 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lJ-vJ-aCT">
-                        <rect key="frame" x="1" y="1" width="318" height="110"/>
+                        <rect key="frame" x="-1.5" y="1" width="323" height="110"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-zY-aHB">
-                                <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="323" height="60"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
-                                <rect key="frame" x="0.0" y="60" width="318" height="50"/>
+                                <rect key="frame" x="0.0" y="60" width="323" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-rG-bBE">
-                                        <rect key="frame" x="0.0" y="0.0" width="234" height="49"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="239" height="49"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
-                                                <rect key="frame" x="8" y="13" width="22" height="22"/>
+                                                <rect key="frame" x="8.5" y="13" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="c9v-49-oHY"/>
                                                     <constraint firstAttribute="width" constant="22" id="sFy-kx-pvA"/>
@@ -54,14 +54,14 @@
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vertical_line_grey" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-DS-b34">
-                                                <rect key="frame" x="38" y="10" width="1" height="30"/>
+                                                <rect key="frame" x="38.5" y="10" width="1" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="dub-88-ZYE"/>
                                                     <constraint firstAttribute="width" constant="1" id="xU3-3l-cyK"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47" y="5" width="181" height="21"/>
+                                                <rect key="frame" x="47.5" y="5" width="185.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="dzq-Za-Wxb"/>
                                                 </constraints>
@@ -73,7 +73,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47" y="26" width="104" height="21"/>
+                                                <rect key="frame" x="47.5" y="26" width="104" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="104" id="Byn-jY-nQf"/>
                                                     <constraint firstAttribute="height" constant="21" id="f1z-fu-fev"/>
@@ -101,10 +101,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-L0-hFD">
-                                        <rect key="frame" x="234" y="0.0" width="84" height="49"/>
+                                        <rect key="frame" x="239" y="0.0" width="84" height="49"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="18.5" width="50" height="12"/>
+                                                <rect key="frame" x="0.0" y="15" width="50" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -166,18 +166,23 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" constant="1" id="7aF-Xu-cLa"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" priority="750" constant="1" id="7aF-Xu-cLa"/>
                     <constraint firstAttribute="bottom" secondItem="S2s-WS-dBD" secondAttribute="bottom" constant="1" id="En1-zo-uqx"/>
                     <constraint firstAttribute="bottom" secondItem="1lJ-vJ-aCT" secondAttribute="bottom" constant="1" id="FKB-Kv-tFg"/>
-                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="HB9-m8-JCW"/>
+                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="750" constant="1" id="HB9-m8-JCW"/>
                     <constraint firstItem="1lJ-vJ-aCT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="Ykq-Pg-0QP"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S2s-WS-dBD" secondAttribute="trailing" constant="1" id="dRE-dv-PQD"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S2s-WS-dBD" secondAttribute="trailing" priority="750" constant="1" id="dRE-dv-PQD"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="eS7-uf-73n"/>
-                    <constraint firstItem="S2s-WS-dBD" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="kgX-TD-7Me"/>
+                    <constraint firstItem="S2s-WS-dBD" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" priority="750" id="kgX-TD-7Me"/>
                     <constraint firstItem="1lJ-vJ-aCT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="mXg-ac-XBd"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="y3e-vw-Ywe"/>
                 </constraints>
             </tableViewCellContentView>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="leftConstraintValue">
+                    <real key="value" value="8"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="borderView" destination="1lJ-vJ-aCT" id="vEL-ld-RdJ"/>
                 <outlet property="contentBottomView" destination="JR1-oY-z8k" id="mHx-8u-4sc"/>

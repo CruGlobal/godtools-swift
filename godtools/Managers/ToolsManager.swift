@@ -27,7 +27,7 @@ class ToolsManager: NSObject {
 extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110.0
+        return 113.0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

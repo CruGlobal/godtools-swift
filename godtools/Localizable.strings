@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Home
+"About" = "About";
+
+// Tool Detail
+"%@ views" = "%@ views!";
+
+// Language Settings
+"Language Settings" = "Language Settings";
+"Primary Language" = "Primary Language";
+"Select a Primary Language" = "Select a Primary Language";
+"Parallel Language" = "Parallel Language";
+"Share God Tools with someone in their native language" = "Share God Tools with someone in their native language";
+"Not every tool is available in every language" = "Not every tool is available in every language";
+
+// Buttons
+"Download" = "Download";

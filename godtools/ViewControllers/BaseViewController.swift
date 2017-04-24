@@ -8,9 +8,10 @@
 
 import UIKit
 
-import PureLayout
-
 class BaseViewController: UIViewController {
+    
+    let kNavigationItemInitialSpace:CGFloat = -7.0
+    let kNavigationItemSpace:CGFloat = 26.0
     
     var navigationLeftButtons = [UIBarButtonItem]()
     var navigationRightButtons = [UIBarButtonItem]()
@@ -55,11 +56,11 @@ class BaseViewController: UIViewController {
     func displayNavigationRightButtons() {
         // Set 26px of fixed space between the two UIBarButtonItems
         let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        fixedSpace.width = 26.0
+        fixedSpace.width = self.kNavigationItemSpace
         
         // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
         let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        negativeSpace.width = -7.0
+        negativeSpace.width = self.kNavigationItemInitialSpace
         
         var rightButtons = [UIBarButtonItem]()
         for buttonItem: UIBarButtonItem in self.navigationRightButtons {

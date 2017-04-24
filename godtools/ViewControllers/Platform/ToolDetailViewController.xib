@@ -10,6 +10,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="descriptionLabel" destination="v52-LQ-1sy" id="L4K-Dk-cZZ"/>
+                <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
+                <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
+                <outlet property="totalLanguagesLabel" destination="WhJ-0q-SQL" id="UEL-1m-0ma"/>
+                <outlet property="totalViewsLabel" destination="1jS-vF-2Ds" id="PiF-Pv-xwc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

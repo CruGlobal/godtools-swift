@@ -10,6 +10,12 @@ import UIKit
 
 @IBDesignable
 class GTButton: UIButton {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.titleLabel?.text = self.titleLabel?.text?.localized
+    }
+    
     @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius

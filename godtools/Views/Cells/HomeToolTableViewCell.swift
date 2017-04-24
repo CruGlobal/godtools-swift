@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class HomeToolTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
@@ -22,6 +23,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var languageLabel: GTLabel!
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
+    @IBInspectable var leftConstraintValue: CGFloat = 8.0
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,8 +37,8 @@ class HomeToolTableViewCell: UITableViewCell {
     func setCellAsDisplayOnly() {
         self.downloadButton.isHidden = true
         self.greyVerticalLine.isHidden = true
-        self.titleLeadingConstraint.constant = 8
-        self.numberOfViewsLeadingConstraint.constant = 8
+        self.titleLeadingConstraint.constant = self.leftConstraintValue
+        self.numberOfViewsLeadingConstraint.constant = self.leftConstraintValue
     }
     
     // MARK: - Actions

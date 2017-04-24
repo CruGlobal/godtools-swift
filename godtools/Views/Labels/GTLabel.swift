@@ -44,4 +44,9 @@ class GTLabel: UILabel {
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.text = self.text?.localized
+    }
+    
 }

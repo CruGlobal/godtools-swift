@@ -70,7 +70,7 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="58" y="378" width="260" height="56"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="quW-Jd-gVL"/>
@@ -101,7 +101,7 @@
                         <constraint firstAttribute="width" constant="44" id="hgG-6N-FH8"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="67" y="577" width="242" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="PPh-0F-emD"/>

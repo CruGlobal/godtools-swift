@@ -15,10 +15,23 @@ class DownloadButton: GTButton {
         self.cornerRadius = 5.0
         self.backgroundColor = UIColor.gtGreen
         self.color = UIColor.gtWhite
-        self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
-        self.titleLabel?.text = "Download"
-        self.setImage(UIImage(named: "download_white"), for: .normal)
         self.tintColor = .gtWhite
+        self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
+        self.setImage(UIImage(named: "download_white"), for: .normal)
+        self.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 10.0)
+        self.titleEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 0.0)
+    }
+    
+    override func layoutSubviews() {
+        self.titleLabel?.text = "Download"
+        super.layoutSubviews()
+        self.increaseTitleWidth()
+    }
+    
+    fileprivate func increaseTitleWidth() {
+        var labelFrame = self.titleLabel?.frame
+        labelFrame?.size.width = (labelFrame?.size.width)! + 30
+        self.titleLabel?.frame = labelFrame!
     }
 
 }
