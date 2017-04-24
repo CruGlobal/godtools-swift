@@ -36,6 +36,7 @@
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="primary_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
@@ -52,6 +53,7 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="select_primary_language"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="pressSelectPrimaryLanguage:" destination="-1" eventType="touchUpInside" id="0CS-JV-4ip"/>
@@ -68,9 +70,10 @@
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="parallel_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="58" y="378" width="260" height="56"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="quW-Jd-gVL"/>
@@ -81,6 +84,7 @@
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="share_god_tools_native_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
@@ -101,8 +105,8 @@
                         <constraint firstAttribute="width" constant="44" id="hgG-6N-FH8"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="66.5" y="577" width="242" height="52"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="67" y="577" width="242" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="PPh-0F-emD"/>
                         <constraint firstAttribute="width" constant="242" id="jwl-EJ-icG"/>
@@ -112,6 +116,7 @@
                     <nil key="highlightedColor"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="redText"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="not_every_tool_is_available"/>
                     </userDefinedRuntimeAttributes>
                 </label>
             </subviews>

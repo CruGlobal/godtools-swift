@@ -8,12 +8,33 @@
 
 import UIKit
 
-class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate {
+class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate,
+HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
-        let viewController = LanguageSettingsViewController(nibName: "LanguageSettingsViewController", bundle: nil)
+        let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
         viewController.delegate = self
         return viewController
+    }
+    
+    // MARK: - HomeViewControllerDelegate
+    
+    func moveToUpdateLanguageSettings() {
+        let viewController = LanguageSettingsViewController(nibName: "LanguageSettingsViewController", bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
+    }
+    
+    func moveToAddNewTool() {
+        let viewController = AddToolsViewController(nibName: "AddToolsViewController", bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
+    }
+    
+    func moveToToolDetail() {
+        let viewController = ToolDetailViewController(nibName: "ToolDetailViewController", bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
     }
     
     // MARK: - GTLanguageSettingsViewControllerDelegate

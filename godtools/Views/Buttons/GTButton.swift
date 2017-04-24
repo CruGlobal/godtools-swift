@@ -9,7 +9,8 @@
 import UIKit
 
 @IBDesignable
-class Button: UIButton {
+class GTButton: UIButton {
+    
     @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
@@ -41,6 +42,12 @@ class Button: UIButton {
         }
         set {
             self.setTitleColor(newValue, for: UIControlState.normal)
+        }
+    }
+    
+    @IBInspectable var translationKey: String = "" {
+        didSet {
+            self.titleLabel?.text = translationKey.localized
         }
     }
 }

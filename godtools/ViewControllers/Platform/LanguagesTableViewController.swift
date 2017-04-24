@@ -13,8 +13,9 @@ protocol LanguagesTableViewControllerDelegate {
 
 class LanguagesTableViewController: BaseViewController {
     
-    let languagesManager = LanguagesManager.shared
+    var delegate: LanguagesTableViewControllerDelegate?
     
+    let languagesManager = LanguagesManager.shared
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -22,8 +23,6 @@ class LanguagesTableViewController: BaseViewController {
             tableView.dataSource = languagesManager
         }
     }
-    
-    var delegate: LanguagesTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
