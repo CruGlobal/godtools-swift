@@ -11,158 +11,146 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="HomeToolTableViewCell" customModule="godtools" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="121"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="113"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-zY-aHB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                        <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2s-WS-dBD">
+                        <rect key="frame" x="1" y="1" width="318" height="110"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="60" id="aRF-T2-HLM"/>
+                            <constraint firstAttribute="height" constant="110" id="3hq-Rb-adn"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="c1B-3g-EW2"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="345" id="l68-VZ-wwc"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
-                        <rect key="frame" x="0.0" y="60" width="320" height="49"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lJ-vJ-aCT">
+                        <rect key="frame" x="1" y="1" width="318" height="110"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-rG-bBE">
-                                <rect key="frame" x="0.0" y="0.0" width="236" height="49"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
-                                        <rect key="frame" x="8" y="13" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="22" id="8IC-TH-e65"/>
-                                            <constraint firstAttribute="height" constant="22" id="sS3-AB-TGL"/>
-                                        </constraints>
-                                        <state key="normal" image="download_green"/>
-                                        <connections>
-                                            <action selector="pressDownloadButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wmh-i4-ycK"/>
-                                        </connections>
-                                    </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vertical_line_grey" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-DS-b34">
-                                        <rect key="frame" x="38" y="10" width="1" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="1" id="11G-zJ-pww"/>
-                                            <constraint firstAttribute="height" constant="30" id="xhG-y6-3e2"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                        <rect key="frame" x="47" y="5" width="183" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="i8D-sh-0VJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                        <rect key="frame" x="47" y="26" width="104" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="104" id="IBI-W7-NQG"/>
-                                            <constraint firstAttribute="height" constant="21" id="S2n-N2-SIc"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="greyTextSmall"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-zY-aHB">
+                                <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
+                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="49" id="FIP-XF-1pI"/>
-                                    <constraint firstItem="ZbI-hf-Sfh" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="GtA-UN-L3r"/>
-                                    <constraint firstItem="qZt-B6-a2j" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="HDa-M3-jor"/>
-                                    <constraint firstItem="WtK-SD-emW" firstAttribute="top" secondItem="qZt-B6-a2j" secondAttribute="bottom" id="IF0-cM-397"/>
-                                    <constraint firstItem="qZt-B6-a2j" firstAttribute="top" secondItem="JrU-rG-bBE" secondAttribute="top" constant="5" id="J3X-mJ-GPr"/>
-                                    <constraint firstAttribute="trailing" secondItem="qZt-B6-a2j" secondAttribute="trailing" constant="6" id="Tjb-s6-8PX"/>
-                                    <constraint firstItem="WtK-SD-emW" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="UBl-4t-83h"/>
-                                    <constraint firstItem="mDc-DS-b34" firstAttribute="leading" secondItem="ZbI-hf-Sfh" secondAttribute="trailing" constant="8" id="Utu-Ob-OkY"/>
-                                    <constraint firstItem="WtK-SD-emW" firstAttribute="top" secondItem="qZt-B6-a2j" secondAttribute="bottom" id="ds7-cv-RHF"/>
-                                    <constraint firstItem="mDc-DS-b34" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="gwW-Lc-XNh"/>
-                                    <constraint firstItem="ZbI-hf-Sfh" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="8" id="pB3-PD-t7M"/>
-                                    <constraint firstAttribute="bottom" secondItem="WtK-SD-emW" secondAttribute="bottom" constant="2" id="tK1-9r-ADz"/>
+                                    <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-L0-hFD">
-                                <rect key="frame" x="236" y="0.0" width="84" height="49"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
+                                <rect key="frame" x="0.0" y="60" width="318" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="14" width="50" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="76V-W9-tls"/>
-                                            <constraint firstAttribute="height" constant="21" id="pms-hE-Twg"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackTextLegend"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zf0-VZ-Gbm">
-                                        <rect key="frame" x="54" y="13" width="22" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="22" id="8zn-vH-AU8"/>
-                                            <constraint firstAttribute="height" constant="22" id="wru-LR-AJz"/>
-                                        </constraints>
-                                        <state key="normal" image="info_blue"/>
-                                        <connections>
-                                            <action selector="pressInfoButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uzr-2d-CAB"/>
-                                        </connections>
-                                    </button>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-rG-bBE">
+                                        <rect key="frame" x="0.0" y="0.0" width="219.5" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
+                                                <rect key="frame" x="8.5" y="13" width="22" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="download_green"/>
+                                                <connections>
+                                                    <action selector="pressDownloadButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wmh-i4-ycK"/>
+                                                </connections>
+                                            </button>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="vertical_line_grey" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-DS-b34">
+                                                <rect key="frame" x="38.5" y="10" width="1" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                                <rect key="frame" x="47.5" y="5" width="166" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                                <rect key="frame" x="47.5" y="26" width="104" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="greyTextSmall"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-L0-hFD">
+                                        <rect key="frame" x="219.5" y="0.0" width="84" height="49"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="French" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="14" width="50" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackTextLegend"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zf0-VZ-Gbm">
+                                                <rect key="frame" x="54" y="13" width="22" height="22"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="info_blue"/>
+                                                <connections>
+                                                    <action selector="pressInfoButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="uzr-2d-CAB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="mo2-YN-vLH" firstAttribute="leading" secondItem="KFJ-L0-hFD" secondAttribute="leading" id="3ek-RO-pYj"/>
-                                    <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="8" id="ASt-RW-xMW"/>
-                                    <constraint firstAttribute="width" constant="84" id="Edg-iM-WC0"/>
-                                    <constraint firstItem="mo2-YN-vLH" firstAttribute="centerY" secondItem="KFJ-L0-hFD" secondAttribute="centerY" id="FRg-0H-QwV"/>
-                                    <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="leading" secondItem="mo2-YN-vLH" secondAttribute="trailing" constant="4" id="Q00-ig-zA2"/>
-                                    <constraint firstAttribute="height" constant="49" id="k2O-G4-jQp"/>
-                                    <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="centerY" secondItem="KFJ-L0-hFD" secondAttribute="centerY" id="oD9-z6-iNS"/>
+                                    <constraint firstAttribute="height" constant="50" id="6jD-pY-332"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="JrU-rG-bBE" firstAttribute="leading" secondItem="JR1-oY-z8k" secondAttribute="leading" id="Jh4-FZ-Bii"/>
-                            <constraint firstItem="JrU-rG-bBE" firstAttribute="top" secondItem="JR1-oY-z8k" secondAttribute="top" id="OD3-lj-1Wb"/>
-                            <constraint firstItem="KFJ-L0-hFD" firstAttribute="top" secondItem="JR1-oY-z8k" secondAttribute="top" id="VyO-GQ-Isj"/>
-                            <constraint firstAttribute="bottom" secondItem="KFJ-L0-hFD" secondAttribute="bottom" id="fgi-Xb-m4i"/>
-                            <constraint firstAttribute="trailing" secondItem="KFJ-L0-hFD" secondAttribute="trailing" id="nvy-du-NNj"/>
-                            <constraint firstAttribute="bottom" secondItem="JrU-rG-bBE" secondAttribute="bottom" id="qK9-A6-nXa"/>
-                            <constraint firstItem="KFJ-L0-hFD" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="trailing" id="skB-ku-cjL"/>
-                            <constraint firstItem="KFJ-L0-hFD" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="trailing" id="ysT-Zx-on8"/>
-                            <constraint firstAttribute="height" constant="49" id="z12-2s-GpM"/>
+                            <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="5fV-zY-aHB" secondAttribute="bottom" id="Blr-F3-YWR"/>
+                            <constraint firstAttribute="trailing" secondItem="JR1-oY-z8k" secondAttribute="trailing" id="DAm-nR-5AT"/>
+                            <constraint firstItem="JR1-oY-z8k" firstAttribute="width" secondItem="1lJ-vJ-aCT" secondAttribute="width" id="DlR-Hu-MQg"/>
+                            <constraint firstItem="5fV-zY-aHB" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="Ege-S6-Oeu"/>
+                            <constraint firstItem="5fV-zY-aHB" firstAttribute="top" secondItem="1lJ-vJ-aCT" secondAttribute="top" id="Ho6-XH-dX0"/>
+                            <constraint firstAttribute="bottom" secondItem="JR1-oY-z8k" secondAttribute="bottom" id="KSB-VW-qHg"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="PJw-zJ-EvV"/>
+                            <constraint firstItem="5fV-zY-aHB" firstAttribute="width" secondItem="1lJ-vJ-aCT" secondAttribute="width" id="UX1-Zm-gYm"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="345" id="cNH-GK-ABN"/>
+                            <constraint firstAttribute="trailing" secondItem="5fV-zY-aHB" secondAttribute="trailing" id="hAH-Ki-9d9"/>
+                            <constraint firstItem="JR1-oY-z8k" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="jfI-il-dz8"/>
+                            <constraint firstAttribute="height" constant="110" id="vRP-lq-pcR"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="JR1-oY-z8k" secondAttribute="bottom" constant="12" id="0jF-nI-3Hi"/>
-                    <constraint firstItem="JR1-oY-z8k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6lw-J3-egD"/>
-                    <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="5fV-zY-aHB" secondAttribute="bottom" id="aO5-ln-91J"/>
-                    <constraint firstAttribute="trailing" secondItem="JR1-oY-z8k" secondAttribute="trailing" id="dGf-A0-k1O"/>
-                    <constraint firstItem="5fV-zY-aHB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iMB-uX-cTr"/>
-                    <constraint firstItem="5fV-zY-aHB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nSR-4I-Qjd"/>
-                    <constraint firstAttribute="trailing" secondItem="5fV-zY-aHB" secondAttribute="trailing" id="uiE-Kn-5Mg"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" constant="1" id="7aF-Xu-cLa"/>
+                    <constraint firstAttribute="bottom" secondItem="S2s-WS-dBD" secondAttribute="bottom" constant="1" id="En1-zo-uqx"/>
+                    <constraint firstAttribute="bottom" secondItem="1lJ-vJ-aCT" secondAttribute="bottom" constant="1" id="FKB-Kv-tFg"/>
+                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="HB9-m8-JCW"/>
+                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="Ykq-Pg-0QP"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S2s-WS-dBD" secondAttribute="trailing" constant="1" id="dRE-dv-PQD"/>
+                    <constraint firstItem="S2s-WS-dBD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="eS7-uf-73n"/>
+                    <constraint firstItem="S2s-WS-dBD" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="kgX-TD-7Me"/>
+                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="mXg-ac-XBd"/>
+                    <constraint firstItem="S2s-WS-dBD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="y3e-vw-Ywe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="borderView" destination="1lJ-vJ-aCT" id="vEL-ld-RdJ"/>
+                <outlet property="contentBottomView" destination="JR1-oY-z8k" id="mHx-8u-4sc"/>
+                <outlet property="contentTopView" destination="5fV-zY-aHB" id="2Rp-fW-JPD"/>
                 <outlet property="downloadButton" destination="ZbI-hf-Sfh" id="aTN-VP-qAa"/>
                 <outlet property="greyVerticalLine" destination="mDc-DS-b34" id="J5F-IZ-qCO"/>
                 <outlet property="languageLabel" destination="mo2-YN-vLH" id="xd0-E6-cW3"/>
                 <outlet property="mainContentView" destination="JrU-rG-bBE" id="QY5-rn-SgV"/>
                 <outlet property="numberOfViewsLabel" destination="WtK-SD-emW" id="jsV-Rz-3Nh"/>
-                <outlet property="numberOfViewsLeadingConstraint" destination="UBl-4t-83h" id="UJE-ub-BHm"/>
+                <outlet property="shadowView" destination="S2s-WS-dBD" id="6Kj-AU-ipS"/>
                 <outlet property="titleLabel" destination="qZt-B6-a2j" id="KB6-Yj-Nwk"/>
-                <outlet property="titleLeadingConstraint" destination="HDa-M3-jor" id="FtL-x4-Blf"/>
             </connections>
         </tableViewCell>
     </objects>

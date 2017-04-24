@@ -10,6 +10,10 @@ import UIKit
 
 class HomeToolTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var borderView: UIView!
+    @IBOutlet weak var contentTopView: UIView!
+    @IBOutlet weak var contentBottomView: UIView!
     @IBOutlet weak var mainContentView: UIView!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
@@ -21,6 +25,7 @@ class HomeToolTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.setupUI()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -40,6 +45,34 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     @IBAction func pressInfoButton(_ sender: Any) {
+    }
+    
+    // MARK: UI 
+    
+    func setupUI() {
+        self.selectionStyle = .none
+        self.backgroundColor = .gtWhite
+        self.setBorders()
+        self.setShadows()
+    }
+    
+    func setBorders() {
+        let layer = borderView.layer
+        layer.cornerRadius = 5.0
+        layer.masksToBounds = true
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    func setShadows() {
+        self.shadowView.backgroundColor = .gtWhite
+        let layer = shadowView.layer
+        layer.cornerRadius = 3.0
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowRadius = 3.0
+        layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        layer.shadowOpacity = 0.4
+        layer.shouldRasterize = true
     }
     
 }

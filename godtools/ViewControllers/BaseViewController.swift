@@ -8,6 +8,8 @@
 
 import UIKit
 
+import PureLayout
+
 class BaseViewController: UIViewController {
     
     var navigationLeftButtons = [UIBarButtonItem]()

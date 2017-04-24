@@ -102,7 +102,7 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="66.5" y="577" width="242" height="52"/>
+                    <rect key="frame" x="67" y="577" width="242" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="52" id="PPh-0F-emD"/>
                         <constraint firstAttribute="width" constant="242" id="jwl-EJ-icG"/>
