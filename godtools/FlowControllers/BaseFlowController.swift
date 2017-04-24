@@ -18,6 +18,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
         self.configureNavigation(navigationController: navigationController)
         window.rootViewController = navigationController
+        self.defineObservers()
     }
     
     func initialViewController() -> UIViewController {
@@ -40,6 +41,29 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
         
         navigationController.delegate = self
+    }
+    
+    // Notifications
+    
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(displayMenu),
+                                               name: .displayMenuNotification,
+                                               object: nil)
+    }
+    
+    func displayMenu() {
+        let source = self.currentViewController
+        let destination = MenuViewController(nibName: "MenuViewController", bundle: nil)
+        
+        source?.view.superview?.insertSubview(destination.view, aboveSubview: (source?.view)!)
+        destination.view.transform = CGAffineTransform(translationX: -(source?.view.frame.size.width)!, y: 0)
+        
+        UIView.animate(withDuration: 0.25,
+                                   delay: 0.0,
+                                   options: UIViewAnimationOptions.curveEaseInOut,
+                                   animations: { destination.view.transform = CGAffineTransform(translationX: 0, y: 0) },
+                                   completion: { finished in source?.present(destination, animated: false, completion: nil) } )
     }
     
 }

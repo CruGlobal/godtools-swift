@@ -59,9 +59,6 @@ class HomeViewController: BaseViewController, ToolsManagerDelegate {
         self.addNavigationLanguageButton()
     }
     
-    override func navigationBurgerButtonAction() {
-    }
-    
     override func navigationPlusButtonAction() {
         self.delegate?.moveToAddNewTool()
     }

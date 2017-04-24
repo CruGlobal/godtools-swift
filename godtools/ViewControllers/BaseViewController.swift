@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol BaseViewControllerDelegate {
+    mutating func displayMenu();
+}
+
 class BaseViewController: UIViewController {
+    
+    var baseDelegate: BaseViewControllerDelegate?
     
     let kNavigationItemInitialSpace:CGFloat = -7.0
     let kNavigationItemSpace:CGFloat = 26.0
@@ -105,6 +111,7 @@ class BaseViewController: UIViewController {
     // MARK: - Navigation Buttons Actions
     
     func navigationBurgerButtonAction() {
+        NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
     }
     
     func navigationPlusButtonAction() {
