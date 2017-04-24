@@ -23,9 +23,9 @@ class DownloadButton: GTButton {
     }
     
     override func layoutSubviews() {
-        self.titleLabel?.text = "Download"
         super.layoutSubviews()
         self.increaseTitleWidth()
+        self.translationKey = "download"
     }
     
     fileprivate func increaseTitleWidth() {

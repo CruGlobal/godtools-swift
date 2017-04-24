@@ -11,11 +11,6 @@ import UIKit
 @IBDesignable
 class GTButton: UIButton {
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.titleLabel?.text = self.titleLabel?.text?.localized
-    }
-    
     @IBInspectable var cornerRadius: CGFloat {
         get {
             return layer.cornerRadius
@@ -47,6 +42,12 @@ class GTButton: UIButton {
         }
         set {
             self.setTitleColor(newValue, for: UIControlState.normal)
+        }
+    }
+    
+    @IBInspectable var translationKey: String = "" {
+        didSet {
+            self.titleLabel?.text = translationKey.localized
         }
     }
 }

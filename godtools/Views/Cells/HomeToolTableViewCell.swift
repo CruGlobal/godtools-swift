@@ -81,7 +81,7 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: Present data
     
     fileprivate func displayData() {
-        self.numberOfViewsLabel.text = String.localizedStringWithFormat("%@ views".localized, "5,000,000")
+        self.numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
 }

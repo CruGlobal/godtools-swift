@@ -44,9 +44,10 @@ class GTLabel: UILabel {
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.text = self.text?.localized
+    @IBInspectable var translationKey: String = "" {
+        didSet {
+            self.text = translationKey.localized
+        }
     }
     
 }

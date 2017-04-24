@@ -33,7 +33,8 @@ class ToolDetailViewController: BaseViewController {
     // MARK: Present data
     
     fileprivate func displayData() {
-        self.totalViewsLabel.text = String.localizedStringWithFormat("%@ views".localized, "5,000,000")
+        self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
+        self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, "40")
     }
 
 }
