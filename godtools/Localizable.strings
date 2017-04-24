@@ -10,7 +10,7 @@
 "About" = "About";
 
 // Tool Detail
-"%@ views" = "%@ views!";
+"%@ views" = "%@ views";
 
 // Language Settings
 "Language Settings" = "Language Settings";

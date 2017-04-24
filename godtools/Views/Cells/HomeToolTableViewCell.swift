@@ -56,6 +56,7 @@ class HomeToolTableViewCell: UITableViewCell {
         self.backgroundColor = .gtWhite
         self.setBorders()
         self.setShadows()
+        self.displayData()
     }
     
     func setBorders() {
@@ -75,6 +76,12 @@ class HomeToolTableViewCell: UITableViewCell {
         layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         layer.shadowOpacity = 0.4
         layer.shouldRasterize = true
+    }
+    
+    // MARK: Present data
+    
+    fileprivate func displayData() {
+        self.numberOfViewsLabel.text = String.localizedStringWithFormat(NSLocalizedString("%@ views", comment: ""), "5,000,000")
     }
     
 }
