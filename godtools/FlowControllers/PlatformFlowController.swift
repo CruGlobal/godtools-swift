@@ -37,6 +37,11 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
         self.pushViewController(viewController: viewController)
     }
     
+    func moveToTract() {
+        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        pushViewController(viewController: viewController)
+    }
+    
     // MARK: - GTLanguageSettingsViewControllerDelegate
     
     func moveToLanguagesList(primaryLanguage: Bool) {
