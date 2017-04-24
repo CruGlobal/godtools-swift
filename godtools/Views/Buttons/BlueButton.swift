@@ -8,7 +8,8 @@
 
 import UIKit
 
-class BlueButton: Button {
+class BlueButton: GTButton {
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.cornerRadius = 5.0
