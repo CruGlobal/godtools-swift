@@ -13,11 +13,10 @@ import PromiseKit
 import Spine
 import MagicalRecord
 
-class LanguagesManager: NSObject {
+class LanguagesManager: GTDataManager {
     static let shared = LanguagesManager()
     
     let path = "/languages"
-    let serializer = Serializer()
     
     var languages = [Language]()
     
@@ -44,7 +43,6 @@ class LanguagesManager: NSObject {
         showNetworkingIndicator()
         
         return issueGETRequest()
-            .responseData()
             .then { data -> Promise<[Language]> in
                 do {
                     let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
@@ -75,17 +73,9 @@ class LanguagesManager: NSObject {
             }
         })
     }
-    
-    private func issueGETRequest() -> DataRequest {
-        return Alamofire.request(self.buildURL())
-    }
-    
-    private func buildURL() -> String {
+
+    override func buildURLString() -> String {
         return "\(GTConstants.kApiBase)\(path)"
-    }
-    
-    fileprivate func showNetworkingIndicator() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
 }
 
