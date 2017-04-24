@@ -13,11 +13,10 @@ import PromiseKit
 import Spine
 import MagicalRecord
 
-class DownloadedResourceManager: NSObject {
+class DownloadedResourceManager: GTDataManager {
     static let shared = DownloadedResourceManager()
     
     let path = "/resources"
-    let serializer = Serializer()
     
     var resources = [DownloadedResource]()
     
@@ -34,11 +33,10 @@ class DownloadedResourceManager: NSObject {
     }
     
     func loadFromRemote() -> Promise<[DownloadedResource]> {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        showNetworkingIndicator()
         
         // load all resources and save them to disk
-        return issueGETRequest()
-            .responseData()
+        return issueGETRequest(["include" : "translations,pages"])
             .then { data -> Promise<[DownloadedResource]> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
@@ -83,22 +81,8 @@ class DownloadedResourceManager: NSObject {
         })
     }
     
-    private func issueGETRequest() -> DataRequest {
-        return Alamofire.request(self.buildURL(resourceId: nil),
-                                 method: HTTPMethod.get,
-                                 parameters: ["include" : "translations,pages"],
-                                 encoding: URLEncoding.default,
-                                 headers: nil)
-    }
-    
-    private func buildURL(resourceId: String?) -> String {
-        var urlString = "\(GTConstants.kApiBase)/\(self.path)"
-        
-        if resourceId != nil {
-            urlString = urlString.appending("/\(resourceId!)")
-        }
-        
-        return urlString
+    override func buildURLString() -> String {
+        return "\(GTConstants.kApiBase)/\(self.path)"
     }
 }
 
