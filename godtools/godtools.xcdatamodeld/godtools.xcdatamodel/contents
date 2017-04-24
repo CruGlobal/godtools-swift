@@ -4,6 +4,7 @@
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PageFile" inverseName="resource" inverseEntity="PageFile" syncable="YES"/>
         <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="downloadedResource" inverseEntity="Translation" syncable="YES"/>
     </entity>
     <entity name="Language" representedClassName="Language" syncable="YES">
@@ -13,8 +14,9 @@
         <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="language" inverseEntity="Translation" syncable="YES"/>
     </entity>
     <entity name="PageFile" representedClassName="PageFile" syncable="YES">
+        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PageFile" inverseName="translations" inverseEntity="PageFile" syncable="YES"/>
+        <relationship name="resource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="pages" inverseEntity="DownloadedResource" syncable="YES"/>
     </entity>
     <entity name="Translation" representedClassName="Translation" syncable="YES">
         <attribute name="isDownloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -25,12 +27,11 @@
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="downloadedResource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="translations" inverseEntity="DownloadedResource" syncable="YES"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
-        <relationship name="pageFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PageFile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="105"/>
+        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="120"/>
         <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="PageFile" positionX="-18" positionY="27" width="128" height="75"/>
-        <element name="Translation" positionX="-54" positionY="-9" width="128" height="180"/>
+        <element name="PageFile" positionX="-18" positionY="27" width="128" height="90"/>
+        <element name="Translation" positionX="-54" positionY="-9" width="128" height="165"/>
     </elements>
 </model>

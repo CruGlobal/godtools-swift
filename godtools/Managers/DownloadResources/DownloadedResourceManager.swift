@@ -13,11 +13,10 @@ import PromiseKit
 import Spine
 import MagicalRecord
 
-class DownloadedResourceManager: NSObject {
+class DownloadedResourceManager: GTDataManager {
     static let shared = DownloadedResourceManager()
     
     let path = "/resources"
-    let serializer = Serializer()
     
     var resources = [DownloadedResource]()
     
@@ -25,6 +24,7 @@ class DownloadedResourceManager: NSObject {
         super.init()
         serializer.registerResource(DownloadedResourceJson.self)
         serializer.registerResource(TranslationResource.self)
+        serializer.registerResource(PageResource.self)
     }
     
     func loadFromDisk() -> Promise<[DownloadedResource]> {
@@ -33,11 +33,10 @@ class DownloadedResourceManager: NSObject {
     }
     
     func loadFromRemote() -> Promise<[DownloadedResource]> {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        showNetworkingIndicator()
         
         // load all resources and save them to disk
-        return issueGETRequest()
-            .responseData()
+        return issueGETRequest(["include" : "translations,pages"])
             .then { data -> Promise<[DownloadedResource]> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
@@ -68,26 +67,22 @@ class DownloadedResourceManager: NSObject {
                     cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                     cachedResource.addToTranslations(cachedTranslation)
                 }
+                
+                let remotePages = remoteResource.pages!
+                for remotePageGeneric in remotePages {
+                    let remotePage = remotePageGeneric as! PageResource
+                    
+                    let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remotePage.id!, in: context)
+
+                    cachedPage.filename = remotePage.filename
+                    cachedPage.resource = cachedResource
+                }
             }
         })
     }
     
-    private func issueGETRequest() -> DataRequest {
-        return Alamofire.request(self.buildURL(resourceId: nil),
-                                 method: HTTPMethod.get,
-                                 parameters: ["include" : "translations"],
-                                 encoding: URLEncoding.default,
-                                 headers: nil)
-    }
-    
-    private func buildURL(resourceId: String?) -> String {
-        var urlString = "\(GTConstants.kApiBase)/\(self.path)"
-        
-        if resourceId != nil {
-            urlString = urlString.appending("/\(resourceId!)")
-        }
-        
-        return urlString
+    override func buildURLString() -> String {
+        return "\(GTConstants.kApiBase)/\(self.path)"
     }
 }
 
