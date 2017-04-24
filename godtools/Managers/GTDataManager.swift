@@ -14,11 +14,20 @@ import Spine
 class GTDataManager: NSObject {
     
     let serializer = Serializer()
+    let reachabilityManager = NetworkReachabilityManager(host: "\(GTConstants.kApiBase)/monitors/lb")
+    
+    override init() {
+        reachabilityManager?.startListening()
+    }
     
     func issueGETRequest() -> Promise<Data> {
-        return Alamofire
-            .request(buildURLString())
-            .responseData()
+        if reachabilityManager!.isReachable {
+            return Alamofire
+                .request(buildURLString())
+                .responseData()
+        }
+        
+        return Promise(error: NSError(domain: "godtools", code: 502, userInfo: ["message" : "Network is not reachable"]))
     }
     
     func issueGETRequest(_ params: Parameters) -> Promise<Data> {
