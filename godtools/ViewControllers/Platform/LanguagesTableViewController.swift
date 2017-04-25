@@ -46,7 +46,9 @@ class LanguagesTableViewController: BaseViewController {
     
     func loadFromRemote() {
         languagesManager.loadFromRemote().catch(execute: { error in
-            self.showAlertControllerWith(message: "language_download_error".localized)
+            if self.languagesManager.languages.count == 0 {
+                self.showAlertControllerWith(message: "language_download_error".localized)
+            }
         }).always {
             self.reloadTableView()
             self.hideNetworkActivityIndicator()
