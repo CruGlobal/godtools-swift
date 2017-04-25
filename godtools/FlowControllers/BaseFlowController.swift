@@ -53,17 +53,20 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     func displayMenu() {
-        let source = self.currentViewController
-        let destination = MenuViewController(nibName: "MenuViewController", bundle: nil)
+        let menuViewController = MenuViewController(nibName: "MenuViewController", bundle: nil)
+        let navigationController = self.currentViewController?.navigationController
+        let src = self.currentViewController
+        let dst = menuViewController
         
-        source?.view.superview?.insertSubview(destination.view, aboveSubview: (source?.view)!)
-        destination.view.transform = CGAffineTransform(translationX: -(source?.view.frame.size.width)!, y: 0)
-        
+        src?.view.superview?.insertSubview(dst.view, aboveSubview: (src?.view)!)
+        dst.view.transform = CGAffineTransform(translationX: -(src?.view.frame.size.width)!, y: 0)
         UIView.animate(withDuration: 0.25,
-                                   delay: 0.0,
-                                   options: UIViewAnimationOptions.curveEaseInOut,
-                                   animations: { destination.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                                   completion: { finished in source?.present(destination, animated: false, completion: nil) } )
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: { finished in
+                        navigationController?.pushViewController(dst, animated: false) } )
     }
     
 }
