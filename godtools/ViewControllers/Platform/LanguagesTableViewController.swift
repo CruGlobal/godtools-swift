@@ -39,9 +39,7 @@ class LanguagesTableViewController: BaseViewController {
     // MARK: - Load data
     
     func loadFromDisk() {
-        languagesManager.loadFromDisk().catch(execute: { error in
-            self.showAlertControllerWith(message: error.localizedDescription)
-        }).always {
+        languagesManager.loadFromDisk().always {
             self.reloadTableView()
         }
     }
