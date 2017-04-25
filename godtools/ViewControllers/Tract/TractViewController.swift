@@ -11,7 +11,6 @@ import UIKit
 
 class TractViewController: UIViewController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +40,7 @@ class TractViewController: UIViewController {
     }
     
     func shareButtonWasPressed() {
-        let activityController = UIActivityViewController(activityItems: ["Hello world"], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, "www.knowgod.com")], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
 }
