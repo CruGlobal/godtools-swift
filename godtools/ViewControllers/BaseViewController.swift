@@ -121,6 +121,11 @@ class BaseViewController: UIViewController {
     
     func showAlertControllerWith(message: String?) {
         let alert = UIAlertController(title: "Error loading languages", message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default) { (action) in
+            alert.presentingViewController?.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
 
