@@ -88,9 +88,9 @@ extension LanguagesManager: UITableViewDataSource {
     static let languageCellIdentifier = "languageCell"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.backgroundColor = .clear
-        cell.textLabel?.text = languages[indexPath.row].localizedName
+        let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
+        cell.languageLabel.text = languages[indexPath.row].localizedName
+        cell.languageExist(exist: false)
         return cell
     }
     

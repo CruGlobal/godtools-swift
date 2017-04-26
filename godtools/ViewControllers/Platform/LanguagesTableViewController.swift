@@ -58,8 +58,7 @@ class LanguagesTableViewController: BaseViewController {
     // MARK: - Helpers
     
     fileprivate func registerCells() {
-        self.tableView .register(
-            LanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
+        self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
     }
     
     fileprivate func reloadTableView() {

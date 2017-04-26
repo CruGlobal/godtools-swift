@@ -63,6 +63,7 @@
             <connections>
                 <outlet property="deleteButton" destination="5ZR-7Z-Rom" id="ads-V8-LYk"/>
                 <outlet property="downloadButton" destination="3ei-pw-TMf" id="r2x-sY-XEy"/>
+                <outlet property="languageLabel" destination="6RB-uZ-KlG" id="KLl-rI-03K"/>
             </connections>
         </tableViewCell>
     </objects>
