@@ -26,6 +26,9 @@ class GTLabel: UILabel {
             case "blackText":
                 self.font = UIFont.gtRegular(size: 15.0)
                 self.textColor = UIColor.gtBlack
+            case "blackTextSmall":
+                self.font = UIFont.gtRegular(size: 13.0)
+                self.textColor = UIColor.gtBlack
             case "blackTextLegend":
                 self.font = UIFont.gtRegular(size: 10.0)
                 self.textColor = UIColor.gtBlack
