@@ -10,14 +10,8 @@ import UIKit
 
 class MenuViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
-    enum MenuCellKind {
-        case link
-        case option
-    }
-    
     @IBOutlet weak var tableView: UITableView!
     let menuCellIdentifier = "cellIdentifier"
-    
     let general = ["language_settings", "about", "help", "contact_us", "notifications", "preview_mode_translators_only"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy"]
@@ -36,6 +30,21 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: UI
+    
+    fileprivate func setupStyle() {
+        self.view.backgroundColor = .clear
+        self.tableView.backgroundColor = .gtGreyLight
+        self.registerCells()
+    }
+    
+    // MARK: - Navigation Buttons
+    
+    override func configureNavigationButtons() {
+        self.addEmptyLeftButton()
+        self.addDoneButton()
     }
     
     // MARK: - UITableViewDataSource
@@ -67,35 +76,25 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
     
     // MARK: - UITableViewDelegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 40)
+        let headerView:UIView = UIView(frame: headerFrame)
+        headerView.backgroundColor = .gtGreyLight
+        
+        let labelFrame = CGRect(x: 32.0, y: 11.0, width: 100.0, height: 18.0)
+        let titleLabel:GTLabel = GTLabel(frame: labelFrame)
+        titleLabel.gtStyle = "blackTextSmall"
+        titleLabel.text = self.getSection(section).localized.capitalized
+        headerView.addSubview(titleLabel)
+        
+        return headerView
     }
     
-    fileprivate func setupStyle() {
-        self.view.backgroundColor = .clear
-        self.tableView.backgroundColor = .gtGreyLight
-        self.registerCells()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: self.menuCellIdentifier)
-    }
-    
-    fileprivate func getSection(_ section: Int) -> String {
-        return header[section]
-    }
-    
-    fileprivate func getSectionData(_ section: Int) -> Array<String> {
-        var values = Array<String>()
-        if section == 0 {
-            values = self.general
-        }
-        else if section == 1 {
-            values = self.share
-        }
-        else {
-            values = self.legal
-        }
-        return values
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -114,25 +113,24 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         return nil
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 40)
-        let headerView:UIView = UIView(frame: headerFrame)
-        headerView.backgroundColor = .gtGreyLight
-        
-        let labelFrame = CGRect(x: 32.0, y: 11.0, width: 100.0, height: 18.0)
-        let titleLabel:GTLabel = GTLabel(frame: labelFrame)
-        titleLabel.gtStyle = "blackTextSmall"
-        titleLabel.text = self.getSection(section).localized.capitalized
-        headerView.addSubview(titleLabel)
-        
-        return headerView
+    // MARK: - Helpers
+    
+    fileprivate func getSection(_ section: Int) -> String {
+        return header[section]
     }
     
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-        self.addEmptyLeftButton()
-        self.addDoneButton()
+    fileprivate func getSectionData(_ section: Int) -> Array<String> {
+        var values = Array<String>()
+        if section == 0 {
+            values = self.general
+        }
+        else if section == 1 {
+            values = self.share
+        }
+        else {
+            values = self.legal
+        }
+        return values
     }
 
 }
