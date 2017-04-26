@@ -12,9 +12,10 @@ protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAddNewTool()
     mutating func moveToToolDetail()
+    mutating func moveToTract()
 }
 
-class HomeViewController: BaseViewController, ToolsManagerDelegate {
+class HomeViewController: BaseViewController {
     
     var delegate: HomeViewControllerDelegate?
     
@@ -82,10 +83,10 @@ class HomeViewController: BaseViewController, ToolsManagerDelegate {
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0)
     }
-    
-    // MARK: - ToolsManagerDelegate
-    
+}
+
+extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        self.delegate?.moveToToolDetail()
+        self.delegate?.moveToTract()
     }
 }
