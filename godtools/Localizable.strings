@@ -12,7 +12,7 @@
 "total_languages" = "%@ languages";
 
 // Language Settings
-"Language Settings" = "Language Settings";
+"language_settings" = "Language Settings";
 "primary_language" = "Primary Language";
 "select_primary_language" = "Select a Primary Language";
 "parallel_language" = "Parallel Language";
