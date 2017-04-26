@@ -49,6 +49,9 @@
                                 <constraint firstAttribute="width" constant="130" id="q8j-i5-Y0H"/>
                             </constraints>
                             <state key="normal" title="Okay"/>
+                            <connections>
+                                <action selector="pressOkayButton:" destination="-1" eventType="touchUpInside" id="TAz-YP-Mwa"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -83,6 +86,9 @@
                                 <constraint firstAttribute="width" constant="130" id="WLG-kO-dXm"/>
                             </constraints>
                             <state key="normal" title="Now"/>
+                            <connections>
+                                <action selector="pressNowButton:" destination="-1" eventType="touchUpInside" id="FMs-jy-kZ8"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn">
                             <rect key="frame" x="192" y="226" width="130" height="48"/>
@@ -91,6 +97,9 @@
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
                             <state key="normal" title="Later"/>
+                            <connections>
+                                <action selector="pressLaterButton:" destination="-1" eventType="touchUpInside" id="D7U-VW-uG7"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
