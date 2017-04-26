@@ -56,6 +56,12 @@
 		4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */; };
 		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
 		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
+		4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A301EB0DF3E00C03447 /* BaseTractView.swift */; };
+		4F462A331EB0DF5200C03447 /* BaseTractView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F462A321EB0DF5200C03447 /* BaseTractView.xib */; };
+		4F462A391EB0E28900C03447 /* Hero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A351EB0E28900C03447 /* Hero.swift */; };
+		4F462A3A1EB0E28900C03447 /* Paragraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A361EB0E28900C03447 /* Paragraph.swift */; };
+		4F462A3B1EB0E28900C03447 /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A371EB0E28900C03447 /* TextContent.swift */; };
+		4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */; };
 		4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707D61EAA985500A540C2 /* PageResource.swift */; };
 		4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707D81EAE760D00A540C2 /* GTDataManager.swift */; };
 		4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5707E01EAE8CA300A540C2 /* TractViewController.xib */; };
@@ -116,6 +122,12 @@
 		4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceJson.swift; path = Managers/DownloadResources/DownloadedResourceJson.swift; sourceTree = "<group>"; };
 		4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationResource.swift; path = Managers/Translations/TranslationResource.swift; sourceTree = "<group>"; };
 		4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceManager.swift; path = Managers/DownloadResources/DownloadedResourceManager.swift; sourceTree = "<group>"; };
+		4F462A301EB0DF3E00C03447 /* BaseTractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractView.swift; path = Views/BaseTractView.swift; sourceTree = "<group>"; };
+		4F462A321EB0DF5200C03447 /* BaseTractView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BaseTractView.xib; path = Views/BaseTractView.xib; sourceTree = "<group>"; };
+		4F462A351EB0E28900C03447 /* Hero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Hero.swift; path = Views/TractElements/Hero.swift; sourceTree = "<group>"; };
+		4F462A361EB0E28900C03447 /* Paragraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Paragraph.swift; path = Views/TractElements/Paragraph.swift; sourceTree = "<group>"; };
+		4F462A371EB0E28900C03447 /* TextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextContent.swift; path = Views/TractElements/TextContent.swift; sourceTree = "<group>"; };
+		4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractElement.swift; path = Views/TractElements/BaseTractElement.swift; sourceTree = "<group>"; };
 		4F5707D61EAA985500A540C2 /* PageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageResource.swift; path = Managers/PageResource.swift; sourceTree = "<group>"; };
 		4F5707D81EAE760D00A540C2 /* GTDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTDataManager.swift; path = Managers/GTDataManager.swift; sourceTree = "<group>"; };
 		4F5707E01EAE8CA300A540C2 /* TractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TractViewController.xib; path = Tract/TractViewController.xib; sourceTree = "<group>"; };
@@ -314,6 +326,9 @@
 				0FB73E4B1EA9063E000BA60D /* Buttons */,
 				0FB73E4E1EA9063E000BA60D /* Cells */,
 				0FB73E511EA9063E000BA60D /* Labels */,
+				4FF82B9A1EB0D85800890E53 /* TractElements */,
+				4F462A301EB0DF3E00C03447 /* BaseTractView.swift */,
+				4F462A321EB0DF5200C03447 /* BaseTractView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -404,6 +419,17 @@
 			path = godtools;
 			sourceTree = "<group>";
 		};
+		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
+			isa = PBXGroup;
+			children = (
+				4F462A351EB0E28900C03447 /* Hero.swift */,
+				4F462A361EB0E28900C03447 /* Paragraph.swift */,
+				4F462A371EB0E28900C03447 /* TextContent.swift */,
+				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
+			);
+			name = TractElements;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -481,6 +507,7 @@
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
+				4F462A331EB0DF5200C03447 /* BaseTractView.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -561,10 +588,12 @@
 				4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
+				4F462A391EB0E28900C03447 /* Hero.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
@@ -584,12 +613,15 @@
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
+				4F462A3B1EB0E28900C03447 /* TextContent.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
+				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				4F462A3A1EB0E28900C03447 /* Paragraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
-				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,

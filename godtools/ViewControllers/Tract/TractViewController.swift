@@ -15,6 +15,7 @@ class TractViewController: BaseViewController {
         super.viewDidLoad()
         
         displayTitle()
+        initializeView()
     }
     
     override func configureNavigationButtons() {
@@ -28,6 +29,19 @@ class TractViewController: BaseViewController {
         } else {
             navigationItem.title = currentTractTitle()
         }
+    }
+    
+    fileprivate func initializeView() {
+        let baseView = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
+        let navigationBarFrame = navigationController!.navigationBar.frame
+        let startingPoint = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        
+        baseView.frame = CGRect(x: 0.0,
+                                y: startingPoint,
+                                width: self.view.frame.size.width,
+                                height: self.view.frame.size.height - startingPoint)
+                
+        view.addSubview(baseView)
     }
     
     override func homeButtonAction() {
