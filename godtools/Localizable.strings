@@ -19,5 +19,13 @@
 "share_god_tools_native_language" = "Share God Tools with someone in their native language";
 "not_every_tool_is_available" = "Not every tool is available in every language";
 
+// Alert Controllers
+"download_error" = "Download Error";
+"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
+
+// Tract - Sharing
+"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+
 // Buttons
 "download" = "Download";
+"dismiss" = "Dismiss";

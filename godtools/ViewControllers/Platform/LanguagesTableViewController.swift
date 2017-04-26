@@ -39,16 +39,16 @@ class LanguagesTableViewController: BaseViewController {
     // MARK: - Load data
     
     func loadFromDisk() {
-        languagesManager.loadFromDisk().catch(execute: { error in
-            self.showAlertControllerWith(message: error.localizedDescription)
-        }).always {
+        languagesManager.loadFromDisk().always {
             self.reloadTableView()
         }
     }
     
     func loadFromRemote() {
         languagesManager.loadFromRemote().catch(execute: { error in
-            self.showAlertControllerWith(message: error.localizedDescription)
+            if self.languagesManager.languages.count == 0 {
+                self.showAlertControllerWith(message: "language_download_error".localized)
+            }
         }).always {
             self.reloadTableView()
             self.hideNetworkActivityIndicator()

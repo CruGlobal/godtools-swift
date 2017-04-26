@@ -94,6 +94,16 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
+    func addHomeButton() {
+        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "home"), style: UIBarButtonItemStyle.done, target: self, action: #selector(homeButtonAction))
+        self.navigationLeftButtons.append(button)
+    }
+    
+    func addShareButton() {
+        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItemStyle.done, target: self, action: #selector(shareButtonAction))
+        self.navigationRightButtons.append(button)
+    }
+    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: 22.0, height: 22.0)
         let button: UIButton = UIButton(frame: buttonFrame)
@@ -113,6 +123,12 @@ class BaseViewController: UIViewController {
     func navigationLanguageButtonAction() {
     }
     
+    func homeButtonAction() {
+    }
+    
+    func shareButtonAction() {
+    }
+    
     // MARK: - Helpers
     
     func hideNetworkActivityIndicator() {
@@ -120,7 +136,15 @@ class BaseViewController: UIViewController {
     }
     
     func showAlertControllerWith(message: String?) {
-        let alert = UIAlertController(title: "Error loading languages", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "download_error".localized,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "dismiss".localized, style: .default) { (action) in
+            alert.presentingViewController?.dismiss(animated: true, completion: nil)
+        }
+        
+        alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
 
