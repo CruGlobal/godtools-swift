@@ -85,6 +85,11 @@ class BaseViewController: UIViewController {
     func configureNavigationButtons() {
     }
     
+    func addEmptyLeftButton() {
+        let button = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.done, target: nil, action: nil)
+        self.navigationLeftButtons.append(button)
+    }
+    
     func addNavigationBurgerButton() {
         let button = self.buildNavigationButton(imageName: "burger_white", action: #selector(navigationBurgerButtonAction))
         self.navigationLeftButtons.append(button)
@@ -107,6 +112,11 @@ class BaseViewController: UIViewController {
     
     func addShareButton() {
         let button = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItemStyle.done, target: self, action: #selector(shareButtonAction))
+        self.navigationRightButtons.append(button)
+    }
+    
+    func addDoneButton() {
+        let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
         self.navigationRightButtons.append(button)
     }
     
@@ -134,6 +144,10 @@ class BaseViewController: UIViewController {
     }
     
     func shareButtonAction() {
+    }
+    
+    func doneButtonAction() {
+        NotificationCenter.default.post(name: .dismissMenuNotification, object: nil)
     }
     
     // MARK: - Helpers

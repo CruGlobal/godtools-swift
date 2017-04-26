@@ -127,5 +127,12 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         
         return headerView
     }
+    
+    // MARK: - Navigation Buttons
+    
+    override func configureNavigationButtons() {
+        self.addEmptyLeftButton()
+        self.addDoneButton()
+    }
 
 }

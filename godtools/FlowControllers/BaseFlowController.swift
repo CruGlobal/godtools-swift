@@ -50,6 +50,10 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                                                selector: #selector(displayMenu),
                                                name: .displayMenuNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dismissMenu),
+                                               name: .dismissMenuNotification,
+                                               object: nil)
     }
     
     func displayMenu() {
@@ -57,17 +61,37 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         let navigationController = self.currentViewController?.navigationController
         let src = self.currentViewController
         let dst = menuViewController
-        let dstViewWidth = dst.view.frame.size.width
+        let srcViewWidth = src?.view.frame.size.width
         
         src?.view.superview?.insertSubview(dst.view, aboveSubview: (src?.view)!)
-        dst.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 64)
+        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth!), y: 64)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
+                        src?.view.transform = CGAffineTransform(translationX: srcViewWidth!, y: 0)
                         dst.view.transform = CGAffineTransform(translationX: 0, y: 64) },
                        completion: { finished in
                         navigationController?.pushViewController(dst, animated: false) } )
+    }
+    
+    func dismissMenu() {
+        let navigationController = self.currentViewController?.navigationController
+        let menuViewController = navigationController?.topViewController as! MenuViewController
+        let src = menuViewController
+        let dst = self.currentViewController
+        let dstViewWidth = dst?.view.frame.size.width
+        
+        src.view.superview?.insertSubview(dst!.view, aboveSubview: (src.view)!)
+        dst?.view.transform = CGAffineTransform(translationX: dstViewWidth!, y: 0)
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 64)
+                        dst?.view.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: { finished in
+                        navigationController?.popViewController(animated: false) } )
     }
     
 }

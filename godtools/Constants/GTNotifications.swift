@@ -10,4 +10,5 @@ import Foundation
 
 extension Notification.Name {
     static let displayMenuNotification = Notification.Name("displayMenuNotificationName")
+    static let dismissMenuNotification = Notification.Name("dismissMenuNotificationName")
 }
