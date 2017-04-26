@@ -37,4 +37,5 @@ class MenuTableViewCell: UITableViewCell {
             self.settingSwitch.isHidden = true
         }
     }
+    
 }
