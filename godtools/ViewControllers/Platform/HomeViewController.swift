@@ -35,6 +35,7 @@ class HomeViewController: BaseViewController {
         self.displayWorkingView()
         self.registerCells()
         self.setupStyle()
+        self.defineObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +50,19 @@ class HomeViewController: BaseViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // Notifications
+    
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentLanguageSettings),
+                                               name: .presentLanguageSettingsNotification,
+                                               object: nil)
+    }
+    
+    @objc fileprivate func presentLanguageSettings() {
+        self.delegate?.moveToUpdateLanguageSettings()
     }
     
     // MARK: - Actions
