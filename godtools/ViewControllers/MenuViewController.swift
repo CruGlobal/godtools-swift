@@ -81,7 +81,7 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         let headerView:UIView = UIView(frame: headerFrame)
         headerView.backgroundColor = .gtGreyLight
         
-        let labelFrame = CGRect(x: 32.0, y: 11.0, width: 100.0, height: 18.0)
+        let labelFrame = CGRect(x: 40.0, y: 16.0, width: 100.0, height: 18.0)
         let titleLabel:GTLabel = GTLabel(frame: labelFrame)
         titleLabel.gtStyle = "blackTextSmall"
         titleLabel.text = self.getSection(section).localized.capitalized
