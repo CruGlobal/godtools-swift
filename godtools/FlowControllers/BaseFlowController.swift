@@ -91,7 +91,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                         src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 64)
                         dst?.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
-                        navigationController?.popViewController(animated: false) } )
+                        _ = navigationController?.popViewController(animated: false) } )
     }
     
 }
