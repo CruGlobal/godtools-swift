@@ -25,6 +25,9 @@
 		0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */; };
 		0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */; };
 		0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */; };
+		0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1B1F91EB13C930033DAB9 /* OnboardingViewController.swift */; };
+		0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB1B1FA1EB13C930033DAB9 /* OnboardingViewController.xib */; };
+		0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1B2091EB151300033DAB9 /* TransparentButton.swift */; };
 		0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4C1EA9063E000BA60D /* BlueButton.swift */; };
 		0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4D1EA9063E000BA60D /* GTButton.swift */; };
 		0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */; };
@@ -82,6 +85,9 @@
 		0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTSwitch.swift; path = Views/Switch/GTSwitch.swift; sourceTree = "<group>"; };
+		0FB1B1F91EB13C930033DAB9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		0FB1B1FA1EB13C930033DAB9 /* OnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
+		0FB1B2091EB151300033DAB9 /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		0FB73E4C1EA9063E000BA60D /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
 		0FB73E4D1EA9063E000BA60D /* GTButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTButton.swift; sourceTree = "<group>"; };
 		0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
@@ -167,6 +173,7 @@
 		0F7D50211EA931BA00F5957E /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				0FB1B1F81EB13C6D0033DAB9 /* Onboarding */,
 				0F7D50221EA933B000F5957E /* HomeViewController.swift */,
 				0F7D50231EA933B000F5957E /* HomeViewController.xib */,
 				0F93A9391EAA70150049C110 /* AddToolsViewController.swift */,
@@ -194,12 +201,22 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+		0FB1B1F81EB13C6D0033DAB9 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				0FB1B1F91EB13C930033DAB9 /* OnboardingViewController.swift */,
+				0FB1B1FA1EB13C930033DAB9 /* OnboardingViewController.xib */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		0FB73E4B1EA9063E000BA60D /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
 				0FB73E4D1EA9063E000BA60D /* GTButton.swift */,
 				0FB73E4C1EA9063E000BA60D /* BlueButton.swift */,
 				0F93A93D1EAAA93B0049C110 /* DownloadButton.swift */,
+				0FB1B2091EB151300033DAB9 /* TransparentButton.swift */,
 			);
 			name = Buttons;
 			path = Views/Buttons;
@@ -454,6 +471,7 @@
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
+				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
@@ -568,8 +586,10 @@
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */,
+				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
+				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,

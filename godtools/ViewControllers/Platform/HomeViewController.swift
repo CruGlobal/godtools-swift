@@ -35,15 +35,34 @@ class HomeViewController: BaseViewController {
         self.displayWorkingView()
         self.registerCells()
         self.setupStyle()
+        self.defineObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.toolsManager.delegate = self
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.displayOnboarding()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    // Notifications
+    
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(presentLanguageSettings),
+                                               name: .presentLanguageSettingsNotification,
+                                               object: nil)
+    }
+    
+    @objc fileprivate func presentLanguageSettings() {
+        self.delegate?.moveToUpdateLanguageSettings()
     }
     
     // MARK: - Actions
@@ -82,6 +101,12 @@ class HomeViewController: BaseViewController {
         self.tableView.backgroundColor = .gtWhite
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0)
+    }
+    
+    fileprivate func displayOnboarding() {
+        let onboardingViewController = OnboardingViewController(nibName: String(describing:OnboardingViewController.self), bundle: nil)
+        onboardingViewController.modalPresentationStyle = .overCurrentContext
+        self.present(onboardingViewController, animated: true, completion: nil)
     }
 }
 
