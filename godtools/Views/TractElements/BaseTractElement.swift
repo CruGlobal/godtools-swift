@@ -24,13 +24,9 @@ class BaseTractElement: NSObject {
     var view: UIView?
     var children:[BaseTractElement]?
     
-    override init() {
-        super.init()
-    }
-    
     init(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
         super.init()
-        setupView(data: data, startOnY: yPosition)
+        setupElement(data: data, startOnY: yPosition)
     }
     
     func render() -> UIView {
@@ -39,38 +35,38 @@ class BaseTractElement: NSObject {
     
     // MARK: - Build content
     
-    func setupView(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
+    func setupElement(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
         let dataContent = splitData(data: data)
         let currentYPosition = yPosition
-        
-        //setup view (work with: dataContent.properties)
-        
-        //setup children
-        self.children = buildChildrenForData(dataContent.children, startOnY: currentYPosition)
+        setupView(properties: dataContent.properties)
+        buildChildrenForData(dataContent.children, startOnY: currentYPosition)
     }
     
-    func buildContentForDictionary(_ data: Dictionary<String, Any>, startOnY yPosition: CGFloat) -> BaseTractElement {
-        let dataContent = splitData(data: data)
-        var item:BaseTractElement?
-        
-        if dataContent.kind == "hero" {
-            item = Hero(data: data, startOnY: yPosition)
-        }
-        
-        return item!
+    func setupView(properties: Dictionary<String, Any>) {
     }
     
-    func buildChildrenForData(_ data: Array<Dictionary<String, Any>>, startOnY yPosition: CGFloat) -> Array<BaseTractElement> {
+    func buildChildrenForData(_ data: Array<Dictionary<String, Any>>, startOnY yPosition: CGFloat) {
         var currentYPosition = yPosition
         var children:Array = [BaseTractElement]()
         
         for dictionary in data {
-            let item = buildContentForDictionary(dictionary, startOnY: currentYPosition)
-            currentYPosition = item.yEndPosition
-            children.append(item)
+            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            currentYPosition = element.yEndPosition
+            children.append(element)
         }
         
-        return children
+        self.children = children
+    }
+    
+    func buildElementForDictionary(_ data: Dictionary<String, Any>, startOnY yPosition: CGFloat) -> BaseTractElement {
+        let dataContent = splitData(data: data)
+        var element:BaseTractElement?
+        
+        if dataContent.kind == "hero" {
+            element = Hero(data: data, startOnY: yPosition)
+        }
+        
+        return element!
     }
     
     // MARK: - Helpers

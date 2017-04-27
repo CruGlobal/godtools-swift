@@ -10,4 +10,7 @@ import UIKit
 
 class TractRoot: BaseTractElement {
     
+    override func setupView(properties: Dictionary<String, Any>) {
+    }
+    
 }

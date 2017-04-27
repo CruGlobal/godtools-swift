@@ -24,8 +24,8 @@ class BaseTractView: UIView {
         backgroundColor = .orange
         
         let data: Dictionary<String, Any>?
-        let rootView: TractRoot = TractRoot()
-        rootView.buildContentForDictionary(data: data, startOnY: yPosition)
+        let yPosition: CGFloat = 0.0
+        let rootView: TractRoot = TractRoot(data: data!, startOnY: yPosition)
         
         let text = TextContent()
         text.text = "Foo"
