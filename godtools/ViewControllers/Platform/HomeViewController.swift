@@ -104,7 +104,7 @@ class HomeViewController: BaseViewController {
     }
     
     fileprivate func displayOnboarding() {
-        let onboardingViewController = OnboardingViewController(nibName: "OnboardingViewController", bundle: nil)
+        let onboardingViewController = OnboardingViewController(nibName: String(describing:OnboardingViewController.self), bundle: nil)
         onboardingViewController.modalPresentationStyle = .overCurrentContext
         self.present(onboardingViewController, animated: true, completion: nil)
     }
