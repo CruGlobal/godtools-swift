@@ -20,19 +20,19 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
     // MARK: - HomeViewControllerDelegate
     
     func moveToUpdateLanguageSettings() {
-        let viewController = LanguageSettingsViewController(nibName: "LanguageSettingsViewController", bundle: nil)
+        let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
     
     func moveToAddNewTool() {
-        let viewController = AddToolsViewController(nibName: "AddToolsViewController", bundle: nil)
+        let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
     
     func moveToToolDetail() {
-        let viewController = ToolDetailViewController(nibName: "ToolDetailViewController", bundle: nil)
+        let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
@@ -45,8 +45,9 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
     // MARK: - GTLanguageSettingsViewControllerDelegate
     
     func moveToLanguagesList(primaryLanguage: Bool) {
-        let viewController = LanguagesTableViewController(nibName: "LanguagesTableViewController", bundle: nil)
+        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
         viewController.delegate = self
+        viewController.selectingPrimaryLanguage(primaryLanguage)
         self.pushViewController(viewController: viewController)
     }
     

@@ -72,8 +72,7 @@ class BaseViewController: UIViewController {
         for buttonItem: UIBarButtonItem in self.navigationRightButtons {
             if rightButtons.isEmpty {
                 rightButtons.append(negativeSpace)
-            }
-            else {
+            } else {
                 rightButtons.append(fixedSpace)
             }
             rightButtons.append(buttonItem)

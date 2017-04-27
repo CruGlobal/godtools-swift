@@ -19,7 +19,6 @@ class MenuTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.contentView.backgroundColor = .gtGreyLight
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
