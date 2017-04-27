@@ -11,7 +11,7 @@ import UIKit
 
 class BaseTractView: UIView {
     var elements = [BaseTractElement]()
-    var currentY = 0.0
+    var currentY = BaseTractElement.Standards.yPadding
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,32 +21,35 @@ class BaseTractView: UIView {
                             width: UIScreen.main.bounds.size.width,
                             height: UIScreen.main.bounds.size.height)
         
-        let paragraph = Paragraph(xml: nil,
-                                  rootView: self,
-                                  parent: nil)
-        
-        let textContent = TextContent(xml: nil,
-                                      rootView: self,
-                                      parent: paragraph)
-        
-        textContent.text = "Maybe we better talk out here; the observation lounge has turned into a swamp. For an android with no feelings, he sure managed to evoke them in others. How long can two people talk about nothing? Commander William Riker of the Starship Enterprise. Fear is the true enemy, the only enemy. Well, that's certainly good to know."
-        
-        
-        let textContent2 = TextContent(xml: nil,
-                                       rootView: self,
-                                       parent: paragraph)
-        
-        textContent2.text = "Foo barsky"
-        
-        paragraph.children.append(textContent)
-        paragraph.children.append(textContent2)
-        
-        elements.append(paragraph)
-        
         backgroundColor = .orange
         
+        let text = TextContent()
+        text.text = "Foo"
+        
+        let paragraph1 = Paragraph()
+        
+        let text2 = TextContent()
+        text2.text = "Some days you get the bear, and some days the bear gets you. Maybe if we felt any human loss as keenly as we feel one of those close to us, human history would be far less bloody. We finished our first sensor sweep of the neutral zone. Our neural pathways have become accustomed to your sensory input patterns. I can't. As much as I care about you, my first duty is to the ship. Congratulations - you just destroyed the Enterprise."
+        
+        let text3 = TextContent()
+        text3.text = "Bacon ipsum dolor amet elit shankle laboris pariatur shank dolor. In esse flank in. Brisket id anim dolore, cillum kevin sunt in lorem. Ut cillum turducken, pork belly laborum jowl dolore doner eu. Sirloin tempor pork loin aliqua ground round leberkas bresaola pork belly sunt incididunt boudin elit. Venison brisket aliqua, ut pork nulla laboris non turducken beef sirloin veniam pig. Minim ground round turducken, pancetta fatback cupim tempor laboris."
+        
+        let text4 = TextContent()
+        text4.text = "Hey there"
+        
+        paragraph1.children.append(text)
+        paragraph1.children.append(text2)
+        
+        elements.append(paragraph1)
+        elements.append(text3)
+        elements.append(text4)
+        
         for element in elements {
-            self.addSubview(element.render())
+            
+            let view = element.render(yPos: currentY)
+            self.addSubview(view)
+            
+            currentY += view.frame.size.height + BaseTractElement.Standards.yPadding
         }
     }    
 }

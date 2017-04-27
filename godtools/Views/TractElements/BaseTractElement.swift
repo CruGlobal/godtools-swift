@@ -10,32 +10,30 @@ import Foundation
 import UIKit
 
 class BaseTractElement: NSObject {
-    var frame: CGRect
-    weak var rootView: BaseTractView?
+    struct Standards {
+        static let xPadding = CGFloat(20.0)
+        static let yPadding = CGFloat(5.0)
+        
+        static let screenWidth = UIScreen.main.bounds.size.width
+        static let textContentWidth = UIScreen.main.bounds.size.width - xPadding * CGFloat(2)
+    }
+    
     weak var parent: BaseTractElement?
-    
-    init(xml: Any?, rootView: BaseTractView?, parent: BaseTractElement?) {
-        self.rootView = rootView
-        self.parent = parent
+
+    static func isParagraphElement(_ element: BaseTractElement) -> Bool {
+        var elementCopy: BaseTractElement? = element
         
-        if rootView != nil {
-            self.frame = rootView!.frame
-        } else {
-            self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: Paragraph.self) {
+                return true
+            }
+            elementCopy = elementCopy!.parent
         }
         
-        super.init()
+        return false
     }
     
-    func parentFrame() -> CGRect {
-        if parent != nil {
-            return parent!.frame
-        } else {
-            return rootView!.frame
-        }
-    }
-    
-    func render() -> UIView {
+    func render(yPos: CGFloat) -> UIView {
         preconditionFailure("This function must be overridden")
     }
 }
