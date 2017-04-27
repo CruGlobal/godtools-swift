@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol BaseViewControllerDelegate {
+    mutating func displayMenu();
+}
+
 class BaseViewController: UIViewController {
+    
+    var baseDelegate: BaseViewControllerDelegate?
     
     let kNavigationItemInitialSpace:CGFloat = -7.0
     let kNavigationItemSpace:CGFloat = 26.0
@@ -78,6 +84,11 @@ class BaseViewController: UIViewController {
     func configureNavigationButtons() {
     }
     
+    func addEmptyLeftButton() {
+        let button = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.done, target: nil, action: nil)
+        self.navigationLeftButtons.append(button)
+    }
+    
     func addNavigationBurgerButton() {
         let button = self.buildNavigationButton(imageName: "burger_white", action: #selector(navigationBurgerButtonAction))
         self.navigationLeftButtons.append(button)
@@ -103,6 +114,11 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
+    func addDoneButton() {
+        let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
+        self.navigationRightButtons.append(button)
+    }
+    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: 22.0, height: 22.0)
         let button: UIButton = UIButton(frame: buttonFrame)
@@ -114,6 +130,7 @@ class BaseViewController: UIViewController {
     // MARK: - Navigation Buttons Actions
     
     func navigationBurgerButtonAction() {
+        NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
     }
     
     func navigationPlusButtonAction() {
@@ -126,6 +143,10 @@ class BaseViewController: UIViewController {
     }
     
     func shareButtonAction() {
+    }
+    
+    func doneButtonAction() {
+        NotificationCenter.default.post(name: .dismissMenuNotification, object: nil)
     }
     
     // MARK: - Helpers

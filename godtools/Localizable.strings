@@ -6,18 +6,35 @@
   Copyright © 2017 Cru. All rights reserved.
 */
 
+// Menu
+"menu_general" = "General";
+"menu_share" = "Share";
+"menu_legal" = "Legal";
+"language_settings" = "Language Settings";
+"about" = "About";
+"help" = "Help";
+"contact_us" = "Contact Us";
+"notifications" = "Notifications";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "Share GodTools";
+"share_a_story_with_us" = "Share a Story With Us";
+"terms_of_use" = "Terms of Use";
+"privacy_policy" = "Privacy Policy";
+
 // Tool Detail
 "about" = "About";
 "total_views" = "%@ views";
 "total_languages" = "%@ languages";
 
 // Language Settings
-"language_settings" = "Language Settings";
 "primary_language" = "Primary Language";
 "select_primary_language" = "Select a Primary Language";
 "parallel_language" = "Parallel Language";
 "share_god_tools_native_language" = "Share God Tools with someone in their native language";
 "not_every_tool_is_available" = "Not every tool is available in every language";
+
+// Settings
+"settings" = "Settings";
 
 // Alert Controllers
 "download_error" = "Download Error";
@@ -29,3 +46,4 @@
 // Buttons
 "download" = "Download";
 "dismiss" = "Dismiss";
+"done" = "Done";
