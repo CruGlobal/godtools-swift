@@ -15,35 +15,35 @@ class GTLabel: UILabel {
         didSet {
             switch self.gtStyle {
             case "whiteTitle":
-                self.font = UIFont.gtLight(size: 28.0)
-                self.textColor = UIColor.gtWhite
+                self.font = .gtLight(size: 28.0)
+                self.textColor = .gtWhite
             case "blueTitle":
-                self.font = UIFont.gtSemiBold(size: 28.0)
-                self.textColor = UIColor.gtBlue
+                self.font = .gtSemiBold(size: 28.0)
+                self.textColor = .gtBlue
             case "blueHeader1":
-                self.font = UIFont.gtSemiBold(size: 17.0)
-                self.textColor = UIColor.gtBlue
+                self.font = .gtSemiBold(size: 17.0)
+                self.textColor = .gtBlue
             case "blackTitle":
-                self.font = UIFont.gtLight(size: 28.0)
-                self.textColor = UIColor.gtBlack
+                self.font = .gtLight(size: 28.0)
+                self.textColor = .gtBlack
             case "blackText":
-                self.font = UIFont.gtRegular(size: 15.0)
-                self.textColor = UIColor.gtBlack
+                self.font = .gtRegular(size: 15.0)
+                self.textColor = .gtBlack
             case "blackTextSmall":
-                self.font = UIFont.gtRegular(size: 13.0)
-                self.textColor = UIColor.gtBlack
+                self.font = .gtRegular(size: 13.0)
+                self.textColor = .gtBlack
             case "blackTextLegend":
-                self.font = UIFont.gtRegular(size: 10.0)
-                self.textColor = UIColor.gtBlack
+                self.font = .gtRegular(size: 10.0)
+                self.textColor = .gtBlack
             case "redText":
-                self.font = UIFont.gtRegular(size: 15.0)
-                self.textColor = UIColor.gtRed
+                self.font = .gtRegular(size: 15.0)
+                self.textColor = .gtRed
             case "greyHeader1":
-                self.font = UIFont.gtRegular(size: 17.0)
-                self.textColor = UIColor.gtGrey
+                self.font = .gtRegular(size: 17.0)
+                self.textColor = .gtGrey
             case "greyTextSmall":
-                self.font = UIFont.gtRegular(size: 12.0)
-                self.textColor = UIColor.gtGrey
+                self.font = .gtRegular(size: 12.0)
+                self.textColor = .gtGrey
             default:
                 break
             }
