@@ -90,7 +90,7 @@ extension LanguagesManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
         cell.languageLabel.text = languages[indexPath.row].localizedName
-        cell.languageExist(false)
+        cell.languageExists(false)
         return cell
     }
     

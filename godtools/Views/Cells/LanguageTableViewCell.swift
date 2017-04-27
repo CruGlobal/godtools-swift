@@ -39,9 +39,9 @@ class LanguageTableViewCell: UITableViewCell {
         self.selectedBackgroundView = selectedView
     }
     
-    func languageExist(_ exist:Bool) {
-        self.deleteButton.isHidden = !exist
-        self.downloadButton.isHidden = exist
+    func languageExists(_ exists:Bool) {
+        self.deleteButton.isHidden = !exists
+        self.downloadButton.isHidden = exists
     }
     
 }
