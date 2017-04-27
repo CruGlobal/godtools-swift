@@ -22,7 +22,7 @@ class BaseTractElement: NSObject {
     var yStartPosition: CGFloat = 0.0
     var yEndPosition: CGFloat = 0.0
     var view: UIView?
-    var children:[BaseTractElement]?
+    var elements:[BaseTractElement]?
     
     init(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
         super.init()
@@ -36,10 +36,10 @@ class BaseTractElement: NSObject {
     // MARK: - Build content
     
     func setupElement(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
+        self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
-        let currentYPosition = yPosition
         setupView(properties: dataContent.properties)
-        buildChildrenForData(dataContent.children, startOnY: currentYPosition)
+        buildChildrenForData(dataContent.children, startOnY: self.yEndPosition)
     }
     
     func setupView(properties: Dictionary<String, Any>) {
@@ -47,15 +47,15 @@ class BaseTractElement: NSObject {
     
     func buildChildrenForData(_ data: Array<Dictionary<String, Any>>, startOnY yPosition: CGFloat) {
         var currentYPosition = yPosition
-        var children:Array = [BaseTractElement]()
+        var elements:Array = [BaseTractElement]()
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             currentYPosition = element.yEndPosition
-            children.append(element)
+            elements.append(element)
         }
         
-        self.children = children
+        self.elements = elements
     }
     
     func buildElementForDictionary(_ data: Dictionary<String, Any>, startOnY yPosition: CGFloat) -> BaseTractElement {
