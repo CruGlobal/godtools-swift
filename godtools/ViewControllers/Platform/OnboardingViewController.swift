@@ -36,8 +36,7 @@ class OnboardingViewController: BaseViewController {
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
         if gesture.direction == UISwipeGestureRecognizerDirection.right {
             displayPage1()
-        }
-        else if gesture.direction == UISwipeGestureRecognizerDirection.left {
+        } else if gesture.direction == UISwipeGestureRecognizerDirection.left {
             displayPage2()
         }
     }
