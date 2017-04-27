@@ -17,10 +17,10 @@ class LanguagesTableViewController: BaseViewController {
     
     let languagesManager = LanguagesManager.shared
     
-    var screenTitleAux: String?
+    var screenTitleAux: String = "primary_language"
     override var screenTitle: String {
         get {
-            return screenTitleAux!.localized
+            return screenTitleAux.localized
         }
     }
     
@@ -64,11 +64,10 @@ class LanguagesTableViewController: BaseViewController {
     
     // MARK: - Helpers
     
-    func primaryLanguage(primary:Bool) {
+    func selectingPrimaryLanguage(_ primary:Bool) {
         if primary {
             self.screenTitleAux = "primary_language"
-        }
-        else {
+        } else {
             self.screenTitleAux = "parallel_language"
         }
     }
