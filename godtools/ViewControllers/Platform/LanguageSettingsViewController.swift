@@ -18,7 +18,7 @@ class LanguageSettingsViewController: BaseViewController {
     
     override var screenTitle: String {
         get {
-            return "Language Settings".localized
+            return "language_settings".localized
         }
     }
     

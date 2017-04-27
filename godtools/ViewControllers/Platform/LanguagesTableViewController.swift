@@ -17,6 +17,13 @@ class LanguagesTableViewController: BaseViewController {
     
     let languagesManager = LanguagesManager.shared
     
+    var screenTitleAux: String = "primary_language"
+    override var screenTitle: String {
+        get {
+            return screenTitleAux.localized
+        }
+    }
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = languagesManager
@@ -57,9 +64,16 @@ class LanguagesTableViewController: BaseViewController {
     
     // MARK: - Helpers
     
+    func selectingPrimaryLanguage(_ primary:Bool) {
+        if primary {
+            self.screenTitleAux = "primary_language"
+        } else {
+            self.screenTitleAux = "parallel_language"
+        }
+    }
+    
     fileprivate func registerCells() {
-        self.tableView .register(
-            LanguageTableViewCell.classForKeyedArchiver(), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
+        self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
     }
     
     fileprivate func reloadTableView() {
