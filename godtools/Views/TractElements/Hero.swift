@@ -14,5 +14,8 @@ class Hero: BaseTractElement {
     
     var textScale = Float(3.0)
     var textColor: UIColor?
+    
+    override func buildContent(_ properties: Dictionary<String, Any>) {
+    }
         
 }

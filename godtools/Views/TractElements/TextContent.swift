@@ -39,4 +39,8 @@ class TextContent: BaseTractElement {
                       width: BaseTractElement.Standards.textContentWidth,
                       height: height)
     }
+    
+    override func buildContent(_ properties: Dictionary<String, Any>) {
+    }
+    
 }

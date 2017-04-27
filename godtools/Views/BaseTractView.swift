@@ -16,12 +16,16 @@ class BaseTractView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.frame = CGRect(x: 0,
-                            y: 0,
-                            width: UIScreen.main.bounds.size.width,
-                            height: UIScreen.main.bounds.size.height)
+//        self.frame = CGRect(x: 0,
+//                            y: 0,
+//                            width: UIScreen.main.bounds.size.width,
+//                            height: UIScreen.main.bounds.size.height)
         
         backgroundColor = .orange
+        
+        let data: Dictionary<String, Any>?
+        let rootView: TractRoot = TractRoot()
+        rootView.buildContentForDictionary(data: data, startOnY: yPosition)
         
         let text = TextContent()
         text.text = "Foo"
@@ -51,5 +55,5 @@ class BaseTractView: UIView {
             
             currentY += view.frame.size.height + BaseTractElement.Standards.yPadding
         }
-    }    
+    }
 }

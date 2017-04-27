@@ -1,21 +1,22 @@
 //
-//  Paragraph.swift
+//  Heading.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/26/17.
+//  Created by Devserker on 4/27/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class Paragraph: BaseTractElement {
+class Heading: BaseTractElement {
+    
     var children = [BaseTractElement]()
     
     let paddingConstant = CGFloat(30.0)
     
     var textScale = Float(1.0)
- 
+    
     override func render(yPos: CGFloat) -> UIView {
         var subviews = [UIView]()
         var currentY = paddingConstant
@@ -39,7 +40,5 @@ class Paragraph: BaseTractElement {
         
         return view
     }
-    
-    override func buildContent(_ properties: Dictionary<String, Any>) {
-    }
+
 }
