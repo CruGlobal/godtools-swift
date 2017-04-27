@@ -8,10 +8,9 @@
 
 import UIKit
 
-class MenuViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let menuCellIdentifier = "cellIdentifier"
     let general = ["language_settings", "about", "help", "contact_us", "notifications", "preview_mode_translators_only"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy"]
@@ -47,18 +46,43 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         self.addDoneButton()
     }
     
-    // MARK: - UITableViewDataSource
+    // MARK: - Helpers
+    
+    fileprivate func getSection(_ section: Int) -> String {
+        return header[section]
+    }
+    
+    fileprivate func getSectionData(_ section: Int) -> Array<String> {
+        var values = [String]()
+        if section == 0 {
+            values = self.general
+        } else if section == 1 {
+            values = self.share
+        } else {
+            values = self.legal
+        }
+        return values
+    }
+    
+    fileprivate func registerCells() {
+        self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuViewController.menuCellIdentifier)
+    }
+
+}
+
+extension MenuViewController: UITableViewDataSource {
+    
+    static let menuCellIdentifier = "cellIdentifier"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let values = self.getSectionData(indexPath.section)
         let value = values[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: self.menuCellIdentifier) as! MenuTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MenuViewController.menuCellIdentifier) as! MenuTableViewCell
         cell.value = value
         
         if value == "notifications" || value == "preview_mode_translators_only" {
             cell.isSwitchCell = true
-        }
-        else {
+        } else {
             cell.isSwitchCell = false
         }
         
@@ -74,7 +98,9 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         return values.count
     }
     
-    // MARK: - UITableViewDelegate
+}
+
+extension MenuViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 40)
@@ -93,10 +119,6 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
     
-    fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: self.menuCellIdentifier)
-    }
-    
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -113,24 +135,4 @@ class MenuViewController: BaseViewController, UITableViewDataSource, UITableView
         return nil
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func getSection(_ section: Int) -> String {
-        return header[section]
-    }
-    
-    fileprivate func getSectionData(_ section: Int) -> Array<String> {
-        var values = Array<String>()
-        if section == 0 {
-            values = self.general
-        }
-        else if section == 1 {
-            values = self.share
-        }
-        else {
-            values = self.legal
-        }
-        return values
-    }
-
 }
