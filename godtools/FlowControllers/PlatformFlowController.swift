@@ -47,6 +47,7 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
     func moveToLanguagesList(primaryLanguage: Bool) {
         let viewController = LanguagesTableViewController(nibName: "LanguagesTableViewController", bundle: nil)
         viewController.delegate = self
+        viewController.selectingPrimaryLanguage(primaryLanguage)
         self.pushViewController(viewController: viewController)
     }
     
