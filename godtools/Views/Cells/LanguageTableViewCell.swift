@@ -18,10 +18,6 @@ class LanguageTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupStyle()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     // MARK: - Actions
     
