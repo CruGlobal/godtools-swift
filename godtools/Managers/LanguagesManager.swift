@@ -70,7 +70,12 @@ class LanguagesManager: GTDataManager {
 }
 
 extension LanguagesManager: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedLanguage = languages[indexPath.row]
+        GTSettings.shared.primaryLanguageId = selectedLanguage.remoteId
+        selectedLanguage.shouldDownload = true
+        saveToDisk()
+    }
 }
 
 extension LanguagesManager: UITableViewDataSource {
