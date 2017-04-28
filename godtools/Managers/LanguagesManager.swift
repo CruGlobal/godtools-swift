@@ -27,7 +27,10 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language {
-        return Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
+        let language = Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
+        language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
+        
+        return language
     }
     
     func loadFromDisk() -> Promise<[Language]> {
