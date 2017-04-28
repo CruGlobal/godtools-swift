@@ -46,7 +46,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.displayOnboarding()
+//        self.displayOnboarding()
     }
 
     override func didReceiveMemoryWarning() {
