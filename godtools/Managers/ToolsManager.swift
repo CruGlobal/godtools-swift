@@ -77,6 +77,8 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
+        cell.titleLabel.text = getShownTranslations()[indexPath.section].downloadedResource!.name
+        cell.languageLabel.text = LanguagesManager.shared.loadPrimaryLanguageFromDisk().localizedName
         return cell
     }
     
