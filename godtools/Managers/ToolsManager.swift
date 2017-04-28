@@ -18,6 +18,8 @@ class ToolsManager: NSObject {
     static let shared = ToolsManager()
     var delegate: ToolsManagerDelegate?
     
+    var showDownloaded = true
+    
     override init() {
         super.init()
     }
@@ -58,7 +60,11 @@ extension ToolsManager: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        if showDownloaded {
+            return TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: "4").count
+        } else {
+            return TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: "4").count
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
