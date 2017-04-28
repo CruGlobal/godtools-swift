@@ -44,8 +44,8 @@ class TextContent: BaseTractElement {
         var text: String = ""
         var backgroundColor: UIColor?
         
-        if properties["text"] != nil {
-            text = properties["text"] as! String
+        if properties["value"] != nil {
+            text = properties["value"] as! String
         }
         
         if properties["backgroundColor"] != nil {

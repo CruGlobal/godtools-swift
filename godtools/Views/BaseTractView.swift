@@ -8,10 +8,11 @@
 
 import Foundation
 import UIKit
+import SWXMLHash
 
 class BaseTractView: UIView {
     
-    var data: Dictionary<String, Any>?
+    var data: XMLIndexer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +22,7 @@ class BaseTractView: UIView {
         backgroundColor = .orange
         
         let yPosition: CGFloat = 0.0
-        let rootElement: TractRoot = TractRoot(data: self.data!, startOnY: yPosition)
+        let rootElement: TractRoot = TractRoot(data: self.data!["page"], startOnY: yPosition)
         self.addSubview(rootElement.render())
     }
 }

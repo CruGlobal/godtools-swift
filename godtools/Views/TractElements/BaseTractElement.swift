@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SWXMLHash
 
 class BaseTractElement: NSObject {
     struct Standards {
@@ -24,12 +25,12 @@ class BaseTractElement: NSObject {
     var view: UIView?
     var elements:[BaseTractElement]?
     
-    init(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
+    init(data: XMLIndexer, startOnY yPosition: CGFloat) {
         super.init()
         setupElement(data: data, startOnY: yPosition)
     }
     
-    init(data: Dictionary<String, Any>, startOnY yPosition: CGFloat, parent: BaseTractElement) {
+    init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
         super.init()
         self.parent = parent
         setupElement(data: data, startOnY: yPosition)
@@ -44,7 +45,7 @@ class BaseTractElement: NSObject {
     
     // MARK: - Build content
     
-    func setupElement(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
+    func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
         buildChildrenForData(dataContent.children)
@@ -55,7 +56,7 @@ class BaseTractElement: NSObject {
         preconditionFailure("This function must be overridden")
     }
     
-    func buildChildrenForData(_ data: Array<Dictionary<String, Any>>) {
+    func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = 0.0
         var elements:Array = [BaseTractElement]()
         
@@ -69,11 +70,11 @@ class BaseTractElement: NSObject {
         self.elements = elements
     }
     
-    func buildElementForDictionary(_ data: Dictionary<String, Any>, startOnY yPosition: CGFloat) -> BaseTractElement {
+    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
         let dataContent = splitData(data: data)
         var element:BaseTractElement?
         
-        if dataContent.kind == "root" {
+        if dataContent.kind == "page" {
             element = TractRoot(data: data, startOnY: yPosition, parent: self)
         } else if dataContent.kind == "hero" {
             element = Hero(data: data, startOnY: yPosition, parent: self)
@@ -81,7 +82,7 @@ class BaseTractElement: NSObject {
             element = Heading(data: data, startOnY: yPosition, parent: self)
         }else if dataContent.kind == "paragraph" {
             element = Paragraph(data: data, startOnY: yPosition, parent: self)
-        }else if dataContent.kind == "text" {
+        }else if dataContent.kind == "content:text" {
             element = TextContent(data: data, startOnY: yPosition, parent: self)
         }
         
@@ -90,11 +91,16 @@ class BaseTractElement: NSObject {
     
     // MARK: - Helpers
     
-    func splitData(data: Dictionary<String, Any>) -> (kind: String, properties: Dictionary<String, Any>, children: Array<Dictionary<String, Any>>) {
-        let kind = data["kind"] as! String
-        let properties = data["properties"] as! Dictionary<String, Any>
-        let children = data["children"] as! Array<Dictionary<String, Any>>
-        return (kind, properties, children)
+    func splitData(data: XMLIndexer) -> (kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
+        let kind = data.element?.name
+        var properties = Dictionary<String, Any>()
+        for item in (data.element?.allAttributes)! {
+            let attribute = item.value as XMLAttribute
+            properties[attribute.name] = attribute.text
+        }
+        properties["value"] = data.element?.text
+        let children = data.children
+        return (kind!, properties, children)
     }
     
     static func isParagraphElement(_ element: BaseTractElement) -> Bool {
