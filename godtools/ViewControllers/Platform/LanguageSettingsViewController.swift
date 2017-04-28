@@ -22,10 +22,6 @@ class LanguageSettingsViewController: BaseViewController {
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: - Actions
     
     @IBAction func pressSelectPrimaryLanguage(_ sender: Any) {
