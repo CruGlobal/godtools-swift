@@ -30,6 +30,10 @@ extension UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight)
     }
     
+    static func gtThin(size: CGFloat) -> UIFont {
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+    }
+    
     static func gtSemiBold(size: CGFloat) -> UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
     }

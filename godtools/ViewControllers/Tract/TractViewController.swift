@@ -57,7 +57,7 @@ class TractViewController: BaseViewController {
     func getData() -> Dictionary<String, Any> {
         let paragraphContent = [
             "kind": "text",
-            "properties": ["text": "These four points explain how to enter into a personal relationship with God and experience the life for which you were created.", "color": "black"],
+            "properties": ["text": "Just as there are physical laws that govern the physical universe, so are there spiritual lwas that govern your relationship with God.", "backgroundColor": "white"],
             "children": [Dictionary<String, Any>]()
             ] as [String : Any]
         
@@ -69,7 +69,7 @@ class TractViewController: BaseViewController {
         
         let headingContent = [
             "kind": "text",
-            "properties": ["text": "Knowing God Personally", "color": "red"],
+            "properties": ["text": "Have you heard of the four spiritual laws?", "color": "red"],
             "children": [Dictionary<String, Any>]()
             ] as [String : Any]
         

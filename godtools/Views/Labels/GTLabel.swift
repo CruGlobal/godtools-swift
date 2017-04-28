@@ -14,6 +14,12 @@ class GTLabel: UILabel {
     @IBInspectable var gtStyle: String = "" {
         didSet {
             switch self.gtStyle {
+            case "toolFrontTitle":
+                self.font = .gtThin(size: 54.0)
+                self.textColor = .gtBlack
+            case "toolFrontSubTitle":
+                self.font = .gtRegular(size: 18.0)
+                self.textColor = .gtBlack
             case "whiteTitle":
                 self.font = .gtLight(size: 28.0)
                 self.textColor = .gtWhite

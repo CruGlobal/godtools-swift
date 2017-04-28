@@ -11,45 +11,59 @@ import UIKit
 
 class TextContent: BaseTractElement {
     
-    var textScale = CGFloat(1.0)
-    var textColor = UIColor.black
-    var text = ""
-    
     override func setupView(properties: Dictionary<String, Any>) {
         let attributes = loadElementAttributes(properties: properties)
-        let label = UILabel(frame: createLabelFrameForHeight(self.height))
+        let label = GTLabel(frame: createLabelFrameForHeight(self.height))
+        let text: String = attributes.text
+        let backgroundColor: UIColor = attributes.backgroundColor
         
-        label.font = UIFont(name: "Helvetica", size: CGFloat(16.0) * textScale)
-        label.text = attributes.text
+        label.text = text
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        label.backgroundColor = .yellow
+        label.backgroundColor = backgroundColor
         
         if BaseTractElement.isParagraphElement(self) {
-            self.height = label.frame.size.height + CGFloat(20.0)
+            label.gtStyle = "toolFrontSubTitle"
+            label.numberOfLines = 0
+            label.sizeToFit()
+            self.height = label.frame.height
             label.frame = createLabelFrameForHeight(self.height)
         } else if BaseTractElement.isHeadingElement(self) {
-            self.height = label.frame.size.height + CGFloat(30.0)
+            label.gtStyle = "toolFrontTitle"
+            label.numberOfLines = 0
+            label.sizeToFit()
+            self.height = label.frame.height
             label.frame = createLabelFrameForHeight(self.height)
         }
         
         self.view = label
     }
     
-    func loadElementAttributes(properties: Dictionary<String, Any>) -> (text: String, color: UIColor) {
-        let text: String = properties["text"] as! String
-        let colorText: String = properties["color"] as! String
-        var color: UIColor?
+    func loadElementAttributes(properties: Dictionary<String, Any>) -> (text: String, backgroundColor: UIColor) {
+        var text: String = ""
+        var backgroundColor: UIColor?
         
-        switch colorText {
-        case "red":
-            color = UIColor.gtRed
-        default:
-            color = UIColor.gtBlack
+        if properties["text"] != nil {
+            text = properties["text"] as! String
         }
         
-        return (text, color!)
+        if properties["backgroundColor"] != nil {
+            let backgroundColorText = properties["backgroundColor"] as! String
+            switch backgroundColorText {
+            case "red":
+                backgroundColor = UIColor.gtRed
+            case "black":
+                backgroundColor = UIColor.gtBlack
+            default:
+                backgroundColor = UIColor.gtWhite
+            }
+        }
+        else {
+            backgroundColor = UIColor.gtWhite
+        }
+        
+        return (text, backgroundColor!)
     }
     
     fileprivate func createLabelFrameForHeight(_ height: CGFloat) -> CGRect {
