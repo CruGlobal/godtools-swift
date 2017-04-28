@@ -83,10 +83,24 @@ extension LanguagesManager: UITableViewDataSource {
     static let languageCellIdentifier = "languageCell"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let language = languages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
-        cell.languageLabel.text = languages[indexPath.row].localizedName
-        cell.languageExists(false)
+        
+        cell.languageLabel.text = language.localizedName
+        cell.languageExists(language.shouldDownload)
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let language = languages[indexPath.row]
+        let selected = language.remoteId == GTSettings.shared.primaryLanguageId
+        
+        if selected {
+            cell.setSelected(selected, animated: true)
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
