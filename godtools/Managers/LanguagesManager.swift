@@ -69,6 +69,22 @@ class LanguagesManager: GTDataManager {
         })
     }
 
+    fileprivate func selectedLanguageId() -> String? {
+        if selectingPrimaryLanguage {
+            return GTSettings.shared.primaryLanguageId
+        } else {
+            return GTSettings.shared.parallelLanguageId
+        }
+    }
+    
+    fileprivate func setSelectedLanguageId(_ id: String) {
+        if selectingPrimaryLanguage {
+            GTSettings.shared.primaryLanguageId = id
+        } else {
+            GTSettings.shared.parallelLanguageId = id
+        }
+    }
+    
     override func buildURLString() -> String {
         return "\(GTConstants.kApiBase)\(path)"
     }
@@ -77,7 +93,7 @@ class LanguagesManager: GTDataManager {
 extension LanguagesManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedLanguage = languages[indexPath.row]
-        GTSettings.shared.primaryLanguageId = selectedLanguage.remoteId
+        self.setSelectedLanguageId(selectedLanguage.remoteId!)
         selectedLanguage.shouldDownload = true
         saveToDisk()
     }
@@ -99,7 +115,7 @@ extension LanguagesManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let language = languages[indexPath.row]
-        let selected = language.remoteId == GTSettings.shared.primaryLanguageId
+        let selected = language.remoteId == self.selectedLanguageId()
         
         if selected {
             cell.setSelected(selected, animated: true)
