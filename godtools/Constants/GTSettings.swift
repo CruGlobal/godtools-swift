@@ -27,8 +27,8 @@ class GTSettings {
         }
         
         set {
-            primaryLanguageIdInternal = primaryLanguageId
-            UserDefaults.standard.set(primaryLanguageId, forKey: "kPrimaryLanguageId")
+            primaryLanguageIdInternal = newValue
+            UserDefaults.standard.set(newValue, forKey: "kPrimaryLanguageId")
         }
     }
     
@@ -43,8 +43,8 @@ class GTSettings {
         }
         
         set {
-            primaryLanguageIdInternal = primaryLanguageId
-            UserDefaults.standard.set(primaryLanguageId, forKey: "kParallelLanguageId")
+            parallelLanguageIdInternal = newValue
+            UserDefaults.standard.set(newValue, forKey: "kParallelLanguageId")
         }
     }
 }
