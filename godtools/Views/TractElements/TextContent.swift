@@ -10,37 +10,33 @@ import Foundation
 import UIKit
 
 class TextContent: BaseTractElement {
+    
     var textScale = CGFloat(1.0)
     var textColor = UIColor.black
-    
     var text = ""
-
-    override func render(yPos: CGFloat) -> UIView {
-        let label = UILabel(frame: createFrame(yPos: yPos, height: 0))
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        let label = UILabel(frame: createLabelFrameForHeight(self.height))
         
         label.font = UIFont(name: "Helvetica", size: CGFloat(16.0) * textScale)
         label.text = text
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        
         label.backgroundColor = .yellow
         
         if BaseTractElement.isParagraphElement(self) {
-            label.frame = createFrame(yPos: yPos, height: label.frame.size.height + CGFloat(20.0))
+            label.frame = createLabelFrameForHeight(label.frame.size.height + CGFloat(20.0))
         }
         
-        return label
+        self.view = label
     }
     
-    fileprivate func createFrame(yPos: CGFloat, height: CGFloat) -> CGRect {
+    fileprivate func createLabelFrameForHeight(_ height: CGFloat) -> CGRect {
         return CGRect(x: BaseTractElement.Standards.xPadding,
-                      y: yPos,
+                      y: self.yStartPosition,
                       width: BaseTractElement.Standards.textContentWidth,
                       height: height)
-    }
-    
-    override func buildContent(_ properties: Dictionary<String, Any>) {
     }
     
 }

@@ -32,10 +32,11 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func initializeView() {
-        let baseView = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
         let navigationBarFrame = navigationController!.navigationBar.frame
         let startingPoint = navigationBarFrame.origin.y + navigationBarFrame.size.height
         
+        let baseView = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
+        baseView.data = getData()
         baseView.frame = CGRect(x: 0.0,
                                 y: startingPoint,
                                 width: self.view.frame.size.width,
@@ -51,6 +52,46 @@ class TractViewController: BaseViewController {
     override func shareButtonAction() {
         let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, "www.knowgod.com")], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+    }
+    
+    func getData() -> Dictionary<String, Any> {
+        let paragraphContent = [
+            "kind": "text",
+            "properties": ["message": "These four points explain how to enter into a personal relationship with God and experience the life for which you were created."],
+            "children": []
+            ] as [String : Any]
+        
+        let paragraph = [
+            "kind": "paragraph",
+            "properties": [],
+            "children": [paragraphContent]
+            ] as [String : Any]
+        
+        let headingContent = [
+            "kind": "text",
+            "properties": ["message": "Knowing God Personally"],
+            "children": []
+            ] as [String : Any]
+        
+        let heading = [
+            "kind": "heading",
+            "properties": [],
+            "children": [headingContent]
+            ] as [String : Any]
+        
+        let hero = [
+            "kind": "hero",
+            "properties": [],
+            "children": [heading, paragraph]
+            ] as [String : Any]
+        
+        let page = [
+            "kind": "root",
+            "properties": [],
+            "children": [hero]
+            ] as [String : Any]
+        
+        return page
     }
 }
 

@@ -10,36 +10,15 @@ import Foundation
 import UIKit
 
 class Paragraph: BaseTractElement {
-    var children = [BaseTractElement]()
     
     let paddingConstant = CGFloat(30.0)
-    
     var textScale = Float(1.0)
- 
-    override func render(yPos: CGFloat) -> UIView {
-        var subviews = [UIView]()
-        var currentY = paddingConstant
-        
-        for child in children {
-            let view = child.render(yPos: currentY)
-            subviews.append(view)
-            currentY += view.frame.size.height + paddingConstant
-        }
-        
-        let view = UIView(frame: CGRect(x: 0,
-                                        y: yPos,
-                                        width: BaseTractElement.Standards.screenWidth,
-                                        height: currentY))
-        
-        view.backgroundColor = .green
-        
-        for subview in subviews {
-            view.addSubview(subview)
-        }
-        
-        return view
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        let frame = CGRect(x: 0.0, y: self.yStartPosition, width: BaseTractElement.Standards.screenWidth, height: self.height)
+        let view = UIView(frame: frame)
+        view.backgroundColor = .blue
+        self.view = view
     }
     
-    override func buildContent(_ properties: Dictionary<String, Any>) {
-    }
 }

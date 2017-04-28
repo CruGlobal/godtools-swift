@@ -20,7 +20,7 @@ class BaseTractElement: NSObject {
     
     weak var parent: BaseTractElement?
     var yStartPosition: CGFloat = 0.0
-    var yEndPosition: CGFloat = 0.0
+    var height: CGFloat = 0.0
     var view: UIView?
     var elements:[BaseTractElement]?
     
@@ -30,6 +30,9 @@ class BaseTractElement: NSObject {
     }
     
     func render() -> UIView {
+        for element in self.elements! {
+            self.view!.addSubview(element.render())
+        }
         return self.view!
     }
     
@@ -38,23 +41,25 @@ class BaseTractElement: NSObject {
     func setupElement(data: Dictionary<String, Any>, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
+        buildChildrenForData(dataContent.children)
         setupView(properties: dataContent.properties)
-        buildChildrenForData(dataContent.children, startOnY: self.yEndPosition)
     }
     
     func setupView(properties: Dictionary<String, Any>) {
+        preconditionFailure("This function must be overridden")
     }
     
-    func buildChildrenForData(_ data: Array<Dictionary<String, Any>>, startOnY yPosition: CGFloat) {
-        var currentYPosition = yPosition
+    func buildChildrenForData(_ data: Array<Dictionary<String, Any>>) {
+        var currentYPosition: CGFloat = 0.0
         var elements:Array = [BaseTractElement]()
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
-            currentYPosition = element.yEndPosition
+            currentYPosition = element.yEndPosition()
             elements.append(element)
         }
         
+        self.height = currentYPosition
         self.elements = elements
     }
     
@@ -89,5 +94,9 @@ class BaseTractElement: NSObject {
         }
         
         return false
+    }
+    
+    func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height
     }
 }

@@ -10,12 +10,11 @@ import Foundation
 import UIKit
 
 class Hero: BaseTractElement {
-    var children = [BaseTractElement]()
     
-    var textScale = Float(3.0)
-    var textColor: UIColor?
-    
-    override func buildContent(_ properties: Dictionary<String, Any>) {
+    override func setupView(properties: Dictionary<String, Any>) {
+        let frame = CGRect(x: 0.0, y: self.yStartPosition, width: BaseTractElement.Standards.screenWidth, height: self.height)
+        let view = UIView(frame: frame)
+        self.view = view
     }
         
 }
