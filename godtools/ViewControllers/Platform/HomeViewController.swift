@@ -36,6 +36,10 @@ class HomeViewController: BaseViewController {
         self.registerCells()
         self.setupStyle()
         self.defineObservers()
+        
+        if LanguagesManager.shared.loadPrimaryLanguageFromDisk() == nil {
+            self.displayOnboarding()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +49,6 @@ class HomeViewController: BaseViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.displayOnboarding()
     }
 
     override func didReceiveMemoryWarning() {

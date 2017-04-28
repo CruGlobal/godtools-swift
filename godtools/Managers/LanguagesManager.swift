@@ -33,8 +33,12 @@ class LanguagesManager: GTDataManager {
         return language
     }
     
-    func loadPrimaryLanguageFromDisk() -> Language {
-        return loadFromDisk(id: GTSettings.shared.primaryLanguageId ?? "-1")
+    func loadPrimaryLanguageFromDisk() -> Language? {
+        if GTSettings.shared.primaryLanguageId == nil {
+            return nil
+        }
+        
+        return loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
     }
     
     func loadFromDisk() -> Promise<[Language]> {

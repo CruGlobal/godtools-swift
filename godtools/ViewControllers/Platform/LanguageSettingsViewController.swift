@@ -34,9 +34,9 @@ class LanguageSettingsViewController: BaseViewController {
     }
     
     private func setupPrimaryLanguageButton() {
-        if GTSettings.shared.primaryLanguageId != nil {
-            let primaryLanguage = self.languagesManager.loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
-            primaryLanguageButton.setTitle(primaryLanguage.localizedName, for: .normal)
+        let primaryLanguage = self.languagesManager.loadPrimaryLanguageFromDisk()
+        if primaryLanguage != nil {
+            primaryLanguageButton.setTitle(primaryLanguage!.localizedName, for: .normal)
         } else {
             primaryLanguageButton.setTitle("select_primary_language".localized, for: .normal)
         }
