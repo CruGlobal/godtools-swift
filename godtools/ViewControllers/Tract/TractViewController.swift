@@ -57,37 +57,37 @@ class TractViewController: BaseViewController {
     func getData() -> Dictionary<String, Any> {
         let paragraphContent = [
             "kind": "text",
-            "properties": ["message": "These four points explain how to enter into a personal relationship with God and experience the life for which you were created."],
-            "children": []
+            "properties": ["text": "These four points explain how to enter into a personal relationship with God and experience the life for which you were created.", "color": "black"],
+            "children": [Dictionary<String, Any>]()
             ] as [String : Any]
         
         let paragraph = [
             "kind": "paragraph",
-            "properties": [],
+            "properties": Dictionary<String, Any>(),
             "children": [paragraphContent]
             ] as [String : Any]
         
         let headingContent = [
             "kind": "text",
-            "properties": ["message": "Knowing God Personally"],
-            "children": []
+            "properties": ["text": "Knowing God Personally", "color": "red"],
+            "children": [Dictionary<String, Any>]()
             ] as [String : Any]
         
         let heading = [
             "kind": "heading",
-            "properties": [],
+            "properties": Dictionary<String, Any>(),
             "children": [headingContent]
             ] as [String : Any]
         
         let hero = [
             "kind": "hero",
-            "properties": [],
+            "properties": Dictionary<String, Any>(),
             "children": [heading, paragraph]
             ] as [String : Any]
         
         let page = [
             "kind": "root",
-            "properties": [],
+            "properties": Dictionary<String, Any>(),
             "children": [hero]
             ] as [String : Any]
         

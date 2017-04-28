@@ -29,6 +29,12 @@ class BaseTractElement: NSObject {
         setupElement(data: data, startOnY: yPosition)
     }
     
+    init(data: Dictionary<String, Any>, startOnY yPosition: CGFloat, parent: BaseTractElement) {
+        super.init()
+        self.parent = parent
+        setupElement(data: data, startOnY: yPosition)
+    }
+    
     func render() -> UIView {
         for element in self.elements! {
             self.view!.addSubview(element.render())
@@ -67,8 +73,16 @@ class BaseTractElement: NSObject {
         let dataContent = splitData(data: data)
         var element:BaseTractElement?
         
-        if dataContent.kind == "hero" {
-            element = Hero(data: data, startOnY: yPosition)
+        if dataContent.kind == "root" {
+            element = TractRoot(data: data, startOnY: yPosition, parent: self)
+        } else if dataContent.kind == "hero" {
+            element = Hero(data: data, startOnY: yPosition, parent: self)
+        }else if dataContent.kind == "heading" {
+            element = Heading(data: data, startOnY: yPosition, parent: self)
+        }else if dataContent.kind == "paragraph" {
+            element = Paragraph(data: data, startOnY: yPosition, parent: self)
+        }else if dataContent.kind == "text" {
+            element = TextContent(data: data, startOnY: yPosition, parent: self)
         }
         
         return element!
@@ -88,6 +102,19 @@ class BaseTractElement: NSObject {
         
         while elementCopy != nil {
             if elementCopy!.isKind(of: Paragraph.self) {
+                return true
+            }
+            elementCopy = elementCopy!.parent
+        }
+        
+        return false
+    }
+    
+    static func isHeadingElement(_ element: BaseTractElement) -> Bool {
+        var elementCopy: BaseTractElement? = element
+        
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: Heading.self) {
                 return true
             }
             elementCopy = elementCopy!.parent
