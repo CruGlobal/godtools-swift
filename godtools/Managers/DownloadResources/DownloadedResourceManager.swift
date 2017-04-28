@@ -28,9 +28,9 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(LanguageResource.self)
     }
     
-    func loadFromDisk() -> Promise<[DownloadedResource]> {
+    func loadFromDisk() -> [DownloadedResource] {
         resources = DownloadedResource.mr_findAll() as! [DownloadedResource]
-        return Promise(value: resources)
+        return resources
     }
     
     func loadFromRemote() -> Promise<[DownloadedResource]> {
@@ -46,7 +46,7 @@ class DownloadedResourceManager: GTDataManager {
                 } catch {
                     return Promise(error: error)
                 }
-                return self.loadFromDisk()
+                return Promise(value:self.loadFromDisk())
             }
     }
     
