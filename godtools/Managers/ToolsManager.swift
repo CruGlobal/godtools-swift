@@ -60,10 +60,16 @@ extension ToolsManager: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if showDownloaded {
-            return TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: "4").count
+        let languageId = GTSettings.shared.primaryLanguageId
+        
+        if languageId == nil {
+            return 0
+        }
+        
+        if self.delegate is HomeViewController {
+            return TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: languageId!).count
         } else {
-            return TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: "4").count
+            return TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: languageId!).count
         }
     }
     
