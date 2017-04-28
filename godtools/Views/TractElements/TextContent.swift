@@ -68,9 +68,13 @@ class TextContent: BaseTractElement {
     
     fileprivate func createLabelFrameForHeight(_ height: CGFloat) -> CGRect {
         return CGRect(x: BaseTractElement.Standards.xPadding,
-                      y: self.yStartPosition,
+                      y: self.yStartPosition + BaseTractElement.Standards.yPadding,
                       width: BaseTractElement.Standards.textContentWidth,
                       height: height)
+    }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height + BaseTractElement.Standards.yPadding
     }
     
 }

@@ -12,13 +12,16 @@ import UIKit
 class Paragraph: BaseTractElement {
     
     let paddingConstant = CGFloat(30.0)
-    var textScale = Float(1.0)
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = CGRect(x: 0.0, y: self.yStartPosition, width: BaseTractElement.Standards.screenWidth, height: self.height)
+        let frame = CGRect(x: 0.0, y: self.yStartPosition + paddingConstant, width: BaseTractElement.Standards.screenWidth, height: self.height)
         let view = UIView(frame: frame)
         view.backgroundColor = .blue
         self.view = view
+    }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height + paddingConstant
     }
     
 }
