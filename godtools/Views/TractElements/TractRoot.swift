@@ -6,6 +6,7 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class TractRoot: BaseTractElement {

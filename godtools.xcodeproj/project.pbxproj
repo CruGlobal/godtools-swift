@@ -18,6 +18,12 @@
 		0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */; };
 		0F806C551EB2893500F3ED2B /* Heading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C541EB2893500F3ED2B /* Heading.swift */; };
 		0F806C571EB28D6000F3ED2B /* TractRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C561EB28D6000F3ED2B /* TractRoot.swift */; };
+		0F806C671EB3E69D00F3ED2B /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C661EB3E69D00F3ED2B /* Header.swift */; };
+		0F806C691EB3E6B100F3ED2B /* Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C681EB3E6B100F3ED2B /* Number.swift */; };
+		0F806C6B1EB3E6C300F3ED2B /* Title.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6A1EB3E6C300F3ED2B /* Title.swift */; };
+		0F806C6D1EB3E6D700F3ED2B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6C1EB3E6D700F3ED2B /* Card.swift */; };
+		0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */; };
+		0F806C711EB3E72C00F3ED2B /* CallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C701EB3E72C00F3ED2B /* CallToAction.swift */; };
 		0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9331EAA56EC0049C110 /* ToolsManager.swift */; };
 		0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9351EAA6FF80049C110 /* ToolDetailViewController.swift */; };
 		0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */; };
@@ -86,6 +92,12 @@
 		0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeToolTableViewCell.xib; sourceTree = "<group>"; };
 		0F806C541EB2893500F3ED2B /* Heading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Heading.swift; path = Views/TractElements/Heading.swift; sourceTree = "<group>"; };
 		0F806C561EB28D6000F3ED2B /* TractRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractRoot.swift; path = Views/TractElements/TractRoot.swift; sourceTree = "<group>"; };
+		0F806C661EB3E69D00F3ED2B /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Header.swift; path = Views/TractElements/Header.swift; sourceTree = "<group>"; };
+		0F806C681EB3E6B100F3ED2B /* Number.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Number.swift; path = Views/TractElements/Number.swift; sourceTree = "<group>"; };
+		0F806C6A1EB3E6C300F3ED2B /* Title.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Title.swift; path = Views/TractElements/Title.swift; sourceTree = "<group>"; };
+		0F806C6C1EB3E6D700F3ED2B /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Card.swift; path = Views/TractElements/Card.swift; sourceTree = "<group>"; };
+		0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLabel.swift; path = Views/TractElements/TractLabel.swift; sourceTree = "<group>"; };
+		0F806C701EB3E72C00F3ED2B /* CallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallToAction.swift; path = Views/TractElements/CallToAction.swift; sourceTree = "<group>"; };
 		0F93A9331EAA56EC0049C110 /* ToolsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolsManager.swift; path = Managers/ToolsManager.swift; sourceTree = "<group>"; };
 		0F93A9351EAA6FF80049C110 /* ToolDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailViewController.swift; sourceTree = "<group>"; };
 		0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolDetailViewController.xib; sourceTree = "<group>"; };
@@ -432,6 +444,12 @@
 				4F462A371EB0E28900C03447 /* TextContent.swift */,
 				0F806C541EB2893500F3ED2B /* Heading.swift */,
 				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
+				0F806C661EB3E69D00F3ED2B /* Header.swift */,
+				0F806C681EB3E6B100F3ED2B /* Number.swift */,
+				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
+				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
+				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
+				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,
 			);
 			name = TractElements;
 			sourceTree = "<group>";
@@ -587,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
+				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
@@ -594,6 +613,8 @@
 				4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				0F806C711EB3E72C00F3ED2B /* CallToAction.swift in Sources */,
+				0F806C691EB3E6B100F3ED2B /* Number.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
@@ -604,7 +625,9 @@
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
+				0F806C6D1EB3E6D700F3ED2B /* Card.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
+				0F806C6B1EB3E6C300F3ED2B /* Title.swift in Sources */,
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
 				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
 				0F93A93E1EAAA93B0049C110 /* DownloadButton.swift in Sources */,
@@ -626,6 +649,7 @@
 				4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				0F806C671EB3E69D00F3ED2B /* Header.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* Paragraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
