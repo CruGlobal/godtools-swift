@@ -22,12 +22,6 @@ class LanguageSettingsViewController: BaseViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        _ = DownloadedResourceManager.shared.loadFromRemote()
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

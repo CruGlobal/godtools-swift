@@ -36,7 +36,6 @@ class LanguagesTableViewController: BaseViewController {
         self.registerCells()
         
         self.loadFromDisk()
-        self.loadFromRemote()
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,17 +47,6 @@ class LanguagesTableViewController: BaseViewController {
     func loadFromDisk() {
         languagesManager.loadFromDisk().always {
             self.reloadTableView()
-        }
-    }
-    
-    func loadFromRemote() {
-        languagesManager.loadFromRemote().catch(execute: { error in
-            if self.languagesManager.languages.count == 0 {
-                self.showAlertControllerWith(message: "language_download_error".localized)
-            }
-        }).always {
-            self.reloadTableView()
-            self.hideNetworkActivityIndicator()
         }
     }
     
