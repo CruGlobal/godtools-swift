@@ -40,7 +40,6 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.toolsManager.showDownloaded = true
         self.toolsManager.delegate = self
     }
     

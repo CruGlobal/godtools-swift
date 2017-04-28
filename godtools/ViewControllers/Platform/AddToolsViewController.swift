@@ -32,7 +32,6 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.toolsManager.showDownloaded = false
         self.toolsManager.delegate = self
     }
 

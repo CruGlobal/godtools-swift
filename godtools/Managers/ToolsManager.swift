@@ -16,14 +16,35 @@ import UIKit
 class ToolsManager: NSObject {
     
     static let shared = ToolsManager()
-    var delegate: ToolsManagerDelegate?
+    var delegate: ToolsManagerDelegate? {
+        didSet {
+            let languageId = GTSettings.shared.primaryLanguageId
+            if languageId == nil {
+                return
+            }
+            
+            if self.delegate is HomeViewController {
+                downloadedTranslations = TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: languageId!)
+            } else {
+                latestTranslations = TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: languageId!)
+            }
+        }
+    }
     
-    var showDownloaded = true
+    var latestTranslations: [Translation]?
+    var downloadedTranslations: [Translation]?
     
     override init() {
         super.init()
     }
-
+    
+    fileprivate func getShownTranslations() -> [Translation] {
+        if self.delegate is HomeViewController {
+            return downloadedTranslations!
+        } else {
+            return latestTranslations!
+        }
+    }
 }
 
 extension ToolsManager: UITableViewDelegate {
@@ -66,11 +87,7 @@ extension ToolsManager: UITableViewDataSource {
             return 0
         }
         
-        if self.delegate is HomeViewController {
-            return TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: languageId!).count
-        } else {
-            return TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: languageId!).count
-        }
+        return getShownTranslations().count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
