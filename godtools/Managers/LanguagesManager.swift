@@ -19,10 +19,15 @@ class LanguagesManager: GTDataManager {
     let path = "/languages"
     
     var languages = [Language]()
+    var selectingPrimaryLanguage = true
     
     override init() {
         super.init()
         serializer.registerResource(LanguageResource.self)
+    }
+    
+    func loadFromDisk(id: String) -> Language {
+        return Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
     }
     
     func loadFromDisk() -> Promise<[Language]> {
