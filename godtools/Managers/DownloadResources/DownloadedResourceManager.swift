@@ -25,6 +25,7 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(DownloadedResourceJson.self)
         serializer.registerResource(TranslationResource.self)
         serializer.registerResource(PageResource.self)
+        serializer.registerResource(LanguageResource.self)
     }
     
     func loadFromDisk() -> Promise<[DownloadedResource]> {
@@ -57,12 +58,13 @@ class DownloadedResourceManager: GTDataManager {
                 cachedResource.code = remoteResource.abbreviation
                 cachedResource.name = remoteResource.name
                 
-                let remoteTranslations = remoteResource.translations!
+                let remoteTranslations = remoteResource.latestTranslations!
                 for remoteTranslationGeneric in remoteTranslations {
                     let remoteTranslation = remoteTranslationGeneric as! TranslationResource
                     
                     let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
                     
+                    cachedTranslation.language = Language.mr_findFirst(byAttribute: "remoteId", withValue: remoteTranslation.language?.id ?? "-1", in: context)
                     cachedTranslation.version = remoteTranslation.version!.int16Value
                     cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                     cachedResource.addToTranslations(cachedTranslation)

@@ -60,16 +60,6 @@ class LanguagesManager: GTDataManager {
             for remoteLanguage in languages {
                 let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
                 cachedlanguage.code = remoteLanguage.code
-                
-                for relatedTranslation in remoteLanguage.translations!.linkage! {
-                    print(relatedTranslation.toDictionary())
-
-                    let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId",
-                                                                             withValue: relatedTranslation.id,
-                                                                             in: context)
-                    
-                    cachedlanguage.addToTranslations(cachedTranslation)
-                }
             }
         })
     }

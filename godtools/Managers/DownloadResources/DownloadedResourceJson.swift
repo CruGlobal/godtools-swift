@@ -14,6 +14,7 @@ class DownloadedResourceJson: Resource {
     var name: String?
     var abbreviation: String?
     
+    var latestTranslations: LinkedResourceCollection?
     var translations: LinkedResourceCollection?
     var pages: LinkedResourceCollection?
     
@@ -26,6 +27,7 @@ class DownloadedResourceJson: Resource {
             "name" : Attribute(),
             "abbreviation" : Attribute(),
             "translations" : ToManyRelationship(TranslationResource.self),
+            "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
             "pages" : ToManyRelationship(PageResource.self)])
     }
 }
