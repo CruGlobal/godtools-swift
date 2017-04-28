@@ -13,36 +13,19 @@ import UIKit
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
 }
 
-class ToolsManager: NSObject {
+class ToolsManager: GTDataManager {
     
     static let shared = ToolsManager()
+    
+    var resources: [DownloadedResource]?
+    
     var delegate: ToolsManagerDelegate? {
         didSet {
-            let languageId = GTSettings.shared.primaryLanguageId
-            if languageId == nil {
-                return
-            }
-            
             if self.delegate is HomeViewController {
-                downloadedTranslations = TranslationsManager.shared.loadDownloadedTranslationsFromDisk(languageId: languageId!)
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
             } else {
-                latestTranslations = TranslationsManager.shared.loadLatestTranslationsFromDisk(languageId: languageId!)
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
             }
-        }
-    }
-    
-    var latestTranslations: [Translation]?
-    var downloadedTranslations: [Translation]?
-    
-    override init() {
-        super.init()
-    }
-    
-    fileprivate func getShownTranslations() -> [Translation] {
-        if self.delegate is HomeViewController {
-            return downloadedTranslations!
-        } else {
-            return latestTranslations!
         }
     }
 }
@@ -59,6 +42,10 @@ extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
+        
+        resources![indexPath.section].shouldDownload = true
+        saveToDisk()
+        
         self.delegate?.didSelectTableViewRow!(cell: cell)
     }
     
@@ -68,7 +55,6 @@ extension ToolsManager: UITableViewDelegate {
         headerView.backgroundColor = .clear
         return headerView
     }
-    
 }
 
 extension ToolsManager: UITableViewDataSource {
@@ -77,19 +63,13 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        cell.titleLabel.text = getShownTranslations()[indexPath.section].downloadedResource!.name
-        cell.languageLabel.text = LanguagesManager.shared.loadPrimaryLanguageFromDisk()!.localizedName
+        cell.titleLabel.text = self.resources![indexPath.section].name
+        cell.languageLabel.text = LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let languageId = GTSettings.shared.primaryLanguageId
-        
-        if languageId == nil {
-            return 0
-        }
-        
-        return getShownTranslations().count
+        return self.resources!.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

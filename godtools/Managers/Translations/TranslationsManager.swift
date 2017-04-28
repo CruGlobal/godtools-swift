@@ -13,13 +13,13 @@ import Alamofire
 class TranslationsManager {
     static let shared = TranslationsManager()
     
-    func loadLatestTranslationsFromDisk(languageId: String) -> [Translation] {
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", languageId)
+    func loadLatestTranslationsFromDisk() -> [Translation] {
+        let predicate = NSPredicate(format: "isPublished = true")
         return Translation.mr_findAll(with: predicate) as! [Translation]
     }
     
-    func loadDownloadedTranslationsFromDisk(languageId: String) -> [Translation] {
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND isDownloaded = true", languageId)
+    func loadDownloadedTranslationsFromDisk() -> [Translation] {
+        let predicate = NSPredicate(format: "isDownloaded = true")
         return Translation.mr_findAll(with: predicate) as! [Translation]
     }
     

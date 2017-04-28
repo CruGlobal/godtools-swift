@@ -45,6 +45,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.toolsManager.delegate = self
+        self.tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
