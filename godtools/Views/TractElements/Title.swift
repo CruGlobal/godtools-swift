@@ -16,7 +16,7 @@ class Title: BaseTractElement {
     override func setupView(properties: Dictionary<String, Any>) {
         let frame = CGRect(x: 0.0, y: self.yStartPosition  + paddingConstant, width: BaseTractElement.Standards.screenWidth, height: self.height)
         let view = UIView(frame: frame)
-        view.backgroundColor = .green
+        view.backgroundColor = .red
         self.view = view
     }
     

@@ -35,12 +35,12 @@ class TextContent: BaseTractElement {
             label.sizeToFit()
             self.height = label.frame.height
             label.frame = createLabelFrameForHeight(self.height)
-        } else if BaseTractElement.isHeaderNumberElement(self) {
+        } else if BaseTractElement.isNumberElement(self) {
             label.gtStyle = "pageHeaderNumber"
             label.numberOfLines = 1
             self.height = 60.0
             label.frame = createLabelFrameForHeight(self.height)
-        } else if BaseTractElement.isHeaderNumberElement(self) {
+        } else if BaseTractElement.isTitleElement(self) {
             label.gtStyle = "pageHeaderTitle"
             label.numberOfLines = 2
             self.height = 48.0
@@ -66,7 +66,7 @@ class TextContent: BaseTractElement {
             case "black":
                 backgroundColor = UIColor.gtBlack
             default:
-                backgroundColor = UIColor.gtWhite
+                backgroundColor = UIColor.clear
             }
         }
         else {

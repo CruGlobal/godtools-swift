@@ -12,8 +12,9 @@ import UIKit
 class TractRoot: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = CGRect(x: 0.0, y: self.yStartPosition, width: BaseTractElement.Standards.screenWidth, height: self.height + 2000.0)
+        let frame = CGRect(x: 0.0, y: self.yStartPosition, width: BaseTractElement.Standards.screenWidth, height: self.height)
         let view = UIView(frame: frame)
+        view.backgroundColor = .yellow
         self.view = view
     }
     

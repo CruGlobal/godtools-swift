@@ -14,10 +14,6 @@ class BaseTractView: UIView {
     
     var data: XMLIndexer?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func layoutSubviews() {
         backgroundColor = .orange
         
