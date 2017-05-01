@@ -66,6 +66,7 @@
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
+		684328EC1EB7C7F4005E9131 /* fastlane in Resources */ = {isa = PBXBuildFile; fileRef = 684328EB1EB7C7F4005E9131 /* fastlane */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,7 @@
 		4F57329B1EA69CF00082035C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
+		684328EB1EB7C7F4005E9131 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -376,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				4F57328B1EA69CF00082035C /* godtools */,
+				684328EB1EB7C7F4005E9131 /* fastlane */,
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
@@ -483,6 +486,7 @@
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
+				684328EC1EB7C7F4005E9131 /* fastlane in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,

@@ -67,3 +67,23 @@ fastlane/screenshots
 fastlane/test_output
 
 .ruby-version
+
+#fastlane
+fastlane/report.xml
+fastlane/screenshots
+fastlane/test_output
+output
+derivedData
+report.xml
+report.junit
+report.html
+index.html
+
+.idea
+fastlane/output
+fastlane/output/encrypted
+fastlane/encrypted
+fastlane/fastlane_cleanup_script.sh
+encrypted
+.env.local
+fastlane_cleanup_script.sh
