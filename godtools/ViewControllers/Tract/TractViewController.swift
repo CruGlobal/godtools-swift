@@ -14,6 +14,7 @@ class TractViewController: BaseViewController {
     
     var xmlPages = [XMLIndexer]()
     var currentPage = 0
+    var containerView = UIView()
     var pagesViews = [UIView]()
     
     override func viewDidLoad() {
@@ -50,23 +51,38 @@ class TractViewController: BaseViewController {
         let navigationBarFrame = navigationController!.navigationBar.frame
         let startingPoint = navigationBarFrame.origin.y + navigationBarFrame.size.height
         
-        for pageNumber in (0..<totalPages()) {
-            let view = buildPage(pageNumber, startingPoint: startingPoint)
+        let width = self.view.frame.size.width
+        let height = self.view.frame.size.height - startingPoint
+        self.containerView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+        self.view.addSubview(view)
+        
+        buildPages(width, height)
+    }
+    
+    fileprivate func buildPages(_ width: CGFloat, _ height: CGFloat) {
+        var start = self.currentPage - 2
+        if start < 0 {
+            start = 0
+        }
+        
+        var end = self.currentPage + 2
+        if end > self.totalPages() - 1 {
+            end = totalPages() - 1
+        }
+        
+        for pageNumber in start...end {
+            let view = buildPage(pageNumber, width: width, height: height)
             self.pagesViews.append(view)
-            self.view.addSubview(view)
+            self.containerView.addSubview(view)
         }
     }
     
-    fileprivate func buildPage(_ page: Int, startingPoint: CGFloat) -> UIView {
-        let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
-        let width = self.view.frame.size.width
-        let height = self.view.frame.size.height - startingPoint
+    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
         let xPosition = width * CGFloat(page)
-        view.data = getPage(self.currentPage)
-        view.frame = CGRect(x: xPosition,
-                            y: startingPoint,
-                            width: width,
-                            height: height)
+        let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
+        view.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
+        view.data = getPage(page)
+        view.tag = 100 + page
         return view
     }
     
