@@ -23,6 +23,8 @@ class BaseTractView: UIView {
         
         let yPosition: CGFloat = 0.0
         let rootElement: TractRoot = TractRoot(data: self.data!["page"], startOnY: yPosition)
-        self.addSubview(rootElement.render())
+        
+        let contentView: UIView = rootElement.render()
+        self.addSubview(contentView)
     }
 }

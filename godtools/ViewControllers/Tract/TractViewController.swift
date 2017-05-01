@@ -12,6 +12,7 @@ import SWXMLHash
 
 class TractViewController: BaseViewController {
     
+    var viewsWereGenerated :Bool = false
     var xmlPages = [XMLIndexer]()
     var currentPage = 0
     var currentMovement: CGFloat = 0.0
@@ -23,8 +24,18 @@ class TractViewController: BaseViewController {
         
         getData()
         displayTitle()
-        initializeView()
         setupSwipeGestures()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if self.viewsWereGenerated {
+            return
+        }
+        
+        initializeView()
+        self.viewsWereGenerated = true
     }
     
     override func configureNavigationButtons() {
@@ -144,7 +155,7 @@ class TractViewController: BaseViewController {
     // MARK: - Handle page movements
     
     func moveToNextPage() {
-        if self.currentPage > totalPages() - 1 {
+        if self.currentPage >= totalPages() - 1 {
             return
         }
         
@@ -211,15 +222,16 @@ extension TractViewController {
         
         let page1 = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><!-- https://projects.invisionapp.com/d/main#/console/10765517/228342248/preview --><page xmlns=\"http://mobile-content-api.cru.org/xmlns/tract\" xmlns:content=\"https://mobile-content-api.cru.org/xmlns/content\"><hero><heading><content:text i18n-id=\"{{uuid}}\">Knowing God Personally</content:text></heading><paragraph><content:text i18n-id=\"{{uuid}}\">These four points explain how to enter into a personal relationship with God and experience the life for which you were created.</content:text></paragraph></hero></page>"
         let xml1 = SWXMLHash.parse(page1)
-        xmlPages.append(xml1)
         
         let page2 = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><!-- https://projects.invisionapp.com/d/main#/console/10765517/228342251/preview --><page xmlns=\"http://mobile-content-api.cru.org/xmlns/tract\" xmlns:content=\"https://mobile-content-api.cru.org/xmlns/content\" background-image=\"{{path_to_sunrise.png}}\"><header><number><content:text i18n-id=\"{{uuid}}\">1</content:text></number><title><content:text i18n-id=\"{{uuid}}\">God loves you and created you to know him personally.</content:text></title></header><card><label><content:text i18n-id=\"{{uuid}}\">God loves you</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">\"For God so loved the world, that He gave His only begotten Son, that whoever believes in Him should not perish, but have eternal life.\"</content:text><content:text i18n-id=\"{{uuid}}\">John 3:16 NIV</content:text></paragraph></card><card><label><content:text i18n-id=\"{{uuid}}\">God wants you to know him</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">\"Now this is eternal life: that they may know You, the only true God, and Jesus Christ, whom You have sent.\"</content:text><content:text i18n-id=\"{{uuid}}\">John 17:3 NIV</content:text></paragraph></card></page>"
         let xml2 = SWXMLHash.parse(page2)
-        xmlPages.append(xml2)
         
         let page3 = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview --><page xmlns=\"http://mobile-content-api.cru.org/xmlns/tract\" xmlns:content=\"https://mobile-content-api.cru.org/xmlns/content\" background-image=\"{{chasm_in_between.png}}\"><header><number><content:text i18n-id=\"{{uuid}}\">2</content:text></number><title><content:text i18n-id=\"{{uuid}}\">We are separated from God by our sin, so we cannot know him or experience his love.</content:text></title></header><card><label><content:text i18n-id=\"{{uuid}}\">What is sin?</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">We were created to have a relationship with God, but we rejected him and the relationship was broken.</content:text><content:text>This rejection of God and the building of our lives around anything else is what the Bible calls sin.</content:text><content:text>We show this by having selfish actions and attitudes, by disobeying God or displaying indifference toward him.</content:text></paragraph></card><card background-image=\"{{chasm_in_between.png}}\" background-image-align=\"bottom\"><label><content:text i18n-id=\"{{uuid}}\">Everyone is sinful</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">“For everyone has sinned: we all fall short of God’s glorious standard.”</content:text><content:text i18n-id=\"{{uuid}}\">Romans 3:23</content:text></paragraph></card><card><label><content:text i18n-id=\"{{uuid}}\">Sin has consequences</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">For the wages of sin is death, but the free gift of God is eternal life through Christ Jesus our Lord.</content:text><content:text i18n-id=\"{{uuid}}\">Romans 6:23</content:text><content:text i18n-id=\"{{uuid}}\">God is perfect and just and will hold us accountable for our sin. There is a penalty for rejecting God.</content:text><content:text i18n-id=\"{{uuid}}\">God is perfect and we are sinful. There is a great gap between us because of our sin.</content:text><content:text i18n-id=\"{{uuid}}\">We may try to bridge this gap through good deeds or following a religion. However, all our efforts fail because they can’t solve the problem of sin that keeps us from God.</content:text></paragraph></card><call-to-action><content:text i18n-id=\"{{uuid}}\">The third point gives us the only solution to this problem…</content:text></call-to-action></page>"
         let xml3 = SWXMLHash.parse(page3)
+        
         xmlPages.append(xml3)
+        xmlPages.append(xml2)
+        xmlPages.append(xml1)
         
         return xmlPages
     }

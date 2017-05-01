@@ -78,12 +78,16 @@ class BaseTractElement: NSObject {
             element = TractRoot(data: data, startOnY: yPosition, parent: self)
         } else if dataContent.kind == "hero" {
             element = Hero(data: data, startOnY: yPosition, parent: self)
-        }else if dataContent.kind == "heading" {
+        } else if dataContent.kind == "heading" {
             element = Heading(data: data, startOnY: yPosition, parent: self)
-        }else if dataContent.kind == "paragraph" {
+        } else if dataContent.kind == "paragraph" {
             element = Paragraph(data: data, startOnY: yPosition, parent: self)
-        }else if dataContent.kind == "content:text" {
+        } else if dataContent.kind == "content:text" {
             element = TextContent(data: data, startOnY: yPosition, parent: self)
+        } else if dataContent.kind == "header" {
+            element = Header(data: data, startOnY: yPosition, parent: self)
+        } else if dataContent.kind == "number" {
+            element = Number(data: data, startOnY: yPosition, parent: self)
         } else {
             element = TractRoot(data: data, startOnY: yPosition, parent: self)
         }
@@ -129,6 +133,36 @@ class BaseTractElement: NSObject {
         }
         
         return false
+    }
+    
+    static func isHeaderElement(_ element: BaseTractElement) -> Bool {
+        var elementCopy: BaseTractElement? = element
+        
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: Header.self) {
+                return true
+            }
+            elementCopy = elementCopy!.parent
+        }
+        
+        return false
+    }
+    
+    static func isNumberElement(_ element: BaseTractElement) -> Bool {
+        var elementCopy: BaseTractElement? = element
+        
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: Number.self) {
+                return true
+            }
+            elementCopy = elementCopy!.parent
+        }
+        
+        return false
+    }
+    
+    static func isHeaderNumberElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isHeaderElement(element) && BaseTractElement.isNumberElement(element)
     }
     
     func yEndPosition() -> CGFloat {
