@@ -70,79 +70,7 @@ class BaseTractElement: NSObject {
         self.elements = elements
     }
     
-    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
-        let dataContent = splitData(data: data)
-        var element:BaseTractElement?
-        
-        if dataContent.kind == "page" {
-            element = TractRoot(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "hero" {
-            element = Hero(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "heading" {
-            element = Heading(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "paragraph" {
-            element = Paragraph(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "content:text" {
-            element = TextContent(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "header" {
-            element = Header(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "number" {
-            element = Number(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "title" {
-            element = Title(data: data, startOnY: yPosition, parent: self)
-        } else {
-            element = TractRoot(data: data, startOnY: yPosition, parent: self)
-        }
-        
-        return element!
-    }
-    
     // MARK: - Helpers
-    
-    func splitData(data: XMLIndexer) -> (kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
-        let kind = data.element?.name
-        var properties = Dictionary<String, Any>()
-        for item in (data.element?.allAttributes)! {
-            let attribute = item.value as XMLAttribute
-            properties[attribute.name] = attribute.text
-        }
-        properties["value"] = data.element?.text
-        let children = data.children
-        return (kind!, properties, children)
-    }
-    
-    static func isParagraphElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Paragraph.self)
-    }
-    
-    static func isHeadingElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Heading.self)
-    }
-    
-    static func isHeaderElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Header.self)
-    }
-    
-    static func isNumberElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Number.self)
-    }
-    
-    static func isTitleElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Title.self)
-    }
-    
-    static func isElement(_ element: BaseTractElement, kindOf tractClass: AnyClass) -> Bool {
-        var elementCopy: BaseTractElement? = element
-        
-        while elementCopy != nil {
-            if elementCopy!.isKind(of: tractClass) {
-                return true
-            }
-            elementCopy = elementCopy!.parent
-        }
-        
-        return false
-    }
     
     func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height

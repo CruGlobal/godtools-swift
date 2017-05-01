@@ -12,6 +12,8 @@
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
 		0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */; };
 		0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */; };
+		0F6982721EB7D9E800CAA284 /* TractElementOperationFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */; };
+		0F6982741EB7DA4500CAA284 /* TractElementKindFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */; };
 		0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50221EA933B000F5957E /* HomeViewController.swift */; };
 		0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50231EA933B000F5957E /* HomeViewController.xib */; };
 		0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */; };
@@ -86,6 +88,8 @@
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNotifications.swift; sourceTree = "<group>"; };
+		0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementOperationFunctions.swift; path = Views/TractElements/TractElementOperationFunctions.swift; sourceTree = "<group>"; };
+		0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementKindFunctions.swift; path = Views/TractElements/TractElementKindFunctions.swift; sourceTree = "<group>"; };
 		0F7D50221EA933B000F5957E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0F7D50231EA933B000F5957E /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeToolTableViewCell.swift; sourceTree = "<group>"; };
@@ -185,6 +189,15 @@
 				0F350D9A1EAE786A0025C4BB /* String.swift */,
 			);
 			name = GeneralExtensions;
+			sourceTree = "<group>";
+		};
+		0F69826E1EB7D96100CAA284 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */,
+				0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		0F7D50201EA931A600F5957E /* Languages */ = {
@@ -438,6 +451,7 @@
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
 			isa = PBXGroup;
 			children = (
+				0F69826E1EB7D96100CAA284 /* Extensions */,
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 				4F462A351EB0E28900C03447 /* Hero.swift */,
 				4F462A361EB0E28900C03447 /* Paragraph.swift */,
@@ -633,6 +647,7 @@
 				0F93A93E1EAAA93B0049C110 /* DownloadButton.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,
+				0F6982741EB7DA4500CAA284 /* TractElementKindFunctions.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* Heading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
@@ -646,6 +661,7 @@
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TextContent.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
+				0F6982721EB7D9E800CAA284 /* TractElementOperationFunctions.swift in Sources */,
 				4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
