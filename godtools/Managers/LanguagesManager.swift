@@ -41,7 +41,7 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
     }
     
-    func loadFromDisk() -> Promise<[Language]> {
+    func loadFromDisk() -> [Language] {
         languages = Language.mr_findAll() as! [Language]
         
         for language in languages {
@@ -52,7 +52,7 @@ class LanguagesManager: GTDataManager {
             return language1.localizedName!.compare(language2.localizedName!).rawValue < 0
         }
         
-        return Promise(value:languages)
+        return languages
     }
     
     func loadFromRemote() -> Promise<[Language]> {
@@ -67,7 +67,7 @@ class LanguagesManager: GTDataManager {
                 } catch {
                     return Promise(error: error)
                 }
-                return self.loadFromDisk()
+                return Promise(value:self.loadFromDisk())
         }
     }
     
