@@ -54,7 +54,7 @@ class TractViewController: BaseViewController {
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingPoint
         self.containerView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-        self.view.addSubview(view)
+        self.view.addSubview(self.containerView)
         
         buildPages(width, height)
     }

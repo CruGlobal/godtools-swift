@@ -84,6 +84,8 @@ class BaseTractElement: NSObject {
             element = Paragraph(data: data, startOnY: yPosition, parent: self)
         }else if dataContent.kind == "content:text" {
             element = TextContent(data: data, startOnY: yPosition, parent: self)
+        } else {
+            element = TractRoot(data: data, startOnY: yPosition, parent: self)
         }
         
         return element!
