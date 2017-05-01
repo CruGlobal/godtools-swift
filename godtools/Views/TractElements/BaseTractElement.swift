@@ -70,6 +70,10 @@ class BaseTractElement: NSObject {
         self.elements = elements
     }
     
+    func configureLabelStyle() -> (style: String, height: CGFloat) {
+        return ("blackText", 0.0)
+    }
+    
     // MARK: - Helpers
     
     func yEndPosition() -> CGFloat {

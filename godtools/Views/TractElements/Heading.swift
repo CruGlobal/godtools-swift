@@ -20,6 +20,10 @@ class Heading: BaseTractElement {
         self.view = view
     }
     
+    override func configureLabelStyle() -> (style: String, dynamic: Bool, height: CGFloat) {
+        return ("toolFrontTitle", 0.0)
+    }
+    
     override func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height + paddingConstant
     }

@@ -24,6 +24,10 @@ class Title: BaseTractElement {
         self.view = view
     }
     
+    override func configureLabelStyle() -> (style: String, dynamic: Bool, height: CGFloat) {
+        return ("pageHeaderTitle", 48.0)
+    }
+    
     override func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height + self.yPaddingConstant
     }
