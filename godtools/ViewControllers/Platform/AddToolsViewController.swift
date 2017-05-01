@@ -9,9 +9,10 @@
 import UIKit
 
 protocol AddToolsViewControllerDelegate {
+    mutating func moveToToolDetail()
 }
 
-class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
+class AddToolsViewController: BaseViewController {
     
     var delegate: AddToolsViewControllerDelegate?
     
@@ -35,10 +36,6 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
         self.toolsManager.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: - Helpers
     
     fileprivate func registerCells() {
@@ -49,10 +46,14 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
         self.tableView.separatorStyle = .none
     }
     
-    // MARK: - ToolsManagerDelegate
-    
+}
+
+extension AddToolsViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         _ = self.navigationController?.popViewController(animated: true)
     }
-
+    
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.moveToToolDetail()
+    }
 }

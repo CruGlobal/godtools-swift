@@ -11,6 +11,7 @@ import UIKit
 
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
+    func infoButtonWasPressed(resource: DownloadedResource)
 }
 
 class ToolsManager: GTDataManager {
@@ -43,9 +44,6 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        resources![indexPath.section].shouldDownload = true
-        saveToDisk()
-        
         self.delegate?.didSelectTableViewRow!(cell: cell)
     }
     
@@ -63,8 +61,11 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        cell.setTitle(self.resources![indexPath.section].name)
+        
+        cell.cellDelegate = self
+        cell.resource = self.resources![indexPath.section]
         cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName)
+
         return cell
     }
     
@@ -75,5 +76,15 @@ extension ToolsManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+}
+
+extension ToolsManager: HomeToolTableViewCellDelegate {
+    func downloadButtonWasPressed(resource: DownloadedResource) {
+        resource.shouldDownload = true
+        saveToDisk()
+    }
     
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.infoButtonWasPressed(resource: resource)
+    }
 }

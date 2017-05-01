@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol HomeToolTableViewCellDelegate {
+    func downloadButtonWasPressed(resource: DownloadedResource)
+    func infoButtonWasPressed(resource: DownloadedResource)
+}
+
 @IBDesignable
 class HomeToolTableViewCell: UITableViewCell {
     
@@ -24,6 +29,14 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
+    
+    var resource: DownloadedResource? {
+        didSet {
+            self.titleLabel.text = resource?.name
+        }
+    }
+    
+    var cellDelegate: HomeToolTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,9 +57,11 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
+        self.cellDelegate?.downloadButtonWasPressed(resource: resource!)
     }
     
     @IBAction func pressInfoButton(_ sender: Any) {
+        self.cellDelegate?.infoButtonWasPressed(resource: resource!)
     }
     
     // MARK: UI 
@@ -77,11 +92,7 @@ class HomeToolTableViewCell: UITableViewCell {
         layer.shadowOpacity = 0.4
         layer.shouldRasterize = true
     }
-    
-    func setTitle(_ title: String?) {
-        self.titleLabel.text = title
-    }
-    
+
     func setLanguage(_ language: String?) {
         self.languageLabel.text = language
     }

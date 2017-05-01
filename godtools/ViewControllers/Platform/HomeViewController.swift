@@ -118,4 +118,8 @@ extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         self.delegate?.moveToTract()
     }
+    
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.moveToToolDetail()
+    }
 }
