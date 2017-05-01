@@ -65,7 +65,7 @@ class TractViewController: BaseViewController {
         
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingPoint
-        self.containerView.frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+        self.containerView.frame = CGRect(x: 0.0, y: startingPoint, width: width, height: height)
         self.view.addSubview(self.containerView)
         
         buildPages(width, height)
@@ -82,6 +82,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
+        // let xPosition = CGFloat(page*200)
         let xPosition = (width * CGFloat(page)) + self.currentMovement
         let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
         view.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
@@ -171,10 +172,9 @@ class TractViewController: BaseViewController {
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         for view in self.pagesViews {
-                            let xPosition = view.frame.origin.x - viewWidth
-                            view.transform = CGAffineTransform(translationX: xPosition, y: yPosition)
-                        } },
-                       completion: nil )
+                            view.transform = CGAffineTransform(translationX: self.currentMovement, y: yPosition)
+                        }
+        }, completion: nil )
     }
     
     func moveToPreviousPage() {
@@ -194,8 +194,7 @@ class TractViewController: BaseViewController {
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         for view in self.pagesViews {
-                            let xPosition = view.frame.origin.x + viewWidth
-                            view.transform = CGAffineTransform(translationX: xPosition, y: yPosition)
+                            view.transform = CGAffineTransform(translationX: self.currentMovement, y: yPosition)
                         } },
                        completion: nil )
     }
@@ -229,9 +228,9 @@ extension TractViewController {
         let page3 = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?><!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview --><page xmlns=\"http://mobile-content-api.cru.org/xmlns/tract\" xmlns:content=\"https://mobile-content-api.cru.org/xmlns/content\" background-image=\"{{chasm_in_between.png}}\"><header><number><content:text i18n-id=\"{{uuid}}\">2</content:text></number><title><content:text i18n-id=\"{{uuid}}\">We are separated from God by our sin, so we cannot know him or experience his love.</content:text></title></header><card><label><content:text i18n-id=\"{{uuid}}\">What is sin?</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">We were created to have a relationship with God, but we rejected him and the relationship was broken.</content:text><content:text>This rejection of God and the building of our lives around anything else is what the Bible calls sin.</content:text><content:text>We show this by having selfish actions and attitudes, by disobeying God or displaying indifference toward him.</content:text></paragraph></card><card background-image=\"{{chasm_in_between.png}}\" background-image-align=\"bottom\"><label><content:text i18n-id=\"{{uuid}}\">Everyone is sinful</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">“For everyone has sinned: we all fall short of God’s glorious standard.”</content:text><content:text i18n-id=\"{{uuid}}\">Romans 3:23</content:text></paragraph></card><card><label><content:text i18n-id=\"{{uuid}}\">Sin has consequences</content:text></label><paragraph><content:text i18n-id=\"{{uuid}}\">For the wages of sin is death, but the free gift of God is eternal life through Christ Jesus our Lord.</content:text><content:text i18n-id=\"{{uuid}}\">Romans 6:23</content:text><content:text i18n-id=\"{{uuid}}\">God is perfect and just and will hold us accountable for our sin. There is a penalty for rejecting God.</content:text><content:text i18n-id=\"{{uuid}}\">God is perfect and we are sinful. There is a great gap between us because of our sin.</content:text><content:text i18n-id=\"{{uuid}}\">We may try to bridge this gap through good deeds or following a religion. However, all our efforts fail because they can’t solve the problem of sin that keeps us from God.</content:text></paragraph></card><call-to-action><content:text i18n-id=\"{{uuid}}\">The third point gives us the only solution to this problem…</content:text></call-to-action></page>"
         let xml3 = SWXMLHash.parse(page3)
         
-        xmlPages.append(xml3)
-        xmlPages.append(xml2)
         xmlPages.append(xml1)
+        xmlPages.append(xml2)
+        xmlPages.append(xml3)
         
         return xmlPages
     }
