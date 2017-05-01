@@ -11,7 +11,7 @@ import UIKit
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAddNewTool()
-    mutating func moveToToolDetail()
+    mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract()
 }
 
@@ -120,6 +120,6 @@ extension HomeViewController: ToolsManagerDelegate {
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.moveToToolDetail()
+        self.delegate?.moveToToolDetail(resource: resource)
     }
 }

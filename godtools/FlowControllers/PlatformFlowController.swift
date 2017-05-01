@@ -31,9 +31,10 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
         self.pushViewController(viewController: viewController)
     }
     
-    func moveToToolDetail() {
+    func moveToToolDetail(resource: DownloadedResource) {
         let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
         viewController.delegate = self
+        viewController.resource = resource
         self.pushViewController(viewController: viewController)
     }
     

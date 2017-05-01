@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddToolsViewControllerDelegate {
-    mutating func moveToToolDetail()
+    mutating func moveToToolDetail(resource: DownloadedResource)
 }
 
 class AddToolsViewController: BaseViewController {
@@ -54,6 +54,6 @@ extension AddToolsViewController: ToolsManagerDelegate {
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.moveToToolDetail()
+        self.delegate?.moveToToolDetail(resource: resource)
     }
 }
