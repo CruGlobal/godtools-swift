@@ -102,6 +102,10 @@ class LanguagesManager: GTDataManager {
     fileprivate func setSelectedLanguageId(_ id: String) {
         if selectingPrimaryLanguage {
             GTSettings.shared.primaryLanguageId = id
+            if id == GTSettings.shared.parallelLanguageId {
+                GTSettings.shared.parallelLanguageId = nil
+            }
+
         } else {
             GTSettings.shared.parallelLanguageId = id
         }
