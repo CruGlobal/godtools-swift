@@ -14,6 +14,7 @@ class TractViewController: BaseViewController {
     
     var xmlPages = [XMLIndexer]()
     var currentPage = 0
+    var currentMovement: CGFloat = 0.0
     var containerView = UIView()
     var pagesViews = [UIView]()
     
@@ -60,6 +61,53 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func buildPages(_ width: CGFloat, _ height: CGFloat) {
+        let range = getRangeOfViews()
+        
+        for pageNumber in range.start...range.end {
+            let view = buildPage(pageNumber, width: width, height: height)
+            self.pagesViews.append(view)
+            self.containerView.addSubview(view)
+        }
+    }
+    
+    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
+        let xPosition = (width * CGFloat(page)) + self.currentMovement
+        let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
+        view.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
+        view.data = getPage(page)
+        view.tag = 100 + page
+        return view
+    }
+    
+    fileprivate func reloadPagesViews() {
+        let range = getRangeOfViews()
+        let firstTag = (self.pagesViews.first?.tag)! - 100
+        let lastTag = (self.pagesViews.last?.tag)! - 100
+        let width = self.containerView.frame.size.width
+        let height = self.containerView.frame.size.height
+        
+        if firstTag < range.start {
+            let view = self.pagesViews.first
+            self.pagesViews.removeFirst()
+            view?.removeFromSuperview()
+        } else if firstTag > range.start {
+            let view = buildPage(range.start, width: width, height: height)
+            self.pagesViews.insert(view, at: 0)
+            self.containerView.addSubview(view)
+        }
+        
+        if lastTag < range.end {
+            let view = buildPage(range.start, width: width, height: height)
+            self.pagesViews.append(view)
+            self.containerView.addSubview(view)
+        } else if lastTag > range.end {
+            let view = self.pagesViews.last
+            self.pagesViews.removeLast()
+            view?.removeFromSuperview()
+        }
+    }
+    
+    fileprivate func getRangeOfViews() -> (start: Int, end: Int) {
         var start = self.currentPage - 2
         if start < 0 {
             start = 0
@@ -70,20 +118,7 @@ class TractViewController: BaseViewController {
             end = totalPages() - 1
         }
         
-        for pageNumber in start...end {
-            let view = buildPage(pageNumber, width: width, height: height)
-            self.pagesViews.append(view)
-            self.containerView.addSubview(view)
-        }
-    }
-    
-    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
-        let xPosition = width * CGFloat(page)
-        let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
-        view.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
-        view.data = getPage(page)
-        view.tag = 100 + page
-        return view
+        return (start, end)
     }
     
     // MARK: - Swipe gestures
@@ -114,8 +149,11 @@ class TractViewController: BaseViewController {
         }
         
         self.currentPage += 1
+        reloadPagesViews()
+        
         let viewWidth = self.view.frame.width
         let yPosition = self.view.frame.origin.y
+        self.currentMovement -= viewWidth
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -134,8 +172,11 @@ class TractViewController: BaseViewController {
         }
         
         self.currentPage -= 1
+        reloadPagesViews()
+        
         let viewWidth = self.view.frame.width
         let yPosition = self.view.frame.origin.y
+        self.currentMovement += viewWidth
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
