@@ -71,6 +71,17 @@ class LanguagesManager: GTDataManager {
         }
     }
     
+    
+    func recordLanguageShouldDownload(language: Language) {
+        language.shouldDownload = true
+        saveToDisk()
+    }
+    
+    func recordLanguageShouldDelete(language: Language) {
+        language.shouldDownload = false
+        saveToDisk()
+    }
+    
     private func saveToDisk(_ languages: [LanguageResource]) {
         MagicalRecord.save(blockAndWait: { (context) in
             for remoteLanguage in languages {
@@ -101,12 +112,21 @@ class LanguagesManager: GTDataManager {
     }
 }
 
+extension LanguagesManager: LanguageTableViewCellDelegate {
+    func deleteButtonWasPressed(_ cell: LanguageTableViewCell) {
+        self.recordLanguageShouldDelete(language: cell.language!)
+    }
+    
+    func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
+        self.recordLanguageShouldDownload(language: cell.language!)
+    }
+}
+
 extension LanguagesManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedLanguage = languages[indexPath.row]
-        self.setSelectedLanguageId(selectedLanguage.remoteId!)
-        selectedLanguage.shouldDownload = true
-        saveToDisk()
+        let language = languages[indexPath.row]
+        self.setSelectedLanguageId(language.remoteId!)
+        self.recordLanguageShouldDownload(language: language)
     }
 }
 
@@ -118,8 +138,8 @@ extension LanguagesManager: UITableViewDataSource {
         let language = languages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
         
-        cell.languageLabel.text = language.localizedName
-        cell.languageExists(language.shouldDownload)
+        cell.cellDelegate = self
+        cell.language = language
         
         return cell
     }
@@ -132,7 +152,6 @@ extension LanguagesManager: UITableViewDataSource {
             cell.setSelected(selected, animated: true)
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
-        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -142,5 +161,4 @@ extension LanguagesManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return languages.count
     }
-    
 }

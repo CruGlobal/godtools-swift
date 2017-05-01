@@ -38,16 +38,12 @@ class LanguagesTableViewController: BaseViewController {
         self.loadFromDisk()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: - Load data
     
     func loadFromDisk() {
-        languagesManager.loadFromDisk().always {
-            self.reloadTableView()
-        }
+        _ = languagesManager.loadFromDisk()
+
+        self.tableView.reloadData()
     }
     
     // MARK: - Helpers
@@ -63,9 +59,4 @@ class LanguagesTableViewController: BaseViewController {
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
     }
-    
-    fileprivate func reloadTableView() {
-        self.tableView.reloadData()
-    }
-    
 }

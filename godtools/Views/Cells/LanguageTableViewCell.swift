@@ -8,11 +8,24 @@
 
 import UIKit
 
+protocol LanguageTableViewCellDelegate {
+    func downloadButtonWasPressed(_ cell: LanguageTableViewCell)
+    func deleteButtonWasPressed(_ cell: LanguageTableViewCell)
+}
+
 class LanguageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var languageLabel: GTLabel!
+    
+    var cellDelegate: LanguageTableViewCellDelegate?
+    var language: Language? {
+        didSet {
+            languageExists(language!.shouldDownload)
+            languageLabel.text = language!.localizedName
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,9 +35,13 @@ class LanguageTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
+        self.cellDelegate?.downloadButtonWasPressed(self)
+        self.languageExists(true)
     }
     
     @IBAction func pressDeleteButton(_ sender: Any) {
+        self.cellDelegate?.deleteButtonWasPressed(self)
+        self.languageExists(false)
     }
     
     // MARK: - Helpers
@@ -35,7 +52,7 @@ class LanguageTableViewCell: UITableViewCell {
         self.selectedBackgroundView = selectedView
     }
     
-    func languageExists(_ exists:Bool) {
+    fileprivate func languageExists(_ exists:Bool) {
         self.deleteButton.isHidden = !exists
         self.downloadButton.isHidden = exists
     }
