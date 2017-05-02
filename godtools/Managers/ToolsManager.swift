@@ -61,11 +61,12 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
+        let resource = self.resources![indexPath.section]
         
         cell.cellDelegate = self
-        cell.resource = self.resources![indexPath.section]
-        cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName)
-
+        cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName())
+        cell.resource = resource
+        
         return cell
     }
     

@@ -32,7 +32,11 @@ class HomeToolTableViewCell: UITableViewCell {
     
     var resource: DownloadedResource? {
         didSet {
-            self.titleLabel.text = resource?.name
+            self.titleLabel.text = resource!.name
+            
+            if (resource!.shouldDownload) {
+                self.setCellAsDisplayOnly()
+            }
         }
     }
     

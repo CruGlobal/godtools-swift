@@ -27,10 +27,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language {
-        let language = Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
-        language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
-        
-        return language
+        return Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -44,12 +41,8 @@ class LanguagesManager: GTDataManager {
     func loadFromDisk() -> [Language] {
         languages = Language.mr_findAll() as! [Language]
         
-        for language in languages {
-            language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
-        }
-        
         languages = languages.sorted { (language1, language2) -> Bool in
-            return language1.localizedName!.compare(language2.localizedName!).rawValue < 0
+            return language1.localizedName().compare(language2.localizedName()).rawValue < 0
         }
         
         return languages

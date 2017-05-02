@@ -24,7 +24,7 @@ class LanguageTableViewCell: UITableViewCell {
         didSet {
             languageExists(language!.shouldDownload)
             languageCanBeDeleted(language: language!)
-            languageLabel.text = language!.localizedName
+            languageLabel.text = language!.localizedName()
         }
     }
     
