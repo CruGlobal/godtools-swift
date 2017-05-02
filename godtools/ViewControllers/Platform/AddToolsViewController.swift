@@ -58,6 +58,6 @@ extension AddToolsViewController: ToolsManagerDelegate {
     }
     
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        _ = self.navigationController?.popViewController(animated: true)
+        self.baseDelegate?.goBack()
     }
 }

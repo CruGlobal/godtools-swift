@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BaseViewControllerDelegate {
-    mutating func displayMenu();
+    mutating func goBack();
 }
 
 class BaseViewController: UIViewController {
