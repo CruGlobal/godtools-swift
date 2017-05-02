@@ -63,8 +63,9 @@ class DownloadedResourceManager: GTDataManager {
                     let remoteTranslation = remoteTranslationGeneric as! TranslationResource
                     
                     let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
-                    
-                    cachedTranslation.language = Language.mr_findFirst(byAttribute: "remoteId", withValue: remoteTranslation.language?.id ?? "-1", in: context)
+                    let languageId = remoteTranslation.language?.id ?? "-1"
+                        
+                    cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                     cachedTranslation.version = remoteTranslation.version!.int16Value
                     cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                     cachedResource.addToTranslations(cachedTranslation)
