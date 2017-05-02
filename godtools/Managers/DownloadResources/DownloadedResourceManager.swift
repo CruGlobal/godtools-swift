@@ -51,37 +51,39 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
-        MagicalRecord.save(blockAndWait: { (context) in
-            for remoteResource in resources {
-                let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
+        let context = NSManagedObjectContext.mr_default()
+        
+        for remoteResource in resources {
+            let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
+            
+            cachedResource.code = remoteResource.abbreviation
+            cachedResource.name = remoteResource.name
+            
+            let remoteTranslations = remoteResource.latestTranslations!
+            for remoteTranslationGeneric in remoteTranslations {
+                let remoteTranslation = remoteTranslationGeneric as! TranslationResource
                 
-                cachedResource.code = remoteResource.abbreviation
-                cachedResource.name = remoteResource.name
+                let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
+                let languageId = remoteTranslation.language?.id ?? "-1"
                 
-                let remoteTranslations = remoteResource.latestTranslations!
-                for remoteTranslationGeneric in remoteTranslations {
-                    let remoteTranslation = remoteTranslationGeneric as! TranslationResource
-                    
-                    let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
-                    let languageId = remoteTranslation.language?.id ?? "-1"
-                        
-                    cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
-                    cachedTranslation.version = remoteTranslation.version!.int16Value
-                    cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
-                    cachedResource.addToTranslations(cachedTranslation)
-                }
-                
-                let remotePages = remoteResource.pages!
-                for remotePageGeneric in remotePages {
-                    let remotePage = remotePageGeneric as! PageResource
-                    
-                    let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remotePage.id!, in: context)
-
-                    cachedPage.filename = remotePage.filename
-                    cachedPage.resource = cachedResource
-                }
+                cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
+                cachedTranslation.version = remoteTranslation.version!.int16Value
+                cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
+                cachedResource.addToTranslations(cachedTranslation)
             }
-        })
+            
+            let remotePages = remoteResource.pages!
+            for remotePageGeneric in remotePages {
+                let remotePage = remotePageGeneric as! PageResource
+                
+                let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remotePage.id!, in: context)
+                
+                cachedPage.filename = remotePage.filename
+                cachedPage.resource = cachedResource
+            }
+        }
+        
+        saveToDisk()
     }
     
     override func buildURLString() -> String {
