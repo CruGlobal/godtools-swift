@@ -11,8 +11,9 @@ import UIKit
 
 class Number: BaseTractElement {
     
-    static let widthConstant = CGFloat(60.0)
-    let paddingConstant = CGFloat(30.0)
+    static let widthConstant = CGFloat(70.0)
+    static let paddingConstant = CGFloat(8.0)
+    
     override var width: CGFloat {
         return Number.widthConstant
     }
@@ -25,8 +26,8 @@ class Number: BaseTractElement {
     }
     
     fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: 0.0,
-                      y: self.yStartPosition + paddingConstant,
+        return CGRect(x: Number.paddingConstant,
+                      y: self.yStartPosition + Number.paddingConstant,
                       width: self.width,
                       height: self.height)
     }

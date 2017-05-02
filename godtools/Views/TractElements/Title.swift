@@ -11,13 +11,13 @@ import UIKit
 
 class Title: BaseTractElement {
     
-    let xPaddingConstant = CGFloat(10.0)
-    let yPaddingConstant = CGFloat(30.0)
+    static let paddingConstant = CGFloat(8.0)
+    
     var xPosition: CGFloat {
-        return Number.widthConstant + self.xPaddingConstant
+        return Number.widthConstant + Number.paddingConstant + Title.paddingConstant
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - Number.widthConstant - (self.xPaddingConstant * CGFloat(2))
+        return (self.parent?.width)! - self.xPosition - Title.paddingConstant
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -29,7 +29,7 @@ class Title: BaseTractElement {
     
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
-                      y: self.yStartPosition  + self.yPaddingConstant,
+                      y: self.yStartPosition + Title.paddingConstant,
                       width: self.width,
                       height: self.height)
     }
@@ -39,7 +39,7 @@ class Title: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height + self.yPaddingConstant
+        return self.yStartPosition + self.height + Title.paddingConstant
     }
 
 }

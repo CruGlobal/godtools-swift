@@ -27,6 +27,9 @@ class BaseTractElement: NSObject {
     var width: CGFloat {
         return BaseTractElement.Standards.screenWidth
     }
+    var horizontalContainer: Bool {
+        return false
+    }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
         super.init()
@@ -61,15 +64,26 @@ class BaseTractElement: NSObject {
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = 0.0
+        var maxHeight: CGFloat = 0.0
         var elements:Array = [BaseTractElement]()
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            
+            if self.horizontalContainer && element.height > maxHeight {
+                maxHeight = element.height
+            }
+            
             currentYPosition = element.yEndPosition()
             elements.append(element)
         }
         
-        self.height = currentYPosition
+        if self.horizontalContainer {
+            self.height = maxHeight > currentYPosition ? maxHeight : currentYPosition
+        } else {
+            self.height = currentYPosition
+        }
+        
         self.elements = elements
     }
     

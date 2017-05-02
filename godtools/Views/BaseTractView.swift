@@ -15,7 +15,7 @@ class BaseTractView: UIView {
     var data: XMLIndexer?
     
     override func layoutSubviews() {
-        backgroundColor = .orange
+        backgroundColor = .gtWhite
         
         let yPosition: CGFloat = 0.0
         let rootElement: TractRoot = TractRoot(data: self.data!["page"], startOnY: yPosition)
