@@ -11,11 +11,15 @@ import UIKit
 
 class TextContent: BaseTractElement {
     
+    let xMargin: CGFloat = BaseTractElement.Standards.xMargin
     var xPosition: CGFloat {
-        return BaseTractElement.Standards.xMargin
+        return self.xMargin
     }
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.Standards.yMargin
+    }
+    override var width: CGFloat {
+        return (self.parent?.width)! - self.xPosition - self.xMargin
     }
     override var height: CGFloat {
         get {
@@ -34,8 +38,7 @@ class TextContent: BaseTractElement {
         let backgroundColor: UIColor = attributes.backgroundColor
         let labelStyle = self.parent?.textStyle()
         
-        let width = (labelStyle?.width)! > CGFloat(0) ? labelStyle?.width : BaseTractElement.Standards.textContentWidth
-        self.label = GTLabel(frame: buildFrame(width!, self.height))
+        self.label = GTLabel(frame: buildFrame())
         self.label?.text = text
         self.label?.backgroundColor = backgroundColor
         self.label?.gtStyle = (labelStyle?.style)!
@@ -50,7 +53,7 @@ class TextContent: BaseTractElement {
             self.height = (labelStyle?.height)!
         }
         
-        self.label?.frame = buildFrame(width!, self.height)
+        self.label?.frame = buildFrame()
         self.view = label
     }
     
@@ -90,13 +93,11 @@ class TextContent: BaseTractElement {
         return (text, backgroundColor!)
     }
     
-    fileprivate func buildFrame(_ width: CGFloat, _ height: CGFloat) -> CGRect {
-        let parentDimensions = self.parent?.getDimensions()
-        let width = (parentDimensions?.width)! - (BaseTractElement.Standards.xPadding * CGFloat(2))
+    fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
-                      width: width,
-                      height: height)
+                      width: self.width,
+                      height: self.height)
     }
     
 }

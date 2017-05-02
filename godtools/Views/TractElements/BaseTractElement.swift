@@ -12,8 +12,8 @@ import SWXMLHash
 
 class BaseTractElement: NSObject {
     struct Standards {
-        static let xMargin = CGFloat(20.0)
-        static let yMargin = CGFloat(5.0)
+        static let xMargin = CGFloat(8.0)
+        static let yMargin = CGFloat(8.0)
         static let xPadding = CGFloat(0.0)
         static let yPadding = CGFloat(0.0)
         
