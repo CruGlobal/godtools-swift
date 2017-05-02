@@ -26,6 +26,9 @@ class GTLabel: UILabel {
             case "pageHeaderTitle":
                 self.font = .gtThin(size: 18.0)
                 self.textColor = .gtWhite
+            case "tabTitle":
+                self.font = .gtSemiBold(size: 18.0)
+                self.textColor = .gtBlack
             case "whiteTitle":
                 self.font = .gtLight(size: 28.0)
                 self.textColor = .gtWhite

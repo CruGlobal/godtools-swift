@@ -27,6 +27,10 @@ class TractLabel: BaseTractElement {
         self.view = view
     }
     
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+        return ("tabTitle", self.width, CGFloat(0.0))
+    }
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yStartPosition + TractLabel.paddingConstant,
