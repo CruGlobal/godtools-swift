@@ -11,18 +11,28 @@ import UIKit
 
 class Number: BaseTractElement {
     
-    let paddingConstant = CGFloat(30.0)
     static let widthConstant = CGFloat(50.0)
+    let paddingConstant = CGFloat(30.0)
+    override var width: CGFloat {
+        return Number.widthConstant
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = CGRect(x: 0.0, y: self.yStartPosition  + paddingConstant, width: Number.widthConstant, height: self.height)
+        let frame = buildFrame()
         let view = UIView(frame: frame)
         view.backgroundColor = .green
         self.view = view
     }
     
-    override func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
-        return ("pageHeaderNumber", Number.widthConstant, CGFloat(60.0))
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: 0.0,
+                      y: self.yStartPosition + paddingConstant,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+        return ("pageHeaderNumber", self.width, CGFloat(60.0))
     }
     
     override func yEndPosition() -> CGFloat {

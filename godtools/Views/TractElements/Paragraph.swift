@@ -20,7 +20,7 @@ class Paragraph: BaseTractElement {
         self.view = view
     }
     
-    override func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
         return ("toolFrontSubTitle", BaseTractElement.Standards.textContentWidth, CGFloat(0.0))
     }
     

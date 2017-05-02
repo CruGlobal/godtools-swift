@@ -13,31 +13,33 @@ class Title: BaseTractElement {
     
     let xPaddingConstant = CGFloat(10.0)
     let yPaddingConstant = CGFloat(30.0)
+    var xPosition: CGFloat {
+        return Number.widthConstant + self.xPaddingConstant
+    }
+    override var width: CGFloat {
+        return (self.parent?.width)! - Number.widthConstant - (self.xPaddingConstant * CGFloat(2))
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = CGRect(x: titleXPosition(),
-                           y: self.yStartPosition  + self.yPaddingConstant,
-                           width: titleWidth(),
-                           height: self.height)
+        let frame = buildFrame()
         let view = UIView(frame: frame)
         view.backgroundColor = .red
         self.view = view
     }
     
-    override func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
-        return ("pageHeaderTitle", titleWidth(), CGFloat(0.0))
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yStartPosition  + self.yPaddingConstant,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+        return ("pageHeaderTitle", self.width, CGFloat(0.0))
     }
     
     override func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height + self.yPaddingConstant
-    }
-    
-    fileprivate func titleXPosition() -> CGFloat {
-        return Number.widthConstant + self.xPaddingConstant
-    }
-    
-    fileprivate func titleWidth() -> CGFloat {
-        return BaseTractElement.Standards.screenWidth - titleXPosition()
     }
 
 }

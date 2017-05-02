@@ -20,10 +20,13 @@ class BaseTractElement: NSObject {
     }
     
     weak var parent: BaseTractElement?
+    var elements:[BaseTractElement]?
+    var view: UIView?
     var yStartPosition: CGFloat = 0.0
     var height: CGFloat = 0.0
-    var view: UIView?
-    var elements:[BaseTractElement]?
+    var width: CGFloat {
+        return BaseTractElement.Standards.screenWidth
+    }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
         super.init()
@@ -70,8 +73,12 @@ class BaseTractElement: NSObject {
         self.elements = elements
     }
     
-    func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+    func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
         return ("blackText", BaseTractElement.Standards.textContentWidth, 0.0)
+    }
+    
+    func getDimensions() -> (width: CGFloat, height: CGFloat) {
+        return (self.width, self.height)
     }
     
     // MARK: - Helpers
