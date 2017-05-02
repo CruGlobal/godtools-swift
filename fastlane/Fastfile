@@ -59,13 +59,13 @@ platform :ios do
 
 		scan(
 				workspace: "godtools.xcworkspace",
-				scheme: "godtoolsTests",
+				scheme: "godtools",
 				code_coverage: true
 		)
 
 		xcov(
 				workspace: "godtools.xcworkspace",
-				scheme: "godtoolsTests"
+				scheme: "godtools"
 		)
 
 	end
