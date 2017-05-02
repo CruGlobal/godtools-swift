@@ -50,7 +50,7 @@ class AddToolsViewController: BaseViewController {
 
 extension AddToolsViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        _ = self.navigationController?.popViewController(animated: true)
+        self.delegate?.moveToToolDetail(resource: cell.resource!)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
