@@ -54,4 +54,17 @@ extension BaseTractElement {
         return (kind!, properties, children)
     }
     
+    func getCardsFromXML(_ data: [XMLIndexer]) -> [XMLIndexer] {
+        var cards = [XMLIndexer]()
+        
+        for dictionary in data {
+            let dataContent = splitData(data: dictionary)
+            if dataContent.kind == "card" {
+                cards.append(dictionary)
+            }
+        }
+        
+        return cards
+    }
+    
 }

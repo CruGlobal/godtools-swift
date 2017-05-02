@@ -14,6 +14,7 @@
 		0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */; };
 		0F6982721EB7D9E800CAA284 /* TractElementOperationFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */; };
 		0F6982741EB7DA4500CAA284 /* TractElementKindFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */; };
+		0F6982781EB8E31F00CAA284 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982771EB8E31F00CAA284 /* Cards.swift */; };
 		0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50221EA933B000F5957E /* HomeViewController.swift */; };
 		0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50231EA933B000F5957E /* HomeViewController.xib */; };
 		0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */; };
@@ -90,6 +91,7 @@
 		0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNotifications.swift; sourceTree = "<group>"; };
 		0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementOperationFunctions.swift; path = Views/TractElements/TractElementOperationFunctions.swift; sourceTree = "<group>"; };
 		0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementKindFunctions.swift; path = Views/TractElements/TractElementKindFunctions.swift; sourceTree = "<group>"; };
+		0F6982771EB8E31F00CAA284 /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cards.swift; path = Views/TractElements/Cards.swift; sourceTree = "<group>"; };
 		0F7D50221EA933B000F5957E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0F7D50231EA933B000F5957E /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeToolTableViewCell.swift; sourceTree = "<group>"; };
@@ -206,7 +208,7 @@
 				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
 				4F462A351EB0E28900C03447 /* Hero.swift */,
 				0F806C661EB3E69D00F3ED2B /* Header.swift */,
-				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
+				0F6982771EB8E31F00CAA284 /* Cards.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -218,6 +220,7 @@
 				4F462A361EB0E28900C03447 /* Paragraph.swift */,
 				0F806C681EB3E6B100F3ED2B /* Number.swift */,
 				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
+				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
 				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
 				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,
 				4F462A371EB0E28900C03447 /* TextContent.swift */,
@@ -673,6 +676,7 @@
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractRoot.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
+				0F6982781EB8E31F00CAA284 /* Cards.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TextContent.swift in Sources */,

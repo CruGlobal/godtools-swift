@@ -30,6 +30,11 @@ class BaseTractElement: NSObject {
     var horizontalContainer: Bool {
         return false
     }
+    var hasCardContainer = false
+    
+    override init() {
+        super.init()
+    }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
         super.init()
@@ -68,8 +73,13 @@ class BaseTractElement: NSObject {
         var elements:Array = [BaseTractElement]()
         
         for dictionary in data {
-            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            let dataContent = splitData(data: dictionary)
+            if dataContent.kind == "card" && !self.isKind(of: Cards.self) {
+                self.hasCardContainer = true
+                break
+            }
             
+            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
             } else {
@@ -79,13 +89,25 @@ class BaseTractElement: NSObject {
             elements.append(element)
         }
         
-        if self.horizontalContainer {
+        if self.hasCardContainer {
+            let cards = getCardsFromXML(data)
+            let element = buildCardContainer(cards, startOnY: currentYPosition)
+            currentYPosition = element.yEndPosition()
+            elements.append(element)
+        }
+        
+        if self.horizontalContainer && !self.hasCardContainer {
             self.height = maxYPosition
         } else {
             self.height = currentYPosition
         }
         
         self.elements = elements
+    }
+    
+    func buildCardContainer(_ data: [XMLIndexer], startOnY yPosition: CGFloat) -> BaseTractElement {
+        let element = Cards(children: data, startOnY: yPosition, parent: self)
+        return element
     }
     
     func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
