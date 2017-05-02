@@ -70,8 +70,8 @@ class BaseTractElement: NSObject {
         self.elements = elements
     }
     
-    func configureLabelStyle() -> (style: String, height: CGFloat) {
-        return ("blackText", 0.0)
+    func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+        return ("blackText", BaseTractElement.Standards.textContentWidth, 0.0)
     }
     
     // MARK: - Helpers

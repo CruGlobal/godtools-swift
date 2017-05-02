@@ -17,14 +17,10 @@ class TextContent: BaseTractElement {
         let attributes = loadElementAttributes(properties: properties)
         let text: String = attributes.text
         let backgroundColor: UIColor = attributes.backgroundColor
-        
-        self.label = GTLabel(frame: createLabelFrameForHeight(self.height))
-        setupLabel(text: text, backgroundColor: backgroundColor)
-        self.view = label
-    }
-    
-    func setupLabel(text: String, backgroundColor: UIColor) {
         let labelStyle = self.parent?.configureLabelStyle()
+        
+        let width = (labelStyle?.width)! > CGFloat(0) ? labelStyle?.width : BaseTractElement.Standards.textContentWidth
+        self.label = GTLabel(frame: createLabelFrame(width!, self.height))
         self.label?.text = text
         self.label?.backgroundColor = backgroundColor
         self.label?.gtStyle = (labelStyle?.style)!
@@ -39,7 +35,8 @@ class TextContent: BaseTractElement {
             self.height = (labelStyle?.height)!
         }
         
-        self.label?.frame = createLabelFrameForHeight(self.height)
+        self.label?.frame = createLabelFrame(width!, self.height)
+        self.view = label
     }
     
     override func yEndPosition() -> CGFloat {
@@ -74,10 +71,10 @@ class TextContent: BaseTractElement {
         return (text, backgroundColor!)
     }
     
-    fileprivate func createLabelFrameForHeight(_ height: CGFloat) -> CGRect {
+    fileprivate func createLabelFrame(_ width: CGFloat, _ height: CGFloat) -> CGRect {
         return CGRect(x: BaseTractElement.Standards.xPadding,
                       y: self.yStartPosition + BaseTractElement.Standards.yPadding,
-                      width: BaseTractElement.Standards.textContentWidth,
+                      width: width,
                       height: height)
     }
     

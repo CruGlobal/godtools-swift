@@ -21,8 +21,8 @@ class Number: BaseTractElement {
         self.view = view
     }
     
-    override func configureLabelStyle() -> (style: String, height: CGFloat) {
-        return ("pageHeaderNumber", CGFloat(60.0))
+    override func configureLabelStyle() -> (style: String, width: CGFloat, height: CGFloat) {
+        return ("pageHeaderNumber", Number.widthConstant, CGFloat(60.0))
     }
     
     override func yEndPosition() -> CGFloat {
