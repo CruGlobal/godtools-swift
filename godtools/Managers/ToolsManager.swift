@@ -12,6 +12,7 @@ import UIKit
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
     func infoButtonWasPressed(resource: DownloadedResource)
+    @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
 }
 
 class ToolsManager: GTDataManager {
@@ -83,6 +84,7 @@ extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
         resource.shouldDownload = true
         saveToDisk()
+        self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {

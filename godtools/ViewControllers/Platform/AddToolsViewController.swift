@@ -56,4 +56,8 @@ extension AddToolsViewController: ToolsManagerDelegate {
     func infoButtonWasPressed(resource: DownloadedResource) {
         self.delegate?.moveToToolDetail(resource: resource)
     }
+    
+    func downloadButtonWasPressed(resource: DownloadedResource) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
 }
