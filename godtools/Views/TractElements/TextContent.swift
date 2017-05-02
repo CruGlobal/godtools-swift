@@ -15,30 +15,28 @@ class TextContent: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         let attributes = loadElementAttributes(properties: properties)
-        let self.label = GTLabel(frame: createLabelFrameForHeight(self.height))
         let text: String = attributes.text
         let backgroundColor: UIColor = attributes.backgroundColor
         
-        self.label.text = text
-        self.label.numberOfLines = 0
-        self.label.sizeToFit()
-        self.label.backgroundColor = backgroundColor
-        
+        self.label = GTLabel(frame: createLabelFrameForHeight(self.height))
+        setupLabel(text: text, backgroundColor: backgroundColor)
         self.view = label
     }
     
-    func setupLabel() {
-        let labelStyle = configureLabelStyle()
-        self.label?.gtStyle = labelStyle.style
+    func setupLabel(text: String, backgroundColor: UIColor) {
+        let labelStyle = self.parent?.configureLabelStyle()
+        self.label?.text = text
+        self.label?.backgroundColor = backgroundColor
+        self.label?.gtStyle = (labelStyle?.style)!
         self.label?.lineBreakMode = .byWordWrapping
         
-        if labelStyle.height == 0.0 {
+        if labelStyle?.height == 0.0 {
             self.label?.numberOfLines = 0
             self.label?.sizeToFit()
             self.height = (self.label?.frame.height)!
         }
         else {
-            self.height = labelStyle.height
+            self.height = (labelStyle?.height)!
         }
         
         self.label?.frame = createLabelFrameForHeight(self.height)
