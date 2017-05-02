@@ -12,6 +12,15 @@ import SWXMLHash
 
 class Cards: BaseTractElement {
     
+    override var height: CGFloat {
+        get {
+            return self.getMaxHeight()
+        }
+        set {
+            // Unused
+        }
+    }
+    
     init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {
         super.init()
         self.parent = parent

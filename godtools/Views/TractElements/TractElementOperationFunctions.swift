@@ -15,9 +15,7 @@ extension BaseTractElement {
         let dataContent = splitData(data: data)
         var element:BaseTractElement?
         
-        if dataContent.kind == "page" {
-            element = TractRoot(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "hero" {
+        if dataContent.kind == "hero" {
             element = Hero(data: data, startOnY: yPosition, parent: self)
         } else if dataContent.kind == "heading" {
             element = Heading(data: data, startOnY: yPosition, parent: self)
@@ -36,7 +34,7 @@ extension BaseTractElement {
         } else if dataContent.kind == "label" {
             element = TractLabel(data: data, startOnY: yPosition, parent: self)
         } else {
-            element = TractRoot(data: data, startOnY: yPosition, parent: self)
+            element = TextContent(data: data, startOnY: yPosition, parent: self)
         }
         
         return element!

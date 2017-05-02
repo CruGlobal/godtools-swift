@@ -23,7 +23,16 @@ class BaseTractElement: NSObject {
     var elements:[BaseTractElement]?
     var view: UIView?
     var yStartPosition: CGFloat = 0.0
-    var height: CGFloat = 0.0
+    var maxHeight: CGFloat = 0.0
+    private var _height: CGFloat = 0.0
+    var height: CGFloat {
+        get {
+            return _height
+        }
+        set {
+            _height = newValue
+        }
+    }
     var width: CGFloat {
         return BaseTractElement.Standards.screenWidth
     }
@@ -122,5 +131,15 @@ class BaseTractElement: NSObject {
     
     func getDimensions() -> (width: CGFloat, height: CGFloat) {
         return (self.width, self.height)
+    }
+    
+    func getMaxHeight() -> CGFloat {
+        if self.maxHeight > 0.0 {
+            return self.maxHeight
+        } else if (self.parent != nil) {
+            return (self.parent?.getMaxHeight())!
+        } else {
+            return 0.0
+        }
     }
 }

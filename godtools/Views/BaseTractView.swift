@@ -15,10 +15,10 @@ class BaseTractView: UIView {
     var data: XMLIndexer?
     
     override func layoutSubviews() {
+        let height = self.frame.size.height
         backgroundColor = .gtWhite
         
-        let yPosition: CGFloat = 0.0
-        let rootElement: TractRoot = TractRoot(data: self.data!["page"], startOnY: yPosition)
+        let rootElement: TractRoot = TractRoot(data: self.data!["page"], withMaxHeight: height)
         
         let contentView: UIView = rootElement.render()
         self.addSubview(contentView)
