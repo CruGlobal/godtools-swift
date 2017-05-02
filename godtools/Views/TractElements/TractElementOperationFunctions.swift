@@ -31,6 +31,10 @@ extension BaseTractElement {
             element = Number(data: data, startOnY: yPosition, parent: self)
         } else if dataContent.kind == "title" {
             element = Title(data: data, startOnY: yPosition, parent: self)
+        } else if dataContent.kind == "card" {
+            element = Card(data: data, startOnY: yPosition, parent: self)
+        } else if dataContent.kind == "label" {
+            element = TractLabel(data: data, startOnY: yPosition, parent: self)
         } else {
             element = TractRoot(data: data, startOnY: yPosition, parent: self)
         }
