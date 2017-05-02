@@ -12,11 +12,13 @@ import SWXMLHash
 
 class BaseTractElement: NSObject {
     struct Standards {
-        static let xPadding = CGFloat(20.0)
-        static let yPadding = CGFloat(5.0)
+        static let xMargin = CGFloat(20.0)
+        static let yMargin = CGFloat(5.0)
+        static let xPadding = CGFloat(0.0)
+        static let yPadding = CGFloat(0.0)
         
         static let screenWidth = UIScreen.main.bounds.size.width
-        static let textContentWidth = UIScreen.main.bounds.size.width - xPadding * CGFloat(2)
+        static let textContentWidth = UIScreen.main.bounds.size.width - xMargin * CGFloat(2)
     }
     
     weak var parent: BaseTractElement?
@@ -121,6 +123,10 @@ class BaseTractElement: NSObject {
     
     func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
         return ("blackText", BaseTractElement.Standards.textContentWidth, 0.0)
+    }
+    
+    func textYPadding() -> CGFloat {
+        return BaseTractElement.Standards.yPadding
     }
     
     // MARK: - Helpers

@@ -11,13 +11,17 @@ import UIKit
 
 class TractLabel: BaseTractElement {
     
-    static let paddingConstant = CGFloat(8.0)
+    static let xMarginConstant = CGFloat(8.0)
+    static let yMarginConstant = CGFloat(8.0)
     
     var xPosition: CGFloat {
-        return TractLabel.paddingConstant
+        return TractLabel.xMarginConstant
+    }
+    var yPosition: CGFloat {
+        return self.yStartPosition + TractLabel.yMarginConstant
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - TractLabel.paddingConstant
+        return (self.parent?.width)! - self.xPosition - TractLabel.xMarginConstant
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -31,15 +35,19 @@ class TractLabel: BaseTractElement {
         return ("tabTitle", self.width, CGFloat(0.0))
     }
     
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yStartPosition + TractLabel.paddingConstant,
-                      width: self.width,
-                      height: self.height)
+    override func textYPadding() -> CGFloat {
+        return 24.0
     }
     
     override func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height
+    }
+    
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
     }
 
 }

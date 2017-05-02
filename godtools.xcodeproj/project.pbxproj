@@ -217,9 +217,9 @@
 			isa = PBXGroup;
 			children = (
 				0F806C541EB2893500F3ED2B /* Heading.swift */,
-				4F462A361EB0E28900C03447 /* Paragraph.swift */,
 				0F806C681EB3E6B100F3ED2B /* Number.swift */,
 				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
+				4F462A361EB0E28900C03447 /* Paragraph.swift */,
 				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
 				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
 				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,

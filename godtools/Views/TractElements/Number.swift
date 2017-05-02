@@ -12,13 +12,13 @@ import UIKit
 class Number: BaseTractElement {
     
     static let widthConstant = CGFloat(70.0)
-    static let paddingConstant = CGFloat(8.0)
+    static let marginConstant = CGFloat(8.0)
     
     var xPosition: CGFloat {
-        return Number.paddingConstant
+        return Number.marginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + Number.paddingConstant
+        return self.yStartPosition + Number.marginConstant
     }
     override var width: CGFloat {
         return Number.widthConstant

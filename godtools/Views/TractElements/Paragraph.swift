@@ -11,16 +11,16 @@ import UIKit
 
 class Paragraph: BaseTractElement {
     
-    static let paddingConstant = CGFloat(8.0)
+    static let marginConstant = CGFloat(8.0)
     
     var xPosition: CGFloat {
-        return Paragraph.paddingConstant
+        return Paragraph.marginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + Paragraph.paddingConstant
+        return self.yStartPosition + Paragraph.marginConstant
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Paragraph.paddingConstant
+        return (self.parent?.width)! - self.xPosition - Paragraph.marginConstant
     }
     
     override func setupView(properties: Dictionary<String, Any>) {

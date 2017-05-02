@@ -11,6 +11,13 @@ import UIKit
 
 class Hero: BaseTractElement {
     
+    var xPosition: CGFloat {
+        return 0.0
+    }
+    var yPosition: CGFloat {
+        return self.yStartPosition + BaseTractElement.Standards.yMargin
+    }
+    
     override func setupView(properties: Dictionary<String, Any>) {
         let frame = buildFrame()
         let view = UIView(frame: frame)
@@ -18,14 +25,14 @@ class Hero: BaseTractElement {
     }
     
     fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: 0.0,
-                      y: self.yStartPosition + BaseTractElement.Standards.yPadding,
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
                       width: self.width,
                       height: self.height)
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height + BaseTractElement.Standards.yPadding
+        return self.yPosition + self.height
     }
         
 }

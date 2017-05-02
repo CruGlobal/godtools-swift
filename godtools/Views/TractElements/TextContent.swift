@@ -11,6 +11,21 @@ import UIKit
 
 class TextContent: BaseTractElement {
     
+    var xPosition: CGFloat {
+        return BaseTractElement.Standards.xMargin
+    }
+    var yPosition: CGFloat {
+        return self.yStartPosition + BaseTractElement.Standards.yMargin
+    }
+    override var height: CGFloat {
+        get {
+            return super.height + (textYPadding() * 2)
+        }
+        set {
+            super.height = newValue
+        }
+    }
+    
     var label: GTLabel?
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -40,7 +55,11 @@ class TextContent: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height + BaseTractElement.Standards.yPadding
+        return self.yPosition + self.height
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return (self.parent?.textYPadding())!
     }
     
     // MARK: - TextContent Helpers
@@ -73,10 +92,9 @@ class TextContent: BaseTractElement {
     
     fileprivate func buildFrame(_ width: CGFloat, _ height: CGFloat) -> CGRect {
         let parentDimensions = self.parent?.getDimensions()
-        let xPosition = BaseTractElement.Standards.xPadding
         let width = (parentDimensions?.width)! - (BaseTractElement.Standards.xPadding * CGFloat(2))
-        return CGRect(x: xPosition,
-                      y: self.yStartPosition + BaseTractElement.Standards.yPadding,
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
                       width: width,
                       height: height)
     }

@@ -11,16 +11,16 @@ import UIKit
 
 class Card: BaseTractElement {
     
-    static let paddingConstant = CGFloat(8.0)
+    static let marginConstant = CGFloat(8.0)
     
     var xPosition: CGFloat {
-        return Card.paddingConstant
+        return Card.marginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + Card.paddingConstant
+        return self.yStartPosition + Card.marginConstant
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Card.paddingConstant
+        return (self.parent?.width)! - self.xPosition - Card.marginConstant
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
