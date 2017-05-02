@@ -48,6 +48,10 @@ class BaseViewController: UIViewController {
         self.navigationItem.title = self.screenTitle
     }
     
+    func hideScreenTitle() {
+        self.navigationItem.titleView = UILabel()
+    }
+    
     func displayNavigationButtons() {
         self.configureNavigationButtons()
         self.displayNavigationLeftButtons()

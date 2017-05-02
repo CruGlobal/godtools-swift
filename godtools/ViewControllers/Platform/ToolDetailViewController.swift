@@ -26,6 +26,7 @@ class ToolDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.displayData()
+        self.hideScreenTitle()
     }
 
     // MARK: Present data
