@@ -52,6 +52,7 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
     // MARK: - ToolsManagerDelegate
     
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
 }

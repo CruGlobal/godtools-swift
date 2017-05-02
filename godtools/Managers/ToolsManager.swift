@@ -13,15 +13,21 @@ import UIKit
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
 }
 
-class ToolsManager: NSObject {
+class ToolsManager: GTDataManager {
     
     static let shared = ToolsManager()
-    var delegate: ToolsManagerDelegate?
     
-    override init() {
-        super.init()
+    var resources: [DownloadedResource]?
+    
+    var delegate: ToolsManagerDelegate? {
+        didSet {
+            if self.delegate is HomeViewController {
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
+            } else {
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
+            }
+        }
     }
-
 }
 
 extension ToolsManager: UITableViewDelegate {
@@ -36,6 +42,10 @@ extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
+        
+        resources![indexPath.section].shouldDownload = true
+        saveToDisk()
+        
         self.delegate?.didSelectTableViewRow!(cell: cell)
     }
     
@@ -45,7 +55,6 @@ extension ToolsManager: UITableViewDelegate {
         headerView.backgroundColor = .clear
         return headerView
     }
-    
 }
 
 extension ToolsManager: UITableViewDataSource {
@@ -54,11 +63,13 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
+        cell.setTitle(self.resources![indexPath.section].name)
+        cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName)
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return self.resources!.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

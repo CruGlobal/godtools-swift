@@ -2,7 +2,7 @@
 //  DownloadedResource+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/21/17.
+//  Created by Ryan Carlson on 4/28/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -19,25 +19,9 @@ extension DownloadedResource {
     @NSManaged public var code: String?
     @NSManaged public var name: String?
     @NSManaged public var remoteId: String?
-    @NSManaged public var translations: NSSet?
+    @NSManaged public var shouldDownload: Bool
     @NSManaged public var pages: NSSet?
-
-}
-
-// MARK: Generated accessors for translations
-extension DownloadedResource {
-
-    @objc(addTranslationsObject:)
-    @NSManaged public func addToTranslations(_ value: Translation)
-
-    @objc(removeTranslationsObject:)
-    @NSManaged public func removeFromTranslations(_ value: Translation)
-
-    @objc(addTranslations:)
-    @NSManaged public func addToTranslations(_ values: NSSet)
-
-    @objc(removeTranslations:)
-    @NSManaged public func removeFromTranslations(_ values: NSSet)
+    @NSManaged public var translations: NSSet?
 
 }
 
@@ -55,5 +39,22 @@ extension DownloadedResource {
 
     @objc(removePages:)
     @NSManaged public func removeFromPages(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for translations
+extension DownloadedResource {
+
+    @objc(addTranslationsObject:)
+    @NSManaged public func addToTranslations(_ value: Translation)
+
+    @objc(removeTranslationsObject:)
+    @NSManaged public func removeFromTranslations(_ value: Translation)
+
+    @objc(addTranslations:)
+    @NSManaged public func addToTranslations(_ values: NSSet)
+
+    @objc(removeTranslations:)
+    @NSManaged public func removeFromTranslations(_ values: NSSet)
 
 }

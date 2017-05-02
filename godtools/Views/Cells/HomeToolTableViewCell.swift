@@ -78,6 +78,14 @@ class HomeToolTableViewCell: UITableViewCell {
         layer.shouldRasterize = true
     }
     
+    func setTitle(_ title: String?) {
+        self.titleLabel.text = title
+    }
+    
+    func setLanguage(_ language: String?) {
+        self.languageLabel.text = language
+    }
+    
     // MARK: Present data
     
     fileprivate func displayData() {

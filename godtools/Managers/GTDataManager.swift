@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import PromiseKit
 import Spine
+import CoreData
 
 class GTDataManager: NSObject {
     
@@ -28,6 +29,10 @@ class GTDataManager: NSObject {
                                  encoding: URLEncoding.default,
                                  headers: nil)
             .responseData()
+    }
+    
+    func saveToDisk() {
+        NSManagedObjectContext.mr_default().mr_saveToPersistentStore(completion: nil)
     }
     
     func buildURLString() -> String {

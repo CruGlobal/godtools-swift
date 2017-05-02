@@ -13,8 +13,6 @@ class LanguageResource: Resource {
 
     var code: String?
     
-    var translations: LinkedResourceCollection?
-    
     override class var resourceType: ResourceType {
         return "language"
     }
@@ -22,7 +20,6 @@ class LanguageResource: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "code" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self)
             ])
     }
 }

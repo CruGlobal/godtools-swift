@@ -15,6 +15,10 @@ protocol LanguageSettingsViewControllerDelegate {
 class LanguageSettingsViewController: BaseViewController {
     
     var delegate: LanguageSettingsViewControllerDelegate?
+    let languagesManager = LanguagesManager.shared
+    
+    @IBOutlet weak var primaryLanguageButton: BlueButton!
+    @IBOutlet weak var parallelLanguageButton: BlueButton!
     
     override var screenTitle: String {
         get {
@@ -22,23 +26,37 @@ class LanguageSettingsViewController: BaseViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        _ = DownloadedResourceManager.shared.loadFromRemote()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        setupPrimaryLanguageButton()
+        setupParallelLanguageButton()
     }
     
+    private func setupPrimaryLanguageButton() {
+        let primaryLanguage = self.languagesManager.loadPrimaryLanguageFromDisk()
+        let title = primaryLanguage != nil ? primaryLanguage!.localizedName : "select_primary_language".localized
+        
+        primaryLanguageButton.setTitle(title, for: .normal)
+    }
+    
+    private func setupParallelLanguageButton() {
+        let parallelLanguageId = GTSettings.shared.parallelLanguageId
+        let title = parallelLanguageId != nil ?
+            self.languagesManager.loadFromDisk(id: parallelLanguageId!).localizedName : "select_parallel_language".localized
+        
+        parallelLanguageButton.setTitle(title, for: .normal)
+    }
+
     // MARK: - Actions
     
     @IBAction func pressSelectPrimaryLanguage(_ sender: Any) {
+        self.languagesManager.selectingPrimaryLanguage = true
         self.delegate?.moveToLanguagesList(primaryLanguage: true)
     }
     
     @IBAction func pressSelectParallelLanguage(_ sender: Any) {
+        self.languagesManager.selectingPrimaryLanguage = false
         self.delegate?.moveToLanguagesList(primaryLanguage: false)
     }
     
