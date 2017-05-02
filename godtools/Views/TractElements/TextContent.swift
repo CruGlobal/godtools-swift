@@ -20,7 +20,7 @@ class TextContent: BaseTractElement {
         let labelStyle = self.parent?.textStyle()
         
         let width = (labelStyle?.width)! > CGFloat(0) ? labelStyle?.width : BaseTractElement.Standards.textContentWidth
-        self.label = GTLabel(frame: createLabelFrame(width!, self.height))
+        self.label = GTLabel(frame: buildFrame(width!, self.height))
         self.label?.text = text
         self.label?.backgroundColor = backgroundColor
         self.label?.gtStyle = (labelStyle?.style)!
@@ -35,7 +35,7 @@ class TextContent: BaseTractElement {
             self.height = (labelStyle?.height)!
         }
         
-        self.label?.frame = createLabelFrame(width!, self.height)
+        self.label?.frame = buildFrame(width!, self.height)
         self.view = label
     }
     
@@ -71,7 +71,7 @@ class TextContent: BaseTractElement {
         return (text, backgroundColor!)
     }
     
-    fileprivate func createLabelFrame(_ width: CGFloat, _ height: CGFloat) -> CGRect {
+    fileprivate func buildFrame(_ width: CGFloat, _ height: CGFloat) -> CGRect {
         let parentDimensions = self.parent?.getDimensions()
         let xPosition = BaseTractElement.Standards.xPadding
         let width = (parentDimensions?.width)! - (BaseTractElement.Standards.xPadding * CGFloat(2))

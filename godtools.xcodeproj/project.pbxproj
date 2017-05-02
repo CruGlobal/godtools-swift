@@ -200,6 +200,31 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		0F6982751EB83A8E00CAA284 /* Containers */ = {
+			isa = PBXGroup;
+			children = (
+				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
+				4F462A351EB0E28900C03447 /* Hero.swift */,
+				0F806C661EB3E69D00F3ED2B /* Header.swift */,
+				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
+			);
+			name = Containers;
+			sourceTree = "<group>";
+		};
+		0F6982761EB83AF700CAA284 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				0F806C541EB2893500F3ED2B /* Heading.swift */,
+				4F462A361EB0E28900C03447 /* Paragraph.swift */,
+				0F806C681EB3E6B100F3ED2B /* Number.swift */,
+				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
+				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
+				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,
+				4F462A371EB0E28900C03447 /* TextContent.swift */,
+			);
+			name = Nodes;
+			sourceTree = "<group>";
+		};
 		0F7D50201EA931A600F5957E /* Languages */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,19 +476,10 @@
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
 			isa = PBXGroup;
 			children = (
+				0F6982751EB83A8E00CAA284 /* Containers */,
 				0F69826E1EB7D96100CAA284 /* Extensions */,
+				0F6982761EB83AF700CAA284 /* Nodes */,
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
-				4F462A351EB0E28900C03447 /* Hero.swift */,
-				4F462A361EB0E28900C03447 /* Paragraph.swift */,
-				4F462A371EB0E28900C03447 /* TextContent.swift */,
-				0F806C541EB2893500F3ED2B /* Heading.swift */,
-				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
-				0F806C661EB3E69D00F3ED2B /* Header.swift */,
-				0F806C681EB3E6B100F3ED2B /* Number.swift */,
-				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
-				0F806C6C1EB3E6D700F3ED2B /* Card.swift */,
-				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
-				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,
 			);
 			name = TractElements;
 			sourceTree = "<group>";

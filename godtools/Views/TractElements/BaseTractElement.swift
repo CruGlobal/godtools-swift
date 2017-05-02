@@ -77,13 +77,13 @@ class BaseTractElement: NSObject {
         return ("blackText", BaseTractElement.Standards.textContentWidth, 0.0)
     }
     
-    func getDimensions() -> (width: CGFloat, height: CGFloat) {
-        return (self.width, self.height)
-    }
-    
     // MARK: - Helpers
     
     func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height
+    }
+    
+    func getDimensions() -> (width: CGFloat, height: CGFloat) {
+        return (self.width, self.height)
     }
 }

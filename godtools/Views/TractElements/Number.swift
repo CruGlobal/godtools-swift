@@ -11,7 +11,7 @@ import UIKit
 
 class Number: BaseTractElement {
     
-    static let widthConstant = CGFloat(50.0)
+    static let widthConstant = CGFloat(60.0)
     let paddingConstant = CGFloat(30.0)
     override var width: CGFloat {
         return Number.widthConstant
@@ -36,7 +36,6 @@ class Number: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        // return self.yStartPosition + self.height + paddingConstant
         return 0.0
     }
 

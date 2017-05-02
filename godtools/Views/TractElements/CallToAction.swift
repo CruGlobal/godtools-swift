@@ -14,10 +14,17 @@ class CallToAction: BaseTractElement {
     let paddingConstant = CGFloat(30.0)
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = CGRect(x: 0.0, y: self.yStartPosition  + paddingConstant, width: BaseTractElement.Standards.screenWidth, height: self.height)
+        let frame = buildFrame()
         let view = UIView(frame: frame)
         view.backgroundColor = .green
         self.view = view
+    }
+    
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: 0.0,
+                      y: self.yStartPosition + self.paddingConstant,
+                      width: self.width,
+                      height: self.height)
     }
     
     override func yEndPosition() -> CGFloat {
