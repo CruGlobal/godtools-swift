@@ -35,20 +35,17 @@ class LanguageSettingsViewController: BaseViewController {
     
     private func setupPrimaryLanguageButton() {
         let primaryLanguage = self.languagesManager.loadPrimaryLanguageFromDisk()
-        if primaryLanguage != nil {
-            primaryLanguageButton.setTitle(primaryLanguage!.localizedName, for: .normal)
-        } else {
-            primaryLanguageButton.setTitle("select_primary_language".localized, for: .normal)
-        }
+        let title = primaryLanguage != nil ? primaryLanguage!.localizedName : "select_primary_language".localized
+        
+        primaryLanguageButton.setTitle(title, for: .normal)
     }
-
+    
     private func setupParallelLanguageButton() {
-        if GTSettings.shared.parallelLanguageId != nil {
-            let parallelLanguage = self.languagesManager.loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
-            parallelLanguageButton.setTitle(parallelLanguage.localizedName, for: .normal)
-        } else {
-            parallelLanguageButton.setTitle("select_parallel_language".localized, for: .normal)
-        }
+        let parallelLanguageId = GTSettings.shared.parallelLanguageId
+        let title = parallelLanguageId != nil ?
+            self.languagesManager.loadFromDisk(id: parallelLanguageId!).localizedName : "select_parallel_language".localized
+        
+        parallelLanguageButton.setTitle(title, for: .normal)
     }
 
     // MARK: - Actions
