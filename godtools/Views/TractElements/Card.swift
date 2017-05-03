@@ -13,6 +13,7 @@ class Card: BaseTractElement {
     
     static let marginConstant = CGFloat(8.0)
     
+    private var cardIsOpen: Bool = false
     var xPosition: CGFloat {
         return Card.marginConstant
     }
@@ -39,6 +40,23 @@ class Card: BaseTractElement {
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    // MARK: - Actions
+    
+    func changeCardState() {
+        self.cardIsOpen = !self.cardIsOpen
+        if self.cardIsOpen {
+            slideDown()
+        } else {
+            slideUp()
+        }
+    }
+    
+    fileprivate func slideUp() {
+    }
+    
+    fileprivate func slideDown() {
     }
 
 }

@@ -84,8 +84,11 @@ class TractViewController: BaseViewController {
     fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
         // let xPosition = CGFloat(page*200)
         let xPosition = (width * CGFloat(page)) + self.currentMovement
-        let view = Bundle.main.loadNibNamed("BaseTractView", owner: self, options: nil)!.first as! BaseTractView
-        view.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
+        let frame = CGRect(x: xPosition,
+                           y: 0.0,
+                           width: width,
+                           height: height)
+        let view = BaseTractView(frame: frame)
         view.data = getPage(page)
         view.tag = 100 + page
         return view
@@ -145,10 +148,10 @@ class TractViewController: BaseViewController {
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .right {
+    @objc fileprivate func handleGesture(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
             moveToPreviousPage()
-        } else if gesture.direction == .left {
+        } else if sender.direction == .left {
             moveToNextPage()
         }
     }

@@ -42,7 +42,7 @@ class Cards: BaseTractElement {
         var currentCard = 0
         
         for dictionary in data {
-            yPosition = self.height - (CGFloat(data.count - currentCard) * 80)
+            yPosition = self.height - (CGFloat(data.count - currentCard) * 60)
             let element = Card(data: dictionary, startOnY: yPosition, parent: self)
             elements.append(element)
             currentCard += 1
