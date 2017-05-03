@@ -17,7 +17,7 @@ class Card: BaseTractElement {
         return Card.marginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + Card.marginConstant
+        return self.yStartPosition
     }
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.marginConstant

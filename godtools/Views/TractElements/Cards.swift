@@ -36,6 +36,21 @@ class Cards: BaseTractElement {
         setupView(properties: Dictionary<String, Any>())
     }
     
+    override func buildChildrenForData(_ data: [XMLIndexer]) {
+        var yPosition: CGFloat = 0.0
+        var elements:Array = [BaseTractElement]()
+        var currentCard = 0
+        
+        for dictionary in data {
+            yPosition = self.height - (CGFloat(data.count - currentCard) * 80)
+            let element = Card(data: dictionary, startOnY: yPosition, parent: self)
+            elements.append(element)
+            currentCard += 1
+        }
+        
+        self.elements = elements
+    }
+    
     override func setupView(properties: Dictionary<String, Any>) {
         let frame = buildFrame()
         let view = UIView(frame: frame)

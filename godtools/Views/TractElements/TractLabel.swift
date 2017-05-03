@@ -11,8 +11,8 @@ import UIKit
 
 class TractLabel: BaseTractElement {
     
-    static let xMarginConstant = CGFloat(8.0)
-    static let yMarginConstant = CGFloat(8.0)
+    static let xMarginConstant = CGFloat(0.0)
+    static let yMarginConstant = CGFloat(0.0)
     
     var xPosition: CGFloat {
         return TractLabel.xMarginConstant
