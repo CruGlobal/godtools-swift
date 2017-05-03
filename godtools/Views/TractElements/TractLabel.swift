@@ -29,7 +29,14 @@ class TractLabel: BaseTractElement {
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
         self.backgroundColor = .gtGreen
+    }
+    
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
         setupPressGestures()
+        return self
     }
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
@@ -62,7 +69,6 @@ class TractLabel: BaseTractElement {
                                width: self.width,
                                height: 60.0)
             self.tapView.frame = frame
-            self.tapView.backgroundColor = .red
             self.tapView.addGestureRecognizer(tapGesture)
             self.tapView.isUserInteractionEnabled = true
             self.addSubview(self.tapView)

@@ -43,18 +43,30 @@ class Card: BaseTractElement {
     // MARK: - Actions
     
     func changeCardState() {
-        self.cardIsOpen = !self.cardIsOpen
         if self.cardIsOpen {
             slideDown()
         } else {
             slideUp()
         }
+        self.cardIsOpen = !self.cardIsOpen
     }
     
     fileprivate func slideUp() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
+                       completion: nil )
     }
     
     fileprivate func slideDown() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: nil )
     }
 
 }
