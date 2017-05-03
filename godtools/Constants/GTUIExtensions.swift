@@ -11,7 +11,7 @@ import UIKit
 extension UIColor {
     
     static let gtWhite = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-    static let gtBlue = UIColor(red: 50.0/255.0, green: 164.0/255.0, blue: 219.0/255.0, alpha: 1.0)
+    static let gtBlue = UIColor(red: 59.0/255.0, green: 164.0/255.0, blue: 219.0/255.0, alpha: 1.0)
     static let gtBlack = UIColor(red: 90.0/255.0, green: 90.0/255.0, blue: 90.0/255.0, alpha: 1.0)
     static let gtGrey = UIColor(red: 190.0/255.0, green: 190.0/255.0, blue: 190.0/255.0, alpha: 1.0)
     static let gtGreyLight = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)

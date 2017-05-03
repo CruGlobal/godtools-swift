@@ -11,6 +11,7 @@ import CoreData
 import MagicalRecord
 import Fabric
 import Crashlytics
+import PromiseKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,13 +27,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initializeCoreDataStack()
         Fabric.with([Crashlytics.self, Answers.self])
         self.startFlowController(launchOptions: launchOptions)
+        
+        self.initalizeAppState()
+            .always {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+        
         return true
     }
     
     fileprivate func initializeCoreDataStack() {
         MagicalRecord.setupCoreDataStack(withAutoMigratingSqliteStoreNamed: "godtools-5.sqlite")
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -65,6 +72,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame : UIScreen.main.bounds)
         self.flowController = PlatformFlowController(window: self.window!, launchOptions: launchOptions)
         self.window?.makeKeyAndVisible()
+    }
+    
+    // MARK: App state initialization/refresh
+    
+    private func initalizeAppState() -> Promise<Any> {
+        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<[DownloadedResource]> in
+            return DownloadedResourceManager.shared.loadFromRemote()
+        }
     }
 }
 

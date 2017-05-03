@@ -36,30 +36,14 @@ class LanguagesTableViewController: BaseViewController {
         self.registerCells()
         
         self.loadFromDisk()
-        self.loadFromRemote()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: - Load data
     
     func loadFromDisk() {
-        languagesManager.loadFromDisk().always {
-            self.reloadTableView()
-        }
-    }
-    
-    func loadFromRemote() {
-        languagesManager.loadFromRemote().catch(execute: { error in
-            if self.languagesManager.languages.count == 0 {
-                self.showAlertControllerWith(message: "language_download_error".localized)
-            }
-        }).always {
-            self.reloadTableView()
-            self.hideNetworkActivityIndicator()
-        }
+        _ = languagesManager.loadFromDisk()
+
+        self.tableView.reloadData()
     }
     
     // MARK: - Helpers
@@ -75,9 +59,4 @@ class LanguagesTableViewController: BaseViewController {
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
     }
-    
-    fileprivate func reloadTableView() {
-        self.tableView.reloadData()
-    }
-    
 }

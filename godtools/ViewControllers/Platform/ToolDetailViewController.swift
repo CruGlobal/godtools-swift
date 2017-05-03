@@ -26,10 +26,6 @@ class ToolDetailViewController: BaseViewController {
         self.displayData()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: Present data
     
     fileprivate func displayData() {

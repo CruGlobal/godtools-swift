@@ -14,6 +14,8 @@ class TranslationResource: Resource {
     var version: NSNumber?
     var isPublished: NSNumber?
     
+    var language: LanguageResource?
+    
     override class var resourceType: ResourceType {
         return "translation"
     }
@@ -21,7 +23,8 @@ class TranslationResource: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "version" : Attribute(),
-            "isPublished" : BooleanAttribute().serializeAs("is-published")
+            "isPublished" : BooleanAttribute().serializeAs("is-published"),
+            "language" : ToOneRelationship(LanguageResource.self)
         ])
     }
 }
