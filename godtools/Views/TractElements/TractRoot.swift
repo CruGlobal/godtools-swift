@@ -12,17 +12,9 @@ import SWXMLHash
 
 class TractRoot: BaseTractElement {
     
-    init(data: XMLIndexer, withMaxHeight height: CGFloat) {
-        super.init()
-        self.maxHeight = height
-        setupElement(data: data, startOnY: 0.0)
-    }
-    
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = buildFrame()
-        let view = UIView(frame: frame)
-        view.backgroundColor = .yellow
-        self.view = view
+        self.frame = buildFrame()
+        self.backgroundColor = .yellow
     }
     
     fileprivate func buildFrame() -> CGRect {

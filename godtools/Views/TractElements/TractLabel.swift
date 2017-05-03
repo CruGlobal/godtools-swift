@@ -15,7 +15,7 @@ class TractLabel: BaseTractElement {
     static let xMarginConstant = CGFloat(0.0)
     static let yMarginConstant = CGFloat(0.0)
     
-    var tapView: UIView?
+    var tapView = UIView()
     var xPosition: CGFloat {
         return TractLabel.xMarginConstant
     }
@@ -27,10 +27,8 @@ class TractLabel: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = buildFrame()
-        let view = UIView(frame: frame)
-        view.backgroundColor = .gtGreen
-        self.view = view
+        self.frame = buildFrame()
+        self.backgroundColor = .gtGreen
         setupPressGestures()
     }
     
@@ -63,12 +61,11 @@ class TractLabel: BaseTractElement {
                                y: 0.0,
                                width: self.width,
                                height: 60.0)
-            self.tapView = UIView(frame: frame)
-            self.tapView?.backgroundColor = .red
-            self.tapView?.addGestureRecognizer(tapGesture)
-            self.tapView?.isUserInteractionEnabled = true
-            
-            self.view?.addSubview(self.tapView!)
+            self.tapView.frame = frame
+            self.tapView.backgroundColor = .red
+            self.tapView.addGestureRecognizer(tapGesture)
+            self.tapView.isUserInteractionEnabled = true
+            self.addSubview(self.tapView)
         }
     }
     

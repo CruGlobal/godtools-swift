@@ -19,9 +19,7 @@ class Hero: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = buildFrame()
-        let view = UIView(frame: frame)
-        self.view = view
+        self.frame = buildFrame()
     }
     
     fileprivate func buildFrame() -> CGRect {

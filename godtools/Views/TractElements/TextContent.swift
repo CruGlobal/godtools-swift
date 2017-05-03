@@ -53,8 +53,9 @@ class TextContent: BaseTractElement {
             self.height = (labelStyle?.height)!
         }
         
-        self.label?.frame = buildFrame()
-        self.view = label
+        self.frame = buildFrame()
+        self.label?.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
+        self.addSubview(self.label!)
     }
     
     override func yEndPosition() -> CGFloat {

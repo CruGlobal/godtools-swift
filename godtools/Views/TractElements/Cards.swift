@@ -28,14 +28,6 @@ class Cards: BaseTractElement {
         }
     }
     
-    init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {
-        super.init()
-        self.parent = parent
-        self.yStartPosition = yPosition
-        buildChildrenForData(children)
-        setupView(properties: Dictionary<String, Any>())
-    }
-    
     override func buildChildrenForData(_ data: [XMLIndexer]) {
         var yPosition: CGFloat = 0.0
         var elements:Array = [BaseTractElement]()
@@ -52,10 +44,8 @@ class Cards: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = buildFrame()
-        let view = UIView(frame: frame)
-        view.backgroundColor = UIColor.darkGray
-        self.view = view
+        self.frame = buildFrame()
+        self.backgroundColor = UIColor.darkGray
     }
     
     fileprivate func buildFrame() -> CGRect {

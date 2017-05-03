@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-class BaseTractElement: NSObject {
+class BaseTractElement: UIView {
     struct Standards {
         static let xMargin = CGFloat(8.0)
         static let yMargin = CGFloat(8.0)
@@ -23,7 +23,6 @@ class BaseTractElement: NSObject {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
-    var view: UIView?
     var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
     private var _height: CGFloat = 0.0
@@ -43,29 +42,49 @@ class BaseTractElement: NSObject {
     }
     var hasCardContainer = false
     
-    override init() {
-        super.init()
+    // MARK: - Initializers
+    
+    init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
+        self.parent = parent
+        self.yStartPosition = yPosition
+        buildChildrenForData(children)
+        setupView(properties: Dictionary<String, Any>())
+    }
+    
+    init(data: XMLIndexer, withMaxHeight height: CGFloat) {
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
+        self.maxHeight = height
+        setupElement(data: data, startOnY: 0.0)
     }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        super.init()
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
         setupElement(data: data, startOnY: yPosition)
     }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
-        super.init()
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
         self.parent = parent
         setupElement(data: data, startOnY: yPosition)
     }
     
-    func render() -> UIView {
-        for element in self.elements! {
-            self.view!.addSubview(element.render())
-        }
-        return self.view!
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Build content
+    
+    func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
+        return self
+    }
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition

@@ -24,10 +24,8 @@ class Title: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        let frame = buildFrame()
-        let view = UIView(frame: frame)
-        view.backgroundColor = .red
-        self.view = view
+        self.frame = buildFrame()
+        self.backgroundColor = .red
     }
     
     fileprivate func buildFrame() -> CGRect {
