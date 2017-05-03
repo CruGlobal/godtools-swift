@@ -58,5 +58,23 @@ class Cards: BaseTractElement {
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
     }
+    
+    func hideCardsExcept(card: Card) {
+        for element in elements! {
+            let elementCard = element as! Card
+            if card != elementCard {
+                elementCard.hideCard()
+            }
+        }
+    }
+    
+    func showCardsExcept(card: Card) {
+        for element in elements! {
+            let elementCard = element as! Card
+            if card != elementCard {
+                elementCard.resetCard()
+            }
+        }
+    }
 
 }

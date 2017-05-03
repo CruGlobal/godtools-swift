@@ -20,8 +20,20 @@ class Card: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.marginConstant
+    }
+    override var height: CGFloat {
+        get {
+            return (self.parent?.height)!
+        }
+        set {
+            // Unused
+        }
+    }
+    var translationY: CGFloat {
+        return self.height - self.yStartPosition
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -43,15 +55,18 @@ class Card: BaseTractElement {
     // MARK: - Actions
     
     func changeCardState() {
+        let cardsManager = self.parent as! Cards
         if self.cardIsOpen {
-            slideDown()
+            resetCard()
+            cardsManager.showCardsExcept(card: self)
         } else {
             slideUp()
+            cardsManager.hideCardsExcept(card: self)
         }
         self.cardIsOpen = !self.cardIsOpen
     }
     
-    fileprivate func slideUp() {
+    func slideUp() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
@@ -60,12 +75,21 @@ class Card: BaseTractElement {
                        completion: nil )
     }
     
-    fileprivate func slideDown() {
+    func resetCard() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: nil )
+    }
+    
+    func hideCard() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: self.translationY) },
                        completion: nil )
     }
 
