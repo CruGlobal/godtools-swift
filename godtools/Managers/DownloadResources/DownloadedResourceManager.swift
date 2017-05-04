@@ -36,8 +36,9 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         showNetworkingIndicator()
         
-        // load all resources and save them to disk
-        return issueGETRequest(["include" : "translations,pages"])
+        let params = ["include" : "translations,pages"]
+        
+        return issueGETRequest(params)
             .then { data -> Promise<[DownloadedResource]> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
