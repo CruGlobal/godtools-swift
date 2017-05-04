@@ -47,7 +47,7 @@ class GTButton: UIButton {
     
     @IBInspectable var translationKey: String = "" {
         didSet {
-            self.titleLabel?.text = translationKey.localized
+            self.setTitle(translationKey.localized, for: .normal)
         }
     }
     
