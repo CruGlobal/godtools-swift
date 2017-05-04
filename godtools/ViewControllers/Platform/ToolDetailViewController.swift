@@ -20,6 +20,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var descriptionLabel: GTLabel!
     @IBOutlet weak var totalLanguagesLabel: GTLabel!
     @IBOutlet weak var languagesLabel: GTLabel!
+    @IBOutlet weak var mainButton: GTButton!
     
     var resource: DownloadedResource?
     
@@ -40,6 +41,20 @@ class ToolDetailViewController: BaseViewController {
             .map({ "\(($0 as! Translation).language!.localizedName())"})
             .sorted(by: { $0 < $1 })
             .joined(separator: ", ")
+        
+        self.displayButton()
+    }
+    
+    fileprivate func displayButton() {
+        if resource!.shouldDownload {
+            mainButton.designAsDeleteButton()
+        } else {
+            mainButton.designAsDownloadButton()
+        }
+    }
+    
+    @IBAction func mainButtonWasPressed(_ sender: Any) {
+        
     }
 
 }
