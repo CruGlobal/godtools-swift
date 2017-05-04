@@ -109,6 +109,8 @@ platform :ios do
 			configuration: "Release",
 			xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
 			export_method: "ad-hoc",
+            build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric",
+            output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric"
 		)
 
 		lane_context[SharedValues::FL_CHANGELOG] = IO.read("#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes") || ''
@@ -118,7 +120,6 @@ platform :ios do
 		)
 
 
-		resign
 
         #### TESTFLIGHT ####
 
@@ -139,6 +140,14 @@ platform :ios do
         # use the UDID of the newly created provisioning profile
         ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
 
+        gym(
+          configuration: "Release",
+          xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
+          export_method: "app-store",
+          build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/testflight",
+          output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/testflight",
+          clean: true
+        )
 
 		testflight(
 			distribute_external: true,
