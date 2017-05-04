@@ -96,7 +96,7 @@ platform :ios do
 		gym(
 			configuration: "Release",
 			xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
-			use_legacy_build_api: true # Used to fix issue with the SwiftSupport folder not being added to the ipa by xcodebuild on swift projects
+			export_method: "ad-hoc",
 		)
 
 		lane_context[SharedValues::FL_CHANGELOG] = IO.read("#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes") || ''
@@ -154,7 +154,7 @@ platform :ios do
 		gym(
 			configuration: "Release",
 			xcargs: "ARCHIVE=YES",
-			use_legacy_build_api: true # Used to fix issue with the SwiftSupport folder not being added to the ipa by xcodebuild on swift projects
+			export_method: "app-store"
 		)
 
 		appstore(
