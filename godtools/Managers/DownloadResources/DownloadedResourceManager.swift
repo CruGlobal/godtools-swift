@@ -91,20 +91,3 @@ class DownloadedResourceManager: GTDataManager {
         return "\(GTConstants.kApiBase)/\(self.path)"
     }
 }
-
-extension DownloadedResourceManager: UITableViewDelegate {
-    
-}
-
-extension DownloadedResourceManager: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resources.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = resources[indexPath.row].name
-        
-        return cell
-    }
-}
