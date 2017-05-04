@@ -84,11 +84,10 @@ class Card: BaseTractElement {
         switch self.cardState {
         case .preview:
             showCard()
-            self.cardState = .open
         case .open:
             hideCard()
-            self.cardState = .close
-        default: break
+        case .close:
+            showCard()
         }
     }
     

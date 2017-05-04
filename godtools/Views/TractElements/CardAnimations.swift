@@ -16,6 +16,7 @@ extension Card {
             return
         }
         
+        self.cardState = .open
         let cardsView = self.parent as! Cards
         cardsView.setEnvironmentForDisplayingCard(self)
         
@@ -33,6 +34,7 @@ extension Card {
             return
         }
         
+        self.cardState = .close
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -50,7 +52,6 @@ extension Card {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: nil )
-        cardsView.showCardsExcept(card: self)
     }
     
 }
