@@ -11,6 +11,8 @@ import UIKit
 
 extension Cards {
     
+    // MARK: - Animations for the cards inside of the Cards container
+    
     func setEnvironmentForDisplayingCard(_ card: Card) {
         changeToOpenCards()
         
@@ -38,6 +40,24 @@ extension Cards {
             elementCard.resetCard()
         }
     }
+    
+    func showFollowingCardToCard(_ card: Card) {
+        var foundCard = false
+        
+        for element in elements! {
+            let elementCard = element as! Card
+            if card == elementCard {
+                foundCard = true
+                continue
+            }
+            if foundCard {
+                elementCard.showCard()
+                break
+            }
+        }
+    }
+    
+    // MARK: - Animations for the Cards container and the Header
     
     func changeToOpenCards() {
         if self.cardsState == .open {

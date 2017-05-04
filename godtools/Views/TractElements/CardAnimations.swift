@@ -18,8 +18,7 @@ extension Card {
         
         self.cardState = .open
         
-        let cardsView = self.parent as! Cards
-        cardsView.setEnvironmentForDisplayingCard(self)
+        self.cardsParentView.setEnvironmentForDisplayingCard(self)
         
         let translationY = Card.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
@@ -39,8 +38,6 @@ extension Card {
         
         self.cardState = .close
         
-        let cardsView = self.parent as! Cards
-        
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -50,7 +47,7 @@ extension Card {
                        completion: { (completed) in
                         if completed {
                             if self.cardNumber == 0 {
-                                cardsView.resetEnvironment()
+                                self.cardsParentView.resetEnvironment()
                             }
                         }})
         

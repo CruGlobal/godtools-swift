@@ -30,3 +30,25 @@ extension Card {
     }
     
 }
+
+extension Card : UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        let translation = scrollView.panGestureRecognizer.translation(in: self.superview)
+        let scrollOffset = scrollView.contentOffset.y
+        // let scrollBottom = scrollView.contentInset.bottom
+        let scrollViewHeight = scrollView.frame.size.height
+        let scrollContentSizeHeight = scrollView.contentSize.height
+        
+        if translation.y > 0 {
+            if scrollOffset == 0 {
+                hideCard()
+            }
+        } else {
+            if scrollOffset + scrollViewHeight == scrollContentSizeHeight {
+                self.cardsParentView.showFollowingCardToCard(self)
+            }
+        }
+    }
+    
+}

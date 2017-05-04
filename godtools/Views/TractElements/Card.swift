@@ -25,6 +25,9 @@ class Card: BaseTractElement {
     let scrollView = UIScrollView()
     let containerView = UIView()
     
+    var cardsParentView: Cards {
+        return self.parent as! Cards
+    }
     var cardState = CardState.preview
     var cardNumber = 0
     
@@ -62,6 +65,7 @@ class Card: BaseTractElement {
         let contentHeight = CGFloat(600.0) // TODO: set dynamic height
         self.scrollView.contentSize = CGSize(width: self.width, height: contentHeight)
         self.scrollView.frame = self.bounds
+        self.scrollView.delegate = self
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
                                           width: self.width,
