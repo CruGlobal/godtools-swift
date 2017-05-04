@@ -36,7 +36,6 @@ extension Card : UIScrollViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: self.superview)
         let scrollOffset = scrollView.contentOffset.y
-        // let scrollBottom = scrollView.contentInset.bottom
         let scrollViewHeight = scrollView.frame.size.height
         let scrollContentSizeHeight = scrollView.contentSize.height
         
