@@ -1,3 +1,6 @@
+# God Tools
+[![Coverage Status](https://coveralls.io/repos/github/CruGlobal/godtools-swift/badge.svg?branch=develop)](https://coveralls.io/github/CruGlobal/godtools-swift?branch=develop)
+
 ## Building the project
 ### Normally
 A build server is setup for this project. The build server does the following:
