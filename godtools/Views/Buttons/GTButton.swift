@@ -80,8 +80,6 @@ class GTButton: UIButton {
     }
     
     fileprivate func designAsToolDetailButton() {
-
-        
         self.cornerRadius = 5.0
         self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
         self.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 10.0)
