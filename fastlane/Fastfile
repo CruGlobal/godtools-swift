@@ -78,10 +78,22 @@ platform :ios do
 			Actions.sh("git pull", log: true)
 		end
 
-		sigh(
-			 adhoc: true,
-			 force: true
-		   )
+
+        #### CRASHLYTICS ####
+
+
+        # update app identifier for crashlytics release
+        update_app_identifier(
+          xcodeproj: "godtools.xcodeproj",
+          plist_path: "godtools/Info.plist",
+          app_identifier: "org.cru.godtools.beta"
+        )
+
+        sigh(
+            app_identifier: "org.cru.godtools.beta",
+			adhoc: true,
+			force: true
+		)
 
 		# use the UDID of the newly created provisioning profile
 		ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
@@ -105,14 +117,39 @@ platform :ios do
 			groups: [ ENV["CRASHLYTICS_GROUP"] ]
 		)
 
-		sigh(force: true)
 
 		resign
+
+        #### TESTFLIGHT ####
+
+
+
+        # return app identifier for testflight release
+        update_app_identifier(
+            xcodeproj: "godtools.xcodeproj",
+            plist_path: "godtools/Info.plist",
+            app_identifier: "org.cru.godtools"
+        )
+
+        sigh(
+            app_identifier: "org.cru.godtools",
+            force: true
+        )
+
+        # use the UDID of the newly created provisioning profile
+        ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
+
 
 		testflight(
 			distribute_external: true,
 			skip_waiting_for_build_processing: true
 		)
+
+        update_app_identifier(
+          xcodeproj: "godtools.xcodeproj",
+          plist_path: "godtools/Info.plist",
+          app_identifier: "org.cru.godtools.beta"
+        )
 
 		clean_build_artifacts
 		commit_version_bump(
@@ -137,6 +174,12 @@ platform :ios do
 			Actions.sh("git checkout #{ENV["GIT_BRANCH"]}", log: false)
 			Actions.sh("git pull", log: false)
 		end
+
+        update_app_identifier(
+          xcodeproj: "godtools.xcodeproj",
+          plist_path: "godtools/Info.plist",
+          app_identifier: "org.cru.godtools"
+        )
 
 		sigh(force: true)
 
