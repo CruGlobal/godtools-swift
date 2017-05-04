@@ -11,7 +11,14 @@ import UIKit
 
 extension Card {
     
-    func slideUp() {
+    func showCard() {
+        if self.cardState == .open {
+            return
+        }
+        
+        let cardsView = self.parent as! Cards
+        cardsView.setEnvironmentForDisplayingCard(self)
+        
         let translationY = Card.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -21,23 +28,29 @@ extension Card {
                        completion: nil )
     }
     
-    func resetCard() {
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: nil )
-    }
-    
     func hideCard() {
-        let translationY = self.height
+        if self.cardState == .close {
+            return
+        }
+        
+        let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: nil )
+    }
+    
+    func resetCard() {
+        let cardsView = self.parent as! Cards
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: nil )
+        cardsView.showCardsExcept(card: self)
     }
     
 }

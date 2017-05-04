@@ -11,7 +11,39 @@ import UIKit
 
 extension Cards {
     
+    func setEnvironmentForDisplayingCard(_ card: Card) {
+        changeToOpenCards()
+        
+        var foundCard = false
+        
+        for element in elements! {
+            let elementCard = element as! Card
+            if card != elementCard {
+                if foundCard {
+                    elementCard.hideCard()
+                } else {
+                    elementCard.showCard()
+                }
+            } else {
+                foundCard = true
+            }
+        }
+    }
+    
     func hideCardsExcept(card: Card) {
+        for element in elements! {
+            let elementCard = element as! Card
+            if card != elementCard {
+                elementCard.hideCard()
+            }
+        }
+    }
+    
+    func changeToOpenCards() {
+        if self.cardsState == .open {
+            return
+        }
+        
         let rootView = self.parent as! TractRoot
         rootView.hideHeader()
         
@@ -21,16 +53,13 @@ extension Cards {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
                        completion: nil )
-        
-        for element in elements! {
-            let elementCard = element as! Card
-            if card != elementCard {
-                elementCard.hideCard()
-            }
-        }
     }
     
-    func showCardsExcept(card: Card) {
+    func changeToPreviewCards() {
+        if self.cardsState == .preview {
+            return
+        }
+        
         let rootView = self.parent as! TractRoot
         rootView.showHeader()
         
@@ -40,13 +69,6 @@ extension Cards {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
                        completion: nil )
-        
-        for element in elements! {
-            let elementCard = element as! Card
-            if card != elementCard {
-                elementCard.resetCard()
-            }
-        }
     }
     
 }

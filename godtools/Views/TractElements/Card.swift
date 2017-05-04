@@ -14,6 +14,10 @@ import UIKit
 
 class Card: BaseTractElement {
     
+    enum CardState {
+        case open, preview, close
+    }
+    
     static let xMarginConstant = CGFloat(8.0)
     static let yTopMarginConstant = CGFloat(8.0)
     static let yBottomMarginConstant = CGFloat(80.0)
@@ -21,7 +25,9 @@ class Card: BaseTractElement {
     let scrollView = UIScrollView()
     let containerView = UIView()
     
-    private var cardIsOpen: Bool = false
+    var cardState = CardState.preview
+    
+    var yDownPosition = CGFloat(0.0)
     var xPosition: CGFloat {
         return Card.xMarginConstant
     }
@@ -74,16 +80,16 @@ class Card: BaseTractElement {
     
     // MARK: - Actions
     
-    func changeCardState() {
-        let cardsView = self.parent as! Cards
-        if self.cardIsOpen {
-            resetCard()
-            cardsView.showCardsExcept(card: self)
-        } else {
-            slideUp()
-            cardsView.hideCardsExcept(card: self)
+    func didTapOnCard() {
+        switch self.cardState {
+        case .preview:
+            showCard()
+            self.cardState = .open
+        case .open:
+            hideCard()
+            self.cardState = .close
+        default: break
         }
-        self.cardIsOpen = !self.cardIsOpen
     }
     
     // MARK: - Helpers

@@ -21,6 +21,12 @@ import SWXMLHash
 
 class Cards: BaseTractElement {
     
+    enum CardsState {
+        case open, preview
+    }
+    
+    var cardsState = CardsState.preview
+    
     var xPosition: CGFloat {
         return 0.0
     }
@@ -40,15 +46,17 @@ class Cards: BaseTractElement {
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
-        var yPosition: CGFloat = 0.0
         var elements:Array = [BaseTractElement]()
-        var currentCard = 0
+        var cardNumber = 0
         
         for dictionary in data {
-            yPosition = self.initialCardPosition - (CGFloat(data.count - currentCard) * 60)
+            let deltaChange = CGFloat(data.count - cardNumber)
+            let yPosition = self.initialCardPosition - (deltaChange * 60)
+            let yDownPosition = self.yStartPosition + (deltaChange * 60) - (deltaChange * 30)
             let element = Card(data: dictionary, startOnY: yPosition, parent: self)
+            element.yDownPosition = yDownPosition
             elements.append(element)
-            currentCard += 1
+            cardNumber += 1
         }
         
         self.elements = elements
