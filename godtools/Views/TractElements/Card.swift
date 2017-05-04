@@ -13,6 +13,9 @@ class Card: BaseTractElement {
     
     static let marginConstant = CGFloat(8.0)
     
+    let scrollView = UIScrollView()
+    let containerView = UIView()
+    
     private var cardIsOpen: Bool = false
     var xPosition: CGFloat {
         return Card.marginConstant
@@ -20,7 +23,6 @@ class Card: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition
     }
-    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.marginConstant
     }
@@ -39,6 +41,26 @@ class Card: BaseTractElement {
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
         self.backgroundColor = .green
+        setupScrollView()
+    }
+    
+    func setupScrollView() {
+        let contentHeight = CGFloat(600.0) // TODO: set dynamic height
+        self.scrollView.contentSize = CGSize(width: self.width, height: contentHeight)
+        self.scrollView.frame = self.bounds
+        self.containerView.frame = CGRect(x: 0.0,
+                                          y: 0.0,
+                                          width: self.width,
+                                          height: contentHeight)
+    }
+    
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.containerView.addSubview(element.render())
+        }
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.scrollView)
+        return self
     }
     
     fileprivate func buildFrame() -> CGRect {

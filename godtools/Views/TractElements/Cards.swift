@@ -18,7 +18,6 @@ class Cards: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.Standards.yMargin
     }
-    
     override var height: CGFloat {
         get {
             return self.getMaxHeight() - self.yStartPosition
