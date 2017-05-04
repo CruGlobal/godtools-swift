@@ -98,7 +98,7 @@ class HomeViewController: BaseViewController {
     }
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "HomeToolTableViewCell", bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+        self.tableView.register(UINib(nibName: String(describing: HomeToolTableViewCell.self), bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
     }
     
     fileprivate func setupStyle() {
