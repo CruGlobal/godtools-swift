@@ -55,6 +55,7 @@ class Cards: BaseTractElement {
             let yDownPosition = self.yStartPosition + (deltaChange * 60) - (deltaChange * 30)
             let element = Card(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
+            element.cardNumber = cardNumber
             elements.append(element)
             cardNumber += 1
         }

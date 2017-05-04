@@ -17,6 +17,7 @@ extension Card {
         }
         
         self.cardState = .open
+        
         let cardsView = self.parent as! Cards
         cardsView.setEnvironmentForDisplayingCard(self)
         
@@ -35,17 +36,31 @@ extension Card {
         }
         
         self.cardState = .close
+        
+        let cardsView = self.parent as! Cards
+        
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
-                       completion: nil )
+                       completion: { (completed) in
+                        if completed {
+                            if self.cardNumber == 0 {
+                                cardsView.resetEnvironment()
+                            }
+                        }})
+        
     }
     
     func resetCard() {
-        let cardsView = self.parent as! Cards
+        if self.cardState == .preview {
+            return
+        }
+        
+        self.cardState = .preview
+        
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

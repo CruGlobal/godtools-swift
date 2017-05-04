@@ -30,12 +30,12 @@ extension Cards {
         }
     }
     
-    func hideCardsExcept(card: Card) {
+    func resetEnvironment() {
+        changeToPreviewCards()
+        
         for element in elements! {
             let elementCard = element as! Card
-            if card != elementCard {
-                elementCard.hideCard()
-            }
+            elementCard.resetCard()
         }
     }
     
@@ -43,6 +43,8 @@ extension Cards {
         if self.cardsState == .open {
             return
         }
+        
+        self.cardsState = .open
         
         let rootView = self.parent as! TractRoot
         rootView.hideHeader()
@@ -59,6 +61,8 @@ extension Cards {
         if self.cardsState == .preview {
             return
         }
+        
+        self.cardsState = .preview
         
         let rootView = self.parent as! TractRoot
         rootView.showHeader()

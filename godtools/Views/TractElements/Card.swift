@@ -26,6 +26,7 @@ class Card: BaseTractElement {
     let containerView = UIView()
     
     var cardState = CardState.preview
+    var cardNumber = 0
     
     var yDownPosition = CGFloat(0.0)
     var xPosition: CGFloat {
