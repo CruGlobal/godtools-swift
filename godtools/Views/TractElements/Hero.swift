@@ -22,15 +22,17 @@ class Hero: BaseTractElement {
         self.frame = buildFrame()
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Helpers
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
         
 }

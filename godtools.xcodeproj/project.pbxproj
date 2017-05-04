@@ -15,6 +15,11 @@
 		0F6982721EB7D9E800CAA284 /* TractElementOperationFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */; };
 		0F6982741EB7DA4500CAA284 /* TractElementKindFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */; };
 		0F6982781EB8E31F00CAA284 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982771EB8E31F00CAA284 /* Cards.swift */; };
+		0F7741D91EBB8A8900888D20 /* CardAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741D81EBB8A8900888D20 /* CardAnimations.swift */; };
+		0F7741DC1EBB8AFC00888D20 /* HeaderAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DB1EBB8AFC00888D20 /* HeaderAnimations.swift */; };
+		0F7741DE1EBB8B4F00888D20 /* TractRootAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DD1EBB8B4F00888D20 /* TractRootAnimations.swift */; };
+		0F7741E01EBB8BF300888D20 /* CardsAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DF1EBB8BF300888D20 /* CardsAnimations.swift */; };
+		0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */; };
 		0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50221EA933B000F5957E /* HomeViewController.swift */; };
 		0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50231EA933B000F5957E /* HomeViewController.xib */; };
 		0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */; };
@@ -93,6 +98,11 @@
 		0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementOperationFunctions.swift; path = Views/TractElements/TractElementOperationFunctions.swift; sourceTree = "<group>"; };
 		0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementKindFunctions.swift; path = Views/TractElements/TractElementKindFunctions.swift; sourceTree = "<group>"; };
 		0F6982771EB8E31F00CAA284 /* Cards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Cards.swift; path = Views/TractElements/Cards.swift; sourceTree = "<group>"; };
+		0F7741D81EBB8A8900888D20 /* CardAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardAnimations.swift; path = Views/TractElements/CardAnimations.swift; sourceTree = "<group>"; };
+		0F7741DB1EBB8AFC00888D20 /* HeaderAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderAnimations.swift; path = Views/TractElements/HeaderAnimations.swift; sourceTree = "<group>"; };
+		0F7741DD1EBB8B4F00888D20 /* TractRootAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractRootAnimations.swift; path = Views/TractElements/TractRootAnimations.swift; sourceTree = "<group>"; };
+		0F7741DF1EBB8BF300888D20 /* CardsAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardsAnimations.swift; path = Views/TractElements/CardsAnimations.swift; sourceTree = "<group>"; };
+		0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLabelGestures.swift; path = Views/TractElements/TractLabelGestures.swift; sourceTree = "<group>"; };
 		0F7D50221EA933B000F5957E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0F7D50231EA933B000F5957E /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeToolTableViewCell.swift; sourceTree = "<group>"; };
@@ -195,18 +205,19 @@
 			name = GeneralExtensions;
 			sourceTree = "<group>";
 		};
-		0F69826E1EB7D96100CAA284 /* Extensions */ = {
+		0F69826E1EB7D96100CAA284 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
 				0F6982731EB7DA4500CAA284 /* TractElementKindFunctions.swift */,
 				0F6982711EB7D9E800CAA284 /* TractElementOperationFunctions.swift */,
 			);
-			name = Extensions;
+			name = Functions;
 			sourceTree = "<group>";
 		};
 		0F6982751EB83A8E00CAA284 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
+				0F7741DA1EBB8AD400888D20 /* Animations */,
 				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
 				4F462A351EB0E28900C03447 /* Hero.swift */,
 				0F806C661EB3E69D00F3ED2B /* Header.swift */,
@@ -218,6 +229,8 @@
 		0F6982761EB83AF700CAA284 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				0F7741D71EBB8A7300888D20 /* Animations */,
+				0F7741E11EBB8CCD00888D20 /* Gestures */,
 				0F806C541EB2893500F3ED2B /* Heading.swift */,
 				0F806C681EB3E6B100F3ED2B /* Number.swift */,
 				0F806C6A1EB3E6C300F3ED2B /* Title.swift */,
@@ -228,6 +241,32 @@
 				4F462A371EB0E28900C03447 /* TextContent.swift */,
 			);
 			name = Nodes;
+			sourceTree = "<group>";
+		};
+		0F7741D71EBB8A7300888D20 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				0F7741D81EBB8A8900888D20 /* CardAnimations.swift */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
+		0F7741DA1EBB8AD400888D20 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				0F7741DD1EBB8B4F00888D20 /* TractRootAnimations.swift */,
+				0F7741DB1EBB8AFC00888D20 /* HeaderAnimations.swift */,
+				0F7741DF1EBB8BF300888D20 /* CardsAnimations.swift */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
+		0F7741E11EBB8CCD00888D20 /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */,
+			);
+			name = Gestures;
 			sourceTree = "<group>";
 		};
 		0F7D50201EA931A600F5957E /* Languages */ = {
@@ -483,7 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				0F6982751EB83A8E00CAA284 /* Containers */,
-				0F69826E1EB7D96100CAA284 /* Extensions */,
+				0F69826E1EB7D96100CAA284 /* Functions */,
 				0F6982761EB83AF700CAA284 /* Nodes */,
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 			);
@@ -640,12 +679,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
+				0F7741D91EBB8A8900888D20 /* CardAnimations.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,
 				4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */,
+				0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* CallToAction.swift in Sources */,
@@ -654,9 +695,11 @@
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
+				0F7741DE1EBB8B4F00888D20 /* TractRootAnimations.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				4F462A391EB0E28900C03447 /* Hero.swift in Sources */,
+				0F7741DC1EBB8AFC00888D20 /* HeaderAnimations.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
@@ -684,6 +727,7 @@
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TextContent.swift in Sources */,
+				0F7741E01EBB8BF300888D20 /* CardsAnimations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				0F6982721EB7D9E800CAA284 /* TractElementOperationFunctions.swift in Sources */,
 				4F5707D71EAA985500A540C2 /* PageResource.swift in Sources */,

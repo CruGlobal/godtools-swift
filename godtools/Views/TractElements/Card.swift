@@ -9,26 +9,31 @@
 import Foundation
 import UIKit
 
+//  NOTES ABOUT THE COMPONENT
+//  * The height size of this component will always be the size of Cards.height minus the margins
+
 class Card: BaseTractElement {
     
-    static let marginConstant = CGFloat(8.0)
+    static let xMarginConstant = CGFloat(8.0)
+    static let yTopMarginConstant = CGFloat(8.0)
+    static let yBottomMarginConstant = CGFloat(80.0)
     
     let scrollView = UIScrollView()
     let containerView = UIView()
     
     private var cardIsOpen: Bool = false
     var xPosition: CGFloat {
-        return Card.marginConstant
+        return Card.xMarginConstant
     }
     var yPosition: CGFloat {
         return self.yStartPosition
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Card.marginConstant
+        return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
     }
     override var height: CGFloat {
         get {
-            return (self.parent?.height)!
+            return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
         }
         set {
             // Unused
@@ -63,13 +68,6 @@ class Card: BaseTractElement {
         return self
     }
     
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
-    
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
     }
@@ -77,42 +75,24 @@ class Card: BaseTractElement {
     // MARK: - Actions
     
     func changeCardState() {
-        let cardsManager = self.parent as! Cards
+        let cardsView = self.parent as! Cards
         if self.cardIsOpen {
             resetCard()
-            cardsManager.showCardsExcept(card: self)
+            cardsView.showCardsExcept(card: self)
         } else {
             slideUp()
-            cardsManager.hideCardsExcept(card: self)
+            cardsView.hideCardsExcept(card: self)
         }
         self.cardIsOpen = !self.cardIsOpen
     }
     
-    func slideUp() {
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
-                       completion: nil )
-    }
+    // MARK: - Helpers
     
-    func resetCard() {
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: nil )
-    }
-    
-    func hideCard() {
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: self.translationY) },
-                       completion: nil )
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
     }
 
 }

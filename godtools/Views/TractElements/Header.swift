@@ -27,15 +27,17 @@ class Header: BaseTractElement {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.80)
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Helpers
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
 
 }

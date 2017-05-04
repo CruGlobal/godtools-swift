@@ -6,6 +6,15 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
+//  NOTES ABOUT THE COMPONENT
+//  * Cards is a component that is not present on the XML. The component was generate
+//  because of the need to have a container to store all the cards. The cards container
+//  will only store elements of the kind Card.
+//  * Following the XML structure, the Cards container will always be a children of
+//  TractRoot container. Also, the Cards container will always be at the same level of a
+//  Header component.
+//  * The height size of this component will always be the same of TractRoot.height
+
 import Foundation
 import UIKit
 import SWXMLHash
@@ -20,11 +29,14 @@ class Cards: BaseTractElement {
     }
     override var height: CGFloat {
         get {
-            return self.getMaxHeight() - self.yStartPosition
+            return self.getMaxHeight()
         }
         set {
             // Unused
         }
+    }
+    var initialCardPosition: CGFloat {
+        return self.height - self.yStartPosition
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
@@ -33,7 +45,7 @@ class Cards: BaseTractElement {
         var currentCard = 0
         
         for dictionary in data {
-            yPosition = self.height - (CGFloat(data.count - currentCard) * 60)
+            yPosition = self.initialCardPosition - (CGFloat(data.count - currentCard) * 60)
             let element = Card(data: dictionary, startOnY: yPosition, parent: self)
             elements.append(element)
             currentCard += 1
@@ -47,33 +59,17 @@ class Cards: BaseTractElement {
         self.backgroundColor = UIColor.darkGray
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Helpers
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
-    func hideCardsExcept(card: Card) {
-        for element in elements! {
-            let elementCard = element as! Card
-            if card != elementCard {
-                elementCard.hideCard()
-            }
-        }
-    }
-    
-    func showCardsExcept(card: Card) {
-        for element in elements! {
-            let elementCard = element as! Card
-            if card != elementCard {
-                elementCard.resetCard()
-            }
-        }
     }
 
 }

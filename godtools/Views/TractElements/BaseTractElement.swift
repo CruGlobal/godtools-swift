@@ -154,10 +154,6 @@ class BaseTractElement: UIView {
         return self.yStartPosition + self.height
     }
     
-    func getDimensions() -> (width: CGFloat, height: CGFloat) {
-        return (self.width, self.height)
-    }
-    
     func getMaxHeight() -> CGFloat {
         if self.maxHeight > 0.0 {
             return self.maxHeight

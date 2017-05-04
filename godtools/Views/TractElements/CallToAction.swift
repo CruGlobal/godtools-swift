@@ -18,15 +18,17 @@ class CallToAction: BaseTractElement {
         self.backgroundColor = .green
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height + paddingConstant
+    }
+    
+    // MARK: - Helpers
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: 0.0,
                       y: self.yStartPosition + self.paddingConstant,
                       width: self.width,
                       height: self.height)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height + paddingConstant
     }
 
 }

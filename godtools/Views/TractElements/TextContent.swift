@@ -66,7 +66,7 @@ class TextContent: BaseTractElement {
         return (self.parent?.textYPadding())!
     }
     
-    // MARK: - TextContent Helpers
+    // MARK: - Helpers
     
     fileprivate func loadElementAttributes(properties: Dictionary<String, Any>) -> (text: String, backgroundColor: UIColor) {
         var text: String = ""

@@ -29,19 +29,21 @@ class Number: BaseTractElement {
         self.backgroundColor = .green
     }
     
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
-    
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
         return ("pageHeaderNumber", self.width, CGFloat(60.0))
     }
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    // MARK: - Helpers
+    
+    fileprivate func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
     }
 
 }

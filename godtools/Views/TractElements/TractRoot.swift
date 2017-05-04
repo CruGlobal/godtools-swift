@@ -10,12 +10,17 @@ import Foundation
 import UIKit
 import SWXMLHash
 
+//  NOTES ABOUT THE COMPONENT
+//  * This component must always be initialized with: init(data: XMLIndexer, withMaxHeight height: CGFloat)
+
 class TractRoot: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
         self.backgroundColor = .yellow
     }
+    
+    // MARK: - Helpers
     
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: 0.0,
