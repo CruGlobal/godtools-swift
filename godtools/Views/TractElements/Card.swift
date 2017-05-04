@@ -54,6 +54,8 @@ class Card: BaseTractElement {
         self.frame = buildFrame()
         self.backgroundColor = .green
         setupScrollView()
+        disableScrollview()
+        setupSwipeGestures()
     }
     
     func setupScrollView() {
@@ -93,6 +95,20 @@ class Card: BaseTractElement {
     }
     
     // MARK: - Helpers
+    
+    func disableScrollview() {
+        if self.cardState != .open {
+            let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
+            self.scrollView.isScrollEnabled = false
+            self.scrollView.setContentOffset(startPoint, animated: true)
+        }
+    }
+    
+    func enableScrollview() {
+        if self.cardState == .open {
+            self.scrollView.isScrollEnabled = true
+        }
+    }
     
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,

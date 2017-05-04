@@ -28,6 +28,8 @@ extension Card {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: nil )
+        
+        enableScrollview()
     }
     
     func hideCard() {
@@ -52,6 +54,8 @@ extension Card {
                             }
                         }})
         
+        disableScrollview()
+        
     }
     
     func resetCard() {
@@ -67,6 +71,8 @@ extension Card {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: nil )
+        
+        disableScrollview()
     }
     
 }
