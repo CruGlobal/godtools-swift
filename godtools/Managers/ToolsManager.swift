@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PromiseKit
 
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
@@ -29,6 +30,20 @@ class ToolsManager: GTDataManager {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
             }
         }
+    }
+    
+    func download(resource: DownloadedResource) -> AnyPromise {
+        resource.shouldDownload = true
+        saveToDisk()
+        
+        return AnyPromise(Promise(value: "ok"))
+    }
+    
+    func delete(resource: DownloadedResource) -> AnyPromise {
+        resource.shouldDownload = false
+        saveToDisk()
+        
+        return AnyPromise(Promise(value: "ok"))
     }
 }
 
@@ -82,8 +97,7 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        resource.shouldDownload = true
-        saveToDisk()
+        _ = self.download(resource: resource)
         self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 
 class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate,
-HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewControllerDelegate {
+HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
         let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
@@ -33,7 +33,6 @@ HomeViewControllerDelegate, ToolDetailViewControllerDelegate, AddToolsViewContro
     
     func moveToToolDetail(resource: DownloadedResource) {
         let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
-        viewController.delegate = self
         viewController.resource = resource
         self.pushViewController(viewController: viewController)
     }

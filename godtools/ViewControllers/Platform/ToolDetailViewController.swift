@@ -8,19 +8,16 @@
 
 import UIKit
 
-protocol ToolDetailViewControllerDelegate {
-}
-
 class ToolDetailViewController: BaseViewController {
     
-    var delegate: ToolDetailViewControllerDelegate?
-
     @IBOutlet weak var titleLabel: GTLabel!
     @IBOutlet weak var totalViewsLabel: GTLabel!
     @IBOutlet weak var descriptionLabel: GTLabel!
     @IBOutlet weak var totalLanguagesLabel: GTLabel!
     @IBOutlet weak var languagesLabel: GTLabel!
     @IBOutlet weak var mainButton: GTButton!
+    
+    let toolsManager = ToolsManager.shared
     
     var resource: DownloadedResource?
     
@@ -54,7 +51,23 @@ class ToolDetailViewController: BaseViewController {
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
-        
+        if resource!.shouldDownload {
+            toolsManager.delete(resource: self.resource!)
+                .always {
+                    self.displayButton()
+                }.catch(execute: { (error) in
+                    //TODO: throw a notification to show an error?
+                })
+            
+        } else {
+            toolsManager.download(resource: self.resource!)
+                .always {
+                    self.displayButton()
+                }
+                .catch(execute: { (error) in
+                    //TODO: throw a notification to show an error?
+                })
+        }
     }
 
 }
