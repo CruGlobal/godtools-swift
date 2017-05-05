@@ -1,18 +1,12 @@
 # Customise this file, documentation can be found here:
-# https://github.com/fastlane/fastlane/tree/master/docs
-# All available actions: https://github.com/fastlane/fastlane/blob/master/docs/Actions.md
+# https://docs.fastlane.tools
+# All available actions: https://docs.fastlane.tools/actions/
 # can also be listed using the `fastlane actions` command
 
 # Change the syntax highlighting to Ruby
 # All lines starting with a # are ignored when running `fastlane`
 
-# By default, fastlane will send which actions are used
-# No personal data is shared, more information on https://github.com/fastlane/enhancer
-# Uncomment the following line to opt out
 opt_out_usage
-
-# If you want to automatically update fastlane if a new version is available:
-# update_fastlane
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
@@ -22,6 +16,12 @@ default_platform :ios
 
 platform :ios do
   
+  
+  
+########### LANE SETUP ###########
+  
+  
+
   before_all do |lane, options|
 
     @run_once_before_all ||= begin
@@ -43,7 +43,16 @@ platform :ios do
 
   end
 
-  desc "Runs all the tests - can take skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out. e.g. `bundle exec fastlane run_tests skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env test` (path must be relative to this project's main Fastfile)"
+
+
+########### TESTS ###########
+
+
+
+  desc "Runs all the tests"
+  desc "can take skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
+  desc "e.g. `bundle exec fastlane run_tests skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env test`"
+  desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
   lane :run_tests do
 
     run_all_tests_and_generate_reports
@@ -57,54 +66,52 @@ platform :ios do
       clear_derived_data
     end
 
-    scan(
-      workspace: "godtools.xcworkspace",
-      scheme: "godtools",
-      code_coverage: true
-    )
-
-    xcov(
-      workspace: "godtools.xcworkspace",
-      scheme: "godtools"
-    )
+    scan(workspace: "godtools.xcworkspace", scheme: "godtools", code_coverage: true)
+    xcov(workspace: "godtools.xcworkspace", scheme: "godtools", only_project_targets: true)
 
   end
 
-  desc "Creates a beta build - can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out. e.g. `bundle exec fastlane beta skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env beta` (path must be relative to this project's main Fastfile)"
+
+
+########### BETA ###########
+
+
+
+  desc "Creates a beta build"
+  desc "can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
+  desc "e.g. `bundle exec fastlane beta skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env beta`"
+  desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
   lane :beta do |options|
 
-    if ENV["GIT_BRANCH"].to_s.length > 0
-      Actions.sh("git checkout #{ENV["GIT_BRANCH"]}", log: true)
-      Actions.sh("git pull", log: true)
-    end
-
-
-    #### CRASHLYTICS ####
-
-
-    # update app identifier for crashlytics release
-    update_app_identifier(
-      xcodeproj: "godtools.xcodeproj",
-      plist_path: "godtools/Info.plist",
-      app_identifier: "org.cru.godtools.beta"
-    )
-
-    sigh(
-      app_identifier: "org.cru.godtools.beta",
-      adhoc: true,
-      force: true
-    )
-
-    # use the UDID of the newly created provisioning profile
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
+    cru_git_setup
 
     run_all_tests_and_generate_reports unless options.key?(:skip_tests)
-
-    increment_version_number(
-      bump_type: "patch"
-    )
+    
+    increment_version_number(bump_type: "patch")
     increment_build_number
 
+    deploy_to_crashlytics
+
+    deploy_to_testflight
+
+    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools.beta")
+
+    clean_build_artifacts
+    commit_version_bump(xcodeproj: "godtools.xcodeproj", message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}")
+    add_git_tag
+    push_to_git_remote(local_branch: ENV['GIT_BRANCH'] || git_branch)
+
+    cru_instant_message(message: "Beta build #{lane_context[SharedValues::BUILD_NUMBER]} released via Crashlytics")
+
+  end
+
+  def deploy_to_crashlytics
+    
+    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools.beta")
+    
+    sigh(app_identifier: "org.cru.godtools.beta",  adhoc: true, force: true)
+    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
+    
     gym(
       configuration: "Release",
       xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
@@ -112,34 +119,20 @@ platform :ios do
       build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric",
       output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric"
     )
-
+    
     lane_context[SharedValues::FL_CHANGELOG] = IO.read("#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes") || ''
 
-    crashlytics(
-      groups: [ ENV["CRASHLYTICS_GROUP"] ]
-    )
+    crashlytics(groups: [ ENV["CRASHLYTICS_GROUP"] ])
+    
+  end
 
-
-
-    #### TESTFLIGHT ####
-
-
-
-    # return app identifier for testflight release
-    update_app_identifier(
-      xcodeproj: "godtools.xcodeproj",
-      plist_path: "godtools/Info.plist",
-      app_identifier: "org.cru.godtools"
-    )
-
-    sigh(
-      app_identifier: "org.cru.godtools",
-      force: true
-    )
-
-    # use the UDID of the newly created provisioning profile
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
-
+  def deploy_to_testflight
+    
+    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools")
+    
+    sigh(app_identifier: "org.cru.godtools", force: true)
+    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
+                               
     gym(
       configuration: "Release",
       xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
@@ -148,59 +141,35 @@ platform :ios do
       output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/testflight",
       clean: true
     )
-
-    testflight(
-      distribute_external: true,
-      skip_waiting_for_build_processing: true
-    )
-
-    update_app_identifier(
-      xcodeproj: "godtools.xcodeproj",
-      plist_path: "godtools/Info.plist",
-      app_identifier: "org.cru.godtools.beta"
-    )
-
-    clean_build_artifacts
-    commit_version_bump(
-      xcodeproj: "godtools.xcodeproj",
-      message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}",
-    )
-    add_git_tag
-    push_to_git_remote(
-      local_branch: ENV['GIT_BRANCH'] || git_branch
-    )
-
-    cru_instant_message(
-      message: "Beta build #{lane_context[SharedValues::BUILD_NUMBER]} released via Crashlytics"
-    )
-
+       
+    testflight(distribute_external: true, skip_waiting_for_build_processing: true)
+    
   end
 
-  desc "Deploy a new version to the App Store - can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out. e.g. `bundle exec fastlane production skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env production` (path must be relative to this project's main Fastfile)"
+
+
+########### PRODUCTION ###########
+
+
+
+  desc "Deploy a new version to the App Store"
+  desc "can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
+  desc "e.g. `bundle exec fastlane production skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env production`"
+  desc "(path must be relative to this project's main Fastfile)"
   lane :production do |options|
 
-    if ENV["GIT_BRANCH"].to_s.length > 0
-      Actions.sh("git checkout #{ENV["GIT_BRANCH"]}", log: false)
-      Actions.sh("git pull", log: false)
-    end
+    cru_git_setup
 
-    update_app_identifier(
-      xcodeproj: "godtools.xcodeproj",
-      plist_path: "godtools/Info.plist",
-      app_identifier: "org.cru.godtools"
-    )
+    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools")
 
     sigh(force: true)
-
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID]
+    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
 
     run_all_tests_and_generate_reports unless options.key?(:skip_tests)
 
     snapshot
 
-    increment_version_number(
-      bump_type: "patch"
-    )
+    increment_version_number(bump_type: "patch")
     increment_build_number
 
     gym(
@@ -217,26 +186,21 @@ platform :ios do
 
     # Tag new release
     clean_build_artifacts
-    version = get_version_number(xcodeproj: "JesusFilm.xcodeproj")
-    commit_version_bump(
-      message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}",
-      xcodeproj: "godtools.xcodeproj"
-    )
-    add_git_tag(
-      grouping: 'release',
-      build_number: version
-    )
-    push_to_git_remote(
-      local_branch: ENV['GIT_BRANCH'] || git_branch
-    )
+    version = get_version_number(xcodeproj: "godtools.xcodeproj")
+    commit_version_bump(xcodeproj: "godtools.xcodeproj",
+                        message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}")
+    add_git_tag(grouping: 'release', build_number: version)
+    push_to_git_remote(local_branch: ENV['GIT_BRANCH'] || git_branch)
 
-    cru_instant_message(
-      message: "Appstore build has been delivered to Itunes Connect!"
-    )
+    cru_instant_message(message: "Appstore build has been delivered to Itunes Connect!")
 
   end
 
-  # You can define as many lanes as you want
+
+
+########### LANE CLEANUP ###########
+
+
 
   after_all do |lane, options|
 
@@ -282,7 +246,11 @@ platform :ios do
 
   end
 
-  # helper
+
+
+########### HELPERS ###########
+
+
 
   def cru_instant_message(options)
 
@@ -304,7 +272,11 @@ platform :ios do
 
   end
 
-end
+  def cru_git_setup
+    if ENV["GIT_BRANCH"].to_s.length > 0
+      Actions.sh("git checkout #{ENV["GIT_BRANCH"]}", log: false)
+      Actions.sh("git pull", log: false)
+    end
+  end
 
-# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/docs/Platforms.md
-# All available actions: https://github.com/fastlane/fastlane/blob/master/docs/Actions.md
+end
