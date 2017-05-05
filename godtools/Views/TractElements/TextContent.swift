@@ -12,14 +12,10 @@ import UIKit
 class TextContent: BaseTractElement {
     
     let xMargin: CGFloat = BaseTractElement.Standards.xMargin
-    var xPosition: CGFloat {
-        return self.xMargin
-    }
-    var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.Standards.yMargin
-    }
+    var xPosition: CGFloat = 0.0
+    var yPosition: CGFloat = 0.0
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - self.xMargin
+        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     override var height: CGFloat {
         get {
@@ -33,10 +29,13 @@ class TextContent: BaseTractElement {
     var label: GTLabel?
     
     override func setupView(properties: Dictionary<String, Any>) {
+        let labelStyle = self.parent?.textStyle()
+        self.xPosition = (labelStyle?.xMargin)!
+        self.yPosition = self.yStartPosition + (labelStyle?.yMargin)!
+        
         let attributes = loadElementAttributes(properties: properties)
         let text: String = attributes.text
         let backgroundColor: UIColor = attributes.backgroundColor
-        let labelStyle = self.parent?.textStyle()
         
         self.label = GTLabel(frame: buildFrame())
         self.label?.text = text

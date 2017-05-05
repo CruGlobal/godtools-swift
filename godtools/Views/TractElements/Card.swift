@@ -21,6 +21,7 @@ class Card: BaseTractElement {
     static let xMarginConstant = CGFloat(8.0)
     static let yTopMarginConstant = CGFloat(8.0)
     static let yBottomMarginConstant = CGFloat(80.0)
+    static let xPaddingConstant = CGFloat(28.0)
     
     let scrollView = UIScrollView()
     let containerView = UIView()

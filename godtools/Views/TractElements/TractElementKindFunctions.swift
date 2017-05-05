@@ -26,6 +26,10 @@ extension BaseTractElement {
         return BaseTractElement.isElement(element, kindOf: Number.self)
     }
     
+    static func isCardElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: Card.self)
+    }
+    
     static func isTitleElement(_ element: BaseTractElement) -> Bool {
         return BaseTractElement.isElement(element, kindOf: Title.self)
     }

@@ -31,9 +31,9 @@ class TractLabel: BaseTractElement {
     }
     
     func buildHorizontalLine() {
-        let xPosition = BaseTractElement.Standards.xMargin
+        let xPosition = Card.xPaddingConstant
         let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (BaseTractElement.Standards.xMargin * CGFloat(2))
+        let width = self.frame.size.width - (Card.xPaddingConstant * CGFloat(2))
         let height = CGFloat(1.0)
         
         let horizontalLine = UIView()
@@ -55,8 +55,13 @@ class TractLabel: BaseTractElement {
         return self
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment) {
-        return ("tabTitle", self.width, CGFloat(0.0), NSTextAlignment.left)
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
+        return ("tabTitle",
+                self.width,
+                0.0,
+                NSTextAlignment.left,
+                Card.xPaddingConstant,
+                BaseTractElement.Standards.yMargin)
     }
     
     override func textYPadding() -> CGFloat {

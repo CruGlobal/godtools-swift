@@ -144,8 +144,13 @@ class BaseTractElement: UIView {
         return element
     }
     
-    func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment) {
-        return ("blackText", BaseTractElement.Standards.textContentWidth, 0.0, NSTextAlignment.left)
+    func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
+        return ("blackText",
+                BaseTractElement.Standards.textContentWidth,
+                0.0,
+                NSTextAlignment.left,
+                BaseTractElement.Standards.xMargin,
+                BaseTractElement.Standards.yMargin)
     }
     
     func textYPadding() -> CGFloat {

@@ -24,8 +24,13 @@ class Heading: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment) {
-        return ("toolFrontTitle", BaseTractElement.Standards.textContentWidth, CGFloat(0.0), NSTextAlignment.left)
+    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
+        return ("toolFrontTitle",
+                BaseTractElement.Standards.textContentWidth,
+                0.0,
+                NSTextAlignment.left,
+                BaseTractElement.Standards.xMargin,
+                BaseTractElement.Standards.yMargin)
     }
     
     override func yEndPosition() -> CGFloat {
