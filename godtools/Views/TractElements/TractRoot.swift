@@ -17,7 +17,6 @@ class TractRoot: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .yellow
     }
     
     // MARK: - Helpers

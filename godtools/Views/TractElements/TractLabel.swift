@@ -28,7 +28,6 @@ class TractLabel: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .gtGreen
     }
     
     override func render() -> UIView {

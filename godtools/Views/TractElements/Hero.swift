@@ -12,10 +12,13 @@ import UIKit
 class Hero: BaseTractElement {
     
     var xPosition: CGFloat {
-        return 0.0
+        return 28.0
     }
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.Standards.yMargin
+    }
+    override var width: CGFloat {
+        return super.width - (xPosition * CGFloat(2.0))
     }
     
     override func setupView(properties: Dictionary<String, Any>) {

@@ -65,7 +65,7 @@ class Cards: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = UIColor.darkGray
+        self.backgroundColor = .clear
     }
     
     override func yEndPosition() -> CGFloat {

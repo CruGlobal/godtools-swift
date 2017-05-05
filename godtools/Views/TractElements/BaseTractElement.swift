@@ -35,7 +35,11 @@ class BaseTractElement: UIView {
         }
     }
     var width: CGFloat {
-        return BaseTractElement.Standards.screenWidth
+        if (self.parent != nil) {
+            return (self.parent?.width)!
+        } else {
+            return BaseTractElement.Standards.screenWidth
+        }
     }
     var horizontalContainer: Bool {
         return false

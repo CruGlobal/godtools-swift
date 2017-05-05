@@ -53,7 +53,7 @@ class Card: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .green
+        self.backgroundColor = .gtWhite
         setupScrollView()
         disableScrollview()
         setupSwipeGestures()

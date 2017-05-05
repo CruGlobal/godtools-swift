@@ -22,7 +22,6 @@ class Heading: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .green
     }
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {

@@ -17,7 +17,7 @@ class Title: BaseTractElement {
         return Number.marginConstant + Number.widthConstant + Title.marginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + Title.marginConstant
+        return self.yStartPosition
     }
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Title.marginConstant
@@ -25,7 +25,6 @@ class Title: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .red
     }
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
@@ -33,7 +32,7 @@ class Title: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
+        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

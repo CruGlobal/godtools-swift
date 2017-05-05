@@ -14,18 +14,17 @@ class Paragraph: BaseTractElement {
     static let marginConstant = CGFloat(8.0)
     
     var xPosition: CGFloat {
-        return Paragraph.marginConstant
+        return CGFloat(0.0)
     }
     var yPosition: CGFloat {
         return self.yStartPosition + Paragraph.marginConstant
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Paragraph.marginConstant
+        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .blue
     }
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat) {
