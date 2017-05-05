@@ -12,7 +12,7 @@ protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAddNewTool()
     mutating func moveToToolDetail(resource: DownloadedResource)
-    mutating func moveToTract()
+    mutating func moveToTract(resource: DownloadedResource)
 }
 
 class HomeViewController: BaseViewController {
@@ -116,7 +116,7 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        self.delegate?.moveToTract()
+        self.delegate?.moveToTract(resource: cell.resource!)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {

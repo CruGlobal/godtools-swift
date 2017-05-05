@@ -37,8 +37,9 @@ HomeViewControllerDelegate, AddToolsViewControllerDelegate {
         self.pushViewController(viewController: viewController)
     }
     
-    func moveToTract() {
+    func moveToTract(resource: DownloadedResource) {
         let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        viewController.resource = resource
         pushViewController(viewController: viewController)
     }
     

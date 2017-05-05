@@ -11,11 +11,7 @@ import UIKit
 
 class TractViewController: BaseViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        displayTitle()
-    }
+    var resource: DownloadedResource?
     
     override func configureNavigationButtons() {
         addHomeButton()
@@ -26,7 +22,7 @@ class TractViewController: BaseViewController {
         if parallelLanguageIsAvailable() {
             navigationItem.titleView = languageSegmentedControl()
         } else {
-            navigationItem.title = currentTractTitle()
+            self.title = currentTractTitle()
         }
     }
     
