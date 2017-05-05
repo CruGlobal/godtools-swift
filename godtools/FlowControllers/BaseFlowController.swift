@@ -26,6 +26,9 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     func pushViewController(viewController: UIViewController) {
+        if viewController.isKind(of: BaseViewController.self) {
+            (viewController as! BaseViewController).baseDelegate = self
+        }
         self.currentViewController?.navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -94,4 +97,10 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                         _ = navigationController?.popViewController(animated: false) } )
     }
     
+}
+
+extension BaseFlowController: BaseViewControllerDelegate {
+    func goBack() {
+        _ = self.currentViewController?.navigationController?.popViewController(animated: true)
+    }
 }

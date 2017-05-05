@@ -36,8 +36,9 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         showNetworkingIndicator()
         
-        // load all resources and save them to disk
-        return issueGETRequest(["include" : "translations,pages"])
+        let params = ["include" : "translations,pages"]
+        
+        return issueGETRequest(params)
             .then { data -> Promise<[DownloadedResource]> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
@@ -88,22 +89,5 @@ class DownloadedResourceManager: GTDataManager {
     
     override func buildURLString() -> String {
         return "\(GTConstants.kApiBase)/\(self.path)"
-    }
-}
-
-extension DownloadedResourceManager: UITableViewDelegate {
-    
-}
-
-extension DownloadedResourceManager: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resources.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = resources[indexPath.row].name
-        
-        return cell
     }
 }

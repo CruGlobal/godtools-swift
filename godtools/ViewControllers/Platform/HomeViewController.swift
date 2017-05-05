@@ -11,8 +11,8 @@ import UIKit
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAddNewTool()
-    mutating func moveToToolDetail()
-    mutating func moveToTract()
+    mutating func moveToToolDetail(resource: DownloadedResource)
+    mutating func moveToTract(resource: DownloadedResource)
 }
 
 class HomeViewController: BaseViewController {
@@ -98,7 +98,7 @@ class HomeViewController: BaseViewController {
     }
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "HomeToolTableViewCell", bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+        self.tableView.register(UINib(nibName: String(describing: HomeToolTableViewCell.self), bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
     }
     
     fileprivate func setupStyle() {
@@ -116,6 +116,10 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        self.delegate?.moveToTract()
+        self.delegate?.moveToTract(resource: cell.resource!)
+    }
+    
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.moveToToolDetail(resource: resource)
     }
 }

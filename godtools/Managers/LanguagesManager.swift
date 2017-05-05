@@ -27,10 +27,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language {
-        let language = Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
-        language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
-        
-        return language
+        return Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -41,15 +38,19 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
     }
     
+    func loadParallelLanguageFromDisk() -> Language? {
+        if GTSettings.shared.parallelLanguageId == nil {
+            return nil
+        }
+        
+        return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
+    }
+    
     func loadFromDisk() -> [Language] {
         languages = Language.mr_findAll() as! [Language]
         
-        for language in languages {
-            language.localizedName = NSLocale.current.localizedString(forLanguageCode: language.code!)
-        }
-        
         languages = languages.sorted { (language1, language2) -> Bool in
-            return language1.localizedName!.compare(language2.localizedName!).rawValue < 0
+            return language1.localizedName().compare(language2.localizedName()).rawValue < 0
         }
         
         return languages
@@ -131,6 +132,13 @@ extension LanguagesManager: UITableViewDelegate {
         let language = languages[indexPath.row]
         self.setSelectedLanguageId(language.remoteId!)
         self.recordLanguageShouldDownload(language: language)
+        self.refreshCellState(tableView: tableView, indexPath: indexPath)
+    }
+    
+    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
+        let cell = self.tableView(tableView, cellForRowAt: indexPath) as! LanguageTableViewCell
+        cell.language = self.languages[indexPath.section]
+        tableView.reloadData()
     }
 }
 

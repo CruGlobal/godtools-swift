@@ -11,27 +11,27 @@ import UIKit
 
 class TractViewController: BaseViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        displayTitle()
-    }
+    var resource: DownloadedResource?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.displayTitle()
+    }
     override func configureNavigationButtons() {
-        addHomeButton()
-        addShareButton()
+        self.addHomeButton()
+        self.addShareButton()
     }
 
     fileprivate func displayTitle() {
         if parallelLanguageIsAvailable() {
-            navigationItem.titleView = languageSegmentedControl()
+            self.navigationItem.titleView = languageSegmentedControl()
         } else {
-            navigationItem.title = currentTractTitle()
+            self.title = currentTractTitle()
         }
     }
     
     override func homeButtonAction() {
-        _ = navigationController?.popViewController(animated: true)
+        self.baseDelegate?.goBack()
     }
     
     override func shareButtonAction() {
@@ -40,20 +40,43 @@ class TractViewController: BaseViewController {
     }
 }
 
-// Mark - stub methods to be filled in with real logic later
-
 extension TractViewController {
     fileprivate func parallelLanguageIsAvailable() -> Bool {
-        return arc4random_uniform(2) % 2 == 0
+        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+        
+        if parallelLanguage == nil {
+            return false
+        }
+        
+        return resource!.isAvailableInLanguage(parallelLanguage!)
     }
     
     fileprivate func currentTractTitle() -> String {
-        return "Knowing God Personally"
+        return resource != nil ? resource!.name! : "GodTools"
     }
     
     fileprivate func languageSegmentedControl() -> UISegmentedControl {
-        let control = UISegmentedControl(items: ["English", "French"])
+        let primaryLabel = self.determinePrimaryLabel()
+        let parallelLabel = self.determineParallelLabel()
+        
+        let control = UISegmentedControl(items: [primaryLabel, parallelLabel])
         control.selectedSegmentIndex = 0
         return control
+    }
+    
+    fileprivate func determinePrimaryLabel() -> String {
+        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        
+        if primaryLanguage == nil {
+            return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
+        } else {
+            return primaryLanguage!.localizedName()
+        }
+    }
+    
+    fileprivate func determineParallelLabel() -> String {
+        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+        
+        return parallelLanguage!.localizedName()
     }
 }
