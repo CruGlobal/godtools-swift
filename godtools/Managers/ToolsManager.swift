@@ -8,9 +8,12 @@
 
 import Foundation
 import UIKit
+import PromiseKit
 
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
+    func infoButtonWasPressed(resource: DownloadedResource)
+    @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
 }
 
 class ToolsManager: GTDataManager {
@@ -28,6 +31,20 @@ class ToolsManager: GTDataManager {
             }
         }
     }
+    
+    func download(resource: DownloadedResource) -> AnyPromise {
+        resource.shouldDownload = true
+        saveToDisk()
+        
+        return AnyPromise(Promise(value: "ok"))
+    }
+    
+    func delete(resource: DownloadedResource) -> AnyPromise {
+        resource.shouldDownload = false
+        saveToDisk()
+        
+        return AnyPromise(Promise(value: "ok"))
+    }
 }
 
 extension ToolsManager: UITableViewDelegate {
@@ -43,10 +60,9 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        resources![indexPath.section].shouldDownload = true
-        saveToDisk()
-        
-        self.delegate?.didSelectTableViewRow!(cell: cell)
+        if cell.isAvailable || self.delegate is AddToolsViewController {
+            self.delegate?.didSelectTableViewRow!(cell: cell)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -63,8 +79,12 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        cell.setTitle(self.resources![indexPath.section].name)
-        cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName)
+        let resource = self.resources![indexPath.section]
+        
+        cell.cellDelegate = self
+        cell.resource = resource
+        cell.configure(primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk()!)
+        
         return cell
     }
     
@@ -75,5 +95,20 @@ extension ToolsManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+}
+
+extension ToolsManager: HomeToolTableViewCellDelegate {
+    func downloadButtonWasPressed(resource: DownloadedResource) {
+        self.download(resource: resource)
+            .always {
+                self.delegate?.downloadButtonWasPressed!(resource: resource)
+            }.catch { (error) in
+                //TODO throw an notification to report an error
+        }
+        
+    }
     
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.infoButtonWasPressed(resource: resource)
+    }
 }

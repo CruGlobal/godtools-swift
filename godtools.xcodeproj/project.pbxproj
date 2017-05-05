@@ -38,7 +38,6 @@
 		0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */; };
 		0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9391EAA70150049C110 /* AddToolsViewController.swift */; };
 		0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F93A93A1EAA70150049C110 /* AddToolsViewController.xib */; };
-		0F93A93E1EAAA93B0049C110 /* DownloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A93D1EAAA93B0049C110 /* DownloadButton.swift */; };
 		0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */; };
 		0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */; };
 		0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */; };
@@ -122,7 +121,6 @@
 		0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolDetailViewController.xib; sourceTree = "<group>"; };
 		0F93A9391EAA70150049C110 /* AddToolsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToolsViewController.swift; sourceTree = "<group>"; };
 		0F93A93A1EAA70150049C110 /* AddToolsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddToolsViewController.xib; sourceTree = "<group>"; };
-		0F93A93D1EAAA93B0049C110 /* DownloadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadButton.swift; sourceTree = "<group>"; };
 		0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTSwitch.swift; path = Views/Switch/GTSwitch.swift; sourceTree = "<group>"; };
@@ -328,7 +326,6 @@
 			children = (
 				0FB73E4D1EA9063E000BA60D /* GTButton.swift */,
 				0FB73E4C1EA9063E000BA60D /* BlueButton.swift */,
-				0F93A93D1EAAA93B0049C110 /* DownloadButton.swift */,
 				0FB1B2091EB151300033DAB9 /* TransparentButton.swift */,
 			);
 			name = Buttons;
@@ -712,7 +709,6 @@
 				0F806C6B1EB3E6C300F3ED2B /* Title.swift in Sources */,
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
 				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
-				0F93A93E1EAAA93B0049C110 /* DownloadButton.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* TractElementKindFunctions.swift in Sources */,

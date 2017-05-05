@@ -24,7 +24,7 @@ class LanguageTableViewCell: UITableViewCell {
         didSet {
             languageExists(language!.shouldDownload)
             languageCanBeDeleted(language: language!)
-            languageLabel.text = language!.localizedName
+            languageLabel.text = language!.localizedName()
         }
     }
     
@@ -59,11 +59,19 @@ class LanguageTableViewCell: UITableViewCell {
     }
     
     fileprivate func languageCanBeDeleted(language: Language) {
-        if language.remoteId! == GTSettings.shared.primaryLanguageId ||
-            language.remoteId! == GTSettings.shared.parallelLanguageId ||
-            language.code! == Locale.current.languageCode! {
-                self.deleteButton.isEnabled = false
-                self.downloadButton.isEnabled = false
+        let id = language.remoteId!
+        let code = language.code!
+        
+        let isPrimary = id == GTSettings.shared.primaryLanguageId
+        let isParallel = id == GTSettings.shared.parallelLanguageId
+        let isLocale = code == Locale.current.languageCode!
+        
+        if isPrimary || isParallel || isLocale {
+            self.deleteButton.isEnabled = false
+            self.downloadButton.isEnabled = false
+        } else {
+            self.deleteButton.isEnabled = true
+            self.downloadButton.isEnabled = true
         }
     }
 }

@@ -9,9 +9,10 @@
 import UIKit
 
 protocol AddToolsViewControllerDelegate {
+    mutating func moveToToolDetail(resource: DownloadedResource)
 }
 
-class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
+class AddToolsViewController: BaseViewController {
     
     var delegate: AddToolsViewControllerDelegate?
     
@@ -33,26 +34,31 @@ class AddToolsViewController: BaseViewController, ToolsManagerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.toolsManager.delegate = self
+        self.tableView.reloadData()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     // MARK: - Helpers
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "HomeToolTableViewCell", bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+        self.tableView.register(UINib(nibName: String(describing:HomeToolTableViewCell.self), bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
     }
     
     fileprivate func setupStyle() {
         self.tableView.separatorStyle = .none
     }
     
-    // MARK: - ToolsManagerDelegate
-    
-    func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        _ = self.navigationController?.popViewController(animated: true)
-    }
+}
 
+extension AddToolsViewController: ToolsManagerDelegate {
+    func didSelectTableViewRow(cell: HomeToolTableViewCell) {
+        self.delegate?.moveToToolDetail(resource: cell.resource!)
+    }
+    
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        self.delegate?.moveToToolDetail(resource: resource)
+    }
+    
+    func downloadButtonWasPressed(resource: DownloadedResource) {
+        self.tableView.reloadData()
+    }
 }

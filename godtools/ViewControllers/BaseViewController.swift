@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BaseViewControllerDelegate {
-    mutating func displayMenu();
+    mutating func goBack();
 }
 
 class BaseViewController: UIViewController {
@@ -46,6 +46,10 @@ class BaseViewController: UIViewController {
     
     func displayScreenTitle() {
         self.navigationItem.title = self.screenTitle
+    }
+    
+    func hideScreenTitle() {
+        self.navigationItem.titleView = UILabel()
     }
     
     func displayNavigationButtons() {

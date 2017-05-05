@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="v52-LQ-1sy" id="L4K-Dk-cZZ"/>
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
+                <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
                 <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
                 <outlet property="totalLanguagesLabel" destination="WhJ-0q-SQL" id="UEL-1m-0ma"/>
                 <outlet property="totalViewsLabel" destination="1jS-vF-2Ds" id="PiF-Pv-xwc"/>
@@ -69,13 +70,16 @@
                                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-XL-FjG" customClass="DownloadButton" customModule="godtools" customModuleProvider="target">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-XL-FjG" customClass="GTButton" customModule="godtools" customModuleProvider="target">
                                     <rect key="frame" x="55" y="121" width="260" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="48" id="ag2-Ps-Qdr"/>
                                         <constraint firstAttribute="width" constant="260" id="hKN-dm-q5A"/>
                                     </constraints>
                                     <state key="normal" title="Download"/>
+                                    <connections>
+                                        <action selector="mainButtonWasPressed:" destination="-1" eventType="touchUpInside" id="sFc-5J-fNA"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-CN-KBN" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                                     <rect key="frame" x="55" y="191" width="163" height="22"/>

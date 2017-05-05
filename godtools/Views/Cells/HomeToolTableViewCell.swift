@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol HomeToolTableViewCellDelegate {
+    func downloadButtonWasPressed(resource: DownloadedResource)
+    func infoButtonWasPressed(resource: DownloadedResource)
+}
+
 @IBDesignable
 class HomeToolTableViewCell: UITableViewCell {
     
@@ -25,16 +30,29 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
     
+    var resource: DownloadedResource?
+    var isAvailable = true
+    
+    var cellDelegate: HomeToolTableViewCellDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.setupUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    
+    func configure(primaryLanguage: Language) {
+        self.titleLabel.text = resource!.name
+        self.isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
+        self.languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
+        self.titleLabel.isEnabled = isAvailable
+        self.selectionStyle = isAvailable ? .default : .none
+        
+        if (resource!.shouldDownload) {
+            self.setCellAsDisplayOnly()
+        }
     }
     
-    func setCellAsDisplayOnly() {
+    fileprivate func setCellAsDisplayOnly() {
         self.downloadButton.isHidden = true
         self.greyVerticalLine.isHidden = true
         self.titleLeadingConstraint.constant = self.leftConstraintValue
@@ -44,9 +62,11 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
+        self.cellDelegate?.downloadButtonWasPressed(resource: resource!)
     }
     
     @IBAction func pressInfoButton(_ sender: Any) {
+        self.cellDelegate?.infoButtonWasPressed(resource: resource!)
     }
     
     // MARK: UI 
@@ -77,11 +97,7 @@ class HomeToolTableViewCell: UITableViewCell {
         layer.shadowOpacity = 0.4
         layer.shouldRasterize = true
     }
-    
-    func setTitle(_ title: String?) {
-        self.titleLabel.text = title
-    }
-    
+
     func setLanguage(_ language: String?) {
         self.languageLabel.text = language
     }

@@ -12,4 +12,13 @@ import CoreData
 @objc(Language)
 public class Language: NSManagedObject {
 
+    func localizedName() -> String {
+        let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code!)
+        
+        if localizedName == nil {
+            return self.code!
+        }
+        
+        return localizedName!
+    }
 }
