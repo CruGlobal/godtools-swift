@@ -62,21 +62,17 @@ extension TractViewController {
     
     fileprivate func determinePrimaryLabel() -> String {
         let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
-
-        var primaryLanguageCode: String
         
         if primaryLanguage == nil {
-            primaryLanguageCode = Locale.current.languageCode!
+            return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
         } else {
-            primaryLanguageCode = primaryLanguage!.code!
+            return primaryLanguage!.localizedName()
         }
-        
-        return Locale.current.localizedString(forLanguageCode: primaryLanguageCode)!
     }
     
     fileprivate func determineParallelLabel() -> String {
         let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
         
-        return Locale.current.localizedString(forLanguageCode: parallelLanguage!.code!)!
+        return parallelLanguage!.localizedName()
     }
 }
