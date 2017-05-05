@@ -41,16 +41,14 @@ class Card: BaseTractElement {
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
     }
-    override var height: CGFloat {
-        get {
-            return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
-        }
-        set {
-            // Unused
-        }
+    var externalHeight: CGFloat {
+        return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
+    }
+    var internalHeight: CGFloat {
+        return self.height > self.externalHeight ? self.height : self.externalHeight
     }
     var translationY: CGFloat {
-        return self.height - self.yStartPosition
+        return self.externalHeight - self.yStartPosition
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -62,7 +60,7 @@ class Card: BaseTractElement {
     }
     
     func setupScrollView() {
-        let contentHeight = CGFloat(600.0) // TODO: set dynamic height
+        let contentHeight = self.internalHeight
         self.scrollView.contentSize = CGSize(width: self.width, height: contentHeight)
         self.scrollView.frame = self.bounds
         self.scrollView.delegate = self
@@ -82,7 +80,7 @@ class Card: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
+        return self.yPosition + self.externalHeight
     }
     
     // MARK: - Actions
@@ -118,7 +116,7 @@ class Card: BaseTractElement {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
-                      height: self.height)
+                      height: self.externalHeight)
     }
 
 }
