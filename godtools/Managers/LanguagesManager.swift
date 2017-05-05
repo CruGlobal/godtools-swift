@@ -124,6 +124,13 @@ extension LanguagesManager: UITableViewDelegate {
         let language = languages[indexPath.row]
         self.setSelectedLanguageId(language.remoteId!)
         self.recordLanguageShouldDownload(language: language)
+        self.refreshCellState(tableView: tableView, indexPath: indexPath)
+    }
+    
+    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
+        let cell = self.tableView(tableView, cellForRowAt: indexPath) as! LanguageTableViewCell
+        cell.language = self.languages[indexPath.section]
+        tableView.reloadData()
     }
 }
 
