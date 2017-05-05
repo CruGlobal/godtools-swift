@@ -40,6 +40,7 @@ class TextContent: BaseTractElement {
         
         self.label = GTLabel(frame: buildFrame())
         self.label?.text = text
+        self.label?.textAlignment = (labelStyle?.alignment)!
         self.label?.backgroundColor = backgroundColor
         self.label?.gtStyle = (labelStyle?.style)!
         self.label?.lineBreakMode = .byWordWrapping
