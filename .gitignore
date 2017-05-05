@@ -86,5 +86,6 @@ fastlane/output/encrypted
 fastlane/encrypted
 fastlane/fastlane_cleanup_script.sh
 encrypted
-.env.local
+.env*
+!.env.local.sample
 fastlane_cleanup_script.sh
