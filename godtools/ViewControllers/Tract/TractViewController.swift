@@ -40,11 +40,15 @@ class TractViewController: BaseViewController {
     }
 }
 
-// Mark - stub methods to be filled in with real logic later
-
 extension TractViewController {
     fileprivate func parallelLanguageIsAvailable() -> Bool {
-        return GTSettings.shared.parallelLanguageId != nil
+        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+        
+        if parallelLanguage == nil {
+            return false
+        }
+        
+        return resource!.isAvailableInLanguage(parallelLanguage!)
     }
     
     fileprivate func currentTractTitle() -> String {
