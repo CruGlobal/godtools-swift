@@ -48,8 +48,7 @@ class TextContent: BaseTractElement {
             self.label?.numberOfLines = 0
             self.label?.sizeToFit()
             self.height = (self.label?.frame.height)!
-        }
-        else {
+        } else {
             self.height = (labelStyle?.height)!
         }
         
@@ -86,8 +85,7 @@ class TextContent: BaseTractElement {
             default:
                 backgroundColor = UIColor.clear
             }
-        }
-        else {
+        } else {
             backgroundColor = UIColor.clear
         }
         
