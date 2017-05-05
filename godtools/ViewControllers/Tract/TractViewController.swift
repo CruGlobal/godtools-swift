@@ -31,7 +31,7 @@ class TractViewController: BaseViewController {
     }
     
     override func homeButtonAction() {
-        _ = self.navigationController?.popViewController(animated: true)
+        self.baseDelegate?.goBack()
     }
     
     override func shareButtonAction() {
