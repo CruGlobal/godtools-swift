@@ -60,7 +60,9 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        self.delegate?.didSelectTableViewRow!(cell: cell)
+        if cell.isAvailable || self.delegate is AddToolsViewController {
+            self.delegate?.didSelectTableViewRow!(cell: cell)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -80,8 +82,8 @@ extension ToolsManager: UITableViewDataSource {
         let resource = self.resources![indexPath.section]
         
         cell.cellDelegate = self
-        cell.setLanguage(LanguagesManager.shared.loadPrimaryLanguageFromDisk()?.localizedName())
         cell.resource = resource
+        cell.configure(primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk()!)
         
         return cell
     }

@@ -30,15 +30,8 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
     
-    var resource: DownloadedResource? {
-        didSet {
-            self.titleLabel.text = resource!.name
-            
-            if (resource!.shouldDownload) {
-                self.setCellAsDisplayOnly()
-            }
-        }
-    }
+    var resource: DownloadedResource?
+    var isAvailable = true
     
     var cellDelegate: HomeToolTableViewCellDelegate?
     
@@ -46,12 +39,20 @@ class HomeToolTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.setupUI()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    
+    func configure(primaryLanguage: Language) {
+        self.titleLabel.text = resource!.name
+        self.isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
+        self.languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
+        self.titleLabel.isEnabled = isAvailable
+        self.selectionStyle = isAvailable ? .default : .none
+        
+        if (resource!.shouldDownload) {
+            self.setCellAsDisplayOnly()
+        }
     }
     
-    func setCellAsDisplayOnly() {
+    fileprivate func setCellAsDisplayOnly() {
         self.downloadButton.isHidden = true
         self.greyVerticalLine.isHidden = true
         self.titleLeadingConstraint.constant = self.leftConstraintValue
