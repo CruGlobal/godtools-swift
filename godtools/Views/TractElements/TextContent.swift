@@ -89,7 +89,7 @@ class TextContent: BaseTractElement {
             }
         }
         else {
-            backgroundColor = UIColor.gray //clear
+            backgroundColor = UIColor.clear
         }
         
         return (text, backgroundColor!)

@@ -30,11 +30,28 @@ class TractLabel: BaseTractElement {
         self.frame = buildFrame()
     }
     
+    func buildHorizontalLine() {
+        let xPosition = BaseTractElement.Standards.xMargin
+        let yPosition = self.frame.size.height - 1
+        let width = self.frame.size.width - (BaseTractElement.Standards.xMargin * CGFloat(2))
+        let height = CGFloat(1.0)
+        
+        let horizontalLine = UIView()
+        horizontalLine.frame = CGRect(x: xPosition,
+                                      y: yPosition,
+                                      width: width,
+                                      height: height)
+        horizontalLine.backgroundColor = UIColor.gtGreyLight
+        self.addSubview(horizontalLine)
+        
+    }
+    
     override func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
         }
         setupPressGestures()
+        buildHorizontalLine()
         return self
     }
     
