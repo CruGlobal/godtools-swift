@@ -12,7 +12,7 @@ import UIKit
 extension Header {
     
     func showHeader() {
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: 0.30,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
@@ -21,11 +21,12 @@ extension Header {
     }
     
     func hideHeader() {
+        let translationY = -self.yPosition - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
+                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: nil )
     }
     

@@ -39,7 +39,7 @@ extension Card {
         self.cardState = .close
         
         let translationY = self.yDownPosition
-        UIView.animate(withDuration: 0.35,
+        UIView.animate(withDuration: 0.45,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
