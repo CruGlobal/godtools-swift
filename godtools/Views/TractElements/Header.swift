@@ -17,6 +17,14 @@ class Header: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.Standards.yMargin
     }
+    override var height: CGFloat {
+        get {
+            return super.height + 10.0
+        }
+        set {
+            super.height = newValue
+        }
+    }
     
     override var horizontalContainer: Bool {
         return true
