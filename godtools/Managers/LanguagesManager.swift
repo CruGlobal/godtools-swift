@@ -38,6 +38,14 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
     }
     
+    func loadParallelLanguageFromDisk() -> Language? {
+        if GTSettings.shared.parallelLanguageId == nil {
+            return nil
+        }
+        
+        return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
+    }
+    
     func loadFromDisk() -> [Language] {
         languages = Language.mr_findAll() as! [Language]
         

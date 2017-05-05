@@ -13,21 +13,25 @@ class TractViewController: BaseViewController {
     
     var resource: DownloadedResource?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.displayTitle()
+    }
     override func configureNavigationButtons() {
-        addHomeButton()
-        addShareButton()
+        self.addHomeButton()
+        self.addShareButton()
     }
 
     fileprivate func displayTitle() {
         if parallelLanguageIsAvailable() {
-            navigationItem.titleView = languageSegmentedControl()
+            self.navigationItem.titleView = languageSegmentedControl()
         } else {
             self.title = currentTractTitle()
         }
     }
     
     override func homeButtonAction() {
-        _ = navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func shareButtonAction() {
@@ -40,16 +44,39 @@ class TractViewController: BaseViewController {
 
 extension TractViewController {
     fileprivate func parallelLanguageIsAvailable() -> Bool {
-        return arc4random_uniform(2) % 2 == 0
+        return GTSettings.shared.parallelLanguageId != nil
     }
     
     fileprivate func currentTractTitle() -> String {
-        return "Knowing God Personally"
+        return resource != nil ? resource!.name! : "GodTools"
     }
     
     fileprivate func languageSegmentedControl() -> UISegmentedControl {
-        let control = UISegmentedControl(items: ["English", "French"])
+        let primaryLabel = self.determinePrimaryLabel()
+        let parallelLabel = self.determineParallelLabel()
+        
+        let control = UISegmentedControl(items: [primaryLabel, parallelLabel])
         control.selectedSegmentIndex = 0
         return control
+    }
+    
+    fileprivate func determinePrimaryLabel() -> String {
+        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+
+        var primaryLanguageCode: String
+        
+        if primaryLanguage == nil {
+            primaryLanguageCode = Locale.current.languageCode!
+        } else {
+            primaryLanguageCode = primaryLanguage!.code!
+        }
+        
+        return Locale.current.localizedString(forLanguageCode: primaryLanguageCode)!
+    }
+    
+    fileprivate func determineParallelLabel() -> String {
+        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+        
+        return Locale.current.localizedString(forLanguageCode: parallelLanguage!.code!)!
     }
 }
