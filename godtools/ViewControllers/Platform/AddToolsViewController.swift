@@ -59,6 +59,6 @@ extension AddToolsViewController: ToolsManagerDelegate {
     }
     
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        self.baseDelegate?.goBack()
+        self.tableView.reloadData()
     }
 }

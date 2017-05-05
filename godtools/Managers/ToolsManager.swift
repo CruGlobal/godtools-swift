@@ -97,8 +97,13 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        _ = self.download(resource: resource)
-        self.delegate?.downloadButtonWasPressed!(resource: resource)
+        self.download(resource: resource)
+            .always {
+                self.delegate?.downloadButtonWasPressed!(resource: resource)
+            }.catch { (error) in
+                //TODO throw an notification to report an error
+        }
+        
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
