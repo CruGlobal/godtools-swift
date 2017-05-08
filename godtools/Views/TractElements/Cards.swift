@@ -66,6 +66,11 @@ class Cards: BaseTractElement {
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
         self.backgroundColor = .clear
+        
+        let image = UIImage(named: self.backgroundImagePath)
+        let imageView = UIImageView(image: image)
+        self.addSubview(imageView)
+        self.sendSubview(toBack: imageView)
     }
     
     override func yEndPosition() -> CGFloat {

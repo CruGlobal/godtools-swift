@@ -65,6 +65,17 @@ class BaseTractElement: UIView {
     }
     var hasCardContainer = false
     
+    fileprivate var _backgroundImagePath: String?
+    var backgroundImagePath: String {
+        if self._backgroundImagePath != nil {
+            return self._backgroundImagePath!
+        } else if self.parent != nil {
+            return (self.parent?.backgroundImagePath)!
+        } else {
+            return ""
+        }
+    }
+    
     // MARK: - Initializers
     
     init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {
@@ -78,11 +89,16 @@ class BaseTractElement: UIView {
     
     
     // Initializer used only for Root component
-    init(data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.maxHeight = height
         self.colors = colors
+        
+        if ((data.element?.attribute(by: "background-image")) != nil) {
+            self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
+        }
+        
         setupElement(data: data, startOnY: 0.0)
     }
     
