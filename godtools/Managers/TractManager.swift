@@ -16,7 +16,7 @@ class TractManager: NSObject {
 
 extension TractManager {
     
-    func loadResource(resource: String) -> (pages: [XMLIndexer], primaryColor: UIColor, primaryTextColor: UIColor, textColor: UIColor) {
+    func loadResource(resource: String) -> (pages: [XMLIndexer], colors: TractColors) {
         let manifestPath = resource + "-manifest"
         let xmlData = loadXMLFile(manifestPath)
         let manifest = xmlData["manifest"]
@@ -33,7 +33,12 @@ extension TractManager {
             }
         }
         
-        return (pages, primaryColorString.getRGBAColor(), primaryTextColorString.getRGBAColor(), textColorString.getRGBAColor())
+        let tractColors = TractColors()
+        tractColors.primaryColor = primaryColorString.getRGBAColor()
+        tractColors.primaryTextColor = primaryTextColorString.getRGBAColor()
+        tractColors.textColor = textColorString.getRGBAColor()
+        
+        return (pages, tractColors)
     }
     
     func loadPage(_ child: XMLIndexer) -> XMLIndexer{

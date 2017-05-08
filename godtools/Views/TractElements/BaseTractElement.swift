@@ -23,6 +23,25 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    var colors: TractColors?
+    var primaryColor: UIColor? {
+        get {
+            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
+            return colors.primaryColor!
+        }
+    }
+    var primaryTextColor: UIColor {
+        get {
+            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
+            return colors.primaryTextColor!
+        }
+    }
+    var textColor: UIColor {
+        get {
+            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
+            return colors.textColor!
+        }
+    }
     var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
     private var _height: CGFloat = 0.0
@@ -57,10 +76,13 @@ class BaseTractElement: UIView {
         setupView(properties: Dictionary<String, Any>())
     }
     
-    init(data: XMLIndexer, withMaxHeight height: CGFloat) {
+    
+    // Initializer used only for Root component
+    init(data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.maxHeight = height
+        self.colors = colors
         setupElement(data: data, startOnY: 0.0)
     }
     

@@ -13,9 +13,10 @@ import SWXMLHash
 class TractViewController: BaseViewController {
     
     let tractsManager: TractManager = TractManager()
+    var resource: DownloadedResource?
     var viewsWereGenerated :Bool = false
     var xmlPages = [XMLIndexer]()
-    var primaryColor: UIColor?
+    var colors: TractColors?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
     var currentPage = 0
@@ -28,7 +29,7 @@ class TractViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getData()
+        getResourceData()
         displayTitle()
         setupStyle()
         setupSwipeGestures()
@@ -45,27 +46,14 @@ class TractViewController: BaseViewController {
         self.viewsWereGenerated = true
     }
     
-    var resource: DownloadedResource?
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.displayTitle()
     }
+    
     override func configureNavigationButtons() {
         self.addHomeButton()
         self.addShareButton()
-    }
-    
-    func getData() {
-        let resource = self.tractsManager.loadResource(resource: "kgp")
-        self.xmlPages = resource.pages
-        self.primaryColor = resource.primaryColor
-        self.primaryTextColor = resource.primaryTextColor
-        self.textColor = resource.textColor
-    }
-    
-    func getPage(_ pageNumber: Int) -> XMLIndexer {
-        return self.xmlPages[pageNumber]
     }
     
     fileprivate func displayTitle() {
@@ -77,8 +65,10 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupStyle() {
-        self.baseDelegate?.changeNavigationBarColor(primaryColor!)
+        self.baseDelegate?.changeNavigationBarColor((self.colors?.primaryColor)!)
     }
+    
+    // MARK: Build content
     
     fileprivate func initializeView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
@@ -111,6 +101,7 @@ class TractViewController: BaseViewController {
         let view = BaseTractView(frame: frame)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.data = getPage(page)
+        view.colors = self.colors
         view.tag = 100 + page
         return view
     }
@@ -159,7 +150,7 @@ class TractViewController: BaseViewController {
     
     // MARK: - Swipe gestures
     
-    func setupSwipeGestures() {
+    fileprivate func setupSwipeGestures() {
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeLeft.direction = .left
         self.view.addGestureRecognizer(swipeLeft)
@@ -199,7 +190,7 @@ class TractViewController: BaseViewController {
         moveViews()
     }
     
-    func moveViews() {
+    fileprivate func moveViews() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
@@ -223,9 +214,11 @@ class TractViewController: BaseViewController {
     
 }
 
-// MARK: - stub methods to be filled in with real logic later
-
 extension TractViewController {
+    
+    fileprivate func currentTractTitle() -> String {
+        return resource != nil ? resource!.name! : "GodTools"
+    }
     
     fileprivate func parallelLanguageIsAvailable() -> Bool {
         let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
@@ -237,10 +230,6 @@ extension TractViewController {
         return resource!.isAvailableInLanguage(parallelLanguage!)
     }
     
-    fileprivate func currentTractTitle() -> String {
-        return resource != nil ? resource!.name! : "GodTools"
-    }
-    
     fileprivate func languageSegmentedControl() -> UISegmentedControl {
         let primaryLabel = self.determinePrimaryLabel()
         let parallelLabel = self.determineParallelLabel()
@@ -248,10 +237,6 @@ extension TractViewController {
         let control = UISegmentedControl(items: [primaryLabel, parallelLabel])
         control.selectedSegmentIndex = 0
         return control
-    }
-    
-    fileprivate func totalPages() -> Int {
-        return self.xmlPages.count;
     }
     
     fileprivate func determinePrimaryLabel() -> String {
@@ -268,6 +253,20 @@ extension TractViewController {
         let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
         
         return parallelLanguage!.localizedName()
+    }
+    
+    fileprivate func getResourceData() {
+        let resource = self.tractsManager.loadResource(resource: "kgp")
+        self.xmlPages = resource.pages
+        self.colors = resource.colors
+    }
+    
+    fileprivate func getPage(_ pageNumber: Int) -> XMLIndexer {
+        return self.xmlPages[pageNumber]
+    }
+    
+    fileprivate func totalPages() -> Int {
+        return self.xmlPages.count;
     }
     
 }
