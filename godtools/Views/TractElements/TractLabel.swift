@@ -55,13 +55,13 @@ class TractLabel: BaseTractElement {
         return self
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("tabTitle",
-                self.width,
-                0.0,
-                NSTextAlignment.left,
-                Card.xPaddingConstant,
-                BaseTractElement.Standards.yMargin)
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        textStyle.style = "tabTitle"
+        textStyle.width = self.width
+        textStyle.xMargin = Card.xPaddingConstant
+        textStyle.textColor = self.primaryColor!
+        return textStyle
     }
     
     override func textYPadding() -> CGFloat {

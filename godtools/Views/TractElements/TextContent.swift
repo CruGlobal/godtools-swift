@@ -42,6 +42,7 @@ class TextContent: BaseTractElement {
         self.label?.textAlignment = (labelStyle?.alignment)!
         self.label?.backgroundColor = backgroundColor
         self.label?.gtStyle = (labelStyle?.style)!
+        self.label?.textColor = labelStyle?.textColor
         self.label?.lineBreakMode = .byWordWrapping
         
         if labelStyle?.height == 0.0 {

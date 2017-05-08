@@ -27,18 +27,21 @@ class Paragraph: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        
         var xMargin = BaseTractElement.Standards.xMargin
         if BaseTractElement.isCardElement(self) {
             xMargin = Card.xPaddingConstant
         }
         
-        return ("toolFrontSubTitle",
-                self.width,
-                0.0,
-                NSTextAlignment.left,
-                xMargin,
-                BaseTractElement.Standards.yMargin)
+        textStyle.style = "toolFrontSubTitle"
+        textStyle.width = self.width
+        textStyle.alignment = .left
+        textStyle.xMargin = xMargin
+        textStyle.textColor = self.textColor
+        
+        return textStyle
     }
     
     override func yEndPosition() -> CGFloat {

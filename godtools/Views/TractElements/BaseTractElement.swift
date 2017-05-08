@@ -11,6 +11,7 @@ import UIKit
 import SWXMLHash
 
 class BaseTractElement: UIView {
+    
     struct Standards {
         static let xMargin = CGFloat(8.0)
         static let yMargin = CGFloat(8.0)
@@ -23,25 +24,24 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    
     var colors: TractColors?
     var primaryColor: UIColor? {
         get {
-            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
-            return colors.primaryColor!
+            return (self.colors != nil ? self.colors?.primaryColor : self.parent?.primaryColor)!
         }
     }
     var primaryTextColor: UIColor {
         get {
-            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
-            return colors.primaryTextColor!
+            return (self.colors != nil ? self.colors?.primaryTextColor : self.parent?.primaryTextColor)!
         }
     }
     var textColor: UIColor {
         get {
-            let colors: TractColors = (self.colors != nil ? self.colors : self.parent?.colors)!
-            return colors.textColor!
+            return (self.colors != nil ? self.colors?.textColor : self.parent?.textColor)!
         }
     }
+    
     var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
     private var _height: CGFloat = 0.0
@@ -166,13 +166,9 @@ class BaseTractElement: UIView {
         return element
     }
     
-    func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("blackText",
-                BaseTractElement.Standards.textContentWidth,
-                0.0,
-                NSTextAlignment.left,
-                BaseTractElement.Standards.xMargin,
-                BaseTractElement.Standards.yMargin)
+    func textStyle() -> TextStyle {
+        let textStyle = TextStyle()
+        return textStyle
     }
     
     func textYPadding() -> CGFloat {
@@ -194,4 +190,5 @@ class BaseTractElement: UIView {
             return 0.0
         }
     }
+    
 }
