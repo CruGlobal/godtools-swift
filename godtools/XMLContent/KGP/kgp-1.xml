@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://projects.invisionapp.com/d/main#/console/10765517/228342251/preview -->
+<page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
+      xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
+      background-image="{{path_to_sunrise.png}}">
+  <header>
+    <number>
+      <content:text i18n-id="{{uuid}}">1</content:text>
+    </number>
+    <title>
+      <content:text i18n-id="{{uuid}}">God loves you and created you to know him personally.</content:text>
+    </title>
+  </header>
+  <card>
+    <label>
+      <content:text i18n-id="{{uuid}}">God loves you</content:text>
+    </label>
+    <paragraph>
+      <content:text i18n-id="{{uuid}}">“For God so loved the world, that He gave His only begotten Son, that whoever
+        believes in Him should not perish, but have eternal life.”
+      </content:text>
+      <content:text i18n-id="{{uuid}}">John 3:16 NIV</content:text>
+    </paragraph>
+  </card>
+  <card>
+    <label>
+      <content:text i18n-id="{{uuid}}">God wants you to know him</content:text>
+    </label>
+    <paragraph>
+      <content:text i18n-id="{{uuid}}">“Now this is eternal life: that they may know You, the only true God, and Jesus
+        Christ, whom You have sent.”
+      </content:text>
+      <content:text i18n-id="{{uuid}}">John 17:3 NIV</content:text>
+    </paragraph>
+  </card>
+</page>

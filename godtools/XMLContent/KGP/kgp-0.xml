@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://projects.invisionapp.com/d/main#/console/10765517/228342248/preview -->
+<page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
+      xmlns:content="https://mobile-content-api.cru.org/xmlns/content">
+  <hero>
+    <heading>
+      <content:text i18n-id="{{uuid}}">Knowing God Personally</content:text>
+    </heading>
+
+    <paragraph>
+      <content:text i18n-id="{{uuid}}">These four points explain how to enter into a personal relationship with God and
+        experience the life for which you were created.
+      </content:text>
+    </paragraph>
+  </hero>
+</page>
