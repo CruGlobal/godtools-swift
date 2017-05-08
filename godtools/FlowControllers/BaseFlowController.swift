@@ -37,13 +37,21 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     // MARK: - Helpers
     
     func configureNavigation(navigationController: UINavigationController) {
+        configureNavigationColor(navigationController: navigationController, color: .gtBlue)
+        navigationController.delegate = self
+    }
+    
+    func resetNavigationControllerColorToDefault() {
+        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
+        configureNavigationColor(navigationController: navigationController, color: .gtBlue)
+    }
+    
+    func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
         navigationController.navigationBar.tintColor = .gtWhite
-        navigationController.navigationBar.barTintColor = .gtBlue
+        navigationController.navigationBar.barTintColor = color
         navigationController.navigationBar.isOpaque = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
-        
-        navigationController.delegate = self
     }
     
     // Notifications
@@ -100,7 +108,15 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
 }
 
 extension BaseFlowController: BaseViewControllerDelegate {
+    
     func goBack() {
         _ = self.currentViewController?.navigationController?.popViewController(animated: true)
+        resetNavigationControllerColorToDefault()
     }
+    
+    func changeNavigationBarColor(_ color: UIColor) {
+        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
+        configureNavigationColor(navigationController: navigationController, color: color)
+    }
+    
 }

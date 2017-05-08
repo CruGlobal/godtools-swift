@@ -9,7 +9,8 @@
 import UIKit
 
 protocol BaseViewControllerDelegate {
-    mutating func goBack();
+    mutating func goBack()
+    mutating func changeNavigationBarColor(_ color: UIColor)
 }
 
 class BaseViewController: UIViewController {

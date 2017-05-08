@@ -15,6 +15,9 @@ class TractViewController: BaseViewController {
     let tractsManager: TractManager = TractManager()
     var viewsWereGenerated :Bool = false
     var xmlPages = [XMLIndexer]()
+    var primaryColor: UIColor?
+    var primaryTextColor: UIColor?
+    var textColor: UIColor?
     var currentPage = 0
     var currentMovement: CGFloat {
         return CGFloat(currentPage) *  -self.view.frame.width
@@ -27,6 +30,7 @@ class TractViewController: BaseViewController {
         
         getData()
         displayTitle()
+        setupStyle()
         setupSwipeGestures()
     }
     
@@ -53,7 +57,11 @@ class TractViewController: BaseViewController {
     }
     
     func getData() {
-        self.xmlPages = self.tractsManager.loadPagesForResource(resource: "kgp")
+        let resource = self.tractsManager.loadResource(resource: "kgp")
+        self.xmlPages = resource.pages
+        self.primaryColor = resource.primaryColor
+        self.primaryTextColor = resource.primaryTextColor
+        self.textColor = resource.textColor
     }
     
     func getPage(_ pageNumber: Int) -> XMLIndexer {
@@ -66,6 +74,10 @@ class TractViewController: BaseViewController {
         } else {
             self.title = currentTractTitle()
         }
+    }
+    
+    fileprivate func setupStyle() {
+        self.baseDelegate?.changeNavigationBarColor(primaryColor!)
     }
     
     fileprivate func initializeView() {

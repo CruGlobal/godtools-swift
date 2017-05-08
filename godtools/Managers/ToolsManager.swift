@@ -84,6 +84,7 @@ extension ToolsManager: UITableViewDataSource {
         cell.cellDelegate = self
         cell.resource = resource
         cell.configure(primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk()!)
+        cell.selectionStyle = .none
         
         return cell
     }

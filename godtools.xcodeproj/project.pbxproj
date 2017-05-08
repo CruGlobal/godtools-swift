@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B51EC0CD03006CD4E5 /* kgp-0.xml */; };
+		0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B61EC0CD03006CD4E5 /* kgp-1.xml */; };
+		0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */; };
+		0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */; };
+		0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */; };
 		0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D971EAE77CD0025C4BB /* Localizable.strings */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
@@ -90,6 +95,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F0352B51EC0CD03006CD4E5 /* kgp-0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-0.xml"; sourceTree = "<group>"; };
+		0F0352B61EC0CD03006CD4E5 /* kgp-1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-1.xml"; sourceTree = "<group>"; };
+		0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-2.xml"; sourceTree = "<group>"; };
+		0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-manifest.xml"; sourceTree = "<group>"; };
+		0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractManager.swift; path = Managers/TractManager.swift; sourceTree = "<group>"; };
 		0F350D971EAE77CD0025C4BB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +205,25 @@
 				3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		0F0352B31EC0CD03006CD4E5 /* XMLContent */ = {
+			isa = PBXGroup;
+			children = (
+				0F0352B41EC0CD03006CD4E5 /* KGP */,
+			);
+			path = XMLContent;
+			sourceTree = "<group>";
+		};
+		0F0352B41EC0CD03006CD4E5 /* KGP */ = {
+			isa = PBXGroup;
+			children = (
+				0F0352B51EC0CD03006CD4E5 /* kgp-0.xml */,
+				0F0352B61EC0CD03006CD4E5 /* kgp-1.xml */,
+				0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */,
+				0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */,
+			);
+			path = KGP;
 			sourceTree = "<group>";
 		};
 		0F350D991EAE78310025C4BB /* GeneralExtensions */ = {
@@ -440,6 +469,7 @@
 				4F5707D61EAA985500A540C2 /* PageResource.swift */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
+				0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -501,13 +531,14 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
-				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				0FB73E721EA906A7000BA60D /* Constants */,
 				0FB73E5E1EA90669000BA60D /* FlowControllers */,
+				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
+				0F0352B31EC0CD03006CD4E5 /* XMLContent */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
@@ -596,12 +627,16 @@
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
+				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
+				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
+				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
+				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
@@ -742,6 +777,7 @@
 				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
+				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
