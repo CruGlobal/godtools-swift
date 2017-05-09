@@ -25,9 +25,9 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [UIView]()
-    let progressView = UIView()
-    let progressViewHelper = UIView()
-    let currentProgressView = UIView()
+    var progressView = UIView()
+    var progressViewHelper = UIView()
+    var currentProgressView = UIView()
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -38,8 +38,8 @@ class TractViewController: BaseViewController {
         
         getResourceData()
         displayTitle()
-        setupStyle()
         setupSwipeGestures()
+        defineObservers()
     }
     
     override func viewWillLayoutSubviews() {
@@ -55,7 +55,14 @@ class TractViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupStyle()
         self.displayTitle()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.progressViewHelper.removeFromSuperview()
+        self.progressView.removeFromSuperview()
     }
     
     override func configureNavigationButtons() {
@@ -72,6 +79,10 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupStyle() {
+        setupNavigationBarStyles()
+    }
+    
+    fileprivate func setupNavigationBarStyles() {
         self.baseDelegate?.changeNavigationBarColor((self.colors?.primaryColor)!)
         
         let navigationBar = navigationController!.navigationBar
@@ -82,19 +93,34 @@ class TractViewController: BaseViewController {
         let yOrigin = CGFloat(0.0)
         let progressViewFrame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
         
-        self.currentProgressView.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 4.0)
+        self.currentProgressView = UIView()
+        self.currentProgressView.frame = CGRect(x: 0.0, y: 0.0, width: currentProgressWidth(), height: height)
         self.currentProgressView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         
+        self.progressViewHelper = UIView()
         self.progressViewHelper.frame = progressViewFrame
         self.progressViewHelper.backgroundColor = .white
         
+        self.progressView = UIView()
         self.progressView.frame = progressViewFrame
         self.progressView.backgroundColor = self.colors?.primaryColor?.withAlphaComponent(0.65)
         self.progressView.addSubview(self.currentProgressView)
         
-        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: 64.0)
         navigationBar.addSubview(self.progressViewHelper)
         navigationBar.addSubview(self.progressView)
+        
+        setupNavigationBarFrame()
+    }
+    
+    @objc fileprivate func setupNavigationBarFrame() {
+        let navigationBar = navigationController!.navigationBar
+        
+        let xOrigin = CGFloat(0.0)
+        let yOrigin = CGFloat(0.0)
+        let width = navigationBar.frame.size.width
+        let navigationBarHeight = CGFloat(64.0)
+        
+        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: navigationBarHeight)
     }
     
     // MARK: Build content
@@ -220,11 +246,9 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func moveViews() {
-        let parentWidth = self.navigationController?.navigationBar.frame.size.width
-        let width = CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
         let newCurrentProgressViewFrame = CGRect(x: 0.0,
                                                  y: 0.0,
-                                                 width: width,
+                                                 width: currentProgressWidth(),
                                                  height: self.currentProgressView.frame.size.height)
         
         UIView.animate(withDuration: 0.35,
@@ -238,6 +262,11 @@ class TractViewController: BaseViewController {
                        completion: nil )
     }
     
+    fileprivate func currentProgressWidth() -> CGFloat {
+        let parentWidth = self.navigationController?.navigationBar.frame.size.width
+        return CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
+    }
+    
     // MARK: - Navigation buttons actions
     
     override func homeButtonAction() {
@@ -247,6 +276,15 @@ class TractViewController: BaseViewController {
     override func shareButtonAction() {
         let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, "www.knowgod.com")], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+    }
+    
+    // Notifications
+    
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(setupNavigationBarFrame),
+                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               object: nil)
     }
     
 }
