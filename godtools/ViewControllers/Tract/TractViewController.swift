@@ -25,6 +25,13 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [UIView]()
+    let progressView = UIView()
+    let progressViewHelper = UIView()
+    let currentProgressView = UIView()
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +73,28 @@ class TractViewController: BaseViewController {
     
     fileprivate func setupStyle() {
         self.baseDelegate?.changeNavigationBarColor((self.colors?.primaryColor)!)
+        
+        let navigationBar = navigationController!.navigationBar
+        
+        let width = navigationBar.frame.size.width
+        let height = CGFloat(4.0)
+        let xOrigin = CGFloat(0.0)
+        let yOrigin = CGFloat(0.0)
+        let progressViewFrame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
+        
+        self.currentProgressView.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 4.0)
+        self.currentProgressView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+        
+        self.progressViewHelper.frame = progressViewFrame
+        self.progressViewHelper.backgroundColor = .white
+        
+        self.progressView.frame = progressViewFrame
+        self.progressView.backgroundColor = self.colors?.primaryColor?.withAlphaComponent(0.65)
+        self.progressView.addSubview(self.currentProgressView)
+        
+        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: 64.0)
+        navigationBar.addSubview(self.progressViewHelper)
+        navigationBar.addSubview(self.progressView)
     }
     
     // MARK: Build content
@@ -191,10 +220,18 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func moveViews() {
+        let parentWidth = self.navigationController?.navigationBar.frame.size.width
+        let width = CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
+        let newCurrentProgressViewFrame = CGRect(x: 0.0,
+                                                 y: 0.0,
+                                                 width: width,
+                                                 height: self.currentProgressView.frame.size.height)
+        
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
+                        self.currentProgressView.frame = newCurrentProgressViewFrame
                         for view in self.pagesViews {
                             view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
