@@ -11,7 +11,18 @@ import UIKit
 
 class CallToAction: BaseTractElement {
     
-    let paddingConstant = CGFloat(30.0)
+    static let yMarginConstant = CGFloat(16.0)
+    static let paddingConstant = CGFloat(16.0)
+    
+    var xPosition: CGFloat {
+        return Card.xMarginConstant
+    }
+    var yPosition: CGFloat {
+        return self.yStartPosition + CallToAction.yMarginConstant
+    }
+    override var width: CGFloat {
+        return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -19,14 +30,27 @@ class CallToAction: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height + paddingConstant
+        return self.yPosition + self.height + CallToAction.yMarginConstant
+    }
+    
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        textStyle.width = self.width
+        textStyle.xMargin = CallToAction.paddingConstant
+        textStyle.yMargin = CallToAction.paddingConstant
+        textStyle.textColor = self.textColor
+        return textStyle
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return 15.0
     }
     
     // MARK: - Helpers
     
     fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: 0.0,
-                      y: self.yStartPosition + self.paddingConstant,
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
                       width: self.width,
                       height: self.height)
     }

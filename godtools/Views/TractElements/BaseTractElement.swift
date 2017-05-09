@@ -24,6 +24,7 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    var didFoundCallToAction: Bool = false
     
     var colors: TractColors?
     var primaryColor: UIColor? {
@@ -144,8 +145,6 @@ class BaseTractElement: UIView {
         var elements:Array = [BaseTractElement]()
         
         for dictionary in data {
-            let dataContent = splitData(data: dictionary)
-            
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
@@ -154,6 +153,19 @@ class BaseTractElement: UIView {
             }
             
             elements.append(element)
+        }
+        
+        if self.isKind(of: TractRoot.self) {
+            if !self.didFoundCallToAction {
+                let element = CallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+                if self.horizontalContainer && element.yEndPosition() > maxYPosition {
+                    maxYPosition = element.yEndPosition()
+                } else {
+                    currentYPosition = element.yEndPosition()
+                }
+                
+                elements.append(element)
+            }
         }
         
         if self.horizontalContainer {

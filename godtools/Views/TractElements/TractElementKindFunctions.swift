@@ -10,6 +10,10 @@ import Foundation
 
 extension BaseTractElement {
     
+    static func isRootElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: TractRoot.self)
+    }
+    
     static func isParagraphElement(_ element: BaseTractElement) -> Bool {
         return BaseTractElement.isElement(element, kindOf: Paragraph.self)
     }
