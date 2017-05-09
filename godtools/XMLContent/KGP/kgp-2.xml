@@ -13,52 +13,54 @@
       </content:text>
     </title>
   </header>
-  <card>
-    <label>
-      <content:text i18n-id="{{uuid}}">What is sin?</content:text>
-    </label>
-    <paragraph>
-      <content:text i18n-id="{{uuid}}">We were created to have a relationship with God, but we rejected him and the
-        relationship was broken.
-      </content:text>
-      <content:text>This rejection of God and the building of our lives around anything else is what the Bible calls
-        sin.
-      </content:text>
-      <content:text>We show this by having selfish actions and attitudes, by disobeying God or displaying indifference
-        toward him.
-      </content:text>
-    </paragraph>
-  </card>
-  <card background-image="{{chasm_in_between.png}}" background-image-align="bottom">
-    <label>
-      <content:text i18n-id="{{uuid}}">Everyone is sinful</content:text>
-    </label>
-    <paragraph>
-      <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-      </content:text>
-      <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-    </paragraph>
-  </card>
-  <card>
-    <label>
-      <content:text i18n-id="{{uuid}}">Sin has consequences</content:text>
-    </label>
-    <paragraph>
-      <content:text i18n-id="{{uuid}}">For the wages of sin is death, but the free gift of God is eternal life through
-        Christ Jesus our Lord.
-      </content:text>
-      <content:text i18n-id="{{uuid}}">Romans 6:23</content:text>
-      <content:text i18n-id="{{uuid}}">God is perfect and just and will hold us accountable for our sin. There is a
-        penalty for rejecting God.
-      </content:text>
-      <content:text i18n-id="{{uuid}}">God is perfect and we are sinful. There is a great gap between us because of our
-        sin.
-      </content:text>
-      <content:text i18n-id="{{uuid}}">We may try to bridge this gap through good deeds or following a religion.
-        However, all our efforts fail because they can’t solve the problem of sin that keeps us from God.
-      </content:text>
-    </paragraph>
-  </card>
+  <cards>
+    <card>
+      <label>
+        <content:text i18n-id="{{uuid}}">What is sin?</content:text>
+      </label>
+      <paragraph>
+        <content:text i18n-id="{{uuid}}">We were created to have a relationship with God, but we rejected him and the
+          relationship was broken.
+        </content:text>
+        <content:text>This rejection of God and the building of our lives around anything else is what the Bible calls
+          sin.
+        </content:text>
+        <content:text>We show this by having selfish actions and attitudes, by disobeying God or displaying indifference
+          toward him.
+        </content:text>
+      </paragraph>
+    </card>
+    <card background-image="{{chasm_in_between.png}}" background-image-align="bottom">
+      <label>
+        <content:text i18n-id="{{uuid}}">Everyone is sinful</content:text>
+      </label>
+      <paragraph>
+        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
+        </content:text>
+        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
+      </paragraph>
+    </card>
+    <card>
+      <label>
+        <content:text i18n-id="{{uuid}}">Sin has consequences</content:text>
+      </label>
+      <paragraph>
+        <content:text i18n-id="{{uuid}}">For the wages of sin is death, but the free gift of God is eternal life through
+          Christ Jesus our Lord.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">Romans 6:23</content:text>
+        <content:text i18n-id="{{uuid}}">God is perfect and just and will hold us accountable for our sin. There is a
+          penalty for rejecting God.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">God is perfect and we are sinful. There is a great gap between us because of our
+          sin.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">We may try to bridge this gap through good deeds or following a religion.
+          However, all our efforts fail because they can’t solve the problem of sin that keeps us from God.
+        </content:text>
+      </paragraph>
+    </card>
+  </cards>
   <call-to-action>
     <content:text i18n-id="{{uuid}}">The third point gives us the only solution to this problem…</content:text>
   </call-to-action>

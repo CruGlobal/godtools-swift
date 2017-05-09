@@ -63,7 +63,6 @@ class BaseTractElement: UIView {
     var horizontalContainer: Bool {
         return false
     }
-    var hasCardContainer = false
     
     fileprivate var _backgroundImagePath: String?
     var backgroundImagePath: String {
@@ -146,10 +145,6 @@ class BaseTractElement: UIView {
         
         for dictionary in data {
             let dataContent = splitData(data: dictionary)
-            if dataContent.kind == "card" && !self.isKind(of: Cards.self) {
-                self.hasCardContainer = true
-                break
-            }
             
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
@@ -161,25 +156,13 @@ class BaseTractElement: UIView {
             elements.append(element)
         }
         
-        if self.hasCardContainer {
-            let cards = getCardsFromXML(data)
-            let element = buildCardContainer(cards, startOnY: currentYPosition)
-            currentYPosition = element.yEndPosition()
-            elements.append(element)
-        }
-        
-        if self.horizontalContainer && !self.hasCardContainer {
+        if self.horizontalContainer {
             self.height = maxYPosition
         } else {
             self.height = currentYPosition
         }
         
         self.elements = elements
-    }
-    
-    func buildCardContainer(_ data: [XMLIndexer], startOnY yPosition: CGFloat) -> BaseTractElement {
-        let element = Cards(children: data, startOnY: yPosition, parent: self)
-        return element
     }
     
     func textStyle() -> TextStyle {

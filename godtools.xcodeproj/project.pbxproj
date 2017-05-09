@@ -14,6 +14,7 @@
 		0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */; };
 		0F0352C31EC11317006CD4E5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C21EC11317006CD4E5 /* TextStyle.swift */; };
 		0F0352C51EC1133A006CD4E5 /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C41EC1133A006CD4E5 /* TractColors.swift */; };
+		0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352C61EC2273B006CD4E5 /* kgp-3.xml */; };
 		0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D971EAE77CD0025C4BB /* Localizable.strings */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
@@ -104,6 +105,7 @@
 		0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractManager.swift; path = Managers/TractManager.swift; sourceTree = "<group>"; };
 		0F0352C21EC11317006CD4E5 /* TextStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextStyle.swift; path = Views/Properties/TextStyle.swift; sourceTree = "<group>"; };
 		0F0352C41EC1133A006CD4E5 /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = Views/Properties/TractColors.swift; sourceTree = "<group>"; };
+		0F0352C61EC2273B006CD4E5 /* kgp-3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-3.xml"; sourceTree = "<group>"; };
 		0F350D971EAE77CD0025C4BB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				0F0352B51EC0CD03006CD4E5 /* kgp-0.xml */,
 				0F0352B61EC0CD03006CD4E5 /* kgp-1.xml */,
 				0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */,
+				0F0352C61EC2273B006CD4E5 /* kgp-3.xml */,
 				0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */,
 			);
 			path = KGP;
@@ -645,6 +648,7 @@
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
+				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
