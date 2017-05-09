@@ -22,6 +22,7 @@ class Card: BaseTractElement {
     static let yTopMarginConstant = CGFloat(8.0)
     static let yBottomMarginConstant = CGFloat(80.0)
     static let xPaddingConstant = CGFloat(28.0)
+    static let contentBottomPadding = CGFloat(50.0)
     
     let scrollView = UIScrollView()
     let containerView = UIView()
@@ -47,7 +48,8 @@ class Card: BaseTractElement {
         return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
     }
     var internalHeight: CGFloat {
-        return self.height > self.externalHeight ? self.height : self.externalHeight
+        let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
+        return internalHeight + Card.contentBottomPadding
     }
     var translationY: CGFloat {
         return self.externalHeight - self.yStartPosition
@@ -76,6 +78,24 @@ class Card: BaseTractElement {
                                           y: 0.0,
                                           width: self.width,
                                           height: contentHeight)
+        self.containerView.backgroundColor = .clear
+    }
+    
+    func setupTransparentView() {
+        let width = self.scrollView.frame.size.width - 6.0
+        let height = CGFloat(60.0)
+        let xPosition = CGFloat(3.0)
+        let yPosition = self.scrollView.frame.size.height - height - 1.0
+        let transparentViewFrame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
+        let transparentView = UIView(frame: transparentViewFrame)
+        transparentView.backgroundColor = .clear
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = transparentView.bounds
+        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
+        transparentView.layer.insertSublayer(gradientLayer, at: 0)
+        
+        self.addSubview(transparentView)
     }
     
     func setBordersAndShadows() {
@@ -102,6 +122,7 @@ class Card: BaseTractElement {
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)
         self.addSubview(self.scrollView)
+        setupTransparentView()
         return self
     }
     
