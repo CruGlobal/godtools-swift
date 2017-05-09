@@ -31,6 +31,8 @@ platform :ios do
         import_from_git(url: 'git@github.com:CruGlobal/mobile-deployment-config.git',
                         path: 'ios/Fastfile')
       end
+      
+      options[:project_name] = "godtools"
 
       if is_ci
         cru_remote_setup(options)
