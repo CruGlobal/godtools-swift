@@ -15,6 +15,7 @@
 		0F0352C31EC11317006CD4E5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C21EC11317006CD4E5 /* TextStyle.swift */; };
 		0F0352C51EC1133A006CD4E5 /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C41EC1133A006CD4E5 /* TractColors.swift */; };
 		0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352C61EC2273B006CD4E5 /* kgp-3.xml */; };
+		0F0352CB1EC27CA4006CD4E5 /* CallToActionAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */; };
 		0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D971EAE77CD0025C4BB /* Localizable.strings */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
@@ -106,6 +107,7 @@
 		0F0352C21EC11317006CD4E5 /* TextStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextStyle.swift; path = Views/Properties/TextStyle.swift; sourceTree = "<group>"; };
 		0F0352C41EC1133A006CD4E5 /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = Views/Properties/TractColors.swift; sourceTree = "<group>"; };
 		0F0352C61EC2273B006CD4E5 /* kgp-3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-3.xml"; sourceTree = "<group>"; };
+		0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallToActionAnimations.swift; path = Views/TractElements/CallToActionAnimations.swift; sourceTree = "<group>"; };
 		0F350D971EAE77CD0025C4BB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 			isa = PBXGroup;
 			children = (
 				0F7741D81EBB8A8900888D20 /* CardAnimations.swift */,
+				0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */,
 			);
 			name = Animations;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				0F0352CB1EC27CA4006CD4E5 /* CallToActionAnimations.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* CallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* Number.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,

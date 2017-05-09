@@ -34,6 +34,10 @@ extension BaseTractElement {
         return BaseTractElement.isElement(element, kindOf: Card.self)
     }
     
+    static func isCallToActionElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: CallToAction.self)
+    }
+    
     static func isTitleElement(_ element: BaseTractElement) -> Bool {
         return BaseTractElement.isElement(element, kindOf: Title.self)
     }
