@@ -42,10 +42,6 @@ class TractViewController: BaseViewController {
     
     var resource: DownloadedResource?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.displayTitle()
-    }
     override func configureNavigationButtons() {
         self.addHomeButton()
         self.addShareButton()
@@ -58,8 +54,8 @@ class TractViewController: BaseViewController {
     func getPage(_ pageNumber: Int) -> XMLIndexer {
         return self.xmlPages[pageNumber]
     }
-    
-    fileprivate func displayTitle() {
+
+    override func displayScreenTitle() {
         if parallelLanguageIsAvailable() {
             self.navigationItem.titleView = languageSegmentedControl()
         } else {
