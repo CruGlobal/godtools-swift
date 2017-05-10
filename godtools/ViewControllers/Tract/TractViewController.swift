@@ -25,7 +25,6 @@ class TractViewController: BaseViewController {
         super.viewDidLoad()
         
         getData()
-        displayScreenTitle()
         setupSwipeGestures()
     }
     
