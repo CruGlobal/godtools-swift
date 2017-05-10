@@ -14,8 +14,9 @@ class TextContent: BaseTractElement {
     let xMargin: CGFloat = BaseTractElement.Standards.xMargin
     var xPosition: CGFloat = 0.0
     var yPosition: CGFloat = 0.0
+    var contentWidth: CGFloat = 0.0
     override var width: CGFloat {
-        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
+        return self.contentWidth - (self.xPosition * CGFloat(2))
     }
     override var height: CGFloat {
         get {
@@ -30,6 +31,13 @@ class TextContent: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         let labelStyle = self.parent?.textStyle()
+        
+        if (labelStyle?.width)! > CGFloat(0.0) {
+            self.contentWidth = (labelStyle?.width)!
+        } else {
+            self.contentWidth = (self.parent?.width)!
+        }
+        
         self.xPosition = (labelStyle?.xMargin)!
         self.yPosition = self.yStartPosition + (labelStyle?.yMargin)!
         

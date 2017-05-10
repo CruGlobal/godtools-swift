@@ -23,10 +23,27 @@ class CallToAction: BaseTractElement {
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
     }
+    let buttonSizeConstant = CGFloat(22.0)
+    let buttonSizeXMargin = CGFloat(8.0)
+    var buttonXPosition: CGFloat {
+        return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        self.backgroundColor = .green
+        addArrowButton()
+    }
+    
+    func addArrowButton() {
+        let xPosition = self.buttonXPosition
+        let yPosition = CallToAction.paddingConstant * 2
+        let origin = CGPoint(x: xPosition, y: yPosition)
+        let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
+        let buttonFrame = CGRect(origin: origin, size: size)
+        let button = UIButton(frame: buttonFrame)
+        let image = UIImage(named: "right_arrow_black")
+        button.setBackgroundImage(image, for: UIControlState.normal)
+        self.addSubview(button)
     }
     
     override func yEndPosition() -> CGFloat {
@@ -35,7 +52,7 @@ class CallToAction: BaseTractElement {
     
     override func textStyle() -> TextStyle {
         let textStyle = super.textStyle()
-        textStyle.width = self.width
+        textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
         textStyle.xMargin = CallToAction.paddingConstant
         textStyle.yMargin = CallToAction.paddingConstant
         textStyle.textColor = self.textColor
