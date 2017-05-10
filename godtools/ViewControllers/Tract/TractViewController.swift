@@ -28,6 +28,7 @@ class TractViewController: BaseViewController {
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
+    let viewTagOrigin = 100
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -155,14 +156,14 @@ class TractViewController: BaseViewController {
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.data = getPage(page)
         view.colors = self.colors
-        view.tag = 100 + page
+        view.tag = self.viewTagOrigin + page
         return view
     }
     
     fileprivate func reloadPagesViews() {
         let range = getRangeOfViews()
-        let firstTag = (self.pagesViews.first?.tag)! - 100
-        let lastTag = (self.pagesViews.last?.tag)! - 100
+        let firstTag = (self.pagesViews.first?.tag)! - self.viewTagOrigin
+        let lastTag = (self.pagesViews.last?.tag)! - self.viewTagOrigin
         let width = self.containerView.frame.size.width
         let height = self.containerView.frame.size.height
         
@@ -243,6 +244,21 @@ class TractViewController: BaseViewController {
         moveViews()
     }
     
+    func removeViewsBeforeCurrentView() {
+        if self.currentPage == 0 {
+            return
+        }
+        
+        let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin)
+        
+        for pageView in self.pagesViews {
+            if pageView == currentPageView {
+                break
+            }
+            pageView.removeFromSuperview()
+        }
+    }
+    
     fileprivate func moveViews() {
         let newCurrentProgressViewFrame = CGRect(x: 0.0,
                                                  y: 0.0,
@@ -268,6 +284,7 @@ class TractViewController: BaseViewController {
     // MARK: - Navigation buttons actions
     
     override func homeButtonAction() {
+        removeViewsBeforeCurrentView()
         self.baseDelegate?.goBack()
     }
     
