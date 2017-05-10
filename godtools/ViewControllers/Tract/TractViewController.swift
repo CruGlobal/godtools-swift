@@ -55,7 +55,6 @@ class TractViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupStyle()
-        self.displayScreenTitle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
