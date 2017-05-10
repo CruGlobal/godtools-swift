@@ -16,6 +16,8 @@ class MenuViewController: BaseViewController {
     let legal = ["terms_of_use", "privacy_policy"]
     let header = ["menu_general", "menu_share", "menu_legal"]
     
+    let headerHeight: CGFloat = 40.0
+    
     override var screenTitle: String {
         get {
             return "settings".localized
@@ -103,11 +105,11 @@ extension MenuViewController: UITableViewDataSource {
 extension MenuViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: 40)
+        let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: headerHeight)
         let headerView:UIView = UIView(frame: headerFrame)
         headerView.backgroundColor = .gtGreyLight
         
-        let labelFrame = CGRect(x: 40.0, y: 16.0, width: 100.0, height: 18.0)
+        let labelFrame = CGRect(x: 20.0, y: 12.0, width: 100.0, height: 16.0)
         let titleLabel:GTLabel = GTLabel(frame: labelFrame)
         titleLabel.gtStyle = "blackTextSmall"
         titleLabel.text = self.getSection(section).localized.capitalized
@@ -124,7 +126,7 @@ extension MenuViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return headerHeight
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
