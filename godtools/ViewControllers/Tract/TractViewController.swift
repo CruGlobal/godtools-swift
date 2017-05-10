@@ -13,16 +13,12 @@ class TractViewController: BaseViewController {
     
     var resource: DownloadedResource?
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.displayTitle()
-    }
     override func configureNavigationButtons() {
         self.addHomeButton()
         self.addShareButton()
     }
 
-    fileprivate func displayTitle() {
+    override func displayScreenTitle() {
         if parallelLanguageIsAvailable() {
             self.navigationItem.titleView = languageSegmentedControl()
         } else {
