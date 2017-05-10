@@ -11,8 +11,8 @@ import UIKit
 
 class Number: BaseTractElement {
     
-    static let widthConstant = CGFloat(70.0)
-    static let marginConstant = CGFloat(8.0)
+    static let widthConstant: CGFloat = 70.0
+    static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return Number.marginConstant

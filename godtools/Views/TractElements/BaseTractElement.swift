@@ -12,15 +12,12 @@ import SWXMLHash
 
 class BaseTractElement: UIView {
     
-    struct Standards {
-        static let xMargin = CGFloat(8.0)
-        static let yMargin = CGFloat(8.0)
-        static let xPadding = CGFloat(0.0)
-        static let yPadding = CGFloat(0.0)
-        
-        static let screenWidth = UIScreen.main.bounds.size.width
-        static let textContentWidth = UIScreen.main.bounds.size.width - xMargin * CGFloat(2)
-    }
+    static let xMargin: CGFloat = 8.0
+    static let yMargin: CGFloat = 8.0
+    static let xPadding: CGFloat = 0.0
+    static let yPadding: CGFloat = 0.0
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
@@ -45,20 +42,12 @@ class BaseTractElement: UIView {
     
     var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
-    private var _height: CGFloat = 0.0
-    var height: CGFloat {
-        get {
-            return _height
-        }
-        set {
-            _height = newValue
-        }
-    }
+    var height: CGFloat = 0.0
     var width: CGFloat {
         if (self.parent != nil) {
-            return (self.parent?.width)!
+            return self.parent!.width
         } else {
-            return BaseTractElement.Standards.screenWidth
+            return BaseTractElement.screenWidth
         }
     }
     var horizontalContainer: Bool {
@@ -84,7 +73,7 @@ class BaseTractElement: UIView {
         self.parent = parent
         self.yStartPosition = yPosition
         buildChildrenForData(children)
-        setupView(properties: Dictionary<String, Any>())
+        setupView(properties: [String: Any]())
     }
     
     
@@ -142,7 +131,7 @@ class BaseTractElement: UIView {
     func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = 0.0
         var maxYPosition: CGFloat = 0.0
-        var elements:Array = [BaseTractElement]()
+        var elements = [BaseTractElement]()
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
@@ -183,7 +172,7 @@ class BaseTractElement: UIView {
     }
     
     func textYPadding() -> CGFloat {
-        return BaseTractElement.Standards.yPadding
+        return BaseTractElement.yPadding
     }
     
     // MARK: - Helpers

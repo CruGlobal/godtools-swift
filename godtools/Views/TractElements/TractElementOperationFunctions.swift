@@ -13,40 +13,38 @@ extension BaseTractElement {
     
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
         let dataContent = splitData(data: data)
-        var element:BaseTractElement?
         
-        if dataContent.kind == "hero" {
-            element = Hero(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "heading" {
-            element = Heading(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "paragraph" {
-            element = Paragraph(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "content:text" {
-            element = TextContent(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "header" {
-            element = Header(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "number" {
-            element = Number(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "title" {
-            element = Title(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "cards" {
-            element = Cards(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "card" {
-            element = Card(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "label" {
-            element = TractLabel(data: data, startOnY: yPosition, parent: self)
-        } else if dataContent.kind == "call-to-action" {
-            element = CallToAction(data: data, startOnY: yPosition, parent: self)
-        } else {
-            element = TextContent(data: data, startOnY: yPosition, parent: self)
+        switch dataContent.kind {
+        case "hero":
+            return Hero(data: data, startOnY: yPosition, parent: self)
+        case "heading":
+            return Heading(data: data, startOnY: yPosition, parent: self)
+        case "paragraph":
+            return Paragraph(data: data, startOnY: yPosition, parent: self)
+        case "content:text":
+            return TextContent(data: data, startOnY: yPosition, parent: self)
+        case "header":
+            return Header(data: data, startOnY: yPosition, parent: self)
+        case "number":
+            return Number(data: data, startOnY: yPosition, parent: self)
+        case "title":
+            return Title(data: data, startOnY: yPosition, parent: self)
+        case "cards":
+            return Cards(data: data, startOnY: yPosition, parent: self)
+        case "card":
+            return Card(data: data, startOnY: yPosition, parent: self)
+        case "label":
+            return TractLabel(data: data, startOnY: yPosition, parent: self)
+        case "call-to-action":
+            return CallToAction(data: data, startOnY: yPosition, parent: self)
+        default:
+            return TextContent(data: data, startOnY: yPosition, parent: self)
         }
-        
-        return element!
     }
     
     func splitData(data: XMLIndexer) -> (kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
         let kind = data.element?.name
-        var properties = Dictionary<String, Any>()
+        var properties = [String: Any]()
         for item in (data.element?.allAttributes)! {
             let attribute = item.value as XMLAttribute
             properties[attribute.name] = attribute.text

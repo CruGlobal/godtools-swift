@@ -11,7 +11,7 @@ import UIKit
 
 class Title: BaseTractElement {
     
-    static let marginConstant = CGFloat(8.0)
+    static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return Number.marginConstant + Number.widthConstant + Title.marginConstant

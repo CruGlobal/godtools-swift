@@ -15,7 +15,7 @@ class Hero: BaseTractElement {
         return 28.0
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.Standards.yMargin
+        return self.yStartPosition + BaseTractElement.yMargin
     }
     override var width: CGFloat {
         return super.width - (xPosition * CGFloat(2.0))

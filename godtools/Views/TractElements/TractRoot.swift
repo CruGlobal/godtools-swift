@@ -15,7 +15,7 @@ import SWXMLHash
 
 class TractRoot: BaseTractElement {
     
-    override func setupView(properties: Dictionary<String, Any>) {
+    override func setupView(properties: [String: Any]) {
         self.frame = buildFrame()
     }
     

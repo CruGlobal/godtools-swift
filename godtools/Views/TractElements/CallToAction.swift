@@ -11,8 +11,8 @@ import UIKit
 
 class CallToAction: BaseTractElement {
     
-    static let yMarginConstant = CGFloat(16.0)
-    static let paddingConstant = CGFloat(16.0)
+    static let yMarginConstant: CGFloat = 16.0
+    static let paddingConstant: CGFloat = 16.0
     
     var xPosition: CGFloat {
         return Card.xMarginConstant

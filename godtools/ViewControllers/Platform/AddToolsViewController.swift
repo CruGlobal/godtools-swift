@@ -10,6 +10,7 @@ import UIKit
 
 protocol AddToolsViewControllerDelegate {
     mutating func moveToToolDetail(resource: DownloadedResource)
+    mutating func moveToUpdateLanguageSettings()
 }
 
 class AddToolsViewController: BaseViewController {
@@ -37,6 +38,18 @@ class AddToolsViewController: BaseViewController {
         self.tableView.reloadData()
     }
 
+    override func displayScreenTitle() {
+        self.navigationItem.title = "add_tools".localized
+    }
+    
+    override func configureNavigationButtons() {
+        self.addNavigationLanguageButton()
+    }
+    
+    override func navigationLanguageButtonAction() {
+        self.delegate?.moveToUpdateLanguageSettings()
+    }
+    
     // MARK: - Helpers
     
     fileprivate func registerCells() {

@@ -14,7 +14,7 @@ class TractViewController: BaseViewController {
     
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
-    var viewsWereGenerated :Bool = false
+    var viewsWereGenerated = false
     var xmlPages = [XMLIndexer]()
     var colors: TractColors?
     var primaryTextColor: UIColor?
@@ -37,7 +37,6 @@ class TractViewController: BaseViewController {
         super.viewDidLoad()
         
         getResourceData()
-        displayTitle()
         setupSwipeGestures()
         defineObservers()
     }
@@ -56,7 +55,7 @@ class TractViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupStyle()
-        self.displayTitle()
+        self.displayScreenTitle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,8 +68,8 @@ class TractViewController: BaseViewController {
         self.addHomeButton()
         self.addShareButton()
     }
-    
-    fileprivate func displayTitle() {
+
+    override func displayScreenTitle() {
         if parallelLanguageIsAvailable() {
             self.navigationItem.titleView = languageSegmentedControl()
         } else {
@@ -127,17 +126,17 @@ class TractViewController: BaseViewController {
     
     fileprivate func initializeView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingPoint = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
         
         let width = self.view.frame.size.width
-        let height = self.view.frame.size.height - startingPoint
-        self.containerView.frame = CGRect(x: 0.0, y: startingPoint, width: width, height: height)
+        let height = self.view.frame.size.height - startingYPos
+        self.containerView.frame = CGRect(x: 0.0, y: startingYPos, width: width, height: height)
         self.view.addSubview(self.containerView)
         
-        buildPages(width, height)
+        buildPages(width: width, height: height)
     }
     
-    fileprivate func buildPages(_ width: CGFloat, _ height: CGFloat) {
+    fileprivate func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
         
         for pageNumber in range.start...range.end {

@@ -18,10 +18,10 @@ class Card: BaseTractElement {
         case open, preview, close
     }
     
-    static let xMarginConstant = CGFloat(8.0)
-    static let yTopMarginConstant = CGFloat(8.0)
-    static let yBottomMarginConstant = CGFloat(80.0)
-    static let xPaddingConstant = CGFloat(28.0)
+    static let xMarginConstant: CGFloat = 8.0
+    static let yTopMarginConstant: CGFloat = 8.0
+    static let yBottomMarginConstant: CGFloat = 80.0
+    static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding = CGFloat(50.0)
     
     let scrollView = UIScrollView()
@@ -34,7 +34,7 @@ class Card: BaseTractElement {
     var cardState = CardState.preview
     var cardNumber = 0
     
-    var yDownPosition = CGFloat(0.0)
+    var yDownPosition: CGFloat = 0.0
     var xPosition: CGFloat {
         return Card.xMarginConstant
     }
