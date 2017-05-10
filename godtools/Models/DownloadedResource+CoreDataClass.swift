@@ -25,4 +25,16 @@ public class DownloadedResource: NSManagedObject {
         
         return false
     }
+    
+    func latestTranslationId() -> String? {
+        let translationsArray = Array(translations!) as! [Translation]
+        
+        let latestTranslation = translationsArray
+            .filter( {$0.isPublished} )
+            .filter( {$0.downloadedResource == self} )
+            .filter( {$0.language?.remoteId == GTSettings.shared.primaryLanguageId} )
+            .max(by: {$0.version < $1.version} )
+        
+        return latestTranslation?.remoteId!
+    }
 }

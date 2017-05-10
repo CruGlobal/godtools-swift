@@ -72,6 +72,7 @@ extension AddToolsViewController: ToolsManagerDelegate {
     }
     
     func downloadButtonWasPressed(resource: DownloadedResource) {
+        TranslationZipImporter.shared.download(translationId: resource.latestTranslationId()!)
         self.tableView.reloadData()
     }
 }
