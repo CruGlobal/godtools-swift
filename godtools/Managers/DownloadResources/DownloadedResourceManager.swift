@@ -70,6 +70,8 @@ class DownloadedResourceManager: GTDataManager {
                 cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                 cachedTranslation.version = remoteTranslation.version!.int16Value
                 cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
+                cachedTranslation.manifestFilename = remoteTranslation.manifestName
+                
                 cachedResource.addToTranslations(cachedTranslation)
             }
             
