@@ -23,6 +23,15 @@ class CallToAction: BaseTractElement {
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
     }
+    let minHeight = CGFloat(80.0)
+    override var height: CGFloat {
+        get {
+            return super.height > self.minHeight ? super.height : self.minHeight
+        }
+        set {
+            super.height = newValue
+        }
+    }
     let buttonSizeConstant = CGFloat(22.0)
     let buttonSizeXMargin = CGFloat(8.0)
     var buttonXPosition: CGFloat {
@@ -36,7 +45,7 @@ class CallToAction: BaseTractElement {
     
     func addArrowButton() {
         let xPosition = self.buttonXPosition
-        let yPosition = CallToAction.paddingConstant * 2
+        let yPosition = (self.height - self.buttonSizeConstant) / 2
         let origin = CGPoint(x: xPosition, y: yPosition)
         let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
         let buttonFrame = CGRect(origin: origin, size: size)
