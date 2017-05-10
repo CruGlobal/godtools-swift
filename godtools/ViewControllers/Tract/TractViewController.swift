@@ -285,6 +285,10 @@ class TractViewController: BaseViewController {
                                                selector: #selector(setupNavigationBarFrame),
                                                name: NSNotification.Name.UIApplicationDidBecomeActive,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moveToNextPage),
+                                               name: NSNotification.Name.moveToNextPageNotification,
+                                               object: nil)
     }
     
 }

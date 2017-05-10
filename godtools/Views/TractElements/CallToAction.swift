@@ -56,7 +56,12 @@ class CallToAction: BaseTractElement {
         let button = UIButton(frame: buttonFrame)
         let image = UIImage(named: "right_arrow_blue")
         button.setBackgroundImage(image, for: UIControlState.normal)
+        button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
         self.addSubview(button)
+    }
+    
+    func moveToNextView() {
+        NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
     }
     
     override func yEndPosition() -> CGFloat {
