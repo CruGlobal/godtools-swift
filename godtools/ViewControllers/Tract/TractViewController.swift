@@ -12,7 +12,7 @@ import SWXMLHash
 
 class TractViewController: BaseViewController {
     
-    var viewsWereGenerated :Bool = false
+    var viewsWereGenerated = false
     var xmlPages = [XMLIndexer]()
     var currentPage = 0
     var currentMovement: CGFloat {
@@ -69,17 +69,17 @@ class TractViewController: BaseViewController {
     
     fileprivate func initializeView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingPoint = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
         
         let width = self.view.frame.size.width
-        let height = self.view.frame.size.height - startingPoint
-        self.containerView.frame = CGRect(x: 0.0, y: startingPoint, width: width, height: height)
+        let height = self.view.frame.size.height - startingYPos
+        self.containerView.frame = CGRect(x: 0.0, y: startingYPos, width: width, height: height)
         self.view.addSubview(self.containerView)
         
-        buildPages(width, height)
+        buildPages(width: width, height: height)
     }
     
-    fileprivate func buildPages(_ width: CGFloat, _ height: CGFloat) {
+    fileprivate func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
         
         for pageNumber in range.start...range.end {

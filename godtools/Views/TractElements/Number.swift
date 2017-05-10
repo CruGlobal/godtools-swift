@@ -11,8 +11,8 @@ import UIKit
 
 class Number: BaseTractElement {
     
-    static let widthConstant = CGFloat(70.0)
-    static let marginConstant = CGFloat(8.0)
+    static let widthConstant: CGFloat = 70.0
+    static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return Number.marginConstant
@@ -33,8 +33,8 @@ class Number: BaseTractElement {
                 self.width,
                 60.0,
                 NSTextAlignment.center,
-                BaseTractElement.Standards.xMargin,
-                BaseTractElement.Standards.yMargin)
+                BaseTractElement.xMargin,
+                BaseTractElement.yMargin)
     }
     
     override func yEndPosition() -> CGFloat {

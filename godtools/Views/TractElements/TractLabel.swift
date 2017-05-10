@@ -12,8 +12,8 @@ import SWXMLHash
 
 class TractLabel: BaseTractElement {
     
-    static let xMarginConstant = CGFloat(0.0)
-    static let yMarginConstant = CGFloat(0.0)
+    static let xMarginConstant: CGFloat = 0.0
+    static let yMarginConstant: CGFloat = 0.0
     
     var tapView = UIView()
     var xPosition: CGFloat {
@@ -34,14 +34,14 @@ class TractLabel: BaseTractElement {
         let xPosition = Card.xPaddingConstant
         let yPosition = self.frame.size.height - 1
         let width = self.frame.size.width - (Card.xPaddingConstant * CGFloat(2))
-        let height = CGFloat(1.0)
+        let height: CGFloat = 1.0
         
         let horizontalLine = UIView()
         horizontalLine.frame = CGRect(x: xPosition,
                                       y: yPosition,
                                       width: width,
                                       height: height)
-        horizontalLine.backgroundColor = UIColor.gtGreyLight
+        horizontalLine.backgroundColor = .gtGreyLight
         self.addSubview(horizontalLine)
         
     }
@@ -61,7 +61,7 @@ class TractLabel: BaseTractElement {
                 0.0,
                 NSTextAlignment.left,
                 Card.xPaddingConstant,
-                BaseTractElement.Standards.yMargin)
+                BaseTractElement.yMargin)
     }
     
     override func textYPadding() -> CGFloat {

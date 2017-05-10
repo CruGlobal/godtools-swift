@@ -11,7 +11,7 @@ import UIKit
 
 class Paragraph: BaseTractElement {
     
-    static let marginConstant = CGFloat(8.0)
+    static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
@@ -28,7 +28,7 @@ class Paragraph: BaseTractElement {
     }
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        var xMargin = BaseTractElement.Standards.xMargin
+        var xMargin = BaseTractElement.xMargin
         if BaseTractElement.isCardElement(self) {
             xMargin = Card.xPaddingConstant
         }
@@ -38,7 +38,7 @@ class Paragraph: BaseTractElement {
                 0.0,
                 NSTextAlignment.left,
                 xMargin,
-                BaseTractElement.Standards.yMargin)
+                BaseTractElement.yMargin)
     }
     
     override func yEndPosition() -> CGFloat {

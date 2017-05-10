@@ -27,12 +27,12 @@ class Cards: BaseTractElement {
     
     var cardsState = CardsState.preview
     
-    var xPosition: CGFloat {
-        return 0.0
-    }
+    var xPosition: CGFloat = 0.0
     var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.Standards.yMargin
+        return self.yStartPosition + BaseTractElement.yMargin
     }
+    var constantYMarginTop: CGFloat = 60
+    var constantYMarginBottom: CGFloat = 30
     override var height: CGFloat {
         get {
             return self.getMaxHeight()
@@ -51,8 +51,8 @@ class Cards: BaseTractElement {
         
         for dictionary in data {
             let deltaChange = CGFloat(data.count - cardNumber)
-            let yPosition = self.initialCardPosition - (deltaChange * 60)
-            let yDownPosition = self.yStartPosition + (deltaChange * 60) - (deltaChange * 30)
+            let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
+            let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
             let element = Card(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.cardNumber = cardNumber

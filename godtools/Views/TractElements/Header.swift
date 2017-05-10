@@ -15,7 +15,7 @@ class Header: BaseTractElement {
         return 0.0
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.Standards.yMargin
+        return self.yStartPosition + BaseTractElement.yMargin
     }
     override var height: CGFloat {
         get {
@@ -30,7 +30,7 @@ class Header: BaseTractElement {
         return true
     }
     
-    override func setupView(properties: Dictionary<String, Any>) {
+    override func setupView(properties: [String: Any]) {
         self.frame = buildFrame()
         self.backgroundColor = UIColor.black.withAlphaComponent(0.80)
     }

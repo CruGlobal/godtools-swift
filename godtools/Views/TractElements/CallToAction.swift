@@ -11,7 +11,7 @@ import UIKit
 
 class CallToAction: BaseTractElement {
     
-    let paddingConstant = CGFloat(30.0)
+    let paddingConstant: CGFloat = 30.0
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()

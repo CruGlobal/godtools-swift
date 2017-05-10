@@ -11,7 +11,7 @@ import UIKit
 
 class TextContent: BaseTractElement {
     
-    let xMargin: CGFloat = BaseTractElement.Standards.xMargin
+    let xMargin: CGFloat = BaseTractElement.xMargin
     var xPosition: CGFloat = 0.0
     var yPosition: CGFloat = 0.0
     override var width: CGFloat {
@@ -79,14 +79,14 @@ class TextContent: BaseTractElement {
             let backgroundColorText = properties["backgroundColor"] as! String
             switch backgroundColorText {
             case "red":
-                backgroundColor = UIColor.gtRed
+                backgroundColor = .gtRed
             case "black":
-                backgroundColor = UIColor.gtBlack
+                backgroundColor = .gtBlack
             default:
-                backgroundColor = UIColor.clear
+                backgroundColor = .clear
             }
         } else {
-            backgroundColor = UIColor.clear
+            backgroundColor = .clear
         }
         
         return (text, backgroundColor!)

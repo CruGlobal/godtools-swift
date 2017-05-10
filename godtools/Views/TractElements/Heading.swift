@@ -11,11 +11,9 @@ import UIKit
 
 class Heading: BaseTractElement {
     
-    let marginConstant = CGFloat(30.0)
+    let marginConstant: CGFloat = 30.0
     
-    var xPosition: CGFloat {
-        return 0.0
-    }
+    var xPosition: CGFloat = 0.0
     var yPosition: CGFloat {
         return self.yStartPosition + self.marginConstant
     }
@@ -26,11 +24,11 @@ class Heading: BaseTractElement {
     
     override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
         return ("toolFrontTitle",
-                BaseTractElement.Standards.textContentWidth,
+                BaseTractElement.textContentWidth,
                 0.0,
                 NSTextAlignment.left,
-                BaseTractElement.Standards.xMargin,
-                BaseTractElement.Standards.yMargin)
+                BaseTractElement.xMargin,
+                BaseTractElement.yMargin)
     }
     
     override func yEndPosition() -> CGFloat {
