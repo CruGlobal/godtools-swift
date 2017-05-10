@@ -39,7 +39,7 @@ class AddToolsViewController: BaseViewController {
     }
 
     override func displayScreenTitle() {
-        self.navigationItem.title = "Add Tools".localized
+        self.navigationItem.title = "add_tools".localized
     }
     
     override func configureNavigationButtons() {
