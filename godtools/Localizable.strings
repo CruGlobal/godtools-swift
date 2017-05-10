@@ -25,6 +25,9 @@
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 
+// Add Tools
+"add_tools" = "Add Tools";
+
 // Tool Detail
 "about" = "About";
 "total_views" = "%@ views";

@@ -37,6 +37,10 @@ class AddToolsViewController: BaseViewController {
         self.tableView.reloadData()
     }
 
+    override func displayScreenTitle() {
+        self.navigationItem.title = "Add Tools".localized
+    }
+    
     // MARK: - Helpers
     
     fileprivate func registerCells() {
