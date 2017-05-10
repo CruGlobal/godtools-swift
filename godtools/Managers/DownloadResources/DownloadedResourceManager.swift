@@ -36,7 +36,7 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         showNetworkingIndicator()
         
-        let params = ["include" : "translations,pages"]
+        let params = ["include": "translations,pages"]
         
         return issueGETRequest(params)
             .then { data -> Promise<[DownloadedResource]> in
