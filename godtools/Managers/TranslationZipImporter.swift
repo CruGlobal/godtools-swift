@@ -27,12 +27,12 @@ class TranslationZipImporter {
     func download(translationId: String) -> AnyPromise {
         let filename = createFilename(translationId: translationId)
         
-        _ = downloadFromRemote(translationId: translationId).then { (zipFileData) -> AnyPromise in
+        let promisedDownload = downloadFromRemote(translationId: translationId).then { zipFileData -> Promise<Bool> in
             
-            self.writeDataFileToDisk(data: zipFileData, filename: filename)
+            try self.writeDataFileToDisk(data: zipFileData, filename: filename)
             self.extractZipFile(filename)
             
-            return AnyPromise(Promise(value: "foo"))
+            return Promise(value: true)
             }.always {
                 do {
                     try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
@@ -41,7 +41,7 @@ class TranslationZipImporter {
                 }
             }
         
-        return AnyPromise(Promise(value: "foo"))
+        return AnyPromise(promisedDownload)
     }
     
     private func downloadFromRemote(translationId: String) -> Promise<Data> {
@@ -55,12 +55,8 @@ class TranslationZipImporter {
             })
     }
     
-    private func writeDataFileToDisk(data: Data, filename: String) {
-        do {
-            try data.write(to: URL.init(fileURLWithPath: "\(documentsPath)/\(filename)"))
-        } catch {
-            print(error.localizedDescription)
-        }
+    private func writeDataFileToDisk(data: Data, filename: String) throws {
+        try data.write(to: URL.init(fileURLWithPath: "\(documentsPath)/\(filename)"))
     }
     
     private func extractZipFile(_ filename: String) {
@@ -77,6 +73,10 @@ class TranslationZipImporter {
     }
     
     private func createResourcesDirectoryIfNecessary() {
+        if FileManager.default.fileExists(atPath: resourcesPath, isDirectory: nil) {
+            return
+        }
+        
         do {
             try FileManager.default.createDirectory(atPath: resourcesPath,
                                                     withIntermediateDirectories: false,
