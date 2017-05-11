@@ -23,6 +23,8 @@ extension BaseTractElement {
             return Paragraph(data: data, startOnY: yPosition, parent: self)
         case "content:text":
             return TextContent(data: data, startOnY: yPosition, parent: self)
+        case "content:image":
+            return ImageContent(data: data, startOnY: yPosition, parent: self)
         case "header":
             return Header(data: data, startOnY: yPosition, parent: self)
         case "number":
@@ -35,6 +37,14 @@ extension BaseTractElement {
             return Card(data: data, startOnY: yPosition, parent: self)
         case "label":
             return TractLabel(data: data, startOnY: yPosition, parent: self)
+        case "form":
+            return TractForm(data: data, startOnY: yPosition, parent: self)
+        case "button":
+            return TractButton(data: data, startOnY: yPosition, parent: self)
+        case "input":
+            return TractInput(data: data, startOnY: yPosition, parent: self)
+        case "placeholder":
+            return TractInputPlaceHolder(data: data, startOnY: yPosition, parent: self)
         case "call-to-action":
             return CallToAction(data: data, startOnY: yPosition, parent: self)
         default:

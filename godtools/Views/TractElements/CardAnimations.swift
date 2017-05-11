@@ -37,6 +37,7 @@ extension Card {
         }
         
         self.cardState = .close
+        self.cardsParentView.hideCallToAction()
         
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.45,
@@ -52,7 +53,6 @@ extension Card {
                         }})
         
         disableScrollview()
-        
     }
     
     func resetCard() {
