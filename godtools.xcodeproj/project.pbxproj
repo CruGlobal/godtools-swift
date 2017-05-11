@@ -16,7 +16,7 @@
 		0F0352C51EC1133A006CD4E5 /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C41EC1133A006CD4E5 /* TractColors.swift */; };
 		0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352C61EC2273B006CD4E5 /* kgp-3.xml */; };
 		0F0352CB1EC27CA4006CD4E5 /* CallToActionAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */; };
-		0F13B5F71EC4C85000C55B2A /* ImageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5F61EC4C85000C55B2A /* ImageContent.swift */; };
+		0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5F61EC4C85000C55B2A /* TractImage.swift */; };
 		0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5F81EC4C86D00C55B2A /* TractButton.swift */; };
 		0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5FA1EC4C88200C55B2A /* TractInput.swift */; };
 		0F13B5FD1EC4C8C700C55B2A /* TractInputPlaceHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5FC1EC4C8C700C55B2A /* TractInputPlaceHolder.swift */; };
@@ -113,7 +113,7 @@
 		0F0352C41EC1133A006CD4E5 /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = Views/Properties/TractColors.swift; sourceTree = "<group>"; };
 		0F0352C61EC2273B006CD4E5 /* kgp-3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-3.xml"; sourceTree = "<group>"; };
 		0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallToActionAnimations.swift; path = Views/TractElements/CallToActionAnimations.swift; sourceTree = "<group>"; };
-		0F13B5F61EC4C85000C55B2A /* ImageContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageContent.swift; path = Views/TractElements/ImageContent.swift; sourceTree = "<group>"; };
+		0F13B5F61EC4C85000C55B2A /* TractImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractImage.swift; path = Views/TractElements/TractImage.swift; sourceTree = "<group>"; };
 		0F13B5F81EC4C86D00C55B2A /* TractButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractButton.swift; path = Views/TractElements/TractButton.swift; sourceTree = "<group>"; };
 		0F13B5FA1EC4C88200C55B2A /* TractInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractInput.swift; path = Views/TractElements/TractInput.swift; sourceTree = "<group>"; };
 		0F13B5FC1EC4C8C700C55B2A /* TractInputPlaceHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractInputPlaceHolder.swift; path = Views/TractElements/TractInputPlaceHolder.swift; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
 				0F806C701EB3E72C00F3ED2B /* CallToAction.swift */,
 				4F462A371EB0E28900C03447 /* TextContent.swift */,
-				0F13B5F61EC4C85000C55B2A /* ImageContent.swift */,
+				0F13B5F61EC4C85000C55B2A /* TractImage.swift */,
 				0F13B5F81EC4C86D00C55B2A /* TractButton.swift */,
 				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
 				0F13B5FC1EC4C8C700C55B2A /* TractInputPlaceHolder.swift */,
@@ -778,7 +778,7 @@
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
-				0F13B5F71EC4C85000C55B2A /* ImageContent.swift in Sources */,
+				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* Card.swift in Sources */,

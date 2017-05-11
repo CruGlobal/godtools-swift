@@ -23,8 +23,8 @@ extension BaseTractElement {
             return Paragraph(data: data, startOnY: yPosition, parent: self)
         case "content:text":
             return TextContent(data: data, startOnY: yPosition, parent: self)
-        case "content:image":
-            return ImageContent(data: data, startOnY: yPosition, parent: self)
+        case "image":
+            return TractImage(data: data, startOnY: yPosition, parent: self)
         case "header":
             return Header(data: data, startOnY: yPosition, parent: self)
         case "number":
