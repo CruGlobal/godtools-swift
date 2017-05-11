@@ -59,7 +59,7 @@ class TractImage: BaseTractElement {
     
     func loadImage(properties: [String: Any]) -> UIImage {
         let resource = properties["resource"] as! String?
-        let align = properties["align"] as! String?
+        let _ = properties["align"] as! String?
         
         let image = UIImage(named: resource!)!
         return image
