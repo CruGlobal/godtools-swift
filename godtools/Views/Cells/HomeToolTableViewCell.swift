@@ -109,4 +109,16 @@ class HomeToolTableViewCell: UITableViewCell {
         self.numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
+    // MARK: Progress view listener
+    
+    private func registerProgressViewListener() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(progressViewListenerShouldUpdate),
+                                               name: .downloadProgressViewUpdateNotification,
+                                               object: nil)
+    }
+    
+    @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
+        self.downloadProgressView.observedProgress = notification.userInfo?["progress"] as? Progress
+    }    
 }
