@@ -4,82 +4,69 @@
       xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
       background-image="jesus_gives_us_life.png">
   <header>
-    <number>
-      <content:text i18n-id="{{uuid}}">4</content:text>
-    </number>
     <title>
-        <content:text i18n-id="{{uuid}}">We must each respond to Jesus by placing our trust in him as our Savior and Lord. Only then can we know God personally.
+        <content:text i18n-id="{{uuid}}">To begin a relationship with God, you must place your trust in Jesus alone.
       </content:text>
     </title>
   </header>
   <cards>
     <card>
       <label>
-        <content:text i18n-id="{{uuid}}">This response involves...</content:text>
+        <content:text i18n-id="{{uuid}}">Here is a suggested prayer</content:text>
       </label>
       <paragraph>
-        <content:text i18n-id="{{uuid}}">Agreeing
+        <content:text i18n-id="{{uuid}}">Lord Jesus,
         </content:text>
-        <content:text>with God that we are sinful and deciding to run from our sin.
+        <content:text>I want to know you personally. I’m sorry for going my own way. Please forgive me for all my sin.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">Thank you for dying on the cross to pay for my sin.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">I agree to turn from my old ways and follow you as my Savior and Lord. Please come and take first place in my life.
+        </content:text>
+        <content:text i18n-id="{{uuid}}">Could you say this to God and mean it?
+        </content:text>
+        <content:text i18n-id="{{uuid}}">Is there anything stopping you from saying this right now?
         </content:text>
       </paragraph>
-      <paragraph>
-          <content:text i18n-id="{{uuid}}">Trusting
-          </content:text>
-          <content:text>God to forgive us completely because Jesus died for our sin.
-          </content:text>
-      </paragraph>
-      <paragraph>
-          <content:text i18n-id="{{uuid}}">Choosing
-          </content:text>
-          <content:text>to follow Jesus; putting him first in our lives.
-          </content:text>
-      </paragraph>
     </card>
     <card>
         <label>
-            <content:text i18n-id="{{uuid}}">The relationship is personal</content:text>
+            <content:text i18n-id="{{uuid}}">Did you pray this prayer?</content:text>
         </label>
         <paragraph>
-            <content:text i18n-id="{{uuid}}">"But to all who believed in him and accepted him, he gave the right to become children of God".
+            <content:text i18n-id="{{uuid}}">"Now this is eternal life: that they may know You, the only true God, and Jesus Christ, whom You have sent".
             </content:text>
-            <content:text>John 1:12
+            <content:text>John 17:3
             </content:text>
         </paragraph>
+        <form>
+            <button>
+                <content:text i18n-id="{{uuid}}">
+                    Not Ready
+                </content:text>
+            </button>
+            <button>
+                <content:text i18n-id="{{uuid}}">
+                    Yes
+                </content:text>
+            </button>
+            <link>
+                <content:text i18n-id="{{uuid}}">
+                    I already made this decision
+                </content:text>
+            </link>
+        </form>
     </card>
     <card>
         <label>
-            <content:text i18n-id="{{uuid}}">The relationship is a gift</content:text>
+            <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
         </label>
         <paragraph>
-            <content:text i18n-id="{{uuid}}">God saved you by his grace when you believed. And you can’t take credit for this; it’s a gift from God … so none of us can boast about it.
-            </content:text>
-            <content:text>Ephesians 2:8-9
-            </content:text>
-            <content:text i18n-id="{{uuid}}">He saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life.
-            </content:text>
-            <content:text>Titus 3:5
-            </content:text>
-            <image resource="tract_test_hands" align="center" />
-        </paragraph>
-    </card>
-    <card>
-        <label>
-            <content:text i18n-id="{{uuid}}">We have a choice to make</content:text>
-        </label>
-        <paragraph>
-            <content:text i18n-id="{{uuid}}">It's not enough just to know or feel that this is true. We have a choice to make.
-            </content:text>
-            <content:text>These circles describe two types of people.
-            </content:text>
-            <tabs>
-            </tabs>
-            <content:text>People like this have received Jesus into their lives. They have been forgiven an experience God's love.
+            <content:text i18n-id="{{uuid}}">Knowing someone better helps a relationship grow. Would you like to sign up for an email series that can help guide you in your new relationship with Jesus Christ?
             </content:text>
         </paragraph>
+        <form>
+        </form>
     </card>
   </cards>
-  <call-to-action>
-      <content:text i18n-id="{{uuid}}">Which circle best describes you? Which would you like to describe you?</content:text>
-  </call-to-action>
 </page>
