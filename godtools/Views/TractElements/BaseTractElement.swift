@@ -166,8 +166,8 @@ class BaseTractElement: UIView {
         self.elements = elements
     }
     
-    func textStyle() -> TextStyle {
-        let textStyle = TextStyle()
+    func textStyle() -> TextContentProperties {
+        let textStyle = TextContentProperties()
         return textStyle
     }
     

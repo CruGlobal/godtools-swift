@@ -12,7 +12,7 @@
 		0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */; };
 		0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */; };
 		0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */; };
-		0F0352C31EC11317006CD4E5 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C21EC11317006CD4E5 /* TextStyle.swift */; };
+		0F0352C31EC11317006CD4E5 /* TextContentProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C21EC11317006CD4E5 /* TextContentProperties.swift */; };
 		0F0352C51EC1133A006CD4E5 /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352C41EC1133A006CD4E5 /* TractColors.swift */; };
 		0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352C61EC2273B006CD4E5 /* kgp-3.xml */; };
 		0F0352CB1EC27CA4006CD4E5 /* CallToActionAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */; };
@@ -104,7 +104,7 @@
 		0F0352B71EC0CD03006CD4E5 /* kgp-2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-2.xml"; sourceTree = "<group>"; };
 		0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-manifest.xml"; sourceTree = "<group>"; };
 		0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractManager.swift; path = Managers/TractManager.swift; sourceTree = "<group>"; };
-		0F0352C21EC11317006CD4E5 /* TextStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextStyle.swift; path = Views/Properties/TextStyle.swift; sourceTree = "<group>"; };
+		0F0352C21EC11317006CD4E5 /* TextContentProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextContentProperties.swift; path = Views/Properties/TextContentProperties.swift; sourceTree = "<group>"; };
 		0F0352C41EC1133A006CD4E5 /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = Views/Properties/TractColors.swift; sourceTree = "<group>"; };
 		0F0352C61EC2273B006CD4E5 /* kgp-3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-3.xml"; sourceTree = "<group>"; };
 		0F0352CA1EC27CA4006CD4E5 /* CallToActionAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallToActionAnimations.swift; path = Views/TractElements/CallToActionAnimations.swift; sourceTree = "<group>"; };
@@ -239,7 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				0F0352C41EC1133A006CD4E5 /* TractColors.swift */,
-				0F0352C21EC11317006CD4E5 /* TextStyle.swift */,
+				0F0352C21EC11317006CD4E5 /* TextContentProperties.swift */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -738,7 +738,7 @@
 				0F7741D91EBB8A8900888D20 /* CardAnimations.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
-				0F0352C31EC11317006CD4E5 /* TextStyle.swift in Sources */,
+				0F0352C31EC11317006CD4E5 /* TextContentProperties.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,

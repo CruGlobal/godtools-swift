@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractColors: NSObject {
+class TractColors {
     
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?

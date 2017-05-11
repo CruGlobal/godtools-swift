@@ -27,11 +27,11 @@ class Title: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
         textStyle.style = "pageHeaderTitle"
         textStyle.width = self.width
-        textStyle.textColor = .gtWhite
+        textStyle.color = .gtWhite
         return textStyle
     }
     

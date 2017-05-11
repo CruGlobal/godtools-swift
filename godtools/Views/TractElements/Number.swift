@@ -28,13 +28,13 @@ class Number: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
         textStyle.style = "pageHeaderNumber"
         textStyle.width = self.width
         textStyle.height = 60.0
-        textStyle.alignment = .center
-        textStyle.textColor = .gtWhite
+        textStyle.align = .center
+        textStyle.color = .gtWhite
         return textStyle
     }
     
