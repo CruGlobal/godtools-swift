@@ -14,7 +14,11 @@ class Title: BaseTractElement {
     static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
-        return Number.marginConstant + Number.widthConstant + Title.marginConstant
+        if (self.parent as! Header).includesNumber {
+            return Number.marginConstant + Number.widthConstant + Title.marginConstant
+        } else {
+            return Title.marginConstant
+        }
     }
     var yPosition: CGFloat {
         return self.yStartPosition

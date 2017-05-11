@@ -25,6 +25,7 @@ class Number: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
+        (self.parent as! Header).includesNumber = true
         self.frame = buildFrame()
     }
     

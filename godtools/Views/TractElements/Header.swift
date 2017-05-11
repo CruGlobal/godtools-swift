@@ -26,6 +26,8 @@ class Header: BaseTractElement {
         }
     }
     
+    var includesNumber = false
+    
     override var horizontalContainer: Bool {
         return true
     }
