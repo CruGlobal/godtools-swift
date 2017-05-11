@@ -11,15 +11,21 @@ import UIKit
 
 extension Card {
     
+    func showCardAndPreviousCards() {
+        if self.cardState == .open {
+            return
+        }
+        
+        self.cardsParentView.setEnvironmentForDisplayingCard(self)
+        showCard()
+    }
+    
     func showCard() {
         if self.cardState == .open {
             return
         }
         
         self.cardState = .open
-        
-        self.cardsParentView.setEnvironmentForDisplayingCard(self)
-        
         let translationY = Card.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
