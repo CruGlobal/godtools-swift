@@ -55,17 +55,17 @@
                     I already made this decision
                 </content:text>
             </link>
-        </form>
-    </card>
-    <card>
-        <label>
-            <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
-        </label>
-        <paragraph>
-            <content:text i18n-id="{{uuid}}">Knowing someone better helps a relationship grow. Would you like to sign up for an email series that can help guide you in your new relationship with Jesus Christ?
-            </content:text>
-        </paragraph>
-        <form>
+            <response>
+                <label>
+                    <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
+                </label>
+                <paragraph>
+                    <content:text i18n-id="{{uuid}}">Knowing someone better helps a relationship grow. Would you like to sign up for an email series that can help guide you in your new relationship with Jesus Christ?
+                    </content:text>
+                </paragraph>
+                <form>
+                </form>
+            </response>
         </form>
     </card>
   </cards>
