@@ -29,6 +29,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
+    @IBOutlet weak var downloadProgressView: GTProgressView!
     
     var resource: DownloadedResource?
     var isAvailable = true
