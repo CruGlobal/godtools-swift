@@ -10,6 +10,7 @@ import Foundation
 import PromiseKit
 import Alamofire
 import SSZipArchive
+import Crashlytics
 
 class TranslationZipImporter {
     static let shared = TranslationZipImporter()
@@ -37,7 +38,8 @@ class TranslationZipImporter {
                 do {
                     try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
                 } catch {
-                    print("Error: \(error.localizedDescription)")
+                    Crashlytics.init().recordError(error,
+                                                   withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
                 }
             }
         
@@ -50,9 +52,6 @@ class TranslationZipImporter {
                 print("Progress: \(progress.fractionCompleted * 100.0)")
             }
             .responseData()
-            .catch(execute: { (error) in
-                print("Error: \(error.localizedDescription)")
-            })
     }
     
     private func writeDataFileToDisk(data: Data, filename: String) throws {
@@ -82,7 +81,7 @@ class TranslationZipImporter {
                                                     withIntermediateDirectories: false,
                                                     attributes: nil)
         } catch {
-            print(error.localizedDescription)
+            Crashlytics.init().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating Resources directory on device."])
         }
     }
 }
