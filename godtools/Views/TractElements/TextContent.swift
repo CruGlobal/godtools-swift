@@ -36,9 +36,9 @@ class TextContent: BaseTractElement {
         loadElementProperties(properties: properties)
         
         self.label = GTLabel(frame: buildFrame())
-        self.label.text = self.properties.text
+        self.label.text = self.properties.value
         self.label.textAlignment = self.properties.align
-        self.label.gtStyle = self.properties.style
+        self.label.font = self.properties.font
         self.label.textColor = self.properties.color
         self.label.lineBreakMode = .byWordWrapping
         
@@ -83,7 +83,7 @@ class TextContent: BaseTractElement {
         for property in properties.keys {
             switch property {
             case "value":
-                self.properties.text = properties[property] as! String?
+                self.properties.value = properties[property] as! String?
             case "i18n-id":
                 self.properties.i18nId = properties[property] as! String?
             case "text-color":

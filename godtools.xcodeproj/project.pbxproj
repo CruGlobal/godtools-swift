@@ -23,6 +23,7 @@
 		0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */; };
 		0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6021EC4F5A500C55B2A /* kgp-4.xml */; };
 		0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6041EC5003600C55B2A /* kgp-5.xml */; };
+		0F2837961EC605B00049CCE5 /* TractButtonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837951EC605B00049CCE5 /* TractButtonProperties.swift */; };
 		0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D971EAE77CD0025C4BB /* Localizable.strings */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
@@ -122,6 +123,7 @@
 		0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractForm.swift; path = Views/TractElements/TractForm.swift; sourceTree = "<group>"; };
 		0F13B6021EC4F5A500C55B2A /* kgp-4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-4.xml"; sourceTree = "<group>"; };
 		0F13B6041EC5003600C55B2A /* kgp-5.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-5.xml"; sourceTree = "<group>"; };
+		0F2837951EC605B00049CCE5 /* TractButtonProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractButtonProperties.swift; path = Views/Properties/TractButtonProperties.swift; sourceTree = "<group>"; };
 		0F350D971EAE77CD0025C4BB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			children = (
 				0F0352C41EC1133A006CD4E5 /* TractColors.swift */,
 				0F0352C21EC11317006CD4E5 /* TextContentProperties.swift */,
+				0F2837951EC605B00049CCE5 /* TractButtonProperties.swift */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -769,6 +772,7 @@
 				0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				0F2837961EC605B00049CCE5 /* TractButtonProperties.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* CallToActionAnimations.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* CallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* Number.swift in Sources */,

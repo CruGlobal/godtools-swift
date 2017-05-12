@@ -35,7 +35,7 @@ class Paragraph: BaseTractElement {
             xMargin = Card.xPaddingConstant
         }
         
-        textStyle.style = "toolFrontSubTitle"
+        textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
         textStyle.align = .left
         textStyle.xMargin = xMargin

@@ -37,10 +37,10 @@ extension BaseTractElement {
             return Card(data: data, startOnY: yPosition, parent: self)
         case "label":
             return TractLabel(data: data, startOnY: yPosition, parent: self)
-//        case "form":
-//            return TractForm(data: data, startOnY: yPosition, parent: self)
-//        case "button":
-//            return TractButton(data: data, startOnY: yPosition, parent: self)
+        case "form":
+            return TractForm(data: data, startOnY: yPosition, parent: self)
+        case "button":
+            return TractButton(data: data, startOnY: yPosition, parent: self)
 //        case "input":
 //            return TractInput(data: data, startOnY: yPosition, parent: self)
         case "placeholder":

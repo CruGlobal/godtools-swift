@@ -33,7 +33,7 @@ class Title: BaseTractElement {
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.style = "pageHeaderTitle"
+        textStyle.font = .gtThin(size: 18.0)
         textStyle.width = self.width
         textStyle.color = .gtWhite
         return textStyle

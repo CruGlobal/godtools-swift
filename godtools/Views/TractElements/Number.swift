@@ -31,7 +31,7 @@ class Number: BaseTractElement {
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.style = "pageHeaderNumber"
+        textStyle.font = .gtThin(size: 54.0)
         textStyle.width = self.width
         textStyle.height = 60.0
         textStyle.align = .center

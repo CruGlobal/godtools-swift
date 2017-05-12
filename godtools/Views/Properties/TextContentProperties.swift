@@ -14,11 +14,11 @@ class TextContentProperties {
     var color: UIColor = .gtBlack
     var scale: CGFloat?
     var align: NSTextAlignment = .left
-    var style: String = "blackText"
     var width: CGFloat = 0.0
     var height: CGFloat = 0.0
     var xMargin: CGFloat = BaseTractElement.xMargin
     var yMargin: CGFloat = BaseTractElement.yMargin
-    var text: String?
+    var value: String?
+    var font = UIFont.gtRegular(size: 15.0)
 
 }

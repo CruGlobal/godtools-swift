@@ -171,6 +171,11 @@ class BaseTractElement: UIView {
         return textStyle
     }
     
+    func buttonStyle() -> TractButtonProperties {
+        let buttonStyle = TractButtonProperties()
+        return buttonStyle
+    }
+    
     func textYPadding() -> CGFloat {
         return BaseTractElement.yPadding
     }

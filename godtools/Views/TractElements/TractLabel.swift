@@ -57,7 +57,7 @@ class TractLabel: BaseTractElement {
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.style = "tabTitle"
+        textStyle.font = .gtSemiBold(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = Card.xPaddingConstant
         textStyle.color = self.primaryColor!
