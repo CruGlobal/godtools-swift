@@ -91,6 +91,23 @@ class TractButton: BaseTractElement {
         }
     }
     
+    override func render() -> UIView {
+        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TextContent.self))! {
+            let element = self.elements?.first as! TextContent
+            let label = element.label
+            
+            self.button.setTitle(label.text, for: .normal)
+            self.button.titleLabel?.font = label.font
+            self.button.titleLabel?.textColor = label.textColor
+        } else {
+            for element in self.elements! {
+                self.addSubview(element.render())
+            }
+        }
+        
+        return self
+    }
+    
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
