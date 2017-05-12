@@ -43,7 +43,6 @@ class TractButton: BaseTractElement {
         self.height = self.properties.height
         
         self.button = GTButton()
-        self.button.setTitle(self.properties.value, for: .normal)
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
         
@@ -67,7 +66,7 @@ class TractButton: BaseTractElement {
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.buttonWidth
         textStyle.align = .center
-        textStyle.color = .gtWhite
+        textStyle.color = self.properties.color
         textStyle.xMargin = self.buttonXPosition
         textStyle.yMargin = self.textPadding
         return textStyle
@@ -89,6 +88,9 @@ class TractButton: BaseTractElement {
             default: break
             }
         }
+        
+        self.properties.backgroundColor = self.primaryColor!
+        self.properties.color = .gtWhite
     }
     
     override func render() -> UIView {
@@ -98,17 +100,17 @@ class TractButton: BaseTractElement {
             
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
-            self.button.titleLabel?.textColor = label.textColor
+            self.button.setTitleColor(self.properties.color, for: .normal)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
             }
         }
-        
+    
         return self
     }
     
-    fileprivate func buildFrame() -> CGRect {
+    func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,

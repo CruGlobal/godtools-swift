@@ -19,6 +19,6 @@ class TractButtonProperties {
     var yMargin = BaseTractElement.yMargin
     var cornerRadius = CGFloat(5.0)
     var backgroundColor = UIColor.gtBlue
-    var color = UIColor.gtWhite
+    var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
 }
