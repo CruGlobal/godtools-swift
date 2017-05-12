@@ -65,10 +65,34 @@ class Cards: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
+        setupBackground()
+    }
+    
+    func setupBackground() {
         self.backgroundColor = .clear
         
         let image = UIImage(named: self.backgroundImagePath)
         let imageView = UIImageView(image: image)
+        
+        var width = imageView.frame.size.width
+        var height = imageView.frame.size.height
+        var xPosition = CGFloat(0.0)
+        var yPosition = CGFloat(0.0)
+        
+        if width > self.frame.size.width {
+            width = self.frame.size.width
+        } else {
+            xPosition = (self.frame.size.width - width) / CGFloat(2.0)
+        }
+        
+        if height > self.frame.size.height {
+            height = self.frame.size.height
+        } else {
+            yPosition = (self.frame.size.height - height) / CGFloat(2.0)
+        }
+        
+        imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
+        
         self.addSubview(imageView)
         self.sendSubview(toBack: imageView)
     }
