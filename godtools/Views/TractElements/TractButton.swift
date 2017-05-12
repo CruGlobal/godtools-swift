@@ -101,6 +101,7 @@ class TractButton: BaseTractElement {
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
             self.button.setTitleColor(self.properties.color, for: .normal)
+            self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
