@@ -74,24 +74,27 @@ class Cards: BaseTractElement {
         let image = UIImage(named: self.backgroundImagePath)
         let imageView = UIImageView(image: image)
         
-        var width = imageView.frame.size.width
-        var height = imageView.frame.size.height
-        var xPosition = CGFloat(0.0)
-        var yPosition = CGFloat(0.0)
+        let viewWidth = self.frame.size.width
+        let viewHeight = self.frame.size.height
+        var width = image?.size.width
+        var height = image?.size.height
+        let ratio = width! / height!
         
-        if width > self.frame.size.width {
-            width = self.frame.size.width
-        } else {
-            xPosition = (self.frame.size.width - width) / CGFloat(2.0)
+        if height! > viewHeight {
+            height = viewHeight
+            width = height! * ratio
         }
         
-        if height > self.frame.size.height {
-            height = self.frame.size.height
-        } else {
-            yPosition = (self.frame.size.height - height) / CGFloat(2.0)
+        if width! > viewWidth {
+            width = viewWidth
+            height = width! / ratio
         }
         
-        imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
+        let xPosition = (viewWidth - width!) / CGFloat(2.0)
+        let yPosition = CGFloat(0.0)
+        
+        imageView.frame = CGRect(x: xPosition, y: yPosition, width: width!, height: height!)
+        imageView.contentMode = .scaleAspectFit
         
         self.addSubview(imageView)
         self.sendSubview(toBack: imageView)
