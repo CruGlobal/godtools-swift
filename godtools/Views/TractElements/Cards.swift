@@ -80,12 +80,7 @@ class Cards: BaseTractElement {
         var height = image?.size.height
         let ratio = width! / height!
         
-        if height! > viewHeight {
-            height = viewHeight
-            width = height! * ratio
-        }
-        
-        if width! > viewWidth {
+        if height! > viewHeight || width! > viewWidth {
             width = viewWidth
             height = width! / ratio
         }
