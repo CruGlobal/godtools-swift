@@ -29,10 +29,14 @@ extension BaseTractElement {
             return Number(data: data, startOnY: yPosition, parent: self)
         case "title":
             return Title(data: data, startOnY: yPosition, parent: self)
+        case "cards":
+            return Cards(data: data, startOnY: yPosition, parent: self)
         case "card":
             return Card(data: data, startOnY: yPosition, parent: self)
         case "label":
             return TractLabel(data: data, startOnY: yPosition, parent: self)
+        case "call-to-action":
+            return CallToAction(data: data, startOnY: yPosition, parent: self)
         default:
             return TextContent(data: data, startOnY: yPosition, parent: self)
         }
@@ -48,19 +52,6 @@ extension BaseTractElement {
         properties["value"] = data.element?.text
         let children = data.children
         return (kind!, properties, children)
-    }
-    
-    func getCardsFromXML(_ data: [XMLIndexer]) -> [XMLIndexer] {
-        var cards = [XMLIndexer]()
-        
-        for dictionary in data {
-            let dataContent = splitData(data: dictionary)
-            if dataContent.kind == "card" {
-                cards.append(dictionary)
-            }
-        }
-        
-        return cards
     }
     
 }

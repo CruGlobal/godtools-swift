@@ -10,6 +10,10 @@ import Foundation
 
 extension BaseTractElement {
     
+    static func isRootElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: TractRoot.self)
+    }
+    
     static func isParagraphElement(_ element: BaseTractElement) -> Bool {
         return BaseTractElement.isElement(element, kindOf: Paragraph.self)
     }
@@ -28,6 +32,10 @@ extension BaseTractElement {
     
     static func isCardElement(_ element: BaseTractElement) -> Bool {
         return BaseTractElement.isElement(element, kindOf: Card.self)
+    }
+    
+    static func isCallToActionElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: CallToAction.self)
     }
     
     static func isTitleElement(_ element: BaseTractElement) -> Bool {

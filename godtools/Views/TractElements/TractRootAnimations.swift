@@ -31,4 +31,24 @@ extension TractRoot {
         }
     }
     
+    func showCallToAction() {
+        for element in self.elements! {
+            if BaseTractElement.isCallToActionElement(element) {
+                let callToAction = element as! CallToAction
+                callToAction.showCallToAction()
+                break
+            }
+        }
+    }
+    
+    func hideCallToAction() {
+        for element in self.elements! {
+            if BaseTractElement.isCallToActionElement(element) {
+                let callToAction = element as! CallToAction
+                callToAction.hideCallToAction()
+                break
+            }
+        }
+    }
+    
 }

@@ -28,13 +28,14 @@ class Number: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("pageHeaderNumber",
-                self.width,
-                60.0,
-                NSTextAlignment.center,
-                BaseTractElement.xMargin,
-                BaseTractElement.yMargin)
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        textStyle.style = "pageHeaderNumber"
+        textStyle.width = self.width
+        textStyle.height = 60.0
+        textStyle.alignment = .center
+        textStyle.textColor = .gtWhite
+        return textStyle
     }
     
     override func yEndPosition() -> CGFloat {

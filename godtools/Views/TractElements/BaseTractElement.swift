@@ -11,6 +11,7 @@ import UIKit
 import SWXMLHash
 
 class BaseTractElement: UIView {
+    
     static let xMargin: CGFloat = 8.0
     static let yMargin: CGFloat = 8.0
     static let xPadding: CGFloat = 0.0
@@ -18,8 +19,37 @@ class BaseTractElement: UIView {
     static let screenWidth = UIScreen.main.bounds.size.width
     static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
     
+    private var _tractConfigurations: TractConfigurations?
+    var tractConfigurations: TractConfigurations? {
+        get {
+            let parentTractConfigurations = self.parent?.tractConfigurations
+            return self._tractConfigurations != nil ? self._tractConfigurations : parentTractConfigurations
+        }
+        set {
+            self._tractConfigurations = newValue
+        }
+    }
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    var didFindCallToAction: Bool = false
+    
+    var colors: TractColors?
+    var primaryColor: UIColor? {
+        get {
+            return (self.colors != nil ? self.colors?.primaryColor : self.parent?.primaryColor)!
+        }
+    }
+    var primaryTextColor: UIColor {
+        get {
+            return (self.colors != nil ? self.colors?.primaryTextColor : self.parent?.primaryTextColor)!
+        }
+    }
+    var textColor: UIColor {
+        get {
+            return (self.colors != nil ? self.colors?.textColor : self.parent?.textColor)!
+        }
+    }
+    
     var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
     var height: CGFloat = 0.0
@@ -33,7 +63,17 @@ class BaseTractElement: UIView {
     var horizontalContainer: Bool {
         return false
     }
-    var hasCardContainer = false
+    
+    fileprivate var _backgroundImagePath: String?
+    var backgroundImagePath: String {
+        if self._backgroundImagePath != nil {
+            return self._backgroundImagePath!
+        } else if self.parent != nil {
+            return (self.parent?.backgroundImagePath)!
+        } else {
+            return ""
+        }
+    }
     
     // MARK: - Initializers
     
@@ -46,10 +86,19 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(data: XMLIndexer, withMaxHeight height: CGFloat) {
+    
+    // Initializer used only for Root component
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.maxHeight = height
+        self.colors = colors
+        self.tractConfigurations = configurations
+        
+        if data.element?.attribute(by: "background-image") != nil {
+            self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
+        }
+        
         setupElement(data: data, startOnY: 0.0)
     }
     
@@ -96,12 +145,6 @@ class BaseTractElement: UIView {
         var elements = [BaseTractElement]()
         
         for dictionary in data {
-            let dataContent = splitData(data: dictionary)
-            if dataContent.kind == "card" && !self.isKind(of: Cards.self) {
-                self.hasCardContainer = true
-                break
-            }
-            
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
@@ -112,14 +155,20 @@ class BaseTractElement: UIView {
             elements.append(element)
         }
         
-        if self.hasCardContainer {
-            let cards = getCardsFromXML(data)
-            let element = buildCardContainer(cards, startOnY: currentYPosition)
-            currentYPosition = element.yEndPosition()
-            elements.append(element)
+        if self.isKind(of: TractRoot.self) {
+            if !self.didFindCallToAction {
+                let element = CallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+                if self.horizontalContainer && element.yEndPosition() > maxYPosition {
+                    maxYPosition = element.yEndPosition()
+                } else {
+                    currentYPosition = element.yEndPosition()
+                }
+                
+                elements.append(element)
+            }
         }
         
-        if self.horizontalContainer && !self.hasCardContainer {
+        if self.horizontalContainer {
             self.height = maxYPosition
         } else {
             self.height = currentYPosition
@@ -128,18 +177,10 @@ class BaseTractElement: UIView {
         self.elements = elements
     }
     
-    func buildCardContainer(_ data: [XMLIndexer], startOnY yPosition: CGFloat) -> BaseTractElement {
-        let element = Cards(children: data, startOnY: yPosition, parent: self)
-        return element
-    }
-    
-    func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("blackText",
-                BaseTractElement.textContentWidth,
-                0.0,
-                NSTextAlignment.left,
-                BaseTractElement.xMargin,
-                BaseTractElement.yMargin)
+    func textStyle() -> TextStyle {
+        let textStyle = TextStyle()
+        textStyle.alignment = (self.tractConfigurations?.defaultTextAlignment)!
+        return textStyle
     }
     
     func textYPadding() -> CGFloat {
@@ -161,4 +202,5 @@ class BaseTractElement: UIView {
             return 0.0
         }
     }
+    
 }

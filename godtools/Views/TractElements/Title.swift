@@ -27,13 +27,12 @@ class Title: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("pageHeaderTitle",
-                self.width,
-                0.0,
-                NSTextAlignment.left,
-                BaseTractElement.xMargin,
-                BaseTractElement.yMargin)
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        textStyle.style = "pageHeaderTitle"
+        textStyle.width = self.width
+        textStyle.textColor = .gtWhite
+        return textStyle
     }
     
     override func yEndPosition() -> CGFloat {

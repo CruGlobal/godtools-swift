@@ -30,6 +30,12 @@ extension Cards {
                 foundCard = true
             }
         }
+        
+        if card == elements?.last {
+            showCallToAction()
+        } else {
+            hideCallToAction()
+        }
     }
     
     func resetEnvironment() {
@@ -55,6 +61,16 @@ extension Cards {
                 break
             }
         }
+    }
+    
+    func showCallToAction() {
+        let rootView = self.parent as! TractRoot
+        rootView.showCallToAction()
+    }
+    
+    func hideCallToAction() {
+        let rootView = self.parent as! TractRoot
+        rootView.hideCallToAction()
     }
     
     // MARK: - Animations for the Cards container and the Header

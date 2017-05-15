@@ -22,13 +22,11 @@ class Heading: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> (style: String, width: CGFloat, height: CGFloat, alignment: NSTextAlignment, xMargin: CGFloat, yMargin: CGFloat) {
-        return ("toolFrontTitle",
-                BaseTractElement.textContentWidth,
-                0.0,
-                NSTextAlignment.left,
-                BaseTractElement.xMargin,
-                BaseTractElement.yMargin)
+    override func textStyle() -> TextStyle {
+        let textStyle = super.textStyle()
+        textStyle.style = "toolFrontTitle"
+        textStyle.textColor = self.primaryColor!
+        return textStyle
     }
     
     override func yEndPosition() -> CGFloat {
