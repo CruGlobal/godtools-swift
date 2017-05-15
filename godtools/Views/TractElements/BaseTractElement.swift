@@ -21,7 +21,7 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
-    var didFoundCallToAction: Bool = false
+    var didFindCallToAction: Bool = false
     
     var colors: TractColors?
     var primaryColor: UIColor? {
@@ -145,7 +145,7 @@ class BaseTractElement: UIView {
         }
         
         if self.isKind(of: TractRoot.self) {
-            if !self.didFoundCallToAction {
+            if !self.didFindCallToAction {
                 let element = CallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
                 if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                     maxYPosition = element.yEndPosition()

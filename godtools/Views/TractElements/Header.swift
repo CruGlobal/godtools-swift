@@ -15,7 +15,7 @@ class Header: BaseTractElement {
         return 0.0
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + 1.0 // BaseTractElement.yMargin
+        return self.yStartPosition + 1.0
     }
     override var height: CGFloat {
         get {

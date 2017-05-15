@@ -20,7 +20,7 @@ class CallToAction: BaseTractElement {
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
     }
-    static let minHeight = CGFloat(80.0)
+    static let minHeight: CGFloat = 80.0
     override var height: CGFloat {
         get {
             return super.height > CallToAction.minHeight ? super.height : CallToAction.minHeight
@@ -36,8 +36,8 @@ class CallToAction: BaseTractElement {
         }
         return position
     }
-    let buttonSizeConstant = CGFloat(22.0)
-    let buttonSizeXMargin = CGFloat(8.0)
+    let buttonSizeConstant: CGFloat = 22.0
+    let buttonSizeXMargin: CGFloat = 8.0
     var buttonXPosition: CGFloat {
         return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
     }
