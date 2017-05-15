@@ -66,6 +66,8 @@ class TractTabs: BaseTractElement {
             self.segmentedControl.insertSegment(withTitle: self.options[i], at: i, animated: true)
         }
         
+        self.segmentedControl.selectedSegmentIndex = 0
+        self.segmentedControl.tintColor = self.primaryColor
         self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
         
         self.addSubview(self.segmentedControl)
