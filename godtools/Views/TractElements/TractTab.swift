@@ -21,10 +21,6 @@ class TractTab: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
     // MARK: - Helpers
     
     fileprivate func buildFrame() -> CGRect {

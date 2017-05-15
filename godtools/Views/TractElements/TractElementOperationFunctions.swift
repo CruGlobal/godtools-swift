@@ -51,8 +51,6 @@ extension BaseTractElement {
             return CallToAction(data: data, startOnY: yPosition, parent: self)
         case "tabs":
             return TractTabs(data: data, startOnY: yPosition, parent: self)
-        case "tab":
-            return TractTab(data: data, startOnY: yPosition, parent: self)
         default:
             return TextContent(data: data, startOnY: yPosition, parent: self)
         }

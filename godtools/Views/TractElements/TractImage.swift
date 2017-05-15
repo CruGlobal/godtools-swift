@@ -10,7 +10,10 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
+    static let xMarginConstant: CGFloat = 8.0
     static let yMarginConstant: CGFloat = 16.0
+    
+    var align = "center"
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
@@ -35,7 +38,17 @@ class TractImage: BaseTractElement {
             height = self.width * height / width
             width = self.width
         } else {
-            xPosition = (self.width - width) / 2
+            switch self.align {
+            case "center":
+                xPosition = (self.width - width) / 2
+            case "left":
+                xPosition = TractImage.xMarginConstant
+            case "right":
+                xPosition = self.width - width - TractImage.xMarginConstant
+            default:
+                xPosition = (self.width - width) / 2
+            }
+            
         }
         
         self.imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
@@ -59,7 +72,7 @@ class TractImage: BaseTractElement {
     
     func loadImage(properties: [String: Any]) -> UIImage {
         let resource = properties["resource"] as! String?
-        let _ = properties["align"] as! String?
+        self.align = properties["align"] as! String
         
         let image = UIImage(named: resource!)!
         return image

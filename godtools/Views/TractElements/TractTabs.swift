@@ -11,36 +11,40 @@ import SWXMLHash
 
 class TractTabs: BaseTractElement {
     
+    static let xMarginConstant: CGFloat = 16.0
+    static let yMarginConstant: CGFloat = 16.0
+    
     var xPosition: CGFloat {
-        return 0.0
+        return TractTabs.xMarginConstant
     }
     var yPosition: CGFloat {
-        return self.yStartPosition
+        return self.yStartPosition + TractTabs.yMarginConstant
     }
-    override var height: CGFloat {
-        get {
-            return super.height + 120.0
-        }
-        set {
-            super.height = newValue
-        }
+    override var width: CGFloat {
+        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     
     var segmentedControl = UISegmentedControl()
     var options = [String]()
-    var tabs = [XMLIndexer]()
+    var tabs = [[XMLIndexer]]()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
         
-        for option in data["options"].children {
-            let text = (option.children.first?.element?.text)! as String
-            self.options.append(text)
-        }
-        
-        for tab in data["tab-content"].children {
-            self.tabs.append(tab)
+        var position = 0
+        for element in data.children {
+            self.tabs.append([XMLIndexer]())
+            let text = element["label"]["text"].element?.text
+            self.options.append(text!)
+            
+            for node in element.children {
+                if node.element?.name != "label" {
+                    self.tabs[position].append(node)
+                }
+            }
+            
+            position += 1
         }
         
         buildChildrenForData(dataContent.children)
@@ -62,20 +66,41 @@ class TractTabs: BaseTractElement {
             self.segmentedControl.insertSegment(withTitle: self.options[i], at: i, animated: true)
         }
         
-        self.addSubview(segmentedControl)
+        self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
+        
+        self.addSubview(self.segmentedControl)
+    }
+    
+    func newOptionSelected() {
+        for element in self.elements! {
+            element.isHidden = true
+        }
+        self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
-        var currentYPosition: CGFloat = 28.0
+        let currentYPosition: CGFloat = 28.0
+        var maxHeight: CGFloat = currentYPosition
         var elements = [BaseTractElement]()
+        var firstElement = true
         
-        for tab in self.tabs {
-            let element = buildElementForDictionary(tab, startOnY: currentYPosition)
-            currentYPosition = element.yEndPosition()
+        for tabData in self.tabs {
+            let element = TractTab(children: tabData, startOnY: currentYPosition, parent: self)
+            
+            if firstElement {
+                element.isHidden = false
+                firstElement = false
+            } else {
+                element.isHidden = true
+            }
+            
+            if element.height > maxHeight {
+                maxHeight = element.height
+            }
             elements.append(element)
         }
         
-        self.height = currentYPosition
+        self.height = maxHeight
         self.elements = elements
     }
     

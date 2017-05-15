@@ -73,24 +73,24 @@
             <content:text>These circles describe two types of people.
             </content:text>
             <tabs>
-                <options>
-                    <option><content:text i18n-id="{{uuid}}">Self-Directed</content:text></option>
-                    <option><content:text i18n-id="{{uuid}}">Christ-Directed</content:text></option>
-                </options>
-                <tab-content>
-                    <tab>
-                        <image resource="tract_test_self_directed_image" align="center" />
-                        <image resource="tract_test_christ_directed_image" align="center" blur-on"parent.selected" />
-                        <content:text i18n-id="{{uuid}}">People like this have never received Jesus into their lives. They remain guilty and cut off from God by their sins.
-                        </content:text>
-                    </tab>
-                    <tab>
-                        <image resource="tract_test_self_directed_image" align="center" blur-on"parent.selected" />
-                        <image resource="tract_test_christ_directed_image" align="center" />
-                        <content:text i18n-id="{{uuid}}">People like this have received Jesus into their lives. They have been forgiven an experience God’s love.
-                        </content:text>
-                    </tab>
-                </tab-content>
+                <tab>
+                    <label>
+                        <text i18n-id="{{uuid}}">Self-Directed</text>
+                    </label>
+                    <image resource="tract_test_self_directed_image" align="left" />
+                    <image resource="tract_test_christ_directed_image" align="right" />
+                    <content:text i18n-id="{{uuid}}">People like this have never received Jesus into their lives. They remain guilty and cut off from God by their sins.
+                    </content:text>
+                </tab>
+                <tab>
+                    <label>
+                        <text i18n-id="{{uuid}}">Christ-Directed</text>
+                    </label>
+                    <image resource="tract_test_christ_directed_image" align="left" />
+                    <image resource="tract_test_self_directed_image" align="right" />
+                    <content:text i18n-id="{{uuid}}">People like this have received Jesus into their lives. They have been forgiven an experience God’s love.
+                    </content:text>
+                </tab>
             </tabs>
         </paragraph>
     </card>
