@@ -84,7 +84,7 @@ class BaseTractElement: UIView {
         self.maxHeight = height
         self.colors = colors
         
-        if ((data.element?.attribute(by: "background-image")) != nil) {
+        if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
         }
         
