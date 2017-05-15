@@ -22,7 +22,7 @@ class Card: BaseTractElement {
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 80.0
     static let xPaddingConstant: CGFloat = 28.0
-    static let contentBottomPadding = CGFloat(50.0)
+    static let contentBottomPadding: CGFloat = 50.0
     
     let scrollView = UIScrollView()
     let containerView = UIView()
@@ -83,8 +83,8 @@ class Card: BaseTractElement {
     
     func setupTransparentView() {
         let width = self.scrollView.frame.size.width - 6.0
-        let height = CGFloat(60.0)
-        let xPosition = CGFloat(3.0)
+        let height: CGFloat = 60.0
+        let xPosition: CGFloat = 3.0
         let yPosition = self.scrollView.frame.size.height - height - 1.0
         let transparentViewFrame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         let transparentView = UIView(frame: transparentViewFrame)

@@ -37,7 +37,6 @@ class Paragraph: BaseTractElement {
         
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
-        textStyle.align = .left
         textStyle.xMargin = xMargin
         textStyle.color = self.textColor
         
