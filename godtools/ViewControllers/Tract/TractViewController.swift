@@ -64,6 +64,8 @@ class TractViewController: BaseViewController {
         self.progressView.removeFromSuperview()
     }
     
+    // MARK: - UI configuration
+    
     override func configureNavigationButtons() {
         self.addHomeButton()
         self.addShareButton()
@@ -156,6 +158,7 @@ class TractViewController: BaseViewController {
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.data = getPage(page)
         view.colors = self.colors
+        view.configurations.defaultTextAlignment = getLanguageTextAlignment()
         view.tag = self.viewTagOrigin + page
         return view
     }
@@ -347,6 +350,10 @@ extension TractViewController {
         let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
         
         return parallelLanguage!.localizedName()
+    }
+    
+    fileprivate func getLanguageTextAlignment() -> NSTextAlignment {
+        return .left
     }
     
     fileprivate func getResourceData() {

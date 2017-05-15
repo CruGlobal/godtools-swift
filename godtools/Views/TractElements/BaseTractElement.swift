@@ -19,6 +19,16 @@ class BaseTractElement: UIView {
     static let screenWidth = UIScreen.main.bounds.size.width
     static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
     
+    private var _tractConfigurations: TractConfigurations?
+    var tractConfigurations: TractConfigurations? {
+        get {
+            let parentTractConfigurations = self.parent?.tractConfigurations
+            return self._tractConfigurations != nil ? self._tractConfigurations : parentTractConfigurations
+        }
+        set {
+            self._tractConfigurations = newValue
+        }
+    }
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
     var didFindCallToAction: Bool = false
@@ -78,11 +88,12 @@ class BaseTractElement: UIView {
     
     
     // Initializer used only for Root component
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.maxHeight = height
         self.colors = colors
+        self.tractConfigurations = configurations
         
         if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
@@ -168,6 +179,7 @@ class BaseTractElement: UIView {
     
     func textStyle() -> TextStyle {
         let textStyle = TextStyle()
+        textStyle.alignment = (self.tractConfigurations?.defaultTextAlignment)!
         return textStyle
     }
     

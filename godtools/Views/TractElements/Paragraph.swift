@@ -37,7 +37,6 @@ class Paragraph: BaseTractElement {
         
         textStyle.style = "toolFrontSubTitle"
         textStyle.width = self.width
-        textStyle.alignment = .left
         textStyle.xMargin = xMargin
         textStyle.textColor = self.textColor
         
