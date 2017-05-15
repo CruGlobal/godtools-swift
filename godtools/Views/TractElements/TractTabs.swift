@@ -35,10 +35,11 @@ class TractTabs: BaseTractElement {
         let dataContent = splitData(data: data)
         
         for option in data["options"].children {
-            self.options.append((option.element?.text)!)
+            let text = (option.children.first?.element?.text)! as String
+            self.options.append(text)
         }
         
-        for tab in data["content"].children {
+        for tab in data["tab-content"].children {
             self.tabs.append(tab)
         }
         
