@@ -76,7 +76,7 @@
                 <options>
                     <option i18n-id="{{uuid}}">Self-Directed</option>
                     <option i18n-id="{{uuid}}">Christ-Directed</option>
-                </option>
+                </options>
                 <content>
                     <tab>
                         <image resource="tract_test_self_directed_image" align="center" />
