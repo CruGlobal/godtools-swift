@@ -43,10 +43,10 @@ extension BaseTractElement {
             return TractButton(data: data, startOnY: yPosition, parent: self)
         case "link":
             return TractLink(data: data, startOnY: yPosition, parent: self)
-//        case "input":
-//            return TractInput(data: data, startOnY: yPosition, parent: self)
-        case "placeholder":
-            return TractInputPlaceHolder(data: data, startOnY: yPosition, parent: self)
+        case "input":
+            return TractInput(data: data, startOnY: yPosition, parent: self)
+//        case "placeholder":
+//            return TractInputPlaceHolder(data: data, startOnY: yPosition, parent: self)
         case "call-to-action":
             return CallToAction(data: data, startOnY: yPosition, parent: self)
         case "tabs":

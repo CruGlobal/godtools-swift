@@ -84,7 +84,7 @@ class TractButton: BaseTractElement {
             case "i18n-id":
                 self.properties.i18nId = properties[property] as! String?
             case "type":
-                self.properties.value = properties[property] as! String?
+                self.properties.type = properties[property] as! String?
             default: break
             }
         }
