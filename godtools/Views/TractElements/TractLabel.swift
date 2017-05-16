@@ -50,8 +50,12 @@ class TractLabel: BaseTractElement {
         for element in self.elements! {
             self.addSubview(element.render())
         }
-        setupPressGestures()
-        buildHorizontalLine()
+        
+        if !BaseTractElement.isFormElement(self) {
+            setupPressGestures()
+            buildHorizontalLine()
+        }
+        
         return self
     }
     
@@ -64,6 +68,8 @@ class TractLabel: BaseTractElement {
             textStyle.font = .gtRegular(size: 16.0)
             textStyle.color = self.textColor
             textStyle.xMargin = CGFloat(0.0)
+            textStyle.yMargin = CGFloat(0.0)
+            textStyle.height = CGFloat(22.0)
         } else {
             textStyle.font = .gtSemiBold(size: 18.0)
             textStyle.color = self.primaryColor!
@@ -73,7 +79,12 @@ class TractLabel: BaseTractElement {
     }
     
     override func textYPadding() -> CGFloat {
-        return 15.0
+        var padding: CGFloat = 15.0
+        if BaseTractElement.isFormElement(self) {
+            padding = 0.0
+        }
+        
+        return padding
     }
     
     override func yEndPosition() -> CGFloat {

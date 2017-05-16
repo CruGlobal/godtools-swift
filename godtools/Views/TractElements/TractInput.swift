@@ -25,22 +25,22 @@ class TractInput: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition + self.yMargin
     }
-    override var width: CGFloat {
-        return super.width - self.xPosition - self.xMargin
-    }
-    override var height: CGFloat {
-        get {
-            return super.height + self.textViewHeight + self.yMargin
-        }
-        set {
-            super.height = newValue
-        }
-    }
     var textViewWidth: CGFloat {
         return self.properties.width > self.width ? self.width : self.properties.width
     }
     var textViewHeight: CGFloat {
         return self.properties.height
+    }
+    override var width: CGFloat {
+        return super.width - self.xPosition - self.xMargin
+    }
+    override var height: CGFloat {
+        get {
+            return super.height + self.yMargin + self.textViewHeight
+        }
+        set {
+            super.height = newValue
+        }
     }
     var textViewXPosition: CGFloat {
         return (self.width - self.textViewWidth) / 2
@@ -70,7 +70,6 @@ class TractInput: BaseTractElement {
     
     override func setupView(properties: [String: Any]) {
         loadElementProperties(properties: properties)
-        self.height = self.properties.height
         
         self.textField.cornerRadius = self.properties.cornerRadius
         self.textField.borderColor = self.properties.color
