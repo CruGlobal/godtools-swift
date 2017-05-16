@@ -44,12 +44,16 @@ extension Card {
     }
     
     func hideCard() {
-        if self.cardState == .close || self.cardState == .hidden || self.cardState == .enable {
+        if self.cardState == .close || self.cardState == .hidden {
             return
         }
         
-        self.cardState = .close
-        self.cardsParentView.hideCallToAction()
+        if self.cardState == .enable {
+            self.cardState = .hidden
+        } else {
+            self.cardState = .close
+            self.cardsParentView.hideCallToAction()
+        }
         
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.45,
@@ -61,6 +65,10 @@ extension Card {
                         if completed {
                             if self.cardNumber == 0 {
                                 self.cardsParentView.resetEnvironment()
+                            }
+                            
+                            if self.cardState == .hidden {
+                                self.isHidden = true
                             }
                         }})
         

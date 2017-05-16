@@ -153,6 +153,8 @@ class Card: BaseTractElement {
             hideCard()
         case .close:
             showCardAndPreviousCards()
+        case .enable:
+            hideCard()
         default: break
         }
     }

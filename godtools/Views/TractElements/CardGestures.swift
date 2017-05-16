@@ -29,7 +29,7 @@ extension Card {
                 self.cardsParentView.showFollowingCardToCard(self)
             }
         } else if sender.direction == .down {
-            if self.cardState == .open {
+            if self.cardState == .open || self.cardState == .enable {
                 hideCard()
             }
         }
