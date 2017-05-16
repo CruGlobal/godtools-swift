@@ -13,7 +13,7 @@ class TractButton: BaseTractElement {
     var properties = TractButtonProperties()
     
     var xMargin: CGFloat {
-        return self.properties.xMargin
+        return Card.xPaddingConstant
     }
     var yMargin : CGFloat {
         return self.properties.yMargin

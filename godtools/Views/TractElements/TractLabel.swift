@@ -57,10 +57,18 @@ class TractLabel: BaseTractElement {
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.font = .gtSemiBold(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = Card.xPaddingConstant
-        textStyle.color = self.primaryColor!
+        
+        if BaseTractElement.isFormElement(self) {
+            textStyle.font = .gtRegular(size: 16.0)
+            textStyle.color = self.textColor
+            textStyle.xMargin = CGFloat(0.0)
+        } else {
+            textStyle.font = .gtSemiBold(size: 18.0)
+            textStyle.color = self.primaryColor!
+        }
+        
         return textStyle
     }
     
