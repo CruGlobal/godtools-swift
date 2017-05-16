@@ -15,7 +15,7 @@ import UIKit
 class Card: BaseTractElement {
     
     enum CardState {
-        case open, preview, close
+        case open, preview, close, hidden, enable
     }
     
     static let xMarginConstant: CGFloat = 8.0
@@ -23,6 +23,8 @@ class Card: BaseTractElement {
     static let yBottomMarginConstant: CGFloat = 80.0
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 50.0
+    
+    var properties = CardProperties()
     
     let scrollView = UIScrollView()
     let containerView = UIView()
@@ -56,6 +58,8 @@ class Card: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
+        loadElementProperties(properties: properties)
+        
         self.frame = buildFrame()
         setupStyle()
         setupScrollView()
@@ -66,6 +70,15 @@ class Card: BaseTractElement {
     
     func setupStyle() {
         self.backgroundColor = .clear
+        
+        if self.properties.hidden {
+            self.isHidden = true
+            self.cardState = .hidden
+        }
+        
+        if self.properties.listener != nil {
+            self.tag = (self.properties.listener?.transformToNumber())!
+        }
     }
     
     func setupScrollView() {
@@ -140,10 +153,29 @@ class Card: BaseTractElement {
             hideCard()
         case .close:
             showCardAndPreviousCards()
+        default: break
+        }
+    }
+    
+    override func receiveMessage() {
+        if self.cardState == .hidden {
+            showCard()
         }
     }
     
     // MARK: - Helpers
+    
+    func loadElementProperties(properties: [String: Any]) {
+        for property in properties.keys {
+            switch property {
+            case "hidden":
+                self.properties.hidden = true
+            case "listener":
+                self.properties.listener = properties[property] as! String?
+            default: break
+            }
+        }
+    }
     
     func disableScrollview() {
         if self.cardState != .open {

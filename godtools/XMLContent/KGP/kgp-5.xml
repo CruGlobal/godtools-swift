@@ -39,13 +39,13 @@
             <content:text>John 17:3
             </content:text>
         </paragraph>
-        <form>
+        <form action="check_prayer">
             <button>
                 <content:text i18n-id="{{uuid}}">
                     Not Ready
                 </content:text>
             </button>
-            <button>
+            <button tap-event="followup-form">
                 <content:text i18n-id="{{uuid}}">
                     Yes
                 </content:text>
@@ -57,7 +57,7 @@
             </link>
         </form>
     </card>
-    <card>
+    <card hidden="true" listener="followup-form">
         <label>
             <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
         </label>
@@ -65,7 +65,7 @@
             <content:text i18n-id="{{uuid}}">Knowing someone better helps a relationship grow. Would you like to sign up for an email series that can help guide you in your new relationship with Jesus Christ?
             </content:text>
         </paragraph>
-        <form>
+        <form action="send_information">
             <input type="text" name="name">
                 <label>
                     <text i18n-id="{{uuid}}">Name</text>
@@ -82,7 +82,7 @@
                     <text i18n-id="{{uuid}}">Email</text>
                 </placeholder>
             </input>
-            <button>
+            <button tap-event="send-information-modal">
                 <content:text i18n-id="{{uuid}}">
                     Send
                 </content:text>
@@ -90,4 +90,31 @@
         </form>
     </card>
   </cards>
+  <modals>
+      <modal listener="send-information-modal">
+          <title>
+              <content:text i18n-id="{{uuid}}">Thank You
+              </content:text>
+          </title>
+          <paragraph>
+              <content:text i18n-id="{{uuid}}">Check your email soon for your first study in following Jesus Christ.
+              </content:text>
+          </paragraph>
+          <paragraph>
+              <content:text i18n-id="{{uuid}}">If you don’t receive it, please check your spam folder.
+              </content:text>
+          </paragraph>
+          <form>
+              <button>
+                  <content:text i18n-id="{{uuid}}">
+                      Done
+                  </content:text>
+              </button>
+          </form>
+          <paragraph>
+              <content:text i18n-id="{{uuid}}">If this sign up occurs offline, you will need to reopen the app while on Wifi to have the signup automatically submit.
+              </content:text>
+          </paragraph>
+      </modal>
+  </modals>
 </page>

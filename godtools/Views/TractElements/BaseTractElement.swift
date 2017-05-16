@@ -19,6 +19,14 @@ class BaseTractElement: UIView {
     static let screenWidth = UIScreen.main.bounds.size.width
     static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
     
+    private var _mainView: TractRoot?
+    var root: TractRoot? {
+        get {
+            let parentRoot = self.parent?.root
+            return self._mainView != nil ? self._mainView : parentRoot!
+        }
+    }
+    
     private var _tractConfigurations: TractConfigurations?
     var tractConfigurations: TractConfigurations? {
         get {
@@ -97,6 +105,10 @@ class BaseTractElement: UIView {
         
         if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
+        }
+        
+        if self.isKind(of: TractRoot.self) {
+            self._mainView = self as? TractRoot
         }
         
         setupElement(data: data, startOnY: 0.0)
@@ -203,6 +215,9 @@ class BaseTractElement: UIView {
     
     func textYPadding() -> CGFloat {
         return BaseTractElement.yPadding
+    }
+    
+    func receiveMessage() {
     }
     
     // MARK: - Helpers

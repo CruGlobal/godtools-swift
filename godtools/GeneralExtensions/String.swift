@@ -35,4 +35,13 @@ extension String {
         return UIColor(red: values[0]/255.0, green: values[1]/255.0, blue: values[2]/255.0, alpha: values[3])
     }
     
+    func transformToNumber() -> Int {
+        let data = self.data(using: .utf8)!
+        let hexString = data.map{ String(format:"%02x", $0) }.joined()
+        let scanner = Scanner(string: hexString)
+        var value: UInt32 = 0
+        scanner.scanHexInt32(&value)
+        return Int(value)
+    }
+    
 }

@@ -46,6 +46,8 @@ class TractButton: BaseTractElement {
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
         
+        self.addTargetToButton()
+        
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.frame.size.height)
         self.addSubview(self.button)
@@ -85,12 +87,25 @@ class TractButton: BaseTractElement {
                 self.properties.i18nId = properties[property] as! String?
             case "type":
                 self.properties.type = properties[property] as! String?
+            case "tap-event":
+                self.properties.tapEvent = properties[property] as! String?
             default: break
             }
         }
         
         self.properties.backgroundColor = self.primaryColor!
         self.properties.color = .gtWhite
+    }
+    
+    func addTargetToButton() {
+        if self.properties.tapEvent != nil {
+            self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
+        }
+    }
+    
+    func buttonTarget() {
+        let tag = self.properties.tapEvent?.transformToNumber()
+        self.root?.sendMessageToView(tag: tag!)
     }
     
     override func render() -> UIView {

@@ -25,7 +25,13 @@ extension Card {
             return
         }
         
-        self.cardState = .open
+        if self.cardState == .hidden {
+            self.isHidden = false
+            self.cardState = .enable
+        } else {
+            self.cardState = .open
+        }
+        
         let translationY = Card.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -38,7 +44,7 @@ extension Card {
     }
     
     func hideCard() {
-        if self.cardState == .close {
+        if self.cardState == .close || self.cardState == .hidden || self.cardState == .enable {
             return
         }
         

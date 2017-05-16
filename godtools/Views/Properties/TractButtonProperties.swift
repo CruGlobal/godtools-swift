@@ -21,4 +21,5 @@ class TractButtonProperties {
     var backgroundColor = UIColor.gtBlue
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
+    var tapEvent: String?
 }

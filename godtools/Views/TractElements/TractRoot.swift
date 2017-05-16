@@ -28,4 +28,11 @@ class TractRoot: BaseTractElement {
                       height: self.height)
     }
     
+    func sendMessageToView(tag: Int) {
+        let view = self.viewWithTag(tag)
+        if (view?.isKind(of: BaseTractElement.self))! {
+            (view as! BaseTractElement).receiveMessage()
+        }
+    }
+    
 }
