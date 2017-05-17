@@ -80,6 +80,9 @@ class LanguagesManager: GTDataManager {
     
     func recordLanguageShouldDelete(language: Language) {
         language.shouldDownload = false
+        for translation in language.translationsAsArray() {
+            translation.isDownloaded = false
+        }
         saveToDisk()
     }
     
@@ -124,6 +127,7 @@ extension LanguagesManager: LanguageTableViewCellDelegate {
     
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
         self.recordLanguageShouldDownload(language: cell.language!)
+        TranslationZipImporter.shared.download(language: cell.language!)
     }
 }
 

@@ -29,4 +29,8 @@ public class Language: NSManagedObject {
     func isParallel() -> Bool {
         return remoteId == GTSettings.shared.parallelLanguageId
     }
+    
+    func translationsAsArray() -> [Translation] {
+        return Array(translations!) as! [Translation]
+    }
 }
