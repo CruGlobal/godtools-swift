@@ -10,7 +10,7 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var imageView = UIImageView()
     var align = "center"

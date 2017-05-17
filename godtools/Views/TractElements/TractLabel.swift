@@ -12,7 +12,7 @@ import SWXMLHash
 
 class TractLabel: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var tapView = UIView()
     

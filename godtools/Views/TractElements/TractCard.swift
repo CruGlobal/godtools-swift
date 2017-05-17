@@ -14,7 +14,7 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     enum CardState {
         case open, preview, close, hidden, enable

@@ -11,7 +11,7 @@ import UIKit
 
 class TractTextContent: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var properties = TractTextContentProperties()
     var label: GTLabel = GTLabel()

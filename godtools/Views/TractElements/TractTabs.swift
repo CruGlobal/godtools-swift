@@ -11,7 +11,7 @@ import SWXMLHash
 
 class TractTabs: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var segmentedControl = UISegmentedControl()
     var options = [String]()

@@ -11,7 +11,7 @@ import SWXMLHash
 
 class TractInput: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var properties = TractTextFieldProperties()
     var textField = GTTextField()

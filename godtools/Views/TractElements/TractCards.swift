@@ -21,11 +21,13 @@ import SWXMLHash
 
 class TractCards: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Configurations
     
     enum CardsState {
         case open, preview
     }
+    
+    // MARK: - Object properties
     
     var cardsState = CardsState.preview
     

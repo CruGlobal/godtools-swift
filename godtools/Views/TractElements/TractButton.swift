@@ -10,7 +10,7 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
-    // MARK: - Object configurations
+    // MARK: - Object properties
     
     var properties = TractButtonProperties()
     var button: GTButton = GTButton()

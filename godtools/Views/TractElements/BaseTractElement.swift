@@ -12,12 +12,16 @@ import SWXMLHash
 
 class BaseTractElement: UIView {
     
+    // MARK: Positions constants
+    
     static let xMargin: CGFloat = 8.0
     static let yMargin: CGFloat = 8.0
     static let xPadding: CGFloat = 0.0
     static let yPadding: CGFloat = 0.0
     static let screenWidth = UIScreen.main.bounds.size.width
     static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
+    
+    // MARK: Main properties
     
     private var _mainView: TractRoot?
     var root: TractRoot? {
@@ -37,6 +41,7 @@ class BaseTractElement: UIView {
             self._tractConfigurations = newValue
         }
     }
+    
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
     var didFindCallToAction: Bool = false
@@ -96,9 +101,11 @@ class BaseTractElement: UIView {
     
     
     // Initializer used only for Root component
+    
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
+        self.yStartPosition = 0.0
         self.maxHeight = height
         self.colors = colors
         self.tractConfigurations = configurations
