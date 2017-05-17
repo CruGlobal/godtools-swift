@@ -54,7 +54,7 @@ class TractTabs: BaseTractElement {
                 let nodeContent = splitData(data: node)
                 
                 if nodeContent.kind == "label" {
-                    let text = node[nodeContent.elementName]["content:text"].element?.text
+                    let text = node["content:text"].element?.text
                     self.options.append(text!)
                 } else {
                     self.tabs[position].append(node)
