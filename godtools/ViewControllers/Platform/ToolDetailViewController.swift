@@ -53,20 +53,10 @@ class ToolDetailViewController: BaseViewController {
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         if resource!.shouldDownload {
             toolsManager.delete(resource: self.resource!)
-                .always {
-                    self.displayButton()
-                }.catch(execute: { (error) in
-                    //TODO: throw a notification to show an error?
-                })
-            
+            self.displayButton()
         } else {
             toolsManager.download(resource: self.resource!)
-                .always {
-                    self.displayButton()
-                }
-                .catch(execute: { (error) in
-                    //TODO: throw a notification to show an error?
-                })
+            self.displayButton()
         }
     }
 

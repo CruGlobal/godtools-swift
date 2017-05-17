@@ -32,18 +32,14 @@ class ToolsManager: GTDataManager {
         }
     }
     
-    func download(resource: DownloadedResource) -> AnyPromise {
+    func download(resource: DownloadedResource) {
         resource.shouldDownload = true
         saveToDisk()
-        
-        return AnyPromise(Promise(value: "ok"))
     }
     
-    func delete(resource: DownloadedResource) -> AnyPromise {
+    func delete(resource: DownloadedResource) {
         resource.shouldDownload = false
         saveToDisk()
-        
-        return AnyPromise(Promise(value: "ok"))
     }
 }
 
@@ -100,13 +96,9 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
+        // TranslationZipImporter.shared.download(resource: resource)
         self.download(resource: resource)
-            .always {
-                self.delegate?.downloadButtonWasPressed!(resource: resource)
-            }.catch { (error) in
-                //TODO throw an notification to report an error
-        }
-        
+        self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
