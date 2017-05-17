@@ -35,6 +35,7 @@ class ToolsManager: GTDataManager {
     func download(resource: DownloadedResource) {
         resource.shouldDownload = true
         saveToDisk()
+        TranslationZipImporter.shared.download(resource: resource)
     }
     
     func delete(resource: DownloadedResource) {
@@ -96,7 +97,6 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        // TranslationZipImporter.shared.download(resource: resource)
         self.download(resource: resource)
         self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
