@@ -47,17 +47,21 @@ class TranslationZipImporter {
     
     private func addTranslationsToQueue(_ translations: [Translation]) {
         let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
-        if primaryTranslation != nil {
+        if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
         }
         
         let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
-        if (parallelTranslation != nil) {
+        if (parallelTranslation != nil && parallelTranslation!.isDownloaded) {
             translationDownloadQueue.append(parallelTranslation!)
         }
         
         for translation in translations {
             if translationDownloadQueue.contains(translation) {
+                continue
+            }
+            
+            if translation.isDownloaded {
                 continue
             }
             
