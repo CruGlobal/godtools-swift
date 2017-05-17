@@ -52,7 +52,7 @@ extension TractRoot {
     
     func sendMessageToView(tag: Int) {
         let view = self.viewWithTag(tag)
-        if (view?.isKind(of: BaseTractElement.self))! {
+        if view != nil && (view?.isKind(of: BaseTractElement.self))! {
             (view as! BaseTractElement).receiveMessage()
         }
     }

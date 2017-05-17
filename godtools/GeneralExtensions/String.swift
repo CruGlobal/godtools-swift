@@ -37,11 +37,18 @@ extension String {
     
     func transformToNumber() -> Int {
         let data = self.data(using: .utf8)!
-        let hexString = data.map{ String(format:"%02x", $0) }.joined()
-        let scanner = Scanner(string: hexString)
-        var value: UInt32 = 0
-        scanner.scanHexInt32(&value)
-        return Int(value)
+        var finalValue = 0
+        
+        for item in data {
+            let hexString = String(format:"%02x", item)
+            let scanner = Scanner(string: hexString)
+            var value: UInt64 = 0
+            scanner.scanHexInt64(&value)
+            
+            finalValue += Int(value)
+        }
+        
+        return finalValue
     }
     
 }
