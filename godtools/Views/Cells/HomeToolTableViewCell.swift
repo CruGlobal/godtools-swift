@@ -38,7 +38,8 @@ class HomeToolTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupUI()
+        setupUI()
+        registerProgressViewListener()
     }
     
     func configure(primaryLanguage: Language) {
@@ -119,6 +120,18 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
-        self.downloadProgressView.observedProgress = notification.userInfo?["progress"] as? Progress
+        guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
+            return
+        }
+        
+        if resourceId != resource!.remoteId! {
+            return
+        }
+        
+        guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
+            return
+        }
+        
+        self.downloadProgressView.observedProgress = progress
     }    
 }

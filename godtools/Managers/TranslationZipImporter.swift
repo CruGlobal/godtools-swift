@@ -81,7 +81,7 @@ class TranslationZipImporter {
             guard let index = translationDownloadQueue.index(of: translation) else { return }
             translationDownloadQueue.remove(at: index)
 
-            _ = self.download(translationId: translation.remoteId!).catch(execute: { error in
+            _ = self.download(translation: translation).catch(execute: { error in
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
             })
@@ -97,10 +97,11 @@ class TranslationZipImporter {
         }
     }
     
-    private func download(translationId: String) -> Promise<Void> {
+    private func download(translation: Translation) -> Promise<Void> {
+        let translationId = translation.remoteId!
         let filename = createFilename(translationId: translationId)
         
-        return downloadFromRemote(translationId: translationId).then { zipFileData -> Promise<Void> in
+        return downloadFromRemote(translation: translation).then { zipFileData -> Promise<Void> in
             
             try self.writeDataFileToDisk(data: zipFileData, filename: filename)
             self.extractZipFile(filename)
@@ -116,9 +117,19 @@ class TranslationZipImporter {
         }
     }
     
-    private func downloadFromRemote(translationId: String) -> Promise<Data> {
+    private func downloadFromRemote(translation: Translation) -> Promise<Data> {
+        let translationId = translation.remoteId!
+        
         return Alamofire.request(buildURLString(translationId: translationId))
             .downloadProgress { (progress) in
+                if !translation.language!.isPrimary() {
+                    return
+                }
+                NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
+                                                object: nil,
+                                                userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
+                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])
+                
                 print("Progress: \(progress.fractionCompleted * 100.0)")
             }
             .responseData()
