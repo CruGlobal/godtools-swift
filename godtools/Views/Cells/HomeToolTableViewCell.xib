@@ -38,6 +38,8 @@
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="58" width="318" height="2"/>
+                                <color key="progressTintColor" red="1" green="0.23705448539999999" blue="0.90658240489999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.32309118609999998" green="1" blue="0.2128146839" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
                                 <rect key="frame" x="0.0" y="60" width="318" height="50"/>

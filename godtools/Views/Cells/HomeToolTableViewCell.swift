@@ -131,7 +131,9 @@ class HomeToolTableViewCell: UITableViewCell {
         guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
             return
         }
-        
-        self.downloadProgressView.observedProgress = progress
+                
+        DispatchQueue.main.async {
+            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+        }
     }    
 }
