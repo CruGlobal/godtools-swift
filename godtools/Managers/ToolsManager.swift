@@ -14,6 +14,7 @@ import PromiseKit
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
     func infoButtonWasPressed(resource: DownloadedResource)
     @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
+    @objc optional func primaryTranslationDownloadCompleted(at index: Int)
 }
 
 class ToolsManager: GTDataManager {
@@ -26,8 +27,10 @@ class ToolsManager: GTDataManager {
         didSet {
             if self.delegate is HomeViewController {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
+                deregisterDownloadCompletedObserver()
             } else {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
+                registerDownloadCompletedObserver()
             }
         }
     }
@@ -36,6 +39,7 @@ class ToolsManager: GTDataManager {
         resource.shouldDownload = true
         saveToDisk()
         TranslationZipImporter.shared.download(resource: resource)
+        
     }
     
     func delete(resource: DownloadedResource) {
@@ -44,6 +48,38 @@ class ToolsManager: GTDataManager {
             translation.isDownloaded = false
         }
         saveToDisk()
+    }
+}
+
+// MARK - Download Notification listening methods
+extension ToolsManager {
+    fileprivate func registerDownloadCompletedObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadCompletedObserver),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
+    }
+    
+    @objc fileprivate func downloadCompletedObserver(notifcation: NSNotification) {
+        guard let resourceId = notifcation.userInfo?[GTConstants.kDownloadProgressResourceIdKey] as? String else {
+            return
+        }
+        
+        guard let resource = resources!.filter({ $0.remoteId == resourceId }).first else {
+            return
+        }
+        
+        guard let index = resources!.index(of: resource) else {
+            return
+        }
+        
+        delegate!.primaryTranslationDownloadCompleted!(at: index)
+    }
+    
+    fileprivate func deregisterDownloadCompletedObserver() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .downloadPrimaryTranslationCompleteNotification,
+                                                  object: nil)
     }
 }
 

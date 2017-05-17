@@ -118,6 +118,9 @@ class TranslationZipImporter {
             try self.writeDataFileToDisk(data: zipFileData, filename: filename)
             self.extractZipFile(filename)
             
+            if translation.language!.isPrimary() {
+                self.primaryDownloadComplete(translation: translation)
+            }
             return Promise(value: ())
         }.always {
             do {
@@ -160,6 +163,12 @@ class TranslationZipImporter {
     private func buildURLString(translationId: String) -> String {
         return "\(GTConstants.kApiBase)/translations/\(translationId)"
         
+    }
+    
+    private func primaryDownloadComplete(translation: Translation) {
+        NotificationCenter.default.post(name: .downloadPrimaryTranslationCompleteNotification,
+                                        object: nil,
+                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])
     }
     
     private func createResourcesDirectoryIfNecessary() {
