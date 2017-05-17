@@ -63,9 +63,15 @@ class DownloadedResourceManager: GTDataManager {
             let remoteTranslations = remoteResource.latestTranslations!
             for remoteTranslationGeneric in remoteTranslations {
                 let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                let languageId = remoteTranslation.language?.id ?? "-1"
+                let resourceId = remoteResource.id ?? "-1"
+                let version = remoteTranslation.version!.int16Value
+                
+                if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                    continue;
+                }
                 
                 let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
-                let languageId = remoteTranslation.language?.id ?? "-1"
                 
                 cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                 cachedTranslation.version = remoteTranslation.version!.int16Value
@@ -73,6 +79,8 @@ class DownloadedResourceManager: GTDataManager {
                 cachedTranslation.manifestFilename = remoteTranslation.manifestName
                 
                 cachedResource.addToTranslations(cachedTranslation)
+                
+                purgeTranslationsOlderThan(cachedTranslation)
             }
             
             let remotePages = remoteResource.pages!
@@ -87,6 +95,41 @@ class DownloadedResourceManager: GTDataManager {
         }
         
         saveToDisk()
+    }
+    
+    private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {
+        let context = NSManagedObjectContext.mr_default()
+        
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@",
+                                    languageId,
+                                    resourceId)
+        
+        guard let existingTranslations: [Translation] = Translation.mr_findAll(with: predicate, in: context) as? [Translation] else {
+            // default to saving if in doubt.
+            return true
+        }
+        
+        let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
+        
+        return latestTranslation == nil || version > latestTranslation!.version
+    }
+    
+    private func purgeTranslationsOlderThan(_ translation: Translation) {
+        let context = NSManagedObjectContext.mr_default()
+        print(translation)
+        
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d and isDownloaded = false",
+                                    translation.language!.remoteId!,
+                                    translation.downloadedResource!.remoteId!,
+                                    translation.version)
+        
+        guard let translationsToPurge: [Translation] = Translation.mr_findAll(with: predicate, in: context) as? [Translation] else {
+            return
+        }
+        
+        for translationToPurge in translationsToPurge {
+            translationToPurge.mr_deleteEntity(in: context)
+        }
     }
     
     override func buildURLString() -> String {
