@@ -30,8 +30,8 @@
 
 // Tool Detail
 "about" = "About";
-"total_views" = "%@ views";
-"total_languages" = "%@ languages";
+"total_views" = "%d views";
+"total_languages" = "%d languages";
 
 // Language Settings
 "primary_language" = "Primary Language";

@@ -48,6 +48,7 @@ class HomeToolTableViewCell: UITableViewCell {
         languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
         titleLabel.isEnabled = isAvailable
         selectionStyle = isAvailable ? .default : .none
+        numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         
         downloadProgressView.setProgress(0.0, animated: false)
         
