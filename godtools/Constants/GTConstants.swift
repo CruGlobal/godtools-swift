@@ -10,4 +10,7 @@ import Foundation
 
 struct GTConstants {
     static let kApiBase = "https://mobile-content-api-stage.cru.org"
+    
+    static let kDownloadProgressProgressKey = "org.cru.godtools.downloadProgressProgressKey"
+    static let kDownloadProgressResourceIdKey = "org.cru.godtools.downloadProgressResourceIdKey"
 }

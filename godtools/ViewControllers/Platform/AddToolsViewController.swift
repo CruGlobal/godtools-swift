@@ -74,4 +74,11 @@ extension AddToolsViewController: ToolsManagerDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
         self.tableView.reloadData()
     }
+    
+    func primaryTranslationDownloadCompleted(at index: Int) {
+        self.tableView.beginUpdates()
+        ToolsManager.shared.resources?.remove(at: index)
+        self.tableView.deleteSections(IndexSet(integer: index), with: .fade)
+        self.tableView.endUpdates()
+    }
 }

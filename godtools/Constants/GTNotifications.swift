@@ -13,4 +13,6 @@ extension Notification.Name {
     static let dismissMenuNotification = Notification.Name("dismissMenuNotificationName")
     static let presentLanguageSettingsNotification = Notification.Name("presentLanguageSettingsNotificationName")
     static let moveToNextPageNotification = Notification.Name("moveToNextPageNotification")
+    static let downloadProgressViewUpdateNotification = Notification.Name("downloadProgressViewUpdateNotification")
+    static let downloadPrimaryTranslationCompleteNotification = Notification.Name("downloadPrimaryTranslationCompleteNotification")
 }
