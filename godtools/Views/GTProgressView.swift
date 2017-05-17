@@ -11,6 +11,7 @@ import UIKit
 
 class GTProgressView: UIProgressView {
     override func layoutSubviews() {
+        super.layoutSubviews()
         progressTintColor = .gtBlue
         trackTintColor = .clear
     }
