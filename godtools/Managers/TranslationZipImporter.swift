@@ -45,6 +45,14 @@ class TranslationZipImporter {
         }
     }
     
+    func catchupMissedDownloads() {
+        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
+        
+        if !isProcessingQueue {
+            processDownloadQueue()
+        }
+    }
+    
     private func addTranslationsToQueue(_ translations: [Translation]) {
         let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
