@@ -10,20 +10,12 @@ import Foundation
 import PromiseKit
 import Alamofire
 
-class TranslationsManager {
+class TranslationsManager: GTDataManager {
     static let shared = TranslationsManager()
     
-    func loadLatestTranslationsFromDisk() -> [Translation] {
-        let predicate = NSPredicate(format: "isPublished = true")
-        return Translation.mr_findAll(with: predicate) as! [Translation]
-    }
     
-    func loadDownloadedTranslationsFromDisk() -> [Translation] {
-        let predicate = NSPredicate(format: "isDownloaded = true")
-        return Translation.mr_findAll(with: predicate) as! [Translation]
-    }
-    
-    func loadTranslationFromRemote(id: String) -> Promise<Translation> {
-        return Promise(value: Translation.mr_createEntity()!)
+    func translationWasDownloaded(_ translation: Translation) {
+        translation.isDownloaded = true
+        saveToDisk()
     }
 }

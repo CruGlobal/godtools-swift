@@ -19,6 +19,7 @@ class TranslationZipImporter {
     let resourcesPath: String
     
     var translationDownloadQueue = [Translation]()
+    var isProcessingQueue = false
     
     private init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -29,10 +30,18 @@ class TranslationZipImporter {
     
     func download(language: Language) {
         addTranslationsToQueue(Array(language.translations!) as! [Translation])
+        
+        if !isProcessingQueue {
+            processDownloadQueue()
+        }
     }
     
     func download(resource: DownloadedResource) {
         addTranslationsToQueue(Array(resource.translations!) as! [Translation])
+        
+        if !isProcessingQueue {
+            processDownloadQueue()
+        }
     }
     
     private func addTranslationsToQueue(_ translations: [Translation]) {
@@ -63,28 +72,49 @@ class TranslationZipImporter {
         }
     }
 
-    /*
-    func download(translationId: String) -> AnyPromise {
+    private func processDownloadQueue() {
+        isProcessingQueue = true
+        let localDownloadQueue = translationDownloadQueue
+        
+        localDownloadQueue.forEach { translation in
+            guard let index = translationDownloadQueue.index(of: translation) else { return }
+            translationDownloadQueue.remove(at: index)
+
+            _ = self.download(translationId: translation.remoteId!).catch(execute: { error in
+                Crashlytics().recordError(error,
+                                          withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
+                self.translationDownloadQueue.append(translation)
+            })
+            .then(execute: { (void) -> Void in
+                TranslationsManager.shared.translationWasDownloaded(translation)
+            })
+        }
+        
+        if translationDownloadQueue.count > 0 {
+            processDownloadQueue()
+        } else {
+            isProcessingQueue = false
+        }
+    }
+    
+    private func download(translationId: String) -> Promise<Void> {
         let filename = createFilename(translationId: translationId)
         
-        let promisedDownload = downloadFromRemote(translationId: translationId).then { zipFileData -> Promise<Bool> in
+        return downloadFromRemote(translationId: translationId).then { zipFileData -> Promise<Void> in
             
             try self.writeDataFileToDisk(data: zipFileData, filename: filename)
             self.extractZipFile(filename)
             
-            return Promise(value: true)
+            return Promise(value: ())
             }.always {
                 do {
                     try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
                 } catch {
-                    Crashlytics.init().recordError(error,
+                    Crashlytics().recordError(error,
                                                    withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
                 }
-            }
-        
-        return AnyPromise(promisedDownload)
+        }
     }
-    */
     
     private func downloadFromRemote(translationId: String) -> Promise<Data> {
         return Alamofire.request(buildURLString(translationId: translationId))
@@ -95,7 +125,7 @@ class TranslationZipImporter {
     }
     
     private func writeDataFileToDisk(data: Data, filename: String) throws {
-        try data.write(to: URL.init(fileURLWithPath: "\(documentsPath)/\(filename)"))
+        try data.write(to: URL(fileURLWithPath: "\(documentsPath)/\(filename)"))
     }
     
     private func extractZipFile(_ filename: String) {
@@ -121,7 +151,7 @@ class TranslationZipImporter {
                                                     withIntermediateDirectories: false,
                                                     attributes: nil)
         } catch {
-            Crashlytics.init().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating Resources directory on device."])
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating Resources directory on device."])
         }
     }
 }
