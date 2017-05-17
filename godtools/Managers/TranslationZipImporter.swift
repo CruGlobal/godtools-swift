@@ -19,6 +19,7 @@ class TranslationZipImporter {
     let resourcesPath: String
     
     var translationDownloadQueue = [Translation]()
+    
     var isProcessingQueue = false
     
     private init() {
@@ -83,7 +84,6 @@ class TranslationZipImporter {
             _ = self.download(translationId: translation.remoteId!).catch(execute: { error in
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
-                self.translationDownloadQueue.append(translation)
             })
             .then(execute: { (void) -> Void in
                 TranslationsManager.shared.translationWasDownloaded(translation)
