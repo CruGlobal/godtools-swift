@@ -18,6 +18,8 @@ class TranslationZipImporter {
     let documentsPath: String
     let resourcesPath: String
     
+    var translationDownloadQueue = [Translation]()
+    
     private init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = "\(documentsPath)/Resources"
@@ -25,6 +27,43 @@ class TranslationZipImporter {
         createResourcesDirectoryIfNecessary()
     }
     
+    func download(language: Language) {
+        addTranslationsToQueue(Array(language.translations!) as! [Translation])
+    }
+    
+    func download(resource: DownloadedResource) {
+        addTranslationsToQueue(Array(resource.translations!) as! [Translation])
+    }
+    
+    private func addTranslationsToQueue(_ translations: [Translation]) {
+        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
+        if primaryTranslation != nil {
+            translationDownloadQueue.append(primaryTranslation!)
+        }
+        
+        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
+        if (parallelTranslation != nil) {
+            translationDownloadQueue.append(parallelTranslation!)
+        }
+        
+        for translation in translations {
+            if translationDownloadQueue.contains(translation) {
+                continue
+            }
+            
+            if !translation.downloadedResource!.shouldDownload {
+                continue
+            }
+            
+            if !translation.language!.shouldDownload {
+                continue
+            }
+            
+            translationDownloadQueue.append(translation)
+        }
+    }
+
+    /*
     func download(translationId: String) -> AnyPromise {
         let filename = createFilename(translationId: translationId)
         
@@ -45,6 +84,7 @@ class TranslationZipImporter {
         
         return AnyPromise(promisedDownload)
     }
+    */
     
     private func downloadFromRemote(translationId: String) -> Promise<Data> {
         return Alamofire.request(buildURLString(translationId: translationId))

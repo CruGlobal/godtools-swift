@@ -21,4 +21,12 @@ public class Language: NSManagedObject {
         
         return localizedName!
     }
+    
+    func isPrimary() -> Bool {
+        return remoteId == GTSettings.shared.primaryLanguageId
+    }
+    
+    func isParallel() -> Bool {
+        return remoteId == GTSettings.shared.parallelLanguageId
+    }
 }
