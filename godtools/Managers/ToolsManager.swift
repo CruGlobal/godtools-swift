@@ -14,6 +14,7 @@ import PromiseKit
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
     func infoButtonWasPressed(resource: DownloadedResource)
     @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
+    @objc optional func primaryTranslationDownloadCompleted(at index: Int)
 }
 
 class ToolsManager: GTDataManager {
@@ -26,24 +27,59 @@ class ToolsManager: GTDataManager {
         didSet {
             if self.delegate is HomeViewController {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
+                deregisterDownloadCompletedObserver()
             } else {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
+                registerDownloadCompletedObserver()
             }
         }
     }
     
-    func download(resource: DownloadedResource) -> AnyPromise {
+    func download(resource: DownloadedResource) {
         resource.shouldDownload = true
         saveToDisk()
+        TranslationZipImporter.shared.download(resource: resource)
         
-        return AnyPromise(Promise(value: "ok"))
     }
     
-    func delete(resource: DownloadedResource) -> AnyPromise {
+    func delete(resource: DownloadedResource) {
         resource.shouldDownload = false
+        for translation in resource.translationsAsArray() {
+            translation.isDownloaded = false
+        }
         saveToDisk()
+    }
+}
+
+// MARK - Download Notification listening methods
+extension ToolsManager {
+    fileprivate func registerDownloadCompletedObserver() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(downloadCompletedObserver),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
+    }
+    
+    @objc fileprivate func downloadCompletedObserver(notifcation: NSNotification) {
+        guard let resourceId = notifcation.userInfo?[GTConstants.kDownloadProgressResourceIdKey] as? String else {
+            return
+        }
         
-        return AnyPromise(Promise(value: "ok"))
+        guard let resource = resources!.filter({ $0.remoteId == resourceId }).first else {
+            return
+        }
+        
+        guard let index = resources!.index(of: resource) else {
+            return
+        }
+        
+        delegate!.primaryTranslationDownloadCompleted!(at: index)
+    }
+    
+    fileprivate func deregisterDownloadCompletedObserver() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .downloadPrimaryTranslationCompleteNotification,
+                                                  object: nil)
     }
 }
 
@@ -101,12 +137,7 @@ extension ToolsManager: UITableViewDataSource {
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
         self.download(resource: resource)
-            .always {
-                self.delegate?.downloadButtonWasPressed!(resource: resource)
-            }.catch { (error) in
-                //TODO throw an notification to report an error
-        }
-        
+        self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
