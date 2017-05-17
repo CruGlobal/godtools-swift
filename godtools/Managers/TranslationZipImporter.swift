@@ -106,13 +106,13 @@ class TranslationZipImporter {
             self.extractZipFile(filename)
             
             return Promise(value: ())
-            }.always {
-                do {
-                    try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
-                } catch {
-                    Crashlytics().recordError(error,
-                                                   withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
-                }
+        }.always {
+            do {
+                try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
+            } catch {
+                Crashlytics().recordError(error,
+                                          withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
+            }
         }
     }
     
