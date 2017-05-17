@@ -47,13 +47,16 @@ class TractTabs: BaseTractElement {
         let dataContent = splitData(data: data)
         
         var position = 0
-        for element in data.children {
+        for item in data.children {
             self.tabs.append([XMLIndexer]())
-            let text = element["label"]["text"].element?.text
-            self.options.append(text!)
             
-            for node in element.children {
-                if node.element?.name != "label" {
+            for node in item.children {
+                let nodeContent = splitData(data: node)
+                
+                if nodeContent.kind == "label" {
+                    let text = node[nodeContent.elementName]["content:text"].element?.text
+                    self.options.append(text!)
+                } else {
                     self.tabs[position].append(node)
                 }
             }

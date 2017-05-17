@@ -79,10 +79,12 @@ class TractInput: BaseTractElement {
         
         var elements = [XMLIndexer]()
         for node in data.children {
-            if node.element?.name == "label" {
+            let nodeContent = splitData(data: node)
+            
+            if nodeContent.kind == "label" {
                 elements.append(node)
-            } else if node.element?.name == "placeholder" {
-                self.properties.placeholder = node["text"].element?.text
+            } else if nodeContent.kind == "placeholder" {
+                self.properties.placeholder = node["content:text"].element?.text
             }
         }
         

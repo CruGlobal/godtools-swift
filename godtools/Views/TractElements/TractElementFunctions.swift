@@ -24,7 +24,7 @@ extension BaseTractElement {
             return TractHeading(data: data, startOnY: yPosition, parent: self)
         case "paragraph":
             return TractParagraph(data: data, startOnY: yPosition, parent: self)
-        case "content:text":
+        case "text":
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
         case "image":
             return TractImage(data: data, startOnY: yPosition, parent: self)
@@ -57,8 +57,19 @@ extension BaseTractElement {
         }
     }
     
-    func splitData(data: XMLIndexer) -> (kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
-        let kind = data.element?.name
+    func splitData(data: XMLIndexer) -> (elementName: String, namespace: String, kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
+        let elementName = data.element?.name
+        let elementNameArray = elementName?.components(separatedBy: ":")
+        var namespace = ""
+        var kind = ""
+        
+        if (elementNameArray?.count)! > 1 {
+            namespace = elementNameArray![0] as String
+            kind = elementNameArray![1] as String
+        } else {
+            kind = elementNameArray![0] as String
+        }
+        
         var properties = [String: Any]()
         for item in (data.element?.allAttributes)! {
             let attribute = item.value as XMLAttribute
@@ -66,7 +77,7 @@ extension BaseTractElement {
         }
         properties["value"] = data.element?.text
         let children = data.children
-        return (kind!, properties, children)
+        return (elementName!, namespace, kind, properties, children)
     }
     
 }
