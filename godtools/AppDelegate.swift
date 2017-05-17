@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.startFlowController(launchOptions: launchOptions)
         
         self.initalizeAppState()
+            .then(execute: { result -> Void in
+                TranslationZipImporter.shared.catchupMissedDownloads()
+            })
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
@@ -77,6 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: App state initialization/refresh
     
     private func initalizeAppState() -> Promise<Any> {
+        // Initializes the importer so the resources directory can be created.
+        _ = TranslationZipImporter.shared
+        
         return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<[DownloadedResource]> in
             return DownloadedResourceManager.shared.loadFromRemote()
         }

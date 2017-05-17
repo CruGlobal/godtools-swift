@@ -16,6 +16,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var totalLanguagesLabel: GTLabel!
     @IBOutlet weak var languagesLabel: GTLabel!
     @IBOutlet weak var mainButton: GTButton!
+    @IBOutlet weak var downloadProgressView: GTProgressView!
     
     let toolsManager = ToolsManager.shared
     
@@ -25,6 +26,7 @@ class ToolDetailViewController: BaseViewController {
         super.viewDidLoad()
         self.displayData()
         self.hideScreenTitle()
+        registerForDownloadProgressNotifications()
     }
 
     // MARK: Present data
@@ -42,7 +44,7 @@ class ToolDetailViewController: BaseViewController {
         self.displayButton()
     }
     
-    fileprivate func displayButton() {
+    private func displayButton() {
         if resource!.shouldDownload {
             mainButton.designAsDeleteButton()
         } else {
@@ -50,24 +52,39 @@ class ToolDetailViewController: BaseViewController {
         }
     }
     
+    private func registerForDownloadProgressNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(progressViewListenerShouldUpdate),
+                                               name: .downloadProgressViewUpdateNotification,
+                                               object: nil)
+    }
+    
+    @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
+        guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
+            return
+        }
+        
+        if resourceId != resource!.remoteId! {
+            return
+        }
+        
+        guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+        }
+    }
+    
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         if resource!.shouldDownload {
             toolsManager.delete(resource: self.resource!)
-                .always {
-                    self.displayButton()
-                }.catch(execute: { (error) in
-                    //TODO: throw a notification to show an error?
-                })
-            
+            downloadProgressView.setProgress(0.0, animated: false)
+            displayButton()
         } else {
             toolsManager.download(resource: self.resource!)
-                .always {
-                    self.displayButton()
-                }
-                .catch(execute: { (error) in
-                    //TODO: throw a notification to show an error?
-                })
+            displayButton()
         }
     }
-
 }

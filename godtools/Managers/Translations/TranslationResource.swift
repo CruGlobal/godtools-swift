@@ -13,6 +13,7 @@ class TranslationResource: Resource {
     
     var version: NSNumber?
     var isPublished: NSNumber?
+    var manifestName: String?
     
     var language: LanguageResource?
     
@@ -24,6 +25,7 @@ class TranslationResource: Resource {
         return fieldsFromDictionary([
             "version" : Attribute(),
             "isPublished" : BooleanAttribute().serializeAs("is-published"),
+            "manifestName" : Attribute().serializeAs("manifest-name"),
             "language" : ToOneRelationship(LanguageResource.self)
         ])
     }

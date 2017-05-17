@@ -29,6 +29,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
+    @IBOutlet weak var downloadProgressView: GTProgressView!
     
     var resource: DownloadedResource?
     var isAvailable = true
@@ -37,15 +38,18 @@ class HomeToolTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupUI()
+        setupUI()
+        registerProgressViewListener()
     }
     
     func configure(primaryLanguage: Language) {
-        self.titleLabel.text = resource!.name
-        self.isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
-        self.languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
-        self.titleLabel.isEnabled = isAvailable
-        self.selectionStyle = isAvailable ? .default : .none
+        titleLabel.text = resource!.name
+        isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
+        languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
+        titleLabel.isEnabled = isAvailable
+        selectionStyle = isAvailable ? .default : .none
+        
+        downloadProgressView.setProgress(0.0, animated: false)
         
         if (resource!.shouldDownload) {
             self.setCellAsDisplayOnly()
@@ -53,20 +57,20 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     fileprivate func setCellAsDisplayOnly() {
-        self.downloadButton.isHidden = true
-        self.greyVerticalLine.isHidden = true
-        self.titleLeadingConstraint.constant = self.leftConstraintValue
-        self.numberOfViewsLeadingConstraint.constant = self.leftConstraintValue
+        downloadButton.isHidden = true
+        greyVerticalLine.isHidden = true
+        titleLeadingConstraint.constant = leftConstraintValue
+        numberOfViewsLeadingConstraint.constant = leftConstraintValue
     }
     
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
-        self.cellDelegate?.downloadButtonWasPressed(resource: resource!)
+        cellDelegate?.downloadButtonWasPressed(resource: resource!)
     }
     
     @IBAction func pressInfoButton(_ sender: Any) {
-        self.cellDelegate?.infoButtonWasPressed(resource: resource!)
+        cellDelegate?.infoButtonWasPressed(resource: resource!)
     }
     
     // MARK: UI 
@@ -108,4 +112,30 @@ class HomeToolTableViewCell: UITableViewCell {
         self.numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
+    // MARK: Progress view listener
+    
+    private func registerProgressViewListener() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(progressViewListenerShouldUpdate),
+                                               name: .downloadProgressViewUpdateNotification,
+                                               object: nil)
+    }
+    
+    @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
+        guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
+            return
+        }
+        
+        if resourceId != resource!.remoteId! {
+            return
+        }
+        
+        guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
+            return
+        }
+                
+        DispatchQueue.main.async {
+            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+        }
+    }    
 }

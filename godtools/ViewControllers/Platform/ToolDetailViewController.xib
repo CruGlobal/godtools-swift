@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="descriptionLabel" destination="v52-LQ-1sy" id="L4K-Dk-cZZ"/>
+                <outlet property="downloadProgressView" destination="tqu-1c-gUh" id="Dyk-YF-IIa"/>
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
                 <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
                 <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
@@ -27,15 +28,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-li-bC7">
                     <rect key="frame" x="0.0" y="64" width="375" height="178"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BOC-54-jf4">
-                            <rect key="frame" x="0.0" y="168" width="375" height="10"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
-                        </view>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-1c-gUh" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="-0.5" y="176" width="375" height="2"/>
+                        </progressView>
                     </subviews>
                     <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="tqu-1c-gUh" firstAttribute="centerX" secondItem="yUi-li-bC7" secondAttribute="centerX" id="GPB-8T-Tcv"/>
+                        <constraint firstItem="tqu-1c-gUh" firstAttribute="width" secondItem="yUi-li-bC7" secondAttribute="width" id="PHK-YP-Y2l"/>
                         <constraint firstAttribute="height" constant="178" id="eh0-cF-FkH"/>
+                        <constraint firstAttribute="bottom" secondItem="tqu-1c-gUh" secondAttribute="bottom" id="v8S-DA-e5v"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-hz-acy">
