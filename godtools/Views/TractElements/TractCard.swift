@@ -14,9 +14,23 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
+    // MARK: - Object configurations
+    
     enum CardState {
         case open, preview, close, hidden, enable
     }
+    
+    var properties = TractCardProperties()
+    let scrollView = UIScrollView()
+    let containerView = UIView()
+    var shadowView = UIView()
+    var cardState = CardState.preview
+    var cardNumber = 0
+    var cardsParentView: TractCards {
+        return self.parent as! TractCards
+    }
+    
+    // MARK: - Positions and Sizes
     
     static let xMarginConstant: CGFloat = 8.0
     static let yTopMarginConstant: CGFloat = 8.0
@@ -24,38 +38,38 @@ class TractCard: BaseTractElement {
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 50.0
     
-    var properties = TractCardProperties()
-    
-    let scrollView = UIScrollView()
-    let containerView = UIView()
-    var shadowView = UIView()
-    
-    var cardsParentView: TractCards {
-        return self.parent as! TractCards
-    }
-    var cardState = CardState.preview
-    var cardNumber = 0
-    
     var yDownPosition: CGFloat = 0.0
+    
     var xPosition: CGFloat {
         return TractCard.xMarginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
+    
     var externalHeight: CGFloat {
         return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
     }
+    
     var internalHeight: CGFloat {
         let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
         return internalHeight + TractCard.contentBottomPadding
     }
+    
     var translationY: CGFloat {
         return self.externalHeight - self.yStartPosition
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.externalHeight
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         loadElementProperties(properties: properties)
@@ -137,10 +151,6 @@ class TractCard: BaseTractElement {
         self.addSubview(self.scrollView)
         setupTransparentView()
         return self
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.externalHeight
     }
     
     // MARK: - Actions

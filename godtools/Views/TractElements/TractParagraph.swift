@@ -11,17 +11,27 @@ import UIKit
 
 class TractParagraph: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + TractParagraph.marginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -41,10 +51,6 @@ class TractParagraph: BaseTractElement {
         textStyle.color = self.textColor
         
         return textStyle
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

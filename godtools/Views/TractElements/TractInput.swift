@@ -11,29 +11,41 @@ import SWXMLHash
 
 class TractInput: BaseTractElement {
     
+    // MARK: - Object configurations
+    
     var properties = TractTextFieldProperties()
+    var textField = GTTextField()
+    
+    // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
         return TractCard.xPaddingConstant
     }
+    
     var yMargin : CGFloat {
         return self.properties.yMargin
     }
+    
     var xPosition: CGFloat {
         return self.xMargin
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + self.yMargin
     }
+    
     var textViewWidth: CGFloat {
         return self.properties.width > self.width ? self.width : self.properties.width
     }
+    
     var textViewHeight: CGFloat {
         return self.properties.height
     }
+    
     override var width: CGFloat {
         return super.width - self.xPosition - self.xMargin
     }
+    
     override var height: CGFloat {
         get {
             return super.height + self.yMargin + self.textViewHeight
@@ -42,14 +54,24 @@ class TractInput: BaseTractElement {
             super.height = newValue
         }
     }
+    
     var textViewXPosition: CGFloat {
         return (self.width - self.textViewWidth) / 2
     }
+    
     var textViewYPosition: CGFloat {
         return super.height + self.yMargin
     }
     
-    var textField = GTTextField()
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + self.yMargin
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return (self.parent?.textYPadding())!
+    }
+    
+    // MARK: - Setup
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
@@ -78,14 +100,6 @@ class TractInput: BaseTractElement {
         self.textField.placeholderTranslationKey = self.properties.placeholder!
         
         self.frame = buildFrame()
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + self.yMargin
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
     }
     
     override func render() -> UIView {

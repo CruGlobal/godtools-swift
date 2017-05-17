@@ -11,15 +11,22 @@ import UIKit
 
 class TractTextContent: BaseTractElement {
     
+    // MARK: - Object configurations
+    
     var properties = TractTextContentProperties()
+    var label: GTLabel = GTLabel()
+    
+    // MARK: - Positions and Sizes
     
     let xMargin: CGFloat = BaseTractElement.xMargin
     var xPosition: CGFloat = 0.0
     var yPosition: CGFloat = 0.0
     var contentWidth: CGFloat = 0.0
+    
     override var width: CGFloat {
         return self.contentWidth - (self.xPosition * CGFloat(2))
     }
+    
     override var height: CGFloat {
         get {
             return super.height + (textYPadding() * 2)
@@ -29,7 +36,15 @@ class TractTextContent: BaseTractElement {
         }
     }
     
-    var label: GTLabel = GTLabel()
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return (self.parent?.textYPadding())!
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
         loadStyles()
@@ -54,14 +69,6 @@ class TractTextContent: BaseTractElement {
         self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
         
         self.addSubview(self.label)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
     }
     
     // MARK: - Helpers

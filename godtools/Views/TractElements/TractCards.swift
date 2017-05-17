@@ -21,29 +21,42 @@ import SWXMLHash
 
 class TractCards: BaseTractElement {
     
+    // MARK: - Object configurations
+    
     enum CardsState {
         case open, preview
     }
     
     var cardsState = CardsState.preview
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat = 0.0
+    
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.yMargin
     }
+    
     var constantYMarginTop: CGFloat = 60
+    
     var constantYMarginBottom: CGFloat = 30
+    
     override var height: CGFloat {
         get {
             return self.getMaxHeight()
         }
-        set {
-            // Unused
-        }
+        set { } // Unused
     }
+    
     var initialCardPosition: CGFloat {
         return self.height - self.yStartPosition
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
         var elements:Array = [BaseTractElement]()
@@ -93,10 +106,6 @@ class TractCards: BaseTractElement {
         
         self.addSubview(imageView)
         self.sendSubview(toBack: imageView)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

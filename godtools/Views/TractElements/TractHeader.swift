@@ -11,12 +11,16 @@ import UIKit
 
 class TractHeader: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
         return 0.0
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + 1.0
     }
+    
     override var height: CGFloat {
         get {
             return super.height + 10.0
@@ -25,6 +29,12 @@ class TractHeader: BaseTractElement {
             super.height = newValue
         }
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     var includesNumber = false
     
@@ -35,10 +45,6 @@ class TractHeader: BaseTractElement {
     override func setupView(properties: [String: Any]) {
         self.frame = buildFrame()
         self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

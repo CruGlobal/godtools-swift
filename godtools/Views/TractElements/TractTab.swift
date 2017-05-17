@@ -10,12 +10,16 @@ import UIKit
 
 class TractTab: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
         return 0.0
     }
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
+    // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
         self.frame = buildFrame()

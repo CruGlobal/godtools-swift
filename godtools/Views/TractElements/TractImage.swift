@@ -10,22 +10,33 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
+    // MARK: - Object configurations
+    
+    var imageView = UIImageView()
+    var align = "center"
+    
+    // MARK: - Positions and Sizes
+    
     static let xMarginConstant: CGFloat = 8.0
     static let yMarginConstant: CGFloat = 16.0
-    
-    var align = "center"
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + TractImage.yMarginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     
-    var imageView = UIImageView()
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + TractImage.yMarginConstant
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
         self.imageView = UIImageView(image: loadImage(properties: properties))
@@ -55,10 +66,6 @@ class TractImage: BaseTractElement {
         self.addSubview(self.imageView)
         self.frame = buildFrame()
         self.height = height
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + TractImage.yMarginConstant
     }
     
     // MARK: - Helpers

@@ -10,6 +10,8 @@ import UIKit
 
 class TractForm: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
         return 0.0
     }
@@ -17,12 +19,14 @@ class TractForm: BaseTractElement {
         return self.yStartPosition
     }
     
-    override func setupView(properties: [String: Any]) {
-        self.frame = buildFrame()
-    }
-    
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    // MARK - Setup
+    
+    override func setupView(properties: [String: Any]) {
+        self.frame = buildFrame()
     }
     
     // MARK: - Helpers

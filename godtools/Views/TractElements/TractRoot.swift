@@ -19,6 +19,13 @@ class TractRoot: BaseTractElement {
         self.frame = buildFrame()
     }
     
+    func sendMessageToView(tag: Int) {
+        let view = self.viewWithTag(tag)
+        if (view?.isKind(of: BaseTractElement.self))! {
+            (view as! BaseTractElement).receiveMessage()
+        }
+    }
+    
     // MARK: - Helpers
     
     fileprivate func buildFrame() -> CGRect {
@@ -26,13 +33,6 @@ class TractRoot: BaseTractElement {
                       y: self.yStartPosition,
                       width: self.width,
                       height: self.height)
-    }
-    
-    func sendMessageToView(tag: Int) {
-        let view = self.viewWithTag(tag)
-        if (view?.isKind(of: BaseTractElement.self))! {
-            (view as! BaseTractElement).receiveMessage()
-        }
     }
     
 }

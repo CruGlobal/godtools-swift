@@ -11,23 +11,33 @@ import UIKit
 
 class TractNumber: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     static let widthConstant: CGFloat = 70.0
     static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
         return TractNumber.marginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
         return TractNumber.widthConstant
+    }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
         (self.parent as! TractHeader).includesNumber = true
         self.frame = buildFrame()
     }
+    
+    // MARK: - Setup
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -37,10 +47,6 @@ class TractNumber: BaseTractElement {
         textStyle.align = .center
         textStyle.color = .gtWhite
         return textStyle
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

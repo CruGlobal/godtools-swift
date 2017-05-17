@@ -11,16 +11,21 @@ import UIKit
 
 class TractCallToAction: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     static let yMarginConstant: CGFloat = 16.0
     static let paddingConstant: CGFloat = 16.0
     
     var xPosition: CGFloat {
         return TractCard.xMarginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
+    
     static let minHeight: CGFloat = 80.0
+    
     override var height: CGFloat {
         get {
             return super.height > TractCallToAction.minHeight ? super.height : TractCallToAction.minHeight
@@ -29,6 +34,7 @@ class TractCallToAction: BaseTractElement {
             super.height = newValue
         }
     }
+    
     var yPosition: CGFloat {
         var position = self.yStartPosition + TractCallToAction.yMarginConstant
         if position < (self.parent?.maxHeight)! - self.height {
@@ -36,11 +42,24 @@ class TractCallToAction: BaseTractElement {
         }
         return position
     }
+    
     let buttonSizeConstant: CGFloat = 22.0
+    
     let buttonSizeXMargin: CGFloat = 8.0
+    
     var buttonXPosition: CGFloat {
         return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + TractCallToAction.yMarginConstant
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return 15.0
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -64,10 +83,6 @@ class TractCallToAction: BaseTractElement {
         NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + TractCallToAction.yMarginConstant
-    }
-    
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
@@ -75,10 +90,6 @@ class TractCallToAction: BaseTractElement {
         textStyle.yMargin = TractCallToAction.paddingConstant
         textStyle.color = self.textColor
         return textStyle
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return 15.0
     }
     
     // MARK: - Helpers

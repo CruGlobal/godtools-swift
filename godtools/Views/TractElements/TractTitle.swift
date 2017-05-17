@@ -11,6 +11,8 @@ import UIKit
 
 class TractTitle: BaseTractElement {
     
+    // MARK: - Positions and Sizes
+    
     static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
@@ -23,9 +25,16 @@ class TractTitle: BaseTractElement {
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractTitle.marginConstant
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -37,10 +46,6 @@ class TractTitle: BaseTractElement {
         textStyle.width = self.width
         textStyle.color = .gtWhite
         return textStyle
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

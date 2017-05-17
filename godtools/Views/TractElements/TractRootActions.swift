@@ -1,13 +1,12 @@
 //
-//  TractRootAnimations.swift
+//  TractRootActions.swift
 //  godtools
 //
-//  Created by Devserker on 5/4/17.
+//  Created by Devserker on 5/17/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
-import UIKit
 
 extension TractRoot {
     
@@ -35,7 +34,7 @@ extension TractRoot {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
-                callToAction.showCallToAction()
+                callToAction.showCallToActionAnimation()
                 break
             }
         }
@@ -45,7 +44,7 @@ extension TractRoot {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
-                callToAction.hideCallToAction()
+                callToAction.hideCallToActionAnimation()
                 break
             }
         }

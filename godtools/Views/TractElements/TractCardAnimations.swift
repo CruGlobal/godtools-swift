@@ -11,27 +11,7 @@ import UIKit
 
 extension TractCard {
     
-    func showCardAndPreviousCards() {
-        if self.cardState == .open {
-            return
-        }
-        
-        self.cardsParentView.setEnvironmentForDisplayingCard(self)
-        showCard()
-    }
-    
-    func showCard() {
-        if self.cardState == .open {
-            return
-        }
-        
-        if self.cardState == .hidden {
-            self.isHidden = false
-            self.cardState = .enable
-        } else {
-            self.cardState = .open
-        }
-        
+    func showCardAnimation() {
         let translationY = TractCard.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -39,22 +19,9 @@ extension TractCard {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: nil )
-        
-        enableScrollview()
     }
     
-    func hideCard() {
-        if self.cardState == .close || self.cardState == .hidden {
-            return
-        }
-        
-        if self.cardState == .enable {
-            self.cardState = .hidden
-        } else {
-            self.cardState = .close
-            self.cardsParentView.hideCallToAction()
-        }
-        
+    func hideCardAnimation() {
         let translationY = self.yDownPosition
         UIView.animate(withDuration: 0.45,
                        delay: 0.0,
@@ -71,25 +38,15 @@ extension TractCard {
                                 self.isHidden = true
                             }
                         }})
-        
-        disableScrollview()
     }
     
-    func resetCard() {
-        if self.cardState == .preview {
-            return
-        }
-        
-        self.cardState = .preview
-        
+    func resetCardToOriginalPositionAnimation() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: nil )
-        
-        disableScrollview()
     }
     
 }

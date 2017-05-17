@@ -10,32 +10,52 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
+    // MARK: - Object configurations
+    
     var properties = TractButtonProperties()
+    var button: GTButton = GTButton()
+    
+    // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
         return TractCard.xPaddingConstant
     }
+    
     var yMargin : CGFloat {
         return self.properties.yMargin
     }
+    
     var xPosition: CGFloat {
         return self.xMargin
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + self.yMargin
     }
+    
     override var width: CGFloat {
         return super.width - self.xPosition - self.xMargin
     }
+    
     var buttonWidth: CGFloat {
         return self.properties.width > self.width ? self.width : self.properties.width
     }
+    
     var buttonXPosition: CGFloat {
         return (self.width - self.buttonWidth) / 2
     }
+    
     var textPadding = CGFloat(8.0)
     
-    var button: GTButton = GTButton()
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + self.yMargin
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return (self.parent?.textYPadding())!
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
         loadStyles()
@@ -51,14 +71,6 @@ class TractButton: BaseTractElement {
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.frame.size.height)
         self.addSubview(self.button)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + self.yMargin
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
     }
     
     // MARK: - Helpers

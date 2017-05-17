@@ -12,19 +12,41 @@ import SWXMLHash
 
 class TractLabel: BaseTractElement {
     
+    // MARK: - Object configurations
+    
+    var tapView = UIView()
+    
+    // MARK: - Positions and Sizes
+    
     static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 0.0
     
-    var tapView = UIView()
     var xPosition: CGFloat {
         return TractLabel.xMarginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + TractLabel.yMarginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractLabel.xMarginConstant
     }
+    
+    override func textYPadding() -> CGFloat {
+        var padding: CGFloat = 15.0
+        if BaseTractElement.isFormElement(self) {
+            padding = 0.0
+        }
+        
+        return padding
+    }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -76,19 +98,6 @@ class TractLabel: BaseTractElement {
         }
         
         return textStyle
-    }
-    
-    override func textYPadding() -> CGFloat {
-        var padding: CGFloat = 15.0
-        if BaseTractElement.isFormElement(self) {
-            padding = 0.0
-        }
-        
-        return padding
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
     }
     
     // MARK: - Helpers
