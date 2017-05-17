@@ -128,9 +128,7 @@ class TranslationZipImporter {
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
-                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])
-                
-                print("Progress: \(progress.fractionCompleted * 100.0)")
+                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])                
             }
             .responseData()
     }
