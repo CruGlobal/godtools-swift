@@ -116,7 +116,6 @@ class DownloadedResourceManager: GTDataManager {
     
     private func purgeTranslationsOlderThan(_ translation: Translation) {
         let context = NSManagedObjectContext.mr_default()
-        print(translation)
         
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d and isDownloaded = false",
                                     translation.language!.remoteId!,
