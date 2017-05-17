@@ -9,17 +9,17 @@
 import Foundation
 import UIKit
 
-extension Cards {
+extension TractCards {
     
     // MARK: - Animations for the cards inside of the Cards container
     
-    func setEnvironmentForDisplayingCard(_ card: Card) {
+    func setEnvironmentForDisplayingCard(_ card: TractCard) {
         changeToOpenCards()
         
         var foundCard = false
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             if card != elementCard {
                 if foundCard {
                     elementCard.hideCard()
@@ -42,16 +42,16 @@ extension Cards {
         changeToPreviewCards()
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             elementCard.resetCard()
         }
     }
     
-    func showFollowingCardToCard(_ card: Card) {
+    func showFollowingCardToCard(_ card: TractCard) {
         var foundCard = false
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             if card == elementCard {
                 foundCard = true
                 continue

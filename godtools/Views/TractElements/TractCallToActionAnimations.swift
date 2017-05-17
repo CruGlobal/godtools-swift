@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension CallToAction {
+extension TractCallToAction {
     
     func showCallToAction() {
         let translationY = (self.parent?.maxHeight)! - self.yPosition - self.height

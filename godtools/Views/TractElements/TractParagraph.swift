@@ -1,41 +1,45 @@
 //
-//  Number.swift
+//  TractParagraph.swift
 //  godtools
 //
-//  Created by Devserker on 4/28/17.
+//  Created by Ryan Carlson on 4/26/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class Number: BaseTractElement {
+class TractParagraph: BaseTractElement {
     
-    static let widthConstant: CGFloat = 70.0
     static let marginConstant: CGFloat = 8.0
     
     var xPosition: CGFloat {
-        return Number.marginConstant
+        return CGFloat(0.0)
     }
     var yPosition: CGFloat {
-        return self.yStartPosition
+        return self.yStartPosition + TractParagraph.marginConstant
     }
     override var width: CGFloat {
-        return Number.widthConstant
+        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        (self.parent as! Header).includesNumber = true
         self.frame = buildFrame()
     }
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 54.0)
+        
+        var xMargin = BaseTractElement.xMargin
+        if BaseTractElement.isCardElement(self) {
+            xMargin = TractCard.xPaddingConstant
+        }
+        
+        textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
-        textStyle.height = 60.0
-        textStyle.align = .center
-        textStyle.color = .gtWhite
+        textStyle.xMargin = xMargin
+        textStyle.color = self.textColor
+        
         return textStyle
     }
     
@@ -51,5 +55,5 @@ class Number: BaseTractElement {
                       width: self.width,
                       height: self.height)
     }
-
+    
 }

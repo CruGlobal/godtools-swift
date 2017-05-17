@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension Card {
+extension TractCard {
     
     func showCardAndPreviousCards() {
         if self.cardState == .open {
@@ -32,7 +32,7 @@ extension Card {
             self.cardState = .open
         }
         
-        let translationY = Card.yTopMarginConstant - self.yPosition
+        let translationY = TractCard.yTopMarginConstant - self.yPosition
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

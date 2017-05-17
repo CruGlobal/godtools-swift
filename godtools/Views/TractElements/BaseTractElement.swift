@@ -182,7 +182,7 @@ class BaseTractElement: UIView {
         
         if self.isKind(of: TractRoot.self) {
             if !self.didFindCallToAction {
-                let element = CallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+                let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
                 if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                     maxYPosition = element.yEndPosition()
                 } else {

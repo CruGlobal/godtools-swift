@@ -1,5 +1,5 @@
 //
-//  Card.swift
+//  TractCard.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -12,7 +12,7 @@ import UIKit
 //  NOTES ABOUT THE COMPONENT
 //  * The height size of this component will always be the size of Cards.height minus the margins
 
-class Card: BaseTractElement {
+class TractCard: BaseTractElement {
     
     enum CardState {
         case open, preview, close, hidden, enable
@@ -30,28 +30,28 @@ class Card: BaseTractElement {
     let containerView = UIView()
     var shadowView = UIView()
     
-    var cardsParentView: Cards {
-        return self.parent as! Cards
+    var cardsParentView: TractCards {
+        return self.parent as! TractCards
     }
     var cardState = CardState.preview
     var cardNumber = 0
     
     var yDownPosition: CGFloat = 0.0
     var xPosition: CGFloat {
-        return Card.xMarginConstant
+        return TractCard.xMarginConstant
     }
     var yPosition: CGFloat {
         return self.yStartPosition
     }
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
+        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
     var externalHeight: CGFloat {
-        return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
+        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
     }
     var internalHeight: CGFloat {
         let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
-        return internalHeight + Card.contentBottomPadding
+        return internalHeight + TractCard.contentBottomPadding
     }
     var translationY: CGFloat {
         return self.externalHeight - self.yStartPosition

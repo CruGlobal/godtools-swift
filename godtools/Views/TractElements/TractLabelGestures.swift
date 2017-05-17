@@ -12,7 +12,7 @@ import UIKit
 extension TractLabel {
     
     func setupPressGestures() {
-        if (self.parent?.isKind(of: Card.self))! {
+        if (self.parent?.isKind(of: TractCard.self))! {
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
             tapGesture.numberOfTapsRequired = 1
             tapGesture.numberOfTouchesRequired = 1
@@ -30,7 +30,7 @@ extension TractLabel {
     
     func handleGesture(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
-            let cardView = self.parent as! Card
+            let cardView = self.parent as! TractCard
             cardView.didTapOnCard()
         }
     }

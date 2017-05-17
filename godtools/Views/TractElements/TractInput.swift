@@ -14,7 +14,7 @@ class TractInput: BaseTractElement {
     var properties = TractTextFieldProperties()
     
     var xMargin: CGFloat {
-        return Card.xPaddingConstant
+        return TractCard.xPaddingConstant
     }
     var yMargin : CGFloat {
         return self.properties.yMargin

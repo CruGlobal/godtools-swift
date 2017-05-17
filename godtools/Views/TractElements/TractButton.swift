@@ -13,7 +13,7 @@ class TractButton: BaseTractElement {
     var properties = TractButtonProperties()
     
     var xMargin: CGFloat {
-        return Card.xPaddingConstant
+        return TractCard.xPaddingConstant
     }
     var yMargin : CGFloat {
         return self.properties.yMargin
@@ -109,8 +109,8 @@ class TractButton: BaseTractElement {
     }
     
     override func render() -> UIView {
-        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TextContent.self))! {
-            let element = self.elements?.first as! TextContent
+        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
+            let element = self.elements?.first as! TractTextContent
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)

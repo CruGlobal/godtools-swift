@@ -1,5 +1,5 @@
 //
-//  TextContent.swift
+//  TractTextContent.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/26/17.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class TextContent: BaseTractElement {
+class TractTextContent: BaseTractElement {
     
     var properties = TextContentProperties()
     

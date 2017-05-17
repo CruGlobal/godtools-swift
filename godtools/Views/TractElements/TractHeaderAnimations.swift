@@ -1,5 +1,5 @@
 //
-//  HeaderAnimations.swift
+//  TractHeaderAnimations.swift
 //  godtools
 //
 //  Created by Devserker on 5/4/17.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension Header {
+extension TractHeader {
     
     func showHeader() {
         UIView.animate(withDuration: 0.30,

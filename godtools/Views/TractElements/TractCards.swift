@@ -1,5 +1,5 @@
 //
-//  Cards.swift
+//  TractCards.swift
 //  godtools
 //
 //  Created by Devserker on 5/2/17.
@@ -19,7 +19,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-class Cards: BaseTractElement {
+class TractCards: BaseTractElement {
     
     enum CardsState {
         case open, preview
@@ -53,7 +53,7 @@ class Cards: BaseTractElement {
             let deltaChange = CGFloat(data.count - cardNumber)
             let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
             let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
-            let element = Card(data: dictionary, startOnY: yPosition, parent: self)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.cardNumber = cardNumber
             elements.append(element)

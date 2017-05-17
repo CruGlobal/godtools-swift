@@ -14,7 +14,7 @@ extension TractRoot {
     func showHeader() {
         for element in self.elements! {
             if BaseTractElement.isHeaderElement(element) {
-                let header = element as! Header
+                let header = element as! TractHeader
                 header.showHeader()
                 break
             }
@@ -24,7 +24,7 @@ extension TractRoot {
     func hideHeader() {
         for element in self.elements! {
             if BaseTractElement.isHeaderElement(element) {
-                let header = element as! Header
+                let header = element as! TractHeader
                 header.hideHeader()
                 break
             }
@@ -34,7 +34,7 @@ extension TractRoot {
     func showCallToAction() {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
-                let callToAction = element as! CallToAction
+                let callToAction = element as! TractCallToAction
                 callToAction.showCallToAction()
                 break
             }
@@ -44,7 +44,7 @@ extension TractRoot {
     func hideCallToAction() {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
-                let callToAction = element as! CallToAction
+                let callToAction = element as! TractCallToAction
                 callToAction.hideCallToAction()
                 break
             }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension Card {
+extension TractCard {
     
     func setupSwipeGestures() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
@@ -37,7 +37,7 @@ extension Card {
     
 }
 
-extension Card : UIScrollViewDelegate {
+extension TractCard : UIScrollViewDelegate {
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         let translation = scrollView.panGestureRecognizer.translation(in: self.superview)

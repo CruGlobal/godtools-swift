@@ -31,9 +31,9 @@ class TractLabel: BaseTractElement {
     }
     
     func buildHorizontalLine() {
-        let xPosition = Card.xPaddingConstant
+        let xPosition = TractCard.xPaddingConstant
         let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (Card.xPaddingConstant * CGFloat(2))
+        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
         let height: CGFloat = 1.0
         
         let horizontalLine = UIView()
@@ -62,7 +62,7 @@ class TractLabel: BaseTractElement {
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width
-        textStyle.xMargin = Card.xPaddingConstant
+        textStyle.xMargin = TractCard.xPaddingConstant
         
         if BaseTractElement.isFormElement(self) {
             textStyle.font = .gtRegular(size: 16.0)

@@ -1,5 +1,5 @@
 //
-//  Hero.swift
+//  TractHero.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/26/17.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Hero: BaseTractElement {
+class TractHero: BaseTractElement {
     
     var xPosition: CGFloat {
         return 28.0

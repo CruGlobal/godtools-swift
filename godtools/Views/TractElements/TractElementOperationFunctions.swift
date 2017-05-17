@@ -16,25 +16,25 @@ extension BaseTractElement {
         
         switch dataContent.kind {
         case "hero":
-            return Hero(data: data, startOnY: yPosition, parent: self)
+            return TractHero(data: data, startOnY: yPosition, parent: self)
         case "heading":
-            return Heading(data: data, startOnY: yPosition, parent: self)
+            return TractHeading(data: data, startOnY: yPosition, parent: self)
         case "paragraph":
-            return Paragraph(data: data, startOnY: yPosition, parent: self)
+            return TractParagraph(data: data, startOnY: yPosition, parent: self)
         case "content:text":
-            return TextContent(data: data, startOnY: yPosition, parent: self)
+            return TractTextContent(data: data, startOnY: yPosition, parent: self)
         case "image":
             return TractImage(data: data, startOnY: yPosition, parent: self)
         case "header":
-            return Header(data: data, startOnY: yPosition, parent: self)
+            return TractHeader(data: data, startOnY: yPosition, parent: self)
         case "number":
-            return Number(data: data, startOnY: yPosition, parent: self)
+            return TractNumber(data: data, startOnY: yPosition, parent: self)
         case "title":
-            return Title(data: data, startOnY: yPosition, parent: self)
+            return TractTitle(data: data, startOnY: yPosition, parent: self)
         case "cards":
-            return Cards(data: data, startOnY: yPosition, parent: self)
+            return TractCards(data: data, startOnY: yPosition, parent: self)
         case "card":
-            return Card(data: data, startOnY: yPosition, parent: self)
+            return TractCard(data: data, startOnY: yPosition, parent: self)
         case "label":
             return TractLabel(data: data, startOnY: yPosition, parent: self)
         case "form":
@@ -48,11 +48,11 @@ extension BaseTractElement {
 //        case "placeholder":
 //            return TractInputPlaceHolder(data: data, startOnY: yPosition, parent: self)
         case "call-to-action":
-            return CallToAction(data: data, startOnY: yPosition, parent: self)
+            return TractCallToAction(data: data, startOnY: yPosition, parent: self)
         case "tabs":
             return TractTabs(data: data, startOnY: yPosition, parent: self)
         default:
-            return TextContent(data: data, startOnY: yPosition, parent: self)
+            return TractTextContent(data: data, startOnY: yPosition, parent: self)
         }
     }
     

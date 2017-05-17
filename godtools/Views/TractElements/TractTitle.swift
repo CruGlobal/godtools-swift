@@ -1,21 +1,30 @@
 //
-//  Heading.swift
+//  TractTitle.swift
 //  godtools
 //
-//  Created by Devserker on 4/27/17.
+//  Created by Devserker on 4/28/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class Heading: BaseTractElement {
+class TractTitle: BaseTractElement {
     
-    let marginConstant: CGFloat = 30.0
+    static let marginConstant: CGFloat = 8.0
     
-    var xPosition: CGFloat = 0.0
+    var xPosition: CGFloat {
+        if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).includesNumber {
+            return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+        } else {
+            return TractTitle.marginConstant
+        }
+    }
     var yPosition: CGFloat {
-        return self.yStartPosition + self.marginConstant
+        return self.yStartPosition
+    }
+    override var width: CGFloat {
+        return (self.parent?.width)! - self.xPosition - TractTitle.marginConstant
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
@@ -24,8 +33,9 @@ class Heading: BaseTractElement {
     
     override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 54.0)
-        textStyle.color = self.primaryColor!
+        textStyle.font = .gtThin(size: 18.0)
+        textStyle.width = self.width
+        textStyle.color = .gtWhite
         return textStyle
     }
     

@@ -1,5 +1,5 @@
 //
-//  ImageContent.swift
+//  TractImage.swift
 //  godtools
 //
 //  Created by Devserker on 5/11/17.

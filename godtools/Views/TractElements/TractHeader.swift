@@ -1,5 +1,5 @@
 //
-//  Header.swift
+//  TractHeader.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Header: BaseTractElement {
+class TractHeader: BaseTractElement {
     
     var xPosition: CGFloat {
         return 0.0
