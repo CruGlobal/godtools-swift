@@ -40,6 +40,9 @@ class ToolsManager: GTDataManager {
     
     func delete(resource: DownloadedResource) {
         resource.shouldDownload = false
+        for translation in resource.translationsAsArray() {
+            translation.isDownloaded = false
+        }
         saveToDisk()
     }
 }

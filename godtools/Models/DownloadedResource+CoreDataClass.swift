@@ -37,4 +37,8 @@ public class DownloadedResource: NSManagedObject {
         
         return latestTranslation?.remoteId!
     }
+    
+    func translationsAsArray() -> [Translation] {
+        return Array(translations!) as! [Translation]
+    }
 }
