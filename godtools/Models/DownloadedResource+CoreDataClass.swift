@@ -12,6 +12,10 @@ import CoreData
 @objc(DownloadedResource)
 public class DownloadedResource: NSManagedObject {
 
+    func numberOfAvailableLanguages() -> Int {
+        return translationsAsArray().filter( {$0.isPublished} ).count
+    }
+    
     func isAvailableInLanguage(_ language: Language) -> Bool {
         guard let translationsSet = self.translations else {
             return false
