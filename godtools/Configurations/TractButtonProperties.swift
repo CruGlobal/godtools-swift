@@ -10,8 +10,12 @@ import UIKit
 
 class TractButtonProperties {
     
+    enum ButtonType {
+        case url, event
+    }
+    
     var i18nId: String?
-    var type: String?
+    var type: ButtonType = .url
     var value: String?
     var width = CGFloat(300.0)
     var height = CGFloat(44.0)
@@ -21,5 +25,15 @@ class TractButtonProperties {
     var backgroundColor = UIColor.gtBlue
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
-    var tapEvent: String?
+    
+    func setupType(_ type: String) {
+        switch type {
+        case "url":
+            self.type = .url
+        case "event":
+            self.type = .event
+        default: break
+        }
+    }
+    
 }

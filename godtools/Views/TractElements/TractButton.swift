@@ -98,9 +98,7 @@ class TractButton: BaseTractElement {
             case "i18n-id":
                 self.properties.i18nId = properties[property] as! String?
             case "type":
-                self.properties.type = properties[property] as! String?
-            case "tap-event":
-                self.properties.tapEvent = properties[property] as! String?
+                self.properties.setupType(properties[property] as! String)
             default: break
             }
         }
@@ -110,13 +108,13 @@ class TractButton: BaseTractElement {
     }
     
     func addTargetToButton() {
-        if self.properties.tapEvent != nil {
+        if self.properties.type == .event {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
         }
     }
     
     func buttonTarget() {
-        let tag = self.properties.tapEvent?.transformToNumber()
+        let tag = self.properties.value?.transformToNumber()
         self.root?.sendMessageToView(tag: tag!)
     }
     

@@ -75,7 +75,11 @@ extension BaseTractElement {
             let attribute = item.value as XMLAttribute
             properties[attribute.name] = attribute.text
         }
-        properties["value"] = data.element?.text
+        
+        if data.element?.text != nil && data.element?.text?.trimmingCharacters(in: .whitespaces) != "" {
+            properties["value"] = data.element?.text
+        }
+
         let children = data.children
         return (elementName!, namespace, kind, properties, children)
     }
