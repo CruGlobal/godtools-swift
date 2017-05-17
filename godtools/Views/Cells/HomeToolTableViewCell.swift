@@ -43,11 +43,13 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     func configure(primaryLanguage: Language) {
-        self.titleLabel.text = resource!.name
-        self.isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
-        self.languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
-        self.titleLabel.isEnabled = isAvailable
-        self.selectionStyle = isAvailable ? .default : .none
+        titleLabel.text = resource!.name
+        isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
+        languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
+        titleLabel.isEnabled = isAvailable
+        selectionStyle = isAvailable ? .default : .none
+        
+        downloadProgressView.setProgress(0.0, animated: false)
         
         if (resource!.shouldDownload) {
             self.setCellAsDisplayOnly()
@@ -55,20 +57,20 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     fileprivate func setCellAsDisplayOnly() {
-        self.downloadButton.isHidden = true
-        self.greyVerticalLine.isHidden = true
-        self.titleLeadingConstraint.constant = self.leftConstraintValue
-        self.numberOfViewsLeadingConstraint.constant = self.leftConstraintValue
+        downloadButton.isHidden = true
+        greyVerticalLine.isHidden = true
+        titleLeadingConstraint.constant = leftConstraintValue
+        numberOfViewsLeadingConstraint.constant = leftConstraintValue
     }
     
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
-        self.cellDelegate?.downloadButtonWasPressed(resource: resource!)
+        cellDelegate?.downloadButtonWasPressed(resource: resource!)
     }
     
     @IBAction func pressInfoButton(_ sender: Any) {
-        self.cellDelegate?.infoButtonWasPressed(resource: resource!)
+        cellDelegate?.infoButtonWasPressed(resource: resource!)
     }
     
     // MARK: UI 
