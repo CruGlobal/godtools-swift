@@ -27,7 +27,7 @@ class TractParagraph: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         
         var xMargin = BaseTractElement.xMargin

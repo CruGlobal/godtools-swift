@@ -11,7 +11,7 @@ import UIKit
 
 class TractTextContent: BaseTractElement {
     
-    var properties = TextContentProperties()
+    var properties = TractTextContentProperties()
     
     let xMargin: CGFloat = BaseTractElement.xMargin
     var xPosition: CGFloat = 0.0

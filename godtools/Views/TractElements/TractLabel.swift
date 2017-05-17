@@ -59,7 +59,7 @@ class TractLabel: BaseTractElement {
         return self
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width
         textStyle.xMargin = TractCard.xPaddingConstant

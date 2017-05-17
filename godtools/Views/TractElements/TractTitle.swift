@@ -31,7 +31,7 @@ class TractTitle: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtThin(size: 18.0)
         textStyle.width = self.width

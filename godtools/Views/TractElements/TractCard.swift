@@ -24,7 +24,7 @@ class TractCard: BaseTractElement {
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 50.0
     
-    var properties = CardProperties()
+    var properties = TractCardProperties()
     
     let scrollView = UIScrollView()
     let containerView = UIView()

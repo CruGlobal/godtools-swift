@@ -22,7 +22,7 @@ class TractHeading: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtThin(size: 54.0)
         textStyle.color = self.primaryColor!

@@ -1,5 +1,5 @@
 //
-//  CardProperties.swift
+//  TractCardProperties.swift
 //  godtools
 //
 //  Created by Devserker on 5/16/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardProperties {
+class TractCardProperties {
     
     var hidden = false
     var listener: String?

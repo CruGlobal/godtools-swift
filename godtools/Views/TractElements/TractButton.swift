@@ -63,7 +63,7 @@ class TractButton: BaseTractElement {
     
     // MARK: - Helpers
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.buttonWidth
