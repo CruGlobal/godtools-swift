@@ -11,10 +11,12 @@ import UIKit
 
 class TractNumber: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let widthConstant: CGFloat = 70.0
     static let marginConstant: CGFloat = 8.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return TractNumber.marginConstant

@@ -16,6 +16,7 @@ class TractHeading: BaseTractElement {
     let marginConstant: CGFloat = 30.0
     
     var xPosition: CGFloat = 0.0
+    
     var yPosition: CGFloat {
         return self.yStartPosition + self.marginConstant
     }

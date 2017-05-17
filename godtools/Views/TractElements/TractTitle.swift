@@ -11,9 +11,11 @@ import UIKit
 
 class TractTitle: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let marginConstant: CGFloat = 8.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).includesNumber {

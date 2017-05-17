@@ -11,11 +11,6 @@ import UIKit
 
 class TractTextContent: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var properties = TractTextContentProperties()
-    var label: GTLabel = GTLabel()
-    
     // MARK: - Positions and Sizes
     
     let xMargin: CGFloat = BaseTractElement.xMargin
@@ -43,6 +38,11 @@ class TractTextContent: BaseTractElement {
     override func textYPadding() -> CGFloat {
         return (self.parent?.textYPadding())!
     }
+    
+    // MARK: - Object properties
+    
+    var properties = TractTextContentProperties()
+    var label: GTLabel = GTLabel()
     
     // MARK: - Setup
     

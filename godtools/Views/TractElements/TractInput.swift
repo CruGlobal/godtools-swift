@@ -11,11 +11,6 @@ import SWXMLHash
 
 class TractInput: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var properties = TractTextFieldProperties()
-    var textField = GTTextField()
-    
     // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
@@ -70,6 +65,11 @@ class TractInput: BaseTractElement {
     override func textYPadding() -> CGFloat {
         return (self.parent?.textYPadding())!
     }
+    
+    // MARK: - Object properties
+    
+    var properties = TractTextFieldProperties()
+    var textField = GTTextField()
     
     // MARK: - Setup
     

@@ -27,10 +27,6 @@ class TractCards: BaseTractElement {
         case open, preview
     }
     
-    // MARK: - Object properties
-    
-    var cardsState = CardsState.preview
-    
     // MARK: - Positions and Sizes
     
     var xPosition: CGFloat = 0.0
@@ -57,6 +53,10 @@ class TractCards: BaseTractElement {
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
     }
+    
+    // MARK: - Object properties
+    
+    var cardsState = CardsState.preview
     
     // MARK: - Setup
     

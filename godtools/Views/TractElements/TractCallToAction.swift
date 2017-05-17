@@ -11,10 +11,13 @@ import UIKit
 
 class TractCallToAction: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let yMarginConstant: CGFloat = 16.0
     static let paddingConstant: CGFloat = 16.0
+    static let minHeight: CGFloat = 80.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return TractCard.xMarginConstant
@@ -23,8 +26,6 @@ class TractCallToAction: BaseTractElement {
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
-    
-    static let minHeight: CGFloat = 80.0
     
     override var height: CGFloat {
         get {

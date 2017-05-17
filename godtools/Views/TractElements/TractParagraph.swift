@@ -11,9 +11,11 @@ import UIKit
 
 class TractParagraph: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let marginConstant: CGFloat = 8.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return CGFloat(0.0)

@@ -14,29 +14,21 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
-    // MARK: - Object properties
+    // MARK: - Configurations
     
     enum CardState {
         case open, preview, close, hidden, enable
     }
     
-    var properties = TractCardProperties()
-    let scrollView = UIScrollView()
-    let containerView = UIView()
-    var shadowView = UIView()
-    var cardState = CardState.preview
-    var cardNumber = 0
-    var cardsParentView: TractCards {
-        return self.parent as! TractCards
-    }
-    
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 80.0
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 50.0
+    
+    // MARK: - Positions and Sizes
     
     var yDownPosition: CGFloat = 0.0
     
@@ -67,6 +59,18 @@ class TractCard: BaseTractElement {
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.externalHeight
+    }
+    
+    // MARK: - Object properties
+    
+    var properties = TractCardProperties()
+    let scrollView = UIScrollView()
+    let containerView = UIView()
+    var shadowView = UIView()
+    var cardState = CardState.preview
+    var cardNumber = 0
+    var cardsParentView: TractCards {
+        return self.parent as! TractCards
     }
     
     // MARK: - Setup

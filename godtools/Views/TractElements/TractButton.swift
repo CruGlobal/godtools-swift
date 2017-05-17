@@ -10,11 +10,6 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var properties = TractButtonProperties()
-    var button: GTButton = GTButton()
-    
     // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
@@ -54,6 +49,11 @@ class TractButton: BaseTractElement {
     override func textYPadding() -> CGFloat {
         return (self.parent?.textYPadding())!
     }
+    
+    // MARK: - Object properties
+    
+    var properties = TractButtonProperties()
+    var button: GTButton = GTButton()
     
     // MARK: - Setup
     

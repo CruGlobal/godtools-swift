@@ -10,15 +10,12 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var imageView = UIImageView()
-    var align = "center"
-    
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
     static let yMarginConstant: CGFloat = 16.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
@@ -35,6 +32,11 @@ class TractImage: BaseTractElement {
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height + TractImage.yMarginConstant
     }
+    
+    // MARK: - Object properties
+    
+    var imageView = UIImageView()
+    var align = "center"
     
     // MARK: - Setup
     

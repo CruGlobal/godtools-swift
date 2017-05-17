@@ -12,14 +12,12 @@ import SWXMLHash
 
 class TractLabel: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var tapView = UIView()
-    
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 0.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return TractLabel.xMarginConstant
@@ -45,6 +43,10 @@ class TractLabel: BaseTractElement {
     override func yEndPosition() -> CGFloat {
         return self.yStartPosition + self.height
     }
+    
+    // MARK: - Object properties
+    
+    var tapView = UIView()
     
     // MARK: - Setup
     

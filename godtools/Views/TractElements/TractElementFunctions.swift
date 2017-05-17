@@ -11,6 +11,9 @@ import SWXMLHash
 
 extension BaseTractElement {
     
+    func receiveMessage() {
+    }
+    
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
         let dataContent = splitData(data: data)
         

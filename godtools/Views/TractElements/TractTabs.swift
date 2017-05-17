@@ -11,16 +11,12 @@ import SWXMLHash
 
 class TractTabs: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var segmentedControl = UISegmentedControl()
-    var options = [String]()
-    var tabs = [[XMLIndexer]]()
-    
-    // MARK: - Positions and Sizes
+    // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 16.0
     static let yMarginConstant: CGFloat = 16.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return TractTabs.xMarginConstant
@@ -37,6 +33,12 @@ class TractTabs: BaseTractElement {
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
     }
+    
+    // MARK: - Object properties
+    
+    var segmentedControl = UISegmentedControl()
+    var options = [String]()
+    var tabs = [[XMLIndexer]]()
     
     // MARK - Setup
     
