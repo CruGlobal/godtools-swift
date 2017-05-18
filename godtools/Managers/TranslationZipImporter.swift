@@ -116,7 +116,7 @@ class TranslationZipImporter {
             self.extractZipFile(filename)
             
             TranslationsManager.shared.translationWasDownloaded(translation)
-            DownloadedResourceManager.shared.purgeTranslationsOlderThan(translation)
+            TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
