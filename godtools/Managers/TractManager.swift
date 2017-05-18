@@ -28,11 +28,11 @@ extension TractManager {
                 let manifest = xmlData?["manifest"]
                 
                 if manifest != nil {
-                    let primaryColorString: String = (manifest!.element?.attribute(by: "primary-color")?.text)!
-                    let primaryTextColorString: String = (manifest!.element?.attribute(by: "primary-text-color")?.text)!
-                    let textColorString: String = (manifest!.element?.attribute(by: "text-color")?.text)!
+                    let primaryColorString: String = (manifest!.element?.attribute(by: "primary-color")?.text) ?? "rgba(59, 164, 219, 1)"
+                    let primaryTextColorString: String = (manifest!.element?.attribute(by: "primary-text-color")?.text) ?? "rgba(59, 164, 219, 1)"
+                    let textColorString: String = (manifest!.element?.attribute(by: "text-color")?.text) ?? "rgba(90, 90, 90, 1)"
                     
-                    for child in manifest!.children {
+                    for child in manifest!["pages"].children {
                         if child.element?.name == "page" {
                             let page = loadPage(child)
                             pages.append(page)
@@ -50,7 +50,7 @@ extension TractManager {
     }
     
     func loadPage(_ child: XMLIndexer) -> XMLIndexer{
-        let resource = child.element?.attribute(by: "id")?.text
+        let resource = child.element?.attribute(by: "src")?.text
         let page = loadXMLFile(resource!)
         return page!
     }
