@@ -10,7 +10,7 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
-    static let xMarginConstant: CGFloat = 8.0
+    static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 16.0
     
     var align = "center"
