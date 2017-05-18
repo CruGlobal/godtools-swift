@@ -74,7 +74,9 @@ class TractImage: BaseTractElement {
         let resource = properties["resource"] as! String?
         self.align = properties["align"] as! String
         
-        let image = UIImage(named: resource!)!
+        guard let image = UIImage(named: resource!) else {
+            return UIImage()
+        }
         return image
     }
 
