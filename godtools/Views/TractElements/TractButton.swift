@@ -40,7 +40,7 @@ class TractButton: BaseTractElement {
         return (self.width - self.buttonWidth) / 2
     }
     
-    var textPadding = CGFloat(8.0)
+    var textPadding: CGFloat = 8.0
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height + self.yMargin

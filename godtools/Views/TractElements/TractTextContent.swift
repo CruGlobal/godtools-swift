@@ -90,15 +90,15 @@ class TractTextContent: BaseTractElement {
         for property in properties.keys {
             switch property {
             case "value":
-                self.properties.value = properties[property] as! String?
+                self.properties.value = properties[property] as? String
             case "i18n-id":
-                self.properties.i18nId = properties[property] as! String?
+                self.properties.i18nId = properties[property] as? String
             case "text-color":
-                self.properties.color = ((properties[property] as! String?)?.getRGBAColor())!
+                self.properties.color = (properties[property] as? String)!.getRGBAColor()
             case "text-scale":
-                self.properties.scale = properties[property] as! CGFloat?
+                self.properties.scale = properties[property] as? CGFloat
             case "text-align":
-                self.properties.align = (properties[property] as! NSTextAlignment?)!
+                self.properties.align = (properties[property] as? NSTextAlignment)!
             default: break
             }
         }

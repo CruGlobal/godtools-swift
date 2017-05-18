@@ -2,7 +2,7 @@
 //  DownloadedResource+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/28/17.
+//  Created by Ryan Carlson on 5/17/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -20,6 +20,8 @@ extension DownloadedResource {
     @NSManaged public var name: String?
     @NSManaged public var remoteId: String?
     @NSManaged public var shouldDownload: Bool
+    @NSManaged public var totalViews: Int32
+    @NSManaged public var copyrightDescription: String?
     @NSManaged public var pages: NSSet?
     @NSManaged public var translations: NSSet?
 

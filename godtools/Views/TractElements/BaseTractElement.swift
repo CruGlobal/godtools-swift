@@ -169,29 +169,17 @@ class BaseTractElement: UIView {
         var currentYPosition: CGFloat = 0.0
         var maxYPosition: CGFloat = 0.0
         var elements = [BaseTractElement]()
-        var previousElementWasImage = false
-        var previousPosition: CGFloat = 0.0
         
         for dictionary in data {
-            var element: BaseTractElement?
-            let properties = splitData(data: dictionary)
+            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
             
-            if previousElementWasImage && properties.kind == "image" {
-                element = buildElementForDictionary(dictionary, startOnY: previousPosition)
+            if self.horizontalContainer && element.yEndPosition() > maxYPosition {
+                maxYPosition = element.yEndPosition()
             } else {
-                element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+                currentYPosition = element.yEndPosition()
             }
             
-            previousElementWasImage = element!.isKind(of: TractImage.self)
-            previousPosition = currentYPosition
-            
-            if self.horizontalContainer && element!.yEndPosition() > maxYPosition {
-                maxYPosition = element!.yEndPosition()
-            } else {
-                currentYPosition = element!.yEndPosition()
-            }
-            
-            elements.append(element!)
+            elements.append(element)
         }
         
         if self.isKind(of: TractRoot.self) {

@@ -12,7 +12,7 @@ class TractImage: BaseTractElement {
     
     // MARK: Positions constants
     
-    static let xMarginConstant: CGFloat = 8.0
+    static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 16.0
     
     // MARK: - Positions and Sizes
@@ -44,8 +44,8 @@ class TractImage: BaseTractElement {
         self.imageView = UIImageView(image: loadImage(properties: properties))
         var width = self.imageView.frame.size.width
         var height = self.imageView.frame.size.height
-        var xPosition = CGFloat(0.0)
-        let yPosition = CGFloat(0.0)
+        var xPosition: CGFloat = 0.0
+        let yPosition: CGFloat = 0.0
         
         if width > self.width {
             height = self.width * height / width
@@ -83,7 +83,9 @@ class TractImage: BaseTractElement {
         let resource = properties["resource"] as! String?
         self.align = properties["align"] as! String
         
-        let image = UIImage(named: resource!)!
+        guard let image = UIImage(named: resource!) else {
+            return UIImage()
+        }
         return image
     }
 
