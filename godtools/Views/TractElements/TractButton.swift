@@ -33,7 +33,7 @@ class TractButton: BaseTractElement {
     var buttonXPosition: CGFloat {
         return (self.width - self.buttonWidth) / 2
     }
-    var textPadding = CGFloat(8.0)
+    var textPadding: CGFloat = 8.0
     
     var button: GTButton = GTButton()
     

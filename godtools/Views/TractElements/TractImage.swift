@@ -31,8 +31,8 @@ class TractImage: BaseTractElement {
         self.imageView = UIImageView(image: loadImage(properties: properties))
         var width = self.imageView.frame.size.width
         var height = self.imageView.frame.size.height
-        var xPosition = CGFloat(0.0)
-        let yPosition = CGFloat(0.0)
+        var xPosition: CGFloat = 0.0
+        let yPosition: CGFloat = 0.0
         
         if width > self.width {
             height = self.width * height / width

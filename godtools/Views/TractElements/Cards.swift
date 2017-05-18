@@ -86,7 +86,7 @@ class Cards: BaseTractElement {
         }
         
         let xPosition = (viewWidth - width!) / CGFloat(2.0)
-        let yPosition = CGFloat(0.0)
+        let yPosition: CGFloat = 0.0
         
         imageView.frame = CGRect(x: xPosition, y: yPosition, width: width!, height: height!)
         imageView.contentMode = .scaleAspectFit
