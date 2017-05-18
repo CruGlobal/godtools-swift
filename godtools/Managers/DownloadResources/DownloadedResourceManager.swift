@@ -48,6 +48,9 @@ class DownloadedResourceManager: GTDataManager {
                     return Promise(error: error)
                 }
                 return Promise(value:self.loadFromDisk())
+            }.then { downloadedResources -> Promise<[DownloadedResource]> in
+                TranslationZipImporter.shared.catchupMissedDownloads()
+                return Promise(value: downloadedResources)
             }
     }
     
