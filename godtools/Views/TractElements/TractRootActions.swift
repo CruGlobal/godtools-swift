@@ -50,10 +50,12 @@ extension TractRoot {
         }
     }
     
-    func sendMessageToView(tag: Int) {
-        let view = self.viewWithTag(tag)
-        if view != nil && (view?.isKind(of: BaseTractElement.self))! {
-            (view as! BaseTractElement).receiveMessage()
+    func sendMessageToView(tag: String) {
+        if self.elementsList?[tag] != nil {
+            let view = self.elementsList?[tag]
+            if view != nil {
+                view?.receiveMessage()
+            }
         }
     }
     

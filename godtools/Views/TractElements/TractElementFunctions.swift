@@ -52,6 +52,10 @@ extension BaseTractElement {
             return TractCallToAction(data: data, startOnY: yPosition, parent: self)
         case "tabs":
             return TractTabs(data: data, startOnY: yPosition, parent: self)
+        case "modals":
+            return TractModals(data: data, startOnY: yPosition, parent: self)
+        case "modal":
+            return TractModal(data: data, startOnY: yPosition, parent: self)
         default:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
         }

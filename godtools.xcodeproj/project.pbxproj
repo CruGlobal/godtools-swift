@@ -23,6 +23,7 @@
 		0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */; };
 		0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6021EC4F5A500C55B2A /* kgp-4.xml */; };
 		0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6041EC5003600C55B2A /* kgp-5.xml */; };
+		0F260D4D1ECE5F9E00865C76 /* TractModalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */; };
 		0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837971EC62D3F0049CCE5 /* TractLink.swift */; };
 		0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837991EC65A140049CCE5 /* TractTabs.swift */; };
 		0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F28379B1EC65A330049CCE5 /* TractTab.swift */; };
@@ -158,6 +159,7 @@
 		0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractForm.swift; path = Views/TractElements/TractForm.swift; sourceTree = "<group>"; };
 		0F13B6021EC4F5A500C55B2A /* kgp-4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-4.xml"; sourceTree = "<group>"; };
 		0F13B6041EC5003600C55B2A /* kgp-5.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-5.xml"; sourceTree = "<group>"; };
+		0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractModalProperties.swift; sourceTree = "<group>"; };
 		0F2837971EC62D3F0049CCE5 /* TractLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLink.swift; path = Views/TractElements/TractLink.swift; sourceTree = "<group>"; };
 		0F2837991EC65A140049CCE5 /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabs.swift; path = Views/TractElements/TractTabs.swift; sourceTree = "<group>"; };
 		0F28379B1EC65A330049CCE5 /* TractTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTab.swift; path = Views/TractElements/TractTab.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */,
 				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
 				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
+				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -390,7 +393,6 @@
 				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
 				0F2837971EC62D3F0049CCE5 /* TractLink.swift */,
 				0F28379B1EC65A330049CCE5 /* TractTab.swift */,
-				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -464,6 +466,7 @@
 				0F85C7871ECC992100023723 /* TractColors.swift */,
 				0F85C7881ECC992100023723 /* TractConfigurations.swift */,
 				0F85C7891ECC992100023723 /* TractTextFieldProperties.swift */,
+				0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */,
 			);
 			name = Tract;
 			sourceTree = "<group>";
@@ -1066,6 +1069,7 @@
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
+				0F260D4D1ECE5F9E00865C76 /* TractModalProperties.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,

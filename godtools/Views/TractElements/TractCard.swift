@@ -93,10 +93,10 @@ class TractCard: BaseTractElement {
             self.isHidden = true
             self.cardState = .hidden
         }
-        
-        if self.properties.listener != nil {
-            self.tag = (self.properties.listener?.transformToNumber())!
-        }
+    }
+    
+    override func getListener() -> String {
+        return self.properties.listener != nil ? self.properties.listener! : ""
     }
     
     func setupScrollView() {
@@ -149,6 +149,7 @@ class TractCard: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.containerView.addSubview(element.render())
+            addElementToList(element)
         }
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)

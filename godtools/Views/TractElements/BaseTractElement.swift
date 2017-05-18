@@ -62,6 +62,17 @@ class BaseTractElement: UIView {
         }
     }
     
+    private var _elementsList: [String: BaseTractElement]?
+    var elementsList: [String: BaseTractElement]? {
+        get {
+            let parentElementsList = self.parent?.elementsList
+            return self._elementsList != nil ? self._elementsList : parentElementsList
+        }
+        set {
+            self._elementsList = newValue
+        }
+    }
+    
     private var _tractConfigurations: TractConfigurations?
     var tractConfigurations: TractConfigurations? {
         get {
@@ -127,6 +138,7 @@ class BaseTractElement: UIView {
         self.maxHeight = height
         self.colors = colors
         self.tractConfigurations = configurations
+        self.elementsList = [String: BaseTractElement]()
         
         if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
@@ -137,6 +149,13 @@ class BaseTractElement: UIView {
         }
         
         setupElement(data: data, startOnY: 0.0)
+    }
+    
+    init(data: XMLIndexer) {
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
+        self.parent = self
+        setupElement(data: data, startOnY: CGFloat(0.0))
     }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
@@ -211,8 +230,19 @@ class BaseTractElement: UIView {
     func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
+            addElementToList(element)
         }
         return self
+    }
+    
+    func getListener() -> String {
+        return ""
+    }
+    
+    func addElementToList(_ element: BaseTractElement) {
+        if element.getListener() != "" {
+            self.elementsList![element.getListener()] = element
+        }
     }
     
     // MARK: - Style properties

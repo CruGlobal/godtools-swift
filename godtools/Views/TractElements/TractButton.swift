@@ -114,8 +114,10 @@ class TractButton: BaseTractElement {
     }
     
     func buttonTarget() {
-        let tag = self.properties.value?.transformToNumber()
-        self.root?.sendMessageToView(tag: tag!)
+        let values = self.properties.value!.components(separatedBy: ",")
+        for value in values {
+            self.root?.sendMessageToView(tag: value)
+        }
     }
     
     override func render() -> UIView {
@@ -127,12 +129,15 @@ class TractButton: BaseTractElement {
             self.button.titleLabel?.font = label.font
             self.button.setTitleColor(self.properties.color, for: .normal)
             self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
+            
+            addElementToList(element)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
+                addElementToList(element)
             }
         }
-    
+        
         return self
     }
     
