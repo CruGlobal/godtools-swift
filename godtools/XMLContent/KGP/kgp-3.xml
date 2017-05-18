@@ -2,93 +2,81 @@
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
       xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
-      background-image="chasm_in_between.png">
+      background-image="">
   <header>
     <number>
       <content:text i18n-id="{{uuid}}">3</content:text>
     </number>
     <title>
-      <content:text i18n-id="{{uuid}}">We are separated from God by our sin, so we cannot know him or experience his
-        love.
+      <content:text i18n-id="{{uuid}}">Jesus is God's only solution for our sin. Only through him can we know God and receive his love and forgiveness.
       </content:text>
     </title>
   </header>
   <cards>
     <card>
       <label>
-        <content:text i18n-id="{{uuid}}">What is sin?</content:text>
+        <content:text i18n-id="{{uuid}}">Jesus is God</content:text>
       </label>
       <paragraph>
-        <content:text i18n-id="{{uuid}}">We were created to have a relationship with God, but we rejected him and the
-          relationship was broken.
+        <content:text i18n-id="{{uuid}}">Christ is the visible image of the invisible God. He existed before anything was created and is supreme over all creation.
         </content:text>
-        <content:text>This rejection of God and the building of our lives around anything else is what the Bible calls
-          sin.
+        <content:text>Colossians 1:15
         </content:text>
-        <content:text>We show this by having selfish actions and attitudes, by disobeying God or displaying indifference
-          toward him.
-        </content:text>
-      </paragraph>
-    </card>
-    <card background-image="{{chasm_in_between.png}}" background-image-align="bottom">
-      <label>
-        <content:text i18n-id="{{uuid}}">Everyone is sinful</content:text>
-      </label>
-      <paragraph>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
-        <content:text i18n-id="{{uuid}}">“For everyone has sinned: we all fall short of God’s glorious standard.”
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 3:23</content:text>
       </paragraph>
     </card>
     <card>
-      <label>
-        <content:text i18n-id="{{uuid}}">Sin has consequences</content:text>
-      </label>
-      <paragraph>
-        <content:text i18n-id="{{uuid}}">For the wages of sin is death, but the free gift of God is eternal life through
-          Christ Jesus our Lord.
-        </content:text>
-        <content:text i18n-id="{{uuid}}">Romans 6:23</content:text>
-        <content:text i18n-id="{{uuid}}">God is perfect and just and will hold us accountable for our sin. There is a
-          penalty for rejecting God.
-        </content:text>
-        <content:text i18n-id="{{uuid}}">God is perfect and we are sinful. There is a great gap between us because of our
-          sin.
-        </content:text>
-        <content:text i18n-id="{{uuid}}">We may try to bridge this gap through good deeds or following a religion.
-          However, all our efforts fail because they can’t solve the problem of sin that keeps us from God.
-        </content:text>
-      </paragraph>
+        <label>
+            <content:text i18n-id="{{uuid}}">Jesus died in our place</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">Christ suffered for our sins once for all time. He never sinned, but he died for sinners to bring you home safely to God.
+            </content:text>
+            <content:text>1 Peter 3:18a
+            </content:text>
+        </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">Jesus came back to life</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">During the forty days after his crucifixion, he appeared to the apostles … and he proved to them in many ways he was actually alive.
+            </content:text>
+            <content:text>Acts 1:3a
+            </content:text>
+            <content:text i18n-id="{{uuid}}">His resurrection proved that he was God and that he had suffered the punishment we deserved in our place.
+            </content:text>
+        </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">Jesus is the only way...</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">Jesus said, "I am the way, the truth and the life. No-one can come to the Father except through me."
+            </content:text>
+            <content:text>John 14:6
+            </content:text>
+        </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">God proves his love...</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">For God loved the world so much that he gave his one and only Son, so that everyone who believes in him will not perish but have eternal life.
+            </content:text>
+            <content:text>John 3:16
+            </content:text>
+            <image resource="tract_test_image" align="center" />
+            <content:text>Although we deserve to be cut off from God forever, in his love God sent Jesus to pay the penalty for our sins by dying on the cross.
+            </content:text>
+            <content:text>Through Jesus, God has bridged the gap that separates us from him, and provided a way for us to be forgiven and restored to relationship with him.
+            </content:text>
+        </paragraph>
     </card>
   </cards>
   <call-to-action>
-    <content:text i18n-id="{{uuid}}">The third point gives us the only solution to this problem…</content:text>
+    <content:text i18n-id="{{uuid}}">It’s not enough just to know these points…</content:text>
   </call-to-action>
 </page>

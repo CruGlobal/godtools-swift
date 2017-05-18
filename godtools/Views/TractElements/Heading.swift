@@ -22,10 +22,10 @@ class Heading: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.style = "toolFrontTitle"
-        textStyle.textColor = self.primaryColor!
+        textStyle.font = .gtThin(size: 54.0)
+        textStyle.color = self.primaryColor!
         return textStyle
     }
     

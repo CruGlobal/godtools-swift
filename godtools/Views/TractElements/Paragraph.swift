@@ -27,7 +27,7 @@ class Paragraph: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
         
         var xMargin = BaseTractElement.xMargin
@@ -35,10 +35,10 @@ class Paragraph: BaseTractElement {
             xMargin = Card.xPaddingConstant
         }
         
-        textStyle.style = "toolFrontSubTitle"
+        textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = xMargin
-        textStyle.textColor = self.textColor
+        textStyle.color = self.textColor
         
         return textStyle
     }

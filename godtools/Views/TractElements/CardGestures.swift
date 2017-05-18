@@ -24,7 +24,7 @@ extension Card {
     func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
             if self.cardState == .preview || self.cardState == .close {
-                showCard()
+                showCardAndPreviousCards()
             } else {
                 self.cardsParentView.showFollowingCardToCard(self)
             }

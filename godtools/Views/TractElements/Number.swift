@@ -25,16 +25,17 @@ class Number: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
+        (self.parent as! Header).includesNumber = true
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.style = "pageHeaderNumber"
+        textStyle.font = .gtThin(size: 54.0)
         textStyle.width = self.width
         textStyle.height = 60.0
-        textStyle.alignment = .center
-        textStyle.textColor = .gtWhite
+        textStyle.align = .center
+        textStyle.color = .gtWhite
         return textStyle
     }
     

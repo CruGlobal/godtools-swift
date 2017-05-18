@@ -146,6 +146,7 @@ class BaseTractElement: UIView {
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
             } else {
@@ -177,10 +178,15 @@ class BaseTractElement: UIView {
         self.elements = elements
     }
     
-    func textStyle() -> TextStyle {
-        let textStyle = TextStyle()
-        textStyle.alignment = (self.tractConfigurations?.defaultTextAlignment)!
+    func textStyle() -> TextContentProperties {
+        let textStyle = TextContentProperties()
+        textStyle.align = (self.tractConfigurations?.defaultTextAlignment)!
         return textStyle
+    }
+    
+    func buttonStyle() -> TractButtonProperties {
+        let buttonStyle = TractButtonProperties()
+        return buttonStyle
     }
     
     func textYPadding() -> CGFloat {

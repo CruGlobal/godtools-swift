@@ -68,12 +68,12 @@ class CallToAction: BaseTractElement {
         return self.yPosition + self.height + CallToAction.yMarginConstant
     }
     
-    override func textStyle() -> TextStyle {
+    override func textStyle() -> TextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
         textStyle.xMargin = CallToAction.paddingConstant
         textStyle.yMargin = CallToAction.paddingConstant
-        textStyle.textColor = self.textColor
+        textStyle.color = self.textColor
         return textStyle
     }
     

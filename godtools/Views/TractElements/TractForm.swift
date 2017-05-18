@@ -1,40 +1,24 @@
 //
-//  Header.swift
+//  TractForm.swift
 //  godtools
 //
-//  Created by Devserker on 4/28/17.
+//  Created by Devserker on 5/11/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class Header: BaseTractElement {
+class TractForm: BaseTractElement {
     
     var xPosition: CGFloat {
         return 0.0
     }
     var yPosition: CGFloat {
-        return self.yStartPosition + 1.0
-    }
-    override var height: CGFloat {
-        get {
-            return super.height + 10.0
-        }
-        set {
-            super.height = newValue
-        }
-    }
-    
-    var includesNumber = false
-    
-    override var horizontalContainer: Bool {
-        return true
+        return self.yStartPosition
     }
     
     override func setupView(properties: [String: Any]) {
         self.frame = buildFrame()
-        self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
     }
     
     override func yEndPosition() -> CGFloat {
@@ -49,5 +33,5 @@ class Header: BaseTractElement {
                       width: self.width,
                       height: self.height)
     }
-
+    
 }

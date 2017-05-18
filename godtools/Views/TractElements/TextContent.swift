@@ -11,6 +11,8 @@ import UIKit
 
 class TextContent: BaseTractElement {
     
+    var properties = TextContentProperties()
+    
     let xMargin: CGFloat = BaseTractElement.xMargin
     var xPosition: CGFloat = 0.0
     var yPosition: CGFloat = 0.0
@@ -27,43 +29,31 @@ class TextContent: BaseTractElement {
         }
     }
     
-    var label: GTLabel?
+    var label: GTLabel = GTLabel()
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        let labelStyle = self.parent?.textStyle()
-        
-        if (labelStyle?.width)! > CGFloat(0.0) {
-            self.contentWidth = (labelStyle?.width)!
-        } else {
-            self.contentWidth = (self.parent?.width)!
-        }
-        
-        self.xPosition = (labelStyle?.xMargin)!
-        self.yPosition = self.yStartPosition + (labelStyle?.yMargin)!
-        
-        let attributes = loadElementAttributes(properties: properties)
-        let text: String = attributes.text
-        let backgroundColor: UIColor = attributes.backgroundColor
+    override func setupView(properties: [String: Any]) {
+        loadStyles()
+        loadElementProperties(properties: properties)
         
         self.label = GTLabel(frame: buildFrame())
-        self.label?.text = text
-        self.label?.textAlignment = (labelStyle?.alignment)!
-        self.label?.backgroundColor = backgroundColor
-        self.label?.gtStyle = (labelStyle?.style)!
-        self.label?.textColor = labelStyle?.textColor
-        self.label?.lineBreakMode = .byWordWrapping
+        self.label.text = self.properties.value
+        self.label.textAlignment = self.properties.align
+        self.label.font = self.properties.font
+        self.label.textColor = self.properties.color
+        self.label.lineBreakMode = .byWordWrapping
         
-        if labelStyle?.height == 0.0 {
-            self.label?.numberOfLines = 0
-            self.label?.sizeToFit()
-            self.height = (self.label?.frame.height)!
+        if self.properties.height == 0.0 {
+            self.label.numberOfLines = 0
+            self.label.sizeToFit()
+            self.height = self.label.frame.height
         } else {
-            self.height = (labelStyle?.height)!
+            self.height = self.properties.height
         }
         
         self.frame = buildFrame()
-        self.label?.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
-        self.addSubview(self.label!)
+        self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
+        
+        self.addSubview(self.label)
     }
     
     override func yEndPosition() -> CGFloat {
@@ -76,29 +66,35 @@ class TextContent: BaseTractElement {
     
     // MARK: - Helpers
     
-    fileprivate func loadElementAttributes(properties: Dictionary<String, Any>) -> (text: String, backgroundColor: UIColor) {
-        var text: String = ""
-        var backgroundColor: UIColor?
+    func loadStyles() {
+        self.properties = (self.parent?.textStyle())!
         
-        if properties["value"] != nil {
-            text = properties["value"] as! String
-        }
-        
-        if properties["backgroundColor"] != nil {
-            let backgroundColorText = properties["backgroundColor"] as! String
-            switch backgroundColorText {
-            case "red":
-                backgroundColor = .gtRed
-            case "black":
-                backgroundColor = .gtBlack
-            default:
-                backgroundColor = .clear
-            }
+        if self.properties.width > CGFloat(0.0) {
+            self.contentWidth = self.properties.width
         } else {
-            backgroundColor = .clear
+            self.contentWidth = (self.parent?.width)!
         }
         
-        return (text, backgroundColor!)
+        self.xPosition = self.properties.xMargin
+        self.yPosition = self.yStartPosition + self.properties.yMargin
+    }
+    
+    func loadElementProperties(properties: [String: Any]) {
+        for property in properties.keys {
+            switch property {
+            case "value":
+                self.properties.value = properties[property] as? String
+            case "i18n-id":
+                self.properties.i18nId = properties[property] as? String
+            case "text-color":
+                self.properties.color = (properties[property] as? String)!.getRGBAColor()
+            case "text-scale":
+                self.properties.scale = properties[property] as? CGFloat
+            case "text-align":
+                self.properties.align = (properties[property] as? NSTextAlignment)!
+            default: break
+            }
+        }
     }
     
     fileprivate func buildFrame() -> CGRect {

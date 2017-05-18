@@ -135,11 +135,11 @@ class Card: BaseTractElement {
     func didTapOnCard() {
         switch self.cardState {
         case .preview:
-            showCard()
+            showCardAndPreviousCards()
         case .open:
             hideCard()
         case .close:
-            showCard()
+            showCardAndPreviousCards()
         }
     }
     

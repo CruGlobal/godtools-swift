@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
+<page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
+      xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
+      background-image="jesus_saves_us.png">
+  <header>
+    <number>
+      <content:text i18n-id="{{uuid}}">4</content:text>
+    </number>
+    <title>
+        <content:text i18n-id="{{uuid}}">We must each respond to Jesus by placing our trust in him as our Savior and Lord. Only then can we know God personally.
+      </content:text>
+    </title>
+  </header>
+  <cards>
+    <card>
+      <label>
+        <content:text i18n-id="{{uuid}}">This response involves...</content:text>
+      </label>
+      <paragraph>
+        <content:text i18n-id="{{uuid}}">Agreeing
+        </content:text>
+        <content:text>with God that we are sinful and deciding to run from our sin.
+        </content:text>
+      </paragraph>
+      <paragraph>
+          <content:text i18n-id="{{uuid}}">Trusting
+          </content:text>
+          <content:text>God to forgive us completely because Jesus died for our sin.
+          </content:text>
+      </paragraph>
+      <paragraph>
+          <content:text i18n-id="{{uuid}}">Choosing
+          </content:text>
+          <content:text>to follow Jesus; putting him first in our lives.
+          </content:text>
+      </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">The relationship is personal</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">"But to all who believed in him and accepted him, he gave the right to become children of God".
+            </content:text>
+            <content:text>John 1:12
+            </content:text>
+        </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">The relationship is a gift</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">God saved you by his grace when you believed. And you can’t take credit for this; it’s a gift from God … so none of us can boast about it.
+            </content:text>
+            <content:text>Ephesians 2:8-9
+            </content:text>
+            <content:text i18n-id="{{uuid}}">He saved us, not because of the righteous things we had done, but because of his mercy. He washed away our sins, giving us a new birth and new life.
+            </content:text>
+            <content:text>Titus 3:5
+            </content:text>
+            <image resource="tract_test_hands" align="center" />
+        </paragraph>
+    </card>
+    <card>
+        <label>
+            <content:text i18n-id="{{uuid}}">We have a choice to make</content:text>
+        </label>
+        <paragraph>
+            <content:text i18n-id="{{uuid}}">It's not enough just to know or feel that this is true. We have a choice to make.
+            </content:text>
+            <content:text>These circles describe two types of people.
+            </content:text>
+            <tabs>
+                <tab>
+                    <label>
+                        <text i18n-id="{{uuid}}">Self-Directed</text>
+                    </label>
+                    <image resource="tab_self_selected" align="center" />
+                    <content:text i18n-id="{{uuid}}">People like this have never received Jesus into their lives. They remain guilty and cut off from God by their sins.
+                    </content:text>
+                </tab>
+                <tab>
+                    <label>
+                        <text i18n-id="{{uuid}}">Christ-Directed</text>
+                    </label>
+                    <image resource="tab_christ_selected" align="center" />
+                    <content:text i18n-id="{{uuid}}">People like this have received Jesus into their lives. They have been forgiven an experience God’s love.
+                    </content:text>
+                </tab>
+            </tabs>
+        </paragraph>
+    </card>
+  </cards>
+  <call-to-action>
+      <content:text i18n-id="{{uuid}}">Which circle best describes you? Which would you like to describe you?</content:text>
+  </call-to-action>
+</page>
