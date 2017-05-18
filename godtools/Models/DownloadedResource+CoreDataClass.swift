@@ -25,6 +25,27 @@ public class DownloadedResource: NSManagedObject {
             .filter({ $0.isPublished} ).count > 0
     }
     
+    func getTranslationForLanguage(_ language: Language) -> Translation? {
+        guard let translationsSet = self.translations else {
+            return nil
+        }
+        
+        var currentVersion:Int16 = 0
+        var translation = Translation()
+        
+        for translationItem in Array(translationsSet) {
+            let translationInstance = translationItem as! Translation
+            if translationInstance.language!.remoteId == language.remoteId {
+                if translationInstance.version > currentVersion {
+                    currentVersion = translationInstance.version
+                    translation = translationInstance
+                }
+            }
+        }
+        
+        return translation
+    }
+    
     func latestTranslationId() -> String? {
         let translationsArray = Array(translations!) as! [Translation]
         
