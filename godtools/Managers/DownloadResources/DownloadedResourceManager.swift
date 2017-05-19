@@ -55,8 +55,6 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
-        let context = NSManagedObjectContext.mr_default()
-        
         for remoteResource in resources {
             let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
             
@@ -102,9 +100,7 @@ class DownloadedResourceManager: GTDataManager {
         saveToDisk()
     }
     
-    private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {
-        let context = NSManagedObjectContext.mr_default()
-        
+    private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@",
                                     languageId,
                                     resourceId)

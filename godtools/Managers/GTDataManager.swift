@@ -15,6 +15,7 @@ import CoreData
 class GTDataManager: NSObject {
     
     let serializer = Serializer()
+    let context = NSManagedObjectContext.mr_default()
     
     func issueGETRequest() -> Promise<Data> {
         return Alamofire
@@ -32,7 +33,27 @@ class GTDataManager: NSObject {
     }
     
     func saveToDisk() {
-        NSManagedObjectContext.mr_default().mr_saveToPersistentStore(completion: nil)
+        saveToDisk(nil)
+    }
+    
+    func saveToDisk(_ completion: ((Bool, Error?) -> Void)?) {
+        context.mr_saveToPersistentStore(completion: completion)
+    }
+    
+    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
+        return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
+    }
+    
+    func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
+        return entityClass.mr_findAll(with: matching, in: context) as! [T]
+    }
+    
+    func createEntity<T: NSManagedObject>(_ entityClass: T.Type) -> T? {
+        return entityClass.mr_createEntity(in: context)
+    }
+    
+    func deleteEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) {
+        entityClass.mr_deleteAll(matching: matching, in: context)
     }
     
     func buildURLString() -> String {
