@@ -40,6 +40,10 @@ class GTDataManager: NSObject {
         context.mr_saveToPersistentStore(completion: completion)
     }
     
+    func saveToDiskAndWait() {
+        context.mr_saveToPersistentStoreAndWait()
+    }
+    
     func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
         return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
     }

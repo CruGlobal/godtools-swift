@@ -44,7 +44,7 @@ class FirstLaunchInitializer: GTDataManager {
             GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
         }
         
-        saveToDisk()
+        saveToDiskAndWait()
     }
     
     private func initializeInitialLanguage() -> Language? {
