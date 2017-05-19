@@ -16,18 +16,13 @@ public class DownloadedResource: NSManagedObject {
         return translationsAsArray().filter( {$0.isPublished} ).count
     }
     
-    func isAvailableInLanguage(_ language: Language) -> Bool {
-        guard let translationsSet = self.translations else {
+    func isAvailableInLanguage(_ language: Language?) -> Bool {
+        if language == nil {
             return false
         }
         
-        for translation in Array(translationsSet) {
-            if (translation as! Translation).language!.remoteId == language.remoteId {
-                return true
-            }
-        }
-        
-        return false
+        return translationsAsArray().filter({ $0.language!.remoteId == language!.remoteId })
+            .filter({ $0.isPublished} ).count > 0
     }
     
     func latestTranslationId() -> String? {

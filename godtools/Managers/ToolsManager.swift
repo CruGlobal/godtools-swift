@@ -117,11 +117,11 @@ extension ToolsManager: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
         let resource = self.resources![indexPath.section]
         
-        cell.cellDelegate = self
-        cell.resource = resource
-        cell.configure(primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk()!)
-        cell.selectionStyle = .none
-        
+        cell.configure(resource: resource,
+                       primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk(),
+                       parallelLanguage: LanguagesManager.shared.loadParallelLanguageFromDisk(),
+                       delegate: self)
+                
         return cell
     }
     

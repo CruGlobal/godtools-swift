@@ -31,10 +31,9 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
     @IBOutlet weak var downloadProgressView: GTProgressView!
     
-    var resource: DownloadedResource?
-    var isAvailable = true
-    
-    var cellDelegate: HomeToolTableViewCellDelegate?
+    private (set) var resource: DownloadedResource?
+    private (set) var cellDelegate: HomeToolTableViewCellDelegate?
+    private (set) var isAvailable = true
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,22 +41,41 @@ class HomeToolTableViewCell: UITableViewCell {
         registerProgressViewListener()
     }
     
-    func configure(primaryLanguage: Language) {
-        titleLabel.text = resource!.name
-        isAvailable = resource!.isAvailableInLanguage(primaryLanguage)
-        languageLabel.text = isAvailable ? primaryLanguage.localizedName() : nil
-        titleLabel.isEnabled = isAvailable
-        selectionStyle = isAvailable ? .default : .none
-        numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
+    func configure(resource: DownloadedResource,
+                   primaryLanguage: Language?,
+                   parallelLanguage: Language?,
+                   delegate: HomeToolTableViewCellDelegate) {
+        self.resource = resource
+        self.cellDelegate = delegate
+        
+        let isAvailableInPrimaryLanguage = resource.isAvailableInLanguage(primaryLanguage)
+        
+        configureLabels(resource: resource,
+                        isAvailableInPrimaryLanguage: isAvailableInPrimaryLanguage,
+                        parallelLanguage: parallelLanguage)
         
         downloadProgressView.setProgress(0.0, animated: false)
         
-        if (resource!.shouldDownload) {
-            self.setCellAsDisplayOnly()
+        selectionStyle = isAvailableInPrimaryLanguage ? .default : .none
+        isAvailable = isAvailableInPrimaryLanguage
+        
+        if (resource.shouldDownload) {
+            setCellAsDisplayOnly()
         }
     }
     
-    fileprivate func setCellAsDisplayOnly() {
+    private func configureLabels(resource: DownloadedResource,
+                                 isAvailableInPrimaryLanguage: Bool,
+                                 parallelLanguage: Language?) {
+        titleLabel.text = resource.name
+        titleLabel.isEnabled = isAvailableInPrimaryLanguage
+        
+        languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
+        
+        numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+    }
+    
+    private func setCellAsDisplayOnly() {
         downloadButton.isHidden = true
         greyVerticalLine.isHidden = true
         titleLeadingConstraint.constant = leftConstraintValue
