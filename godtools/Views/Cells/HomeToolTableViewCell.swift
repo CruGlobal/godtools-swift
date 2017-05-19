@@ -145,7 +145,7 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         
-        if resourceId != resource!.remoteId! {
+        if resourceId != resource!.remoteId {
             return
         }
         
