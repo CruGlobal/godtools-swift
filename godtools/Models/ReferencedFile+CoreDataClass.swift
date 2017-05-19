@@ -11,5 +11,8 @@ import CoreData
 
 @objc(ReferencedFile)
 public class ReferencedFile: NSManagedObject {
-
+    
+    func translationsAsArray() -> [Translation] {
+        return Array(translations!) as! [Translation]
+    }
 }

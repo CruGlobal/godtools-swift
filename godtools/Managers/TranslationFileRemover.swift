@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class TranslationFileRemover: GTDataManager {
     
@@ -14,11 +15,10 @@ class TranslationFileRemover: GTDataManager {
         for page in findAllEntities(ReferencedFile.self) {
             do {
                 if page.translationsAsArray().filter({ $0.isDownloaded }).count == 0 {
-                    print("removing file: \(resourcesPath)/\(page.filename!)")
                     try FileManager.default.removeItem(atPath: "\(resourcesPath)/\(page.filename!)")
                 }
             } catch {
-                
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error deleting file \(page.filename!) no longer referenced by any translations"])
             }
         }
     }
