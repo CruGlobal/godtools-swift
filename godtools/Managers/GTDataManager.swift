@@ -32,6 +32,10 @@ class GTDataManager: NSObject {
             .responseData()
     }
     
+    func rollbackContext() {
+        context.rollback()
+    }
+    
     func saveToDisk() {
         saveToDisk(nil)
     }
@@ -50,6 +54,10 @@ class GTDataManager: NSObject {
     
     func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
         return entityClass.mr_findAll(with: matching, in: context) as! [T]
+    }
+    
+    func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
+        return entityClass.mr_findAll(in: context) as! [T]
     }
     
     func createEntity<T: NSManagedObject>(_ entityClass: T.Type) -> T? {
