@@ -27,9 +27,11 @@ class ToolsManager: GTDataManager {
         didSet {
             if self.delegate is HomeViewController {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
+                    .sorted(by: { $0.name! < $1.name! })
                 deregisterDownloadCompletedObserver()
             } else {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
+                    .sorted(by: { $0.name! < $1.name! })
                 registerDownloadCompletedObserver()
             }
         }
