@@ -13,4 +13,6 @@ struct GTConstants {
     
     static let kDownloadProgressProgressKey = "org.cru.godtools.downloadProgressProgressKey"
     static let kDownloadProgressResourceIdKey = "org.cru.godtools.downloadProgressResourceIdKey"
+    
+    static let kFirstLaunchKey = "org.cru.godtools.firstLaunchKey"
 }

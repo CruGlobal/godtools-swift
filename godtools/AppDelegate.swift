@@ -19,10 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var flowController: BaseFlowController?
     
-    override init() {
-        super.init()
-    }
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         initializeCoreDataStack()
         Fabric.with([Crashlytics.self, Answers.self])
@@ -80,9 +76,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initializes the importer so the resources directory can be created.
         _ = TranslationZipImporter.shared
         
+        if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
+            initializeAppStateOnFirstLaunch()
+        }
+        
         return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<[DownloadedResource]> in
             return DownloadedResourceManager.shared.loadFromRemote()
+        }.then { (resources) -> Promise<[DownloadedResource]> in
+            FirstLaunchInitializer().cleanupInitialAppState()
+            return Promise(value: resources)
         }
+    }
+    
+    private func initializeAppStateOnFirstLaunch() {
+        FirstLaunchInitializer().initializeAppState()
+        UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
     }
 }
 

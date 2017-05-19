@@ -87,7 +87,6 @@ class LanguagesManager: GTDataManager {
     }
     
     private func saveToDisk(_ languages: [LanguageResource]) {
-        let context = NSManagedObjectContext.mr_default()
         for remoteLanguage in languages {
             let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
             cachedlanguage.code = remoteLanguage.code
