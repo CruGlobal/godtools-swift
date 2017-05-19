@@ -13,9 +13,18 @@ import Spine
 import CoreData
 
 class GTDataManager: NSObject {
+    let documentsPath: String
+    let resourcesPath: String
     
     let serializer = Serializer()
     let context = NSManagedObjectContext.mr_default()
+    
+    override init() {
+        documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        resourcesPath = "\(documentsPath)/Resources"
+        
+        super.init()
+    }
     
     func issueGETRequest() -> Promise<Data> {
         return Alamofire

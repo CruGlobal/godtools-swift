@@ -23,7 +23,7 @@
     </entity>
     <entity name="ReferencedFile" representedClassName="ReferencedFile" syncable="YES">
         <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Translation" inverseName="referencedFiles" inverseEntity="Translation" syncable="YES"/>
+        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="referencedFiles" inverseEntity="Translation" syncable="YES"/>
     </entity>
     <entity name="Translation" representedClassName="Translation" syncable="YES">
         <attribute name="isDownloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -35,7 +35,7 @@
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="downloadedResource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="translations" inverseEntity="DownloadedResource" syncable="YES"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
-        <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
+        <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
     </entity>
     <elements>
         <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="165"/>
