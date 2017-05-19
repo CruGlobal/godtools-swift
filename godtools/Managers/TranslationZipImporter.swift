@@ -15,17 +15,11 @@ import Crashlytics
 class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
     
-    let documentsPath: String
-    let resourcesPath: String
-    
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
     
-    private override init() {
-        documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        resourcesPath = "\(documentsPath)/Resources"
-        
+    private override init() {    
         super.init()
         
         createResourcesDirectoryIfNecessary()

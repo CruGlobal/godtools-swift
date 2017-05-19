@@ -10,18 +10,15 @@ import Foundation
 
 class TranslationFileRemover: GTDataManager {
     
-    func handleDelete(resource: DownloadedResource) {
-        
-    }
-    
-    func handleDelete(language: Language) {
-        
-    }
-    
     func deleteUnusedPages() {
-        for page in findAllEntities(PageFile.self) {
-            if page.resource!.translationsAsArray().filter({ $0.isDownloaded }).count == 0 {
-                //delete page
+        for page in findAllEntities(ReferencedFile.self) {
+            do {
+                if page.translationsAsArray().filter({ $0.isDownloaded }).count == 0 {
+                    print("removing file: \(resourcesPath)/\(page.filename!)")
+                    try FileManager.default.removeItem(atPath: "\(resourcesPath)/\(page.filename!)")
+                }
+            } catch {
+                
             }
         }
     }
