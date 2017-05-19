@@ -265,6 +265,7 @@ platform :ios do
       )
     elsif ENV["HIPCHAT_API_TOKEN"].to_s.length > 0
       hipchat(
+        from: "Cru Mobile Build Server",
         message: message,
         success: success
       )
