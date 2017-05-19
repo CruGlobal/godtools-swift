@@ -119,6 +119,9 @@
 		684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684328F31EB7CF66005E9131 /* godtoolsTests.swift */; };
 		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
+		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
+		4FF646341ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */; };
+		4FF646351ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -250,6 +253,9 @@
 		68EE51D71EBBA1E400596250 /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = SOURCE_ROOT; };
 		833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstLaunchInitializer.swift; path = Managers/FirstLaunchInitializer.swift; sourceTree = "<group>"; };
+		4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationFileRemover.swift; path = Managers/TranslationFileRemover.swift; sourceTree = "<group>"; };
+		4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataClass.swift"; path = "Models/ReferencedFile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataProperties.swift"; path = "Models/ReferencedFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -582,6 +588,8 @@
 				4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */,
 				4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */,
 				4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */,
+				4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */,
+				4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */,
 				4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */,
 				4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */,
 			);
@@ -614,6 +622,7 @@
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
 				0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */,
 				4F855F091EC3907300B42146 /* TranslationZipImporter.swift */,
+				4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */,
 				4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */,
 			);
 			name = Managers;
@@ -988,6 +997,7 @@
 				0F85C7981ECCAC2400023723 /* TractCardActions.swift in Sources */,
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
+				4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCardsActions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
@@ -1008,6 +1018,7 @@
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
+				4FF646341ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCardGestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
@@ -1035,6 +1046,7 @@
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
+				4FF646351ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift in Sources */,
 				4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */,
