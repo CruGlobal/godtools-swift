@@ -57,16 +57,14 @@ class BaseTractElement: UIView {
     private var _mainView: TractRoot?
     var root: TractRoot? {
         get {
-            let parentRoot = self.parent?.root
-            return self._mainView != nil ? self._mainView : parentRoot!
+            return self._mainView != nil ? self._mainView : self.parent!.root
         }
     }
     
     private var _elementsList: [String: BaseTractElement]?
     var elementsList: [String: BaseTractElement]? {
         get {
-            let parentElementsList = self.parent?.elementsList
-            return self._elementsList != nil ? self._elementsList : parentElementsList
+            return self._elementsList != nil ? self._elementsList : self.parent!.root!.elementsList
         }
         set {
             self._elementsList = newValue
@@ -151,10 +149,10 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: 0.0)
     }
     
-    init(data: XMLIndexer) {
+    init(data: XMLIndexer, parent: BaseTractElement) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
-        self.parent = self
+        self.parent = parent
         setupElement(data: data, startOnY: CGFloat(0.0))
     }
     

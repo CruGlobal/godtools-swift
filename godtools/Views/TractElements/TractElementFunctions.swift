@@ -53,7 +53,7 @@ extension BaseTractElement {
         case "tabs":
             return TractTabs(data: data, startOnY: yPosition, parent: self)
         case "modals":
-            return TractModals(data: data, startOnY: yPosition, parent: self)
+            return TractModals(data: data, parent: self)
         case "modal":
             return TractModal(data: data, startOnY: yPosition, parent: self)
         default:
