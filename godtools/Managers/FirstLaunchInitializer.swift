@@ -45,6 +45,8 @@ class FirstLaunchInitializer: GTDataManager {
         }
         
         saveToDiskAndWait()
+        
+        sendCompletedNotification()
     }
     
     private func initializeInitialLanguage() -> Language? {
@@ -91,5 +93,9 @@ class FirstLaunchInitializer: GTDataManager {
             translation?.version = 0
             translation?.localizedName = resource?.name
         }
+    }
+    
+    private func sendCompletedNotification() {
+        NotificationCenter.default.post(name: .initialAppStateCleanupCompleted, object: nil)
     }
 }
