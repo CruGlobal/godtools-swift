@@ -152,9 +152,12 @@ class HomeToolTableViewCell: UITableViewCell {
         guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
             return
         }
-                
+
+        let progressFraction = Float(progress.fractionCompleted >= 1.0 ? 0.0 : progress.fractionCompleted)
+        let animated = progressFraction > 0.0
+        
         DispatchQueue.main.async {
-            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+            self.downloadProgressView.setProgress(progressFraction, animated: animated)
         }
     }    
 }
