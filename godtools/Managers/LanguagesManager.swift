@@ -82,10 +82,14 @@ class LanguagesManager: GTDataManager {
         language.shouldDownload = false
         for translation in language.translationsAsArray() {
             translation.isDownloaded = false
+            translation.removeFromReferencedFiles(translation.referencedFiles!)
         }
+        
+        TranslationFileRemover().deleteUnusedPages()
+    
         saveToDisk()
     }
-    
+
     private func saveToDisk(_ languages: [LanguageResource]) {
         for remoteLanguage in languages {
             let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)

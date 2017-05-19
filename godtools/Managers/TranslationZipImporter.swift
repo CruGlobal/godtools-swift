@@ -12,19 +12,15 @@ import Alamofire
 import SSZipArchive
 import Crashlytics
 
-class TranslationZipImporter {
+class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
-    
-    let documentsPath: String
-    let resourcesPath: String
     
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
     
-    private init() {
-        documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        resourcesPath = "\(documentsPath)/Resources"
+    private override init() {    
+        super.init()
         
         createResourcesDirectoryIfNecessary()
     }
@@ -113,7 +109,7 @@ class TranslationZipImporter {
         return downloadFromRemote(translation: translation).then { zipFileData -> Promise<Void> in
             
             try self.writeDataFileToDisk(data: zipFileData, filename: filename)
-            self.extractZipFile(filename)
+            self.extractZipFile(filename, translationId: translationId)
             
             TranslationsManager.shared.translationWasDownloaded(translation)
             TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
@@ -125,6 +121,7 @@ class TranslationZipImporter {
         }.always {
             do {
                 try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
+                try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename.replacingOccurrences(of: ".zip", with: ""))")
             } catch {
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
@@ -152,8 +149,52 @@ class TranslationZipImporter {
         try data.write(to: URL(fileURLWithPath: "\(documentsPath)/\(filename)"))
     }
     
-    private func extractZipFile(_ filename: String) {
-        SSZipArchive.unzipFile(atPath: "\(documentsPath)/\(filename)", toDestination: resourcesPath)
+    private func extractZipFile(_ filename: String, translationId: String) {
+        let tempDirectoryPath = "\(documentsPath)/\(filename.replacingOccurrences(of: ".zip", with: ""))"
+        do {
+            try FileManager.default.createDirectory(atPath: tempDirectoryPath,
+                                                    withIntermediateDirectories: true,
+                                                    attributes: nil)
+            
+            SSZipArchive.unzipFile(atPath: "\(documentsPath)/\(filename)", toDestination: tempDirectoryPath)
+            
+            try recordReferencedFiles(directoryPath: tempDirectoryPath, translationId: translationId)
+            
+            try moveFilesFrom(directoryPath: tempDirectoryPath)
+            saveToDisk()
+        } catch {
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error extracting zip file \(filename)"])
+            rollbackContext()
+        }
+    }
+    
+    private func recordReferencedFiles(directoryPath: String, translationId: String) throws {
+        guard let translation = findEntity(Translation.self, byAttribute: "remoteId", withValue: translationId) else {
+            return
+        }
+        
+        let files = try FileManager.default.contentsOfDirectory(atPath: directoryPath)
+        
+        for filename in files {
+            let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) ?? createEntity(ReferencedFile.self)
+            referencedFile?.filename = filename
+            referencedFile?.addToTranslations(translation)
+        }
+    }
+    
+    private func moveFilesFrom(directoryPath: String) throws {
+        let fileManager = FileManager.default
+        let files = try fileManager.contentsOfDirectory(atPath: directoryPath)
+
+        for filename in files {
+            let fullSourcePath = "\(directoryPath)/\(filename)"
+            let fullDestinationPath = "\(resourcesPath)/\(filename)"
+            if fileManager.fileExists(atPath: fullDestinationPath) {
+                try fileManager.removeItem(atPath: fullDestinationPath)
+            }
+            
+            try fileManager.moveItem(atPath: fullSourcePath, toPath: fullDestinationPath)
+        }
     }
     
     private func createFilename(translationId: String) -> String {

@@ -13,9 +13,18 @@ import Spine
 import CoreData
 
 class GTDataManager: NSObject {
+    let documentsPath: String
+    let resourcesPath: String
     
     let serializer = Serializer()
     let context = NSManagedObjectContext.mr_default()
+    
+    override init() {
+        documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        resourcesPath = "\(documentsPath)/Resources"
+        
+        super.init()
+    }
     
     func issueGETRequest() -> Promise<Data> {
         return Alamofire
@@ -30,6 +39,10 @@ class GTDataManager: NSObject {
                                  encoding: URLEncoding.default,
                                  headers: nil)
             .responseData()
+    }
+    
+    func rollbackContext() {
+        context.rollback()
     }
     
     func saveToDisk() {
@@ -50,6 +63,10 @@ class GTDataManager: NSObject {
     
     func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
         return entityClass.mr_findAll(with: matching, in: context) as! [T]
+    }
+    
+    func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
+        return entityClass.mr_findAll(in: context) as! [T]
     }
     
     func createEntity<T: NSManagedObject>(_ entityClass: T.Type) -> T? {
