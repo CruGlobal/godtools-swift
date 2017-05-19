@@ -63,12 +63,21 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(presentLanguageSettings),
                                                name: .presentLanguageSettingsNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadTableData),
+                                               name: .initialAppStateCleanupCompleted,
+                                               object: nil)
     }
     
-    @objc fileprivate func presentLanguageSettings() {
+    @objc private func presentLanguageSettings() {
         self.delegate?.moveToUpdateLanguageSettings()
     }
     
+    @objc private func reloadTableData() {
+        self.toolsManager.delegate = self
+        tableView.reloadData()
+    }
     // MARK: - Actions
     
     @IBAction func pressAddNewToolsButton(_ sender: Any) {
