@@ -97,9 +97,6 @@ class TranslationZipImporter {
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
             })
-            .then(execute: { (void) -> Void in
-                TranslationsManager.shared.translationWasDownloaded(translation)
-            })
         }
         
         if translationDownloadQueue.count > 0 {
@@ -117,6 +114,9 @@ class TranslationZipImporter {
             
             try self.writeDataFileToDisk(data: zipFileData, filename: filename)
             self.extractZipFile(filename)
+            
+            TranslationsManager.shared.translationWasDownloaded(translation)
+            TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)

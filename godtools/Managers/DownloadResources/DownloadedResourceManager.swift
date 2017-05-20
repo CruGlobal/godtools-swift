@@ -48,6 +48,9 @@ class DownloadedResourceManager: GTDataManager {
                     return Promise(error: error)
                 }
                 return Promise(value:self.loadFromDisk())
+            }.then { downloadedResources -> Promise<[DownloadedResource]> in
+                TranslationZipImporter.shared.catchupMissedDownloads()
+                return Promise(value: downloadedResources)
             }
     }
     
@@ -82,7 +85,7 @@ class DownloadedResourceManager: GTDataManager {
                 
                 cachedResource.addToTranslations(cachedTranslation)
                 
-                purgeTranslationsOlderThan(cachedTranslation)
+                TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
             }
             
             let remotePages = remoteResource.pages!
@@ -114,23 +117,6 @@ class DownloadedResourceManager: GTDataManager {
         let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
         
         return latestTranslation == nil || version > latestTranslation!.version
-    }
-    
-    private func purgeTranslationsOlderThan(_ translation: Translation) {
-        let context = NSManagedObjectContext.mr_default()
-        
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d and isDownloaded = false",
-                                    translation.language!.remoteId!,
-                                    translation.downloadedResource!.remoteId!,
-                                    translation.version)
-        
-        guard let translationsToPurge: [Translation] = Translation.mr_findAll(with: predicate, in: context) as? [Translation] else {
-            return
-        }
-        
-        for translationToPurge in translationsToPurge {
-            translationToPurge.mr_deleteEntity(in: context)
-        }
     }
     
     override func buildURLString() -> String {

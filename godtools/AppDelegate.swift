@@ -29,9 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.startFlowController(launchOptions: launchOptions)
         
         self.initalizeAppState()
-            .then(execute: { result -> Void in
-                TranslationZipImporter.shared.catchupMissedDownloads()
-            })
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
