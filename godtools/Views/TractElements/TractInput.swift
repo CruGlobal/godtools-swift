@@ -99,7 +99,7 @@ class TractInput: BaseTractElement {
         self.textField.borderColor = self.properties.color
         self.textField.borderWidth = self.properties.borderWidth
         self.textField.backgroundColor = self.properties.backgroundColor
-        self.textField.placeholderTranslationKey = self.properties.placeholder!
+        self.textField.placeholderTranslationKey = self.properties.placeholder ?? ""
         
         self.frame = buildFrame()
     }
