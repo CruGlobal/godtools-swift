@@ -40,10 +40,6 @@ class BaseViewController: UIViewController {
         super.viewWillAppear(animated)
         self.displayScreenTitle()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     // MARK: - Navigation Bar
     
