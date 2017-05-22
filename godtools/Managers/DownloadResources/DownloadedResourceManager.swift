@@ -53,7 +53,9 @@ class DownloadedResourceManager: GTDataManager {
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         for remoteResource in resources {
-            let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteResource.id!, in: context)
+            let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                                         withValue: remoteResource.id!,
+                                                                         in: self.context)
             
             cachedResource.code = remoteResource.abbreviation
             cachedResource.name = remoteResource.name
@@ -71,7 +73,9 @@ class DownloadedResourceManager: GTDataManager {
                     continue;
                 }
                 
-                let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteTranslation.id!, in: context)
+                let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                                         withValue: remoteTranslation.id!,
+                                                                         in: self.context)
                 
                 cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                 cachedTranslation.version = remoteTranslation.version!.int16Value
@@ -87,7 +91,9 @@ class DownloadedResourceManager: GTDataManager {
             for remotePageGeneric in remotePages {
                 let remotePage = remotePageGeneric as! PageResource
                 
-                let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remotePage.id!, in: context)
+                let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                               withValue: remotePage.id!,
+                                                               in: self.context)
                 
                 cachedPage.filename = remotePage.filename
                 cachedPage.resource = cachedResource
@@ -102,7 +108,8 @@ class DownloadedResourceManager: GTDataManager {
                                     languageId,
                                     resourceId)
         
-        guard let existingTranslations: [Translation] = Translation.mr_findAll(with: predicate, in: context) as? [Translation] else {
+        guard let existingTranslations: [Translation] = Translation.mr_findAll(with: predicate,
+                                                                               in: self.context) as? [Translation] else {
             // default to saving if in doubt.
             return true
         }
