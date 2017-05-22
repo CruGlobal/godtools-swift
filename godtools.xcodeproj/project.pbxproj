@@ -116,7 +116,19 @@
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
+		684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684328F31EB7CF66005E9131 /* godtoolsTests.swift */; };
+		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		684328F61EB7CF66005E9131 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F5732881EA69CF00082035C;
+			remoteInfo = godtools;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0F0352B51EC0CD03006CD4E5 /* kgp-0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-0.xml"; sourceTree = "<group>"; };
@@ -230,7 +242,15 @@
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
+		684328EB1EB7C7F4005E9131 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
+		684328F11EB7CF66005E9131 /* godtoolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		684328F31EB7CF66005E9131 /* godtoolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsTests.swift; sourceTree = "<group>"; };
+		684328F51EB7CF66005E9131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		68EE51D71EBBA1E400596250 /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = SOURCE_ROOT; };
+		833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
+		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
+		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -243,6 +263,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		684328EE1EB7CF66005E9131 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -251,6 +279,8 @@
 			children = (
 				B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */,
 				3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */,
+				833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */,
+				CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -536,6 +566,7 @@
 			isa = PBXGroup;
 			children = (
 				D61FF360D11F854476B6E206 /* Pods_godtools.framework */,
+				D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -625,6 +656,8 @@
 			isa = PBXGroup;
 			children = (
 				4F57328B1EA69CF00082035C /* godtools */,
+				684328F21EB7CF66005E9131 /* godtoolsTests */,
+				684328EB1EB7C7F4005E9131 /* fastlane */,
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
@@ -635,6 +668,7 @@
 			isa = PBXGroup;
 			children = (
 				4F5732891EA69CF00082035C /* godtools.app */,
+				684328F11EB7CF66005E9131 /* godtoolsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -655,6 +689,7 @@
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
 				4F57329B1EA69CF00082035C /* Info.plist */,
+				68EE51D71EBBA1E400596250 /* release_notes */,
 				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
 				0F350D971EAE77CD0025C4BB /* Localizable.strings */,
 			);
@@ -670,6 +705,15 @@
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 			);
 			name = TractElements;
+			sourceTree = "<group>";
+		};
+		684328F21EB7CF66005E9131 /* godtoolsTests */ = {
+			isa = PBXGroup;
+			children = (
+				684328F31EB7CF66005E9131 /* godtoolsTests.swift */,
+				684328F51EB7CF66005E9131 /* Info.plist */,
+			);
+			path = godtoolsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -696,20 +740,47 @@
 			productReference = 4F5732891EA69CF00082035C /* godtools.app */;
 			productType = "com.apple.product-type.application";
 		};
+		684328F01EB7CF66005E9131 /* godtoolsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 684328F81EB7CF66005E9131 /* Build configuration list for PBXNativeTarget "godtoolsTests" */;
+			buildPhases = (
+				38CF3DE960E7E986A4135FA0 /* [CP] Check Pods Manifest.lock */,
+				684328ED1EB7CF66005E9131 /* Sources */,
+				684328EE1EB7CF66005E9131 /* Frameworks */,
+				684328EF1EB7CF66005E9131 /* Resources */,
+				A185E6F3CB27BB359BF9AC4C /* [CP] Embed Pods Frameworks */,
+				C7F5DBF14265B55158A36D59 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				684328F71EB7CF66005E9131 /* PBXTargetDependency */,
+			);
+			name = godtoolsTests;
+			productName = godtoolsTests;
+			productReference = 684328F11EB7CF66005E9131 /* godtoolsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		4F5732811EA69CF00082035C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = DQ48D9BF2V;
+						ProvisioningStyle = Manual;
+					};
+					684328F01EB7CF66005E9131 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = DQ48D9BF2V;
 						ProvisioningStyle = Automatic;
+						TestTargetID = 4F5732881EA69CF00082035C;
 					};
 				};
 			};
@@ -727,6 +798,7 @@
 			projectRoot = "";
 			targets = (
 				4F5732881EA69CF00082035C /* godtools */,
+				684328F01EB7CF66005E9131 /* godtoolsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -757,6 +829,13 @@
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		684328EF1EB7CF66005E9131 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,6 +872,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		38CF3DE960E7E986A4135FA0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		4F5707E51EAFCA7F00A540C2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -805,6 +899,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 4c6c9eb55214633c5eca4176c06b20bb8fd07a72 c71d676836deedca0040ec813caa99d5e9330f440319d855e82c69e75779518d";
+		};
+		A185E6F3CB27BB359BF9AC4C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7F5DBF14265B55158A36D59 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		D28899168EA8F78D5A9CD0D1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -918,7 +1042,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		684328ED1EB7CF66005E9131 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		684328F71EB7CF66005E9131 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F5732881EA69CF00082035C /* godtools */;
+			targetProxy = 684328F61EB7CF66005E9131 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4F5732981EA69CF00082035C /* LaunchScreen.storyboard */ = {
@@ -1028,12 +1168,17 @@
 			baseConfigurationReference = B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
 				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
@@ -1042,12 +1187,52 @@
 			baseConfigurationReference = 3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
+				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
 				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		684328F91EB7CF66005E9131 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtoolsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
+			};
+			name = Debug;
+		};
+		684328FA1EB7CF66005E9131 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtoolsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
 			};
 			name = Release;
 		};
@@ -1068,6 +1253,15 @@
 			buildConfigurations = (
 				4F57329F1EA69CF00082035C /* Debug */,
 				4F5732A01EA69CF00082035C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		684328F81EB7CF66005E9131 /* Build configuration list for PBXNativeTarget "godtoolsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684328F91EB7CF66005E9131 /* Debug */,
+				684328FA1EB7CF66005E9131 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

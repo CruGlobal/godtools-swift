@@ -21,6 +21,7 @@ xcuserdata/
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
+.DS_Store
 
 ## Obj-C/Swift specific
 *.hmap
@@ -67,3 +68,24 @@ fastlane/screenshots
 fastlane/test_output
 
 .ruby-version
+
+#fastlane
+fastlane/report.xml
+fastlane/screenshots
+fastlane/test_output
+output
+derivedData
+report.xml
+report.junit
+report.html
+index.html
+
+.idea
+fastlane/output
+fastlane/output/encrypted
+fastlane/encrypted
+fastlane/fastlane_cleanup_script.sh
+encrypted
+.env*
+!.env.local.sample
+fastlane_cleanup_script.sh

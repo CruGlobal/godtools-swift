@@ -8,6 +8,7 @@ PODS:
   - MagicalRecord (2.3.2):
     - MagicalRecord/Core (= 2.3.2)
   - MagicalRecord/Core (2.3.2)
+  - Nimble (6.1.0)
   - PromiseKit (4.1.7):
     - PromiseKit/Foundation (= 4.1.7)
     - PromiseKit/QuartzCore (= 4.1.7)
@@ -22,6 +23,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
+  - Quick (1.1.0)
   - Result (3.2.1)
   - Spine (0.3.1):
     - BrightFutures (~> 5.0)
@@ -35,8 +37,10 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - MagicalRecord (~> 2.3)
+  - Nimble (~> 6.1)
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
+  - Quick (= 1.1)
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 3.0.0)
@@ -57,13 +61,15 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  Nimble: c53e6903fee94041b90ded74f135820437d8bf59
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   Spine: 86ff8436c21b023766a82388880864fa4ecc7431
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
 
-PODFILE CHECKSUM: b76636d88ed8c239511c9f6a28a1b670730f264d
+PODFILE CHECKSUM: 4726fcde0f14e43c9b1d42d6b77522c1e22f50c7
 
 COCOAPODS: 1.2.1

@@ -1,0 +1,16 @@
+# For more information about this configuration visit
+# https://github.com/fastlane/gym#gymfile
+
+# In general, you can use the options available
+# gym --help
+
+workspace "godtools.xcworkspace"
+
+scheme "godtools"
+
+clean false
+
+output_name "godtools.ipa"
+
+# if we get repeated CompileXIB errors we will need to uncomment the following line see this for reason: http://michiganlabs.com/troubleshooting-xcode-6-file-exists-xib-build-errors/#.V4arJpMrJE4
+#xcargs "-IDEBuildOperationMaxNumberOfConcurrentCompileTasks=1"
