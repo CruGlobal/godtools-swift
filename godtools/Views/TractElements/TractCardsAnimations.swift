@@ -1,5 +1,5 @@
 //
-//  HeaderAnimations.swift
+//  CardsAnimations.swift
 //  godtools
 //
 //  Created by Devserker on 5/4/17.
@@ -9,24 +9,23 @@
 import Foundation
 import UIKit
 
-extension Header {
+extension TractCards {
     
-    func showHeader() {
-        UIView.animate(withDuration: 0.30,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
-                       completion: nil )
-    }
-    
-    func hideHeader() {
-        let translationY = -self.yPosition - self.height
+    func transformToOpenUpCardsAnimation() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
+                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
+                       completion: nil )
+    }
+    
+    func transformToInitialPositionAnimation() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
                        completion: nil )
     }
     

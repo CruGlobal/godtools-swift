@@ -15,31 +15,35 @@ extension BaseTractElement {
     }
     
     static func isParagraphElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Paragraph.self)
+        return BaseTractElement.isElement(element, kindOf: TractParagraph.self)
     }
     
     static func isHeadingElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Heading.self)
+        return BaseTractElement.isElement(element, kindOf: TractHeading.self)
     }
     
     static func isHeaderElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Header.self)
+        return BaseTractElement.isElement(element, kindOf: TractHeader.self)
     }
     
     static func isNumberElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Number.self)
+        return BaseTractElement.isElement(element, kindOf: TractNumber.self)
     }
     
     static func isCardElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Card.self)
+        return BaseTractElement.isElement(element, kindOf: TractCard.self)
     }
     
     static func isCallToActionElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: CallToAction.self)
+        return BaseTractElement.isElement(element, kindOf: TractCallToAction.self)
     }
     
     static func isTitleElement(_ element: BaseTractElement) -> Bool {
-        return BaseTractElement.isElement(element, kindOf: Title.self)
+        return BaseTractElement.isElement(element, kindOf: TractTitle.self)
+    }
+    
+    static func isFormElement(_ element: BaseTractElement) -> Bool {
+        return BaseTractElement.isElement(element, kindOf: TractForm.self)
     }
     
     static func isElement(_ element: BaseTractElement, kindOf tractClass: AnyClass) -> Bool {

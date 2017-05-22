@@ -1,5 +1,5 @@
 //
-//  CallToAction.swift
+//  TractCallToAction.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -9,38 +9,58 @@
 import Foundation
 import UIKit
 
-class CallToAction: BaseTractElement {
+class TractCallToAction: BaseTractElement {
+    
+    // MARK: Positions constants
     
     static let yMarginConstant: CGFloat = 16.0
     static let paddingConstant: CGFloat = 16.0
+    static let minHeight: CGFloat = 80.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
-        return Card.xMarginConstant
+        return TractCard.xMarginConstant
     }
+    
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
+        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
-    static let minHeight: CGFloat = 80.0
+    
     override var height: CGFloat {
         get {
-            return super.height > CallToAction.minHeight ? super.height : CallToAction.minHeight
+            return super.height > TractCallToAction.minHeight ? super.height : TractCallToAction.minHeight
         }
         set {
             super.height = newValue
         }
     }
+    
     var yPosition: CGFloat {
-        var position = self.yStartPosition + CallToAction.yMarginConstant
+        var position = self.yStartPosition + TractCallToAction.yMarginConstant
         if position < (self.parent?.maxHeight)! - self.height {
             position = (self.parent?.maxHeight)! - self.height
         }
         return position
     }
+    
     let buttonSizeConstant: CGFloat = 22.0
+    
     let buttonSizeXMargin: CGFloat = 8.0
+    
     var buttonXPosition: CGFloat {
         return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + TractCallToAction.yMarginConstant
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return 15.0
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
@@ -64,21 +84,13 @@ class CallToAction: BaseTractElement {
         NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + CallToAction.yMarginConstant
-    }
-    
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
-        textStyle.xMargin = CallToAction.paddingConstant
-        textStyle.yMargin = CallToAction.paddingConstant
+        textStyle.xMargin = TractCallToAction.paddingConstant
+        textStyle.yMargin = TractCallToAction.paddingConstant
         textStyle.color = self.textColor
         return textStyle
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return 15.0
     }
     
     // MARK: - Helpers

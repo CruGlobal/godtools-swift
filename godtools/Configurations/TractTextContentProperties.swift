@@ -1,5 +1,5 @@
 //
-//  TextContentProperties.swift
+//  TractTextContentProperties.swift
 //  godtools
 //
 //  Created by Devserker on 5/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextContentProperties {
+class TractTextContentProperties {
     
     var i18nId: String?
     var color: UIColor = .gtBlack

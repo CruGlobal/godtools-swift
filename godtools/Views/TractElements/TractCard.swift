@@ -1,5 +1,5 @@
 //
-//  Card.swift
+//  TractCard.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -12,11 +12,15 @@ import UIKit
 //  NOTES ABOUT THE COMPONENT
 //  * The height size of this component will always be the size of Cards.height minus the margins
 
-class Card: BaseTractElement {
+class TractCard: BaseTractElement {
+    
+    // MARK: - Configurations
     
     enum CardState {
-        case open, preview, close
+        case open, preview, close, hidden, enable
     }
+    
+    // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
     static let yTopMarginConstant: CGFloat = 8.0
@@ -24,38 +28,56 @@ class Card: BaseTractElement {
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 50.0
     
-    let scrollView = UIScrollView()
-    let containerView = UIView()
-    var shadowView = UIView()
-    
-    var cardsParentView: Cards {
-        return self.parent as! Cards
-    }
-    var cardState = CardState.preview
-    var cardNumber = 0
+    // MARK: - Positions and Sizes
     
     var yDownPosition: CGFloat = 0.0
+    
     var xPosition: CGFloat {
-        return Card.xMarginConstant
+        return TractCard.xMarginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Card.xMarginConstant
+        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
+    
     var externalHeight: CGFloat {
-        return (self.parent?.height)! - Card.yTopMarginConstant - Card.yBottomMarginConstant
+        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
     }
+    
     var internalHeight: CGFloat {
         let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
-        return internalHeight + Card.contentBottomPadding
+        return internalHeight + TractCard.contentBottomPadding
     }
+    
     var translationY: CGFloat {
         return self.externalHeight - self.yStartPosition
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.externalHeight
+    }
+    
+    // MARK: - Object properties
+    
+    var properties = TractCardProperties()
+    let scrollView = UIScrollView()
+    let containerView = UIView()
+    var shadowView = UIView()
+    var cardState = CardState.preview
+    var cardNumber = 0
+    var cardsParentView: TractCards {
+        return self.parent as! TractCards
+    }
+    
+    // MARK: - Setup
+    
     override func setupView(properties: Dictionary<String, Any>) {
+        loadElementProperties(properties: properties)
+        
         self.frame = buildFrame()
         setupStyle()
         setupScrollView()
@@ -66,6 +88,15 @@ class Card: BaseTractElement {
     
     func setupStyle() {
         self.backgroundColor = .clear
+        
+        if self.properties.hidden {
+            self.isHidden = true
+            self.cardState = .hidden
+        }
+        
+        if self.properties.listener != nil {
+            self.tag = (self.properties.listener?.transformToNumber())!
+        }
     }
     
     func setupScrollView() {
@@ -126,10 +157,6 @@ class Card: BaseTractElement {
         return self
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.externalHeight
-    }
-    
     // MARK: - Actions
     
     func didTapOnCard() {
@@ -140,10 +167,31 @@ class Card: BaseTractElement {
             hideCard()
         case .close:
             showCardAndPreviousCards()
+        case .enable:
+            hideCard()
+        default: break
+        }
+    }
+    
+    override func receiveMessage() {
+        if self.cardState == .hidden {
+            showCard()
         }
     }
     
     // MARK: - Helpers
+    
+    func loadElementProperties(properties: [String: Any]) {
+        for property in properties.keys {
+            switch property {
+            case "hidden":
+                self.properties.hidden = true
+            case "listener":
+                self.properties.listener = properties[property] as! String?
+            default: break
+            }
+        }
+    }
     
     func disableScrollview() {
         if self.cardState != .open {

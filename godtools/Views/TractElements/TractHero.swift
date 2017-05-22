@@ -1,5 +1,5 @@
 //
-//  Hero.swift
+//  TractHero.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/26/17.
@@ -9,24 +9,30 @@
 import Foundation
 import UIKit
 
-class Hero: BaseTractElement {
+class TractHero: BaseTractElement {
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return 28.0
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.yMargin
     }
+    
     override var width: CGFloat {
         return super.width - (xPosition * CGFloat(2.0))
     }
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
-    }
-    
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup 
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        self.frame = buildFrame()
     }
     
     // MARK: - Helpers

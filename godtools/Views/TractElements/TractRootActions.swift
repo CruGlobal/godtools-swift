@@ -1,20 +1,19 @@
 //
-//  TractRootAnimations.swift
+//  TractRootActions.swift
 //  godtools
 //
-//  Created by Devserker on 5/4/17.
+//  Created by Devserker on 5/17/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
-import UIKit
 
 extension TractRoot {
     
     func showHeader() {
         for element in self.elements! {
             if BaseTractElement.isHeaderElement(element) {
-                let header = element as! Header
+                let header = element as! TractHeader
                 header.showHeader()
                 break
             }
@@ -24,7 +23,7 @@ extension TractRoot {
     func hideHeader() {
         for element in self.elements! {
             if BaseTractElement.isHeaderElement(element) {
-                let header = element as! Header
+                let header = element as! TractHeader
                 header.hideHeader()
                 break
             }
@@ -34,8 +33,8 @@ extension TractRoot {
     func showCallToAction() {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
-                let callToAction = element as! CallToAction
-                callToAction.showCallToAction()
+                let callToAction = element as! TractCallToAction
+                callToAction.showCallToActionAnimation()
                 break
             }
         }
@@ -44,10 +43,17 @@ extension TractRoot {
     func hideCallToAction() {
         for element in self.elements! {
             if BaseTractElement.isCallToActionElement(element) {
-                let callToAction = element as! CallToAction
-                callToAction.hideCallToAction()
+                let callToAction = element as! TractCallToAction
+                callToAction.hideCallToActionAnimation()
                 break
             }
+        }
+    }
+    
+    func sendMessageToView(tag: Int) {
+        let view = self.viewWithTag(tag)
+        if view != nil && (view?.isKind(of: BaseTractElement.self))! {
+            (view as! BaseTractElement).receiveMessage()
         }
     }
     

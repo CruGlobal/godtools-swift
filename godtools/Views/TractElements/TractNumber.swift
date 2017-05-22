@@ -1,5 +1,5 @@
 //
-//  Title.swift
+//  TractNumber.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -9,38 +9,46 @@
 import Foundation
 import UIKit
 
-class Title: BaseTractElement {
+class TractNumber: BaseTractElement {
     
+    // MARK: Positions constants
+    
+    static let widthConstant: CGFloat = 70.0
     static let marginConstant: CGFloat = 8.0
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
-        if (self.parent as! Header).includesNumber {
-            return Number.marginConstant + Number.widthConstant + Title.marginConstant
-        } else {
-            return Title.marginConstant
-        }
+        return TractNumber.marginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - Title.marginConstant
-    }
-    
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
-    }
-    
-    override func textStyle() -> TextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 18.0)
-        textStyle.width = self.width
-        textStyle.color = .gtWhite
-        return textStyle
+        return TractNumber.widthConstant
     }
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        (self.parent as! TractHeader).includesNumber = true
+        self.frame = buildFrame()
+    }
+    
+    // MARK: - Setup
+    
+    override func textStyle() -> TractTextContentProperties {
+        let textStyle = super.textStyle()
+        textStyle.font = .gtThin(size: 54.0)
+        textStyle.width = self.width
+        textStyle.height = 60.0
+        textStyle.align = .center
+        textStyle.color = .gtWhite
+        return textStyle
     }
     
     // MARK: - Helpers

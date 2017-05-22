@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-extension CallToAction {
+extension TractCallToAction {
     
-    func showCallToAction() {
+    func showCallToActionAnimation() {
         let translationY = (self.parent?.maxHeight)! - self.yPosition - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -21,7 +21,7 @@ extension CallToAction {
                        completion: nil )
     }
     
-    func hideCallToAction() {
+    func hideCallToActionAnimation() {
         UIView.animate(withDuration: 0.30,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

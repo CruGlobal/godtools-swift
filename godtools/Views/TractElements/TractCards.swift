@@ -1,5 +1,5 @@
 //
-//  Cards.swift
+//  TractCards.swift
 //  godtools
 //
 //  Created by Devserker on 5/2/17.
@@ -19,31 +19,46 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-class Cards: BaseTractElement {
+class TractCards: BaseTractElement {
+    
+    // MARK: - Configurations
     
     enum CardsState {
         case open, preview
     }
     
-    var cardsState = CardsState.preview
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat = 0.0
+    
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.yMargin
     }
+    
     var constantYMarginTop: CGFloat = 60
+    
     var constantYMarginBottom: CGFloat = 30
+    
     override var height: CGFloat {
         get {
             return self.getMaxHeight()
         }
-        set {
-            // Unused
-        }
+        set { } // Unused
     }
+    
     var initialCardPosition: CGFloat {
         return self.height - self.yStartPosition
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Object properties
+    
+    var cardsState = CardsState.preview
+    
+    // MARK: - Setup
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
         var elements:Array = [BaseTractElement]()
@@ -53,7 +68,7 @@ class Cards: BaseTractElement {
             let deltaChange = CGFloat(data.count - cardNumber)
             let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
             let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
-            let element = Card(data: dictionary, startOnY: yPosition, parent: self)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.cardNumber = cardNumber
             elements.append(element)
@@ -95,10 +110,6 @@ class Cards: BaseTractElement {
         
         self.addSubview(imageView)
         self.sendSubview(toBack: imageView)
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

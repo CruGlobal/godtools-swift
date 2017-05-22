@@ -10,7 +10,9 @@ import UIKit
 
 class TractLink: TractButton {
     
-    override func textStyle() -> TextContentProperties {
+    // MARK: - Setup
+    
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtRegular(size: 16.0)
         return textStyle

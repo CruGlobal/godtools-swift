@@ -1,5 +1,5 @@
 //
-//  Number.swift
+//  TractTitle.swift
 //  godtools
 //
 //  Created by Devserker on 4/28/17.
@@ -9,38 +9,45 @@
 import Foundation
 import UIKit
 
-class Number: BaseTractElement {
+class TractTitle: BaseTractElement {
     
-    static let widthConstant: CGFloat = 70.0
+    // MARK: Positions constants
+    
     static let marginConstant: CGFloat = 8.0
     
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
-        return Number.marginConstant
+        if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).includesNumber {
+            return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+        } else {
+            return TractTitle.marginConstant
+        }
     }
     var yPosition: CGFloat {
         return self.yStartPosition
     }
+    
     override var width: CGFloat {
-        return Number.widthConstant
-    }
-    
-    override func setupView(properties: Dictionary<String, Any>) {
-        (self.parent as! Header).includesNumber = true
-        self.frame = buildFrame()
-    }
-    
-    override func textStyle() -> TextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 54.0)
-        textStyle.width = self.width
-        textStyle.height = 60.0
-        textStyle.align = .center
-        textStyle.color = .gtWhite
-        return textStyle
+        return (self.parent?.width)! - self.xPosition - TractTitle.marginConstant
     }
     
     override func yEndPosition() -> CGFloat {
         return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        self.frame = buildFrame()
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        let textStyle = super.textStyle()
+        textStyle.font = .gtThin(size: 18.0)
+        textStyle.width = self.width
+        textStyle.color = .gtWhite
+        return textStyle
     }
     
     // MARK: - Helpers

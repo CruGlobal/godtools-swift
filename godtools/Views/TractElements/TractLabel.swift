@@ -12,28 +12,52 @@ import SWXMLHash
 
 class TractLabel: BaseTractElement {
     
+    // MARK: Positions constants
+    
     static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 0.0
     
-    var tapView = UIView()
+    // MARK: - Positions and Sizes
+    
     var xPosition: CGFloat {
         return TractLabel.xMarginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + TractLabel.yMarginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractLabel.xMarginConstant
     }
+    
+    override func textYPadding() -> CGFloat {
+        var padding: CGFloat = 15.0
+        if BaseTractElement.isFormElement(self) {
+            padding = 0.0
+        }
+        
+        return padding
+    }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height
+    }
+    
+    // MARK: - Object properties
+    
+    var tapView = UIView()
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
     }
     
     func buildHorizontalLine() {
-        let xPosition = Card.xPaddingConstant
+        let xPosition = TractCard.xPaddingConstant
         let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (Card.xPaddingConstant * CGFloat(2))
+        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
         let height: CGFloat = 1.0
         
         let horizontalLine = UIView()
@@ -50,26 +74,32 @@ class TractLabel: BaseTractElement {
         for element in self.elements! {
             self.addSubview(element.render())
         }
-        setupPressGestures()
-        buildHorizontalLine()
+        
+        if !BaseTractElement.isFormElement(self) {
+            setupPressGestures()
+            buildHorizontalLine()
+        }
+        
         return self
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.font = .gtSemiBold(size: 18.0)
         textStyle.width = self.width
-        textStyle.xMargin = Card.xPaddingConstant
-        textStyle.color = self.primaryColor!
+        textStyle.xMargin = TractCard.xPaddingConstant
+        
+        if BaseTractElement.isFormElement(self) {
+            textStyle.font = .gtRegular(size: 16.0)
+            textStyle.color = self.textColor
+            textStyle.xMargin = CGFloat(0.0)
+            textStyle.yMargin = CGFloat(0.0)
+            textStyle.height = CGFloat(22.0)
+        } else {
+            textStyle.font = .gtSemiBold(size: 18.0)
+            textStyle.color = self.primaryColor!
+        }
+        
         return textStyle
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return 15.0
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
     }
     
     // MARK: - Helpers

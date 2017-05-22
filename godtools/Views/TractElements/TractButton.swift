@@ -10,32 +10,52 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
-    var properties = TractButtonProperties()
+    // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
-        return self.properties.xMargin
+        return TractCard.xPaddingConstant
     }
+    
     var yMargin : CGFloat {
         return self.properties.yMargin
     }
+    
     var xPosition: CGFloat {
         return self.xMargin
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + self.yMargin
     }
+    
     override var width: CGFloat {
         return super.width - self.xPosition - self.xMargin
     }
+    
     var buttonWidth: CGFloat {
         return self.properties.width > self.width ? self.width : self.properties.width
     }
+    
     var buttonXPosition: CGFloat {
         return (self.width - self.buttonWidth) / 2
     }
+    
     var textPadding: CGFloat = 8.0
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height + self.yMargin
+    }
+    
+    override func textYPadding() -> CGFloat {
+        return (self.parent?.textYPadding())!
+    }
+    
+    // MARK: - Object properties
+    
+    var properties = TractButtonProperties()
     var button: GTButton = GTButton()
+    
+    // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
         loadStyles()
@@ -46,22 +66,16 @@ class TractButton: BaseTractElement {
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
         
+        self.addTargetToButton()
+        
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.frame.size.height)
         self.addSubview(self.button)
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + self.yMargin
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
-    }
-    
     // MARK: - Helpers
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.buttonWidth
@@ -84,7 +98,7 @@ class TractButton: BaseTractElement {
             case "i18n-id":
                 self.properties.i18nId = properties[property] as! String?
             case "type":
-                self.properties.value = properties[property] as! String?
+                self.properties.setupType(properties[property] as! String)
             default: break
             }
         }
@@ -93,9 +107,20 @@ class TractButton: BaseTractElement {
         self.properties.color = .gtWhite
     }
     
+    func addTargetToButton() {
+        if self.properties.type == .event {
+            self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
+        }
+    }
+    
+    func buttonTarget() {
+        let tag = self.properties.value?.transformToNumber()
+        self.root?.sendMessageToView(tag: tag!)
+    }
+    
     override func render() -> UIView {
-        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TextContent.self))! {
-            let element = self.elements?.first as! TextContent
+        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
+            let element = self.elements?.first as! TractTextContent
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)

@@ -11,35 +11,52 @@ import SWXMLHash
 
 class TractTabs: BaseTractElement {
     
+    // MARK: Positions constants
+    
     static let xMarginConstant: CGFloat = 16.0
     static let yMarginConstant: CGFloat = 16.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return TractTabs.xMarginConstant
     }
+    
     var yPosition: CGFloat {
         return self.yStartPosition + TractTabs.yMarginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
     
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Object properties
+    
     var segmentedControl = UISegmentedControl()
     var options = [String]()
     var tabs = [[XMLIndexer]]()
+    
+    // MARK - Setup
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
         
         var position = 0
-        for element in data.children {
+        for item in data.children {
             self.tabs.append([XMLIndexer]())
-            let text = element["label"]["text"].element?.text
-            self.options.append(text!)
             
-            for node in element.children {
-                if node.element?.name != "label" {
+            for node in item.children {
+                let nodeContent = splitData(data: node)
+                
+                if nodeContent.kind == "label" {
+                    let text = node["content:text"].element?.text
+                    self.options.append(text!)
+                } else {
                     self.tabs[position].append(node)
                 }
             }
@@ -104,10 +121,6 @@ class TractTabs: BaseTractElement {
         
         self.height = maxHeight
         self.elements = elements
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

@@ -1,25 +1,24 @@
 //
-//  CardsAnimations.swift
+//  TractCardsActions.swift
 //  godtools
 //
-//  Created by Devserker on 5/4/17.
+//  Created by Devserker on 5/17/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
-import UIKit
 
-extension Cards {
+extension TractCards {
     
     // MARK: - Animations for the cards inside of the Cards container
     
-    func setEnvironmentForDisplayingCard(_ card: Card) {
+    func setEnvironmentForDisplayingCard(_ card: TractCard) {
         changeToOpenCards()
         
         var foundCard = false
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             if card != elementCard {
                 if foundCard {
                     elementCard.hideCard()
@@ -42,16 +41,16 @@ extension Cards {
         changeToPreviewCards()
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             elementCard.resetCard()
         }
     }
     
-    func showFollowingCardToCard(_ card: Card) {
+    func showFollowingCardToCard(_ card: TractCard) {
         var foundCard = false
         
         for element in elements! {
-            let elementCard = element as! Card
+            let elementCard = element as! TractCard
             if card == elementCard {
                 foundCard = true
                 continue
@@ -84,13 +83,7 @@ extension Cards {
         
         let rootView = self.parent as! TractRoot
         rootView.hideHeader()
-        
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
-                       completion: nil )
+        transformToOpenUpCardsAnimation()
     }
     
     func changeToPreviewCards() {
@@ -102,13 +95,7 @@ extension Cards {
         
         let rootView = self.parent as! TractRoot
         rootView.showHeader()
-        
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
-                       completion: nil )
+        transformToInitialPositionAnimation()
     }
     
 }

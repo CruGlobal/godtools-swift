@@ -1,5 +1,5 @@
 //
-//  Paragraph.swift
+//  TractParagraph.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/26/17.
@@ -9,30 +9,42 @@
 import Foundation
 import UIKit
 
-class Paragraph: BaseTractElement {
+class TractParagraph: BaseTractElement {
+    
+    // MARK: Positions constants
     
     static let marginConstant: CGFloat = 8.0
+    
+    // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
         return CGFloat(0.0)
     }
+    
     var yPosition: CGFloat {
-        return self.yStartPosition + Paragraph.marginConstant
+        return self.yStartPosition + TractParagraph.marginConstant
     }
+    
     override var width: CGFloat {
         return (self.parent?.width)! - (self.xPosition * CGFloat(2))
     }
+    
+    override func yEndPosition() -> CGFloat {
+        return self.yPosition + self.height
+    }
+    
+    // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
     }
     
-    override func textStyle() -> TextContentProperties {
+    override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         
         var xMargin = BaseTractElement.xMargin
         if BaseTractElement.isCardElement(self) {
-            xMargin = Card.xPaddingConstant
+            xMargin = TractCard.xPaddingConstant
         }
         
         textStyle.font = .gtRegular(size: 18.0)
@@ -41,10 +53,6 @@ class Paragraph: BaseTractElement {
         textStyle.color = self.textColor
         
         return textStyle
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Helpers

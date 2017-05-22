@@ -12,12 +12,55 @@ import SWXMLHash
 
 class BaseTractElement: UIView {
     
+    // MARK: Positions constants
+    
     static let xMargin: CGFloat = 8.0
     static let yMargin: CGFloat = 8.0
     static let xPadding: CGFloat = 0.0
     static let yPadding: CGFloat = 0.0
     static let screenWidth = UIScreen.main.bounds.size.width
     static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
+    
+    // MARK: - Positions and Sizes
+    
+    var yStartPosition: CGFloat = 0.0
+    var maxHeight: CGFloat = 0.0
+    var height: CGFloat = 0.0
+    var width: CGFloat {
+        if (self.parent != nil) {
+            return self.parent!.width
+        } else {
+            return BaseTractElement.screenWidth
+        }
+    }
+    
+    func yEndPosition() -> CGFloat {
+        return self.yStartPosition + self.height
+    }
+    
+    func getMaxHeight() -> CGFloat {
+        if self.maxHeight > 0.0 {
+            return self.maxHeight
+        } else if (self.parent != nil) {
+            return (self.parent?.getMaxHeight())!
+        } else {
+            return 0.0
+        }
+    }
+    
+    func textYPadding() -> CGFloat {
+        return BaseTractElement.yPadding
+    }
+    
+    // MARK: Main properties
+    
+    private var _mainView: TractRoot?
+    var root: TractRoot? {
+        get {
+            let parentRoot = self.parent?.root
+            return self._mainView != nil ? self._mainView : parentRoot!
+        }
+    }
     
     private var _tractConfigurations: TractConfigurations?
     var tractConfigurations: TractConfigurations? {
@@ -29,6 +72,7 @@ class BaseTractElement: UIView {
             self._tractConfigurations = newValue
         }
     }
+    
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
     var didFindCallToAction: Bool = false
@@ -50,16 +94,6 @@ class BaseTractElement: UIView {
         }
     }
     
-    var yStartPosition: CGFloat = 0.0
-    var maxHeight: CGFloat = 0.0
-    var height: CGFloat = 0.0
-    var width: CGFloat {
-        if (self.parent != nil) {
-            return self.parent!.width
-        } else {
-            return BaseTractElement.screenWidth
-        }
-    }
     var horizontalContainer: Bool {
         return false
     }
@@ -86,17 +120,20 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    
-    // Initializer used only for Root component
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
+        self.yStartPosition = 0.0
         self.maxHeight = height
         self.colors = colors
         self.tractConfigurations = configurations
         
         if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
+        }
+        
+        if self.isKind(of: TractRoot.self) {
+            self._mainView = self as? TractRoot
         }
         
         setupElement(data: data, startOnY: 0.0)
@@ -121,22 +158,11 @@ class BaseTractElement: UIView {
     
     // MARK: - Build content
     
-    func render() -> UIView {
-        for element in self.elements! {
-            self.addSubview(element.render())
-        }
-        return self
-    }
-    
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
         buildChildrenForData(dataContent.children)
         setupView(properties: dataContent.properties)
-    }
-    
-    func setupView(properties: Dictionary<String, Any>) {
-        preconditionFailure("This function must be overridden")
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
@@ -158,7 +184,7 @@ class BaseTractElement: UIView {
         
         if self.isKind(of: TractRoot.self) {
             if !self.didFindCallToAction {
-                let element = CallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+                let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
                 if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                     maxYPosition = element.yEndPosition()
                 } else {
@@ -178,8 +204,21 @@ class BaseTractElement: UIView {
         self.elements = elements
     }
     
-    func textStyle() -> TextContentProperties {
-        let textStyle = TextContentProperties()
+    func setupView(properties: Dictionary<String, Any>) {
+        preconditionFailure("This function must be overridden")
+    }
+    
+    func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
+        return self
+    }
+    
+    // MARK: - Style properties
+    
+    func textStyle() -> TractTextContentProperties {
+        let textStyle = TractTextContentProperties()
         textStyle.align = (self.tractConfigurations?.defaultTextAlignment)!
         return textStyle
     }
@@ -187,26 +226,6 @@ class BaseTractElement: UIView {
     func buttonStyle() -> TractButtonProperties {
         let buttonStyle = TractButtonProperties()
         return buttonStyle
-    }
-    
-    func textYPadding() -> CGFloat {
-        return BaseTractElement.yPadding
-    }
-    
-    // MARK: - Helpers
-    
-    func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
-    }
-    
-    func getMaxHeight() -> CGFloat {
-        if self.maxHeight > 0.0 {
-            return self.maxHeight
-        } else if (self.parent != nil) {
-            return (self.parent?.getMaxHeight())!
-        } else {
-            return 0.0
-        }
     }
     
 }
