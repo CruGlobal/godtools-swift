@@ -32,7 +32,8 @@ class FirstLaunchInitializer: GTDataManager {
         deleteEntities(DownloadedResource.self, matching: predicate)
         
         if GTSettings.shared.primaryLanguageId == magicId {
-            let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: Locale.preferredLanguages[0]) ??
+            let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
+            let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
                 findEntity(Language.self, byAttribute: "code", withValue: "en")
         
             primaryLanguage?.shouldDownload = true
