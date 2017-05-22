@@ -966,7 +966,6 @@
 			files = (
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCardAnimations.swift in Sources */,
-				0F7741D91EBB8A8900888D20 /* CardAnimations.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
