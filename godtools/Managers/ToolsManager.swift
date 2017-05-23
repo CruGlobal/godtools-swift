@@ -23,13 +23,15 @@ class ToolsManager: GTDataManager {
     
     var resources: [DownloadedResource]?
     
-    var delegate: ToolsManagerDelegate? {
+    weak var delegate: ToolsManagerDelegate? {
         didSet {
             if self.delegate is HomeViewController {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
+                    .sorted(by: { $0.name! < $1.name! })
                 deregisterDownloadCompletedObserver()
             } else {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
+                    .sorted(by: { $0.name! < $1.name! })
                 registerDownloadCompletedObserver()
             }
         }
@@ -45,8 +47,12 @@ class ToolsManager: GTDataManager {
     func delete(resource: DownloadedResource) {
         resource.shouldDownload = false
         for translation in resource.translationsAsArray() {
-            translation.isDownloaded = false
+            translation.isDownloaded = false            
+            translation.removeFromReferencedFiles(translation.referencedFiles!)
         }
+        
+        TranslationFileRemover().deleteUnusedPages()
+        
         saveToDisk()
     }
 }

@@ -21,14 +21,11 @@ class TranslationsManager: GTDataManager {
     
     func translationsNeedingDownloaded() -> [Translation] {
         let predicate = NSPredicate(format: "language.shouldDownload = true AND downloadedResource.shouldDownload = true AND isDownloaded = false")
-        let context = NSManagedObjectContext.mr_default()
+
         return Translation.mr_findAll(with: predicate, in: context) as! [Translation]
     }
     
     func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
-        let context = NSManagedObjectContext.mr_default()
-        
-        print(latest)
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
                                     latest.language!.remoteId!,
                                     latest.downloadedResource!.remoteId!,
