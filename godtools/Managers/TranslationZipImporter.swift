@@ -174,7 +174,7 @@ class TranslationZipImporter: GTDataManager {
             try recordReferencedFiles(directory: unzipDirectory,
                                       translationId: translationId)
             
-            try moveFilesFrom(directoryPath: unzipDirectory.path)
+            try moveFilesFrom(unzipDirectory)
             
             saveToDisk()
         } catch {
@@ -198,18 +198,17 @@ class TranslationZipImporter: GTDataManager {
         }
     }
     
-    private func moveFilesFrom(directoryPath: String) throws {
+    private func moveFilesFrom(_ path: URL) throws {
         let fileManager = FileManager.default
-        let files = try fileManager.contentsOfDirectory(atPath: directoryPath)
+        let files = try fileManager.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
 
-        for filename in files {
-            let fullSourcePath = directoryPath.appending("/").appending(filename)
-            let fullDestinationPath = resourcesPath.appending("/").appending(filename)
-            if fileManager.fileExists(atPath: fullDestinationPath) {
-                try fileManager.removeItem(atPath: fullDestinationPath)
+        for file in files {
+            let destinationPath = URL(fileURLWithPath: resourcesPath.appending("/").appending(file.lastPathComponent))
+            if fileManager.fileExists(atPath: destinationPath.path) {
+                try fileManager.removeItem(at: destinationPath)
             }
             
-            try fileManager.moveItem(atPath: fullSourcePath, toPath: fullDestinationPath)
+            try fileManager.moveItem(at: file, to: destinationPath)
         }
     }
     
@@ -218,7 +217,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func buildURLString(translationId: String) -> String {
-        return GTConstants.kApiBase.appending("/translations/").appending(translationId)        
+        return GTConstants.kApiBase.appending("/translations/").appending(translationId)
     }
     
     private func primaryDownloadComplete(translation: Translation) {
