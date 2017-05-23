@@ -110,10 +110,18 @@ class TranslationZipImporter: GTDataManager {
         let translationId = translation.remoteId!
         let filename = createFilename(translationId: translationId)
         
+        guard let tempDirectoryPath = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) else {
+            return Promise(value: ())
+        }
+        
         return downloadFromRemote(translation: translation).then { zipFileData -> Promise<Void> in
+
+            try FileManager.default.createDirectory(at: tempDirectoryPath, withIntermediateDirectories: true, attributes: nil)
             
-            try self.writeDataFileToDisk(data: zipFileData, filename: filename)
-            self.extractZipFile(filename, translationId: translationId)
+            let zipFile = tempDirectoryPath.appendingPathComponent(filename)
+            
+            try self.writeDataFileToDisk(data: zipFileData, to: zipFile)
+            self.extractZipFile(zipFile, translationId: translationId)
             
             TranslationsManager.shared.translationWasDownloaded(translation)
             TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
@@ -124,11 +132,10 @@ class TranslationZipImporter: GTDataManager {
             return Promise(value: ())
         }.always {
             do {
-                try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename)")
-                try FileManager.default.removeItem(atPath: "\(self.documentsPath)/\(filename.replacingOccurrences(of: ".zip", with: ""))")
+                try FileManager.default.removeItem(at: tempDirectoryPath)
             } catch {
                 Crashlytics().recordError(error,
-                                          withAdditionalUserInfo: ["customMessage": "Error deleting zip file after downloading translation w/ id: \(translationId)."])
+                                          withAdditionalUserInfo: ["customMessage": "Error deleting temporary directory after downloading translation w/ id: \(translationId)."])
             }
         }
     }
@@ -149,39 +156,44 @@ class TranslationZipImporter: GTDataManager {
             .responseData()
     }
     
-    private func writeDataFileToDisk(data: Data, filename: String) throws {
-        try data.write(to: URL(fileURLWithPath: "\(documentsPath)/\(filename)"))
+    private func writeDataFileToDisk(data: Data, to path: URL) throws {
+        try data.write(to: path)
     }
     
-    private func extractZipFile(_ filename: String, translationId: String) {
-        let tempDirectoryPath = "\(documentsPath)/\(filename.replacingOccurrences(of: ".zip", with: ""))"
+    private func extractZipFile(_ file: URL, translationId: String) {
+        let unzipDirectory = file.deletingPathExtension()
+        
         do {
-            try FileManager.default.createDirectory(atPath: tempDirectoryPath,
+            try FileManager.default.createDirectory(at: unzipDirectory,
                                                     withIntermediateDirectories: true,
                                                     attributes: nil)
             
-            SSZipArchive.unzipFile(atPath: "\(documentsPath)/\(filename)", toDestination: tempDirectoryPath)
+            SSZipArchive.unzipFile(atPath: file.path,
+                                   toDestination: unzipDirectory.path)
             
-            try recordReferencedFiles(directoryPath: tempDirectoryPath, translationId: translationId)
+            try recordReferencedFiles(directory: unzipDirectory,
+                                      translationId: translationId)
             
-            try moveFilesFrom(directoryPath: tempDirectoryPath)
+            try moveFilesFrom(directoryPath: unzipDirectory.path)
+            
             saveToDisk()
         } catch {
-            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error extracting zip file \(filename)"])
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error extracting zip file \(file.lastPathComponent)"])
             rollbackContext()
         }
     }
     
-    private func recordReferencedFiles(directoryPath: String, translationId: String) throws {
+    private func recordReferencedFiles(directory: URL, translationId: String) throws {
         guard let translation = findEntity(Translation.self, byAttribute: "remoteId", withValue: translationId) else {
             return
         }
         
-        let files = try FileManager.default.contentsOfDirectory(atPath: directoryPath)
+        let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
         
-        for filename in files {
+        for file in files {
+            let filename = file.lastPathComponent
             let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) ?? createEntity(ReferencedFile.self)
-            referencedFile?.filename = filename
+            referencedFile?.filename = file.lastPathComponent
             referencedFile?.addToTranslations(translation)
         }
     }
@@ -191,8 +203,8 @@ class TranslationZipImporter: GTDataManager {
         let files = try fileManager.contentsOfDirectory(atPath: directoryPath)
 
         for filename in files {
-            let fullSourcePath = "\(directoryPath)/\(filename)"
-            let fullDestinationPath = "\(resourcesPath)/\(filename)"
+            let fullSourcePath = directoryPath.appending("/").appending(filename)
+            let fullDestinationPath = resourcesPath.appending("/").appending(filename)
             if fileManager.fileExists(atPath: fullDestinationPath) {
                 try fileManager.removeItem(atPath: fullDestinationPath)
             }
@@ -202,7 +214,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func createFilename(translationId: String) -> String {
-        return "\(translationId).zip"
+        return translationId.appending(".zip")
     }
     
     private func buildURLString(translationId: String) -> String {
