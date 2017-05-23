@@ -218,8 +218,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func buildURLString(translationId: String) -> String {
-        return "\(GTConstants.kApiBase)/translations/\(translationId)"
-        
+        return GTConstants.kApiBase.appending("/translations/").appending(translationId)        
     }
     
     private func primaryDownloadComplete(translation: Translation) {
