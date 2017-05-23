@@ -23,7 +23,7 @@ class ToolsManager: GTDataManager {
     
     var resources: [DownloadedResource]?
     
-    var delegate: ToolsManagerDelegate? {
+    weak var delegate: ToolsManagerDelegate? {
         didSet {
             if self.delegate is HomeViewController {
                 resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
