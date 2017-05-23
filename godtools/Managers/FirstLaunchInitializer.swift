@@ -11,7 +11,7 @@ import CoreData
 
 class FirstLaunchInitializer: GTDataManager {
     
-    private let magicId = "-358"
+    private let magicId = "temporaryRecordId"
     private let initialPackageCodes = ["kgp", "fourlaws", "sat"]
     
     func initializeAppState() {
