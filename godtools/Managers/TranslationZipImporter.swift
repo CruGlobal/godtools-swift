@@ -15,6 +15,10 @@ import Crashlytics
 class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
     
+    class func setup() {
+        _ = TranslationZipImporter.shared
+    }
+    
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
