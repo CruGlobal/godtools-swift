@@ -30,12 +30,12 @@ class GTDataManager: NSObject {
     
     func issueGETRequest() -> Promise<Data> {
         return Alamofire
-            .request(buildURLString())
+            .request(buildURL() ?? "")
             .responseData()
     }
     
     func issueGETRequest(_ params: Parameters) -> Promise<Data> {
-        return Alamofire.request(buildURLString(),
+        return Alamofire.request(buildURL() ?? "",
                                  method: HTTPMethod.get,
                                  parameters: params,
                                  encoding: URLEncoding.default,
@@ -79,9 +79,9 @@ class GTDataManager: NSObject {
         entityClass.mr_deleteAll(matching: matching, in: context)
     }
     
-    func buildURLString() -> String {
+    func buildURL() -> URL? {
         assertionFailure("method must be overridden")
-        return ""
+        return nil
     }
     
     func showNetworkingIndicator() {
