@@ -25,6 +25,7 @@ extension DownloadedResource {
     @NSManaged public var bannerRemoteId: String?
     @NSManaged public var pages: NSSet?
     @NSManaged public var translations: NSSet?
+    @NSManaged public var attachments: NSSet?
 
 }
 
@@ -59,5 +60,22 @@ extension DownloadedResource {
 
     @objc(removeTranslations:)
     @NSManaged public func removeFromTranslations(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for attachments
+extension DownloadedResource {
+
+    @objc(addAttachmentsObject:)
+    @NSManaged public func addToAttachments(_ value: Attachment)
+
+    @objc(removeAttachmentsObject:)
+    @NSManaged public func removeFromAttachments(_ value: Attachment)
+
+    @objc(addAttachments:)
+    @NSManaged public func addToAttachments(_ values: NSSet)
+
+    @objc(removeAttachments:)
+    @NSManaged public func removeFromAttachments(_ values: NSSet)
 
 }

@@ -20,6 +20,7 @@ class DownloadedResourceJson: Resource {
     var latestTranslations: LinkedResourceCollection?
     var translations: LinkedResourceCollection?
     var pages: LinkedResourceCollection?
+    var attachments: LinkedResourceCollection?
     
     override class var resourceType: ResourceType {
         return "resource"
@@ -34,6 +35,7 @@ class DownloadedResourceJson: Resource {
             "bannerId": Attribute().serializeAs("attr-banner"),
             "totalViews": Attribute().serializeAs("total-views"),
             "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
+            "attachments": ToManyRelationship(AttachmentResource.self),
             "pages" : ToManyRelationship(PageResource.self)])
     }
 }

@@ -26,6 +26,7 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(TranslationResource.self)
         serializer.registerResource(PageResource.self)
         serializer.registerResource(LanguageResource.self)
+        serializer.registerResource(AttachmentResource.self)
     }
     
     func loadFromDisk() -> [DownloadedResource] {
@@ -36,7 +37,7 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         showNetworkingIndicator()
         
-        let params = ["include": "translations,pages"]
+        let params = ["include": "translations,pages,attachments"]
         
         return issueGETRequest(params)
             .then { data -> Promise<[DownloadedResource]> in
@@ -65,6 +66,16 @@ class DownloadedResourceManager: GTDataManager {
             
             if cachedResource.bannerRemoteId != nil {
                 _ = BannerManager.shared.downloadFor(cachedResource)
+            }
+            
+            for remoteAttachment in (remoteResource.attachments!) {
+                let remoteAttachment = remoteAttachment as! AttachmentResource
+                let cachedAttachment = Attachment.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                                       withValue: remoteAttachment.id!,
+                                                                       in: self.context)
+                
+                cachedAttachment.sha = remoteAttachment.sha256
+                cachedAttachment.resource = cachedResource
             }
             
             let remoteTranslations = remoteResource.latestTranslations!
