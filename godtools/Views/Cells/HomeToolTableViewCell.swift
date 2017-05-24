@@ -20,6 +20,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var contentTopView: UIView!
     @IBOutlet weak var contentBottomView: UIView!
+    @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var mainContentView: UIView!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
@@ -44,6 +45,7 @@ class HomeToolTableViewCell: UITableViewCell {
     func configure(resource: DownloadedResource,
                    primaryLanguage: Language?,
                    parallelLanguage: Language?,
+                   banner: UIImage?,
                    delegate: HomeToolTableViewCellDelegate) {
         self.resource = resource
         self.cellDelegate = delegate
@@ -61,6 +63,10 @@ class HomeToolTableViewCell: UITableViewCell {
         
         if (resource.shouldDownload) {
             setCellAsDisplayOnly()
+        }
+        
+        if banner != nil {
+            bannerImageView.image = banner
         }
     }
     

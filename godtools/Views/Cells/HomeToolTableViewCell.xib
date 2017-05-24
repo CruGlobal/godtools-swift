@@ -36,6 +36,13 @@
                                     <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-nQ-kW7" userLabel="Banner View">
+                                <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="dtP-Xy-5eP"/>
+                                    <constraint firstAttribute="width" constant="318" id="rgc-Yv-fMo"/>
+                                </constraints>
+                            </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="58" width="318" height="2"/>
                             </progressView>
@@ -153,6 +160,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Om4-nQ-kW7" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="1gU-tS-veC"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="5fV-zY-aHB" secondAttribute="bottom" id="Blr-F3-YWR"/>
                             <constraint firstAttribute="trailing" secondItem="JR1-oY-z8k" secondAttribute="trailing" id="DAm-nR-5AT"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="sTw-7d-Fpn" secondAttribute="bottom" id="DIK-iN-L5M"/>
@@ -164,9 +172,12 @@
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="PJw-zJ-EvV"/>
                             <constraint firstItem="sTw-7d-Fpn" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="Rd1-0A-tZA"/>
                             <constraint firstItem="5fV-zY-aHB" firstAttribute="width" secondItem="1lJ-vJ-aCT" secondAttribute="width" id="UX1-Zm-gYm"/>
+                            <constraint firstAttribute="trailing" secondItem="Om4-nQ-kW7" secondAttribute="trailing" id="ZjC-62-LtE"/>
+                            <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="Om4-nQ-kW7" secondAttribute="bottom" id="bh7-uK-3Nv"/>
                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="345" id="cNH-GK-ABN"/>
                             <constraint firstAttribute="trailing" secondItem="5fV-zY-aHB" secondAttribute="trailing" id="hAH-Ki-9d9"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="jfI-il-dz8"/>
+                            <constraint firstItem="Om4-nQ-kW7" firstAttribute="top" secondItem="1lJ-vJ-aCT" secondAttribute="top" id="kZh-9y-xvN"/>
                             <constraint firstAttribute="height" constant="110" id="vRP-lq-pcR"/>
                         </constraints>
                     </view>
@@ -190,6 +201,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="bannerImageView" destination="Om4-nQ-kW7" id="qol-Vb-EgI"/>
                 <outlet property="borderView" destination="1lJ-vJ-aCT" id="vEL-ld-RdJ"/>
                 <outlet property="contentBottomView" destination="JR1-oY-z8k" id="mHx-8u-4sc"/>
                 <outlet property="contentTopView" destination="5fV-zY-aHB" id="2Rp-fW-JPD"/>
@@ -207,6 +219,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="cell_banner_placeholder" width="318" height="60"/>
         <image name="download_green" width="22" height="22"/>
         <image name="info_blue" width="22" height="22"/>
         <image name="vertical_line_grey" width="1" height="30"/>
