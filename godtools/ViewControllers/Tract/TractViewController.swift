@@ -24,7 +24,7 @@ class TractViewController: BaseViewController {
         return CGFloat(currentPage) *  -self.view.frame.width
     }
     var containerView = UIView()
-    var pagesViews = [UIView]()
+    var pagesViews = [BaseTractView]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
@@ -149,7 +149,7 @@ class TractViewController: BaseViewController {
         }
     }
     
-    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
+    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> BaseTractView {
         let xPosition = (width * CGFloat(page))
         let frame = CGRect(x: xPosition,
                            y: 0.0,
@@ -228,6 +228,26 @@ class TractViewController: BaseViewController {
     
     // MARK: - Handle page movements
     
+    func moveToPage(notification: Notification) {
+        guard let dictionary = notification.object as? [String: String] else {
+            return
+        }
+        
+        let destinationViewPageId = dictionary["pageId"]
+        
+        var position = 0
+        for view in self.pagesViews {
+            if view.pageId() == destinationViewPageId {
+                self.currentPage = position
+                break
+            }
+            position += 1
+        }
+        
+        reloadPagesViews()
+        moveViews()
+    }
+    
     func moveToNextPage() {
         if self.currentPage >= totalPages() - 1 {
             return
@@ -303,6 +323,10 @@ class TractViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(setupNavigationBarFrame),
                                                name: NSNotification.Name.UIApplicationDidBecomeActive,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moveToPage),
+                                               name: NSNotification.Name.moveToPageNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToNextPage),

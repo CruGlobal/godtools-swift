@@ -27,7 +27,7 @@ class TractRoot: BaseTractElement {
     }
     
     override func receiveMessage() {
-        print("Move to this page") // TODO
+        NotificationCenter.default.post(name: .moveToPageNotification, object: ["pageId": self.pageId])
     }
     
     // MARK: - Helpers
