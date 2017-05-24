@@ -31,10 +31,18 @@ class BannerManager: GTDataManager {
             return Promise<UIImage?>(value: nil)
         }
         
+        guard let attachment = loadAttachment(remoteId: remoteId) else {
+            return Promise<UIImage?>(value: nil)
+        }
+        
+        if !bannerHasChanged(attachment: attachment) {
+            return Promise(value: loadFor(resource))
+        }
+        
         bannerId = remoteId
         
         return issueGETRequest().then { image -> Promise<UIImage?> in
-            self.saveImageToDisk(image)
+            self.saveImageToDisk(image, attachment: attachment)
             
             return Promise(value: UIImage(data: image))
         }.catch(execute: { error in
@@ -47,7 +55,7 @@ class BannerManager: GTDataManager {
             return nil
         }
         
-        guard let attachment = findEntity(Attachment.self, byAttribute: "remoteId", withValue: remoteId) else {
+        guard let attachment = loadAttachment(remoteId: remoteId) else {
             return nil
         }
         
@@ -57,16 +65,22 @@ class BannerManager: GTDataManager {
         
         return UIImage(contentsOfFile: diskPathString)
     }
-    
+
     override func buildURLString() -> String {
         return GTConstants.kApiBase.appending("/attachments/").appending(bannerId!).appending("/download")
     }
-    
-    private func saveImageToDisk(_ image: Data) {
-        guard let attachment = findEntity(Attachment.self, byAttribute: "remoteId", withValue: bannerId ?? "-1") else {
-            return
+
+    private func bannerHasChanged(attachment: Attachment) -> Bool {
+        if attachment.sha == nil {
+            return true
         }
         
+        return FileManager.default.fileExists(atPath: bannersPath.appendingPathComponent(attachment.sha!)
+            .appendingPathExtension(defaultExtension)
+            .path)
+    }
+    
+    private func saveImageToDisk(_ image: Data, attachment: Attachment) {
         let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension)
         
         do {
@@ -77,6 +91,10 @@ class BannerManager: GTDataManager {
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
         }
+    }
+    
+    private func loadAttachment(remoteId: String) -> Attachment? {
+        return findEntity(Attachment.self, byAttribute: "remoteId", withValue: remoteId)
     }
     
     private func createBannersDirectoryIfNecessary() {

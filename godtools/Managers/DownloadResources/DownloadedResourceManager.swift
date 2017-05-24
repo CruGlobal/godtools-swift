@@ -118,7 +118,7 @@ class DownloadedResourceManager: GTDataManager {
         
         saveToDisk()
     }
-    
+
     private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@",
                                     languageId,
