@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol MenuViewControllerDelegate {
+    mutating func moveToUpdateLanguageSettings()
+}
+
 class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -17,6 +21,8 @@ class MenuViewController: BaseViewController {
     let header = ["menu_general", "menu_share", "menu_legal"]
     
     let headerHeight: CGFloat = 40.0
+    
+    var delegate: MenuViewControllerDelegate?
     
     override var screenTitle: String {
         get {
@@ -119,6 +125,12 @@ extension MenuViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            handleGeneralSectionCellSelection(rowIndex: indexPath.row)
+            break
+        default: break
+        }
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -137,4 +149,12 @@ extension MenuViewController: UITableViewDelegate {
         return nil
     }
     
+}
+
+//MARK: cell selection methods
+
+extension MenuViewController {
+    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+        delegate?.moveToUpdateLanguageSettings()
+    }
 }
