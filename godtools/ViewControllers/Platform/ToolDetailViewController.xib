@@ -39,12 +39,11 @@
                     <rect key="frame" x="0.0" y="242" width="375" height="425"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="425"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="412.5"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="40" width="260" height="34"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                    <rect key="frame" x="55" y="40" width="260" height="33.5"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="34" id="0E1-D9-HAq"/>
                                         <constraint firstAttribute="width" constant="260" id="w7U-YD-9pa"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -55,7 +54,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2,345,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jS-vF-2Ds" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="84" width="163" height="20"/>
+                                    <rect key="frame" x="55" y="83.5" width="163" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="9kQ-xd-mSb"/>
                                         <constraint firstAttribute="width" constant="163" id="xpt-fz-7DA"/>
@@ -68,7 +67,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-XL-FjG" customClass="GTButton" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="121" width="260" height="48"/>
+                                    <rect key="frame" x="55" y="120.5" width="260" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="48" id="ag2-Ps-Qdr"/>
                                         <constraint firstAttribute="width" constant="260" id="hKN-dm-q5A"/>
@@ -79,7 +78,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-CN-KBN" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="191" width="163" height="22"/>
+                                    <rect key="frame" x="55" y="190.5" width="163" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="163" id="4fQ-NZ-cd4"/>
                                         <constraint firstAttribute="height" constant="22" id="cbh-A5-jZD"/>
@@ -92,11 +91,10 @@
                                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="about"/>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consect etur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v52-LQ-1sy" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="227" width="260" height="80"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consect etur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v52-LQ-1sy" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                    <rect key="frame" x="55" y="226.5" width="260" height="72"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="UpF-c7-Bbd"/>
-                                        <constraint firstAttribute="height" constant="80" id="oJa-uR-8XW"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -106,7 +104,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40 Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhJ-0q-SQL" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="327" width="163" height="21"/>
+                                    <rect key="frame" x="55" y="318.5" width="163" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="Srb-pd-OVd"/>
                                         <constraint firstAttribute="width" constant="163" id="zjM-jq-Ke9"/>
@@ -118,11 +116,10 @@
                                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="greyHeader1"/>
                                     </userDefinedRuntimeAttributes>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Afrikaans, Bengali, Czech, Danish, English, Farsi, Finnish, French" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mm5-hE-C3H" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="355" width="260" height="40"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Afrikaans, Bengali, Czech, Danish, English, Farsi, Finnish, French" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mm5-hE-C3H" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                    <rect key="frame" x="55" y="346.5" width="260" height="36"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="CnW-uM-qvf"/>
-                                        <constraint firstAttribute="height" constant="40" id="SPf-Ii-QwY"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -148,7 +145,6 @@
                                 <constraint firstItem="v52-LQ-1sy" firstAttribute="top" secondItem="DxX-CN-KBN" secondAttribute="bottom" constant="14" id="bW4-Zd-E90"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="top" secondItem="XdA-LP-5i3" secondAttribute="bottom" constant="10" id="jVr-dy-p0m"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="top" secondItem="WhJ-0q-SQL" secondAttribute="bottom" constant="7" id="lE0-E5-tMh"/>
-                                <constraint firstAttribute="height" constant="425" id="r0b-LX-Nvw"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="ttv-LD-HWQ"/>
                             </constraints>
                         </view>
