@@ -17,6 +17,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var languagesLabel: GTLabel!
     @IBOutlet weak var mainButton: GTButton!
     @IBOutlet weak var downloadProgressView: GTProgressView!
+    @IBOutlet weak var bannerImageView: UIImageView!
     
     let toolsManager = ToolsManager.shared
     
@@ -42,6 +43,7 @@ class ToolDetailViewController: BaseViewController {
             .joined(separator: ", ")
         
         self.displayButton()
+        self.bannerImageView.image = BannerManager.shared.loadFor(resource!)
     }
     
     private func displayButton() {

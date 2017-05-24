@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="bannerImageView" destination="6sd-7g-yCc" id="8eK-eS-AVc"/>
                 <outlet property="descriptionLabel" destination="v52-LQ-1sy" id="L4K-Dk-cZZ"/>
                 <outlet property="downloadProgressView" destination="tqu-1c-gUh" id="Dyk-YF-IIa"/>
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
@@ -25,21 +26,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-li-bC7">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="6sd-7g-yCc">
                     <rect key="frame" x="0.0" y="64" width="375" height="178"/>
-                    <subviews>
-                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-1c-gUh" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="-0.5" y="176" width="375" height="2"/>
-                        </progressView>
-                    </subviews>
-                    <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="tqu-1c-gUh" firstAttribute="centerX" secondItem="yUi-li-bC7" secondAttribute="centerX" id="GPB-8T-Tcv"/>
-                        <constraint firstItem="tqu-1c-gUh" firstAttribute="width" secondItem="yUi-li-bC7" secondAttribute="width" id="PHK-YP-Y2l"/>
-                        <constraint firstAttribute="height" constant="178" id="eh0-cF-FkH"/>
-                        <constraint firstAttribute="bottom" secondItem="tqu-1c-gUh" secondAttribute="bottom" id="v8S-DA-e5v"/>
+                        <constraint firstAttribute="height" constant="178" id="B1E-bH-Ppf"/>
                     </constraints>
-                </view>
+                </imageView>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-1c-gUh" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="240" width="375" height="2"/>
+                </progressView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-hz-acy">
                     <rect key="frame" x="0.0" y="242" width="375" height="425"/>
                     <subviews>
@@ -168,13 +163,15 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="yUi-li-bC7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7YT-QS-BqD"/>
+                <constraint firstAttribute="trailing" secondItem="6sd-7g-yCc" secondAttribute="trailing" id="04U-ai-s3z"/>
+                <constraint firstItem="5dK-hz-acy" firstAttribute="top" secondItem="6sd-7g-yCc" secondAttribute="bottom" id="0MT-BE-9pA"/>
+                <constraint firstItem="tqu-1c-gUh" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="4At-Kn-wFA"/>
+                <constraint firstItem="6sd-7g-yCc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9r0-VY-gWO"/>
+                <constraint firstItem="tqu-1c-gUh" firstAttribute="bottom" secondItem="6sd-7g-yCc" secondAttribute="bottom" id="AtU-4W-zSK"/>
                 <constraint firstAttribute="trailing" secondItem="5dK-hz-acy" secondAttribute="trailing" id="OaM-Yl-dBL"/>
                 <constraint firstItem="5dK-hz-acy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UMr-cW-LTu"/>
-                <constraint firstAttribute="trailing" secondItem="yUi-li-bC7" secondAttribute="trailing" id="ZQp-5Y-Dce"/>
-                <constraint firstItem="yUi-li-bC7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="ZS3-jB-T8x"/>
-                <constraint firstItem="5dK-hz-acy" firstAttribute="top" secondItem="yUi-li-bC7" secondAttribute="bottom" id="hJe-uK-Opi"/>
-                <constraint firstItem="5dK-hz-acy" firstAttribute="top" secondItem="yUi-li-bC7" secondAttribute="bottom" id="jUy-fm-EHC"/>
+                <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="dtL-DA-EOL"/>
+                <constraint firstItem="tqu-1c-gUh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hHM-Qs-2ib"/>
                 <constraint firstItem="DYc-AD-3c6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="uUI-lA-BdC"/>
                 <constraint firstAttribute="bottom" secondItem="5dK-hz-acy" secondAttribute="bottom" id="xy0-gH-7FK"/>
             </constraints>
@@ -182,4 +179,7 @@
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="cell_banner_placeholder" width="318" height="60"/>
+    </resources>
 </document>
