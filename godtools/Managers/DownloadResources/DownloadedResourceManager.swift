@@ -64,10 +64,6 @@ class DownloadedResourceManager: GTDataManager {
             cachedResource.bannerRemoteId = remoteResource.bannerId
             cachedResource.totalViews = remoteResource.totalViews!.int32Value
             
-            if cachedResource.bannerRemoteId != nil {
-                _ = BannerManager.shared.downloadFor(cachedResource)
-            }
-            
             for remoteAttachment in (remoteResource.attachments!) {
                 let remoteAttachment = remoteAttachment as! AttachmentResource
                 let cachedAttachment = Attachment.mr_findFirstOrCreate(byAttribute: "remoteId",
@@ -76,6 +72,10 @@ class DownloadedResourceManager: GTDataManager {
                 
                 cachedAttachment.sha = remoteAttachment.sha256
                 cachedAttachment.resource = cachedResource
+            }
+            
+            if cachedResource.bannerRemoteId != nil {
+                _ = BannerManager.shared.downloadFor(cachedResource)
             }
             
             let remoteTranslations = remoteResource.latestTranslations!
