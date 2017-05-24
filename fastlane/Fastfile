@@ -233,7 +233,7 @@ platform :ios do
       end
 
       cru_instant_message(
-        message: exception.message,
+        message: "Build Failed because: #{exception.message}<br /><br />Check details here #{ENV['JOB_URL']}/#{ENV['BUILD_ID']}/console",
         success: false
       )
 
