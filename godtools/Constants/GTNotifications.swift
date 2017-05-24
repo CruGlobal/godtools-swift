@@ -16,4 +16,5 @@ extension Notification.Name {
     static let downloadProgressViewUpdateNotification = Notification.Name("downloadProgressViewUpdateNotification")
     static let downloadPrimaryTranslationCompleteNotification = Notification.Name("downloadPrimaryTranslationCompleteNotification")
     static let initialAppStateCleanupCompleted = Notification.Name("initialAppStateCleanupCompleted")
+    static let downloadBannerCompleteNotifciation = Notification.Name("downloadBannerCompleteNotifciation")
 }

@@ -144,6 +144,11 @@ class HomeToolTableViewCell: UITableViewCell {
                                                selector: #selector(progressViewListenerShouldUpdate),
                                                name: .downloadProgressViewUpdateNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBannerImage),
+                                               name: .downloadBannerCompleteNotifciation,
+                                               object: nil)
     }
     
     @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
@@ -165,5 +170,28 @@ class HomeToolTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             self.downloadProgressView.setProgress(progressFraction, animated: animated)
         }
-    }    
+    }
+    
+    @objc private func refreshBannerImage(notification: NSNotification) {
+        guard let resourceId = notification.userInfo![GTConstants.kDownloadBannerResourceIdKey] as? String else {
+            return
+        }
+        
+        if resourceId != resource!.remoteId {
+            return
+        }
+        
+        guard let bannerImage = BannerManager.shared.loadFor(resource!) else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            UIView.transition(with: self.bannerImageView,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.bannerImageView.image = bannerImage },
+                              completion: nil)
+        }
+    }
 }

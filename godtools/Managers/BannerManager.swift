@@ -44,6 +44,8 @@ class BannerManager: GTDataManager {
         return issueGETRequest().then { image -> Promise<UIImage?> in
             self.saveImageToDisk(image, attachment: attachment)
             
+            self.postCompletedNotification(resource: resource)
+            
             return Promise(value: UIImage(data: image))
         }.catch(execute: { error in
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error downloading banner w/ id \(self.bannerId)."])
@@ -74,6 +76,12 @@ class BannerManager: GTDataManager {
         return GTConstants.kApiBase.appending("/attachments/").appending(bannerId!).appending("/download")
     }
 
+    private func postCompletedNotification(resource: DownloadedResource) {
+        NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
+                                        object: nil,
+                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId!])
+    }
+    
     private func bannerHasChanged(attachment: Attachment) -> Bool {
         if attachment.sha == nil {
             return true
