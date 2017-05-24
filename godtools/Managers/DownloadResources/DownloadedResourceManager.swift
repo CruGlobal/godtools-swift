@@ -60,6 +60,7 @@ class DownloadedResourceManager: GTDataManager {
             cachedResource.code = remoteResource.abbreviation
             cachedResource.name = remoteResource.name
             cachedResource.copyrightDescription = remoteResource.copyrightDescription
+            cachedResource.bannerRemoteId = remoteResource.bannerId
             cachedResource.totalViews = remoteResource.totalViews!.int32Value
             
             let remoteTranslations = remoteResource.latestTranslations!
