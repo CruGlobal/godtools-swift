@@ -18,7 +18,6 @@ extension Attachment {
 
     @NSManaged public var remoteId: String?
     @NSManaged public var sha: String?
-    @NSManaged public var diskPath: String?
     @NSManaged public var isBanner: Bool
     @NSManaged public var translations: Translation?
     @NSManaged public var resource: DownloadedResource?
