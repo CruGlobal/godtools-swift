@@ -75,6 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initalizeAppState() -> Promise<Any> {
         // Initializes the importer so the resources directory can be created.
         TranslationZipImporter.setup()
+        BannerManager.setup()
         
         if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
             initializeAppStateOnFirstLaunch()

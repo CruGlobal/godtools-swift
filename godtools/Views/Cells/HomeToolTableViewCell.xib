@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,32 +19,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2s-WS-dBD">
-                        <rect key="frame" x="1" y="1" width="318" height="110"/>
+                        <rect key="frame" x="18" y="1" width="284" height="110"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="110" id="3hq-Rb-adn"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="c1B-3g-EW2"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="345" id="l68-VZ-wwc"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lJ-vJ-aCT">
-                        <rect key="frame" x="1" y="1" width="318" height="110"/>
+                        <rect key="frame" x="18" y="1" width="284" height="110"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-zY-aHB">
-                                <rect key="frame" x="0.0" y="0.0" width="318" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="60"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-nQ-kW7" userLabel="Banner View">
+                                <rect key="frame" x="0.0" y="0.0" width="284" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="dtP-Xy-5eP"/>
+                                </constraints>
+                            </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="58" width="318" height="2"/>
+                                <rect key="frame" x="0.0" y="58" width="284" height="2"/>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
-                                <rect key="frame" x="0.0" y="60" width="318" height="50"/>
+                                <rect key="frame" x="0.0" y="60" width="284" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-rG-bBE">
-                                        <rect key="frame" x="0.0" y="0.0" width="234" height="49"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="49"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
                                                 <rect key="frame" x="8.5" y="13" width="22" height="22"/>
@@ -64,7 +69,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="5" width="180.5" height="21"/>
+                                                <rect key="frame" x="47.5" y="5" width="146.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="dzq-Za-Wxb"/>
                                                 </constraints>
@@ -104,7 +109,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-L0-hFD">
-                                        <rect key="frame" x="234" y="0.0" width="84" height="49"/>
+                                        <rect key="frame" x="200" y="0.0" width="84" height="49"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="19" width="50" height="12"/>
@@ -153,6 +158,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Om4-nQ-kW7" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="1gU-tS-veC"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="5fV-zY-aHB" secondAttribute="bottom" id="Blr-F3-YWR"/>
                             <constraint firstAttribute="trailing" secondItem="JR1-oY-z8k" secondAttribute="trailing" id="DAm-nR-5AT"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="sTw-7d-Fpn" secondAttribute="bottom" id="DIK-iN-L5M"/>
@@ -161,27 +167,48 @@
                             <constraint firstItem="5fV-zY-aHB" firstAttribute="top" secondItem="1lJ-vJ-aCT" secondAttribute="top" id="Ho6-XH-dX0"/>
                             <constraint firstAttribute="bottom" secondItem="JR1-oY-z8k" secondAttribute="bottom" id="KSB-VW-qHg"/>
                             <constraint firstAttribute="trailing" secondItem="sTw-7d-Fpn" secondAttribute="trailing" id="Op2-UF-5KQ"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="PJw-zJ-EvV"/>
                             <constraint firstItem="sTw-7d-Fpn" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="Rd1-0A-tZA"/>
                             <constraint firstItem="5fV-zY-aHB" firstAttribute="width" secondItem="1lJ-vJ-aCT" secondAttribute="width" id="UX1-Zm-gYm"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="345" id="cNH-GK-ABN"/>
+                            <constraint firstAttribute="trailing" secondItem="Om4-nQ-kW7" secondAttribute="trailing" id="ZjC-62-LtE"/>
+                            <constraint firstItem="JR1-oY-z8k" firstAttribute="top" secondItem="Om4-nQ-kW7" secondAttribute="bottom" id="bh7-uK-3Nv"/>
                             <constraint firstAttribute="trailing" secondItem="5fV-zY-aHB" secondAttribute="trailing" id="hAH-Ki-9d9"/>
                             <constraint firstItem="JR1-oY-z8k" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="leading" id="jfI-il-dz8"/>
+                            <constraint firstItem="Om4-nQ-kW7" firstAttribute="top" secondItem="1lJ-vJ-aCT" secondAttribute="top" id="kZh-9y-xvN"/>
                             <constraint firstAttribute="height" constant="110" id="vRP-lq-pcR"/>
+                            <constraint firstItem="Om4-nQ-kW7" firstAttribute="width" secondItem="1lJ-vJ-aCT" secondAttribute="width" id="vj1-qR-np3"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-ik-Nxc" userLabel="Left Padding Spacer View">
+                        <rect key="frame" x="0.0" y="0.0" width="18" height="128.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="cpH-5C-0xf"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-9e-kQd" userLabel="Right Padding Spacer View">
+                        <rect key="frame" x="302" y="0.0" width="18" height="128"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="i42-EE-7Ek"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" priority="750" constant="1" id="7aF-Xu-cLa"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="eQf-9e-kQd" secondAttribute="trailing" constant="-8" id="6OZ-d1-988"/>
+                    <constraint firstItem="1f0-ik-Nxc" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" constant="15.5" id="Be9-IW-hQP"/>
+                    <constraint firstItem="1f0-ik-Nxc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="Brd-op-XoL"/>
                     <constraint firstAttribute="bottom" secondItem="S2s-WS-dBD" secondAttribute="bottom" constant="1" id="En1-zo-uqx"/>
                     <constraint firstAttribute="bottom" secondItem="1lJ-vJ-aCT" secondAttribute="bottom" constant="1" id="FKB-Kv-tFg"/>
-                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="750" constant="1" id="HB9-m8-JCW"/>
+                    <constraint firstItem="eQf-9e-kQd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="7.75" id="VoV-sd-Jfc"/>
                     <constraint firstItem="1lJ-vJ-aCT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="Ykq-Pg-0QP"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="S2s-WS-dBD" secondAttribute="trailing" priority="750" constant="1" id="dRE-dv-PQD"/>
+                    <constraint firstItem="1f0-ik-Nxc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" constant="8" id="ZnI-3Z-Ajd"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="eS7-uf-73n"/>
+                    <constraint firstItem="S2s-WS-dBD" firstAttribute="leading" secondItem="1f0-ik-Nxc" secondAttribute="trailing" id="fHF-8z-omA"/>
+                    <constraint firstItem="eQf-9e-kQd" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" constant="15.5" id="i4t-Xo-IRt"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" priority="750" id="kgX-TD-7Me"/>
                     <constraint firstItem="1lJ-vJ-aCT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="mXg-ac-XBd"/>
-                    <constraint firstItem="S2s-WS-dBD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="y3e-vw-Ywe"/>
+                    <constraint firstItem="eQf-9e-kQd" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" id="vMD-zZ-KqQ"/>
+                    <constraint firstItem="1lJ-vJ-aCT" firstAttribute="leading" secondItem="1f0-ik-Nxc" secondAttribute="trailing" id="xdT-KW-3Ma"/>
                 </constraints>
             </tableViewCellContentView>
             <userDefinedRuntimeAttributes>
@@ -190,6 +217,7 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
+                <outlet property="bannerImageView" destination="Om4-nQ-kW7" id="qol-Vb-EgI"/>
                 <outlet property="borderView" destination="1lJ-vJ-aCT" id="vEL-ld-RdJ"/>
                 <outlet property="contentBottomView" destination="JR1-oY-z8k" id="mHx-8u-4sc"/>
                 <outlet property="contentTopView" destination="5fV-zY-aHB" id="2Rp-fW-JPD"/>
@@ -207,6 +235,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="cell_banner_placeholder" width="318" height="60"/>
         <image name="download_green" width="22" height="22"/>
         <image name="info_blue" width="22" height="22"/>
         <image name="vertical_line_grey" width="1" height="30"/>

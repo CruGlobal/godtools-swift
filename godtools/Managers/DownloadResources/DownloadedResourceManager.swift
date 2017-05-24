@@ -26,6 +26,7 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(TranslationResource.self)
         serializer.registerResource(PageResource.self)
         serializer.registerResource(LanguageResource.self)
+        serializer.registerResource(AttachmentResource.self)
     }
     
     func loadFromDisk() -> [DownloadedResource] {
@@ -36,7 +37,7 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<[DownloadedResource]> {
         showNetworkingIndicator()
         
-        let params = ["include": "translations,pages"]
+        let params = ["include": "translations,pages,attachments"]
         
         return issueGETRequest(params)
             .then { data -> Promise<[DownloadedResource]> in
@@ -60,7 +61,22 @@ class DownloadedResourceManager: GTDataManager {
             cachedResource.code = remoteResource.abbreviation
             cachedResource.name = remoteResource.name
             cachedResource.copyrightDescription = remoteResource.copyrightDescription
+            cachedResource.bannerRemoteId = remoteResource.bannerId
             cachedResource.totalViews = remoteResource.totalViews!.int32Value
+            
+            for remoteAttachment in (remoteResource.attachments!) {
+                let remoteAttachment = remoteAttachment as! AttachmentResource
+                let cachedAttachment = Attachment.mr_findFirstOrCreate(byAttribute: "remoteId",
+                                                                       withValue: remoteAttachment.id!,
+                                                                       in: self.context)
+                
+                cachedAttachment.sha = remoteAttachment.sha256
+                cachedAttachment.resource = cachedResource
+            }
+            
+            if cachedResource.bannerRemoteId != nil {
+                _ = BannerManager.shared.downloadFor(cachedResource)
+            }
             
             let remoteTranslations = remoteResource.latestTranslations!
             for remoteTranslationGeneric in remoteTranslations {
@@ -102,7 +118,7 @@ class DownloadedResourceManager: GTDataManager {
         
         saveToDisk()
     }
-    
+
     private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@",
                                     languageId,

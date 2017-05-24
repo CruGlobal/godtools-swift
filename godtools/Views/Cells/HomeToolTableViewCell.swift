@@ -20,6 +20,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var borderView: UIView!
     @IBOutlet weak var contentTopView: UIView!
     @IBOutlet weak var contentBottomView: UIView!
+    @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var mainContentView: UIView!
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
@@ -44,6 +45,7 @@ class HomeToolTableViewCell: UITableViewCell {
     func configure(resource: DownloadedResource,
                    primaryLanguage: Language?,
                    parallelLanguage: Language?,
+                   banner: UIImage?,
                    delegate: HomeToolTableViewCellDelegate) {
         self.resource = resource
         self.cellDelegate = delegate
@@ -61,6 +63,10 @@ class HomeToolTableViewCell: UITableViewCell {
         
         if (resource.shouldDownload) {
             setCellAsDisplayOnly()
+        }
+        
+        if banner != nil {
+            bannerImageView.image = banner
         }
     }
     
@@ -138,6 +144,11 @@ class HomeToolTableViewCell: UITableViewCell {
                                                selector: #selector(progressViewListenerShouldUpdate),
                                                name: .downloadProgressViewUpdateNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refreshBannerImage),
+                                               name: .downloadBannerCompleteNotifciation,
+                                               object: nil)
     }
     
     @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
@@ -159,5 +170,28 @@ class HomeToolTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             self.downloadProgressView.setProgress(progressFraction, animated: animated)
         }
-    }    
+    }
+    
+    @objc private func refreshBannerImage(notification: NSNotification) {
+        guard let resourceId = notification.userInfo![GTConstants.kDownloadBannerResourceIdKey] as? String else {
+            return
+        }
+        
+        if resourceId != resource!.remoteId {
+            return
+        }
+        
+        guard let bannerImage = BannerManager.shared.loadFor(resource!) else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            UIView.transition(with: self.bannerImageView,
+                              duration: 0.3,
+                              options: .transitionCrossDissolve,
+                              animations: {
+                                self.bannerImageView.image = bannerImage },
+                              completion: nil)
+        }
+    }
 }

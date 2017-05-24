@@ -2,7 +2,7 @@
 //  Translation+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 5/19/17.
+//  Created by Ryan Carlson on 5/24/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -26,6 +26,7 @@ extension Translation {
     @NSManaged public var downloadedResource: DownloadedResource?
     @NSManaged public var language: Language?
     @NSManaged public var referencedFiles: NSSet?
+    @NSManaged public var attachments: NSSet?
 
 }
 
@@ -43,5 +44,22 @@ extension Translation {
 
     @objc(removeReferencedFiles:)
     @NSManaged public func removeFromReferencedFiles(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for attachments
+extension Translation {
+
+    @objc(addAttachmentsObject:)
+    @NSManaged public func addToAttachments(_ value: Attachment)
+
+    @objc(removeAttachmentsObject:)
+    @NSManaged public func removeFromAttachments(_ value: Attachment)
+
+    @objc(addAttachments:)
+    @NSManaged public func addToAttachments(_ values: NSSet)
+
+    @objc(removeAttachments:)
+    @NSManaged public func removeFromAttachments(_ values: NSSet)
 
 }
