@@ -10,7 +10,7 @@ import Foundation
 import CRUConfig
 
 class Config: CRUEmptyConfig {
-    let baseUrl: URL? = nil
-    let apiKey: String = ""
-    let googleAnalyticsApiKey: String = ""
+    var baseUrl: URL? = nil
+    var apiKey: String = ""
+    var googleAnalyticsApiKey: String = ""
 }
