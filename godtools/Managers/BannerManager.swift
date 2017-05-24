@@ -59,11 +59,15 @@ class BannerManager: GTDataManager {
             return nil
         }
         
-        guard let diskPathString = attachment.diskPath else {
+        if attachment.sha == nil {
             return nil
         }
         
-        return UIImage(contentsOfFile: diskPathString)
+        let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension).path
+        
+        print(path)
+        
+        return UIImage(contentsOfFile: path)
     }
 
     override func buildURLString() -> String {
@@ -86,7 +90,6 @@ class BannerManager: GTDataManager {
         do {
             try image.write(to: path)
             attachment.isBanner = true
-            attachment.diskPath = path.path
             saveToDisk()
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
