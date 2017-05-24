@@ -357,9 +357,10 @@ extension TractViewController {
     }
     
     fileprivate func getResourceData() {
-        let resource = self.tractsManager.loadResource(resource: "kgp")
-        self.xmlPages = resource.pages
-        self.colors = resource.colors
+        let language = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
+        self.xmlPages = content.pages
+        self.colors = content.colors
     }
     
     fileprivate func getPage(_ pageNumber: Int) -> XMLIndexer {

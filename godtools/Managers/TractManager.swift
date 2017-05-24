@@ -9,31 +9,45 @@
 import Foundation
 import UIKit
 import SWXMLHash
+import Crashlytics
 
-class TractManager: NSObject {
+class TractManager: GTDataManager {
 
 }
 
 extension TractManager {
     
-    func loadResource(resource: String) -> (pages: [XMLIndexer], colors: TractColors) {
-        let manifestPath = resource + "-manifest"
-        let xmlData = loadXMLFile(manifestPath)
-        let manifest = xmlData["manifest"]
-        
-        let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text)!
-        let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text)!
-        let textColorString: String = (manifest.element?.attribute(by: "text-color")?.text)!
-        
+    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLIndexer], colors: TractColors) {
         var pages = [XMLIndexer]()
-        for child in manifest.children {
+        let tractColors = TractColors()
+        
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return (pages, tractColors)
+        }
+        
+        
+        guard let manifestPath = translation.manifestFilename else {
+            return (pages, tractColors)
+        }
+        
+        
+        let xmlData = loadXMLFile(manifestPath)
+        guard let manifest = xmlData?["manifest"] else {
+            return (pages, tractColors)
+        }
+        
+        
+        let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text) ?? GTAppDefaultColors.primaryColor
+        let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text) ?? GTAppDefaultColors.primaryTextColorString
+        let textColorString: String = (manifest.element?.attribute(by: "text-color")?.text) ?? GTAppDefaultColors.textColorString
+        
+        for child in manifest["pages"].children {
             if child.element?.name == "page" {
                 let page = loadPage(child)
                 pages.append(page)
             }
         }
         
-        let tractColors = TractColors()
         tractColors.primaryColor = primaryColorString.getRGBAColor()
         tractColors.primaryTextColor = primaryTextColorString.getRGBAColor()
         tractColors.textColor = textColorString.getRGBAColor()
@@ -42,31 +56,30 @@ extension TractManager {
     }
     
     func loadPage(_ child: XMLIndexer) -> XMLIndexer{
-        let resource = child.element?.attribute(by: "id")?.text
+        let resource = child.element?.attribute(by: "src")?.text
         let page = loadXMLFile(resource!)
-        return page
+        return page!
     }
     
-    func loadXMLFile(_ resource: String) -> XMLIndexer {
+    func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
+        let file = documentsPath.appending("/Resources/").appending(resourcePath)
+        
         var xml: XMLIndexer?
-        if let filepath = Bundle.main.path(forResource: resource, ofType: "xml") {
-            do {
-                let content = try String(contentsOfFile: filepath)
-                
-                let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
-                let range = NSMakeRange(0, content.characters.count)
-                let modString = regex.stringByReplacingMatches(in: content, options: [], range: range, withTemplate: "")
-                
-                xml = SWXMLHash.parse(modString.condenseWhitespace())
-            }
-            catch {
-                // error
-            }
-        } else {
-            // error
+        do {
+            let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
+            
+            let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
+            let range = NSMakeRange(0, content.characters.count)
+            let modString = regex.stringByReplacingMatches(in: content, options: [], range: range, withTemplate: "")
+            
+            xml = SWXMLHash.parse(modString.condenseWhitespace())
+        }
+        catch {
+            Crashlytics().recordError(error,
+                                      withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
         }
         
-        return xml!
+        return xml
     }
     
 }

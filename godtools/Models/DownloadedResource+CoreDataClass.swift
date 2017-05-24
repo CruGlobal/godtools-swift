@@ -25,6 +25,12 @@ public class DownloadedResource: NSManagedObject {
             .filter({ $0.isPublished} ).count > 0
     }
     
+    func getTranslationForLanguage(_ language: Language) -> Translation? {
+        return translationsAsArray().filter({ $0.language!.remoteId == language.remoteId })
+            .filter({ $0.isDownloaded })
+            .max(by: { $0.version < $1.version })
+    }
+    
     func latestTranslationId() -> String? {
         let translationsArray = Array(translations!) as! [Translation]
         
