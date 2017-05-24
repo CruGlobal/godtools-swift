@@ -10,7 +10,7 @@ opt_out_usage
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.28.7"
+fastlane_version "2.35.0"
 
 default_platform :ios
 
@@ -233,7 +233,7 @@ platform :ios do
       end
 
       cru_instant_message(
-        message: "Build Failed because: #{exception.message}<br /><br />Check details here #{ENV['JOB_URL']}/#{ENV['BUILD_ID']}/console",
+        message: "Build Failed because: <a href=\"#{ENV['JOB_URL']}/#{ENV['BUILD_ID']}/console\">#{ENV['JOB_URL']}/#{ENV['BUILD_ID']}/console</a>",
         success: false
       )
 
