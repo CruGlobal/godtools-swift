@@ -13,6 +13,8 @@ import Crashlytics
 class BannerManager: GTDataManager {
     static let shared = BannerManager()
     
+    let path = "attachments"
+    
     class func setup() {
         _ = BannerManager.shared
     }
@@ -72,10 +74,14 @@ class BannerManager: GTDataManager {
         return UIImage(contentsOfFile: path)
     }
 
-    override func buildURLString() -> String {
-        return GTConstants.kApiBase.appending("/attachments/")
-            .appending(bannerId!)
-            .appending("/download")
+    override func buildURL() -> URL? {
+        guard let bannerID = self.bannerId else {
+            return nil
+        }
+        return Config.shared().baseUrl?
+            .appendingPathComponent(self.path)
+            .appendingPathComponent(bannerID)
+            .appendingPathComponent("download")
     }
 
     private func postCompletedNotification(resource: DownloadedResource) {
@@ -90,8 +96,9 @@ class BannerManager: GTDataManager {
         }
         
         return !FileManager.default.fileExists(atPath: bannersPath.appendingPathComponent(attachment.sha!)
-            .appendingPathExtension(defaultExtension)
-            .path)
+                                                                  .appendingPathExtension(defaultExtension)
+                                                                  .path
+        )
     }
     
     private func saveImageToDisk(_ image: Data, attachment: Attachment) {
