@@ -18,9 +18,7 @@ class TractModals: BaseTractElement {
     }
     
     override func render() -> UIView {
-        for element in self.elements! {
-            TractBindings.addBindings(element)
-        }
+        TractBindings.addBindings(self)
         return self
     }
     

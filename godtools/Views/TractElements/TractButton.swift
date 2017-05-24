@@ -145,15 +145,13 @@ class TractButton: BaseTractElement {
             self.button.titleLabel?.font = label.font
             self.button.setTitleColor(self.properties.color, for: .normal)
             self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
-            
-            TractBindings.addBindings(element)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
-                TractBindings.addBindings(element)
             }
         }
         
+        TractBindings.addBindings(self)
         return self
     }
     

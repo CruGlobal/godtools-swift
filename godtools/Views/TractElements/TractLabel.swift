@@ -73,7 +73,6 @@ class TractLabel: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
-            TractBindings.addBindings(element)
         }
         
         if !BaseTractElement.isFormElement(self) {
@@ -81,6 +80,7 @@ class TractLabel: BaseTractElement {
             buildHorizontalLine()
         }
         
+        TractBindings.addBindings(self)
         return self
     }
     

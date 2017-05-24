@@ -28,6 +28,7 @@ class TractModal: BaseTractElement {
     
     override func setupView(properties: [String: Any]) {
         loadElementProperties(properties: properties)
+        TractBindings.addBindings(self)
         
         self.frame = buildFrame()
         setupStyle()
@@ -53,6 +54,7 @@ class TractModal: BaseTractElement {
             element.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
             self.addSubview(element.render())
         }
+        
         return self
     }
     

@@ -217,8 +217,9 @@ class BaseTractElement: UIView {
     func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
-            TractBindings.addBindings(element)
         }
+        
+        TractBindings.addBindings(self)
         return self
     }
     

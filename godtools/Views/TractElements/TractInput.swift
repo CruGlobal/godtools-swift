@@ -107,7 +107,6 @@ class TractInput: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
-            TractBindings.addBindings(element)
         }
         
         self.textField.frame = CGRect(x: self.textViewXPosition,
@@ -116,6 +115,7 @@ class TractInput: BaseTractElement {
                                       height: self.textViewHeight)
         self.addSubview(self.textField)
         
+        TractBindings.addBindings(self)
         return self
     }
     

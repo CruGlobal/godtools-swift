@@ -149,12 +149,13 @@ class TractCard: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.containerView.addSubview(element.render())
-            TractBindings.addBindings(element)
         }
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)
         self.addSubview(self.scrollView)
         setupTransparentView()
+        
+        TractBindings.addBindings(self)
         return self
     }
     
