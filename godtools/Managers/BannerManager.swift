@@ -65,15 +65,17 @@ class BannerManager: GTDataManager {
             return nil
         }
         
-        let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension).path
-        
-        print(path)
+        let path = bannersPath.appendingPathComponent(attachment.sha!)
+            .appendingPathExtension(defaultExtension)
+            .path
         
         return UIImage(contentsOfFile: path)
     }
 
     override func buildURLString() -> String {
-        return GTConstants.kApiBase.appending("/attachments/").appending(bannerId!).appending("/download")
+        return GTConstants.kApiBase.appending("/attachments/")
+            .appending(bannerId!)
+            .appending("/download")
     }
 
     private func postCompletedNotification(resource: DownloadedResource) {
