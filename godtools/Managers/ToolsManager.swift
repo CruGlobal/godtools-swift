@@ -37,6 +37,10 @@ class ToolsManager: GTDataManager {
         }
     }
     
+    func hasResources() -> Bool {
+        return resources != nil && resources!.count > 0
+    }
+    
     func download(resource: DownloadedResource) {
         resource.shouldDownload = true
         saveToDisk()

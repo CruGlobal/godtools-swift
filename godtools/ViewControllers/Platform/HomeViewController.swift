@@ -44,16 +44,7 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.toolsManager.delegate = self
-        self.tableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        reloadView()
     }
     
     // Notifications
@@ -65,7 +56,7 @@ class HomeViewController: BaseViewController {
                                                object: nil)
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reloadTableData),
+                                               selector: #selector(reloadView),
                                                name: .initialAppStateCleanupCompleted,
                                                object: nil)
     }
@@ -74,10 +65,15 @@ class HomeViewController: BaseViewController {
         self.delegate?.moveToUpdateLanguageSettings()
     }
     
-    @objc private func reloadTableData() {
-        self.toolsManager.delegate = self
+    @objc private func reloadView() {
+        toolsManager.delegate = self
+        
+        emptyStateView.isHidden = toolsManager.hasResources()
+        normalStateView.isHidden = !toolsManager.hasResources()
+
         tableView.reloadData()
     }
+    
     // MARK: - Actions
     
     @IBAction func pressAddNewToolsButton(_ sender: Any) {
