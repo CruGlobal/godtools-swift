@@ -10,6 +10,10 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
+    // MARK: Positions constants
+    
+    static let modalMarginConstant: CGFloat = 50.0
+    
     // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
@@ -60,16 +64,28 @@ class TractButton: BaseTractElement {
     override func setupView(properties: [String: Any]) {
         loadStyles()
         loadElementProperties(properties: properties)
-        self.height = self.properties.height
         
         self.button = GTButton()
-        button.cornerRadius = self.properties.cornerRadius
-        button.backgroundColor = self.properties.backgroundColor
+        if BaseTractElement.isModalElement(self) {
+            self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
+            self.button.designAsTractModalButton()
+            
+            self.frame = buildFrame()
+            self.button.frame = CGRect(x: self.buttonXPosition,
+                                       y: TractButton.modalMarginConstant,
+                                       width: self.buttonWidth,
+                                       height: self.properties.height)
+        } else {
+            self.height = self.properties.height
+            button.cornerRadius = self.properties.cornerRadius
+            button.backgroundColor = self.properties.backgroundColor
+            
+            self.frame = buildFrame()
+            self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.height)
+        }
         
         self.addTargetToButton()
         
-        self.frame = buildFrame()
-        self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.frame.size.height)
         self.addSubview(self.button)
     }
     

@@ -90,7 +90,6 @@
                 <content:text i18n-id="{{uuid}}">Thank You
                 </content:text>
             </title>
-            
             <paragraph>
                 <content:text i18n-id="{{uuid}}">Check your email soon for your first study in following Jesus Christ.
                 </content:text>

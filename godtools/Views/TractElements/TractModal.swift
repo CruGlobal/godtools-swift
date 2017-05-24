@@ -10,6 +10,10 @@ import UIKit
 
 class TractModal: BaseTractElement {
     
+    // MARK: Positions constants
+    
+    static let contentWidth: CGFloat = 275.0
+    
     // MARK: - Positions and Sizes
     
     override func yEndPosition() -> CGFloat {
@@ -30,7 +34,7 @@ class TractModal: BaseTractElement {
     }
     
     func setupStyle() {
-        self.backgroundColor = .gtBlack
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
     override func getListener() -> String {
@@ -38,7 +42,15 @@ class TractModal: BaseTractElement {
     }
     
     override func render() -> UIView {
+        let modalHeight = UIApplication.shared.keyWindow?.frame.size.height
+        let startYPosition = (modalHeight! - self.height) / CGFloat(2)
+        
         for element in self.elements! {
+            let xPosition = element.frame.origin.x
+            let yPosition = element.frame.origin.y + startYPosition
+            let width = element.frame.size.width
+            let height = element.frame.size.height
+            element.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
             self.addSubview(element.render())
         }
         return self

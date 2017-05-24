@@ -18,7 +18,11 @@ class TractParagraph: BaseTractElement {
     // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
-        return CGFloat(0.0)
+        if BaseTractElement.isModalElement(self) {
+            return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
+        } else {
+            return CGFloat(0)
+        }
     }
     
     var yPosition: CGFloat {
@@ -26,7 +30,11 @@ class TractParagraph: BaseTractElement {
     }
     
     override var width: CGFloat {
-        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
+        if BaseTractElement.isModalElement(self) {
+            return TractModal.contentWidth
+        } else {
+            return self.parent!.width - (self.xPosition * CGFloat(2))
+        }
     }
     
     override func yEndPosition() -> CGFloat {
@@ -43,14 +51,23 @@ class TractParagraph: BaseTractElement {
         let textStyle = super.textStyle()
         
         var xMargin = BaseTractElement.xMargin
-        if BaseTractElement.isCardElement(self) {
-            xMargin = TractCard.xPaddingConstant
-        }
         
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.width
-        textStyle.xMargin = xMargin
-        textStyle.color = self.textColor
+        if BaseTractElement.isModalElement(self) {
+            textStyle.font = .gtRegular(size: 18.0)
+            textStyle.width = self.width
+            textStyle.xMargin = xMargin
+            textStyle.color = .gtWhite
+            textStyle.align = .center
+        } else {
+            if BaseTractElement.isCardElement(self) {
+                xMargin = TractCard.xPaddingConstant
+            }
+            
+            textStyle.font = .gtRegular(size: 18.0)
+            textStyle.width = self.width
+            textStyle.xMargin = xMargin
+            textStyle.color = self.textColor
+        }
         
         return textStyle
     }
