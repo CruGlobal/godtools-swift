@@ -63,6 +63,10 @@ class DownloadedResourceManager: GTDataManager {
             cachedResource.bannerRemoteId = remoteResource.bannerId
             cachedResource.totalViews = remoteResource.totalViews!.int32Value
             
+            if cachedResource.bannerRemoteId != nil {
+                _ = BannerManager.shared.downloadFor(cachedResource)
+            }
+            
             let remoteTranslations = remoteResource.latestTranslations!
             for remoteTranslationGeneric in remoteTranslations {
                 let remoteTranslation = remoteTranslationGeneric as! TranslationResource

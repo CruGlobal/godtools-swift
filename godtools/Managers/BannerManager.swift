@@ -23,7 +23,7 @@ class BannerManager: GTDataManager {
         createBannersDirectoryIfNecessary()
     }
     
-    let defaultExtension = ".png"
+    let defaultExtension = "png"
     var bannerId: String?
     
     func downloadFor(_ resource: DownloadedResource) -> Promise<UIImage?> {
@@ -53,7 +53,7 @@ class BannerManager: GTDataManager {
     }
     
     override func buildURLString() -> String {
-        return GTConstants.kApiBase.appending("/attachments/").appending(bannerId!)
+        return GTConstants.kApiBase.appending("/attachments/").appending(bannerId!).appending("/download")
     }
     
     private func saveImageToDisk(_ image: Data) {
