@@ -37,6 +37,13 @@ class TractModal: BaseTractElement {
         return self.properties.listener != nil ? self.properties.listener! : ""
     }
     
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
+        return self
+    }
+    
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
@@ -50,6 +57,8 @@ class TractModal: BaseTractElement {
     }
     
     override func receiveMessage() {
+        _ = render()
+        
         let currentWindow = UIApplication.shared.keyWindow
         currentWindow?.addSubview(self)
         
