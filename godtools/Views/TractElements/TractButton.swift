@@ -132,7 +132,7 @@ class TractButton: BaseTractElement {
     func buttonTarget() {
         let values = self.properties.value!.components(separatedBy: ",")
         for value in values {
-            sendMessageToView(tag: value)
+            sendMessageToElement(tag: value)
         }
     }
     
@@ -146,11 +146,11 @@ class TractButton: BaseTractElement {
             self.button.setTitleColor(self.properties.color, for: .normal)
             self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
             
-            addBindings(element)
+            TractBindings.addBindings(element)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
-                addBindings(element)
+                TractBindings.addBindings(element)
             }
         }
         

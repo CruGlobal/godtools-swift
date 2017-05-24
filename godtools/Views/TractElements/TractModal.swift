@@ -37,7 +37,7 @@ class TractModal: BaseTractElement {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
-    override func getListener() -> String {
+    override func elementListener() -> String {
         return self.properties.listener != nil ? self.properties.listener! : ""
     }
     

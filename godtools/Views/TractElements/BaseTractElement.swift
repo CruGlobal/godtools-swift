@@ -126,7 +126,6 @@ class BaseTractElement: UIView {
         self.maxHeight = height
         self.colors = colors
         self.tractConfigurations = configurations
-        setupBindings()
         
         if data.element?.attribute(by: "background-image") != nil {
             self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
@@ -218,13 +217,9 @@ class BaseTractElement: UIView {
     func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
-            addBindings(element)
+            TractBindings.addBindings(element)
         }
         return self
-    }
-    
-    func getListener() -> String {
-        return ""
     }
     
     // MARK: - Style properties

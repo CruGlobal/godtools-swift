@@ -95,7 +95,7 @@ class TractCard: BaseTractElement {
         }
     }
     
-    override func getListener() -> String {
+    override func elementListener() -> String {
         return self.properties.listener != nil ? self.properties.listener! : ""
     }
     
@@ -149,7 +149,7 @@ class TractCard: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.containerView.addSubview(element.render())
-            addBindings(element)
+            TractBindings.addBindings(element)
         }
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)

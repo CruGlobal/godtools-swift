@@ -73,7 +73,7 @@ class TractLabel: BaseTractElement {
     override func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
-            addBindings(element)
+            TractBindings.addBindings(element)
         }
         
         if !BaseTractElement.isFormElement(self) {

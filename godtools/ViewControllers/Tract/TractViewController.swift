@@ -37,6 +37,7 @@ class TractViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TractBindings.setupBindings()
         getResourceData()
         setupSwipeGestures()
         defineObservers()
