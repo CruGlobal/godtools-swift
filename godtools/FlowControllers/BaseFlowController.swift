@@ -11,6 +11,7 @@ import UIKit
 class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
     var currentViewController: UIViewController?
+    var shouldRemoveMenu = false
     
     init(window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
         super.init()
@@ -86,6 +87,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                         dst.view.transform = CGAffineTransform(translationX: 0, y: 64) },
                        completion: { finished in
                         navigationController?.pushViewController(dst, animated: false) } )
+        
+        self.shouldRemoveMenu = true
     }
     
     func dismissMenu() {
@@ -105,6 +108,14 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                         dst?.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
                         _ = navigationController?.popViewController(animated: false) } )
+        
+        self.shouldRemoveMenu = false
+    }
+    
+    func removeMenuViewController() {
+        let menuPosition = (self.currentViewController?.navigationController?.viewControllers.count)! - 2
+        self.currentViewController?.navigationController?.viewControllers.remove(at: menuPosition)
+        self.shouldRemoveMenu = false
     }
     
 }
@@ -128,6 +139,10 @@ extension BaseFlowController: MenuViewControllerDelegate {
         let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
+        
+        if self.shouldRemoveMenu {
+            removeMenuViewController()
+        }
     }
 }
 
