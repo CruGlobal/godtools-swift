@@ -85,6 +85,7 @@
 		0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */; };
 		0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */; };
 		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
+		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
 		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
@@ -116,12 +117,12 @@
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
-		684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684328F31EB7CF66005E9131 /* godtoolsTests.swift */; };
-		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
 		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
 		4FF646341ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */; };
 		4FF646351ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */; };
+		684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684328F31EB7CF66005E9131 /* godtoolsTests.swift */; };
+		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,6 +214,7 @@
 		0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguagesTableViewController.xib; sourceTree = "<group>"; };
 		0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTUIExtensions.swift; sourceTree = "<group>"; };
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
+		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultColors.swift; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -246,16 +248,16 @@
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
+		4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstLaunchInitializer.swift; path = Managers/FirstLaunchInitializer.swift; sourceTree = "<group>"; };
+		4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationFileRemover.swift; path = Managers/TranslationFileRemover.swift; sourceTree = "<group>"; };
+		4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataClass.swift"; path = "Models/ReferencedFile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataProperties.swift"; path = "Models/ReferencedFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		684328EB1EB7C7F4005E9131 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		684328F11EB7CF66005E9131 /* godtoolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		684328F31EB7CF66005E9131 /* godtoolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsTests.swift; sourceTree = "<group>"; };
 		684328F51EB7CF66005E9131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68EE51D71EBBA1E400596250 /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = SOURCE_ROOT; };
 		833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstLaunchInitializer.swift; path = Managers/FirstLaunchInitializer.swift; sourceTree = "<group>"; };
-		4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationFileRemover.swift; path = Managers/TranslationFileRemover.swift; sourceTree = "<group>"; };
-		4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataClass.swift"; path = "Models/ReferencedFile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ReferencedFile+CoreDataProperties.swift"; path = "Models/ReferencedFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -566,6 +568,7 @@
 				0FB73E741EA906A7000BA60D /* GTConstants.swift */,
 				0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */,
 				4F8048041EB3A2FB00943DFF /* GTSettings.swift */,
+				0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1006,6 +1009,7 @@
 				0F85C78F1ECC992100023723 /* TractTextFieldProperties.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
+				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				0F806C6B1EB3E6C300F3ED2B /* TractTitle.swift in Sources */,
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,

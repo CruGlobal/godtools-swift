@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import SWXMLHash
+import Crashlytics
 
-class TractManager: NSObject {
+class TractManager: GTDataManager {
 
 }
 
@@ -20,31 +21,36 @@ extension TractManager {
         var pages = [XMLIndexer]()
         let tractColors = TractColors()
         
-        let translation = resource.getTranslationForLanguage(language)
-        if translation != nil {
-            let manifestPath = translation?.manifestFilename
-            if manifestPath != nil {
-                let xmlData = loadXMLFile(manifestPath!)
-                let manifest = xmlData?["manifest"]
-                
-                if manifest != nil {
-                    let primaryColorString: String = (manifest!.element?.attribute(by: "primary-color")?.text) ?? "rgba(59, 164, 219, 1)"
-                    let primaryTextColorString: String = (manifest!.element?.attribute(by: "primary-text-color")?.text) ?? "rgba(59, 164, 219, 1)"
-                    let textColorString: String = (manifest!.element?.attribute(by: "text-color")?.text) ?? "rgba(90, 90, 90, 1)"
-                    
-                    for child in manifest!["pages"].children {
-                        if child.element?.name == "page" {
-                            let page = loadPage(child)
-                            pages.append(page)
-                        }
-                    }
-                    
-                    tractColors.primaryColor = primaryColorString.getRGBAColor()
-                    tractColors.primaryTextColor = primaryTextColorString.getRGBAColor()
-                    tractColors.textColor = textColorString.getRGBAColor()
-                }
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return (pages, tractColors)
+        }
+        
+        
+        guard let manifestPath = translation.manifestFilename else {
+            return (pages, tractColors)
+        }
+        
+        
+        let xmlData = loadXMLFile(manifestPath)
+        guard let manifest = xmlData?["manifest"] else {
+            return (pages, tractColors)
+        }
+        
+        
+        let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text) ?? GTAppDefaultColors.primaryColor
+        let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text) ?? GTAppDefaultColors.primaryTextColorString
+        let textColorString: String = (manifest.element?.attribute(by: "text-color")?.text) ?? GTAppDefaultColors.textColorString
+        
+        for child in manifest["pages"].children {
+            if child.element?.name == "page" {
+                let page = loadPage(child)
+                pages.append(page)
             }
         }
+        
+        tractColors.primaryColor = primaryColorString.getRGBAColor()
+        tractColors.primaryTextColor = primaryTextColorString.getRGBAColor()
+        tractColors.textColor = textColorString.getRGBAColor()
         
         return (pages, tractColors)
     }
@@ -56,7 +62,6 @@ extension TractManager {
     }
     
     func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let file = documentsPath.appending("/Resources/").appending(resourcePath)
         
         var xml: XMLIndexer?
@@ -70,7 +75,8 @@ extension TractManager {
             xml = SWXMLHash.parse(modString.condenseWhitespace())
         }
         catch {
-            print("error getting xml string: \(error)")
+            Crashlytics().recordError(error,
+                                      withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
         }
         
         return xml
