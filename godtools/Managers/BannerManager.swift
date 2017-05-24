@@ -79,7 +79,7 @@ class BannerManager: GTDataManager {
             return true
         }
         
-        return FileManager.default.fileExists(atPath: bannersPath.appendingPathComponent(attachment.sha!)
+        return !FileManager.default.fileExists(atPath: bannersPath.appendingPathComponent(attachment.sha!)
             .appendingPathExtension(defaultExtension)
             .path)
     }
