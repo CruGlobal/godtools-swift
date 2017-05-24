@@ -15,13 +15,15 @@ import CoreData
 class GTDataManager: NSObject {
     let documentsPath: String
     let resourcesPath: String
+    let bannersPath: URL
     
     let serializer = Serializer()
     let context = NSManagedObjectContext.mr_default()
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        resourcesPath = "\(documentsPath)/Resources"
+        resourcesPath = documentsPath.appending("/").appending("Resources")
+        bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
         
         super.init()
     }

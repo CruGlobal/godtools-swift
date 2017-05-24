@@ -116,6 +116,7 @@
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
+		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
 		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
@@ -247,6 +248,7 @@
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
+		4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BannerManager.swift; path = Managers/BannerManager.swift; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
 		4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstLaunchInitializer.swift; path = Managers/FirstLaunchInitializer.swift; sourceTree = "<group>"; };
 		4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationFileRemover.swift; path = Managers/TranslationFileRemover.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				4F855F091EC3907300B42146 /* TranslationZipImporter.swift */,
 				4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */,
 				4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */,
+				4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -996,6 +999,7 @@
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				0F7741DC1EBB8AFC00888D20 /* TractHeaderAnimations.swift in Sources */,
+				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				0F85C7981ECCAC2400023723 /* TractCardActions.swift in Sources */,
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
 				4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */,
