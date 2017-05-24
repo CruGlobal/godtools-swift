@@ -13,6 +13,16 @@ import Crashlytics
 class BannerManager: GTDataManager {
     static let shared = BannerManager()
     
+    class func setup() {
+        _ = BannerManager.shared
+    }
+    
+    private override init() {
+        super.init()
+        
+        createBannersDirectoryIfNecessary()
+    }
+    
     let defaultExtension = ".png"
     var bannerId: String?
     
