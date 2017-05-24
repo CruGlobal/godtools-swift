@@ -30,7 +30,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(language: Language) {
-        addTranslationsToQueue(Array(language.translations!) as! [Translation])
+        addTranslationsToQueue(language.translationsAsArray())
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -38,7 +38,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(resource: DownloadedResource) {
-        addTranslationsToQueue(Array(resource.translations!) as! [Translation])
+        addTranslationsToQueue(resource.translationsAsArray())
         
         if !isProcessingQueue {
             processDownloadQueue()
