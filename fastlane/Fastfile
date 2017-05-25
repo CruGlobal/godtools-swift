@@ -98,7 +98,9 @@ platform :ios do
     update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools.beta")
 
     clean_build_artifacts
-    commit_version_bump(xcodeproj: "godtools.xcodeproj", message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}")
+    commit_version_bump(xcodeproj: "godtools.xcodeproj",
+                        message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}",
+                        force: true)
     add_git_tag
     push_to_git_remote(local_branch: ENV['GIT_BRANCH'] || git_branch)
 
@@ -188,7 +190,8 @@ platform :ios do
     clean_build_artifacts
     version = get_version_number(xcodeproj: "godtools.xcodeproj")
     commit_version_bump(xcodeproj: "godtools.xcodeproj",
-                        message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}")
+                        message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}",
+                        force: true)
     add_git_tag(grouping: 'release', build_number: version)
     push_to_git_remote(local_branch: ENV['GIT_BRANCH'] || git_branch)
 
