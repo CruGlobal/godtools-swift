@@ -17,6 +17,7 @@ target 'godtools' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Spine', :git => 'https://github.com/CruGlobal/Spine.git', :tag => '0.3.1'
+  pod 'CRUConfig', '~> 1.2'
 
   target 'godtoolsTests' do
     inherit! :search_paths

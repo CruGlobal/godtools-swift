@@ -135,7 +135,8 @@ class DownloadedResourceManager: GTDataManager {
         return latestTranslation == nil || version > latestTranslation!.version
     }
     
-    override func buildURLString() -> String {
-        return "\(GTConstants.kApiBase)/\(self.path)"
+    override func buildURL() -> URL? {
+        return Config.shared().baseUrl?
+                              .appendingPathComponent(self.path)
     }
 }

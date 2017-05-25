@@ -15,6 +15,8 @@ import Crashlytics
 class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
     
+    let path = "translations"
+    
     class func setup() {
         _ = TranslationZipImporter.shared
     }
@@ -143,7 +145,7 @@ class TranslationZipImporter: GTDataManager {
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
         let translationId = translation.remoteId!
         
-        return Alamofire.request(buildURLString(translationId: translationId))
+        return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
                 if !translation.language!.isPrimary() {
                     return
@@ -216,8 +218,10 @@ class TranslationZipImporter: GTDataManager {
         return translationId.appending(".zip")
     }
     
-    private func buildURLString(translationId: String) -> String {
-        return GTConstants.kApiBase.appending("/translations/").appending(translationId)
+    private func buildURL(translationId: String) -> URL? {
+        return Config.shared().baseUrl?
+                              .appendingPathComponent(self.path)
+                              .appendingPathComponent(translationId)
     }
     
     private func primaryDownloadComplete(translation: Translation) {

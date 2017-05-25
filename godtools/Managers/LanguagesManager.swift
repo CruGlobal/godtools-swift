@@ -16,7 +16,7 @@ import MagicalRecord
 class LanguagesManager: GTDataManager {
     static let shared = LanguagesManager()
     
-    let path = "/languages"
+    let path = "languages"
     
     var languages = [Language]()
     var selectingPrimaryLanguage = true
@@ -118,8 +118,9 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    override func buildURLString() -> String {
-        return "\(GTConstants.kApiBase)\(path)"
+    override func buildURL() -> URL? {
+        return Config.shared().baseUrl?
+                              .appendingPathComponent(self.path)
     }
 }
 
