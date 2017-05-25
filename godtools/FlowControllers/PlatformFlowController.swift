@@ -8,8 +8,7 @@
 
 import UIKit
 
-class PlatformFlowController: BaseFlowController, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate,
-HomeViewControllerDelegate, AddToolsViewControllerDelegate {
+class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
         let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
@@ -18,13 +17,7 @@ HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     }
     
     // MARK: - HomeViewControllerDelegate
-    
-    func moveToUpdateLanguageSettings() {
-        let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
-        viewController.delegate = self
-        self.pushViewController(viewController: viewController)
-    }
-    
+        
     func moveToAddNewTool() {
         let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
         viewController.delegate = self
@@ -42,16 +35,4 @@ HomeViewControllerDelegate, AddToolsViewControllerDelegate {
         viewController.resource = resource
         pushViewController(viewController: viewController)
     }
-    
-    // MARK: - GTLanguageSettingsViewControllerDelegate
-    
-    func moveToLanguagesList(primaryLanguage: Bool) {
-        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
-        viewController.delegate = self
-        viewController.selectingPrimaryLanguage(primaryLanguage)
-        self.pushViewController(viewController: viewController)
-    }
-    
-    // MARK: - GTLanguagesTableViewControllerDelegate
-    
 }

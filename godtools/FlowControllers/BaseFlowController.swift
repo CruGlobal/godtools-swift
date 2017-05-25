@@ -69,6 +69,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
     func displayMenu() {
         let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
+        menuViewController.delegate = self
+        
         let navigationController = self.currentViewController?.navigationController
         let src = self.currentViewController
         let dst = menuViewController
@@ -109,6 +111,11 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
 
 extension BaseFlowController: BaseViewControllerDelegate {
     
+    func goHome() {
+        _ = self.currentViewController?.navigationController?.popToRootViewController(animated: true)
+        resetNavigationControllerColorToDefault()
+    }
+    
     func goBack() {
         _ = self.currentViewController?.navigationController?.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
@@ -118,5 +125,26 @@ extension BaseFlowController: BaseViewControllerDelegate {
         let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
         configureNavigationColor(navigationController: navigationController, color: color)
     }
+    
+}
+
+extension BaseFlowController: MenuViewControllerDelegate {
+    func moveToUpdateLanguageSettings() {
+        let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
+    }
+}
+
+extension BaseFlowController: LanguageSettingsViewControllerDelegate {
+    func moveToLanguagesList(primaryLanguage: Bool) {
+        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
+        viewController.delegate = self
+        viewController.selectingPrimaryLanguage(primaryLanguage)
+        self.pushViewController(viewController: viewController)
+    }
+}
+
+extension BaseFlowController: LanguagesTableViewControllerDelegate {
     
 }

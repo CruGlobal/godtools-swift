@@ -288,7 +288,7 @@ class TractViewController: BaseViewController {
     
     override func homeButtonAction() {
         removeViewsBeforeCurrentView()
-        self.baseDelegate?.goBack()
+        super.homeButtonAction()
     }
     
     override func shareButtonAction() {
