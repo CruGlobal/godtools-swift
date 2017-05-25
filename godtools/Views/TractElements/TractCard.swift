@@ -23,6 +23,7 @@ class TractCard: BaseTractElement {
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
+    static let shadowPaddingConstant: CGFloat = 2.0
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 80.0
     static let xPaddingConstant: CGFloat = 28.0
@@ -42,6 +43,10 @@ class TractCard: BaseTractElement {
     
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
+    }
+    
+    var contentWidth: CGFloat {
+        return self.width - (TractCard.shadowPaddingConstant * CGFloat(2))
     }
     
     var externalHeight: CGFloat {
@@ -64,9 +69,9 @@ class TractCard: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractCardProperties()
+    var shadowView = UIView()
     let scrollView = UIScrollView()
     let containerView = UIView()
-    var shadowView = UIView()
     var cardState = CardState.preview
     var cardNumber = 0
     var cardsParentView: TractCards {
@@ -100,14 +105,17 @@ class TractCard: BaseTractElement {
     }
     
     func setupScrollView() {
+        let height = self.bounds.size.height
+        let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
+        
         let contentHeight = self.internalHeight
-        self.scrollView.contentSize = CGSize(width: self.width, height: contentHeight)
-        self.scrollView.frame = self.bounds
+        self.scrollView.contentSize = CGSize(width: self.contentWidth, height: contentHeight)
+        self.scrollView.frame = scrollViewFrame
         self.scrollView.delegate = self
         self.scrollView.backgroundColor = .gtWhite
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
-                                          width: self.width,
+                                          width: self.contentWidth,
                                           height: contentHeight)
         self.containerView.backgroundColor = .clear
     }
@@ -130,13 +138,8 @@ class TractCard: BaseTractElement {
     }
     
     func setBordersAndShadows() {
-        let layer = self.scrollView.layer
-        layer.cornerRadius = 5.0
-        layer.masksToBounds = true
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.gtGreyLight.cgColor
-        
         self.shadowView.frame = self.bounds
+        self.shadowView.backgroundColor = .white
         let shadowLayer = self.shadowView.layer
         shadowLayer.cornerRadius = 3.0
         shadowLayer.shadowColor = UIColor.black.cgColor
