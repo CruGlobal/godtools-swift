@@ -54,8 +54,8 @@ class TractCard: BaseTractElement {
     }
     
     var internalHeight: CGFloat {
-        let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
-        return internalHeight + TractCard.contentBottomPadding
+        let internalHeight = self.height > self.externalHeight ? self.height + TractCard.contentBottomPadding : self.externalHeight
+        return internalHeight
     }
     
     var translationY: CGFloat {
