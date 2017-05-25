@@ -14,18 +14,29 @@ class BaseTractView: UIView {
     
     var data: XMLIndexer?
     var colors: TractColors?
-    var configurations = TractConfigurations()
+    var configurations: TractConfigurations?
     var contentView: TractRoot?
     
-    override func layoutSubviews() {
-        let height = self.frame.size.height
-        backgroundColor = .gtWhite
+    init(frame: CGRect, data: XMLIndexer, colors: TractColors, configurations: TractConfigurations) {
+        super.init(frame: frame)
         
-        self.contentView = TractRoot(startWithData: self.data!["page"],
+        self.data = data
+        self.colors = colors
+        self.configurations = configurations
+        
+        let height = self.frame.size.height
+        self.contentView = TractRoot(startWithData: self.data!,
                                      withMaxHeight: height,
                                      colors: self.colors!,
-                                     configurations: self.configurations)
-        
+                                     configurations: self.configurations!)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        backgroundColor = .gtWhite        
         self.addSubview(self.contentView!.render())
     }
     
