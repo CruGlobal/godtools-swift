@@ -85,6 +85,7 @@ class BaseViewController: UIViewController {
     }
     
     func configureNavigationButtons() {
+        
     }
     
     func addEmptyLeftButton() {
