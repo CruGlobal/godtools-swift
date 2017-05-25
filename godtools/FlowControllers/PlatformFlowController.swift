@@ -17,11 +17,7 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
     }
     
     // MARK: - HomeViewControllerDelegate
-    
-    override func moveToUpdateLanguageSettings() {
-        super.moveToUpdateLanguageSettings()
-    }
-    
+        
     func moveToAddNewTool() {
         let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
         viewController.delegate = self
