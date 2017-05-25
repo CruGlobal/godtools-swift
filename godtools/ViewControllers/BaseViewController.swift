@@ -10,6 +10,7 @@ import UIKit
 
 protocol BaseViewControllerDelegate {
     mutating func goBack()
+    mutating func goHome()
     mutating func changeNavigationBarColor(_ color: UIColor)
 }
 
@@ -144,6 +145,7 @@ class BaseViewController: UIViewController {
     }
     
     func homeButtonAction() {
+        baseDelegate?.goHome()
     }
     
     func shareButtonAction() {

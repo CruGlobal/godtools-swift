@@ -37,10 +37,6 @@ class LanguageSettingsViewController: BaseViewController {
         addHomeButton()
     }
     
-    override func homeButtonAction() {
-        baseDelegate?.goBack()
-    }
-    
     private func setupPrimaryLanguageButton() {
         let primaryLanguage = self.languagesManager.loadPrimaryLanguageFromDisk()
         let title = primaryLanguage != nil ? primaryLanguage!.localizedName() : "select_primary_language".localized

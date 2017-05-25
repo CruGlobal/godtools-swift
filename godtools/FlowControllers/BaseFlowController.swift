@@ -122,6 +122,11 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
 
 extension BaseFlowController: BaseViewControllerDelegate {
     
+    func goHome() {
+        _ = self.currentViewController?.navigationController?.popToRootViewController(animated: true)
+        resetNavigationControllerColorToDefault()
+    }
+    
     func goBack() {
         _ = self.currentViewController?.navigationController?.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
