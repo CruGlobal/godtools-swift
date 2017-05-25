@@ -68,7 +68,7 @@ platform :ios do
       clear_derived_data
     end
 
-    scan(workspace: "godtools.xcworkspace", scheme: "godtools", code_coverage: true)
+    scan(workspace: "godtools.xcworkspace", scheme: "godtools", code_coverage: true, devices: ["iPhone 7"])
     xcov(workspace: "godtools.xcworkspace", scheme: "godtools", only_project_targets: true)
 
   end
