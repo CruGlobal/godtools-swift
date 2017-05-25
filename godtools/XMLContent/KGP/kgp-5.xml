@@ -99,7 +99,7 @@
                 </content:text>
             </paragraph>
             <paragraph>
-                <content:button type="event" value="kgp-6">
+                <content:button type="event" value="kgp-6,send-information-modal">
                     <content:text i18n-id="{{uuid}}">
                         Done
                     </content:text>

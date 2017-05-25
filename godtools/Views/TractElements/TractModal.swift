@@ -23,6 +23,7 @@ class TractModal: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractModalProperties()
+    var modalOpen = false
     
     // MARK: - Setup
     
@@ -71,17 +72,34 @@ class TractModal: BaseTractElement {
     }
     
     override func receiveMessage() {
-        _ = render()
+        if self.modalOpen {
+            for view in self.subviews {
+                view.removeFromSuperview()
+            }
+            
+            self.alpha = CGFloat(0.0)
+            UIView.animate(withDuration: 0.35,
+                           delay: 0.0,
+                           options: UIViewAnimationOptions.curveEaseInOut,
+                           animations: { self.alpha = CGFloat(0.0) },
+                           completion: nil )
+            
+            self.removeFromSuperview()
+        } else {
+            _ = render()
+            
+            let currentWindow = UIApplication.shared.keyWindow
+            currentWindow?.addSubview(self)
+            
+            self.alpha = CGFloat(0.0)
+            UIView.animate(withDuration: 0.35,
+                           delay: 0.0,
+                           options: UIViewAnimationOptions.curveEaseInOut,
+                           animations: { self.alpha = CGFloat(1.0) },
+                           completion: nil )
+        }
         
-        let currentWindow = UIApplication.shared.keyWindow
-        currentWindow?.addSubview(self)
-        
-        self.alpha = CGFloat(0.0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { self.alpha = CGFloat(1.0) },
-                       completion: nil )
+        self.modalOpen = !self.modalOpen
     }
     
     fileprivate func buildFrame() -> CGRect {
