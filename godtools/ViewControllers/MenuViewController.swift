@@ -155,6 +155,8 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController {
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
-        delegate?.moveToUpdateLanguageSettings()
+        if rowIndex == 0 {
+            delegate?.moveToUpdateLanguageSettings()
+        }
     }
 }
