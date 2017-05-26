@@ -162,23 +162,7 @@ class TractCard: BaseTractElement {
     // MARK: - Actions
     
     func didTapOnCard() {
-        switch self.cardState {
-        case .preview:
-            showCardAndPreviousCards()
-        case .open:
-            hideCard()
-        case .close:
-            showCardAndPreviousCards()
-        case .enable:
-            hideCard()
-        default: break
-        }
-    }
-    
-    override func receiveMessage() {
-        if self.cardState == .hidden {
-            showCard()
-        }
+        processCardWithState()
     }
     
     // MARK: - Helpers
