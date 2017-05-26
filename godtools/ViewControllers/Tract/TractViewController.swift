@@ -322,13 +322,11 @@ extension TractViewController {
     }
     
     fileprivate func parallelLanguageIsAvailable() -> Bool {
-        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
-        
-        if parallelLanguage == nil {
+        guard let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk() else {
             return false
         }
         
-        return resource!.isAvailableInLanguage(parallelLanguage!)
+        return resource!.isAvailableInLanguage(parallelLanguage)
     }
     
     fileprivate func languageSegmentedControl() -> UISegmentedControl {
