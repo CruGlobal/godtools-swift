@@ -315,10 +315,8 @@ extension TractViewController {
     
     fileprivate func currentTractTitle() -> String {
         let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
-        if primaryLanguage != nil && resource!.isAvailableInLanguage(primaryLanguage) {
-            return resource?.getTranslationForLanguage(primaryLanguage!)?.localizedName ?? resource!.name!
-        }
-        return resource!.name!
+        
+        return resource!.localizedName(language: primaryLanguage)
     }
     
     fileprivate func parallelLanguageIsAvailable() -> Bool {

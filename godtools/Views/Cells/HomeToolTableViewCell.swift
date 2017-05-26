@@ -75,14 +75,8 @@ class HomeToolTableViewCell: UITableViewCell {
                                  isAvailableInPrimaryLanguage: Bool,
                                  primaryLanguage: Language?,
                                  parallelLanguage: Language?) {
-        if isAvailableInPrimaryLanguage && primaryLanguage != nil {
-            titleLabel.isEnabled = true
-            titleLabel.text = resource.getTranslationForLanguage(primaryLanguage!)?.localizedName ?? resource.name
-        } else {
-            titleLabel.isEnabled = false
-            titleLabel.text = resource.name
-        }
-        
+        titleLabel.isEnabled = isAvailableInPrimaryLanguage
+        titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
         
