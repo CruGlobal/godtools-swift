@@ -84,9 +84,9 @@ platform :ios do
   desc "e.g. `bundle exec fastlane beta skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env beta`"
   desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
   lane :beta do |options|
-    UI.message "beta"
+
     cru_git_setup
-    UI.message "run tests"
+
     run_all_tests_and_generate_reports unless options.key?(:skip_tests)
     
     increment_build_number
@@ -102,7 +102,8 @@ platform :ios do
                         message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}",
                         force: true)
     add_git_tag
-    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch)
+    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch,
+                       force: true)
     create_pull_request(repo: "CruGlobal/godtools-swift",
                         title: "Build Number Bump - #{lane_context[SharedValues::BUILD_NUMBER]}",
                         head: ENV['GIT_BUILD_NUMBER_BRANCH'],
@@ -197,7 +198,8 @@ platform :ios do
                         message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}",
                         force: true)
     add_git_tag(grouping: 'release', build_number: version)
-    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch)
+    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch,
+                       force: true)
     create_pull_request(repo: "CruGlobal/godtools-swift",
                         title: "Build Number Bump - #{lane_context[SharedValues::BUILD_NUMBER]}",
                         head: ENV['GIT_BUILD_NUMBER_BRANCH'],
@@ -286,13 +288,9 @@ platform :ios do
   end
 
   def cru_git_setup
-    UI.message "cru_git_setup"
     build_number = get_build_number(xcodeproj: "godtools.xcodeproj").to_i + 1
-    UI.message "build number: #{build_number}"
     ENV["GIT_BUILD_NUMBER_BRANCH"] = "build-number-bump-#{build_number}"
-    UI.message "build number branch: #{ENV["GIT_BUILD_NUMBER_BRANCH"]}"
-    Actions.sh("git checkout -b #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: false)
-    UI.message "SUCCESS"
+    Actions.sh("git checkout -B -f #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: false)
   end
 
 end
