@@ -185,20 +185,17 @@ class BaseTractElement: UIView {
                 currentYPosition = element.yEndPosition()
             }
             
+            if element.isKind(of: TractCallToAction.self) {
+                self.didFindCallToAction = true
+            }
+            
             elements.append(element)
         }
         
-        if self.isKind(of: TractRoot.self) {
-            if !self.didFindCallToAction {
-                let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
-                if self.horizontalContainer && element.yEndPosition() > maxYPosition {
-                    maxYPosition = element.yEndPosition()
-                } else {
-                    currentYPosition = element.yEndPosition()
-                }
-                
-                elements.append(element)
-            }
+        if self.isKind(of: TractRoot.self) && !self.didFindCallToAction {
+            let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+            currentYPosition = element.yEndPosition()
+            elements.append(element)
         }
         
         if self.horizontalContainer {
