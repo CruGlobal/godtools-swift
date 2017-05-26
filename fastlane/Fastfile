@@ -126,10 +126,9 @@ platform :ios do
       build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric",
       output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric"
     )
-    
-    lane_context[SharedValues::FL_CHANGELOG] = IO.read("#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes") || ''
 
-    crashlytics(groups: [ ENV["CRASHLYTICS_GROUP"] ])
+    crashlytics(notes_path: "#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes",
+                groups: [ ENV["CRASHLYTICS_GROUP"] ])
     
   end
 
