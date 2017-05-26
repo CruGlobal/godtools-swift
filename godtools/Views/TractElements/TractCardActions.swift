@@ -19,7 +19,7 @@ extension TractCard {
     func processSwipeUp() {
         if self.cardState == .preview || self.cardState == .close {
             showCardAndPreviousCards()
-        } else {
+        } else if self.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
         }
     }
@@ -96,6 +96,36 @@ extension TractCard {
         
         resetCardToOriginalPositionAnimation()
         disableScrollview()
+    }
+    
+    fileprivate func setStateOpen() {
+        if self.cardState == .preview || self.cardState == .close {
+            self.cardState = .open
+        }
+    }
+    
+    fileprivate func setStateClose() {
+        if self.cardState == .open || self.cardState == .preview {
+            self.cardState = .close
+        }
+    }
+    
+    fileprivate func setStateHidden() {
+        if self.cardState == .enable {
+            self.cardState = .hidden
+        }
+    }
+    
+    fileprivate func setStateEnable() {
+        if self.cardState == .hidden {
+            self.cardState = .enable
+        }
+    }
+    
+    fileprivate func setStatePreview() {
+        if self.cardState == .open || self.cardState == .close {
+            self.cardState = .preview
+        }
     }
     
 }
