@@ -314,7 +314,11 @@ class TractViewController: BaseViewController {
 extension TractViewController {
     
     fileprivate func currentTractTitle() -> String {
-        return resource != nil ? resource!.name! : "GodTools"
+        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        if primaryLanguage != nil && resource!.isAvailableInLanguage(primaryLanguage) {
+            return resource?.getTranslationForLanguage(primaryLanguage!)?.localizedName ?? resource!.name!
+        }
+        return resource!.name!
     }
     
     fileprivate func parallelLanguageIsAvailable() -> Bool {
