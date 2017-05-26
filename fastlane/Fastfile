@@ -290,7 +290,7 @@ platform :ios do
   def cru_git_setup
     build_number = get_build_number(xcodeproj: "godtools.xcodeproj").to_i + 1
     ENV["GIT_BUILD_NUMBER_BRANCH"] = "build-number-bump-#{build_number}"
-    Actions.sh("git checkout -B -f #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: true)
+    Actions.sh("git checkout -B #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: true)
   end
 
 end
