@@ -84,9 +84,9 @@ platform :ios do
   desc "e.g. `bundle exec fastlane beta skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env beta`"
   desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
   lane :beta do |options|
-
+    UI.message "beta"
     cru_git_setup
-
+    UI.message "run tests"
     run_all_tests_and_generate_reports unless options.key?(:skip_tests)
     
     increment_build_number
@@ -286,9 +286,13 @@ platform :ios do
   end
 
   def cru_git_setup
+    UI.message "cru_git_setup"
     build_number = get_build_number(xcodeproj: "godtools.xcodeproj").to_i + 1
+    UI.message "build number: #{build_number}"
     ENV["GIT_BUILD_NUMBER_BRANCH"] = "build-number-bump-#{build_number}"
+    UI.message "build number branch: #{ENV["GIT_BUILD_NUMBER_BRANCH"]}"
     Actions.sh("git checkout -b #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: false)
+    UI.message "SUCCESS"
   end
 
 end
