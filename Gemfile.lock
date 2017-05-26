@@ -191,7 +191,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.2.1)
-  fastlane (~> 2.28)
+  fastlane (~> 2.35)
   xcode-install (~> 2.0)
   xcov (~> 1.2)
 
