@@ -232,14 +232,14 @@ class TractViewController: BaseViewController {
     // MARK: - Handle page movements
     
     func moveToPage(notification: Notification) {
-        guard let dictionary = notification.object as? [String: String] else {
+        guard let dictionary = notification.userInfo as? [String: String] else {
             return
         }
         
         let destinationViewPageId = dictionary["pageId"]
-        for pageId in self.pagesIds.keys {
+        for (pageId, pageIndex) in self.pagesIds {
             if pageId == destinationViewPageId {
-                self.currentPage = self.pagesIds[pageId]!
+                self.currentPage = pageIndex
                 break
             }
         }

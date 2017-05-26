@@ -48,31 +48,41 @@ class TractParagraph: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        
-        var xMargin = BaseTractElement.xMargin
-        
         if BaseTractElement.isModalElement(self) {
-            textStyle.font = .gtRegular(size: 18.0)
-            textStyle.width = self.width
-            textStyle.xMargin = xMargin
-            textStyle.color = .gtWhite
-            textStyle.align = .center
+            return buildModalParagraph()
         } else {
-            if BaseTractElement.isCardElement(self) {
-                xMargin = TractCard.xPaddingConstant
-            }
-            
-            textStyle.font = .gtRegular(size: 18.0)
-            textStyle.width = self.width
-            textStyle.xMargin = xMargin
-            textStyle.color = self.textColor
+            return buildStandardParagraph()
         }
+    }
+    
+    // MARK: - Helpers
+    
+    func buildModalParagraph() -> TractTextContentProperties {        
+        let textStyle = super.textStyle()
+        textStyle.font = .gtRegular(size: 18.0)
+        textStyle.width = self.width
+        textStyle.xMargin = BaseTractElement.xMargin
+        textStyle.color = .gtWhite
+        textStyle.align = .center
         
         return textStyle
     }
     
-    // MARK: - Helpers
+    func buildStandardParagraph() -> TractTextContentProperties {
+        var xMargin = BaseTractElement.xMargin
+        
+        if BaseTractElement.isCardElement(self) {
+            xMargin = TractCard.xPaddingConstant
+        }
+        
+        let textStyle = super.textStyle()
+        textStyle.font = .gtRegular(size: 18.0)
+        textStyle.width = self.width
+        textStyle.xMargin = xMargin
+        textStyle.color = self.textColor
+        
+        return textStyle
+    }
     
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,

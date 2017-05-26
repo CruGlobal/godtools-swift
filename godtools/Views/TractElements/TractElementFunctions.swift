@@ -85,8 +85,8 @@ extension BaseTractElement {
         return (elementName!, namespace, kind, properties, children)
     }
     
-    func elementListener() -> String {
-        return ""
+    func elementListeners() -> [String]? {
+        return nil
     }
     
     func sendMessageToElement(tag: String) {

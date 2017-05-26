@@ -95,8 +95,8 @@ class TractCard: BaseTractElement {
         }
     }
     
-    override func elementListener() -> String {
-        return self.properties.listener != nil ? self.properties.listener! : ""
+    override func elementListeners() -> [String]? {
+        return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
     }
     
     func setupScrollView() {

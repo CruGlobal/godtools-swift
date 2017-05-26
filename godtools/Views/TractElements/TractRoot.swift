@@ -22,12 +22,12 @@ class TractRoot: BaseTractElement {
         self.frame = buildFrame()
     }
     
-    override func elementListener() -> String {
-        return self.pageId
+    override func elementListeners() -> [String]? {
+        return [self.pageId]
     }
     
     override func receiveMessage() {
-        NotificationCenter.default.post(name: .moveToPageNotification, object: ["pageId": self.pageId])
+        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
     }
     
     // MARK: - Helpers

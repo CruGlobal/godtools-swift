@@ -12,23 +12,16 @@ import SWXMLHash
 
 class BaseTractView: UIView {
     
-    var data: XMLIndexer?
-    var colors: TractColors?
-    var configurations: TractConfigurations?
     var contentView: TractRoot?
     
     init(frame: CGRect, data: XMLIndexer, colors: TractColors, configurations: TractConfigurations) {
         super.init(frame: frame)
         
-        self.data = data
-        self.colors = colors
-        self.configurations = configurations
-        
         let height = self.frame.size.height
-        self.contentView = TractRoot(startWithData: self.data!,
+        self.contentView = TractRoot(startWithData: data,
                                      withMaxHeight: height,
-                                     colors: self.colors!,
-                                     configurations: self.configurations!)
+                                     colors: colors,
+                                     configurations: configurations)
     }
     
     required init?(coder aDecoder: NSCoder) {

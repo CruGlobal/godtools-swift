@@ -39,8 +39,8 @@ class TractModal: BaseTractElement {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
-    override func elementListener() -> String {
-        return self.properties.listener != nil ? self.properties.listener! : ""
+    override func elementListeners() -> [String]? {
+        return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
     }
     
     override func render() -> UIView {
@@ -77,14 +77,12 @@ class TractModal: BaseTractElement {
                 view.removeFromSuperview()
             }
             
-            self.alpha = CGFloat(0.0)
-            UIView.animate(withDuration: 0.35,
+            UIView.animate(withDuration: 0.75,
                            delay: 0.0,
                            options: UIViewAnimationOptions.curveEaseInOut,
                            animations: { self.alpha = CGFloat(0.0) },
-                           completion: nil )
-            
-            self.removeFromSuperview()
+                           completion: { (completed: Bool) in
+                            self.removeFromSuperview() } )
         } else {
             _ = render()
             

@@ -85,7 +85,7 @@
         </card>
     </cards>
     <modals>
-        <modal listener="send-information-modal">
+        <modal listener="send-information-modal" dismiss-listeners="send-information-model-close">
             <title>
                 <content:text i18n-id="{{uuid}}">Thank You
                 </content:text>

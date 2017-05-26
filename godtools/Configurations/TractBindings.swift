@@ -17,8 +17,12 @@ class TractBindings: NSObject {
     }
     
     static func addBindings(_ element: BaseTractElement) {
-        if element.elementListener() != "" {
-            TractBindings.bindings[element.elementListener()] = element
+        if element.elementListeners() == nil {
+            return
+        }
+        
+        for listener in element.elementListeners()! {
+            TractBindings.bindings[listener] = element
         }
     }
 
