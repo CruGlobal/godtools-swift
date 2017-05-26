@@ -85,7 +85,7 @@
         </card>
     </cards>
     <modals>
-        <modal listeners="send-information-modal" dismiss-listeners="send-information-model-close">
+        <modal listeners="send-information-modal" dismiss-listeners="send-information-modal-close">
             <title>
                 <content:text i18n-id="{{uuid}}">Thank You
                 </content:text>
@@ -99,7 +99,7 @@
                 </content:text>
             </paragraph>
             <paragraph>
-                <content:button type="event" value="kgp-6,send-information-model-close">
+                <content:button type="event" value="kgp-6,send-information-modal-close">
                     <content:text i18n-id="{{uuid}}">
                         Done
                     </content:text>
