@@ -97,7 +97,9 @@ class DownloadedResourceManager: GTDataManager {
                 cachedTranslation.version = remoteTranslation.version!.int16Value
                 cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                 cachedTranslation.manifestFilename = remoteTranslation.manifestName
-                
+                cachedTranslation.localizedName = remoteTranslation.translatedName
+                cachedTranslation.localizedDescription = remoteTranslation.translatedDescription
+                                
                 cachedResource.addToTranslations(cachedTranslation)
                 
                 TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
