@@ -113,6 +113,7 @@ class TractCard: BaseTractElement {
         self.scrollView.frame = scrollViewFrame
         self.scrollView.delegate = self
         self.scrollView.backgroundColor = .gtWhite
+        self.scrollView.showsVerticalScrollIndicator = false
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
                                           width: self.contentWidth,
@@ -121,6 +122,10 @@ class TractCard: BaseTractElement {
     }
     
     func setupTransparentView() {
+        if self.externalHeight >= self.internalHeight {
+            return
+        }
+        
         let width = self.scrollView.frame.size.width - 6.0
         let height: CGFloat = 60.0
         let xPosition: CGFloat = 3.0
