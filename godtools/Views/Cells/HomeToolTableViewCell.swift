@@ -65,9 +65,7 @@ class HomeToolTableViewCell: UITableViewCell {
             setCellAsDisplayOnly()
         }
         
-        if banner != nil {
-            bannerImageView.image = banner
-        }
+        bannerImageView.image = banner ?? #imageLiteral(resourceName: "cell_banner_placeholder")
     }
     
     private func configureLabels(resource: DownloadedResource,
