@@ -89,13 +89,24 @@ extension BaseTractElement {
         return nil
     }
     
+    func elementDismissListeners() -> [String]? {
+        return nil
+    }
+    
     func sendMessageToElement(tag: String) {
         if TractBindings.bindings[tag] != nil {
             guard let view = TractBindings.bindings[tag] else { return }
             view.receiveMessage()
         }
+        
+        if TractBindings.dismissBindings[tag] != nil {
+            guard let view = TractBindings.dismissBindings[tag] else { return }
+            view.receiveDismissMessage()
+        }
     }
     
     func receiveMessage() { }
+    
+    func receiveDismissMessage() { }
     
 }

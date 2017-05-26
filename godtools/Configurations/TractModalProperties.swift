@@ -10,6 +10,7 @@ import UIKit
 
 class TractModalProperties {
     
-    var listener: String?
+    var listeners: String?
+    var dismissListeners: String?
     
 }

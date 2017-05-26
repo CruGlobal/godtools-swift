@@ -23,7 +23,6 @@ class TractModal: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractModalProperties()
-    var modalOpen = false
     
     // MARK: - Setup
     
@@ -40,7 +39,11 @@ class TractModal: BaseTractElement {
     }
     
     override func elementListeners() -> [String]? {
-        return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+    }
+    
+    override func elementDismissListeners() -> [String]? {
+        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
     }
     
     override func render() -> UIView {
@@ -64,40 +67,40 @@ class TractModal: BaseTractElement {
     func loadElementProperties(properties: [String: Any]) {
         for property in properties.keys {
             switch property {
-            case "listener":
-                self.properties.listener = properties[property] as! String?
+            case "listeners":
+                self.properties.listeners = properties[property] as! String?
+            case "dismiss-listeners":
+                self.properties.dismissListeners = properties[property] as! String?
             default: break
             }
         }
     }
     
     override func receiveMessage() {
-        if self.modalOpen {
-            for view in self.subviews {
-                view.removeFromSuperview()
-            }
-            
-            UIView.animate(withDuration: 0.75,
-                           delay: 0.0,
-                           options: UIViewAnimationOptions.curveEaseInOut,
-                           animations: { self.alpha = CGFloat(0.0) },
-                           completion: { (completed: Bool) in
-                            self.removeFromSuperview() } )
-        } else {
-            _ = render()
-            
-            let currentWindow = UIApplication.shared.keyWindow
-            currentWindow?.addSubview(self)
-            
-            self.alpha = CGFloat(0.0)
-            UIView.animate(withDuration: 0.35,
-                           delay: 0.0,
-                           options: UIViewAnimationOptions.curveEaseInOut,
-                           animations: { self.alpha = CGFloat(1.0) },
-                           completion: nil )
+        _ = render()
+        
+        let currentWindow = UIApplication.shared.keyWindow
+        currentWindow?.addSubview(self)
+        
+        self.alpha = CGFloat(0.0)
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: { self.alpha = CGFloat(1.0) },
+                       completion: nil )
+    }
+    
+    override func receiveDismissMessage() {
+        for view in self.subviews {
+            view.removeFromSuperview()
         }
         
-        self.modalOpen = !self.modalOpen
+        UIView.animate(withDuration: 0.75,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: { self.alpha = CGFloat(0.0) },
+                       completion: { (completed: Bool) in
+                        self.removeFromSuperview() } )
     }
     
     fileprivate func buildFrame() -> CGRect {
