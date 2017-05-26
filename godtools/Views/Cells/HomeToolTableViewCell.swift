@@ -54,6 +54,7 @@ class HomeToolTableViewCell: UITableViewCell {
         
         configureLabels(resource: resource,
                         isAvailableInPrimaryLanguage: isAvailableInPrimaryLanguage,
+                        primaryLanguage: primaryLanguage,
                         parallelLanguage: parallelLanguage)
         
         downloadProgressView.setProgress(0.0, animated: false)
@@ -72,9 +73,16 @@ class HomeToolTableViewCell: UITableViewCell {
     
     private func configureLabels(resource: DownloadedResource,
                                  isAvailableInPrimaryLanguage: Bool,
+                                 primaryLanguage: Language?,
                                  parallelLanguage: Language?) {
-        titleLabel.text = resource.name
-        titleLabel.isEnabled = isAvailableInPrimaryLanguage
+        if isAvailableInPrimaryLanguage && primaryLanguage != nil {
+            titleLabel.isEnabled = true
+            titleLabel.text = resource.getTranslationForLanguage(primaryLanguage!)?.localizedName ?? resource.name
+        } else {
+            titleLabel.isEnabled = false
+            titleLabel.text = resource.name
+        }
+        
         
         languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
         
