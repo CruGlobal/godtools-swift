@@ -24,8 +24,8 @@ class TractTextFieldProperties: TractElementProperties {
     var font = UIFont.gtRegular(size: 16.0)
     var placeholder: String?
     
-    override func loadProperties(properties: [String: Any]) {
-        super.loadProperties(properties: properties)
+    override func load(_ properties: [String: Any]) {
+        super.load(properties)
         
         for property in properties.keys {
             switch property {

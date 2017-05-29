@@ -176,7 +176,7 @@ class TractCard: BaseTractElement {
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
-        self.properties.loadProperties(properties: properties)
+        self.properties.load(properties)
     }
     
     func disableScrollview() {

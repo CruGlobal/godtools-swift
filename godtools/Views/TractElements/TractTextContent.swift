@@ -87,7 +87,7 @@ class TractTextContent: BaseTractElement {
     }
     
     func loadElementProperties(properties: [String: Any]) {
-        self.properties.loadProperties(properties: properties)
+        self.properties.load(properties)
     }
     
     fileprivate func buildFrame() -> CGRect {

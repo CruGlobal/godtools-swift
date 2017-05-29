@@ -27,8 +27,8 @@ class TractButtonProperties: TractElementProperties {
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func loadProperties(properties: [String: Any]) {
-        super.loadProperties(properties: properties)
+    override func load(_ properties: [String: Any]) {
+        super.load(properties)
         
         for property in properties.keys {
             switch property {
