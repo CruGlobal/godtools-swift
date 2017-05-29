@@ -11,7 +11,7 @@ import Foundation
 extension TractCard {
     
     override func receiveMessage() {
-        if self.cardState == .hidden {
+        if isHiddenKindCard() {
             showCard()
         }
     }
@@ -29,8 +29,6 @@ extension TractCard {
             hideCard()
         }
     }
-    
-    // MARK: - Card State Management
     
     func processCardWithState() {
         switch self.cardState {
@@ -60,11 +58,10 @@ extension TractCard {
             return
         }
         
-        if self.cardState == .hidden {
-            self.isHidden = false
-            self.cardState = .enable
+        if isHiddenKindCard() {
+            setStateEnable()
         } else {
-            self.cardState = .open
+            setStateOpen()
         }
         
         showCardAnimation()
@@ -76,13 +73,13 @@ extension TractCard {
             return
         }
         
-        if self.cardState == .enable {
-            self.cardState = .hidden
+        if isHiddenKindCard() {
+            setStateHidden()
         } else {
-            self.cardState = .close
-            self.cardsParentView.hideCallToAction()
+            setStateClose()
         }
         
+        self.cardsParentView.hideCallToAction()
         hideCardAnimation()
         disableScrollview()
     }
@@ -92,10 +89,20 @@ extension TractCard {
             return
         }
         
-        self.cardState = .preview
+        if isHiddenKindCard() {
+            setStateHidden()
+        } else {
+            setStatePreview()
+        }
         
         resetCardToOriginalPositionAnimation()
         disableScrollview()
+    }
+    
+    // MARK: - Management of card state
+    
+    fileprivate func isHiddenKindCard() -> Bool {
+        return self.cardState == .hidden || self.cardState == .enable
     }
     
     fileprivate func setStateOpen() {
@@ -118,6 +125,7 @@ extension TractCard {
     
     fileprivate func setStateEnable() {
         if self.cardState == .hidden {
+            self.isHidden = false
             self.cardState = .enable
         }
     }
