@@ -87,21 +87,7 @@ class TractTextContent: BaseTractElement {
     }
     
     func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "value":
-                self.properties.value = properties[property] as? String
-            case "i18n-id":
-                self.properties.i18nId = properties[property] as? String
-            case "text-color":
-                self.properties.color = (properties[property] as? String)!.getRGBAColor()
-            case "text-scale":
-                self.properties.scale = properties[property] as? CGFloat
-            case "text-align":
-                self.properties.align = (properties[property] as? NSTextAlignment)!
-            default: break
-            }
-        }
+        self.properties.loadProperties(properties: properties)
     }
     
     fileprivate func buildFrame() -> CGRect {

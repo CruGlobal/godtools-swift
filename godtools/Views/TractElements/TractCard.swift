@@ -176,15 +176,7 @@ class TractCard: BaseTractElement {
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "hidden":
-                self.properties.hidden = true
-            case "listener":
-                self.properties.listener = properties[property] as! String?
-            default: break
-            }
-        }
+        self.properties.loadProperties(properties: properties)
     }
     
     func disableScrollview() {
