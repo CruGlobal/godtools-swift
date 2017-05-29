@@ -122,7 +122,7 @@ class TractInput: BaseTractElement {
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
-        self.properties.loadProperties(properties: properties)
+        self.properties.load(properties)
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.primaryColor!
     }

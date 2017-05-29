@@ -21,8 +21,8 @@ class TractTextContentProperties: TractElementProperties {
     var value: String?
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func loadProperties(properties: [String: Any]) {
-        super.loadProperties(properties: properties)
+    override func load(_ properties: [String: Any]) {
+        super.load(properties)
         
         for property in properties.keys {
             switch property {

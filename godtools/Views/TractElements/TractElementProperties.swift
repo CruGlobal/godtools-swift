@@ -15,7 +15,7 @@ class TractElementProperties: NSObject {
     var hidden = false
     var listener: String?
     
-    func loadProperties(properties: [String: Any]) {
+    func load(_ properties: [String: Any]) {
         for property in properties.keys {
             switch property {
             case "listeners":

@@ -117,7 +117,7 @@ class TractButton: BaseTractElement {
     }
     
     func loadElementProperties(properties: [String: Any]) {
-        self.properties.loadProperties(properties: properties)
+        self.properties.load(properties)
         self.properties.backgroundColor = self.primaryColor!
         self.properties.color = .gtWhite
     }
