@@ -17,6 +17,7 @@ class TractButtonProperties {
     var i18nId: String?
     var type: ButtonType = .url
     var value: String?
+    var events: String?
     var width: CGFloat = 300.0
     var height: CGFloat = 44.0
     var xMargin = BaseTractElement.xMargin
