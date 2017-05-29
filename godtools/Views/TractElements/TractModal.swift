@@ -65,15 +65,7 @@ class TractModal: BaseTractElement {
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "listeners":
-                self.properties.listeners = properties[property] as! String?
-            case "dismiss-listeners":
-                self.properties.dismissListeners = properties[property] as! String?
-            default: break
-            }
-        }
+        self.properties.loadProperties(properties: properties)
     }
     
     override func receiveMessage() {

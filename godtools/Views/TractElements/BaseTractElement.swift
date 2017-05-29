@@ -107,7 +107,7 @@ class BaseTractElement: UIView {
             return ""
         }
     }
-    
+        
     // MARK: - Initializers
     
     init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {

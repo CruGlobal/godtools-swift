@@ -8,9 +8,6 @@
 
 import UIKit
 
-class TractCardProperties {
-    
-    var hidden = false
-    var listener: String?
+class TractCardProperties: TractElementProperties {
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class TractButton: BaseTractElement {
     
@@ -56,8 +57,8 @@ class TractButton: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractButtonProperties()
     var button: GTButton = GTButton()
+    var properties = TractButtonProperties()
     
     // MARK: - Setup
     
@@ -116,18 +117,7 @@ class TractButton: BaseTractElement {
     }
     
     func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "value":
-                self.properties.value = properties[property] as! String?
-            case "i18n-id":
-                self.properties.i18nId = properties[property] as! String?
-            case "type":
-                self.properties.setupType(properties[property] as! String)
-            default: break
-            }
-        }
-        
+        self.properties.loadProperties(properties: properties)
         self.properties.backgroundColor = self.primaryColor!
         self.properties.color = .gtWhite
     }
