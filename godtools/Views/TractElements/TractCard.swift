@@ -81,6 +81,8 @@ class TractCard: BaseTractElement {
     // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
+        super.setupView(properties: properties)
+        
         loadElementProperties(properties: properties)
         
         self.frame = buildFrame()
@@ -167,10 +169,11 @@ class TractCard: BaseTractElement {
         return self
     }
     
-    // MARK: - Actions
-    
-    func didTapOnCard() {
-        processCardWithState()
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.externalHeight)
     }
     
     // MARK: - Helpers
@@ -191,13 +194,6 @@ class TractCard: BaseTractElement {
         if self.cardState == .open {
             self.scrollView.isScrollEnabled = true
         }
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.externalHeight)
     }
 
 }

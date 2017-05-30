@@ -50,10 +50,6 @@ class TractLabel: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
-    }
-    
     func buildHorizontalLine() {
         let xPosition = TractCard.xPaddingConstant
         let yPosition = self.frame.size.height - 1
@@ -103,9 +99,7 @@ class TractLabel: BaseTractElement {
         return textStyle
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,

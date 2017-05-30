@@ -71,6 +71,13 @@ class TractTextContent: BaseTractElement {
         self.addSubview(self.label)
     }
     
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
     // MARK: - Helpers
     
     func loadStyles() {
@@ -88,13 +95,6 @@ class TractTextContent: BaseTractElement {
     
     func loadElementProperties(properties: [String: Any]) {
         self.properties.load(properties)
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
     
 }

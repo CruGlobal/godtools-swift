@@ -119,19 +119,19 @@ class TractInput: BaseTractElement {
         return self
     }
     
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
         self.properties.load(properties)
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.primaryColor!
-    }
-    
-    func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
 
 }

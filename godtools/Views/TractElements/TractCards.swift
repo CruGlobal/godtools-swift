@@ -85,8 +85,15 @@ class TractCards: BaseTractElement {
     }
     
     override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
+        super.setupView(properties: properties)
         setupBackground()
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
     }
     
     func setupBackground() {
@@ -116,15 +123,6 @@ class TractCards: BaseTractElement {
         
         self.addSubview(imageView)
         self.sendSubview(toBack: imageView)
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
 
 }

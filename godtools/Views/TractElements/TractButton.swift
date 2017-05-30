@@ -78,6 +78,32 @@ class TractButton: BaseTractElement {
         self.addSubview(self.button)
     }
     
+    override func render() -> UIView {
+        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
+            let element = self.elements?.first as! TractTextContent
+            let label = element.label
+            
+            self.button.setTitle(label.text, for: .normal)
+            self.button.titleLabel?.font = label.font
+            self.button.setTitleColor(self.properties.color, for: .normal)
+            self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
+        } else {
+            for element in self.elements! {
+                self.addSubview(element.render())
+            }
+        }
+        
+        TractBindings.addBindings(self)
+        return self
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
     // MARK: - Helpers
     
     func configureAsModalButton() {
@@ -133,32 +159,6 @@ class TractButton: BaseTractElement {
         for value in values {
             sendMessageToElement(tag: value)
         }
-    }
-    
-    override func render() -> UIView {
-        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
-            let element = self.elements?.first as! TractTextContent
-            let label = element.label
-            
-            self.button.setTitle(label.text, for: .normal)
-            self.button.titleLabel?.font = label.font
-            self.button.setTitleColor(self.properties.color, for: .normal)
-            self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
-        } else {
-            for element in self.elements! {
-                self.addSubview(element.render())
-            }
-        }
-        
-        TractBindings.addBindings(self)
-        return self
-    }
-    
-    func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
 
 }

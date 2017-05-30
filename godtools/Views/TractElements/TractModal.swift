@@ -27,10 +27,9 @@ class TractModal: BaseTractElement {
     // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
+        super.setupView(properties: properties)
         loadElementProperties(properties: properties)
         TractBindings.addBindings(self)
-        
-        self.frame = buildFrame()
         setupStyle()
     }
     
@@ -62,41 +61,14 @@ class TractModal: BaseTractElement {
         return self
     }
     
+    override func buildFrame() -> CGRect {
+        return (UIApplication.shared.keyWindow?.frame)!
+    }
+    
     // MARK: - Helpers
     
     func loadElementProperties(properties: [String: Any]) {
         self.properties.load(properties)
-    }
-    
-    override func receiveMessage() {
-        _ = render()
-        
-        let currentWindow = UIApplication.shared.keyWindow
-        currentWindow?.addSubview(self)
-        
-        self.alpha = CGFloat(0.0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { self.alpha = CGFloat(1.0) },
-                       completion: nil )
-    }
-    
-    override func receiveDismissMessage() {
-        for view in self.subviews {
-            view.removeFromSuperview()
-        }
-        
-        UIView.animate(withDuration: 0.75,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { self.alpha = CGFloat(0.0) },
-                       completion: { (completed: Bool) in
-                        self.removeFromSuperview() } )
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return (UIApplication.shared.keyWindow?.frame)!
     }
 
 }
