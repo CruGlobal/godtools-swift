@@ -43,16 +43,19 @@ class TractParagraph: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
-    }
-    
     override func textStyle() -> TractTextContentProperties {
         if BaseTractElement.isModalElement(self) {
             return buildModalParagraph()
         } else {
             return buildStandardParagraph()
         }
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
     }
     
     // MARK: - Helpers
@@ -82,13 +85,6 @@ class TractParagraph: BaseTractElement {
         textStyle.color = self.textColor
         
         return textStyle
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
     
 }

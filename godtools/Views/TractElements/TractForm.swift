@@ -24,14 +24,8 @@ class TractForm: BaseTractElement {
     }
     
     // MARK - Setup
-    
-    override func setupView(properties: [String: Any]) {
-        self.frame = buildFrame()
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+        
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,

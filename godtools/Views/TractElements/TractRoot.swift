@@ -18,21 +18,15 @@ class TractRoot: BaseTractElement {
     var pageId: String = ""
     
     override func setupView(properties: [String: Any]) {
+        super.setupView(properties: properties)
         self.pageId = properties["id"] as! String
-        self.frame = buildFrame()
     }
     
     override func elementListeners() -> [String]? {
         return [self.pageId]
     }
     
-    override func receiveMessage() {
-        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: 0.0,
                       y: self.yStartPosition,
                       width: self.width,

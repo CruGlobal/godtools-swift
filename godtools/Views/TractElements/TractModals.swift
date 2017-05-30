@@ -13,7 +13,7 @@ class TractModals: BaseTractElement {
     // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
+        super.setupView(properties: properties)
         self.isHidden = true
     }
     
@@ -22,9 +22,7 @@ class TractModals: BaseTractElement {
         return self
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return (UIApplication.shared.keyWindow?.frame)!
     }
 

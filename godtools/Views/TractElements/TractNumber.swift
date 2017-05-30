@@ -34,12 +34,12 @@ class TractNumber: BaseTractElement {
         return self.yPosition + self.height
     }
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        (self.parent as! TractHeader).includesNumber = true
-        self.frame = buildFrame()
-    }
-    
     // MARK: - Setup
+    
+    override func setupView(properties: Dictionary<String, Any>) {
+        super.setupView(properties: properties)
+        (self.parent as! TractHeader).includesNumber = true
+    }
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -51,9 +51,7 @@ class TractNumber: BaseTractElement {
         return textStyle
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,

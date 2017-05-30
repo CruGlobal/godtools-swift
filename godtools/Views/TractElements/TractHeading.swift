@@ -27,10 +27,6 @@ class TractHeading: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
-    }
-    
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtThin(size: 54.0)
@@ -38,9 +34,7 @@ class TractHeading: BaseTractElement {
         return textStyle
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
