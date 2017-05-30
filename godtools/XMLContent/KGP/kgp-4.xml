@@ -2,7 +2,10 @@
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
-    background-image="jesus_saves_us.png" id="kgp-4">
+    background-image="jesus_saves_us.png" id="kgp-4"
+    primary-color="rgba(90, 90, 90, 1)"
+    primary-text-color="rgba(90, 90, 90, 1)"
+    text-color="rgba(59, 164, 219, 1)">
     <header>
         <number>
             <content:text i18n-id="{{uuid}}">4</content:text>

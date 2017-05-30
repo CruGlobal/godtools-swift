@@ -17,9 +17,27 @@ class TractRoot: BaseTractElement {
     
     var pageId: String = ""
     
+    // MARK: - Object properties
+    
+    var properties = TractRootProperties()
+    
+    // MARK: - Setup
+    
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
         self.pageId = properties["id"] as! String
+    }
+    
+    override func loadElementProperties(properties: [String: Any]) {
+        self.properties.primaryColor = self.colors?.primaryColor
+        self.properties.primaryTextColor = self.colors?.primaryTextColor
+        self.properties.textColor = self.colors?.textColor
+        
+        self.properties.load(properties)
+        
+        self.colors?.primaryColor = self.properties.primaryColor
+        self.colors?.primaryTextColor = self.properties.primaryTextColor
+        self.colors?.textColor = self.colors?.textColor
     }
     
     override func buildFrame() -> CGRect {
