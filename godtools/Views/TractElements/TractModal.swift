@@ -28,21 +28,15 @@ class TractModal: BaseTractElement {
     
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
-        loadElementProperties(properties: properties)
         TractBindings.addBindings(self)
-        setupStyle()
     }
     
-    func setupStyle() {
+    override func loadStyles() {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
-    override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
-    }
-    
-    override func elementDismissListeners() -> [String]? {
-        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
+    override func buildFrame() -> CGRect {
+        return (UIApplication.shared.keyWindow?.frame)!
     }
     
     override func render() -> UIView {
@@ -61,13 +55,19 @@ class TractModal: BaseTractElement {
         return self
     }
     
-    override func buildFrame() -> CGRect {
-        return (UIApplication.shared.keyWindow?.frame)!
+    // MARK: - Bindings
+    
+    override func elementListeners() -> [String]? {
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+    }
+    
+    override func elementDismissListeners() -> [String]? {
+        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
     }
     
     // MARK: - Helpers
     
-    func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(properties: [String: Any]) {
         self.properties.load(properties)
     }
 

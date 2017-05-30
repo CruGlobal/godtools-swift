@@ -106,6 +106,32 @@ class TractCard: BaseTractElement {
         return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
     }
     
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.containerView.addSubview(element.render())
+        }
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.shadowView)
+        self.addSubview(self.scrollView)
+        setupTransparentView()
+        
+        TractBindings.addBindings(self)
+        return self
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.externalHeight)
+    }
+    
+    override func loadElementProperties(properties: [String: Any]) {
+        self.properties.load(properties)
+    }
+    
+    // MARK: - ScrollView
+    
     func setupScrollView() {
         let height = self.bounds.size.height
         let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
@@ -122,6 +148,8 @@ class TractCard: BaseTractElement {
                                           height: contentHeight)
         self.containerView.backgroundColor = .clear
     }
+    
+    // MARK: - UI
     
     func setupTransparentView() {
         if self.externalHeight >= self.internalHeight {
@@ -154,46 +182,6 @@ class TractCard: BaseTractElement {
         shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         shadowLayer.shadowOpacity = 0.4
         shadowLayer.shouldRasterize = true
-    }
-    
-    override func render() -> UIView {
-        for element in self.elements! {
-            self.containerView.addSubview(element.render())
-        }
-        self.scrollView.addSubview(self.containerView)
-        self.addSubview(self.shadowView)
-        self.addSubview(self.scrollView)
-        setupTransparentView()
-        
-        TractBindings.addBindings(self)
-        return self
-    }
-    
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.externalHeight)
-    }
-    
-    // MARK: - Helpers
-    
-    func loadElementProperties(properties: [String: Any]) {
-        self.properties.load(properties)
-    }
-    
-    func disableScrollview() {
-        if self.cardState != .open {
-            let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
-            self.scrollView.isScrollEnabled = false
-            self.scrollView.setContentOffset(startPoint, animated: true)
-        }
-    }
-    
-    func enableScrollview() {
-        if self.cardState == .open {
-            self.scrollView.isScrollEnabled = true
-        }
     }
 
 }

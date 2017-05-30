@@ -38,12 +38,7 @@ class TractHeader: BaseTractElement {
     
     var includesNumber = false
     
-    override var horizontalContainer: Bool {
-        return true
-    }
-    
-    override func setupView(properties: [String: Any]) {
-        super.setupView(properties: properties)
+    override func loadStyles() {
         self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
     }
     
@@ -52,6 +47,10 @@ class TractHeader: BaseTractElement {
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    override var horizontalContainer: Bool {
+        return true
     }
 
 }

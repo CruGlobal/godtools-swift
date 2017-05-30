@@ -12,18 +12,17 @@ class TractModals: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        super.setupView(properties: properties)
+    override func loadStyles() {
         self.isHidden = true
+    }
+    
+    override func buildFrame() -> CGRect {
+        return (UIApplication.shared.keyWindow?.frame)!
     }
     
     override func render() -> UIView {
         TractBindings.addBindings(self)
         return self
-    }
-    
-    override func buildFrame() -> CGRect {
-        return (UIApplication.shared.keyWindow?.frame)!
     }
 
 }

@@ -84,8 +84,7 @@ class TractCards: BaseTractElement {
         self.elements = elements
     }
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        super.setupView(properties: properties)
+    override func loadStyles() {
         setupBackground()
     }
     
@@ -95,6 +94,8 @@ class TractCards: BaseTractElement {
                       width: self.width,
                       height: self.height)
     }
+    
+    // MARK: - UI
     
     func setupBackground() {
         self.backgroundColor = .clear

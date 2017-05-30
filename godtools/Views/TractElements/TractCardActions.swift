@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension TractCard {
     
@@ -97,6 +98,22 @@ extension TractCard {
         
         resetCardToOriginalPositionAnimation()
         disableScrollview()
+    }
+    
+    // MARK: - ScrollView
+    
+    func disableScrollview() {
+        if self.cardState != .open {
+            let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
+            self.scrollView.isScrollEnabled = false
+            self.scrollView.setContentOffset(startPoint, animated: true)
+        }
+    }
+    
+    func enableScrollview() {
+        if self.cardState == .open {
+            self.scrollView.isScrollEnabled = true
+        }
     }
     
     // MARK: - Management of card state

@@ -62,10 +62,14 @@ class TractButton: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: [String: Any]) {
-        loadStyles()
-        loadElementProperties(properties: properties)
-        
+    override func loadElementProperties(properties: [String: Any]) {
+        self.properties = (self.parent?.buttonStyle())!
+        self.properties.load(properties)
+        self.properties.backgroundColor = self.primaryColor!
+        self.properties.color = .gtWhite
+    }
+    
+    override func loadStyles() {
         self.button = GTButton()
         if BaseTractElement.isModalElement(self) {
             configureAsModalButton()
@@ -76,6 +80,24 @@ class TractButton: BaseTractElement {
         self.addTargetToButton()
         
         self.addSubview(self.button)
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        let textStyle = super.textStyle()
+        textStyle.font = .gtRegular(size: 18.0)
+        textStyle.width = self.buttonWidth
+        textStyle.align = .center
+        textStyle.color = self.properties.color
+        textStyle.xMargin = self.buttonXPosition
+        textStyle.yMargin = self.textPadding
+        return textStyle
     }
     
     override func render() -> UIView {
@@ -97,20 +119,11 @@ class TractButton: BaseTractElement {
         return self
     }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
-    
     // MARK: - Helpers
     
     func configureAsModalButton() {
         self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
         self.button.designAsTractModalButton()
-        
-        self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: TractButton.modalMarginConstant,
                                    width: self.buttonWidth,
@@ -121,43 +134,13 @@ class TractButton: BaseTractElement {
         self.height = self.properties.height
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
-        
-        self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.height)
         
-    }
-    
-    override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.buttonWidth
-        textStyle.align = .center
-        textStyle.color = self.properties.color
-        textStyle.xMargin = self.buttonXPosition
-        textStyle.yMargin = self.textPadding
-        return textStyle
-    }
-    
-    func loadStyles() {
-        self.properties = (self.parent?.buttonStyle())!
-    }
-    
-    func loadElementProperties(properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.backgroundColor = self.primaryColor!
-        self.properties.color = .gtWhite
     }
     
     func addTargetToButton() {
         if self.properties.type == .event {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
-        }
-    }
-    
-    func buttonTarget() {
-        let values = self.properties.value!.components(separatedBy: ",")
-        for value in values {
-            sendMessageToElement(tag: value)
         }
     }
 
