@@ -124,7 +124,7 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.yStartPosition = 0.0
         self.maxHeight = height
-        self.colors = colors
+        self.colors = colors.copyObject()
         self.tractConfigurations = configurations
         
         if data.element?.attribute(by: "background-image") != nil {
@@ -167,6 +167,7 @@ class BaseTractElement: UIView {
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
+        loadElementProperties(properties: dataContent.properties)
         buildChildrenForData(dataContent.children)
         setupView(properties: dataContent.properties)
     }
@@ -209,7 +210,6 @@ class BaseTractElement: UIView {
     
     func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
-        loadElementProperties(properties: properties)
         loadStyles()
     }
     

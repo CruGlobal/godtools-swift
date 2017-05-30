@@ -8,10 +8,26 @@
 
 import UIKit
 
-class TractColors {
+class TractColors: NSObject {
     
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
+    
+    override init() {
+        super.init()
+    }
+    
+    init(primaryColor: UIColor, primaryTextColor: UIColor, textColor: UIColor) {
+        self.primaryColor = primaryColor
+        self.primaryTextColor = primaryTextColor
+        self.textColor = textColor
+    }
+    
+    func copyObject() -> TractColors {
+        return TractColors(primaryColor: self.primaryColor!,
+                           primaryTextColor: self.primaryTextColor!,
+                           textColor: self.textColor!)
+    }
 
 }
