@@ -179,18 +179,19 @@ class BaseTractElement: UIView {
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            elements.append(element)
+            
+            if element.isKind(of: TractCallToAction.self) {
+                self.didFindCallToAction = true
+            } else if element.isKind(of: TractModals.self) {
+                continue
+            }
             
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
             } else {
                 currentYPosition = element.yEndPosition()
             }
-            
-            if element.isKind(of: TractCallToAction.self) {
-                self.didFindCallToAction = true
-            }
-            
-            elements.append(element)
         }
         
         if self.isKind(of: TractRoot.self) && !self.didFindCallToAction {
