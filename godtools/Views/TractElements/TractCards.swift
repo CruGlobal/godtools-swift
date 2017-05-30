@@ -70,8 +70,19 @@ class TractCards: BaseTractElement {
         var elements:Array = [BaseTractElement]()
         var cardNumber = 0
         
+        var normalCards = [XMLIndexer]()
+        var hiddenCards = [XMLIndexer]()
+        
         for dictionary in data {
-            let deltaChange = CGFloat(data.count - cardNumber)
+            if (dictionary.element?.attribute(by: "hidden")) != nil && dictionary.element?.attribute(by: "hidden")?.text == "true" {
+                hiddenCards.append(dictionary)
+            } else {
+                normalCards.append(dictionary)
+            }
+        }
+        
+        for dictionary in normalCards {
+            let deltaChange = CGFloat(normalCards.count - cardNumber)
             let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
             let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
@@ -79,6 +90,12 @@ class TractCards: BaseTractElement {
             element.cardNumber = cardNumber
             elements.append(element)
             cardNumber += 1
+        }
+        
+        for dictionary in hiddenCards {
+            let yPosition = self.initialCardPosition
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
+            elements.append(element)
         }
         
         self.elements = elements
