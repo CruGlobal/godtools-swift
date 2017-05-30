@@ -46,4 +46,20 @@ public class DownloadedResource: NSManagedObject {
     func translationsAsArray() -> [Translation] {
         return Array(translations!) as! [Translation]
     }
+    
+    func localizedName(language: Language?) -> String {
+        guard let language = language else {
+            return name!
+        }
+        
+        if isAvailableInLanguage(language) {
+            guard let translation = getTranslationForLanguage(language) else {
+                return name!
+            }
+            
+            return translation.localizedName ?? name!
+        }
+        
+        return name!
+    }
 }

@@ -314,17 +314,17 @@ class TractViewController: BaseViewController {
 extension TractViewController {
     
     fileprivate func currentTractTitle() -> String {
-        return resource != nil ? resource!.name! : "GodTools"
+        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        
+        return resource!.localizedName(language: primaryLanguage)
     }
     
     fileprivate func parallelLanguageIsAvailable() -> Bool {
-        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
-        
-        if parallelLanguage == nil {
+        guard let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk() else {
             return false
         }
         
-        return resource!.isAvailableInLanguage(parallelLanguage!)
+        return resource!.isAvailableInLanguage(parallelLanguage)
     }
     
     fileprivate func languageSegmentedControl() -> UISegmentedControl {
