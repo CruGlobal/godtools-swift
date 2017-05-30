@@ -23,6 +23,7 @@ class TractModal: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractModalProperties()
+    var alreadyRendered = false
     
     // MARK: - Setup
     
@@ -41,9 +42,16 @@ class TractModal: BaseTractElement {
     
     override func render() -> UIView {
         let modalHeight = UIApplication.shared.keyWindow?.frame.size.height
-        let startYPosition = (modalHeight! - self.height) / CGFloat(2)
+        var startYPosition:CGFloat = 0
+        
+        if self.alreadyRendered == false {
+            startYPosition = (modalHeight! - self.height) / CGFloat(2)
+            self.alreadyRendered = true
+        }
         
         for element in self.elements! {
+            element.removeFromSuperview()
+            
             let xPosition = element.frame.origin.x
             let yPosition = element.frame.origin.y + startYPosition
             let width = element.frame.size.width
