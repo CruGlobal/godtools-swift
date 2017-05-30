@@ -124,6 +124,7 @@ class TractButton: BaseTractElement {
     func configureAsModalButton() {
         self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
         self.button.designAsTractModalButton()
+        self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: TractButton.modalMarginConstant,
                                    width: self.buttonWidth,
@@ -134,7 +135,11 @@ class TractButton: BaseTractElement {
         self.height = self.properties.height
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
-        self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.height)
+        self.frame = buildFrame()
+        self.button.frame = CGRect(x: self.buttonXPosition,
+                                   y: 0.0,
+                                   width: self.buttonWidth,
+                                   height: self.height)
         
     }
     
