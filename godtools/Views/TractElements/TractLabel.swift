@@ -50,36 +50,6 @@ class TractLabel: BaseTractElement {
     
     // MARK: - Setup
     
-    func buildHorizontalLine() {
-        let xPosition = TractCard.xPaddingConstant
-        let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
-        let height: CGFloat = 1.0
-        
-        let horizontalLine = UIView()
-        horizontalLine.frame = CGRect(x: xPosition,
-                                      y: yPosition,
-                                      width: width,
-                                      height: height)
-        horizontalLine.backgroundColor = .gtGreyLight
-        self.addSubview(horizontalLine)
-        
-    }
-    
-    override func render() -> UIView {
-        for element in self.elements! {
-            self.addSubview(element.render())
-        }
-        
-        if !BaseTractElement.isFormElement(self) {
-            setupPressGestures()
-            buildHorizontalLine()
-        }
-        
-        TractBindings.addBindings(self)
-        return self
-    }
-    
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.width = self.width
@@ -104,6 +74,38 @@ class TractLabel: BaseTractElement {
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
+        
+        if !BaseTractElement.isFormElement(self) {
+            setupPressGestures()
+            buildHorizontalLine()
+        }
+        
+        TractBindings.addBindings(self)
+        return self
+    }
+    
+    // MARK: - UI
+    
+    func buildHorizontalLine() {
+        let xPosition = TractCard.xPaddingConstant
+        let yPosition = self.frame.size.height - 1
+        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
+        let height: CGFloat = 1.0
+        
+        let horizontalLine = UIView()
+        horizontalLine.frame = CGRect(x: xPosition,
+                                      y: yPosition,
+                                      width: width,
+                                      height: height)
+        horizontalLine.backgroundColor = .gtGreyLight
+        self.addSubview(horizontalLine)
+        
     }
 
 }

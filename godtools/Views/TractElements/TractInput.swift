@@ -104,6 +104,19 @@ class TractInput: BaseTractElement {
         self.frame = buildFrame()
     }
     
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func loadElementProperties(properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.backgroundColor = .gtWhite
+        self.properties.color = self.primaryColor!
+    }
+    
     override func render() -> UIView {
         for element in self.elements! {
             self.addSubview(element.render())
@@ -117,21 +130,6 @@ class TractInput: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
-    }
-    
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
-    
-    // MARK: - Helpers
-    
-    func loadElementProperties(properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.primaryColor!
     }
 
 }

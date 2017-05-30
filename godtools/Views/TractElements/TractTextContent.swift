@@ -47,9 +47,41 @@ class TractTextContent: BaseTractElement {
     // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
-        loadStyles()
-        loadElementProperties(properties: properties)
+        super.setupView(properties: properties)
+        buildLabel()
         
+        self.frame = buildFrame()
+        self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
+        
+        self.addSubview(self.label)
+    }
+    
+    override func loadStyles() {
+        if self.properties.width > CGFloat(0.0) {
+            self.contentWidth = self.properties.width
+        } else {
+            self.contentWidth = (self.parent?.width)!
+        }
+        
+        self.xPosition = self.properties.xMargin
+        self.yPosition = self.yStartPosition + self.properties.yMargin
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func loadElementProperties(properties: [String: Any]) {
+        self.properties = (self.parent?.textStyle())!
+        self.properties.load(properties)
+    }
+    
+    // MARK: - UI
+    
+    private func buildLabel() {
         self.label = GTLabel(frame: buildFrame())
         self.label.text = self.properties.value
         self.label.textAlignment = self.properties.align
@@ -64,37 +96,6 @@ class TractTextContent: BaseTractElement {
         } else {
             self.height = self.properties.height
         }
-        
-        self.frame = buildFrame()
-        self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
-        
-        self.addSubview(self.label)
-    }
-    
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
-    
-    // MARK: - Helpers
-    
-    func loadStyles() {
-        self.properties = (self.parent?.textStyle())!
-        
-        if self.properties.width > CGFloat(0.0) {
-            self.contentWidth = self.properties.width
-        } else {
-            self.contentWidth = (self.parent?.width)!
-        }
-        
-        self.xPosition = self.properties.xMargin
-        self.yPosition = self.yStartPosition + self.properties.yMargin
-    }
-    
-    func loadElementProperties(properties: [String: Any]) {
-        self.properties.load(properties)
     }
     
 }

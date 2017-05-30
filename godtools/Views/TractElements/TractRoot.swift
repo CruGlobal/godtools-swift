@@ -22,15 +22,15 @@ class TractRoot: BaseTractElement {
         self.pageId = properties["id"] as! String
     }
     
-    override func elementListeners() -> [String]? {
-        return [self.pageId]
-    }
-    
     override func buildFrame() -> CGRect {
         return CGRect(x: 0.0,
                       y: self.yStartPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    override func elementListeners() -> [String]? {
+        return [self.pageId]
     }
     
 }

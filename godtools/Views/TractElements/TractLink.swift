@@ -38,12 +38,5 @@ class TractLink: TractButton {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
         }
     }
-    
-    override func buttonTarget() {
-        let events = self.properties.events!.components(separatedBy: ",")
-        for event in events {
-            sendMessageToElement(tag: event)
-        }
-    }
 
 }

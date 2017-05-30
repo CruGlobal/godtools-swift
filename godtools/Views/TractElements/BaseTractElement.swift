@@ -209,7 +209,13 @@ class BaseTractElement: UIView {
     
     func setupView(properties: Dictionary<String, Any>) {
         self.frame = buildFrame()
+        loadElementProperties(properties: properties)
+        loadStyles()
     }
+    
+    func loadElementProperties(properties: [String: Any]) { }
+    
+    func loadStyles() { }
     
     func buildFrame() -> CGRect {
         preconditionFailure("This function must be overridden")
