@@ -35,9 +35,22 @@ class TractTextContentProperties: TractElementProperties {
             case "text-scale":
                 self.scale = properties[property] as? CGFloat
             case "text-align":
-                self.align = (properties[property] as? NSTextAlignment)!
+                self.align = convertTextAlignmentString(properties[property] as! String?)
             default: break
             }
+        }
+    }
+    
+    private func convertTextAlignmentString(_ string: String?) -> NSTextAlignment {
+        guard let string = string else {
+            return .left
+        }
+        
+        switch string {
+            case "start": return .left
+            case "end": return .right
+            case "center": return .center
+        default: return .left
         }
     }
 
