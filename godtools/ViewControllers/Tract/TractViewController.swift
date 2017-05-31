@@ -389,8 +389,11 @@ extension TractViewController {
         
         var counter = 0
         for page in self.xmlPages {
-            let id = page["page"].element?.attribute(by: "id")!.text
-            self.pagesIds[id!] = counter
+            if page["page"].element?.attribute(by: "id") != nil {
+                let id = page["page"].element?.attribute(by: "id")!.text
+                self.pagesIds[id!] = counter
+            }
+            
             counter += 1
         }
     }
