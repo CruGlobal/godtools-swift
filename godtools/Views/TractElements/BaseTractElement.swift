@@ -57,8 +57,7 @@ class BaseTractElement: UIView {
     private var _mainView: TractRoot?
     var root: TractRoot? {
         get {
-            let parentRoot = self.parent?.root
-            return self._mainView != nil ? self._mainView : parentRoot!
+            return self._mainView != nil ? self._mainView : self.parent!.root
         }
     }
     
@@ -139,6 +138,13 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: 0.0)
     }
     
+    init(data: XMLIndexer, parent: BaseTractElement) {
+        let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        super.init(frame: frame)
+        self.parent = parent
+        setupElement(data: data, startOnY: CGFloat(0.0))
+    }
+    
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
@@ -179,20 +185,17 @@ class BaseTractElement: UIView {
                 currentYPosition = element.yEndPosition()
             }
             
+            if element.isKind(of: TractCallToAction.self) {
+                self.didFindCallToAction = true
+            }
+            
             elements.append(element)
         }
         
-        if self.isKind(of: TractRoot.self) {
-            if !self.didFindCallToAction {
-                let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
-                if self.horizontalContainer && element.yEndPosition() > maxYPosition {
-                    maxYPosition = element.yEndPosition()
-                } else {
-                    currentYPosition = element.yEndPosition()
-                }
-                
-                elements.append(element)
-            }
+        if self.isKind(of: TractRoot.self) && !self.didFindCallToAction {
+            let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
+            currentYPosition = element.yEndPosition()
+            elements.append(element)
         }
         
         if self.horizontalContainer {
@@ -212,6 +215,8 @@ class BaseTractElement: UIView {
         for element in self.elements! {
             self.addSubview(element.render())
         }
+        
+        TractBindings.addBindings(self)
         return self
     }
     

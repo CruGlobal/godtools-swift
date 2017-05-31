@@ -31,8 +31,14 @@ class TractCards: BaseTractElement {
     
     var xPosition: CGFloat = 0.0
     
+    let minYPosition: CGFloat = 110.0
+    
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.yMargin
+    }
+    
+    var yExternalPosition: CGFloat {
+        return self.yPosition > self.minYPosition ? self.yPosition : self.minYPosition
     }
     
     var constantYMarginTop: CGFloat = 60
@@ -51,7 +57,7 @@ class TractCards: BaseTractElement {
     }
     
     override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
+        return self.yExternalPosition + self.height
     }
     
     // MARK: - Object properties

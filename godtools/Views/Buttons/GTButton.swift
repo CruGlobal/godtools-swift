@@ -79,6 +79,17 @@ class GTButton: UIButton {
         self.layoutSubviews()
     }
     
+    func designAsTractModalButton() {
+        self.cornerRadius = 5.0
+        self.color = .gtWhite
+        self.tintColor = .gtWhite
+        self.borderWidth = 1.0
+        self.borderColor = .gtWhite
+        self.backgroundColor = .clear
+        
+        self.layoutSubviews()
+    }
+    
     fileprivate func designAsToolDetailButton() {
         self.cornerRadius = 5.0
         self.titleLabel?.font = UIFont.gtRegular(size: 15.0)

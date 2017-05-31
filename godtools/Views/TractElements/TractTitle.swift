@@ -20,6 +20,8 @@ class TractTitle: BaseTractElement {
     var xPosition: CGFloat {
         if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).includesNumber {
             return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+        } else if (BaseTractElement.isModalElement(self)) {
+            return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
         } else {
             return TractTitle.marginConstant
         }
@@ -44,9 +46,17 @@ class TractTitle: BaseTractElement {
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 18.0)
-        textStyle.width = self.width
         textStyle.color = .gtWhite
+        
+        if BaseTractElement.isModalElement(self) {
+            textStyle.font = .gtThin(size: 54.0)
+            textStyle.width = TractModal.contentWidth
+            textStyle.align = .center
+        } else {
+            textStyle.font = .gtThin(size: 18.0)
+            textStyle.width = self.width
+        }
+        
         return textStyle
     }
     

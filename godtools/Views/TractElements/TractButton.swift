@@ -10,6 +10,10 @@ import UIKit
 
 class TractButton: BaseTractElement {
     
+    // MARK: Positions constants
+    
+    static let modalMarginConstant: CGFloat = 50.0
+    
     // MARK: - Positions and Sizes
     
     var xMargin: CGFloat {
@@ -60,20 +64,41 @@ class TractButton: BaseTractElement {
     override func setupView(properties: [String: Any]) {
         loadStyles()
         loadElementProperties(properties: properties)
-        self.height = self.properties.height
         
         self.button = GTButton()
-        button.cornerRadius = self.properties.cornerRadius
-        button.backgroundColor = self.properties.backgroundColor
+        if BaseTractElement.isModalElement(self) {
+            configureAsModalButton()
+        } else {
+            configureAsStandardButton()
+        }
         
         self.addTargetToButton()
         
-        self.frame = buildFrame()
-        self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.frame.size.height)
         self.addSubview(self.button)
     }
     
     // MARK: - Helpers
+    
+    func configureAsModalButton() {
+        self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
+        self.button.designAsTractModalButton()
+        
+        self.frame = buildFrame()
+        self.button.frame = CGRect(x: self.buttonXPosition,
+                                   y: TractButton.modalMarginConstant,
+                                   width: self.buttonWidth,
+                                   height: self.properties.height)
+    }
+    
+    func configureAsStandardButton() {
+        self.height = self.properties.height
+        button.cornerRadius = self.properties.cornerRadius
+        button.backgroundColor = self.properties.backgroundColor
+        
+        self.frame = buildFrame()
+        self.button.frame = CGRect(x: self.buttonXPosition, y: 0.0, width: self.buttonWidth, height: self.height)
+        
+    }
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -114,8 +139,10 @@ class TractButton: BaseTractElement {
     }
     
     func buttonTarget() {
-        let tag = self.properties.value?.transformToNumber()
-        self.root?.sendMessageToView(tag: tag!)
+        let values = self.properties.value!.components(separatedBy: ",")
+        for value in values {
+            sendMessageToElement(tag: value)
+        }
     }
     
     override func render() -> UIView {
@@ -132,7 +159,8 @@ class TractButton: BaseTractElement {
                 self.addSubview(element.render())
             }
         }
-    
+        
+        TractBindings.addBindings(self)
         return self
     }
     

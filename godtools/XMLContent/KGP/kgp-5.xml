@@ -2,7 +2,7 @@
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
-    background-image="jesus_gives_us_life.png">
+    background-image="jesus_gives_us_life.png" id="kgp-5">
     <header>
         <title>
             <content:text i18n-id="{{uuid}}">To begin a relationship with God, you must place your trust in Jesus alone.
@@ -85,12 +85,11 @@
         </card>
     </cards>
     <modals>
-        <modal listener="send-information-modal">
+        <modal listeners="send-information-modal" dismiss-listeners="send-information-modal-close">
             <title>
                 <content:text i18n-id="{{uuid}}">Thank You
                 </content:text>
             </title>
-            
             <paragraph>
                 <content:text i18n-id="{{uuid}}">Check your email soon for your first study in following Jesus Christ.
                 </content:text>
@@ -100,7 +99,7 @@
                 </content:text>
             </paragraph>
             <paragraph>
-                <content:button type="event" value="kgp-6">
+                <content:button type="event" value="kgp-6,send-information-modal-close">
                     <content:text i18n-id="{{uuid}}">
                         Done
                     </content:text>

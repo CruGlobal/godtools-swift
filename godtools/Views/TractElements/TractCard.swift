@@ -93,10 +93,10 @@ class TractCard: BaseTractElement {
             self.isHidden = true
             self.cardState = .hidden
         }
-        
-        if self.properties.listener != nil {
-            self.tag = (self.properties.listener?.transformToNumber())!
-        }
+    }
+    
+    override func elementListeners() -> [String]? {
+        return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
     }
     
     func setupScrollView() {
@@ -154,29 +154,15 @@ class TractCard: BaseTractElement {
         self.addSubview(self.shadowView)
         self.addSubview(self.scrollView)
         setupTransparentView()
+        
+        TractBindings.addBindings(self)
         return self
     }
     
     // MARK: - Actions
     
     func didTapOnCard() {
-        switch self.cardState {
-        case .preview:
-            showCardAndPreviousCards()
-        case .open:
-            hideCard()
-        case .close:
-            showCardAndPreviousCards()
-        case .enable:
-            hideCard()
-        default: break
-        }
-    }
-    
-    override func receiveMessage() {
-        if self.cardState == .hidden {
-            showCard()
-        }
+        processCardWithState()
     }
     
     // MARK: - Helpers

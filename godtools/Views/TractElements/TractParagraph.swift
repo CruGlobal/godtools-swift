@@ -18,7 +18,11 @@ class TractParagraph: BaseTractElement {
     // MARK: - Positions and Sizes
     
     var xPosition: CGFloat {
-        return CGFloat(0.0)
+        if BaseTractElement.isModalElement(self) {
+            return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
+        } else {
+            return CGFloat(0)
+        }
     }
     
     var yPosition: CGFloat {
@@ -26,7 +30,11 @@ class TractParagraph: BaseTractElement {
     }
     
     override var width: CGFloat {
-        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
+        if BaseTractElement.isModalElement(self) {
+            return TractModal.contentWidth
+        } else {
+            return self.parent!.width - (self.xPosition * CGFloat(2))
+        }
     }
     
     override func yEndPosition() -> CGFloat {
@@ -40,13 +48,34 @@ class TractParagraph: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
+        if BaseTractElement.isModalElement(self) {
+            return buildModalParagraph()
+        } else {
+            return buildStandardParagraph()
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    func buildModalParagraph() -> TractTextContentProperties {        
         let textStyle = super.textStyle()
+        textStyle.font = .gtRegular(size: 18.0)
+        textStyle.width = self.width
+        textStyle.xMargin = BaseTractElement.xMargin
+        textStyle.color = .gtWhite
+        textStyle.align = .center
         
+        return textStyle
+    }
+    
+    func buildStandardParagraph() -> TractTextContentProperties {
         var xMargin = BaseTractElement.xMargin
+        
         if BaseTractElement.isCardElement(self) {
             xMargin = TractCard.xPaddingConstant
         }
         
+        let textStyle = super.textStyle()
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = xMargin
@@ -54,8 +83,6 @@ class TractParagraph: BaseTractElement {
         
         return textStyle
     }
-    
-    // MARK: - Helpers
     
     fileprivate func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,

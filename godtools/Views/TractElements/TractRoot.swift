@@ -15,8 +15,19 @@ import SWXMLHash
 
 class TractRoot: BaseTractElement {
     
+    var pageId: String = ""
+    
     override func setupView(properties: [String: Any]) {
+        self.pageId = properties["id"] as! String
         self.frame = buildFrame()
+    }
+    
+    override func elementListeners() -> [String]? {
+        return [self.pageId]
+    }
+    
+    override func receiveMessage() {
+        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
     }
     
     // MARK: - Helpers

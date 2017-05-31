@@ -12,6 +12,8 @@ import SWXMLHash
 import Crashlytics
 
 class TractManager: GTDataManager {
+    
+    let testMode = true
 
 }
 
@@ -20,22 +22,28 @@ extension TractManager {
     func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLIndexer], colors: TractColors) {
         var pages = [XMLIndexer]()
         let tractColors = TractColors()
+        var xmlData: XMLIndexer?
         
-        guard let translation = resource.getTranslationForLanguage(language) else {
-            return (pages, tractColors)
+        if testMode {
+            let manifestPath = "kgp-manifest"
+            xmlData = loadXMLFile(manifestPath)
+        
+        } else {
+            guard let translation = resource.getTranslationForLanguage(language) else {
+                return (pages, tractColors)
+            }
+            
+            
+            guard let manifestPath = translation.manifestFilename else {
+                return (pages, tractColors)
+            }
+            
+            xmlData = loadXMLFile(manifestPath)
         }
         
-        
-        guard let manifestPath = translation.manifestFilename else {
-            return (pages, tractColors)
-        }
-        
-        
-        let xmlData = loadXMLFile(manifestPath)
         guard let manifest = xmlData?["manifest"] else {
             return (pages, tractColors)
         }
-        
         
         let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text) ?? GTAppDefaultColors.primaryColor
         let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text) ?? GTAppDefaultColors.primaryTextColorString
@@ -62,11 +70,11 @@ extension TractManager {
     }
     
     func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
-        let file = documentsPath.appending("/Resources/").appending(resourcePath)
+        let file = testMode ? Bundle.main.path(forResource: resourcePath, ofType: "xml") : documentsPath.appending("/Resources/").appending(resourcePath)
         
         var xml: XMLIndexer?
         do {
-            let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
+            let content = try String(contentsOfFile: file!, encoding: String.Encoding.utf8)
             
             let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
             let range = NSMakeRange(0, content.characters.count)

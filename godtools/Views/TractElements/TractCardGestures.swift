@@ -23,15 +23,9 @@ extension TractCard {
     
     func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
-            if self.cardState == .preview || self.cardState == .close {
-                showCardAndPreviousCards()
-            } else {
-                self.cardsParentView.showFollowingCardToCard(self)
-            }
+            processSwipeUp()
         } else if sender.direction == .down {
-            if self.cardState == .open || self.cardState == .enable {
-                hideCard()
-            }
+            processSwipeDown()
         }
     }
     

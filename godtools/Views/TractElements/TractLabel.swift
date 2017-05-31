@@ -80,6 +80,7 @@ class TractLabel: BaseTractElement {
             buildHorizontalLine()
         }
         
+        TractBindings.addBindings(self)
         return self
     }
     

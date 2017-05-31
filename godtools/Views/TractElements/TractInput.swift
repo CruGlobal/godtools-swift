@@ -115,6 +115,7 @@ class TractInput: BaseTractElement {
                                       height: self.textViewHeight)
         self.addSubview(self.textField)
         
+        TractBindings.addBindings(self)
         return self
     }
     

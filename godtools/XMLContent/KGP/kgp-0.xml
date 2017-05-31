@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342248/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
-    xmlns:content="https://mobile-content-api.cru.org/xmlns/content">
+    xmlns:content="https://mobile-content-api.cru.org/xmlns/content" id="kgp-0">
     <hero>
         <heading>
             <content:text i18n-id="{{uuid}}">Knowing God Personally</content:text>

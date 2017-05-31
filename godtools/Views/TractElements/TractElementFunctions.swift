@@ -11,9 +11,6 @@ import SWXMLHash
 
 extension BaseTractElement {
     
-    func receiveMessage() {
-    }
-    
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
         let dataContent = splitData(data: data)
         
@@ -52,6 +49,10 @@ extension BaseTractElement {
             return TractCallToAction(data: data, startOnY: yPosition, parent: self)
         case "tabs":
             return TractTabs(data: data, startOnY: yPosition, parent: self)
+        case "modals":
+            return TractModals(data: data, parent: self)
+        case "modal":
+            return TractModal(data: data, startOnY: yPosition, parent: self)
         default:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
         }
@@ -83,5 +84,29 @@ extension BaseTractElement {
         let children = data.children
         return (elementName!, namespace, kind, properties, children)
     }
+    
+    func elementListeners() -> [String]? {
+        return nil
+    }
+    
+    func elementDismissListeners() -> [String]? {
+        return nil
+    }
+    
+    func sendMessageToElement(tag: String) {
+        if TractBindings.bindings[tag] != nil {
+            guard let view = TractBindings.bindings[tag] else { return }
+            view.receiveMessage()
+        }
+        
+        if TractBindings.dismissBindings[tag] != nil {
+            guard let view = TractBindings.dismissBindings[tag] else { return }
+            view.receiveDismissMessage()
+        }
+    }
+    
+    func receiveMessage() { }
+    
+    func receiveDismissMessage() { }
     
 }

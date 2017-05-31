@@ -23,6 +23,7 @@
 		0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */; };
 		0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6021EC4F5A500C55B2A /* kgp-4.xml */; };
 		0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F13B6041EC5003600C55B2A /* kgp-5.xml */; };
+		0F260D4D1ECE5F9E00865C76 /* TractModalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */; };
 		0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837971EC62D3F0049CCE5 /* TractLink.swift */; };
 		0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837991EC65A140049CCE5 /* TractTabs.swift */; };
 		0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F28379B1EC65A330049CCE5 /* TractTab.swift */; };
@@ -86,6 +87,9 @@
 		0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */; };
 		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */; };
+		0FF3DA551ED5F5400053D0E0 /* TractElementBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3DA541ED5F5400053D0E0 /* TractElementBindings.swift */; };
+		0FF3DA571ED61BDF0053D0E0 /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3DA561ED61BDF0053D0E0 /* TractBindings.swift */; };
+		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
 		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
@@ -158,6 +162,7 @@
 		0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractForm.swift; path = Views/TractElements/TractForm.swift; sourceTree = "<group>"; };
 		0F13B6021EC4F5A500C55B2A /* kgp-4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-4.xml"; sourceTree = "<group>"; };
 		0F13B6041EC5003600C55B2A /* kgp-5.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-5.xml"; sourceTree = "<group>"; };
+		0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractModalProperties.swift; sourceTree = "<group>"; };
 		0F2837971EC62D3F0049CCE5 /* TractLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLink.swift; path = Views/TractElements/TractLink.swift; sourceTree = "<group>"; };
 		0F2837991EC65A140049CCE5 /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabs.swift; path = Views/TractElements/TractTabs.swift; sourceTree = "<group>"; };
 		0F28379B1EC65A330049CCE5 /* TractTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTab.swift; path = Views/TractElements/TractTab.swift; sourceTree = "<group>"; };
@@ -221,6 +226,9 @@
 		0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTUIExtensions.swift; sourceTree = "<group>"; };
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultColors.swift; sourceTree = "<group>"; };
+		0FF3DA541ED5F5400053D0E0 /* TractElementBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementBindings.swift; path = Views/TractElements/TractElementBindings.swift; sourceTree = "<group>"; };
+		0FF3DA561ED61BDF0053D0E0 /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractBindings.swift; sourceTree = "<group>"; };
+		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -325,6 +333,7 @@
 				0F0352C61EC2273B006CD4E5 /* kgp-3.xml */,
 				0F13B6021EC4F5A500C55B2A /* kgp-4.xml */,
 				0F13B6041EC5003600C55B2A /* kgp-5.xml */,
+				0FF3DA581ED623570053D0E0 /* kgp-6.xml */,
 				0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */,
 			);
 			path = KGP;
@@ -367,6 +376,7 @@
 				0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */,
 				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
 				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
+				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -390,7 +400,6 @@
 				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
 				0F2837971EC62D3F0049CCE5 /* TractLink.swift */,
 				0F28379B1EC65A330049CCE5 /* TractTab.swift */,
-				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -464,6 +473,8 @@
 				0F85C7871ECC992100023723 /* TractColors.swift */,
 				0F85C7881ECC992100023723 /* TractConfigurations.swift */,
 				0F85C7891ECC992100023723 /* TractTextFieldProperties.swift */,
+				0F260D4C1ECE5F9E00865C76 /* TractModalProperties.swift */,
+				0FF3DA561ED61BDF0053D0E0 /* TractBindings.swift */,
 			);
 			name = Tract;
 			sourceTree = "<group>";
@@ -859,6 +870,7 @@
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
+				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
@@ -996,6 +1008,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FF3DA571ED61BDF0053D0E0 /* TractBindings.swift in Sources */,
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCardAnimations.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
@@ -1066,6 +1079,7 @@
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
+				0F260D4D1ECE5F9E00865C76 /* TractModalProperties.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,

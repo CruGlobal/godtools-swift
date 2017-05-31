@@ -24,7 +24,8 @@ class TractViewController: BaseViewController {
         return CGFloat(currentPage) *  -self.view.frame.width
     }
     var containerView = UIView()
-    var pagesViews = [UIView]()
+    var pagesViews = [BaseTractView]()
+    var pagesIds = [String: Int]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
@@ -37,6 +38,7 @@ class TractViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TractBindings.setupBindings()
         getResourceData()
         setupSwipeGestures()
         defineObservers()
@@ -148,18 +150,20 @@ class TractViewController: BaseViewController {
         }
     }
     
-    fileprivate func buildPage(_ page: Int, width: CGFloat, height: CGFloat) -> UIView {
-        let xPosition = (width * CGFloat(page))
+    fileprivate func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat) -> BaseTractView {
+        let xPosition = (width * CGFloat(pageNumber))
         let frame = CGRect(x: xPosition,
                            y: 0.0,
                            width: width,
                            height: height)
-        let view = BaseTractView(frame: frame)
+        
+        let page = getPage(pageNumber)
+        let configurations = TractConfigurations()
+        configurations.defaultTextAlignment = getLanguageTextAlignment()
+        
+        let view = BaseTractView(frame: frame, data: page["page"], colors: self.colors!, configurations: configurations)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        view.data = getPage(page)
-        view.colors = self.colors
-        view.configurations.defaultTextAlignment = getLanguageTextAlignment()
-        view.tag = self.viewTagOrigin + page
+        view.tag = self.viewTagOrigin + pageNumber
         return view
     }
     
@@ -226,6 +230,23 @@ class TractViewController: BaseViewController {
     }
     
     // MARK: - Handle page movements
+    
+    func moveToPage(notification: Notification) {
+        guard let dictionary = notification.userInfo as? [String: String] else {
+            return
+        }
+        
+        let destinationViewPageId = dictionary["pageId"]
+        for (pageId, pageIndex) in self.pagesIds {
+            if pageId == destinationViewPageId {
+                self.currentPage = pageIndex
+                break
+            }
+        }
+        
+        reloadPagesViews()
+        moveViews()
+    }
     
     func moveToNextPage() {
         if self.currentPage >= totalPages() - 1 {
@@ -304,6 +325,10 @@ class TractViewController: BaseViewController {
                                                name: NSNotification.Name.UIApplicationDidBecomeActive,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moveToPage),
+                                               name: NSNotification.Name.moveToPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToNextPage),
                                                name: NSNotification.Name.moveToNextPageNotification,
                                                object: nil)
@@ -361,6 +386,13 @@ extension TractViewController {
         let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
         self.xmlPages = content.pages
         self.colors = content.colors
+        
+        var counter = 0
+        for page in self.xmlPages {
+            let id = page["page"].element?.attribute(by: "id")!.text
+            self.pagesIds[id!] = counter
+            counter += 1
+        }
     }
     
     fileprivate func getPage(_ pageNumber: Int) -> XMLIndexer {
