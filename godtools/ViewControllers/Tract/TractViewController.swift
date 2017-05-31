@@ -16,6 +16,8 @@ class TractViewController: BaseViewController {
     var resource: DownloadedResource?
     var viewsWereGenerated = false
     var xmlPages = [XMLIndexer]()
+    var xmlPagesForPrimaryLang = [XMLIndexer]()
+    var xmlPagesForParallelLang = [XMLIndexer]()
     var colors: TractColors?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
@@ -51,7 +53,8 @@ class TractViewController: BaseViewController {
             return
         }
         
-        initializeView()
+        setupContainerView()
+        loadPagesViews()
         self.viewsWereGenerated = true
     }
     
@@ -66,7 +69,7 @@ class TractViewController: BaseViewController {
         self.progressView.removeFromSuperview()
     }
     
-    // MARK: - UI configuration
+    // MARK: - UI setup
     
     override func configureNavigationButtons() {
         self.addHomeButton()
@@ -79,6 +82,26 @@ class TractViewController: BaseViewController {
         } else {
             self.title = currentTractTitle()
         }
+    }
+    
+    fileprivate func setupContainerView() {
+        let navigationBarFrame = navigationController!.navigationBar.frame
+        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        
+        let width = self.view.frame.size.width
+        let height = self.view.frame.size.height - startingYPos
+        self.containerView.frame = CGRect(x: 0.0, y: startingYPos, width: width, height: height)
+        self.view.addSubview(self.containerView)
+    }
+        
+    fileprivate func loadPagesViews() {
+        let size = self.containerView.frame.size
+        buildPages(width: size.width, height: size.height)
+    }
+    
+    fileprivate func currentTractTitle() -> String {
+        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        return resource!.localizedName(language: primaryLanguage)
     }
     
     fileprivate func setupStyle() {
@@ -126,183 +149,26 @@ class TractViewController: BaseViewController {
         navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: navigationBarHeight)
     }
     
-    // MARK: Build content
+    // MARK: - Segmented Control
     
-    fileprivate func initializeView() {
-        let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
+    fileprivate func languageSegmentedControl() -> UISegmentedControl {
+        let primaryLabel = self.determinePrimaryLabel()
+        let parallelLabel = self.determineParallelLabel()
         
-        let width = self.view.frame.size.width
-        let height = self.view.frame.size.height - startingYPos
-        self.containerView.frame = CGRect(x: 0.0, y: startingYPos, width: width, height: height)
-        self.view.addSubview(self.containerView)
-        
-        buildPages(width: width, height: height)
+        let segmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
+        return segmentedControl
     }
     
-    fileprivate func buildPages(width: CGFloat, height: CGFloat) {
-        let range = getRangeOfViews()
-        
-        for pageNumber in range.start...range.end {
-            let view = buildPage(pageNumber, width: width, height: height)
-            self.pagesViews.append(view)
-            self.containerView.addSubview(view)
-        }
-    }
-    
-    fileprivate func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat) -> BaseTractView {
-        let xPosition = (width * CGFloat(pageNumber))
-        let frame = CGRect(x: xPosition,
-                           y: 0.0,
-                           width: width,
-                           height: height)
-        
-        let page = getPage(pageNumber)
-        let configurations = TractConfigurations()
-        configurations.defaultTextAlignment = getLanguageTextAlignment()
-        
-        let view = BaseTractView(frame: frame, data: page["page"], colors: self.colors!, configurations: configurations)
-        view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        view.tag = self.viewTagOrigin + pageNumber
-        return view
-    }
-    
-    fileprivate func reloadPagesViews() {
-        let range = getRangeOfViews()
-        let firstTag = (self.pagesViews.first?.tag)! - self.viewTagOrigin
-        let lastTag = (self.pagesViews.last?.tag)! - self.viewTagOrigin
-        let width = self.containerView.frame.size.width
-        let height = self.containerView.frame.size.height
-        
-        if firstTag < range.start {
-            let view = self.pagesViews.first
-            self.pagesViews.removeFirst()
-            view?.removeFromSuperview()
-        } else if firstTag > range.start {
-            let view = buildPage(range.start, width: width, height: height)
-            self.pagesViews.insert(view, at: 0)
-            self.containerView.addSubview(view)
+    @objc fileprivate func didSelectLanguage(segmentedControl: UISegmentedControl) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            usePrimaryLanguageResources()
+        } else {
+            useParallelLanguageResources()
         }
         
-        if lastTag < range.end {
-            let view = buildPage(range.end, width: width, height: height)
-            self.pagesViews.append(view)
-            self.containerView.addSubview(view)
-        } else if lastTag > range.end {
-            let view = self.pagesViews.last
-            self.pagesViews.removeLast()
-            view?.removeFromSuperview()
-        }
-    }
-    
-    fileprivate func getRangeOfViews() -> (start: Int, end: Int) {
-        var start = self.currentPage - 2
-        if start < 0 {
-            start = 0
-        }
-        
-        var end = self.currentPage + 2
-        if end > self.totalPages() - 1 {
-            end = totalPages() - 1
-        }
-        
-        return (start, end)
-    }
-    
-    // MARK: - Swipe gestures
-    
-    fileprivate func setupSwipeGestures() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
-    @objc fileprivate func handleGesture(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right {
-            moveToPreviousPage()
-        } else if sender.direction == .left {
-            moveToNextPage()
-        }
-    }
-    
-    // MARK: - Handle page movements
-    
-    func moveToPage(notification: Notification) {
-        guard let dictionary = notification.userInfo as? [String: String] else {
-            return
-        }
-        
-        let destinationViewPageId = dictionary["pageId"]
-        for (pageId, pageIndex) in self.pagesIds {
-            if pageId == destinationViewPageId {
-                self.currentPage = pageIndex
-                break
-            }
-        }
-        
-        reloadPagesViews()
-        moveViews()
-    }
-    
-    func moveToNextPage() {
-        if self.currentPage >= totalPages() - 1 {
-            return
-        }
-        
-        self.currentPage += 1
-        reloadPagesViews()
-        moveViews()
-    }
-    
-    func moveToPreviousPage() {
-        if self.currentPage == 0 {
-            return
-        }
-        
-        self.currentPage -= 1
-        reloadPagesViews()
-        moveViews()
-    }
-    
-    func removeViewsBeforeCurrentView() {
-        if self.currentPage == 0 {
-            return
-        }
-        
-        let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin)
-        
-        for pageView in self.pagesViews {
-            if pageView == currentPageView {
-                break
-            }
-            pageView.removeFromSuperview()
-        }
-    }
-    
-    fileprivate func moveViews() {
-        let newCurrentProgressViewFrame = CGRect(x: 0.0,
-                                                 y: 0.0,
-                                                 width: currentProgressWidth(),
-                                                 height: self.currentProgressView.frame.size.height)
-        
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.currentProgressView.frame = newCurrentProgressViewFrame
-                        for view in self.pagesViews {
-                            view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-                        } },
-                       completion: nil )
-    }
-    
-    fileprivate func currentProgressWidth() -> CGFloat {
-        let parentWidth = self.navigationController?.navigationBar.frame.size.width
-        return CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
+        loadPagesViews()
     }
     
     // MARK: - Navigation buttons actions
@@ -334,76 +200,11 @@ class TractViewController: BaseViewController {
                                                object: nil)
     }
     
-}
-
-extension TractViewController {
+    // MARK: - Helpers
     
-    fileprivate func currentTractTitle() -> String {
-        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
-        
-        return resource!.localizedName(language: primaryLanguage)
-    }
-    
-    fileprivate func parallelLanguageIsAvailable() -> Bool {
-        guard let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk() else {
-            return false
-        }
-        
-        return resource!.isAvailableInLanguage(parallelLanguage)
-    }
-    
-    fileprivate func languageSegmentedControl() -> UISegmentedControl {
-        let primaryLabel = self.determinePrimaryLabel()
-        let parallelLabel = self.determineParallelLabel()
-        
-        let control = UISegmentedControl(items: [primaryLabel, parallelLabel])
-        control.selectedSegmentIndex = 0
-        return control
-    }
-    
-    fileprivate func determinePrimaryLabel() -> String {
-        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
-        
-        if primaryLanguage == nil {
-            return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
-        } else {
-            return primaryLanguage!.localizedName()
-        }
-    }
-    
-    fileprivate func determineParallelLabel() -> String {
-        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
-        
-        return parallelLanguage!.localizedName()
-    }
-    
-    fileprivate func getLanguageTextAlignment() -> NSTextAlignment {
-        return .left
-    }
-    
-    fileprivate func getResourceData() {
-        let language = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
-        let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
-        self.xmlPages = content.pages
-        self.colors = content.colors
-        
-        var counter = 0
-        for page in self.xmlPages {
-            if page["page"].element?.attribute(by: "id") != nil {
-                let id = page["page"].element?.attribute(by: "id")!.text
-                self.pagesIds[id!] = counter
-            }
-            
-            counter += 1
-        }
-    }
-    
-    fileprivate func getPage(_ pageNumber: Int) -> XMLIndexer {
-        return self.xmlPages[pageNumber]
-    }
-    
-    fileprivate func totalPages() -> Int {
-        return self.xmlPages.count;
+    func currentProgressWidth() -> CGFloat {
+        let parentWidth = self.navigationController?.navigationBar.frame.size.width
+        return CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
     }
     
 }
