@@ -25,7 +25,7 @@ class TractRoot: BaseTractElement {
     
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
-        self.pageId = properties["id"] as! String
+        self.pageId = properties["id"] as? String ?? ""
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
