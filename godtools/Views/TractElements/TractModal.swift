@@ -75,7 +75,7 @@ class TractModal: BaseTractElement {
     
     // MARK: - Helpers
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.load(properties)
     }
 

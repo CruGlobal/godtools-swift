@@ -62,7 +62,7 @@ class TractButton: BaseTractElement {
     
     // MARK: - Setup
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties = (self.parent?.buttonStyle())!
         self.properties.load(properties)
         self.properties.backgroundColor = self.primaryColor!

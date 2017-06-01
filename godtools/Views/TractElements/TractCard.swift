@@ -83,7 +83,7 @@ class TractCard: BaseTractElement {
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
         
-        loadElementProperties(properties: properties)
+        loadElementProperties(properties)
         
         self.frame = buildFrame()
         setupStyle()
@@ -126,7 +126,7 @@ class TractCard: BaseTractElement {
                       height: self.externalHeight)
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.load(properties)
     }
     
