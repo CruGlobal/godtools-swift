@@ -51,7 +51,7 @@
                 </content:link>
             </paragraph>
         </card>
-        <card hidden="true" listener="followup-form">
+        <card hidden="true" listeners="followup-form">
             <label>
                 <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
             </label>

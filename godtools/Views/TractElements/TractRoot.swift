@@ -48,7 +48,7 @@ class TractRoot: BaseTractElement {
     }
     
     override func elementListeners() -> [String]? {
-        return [self.pageId]
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
     }
     
 }
