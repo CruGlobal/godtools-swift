@@ -59,6 +59,10 @@ class GTDataManager: NSObject {
         context.mr_saveToPersistentStoreAndWait()
     }
     
+    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
+        return entityClass.mr_findFirst(with: matching, in: context)
+    }
+    
     func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
         return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
     }
@@ -81,6 +85,10 @@ class GTDataManager: NSObject {
     
     func deleteEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) {
         entityClass.mr_deleteAll(matching: matching, in: context)
+    }
+    
+    func deleteEntity<T: NSManagedObject>(_ entity: T) {
+        entity.mr_deleteEntity(in: context)
     }
     
     func buildURL() -> URL? {

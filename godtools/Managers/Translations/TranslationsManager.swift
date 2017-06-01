@@ -38,4 +38,27 @@ class TranslationsManager: GTDataManager {
             saveToDisk()
         }
     }
+    
+    func purgeOlderTranslations(languageId: String, resourceId: String, version: Int16) {
+        let lookupPredicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version = %d",
+                                          languageId,
+                                          resourceId,
+                                          version)
+        
+        guard let translation = findEntity(Translation.self, matching: lookupPredicate) else {
+            return
+        }
+        
+        let deletePredicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
+                                          languageId,
+                                          resourceId,
+                                          version,
+                                          NSNumber(booleanLiteral: translation.isDownloaded))
+        
+        let oldTranslations = findEntities(Translation.self, matching: deletePredicate)
+        
+        for oldTranslation in oldTranslations {
+            deleteEntity(oldTranslation)
+        }
+    }
 }
