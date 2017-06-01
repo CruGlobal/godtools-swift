@@ -52,23 +52,32 @@ extension TractViewController {
         let height = self.containerView.frame.size.height
         
         if firstTag < range.start {
-            let view = self.pagesViews.first
-            self.pagesViews.removeFirst()
-            view?.removeFromSuperview()
+            for _ in 0...firstTag {
+                self.pagesViews.first?.removeFromSuperview()
+                self.pagesViews.removeFirst()
+            }
+            
         } else if firstTag > range.start {
-            let view = buildPage(range.start, width: width, height: height)
-            self.pagesViews.insert(view, at: 0)
-            self.containerView.addSubview(view)
+            var position = 0
+            for _ in range.start...firstTag {
+                let view = buildPage(range.start + position, width: width, height: height)
+                self.pagesViews.insert(view, at: position)
+                self.containerView.addSubview(view)
+                position += 1
+            }
         }
         
         if lastTag < range.end {
-            let view = buildPage(range.end, width: width, height: height)
-            self.pagesViews.append(view)
-            self.containerView.addSubview(view)
+            for position in lastTag...range.end {
+                let view = buildPage(position, width: width, height: height)
+                self.pagesViews.append(view)
+                self.containerView.addSubview(view)
+            }
         } else if lastTag > range.end {
-            let view = self.pagesViews.last
-            self.pagesViews.removeLast()
-            view?.removeFromSuperview()
+            for _ in range.end...lastTag {
+                self.pagesViews.last?.removeFromSuperview()
+                self.pagesViews.removeLast()
+            }
         }
     }
     
