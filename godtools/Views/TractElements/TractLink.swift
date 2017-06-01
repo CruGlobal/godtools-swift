@@ -18,8 +18,8 @@ class TractLink: TractButton {
         return textStyle
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
-        super.loadElementProperties(properties: properties)
+    override func loadElementProperties(_ properties: [String: Any]) {
+        super.loadElementProperties(properties)
         
         for property in properties.keys {
             switch property {

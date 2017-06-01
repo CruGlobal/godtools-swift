@@ -93,7 +93,7 @@ class TractInput: BaseTractElement {
     }
     
     override func setupView(properties: [String: Any]) {
-        loadElementProperties(properties: properties)
+        loadElementProperties(properties)
         
         self.textField.cornerRadius = self.properties.cornerRadius
         self.textField.borderColor = self.properties.color
@@ -111,7 +111,7 @@ class TractInput: BaseTractElement {
                       height: self.height)
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.load(properties)
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.primaryColor!

@@ -74,7 +74,7 @@ class TractTextContent: BaseTractElement {
                       height: self.height)
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties = (self.parent?.textStyle())!
         self.properties.load(properties)
     }

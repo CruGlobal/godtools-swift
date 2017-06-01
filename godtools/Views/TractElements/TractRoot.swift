@@ -28,7 +28,7 @@ class TractRoot: BaseTractElement {
         self.pageId = properties["id"] as! String
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
+    override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.primaryColor = self.colors?.primaryColor
         self.properties.primaryTextColor = self.colors?.primaryTextColor
         self.properties.textColor = self.colors?.textColor

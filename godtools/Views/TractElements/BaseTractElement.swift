@@ -167,7 +167,7 @@ class BaseTractElement: UIView {
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
-        loadElementProperties(properties: dataContent.properties)
+        loadElementProperties(dataContent.properties)
         buildChildrenForData(dataContent.children)
         setupView(properties: dataContent.properties)
     }
@@ -214,7 +214,7 @@ class BaseTractElement: UIView {
         loadStyles()
     }
     
-    func loadElementProperties(properties: [String: Any]) { }
+    func loadElementProperties(_ properties: [String: Any]) { }
     
     func loadStyles() { }
     
