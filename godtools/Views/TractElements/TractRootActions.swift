@@ -50,4 +50,8 @@ extension TractRoot {
         }
     }
     
+    override func receiveMessage() {
+        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
+    }
+    
 }

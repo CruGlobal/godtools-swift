@@ -23,6 +23,7 @@ class TractCard: BaseTractElement {
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
+    static let shadowPaddingConstant: CGFloat = 2.0
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 80.0
     static let xPaddingConstant: CGFloat = 28.0
@@ -44,13 +45,17 @@ class TractCard: BaseTractElement {
         return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
     }
     
+    var contentWidth: CGFloat {
+        return self.width - (TractCard.shadowPaddingConstant * CGFloat(2))
+    }
+    
     var externalHeight: CGFloat {
         return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
     }
     
     var internalHeight: CGFloat {
-        let internalHeight = self.height > self.externalHeight ? self.height : self.externalHeight
-        return internalHeight + TractCard.contentBottomPadding
+        let internalHeight = self.height > self.externalHeight ? self.height + TractCard.contentBottomPadding : self.externalHeight
+        return internalHeight
     }
     
     var translationY: CGFloat {
@@ -64,9 +69,9 @@ class TractCard: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractCardProperties()
+    var shadowView = UIView()
     let scrollView = UIScrollView()
     let containerView = UIView()
-    var shadowView = UIView()
     var cardState = CardState.preview
     var cardNumber = 0
     var cardsParentView: TractCards {
@@ -76,7 +81,9 @@ class TractCard: BaseTractElement {
     // MARK: - Setup
     
     override func setupView(properties: Dictionary<String, Any>) {
-        loadElementProperties(properties: properties)
+        super.setupView(properties: properties)
+        
+        loadElementProperties(properties)
         
         self.frame = buildFrame()
         setupStyle()
@@ -99,20 +106,56 @@ class TractCard: BaseTractElement {
         return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
     }
     
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.containerView.addSubview(element.render())
+        }
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.shadowView)
+        self.addSubview(self.scrollView)
+        setupTransparentView()
+        
+        TractBindings.addBindings(self)
+        return self
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.externalHeight)
+    }
+    
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+    }
+    
+    // MARK: - ScrollView
+    
     func setupScrollView() {
+        let height = self.bounds.size.height
+        let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
+        
         let contentHeight = self.internalHeight
-        self.scrollView.contentSize = CGSize(width: self.width, height: contentHeight)
-        self.scrollView.frame = self.bounds
+        self.scrollView.contentSize = CGSize(width: self.contentWidth, height: contentHeight)
+        self.scrollView.frame = scrollViewFrame
         self.scrollView.delegate = self
         self.scrollView.backgroundColor = .gtWhite
+        self.scrollView.showsVerticalScrollIndicator = false
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
-                                          width: self.width,
+                                          width: self.contentWidth,
                                           height: contentHeight)
         self.containerView.backgroundColor = .clear
     }
     
+    // MARK: - UI
+    
     func setupTransparentView() {
+        if self.externalHeight >= self.internalHeight {
+            return
+        }
+        
         let width = self.scrollView.frame.size.width - 6.0
         let height: CGFloat = 60.0
         let xPosition: CGFloat = 3.0
@@ -130,13 +173,8 @@ class TractCard: BaseTractElement {
     }
     
     func setBordersAndShadows() {
-        let layer = self.scrollView.layer
-        layer.cornerRadius = 5.0
-        layer.masksToBounds = true
-        layer.borderWidth = 1.0
-        layer.borderColor = UIColor.gtGreyLight.cgColor
-        
         self.shadowView.frame = self.bounds
+        self.shadowView.backgroundColor = .white
         let shadowLayer = self.shadowView.layer
         shadowLayer.cornerRadius = 3.0
         shadowLayer.shadowColor = UIColor.black.cgColor
@@ -144,60 +182,6 @@ class TractCard: BaseTractElement {
         shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         shadowLayer.shadowOpacity = 0.4
         shadowLayer.shouldRasterize = true
-    }
-    
-    override func render() -> UIView {
-        for element in self.elements! {
-            self.containerView.addSubview(element.render())
-        }
-        self.scrollView.addSubview(self.containerView)
-        self.addSubview(self.shadowView)
-        self.addSubview(self.scrollView)
-        setupTransparentView()
-        
-        TractBindings.addBindings(self)
-        return self
-    }
-    
-    // MARK: - Actions
-    
-    func didTapOnCard() {
-        processCardWithState()
-    }
-    
-    // MARK: - Helpers
-    
-    func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "hidden":
-                self.properties.hidden = true
-            case "listener":
-                self.properties.listener = properties[property] as! String?
-            default: break
-            }
-        }
-    }
-    
-    func disableScrollview() {
-        if self.cardState != .open {
-            let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
-            self.scrollView.isScrollEnabled = false
-            self.scrollView.setContentOffset(startPoint, animated: true)
-        }
-    }
-    
-    func enableScrollview() {
-        if self.cardState == .open {
-            self.scrollView.isScrollEnabled = true
-        }
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.externalHeight)
     }
 
 }

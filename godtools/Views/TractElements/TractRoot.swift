@@ -17,26 +17,38 @@ class TractRoot: BaseTractElement {
     
     var pageId: String = ""
     
+    // MARK: - Object properties
+    
+    var properties = TractRootProperties()
+    
+    // MARK: - Setup
+    
     override func setupView(properties: [String: Any]) {
-        self.pageId = properties["id"] as! String
-        self.frame = buildFrame()
+        super.setupView(properties: properties)
+        self.pageId = properties["id"] as? String ?? ""
     }
     
-    override func elementListeners() -> [String]? {
-        return [self.pageId]
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.primaryColor = self.colors?.primaryColor
+        self.properties.primaryTextColor = self.colors?.primaryTextColor
+        self.properties.textColor = self.colors?.textColor
+        
+        self.properties.load(properties)
+        
+        self.colors?.primaryColor = self.properties.primaryColor
+        self.colors?.primaryTextColor = self.properties.primaryTextColor
+        self.colors?.textColor = self.colors?.textColor
     }
     
-    override func receiveMessage() {
-        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: 0.0,
                       y: self.yStartPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    override func elementListeners() -> [String]? {
+        return [self.pageId]
     }
     
 }

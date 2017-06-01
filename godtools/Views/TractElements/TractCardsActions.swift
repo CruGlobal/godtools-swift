@@ -57,6 +57,14 @@ extension TractCards {
             }
             if foundCard {
                 elementCard.showCard()
+                
+                
+                if elementCard == elements?.last {
+                    showCallToAction()
+                } else {
+                    hideCallToAction()
+                }
+                
                 break
             }
         }

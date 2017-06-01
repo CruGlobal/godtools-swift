@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractTextFieldProperties {
+class TractTextFieldProperties: TractElementProperties {
     
     var type: String?
     var name: String?
@@ -23,4 +23,21 @@ class TractTextFieldProperties {
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 16.0)
     var placeholder: String?
+    
+    override func load(_ properties: [String: Any]) {
+        super.load(properties)
+        
+        for property in properties.keys {
+            switch property {
+            case "value":
+                self.value = properties[property] as! String?
+            case "name":
+                self.name = properties[property] as! String?
+            case "type":
+                self.type = properties[property] as! String?
+            default: break
+            }
+        }
+    }
+    
 }

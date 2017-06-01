@@ -62,10 +62,27 @@ class TractCallToAction: BaseTractElement {
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
+    override func loadStyles() {
         addArrowButton()
     }
+    
+    override func textStyle() -> TractTextContentProperties {
+        let textStyle = super.textStyle()
+        textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
+        textStyle.xMargin = TractCallToAction.paddingConstant
+        textStyle.yMargin = TractCallToAction.paddingConstant
+        textStyle.color = self.textColor
+        return textStyle
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    // MARK: - UI
     
     func addArrowButton() {
         let xPosition = self.buttonXPosition
@@ -78,28 +95,6 @@ class TractCallToAction: BaseTractElement {
         button.setBackgroundImage(image, for: UIControlState.normal)
         button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
         self.addSubview(button)
-    }
-    
-    func moveToNextView() {
-        NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
-    }
-    
-    override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
-        textStyle.xMargin = TractCallToAction.paddingConstant
-        textStyle.yMargin = TractCallToAction.paddingConstant
-        textStyle.color = self.textColor
-        return textStyle
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
 
 }

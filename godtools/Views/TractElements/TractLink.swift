@@ -18,11 +18,25 @@ class TractLink: TractButton {
         return textStyle
     }
     
-    override func loadElementProperties(properties: [String: Any]) {
-        super.loadElementProperties(properties: properties)
+    override func loadElementProperties(_ properties: [String: Any]) {
+        super.loadElementProperties(properties)
+        
+        for property in properties.keys {
+            switch property {
+            case "events":
+                self.properties.events = properties[property] as! String?
+            default: break
+            }
+        }
         
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.primaryColor!
+    }
+    
+    override func addTargetToButton() {
+        if self.properties.type == .url {
+            self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
+        }
     }
 
 }
