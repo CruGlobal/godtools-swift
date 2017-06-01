@@ -26,8 +26,8 @@ class LanguagesManager: GTDataManager {
         serializer.registerResource(LanguageResource.self)
     }
     
-    func loadFromDisk(id: String) -> Language {
-        return findEntity(Language.self, byAttribute: "remoteId", withValue: id)!
+    func loadFromDisk(id: String) -> Language? {
+        return findEntity(Language.self, byAttribute: "remoteId", withValue: id)
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -92,8 +92,8 @@ class LanguagesManager: GTDataManager {
 
     private func saveToDisk(_ languages: [LanguageResource]) {
         for remoteLanguage in languages {
-            let cachedlanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
-            cachedlanguage?.code = remoteLanguage.code
+            let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
+            cachedlanguage.code = remoteLanguage.code
         }
         saveToDisk()
     }
