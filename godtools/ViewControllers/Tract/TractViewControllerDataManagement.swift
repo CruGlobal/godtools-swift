@@ -69,7 +69,7 @@ extension TractViewController {
         var counter = 0
         for page in self.xmlPages {
             for listener in page.pageListeners()! {
-                pagesListeners[listener] = counter
+                TractBindings.addPageBinding(listener, counter)
             }
             
             counter += 1

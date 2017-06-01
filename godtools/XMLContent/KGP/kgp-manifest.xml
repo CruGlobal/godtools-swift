@@ -16,6 +16,6 @@
     <page src="kgp-3"/>
     <page src="kgp-4"/>
     <page src="kgp-5"/>
-    <page src="kgp-6" listeners="follow-up-no-thanks,follow-up-thank-you-done"/>
+    <page src="kgp-6"/>
   </pages>
 </manifest>

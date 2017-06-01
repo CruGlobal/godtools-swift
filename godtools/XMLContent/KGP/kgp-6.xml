@@ -3,7 +3,7 @@
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
     background-image="jesus_saves_us.png"
-    listeners="follow-up-no-thanks,follow-up-thank-you-done">
+    listeners="follow-up-thank-you-done">
     <header>
         <title>
             <content:text i18n-id="{{uuid}}">What happens when you put your trust in Jesus?

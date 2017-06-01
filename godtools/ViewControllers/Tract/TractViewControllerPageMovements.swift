@@ -17,14 +17,12 @@ extension TractViewController {
             return
         }
         
-        let destinationListener = dictionary["pageListener"]
-        for (listener, pageIndex) in self.pagesListeners {
-            if listener == destinationListener {
-                self.currentPage = pageIndex
-                break
-            }
+        let pageListener = dictionary["pageListener"]
+        guard let page = TractBindings.pageBindings[pageListener!] else {
+            return
         }
         
+        self.currentPage = page
         reloadPagesViews()
         moveViews()
     }

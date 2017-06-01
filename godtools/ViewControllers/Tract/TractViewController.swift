@@ -27,7 +27,6 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [BaseTractView]()
-    var pagesListeners = [String: Int]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()

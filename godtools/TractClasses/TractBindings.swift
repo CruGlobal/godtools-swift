@@ -10,12 +10,18 @@ import UIKit
 
 class TractBindings: NSObject {
     
+    @nonobjc static var pageBindings = [String: Int]()
     @nonobjc static var bindings = [String: BaseTractElement]()
     @nonobjc static var dismissBindings = [String: BaseTractElement]()
     
     static func setupBindings() {
+        TractBindings.pageBindings = [String: Int]()
         TractBindings.bindings = [String: BaseTractElement]()
         TractBindings.dismissBindings = [String: BaseTractElement]()
+    }
+    
+    static func addPageBinding(_ listener: String, _ number: Int){
+        TractBindings.pageBindings[listener] = number
     }
     
     static func addBindings(_ element: BaseTractElement) {
