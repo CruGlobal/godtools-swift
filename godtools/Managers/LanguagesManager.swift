@@ -27,7 +27,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language {
-        return Language.mr_findFirst(byAttribute: "remoteId", withValue: id)!
+        return findEntity(Language.self, byAttribute: "remoteId", withValue: id)!
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -47,7 +47,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> [Language] {
-        languages = Language.mr_findAll() as! [Language]
+        languages = findAllEntities(Language.self)
         
         languages = languages.sorted { (language1, language2) -> Bool in
             return language1.localizedName().compare(language2.localizedName()).rawValue < 0
@@ -92,8 +92,8 @@ class LanguagesManager: GTDataManager {
 
     private func saveToDisk(_ languages: [LanguageResource]) {
         for remoteLanguage in languages {
-            let cachedlanguage = Language.mr_findFirstOrCreate(byAttribute: "remoteId", withValue: remoteLanguage.id!, in: context)
-            cachedlanguage.code = remoteLanguage.code
+            let cachedlanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
+            cachedlanguage?.code = remoteLanguage.code
         }
         saveToDisk()
     }

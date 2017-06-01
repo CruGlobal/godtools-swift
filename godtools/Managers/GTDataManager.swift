@@ -67,6 +67,10 @@ class GTDataManager: NSObject {
         return entityClass.mr_findAll(with: matching, in: context) as! [T]
     }
     
+    func findFirstOrCreateEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
+        return entityClass.mr_findFirstOrCreate(byAttribute: attribute, withValue: value, in: context)
+    }
+    
     func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
         return entityClass.mr_findAll(in: context) as! [T]
     }
