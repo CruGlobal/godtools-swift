@@ -18,7 +18,7 @@ class GTDataManager: NSObject {
     let bannersPath: URL
     
     let serializer = Serializer()
-    let context = NSManagedObjectContext.mr_default()
+    let context = NSManagedObjectContext.mr_rootSaving()
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
