@@ -37,7 +37,7 @@ extension TractViewController {
         let configurations = TractConfigurations()
         configurations.defaultTextAlignment = getLanguageTextAlignment()
         
-        let view = BaseTractView(frame: frame, data: page["page"], colors: self.colors!, configurations: configurations)
+        let view = BaseTractView(frame: frame, data: page.pageContent(), colors: self.colors!, configurations: configurations)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.tag = self.viewTagOrigin + pageNumber
         

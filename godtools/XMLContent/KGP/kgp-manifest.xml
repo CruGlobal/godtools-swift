@@ -10,12 +10,12 @@
     <content:text i18n-id="{{uuid}}">Knowing God Personally</content:text>
   </title>
   <pages>
-    <page id="kgp-0" src="kgp-0"/>
-    <page id="kgp-1" src="kgp-1"/>
-    <page id="kgp-2" src="kgp-2"/>
-    <page id="kgp-3" src="kgp-3"/>
-    <page id="kgp-4" src="kgp-4"/>
-    <page id="kgp-5" src="kgp-5"/>
-    <page id="kgp-6" src="kgp-6"/>
+    <page src="kgp-0"/>
+    <page src="kgp-1"/>
+    <page src="kgp-2"/>
+    <page src="kgp-3"/>
+    <page src="kgp-4"/>
+    <page src="kgp-5"/>
+    <page src="kgp-6" listeners="follow-up-no-thanks,follow-up-thank-you-done"/>
   </pages>
 </manifest>

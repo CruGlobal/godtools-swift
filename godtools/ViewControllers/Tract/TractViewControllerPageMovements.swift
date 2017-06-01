@@ -17,9 +17,9 @@ extension TractViewController {
             return
         }
         
-        let destinationViewPageId = dictionary["pageId"]
-        for (pageId, pageIndex) in self.pagesIds {
-            if pageId == destinationViewPageId {
+        let destinationListener = dictionary["pageListener"]
+        for (listener, pageIndex) in self.pagesListeners {
+            if listener == destinationListener {
                 self.currentPage = pageIndex
                 break
             }

@@ -33,8 +33,4 @@ class BaseTractView: UIView {
         self.addSubview(self.contentView!.render())
     }
     
-    func pageId() -> String {
-        return self.contentView!.pageId
-    }
-    
 }

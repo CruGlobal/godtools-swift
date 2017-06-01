@@ -51,7 +51,14 @@ extension TractRoot {
     }
     
     override func receiveMessage() {
-        NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageId": self.pageId])
+        
+        if self.properties.listeners == nil {
+            return
+        }
+        
+        for listener in self.properties.listeners!.components(separatedBy: ",") {
+            NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
+        }
     }
     
 }

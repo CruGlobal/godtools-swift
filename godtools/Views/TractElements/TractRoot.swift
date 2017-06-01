@@ -15,18 +15,11 @@ import SWXMLHash
 
 class TractRoot: BaseTractElement {
     
-    var pageId: String = ""
-    
     // MARK: - Object properties
     
     var properties = TractRootProperties()
     
     // MARK: - Setup
-    
-    override func setupView(properties: [String: Any]) {
-        super.setupView(properties: properties)
-        self.pageId = properties["id"] as? String ?? ""
-    }
     
     override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.primaryColor = self.colors?.primaryColor

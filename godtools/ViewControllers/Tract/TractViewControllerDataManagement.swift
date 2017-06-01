@@ -68,9 +68,8 @@ extension TractViewController {
     func loadPagesIds() {
         var counter = 0
         for page in self.xmlPages {
-            if page["page"].element?.attribute(by: "id") != nil {
-                let id = page["page"].element?.attribute(by: "id")!.text
-                self.pagesIds[id!] = counter
+            for listener in page.pageListeners()! {
+                pagesListeners[listener] = counter
             }
             
             counter += 1
@@ -85,7 +84,7 @@ extension TractViewController {
         self.xmlPages = self.xmlPagesForParallelLang
     }
     
-    func getPage(_ pageNumber: Int) -> XMLIndexer {
+    func getPage(_ pageNumber: Int) -> TractPage {
         return self.xmlPages[pageNumber]
     }
     
