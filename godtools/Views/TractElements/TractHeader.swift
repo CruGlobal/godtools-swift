@@ -38,22 +38,19 @@ class TractHeader: BaseTractElement {
     
     var includesNumber = false
     
-    override var horizontalContainer: Bool {
-        return true
-    }
-    
-    override func setupView(properties: [String: Any]) {
-        self.frame = buildFrame()
+    override func loadStyles() {
         self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    override var horizontalContainer: Bool {
+        return true
     }
 
 }

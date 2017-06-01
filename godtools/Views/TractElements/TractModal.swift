@@ -23,34 +23,35 @@ class TractModal: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractModalProperties()
+    var alreadyRendered = false
     
     // MARK: - Setup
     
     override func setupView(properties: [String: Any]) {
-        loadElementProperties(properties: properties)
+        super.setupView(properties: properties)
         TractBindings.addBindings(self)
-        
-        self.frame = buildFrame()
-        setupStyle()
     }
     
-    func setupStyle() {
+    override func loadStyles() {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
-    override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
-    }
-    
-    override func elementDismissListeners() -> [String]? {
-        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
+    override func buildFrame() -> CGRect {
+        return (UIApplication.shared.keyWindow?.frame)!
     }
     
     override func render() -> UIView {
         let modalHeight = UIApplication.shared.keyWindow?.frame.size.height
-        let startYPosition = (modalHeight! - self.height) / CGFloat(2)
+        var startYPosition:CGFloat = 0
+        
+        if self.alreadyRendered == false {
+            startYPosition = (modalHeight! - self.height) / CGFloat(2)
+            self.alreadyRendered = true
+        }
         
         for element in self.elements! {
+            element.removeFromSuperview()
+            
             let xPosition = element.frame.origin.x
             let yPosition = element.frame.origin.y + startYPosition
             let width = element.frame.size.width
@@ -62,49 +63,20 @@ class TractModal: BaseTractElement {
         return self
     }
     
+    // MARK: - Bindings
+    
+    override func elementListeners() -> [String]? {
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+    }
+    
+    override func elementDismissListeners() -> [String]? {
+        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
+    }
+    
     // MARK: - Helpers
     
-    func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "listeners":
-                self.properties.listeners = properties[property] as! String?
-            case "dismiss-listeners":
-                self.properties.dismissListeners = properties[property] as! String?
-            default: break
-            }
-        }
-    }
-    
-    override func receiveMessage() {
-        _ = render()
-        
-        let currentWindow = UIApplication.shared.keyWindow
-        currentWindow?.addSubview(self)
-        
-        self.alpha = CGFloat(0.0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { self.alpha = CGFloat(1.0) },
-                       completion: nil )
-    }
-    
-    override func receiveDismissMessage() {
-        for view in self.subviews {
-            view.removeFromSuperview()
-        }
-        
-        UIView.animate(withDuration: 0.75,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { self.alpha = CGFloat(0.0) },
-                       completion: { (completed: Bool) in
-                        self.removeFromSuperview() } )
-    }
-    
-    fileprivate func buildFrame() -> CGRect {
-        return (UIApplication.shared.keyWindow?.frame)!
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
     }
 
 }

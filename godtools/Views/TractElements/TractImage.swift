@@ -70,14 +70,14 @@ class TractImage: BaseTractElement {
         self.height = height
     }
     
-    // MARK: - Helpers
-    
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
     }
+    
+    // MARK: - Helpers
     
     func loadImage(properties: [String: Any]) -> UIImage {
         let resource = properties["resource"] as! String?

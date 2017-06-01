@@ -93,7 +93,7 @@ class TractInput: BaseTractElement {
     }
     
     override func setupView(properties: [String: Any]) {
-        loadElementProperties(properties: properties)
+        loadElementProperties(properties)
         
         self.textField.cornerRadius = self.properties.cornerRadius
         self.textField.borderColor = self.properties.color
@@ -102,6 +102,19 @@ class TractInput: BaseTractElement {
         self.textField.placeholderTranslationKey = self.properties.placeholder ?? ""
         
         self.frame = buildFrame()
+    }
+    
+    override func buildFrame() -> CGRect {
+        return CGRect(x: self.xPosition,
+                      y: self.yPosition,
+                      width: self.width,
+                      height: self.height)
+    }
+    
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.backgroundColor = .gtWhite
+        self.properties.color = self.primaryColor!
     }
     
     override func render() -> UIView {
@@ -117,32 +130,6 @@ class TractInput: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
-    }
-    
-    // MARK: - Helpers
-    
-    func loadElementProperties(properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "value":
-                self.properties.value = properties[property] as! String?
-            case "name":
-                self.properties.name = properties[property] as! String?
-            case "type":
-                self.properties.type = properties[property] as! String?
-            default: break
-            }
-        }
-        
-        self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.primaryColor!
-    }
-    
-    func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
     }
 
 }

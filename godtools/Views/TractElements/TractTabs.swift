@@ -68,35 +68,6 @@ class TractTabs: BaseTractElement {
         setupView(properties: dataContent.properties)
     }
     
-    override func setupView(properties: [String: Any]) {
-        self.frame = buildFrame()
-        setupSegmentedControl()
-    }
-    
-    func setupSegmentedControl() {
-        let width = self.width
-        let height: CGFloat = 28.0
-        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-        
-        self.segmentedControl = UISegmentedControl(frame: frame)
-        for i in 0..<self.options.count {
-            self.segmentedControl.insertSegment(withTitle: self.options[i], at: i, animated: true)
-        }
-        
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.segmentedControl.tintColor = self.primaryColor
-        self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
-        
-        self.addSubview(self.segmentedControl)
-    }
-    
-    func newOptionSelected() {
-        for element in self.elements! {
-            element.isHidden = true
-        }
-        self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
-    }
-    
     override func buildChildrenForData(_ data: [XMLIndexer]) {
         let currentYPosition: CGFloat = 28.0
         var maxHeight: CGFloat = currentYPosition
@@ -123,13 +94,42 @@ class TractTabs: BaseTractElement {
         self.elements = elements
     }
     
-    // MARK: - Helpers
+    override func setupView(properties: [String: Any]) {
+        super.setupView(properties: properties)
+        setupSegmentedControl()
+    }
     
-    fileprivate func buildFrame() -> CGRect {
+    override func buildFrame() -> CGRect {
         return CGRect(x: self.xPosition,
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    // MARK: - Segmented Control
+    
+    func setupSegmentedControl() {
+        let width = self.width
+        let height: CGFloat = 28.0
+        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+        
+        self.segmentedControl = UISegmentedControl(frame: frame)
+        for i in 0..<self.options.count {
+            self.segmentedControl.insertSegment(withTitle: self.options[i], at: i, animated: true)
+        }
+        
+        self.segmentedControl.selectedSegmentIndex = 0
+        self.segmentedControl.tintColor = self.primaryColor
+        self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
+        
+        self.addSubview(self.segmentedControl)
+    }
+    
+    func newOptionSelected() {
+        for element in self.elements! {
+            element.isHidden = true
+        }
+        self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
     }
 
 }

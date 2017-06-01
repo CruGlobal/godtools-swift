@@ -8,9 +8,6 @@
 
 import UIKit
 
-class TractModalProperties {
-    
-    var listeners: String?
-    var dismissListeners: String?
+class TractModalProperties: TractElementProperties {
     
 }

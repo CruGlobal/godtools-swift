@@ -107,7 +107,7 @@ class BaseTractElement: UIView {
             return ""
         }
     }
-    
+        
     // MARK: - Initializers
     
     init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) {
@@ -124,7 +124,7 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.yStartPosition = 0.0
         self.maxHeight = height
-        self.colors = colors
+        self.colors = colors.copyObject()
         self.tractConfigurations = configurations
         
         if data.element?.attribute(by: "background-image") != nil {
@@ -167,6 +167,7 @@ class BaseTractElement: UIView {
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let dataContent = splitData(data: data)
+        loadElementProperties(dataContent.properties)
         buildChildrenForData(dataContent.children)
         setupView(properties: dataContent.properties)
     }
@@ -178,18 +179,19 @@ class BaseTractElement: UIView {
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            elements.append(element)
+            
+            if element.isKind(of: TractCallToAction.self) {
+                self.didFindCallToAction = true
+            } else if element.isKind(of: TractModals.self) {
+                continue
+            }
             
             if self.horizontalContainer && element.yEndPosition() > maxYPosition {
                 maxYPosition = element.yEndPosition()
             } else {
                 currentYPosition = element.yEndPosition()
             }
-            
-            if element.isKind(of: TractCallToAction.self) {
-                self.didFindCallToAction = true
-            }
-            
-            elements.append(element)
         }
         
         if self.isKind(of: TractRoot.self) && !self.didFindCallToAction {
@@ -208,6 +210,15 @@ class BaseTractElement: UIView {
     }
     
     func setupView(properties: Dictionary<String, Any>) {
+        self.frame = buildFrame()
+        loadStyles()
+    }
+    
+    func loadElementProperties(_ properties: [String: Any]) { }
+    
+    func loadStyles() { }
+    
+    func buildFrame() -> CGRect {
         preconditionFailure("This function must be overridden")
     }
     
