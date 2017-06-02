@@ -76,10 +76,8 @@ class TractViewController: BaseViewController {
     }
 
     override func displayScreenTitle() {
-        if parallelLanguageIsAvailable() {
+        if parallelLanguageIsAvailable() && determinePrimaryLabel() != determineParallelLabel() {
             self.navigationItem.titleView = languageSegmentedControl()
-        } else {
-            self.title = currentTractTitle()
         }
     }
     
