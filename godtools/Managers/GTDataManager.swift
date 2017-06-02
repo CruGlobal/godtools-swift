@@ -18,7 +18,7 @@ class GTDataManager: NSObject {
     let bannersPath: URL
     
     let serializer = Serializer()
-    let context = NSManagedObjectContext.mr_default()
+    let context = NSManagedObjectContext.mr_rootSaving()
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -59,12 +59,20 @@ class GTDataManager: NSObject {
         context.mr_saveToPersistentStoreAndWait()
     }
     
+    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
+        return entityClass.mr_findFirst(with: matching, in: context)
+    }
+    
     func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
         return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
     }
     
     func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
         return entityClass.mr_findAll(with: matching, in: context) as! [T]
+    }
+    
+    func findFirstOrCreateEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
+        return entityClass.mr_findFirstOrCreate(byAttribute: attribute, withValue: value, in: context)
     }
     
     func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
@@ -77,6 +85,10 @@ class GTDataManager: NSObject {
     
     func deleteEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) {
         entityClass.mr_deleteAll(matching: matching, in: context)
+    }
+    
+    func deleteEntity<T: NSManagedObject>(_ entity: T) {
+        entity.mr_deleteEntity(in: context)
     }
     
     func buildURL() -> URL? {

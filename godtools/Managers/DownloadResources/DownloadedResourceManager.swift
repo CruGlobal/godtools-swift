@@ -30,7 +30,7 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func loadFromDisk() -> [DownloadedResource] {
-        resources = DownloadedResource.mr_findAll() as! [DownloadedResource]
+        resources = findAllEntities(DownloadedResource.self)
         return resources
     }
     
@@ -54,9 +54,9 @@ class DownloadedResourceManager: GTDataManager {
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         for remoteResource in resources {
-            let cachedResource = DownloadedResource.mr_findFirstOrCreate(byAttribute: "remoteId",
-                                                                         withValue: remoteResource.id!,
-                                                                         in: self.context)
+            let cachedResource = findFirstOrCreateEntity(DownloadedResource.self,
+                                                         byAttribute: "remoteId",
+                                                         withValue: remoteResource.id!)
             
             cachedResource.code = remoteResource.abbreviation
             cachedResource.name = remoteResource.name
@@ -66,9 +66,9 @@ class DownloadedResourceManager: GTDataManager {
             
             for remoteAttachment in (remoteResource.attachments!) {
                 let remoteAttachment = remoteAttachment as! AttachmentResource
-                let cachedAttachment = Attachment.mr_findFirstOrCreate(byAttribute: "remoteId",
-                                                                       withValue: remoteAttachment.id!,
-                                                                       in: self.context)
+                let cachedAttachment = findFirstOrCreateEntity(Attachment.self,
+                                                               byAttribute: "remoteId",
+                                                               withValue: remoteAttachment.id!)
                 
                 cachedAttachment.sha = remoteAttachment.sha256
                 cachedAttachment.resource = cachedResource
@@ -89,9 +89,7 @@ class DownloadedResourceManager: GTDataManager {
                     continue;
                 }
                 
-                let cachedTranslation = Translation.mr_findFirstOrCreate(byAttribute: "remoteId",
-                                                                         withValue: remoteTranslation.id!,
-                                                                         in: self.context)
+                let cachedTranslation = findFirstOrCreateEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
                 
                 cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                 cachedTranslation.version = remoteTranslation.version!.int16Value
@@ -109,9 +107,9 @@ class DownloadedResourceManager: GTDataManager {
             for remotePageGeneric in remotePages {
                 let remotePage = remotePageGeneric as! PageResource
                 
-                let cachedPage = PageFile.mr_findFirstOrCreate(byAttribute: "remoteId",
-                                                               withValue: remotePage.id!,
-                                                               in: self.context)
+                let cachedPage = findFirstOrCreateEntity(PageFile.self,
+                                                         byAttribute: "remoteId",
+                                                         withValue: remotePage.id!)
                 
                 cachedPage.filename = remotePage.filename
                 cachedPage.resource = cachedResource
@@ -126,11 +124,7 @@ class DownloadedResourceManager: GTDataManager {
                                     languageId,
                                     resourceId)
         
-        guard let existingTranslations: [Translation] = Translation.mr_findAll(with: predicate,
-                                                                               in: self.context) as? [Translation] else {
-            // default to saving if in doubt.
-            return true
-        }
+        let existingTranslations: [Translation] = findEntities(Translation.self, matching: predicate)
         
         let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
         
