@@ -17,10 +17,8 @@ extension TractViewController {
             return
         }
         
-        let pageListener = dictionary["pageListener"]
-        guard let page = TractBindings.pageBindings[pageListener!] else {
-            return
-        }
+        guard let pageListener = dictionary["pageListener"] else { return }
+        guard let page = TractBindings.pageBindings[pageListener] else { return }
         
         self.currentPage = page
         reloadPagesViews()
