@@ -96,7 +96,7 @@ class ToolDetailViewController: BaseViewController {
     }
     
     private func returnToHome() {
-        let time = DispatchTime.now() + 0.25
+        let time = DispatchTime.now() + 0.55
         DispatchQueue.main.asyncAfter(deadline: time) {
             self.baseDelegate?.goHome()
         }
