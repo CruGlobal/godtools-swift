@@ -21,6 +21,8 @@ class ToolsManager: GTDataManager {
     
     static let shared = ToolsManager()
     
+    let viewsPath = "views"
+    
     var resources: [DownloadedResource]?
     
     weak var delegate: ToolsManagerDelegate? {
@@ -112,7 +114,7 @@ extension ToolsManager: UITableViewDelegate {
         }
         
         if cell.isAvailable {
-            cell.resource!.myViews += 1
+            self.recordViewed(cell.resource!)
             self.delegate?.didSelectTableViewRow!(cell: cell)
         }
     }
