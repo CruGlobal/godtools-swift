@@ -11,5 +11,6 @@ import UIKit
 class TractConfigurations: NSObject {
     
     var defaultTextAlignment: NSTextAlignment = .left
+    var pagination: TractPagination?
     
 }

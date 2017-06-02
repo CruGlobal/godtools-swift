@@ -12,6 +12,7 @@ import SWXMLHash
 class TractPage: NSObject {
     
     var content: XMLIndexer?
+    var pagination: TractPagination?
     
     init(withPageXML content: XMLIndexer) {
         self.content = content

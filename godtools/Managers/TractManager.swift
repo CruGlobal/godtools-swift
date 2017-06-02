@@ -49,10 +49,14 @@ extension TractManager {
         let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text) ?? GTAppDefaultColors.primaryTextColorString
         let textColorString: String = (manifest.element?.attribute(by: "text-color")?.text) ?? GTAppDefaultColors.textColorString
         
+        let totalPages = manifest["pages"].children.count
+        var currentPage = 1
         for child in manifest["pages"].children {
             if child.element?.name == "page" {
                 let page = loadPage(child)
+                page.pagination = TractPagination(totalPages: totalPages, pageNumber: currentPage)
                 pages.append(page)
+                currentPage += 1
             }
         }
         

@@ -142,11 +142,12 @@
 		68C0A3841ED4C65400CC97A3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C0A3831ED4C65400CC97A3 /* config.plist */; };
 		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
-		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61E1EE0AC37000235CA /* TractBindings.swift */; };
 		EC55A6221EE0AC37000235CA /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61F1EE0AC37000235CA /* TractColors.swift */; };
 		EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6201EE0AC37000235CA /* TractConfigurations.swift */; };
 		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
+		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
+		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,11 +307,12 @@
 		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC55A61E1EE0AC37000235CA /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractBindings.swift; path = TractClasses/TractBindings.swift; sourceTree = "<group>"; };
 		EC55A61F1EE0AC37000235CA /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = TractClasses/TractColors.swift; sourceTree = "<group>"; };
 		EC55A6201EE0AC37000235CA /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractConfigurations.swift; path = TractClasses/TractConfigurations.swift; sourceTree = "<group>"; };
 		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
+		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
+		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -817,6 +819,7 @@
 				EC55A61F1EE0AC37000235CA /* TractColors.swift */,
 				EC55A6201EE0AC37000235CA /* TractConfigurations.swift */,
 				EC55A6241EE0AD03000235CA /* TractPage.swift */,
+				EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */,
 			);
 			name = TractClasses;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0F9E32451EDD1A4C0081DBB9 /* TractLinkActions.swift in Sources */,
+				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
