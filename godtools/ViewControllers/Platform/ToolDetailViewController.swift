@@ -74,8 +74,12 @@ class ToolDetailViewController: BaseViewController {
             return
         }
         
-        DispatchQueue.main.async {
+        OperationQueue.main.addOperation {
             self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+            
+            if progress.fractionCompleted == 1.0 {
+                self.returnToHome()
+            }
         }
     }
     
@@ -84,9 +88,17 @@ class ToolDetailViewController: BaseViewController {
             toolsManager.delete(resource: self.resource!)
             downloadProgressView.setProgress(0.0, animated: false)
             displayButton()
+            returnToHome()
         } else {
             toolsManager.download(resource: self.resource!)
             displayButton()
+        }
+    }
+    
+    private func returnToHome() {
+        let time = DispatchTime.now() + 0.25
+        DispatchQueue.main.asyncAfter(deadline: time) {
+            self.baseDelegate?.goHome()
         }
     }
 }
