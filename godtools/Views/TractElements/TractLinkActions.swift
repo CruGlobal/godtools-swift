@@ -16,7 +16,7 @@ extension TractLink {
         }
         
         for event in events {
-            sendMessageToElement(tag: event)
+            sendMessageToElement(listener: event)
         }
     }
     

@@ -93,15 +93,19 @@ extension BaseTractElement {
         return nil
     }
     
-    func sendMessageToElement(tag: String) {
-        if TractBindings.bindings[tag] != nil {
-            guard let view = TractBindings.bindings[tag] else { return }
+    func sendMessageToElement(listener: String) {
+        if TractBindings.bindings[listener] != nil {
+            guard let view = TractBindings.bindings[listener] else { return }
             view.receiveMessage()
         }
         
-        if TractBindings.dismissBindings[tag] != nil {
-            guard let view = TractBindings.dismissBindings[tag] else { return }
+        if TractBindings.dismissBindings[listener] != nil {
+            guard let view = TractBindings.dismissBindings[listener] else { return }
             view.receiveDismissMessage()
+        }
+        
+        if TractBindings.pageBindings[listener] != nil {
+            NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
         }
     }
     

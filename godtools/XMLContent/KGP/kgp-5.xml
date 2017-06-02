@@ -2,7 +2,7 @@
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
-    background-image="jesus_gives_us_life.png" id="kgp-5">
+    background-image="jesus_gives_us_life.png">
     <header>
         <title>
             <content:text i18n-id="{{uuid}}">To begin a relationship with God, you must place your trust in Jesus alone.
@@ -40,7 +40,7 @@
                 </content:text>
             </paragraph>
             <paragraph>
-                <content:button type="event" value="kgp-6">
+                <content:button type="event" value="follow-up-no-thanks">
                     <content:text i18n-id="{{uuid}}">Not Ready</content:text>
                 </content:button>
                 <content:button type="event" value="followup-form">
@@ -51,7 +51,7 @@
                 </content:link>
             </paragraph>
         </card>
-        <card hidden="true" listener="followup-form">
+        <card hidden="true" listeners="followup-form">
             <label>
                 <content:text i18n-id="{{uuid}}">Jesus has come into your life as he promised.</content:text>
             </label>
@@ -99,7 +99,7 @@
                 </content:text>
             </paragraph>
             <paragraph>
-                <content:button type="event" value="kgp-6,send-information-modal-close">
+                <content:button type="event" value="send-information-modal-close,follow-up-thank-you-done">
                     <content:text i18n-id="{{uuid}}">
                         Done
                     </content:text>
