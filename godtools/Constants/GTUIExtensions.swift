@@ -17,7 +17,6 @@ extension UIColor {
     static let gtGreyLight = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
     static let gtRed = UIColor(red: 229.0/255.0, green: 91.0/255.0, blue: 54.0/255.0, alpha: 1.0)
     static let gtGreen = UIColor(red: 110.0/255.0, green: 220.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-    
 }
 
 extension UIFont {

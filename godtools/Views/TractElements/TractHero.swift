@@ -13,16 +13,16 @@ class TractHero: BaseTractElement {
     
     // MARK: - Positions and Sizes
     
+    override var width: CGFloat {
+        return 300
+    }
+    
     var xPosition: CGFloat {
-        return 28.0
+        return (super.width - self.width) / CGFloat(2)
     }
     
     var yPosition: CGFloat {
         return self.yStartPosition + BaseTractElement.yMargin
-    }
-    
-    override var width: CGFloat {
-        return super.width - (xPosition * CGFloat(2.0))
     }
     
     override func yEndPosition() -> CGFloat {
