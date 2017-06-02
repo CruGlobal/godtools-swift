@@ -13,7 +13,6 @@ class TractElementProperties: NSObject {
     var listeners: String?
     var dismissListeners: String?
     var hidden = false
-    var listener: String?
     
     func load(_ properties: [String: Any]) {
         for property in properties.keys {
@@ -24,8 +23,6 @@ class TractElementProperties: NSObject {
                 self.dismissListeners = properties[property] as! String?
             case "hidden":
                 self.hidden = true
-            case "listener":
-                self.listener = properties[property] as! String?
             default: break
             }
         }

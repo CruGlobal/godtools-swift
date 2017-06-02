@@ -15,9 +15,9 @@ class TractViewController: BaseViewController {
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
-    var xmlPages = [XMLIndexer]()
-    var xmlPagesForPrimaryLang = [XMLIndexer]()
-    var xmlPagesForParallelLang = [XMLIndexer]()
+    var xmlPages = [TractPage]()
+    var xmlPagesForPrimaryLang = [TractPage]()
+    var xmlPagesForParallelLang = [TractPage]()
     var colors: TractColors?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
@@ -27,7 +27,6 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [BaseTractView]()
-    var pagesIds = [String: Int]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()

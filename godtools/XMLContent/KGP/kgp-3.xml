@@ -2,7 +2,7 @@
 <!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
 <page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
-    background-image="" id="kgp-3">
+    background-image="">
     <header>
         <number>
             <content:text i18n-id="{{uuid}}">3</content:text>

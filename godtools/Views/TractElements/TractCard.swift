@@ -103,7 +103,7 @@ class TractCard: BaseTractElement {
     }
     
     override func elementListeners() -> [String]? {
-        return self.properties.listener == nil ? nil : self.properties.listener?.components(separatedBy: ",")
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
     }
     
     override func render() -> UIView {

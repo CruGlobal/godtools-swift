@@ -13,7 +13,7 @@ extension TractButton {
     func buttonTarget() {
         let values = self.properties.value!.components(separatedBy: ",")
         for value in values {
-            sendMessageToElement(tag: value)
+            sendMessageToElement(listener: value)
         }
     }
     
