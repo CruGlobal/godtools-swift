@@ -22,7 +22,7 @@ class TranslationsManager: GTDataManager {
     func translationsNeedingDownloaded() -> [Translation] {
         let predicate = NSPredicate(format: "language.shouldDownload = true AND downloadedResource.shouldDownload = true AND isDownloaded = false")
 
-        return Translation.mr_findAll(with: predicate, in: context) as! [Translation]
+        return findEntities(Translation.self, matching: predicate)
     }
     
     func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
@@ -32,13 +32,7 @@ class TranslationsManager: GTDataManager {
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
-        guard let translationsToPurge: [Translation] = Translation.mr_findAll(with: predicate, in: context) as? [Translation] else {
-            return
-        }
-        
-        for translationToPurge in translationsToPurge {
-            translationToPurge.mr_deleteEntity(in: context)
-        }
+        deleteEntities(Translation.self, matching: predicate)
         
         if saving {
             saveToDisk()

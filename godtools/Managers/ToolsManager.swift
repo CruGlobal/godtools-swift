@@ -21,6 +21,13 @@ class ToolsManager: GTDataManager {
     
     static let shared = ToolsManager()
     
+    private override init() {
+        super.init()
+        self.syncCachedRecordViews()
+    }
+    
+    let viewsPath = "views"
+    
     var resources: [DownloadedResource]?
     
     weak var delegate: ToolsManagerDelegate? {
@@ -106,7 +113,13 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        if cell.isAvailable || self.delegate is AddToolsViewController {
+        if self.delegate is AddToolsViewController {
+            self.delegate?.didSelectTableViewRow!(cell: cell)
+            return
+        }
+        
+        if cell.isAvailable {
+            self.recordViewed(cell.resource!)
             self.delegate?.didSelectTableViewRow!(cell: cell)
         }
     }
