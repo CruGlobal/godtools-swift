@@ -45,7 +45,7 @@
         <relationship name="attachments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attachment" inverseName="translations" inverseEntity="Attachment" syncable="YES"/>
         <relationship name="downloadedResource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="translations" inverseEntity="DownloadedResource" syncable="YES"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
-        <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
+        <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
     </entity>
     <elements>
         <element name="Attachment" positionX="-45" positionY="72" width="128" height="120"/>
