@@ -106,7 +106,13 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        if cell.isAvailable || self.delegate is AddToolsViewController {
+        if self.delegate is AddToolsViewController {
+            self.delegate?.didSelectTableViewRow!(cell: cell)
+            return
+        }
+        
+        if cell.isAvailable {
+            cell.resource!.myViews += 1
             self.delegate?.didSelectTableViewRow!(cell: cell)
         }
     }
