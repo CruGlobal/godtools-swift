@@ -21,6 +21,11 @@ class ToolsManager: GTDataManager {
     
     static let shared = ToolsManager()
     
+    private override init() {
+        super.init()
+        self.syncCachedRecordViews()
+    }
+    
     let viewsPath = "views"
     
     var resources: [DownloadedResource]?
