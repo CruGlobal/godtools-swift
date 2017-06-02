@@ -134,6 +134,8 @@
 		4FC74ED41ED5E14500D6BFFF /* Attachment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED21ED5E14500D6BFFF /* Attachment+CoreDataClass.swift */; };
 		4FC74ED51ED5E14500D6BFFF /* Attachment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED31ED5E14500D6BFFF /* Attachment+CoreDataProperties.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
+		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
+		4FE4AF2C1EE0F386000E3125 /* ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
 		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
@@ -285,6 +287,8 @@
 		4FC74ED21ED5E14500D6BFFF /* Attachment+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Attachment+CoreDataClass.swift"; path = "Models/Attachment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4FC74ED31ED5E14500D6BFFF /* Attachment+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Attachment+CoreDataProperties.swift"; path = "Models/Attachment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttachmentResource.swift; path = Managers/Attachments/AttachmentResource.swift; sourceTree = "<group>"; };
+		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
+		4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResourceViews.swift; path = Managers/ResourceViews.swift; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
 		4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FirstLaunchInitializer.swift; path = Managers/FirstLaunchInitializer.swift; sourceTree = "<group>"; };
 		4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationFileRemover.swift; path = Managers/TranslationFileRemover.swift; sourceTree = "<group>"; };
@@ -695,6 +699,8 @@
 				4F5707D61EAA985500A540C2 /* PageResource.swift */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
+				4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */,
+				4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */,
 				0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */,
 				4F855F091EC3907300B42146 /* TranslationZipImporter.swift */,
 				4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */,
@@ -1107,6 +1113,8 @@
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
+				4FE4AF2C1EE0F386000E3125 /* ResourceViews.swift in Sources */,
+				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */,
 				0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,

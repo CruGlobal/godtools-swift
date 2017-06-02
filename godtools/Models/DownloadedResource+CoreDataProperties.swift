@@ -2,7 +2,7 @@
 //  DownloadedResource+CoreDataProperties.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 5/24/17.
+//  Created by Ryan Carlson on 6/1/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
@@ -16,16 +16,34 @@ extension DownloadedResource {
         return NSFetchRequest<DownloadedResource>(entityName: "DownloadedResource");
     }
 
+    @NSManaged public var bannerRemoteId: String?
     @NSManaged public var code: String?
     @NSManaged public var copyrightDescription: String?
     @NSManaged public var name: String?
     @NSManaged public var remoteId: String?
     @NSManaged public var shouldDownload: Bool
     @NSManaged public var totalViews: Int32
-    @NSManaged public var bannerRemoteId: String?
+    @NSManaged public var myViews: Int32
+    @NSManaged public var attachments: NSSet?
     @NSManaged public var pages: NSSet?
     @NSManaged public var translations: NSSet?
-    @NSManaged public var attachments: NSSet?
+
+}
+
+// MARK: Generated accessors for attachments
+extension DownloadedResource {
+
+    @objc(addAttachmentsObject:)
+    @NSManaged public func addToAttachments(_ value: Attachment)
+
+    @objc(removeAttachmentsObject:)
+    @NSManaged public func removeFromAttachments(_ value: Attachment)
+
+    @objc(addAttachments:)
+    @NSManaged public func addToAttachments(_ values: NSSet)
+
+    @objc(removeAttachments:)
+    @NSManaged public func removeFromAttachments(_ values: NSSet)
 
 }
 
@@ -60,22 +78,5 @@ extension DownloadedResource {
 
     @objc(removeTranslations:)
     @NSManaged public func removeFromTranslations(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for attachments
-extension DownloadedResource {
-
-    @objc(addAttachmentsObject:)
-    @NSManaged public func addToAttachments(_ value: Attachment)
-
-    @objc(removeAttachmentsObject:)
-    @NSManaged public func removeFromAttachments(_ value: Attachment)
-
-    @objc(addAttachments:)
-    @NSManaged public func addToAttachments(_ values: NSSet)
-
-    @objc(removeAttachments:)
-    @NSManaged public func removeFromAttachments(_ values: NSSet)
 
 }
