@@ -18,7 +18,7 @@ extension ToolsManager {
         recordViewOnRemote(resource, quantity: 1).catch { (error) in
             resource.myViews += 1
             self.saveToDisk()
-            self.record(error)
+            self.record(error, resource: resource)
         }
     }
     
@@ -34,7 +34,7 @@ extension ToolsManager {
                     return Promise(value: ())
                 })
                 .catch(execute: { (error) in
-                    self.record(error)
+                    self.record(error, resource: resource)
                 })
         }
     }
@@ -58,7 +58,7 @@ extension ToolsManager {
         return try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
     }
     
-    private func record(_ error: Error) {
+    private func record(_ error: Error, resource: DownloadedResource) {
         Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Unable to sync views to remote for resource \(resource.remoteId!)"])
     }
 }
