@@ -134,6 +134,11 @@ extension BaseFlowController: MenuViewControllerDelegate {
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
+    
+    func moveToAbout() {
+        let viewController = AboutViewController(nibName: String(describing:AboutViewController.self), bundle: nil)
+        self.pushViewController(viewController: viewController)
+    }
 }
 
 extension BaseFlowController: LanguageSettingsViewControllerDelegate {

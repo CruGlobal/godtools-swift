@@ -148,6 +148,8 @@
 		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
+		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
+		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -313,6 +315,8 @@
 		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
+		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -617,6 +621,7 @@
 		0FB73E651EA90669000BA60D /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				ECB5A8BB1EE5C9E1008E4AB7 /* General */,
 				0F7D50201EA931A600F5957E /* Languages */,
 				0F7D50211EA931BA00F5957E /* Tools */,
 			);
@@ -824,6 +829,15 @@
 			name = TractClasses;
 			sourceTree = "<group>";
 		};
+		ECB5A8BB1EE5C9E1008E4AB7 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */,
+				ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */,
+			);
+			name = General;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -940,6 +954,7 @@
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
+				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1131,6 +1146,7 @@
 				0F6982741EB7DA4500CAA284 /* TractElementStaticFunctions.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
+				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,

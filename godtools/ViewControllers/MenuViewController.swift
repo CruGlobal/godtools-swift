@@ -11,6 +11,7 @@ import MessageUI
 
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
+    mutating func moveToAbout()
 }
 
 class MenuViewController: BaseViewController {
@@ -162,6 +163,9 @@ extension MenuViewController {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
+            break
+        case 1:
+            delegate?.moveToAbout()
             break
         case 2:
             openHelp()
