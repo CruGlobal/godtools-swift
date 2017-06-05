@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
@@ -165,6 +166,9 @@ extension MenuViewController {
         case 2:
             openHelp()
             break
+        case 3:
+            contactUs()
+            break
         default: break
         }
         if rowIndex == 0 {
@@ -172,8 +176,13 @@ extension MenuViewController {
     }
     
     fileprivate func handleShareSectionCellSelection(rowIndex: Int) {
-        if rowIndex == 0 {
+        switch rowIndex {
+        case 0:
             shareGodToolsApp()
+            break
+        case 1:
+            shareAStoryWithUs()
+        default: break
         }
     }
     
@@ -182,10 +191,44 @@ extension MenuViewController {
         UIApplication.shared.openURL(url!)
     }
     
+    fileprivate func contactUs() {
+        if MFMailComposeViewController.canSendMail() {
+            sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
+        } else {
+            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            UIApplication.shared.openURL(url!)
+        }
+    }
+    
     fileprivate func shareGodToolsApp() {
         let textToShare = [ "share_god_tools_share_sheet_text".localized ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    fileprivate func shareAStoryWithUs() {
+        if MFMailComposeViewController.canSendMail() {
+            sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
+        } else {
+            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            UIApplication.shared.openURL(url!)
+        }
+    }
+    
+}
+
+extension MenuViewController: MFMailComposeViewControllerDelegate {
+    
+    func sendEmail(recipient: String, subject: String) {
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        composeVC.setToRecipients([ recipient ])
+        composeVC.setSubject(subject)
+        self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
 }
