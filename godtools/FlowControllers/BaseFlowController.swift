@@ -126,6 +126,12 @@ extension BaseFlowController: BaseViewControllerDelegate {
         configureNavigationColor(navigationController: navigationController, color: color)
     }
     
+    func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
+        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
+        configureNavigationColor(navigationController: navigationController, color: backgroundColor)
+        navigationController.navigationBar.tintColor = controlColor
+    }
+    
 }
 
 extension BaseFlowController: MenuViewControllerDelegate {

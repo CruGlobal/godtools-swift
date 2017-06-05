@@ -106,7 +106,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationBarColor((self.colors?.primaryColor)!)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: (self.colors?.primaryColor)!, controlColor: (self.colors?.primaryTextColor)!)
         
         let navigationBar = navigationController!.navigationBar
         
