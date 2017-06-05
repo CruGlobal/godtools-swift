@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -99,13 +99,6 @@
                         <action selector="pressSelectParallelLanguage:" destination="-1" eventType="touchUpInside" id="3iC-LE-Yfw"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="Rbi-0H-ieC">
-                    <rect key="frame" x="166" y="525" width="44" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="aHw-bz-b35"/>
-                        <constraint firstAttribute="width" constant="44" id="hgG-6N-FH8"/>
-                    </constraints>
-                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="67" y="577" width="242" height="52"/>
                     <constraints>
@@ -126,13 +119,10 @@
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="04v-yM-ZEj"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="8" id="05d-jA-pxh"/>
                 <constraint firstItem="2QP-b4-GGk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" constant="124" id="ACZ-cj-Eny"/>
-                <constraint firstItem="Rbi-0H-ieC" firstAttribute="top" secondItem="iQc-Pj-d7G" secondAttribute="bottom" priority="750" constant="35" id="ESm-y8-7Fe"/>
-                <constraint firstItem="Rbi-0H-ieC" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iQc-Pj-d7G" secondAttribute="bottom" constant="8" id="FAv-7H-z68"/>
                 <constraint firstItem="2QP-b4-GGk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="HGB-Vb-0i0"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IPj-S7-m6T"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="McU-E7-KVx"/>
                 <constraint firstAttribute="bottom" secondItem="4sz-fA-Y1h" secondAttribute="bottom" priority="250" constant="38" id="Npi-Z2-bva"/>
-                <constraint firstItem="Rbi-0H-ieC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Nwg-2J-eiO"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="top" secondItem="mQB-PV-ktd" secondAttribute="bottom" constant="8" id="Pkv-H1-0aR"/>
                 <constraint firstItem="4sz-fA-Y1h" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Pvp-Th-BiN"/>
                 <constraint firstItem="1hm-LH-y2y" firstAttribute="top" secondItem="2n1-cR-Y3q" secondAttribute="bottom" constant="8" id="bZk-2f-Q9t"/>
@@ -140,7 +130,6 @@
                 <constraint firstItem="2n1-cR-Y3q" firstAttribute="top" relation="greaterThanOrEqual" secondItem="wUa-h5-W1Y" secondAttribute="bottom" constant="8" id="gyW-xa-eEQ"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="top" secondItem="1hm-LH-y2y" secondAttribute="bottom" constant="8" id="hGT-E2-gao"/>
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2QP-b4-GGk" secondAttribute="bottom" constant="8" id="kuR-Sj-kKu"/>
-                <constraint firstItem="4sz-fA-Y1h" firstAttribute="top" secondItem="Rbi-0H-ieC" secondAttribute="bottom" constant="8" id="lpq-F0-7J0"/>
                 <constraint firstItem="2n1-cR-Y3q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ncb-9H-vNO"/>
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="top" secondItem="2QP-b4-GGk" secondAttribute="bottom" priority="750" constant="37" id="qA2-rh-Ere"/>
                 <constraint firstItem="1hm-LH-y2y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qlD-Be-SKC"/>
@@ -152,7 +141,6 @@
         </view>
     </objects>
     <resources>
-        <image name="exclamation_red" width="44" height="44"/>
         <image name="language_logo" width="60" height="60"/>
     </resources>
 </document>
