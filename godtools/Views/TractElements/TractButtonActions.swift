@@ -17,8 +17,7 @@ extension TractButton {
             for value in values {
                 sendMessageToElement(listener: value)
             }
-        }
-        else if self.properties.type == .url {
+        } else if self.properties.type == .url {
             if let url = URL(string: self.properties.value!) {
                 UIApplication.shared.openURL(url)
             }
