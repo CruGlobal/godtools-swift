@@ -36,7 +36,7 @@ extension TractCard {
         case .preview:
             showCardAndPreviousCards()
         case .open:
-            hideCard()
+            hideAllCards()
         case .close:
             showCardAndPreviousCards()
         case .enable:
@@ -83,6 +83,15 @@ extension TractCard {
         self.cardsParentView.hideCallToAction()
         hideCardAnimation()
         disableScrollview()
+    }
+    
+    func hideAllCards() {
+        if self.cardState == .close || self.cardState == .hidden {
+            return
+        }
+        
+        self.cardsParentView.resetEnvironment()
+        self.cardsParentView.hideCallToAction()
     }
     
     func resetCard() {
