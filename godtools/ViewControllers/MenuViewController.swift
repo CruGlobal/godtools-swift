@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MessageUI
 
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
+    mutating func moveToAbout()
+    mutating func openWebView(url: URL, title: String)
 }
 
 class MenuViewController: BaseViewController {
@@ -129,6 +132,8 @@ extension MenuViewController: UITableViewDelegate {
         case 0:
             handleGeneralSectionCellSelection(rowIndex: indexPath.row)
             break
+        case 1:
+            handleShareSectionCellSelection(rowIndex: indexPath.row)
         default: break
         }
     }
@@ -154,9 +159,81 @@ extension MenuViewController: UITableViewDelegate {
 //MARK: cell selection methods
 
 extension MenuViewController {
+    
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
-        if rowIndex == 0 {
+        switch rowIndex {
+        case 0:
             delegate?.moveToUpdateLanguageSettings()
+            break
+        case 1:
+            delegate?.moveToAbout()
+            break
+        case 2:
+            openHelp()
+            break
+        case 3:
+            contactUs()
+            break
+        default: break
+        }
+        if rowIndex == 0 {
         }
     }
+    
+    fileprivate func handleShareSectionCellSelection(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            shareGodToolsApp()
+            break
+        case 1:
+            shareAStoryWithUs()
+        default: break
+        }
+    }
+    
+    fileprivate func openHelp() {
+        let url = URL(string: "http://godtoolsapp.com")
+        self.delegate?.openWebView(url: url!, title: "help".localized)
+    }
+    
+    fileprivate func contactUs() {
+        if MFMailComposeViewController.canSendMail() {
+            sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
+        } else {
+            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            self.delegate?.openWebView(url: url!, title: "contact_us".localized)
+        }
+    }
+    
+    fileprivate func shareGodToolsApp() {
+        let textToShare = [ "share_god_tools_share_sheet_text".localized ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    fileprivate func shareAStoryWithUs() {
+        if MFMailComposeViewController.canSendMail() {
+            sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
+        } else {
+            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized)
+        }
+    }
+    
+}
+
+extension MenuViewController: MFMailComposeViewControllerDelegate {
+    
+    func sendEmail(recipient: String, subject: String) {
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        composeVC.setToRecipients([ recipient ])
+        composeVC.setSubject(subject)
+        self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
 }

@@ -134,6 +134,18 @@ extension BaseFlowController: MenuViewControllerDelegate {
         viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
+    
+    func moveToAbout() {
+        let viewController = AboutViewController(nibName: String(describing:AboutViewController.self), bundle: nil)
+        self.pushViewController(viewController: viewController)
+    }
+    
+    func openWebView(url: URL, title: String) {
+        let viewController = WebViewController(nibName: String(describing:WebViewController.self), bundle: nil)
+        viewController.websiteUrl = url
+        viewController.pageTitle = title
+        self.pushViewController(viewController: viewController)
+    }
 }
 
 extension BaseFlowController: LanguageSettingsViewControllerDelegate {
