@@ -146,6 +146,8 @@
 		EC55A6221EE0AC37000235CA /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61F1EE0AC37000235CA /* TractColors.swift */; };
 		EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6201EE0AC37000235CA /* TractConfigurations.swift */; };
 		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
+		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
+		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -309,6 +311,8 @@
 		EC55A61F1EE0AC37000235CA /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = TractClasses/TractColors.swift; sourceTree = "<group>"; };
 		EC55A6201EE0AC37000235CA /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractConfigurations.swift; path = TractClasses/TractConfigurations.swift; sourceTree = "<group>"; };
 		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
+		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
+		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +364,7 @@
 				0F13B6021EC4F5A500C55B2A /* kgp-4.xml */,
 				0F13B6041EC5003600C55B2A /* kgp-5.xml */,
 				0FF3DA581ED623570053D0E0 /* kgp-6.xml */,
+				EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */,
 				0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */,
 			);
 			path = KGP;
@@ -814,6 +819,7 @@
 				EC55A61F1EE0AC37000235CA /* TractColors.swift */,
 				EC55A6201EE0AC37000235CA /* TractConfigurations.swift */,
 				EC55A6241EE0AD03000235CA /* TractPage.swift */,
+				EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */,
 			);
 			name = TractClasses;
 			sourceTree = "<group>";
@@ -932,6 +938,7 @@
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
+				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1082,6 +1089,7 @@
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0F9E32451EDD1A4C0081DBB9 /* TractLinkActions.swift in Sources */,
+				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,

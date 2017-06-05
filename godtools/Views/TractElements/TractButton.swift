@@ -144,7 +144,7 @@ class TractButton: BaseTractElement {
     }
     
     func addTargetToButton() {
-        if self.properties.type == .event {
+        if self.properties.type == .event || self.properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
         }
     }

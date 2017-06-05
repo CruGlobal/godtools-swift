@@ -194,7 +194,7 @@ class BaseTractElement: UIView {
             }
         }
         
-        if self.isKind(of: TractRoot.self) && !self.didFindCallToAction {
+        if self.isKind(of: TractRoot.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
             let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
             currentYPosition = element.yEndPosition()
             elements.append(element)

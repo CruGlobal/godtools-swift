@@ -36,6 +36,7 @@ extension TractViewController {
         let page = getPage(pageNumber)
         let configurations = TractConfigurations()
         configurations.defaultTextAlignment = getLanguageTextAlignment()
+        configurations.pagination = page.pagination
         
         let view = BaseTractView(frame: frame, data: page.pageContent(), colors: self.colors!, configurations: configurations)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
