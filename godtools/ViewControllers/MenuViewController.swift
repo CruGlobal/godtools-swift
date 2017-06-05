@@ -129,6 +129,8 @@ extension MenuViewController: UITableViewDelegate {
         case 0:
             handleGeneralSectionCellSelection(rowIndex: indexPath.row)
             break
+        case 1:
+            handleShareSectionCellSelection(rowIndex: indexPath.row)
         default: break
         }
     }
@@ -154,9 +156,23 @@ extension MenuViewController: UITableViewDelegate {
 //MARK: cell selection methods
 
 extension MenuViewController {
+    
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         if rowIndex == 0 {
             delegate?.moveToUpdateLanguageSettings()
         }
     }
+    
+    fileprivate func handleShareSectionCellSelection(rowIndex: Int) {
+        if rowIndex == 0 {
+            shareGodToolsApp()
+        }
+    }
+    
+    private func shareGodToolsApp() {
+        let textToShare = [ "share_god_tools_share_sheet_text".localized ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        self.present(activityViewController, animated: true, completion: nil)
+    }
+    
 }
