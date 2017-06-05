@@ -18,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ha3-cm-XIu">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ha3-cm-XIu">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="na6-gP-xwo">
@@ -106,7 +106,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="0.98965504979345764" green="1" blue="0.29674608800101498" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="R6h-1R-TpU" secondAttribute="trailing" constant="24" id="0W0-D5-Zm1"/>
                                 <constraint firstAttribute="trailing" secondItem="LwH-B1-vWi" secondAttribute="trailing" constant="24" id="9Ze-za-tY9"/>
@@ -142,6 +142,7 @@
                     <constraints>
                         <constraint firstItem="na6-gP-xwo" firstAttribute="width" secondItem="Ha3-cm-XIu" secondAttribute="width" id="6X7-hD-3gV"/>
                         <constraint firstItem="na6-gP-xwo" firstAttribute="leading" secondItem="Ha3-cm-XIu" secondAttribute="leading" id="CFV-qX-GRY"/>
+                        <constraint firstAttribute="bottom" secondItem="na6-gP-xwo" secondAttribute="bottom" id="QCh-Zx-rUp"/>
                         <constraint firstAttribute="trailing" secondItem="na6-gP-xwo" secondAttribute="trailing" id="d9h-kQ-Qdi"/>
                         <constraint firstItem="na6-gP-xwo" firstAttribute="top" secondItem="Ha3-cm-XIu" secondAttribute="top" id="u0g-cP-Dgv"/>
                     </constraints>
