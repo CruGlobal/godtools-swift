@@ -36,7 +36,7 @@ extension TractCard {
         case .preview:
             showCardAndPreviousCards()
         case .open:
-            hideCardAndPreviousCards()
+            hideAllCards()
         case .close:
             showCardAndPreviousCards()
         case .enable:
@@ -85,7 +85,7 @@ extension TractCard {
         disableScrollview()
     }
     
-    func hideCardAndPreviousCards() {
+    func hideAllCards() {
         if self.cardState == .close || self.cardState == .hidden {
             return
         }
