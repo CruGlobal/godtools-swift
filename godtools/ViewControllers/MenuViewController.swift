@@ -158,8 +158,16 @@ extension MenuViewController: UITableViewDelegate {
 extension MenuViewController {
     
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
-        if rowIndex == 0 {
+        switch rowIndex {
+        case 0:
             delegate?.moveToUpdateLanguageSettings()
+            break
+        case 2:
+            openHelp()
+            break
+        default: break
+        }
+        if rowIndex == 0 {
         }
     }
     
@@ -169,7 +177,12 @@ extension MenuViewController {
         }
     }
     
-    private func shareGodToolsApp() {
+    fileprivate func openHelp() {
+        let url = URL(string: "http://godtoolsapp.com")
+        UIApplication.shared.openURL(url!)
+    }
+    
+    fileprivate func shareGodToolsApp() {
         let textToShare = [ "share_god_tools_share_sheet_text".localized ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
