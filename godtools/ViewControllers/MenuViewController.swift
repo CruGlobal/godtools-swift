@@ -12,6 +12,7 @@ import MessageUI
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAbout()
+    mutating func openWebView(url: URL, title: String)
 }
 
 class MenuViewController: BaseViewController {
@@ -192,7 +193,7 @@ extension MenuViewController {
     
     fileprivate func openHelp() {
         let url = URL(string: "http://godtoolsapp.com")
-        UIApplication.shared.openURL(url!)
+        self.delegate?.openWebView(url: url!, title: "help".localized)
     }
     
     fileprivate func contactUs() {
@@ -200,7 +201,7 @@ extension MenuViewController {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")
-            UIApplication.shared.openURL(url!)
+            self.delegate?.openWebView(url: url!, title: "contact_us".localized)
         }
     }
     
@@ -215,7 +216,7 @@ extension MenuViewController {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")
-            UIApplication.shared.openURL(url!)
+            self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized)
         }
     }
     
