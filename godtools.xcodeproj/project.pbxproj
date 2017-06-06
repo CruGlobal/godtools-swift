@@ -98,6 +98,7 @@
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
 		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
 		4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */; };
@@ -262,6 +263,7 @@
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultColors.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataClass.swift"; path = "Models/PageFile+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
+				4F0CCC1E1EE73E9D00AE4E45 /* Podfile */,
 			);
 			sourceTree = "<group>";
 		};
@@ -978,6 +981,7 @@
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
+				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 			);
