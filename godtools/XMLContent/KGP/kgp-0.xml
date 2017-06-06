@@ -4,7 +4,7 @@
     xmlns:content="https://mobile-content-api.cru.org/xmlns/content">
     <hero>
         <heading>
-            <content:text i18n-id="{{uuid}}">Knowing God Personally :)</content:text>
+            <content:text i18n-id="{{uuid}}">Knowing God Personally</content:text>
         </heading>
         
         <paragraph>

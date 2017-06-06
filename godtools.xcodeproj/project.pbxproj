@@ -148,6 +148,7 @@
 		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
+		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
 		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
@@ -317,6 +318,7 @@
 		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
+		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
 		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 			children = (
 				0F350D9A1EAE786A0025C4BB /* String.swift */,
 				0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */,
+				ECA4B3431EE7119A00BAE23C /* UIColor.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -1107,6 +1110,7 @@
 				0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
+				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
