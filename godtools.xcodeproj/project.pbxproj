@@ -101,8 +101,6 @@
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F1C95641EA6C204007B47DB /* Language+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */; };
 		4F1C95651EA6C204007B47DB /* Language+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */; };
-		4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */; };
-		4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */; };
 		4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */; };
 		4F1C956B1EA6C204007B47DB /* Translation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -265,8 +263,6 @@
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataClass.swift"; path = "Models/Language+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Language+CoreDataProperties.swift"; path = "Models/Language+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataClass.swift"; path = "Models/PageFile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "PageFile+CoreDataProperties.swift"; path = "Models/PageFile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataClass.swift"; path = "Models/Translation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4F1C95631EA6C204007B47DB /* Translation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Translation+CoreDataProperties.swift"; path = "Models/Translation+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4F1C95701EA70582007B47DB /* LanguagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesManager.swift; path = Managers/LanguagesManager.swift; sourceTree = "<group>"; };
@@ -679,8 +675,6 @@
 				4F1C957C1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift */,
 				4F1C955C1EA6C204007B47DB /* Language+CoreDataClass.swift */,
 				4F1C955D1EA6C204007B47DB /* Language+CoreDataProperties.swift */,
-				4F1C955E1EA6C204007B47DB /* PageFile+CoreDataClass.swift */,
-				4F1C955F1EA6C204007B47DB /* PageFile+CoreDataProperties.swift */,
 				4FF646321ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift */,
 				4FF646331ECF70DC00953090 /* ReferencedFile+CoreDataProperties.swift */,
 				4F1C95621EA6C204007B47DB /* Translation+CoreDataClass.swift */,
@@ -1117,7 +1111,6 @@
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
-				4F1C95661EA6C204007B47DB /* PageFile+CoreDataClass.swift in Sources */,
 				4F1C957D1EA7AEB8007B47DB /* DownloadedResource+CoreDataClass.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */,
 				EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */,
@@ -1137,7 +1130,6 @@
 				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
-				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButtonActions.swift in Sources */,
