@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import PromiseKit
 import Spine
-import CoreData
+import RealmSwift
 
 class GTDataManager: NSObject {
     let documentsPath: String
@@ -18,7 +18,7 @@ class GTDataManager: NSObject {
     let bannersPath: URL
     
     let serializer = Serializer()
-    let context = NSManagedObjectContext.mr_rootSaving()
+    let realm = try! Realm()
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
@@ -44,51 +44,56 @@ class GTDataManager: NSObject {
     }
     
     func rollbackContext() {
-        context.rollback()
+        assertionFailure("method must be re-implemented")
     }
     
     func saveToDisk() {
-        saveToDisk(nil)
+        assertionFailure("method must be re-implemented")
     }
     
     func saveToDisk(_ completion: ((Bool, Error?) -> Void)?) {
-        context.mr_saveToPersistentStore(completion: completion)
+        assertionFailure("method must be re-implemented")
     }
     
     func saveToDiskAndWait() {
-        context.mr_saveToPersistentStoreAndWait()
+        assertionFailure("method must be re-implemented")
     }
     
-    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
-        return entityClass.mr_findFirst(with: matching, in: context)
+    func findEntity<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
+        return findEntities(entityClass, matching: matching).first
     }
     
-    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
-        return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
+    func findEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
+        let predicate = NSPredicate(format: attribute.appending(" = %@"), [value])
+        return findEntity(entityClass, matching: predicate)
     }
     
-    func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
-        return entityClass.mr_findAll(with: matching, in: context) as! [T]
+    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> Results<T> {
+        return findAllEntities(entityClass).filter(matching)
     }
     
-    func findFirstOrCreateEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
-        return entityClass.mr_findFirstOrCreate(byAttribute: attribute, withValue: value, in: context)
+    func findFirstOrCreateEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
+        if let entity = findEntity(entityClass, byAttribute: attribute, withValue: value) {
+            return entity
+        }
+        
+        return entityClass.init()
     }
     
-    func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
-        return entityClass.mr_findAll(in: context) as! [T]
+    func findAllEntities<T: Object>(_ entityClass: T.Type) -> Results<T> {
+        return realm.objects(entityClass)
     }
     
-    func createEntity<T: NSManagedObject>(_ entityClass: T.Type) -> T? {
-        return entityClass.mr_createEntity(in: context)
+    func createEntity<T: Object>(_ entityClass: T.Type) -> T? {
+        return entityClass.init()
     }
     
-    func deleteEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) {
-        entityClass.mr_deleteAll(matching: matching, in: context)
+    func deleteEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) {
+        realm.delete(findEntities(entityClass, matching: matching))
     }
     
-    func deleteEntity<T: NSManagedObject>(_ entity: T) {
-        entity.mr_deleteEntity(in: context)
+    func deleteEntity<T: Object>(_ entity: T) {
+        realm.delete(entity)
     }
     
     func buildURL() -> URL? {
