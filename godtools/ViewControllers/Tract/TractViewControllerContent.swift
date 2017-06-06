@@ -19,7 +19,7 @@ extension TractViewController {
         let range = getRangeOfViews()
         for pageNumber in range.start...range.end {
             let view = buildPage(pageNumber, width: width, height: height)
-            self.pagesViews.append(view)
+            self.pagesViews[pageNumber] = view
             self.containerView.addSubview(view)
         }
         
@@ -47,39 +47,30 @@ extension TractViewController {
     
     func reloadPagesViews() {
         let range = getRangeOfViews()
-        let firstTag = (self.pagesViews.first?.tag)! - self.viewTagOrigin
-        let lastTag = (self.pagesViews.last?.tag)! - self.viewTagOrigin
         let width = self.containerView.frame.size.width
         let height = self.containerView.frame.size.height
+        let lastPosition = self.totalPages() - 1
+        var tmpPagesViews = [BaseTractView?](repeating: nil, count: 10)
         
-        if firstTag < range.start {
-            for _ in 0...firstTag {
-                self.pagesViews.first?.removeFromSuperview()
-                self.pagesViews.removeFirst()
-            }
-            
-        } else if firstTag > range.start {
-            var position = 0
-            for _ in range.start...firstTag {
-                let view = buildPage(range.start + position, width: width, height: height)
-                self.pagesViews.insert(view, at: position)
-                self.containerView.addSubview(view)
-                position += 1
-            }
-        }
-        
-        if lastTag < range.end {
-            for position in lastTag...range.end {
+        for position in range.start...range.end {
+            let pageView = self.pagesViews[position]
+            if pageView != nil {
+                tmpPagesViews[position] = pageView!
+            } else {
                 let view = buildPage(position, width: width, height: height)
-                self.pagesViews.append(view)
+                tmpPagesViews[position] = view
                 self.containerView.addSubview(view)
             }
-        } else if lastTag > range.end {
-            for _ in range.end...lastTag {
-                self.pagesViews.last?.removeFromSuperview()
-                self.pagesViews.removeLast()
+        }
+        
+        for position in 0...lastPosition {
+            let pageView = self.pagesViews[position]
+            if pageView != nil && (position < range.start || position > range.end) {
+                pageView?.removeFromSuperview()
             }
         }
+        
+        self.pagesViews = tmpPagesViews
     }
     
     func getRangeOfViews() -> (start: Int, end: Int) {
@@ -89,7 +80,7 @@ extension TractViewController {
         }
         
         var end = self.currentPage + 2
-        if end > self.totalPages() - 1 {
+        if end >= self.totalPages() {
             end = totalPages() - 1
         }
         
@@ -106,6 +97,11 @@ extension TractViewController {
         }
         
         self.pagesViews.removeAll()
+        resetPagesView()
+    }
+    
+    func resetPagesView() {
+        self.pagesViews = [BaseTractView?](repeating: nil, count: 10)
     }
     
     private func addSnapshotView() {
