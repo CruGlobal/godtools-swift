@@ -195,6 +195,10 @@ class TractViewController: BaseViewController {
                                                selector: #selector(moveToNextPage),
                                                name: NSNotification.Name.moveToNextPageNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendEmail),
+                                               name: NSNotification.Name.sendEmailFromTractForm,
+                                               object: nil)
     }
     
     // MARK: - Helpers

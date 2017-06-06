@@ -18,4 +18,5 @@ extension Notification.Name {
     static let downloadPrimaryTranslationCompleteNotification = Notification.Name("downloadPrimaryTranslationCompleteNotification")
     static let initialAppStateCleanupCompleted = Notification.Name("initialAppStateCleanupCompleted")
     static let downloadBannerCompleteNotifciation = Notification.Name("downloadBannerCompleteNotifciation")
+    static let sendEmailFromTractForm = Notification.Name("sendEmailFromTractForm")
 }
