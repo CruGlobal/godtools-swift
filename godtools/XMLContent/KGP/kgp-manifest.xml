@@ -3,6 +3,8 @@
           xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
           background-image="resource/bg-texture.png"
           background-image-align="repeat"
+          navbar-color="rgba(0, 0, 0, 0)"
+          navbar-control-color="rgba(255, 255, 255, 1)"
           primary-color="rgba(59, 164, 219, 1)"
           primary-text-color="rgba(59, 164, 219, 1)"
           text-color="rgba(90, 90, 90, 1)">

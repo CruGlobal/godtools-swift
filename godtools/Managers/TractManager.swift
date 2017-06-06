@@ -13,7 +13,7 @@ import Crashlytics
 
 class TractManager: GTDataManager {
     
-    let testMode = false
+    let testMode = true
 
 }
 
@@ -45,6 +45,8 @@ extension TractManager {
             return (pages, tractColors)
         }
         
+        let navBarColorString: String = (manifest.element?.attribute(by: "navbar-color")?.text) ?? GTAppDefaultColors.navBarColor
+        let navBarControlColorString: String = (manifest.element?.attribute(by: "navbar-control-color")?.text) ?? GTAppDefaultColors.navBarControlColor
         let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text) ?? GTAppDefaultColors.primaryColor
         let primaryTextColorString: String = (manifest.element?.attribute(by: "primary-text-color")?.text) ?? GTAppDefaultColors.primaryTextColorString
         let textColorString: String = (manifest.element?.attribute(by: "text-color")?.text) ?? GTAppDefaultColors.textColorString
@@ -60,6 +62,8 @@ extension TractManager {
             }
         }
         
+        tractColors.navBarColor = navBarColorString.getRGBAColor()
+        tractColors.navBarControlColor = navBarControlColorString.getRGBAColor()
         tractColors.primaryColor = primaryColorString.getRGBAColor()
         tractColors.primaryTextColor = primaryTextColorString.getRGBAColor()
         tractColors.textColor = textColorString.getRGBAColor()
