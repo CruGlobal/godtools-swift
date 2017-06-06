@@ -25,6 +25,9 @@ PODS:
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
   - Quick (1.1.0)
+  - Realm (2.8.0):
+    - Realm/Headers (= 2.8.0)
+  - Realm/Headers (2.8.0)
   - Result (3.2.1)
   - Spine (0.3.1):
     - BrightFutures (~> 5.0)
@@ -43,6 +46,7 @@ DEPENDENCIES:
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
   - Quick (= 1.1)
+  - Realm (~> 2.8.0)
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 3.0.0)
@@ -67,12 +71,13 @@ SPEC CHECKSUMS:
   Nimble: c53e6903fee94041b90ded74f135820437d8bf59
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  Realm: 929243ad2b618b3232e70658bedc61110e7563f1
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   Spine: 86ff8436c21b023766a82388880864fa4ecc7431
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
 
-PODFILE CHECKSUM: aff4244e5c7260aa7a52b042d1fe6e24ec65f8cc
+PODFILE CHECKSUM: 7e33aa21196cb13927db2da87fda0f52fef6b6c3
 
 COCOAPODS: 1.2.1
