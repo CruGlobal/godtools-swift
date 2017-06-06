@@ -33,7 +33,7 @@ PODS:
     - SwiftyJSON (~> 3.1.4)
   - SSZipArchive (1.8.1)
   - SwiftyJSON (3.1.4)
-  - SWXMLHash (3.0.4)
+  - SWXMLHash (4.1.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.4)
@@ -47,7 +47,7 @@ DEPENDENCIES:
   - RealmSwift (~> 2.8.0)
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
-  - SWXMLHash (~> 3.0.0)
+  - SWXMLHash (~> 4.1.0)
 
 EXTERNAL SOURCES:
   Spine:
@@ -74,8 +74,8 @@ SPEC CHECKSUMS:
   Spine: 86ff8436c21b023766a82388880864fa4ecc7431
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
+  SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
 
-PODFILE CHECKSUM: 2cda1987ceaec935d56c1babd9f6928e3ea522b6
+PODFILE CHECKSUM: 476c4ac26621f92f1030d8fb4f8bc205eba46fbe
 
 COCOAPODS: 1.2.1

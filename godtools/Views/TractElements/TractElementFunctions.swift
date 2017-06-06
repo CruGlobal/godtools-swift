@@ -81,7 +81,7 @@ extension BaseTractElement {
             properties[attribute.name] = attribute.text
         }
         
-        if data.element?.text != nil && data.element?.text?.trimmingCharacters(in: .whitespaces) != "" {
+        if data.element?.text != nil && data.element?.text.trimmingCharacters(in: .whitespaces) != "" {
             properties["value"] = data.element?.text
         }
 
