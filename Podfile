@@ -12,7 +12,7 @@ target 'godtools' do
   pod 'PromiseKit', '~> 4.1'
   pod 'PromiseKit/Alamofire', '~> 4.1'
   pod 'MagicalRecord', '~> 2.3'
-  pod 'Realm', '~> 2.8.0'
+  pod 'RealmSwift', '~> 2.8.0'
   pod 'SSZipArchive'
   pod 'SWXMLHash', '~> 3.0.0'
   pod 'Fabric'
