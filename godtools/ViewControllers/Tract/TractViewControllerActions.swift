@@ -13,15 +13,14 @@ import MessageUI
 extension TractViewController: MFMailComposeViewControllerDelegate {
     
     func sendEmail(notification: Notification) {
-        guard let dictionary = notification.userInfo as? [String: String] else {
+        guard let dictionary = notification.userInfo as? [String: Any] else {
             return
         }
         
         let composeVC = MFMailComposeViewController()
         composeVC.mailComposeDelegate = self
-        composeVC.setToRecipients([ dictionary["recipient"] ])
-        composeVC.setSubject(dictionary["subject"])
-        composeVC.setMessageBody(dictionary["content"], isHTML: dictionary["html"])
+        composeVC.setSubject(dictionary["subject"] as! String)
+        composeVC.setMessageBody(dictionary["content"] as! String, isHTML: dictionary["html"] as! Bool)
         self.present(composeVC, animated: true, completion: nil)
     }
     

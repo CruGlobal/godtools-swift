@@ -1,5 +1,5 @@
 //
-//  TractFormEmailActions.swift
+//  TractEmailActions.swift
 //  godtools
 //
 //  Created by Pablo Marti on 6/6/17.
@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
-extension TractForm {
+extension TractEmail {
     
-    func sendEmail(recipient: String, subject: String, content: String) {
-        let userInfo = ["recipient": recipient, "subject": subject, "content": content, "html": true]
+    override func receiveMessage() {
+        let userInfo = ["subject": self.properties.subject, "content": self.properties.content, "html": self.properties.html] as [String : Any]
         NotificationCenter.default.post(name: .sendEmailFromTractForm, object: nil, userInfo: userInfo)
     }
     

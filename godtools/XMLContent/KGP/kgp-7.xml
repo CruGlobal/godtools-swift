@@ -43,5 +43,14 @@
                 </content:text>
             </content:button>
         </paragraph>
+        
+        <form>
+            <content:link events="links-with-information">
+                <content:text i18n-id="{{uuid}}">Send me the links</content:text>
+            </content:link>
+        </form>
     </hero>
+    <emails>
+        <email listeners="links-with-information" subject="Links of GodTools" content="Hi, this is the info of the email" html="true" />
+    </emails>
 </page>
