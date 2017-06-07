@@ -43,11 +43,11 @@ class ToolsManager: GTDataManager {
             }
             
             let downloadedTranslations = findEntities(Translation.self, matching: predicate)
-            let primaryTranslations = downloadedTranslations.filter({ return $0.language.first!.isPrimary() })
+            let primaryTranslations = downloadedTranslations.filter({ return $0.language!.isPrimary() })
             
             resources.removeAll()
             for translation in primaryTranslations {
-                resources.append(translation.downloadedResource.first!)
+                resources.append(translation.downloadedResource!)
             }
         }
     }

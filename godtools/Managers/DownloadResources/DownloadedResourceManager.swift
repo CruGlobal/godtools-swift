@@ -123,9 +123,9 @@ class DownloadedResourceManager: GTDataManager {
                     let resourceId = remoteResource.id ?? "-1"
                     let version = remoteTranslation.version!.int16Value
                     
-                    //                if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
-                    //                    continue;
-                    //                }
+                    if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                        continue;
+                    }
                     
                     var cachedTranslation = findEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
                     
@@ -141,11 +141,13 @@ class DownloadedResourceManager: GTDataManager {
                     cachedTranslation!.localizedName = remoteTranslation.translatedName
                     cachedTranslation!.localizedDescription = remoteTranslation.translatedDescription
                     
+                    cachedTranslation!.downloadedResource = cachedResource
                     cachedResource!.translations.append(cachedTranslation!)
                     
                     let cachedLanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: languageId)
                     cachedLanguage?.translations.append(cachedTranslation!)
-
+                    cachedTranslation!.language = cachedLanguage
+                    
                     //                TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
                 }
             }

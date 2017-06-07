@@ -59,12 +59,12 @@ class TranslationZipImporter: GTDataManager {
     private func addTranslationsToQueue(_ translations: List<Translation>) {
         let translations = Array(translations)
         
-        let primaryTranslation = translations.filter( {$0.language.first!.isPrimary()} ).first
+        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
         }
         
-        let parallelTranslation = translations.filter( {$0.language.first!.isParallel()} ).first
+        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
         if (parallelTranslation != nil && parallelTranslation!.isDownloaded) {
             translationDownloadQueue.append(parallelTranslation!)
         }
@@ -78,11 +78,11 @@ class TranslationZipImporter: GTDataManager {
                 continue
             }
             
-            if !translation.downloadedResource.first!.shouldDownload {
+            if !translation.downloadedResource!.shouldDownload {
                 continue
             }
             
-            if !translation.language.first!.shouldDownload {
+            if !translation.language!.shouldDownload {
                 continue
             }
             
@@ -131,7 +131,7 @@ class TranslationZipImporter: GTDataManager {
             TranslationsManager.shared.translationWasDownloaded(translation)
             TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
             
-            if translation.language.first!.isPrimary() {
+            if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
             }
             return Promise(value: ())
@@ -150,13 +150,13 @@ class TranslationZipImporter: GTDataManager {
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
-                if !translation.language.first!.isPrimary() {
+                if !translation.language!.isPrimary() {
                     return
                 }
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
-                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource.first!.remoteId])
+                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
             }
             .responseData()
     }
@@ -227,7 +227,7 @@ class TranslationZipImporter: GTDataManager {
     private func primaryDownloadComplete(translation: Translation) {
         NotificationCenter.default.post(name: .downloadPrimaryTranslationCompleteNotification,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource.first!.remoteId])
+                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
     }
     
     private func createResourcesDirectoryIfNecessary() {

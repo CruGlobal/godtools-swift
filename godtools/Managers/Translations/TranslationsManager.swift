@@ -16,7 +16,9 @@ class TranslationsManager: GTDataManager {
     static let shared = TranslationsManager()
     
     func translationWasDownloaded(_ translation: Translation) {
-        translation.isDownloaded = true
+        try! realm.write {
+            translation.isDownloaded = true
+        }
     }
     
     func translationsNeedingDownloaded() -> List<Translation> {
@@ -27,14 +29,14 @@ class TranslationsManager: GTDataManager {
     
     func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
-                                    latest.language.first!.remoteId,
-                                    latest.downloadedResource.first!.remoteId,
+                                    latest.language!.remoteId,
+                                    latest.downloadedResource!.remoteId,
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
-        try! realm.write {
-            realm.delete(findEntities(Translation.self, matching: predicate))
-        }
+//        try! realm.write {
+//            realm.delete(findEntities(Translation.self, matching: predicate))
+//        }
         
     }
 }
