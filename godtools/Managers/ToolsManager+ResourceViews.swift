@@ -50,7 +50,7 @@ extension ToolsManager {
     }
     
     private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any] {
-        let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId!)!),
+        let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId)!),
                                           quantity: quantity)
         
         
@@ -59,6 +59,6 @@ extension ToolsManager {
     }
     
     private func record(_ error: Error, resource: DownloadedResource) {
-        Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Unable to sync views to remote for resource \(resource.remoteId!)"])
+        Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Unable to sync views to remote for resource \(resource.remoteId)"])
     }
 }

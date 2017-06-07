@@ -26,28 +26,18 @@ class DownloadedResource: Object {
     }
     
     func isAvailableInLanguage(_ language: Language?) -> Bool {
-        if language == nil {
+        guard let language = language else {
             return false
         }
         
-        return translations.filter({ $0.language!.remoteId == language!.remoteId })
-            .filter({ $0.isPublished} ).count > 0
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", language.remoteId)
+        return translations.filter(predicate).count > 0
     }
     
     func getTranslationForLanguage(_ language: Language) -> Translation? {
-        return translations.filter({ $0.language!.remoteId == language.remoteId })
-            .filter({ $0.isDownloaded })
-            .max(by: { $0.version < $1.version })
-    }
-    
-    func latestTranslationId() -> String? {
-        let latestTranslation = translations
-            .filter( {$0.isPublished} )
-            .filter( {$0.downloadedResource == self} )
-            .filter( {$0.language?.remoteId == GTSettings.shared.primaryLanguageId} )
-            .max(by: {$0.version < $1.version} )
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND isDownloaded = true", language.remoteId)
         
-        return latestTranslation?.remoteId
+        return translations.filter(predicate).first
     }
     
     func localizedName(language: Language?) -> String {

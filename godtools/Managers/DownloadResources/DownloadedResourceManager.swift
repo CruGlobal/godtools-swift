@@ -19,7 +19,7 @@ class DownloadedResourceManager: GTDataManager {
     
     let path = "/resources"
     
-    var resources: List<DownloadedResource>
+    var resources = List<DownloadedResource>()
     
     override init() {
         super.init()
@@ -92,14 +92,15 @@ class DownloadedResourceManager: GTDataManager {
                 
                 let cachedTranslation = findFirstOrCreateEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
                 
-                cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
                 cachedTranslation.version = remoteTranslation.version!.int16Value
                 cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
                 cachedTranslation.manifestFilename = remoteTranslation.manifestName
                 cachedTranslation.localizedName = remoteTranslation.translatedName
                 cachedTranslation.localizedDescription = remoteTranslation.translatedDescription
-                                
-                cachedResource.addToTranslations(cachedTranslation)
+
+                cachedResource.translations.append(cachedTranslation)
+                let cachedLanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: languageId)
+                cachedLanguage?.translations.append(cachedTranslation)
                 
                 TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
             }
@@ -113,7 +114,7 @@ class DownloadedResourceManager: GTDataManager {
                                     languageId,
                                     resourceId)
         
-        let existingTranslations: [Translation] = findEntities(Translation.self, matching: predicate)
+        let existingTranslations = findEntities(Translation.self, matching: predicate)
         
         let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
         

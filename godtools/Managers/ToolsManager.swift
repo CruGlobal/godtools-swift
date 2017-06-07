@@ -29,22 +29,20 @@ class ToolsManager: GTDataManager {
     
     let viewsPath = "views"
     
-    var resources: Results<DownloadedResource>
+    var resources = List<DownloadedResource>()
     
     weak var delegate: ToolsManagerDelegate? {
         didSet {
+            var predicate: NSPredicate
             if self.delegate is HomeViewController {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter({ (resource) -> Bool in
-                    return resource.isDownloaded
-                })
-                
+                predicate = NSPredicate(format: "isDownloaded = true")
                 deregisterDownloadCompletedObserver()
             } else {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter({ (resource) -> Bool in
-                    return !(resource.isDownloaded)
-                })
+                predicate = NSPredicate(format: "isDownloaded = false")
                 registerDownloadCompletedObserver()
             }
+            
+            resources = findEntities(DownloadedResource.self, matching: predicate)
         }
     }
     
@@ -63,7 +61,7 @@ class ToolsManager: GTDataManager {
         resource.shouldDownload = false
         for translation in resource.translations {
             translation.isDownloaded = false            
-            translation.removeFromReferencedFiles(translation.referencedFiles!)
+//            translation.removeFromReferencedFiles(translation.referencedFiles!)
         }
         
         TranslationFileRemover().deleteUnusedPages()

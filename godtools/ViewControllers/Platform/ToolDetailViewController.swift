@@ -37,8 +37,8 @@ class ToolDetailViewController: BaseViewController {
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
         self.titleLabel.text = resource!.localizedName(language: LanguagesManager.shared.loadPrimaryLanguageFromDisk())
 
-        self.languagesLabel.text = Array(resource!.translations!)
-            .map({ "\(($0 as! Translation).language!.localizedName())"})
+        self.languagesLabel.text = Array(resource!.translations)
+            .map({ "\($0.language.first!.localizedName())"})
             .sorted(by: { $0 < $1 })
             .joined(separator: ", ")
         

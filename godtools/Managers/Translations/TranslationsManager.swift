@@ -10,6 +10,7 @@ import Foundation
 import PromiseKit
 import Alamofire
 import CoreData
+import RealmSwift
 
 class TranslationsManager: GTDataManager {
     static let shared = TranslationsManager()
@@ -19,7 +20,7 @@ class TranslationsManager: GTDataManager {
         saveToDisk()
     }
     
-    func translationsNeedingDownloaded() -> [Translation] {
+    func translationsNeedingDownloaded() -> List<Translation> {
         let predicate = NSPredicate(format: "language.shouldDownload = true AND downloadedResource.shouldDownload = true AND isDownloaded = false")
 
         return findEntities(Translation.self, matching: predicate)
@@ -27,8 +28,8 @@ class TranslationsManager: GTDataManager {
     
     func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
-                                    latest.language!.remoteId!,
-                                    latest.downloadedResource!.remoteId!,
+                                    latest.language.first!.remoteId,
+                                    latest.downloadedResource.first!.remoteId,
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         

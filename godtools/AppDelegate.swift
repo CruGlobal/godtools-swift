@@ -12,6 +12,7 @@ import MagicalRecord
 import Fabric
 import Crashlytics
 import PromiseKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -81,9 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initializeAppStateOnFirstLaunch()
         }
         
-        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<[DownloadedResource]> in
+        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<List<DownloadedResource>> in
             return DownloadedResourceManager.shared.loadFromRemote()
-        }.then { (resources) -> Promise<[DownloadedResource]> in
+        }.then { (resources) -> Promise<List<DownloadedResource>> in
             FirstLaunchInitializer().cleanupInitialAppState()
             TranslationZipImporter.shared.catchupMissedDownloads()
             return Promise(value: resources)
