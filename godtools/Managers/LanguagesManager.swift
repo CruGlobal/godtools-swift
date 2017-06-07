@@ -18,7 +18,7 @@ class LanguagesManager: GTDataManager {
     
     let path = "languages"
     
-    var languages: List<Language>
+    var languages = List<Language>()
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -47,7 +47,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> List<Language> {
-        languages = findAllEntities(Language.self)        
+        languages = findAllEntities(Language.self)
         return languages
     }
     
