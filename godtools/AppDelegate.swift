@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import CoreData
-import MagicalRecord
 import Fabric
 import Crashlytics
 import PromiseKit
@@ -21,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        initializeCoreDataStack()
         Fabric.with([Crashlytics.self, Answers.self])
         self.startFlowController(launchOptions: launchOptions)
         
@@ -31,10 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return true
-    }
-    
-    fileprivate func initializeCoreDataStack() {
-        MagicalRecord.setupCoreDataStack(withAutoMigratingSqliteStoreNamed: "godtools-5.sqlite")
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -56,11 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        cleanupCoreData()
-    }
     
-    fileprivate func cleanupCoreData() {
-        MagicalRecord.cleanUp()
     }
     
     // MARK: - Flow controllers setup

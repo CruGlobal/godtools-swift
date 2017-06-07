@@ -6,9 +6,6 @@ PODS:
     - Fabric (~> 1.6.3)
   - CRUConfig (1.2.0)
   - Fabric (1.6.11)
-  - MagicalRecord (2.3.2):
-    - MagicalRecord/Core (= 2.3.2)
-  - MagicalRecord/Core (2.3.2)
   - Nimble (6.1.0)
   - PromiseKit (4.1.7):
     - PromiseKit/Foundation (= 4.1.7)
@@ -43,7 +40,6 @@ DEPENDENCIES:
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
-  - MagicalRecord (~> 2.3)
   - Nimble (~> 6.1)
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
@@ -69,7 +65,6 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   Nimble: c53e6903fee94041b90ded74f135820437d8bf59
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
@@ -81,6 +76,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
 
-PODFILE CHECKSUM: fd614e817077e5a5605ebc83c360fd12cd9d090f
+PODFILE CHECKSUM: 2cda1987ceaec935d56c1babd9f6928e3ea522b6
 
 COCOAPODS: 1.2.1
