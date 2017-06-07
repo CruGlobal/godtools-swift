@@ -42,8 +42,14 @@ class ToolsManager: GTDataManager {
                 registerDownloadCompletedObserver()
             }
             
-            resources = findEntities(DownloadedResource.self, matching: predicate)
+            let downloadedTranslations = findEntities(Translation.self, matching: predicate)
+            let primaryTranslations = downloadedTranslations.filter({ return $0.language.first!.isPrimary() })
+            
+            for translation in primaryTranslations {
+                resources.append(translation.downloadedResource.first!)
+            }
         }
+        
     }
     
     func hasResources() -> Bool {
