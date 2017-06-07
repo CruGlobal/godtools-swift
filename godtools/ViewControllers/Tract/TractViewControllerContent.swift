@@ -50,16 +50,16 @@ extension TractViewController {
         let width = self.containerView.frame.size.width
         let height = self.containerView.frame.size.height
         let lastPosition = self.totalPages() - 1
-        var tmpPagesViews = [BaseTractView?](repeating: nil, count: 10)
+        var tmpPagesViews = [BaseTractView?](repeating: nil, count: totalPages())
         
         for position in range.start...range.end {
-            let pageView = self.pagesViews[position]
-            if pageView != nil {
-                tmpPagesViews[position] = pageView!
+            if let pageView = self.pagesViews[position] {
+                tmpPagesViews[position] = pageView
             } else {
                 let view = buildPage(position, width: width, height: height)
                 tmpPagesViews[position] = view
                 self.containerView.addSubview(view)
+                
             }
         }
         
@@ -101,7 +101,7 @@ extension TractViewController {
     }
     
     func resetPagesView() {
-        self.pagesViews = [BaseTractView?](repeating: nil, count: 10)
+        self.pagesViews = [BaseTractView?](repeating: nil, count: totalPages())
     }
     
     private func addSnapshotView() {
