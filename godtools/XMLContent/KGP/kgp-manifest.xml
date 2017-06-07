@@ -10,6 +10,7 @@
     <content:text i18n-id="{{uuid}}">Knowing God Personally</content:text>
   </title>
   <pages>
+    <page src="kgp-7"/>
     <page src="kgp-0"/>
     <page src="kgp-1"/>
     <page src="kgp-2"/>
@@ -17,6 +18,5 @@
     <page src="kgp-4"/>
     <page src="kgp-5"/>
     <page src="kgp-6"/>
-    <page src="kgp-7"/>
   </pages>
 </manifest>
