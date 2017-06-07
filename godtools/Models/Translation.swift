@@ -12,13 +12,13 @@ import RealmSwift
 class Translation: Object {
     dynamic var isDownloaded = false
     dynamic var isPublished = false
-    dynamic var localizedDescription = ""
-    dynamic var localizedName = ""
-    dynamic var manifestFilename = ""
+    dynamic var localizedDescription: String?
+    dynamic var localizedName: String?
+    dynamic var manifestFilename: String?
     dynamic var remoteId = ""
     dynamic var version: Int16 = 0
-    dynamic var downloadedResource: DownloadedResource?
     dynamic var language: Language?
-    let referencedFiles = List<ReferencedFile>()
-    let attachments = List<Attachment>()
+    let downloadedResource = LinkingObjects(fromType: DownloadedResource.self, property: "translations")
+    let referencedFiles = LinkingObjects(fromType: ReferencedFile.self, property: "translations")
+    let attachments = LinkingObjects(fromType: Attachment.self, property: "translations")
 }
