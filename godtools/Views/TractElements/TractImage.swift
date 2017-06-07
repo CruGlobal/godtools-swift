@@ -81,7 +81,7 @@ class TractImage: BaseTractElement {
     
     func loadImage(properties: [String: Any]) -> UIImage {
         let resource = properties["resource"] as! String?
-        self.align = properties["align"] as! String
+        self.align = properties["align"] as? String ?? "center"
         
         guard let image = UIImage(named: resource!) else {
             return UIImage()

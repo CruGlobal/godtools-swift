@@ -244,4 +244,20 @@ class BaseTractElement: UIView {
         return buttonStyle
     }
     
+    // MARK: - Form Functions
+    
+    func attachToForm() {
+        if let form = BaseTractElement.getFormForElement(self) {
+            form.attachElementToForm(element: self)
+        }
+    }
+    
+    func formName() -> String {
+        return ""
+    }
+    
+    func formValue() -> String {
+        return ""
+    }
+    
 }

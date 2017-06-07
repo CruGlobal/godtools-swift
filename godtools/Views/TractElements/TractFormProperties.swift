@@ -18,7 +18,7 @@ class TractFormProperties: TractElementProperties {
         for property in properties.keys {
             switch property {
             case "action":
-                self.action = properties[property] as! String
+                self.action = properties[property] as? String
             default: break
             }
         }

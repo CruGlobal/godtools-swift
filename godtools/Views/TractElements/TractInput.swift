@@ -128,8 +128,19 @@ class TractInput: BaseTractElement {
                                       height: self.textViewHeight)
         self.addSubview(self.textField)
         
+        attachToForm()
         TractBindings.addBindings(self)
         return self
+    }
+    
+    // MARK: - Form Functions
+    
+    override func formName() -> String {
+        return self.properties.name ?? ""
+    }
+    
+    override func formValue() -> String {
+        return self.textField.text!
     }
 
 }

@@ -153,6 +153,8 @@
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
 		ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */; };
 		ECC5355C1EE88EE100AABAB7 /* TractFormProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */; };
+		ECC5355E1EE8A9FE00AABAB7 /* TractFormActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5355D1EE8A9FE00AABAB7 /* TractFormActions.swift */; };
+		ECC535611EE8ABDE00AABAB7 /* TractFormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC535601EE8ABDE00AABAB7 /* TractFormManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -323,6 +325,8 @@
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormProperties.swift; path = Views/TractElements/TractFormProperties.swift; sourceTree = "<group>"; };
+		ECC5355D1EE8A9FE00AABAB7 /* TractFormActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormActions.swift; path = Views/TractElements/TractFormActions.swift; sourceTree = "<group>"; };
+		ECC535601EE8ABDE00AABAB7 /* TractFormManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormManager.swift; path = Managers/Tracts/TractFormManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -504,6 +508,7 @@
 				0F85C7921ECCAA4400023723 /* TractRootActions.swift */,
 				0F85C7941ECCAAA000023723 /* TractCardsActions.swift */,
 				0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */,
+				ECC5355D1EE8A9FE00AABAB7 /* TractFormActions.swift */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -693,6 +698,7 @@
 		4F1C953B1EA6B85C007B47DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				ECC5355F1EE8ABB000AABAB7 /* Tracts */,
 				4FC74ED61ED5E2A200D6BFFF /* Attachments */,
 				4F1C959B1EA7EA8A007B47DB /* Translations */,
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
@@ -845,6 +851,14 @@
 				ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */,
 			);
 			name = General;
+			sourceTree = "<group>";
+		};
+		ECC5355F1EE8ABB000AABAB7 /* Tracts */ = {
+			isa = PBXGroup;
+			children = (
+				ECC535601EE8ABDE00AABAB7 /* TractFormManager.swift */,
+			);
+			name = Tracts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1110,6 +1124,7 @@
 				0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
+				ECC5355E1EE8A9FE00AABAB7 /* TractFormActions.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
@@ -1174,6 +1189,7 @@
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
+				ECC535611EE8ABDE00AABAB7 /* TractFormManager.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,

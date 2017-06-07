@@ -26,6 +26,7 @@ class TractForm: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractFormProperties()
+    var formElements = [BaseTractElement]()
     
     // MARK - Setup
         

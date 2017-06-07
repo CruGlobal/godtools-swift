@@ -59,7 +59,7 @@
                 <content:text i18n-id="{{uuid}}">Knowing someone better helps a relationship grow. Would you like to sign up for an email series that can help guide you in your new relationship with Jesus Christ?
                 </content:text>
             </paragraph>
-            <form action="/follow_ups/">
+            <form action="/follow_ups/" listeners="followup:send">
                 <content:input type="text" name="name">
                     <content:label>
                         <content:text i18n-id="{{uuid}}">Name</content:text>
