@@ -56,7 +56,7 @@ extension TractViewController {
             if pageView == currentPageView {
                 break
             }
-            pageView.removeFromSuperview()
+            pageView?.removeFromSuperview()
         }
     }
     
@@ -72,7 +72,7 @@ extension TractViewController {
                        animations: {
                         self.currentProgressView.frame = newCurrentProgressViewFrame
                         for view in self.pagesViews {
-                            view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+                            view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
                        completion: nil )
     }

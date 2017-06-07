@@ -26,7 +26,7 @@ class TractViewController: BaseViewController {
         return CGFloat(currentPage) *  -self.view.frame.width
     }
     var containerView = UIView()
-    var pagesViews = [BaseTractView]()
+    var pagesViews = [BaseTractView?]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
