@@ -13,7 +13,7 @@ import Crashlytics
 
 class TractManager: GTDataManager {
     
-    let testMode = true
+    let testMode = false
 
 }
 
