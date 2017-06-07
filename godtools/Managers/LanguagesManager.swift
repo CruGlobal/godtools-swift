@@ -83,12 +83,16 @@ class LanguagesManager: GTDataManager {
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
-        for remoteLanguage in languages {
-            let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
-            cachedlanguage.code = remoteLanguage.code!
+        try! realm.write {
+            for remoteLanguage in languages {
+                let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
+                cachedlanguage.code = remoteLanguage.code!
+                cachedlanguage.remoteId = remoteLanguage.id!
+                realm.add(cachedlanguage)
+            }
         }
     }
-
+    
     fileprivate func selectedLanguageId() -> String? {
         if selectingPrimaryLanguage {
             return GTSettings.shared.primaryLanguageId

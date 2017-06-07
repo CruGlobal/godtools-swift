@@ -15,6 +15,10 @@ class Language: Object {
     dynamic var shouldDownload = false
     let translations = List<Translation>()
     
+    override static func primaryKey() -> String {
+        return "remoteId"
+    }
+    
     func localizedName() -> String {
         guard let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code) else {
             return self.code
