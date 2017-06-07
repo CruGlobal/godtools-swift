@@ -49,7 +49,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func catchupMissedDownloads() {
-        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
+//        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -194,9 +194,9 @@ class TranslationZipImporter: GTDataManager {
         
         for file in files {
             let filename = file.lastPathComponent
-            let referencedFile = findFirstOrCreateEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename)
-            referencedFile.filename = file.lastPathComponent
-            referencedFile.translations.append(translation)
+//            let referencedFile = findFirstOrCreateEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename)
+//            referencedFile.filename = file.lastPathComponent
+//            referencedFile.translations.append(translation)
         }
     }
     
