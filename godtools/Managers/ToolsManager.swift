@@ -40,23 +40,15 @@ class ToolsManager: GTDataManager {
     func loadResourceList() {
         var predicate: NSPredicate
         if self.delegate is HomeViewController {
-            predicate = NSPredicate(format: "isDownloaded = true")
+            predicate = NSPredicate(format: "shouldDownload = true")
             deregisterDownloadCompletedObserver()
         } else {
-            predicate = NSPredicate(format: "isDownloaded = false")
+            predicate = NSPredicate(format: "shouldDownload = false")
             registerDownloadCompletedObserver()
         }
         
-        let downloadedTranslations = findEntities(Translation.self, matching: predicate)
-        let primaryTranslations = downloadedTranslations.filter({ return $0.language!.isPrimary() })
-        
-        resources.removeAll()
-        for translation in primaryTranslations {
-            resources.append(translation.downloadedResource!)
-        }
-
+        resources = findEntities(DownloadedResource.self, matching: predicate)
     }
-
 }
 
 // MARK - Download Notification listening methods
