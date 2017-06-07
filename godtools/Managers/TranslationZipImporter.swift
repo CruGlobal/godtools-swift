@@ -97,7 +97,7 @@ class TranslationZipImporter: GTDataManager {
 
             _ = self.download(translation: translation).catch(execute: { error in
                 Crashlytics().recordError(error,
-                                          withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
+                                          withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId)"])
             })
         }
         
@@ -109,7 +109,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func download(translation: Translation) -> Promise<Void> {
-        let translationId = translation.remoteId!
+        let translationId = translation.remoteId
         let filename = createFilename(translationId: translationId)
         
         guard let tempDirectoryPath = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) else {
@@ -143,7 +143,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
-        let translationId = translation.remoteId!
+        let translationId = translation.remoteId
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in

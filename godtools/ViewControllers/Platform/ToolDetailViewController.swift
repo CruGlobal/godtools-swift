@@ -66,7 +66,7 @@ class ToolDetailViewController: BaseViewController {
             return
         }
         
-        if resourceId != resource!.remoteId! {
+        if resourceId != resource!.remoteId {
             return
         }
         

@@ -93,7 +93,7 @@ class LanguagesManager: GTDataManager {
     private func saveToDisk(_ languages: [LanguageResource]) {
         for remoteLanguage in languages {
             let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
-            cachedlanguage.code = remoteLanguage.code
+            cachedlanguage.code = remoteLanguage.code!
         }
         saveToDisk()
     }
@@ -138,7 +138,7 @@ extension LanguagesManager: LanguageTableViewCellDelegate {
 extension LanguagesManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let language = languages[indexPath.row]
-        self.setSelectedLanguageId(language.remoteId!)
+        self.setSelectedLanguageId(language.remoteId)
         self.recordLanguageShouldDownload(language: language)
         TranslationZipImporter.shared.download(language: language)
         self.refreshCellState(tableView: tableView, indexPath: indexPath)

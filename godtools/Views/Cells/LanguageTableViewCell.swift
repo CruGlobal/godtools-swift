@@ -59,8 +59,8 @@ class LanguageTableViewCell: UITableViewCell {
     }
     
     fileprivate func languageCanBeDeleted(language: Language) {
-        let id = language.remoteId!
-        let code = language.code!
+        let id = language.remoteId
+        let code = language.code
         
         let isPrimary = id == GTSettings.shared.primaryLanguageId
         let isParallel = id == GTSettings.shared.parallelLanguageId

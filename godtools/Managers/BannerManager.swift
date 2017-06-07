@@ -87,7 +87,7 @@ class BannerManager: GTDataManager {
     private func postCompletedNotification(resource: DownloadedResource) {
         NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId!])
+                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId])
     }
     
     private func bannerHasChanged(attachment: Attachment) -> Bool {
