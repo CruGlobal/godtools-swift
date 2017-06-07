@@ -11,14 +11,14 @@ import UIKit
 import Alamofire
 import PromiseKit
 import Spine
-import MagicalRecord
+import RealmSwift
 
 class LanguagesManager: GTDataManager {
     static let shared = LanguagesManager()
     
     let path = "languages"
     
-    var languages = [Language]()
+    var languages: List<Language>
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -46,21 +46,16 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
     }
     
-    func loadFromDisk() -> [Language] {
-        languages = findAllEntities(Language.self)
-        
-        languages = languages.sorted { (language1, language2) -> Bool in
-            return language1.localizedName().compare(language2.localizedName()).rawValue < 0
-        }
-        
+    func loadFromDisk() -> List<Language> {
+        languages = findAllEntities(Language.self)        
         return languages
     }
     
-    func loadFromRemote() -> Promise<[Language]> {
+    func loadFromRemote() -> Promise<List<Language>> {
         showNetworkingIndicator()
         
         return issueGETRequest()
-            .then { data -> Promise<[Language]> in
+            .then { data -> Promise<List<Language>> in
                 do {
                     let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
                     
@@ -80,9 +75,9 @@ class LanguagesManager: GTDataManager {
     
     func recordLanguageShouldDelete(language: Language) {
         language.shouldDownload = false
-        for translation in language.translationsAsArray() {
+        for translation in language.translations {
             translation.isDownloaded = false
-            translation.removeFromReferencedFiles(translation.referencedFiles!)
+            //TODO anything with referenced files here?
         }
         
         TranslationFileRemover().deleteUnusedPages()

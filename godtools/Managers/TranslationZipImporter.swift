@@ -11,6 +11,7 @@ import PromiseKit
 import Alamofire
 import SSZipArchive
 import Crashlytics
+import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
@@ -32,7 +33,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(language: Language) {
-        addTranslationsToQueue(language.translationsAsArray())
+        addTranslationsToQueue(language.translations)
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -40,7 +41,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(resource: DownloadedResource) {
-        addTranslationsToQueue(resource.translationsAsArray())
+        addTranslationsToQueue(resource.translations)
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -55,7 +56,7 @@ class TranslationZipImporter: GTDataManager {
         }
     }
     
-    private func addTranslationsToQueue(_ translations: [Translation]) {
+    private func addTranslationsToQueue(_ translations: List<Translation>) {
         let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
@@ -75,7 +76,7 @@ class TranslationZipImporter: GTDataManager {
                 continue
             }
             
-            if !translation.downloadedResource!.shouldDownload {
+            if !translation.downloadedResource.first!.shouldDownload {
                 continue
             }
             
@@ -153,7 +154,7 @@ class TranslationZipImporter: GTDataManager {
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
-                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])                
+                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource.first!.remoteId])
             }
             .responseData()
     }
@@ -227,7 +228,7 @@ class TranslationZipImporter: GTDataManager {
     private func primaryDownloadComplete(translation: Translation) {
         NotificationCenter.default.post(name: .downloadPrimaryTranslationCompleteNotification,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])
+                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource.first!.remoteId])
     }
     
     private func createResourcesDirectoryIfNecessary() {

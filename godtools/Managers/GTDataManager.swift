@@ -68,8 +68,8 @@ class GTDataManager: NSObject {
         return findEntity(entityClass, matching: predicate)
     }
     
-    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> Results<T> {
-        return findAllEntities(entityClass).filter(matching)
+    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> List<T> {
+        return asList(findAllEntities(entityClass).filter(matching))
     }
     
     func findFirstOrCreateEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
@@ -80,8 +80,8 @@ class GTDataManager: NSObject {
         return entityClass.init()
     }
     
-    func findAllEntities<T: Object>(_ entityClass: T.Type) -> Results<T> {
-        return realm.objects(entityClass)
+    func findAllEntities<T: Object>(_ entityClass: T.Type) -> List<T> {
+        return asList(realm.objects(entityClass))
     }
     
     func createEntity<T: Object>(_ entityClass: T.Type) -> T? {
@@ -94,6 +94,13 @@ class GTDataManager: NSObject {
     
     func deleteEntity<T: Object>(_ entity: T) {
         realm.delete(entity)
+    }
+    
+    private func asList<T: Object>(_ results: Results<T>) -> List<T> {
+        return results.reduce(List<T>()) { (list, element) -> List<T> in
+            list.append(element)
+            return list
+        }
     }
     
     func buildURL() -> URL? {

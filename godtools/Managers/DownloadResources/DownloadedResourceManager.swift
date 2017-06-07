@@ -13,12 +13,13 @@ import PromiseKit
 import Spine
 import MagicalRecord
 import RealmSwift
+
 class DownloadedResourceManager: GTDataManager {
     static let shared = DownloadedResourceManager()
     
     let path = "/resources"
     
-    var resources: Results<DownloadedResource>
+    var resources: List<DownloadedResource>
     
     override init() {
         super.init()
@@ -29,18 +30,18 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(AttachmentResource.self)
     }
     
-    func loadFromDisk() -> Results<DownloadedResource> {
+    func loadFromDisk() -> List<DownloadedResource> {
         resources = findAllEntities(DownloadedResource.self)
         return resources
     }
     
-    func loadFromRemote() -> Promise<Results<DownloadedResource>> {
+    func loadFromRemote() -> Promise<List<DownloadedResource>> {
         showNetworkingIndicator()
         
         let params = ["include": "translations,ages,attachments"]
         
         return issueGETRequest(params)
-            .then { data -> Promise<Results<DownloadedResource>> in
+            .then { data -> Promise<List<DownloadedResource>> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                     
