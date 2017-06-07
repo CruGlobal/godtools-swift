@@ -9,7 +9,6 @@
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shouldDownload" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="totalViews" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" syncable="YES"/>
         <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="downloadedResource" inverseEntity="Translation" syncable="YES"/>
     </entity>
     <entity name="Language" representedClassName="Language" syncable="YES">
@@ -35,7 +34,7 @@
         <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="195"/>
+        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="180"/>
         <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="ReferencedFile" positionX="-45" positionY="63" width="128" height="75"/>
         <element name="Translation" positionX="-54" positionY="-9" width="128" height="195"/>

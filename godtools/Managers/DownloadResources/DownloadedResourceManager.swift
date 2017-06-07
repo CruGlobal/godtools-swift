@@ -102,18 +102,6 @@ class DownloadedResourceManager: GTDataManager {
                 
                 TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
             }
-            
-            let remotePages = remoteResource.pages!
-            for remotePageGeneric in remotePages {
-                let remotePage = remotePageGeneric as! PageResource
-                
-                let cachedPage = findFirstOrCreateEntity(PageFile.self,
-                                                         byAttribute: "remoteId",
-                                                         withValue: remotePage.id!)
-                
-                cachedPage.filename = remotePage.filename
-                cachedPage.resource = cachedResource
-            }
         }
         
         saveToDisk()

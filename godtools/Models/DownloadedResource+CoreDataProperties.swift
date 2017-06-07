@@ -24,25 +24,7 @@ extension DownloadedResource {
     @NSManaged public var remoteId: String?
     @NSManaged public var shouldDownload: Bool
     @NSManaged public var totalViews: Int32
-    @NSManaged public var pages: NSSet?
     @NSManaged public var translations: NSSet?
-
-}
-
-// MARK: Generated accessors for pages
-extension DownloadedResource {
-
-    @objc(addPagesObject:)
-    @NSManaged public func addToPages(_ value: PageFile)
-
-    @objc(removePagesObject:)
-    @NSManaged public func removeFromPages(_ value: PageFile)
-
-    @objc(addPages:)
-    @NSManaged public func addToPages(_ values: NSSet)
-
-    @objc(removePages:)
-    @NSManaged public func removeFromPages(_ values: NSSet)
 
 }
 
