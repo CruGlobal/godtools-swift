@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SWXMLHash
+import MessageUI
 
 class TractViewController: BaseViewController {
     
@@ -194,6 +195,10 @@ class TractViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToNextPage),
                                                name: NSNotification.Name.moveToNextPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendEmail),
+                                               name: NSNotification.Name.sendEmailFromTractForm,
                                                object: nil)
     }
     

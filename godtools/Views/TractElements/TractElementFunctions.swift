@@ -53,6 +53,10 @@ extension BaseTractElement {
             return TractModals(data: data, parent: self)
         case "modal":
             return TractModal(data: data, startOnY: yPosition, parent: self)
+        case "emails":
+            return TractEmails(data: data, parent: self)
+        case "email":
+            return TractEmail(data: data, parent: self)
         default:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
         }
