@@ -55,7 +55,7 @@ extension BaseTractElement {
         
         while elementCopy != nil {
             if elementCopy!.isKind(of: TractForm.self) {
-                return element as? TractForm
+                return elementCopy as? TractForm
             }
             elementCopy = elementCopy!.parent
         }
