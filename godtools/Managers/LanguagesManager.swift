@@ -67,19 +67,22 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    
     func recordLanguageShouldDownload(language: Language) {
-        language.shouldDownload = true
+        try! realm.write {
+            language.shouldDownload = true
+        }
     }
     
     func recordLanguageShouldDelete(language: Language) {
-        language.shouldDownload = false
-        for translation in language.translations {
-            translation.isDownloaded = false
-            //TODO anything with referenced files here?
+        try! realm.write {
+            language.shouldDownload = false
+            for translation in language.translations {
+                translation.isDownloaded = false
+                //TODO anything with referenced files here?
+            }
+            
+            TranslationFileRemover().deleteUnusedPages()
         }
-        
-        TranslationFileRemover().deleteUnusedPages()
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
