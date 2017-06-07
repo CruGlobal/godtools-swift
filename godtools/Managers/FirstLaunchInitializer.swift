@@ -19,8 +19,6 @@ class FirstLaunchInitializer: GTDataManager {
         let resources = initializeInitialResources(language: language)
         initializeInitialTranslations(language: language, resources: resources)
         
-        saveToDisk()
-        
         GTSettings.shared.primaryLanguageId = magicId
     }
     
@@ -44,9 +42,7 @@ class FirstLaunchInitializer: GTDataManager {
             
             GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
         }
-        
-        saveToDiskAndWait()
-        
+                
         sendCompletedNotification()
     }
     

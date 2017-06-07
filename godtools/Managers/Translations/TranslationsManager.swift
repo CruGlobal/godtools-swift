@@ -17,7 +17,6 @@ class TranslationsManager: GTDataManager {
     
     func translationWasDownloaded(_ translation: Translation) {
         translation.isDownloaded = true
-        saveToDisk()
     }
     
     func translationsNeedingDownloaded() -> List<Translation> {
@@ -34,9 +33,5 @@ class TranslationsManager: GTDataManager {
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
         deleteEntities(Translation.self, matching: predicate)
-        
-        if saving {
-            saveToDisk()
-        }
     }
 }

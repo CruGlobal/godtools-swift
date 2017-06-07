@@ -43,22 +43,6 @@ class GTDataManager: NSObject {
             .responseData()
     }
     
-    func rollbackContext() {
-        assertionFailure("method must be re-implemented")
-    }
-    
-    func saveToDisk() {
-        assertionFailure("method must be re-implemented")
-    }
-    
-    func saveToDisk(_ completion: ((Bool, Error?) -> Void)?) {
-        assertionFailure("method must be re-implemented")
-    }
-    
-    func saveToDiskAndWait() {
-        assertionFailure("method must be re-implemented")
-    }
-    
     func findEntity<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
         return findEntities(entityClass, matching: matching).first
     }
@@ -85,15 +69,25 @@ class GTDataManager: NSObject {
     }
     
     func createEntity<T: Object>(_ entityClass: T.Type) -> T? {
-        return entityClass.init()
+        let entity = entityClass.init()
+        
+        try! realm.write {
+            realm.add(entity)
+        }
+        
+        return entity
     }
     
     func deleteEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) {
-        realm.delete(findEntities(entityClass, matching: matching))
+        try! realm.write {
+            realm.delete(findEntities(entityClass, matching: matching))
+        }
     }
     
     func deleteEntity<T: Object>(_ entity: T) {
-        realm.delete(entity)
+        try! realm.write {
+            realm.delete(entity)
+        }
     }
     
     private func asList<T: Object>(_ results: Results<T>) -> List<T> {

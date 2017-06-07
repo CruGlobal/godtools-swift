@@ -104,8 +104,6 @@ class DownloadedResourceManager: GTDataManager {
                 TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
             }
         }
-        
-        saveToDisk()
     }
 
     private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        

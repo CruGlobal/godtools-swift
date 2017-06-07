@@ -107,7 +107,6 @@ class BannerManager: GTDataManager {
         do {
             try image.write(to: path)
             attachment.isBanner = true
-            saveToDisk()
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
         }

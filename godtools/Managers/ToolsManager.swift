@@ -52,7 +52,6 @@ class ToolsManager: GTDataManager {
     
     func download(resource: DownloadedResource) {
         resource.shouldDownload = true
-        saveToDisk()
         TranslationZipImporter.shared.download(resource: resource)
         
     }
@@ -65,8 +64,6 @@ class ToolsManager: GTDataManager {
         }
         
         TranslationFileRemover().deleteUnusedPages()
-        
-        saveToDisk()
     }
 }
 

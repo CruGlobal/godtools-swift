@@ -70,7 +70,6 @@ class LanguagesManager: GTDataManager {
     
     func recordLanguageShouldDownload(language: Language) {
         language.shouldDownload = true
-        saveToDisk()
     }
     
     func recordLanguageShouldDelete(language: Language) {
@@ -81,8 +80,6 @@ class LanguagesManager: GTDataManager {
         }
         
         TranslationFileRemover().deleteUnusedPages()
-    
-        saveToDisk()
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
@@ -90,7 +87,6 @@ class LanguagesManager: GTDataManager {
             let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
             cachedlanguage.code = remoteLanguage.code!
         }
-        saveToDisk()
     }
 
     fileprivate func selectedLanguageId() -> String? {

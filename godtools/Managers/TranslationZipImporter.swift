@@ -180,11 +180,8 @@ class TranslationZipImporter: GTDataManager {
                                       translationId: translationId)
             
             try moveFilesFrom(unzipDirectory)
-            
-            saveToDisk()
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error extracting zip file \(file.lastPathComponent)"])
-            rollbackContext()
         }
     }
     
