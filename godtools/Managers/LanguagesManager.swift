@@ -47,7 +47,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> List<Language> {
-        languages = findAllEntities(Language.self)
+        languages = findAllEntities(Language.self, sortedByKeyPath: "localizedName")
         return languages
     }
     

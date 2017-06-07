@@ -61,8 +61,12 @@ class GTDataManager: NSObject {
     func findAllEntities<T: Object>(_ entityClass: T.Type) -> List<T> {
         return asList(realm.objects(entityClass))
     }
+    
+    func findAllEntities<T: Object>(_ entityClass: T.Type, sortedByKeyPath: String) -> List<T> {
+        return asList(realm.objects(entityClass).sorted(byKeyPath: sortedByKeyPath))
+    }
 
-    private func asList<T: Object>(_ results: Results<T>) -> List<T> {
+    func asList<T: Object>(_ results: Results<T>) -> List<T> {
         return results.reduce(List<T>()) { (list, element) -> List<T> in
             list.append(element)
             return list
