@@ -27,15 +27,19 @@ class TranslationsManager: GTDataManager {
         return findEntities(Translation.self, matching: predicate)
     }
     
-    func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
+    func purgeTranslationsOlderThan(_ latest: Translation) {
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
                                     latest.language!.remoteId,
                                     latest.downloadedResource!.remoteId,
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
-        try! realm.write {
+        if realm.isInWriteTransaction {
             realm.delete(findEntities(Translation.self, matching: predicate))
-        }        
+        } else {
+            try! realm.write {
+                realm.delete(findEntities(Translation.self, matching: predicate))
+            }
+        }
     }
 }

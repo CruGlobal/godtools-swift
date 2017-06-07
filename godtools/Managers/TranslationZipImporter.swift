@@ -129,7 +129,7 @@ class TranslationZipImporter: GTDataManager {
             self.extractZipFile(zipFile, translationId: translationId)
             
             TranslationsManager.shared.translationWasDownloaded(translation)
-            TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
+            TranslationsManager.shared.purgeTranslationsOlderThan(translation)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
