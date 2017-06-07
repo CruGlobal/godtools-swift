@@ -152,6 +152,7 @@
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
 		ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */; };
+		ECC5355C1EE88EE100AABAB7 /* TractFormProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +322,7 @@
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormProperties.swift; path = Views/TractElements/TractFormProperties.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -527,6 +529,7 @@
 				0F9E32321EDCC78A0081DBB9 /* TractModalProperties.swift */,
 				0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */,
 				0F9E32341EDCC78A0081DBB9 /* TractTextFieldProperties.swift */,
+				ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -1156,6 +1159,7 @@
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
+				ECC5355C1EE88EE100AABAB7 /* TractFormProperties.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
 				4FF646341ECF70DC00953090 /* ReferencedFile+CoreDataClass.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,

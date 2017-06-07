@@ -23,6 +23,10 @@ class TractForm: BaseTractElement {
         return self.yPosition + self.height
     }
     
+    // MARK: - Object properties
+    
+    var properties = TractFormProperties()
+    
     // MARK - Setup
         
     override func buildFrame() -> CGRect {
@@ -30,6 +34,18 @@ class TractForm: BaseTractElement {
                       y: self.yPosition,
                       width: self.width,
                       height: self.height)
+    }
+    
+    // MARK: - Bindings
+    
+    override func elementListeners() -> [String]? {
+        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: " ")
+    }
+    
+    // MARK: - Helpers
+    
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
     }
     
 }
