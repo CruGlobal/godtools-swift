@@ -8,7 +8,7 @@
             <content:text i18n-id="2b883c27-3cf3-4046-a075-f5ddd97c881e" text-align="center">Still not sure who Jesus is?
             </content:text>
             
-            <content:button tyoe="url" value="http://everystudent.com">
+            <content:button type="event" value="http://everystudent.com">
                 <content:text i18n-id="3285f0ab-f247-4524-bcc1-b757d2db85a9">everystudent.com
                 </content:text>
             </content:button>
@@ -18,7 +18,7 @@
             <content:text i18n-id="22ddc59d-91cc-4432-90a9-1730d995f7d3" text-align="center">More about Christianity...
             </content:text>
             
-            <content:button tyoe="url" value="http://startingwithgod.com">
+            <content:button type="url" value="http://startingwithgod.com">
                 <content:text i18n-id="f1225cff-2834-486a-a93e-b8dd4efd7a5c">startingwithgod.com
                 </content:text>
             </content:button>
@@ -28,7 +28,7 @@
             <content:text i18n-id="1065a75a-70fa-469e-a978-0d2a93d9c0d2" text-align="center">Read the Bible
             </content:text>
             
-            <content:button tyoe="url" value="http://bible.com/bible/59/mrk.1">
+            <content:button type="url" value="http://bible.com/bible/59/mrk.1">
                 <content:text i18n-id="9a926209-6bfc-407f-83e5-5dc04d21f64e">bible.com (Mark 1:1)
                 </content:text>
             </content:button>
@@ -38,10 +38,19 @@
             <content:text i18n-id="0a54d46a-93af-4f0d-804f-4bd48ce5e385" text-align="center">Watch a film about Jesus
             </content:text>
             
-            <content:button tyoe="url" value="http://jesusfilm.org/watch/jesus.html/english.html">
+            <content:button type="url" value="http://jesusfilm.org/watch/jesus.html/english.html">
                 <content:text i18n-id="1c0b32ac-31ba-4606-9de8-05034082e178">jesusfilm.org/watch/jesus.html/english.html
                 </content:text>
             </content:button>
         </paragraph>
+        
+        <form>
+            <content:link events="links-with-information">
+                <content:text i18n-id="{{uuid}}">Send me the links</content:text>
+            </content:link>
+        </form>
     </hero>
+    <emails>
+        <email listeners="links-with-information" subject="Links of GodTools" content="Hi, this is the info of the email" html="true" />
+    </emails>
 </page>

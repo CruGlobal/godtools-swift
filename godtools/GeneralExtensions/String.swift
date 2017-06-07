@@ -26,7 +26,7 @@ extension String {
         
         for component in components {
             let result = String(component.characters.filter {
-                String($0).rangeOfCharacter(from: CharacterSet(charactersIn: "0123456789")) != nil
+                String($0).rangeOfCharacter(from: CharacterSet(charactersIn: ".0123456789")) != nil
             })
             let value = NumberFormatter().number(from: result)
             values.append(CGFloat(value!))

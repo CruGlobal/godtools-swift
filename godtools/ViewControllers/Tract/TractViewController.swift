@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SWXMLHash
+import MessageUI
 
 class TractViewController: BaseViewController {
     
@@ -26,7 +27,7 @@ class TractViewController: BaseViewController {
         return CGFloat(currentPage) *  -self.view.frame.width
     }
     var containerView = UIView()
-    var pagesViews = [BaseTractView]()
+    var pagesViews = [BaseTractView?]()
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
@@ -106,7 +107,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationBarColor((self.colors?.primaryColor)!)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: (self.colors?.navBarColor)!, controlColor: (self.colors?.navBarControlColor)!)
         
         let navigationBar = navigationController!.navigationBar
         
@@ -194,6 +195,10 @@ class TractViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToNextPage),
                                                name: NSNotification.Name.moveToNextPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(sendEmail),
+                                               name: NSNotification.Name.sendEmailFromTractForm,
                                                object: nil)
     }
     

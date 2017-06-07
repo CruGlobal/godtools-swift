@@ -32,11 +32,5 @@ class TractLink: TractButton {
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.primaryColor!
     }
-    
-    override func addTargetToButton() {
-        if self.properties.type == .url {
-            self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
-        }
-    }
 
 }

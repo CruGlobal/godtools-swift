@@ -58,6 +58,10 @@
 "done" = "Done";
 "remove" = "Remove";
 
+// Alerts
+"ok" = "Ok";
+"error_can_not_send_email" = "There is no configured email on your device.";
+
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
 "general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";

@@ -142,12 +142,18 @@
 		68C0A3841ED4C65400CC97A3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C0A3831ED4C65400CC97A3 /* config.plist */; };
 		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
+		EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140BB1EE76A9E009347D3 /* TractViewControllerActions.swift */; };
+		EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140BE1EE76DD7009347D3 /* TractEmails.swift */; };
+		EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C01EE76E6C009347D3 /* TractEmail.swift */; };
+		EC3140C31EE76F1D009347D3 /* TractEmailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */; };
+		EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */; };
 		EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61E1EE0AC37000235CA /* TractBindings.swift */; };
 		EC55A6221EE0AC37000235CA /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61F1EE0AC37000235CA /* TractColors.swift */; };
 		EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6201EE0AC37000235CA /* TractConfigurations.swift */; };
 		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
+		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
 		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
@@ -314,12 +320,18 @@
 		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC3140BB1EE76A9E009347D3 /* TractViewControllerActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerActions.swift; path = Tract/TractViewControllerActions.swift; sourceTree = "<group>"; };
+		EC3140BE1EE76DD7009347D3 /* TractEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmails.swift; path = Views/TractElements/TractEmails.swift; sourceTree = "<group>"; };
+		EC3140C01EE76E6C009347D3 /* TractEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmail.swift; path = Views/TractElements/TractEmail.swift; sourceTree = "<group>"; };
+		EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmailActions.swift; path = Views/TractElements/TractEmailActions.swift; sourceTree = "<group>"; };
+		EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmailProperties.swift; path = Views/TractElements/TractEmailProperties.swift; sourceTree = "<group>"; };
 		EC55A61E1EE0AC37000235CA /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractBindings.swift; path = TractClasses/TractBindings.swift; sourceTree = "<group>"; };
 		EC55A61F1EE0AC37000235CA /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = TractClasses/TractColors.swift; sourceTree = "<group>"; };
 		EC55A6201EE0AC37000235CA /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractConfigurations.swift; path = TractClasses/TractConfigurations.swift; sourceTree = "<group>"; };
 		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
+		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
 		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -397,6 +409,7 @@
 			children = (
 				0F350D9A1EAE786A0025C4BB /* String.swift */,
 				0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */,
+				ECA4B3431EE7119A00BAE23C /* UIColor.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -422,7 +435,7 @@
 				0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */,
 				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
 				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
-				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
+				EC3140BE1EE76DD7009347D3 /* TractEmails.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -446,6 +459,8 @@
 				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
 				0F2837971EC62D3F0049CCE5 /* TractLink.swift */,
 				0F28379B1EC65A330049CCE5 /* TractTab.swift */,
+				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
+				EC3140C01EE76E6C009347D3 /* TractEmail.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -520,6 +535,8 @@
 				0F9E32401EDD170C0081DBB9 /* TractCallToActionActions.swift */,
 				0F9E32421EDD182F0081DBB9 /* TractButtonActions.swift */,
 				0F9E32441EDD1A4C0081DBB9 /* TractLinkActions.swift */,
+				0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */,
+				EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -535,6 +552,7 @@
 				0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */,
 				0F9E32341EDCC78A0081DBB9 /* TractTextFieldProperties.swift */,
 				ECC5355B1EE88EE100AABAB7 /* TractFormProperties.swift */,
+				EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -546,6 +564,7 @@
 				0F9E324D1EDE78590081DBB9 /* TractViewControllerContent.swift */,
 				0F9E324F1EDE78940081DBB9 /* TractViewControllerPageMovements.swift */,
 				0F9E32511EDE794F0081DBB9 /* TractViewControllerDataManagement.swift */,
+				EC3140BB1EE76A9E009347D3 /* TractViewControllerActions.swift */,
 			);
 			name = TractViewController;
 			sourceTree = "<group>";
@@ -1103,8 +1122,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
+				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCardAnimations.swift in Sources */,
+				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				0F9E32391EDCC78A0081DBB9 /* TractTextFieldProperties.swift in Sources */,
@@ -1125,6 +1146,7 @@
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
 				ECC5355E1EE8A9FE00AABAB7 /* TractFormActions.swift in Sources */,
+				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
@@ -1137,6 +1159,7 @@
 				4FC74ED41ED5E14500D6BFFF /* Attachment+CoreDataClass.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButtonActions.swift in Sources */,
+				EC3140C31EE76F1D009347D3 /* TractEmailActions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
@@ -1165,6 +1188,7 @@
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				0F806C6B1EB3E6C300F3ED2B /* TractTitle.swift in Sources */,
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
+				EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */,
 				4F1C956A1EA6C204007B47DB /* Translation+CoreDataClass.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				4F1C957E1EA7AEB8007B47DB /* DownloadedResource+CoreDataProperties.swift in Sources */,
@@ -1183,6 +1207,7 @@
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
+				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractRoot.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
