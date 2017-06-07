@@ -17,7 +17,7 @@ class Translation: Object {
     dynamic var manifestFilename: String?
     dynamic var remoteId = ""
     dynamic var version: Int16 = 0
-    dynamic var language: Language?
+    let language = LinkingObjects(fromType: Language.self, property: "translations")
     let downloadedResource = LinkingObjects(fromType: DownloadedResource.self, property: "translations")
     let referencedFiles = LinkingObjects(fromType: ReferencedFile.self, property: "translations")
     let attachments = LinkingObjects(fromType: Attachment.self, property: "translations")

@@ -86,13 +86,14 @@ class FirstLaunchInitializer: GTDataManager {
         for resource in resources {
             let translation = createEntity(Translation.self)
             
-            translation?.language = language
-            translation?.downloadedResource = resource
             translation?.remoteId = magicId
             translation?.isPublished = true
             translation?.isDownloaded = true
             translation?.version = 0
             translation?.localizedName = resource?.name
+            
+            language?.translations.append(translation!)
+            resource?.translations.append(translation!)
         }
     }
     
