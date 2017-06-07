@@ -78,7 +78,6 @@ class LanguagesManager: GTDataManager {
             language.shouldDownload = false
             for translation in language.translations {
                 translation.isDownloaded = false
-                //TODO anything with referenced files here?
             }
             
             TranslationFileRemover().deleteUnusedPages()

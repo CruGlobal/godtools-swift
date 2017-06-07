@@ -192,11 +192,20 @@ class TranslationZipImporter: GTDataManager {
         
         let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
         
-        for file in files {
-            let filename = file.lastPathComponent
-//            let referencedFile = findFirstOrCreateEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename)
-//            referencedFile.filename = file.lastPathComponent
-//            referencedFile.translations.append(translation)
+        try! realm.write {
+            for file in files {
+                let filename = file.lastPathComponent
+                if let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) {
+                    referencedFile.filename = file.lastPathComponent
+                    referencedFile.translations.append(translation)
+                    return
+                }
+                
+                let referencedFile = ReferencedFile()
+                referencedFile.filename = file.lastPathComponent
+                referencedFile.translations.append(translation)
+                realm.add(referencedFile)
+            }
         }
     }
     

@@ -69,7 +69,6 @@ class DownloadedResourceManager: GTDataManager {
                 resource.shouldDownload = false
                 for translation in resource.translations {
                     translation.isDownloaded = false
-                    //translation.removeFromReferencedFiles(translation.referencedFiles!)
                 }
                 
                 TranslationFileRemover().deleteUnusedPages()

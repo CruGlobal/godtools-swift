@@ -31,22 +31,22 @@ class FirstLaunchInitializer: GTDataManager {
             realm.delete(findEntities(Translation.self, matching: predicate))
             realm.delete(findEntities(Language.self, matching: predicate))
             realm.delete(findEntities(DownloadedResource.self, matching: predicate))
-        }
-
-        if GTSettings.shared.primaryLanguageId == magicId {
-            let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
-            let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
-                findEntity(Language.self, byAttribute: "code", withValue: "en")
-        
-            primaryLanguage?.shouldDownload = true
             
-            for resource in findEntities(DownloadedResource.self, matching: NSPredicate(format:"code IN %@", initialPackageCodes)) {
-                resource.shouldDownload = true
+            if GTSettings.shared.primaryLanguageId == magicId {
+                let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
+                let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
+                    findEntity(Language.self, byAttribute: "code", withValue: "en")
+                
+                primaryLanguage?.shouldDownload = true
+                
+                for resource in findEntities(DownloadedResource.self, matching: NSPredicate(format:"code IN %@", initialPackageCodes)) {
+                    resource.shouldDownload = true
+                }
+                
+                GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
             }
             
-            GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
         }
-                
         sendCompletedNotification()
     }
     
