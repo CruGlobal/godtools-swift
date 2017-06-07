@@ -10,19 +10,17 @@ import Foundation
 import RealmSwift
 
 class Language: Object {
-    dynamic var code: String?
-    dynamic var remoteId: String?
+    dynamic var code = ""
+    dynamic var remoteId = ""
     dynamic var shouldDownload = false
     let translations = List<Translation>()
     
     func localizedName() -> String {
-        let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code!)
-        
-        if localizedName == nil {
-            return self.code!
+        guard let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code) else {
+            return self.code
         }
         
-        return localizedName!
+        return localizedName
     }
     
     func isPrimary() -> Bool {
