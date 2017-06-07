@@ -49,7 +49,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func catchupMissedDownloads() {
-//        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
+        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
         
         if !isProcessingQueue {
             processDownloadQueue()
