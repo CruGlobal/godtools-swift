@@ -85,10 +85,15 @@ class LanguagesManager: GTDataManager {
     private func saveToDisk(_ languages: [LanguageResource]) {
         try! realm.write {
             for remoteLanguage in languages {
-                let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
-                cachedlanguage.code = remoteLanguage.code!
-                cachedlanguage.remoteId = remoteLanguage.id!
-                realm.add(cachedlanguage)
+                if let cachedlanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!) {
+                    cachedlanguage.code = remoteLanguage.code!
+                    return
+                }
+                
+                let newCachedLanguage = Language()
+                newCachedLanguage.remoteId = remoteLanguage.id!
+                newCachedLanguage.code = remoteLanguage.code!
+                realm.add(newCachedLanguage)
             }
         }
     }

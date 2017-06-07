@@ -58,14 +58,6 @@ class GTDataManager: NSObject {
         return asList(filteredObjects)
     }
     
-    func findFirstOrCreateEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
-        if let entity = findEntity(entityClass, byAttribute: attribute, withValue: value) {
-            return entity
-        }
-        
-        return entityClass.init()
-    }
-    
     func findAllEntities<T: Object>(_ entityClass: T.Type) -> List<T> {
         return asList(realm.objects(entityClass))
     }

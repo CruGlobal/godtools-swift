@@ -53,55 +53,74 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
-        for remoteResource in resources {
-            let cachedResource = findFirstOrCreateEntity(DownloadedResource.self,
-                                                         byAttribute: "remoteId",
-                                                         withValue: remoteResource.id!)
-            
-            cachedResource.code = remoteResource.abbreviation!
-            cachedResource.name = remoteResource.name!
-            cachedResource.copyrightDescription = remoteResource.copyrightDescription
-            cachedResource.bannerRemoteId = remoteResource.bannerId
-            cachedResource.totalViews = remoteResource.totalViews!.int32Value
-            
-            for remoteAttachment in (remoteResource.attachments!) {
-                let remoteAttachment = remoteAttachment as! AttachmentResource
-                let cachedAttachment = findFirstOrCreateEntity(Attachment.self,
-                                                               byAttribute: "remoteId",
-                                                               withValue: remoteAttachment.id!)
+        try! realm.write {
+            for remoteResource in resources {
+                var cachedResource = findEntity(DownloadedResource.self, byAttribute: "remoteId", withValue: remoteResource.id!)
                 
-                cachedAttachment.sha = remoteAttachment.sha256
-                cachedAttachment.resource = cachedResource
-            }
-            
-            if cachedResource.bannerRemoteId != nil {
-                _ = BannerManager.shared.downloadFor(cachedResource)
-            }
-            
-            let remoteTranslations = remoteResource.latestTranslations!
-            for remoteTranslationGeneric in remoteTranslations {
-                let remoteTranslation = remoteTranslationGeneric as! TranslationResource
-                let languageId = remoteTranslation.language?.id ?? "-1"
-                let resourceId = remoteResource.id ?? "-1"
-                let version = remoteTranslation.version!.int16Value
-                
-                if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
-                    continue;
+                if cachedResource == nil {
+                    cachedResource = DownloadedResource()
+                    cachedResource!.remoteId = remoteResource.id!
+                    realm.add(cachedResource!)
                 }
                 
-                let cachedTranslation = findFirstOrCreateEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
+                cachedResource!.code = remoteResource.abbreviation!
+                cachedResource!.name = remoteResource.name!
+                cachedResource!.copyrightDescription = remoteResource.copyrightDescription
+                cachedResource!.bannerRemoteId = remoteResource.bannerId
+                cachedResource!.totalViews = remoteResource.totalViews!.int32Value
                 
-                cachedTranslation.version = remoteTranslation.version!.int16Value
-                cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
-                cachedTranslation.manifestFilename = remoteTranslation.manifestName
-                cachedTranslation.localizedName = remoteTranslation.translatedName
-                cachedTranslation.localizedDescription = remoteTranslation.translatedDescription
+                for remoteAttachment in (remoteResource.attachments!) {
+                    let remoteAttachment = remoteAttachment as! AttachmentResource
+                    var cachedAttachment = findEntity(Attachment.self,
+                                                      byAttribute: "remoteId",
+                                                      withValue: remoteAttachment.id!)
+                    
+                    if cachedAttachment == nil {
+                        cachedAttachment = Attachment()
+                        cachedAttachment!.remoteId = remoteAttachment.id!
+                        realm.add(cachedAttachment!)
+                    }
+                    
+                    cachedAttachment!.sha = remoteAttachment.sha256
+                    cachedAttachment!.resource = cachedResource
+                }
+                
+                if cachedResource!.bannerRemoteId != nil {
+                    _ = BannerManager.shared.downloadFor(cachedResource!)
+                }
+                
+                let remoteTranslations = remoteResource.latestTranslations!
+                for remoteTranslationGeneric in remoteTranslations {
+                    let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                    let languageId = remoteTranslation.language?.id ?? "-1"
+                    let resourceId = remoteResource.id ?? "-1"
+                    let version = remoteTranslation.version!.int16Value
+                    
+                    //                if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                    //                    continue;
+                    //                }
+                    
+                    var cachedTranslation = findEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
+                    
+                    if cachedTranslation == nil {
+                        cachedTranslation = Translation()
+                        cachedTranslation!.remoteId = remoteTranslation.id!
+                        realm.add(cachedTranslation!)
+                    }
+                    
+                    cachedTranslation!.version = remoteTranslation.version!.int16Value
+                    cachedTranslation!.isPublished = remoteTranslation.isPublished!.boolValue
+                    cachedTranslation!.manifestFilename = remoteTranslation.manifestName
+                    cachedTranslation!.localizedName = remoteTranslation.translatedName
+                    cachedTranslation!.localizedDescription = remoteTranslation.translatedDescription
+                    
+                    cachedResource!.translations.append(cachedTranslation!)
+                    
+                    let cachedLanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: languageId)
+                    cachedLanguage?.translations.append(cachedTranslation!)
 
-                cachedResource.translations.append(cachedTranslation)
-                let cachedLanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: languageId)
-                cachedLanguage?.translations.append(cachedTranslation)
-                
-                TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
+                    //                TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
+                }
             }
         }
     }

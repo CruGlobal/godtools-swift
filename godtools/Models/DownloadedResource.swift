@@ -21,6 +21,10 @@ class DownloadedResource: Object {
     let attachments = List<Attachment>()
     let translations = List<Translation>()
     
+    override static func primaryKey() -> String {
+        return "remoteId"
+    }
+    
     func numberOfAvailableLanguages() -> Int {
         return translations.filter( {$0.isPublished} ).count
     }

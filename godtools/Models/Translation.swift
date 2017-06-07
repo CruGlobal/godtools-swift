@@ -21,4 +21,8 @@ class Translation: Object {
     let downloadedResource = LinkingObjects(fromType: DownloadedResource.self, property: "translations")
     let referencedFiles = LinkingObjects(fromType: ReferencedFile.self, property: "translations")
     let attachments = LinkingObjects(fromType: Attachment.self, property: "translations")
+    
+    override static func primaryKey() -> String {
+        return "remoteId"
+    }
 }
