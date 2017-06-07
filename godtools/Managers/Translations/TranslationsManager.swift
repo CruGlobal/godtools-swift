@@ -32,6 +32,9 @@ class TranslationsManager: GTDataManager {
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
-        deleteEntities(Translation.self, matching: predicate)
+        try! realm.write {
+            realm.delete(findEntities(Translation.self, matching: predicate))
+        }
+        
     }
 }

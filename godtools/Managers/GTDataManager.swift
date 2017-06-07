@@ -69,29 +69,7 @@ class GTDataManager: NSObject {
     func findAllEntities<T: Object>(_ entityClass: T.Type) -> List<T> {
         return asList(realm.objects(entityClass))
     }
-    
-    func createEntity<T: Object>(_ entityClass: T.Type) -> T? {
-        let entity = entityClass.init()
-        
-        try! realm.write {
-            realm.add(entity)
-        }
-        
-        return entity
-    }
-    
-    func deleteEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) {
-        try! realm.write {
-            realm.delete(findEntities(entityClass, matching: matching))
-        }
-    }
-    
-    func deleteEntity<T: Object>(_ entity: T) {
-        try! realm.write {
-            realm.delete(entity)
-        }
-    }
-    
+
     private func asList<T: Object>(_ results: Results<T>) -> List<T> {
         return results.reduce(List<T>()) { (list, element) -> List<T> in
             list.append(element)
