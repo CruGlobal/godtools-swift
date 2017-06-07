@@ -23,7 +23,6 @@ extension Translation {
     @NSManaged public var manifestFilename: String?
     @NSManaged public var remoteId: String?
     @NSManaged public var version: Int16
-    @NSManaged public var downloadedResource: DownloadedResource?
     @NSManaged public var language: Language?
     @NSManaged public var referencedFiles: NSSet?
 

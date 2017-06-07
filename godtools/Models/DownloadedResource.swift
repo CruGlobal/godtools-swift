@@ -1,19 +1,28 @@
 //
-//  DownloadedResource+CoreDataClass.swift
+//  DownloadedResource.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/19/17.
+//  Created by Ryan Carlson on 6/6/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
-import CoreData
+import RealmSwift
 
-@objc(DownloadedResource)
-public class DownloadedResource: NSManagedObject {
-
+class DownloadedResource: Object {
+    dynamic var bannerRemoteId: String?
+    dynamic var code = ""
+    dynamic var copyrightDescription: String?
+    dynamic var name = ""
+    dynamic var remoteId = ""
+    dynamic var shouldDownload = false
+    dynamic var totalViews: Int32 = 0
+    dynamic var myViews: Int32 = 0
+    let attachments = List<Attachment>()
+    let translations = List<Translation>()
+    
     func numberOfAvailableLanguages() -> Int {
-        return translationsAsArray().filter( {$0.isPublished} ).count
+        return translations.filter( {$0.isPublished} ).count
     }
     
     func isAvailableInLanguage(_ language: Language?) -> Bool {
@@ -21,45 +30,39 @@ public class DownloadedResource: NSManagedObject {
             return false
         }
         
-        return translationsAsArray().filter({ $0.language!.remoteId == language!.remoteId })
+        return translations.filter({ $0.language!.remoteId == language!.remoteId })
             .filter({ $0.isPublished} ).count > 0
     }
     
     func getTranslationForLanguage(_ language: Language) -> Translation? {
-        return translationsAsArray().filter({ $0.language!.remoteId == language.remoteId })
+        return translations.filter({ $0.language!.remoteId == language.remoteId })
             .filter({ $0.isDownloaded })
             .max(by: { $0.version < $1.version })
     }
     
     func latestTranslationId() -> String? {
-        let translationsArray = Array(translations!) as! [Translation]
-        
-        let latestTranslation = translationsArray
+        let latestTranslation = translations
             .filter( {$0.isPublished} )
             .filter( {$0.downloadedResource == self} )
             .filter( {$0.language?.remoteId == GTSettings.shared.primaryLanguageId} )
             .max(by: {$0.version < $1.version} )
         
-        return latestTranslation?.remoteId!
-    }
-    
-    func translationsAsArray() -> [Translation] {
-        return Array(translations!) as! [Translation]
+        return latestTranslation?.remoteId
     }
     
     func localizedName(language: Language?) -> String {
         guard let language = language else {
-            return name!
+            return name
         }
         
         if isAvailableInLanguage(language) {
             guard let translation = getTranslationForLanguage(language) else {
-                return name!
+                return name
             }
             
-            return translation.localizedName ?? name!
+            return translation.localizedName! 
         }
         
-        return name!
+        return name
     }
 }

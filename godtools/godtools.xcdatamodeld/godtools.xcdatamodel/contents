@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="DownloadedResource" representedClassName="DownloadedResource" syncable="YES">
-        <attribute name="bannerRemoteId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="copyrightDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="myViews" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shouldDownload" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="totalViews" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="downloadedResource" inverseEntity="Translation" syncable="YES"/>
-    </entity>
     <entity name="Language" representedClassName="Language" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,14 +18,12 @@
         <attribute name="manifestFilename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="downloadedResource" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DownloadedResource" inverseName="translations" inverseEntity="DownloadedResource" syncable="YES"/>
         <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
         <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DownloadedResource" positionX="-36" positionY="9" width="128" height="180"/>
         <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="ReferencedFile" positionX="-45" positionY="63" width="128" height="75"/>
-        <element name="Translation" positionX="-54" positionY="-9" width="128" height="195"/>
+        <element name="Translation" positionX="-54" positionY="-9" width="128" height="180"/>
     </elements>
 </model>
