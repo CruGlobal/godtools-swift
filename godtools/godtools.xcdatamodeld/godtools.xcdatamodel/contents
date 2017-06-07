@@ -4,26 +4,8 @@
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shouldDownload" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Translation" inverseName="language" inverseEntity="Translation" syncable="YES"/>
-    </entity>
-    <entity name="ReferencedFile" representedClassName="ReferencedFile" syncable="YES">
-        <attribute name="filename" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Translation" inverseName="referencedFiles" inverseEntity="Translation" syncable="YES"/>
-    </entity>
-    <entity name="Translation" representedClassName="Translation" syncable="YES">
-        <attribute name="isDownloaded" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isPublished" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="localizedDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="localizedName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="manifestFilename" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="translations" inverseEntity="Language" syncable="YES"/>
-        <relationship name="referencedFiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ReferencedFile" inverseName="translations" inverseEntity="ReferencedFile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Language" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="ReferencedFile" positionX="-45" positionY="63" width="128" height="75"/>
-        <element name="Translation" positionX="-54" positionY="-9" width="128" height="180"/>
+        <element name="Language" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>
