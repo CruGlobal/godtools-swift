@@ -31,29 +31,30 @@ class ToolsManager: GTDataManager {
     
     var resources = List<DownloadedResource>()
     
-    weak var delegate: ToolsManagerDelegate? {
-        didSet {
-            var predicate: NSPredicate
-            if self.delegate is HomeViewController {
-                predicate = NSPredicate(format: "isDownloaded = true")
-                deregisterDownloadCompletedObserver()
-            } else {
-                predicate = NSPredicate(format: "isDownloaded = false")
-                registerDownloadCompletedObserver()
-            }
-            
-            let downloadedTranslations = findEntities(Translation.self, matching: predicate)
-            let primaryTranslations = downloadedTranslations.filter({ return $0.language!.isPrimary() })
-            
-            resources.removeAll()
-            for translation in primaryTranslations {
-                resources.append(translation.downloadedResource!)
-            }
-        }
-    }
+    weak var delegate: ToolsManagerDelegate?
     
     func hasResources() -> Bool {
         return resources.count > 0
+    }
+    
+    func loadResourceList() {
+        var predicate: NSPredicate
+        if self.delegate is HomeViewController {
+            predicate = NSPredicate(format: "isDownloaded = true")
+            deregisterDownloadCompletedObserver()
+        } else {
+            predicate = NSPredicate(format: "isDownloaded = false")
+            registerDownloadCompletedObserver()
+        }
+        
+        let downloadedTranslations = findEntities(Translation.self, matching: predicate)
+        let primaryTranslations = downloadedTranslations.filter({ return $0.language!.isPrimary() })
+        
+        resources.removeAll()
+        for translation in primaryTranslations {
+            resources.append(translation.downloadedResource!)
+        }
+
     }
 
 }

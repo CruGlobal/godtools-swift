@@ -35,6 +35,7 @@ class AddToolsViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.toolsManager.delegate = self
+        self.toolsManager.loadResourceList()
         self.tableView.reloadData()
     }
 
