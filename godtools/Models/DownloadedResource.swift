@@ -34,7 +34,7 @@ class DownloadedResource: Object {
             return false
         }
         
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", language.remoteId)
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true AND isDownloaded = true", language.remoteId)
         return translations.filter(predicate).count > 0
     }
     
