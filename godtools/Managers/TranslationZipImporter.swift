@@ -57,12 +57,14 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func addTranslationsToQueue(_ translations: List<Translation>) {
-        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
+        let translations = Array(translations)
+        
+        let primaryTranslation = translations.filter( {$0.language.first!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
         }
         
-        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
+        let parallelTranslation = translations.filter( {$0.language.first!.isParallel()} ).first
         if (parallelTranslation != nil && parallelTranslation!.isDownloaded) {
             translationDownloadQueue.append(parallelTranslation!)
         }
@@ -80,7 +82,7 @@ class TranslationZipImporter: GTDataManager {
                 continue
             }
             
-            if !translation.language!.shouldDownload {
+            if !translation.language.first!.shouldDownload {
                 continue
             }
             
@@ -129,7 +131,7 @@ class TranslationZipImporter: GTDataManager {
             TranslationsManager.shared.translationWasDownloaded(translation)
             TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
             
-            if translation.language!.isPrimary() {
+            if translation.language.first!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
             }
             return Promise(value: ())
@@ -148,7 +150,7 @@ class TranslationZipImporter: GTDataManager {
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
-                if !translation.language!.isPrimary() {
+                if !translation.language.first!.isPrimary() {
                     return
                 }
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
