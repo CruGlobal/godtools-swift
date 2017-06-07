@@ -52,6 +52,33 @@ class DownloadedResourceManager: GTDataManager {
             }
     }
     
+    func download(_ resource: DownloadedResource) {
+        do {
+            try realm.write {
+                resource.shouldDownload = true
+                TranslationZipImporter.shared.download(resource: resource)
+            }
+        } catch {
+            
+        }
+    }
+    
+    func delete(_ resource: DownloadedResource) {
+        do {
+            try realm.write {
+                resource.shouldDownload = false
+                for translation in resource.translations {
+                    translation.isDownloaded = false
+                    //translation.removeFromReferencedFiles(translation.referencedFiles!)
+                }
+                
+                TranslationFileRemover().deleteUnusedPages()
+            }
+        } catch {
+            
+        }
+    }
+    
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         try! realm.write {
             for remoteResource in resources {

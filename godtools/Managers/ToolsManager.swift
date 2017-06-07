@@ -49,28 +49,12 @@ class ToolsManager: GTDataManager {
                 resources.append(translation.downloadedResource.first!)
             }
         }
-        
     }
     
     func hasResources() -> Bool {
         return resources.count > 0
     }
-    
-    func download(resource: DownloadedResource) {
-        resource.shouldDownload = true
-        TranslationZipImporter.shared.download(resource: resource)
-        
-    }
-    
-    func delete(resource: DownloadedResource) {
-        resource.shouldDownload = false
-        for translation in resource.translations {
-            translation.isDownloaded = false            
-//            translation.removeFromReferencedFiles(translation.referencedFiles!)
-        }
-        
-        TranslationFileRemover().deleteUnusedPages()
-    }
+
 }
 
 // MARK - Download Notification listening methods
@@ -165,7 +149,7 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        self.download(resource: resource)
+        DownloadedResourceManager.shared.download(resource)
         self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
