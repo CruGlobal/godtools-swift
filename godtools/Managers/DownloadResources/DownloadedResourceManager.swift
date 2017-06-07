@@ -12,13 +12,13 @@ import Alamofire
 import PromiseKit
 import Spine
 import MagicalRecord
-
+import RealmSwift
 class DownloadedResourceManager: GTDataManager {
     static let shared = DownloadedResourceManager()
     
     let path = "/resources"
     
-    var resources = [DownloadedResource]()
+    var resources: Results<DownloadedResource>
     
     override init() {
         super.init()
@@ -29,18 +29,18 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(AttachmentResource.self)
     }
     
-    func loadFromDisk() -> [DownloadedResource] {
+    func loadFromDisk() -> Results<DownloadedResource> {
         resources = findAllEntities(DownloadedResource.self)
         return resources
     }
     
-    func loadFromRemote() -> Promise<[DownloadedResource]> {
+    func loadFromRemote() -> Promise<Results<DownloadedResource>> {
         showNetworkingIndicator()
         
-        let params = ["include": "translations,pages,attachments"]
+        let params = ["include": "translations,ages,attachments"]
         
         return issueGETRequest(params)
-            .then { data -> Promise<[DownloadedResource]> in
+            .then { data -> Promise<Results<DownloadedResource>> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                     
@@ -58,8 +58,8 @@ class DownloadedResourceManager: GTDataManager {
                                                          byAttribute: "remoteId",
                                                          withValue: remoteResource.id!)
             
-            cachedResource.code = remoteResource.abbreviation
-            cachedResource.name = remoteResource.name
+            cachedResource.code = remoteResource.abbreviation!
+            cachedResource.name = remoteResource.name!
             cachedResource.copyrightDescription = remoteResource.copyrightDescription
             cachedResource.bannerRemoteId = remoteResource.bannerId
             cachedResource.totalViews = remoteResource.totalViews!.int32Value

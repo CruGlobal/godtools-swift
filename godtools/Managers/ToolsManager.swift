@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import PromiseKit
+import RealmSwift
 
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
@@ -28,24 +29,27 @@ class ToolsManager: GTDataManager {
     
     let viewsPath = "views"
     
-    var resources: [DownloadedResource]?
+    var resources: Results<DownloadedResource>
     
     weak var delegate: ToolsManagerDelegate? {
         didSet {
             if self.delegate is HomeViewController {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
-                    .sorted(by: { $0.name! < $1.name! })
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter({ (resource) -> Bool in
+                    return resource.isDownloaded
+                })
+                
                 deregisterDownloadCompletedObserver()
             } else {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
-                    .sorted(by: { $0.name! < $1.name! })
+                resources = DownloadedResourceManager.shared.loadFromDisk().filter({ (resource) -> Bool in
+                    return !(resource.isDownloaded)
+                })
                 registerDownloadCompletedObserver()
             }
         }
     }
     
     func hasResources() -> Bool {
-        return resources != nil && resources!.count > 0
+        return resources.count > 0
     }
     
     func download(resource: DownloadedResource) {
@@ -57,7 +61,7 @@ class ToolsManager: GTDataManager {
     
     func delete(resource: DownloadedResource) {
         resource.shouldDownload = false
-        for translation in resource.translationsAsArray() {
+        for translation in resource.translations {
             translation.isDownloaded = false            
             translation.removeFromReferencedFiles(translation.referencedFiles!)
         }
@@ -82,11 +86,11 @@ extension ToolsManager {
             return
         }
         
-        guard let resource = resources!.filter({ $0.remoteId == resourceId }).first else {
+        guard let resource = resources.filter({ $0.remoteId == resourceId }).first else {
             return
         }
         
-        guard let index = resources!.index(of: resource) else {
+        guard let index = resources.index(of: resource) else {
             return
         }
         
@@ -138,7 +142,7 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        let resource = self.resources![indexPath.section]
+        let resource = self.resources[indexPath.section]
         
         cell.configure(resource: resource,
                        primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk(),
@@ -150,7 +154,7 @@ extension ToolsManager: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.resources!.count
+        return self.resources.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
