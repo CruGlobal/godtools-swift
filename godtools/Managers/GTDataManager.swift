@@ -53,7 +53,9 @@ class GTDataManager: NSObject {
     }
     
     func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> List<T> {
-        return asList(findAllEntities(entityClass).filter(matching))
+        let objects = realm.objects(entityClass)
+        let filteredObjects = objects.filter(matching)
+        return asList(filteredObjects)
     }
     
     func findFirstOrCreateEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
