@@ -20,7 +20,7 @@ class Language: Object {
     }
     
     func localizedName() -> String {
-        guard let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code) else {
+        guard let localizedName = NSLocale.current.localizedString(forIdentifier: self.code) else {
             return self.code
         }
         
