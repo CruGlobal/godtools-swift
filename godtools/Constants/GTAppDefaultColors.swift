@@ -10,6 +10,8 @@ import Foundation
 
 struct GTAppDefaultColors {
     
+    static let navBarColor = "rgba(59, 164, 219, 1)"
+    static let navBarControlColor = "rgba(255, 255, 255, 1)"
     static let primaryColor = "rgba(59, 164, 219, 1)"
     static let primaryTextColorString = "rgba(59, 164, 219, 1)"
     static let textColorString = "rgba(90, 90, 90, 1)"

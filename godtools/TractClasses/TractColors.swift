@@ -10,6 +10,8 @@ import UIKit
 
 class TractColors: NSObject {
     
+    var navBarColor: UIColor?
+    var navBarControlColor: UIColor?
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
@@ -18,14 +20,18 @@ class TractColors: NSObject {
         super.init()
     }
     
-    init(primaryColor: UIColor, primaryTextColor: UIColor, textColor: UIColor) {
+    init(navBarColor: UIColor, navBarControlColor: UIColor, primaryColor: UIColor, primaryTextColor: UIColor, textColor: UIColor) {
+        self.navBarColor = navBarColor
+        self.navBarControlColor = navBarControlColor
         self.primaryColor = primaryColor
         self.primaryTextColor = primaryTextColor
         self.textColor = textColor
     }
     
     func copyObject() -> TractColors {
-        return TractColors(primaryColor: self.primaryColor!,
+        return TractColors(navBarColor: self.navBarColor!,
+                           navBarControlColor: self.navBarControlColor!,
+                           primaryColor: self.primaryColor!,
                            primaryTextColor: self.primaryTextColor!,
                            textColor: self.textColor!)
     }
