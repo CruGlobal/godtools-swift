@@ -76,7 +76,7 @@
                         <content:text i18n-id="{{uuid}}">Email</content:text>
                     </content:placeholder>
                 </content:input>
-                <content:button type="event" value="followup:send,send-information-modal">
+                <content:button type="event" value="followup:send send-information-modal">
                     <content:text i18n-id="{{uuid}}">
                         Send
                     </content:text>
