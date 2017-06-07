@@ -1,17 +1,20 @@
 //
-//  Language+CoreDataClass.swift
+//  Language.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/18/17.
+//  Created by Ryan Carlson on 6/6/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import Foundation
-import CoreData
+import RealmSwift
 
-@objc(Language)
-public class Language: NSManagedObject {
-
+class Language: Object {
+    dynamic var code: String?
+    dynamic var remoteId: String?
+    dynamic var shouldDownload = false
+    let translations = List<Translation>()
+    
     func localizedName() -> String {
         let localizedName = NSLocale.current.localizedString(forLanguageCode: self.code!)
         
@@ -28,9 +31,5 @@ public class Language: NSManagedObject {
     
     func isParallel() -> Bool {
         return remoteId == GTSettings.shared.parallelLanguageId
-    }
-    
-    func translationsAsArray() -> [Translation] {
-        return Array(translations!) as! [Translation]
     }
 }

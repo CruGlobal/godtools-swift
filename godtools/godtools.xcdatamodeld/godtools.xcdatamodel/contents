@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16F73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Language" representedClassName="Language" syncable="YES">
-        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="remoteId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shouldDownload" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
-    <elements>
-        <element name="Language" positionX="-63" positionY="-18" width="128" height="90"/>
-    </elements>
+    <elements/>
 </model>
