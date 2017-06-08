@@ -34,9 +34,9 @@ class GTDataManager: NSObject {
             .responseData()
     }
     
-    func issuePOSTRequest(url: URL, params: Parameters) -> Promise<Data> {
+    func issuePOSTRequest(_ params: Parameters) -> Promise<Data> {
         return Alamofire
-            .request(url,
+            .request(buildURL() ?? "",
                      method: HTTPMethod.post,
                      parameters: params)
             .responseData()

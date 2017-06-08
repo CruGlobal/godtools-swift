@@ -154,6 +154,8 @@
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
 		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
+		ECB2E2931EE996A800346FBE /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2E2921EE996A800346FBE /* FollowUpsManager.swift */; };
+		ECB2E2951EE9987E00346FBE /* GTGlobalBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2E2941EE9987E00346FBE /* GTGlobalBindings.swift */; };
 		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
@@ -332,6 +334,8 @@
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
 		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
+		ECB2E2921EE996A800346FBE /* FollowUpsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpsManager.swift; path = Managers/FollowUpsManager.swift; sourceTree = "<group>"; };
+		ECB2E2941EE9987E00346FBE /* GTGlobalBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTGlobalBindings.swift; sourceTree = "<group>"; };
 		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -522,7 +526,6 @@
 			children = (
 				0F85C7921ECCAA4400023723 /* TractRootActions.swift */,
 				0F85C7941ECCAAA000023723 /* TractCardsActions.swift */,
-				0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */,
 				ECC5355D1EE8A9FE00AABAB7 /* TractFormActions.swift */,
 			);
 			name = Actions;
@@ -667,6 +670,7 @@
 				0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */,
 				4F8048041EB3A2FB00943DFF /* GTSettings.swift */,
 				0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */,
+				ECB2E2941EE9987E00346FBE /* GTGlobalBindings.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -732,6 +736,7 @@
 				4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */,
 				4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */,
 				4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */,
+				ECB2E2921EE996A800346FBE /* FollowUpsManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1146,6 +1151,7 @@
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
 				ECC5355E1EE8A9FE00AABAB7 /* TractFormActions.swift in Sources */,
+				ECB2E2931EE996A800346FBE /* FollowUpsManager.swift in Sources */,
 				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
@@ -1157,6 +1163,7 @@
 				4F1C95671EA6C204007B47DB /* PageFile+CoreDataProperties.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				4FC74ED41ED5E14500D6BFFF /* Attachment+CoreDataClass.swift in Sources */,
+				ECB2E2951EE9987E00346FBE /* GTGlobalBindings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButtonActions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmailActions.swift in Sources */,

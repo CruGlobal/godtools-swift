@@ -10,22 +10,13 @@ import Foundation
 
 extension TractForm {
     
-    override func receiveMessage() {
-        if self.properties.action == nil {
-            return
-        }
-        
-        let manager: TractFormManager = TractFormManager()
-        let params = getFormData()
-        
-        let _ = manager.postFromForm(path: self.properties.action!, params: params)
-    }
+    override func receiveMessage() { }
     
     func attachElementToForm(element: BaseTractElement) {
         formElements.append(element)
     }
     
-    func getFormData() -> [String: String] {
+    override func getFormData() -> [String: String] {
         var data = [String: String]()
         
         for element in self.formElements {
