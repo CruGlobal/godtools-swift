@@ -116,7 +116,7 @@ extension BaseTractElement {
             NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
         }
         
-        GTGlobalBindings.listen(listener: listener, element: self)
+        GTGlobalTractBindings.listen(listener: listener, element: self)
     }
     
     func receiveMessage() { }

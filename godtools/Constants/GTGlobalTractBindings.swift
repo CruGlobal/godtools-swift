@@ -1,5 +1,5 @@
 //
-//  GTGlobalBindings.swift
+//  GTGlobalTractBindings.swift
 //  godtools
 //
 //  Created by Pablo Marti on 6/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GTGlobalBindings: NSObject {
+class GTGlobalTractBindings: NSObject {
     
     enum Bindings:String {
         case followUp = "followup:send"
