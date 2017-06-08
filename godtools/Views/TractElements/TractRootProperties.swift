@@ -13,6 +13,7 @@ class TractRootProperties: TractElementProperties {
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
+    var backgroundProperties = TractBackgroundProperties()
     
     override func load(_ properties: [String: Any]) {
         super.load(properties)
@@ -28,6 +29,8 @@ class TractRootProperties: TractElementProperties {
             default: break
             }
         }
+        
+        self.backgroundProperties.load(properties)
     }
 
 }

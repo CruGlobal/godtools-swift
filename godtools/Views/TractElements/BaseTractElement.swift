@@ -96,17 +96,6 @@ class BaseTractElement: UIView {
     var horizontalContainer: Bool {
         return false
     }
-    
-    fileprivate var _backgroundImagePath: String?
-    var backgroundImagePath: String {
-        if self._backgroundImagePath != nil {
-            return self._backgroundImagePath!
-        } else if self.parent != nil {
-            return (self.parent?.backgroundImagePath)!
-        } else {
-            return ""
-        }
-    }
         
     // MARK: - Initializers
     
@@ -126,10 +115,6 @@ class BaseTractElement: UIView {
         self.maxHeight = height
         self.colors = colors.copyObject()
         self.tractConfigurations = configurations
-        
-        if data.element?.attribute(by: "background-image") != nil {
-            self._backgroundImagePath = data.element?.attribute(by: "background-image")?.text
-        }
         
         if self.isKind(of: TractRoot.self) {
             self._mainView = self as? TractRoot
@@ -166,10 +151,10 @@ class BaseTractElement: UIView {
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
-        let dataContent = splitData(data: data)
-        loadElementProperties(dataContent.properties)
-        buildChildrenForData(dataContent.children)
-        setupView(properties: dataContent.properties)
+        let contentElements = XMLFunctions.getContentElements(data)
+        loadElementProperties(contentElements.properties)
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {

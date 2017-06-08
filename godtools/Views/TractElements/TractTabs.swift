@@ -44,16 +44,16 @@ class TractTabs: BaseTractElement {
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
-        let dataContent = splitData(data: data)
+        let contentElements = XMLFunctions.getContentElements(data)
         
         var position = 0
         for item in data.children {
             self.tabs.append([XMLIndexer]())
             
             for node in item.children {
-                let nodeContent = splitData(data: node)
+                let nodeElements = XMLFunctions.getContentElements(node)
                 
-                if nodeContent.kind == "label" {
+                if nodeElements.kind == "label" {
                     let text = node["content:text"].element?.text
                     self.options.append(text!)
                 } else {
@@ -64,8 +64,8 @@ class TractTabs: BaseTractElement {
             position += 1
         }
         
-        buildChildrenForData(dataContent.children)
-        setupView(properties: dataContent.properties)
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {

@@ -75,21 +75,21 @@ class TractInput: BaseTractElement {
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
-        let dataContent = splitData(data: data)
+        let contentElements = XMLFunctions.getContentElements(data)
         
         var elements = [XMLIndexer]()
         for node in data.children {
-            let nodeContent = splitData(data: node)
+            let nodeElements = XMLFunctions.getContentElements(node)
             
-            if nodeContent.kind == "label" {
+            if nodeElements.kind == "label" {
                 elements.append(node)
-            } else if nodeContent.kind == "placeholder" {
+            } else if nodeElements.kind == "placeholder" {
                 self.properties.placeholder = node["content:text"].element?.text
             }
         }
         
         buildChildrenForData(elements)
-        setupView(properties: dataContent.properties)
+        setupView(properties: contentElements.properties)
     }
     
     override func setupView(properties: [String: Any]) {

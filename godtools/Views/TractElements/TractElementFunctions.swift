@@ -12,9 +12,9 @@ import SWXMLHash
 extension BaseTractElement {
     
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
-        let dataContent = splitData(data: data)
+        let contentElements = XMLFunctions.getContentElements(data)
         
-        switch dataContent.kind {
+        switch contentElements.kind {
         case "hero":
             return TractHero(data: data, startOnY: yPosition, parent: self)
         case "heading":
@@ -60,33 +60,6 @@ extension BaseTractElement {
         default:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
         }
-    }
-    
-    func splitData(data: XMLIndexer) -> (elementName: String, namespace: String, kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
-        let elementName = data.element?.name
-        let elementNameArray = elementName?.components(separatedBy: ":")
-        var namespace = ""
-        var kind = ""
-        
-        if (elementNameArray?.count)! > 1 {
-            namespace = elementNameArray![0] as String
-            kind = elementNameArray![1] as String
-        } else {
-            kind = elementNameArray![0] as String
-        }
-        
-        var properties = [String: Any]()
-        for item in (data.element?.allAttributes)! {
-            let attribute = item.value as XMLAttribute
-            properties[attribute.name] = attribute.text
-        }
-        
-        if data.element?.text != nil && data.element?.text?.trimmingCharacters(in: .whitespaces) != "" {
-            properties["value"] = data.element?.text
-        }
-
-        let children = data.children
-        return (elementName!, namespace, kind, properties, children)
     }
     
     func elementListeners() -> [String]? {
