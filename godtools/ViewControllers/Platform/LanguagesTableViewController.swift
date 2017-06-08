@@ -58,6 +58,8 @@ class LanguagesTableViewController: BaseViewController {
         } else {
             self.screenTitleAux = "parallel_language"
         }
+        
+        languagesManager.selectingPrimaryLanguage = primary
     }
 
     fileprivate func registerCells() {
