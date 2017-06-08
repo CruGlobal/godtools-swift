@@ -42,17 +42,7 @@ class TranslationZipImporter: GTDataManager {
             processDownloadQueue()
         }
     }
-    
-    func reDownload(resource: DownloadedResource) {
-        safelyWriteToRealm {
-            for translation in resource.translations {
-                translation.isDownloaded = false
-            }
-        }
-        
-        download(resource: resource)
-    }
-    
+
     func catchupMissedDownloads() {
         addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         

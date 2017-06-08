@@ -23,7 +23,7 @@ extension TractViewController {
             showErrorMessage()
             return
         }
-        
+    
         for pageNumber in range.start...range.end {
             let view = buildPage(pageNumber, width: width, height: height)
             self.pagesViews[pageNumber] = view
@@ -136,7 +136,9 @@ extension TractViewController {
         
         let actionNo = UIAlertAction(title: "no".localized,
                                       style: .cancel,
-                                      handler: nil)
+                                      handler: { action in
+                                        self.disableResource()
+        })
         
         alert.addAction(actionYes)
         alert.addAction(actionNo)
@@ -144,6 +146,17 @@ extension TractViewController {
     }
     
     private func redownloadResources() {
-        TranslationZipImporter.shared.reDownload(resource: resource!)
+        DownloadedResourceManager.shared.delete(resource!)
+        DownloadedResourceManager.shared.download(resource!)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func disableResource() {
+        DownloadedResourceManager.shared.delete(resource!)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func postReloadHomeScreenNotification() {
+        NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
     }
 }

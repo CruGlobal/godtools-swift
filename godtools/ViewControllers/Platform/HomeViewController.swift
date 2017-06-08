@@ -65,6 +65,11 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(reloadView),
                                                name: .downloadPrimaryTranslationCompleteNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .reloadHomeListNotification,
+                                               object: nil)
     }
     
     @objc private func presentLanguageSettings() {
