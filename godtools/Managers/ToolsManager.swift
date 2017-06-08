@@ -127,7 +127,7 @@ extension ToolsManager: UITableViewDataSource {
         cell.configure(resource: resource,
                        primaryLanguage: languagesManager.loadPrimaryLanguageFromDisk(),
                        parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
-                       banner: BannerManager.shared.loadFor(resource),
+                       banner: BannerManager().loadFor(resource),
                        delegate: self)
                 
         return cell

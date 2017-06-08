@@ -11,15 +11,9 @@ import PromiseKit
 import Crashlytics
 
 class BannerManager: GTDataManager {
-    static let shared = BannerManager()
-    
     let path = "attachments"
     
-    class func setup() {
-        _ = BannerManager.shared
-    }
-    
-    private override init() {
+    override init() {
         super.init()
         
         createBannersDirectoryIfNecessary()

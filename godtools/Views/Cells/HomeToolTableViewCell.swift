@@ -178,7 +178,7 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         
-        guard let bannerImage = BannerManager.shared.loadFor(resource!) else {
+        guard let bannerImage = BannerManager().loadFor(resource!) else {
             return
         }
         

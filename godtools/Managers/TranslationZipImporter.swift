@@ -14,19 +14,14 @@ import Crashlytics
 import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
-    static let shared = TranslationZipImporter()
     
     let path = "translations"
-    
-    class func setup() {
-        _ = TranslationZipImporter.shared
-    }
     
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
     
-    private override init() {    
+    override init() {
         super.init()
         
         createResourcesDirectoryIfNecessary()

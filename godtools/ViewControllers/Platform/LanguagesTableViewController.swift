@@ -20,6 +20,8 @@ class LanguagesTableViewController: BaseViewController {
     
     var languages = List<Language>()
     let languagesManager = LanguagesManager()
+    let zipImporter = TranslationZipImporter()
+    
     var screenTitleAux: String = "primary_language"
     
     override var screenTitle: String {
@@ -75,6 +77,6 @@ extension LanguagesTableViewController: LanguageTableViewCellDelegate {
     
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
         languagesManager.recordLanguageShouldDownload(language: cell.language!)
-        TranslationZipImporter.shared.download(language: cell.language!)
+        zipImporter.download(language: cell.language!)
     }
 }

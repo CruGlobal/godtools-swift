@@ -50,7 +50,7 @@ class DownloadedResourceManager: GTDataManager {
     func download(_ resource: DownloadedResource) {
         safelyWriteToRealm {
             resource.shouldDownload = true
-            TranslationZipImporter.shared.download(resource: resource)
+            TranslationZipImporter().download(resource: resource)
         }
     }
     
@@ -77,7 +77,7 @@ class DownloadedResourceManager: GTDataManager {
                 }
                 
                 if cachedResource.bannerRemoteId != nil {
-                    _ = BannerManager.shared.downloadFor(cachedResource)
+                    _ = BannerManager().downloadFor(cachedResource)
                 }
                 
                 let remoteTranslations = remoteResource.latestTranslations!

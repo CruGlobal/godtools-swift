@@ -14,7 +14,7 @@ extension LanguagesTableViewController: UITableViewDelegate {
         let language = languages[indexPath.row]
         languagesManager.setSelectedLanguageId(language.remoteId)
         languagesManager.recordLanguageShouldDownload(language: language)
-        TranslationZipImporter.shared.download(language: language)
+        zipImporter.download(language: language)
         self.refreshCellState(tableView: tableView, indexPath: indexPath)
     }
     
