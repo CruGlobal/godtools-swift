@@ -17,6 +17,13 @@ extension TractViewController {
         cleanContainerView()
         
         let range = getRangeOfViews()
+        
+        if range.end < range.start {
+            baseDelegate?.goHome()
+            showErrorMessage()
+            return
+        }
+        
         for pageNumber in range.start...range.end {
             let view = buildPage(pageNumber, width: width, height: height)
             self.pagesViews[pageNumber] = view
@@ -116,4 +123,27 @@ extension TractViewController {
         snapshotView?.removeFromSuperview()
     }
     
+    private func showErrorMessage() {
+        let alert = UIAlertController(title: "error".localized,
+                                      message: "tract_loading_error_message".localized,
+                                      preferredStyle: .alert)
+        
+        let actionYes = UIAlertAction(title: "yes".localized,
+                                      style: .default,
+                                      handler: { action in
+                                        self.redownloadResources()
+        })
+        
+        let actionNo = UIAlertAction(title: "no".localized,
+                                      style: .cancel,
+                                      handler: nil)
+        
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func redownloadResources() {
+        TranslationZipImporter.shared.reDownload(resource: resource!)
+    }
 }

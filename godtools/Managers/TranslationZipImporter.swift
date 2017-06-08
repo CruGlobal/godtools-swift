@@ -43,11 +43,41 @@ class TranslationZipImporter: GTDataManager {
         }
     }
     
+    func reDownload(resource: DownloadedResource) {
+        forceAddTranslationsToQueue(resource.translations)
+        
+        if !isProcessingQueue {
+            processDownloadQueue()
+        }
+    }
+    
     func catchupMissedDownloads() {
         addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         
         if !isProcessingQueue {
             processDownloadQueue()
+        }
+    }
+    
+    private func forceAddTranslationsToQueue(_ translations: List<Translation>) {
+        let translations = Array(translations)
+        
+        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
+        if primaryTranslation != nil {
+            translationDownloadQueue.append(primaryTranslation!)
+        }
+        
+        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
+        if parallelTranslation != nil {
+            translationDownloadQueue.append(parallelTranslation!)
+        }
+        
+        for translation in translations {
+            if translationDownloadQueue.contains(translation) {
+                continue
+            }
+            
+            translationDownloadQueue.append(translation)
         }
     }
     
