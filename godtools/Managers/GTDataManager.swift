@@ -11,6 +11,7 @@ import Alamofire
 import PromiseKit
 import Spine
 import RealmSwift
+import Crashlytics
 
 class GTDataManager: NSObject {
     let documentsPath: String
@@ -70,6 +71,16 @@ class GTDataManager: NSObject {
         return asList(realm.objects(entityClass).sorted(byKeyPath: sortedByKeyPath))
     }
 
+    func safelyWriteToRealm(_ writeBlock: () -> Void ) {
+        do {
+            try realm.write {
+                writeBlock()
+            }
+        } catch {
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error saving to realm!"])
+        }
+    }
+    
     func asList<T: Object>(_ results: Results<T>) -> List<T> {
         return results.reduce(List<T>()) { (list, element) -> List<T> in
             list.append(element)

@@ -68,13 +68,13 @@ class LanguagesManager: GTDataManager {
     }
     
     func recordLanguageShouldDownload(language: Language) {
-        try! realm.write {
+        safelyWriteToRealm {
             language.shouldDownload = true
         }
     }
     
     func recordLanguageShouldDelete(language: Language) {
-        try! realm.write {
+        safelyWriteToRealm {
             language.shouldDownload = false
             for translation in language.translations {
                 translation.isDownloaded = false
@@ -85,7 +85,7 @@ class LanguagesManager: GTDataManager {
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
-        try! realm.write {
+        safelyWriteToRealm {
             for remoteLanguage in languages {
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
                     cachedlanguage.code = remoteLanguage.code!

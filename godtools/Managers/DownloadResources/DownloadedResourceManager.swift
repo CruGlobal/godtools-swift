@@ -64,22 +64,18 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func delete(_ resource: DownloadedResource) {
-        do {
-            try realm.write {
-                resource.shouldDownload = false
-                for translation in resource.translations {
-                    translation.isDownloaded = false
-                }
-                
-                TranslationFileRemover().deleteUnusedPages()
+        safelyWriteToRealm {
+            resource.shouldDownload = false
+            for translation in resource.translations {
+                translation.isDownloaded = false
             }
-        } catch {
             
+            TranslationFileRemover().deleteUnusedPages()
         }
     }
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
-        try! realm.write {
+        safelyWriteToRealm({
             for remoteResource in resources {
                 var cachedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
                 
@@ -150,7 +146,7 @@ class DownloadedResourceManager: GTDataManager {
                     TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation!)
                 }
             }
-        }
+        })
     }
 
     private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        

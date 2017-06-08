@@ -15,7 +15,7 @@ class FirstLaunchInitializer: GTDataManager {
     private let initialPackageCodes = ["kgp", "fourlaws", "sat"]
     
     func initializeAppState() {
-        try! realm.write {
+        safelyWriteToRealm {
             let language = initializeInitialLanguage()
             let resources = initializeInitialResources(language: language)
             initializeInitialTranslations(language: language, resources: resources)
@@ -27,7 +27,7 @@ class FirstLaunchInitializer: GTDataManager {
     func cleanupInitialAppState() {
         let predicate = NSPredicate(format: "remoteId = %@", magicId)
         
-        try! realm.write {
+        safelyWriteToRealm {
             realm.delete(findEntities(Translation.self, matching: predicate))
             realm.delete(findEntities(Language.self, matching: predicate))
             realm.delete(findEntities(DownloadedResource.self, matching: predicate))

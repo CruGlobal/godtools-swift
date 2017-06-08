@@ -16,7 +16,7 @@ class TranslationsManager: GTDataManager {
     static let shared = TranslationsManager()
     
     func translationWasDownloaded(_ translation: Translation) {
-        try! realm.write {
+        safelyWriteToRealm {
             translation.isDownloaded = true
         }
     }
@@ -37,7 +37,7 @@ class TranslationsManager: GTDataManager {
         if realm.isInWriteTransaction {
             realm.delete(findEntities(Translation.self, matching: predicate))
         } else {
-            try! realm.write {
+            safelyWriteToRealm {
                 realm.delete(findEntities(Translation.self, matching: predicate))
             }
         }
