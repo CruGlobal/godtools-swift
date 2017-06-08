@@ -73,7 +73,7 @@ extension ToolsManager {
             return
         }
         
-        delegate!.primaryTranslationDownloadCompleted!(at: index)
+        delegate?.primaryTranslationDownloadCompleted!(at: index)
     }
     
     fileprivate func deregisterDownloadCompletedObserver() {
@@ -97,13 +97,13 @@ extension ToolsManager: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
         if self.delegate is AddToolsViewController {
-            self.delegate?.didSelectTableViewRow!(cell: cell)
+            delegate?.didSelectTableViewRow!(cell: cell)
             return
         }
         
         if cell.isAvailable {
-            self.recordViewed(cell.resource!)
-            self.delegate?.didSelectTableViewRow!(cell: cell)
+            recordViewed(cell.resource!)
+            delegate?.didSelectTableViewRow!(cell: cell)
         }
     }
     
@@ -121,7 +121,7 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        let resource = self.resources[indexPath.section]
+        let resource = resources[indexPath.section]
         let languagesManager = LanguagesManager()
         
         cell.configure(resource: resource,
@@ -134,7 +134,7 @@ extension ToolsManager: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.resources.count
+        return resources.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -145,10 +145,10 @@ extension ToolsManager: UITableViewDataSource {
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
         DownloadedResourceManager.shared.download(resource)
-        self.delegate?.downloadButtonWasPressed!(resource: resource)
+        delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.infoButtonWasPressed(resource: resource)
+        delegate?.infoButtonWasPressed(resource: resource)
     }
 }
