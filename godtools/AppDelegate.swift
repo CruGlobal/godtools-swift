@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initializeAppStateOnFirstLaunch()
         }
         
-        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+        return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager.shared.loadFromRemote()
         }.then { (resources) -> Promise<DownloadedResources
             > in

@@ -37,7 +37,7 @@ class HomeViewController: BaseViewController {
         self.setupStyle()
         self.defineObservers()
         
-        if LanguagesManager.shared.loadPrimaryLanguageFromDisk() == nil {
+        if LanguagesManager().loadPrimaryLanguageFromDisk() == nil {
             self.displayOnboarding()
         }
     }

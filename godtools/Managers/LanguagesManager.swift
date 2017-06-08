@@ -14,11 +14,9 @@ import Spine
 import RealmSwift
 
 class LanguagesManager: GTDataManager {
-    static let shared = LanguagesManager()
     
     let path = "languages"
     
-    var languages = Languages()
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -46,9 +44,8 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
     }
     
-    func loadFromDisk() -> Languages {
-        languages = findAllEntities(Language.self, sortedByKeyPath: "localizedName")
-        return languages
+    func loadFromDisk() -> List<Language> {
+        return findAllEntities(Language.self, sortedByKeyPath: "localizedName")
     }
     
     func loadFromRemote() -> Promise<Languages> {

@@ -13,6 +13,7 @@ import MessageUI
 
 class TractViewController: BaseViewController {
     
+    let languagesManager = LanguagesManager()
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
@@ -98,7 +99,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
-        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         return resource!.localizedName(language: primaryLanguage)
     }
     

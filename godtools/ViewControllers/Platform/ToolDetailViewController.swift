@@ -35,7 +35,7 @@ class ToolDetailViewController: BaseViewController {
     fileprivate func displayData() {
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
-        self.titleLabel.text = resource!.localizedName(language: LanguagesManager.shared.loadPrimaryLanguageFromDisk())
+        self.titleLabel.text = resource!.localizedName(language: LanguagesManager().loadPrimaryLanguageFromDisk())
 
         self.languagesLabel.text = Array(resource!.translations)
             .map({ "\($0.language!.localizedName)"})
