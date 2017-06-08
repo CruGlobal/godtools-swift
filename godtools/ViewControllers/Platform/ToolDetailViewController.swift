@@ -87,12 +87,11 @@ class ToolDetailViewController: BaseViewController {
         if resource!.shouldDownload {
             DownloadedResourceManager().delete(self.resource!)
             downloadProgressView.setProgress(0.0, animated: false)
-            displayButton()
-            returnToHome()
         } else {
             DownloadedResourceManager().download(self.resource!)
-            displayButton()
         }
+        displayButton()
+        returnToHome()
     }
     
     private func returnToHome() {
