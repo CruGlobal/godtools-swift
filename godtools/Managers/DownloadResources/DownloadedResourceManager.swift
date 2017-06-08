@@ -100,7 +100,7 @@ class DownloadedResourceManager: GTDataManager {
                     cachedLanguage?.translations.append(cachedTranslation)
                     cachedTranslation.language = cachedLanguage
                     
-                    TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation)
+                    TranslationsManager().purgeTranslationsOlderThan(cachedTranslation)
                 }
             }
         })
