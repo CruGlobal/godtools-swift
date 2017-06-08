@@ -52,6 +52,10 @@ class GTDataManager: NSObject {
         return findEntity(entityClass, matching: predicate)
     }
     
+    func findEntityByRemoteId<T: Object>(_ entityClass: T.Type, remoteId: String) -> T? {
+        return findEntity(entityClass, byAttribute: "remoteId", withValue: remoteId)
+    }
+    
     func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> List<T> {
         let objects = realm.objects(entityClass)
         let filteredObjects = objects.filter(matching)

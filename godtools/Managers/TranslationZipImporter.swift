@@ -186,7 +186,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func recordReferencedFiles(directory: URL, translationId: String) throws {
-        guard let translation = findEntity(Translation.self, byAttribute: "remoteId", withValue: translationId) else {
+        guard let translation = findEntityByRemoteId(Translation.self, remoteId: translationId) else {
             return
         }
         

@@ -27,7 +27,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language? {
-        return findEntity(Language.self, byAttribute: "remoteId", withValue: id)
+        return findEntityByRemoteId(Language.self, remoteId: id)
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -87,7 +87,7 @@ class LanguagesManager: GTDataManager {
     private func saveToDisk(_ languages: [LanguageResource]) {
         try! realm.write {
             for remoteLanguage in languages {
-                if let cachedlanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!) {
+                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
                     cachedlanguage.code = remoteLanguage.code!
                     return
                 }

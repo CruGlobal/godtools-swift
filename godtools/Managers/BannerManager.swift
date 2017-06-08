@@ -113,7 +113,7 @@ class BannerManager: GTDataManager {
     }
     
     private func loadAttachment(remoteId: String) -> Attachment? {
-        return findEntity(Attachment.self, byAttribute: "remoteId", withValue: remoteId)
+        return findEntityByRemoteId(Attachment.self, remoteId: remoteId)
     }
     
     private func createBannersDirectoryIfNecessary() {

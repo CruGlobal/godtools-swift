@@ -81,7 +81,7 @@ class DownloadedResourceManager: GTDataManager {
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         try! realm.write {
             for remoteResource in resources {
-                var cachedResource = findEntity(DownloadedResource.self, byAttribute: "remoteId", withValue: remoteResource.id!)
+                var cachedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
                 
                 if cachedResource == nil {
                     cachedResource = DownloadedResource()
@@ -126,7 +126,7 @@ class DownloadedResourceManager: GTDataManager {
                         continue;
                     }
                     
-                    var cachedTranslation = findEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
+                    var cachedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id!)
                     
                     if cachedTranslation == nil {
                         cachedTranslation = Translation()
@@ -143,7 +143,7 @@ class DownloadedResourceManager: GTDataManager {
                     cachedTranslation!.downloadedResource = cachedResource
                     cachedResource!.translations.append(cachedTranslation!)
                     
-                    let cachedLanguage = findEntity(Language.self, byAttribute: "remoteId", withValue: languageId)
+                    let cachedLanguage = findEntityByRemoteId(Language.self, remoteId: languageId)
                     cachedLanguage?.translations.append(cachedTranslation!)
                     cachedTranslation!.language = cachedLanguage
                     
