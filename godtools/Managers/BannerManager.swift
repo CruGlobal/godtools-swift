@@ -106,7 +106,11 @@ class BannerManager: GTDataManager {
         
         do {
             try image.write(to: path)
+            
+            //NOTE: This could require a realm.write block, but I'm not sure. It's operating in a thread that *should*
+            //already be in a block, but given the nesting of promises, i'm not 100% sure. -RTC
             attachment.isBanner = true
+
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
         }
