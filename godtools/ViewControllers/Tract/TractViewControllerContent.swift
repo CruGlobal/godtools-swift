@@ -146,13 +146,13 @@ extension TractViewController {
     }
     
     private func redownloadResources() {
-        DownloadedResourceManager.shared.delete(resource!)
-        DownloadedResourceManager.shared.download(resource!)
+        DownloadedResourceManager().delete(resource!)
+        DownloadedResourceManager().download(resource!)
         postReloadHomeScreenNotification()
     }
     
     private func disableResource() {
-        DownloadedResourceManager.shared.delete(resource!)
+        DownloadedResourceManager().delete(resource!)
         postReloadHomeScreenNotification()
     }
     

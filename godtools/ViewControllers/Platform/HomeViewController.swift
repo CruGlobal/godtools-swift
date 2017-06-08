@@ -45,6 +45,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        toolsManager.delegate = self
         reloadView()
     }
     
@@ -77,7 +78,6 @@ class HomeViewController: BaseViewController {
     }
     
     @objc private func reloadView() {
-        toolsManager.delegate = self
         toolsManager.loadResourceList()
         
         emptyStateView.isHidden = toolsManager.hasResources()
