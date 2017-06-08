@@ -40,6 +40,10 @@ class LanguagesTableViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        if !selectingForPrimary {
+            addClearButton()
+        }
+
         super.viewDidLoad()
         
         registerCells()
@@ -62,7 +66,6 @@ class LanguagesTableViewController: BaseViewController {
     func selectingPrimaryLanguage(_ primary:Bool) {
         if primary {
             screenTitleAux = "primary_language"
-
         } else {
             screenTitleAux = "parallel_language"
         }
@@ -70,6 +73,11 @@ class LanguagesTableViewController: BaseViewController {
         languagesManager.selectingPrimaryLanguage = primary
     }
     
+    override func clearButtonAction() {
+        GTSettings.shared.parallelLanguageId = nil
+        tableView.reloadData()
+    }
+
     private func configureListForParallelChoice() {
         // remove primary language from list of options for parallel
         if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
