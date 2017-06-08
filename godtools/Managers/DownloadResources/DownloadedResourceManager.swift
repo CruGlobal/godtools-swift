@@ -53,13 +53,9 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func download(_ resource: DownloadedResource) {
-        do {
-            try realm.write {
-                resource.shouldDownload = true
-                TranslationZipImporter.shared.download(resource: resource)
-            }
-        } catch {
-            
+        safelyWriteToRealm {
+            resource.shouldDownload = true
+            TranslationZipImporter.shared.download(resource: resource)
         }
     }
     
