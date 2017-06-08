@@ -44,11 +44,13 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func reDownload(resource: DownloadedResource) {
-        forceAddTranslationsToQueue(resource.translations)
-        
-        if !isProcessingQueue {
-            processDownloadQueue()
+        safelyWriteToRealm {
+            for translation in resource.translations {
+                translation.isDownloaded = false
+            }
         }
+        
+        download(resource: resource)
     }
     
     func catchupMissedDownloads() {
@@ -58,29 +60,7 @@ class TranslationZipImporter: GTDataManager {
             processDownloadQueue()
         }
     }
-    
-    private func forceAddTranslationsToQueue(_ translations: List<Translation>) {
-        let translations = Array(translations)
-        
-        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
-        if primaryTranslation != nil {
-            translationDownloadQueue.append(primaryTranslation!)
-        }
-        
-        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
-        if parallelTranslation != nil {
-            translationDownloadQueue.append(parallelTranslation!)
-        }
-        
-        for translation in translations {
-            if translationDownloadQueue.contains(translation) {
-                continue
-            }
-            
-            translationDownloadQueue.append(translation)
-        }
-    }
-    
+
     private func addTranslationsToQueue(_ translations: List<Translation>) {
         let translations = Array(translations)
         
