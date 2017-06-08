@@ -22,6 +22,8 @@ class LanguagesTableViewController: BaseViewController {
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
     
+    var selectingForPrimary = true
+    
     var screenTitleAux: String = "primary_language"
     
     override var screenTitle: String {
@@ -49,6 +51,9 @@ class LanguagesTableViewController: BaseViewController {
     func loadLanguages() {
         languages = languagesManager.loadFromDisk()
 
+        if !selectingForPrimary {
+            configureListForParallelChoice()
+        }
         tableView.reloadData()
     }
     
@@ -57,13 +62,23 @@ class LanguagesTableViewController: BaseViewController {
     func selectingPrimaryLanguage(_ primary:Bool) {
         if primary {
             screenTitleAux = "primary_language"
+
         } else {
             screenTitleAux = "parallel_language"
         }
         
         languagesManager.selectingPrimaryLanguage = primary
     }
-
+    
+    private func configureListForParallelChoice() {
+        // remove primary language from list of options for parallel
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            if let index = languages.index(of: primaryLanguage) {
+                languages.remove(objectAtIndex: index)
+            }
+        }
+    }
+    
     fileprivate func registerCells() {
         tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil),
                            forCellReuseIdentifier: LanguagesTableViewController.languageCellIdentifier)
