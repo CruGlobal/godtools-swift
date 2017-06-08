@@ -37,34 +37,34 @@ class LanguagesTableViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.registerCells()
         
-        self.loadFromDisk()
+        registerCells()
+        loadLanguages()
     }
     
     // MARK: - Load data
     
-    func loadFromDisk() {
+    func loadLanguages() {
         languages = languagesManager.loadFromDisk()
 
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     // MARK: - Helpers
     
     func selectingPrimaryLanguage(_ primary:Bool) {
         if primary {
-            self.screenTitleAux = "primary_language"
+            screenTitleAux = "primary_language"
         } else {
-            self.screenTitleAux = "parallel_language"
+            screenTitleAux = "parallel_language"
         }
         
         languagesManager.selectingPrimaryLanguage = primary
     }
 
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil),
-                                forCellReuseIdentifier: LanguagesTableViewController.languageCellIdentifier)
+        tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil),
+                           forCellReuseIdentifier: LanguagesTableViewController.languageCellIdentifier)
     }
 }
 
