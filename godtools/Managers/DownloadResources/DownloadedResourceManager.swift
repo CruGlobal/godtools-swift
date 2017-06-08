@@ -13,12 +13,8 @@ import PromiseKit
 import Spine
 import RealmSwift
 
-class DownloadedResourceManager: GTDataManager {
-    static let shared = DownloadedResourceManager()
-    
+class DownloadedResourceManager: GTDataManager {    
     let path = "/resources"
-    
-    var resources = DownloadedResources()
     
     override init() {
         super.init()
@@ -30,8 +26,8 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func loadFromDisk() -> DownloadedResources {
-        resources = findAllEntities(DownloadedResource.self)
-        return resources
+        return findAllEntities(DownloadedResource.self)
+
     }
     
     func loadFromRemote() -> Promise<DownloadedResources> {

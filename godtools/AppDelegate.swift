@@ -72,9 +72,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
-            return DownloadedResourceManager.shared.loadFromRemote()
-        }.then { (resources) -> Promise<DownloadedResources
-            > in
+            return DownloadedResourceManager().loadFromRemote()
+        }.then { (resources) -> Promise<DownloadedResources> in
+
             FirstLaunchInitializer().cleanupInitialAppState()
             TranslationZipImporter.shared.catchupMissedDownloads()
             return Promise(value: resources)
