@@ -91,9 +91,6 @@ extension TractViewController {
             end = totalPages() - 1
         }
         
-        end = -358
-        start = 2
-        
         return (start, end)
     }
     
