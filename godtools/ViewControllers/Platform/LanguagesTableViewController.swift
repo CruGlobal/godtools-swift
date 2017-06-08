@@ -40,7 +40,7 @@ class LanguagesTableViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        if !selectingForPrimary {
+        if !selectingForPrimary, languagesManager.loadParallelLanguageFromDisk() != nil {
             addClearButton()
         }
 
