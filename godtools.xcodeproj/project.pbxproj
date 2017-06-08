@@ -120,6 +120,7 @@
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
+		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
 		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
@@ -280,6 +281,7 @@
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
+		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BannerManager.swift; path = Managers/BannerManager.swift; sourceTree = "<group>"; };
 		4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttachmentResource.swift; path = Managers/Attachments/AttachmentResource.swift; sourceTree = "<group>"; };
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */,
 				0FB73E681EA90669000BA60D /* LanguagesTableViewController.swift */,
 				0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */,
+				4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */,
 			);
 			name = Languages;
 			sourceTree = "<group>";
@@ -1192,6 +1195,7 @@
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
 				4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
+				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
 				ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,

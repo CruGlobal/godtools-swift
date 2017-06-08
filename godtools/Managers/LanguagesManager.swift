@@ -100,7 +100,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    fileprivate func selectedLanguageId() -> String? {
+    func selectedLanguageId() -> String? {
         if selectingPrimaryLanguage {
             return GTSettings.shared.primaryLanguageId
         } else {
@@ -108,7 +108,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    fileprivate func setSelectedLanguageId(_ id: String) {
+    func setSelectedLanguageId(_ id: String) {
         if selectingPrimaryLanguage {
             GTSettings.shared.primaryLanguageId = id
             if id == GTSettings.shared.parallelLanguageId {
@@ -134,22 +134,6 @@ extension LanguagesManager: LanguageTableViewCellDelegate {
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
         self.recordLanguageShouldDownload(language: cell.language!)
         TranslationZipImporter.shared.download(language: cell.language!)
-    }
-}
-
-extension LanguagesManager: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
-        self.setSelectedLanguageId(language.remoteId)
-        self.recordLanguageShouldDownload(language: language)
-        TranslationZipImporter.shared.download(language: language)
-        self.refreshCellState(tableView: tableView, indexPath: indexPath)
-    }
-    
-    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
-        let cell = self.tableView(tableView, cellForRowAt: indexPath) as! LanguageTableViewCell
-        cell.language = self.languages[indexPath.section]
-        tableView.reloadData()
     }
 }
 

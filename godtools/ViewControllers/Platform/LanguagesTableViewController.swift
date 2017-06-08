@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol LanguagesTableViewControllerDelegate {
 }
@@ -15,7 +16,9 @@ class LanguagesTableViewController: BaseViewController {
     
     var delegate: LanguagesTableViewControllerDelegate?
     
-    let languagesManager = LanguagesManager.shared
+    var languages = List<Language>()
+    
+    let languagesManager = LanguagesManager()
     
     var screenTitleAux: String = "primary_language"
     override var screenTitle: String {
@@ -26,7 +29,7 @@ class LanguagesTableViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableView.delegate = languagesManager
+            tableView.delegate = self
             tableView.dataSource = languagesManager
         }
     }
@@ -41,7 +44,7 @@ class LanguagesTableViewController: BaseViewController {
     // MARK: - Load data
     
     func loadFromDisk() {
-        _ = languagesManager.loadFromDisk()
+        languages = languagesManager.loadFromDisk()
 
         self.tableView.reloadData()
     }
