@@ -18,7 +18,7 @@ class LanguagesManager: GTDataManager {
     
     let path = "languages"
     
-    var languages = List<Language>()
+    var languages = Languages()
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -46,16 +46,16 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
     }
     
-    func loadFromDisk() -> List<Language> {
+    func loadFromDisk() -> Languages {
         languages = findAllEntities(Language.self, sortedByKeyPath: "localizedName")
         return languages
     }
     
-    func loadFromRemote() -> Promise<List<Language>> {
+    func loadFromRemote() -> Promise<Languages> {
         showNetworkingIndicator()
         
         return issueGETRequest()
-            .then { data -> Promise<List<Language>> in
+            .then { data -> Promise<Languages> in
                 do {
                     let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
                     

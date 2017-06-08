@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+typealias Languages = List<Language>
+
 class Language: Object {
     dynamic var code = "" {
         didSet {
