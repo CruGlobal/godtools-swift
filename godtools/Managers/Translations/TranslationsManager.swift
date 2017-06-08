@@ -10,32 +10,36 @@ import Foundation
 import PromiseKit
 import Alamofire
 import CoreData
+import RealmSwift
 
 class TranslationsManager: GTDataManager {
     static let shared = TranslationsManager()
     
     func translationWasDownloaded(_ translation: Translation) {
-        translation.isDownloaded = true
-        saveToDisk()
+        safelyWriteToRealm {
+            translation.isDownloaded = true
+        }
     }
     
-    func translationsNeedingDownloaded() -> [Translation] {
+    func translationsNeedingDownloaded() -> List<Translation> {
         let predicate = NSPredicate(format: "language.shouldDownload = true AND downloadedResource.shouldDownload = true AND isDownloaded = false")
 
         return findEntities(Translation.self, matching: predicate)
     }
     
-    func purgeTranslationsOlderThan(_ latest: Translation, saving: Bool) {
+    func purgeTranslationsOlderThan(_ latest: Translation) {
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
-                                    latest.language!.remoteId!,
-                                    latest.downloadedResource!.remoteId!,
+                                    latest.language!.remoteId,
+                                    latest.downloadedResource!.remoteId,
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
-        deleteEntities(Translation.self, matching: predicate)
-        
-        if saving {
-            saveToDisk()
+        if realm.isInWriteTransaction {
+            realm.delete(findEntities(Translation.self, matching: predicate))
+        } else {
+            safelyWriteToRealm {
+                realm.delete(findEntities(Translation.self, matching: predicate))
+            }
         }
     }
 }

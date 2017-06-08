@@ -11,6 +11,7 @@ import PromiseKit
 import Alamofire
 import SSZipArchive
 import Crashlytics
+import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
     static let shared = TranslationZipImporter()
@@ -32,7 +33,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(language: Language) {
-        addTranslationsToQueue(language.translationsAsArray())
+        addTranslationsToQueue(language.translations)
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -40,7 +41,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func download(resource: DownloadedResource) {
-        addTranslationsToQueue(resource.translationsAsArray())
+        addTranslationsToQueue(resource.translations)
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -55,7 +56,9 @@ class TranslationZipImporter: GTDataManager {
         }
     }
     
-    private func addTranslationsToQueue(_ translations: [Translation]) {
+    private func addTranslationsToQueue(_ translations: List<Translation>) {
+        let translations = Array(translations)
+        
         let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
@@ -97,7 +100,7 @@ class TranslationZipImporter: GTDataManager {
 
             _ = self.download(translation: translation).catch(execute: { error in
                 Crashlytics().recordError(error,
-                                          withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId!)"])
+                                          withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId)"])
             })
         }
         
@@ -109,7 +112,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func download(translation: Translation) -> Promise<Void> {
-        let translationId = translation.remoteId!
+        let translationId = translation.remoteId
         let filename = createFilename(translationId: translationId)
         
         guard let tempDirectoryPath = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) else {
@@ -126,7 +129,7 @@ class TranslationZipImporter: GTDataManager {
             self.extractZipFile(zipFile, translationId: translationId)
             
             TranslationsManager.shared.translationWasDownloaded(translation)
-            TranslationsManager.shared.purgeTranslationsOlderThan(translation, saving: true)
+            TranslationsManager.shared.purgeTranslationsOlderThan(translation)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
@@ -143,7 +146,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
-        let translationId = translation.remoteId!
+        let translationId = translation.remoteId
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
@@ -153,7 +156,7 @@ class TranslationZipImporter: GTDataManager {
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
-                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])                
+                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
             }
             .responseData()
     }
@@ -177,26 +180,31 @@ class TranslationZipImporter: GTDataManager {
                                       translationId: translationId)
             
             try moveFilesFrom(unzipDirectory)
-            
-            saveToDisk()
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error extracting zip file \(file.lastPathComponent)"])
-            rollbackContext()
         }
     }
     
     private func recordReferencedFiles(directory: URL, translationId: String) throws {
-        guard let translation = findEntity(Translation.self, byAttribute: "remoteId", withValue: translationId) else {
+        guard let translation = findEntityByRemoteId(Translation.self, remoteId: translationId) else {
             return
         }
         
         let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
         
-        for file in files {
-            let filename = file.lastPathComponent
-            let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) ?? createEntity(ReferencedFile.self)
-            referencedFile?.filename = file.lastPathComponent
-            referencedFile?.addToTranslations(translation)
+        safelyWriteToRealm {
+            for file in files {
+                let filename = file.lastPathComponent
+                if let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) {
+                    referencedFile.filename = file.lastPathComponent
+                    referencedFile.translations.append(translation)
+                }
+                
+                let referencedFile = ReferencedFile()
+                referencedFile.filename = file.lastPathComponent
+                referencedFile.translations.append(translation)
+                realm.add(referencedFile)
+            }
         }
     }
     
@@ -227,7 +235,7 @@ class TranslationZipImporter: GTDataManager {
     private func primaryDownloadComplete(translation: Translation) {
         NotificationCenter.default.post(name: .downloadPrimaryTranslationCompleteNotification,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId!])
+                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
     }
     
     private func createResourcesDirectoryIfNecessary() {

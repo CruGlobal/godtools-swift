@@ -37,8 +37,8 @@ class ToolDetailViewController: BaseViewController {
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
         self.titleLabel.text = resource!.localizedName(language: LanguagesManager.shared.loadPrimaryLanguageFromDisk())
 
-        self.languagesLabel.text = Array(resource!.translations!)
-            .map({ "\(($0 as! Translation).language!.localizedName())"})
+        self.languagesLabel.text = Array(resource!.translations)
+            .map({ "\($0.language!.localizedName)"})
             .sorted(by: { $0 < $1 })
             .joined(separator: ", ")
         
@@ -66,7 +66,7 @@ class ToolDetailViewController: BaseViewController {
             return
         }
         
-        if resourceId != resource!.remoteId! {
+        if resourceId != resource!.remoteId {
             return
         }
         
@@ -85,12 +85,12 @@ class ToolDetailViewController: BaseViewController {
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         if resource!.shouldDownload {
-            toolsManager.delete(resource: self.resource!)
+            DownloadedResourceManager.shared.delete(self.resource!)
             downloadProgressView.setProgress(0.0, animated: false)
             displayButton()
             returnToHome()
         } else {
-            toolsManager.download(resource: self.resource!)
+            DownloadedResourceManager.shared.download(self.resource!)
             displayButton()
         }
     }

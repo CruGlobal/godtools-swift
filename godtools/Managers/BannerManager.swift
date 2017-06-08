@@ -87,7 +87,7 @@ class BannerManager: GTDataManager {
     private func postCompletedNotification(resource: DownloadedResource) {
         NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId!])
+                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId])
     }
     
     private func bannerHasChanged(attachment: Attachment) -> Bool {
@@ -107,14 +107,13 @@ class BannerManager: GTDataManager {
         do {
             try image.write(to: path)
             attachment.isBanner = true
-            saveToDisk()
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
         }
     }
     
     private func loadAttachment(remoteId: String) -> Attachment? {
-        return findEntity(Attachment.self, byAttribute: "remoteId", withValue: remoteId)
+        return findEntityByRemoteId(Attachment.self, remoteId: remoteId)
     }
     
     private func createBannersDirectoryIfNecessary() {

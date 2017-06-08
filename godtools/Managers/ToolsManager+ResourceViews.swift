@@ -17,7 +17,6 @@ extension ToolsManager {
     func recordViewed(_ resource: DownloadedResource) {
         recordViewOnRemote(resource, quantity: 1).catch { (error) in
             resource.myViews += 1
-            self.saveToDisk()
             self.record(error, resource: resource)
         }
     }
@@ -30,7 +29,6 @@ extension ToolsManager {
             recordViewOnRemote(resource, quantity: NSNumber(value: resource.myViews))
                 .then(execute: { (_) -> Promise<Void> in
                     resource.myViews = 0
-                    self.saveToDisk()
                     return Promise(value: ())
                 })
                 .catch(execute: { (error) in
@@ -50,7 +48,7 @@ extension ToolsManager {
     }
     
     private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any] {
-        let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId!)!),
+        let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId)!),
                                           quantity: quantity)
         
         
@@ -59,6 +57,6 @@ extension ToolsManager {
     }
     
     private func record(_ error: Error, resource: DownloadedResource) {
-        Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Unable to sync views to remote for resource \(resource.remoteId!)"])
+        Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Unable to sync views to remote for resource \(resource.remoteId)"])
     }
 }

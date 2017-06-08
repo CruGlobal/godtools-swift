@@ -11,14 +11,14 @@ import UIKit
 import Alamofire
 import PromiseKit
 import Spine
-import MagicalRecord
+import RealmSwift
 
 class DownloadedResourceManager: GTDataManager {
     static let shared = DownloadedResourceManager()
     
     let path = "/resources"
     
-    var resources = [DownloadedResource]()
+    var resources = DownloadedResources()
     
     override init() {
         super.init()
@@ -29,18 +29,18 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(AttachmentResource.self)
     }
     
-    func loadFromDisk() -> [DownloadedResource] {
+    func loadFromDisk() -> DownloadedResources {
         resources = findAllEntities(DownloadedResource.self)
         return resources
     }
     
-    func loadFromRemote() -> Promise<[DownloadedResource]> {
+    func loadFromRemote() -> Promise<DownloadedResources> {
         showNetworkingIndicator()
         
         let params = ["include": "translations,pages,attachments"]
         
         return issueGETRequest(params)
-            .then { data -> Promise<[DownloadedResource]> in
+            .then { data -> Promise<DownloadedResources> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                     
@@ -52,71 +52,97 @@ class DownloadedResourceManager: GTDataManager {
             }
     }
     
+    func download(_ resource: DownloadedResource) {
+        safelyWriteToRealm {
+            resource.shouldDownload = true
+            TranslationZipImporter.shared.download(resource: resource)
+        }
+    }
+    
+    func delete(_ resource: DownloadedResource) {
+        safelyWriteToRealm {
+            resource.shouldDownload = false
+            for translation in resource.translations {
+                translation.isDownloaded = false
+            }
+            
+            TranslationFileRemover().deleteUnusedPages()
+        }
+    }
+    
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
-        for remoteResource in resources {
-            let cachedResource = findFirstOrCreateEntity(DownloadedResource.self,
-                                                         byAttribute: "remoteId",
-                                                         withValue: remoteResource.id!)
-            
-            cachedResource.code = remoteResource.abbreviation
-            cachedResource.name = remoteResource.name
-            cachedResource.copyrightDescription = remoteResource.copyrightDescription
-            cachedResource.bannerRemoteId = remoteResource.bannerId
-            cachedResource.totalViews = remoteResource.totalViews!.int32Value
-            
-            for remoteAttachment in (remoteResource.attachments!) {
-                let remoteAttachment = remoteAttachment as! AttachmentResource
-                let cachedAttachment = findFirstOrCreateEntity(Attachment.self,
-                                                               byAttribute: "remoteId",
-                                                               withValue: remoteAttachment.id!)
+        safelyWriteToRealm({
+            for remoteResource in resources {
+                var cachedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
                 
-                cachedAttachment.sha = remoteAttachment.sha256
-                cachedAttachment.resource = cachedResource
-            }
-            
-            if cachedResource.bannerRemoteId != nil {
-                _ = BannerManager.shared.downloadFor(cachedResource)
-            }
-            
-            let remoteTranslations = remoteResource.latestTranslations!
-            for remoteTranslationGeneric in remoteTranslations {
-                let remoteTranslation = remoteTranslationGeneric as! TranslationResource
-                let languageId = remoteTranslation.language?.id ?? "-1"
-                let resourceId = remoteResource.id ?? "-1"
-                let version = remoteTranslation.version!.int16Value
-                
-                if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
-                    continue;
+                if cachedResource == nil {
+                    cachedResource = DownloadedResource()
+                    cachedResource!.remoteId = remoteResource.id!
+                    realm.add(cachedResource!)
                 }
                 
-                let cachedTranslation = findFirstOrCreateEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
+                cachedResource!.code = remoteResource.abbreviation!
+                cachedResource!.name = remoteResource.name!
+                cachedResource!.copyrightDescription = remoteResource.copyrightDescription
+                cachedResource!.bannerRemoteId = remoteResource.bannerId
+                cachedResource!.totalViews = remoteResource.totalViews!.int32Value
                 
-                cachedTranslation.language = LanguagesManager.shared.loadFromDisk(id: languageId)
-                cachedTranslation.version = remoteTranslation.version!.int16Value
-                cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
-                cachedTranslation.manifestFilename = remoteTranslation.manifestName
-                cachedTranslation.localizedName = remoteTranslation.translatedName
-                cachedTranslation.localizedDescription = remoteTranslation.translatedDescription
-                                
-                cachedResource.addToTranslations(cachedTranslation)
+                for remoteAttachment in (remoteResource.attachments!) {
+                    let remoteAttachment = remoteAttachment as! AttachmentResource
+                    var cachedAttachment = findEntity(Attachment.self,
+                                                      byAttribute: "remoteId",
+                                                      withValue: remoteAttachment.id!)
+                    
+                    if cachedAttachment == nil {
+                        cachedAttachment = Attachment()
+                        cachedAttachment!.remoteId = remoteAttachment.id!
+                        realm.add(cachedAttachment!)
+                    }
+                    
+                    cachedAttachment!.sha = remoteAttachment.sha256
+                    cachedAttachment!.resource = cachedResource
+                }
                 
-                TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation, saving: false)
+                if cachedResource!.bannerRemoteId != nil {
+                    _ = BannerManager.shared.downloadFor(cachedResource!)
+                }
+                
+                let remoteTranslations = remoteResource.latestTranslations!
+                for remoteTranslationGeneric in remoteTranslations {
+                    let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                    let languageId = remoteTranslation.language?.id ?? "-1"
+                    let resourceId = remoteResource.id ?? "-1"
+                    let version = remoteTranslation.version!.int16Value
+                    
+                    if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                        continue;
+                    }
+                    
+                    var cachedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id!)
+                    
+                    if cachedTranslation == nil {
+                        cachedTranslation = Translation()
+                        cachedTranslation!.remoteId = remoteTranslation.id!
+                        realm.add(cachedTranslation!)
+                    }
+                    
+                    cachedTranslation!.version = remoteTranslation.version!.int16Value
+                    cachedTranslation!.isPublished = remoteTranslation.isPublished!.boolValue
+                    cachedTranslation!.manifestFilename = remoteTranslation.manifestName
+                    cachedTranslation!.localizedName = remoteTranslation.translatedName
+                    cachedTranslation!.localizedDescription = remoteTranslation.translatedDescription
+                    
+                    cachedTranslation!.downloadedResource = cachedResource
+                    cachedResource!.translations.append(cachedTranslation!)
+                    
+                    let cachedLanguage = findEntityByRemoteId(Language.self, remoteId: languageId)
+                    cachedLanguage?.translations.append(cachedTranslation!)
+                    cachedTranslation!.language = cachedLanguage
+                    
+                    TranslationsManager.shared.purgeTranslationsOlderThan(cachedTranslation!)
+                }
             }
-            
-            let remotePages = remoteResource.pages!
-            for remotePageGeneric in remotePages {
-                let remotePage = remotePageGeneric as! PageResource
-                
-                let cachedPage = findFirstOrCreateEntity(PageFile.self,
-                                                         byAttribute: "remoteId",
-                                                         withValue: remotePage.id!)
-                
-                cachedPage.filename = remotePage.filename
-                cachedPage.resource = cachedResource
-            }
-        }
-        
-        saveToDisk()
+        })
     }
 
     private func translationShouldBeSaved(languageId: String, resourceId: String, version: Int16) -> Bool {        
@@ -124,7 +150,7 @@ class DownloadedResourceManager: GTDataManager {
                                     languageId,
                                     resourceId)
         
-        let existingTranslations: [Translation] = findEntities(Translation.self, matching: predicate)
+        let existingTranslations = findEntities(Translation.self, matching: predicate)
         
         let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
         

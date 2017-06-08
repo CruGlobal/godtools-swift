@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import PromiseKit
+import RealmSwift
 
 @objc protocol ToolsManagerDelegate {
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
@@ -28,43 +29,25 @@ class ToolsManager: GTDataManager {
     
     let viewsPath = "views"
     
-    var resources: [DownloadedResource]?
+    var resources = DownloadedResources()
     
-    weak var delegate: ToolsManagerDelegate? {
-        didSet {
-            if self.delegate is HomeViewController {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { $0.shouldDownload } )
-                    .sorted(by: { $0.name! < $1.name! })
-                deregisterDownloadCompletedObserver()
-            } else {
-                resources = DownloadedResourceManager.shared.loadFromDisk().filter( { !$0.shouldDownload } )
-                    .sorted(by: { $0.name! < $1.name! })
-                registerDownloadCompletedObserver()
-            }
-        }
-    }
+    weak var delegate: ToolsManagerDelegate?
     
     func hasResources() -> Bool {
-        return resources != nil && resources!.count > 0
+        return resources.count > 0
     }
     
-    func download(resource: DownloadedResource) {
-        resource.shouldDownload = true
-        saveToDisk()
-        TranslationZipImporter.shared.download(resource: resource)
-        
-    }
-    
-    func delete(resource: DownloadedResource) {
-        resource.shouldDownload = false
-        for translation in resource.translationsAsArray() {
-            translation.isDownloaded = false            
-            translation.removeFromReferencedFiles(translation.referencedFiles!)
+    func loadResourceList() {
+        var predicate: NSPredicate
+        if self.delegate is HomeViewController {
+            predicate = NSPredicate(format: "shouldDownload = true")
+            deregisterDownloadCompletedObserver()
+        } else {
+            predicate = NSPredicate(format: "shouldDownload = false")
+            registerDownloadCompletedObserver()
         }
         
-        TranslationFileRemover().deleteUnusedPages()
-        
-        saveToDisk()
+        resources = findEntities(DownloadedResource.self, matching: predicate)
     }
 }
 
@@ -82,11 +65,11 @@ extension ToolsManager {
             return
         }
         
-        guard let resource = resources!.filter({ $0.remoteId == resourceId }).first else {
+        guard let resource = resources.filter({ $0.remoteId == resourceId }).first else {
             return
         }
         
-        guard let index = resources!.index(of: resource) else {
+        guard let index = resources.index(of: resource) else {
             return
         }
         
@@ -138,7 +121,7 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        let resource = self.resources![indexPath.section]
+        let resource = self.resources[indexPath.section]
         
         cell.configure(resource: resource,
                        primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk(),
@@ -150,7 +133,7 @@ extension ToolsManager: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.resources!.count
+        return self.resources.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -160,7 +143,7 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        self.download(resource: resource)
+        DownloadedResourceManager.shared.download(resource)
         self.delegate?.downloadButtonWasPressed!(resource: resource)
     }
     

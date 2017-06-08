@@ -15,11 +15,11 @@ class FirstLaunchInitializer: GTDataManager {
     private let initialPackageCodes = ["kgp", "fourlaws", "sat"]
     
     func initializeAppState() {
-        let language = initializeInitialLanguage()
-        let resources = initializeInitialResources(language: language)
-        initializeInitialTranslations(language: language, resources: resources)
-        
-        saveToDisk()
+        safelyWriteToRealm {
+            let language = initializeInitialLanguage()
+            let resources = initializeInitialResources(language: language)
+            initializeInitialTranslations(language: language, resources: resources)
+        }
         
         GTSettings.shared.primaryLanguageId = magicId
     }
@@ -27,72 +27,73 @@ class FirstLaunchInitializer: GTDataManager {
     func cleanupInitialAppState() {
         let predicate = NSPredicate(format: "remoteId = %@", magicId)
         
-        deleteEntities(Translation.self, matching: predicate)
-        deleteEntities(Language.self, matching: predicate)
-        deleteEntities(DownloadedResource.self, matching: predicate)
-        
-        if GTSettings.shared.primaryLanguageId == magicId {
-            let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
-            let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
-                findEntity(Language.self, byAttribute: "code", withValue: "en")
-        
-            primaryLanguage?.shouldDownload = true
+        safelyWriteToRealm {
+            realm.delete(findEntities(Translation.self, matching: predicate))
+            realm.delete(findEntities(Language.self, matching: predicate))
+            realm.delete(findEntities(DownloadedResource.self, matching: predicate))
             
-            for resource in findEntities(DownloadedResource.self, matching: NSPredicate(format:"code IN %@", initialPackageCodes)) {
-                resource.shouldDownload = true
+            if GTSettings.shared.primaryLanguageId == magicId {
+                let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
+                let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
+                    findEntity(Language.self, byAttribute: "code", withValue: "en")
+                
+                primaryLanguage?.shouldDownload = true
+                
+                for resource in findEntities(DownloadedResource.self, matching: NSPredicate(format:"code IN %@", initialPackageCodes)) {
+                    resource.shouldDownload = true
+                }
+                
+                GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
             }
             
-            GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
         }
-        
-        saveToDiskAndWait()
-        
         sendCompletedNotification()
     }
     
-    private func initializeInitialLanguage() -> Language? {
-        let language = createEntity(Language.self)
+    private func initializeInitialLanguage() -> Language {
+        let language = Language()
         
-        language?.code = "en-US"
-        language?.remoteId = magicId
+        language.code = "en-US"
+        language.remoteId = magicId
         
         return language
     }
     
-    private func initializeInitialResources(language: Language?) -> [DownloadedResource?] {
-        let kgp = createEntity(DownloadedResource.self)
-        kgp?.code = "kgp"
-        kgp?.name = "Knowing God Personally"
-        kgp?.remoteId = magicId
-        kgp?.shouldDownload = true
+    private func initializeInitialResources(language: Language?) -> [DownloadedResource] {
+        let kgp = DownloadedResource()
+        kgp.code = "kgp"
+        kgp.name = "Knowing God Personally"
+        kgp.remoteId = magicId
+        kgp.shouldDownload = true
         
-        let fourlaws = createEntity(DownloadedResource.self)
-        fourlaws?.code = "fourlaws"
-        fourlaws?.name = "Four Spiritual Laws"
-        fourlaws?.remoteId = magicId
-        fourlaws?.shouldDownload = true
+        let fourlaws = DownloadedResource()
+        fourlaws.code = "fourlaws"
+        fourlaws.name = "Four Spiritual Laws"
+        fourlaws.remoteId = magicId
+        fourlaws.shouldDownload = true
         
-        let satisfied = createEntity(DownloadedResource.self)
-        satisfied?.code = "satisfied"
-        satisfied?.name = "Satisfied?"
-        satisfied?.remoteId = magicId
-        satisfied?.shouldDownload = true
+        let satisfied = DownloadedResource()
+        satisfied.code = "satisfied"
+        satisfied.name = "Satisfied?"
+        satisfied.remoteId = magicId
+        satisfied.shouldDownload = true
         
         return [kgp, fourlaws, satisfied]
     }
     
-    private func initializeInitialTranslations(language: Language?,
-                                               resources: [DownloadedResource?]) {
+    private func initializeInitialTranslations(language: Language,
+                                               resources: [DownloadedResource]) {
         for resource in resources {
-            let translation = createEntity(Translation.self)
+            let translation = Translation()
             
-            translation?.language = language
-            translation?.downloadedResource = resource
-            translation?.remoteId = magicId
-            translation?.isPublished = true
-            translation?.isDownloaded = true
-            translation?.version = 0
-            translation?.localizedName = resource?.name
+            translation.remoteId = magicId
+            translation.isPublished = true
+            translation.isDownloaded = true
+            translation.version = 0
+            translation.localizedName = resource.name
+            
+            language.translations.append(translation)
+            resource.translations.append(translation)
         }
     }
     
