@@ -20,7 +20,6 @@ class DownloadedResourceManager: GTDataManager {
         super.init()
         serializer.registerResource(DownloadedResourceJson.self)
         serializer.registerResource(TranslationResource.self)
-        serializer.registerResource(PageResource.self)
         serializer.registerResource(LanguageResource.self)
         serializer.registerResource(AttachmentResource.self)
     }

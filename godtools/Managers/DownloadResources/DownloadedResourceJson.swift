@@ -35,7 +35,6 @@ class DownloadedResourceJson: Resource {
             "bannerId": Attribute().serializeAs("attr-banner"),
             "totalViews": Attribute().serializeAs("total-views"),
             "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
-            "attachments": ToManyRelationship(AttachmentResource.self),
-            "pages" : ToManyRelationship(PageResource.self)])
+            "attachments": ToManyRelationship(AttachmentResource.self)])
     }
 }
