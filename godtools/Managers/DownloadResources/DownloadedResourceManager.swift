@@ -18,7 +18,7 @@ class DownloadedResourceManager: GTDataManager {
     
     let path = "/resources"
     
-    var resources = List<DownloadedResource>()
+    var resources = DownloadedResources()
     
     override init() {
         super.init()
@@ -29,18 +29,18 @@ class DownloadedResourceManager: GTDataManager {
         serializer.registerResource(AttachmentResource.self)
     }
     
-    func loadFromDisk() -> List<DownloadedResource> {
+    func loadFromDisk() -> DownloadedResources {
         resources = findAllEntities(DownloadedResource.self)
         return resources
     }
     
-    func loadFromRemote() -> Promise<List<DownloadedResource>> {
+    func loadFromRemote() -> Promise<DownloadedResources> {
         showNetworkingIndicator()
         
         let params = ["include": "translations,pages,attachments"]
         
         return issueGETRequest(params)
-            .then { data -> Promise<List<DownloadedResource>> in
+            .then { data -> Promise<DownloadedResources> in
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                     

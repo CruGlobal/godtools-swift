@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+typealias DownloadedResources = List<DownloadedResource>
+
 class DownloadedResource: Object {
     dynamic var bannerRemoteId: String?
     dynamic var code = ""

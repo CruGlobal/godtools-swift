@@ -29,7 +29,7 @@ class ToolsManager: GTDataManager {
     
     let viewsPath = "views"
     
-    var resources = List<DownloadedResource>()
+    var resources = DownloadedResources()
     
     weak var delegate: ToolsManagerDelegate?
     
