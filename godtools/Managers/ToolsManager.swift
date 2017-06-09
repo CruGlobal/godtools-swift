@@ -24,7 +24,8 @@ class ToolsManager: GTDataManager {
     
     private override init() {
         super.init()
-        self.syncCachedRecordViews()
+        syncCachedRecordViews()
+        registerDownloadCompletedObserver()
     }
     
     let viewsPath = "views"
@@ -41,10 +42,8 @@ class ToolsManager: GTDataManager {
         var predicate: NSPredicate
         if self.delegate is HomeViewController {
             predicate = NSPredicate(format: "shouldDownload = true")
-            deregisterDownloadCompletedObserver()
         } else {
             predicate = NSPredicate(format: "shouldDownload = false")
-            registerDownloadCompletedObserver()
         }
         
         resources = findEntities(DownloadedResource.self, matching: predicate)
@@ -73,13 +72,7 @@ extension ToolsManager {
             return
         }
         
-        delegate?.primaryTranslationDownloadCompleted!(at: index)
-    }
-    
-    fileprivate func deregisterDownloadCompletedObserver() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: .downloadPrimaryTranslationCompleteNotification,
-                                                  object: nil)
+        delegate!.primaryTranslationDownloadCompleted?(at: index)
     }
 }
 

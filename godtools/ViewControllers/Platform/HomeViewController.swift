@@ -45,6 +45,7 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        toolsManager.delegate = self
         reloadView()
     }
     
@@ -65,6 +66,11 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(reloadView),
                                                name: .downloadPrimaryTranslationCompleteNotification,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .reloadHomeListNotification,
+                                               object: nil)
     }
     
     @objc private func presentLanguageSettings() {
@@ -72,7 +78,6 @@ class HomeViewController: BaseViewController {
     }
     
     @objc private func reloadView() {
-        toolsManager.delegate = self
         toolsManager.loadResourceList()
         
         emptyStateView.isHidden = toolsManager.hasResources()
