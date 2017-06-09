@@ -77,20 +77,20 @@ class BaseTractElement: UIView {
     var didFindCallToAction: Bool = false
     
     var manifestProperties = ManifestProperties()
-    var colors: TractColors?
+    var styleProperties: TractStyleProperties?
     var primaryColor: UIColor? {
         get {
-            return (self.colors != nil ? self.colors?.primaryColor : self.parent?.primaryColor)!
+            return (self.styleProperties != nil ? self.styleProperties?.primaryColor : self.parent?.primaryColor)!
         }
     }
     var primaryTextColor: UIColor {
         get {
-            return (self.colors != nil ? self.colors?.primaryTextColor : self.parent?.primaryTextColor)!
+            return (self.styleProperties != nil ? self.styleProperties?.primaryTextColor : self.parent?.primaryTextColor)!
         }
     }
     var textColor: UIColor {
         get {
-            return (self.colors != nil ? self.colors?.textColor : self.parent?.textColor)!
+            return (self.styleProperties != nil ? self.styleProperties?.textColor : self.parent?.textColor)!
         }
     }
     
@@ -116,7 +116,7 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.yStartPosition = 0.0
         self.maxHeight = height
-        self.colors = manifestProperties.getTractColors()
+        self.styleProperties = manifestProperties.styleProperties
         self.tractConfigurations = configurations
         
         if self.isKind(of: TractPage.self) {

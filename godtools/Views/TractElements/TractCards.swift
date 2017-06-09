@@ -111,7 +111,7 @@ class TractCards: BaseTractElement {
     func setupBackground() {
         self.backgroundColor = .clear
 
-        guard let image = self.page?.properties.backgroundProperties.backgroundImage else {
+        guard let image = self.page?.properties.styleProperties.backgroundImage else {
             return
         }
         let imageView = UIImageView(image: image)

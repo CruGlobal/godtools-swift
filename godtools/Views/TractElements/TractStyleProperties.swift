@@ -1,5 +1,5 @@
 //
-//  TractBackgroundProperties.swift
+//  TractStyleProperties.swift
 //  godtools
 //
 //  Created by Pablo Marti on 6/8/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractBackgroundProperties: XMLNode {
+class TractStyleProperties: TractProperties {
     
     enum BackgroundImageAlign {
         case center, start, end, top, bottom
@@ -18,9 +18,19 @@ class TractBackgroundProperties: XMLNode {
         case fit, fill, fillX, fillY
     }
     
+    // MARK: - XML Properties
+    
+    var navBarColor = GTAppDefaultColors.navBarColor.getRGBAColor()
+    var navBarControlColor = GTAppDefaultColors.navBarControlColor.getRGBAColor()
+    var primaryColor = GTAppDefaultColors.primaryColor.getRGBAColor()
+    var primaryTextColor = GTAppDefaultColors.primaryTextColorString.getRGBAColor()
+    var textColor = GTAppDefaultColors.textColorString.getRGBAColor()
+    var backgroundColor: UIColor?
     var backgroundImage: UIImage?
     var backgroundImageAlign: [BackgroundImageAlign] = [.center]
     var backgroundImageScaleType: BackgroundImageScaleType = .fit
+    
+    // MARK: - Setup of custom properties
     
     override func customProperties() -> [String]? {
         return ["backgroundImage", "backgroundImageScaleType", "backgroundImageAlign"]

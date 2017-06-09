@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TractModalProperties: XMLNode {
+class TractModalProperties: TractProperties {
+    
+    // MARK: - View Properties
     
     var alreadyRendered = false
     

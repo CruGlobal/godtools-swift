@@ -8,11 +8,13 @@
 
 import UIKit
 
-class TractCardsProperties: XMLNode {
+class TractCardsProperties: TractProperties {
     
     enum CardsState {
         case open, preview
     }
+    
+    // MARK: - View Properties
     
     var cardsState = CardsState.preview
 

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TractEmailProperties: XMLNode {
+class TractEmailProperties: TractProperties {
+    
+    // MARK: - XML Properties
     
     var subject: String?
     var content: String?

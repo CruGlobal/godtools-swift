@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TractHeaderProperties: XMLNode {
+class TractHeaderProperties: TractProperties {
+    
+    // MARK: - View Properties
     
     var includesNumber = false
 

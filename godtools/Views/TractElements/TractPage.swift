@@ -22,15 +22,15 @@ class TractPage: BaseTractElement {
     // MARK: - Setup
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.primaryColor = self.colors?.primaryColor
-        self.properties.primaryTextColor = self.colors?.primaryTextColor
-        self.properties.textColor = self.colors?.textColor
+        self.properties.primaryColor = self.styleProperties?.primaryColor
+        self.properties.primaryTextColor = self.styleProperties?.primaryTextColor
+        self.properties.textColor = self.styleProperties?.textColor
         
         self.properties.load(properties)
         
-        self.colors?.primaryColor = self.properties.primaryColor
-        self.colors?.primaryTextColor = self.properties.primaryTextColor
-        self.colors?.textColor = self.colors?.textColor
+        self.styleProperties?.primaryColor = self.properties.primaryColor!
+        self.styleProperties?.primaryTextColor = self.properties.primaryTextColor!
+        self.styleProperties?.textColor = self.properties.textColor!
     }
     
     override func buildFrame() -> CGRect {

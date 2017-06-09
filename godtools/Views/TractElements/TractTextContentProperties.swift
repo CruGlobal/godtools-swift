@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractTextContentProperties: XMLNode {
+class TractTextContentProperties: TractProperties {
     
     var i18nId: String = ""
     var color: UIColor = .gtBlack
@@ -20,6 +20,8 @@ class TractTextContentProperties: XMLNode {
     var yMargin: CGFloat = BaseTractElement.yMargin
     var value: String = ""
     var font = UIFont.gtRegular(size: 15.0)
+    
+    // MARK: - Setup of custom properties
     
     override func customProperties() -> [String]? {
         return ["textAlign"]

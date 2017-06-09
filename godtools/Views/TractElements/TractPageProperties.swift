@@ -8,15 +8,19 @@
 
 import UIKit
 
-class TractPageProperties: XMLNode {
+class TractPageProperties: TractProperties {
+    
+    // MARK: - XML Properties
     
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
-    var backgroundProperties = TractBackgroundProperties()
+    var styleProperties = TractStyleProperties()
+    
+    // MARK: - Setup of custom properties
     
     override func loadCustomProperties(_ properties: [String: Any]) {
-        self.backgroundProperties.load(properties)
+        self.styleProperties.load(properties)
     }
 
 }

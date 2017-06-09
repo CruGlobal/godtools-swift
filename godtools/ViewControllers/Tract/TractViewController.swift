@@ -108,7 +108,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.navBarColor, controlColor: self.manifestProperties.navBarControlColor)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.styleProperties.navBarColor, controlColor: self.manifestProperties.styleProperties.navBarControlColor)
         
         let navigationBar = navigationController!.navigationBar
         
@@ -128,7 +128,7 @@ class TractViewController: BaseViewController {
         
         self.progressView = UIView()
         self.progressView.frame = progressViewFrame
-        self.progressView.backgroundColor = self.manifestProperties.primaryColor.withAlphaComponent(0.65)
+        self.progressView.backgroundColor = self.manifestProperties.styleProperties.primaryColor.withAlphaComponent(0.65)
         self.progressView.addSubview(self.currentProgressView)
         
         navigationBar.addSubview(self.progressViewHelper)
