@@ -12,9 +12,6 @@ class TractPageProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var primaryColor: UIColor?
-    var primaryTextColor: UIColor?
-    var textColor: UIColor?
     var styleProperties = TractStyleProperties()
     
     // MARK: - Setup of custom properties

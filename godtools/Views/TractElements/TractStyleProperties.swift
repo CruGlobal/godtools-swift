@@ -88,4 +88,18 @@ class TractStyleProperties: TractProperties {
         }
     }
     
+    // MARK: - Management functions
+    
+    func overrideProperties(withProperties styleProperties: TractStyleProperties) {
+        self.navBarColor = styleProperties.navBarColor
+        self.navBarControlColor = styleProperties.navBarControlColor
+        self.primaryColor = styleProperties.primaryColor
+        self.primaryTextColor = styleProperties.primaryTextColor
+        self.textColor = styleProperties.textColor
+        self.backgroundColor = styleProperties.backgroundColor
+        self.backgroundImage = styleProperties.backgroundImage
+        self.backgroundImageAlign = styleProperties.backgroundImageAlign
+        self.backgroundImageScaleType = styleProperties.backgroundImageScaleType
+    }
+    
 }
