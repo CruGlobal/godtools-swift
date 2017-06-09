@@ -76,6 +76,7 @@ class BaseTractElement: UIView {
     var elements:[BaseTractElement]?
     var didFindCallToAction: Bool = false
     
+    var manifestProperties: ManifestProperties?
     var colors: TractColors?
     var primaryColor: UIColor? {
         get {
@@ -110,12 +111,12 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, colors: TractColors, configurations: TractConfigurations) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.yStartPosition = 0.0
         self.maxHeight = height
-        self.colors = colors.copyObject()
+        self.colors = manifestProperties.getTractColors()
         self.tractConfigurations = configurations
         
         if self.isKind(of: TractRoot.self) {

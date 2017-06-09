@@ -54,7 +54,7 @@ extension TractViewController {
         let language = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
         let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
         self.xmlPagesForPrimaryLang = content.pages
-        self.colors = content.colors
+        self.manifestProperties = content.manifestProperties
     }
     
     func loadResourcesForParallelLanguage() {

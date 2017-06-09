@@ -14,13 +14,13 @@ class BaseTractView: UIView {
     
     var contentView: TractRoot?
     
-    init(frame: CGRect, data: XMLIndexer, colors: TractColors, configurations: TractConfigurations) {
+    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         super.init(frame: frame)
         
         let height = self.frame.size.height
         self.contentView = TractRoot(startWithData: data,
                                      withMaxHeight: height,
-                                     colors: colors,
+                                     manifestProperties: manifestProperties,
                                      configurations: configurations)
     }
     

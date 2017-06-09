@@ -19,7 +19,7 @@ class TractViewController: BaseViewController {
     var xmlPages = [TractPage]()
     var xmlPagesForPrimaryLang = [TractPage]()
     var xmlPagesForParallelLang = [TractPage]()
-    var colors: TractColors?
+    var manifestProperties: ManifestProperties?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
     var currentPage = 0
@@ -107,7 +107,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationColors(backgroundColor: (self.colors?.navBarColor)!, controlColor: (self.colors?.navBarControlColor)!)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: (self.manifestProperties?.navBarColor)!, controlColor: (self.manifestProperties?.navBarControlColor)!)
         
         let navigationBar = navigationController!.navigationBar
         
@@ -127,7 +127,7 @@ class TractViewController: BaseViewController {
         
         self.progressView = UIView()
         self.progressView.frame = progressViewFrame
-        self.progressView.backgroundColor = self.colors?.primaryColor?.withAlphaComponent(0.65)
+        self.progressView.backgroundColor = self.manifestProperties?.primaryColor.withAlphaComponent(0.65)
         self.progressView.addSubview(self.currentProgressView)
         
         navigationBar.addSubview(self.progressViewHelper)

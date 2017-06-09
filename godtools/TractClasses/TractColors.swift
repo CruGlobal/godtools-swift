@@ -27,13 +27,5 @@ class TractColors: NSObject {
         self.primaryTextColor = primaryTextColor
         self.textColor = textColor
     }
-    
-    func copyObject() -> TractColors {
-        return TractColors(navBarColor: self.navBarColor!,
-                           navBarControlColor: self.navBarControlColor!,
-                           primaryColor: self.primaryColor!,
-                           primaryTextColor: self.primaryTextColor!,
-                           textColor: self.textColor!)
-    }
 
 }
