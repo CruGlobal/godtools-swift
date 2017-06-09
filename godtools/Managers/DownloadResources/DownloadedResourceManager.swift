@@ -106,7 +106,7 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteResource: DownloadedResourceJson) -> DownloadedResource {
-        let alreadySavedResource = findEntity(DownloadedResource.self, byAttribute: "remoteId", withValue: remoteResource.id!)
+        let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
         
         var cachedResource: DownloadedResource
         
@@ -128,9 +128,7 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteAttachment: AttachmentResource) -> Attachment {
-        let alreadySavedAttachment = findEntity(Attachment.self,
-                                                byAttribute: "remoteId",
-                                                withValue: remoteAttachment.id!)
+        let alreadySavedAttachment = findEntityByRemoteId(Attachment.self, remoteId: remoteAttachment.id!)
         
         var cachedAttachment: Attachment
         
@@ -148,7 +146,7 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteTranslation: TranslationResource) -> Translation {
-        let alreadySavedTranslation = findEntity(Translation.self,byAttribute: "remoteId",withValue: remoteTranslation.id!)
+        let alreadySavedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id!)
         
         var cachedTranslation: Translation
         
