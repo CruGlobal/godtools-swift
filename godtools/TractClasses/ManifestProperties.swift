@@ -15,6 +15,8 @@ class ManifestProperties: XMLNode {
     var primaryColor = GTAppDefaultColors.primaryColor.getRGBAColor()
     var primaryTextColor = GTAppDefaultColors.primaryTextColorString.getRGBAColor()
     var textColor = GTAppDefaultColors.textColorString.getRGBAColor()
+    var textSize = "18px"
+    var backgroundProperties = TractBackgroundProperties()
     
     func getTractColors() -> TractColors {
         return TractColors(navBarColor: self.navBarColor,

@@ -18,12 +18,12 @@ class TractBackgroundProperties: XMLNode {
         case fit, fill, fillX, fillY
     }
     
-    var backgroundImagePath: String?
-    var backgroundImageAlign: [BackgroundImageAlign]?
-    var backgroundImageScaleType: BackgroundImageScaleType?
+    var backgroundImage: UIImage?
+    var backgroundImageAlign: [BackgroundImageAlign] = [.center]
+    var backgroundImageScaleType: BackgroundImageScaleType = .fit
     
     override func customProperties() -> [String]? {
-        return ["type", "backgroundImageAlign"]
+        return ["backgroundImage", "backgroundImageScaleType", "backgroundImageAlign"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
@@ -36,7 +36,14 @@ class TractBackgroundProperties: XMLNode {
         }
     }
     
-    func setupBackgroundImageScaleType(_ string: String) {
+    private func setupBackground(_ string: String) {
+        guard let backgroundImage = UIImage(named: string) else {
+            return
+        }
+        self.backgroundImage = backgroundImage
+    }
+    
+    private func setupBackgroundImageScaleType(_ string: String) {
         switch string {
         case "fit":
             self.backgroundImageScaleType = .fit
@@ -51,19 +58,19 @@ class TractBackgroundProperties: XMLNode {
         }
     }
     
-    func setupBackgroundImageAlign(_ string: String) {
+    private func setupBackgroundImageAlign(_ string: String) {
         for value in string.components(separatedBy: " ") {
             switch value {
             case "center":
-                self.backgroundImageAlign?.append(.center)
+                self.backgroundImageAlign.append(.center)
             case "start":
-                self.backgroundImageAlign?.append(.start)
+                self.backgroundImageAlign.append(.start)
             case "end":
-                self.backgroundImageAlign?.append(.end)
+                self.backgroundImageAlign.append(.end)
             case "top":
-                self.backgroundImageAlign?.append(.top)
+                self.backgroundImageAlign.append(.top)
             case "bottom":
-                self.backgroundImageAlign?.append(.bottom)
+                self.backgroundImageAlign.append(.bottom)
             default: break
             }
         }

@@ -12,13 +12,13 @@ import SWXMLHash
 
 class TractView: UIView {
     
-    var contentView: TractRoot?
+    var contentView: TractPage?
     
     init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         super.init(frame: frame)
         
         let height = self.frame.size.height
-        self.contentView = TractRoot(startWithData: data,
+        self.contentView = TractPage(startWithData: data,
                                      withMaxHeight: height,
                                      manifestProperties: manifestProperties,
                                      configurations: configurations)

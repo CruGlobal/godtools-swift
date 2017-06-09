@@ -1,5 +1,5 @@
 //
-//  TractRootActions.swift
+//  TractPageActions.swift
 //  godtools
 //
 //  Created by Devserker on 5/17/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension TractRoot {
+extension TractPage {
     
     func showHeader() {
         for element in self.elements! {

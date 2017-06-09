@@ -11,9 +11,9 @@
 //  because of the need to have a container to store all the cards. The cards container
 //  will only store elements of the kind Card.
 //  * Following the XML structure, the Cards container will always be a children of
-//  TractRoot container. Also, the Cards container will always be at the same level of a
+//  TractPage container. Also, the Cards container will always be at the same level of a
 //  Header component.
-//  * The height size of this component will always be the same of TractRoot.height
+//  * The height size of this component will always be the same of TractPage.height
 
 import Foundation
 import UIKit

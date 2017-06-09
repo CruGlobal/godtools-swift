@@ -39,7 +39,7 @@ class TractButtonProperties: XMLNode {
         }
     }
     
-    func setupType(_ type: String) {
+    private func setupType(_ type: String) {
         switch type {
         case "url":
             self.type = .url

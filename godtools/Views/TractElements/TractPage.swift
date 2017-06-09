@@ -1,5 +1,5 @@
 //
-//  TractRoot.swift
+//  TractPage.swift
 //  godtools
 //
 //  Created by Devserker on 4/27/17.
@@ -13,11 +13,11 @@ import SWXMLHash
 //  NOTES ABOUT THE COMPONENT
 //  * This component must always be initialized with: init(data: XMLIndexer, withMaxHeight height: CGFloat)
 
-class TractRoot: BaseTractElement {
+class TractPage: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractRootProperties()
+    var properties = TractPageProperties()
     
     // MARK: - Setup
     

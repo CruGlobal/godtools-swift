@@ -54,10 +54,10 @@ class BaseTractElement: UIView {
     
     // MARK: Main properties
     
-    private var _mainView: TractRoot?
-    var root: TractRoot? {
+    private var _mainView: TractPage?
+    var page: TractPage? {
         get {
-            return self._mainView != nil ? self._mainView : self.parent!.root
+            return self._mainView != nil ? self._mainView : self.parent!.page
         }
     }
     
@@ -119,8 +119,8 @@ class BaseTractElement: UIView {
         self.colors = manifestProperties.getTractColors()
         self.tractConfigurations = configurations
         
-        if self.isKind(of: TractRoot.self) {
-            self._mainView = self as? TractRoot
+        if self.isKind(of: TractPage.self) {
+            self._mainView = self as? TractPage
         }
         
         setupElement(data: data, startOnY: 0.0)
@@ -182,7 +182,7 @@ class BaseTractElement: UIView {
             }
         }
         
-        if self.isKind(of: TractRoot.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
+        if self.isKind(of: TractPage.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
             let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
             currentYPosition = element.yEndPosition()
             elements.append(element)

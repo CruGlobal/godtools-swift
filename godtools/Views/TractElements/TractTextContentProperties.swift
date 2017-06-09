@@ -33,7 +33,7 @@ class TractTextContentProperties: XMLNode {
         }
     }
     
-    func setupTextAlign(_ string: String) {
+    private func setupTextAlign(_ string: String) {
         switch string {
         case "start":
             self.textAlign = .left

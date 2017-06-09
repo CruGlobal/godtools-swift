@@ -1,5 +1,5 @@
 //
-//  TractRootProperties.swift
+//  TractPageProperties.swift
 //  godtools
 //
 //  Created by Devserker on 5/29/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractRootProperties: XMLNode {
+class TractPageProperties: XMLNode {
     
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
