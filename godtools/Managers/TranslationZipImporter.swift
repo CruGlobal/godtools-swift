@@ -42,7 +42,7 @@ class TranslationZipImporter: GTDataManager {
             processDownloadQueue()
         }
     }
-    
+
     func catchupMissedDownloads() {
         addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         
@@ -50,7 +50,7 @@ class TranslationZipImporter: GTDataManager {
             processDownloadQueue()
         }
     }
-    
+
     private func addTranslationsToQueue(_ translations: List<Translation>) {
         let translations = Array(translations)
         

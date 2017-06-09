@@ -17,6 +17,13 @@ extension TractViewController {
         cleanContainerView()
         
         let range = getRangeOfViews()
+        
+        if range.end < range.start {
+            baseDelegate?.goHome()
+            showErrorMessage()
+            return
+        }
+    
         for pageNumber in range.start...range.end {
             let view = buildPage(pageNumber, width: width, height: height)
             self.pagesViews[pageNumber] = view
@@ -116,4 +123,40 @@ extension TractViewController {
         snapshotView?.removeFromSuperview()
     }
     
+    private func showErrorMessage() {
+        let alert = UIAlertController(title: "error".localized,
+                                      message: "tract_loading_error_message".localized,
+                                      preferredStyle: .alert)
+        
+        let actionYes = UIAlertAction(title: "yes".localized,
+                                      style: .default,
+                                      handler: { action in
+                                        self.redownloadResources()
+        })
+        
+        let actionNo = UIAlertAction(title: "no".localized,
+                                      style: .cancel,
+                                      handler: { action in
+                                        self.disableResource()
+        })
+        
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func redownloadResources() {
+        DownloadedResourceManager().delete(resource!)
+        DownloadedResourceManager().download(resource!)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func disableResource() {
+        DownloadedResourceManager().delete(resource!)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func postReloadHomeScreenNotification() {
+        NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
+    }
 }
