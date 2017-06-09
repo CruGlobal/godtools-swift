@@ -14,11 +14,9 @@ import Spine
 import RealmSwift
 
 class LanguagesManager: GTDataManager {
-    static let shared = LanguagesManager()
     
     let path = "languages"
     
-    var languages = Languages()
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -47,8 +45,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> Languages {
-        languages = findAllEntities(Language.self, sortedByKeyPath: "localizedName")
-        return languages
+        return findAllEntities(Language.self, sortedByKeyPath: "localizedName")
     }
     
     func loadFromRemote() -> Promise<Languages> {
@@ -79,9 +76,8 @@ class LanguagesManager: GTDataManager {
             for translation in language.translations {
                 translation.isDownloaded = false
             }
-            
-            TranslationFileRemover().deleteUnusedPages()
         }
+        TranslationFileRemover().deleteUnusedPages()
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
@@ -100,7 +96,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    fileprivate func selectedLanguageId() -> String? {
+    func selectedLanguageId() -> String? {
         if selectingPrimaryLanguage {
             return GTSettings.shared.primaryLanguageId
         } else {
@@ -108,7 +104,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    fileprivate func setSelectedLanguageId(_ id: String) {
+    func setSelectedLanguageId(_ id: String) {
         if selectingPrimaryLanguage {
             GTSettings.shared.primaryLanguageId = id
             if id == GTSettings.shared.parallelLanguageId {
@@ -123,65 +119,5 @@ class LanguagesManager: GTDataManager {
     override func buildURL() -> URL? {
         return Config.shared().baseUrl?
                               .appendingPathComponent(self.path)
-    }
-}
-
-extension LanguagesManager: LanguageTableViewCellDelegate {
-    func deleteButtonWasPressed(_ cell: LanguageTableViewCell) {
-        self.recordLanguageShouldDelete(language: cell.language!)
-    }
-    
-    func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
-        self.recordLanguageShouldDownload(language: cell.language!)
-        TranslationZipImporter.shared.download(language: cell.language!)
-    }
-}
-
-extension LanguagesManager: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
-        self.setSelectedLanguageId(language.remoteId)
-        self.recordLanguageShouldDownload(language: language)
-        TranslationZipImporter.shared.download(language: language)
-        self.refreshCellState(tableView: tableView, indexPath: indexPath)
-    }
-    
-    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
-        let cell = self.tableView(tableView, cellForRowAt: indexPath) as! LanguageTableViewCell
-        cell.language = self.languages[indexPath.section]
-        tableView.reloadData()
-    }
-}
-
-extension LanguagesManager: UITableViewDataSource {
-    
-    static let languageCellIdentifier = "languageCell"
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let language = languages[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
-        
-        cell.cellDelegate = self
-        cell.language = language
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
-        let selected = language.remoteId == self.selectedLanguageId()
-        
-        if selected {
-            cell.setSelected(selected, animated: true)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
     }
 }

@@ -35,7 +35,7 @@ class ToolDetailViewController: BaseViewController {
     fileprivate func displayData() {
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
-        self.titleLabel.text = resource!.localizedName(language: LanguagesManager.shared.loadPrimaryLanguageFromDisk())
+        self.titleLabel.text = resource!.localizedName(language: LanguagesManager().loadPrimaryLanguageFromDisk())
 
         self.languagesLabel.text = Array(resource!.translations)
             .map({ "\($0.language!.localizedName)"})
@@ -43,7 +43,7 @@ class ToolDetailViewController: BaseViewController {
             .joined(separator: ", ")
         
         self.displayButton()
-        self.bannerImageView.image = BannerManager.shared.loadFor(resource!)
+        self.bannerImageView.image = BannerManager().loadFor(resource!)
     }
     
     private func displayButton() {
@@ -85,14 +85,13 @@ class ToolDetailViewController: BaseViewController {
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         if resource!.shouldDownload {
-            DownloadedResourceManager.shared.delete(self.resource!)
+            DownloadedResourceManager().delete(self.resource!)
             downloadProgressView.setProgress(0.0, animated: false)
-            displayButton()
-            returnToHome()
         } else {
-            DownloadedResourceManager.shared.download(self.resource!)
-            displayButton()
+            DownloadedResourceManager().download(self.resource!)
         }
+        displayButton()
+        returnToHome()
     }
     
     private func returnToHome() {

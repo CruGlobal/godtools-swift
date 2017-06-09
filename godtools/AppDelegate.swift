@@ -62,21 +62,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState() -> Promise<Any> {
-        // Initializes the importer so the resources directory can be created.
-        TranslationZipImporter.setup()
-        BannerManager.setup()
-        
+    private func initalizeAppState() -> Promise<Any> {        
         if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
             initializeAppStateOnFirstLaunch()
         }
         
-        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
-            return DownloadedResourceManager.shared.loadFromRemote()
-        }.then { (resources) -> Promise<DownloadedResources
-            > in
+        return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+            return DownloadedResourceManager().loadFromRemote()
+        }.then { (resources) -> Promise<DownloadedResources> in
+
             FirstLaunchInitializer().cleanupInitialAppState()
-            TranslationZipImporter.shared.catchupMissedDownloads()
+            TranslationZipImporter().catchupMissedDownloads()
             return Promise(value: resources)
         }
     }

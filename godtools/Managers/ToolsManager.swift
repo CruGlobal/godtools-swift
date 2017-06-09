@@ -24,7 +24,8 @@ class ToolsManager: GTDataManager {
     
     private override init() {
         super.init()
-        self.syncCachedRecordViews()
+        syncCachedRecordViews()
+        registerDownloadCompletedObserver()
     }
     
     let viewsPath = "views"
@@ -41,10 +42,8 @@ class ToolsManager: GTDataManager {
         var predicate: NSPredicate
         if self.delegate is HomeViewController {
             predicate = NSPredicate(format: "shouldDownload = true")
-            deregisterDownloadCompletedObserver()
         } else {
             predicate = NSPredicate(format: "shouldDownload = false")
-            registerDownloadCompletedObserver()
         }
         
         resources = findEntities(DownloadedResource.self, matching: predicate)
@@ -73,13 +72,7 @@ extension ToolsManager {
             return
         }
         
-        delegate!.primaryTranslationDownloadCompleted!(at: index)
-    }
-    
-    fileprivate func deregisterDownloadCompletedObserver() {
-        NotificationCenter.default.removeObserver(self,
-                                                  name: .downloadPrimaryTranslationCompleteNotification,
-                                                  object: nil)
+        delegate!.primaryTranslationDownloadCompleted?(at: index)
     }
 }
 
@@ -97,13 +90,13 @@ extension ToolsManager: UITableViewDelegate {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
         if self.delegate is AddToolsViewController {
-            self.delegate?.didSelectTableViewRow!(cell: cell)
+            delegate?.didSelectTableViewRow!(cell: cell)
             return
         }
         
         if cell.isAvailable {
-            self.recordViewed(cell.resource!)
-            self.delegate?.didSelectTableViewRow!(cell: cell)
+            recordViewed(cell.resource!)
+            delegate?.didSelectTableViewRow!(cell: cell)
         }
     }
     
@@ -121,19 +114,20 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
-        let resource = self.resources[indexPath.section]
+        let resource = resources[indexPath.section]
+        let languagesManager = LanguagesManager()
         
         cell.configure(resource: resource,
-                       primaryLanguage: LanguagesManager.shared.loadPrimaryLanguageFromDisk(),
-                       parallelLanguage: LanguagesManager.shared.loadParallelLanguageFromDisk(),
-                       banner: BannerManager.shared.loadFor(resource),
+                       primaryLanguage: languagesManager.loadPrimaryLanguageFromDisk(),
+                       parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
+                       banner: BannerManager().loadFor(resource),
                        delegate: self)
                 
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.resources.count
+        return resources.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,11 +137,11 @@ extension ToolsManager: UITableViewDataSource {
 
 extension ToolsManager: HomeToolTableViewCellDelegate {
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        DownloadedResourceManager.shared.download(resource)
-        self.delegate?.downloadButtonWasPressed!(resource: resource)
+        DownloadedResourceManager().download(resource)
+        delegate?.downloadButtonWasPressed!(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.infoButtonWasPressed(resource: resource)
+        delegate?.infoButtonWasPressed(resource: resource)
     }
 }

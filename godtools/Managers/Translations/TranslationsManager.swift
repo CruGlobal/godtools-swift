@@ -7,13 +7,10 @@
 //
 
 import Foundation
-import PromiseKit
 import Alamofire
-import CoreData
 import RealmSwift
 
 class TranslationsManager: GTDataManager {
-    static let shared = TranslationsManager()
     
     func translationWasDownloaded(_ translation: Translation) {
         safelyWriteToRealm {

@@ -15,7 +15,7 @@ protocol LanguageSettingsViewControllerDelegate {
 class LanguageSettingsViewController: BaseViewController {
     
     var delegate: LanguageSettingsViewControllerDelegate?
-    let languagesManager = LanguagesManager.shared
+    let languagesManager = LanguagesManager()
     
     @IBOutlet weak var primaryLanguageButton: BlueButton!
     @IBOutlet weak var parallelLanguageButton: BlueButton!
