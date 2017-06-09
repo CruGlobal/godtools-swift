@@ -13,7 +13,7 @@ class TractTextContentProperties: XMLNode {
     var i18nId: String?
     var color: UIColor = .gtBlack
     var scale: CGFloat?
-    var align: NSTextAlignment = .left
+    var textAlign: NSTextAlignment = .left
     var width: CGFloat = 0.0
     var height: CGFloat = 0.0
     var xMargin: CGFloat = BaseTractElement.xMargin
@@ -21,26 +21,16 @@ class TractTextContentProperties: XMLNode {
     var value: String?
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func loadCustomProperties(_ properties: [String: Any]) {        
-        for property in properties.keys {
-            switch property {
-            case "text-align":
-                self.align = convertTextAlignmentString(properties[property] as! String?)
-            default: break
-            }
-        }
-    }
-    
-    private func convertTextAlignmentString(_ string: String?) -> NSTextAlignment {
-        guard let string = string else {
-            return .left
-        }
-        
+    func setupTextAlign(_ string: String) {
         switch string {
-            case "start": return .left
-            case "end": return .right
-            case "center": return .center
-        default: return .left
+        case "start":
+            self.textAlign = .left
+        case "end":
+            self.textAlign = .right
+        case "center":
+            self.textAlign = .center
+        default:
+            self.textAlign = .left
         }
     }
 

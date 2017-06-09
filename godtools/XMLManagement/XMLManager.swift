@@ -60,7 +60,9 @@ class XMLManager: NSObject {
         case is UIColor:
             let newValue = value.getRGBAColor()
             self.setValue(newValue, forKey: propertyName)
-        default: break
+        default:
+            let selectorName = "setup" + propertyName.capitalized
+            object.perform(Selector(selectorName), with: value)
         }
     }
 

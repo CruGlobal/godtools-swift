@@ -27,16 +27,6 @@ class TractButtonProperties: XMLNode {
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func loadCustomProperties(_ properties: [String: Any]) {
-        for property in properties.keys {
-            switch property {
-            case "type":
-                self.setupType(properties[property] as! String)
-            default: break
-            }
-        }
-    }
-    
     func setupType(_ type: String) {
         switch type {
         case "url":
