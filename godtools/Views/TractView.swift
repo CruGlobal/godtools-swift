@@ -1,5 +1,5 @@
 //
-//  BaseTractView.swift
+//  TractView.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/26/17.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-class BaseTractView: UIView {
+class TractView: UIView {
     
     var contentView: TractRoot?
     
