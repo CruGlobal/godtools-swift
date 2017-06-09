@@ -93,7 +93,7 @@ class TractButton: BaseTractElement {
         let textStyle = super.textStyle()
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.buttonWidth
-        textStyle.align = .center
+        textStyle.textAlign = .center
         textStyle.color = self.properties.color
         textStyle.xMargin = self.buttonXPosition
         textStyle.yMargin = self.textPadding

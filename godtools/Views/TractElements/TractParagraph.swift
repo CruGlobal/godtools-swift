@@ -66,7 +66,7 @@ class TractParagraph: BaseTractElement {
         textStyle.width = self.width
         textStyle.xMargin = BaseTractElement.xMargin
         textStyle.color = .gtWhite
-        textStyle.align = .center
+        textStyle.textAlign = .center
         
         return textStyle
     }

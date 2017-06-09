@@ -84,7 +84,7 @@ class TractTextContent: BaseTractElement {
     private func buildLabel() {
         self.label = GTLabel(frame: buildFrame())
         self.label.text = self.properties.value
-        self.label.textAlignment = self.properties.align
+        self.label.textAlignment = self.properties.textAlign
         self.label.font = self.properties.font
         self.label.textColor = self.properties.color
         self.label.lineBreakMode = .byWordWrapping

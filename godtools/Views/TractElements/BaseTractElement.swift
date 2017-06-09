@@ -222,7 +222,7 @@ class BaseTractElement: UIView {
     
     func textStyle() -> TractTextContentProperties {
         let textStyle = TractTextContentProperties()
-        textStyle.align = (self.tractConfigurations?.defaultTextAlignment)!
+        textStyle.textAlign = (self.tractConfigurations?.defaultTextAlignment)!
         return textStyle
     }
     

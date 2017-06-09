@@ -47,7 +47,7 @@ class TractTitle: BaseTractElement {
         if BaseTractElement.isModalElement(self) {
             textStyle.font = .gtThin(size: 54.0)
             textStyle.width = TractModal.contentWidth
-            textStyle.align = .center
+            textStyle.textAlign = .center
         } else {
             textStyle.font = .gtThin(size: 18.0)
             textStyle.width = self.width
