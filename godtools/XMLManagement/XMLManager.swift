@@ -40,7 +40,7 @@ class XMLManager: NSObject {
     
     func loadAttributesIntoObject(object: NSObject, properties: [String: Any]) {
         for property in properties {
-            xmlManager.assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
+            assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
         }
     }
     

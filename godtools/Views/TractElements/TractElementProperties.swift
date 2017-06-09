@@ -8,20 +8,10 @@
 
 import UIKit
 
-class TractElementProperties: NSObject {
+class TractElementProperties: XMLNode {
     
     var listeners: String?
     var dismissListeners: String?
     var hidden = false
-    
-    let xmlManager = XMLManager()
-    
-    func load(_ properties: [String: Any]) {
-        xmlManager.loadAttributesIntoObject(object: self, properties: properties)
-    }
-    
-    func properties() -> [String] {
-        return Mirror(reflecting: self).children.flatMap{$0.label?.dashCased}
-    }
     
 }
