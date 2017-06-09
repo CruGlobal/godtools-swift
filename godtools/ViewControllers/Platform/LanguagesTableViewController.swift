@@ -18,7 +18,7 @@ class LanguagesTableViewController: BaseViewController {
     
     var delegate: LanguagesTableViewControllerDelegate?
     
-    var languages = List<Language>()
+    var languages = Languages()
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
     

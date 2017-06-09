@@ -44,7 +44,7 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
     }
     
-    func loadFromDisk() -> List<Language> {
+    func loadFromDisk() -> Languages {
         return findAllEntities(Language.self, sortedByKeyPath: "localizedName")
     }
     
