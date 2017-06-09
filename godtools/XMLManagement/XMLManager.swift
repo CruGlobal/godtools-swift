@@ -48,6 +48,11 @@ class XMLManager: NSObject {
     func assignValueFromAttribute(object: XMLNode, attribute: String, value: String) {
         let propertyName = attribute.camelCased
         
+        if object.customProperties() != nil && (object.customProperties()?.contains(propertyName))! {
+            object.performCustomProperty(propertyName: propertyName, value: value)
+            return
+        }
+        
         if !object.properties().contains(propertyName) {
             return
         }

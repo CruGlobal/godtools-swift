@@ -27,5 +27,9 @@ class XMLNode: NSObject {
     func properties() -> [String] {
         return Mirror(reflecting: self).children.flatMap{$0.label}
     }
+    
+    func customProperties() -> [String]? {
+        return nil
+    }
 
 }

@@ -15,7 +15,6 @@ class TractButtonProperties: XMLNode {
     }
     
     var i18nId: String?
-    var type: ButtonType = .url
     var value: String?
     var events: String?
     var width: CGFloat = 300.0
@@ -26,6 +25,11 @@ class TractButtonProperties: XMLNode {
     var backgroundColor = UIColor.gtBlue
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
+    var type: ButtonType = .url
+    
+    override func customProperties() -> [String]? {
+        return ["type"]
+    }
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
