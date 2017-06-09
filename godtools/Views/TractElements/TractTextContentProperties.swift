@@ -26,14 +26,8 @@ class TractTextContentProperties: TractElementProperties {
         
         for property in properties.keys {
             switch property {
-            case "value":
-                self.value = properties[property] as? String
-            case "i18n-id":
-                self.i18nId = properties[property] as? String
             case "text-color":
                 self.color = (properties[property] as? String)!.getRGBAColor()
-            case "text-scale":
-                self.scale = properties[property] as? CGFloat
             case "text-align":
                 self.align = convertTextAlignmentString(properties[property] as! String?)
             default: break

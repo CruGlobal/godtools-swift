@@ -12,7 +12,8 @@ import SWXMLHash
 extension BaseTractElement {
     
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
-        let contentElements = XMLFunctions.getContentElements(data)
+        let xmlManager = XMLManager()
+        let contentElements = xmlManager.getContentElements(data)
         
         switch contentElements.kind {
         case "hero":

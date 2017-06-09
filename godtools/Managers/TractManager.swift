@@ -45,6 +45,9 @@ extension TractManager {
             return (pages, tractColors)
         }
         
+        let xmlManager = XMLManager()
+        let manifestContent = xmlManager.getContentElements(manifest)
+        
         let navBarColorString: String = (manifest.element?.attribute(by: "navbar-color")?.text) ?? GTAppDefaultColors.navBarColor
         let navBarControlColorString: String = (manifest.element?.attribute(by: "navbar-control-color")?.text) ?? GTAppDefaultColors.navBarControlColor
         let primaryColorString: String = (manifest.element?.attribute(by: "primary-color")?.text) ?? GTAppDefaultColors.primaryColor

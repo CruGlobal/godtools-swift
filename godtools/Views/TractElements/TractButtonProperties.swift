@@ -32,12 +32,6 @@ class TractButtonProperties: TractElementProperties {
         
         for property in properties.keys {
             switch property {
-            case "value":
-                self.value = properties[property] as! String?
-            case "events":
-                self.events = properties[property] as! String?
-            case "i18n-id":
-                self.i18nId = properties[property] as! String?
             case "type":
                 self.setupType(properties[property] as! String)
             default: break

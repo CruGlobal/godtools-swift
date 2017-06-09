@@ -51,4 +51,21 @@ extension String {
         return finalValue
     }
     
+    var dashCased: String? {
+        let pattern = "([a-z0-9])([A-Z])"
+        
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: self.characters.count)
+        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1-$2").lowercased()
+    }
+    
+    var camelCased: String {
+        let items = self.components(separatedBy: "-")
+        var camelCase = ""
+        items.enumerated().forEach {
+            camelCase += 0 == $0 ? $1 : $1.capitalized
+        }
+        return camelCase
+    }
+    
 }

@@ -96,6 +96,8 @@ class BaseTractElement: UIView {
     var horizontalContainer: Bool {
         return false
     }
+    
+    var xmlManager = XMLManager()
         
     // MARK: - Initializers
     
@@ -151,7 +153,7 @@ class BaseTractElement: UIView {
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
-        let contentElements = XMLFunctions.getContentElements(data)
+        let contentElements = self.xmlManager.getContentElements(data)
         loadElementProperties(contentElements.properties)
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)

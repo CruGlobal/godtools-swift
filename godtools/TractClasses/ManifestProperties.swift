@@ -1,14 +1,14 @@
 //
-//  TractElementProperties.swift
+//  ManifestProperties.swift
 //  godtools
 //
-//  Created by Devserker on 5/29/17.
+//  Created by Pablo Marti on 6/9/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import UIKit
 
-class TractElementProperties: NSObject {
+class ManifestProperties: NSObject {
     
     var listeners: String?
     var dismissListeners: String?
@@ -19,9 +19,5 @@ class TractElementProperties: NSObject {
     func load(_ properties: [String: Any]) {
         xmlManager.loadAttributesIntoObject(object: self, properties: properties)
     }
-    
-    func properties() -> [String] {
-        return Mirror(reflecting: self).children.flatMap{$0.label?.dashCased}
-    }
-    
+
 }

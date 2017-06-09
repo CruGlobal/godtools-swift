@@ -44,14 +44,14 @@ class TractTabs: BaseTractElement {
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
-        let contentElements = XMLFunctions.getContentElements(data)
+        let contentElements = self.xmlManager.getContentElements(data)
         
         var position = 0
         for item in data.children {
             self.tabs.append([XMLIndexer]())
             
             for node in item.children {
-                let nodeElements = XMLFunctions.getContentElements(node)
+                let nodeElements = self.xmlManager.getContentElements(node)
                 
                 if nodeElements.kind == "label" {
                     let text = node["content:text"].element?.text
