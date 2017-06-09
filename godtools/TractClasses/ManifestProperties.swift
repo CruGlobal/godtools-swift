@@ -9,9 +9,5 @@
 import UIKit
 
 class ManifestProperties: XMLNode {
-    
-    var listeners: String?
-    var dismissListeners: String?
-    var hidden = false
 
 }

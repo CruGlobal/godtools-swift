@@ -57,6 +57,9 @@ class XMLManager: NSObject {
         case is Bool:
             let newValue = value == "true" ? true : false
             self.setValue(newValue, forKey: propertyName)
+        case is UIColor:
+            let newValue = value.getRGBAColor()
+            self.setValue(newValue, forKey: propertyName)
         default: break
         }
     }

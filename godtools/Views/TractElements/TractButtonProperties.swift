@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractButtonProperties: TractElementProperties {
+class TractButtonProperties: XMLNode {
     
     enum ButtonType {
         case url, event
@@ -27,9 +27,7 @@ class TractButtonProperties: TractElementProperties {
     var color = UIColor.gtBlack
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
+    override func loadCustomProperties(_ properties: [String: Any]) {
         for property in properties.keys {
             switch property {
             case "type":

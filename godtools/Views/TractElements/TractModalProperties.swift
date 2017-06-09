@@ -8,6 +8,6 @@
 
 import UIKit
 
-class TractModalProperties: TractElementProperties {
+class TractModalProperties: XMLNode {
     
 }

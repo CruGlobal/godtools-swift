@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractTextContentProperties: TractElementProperties {
+class TractTextContentProperties: XMLNode {
     
     var i18nId: String?
     var color: UIColor = .gtBlack
@@ -21,13 +21,9 @@ class TractTextContentProperties: TractElementProperties {
     var value: String?
     var font = UIFont.gtRegular(size: 15.0)
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
+    override func loadCustomProperties(_ properties: [String: Any]) {        
         for property in properties.keys {
             switch property {
-            case "text-color":
-                self.color = (properties[property] as? String)!.getRGBAColor()
             case "text-align":
                 self.align = convertTextAlignmentString(properties[property] as! String?)
             default: break

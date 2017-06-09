@@ -8,12 +8,11 @@
 
 import UIKit
 
-class TractCardProperties: TractElementProperties {
+class TractCardProperties: XMLNode {
     
     var backgroundProperties = TractBackgroundProperties()
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
+    override func loadCustomProperties(_ properties: [String: Any]) {
         self.backgroundProperties.load(properties)
     }
     

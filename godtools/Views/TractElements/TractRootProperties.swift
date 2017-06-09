@@ -8,28 +8,14 @@
 
 import UIKit
 
-class TractRootProperties: TractElementProperties {
+class TractRootProperties: XMLNode {
     
     var primaryColor: UIColor?
     var primaryTextColor: UIColor?
     var textColor: UIColor?
     var backgroundProperties = TractBackgroundProperties()
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
-        for property in properties.keys {
-            switch property {
-            case "primary-color":
-                self.primaryColor = (properties[property] as! String).getRGBAColor()
-            case "primary-text-color":
-                self.primaryTextColor = (properties[property] as! String).getRGBAColor()
-            case "text-color":
-                self.textColor = (properties[property] as! String).getRGBAColor()
-            default: break
-            }
-        }
-        
+    override func loadCustomProperties(_ properties: [String: Any]) {
         self.backgroundProperties.load(properties)
     }
 

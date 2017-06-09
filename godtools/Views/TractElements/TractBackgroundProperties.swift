@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractBackgroundProperties: TractElementProperties {
+class TractBackgroundProperties: XMLNode {
     
     enum BackgroundImageAlign {
         case center, start, end, top, bottom
@@ -22,7 +22,7 @@ class TractBackgroundProperties: TractElementProperties {
     var backgroundImageAlign: [BackgroundImageAlign]?
     var backgroundImageScaleType: BackgroundImageScaleType?
     
-    override func load(_ properties: [String: Any]) {        
+    override func loadCustomProperties(_ properties: [String: Any]) {        
         for property in properties.keys {
             switch property {
             case "background-image-scale-type":

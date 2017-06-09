@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractEmailProperties: TractElementProperties {
+class TractEmailProperties: XMLNode {
     
     var subject: String?
     var content: String?

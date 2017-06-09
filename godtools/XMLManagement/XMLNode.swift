@@ -10,11 +10,17 @@ import UIKit
 
 class XMLNode: NSObject {
     
+    var listeners: String?
+    var dismissListeners: String?
+    var hidden = false
+    
     let xmlManager = XMLManager()
     
-    func load(_ properties: [String: Any]) {
+    final func load(_ properties: [String: Any]) {
         xmlManager.loadAttributesIntoObject(object: self, properties: properties)
     }
+    
+    func loadCustomProperties(_ properties: [String: Any]) { }
     
     func properties() -> [String] {
         return Mirror(reflecting: self).children.flatMap{$0.label?.dashCased}

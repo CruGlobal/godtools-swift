@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractTextFieldProperties: TractElementProperties {
+class TractTextFieldProperties: XMLNode {
     
     var type: String?
     var name: String?
