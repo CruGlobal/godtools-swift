@@ -22,8 +22,10 @@ class XMLNode: NSObject {
     
     func loadCustomProperties(_ properties: [String: Any]) { }
     
+    func performCustomProperty(propertyName: String, value: String) {}
+    
     func properties() -> [String] {
-        return Mirror(reflecting: self).children.flatMap{$0.label?.dashCased}
+        return Mirror(reflecting: self).children.flatMap{$0.label}
     }
 
 }

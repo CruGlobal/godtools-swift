@@ -21,6 +21,14 @@ class TractTextContentProperties: XMLNode {
     var value: String?
     var font = UIFont.gtRegular(size: 15.0)
     
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "textAlign":
+            setupTextAlign(value)
+        default: break
+        }
+    }
+    
     func setupTextAlign(_ string: String) {
         switch string {
         case "start":

@@ -22,6 +22,16 @@ class TractBackgroundProperties: XMLNode {
     var backgroundImageAlign: [BackgroundImageAlign]?
     var backgroundImageScaleType: BackgroundImageScaleType?
     
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "backgroundImageScaleType":
+            setupBackgroundImageScaleType(value)
+        case "backgroundImageAlign":
+            setupBackgroundImageAlign(value)
+        default: break
+        }
+    }
+    
     func setupBackgroundImageScaleType(_ string: String) {
         switch string {
         case "fit":

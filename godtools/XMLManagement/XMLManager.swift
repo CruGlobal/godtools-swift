@@ -8,6 +8,7 @@
 
 import UIKit
 import SWXMLHash
+import Crashlytics
 
 class XMLManager: NSObject {
     
@@ -38,32 +39,38 @@ class XMLManager: NSObject {
         return (elementName!, namespace, kind, properties, children)
     }
     
-    func loadAttributesIntoObject(object: NSObject, properties: [String: Any]) {
+    func loadAttributesIntoObject(object: XMLNode, properties: [String: Any]) {
         for property in properties {
             assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
         }
     }
     
-    func assignValueFromAttribute(object: NSObject, attribute: String, value: String) {
+    func assignValueFromAttribute(object: XMLNode, attribute: String, value: String) {
         let propertyName = attribute.camelCased
-        let property = self.value(forKey: propertyName)
+        
+        if !object.properties().contains(propertyName) {
+            return
+        }
+        
+        let property = object.value(forKey: propertyName)
         
         switch property {
         case is String:
-            self.setValue(value, forKey: propertyName)
+            object.setValue(value, forKey: propertyName)
         case is CGFloat:
             guard let newValue = NumberFormatter().number(from: value) else { return }
-            self.setValue(newValue, forKey: propertyName)
+            object.setValue(newValue, forKey: propertyName)
         case is Bool:
             let newValue = value == "true" ? true : false
-            self.setValue(newValue, forKey: propertyName)
+            object.setValue(newValue, forKey: propertyName)
         case is UIColor:
             let newValue = value.getRGBAColor()
-            self.setValue(newValue, forKey: propertyName)
+            object.setValue(newValue, forKey: propertyName)
         default:
-            let selectorName = "setup" + propertyName.capitalized
-            object.perform(Selector(selectorName), with: value)
+            object.performCustomProperty(propertyName: propertyName, value: value)
         }
+        
+        _ = 1
     }
 
 }
