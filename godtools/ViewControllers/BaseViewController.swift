@@ -124,6 +124,11 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
+    func addClearButton() {
+        let button = UIBarButtonItem(title: "clear".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(clearButtonAction))
+        self.navigationRightButtons.append(button)
+    }
+    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: 22.0, height: 22.0)
         let button: UIButton = UIButton(frame: buttonFrame)
@@ -153,6 +158,10 @@ class BaseViewController: UIViewController {
     
     func doneButtonAction() {
         NotificationCenter.default.post(name: .dismissMenuNotification, object: nil)
+    }
+    
+    func clearButtonAction() {
+        
     }
     
     // MARK: - Helpers

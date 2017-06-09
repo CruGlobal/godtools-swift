@@ -7,17 +7,25 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol LanguagesTableViewControllerDelegate {
 }
 
 class LanguagesTableViewController: BaseViewController {
     
+    static let languageCellIdentifier = "languageCell"
+    
     var delegate: LanguagesTableViewControllerDelegate?
     
-    let languagesManager = LanguagesManager.shared
+    var languages = Languages()
+    let languagesManager = LanguagesManager()
+    let zipImporter = TranslationZipImporter()
+    
+    var selectingForPrimary = true
     
     var screenTitleAux: String = "primary_language"
+    
     override var screenTitle: String {
         get {
             return screenTitleAux.localized
@@ -26,37 +34,72 @@ class LanguagesTableViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableView.delegate = languagesManager
-            tableView.dataSource = languagesManager
+            tableView.delegate = self
+            tableView.dataSource = self
         }
     }
     
     override func viewDidLoad() {
+        if !selectingForPrimary, languagesManager.loadParallelLanguageFromDisk() != nil {
+            addClearButton()
+        }
+
         super.viewDidLoad()
-        self.registerCells()
         
-        self.loadFromDisk()
+        registerCells()
+        loadLanguages()
     }
     
     // MARK: - Load data
     
-    func loadFromDisk() {
-        _ = languagesManager.loadFromDisk()
+    func loadLanguages() {
+        languages = languagesManager.loadFromDisk()
 
-        self.tableView.reloadData()
+        if !selectingForPrimary {
+            configureListForParallelChoice()
+        }
+        tableView.reloadData()
     }
     
     // MARK: - Helpers
     
     func selectingPrimaryLanguage(_ primary:Bool) {
         if primary {
-            self.screenTitleAux = "primary_language"
+            screenTitleAux = "primary_language"
         } else {
-            self.screenTitleAux = "parallel_language"
+            screenTitleAux = "parallel_language"
+        }
+        
+        languagesManager.selectingPrimaryLanguage = primary
+    }
+    
+    override func clearButtonAction() {
+        GTSettings.shared.parallelLanguageId = nil
+        tableView.reloadData()
+    }
+
+    private func configureListForParallelChoice() {
+        // remove primary language from list of options for parallel
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            if let index = languages.index(of: primaryLanguage) {
+                languages.remove(objectAtIndex: index)
+            }
         }
     }
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: LanguagesManager.languageCellIdentifier)
+        tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil),
+                           forCellReuseIdentifier: LanguagesTableViewController.languageCellIdentifier)
+    }
+}
+
+extension LanguagesTableViewController: LanguageTableViewCellDelegate {
+    func deleteButtonWasPressed(_ cell: LanguageTableViewCell) {
+        languagesManager.recordLanguageShouldDelete(language: cell.language!)
+    }
+    
+    func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
+        languagesManager.recordLanguageShouldDownload(language: cell.language!)
+        zipImporter.download(language: cell.language!)
     }
 }

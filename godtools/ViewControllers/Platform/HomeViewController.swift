@@ -37,7 +37,7 @@ class HomeViewController: BaseViewController {
         self.setupStyle()
         self.defineObservers()
         
-        if LanguagesManager.shared.loadPrimaryLanguageFromDisk() == nil {
+        if LanguagesManager().loadPrimaryLanguageFromDisk() == nil {
             self.displayOnboarding()
         }
     }
@@ -59,6 +59,11 @@ class HomeViewController: BaseViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(reloadView),
                                                name: .initialAppStateCleanupCompleted,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
                                                object: nil)
     }
     

@@ -14,19 +14,14 @@ import Crashlytics
 import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
-    static let shared = TranslationZipImporter()
     
     let path = "translations"
-    
-    class func setup() {
-        _ = TranslationZipImporter.shared
-    }
     
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
     
-    private override init() {    
+    override init() {
         super.init()
         
         createResourcesDirectoryIfNecessary()
@@ -49,7 +44,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     func catchupMissedDownloads() {
-        addTranslationsToQueue(TranslationsManager.shared.translationsNeedingDownloaded())
+        addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         
         if !isProcessingQueue {
             processDownloadQueue()
@@ -128,8 +123,9 @@ class TranslationZipImporter: GTDataManager {
             try self.writeDataFileToDisk(data: zipFileData, to: zipFile)
             self.extractZipFile(zipFile, translationId: translationId)
             
-            TranslationsManager.shared.translationWasDownloaded(translation)
-            TranslationsManager.shared.purgeTranslationsOlderThan(translation)
+            let translationsManager = TranslationsManager()
+            translationsManager.translationWasDownloaded(translation)
+            translationsManager.purgeTranslationsOlderThan(translation)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
