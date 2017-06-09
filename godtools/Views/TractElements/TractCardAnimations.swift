@@ -30,11 +30,11 @@ extension TractCard {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: { (completed) in
                         if completed {
-                            if self.cardNumber == 0 {
+                            if self.properties.cardNumber == 0 {
                                 self.cardsParentView.resetEnvironment()
                             }
                             
-                            if self.cardState == .hidden {
+                            if self.properties.cardState == .hidden {
                                 self.isHidden = true
                             }
                         }})

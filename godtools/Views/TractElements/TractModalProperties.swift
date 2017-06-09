@@ -10,4 +10,6 @@ import UIKit
 
 class TractModalProperties: XMLNode {
     
+    var alreadyRendered = false
+    
 }

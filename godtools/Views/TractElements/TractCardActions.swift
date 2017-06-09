@@ -18,21 +18,21 @@ extension TractCard {
     }
     
     func processSwipeUp() {
-        if self.cardState == .preview || self.cardState == .close {
+        if self.properties.cardState == .preview || self.properties.cardState == .close {
             showCardAndPreviousCards()
-        } else if self.cardState == .open {
+        } else if self.properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
         }
     }
     
     func processSwipeDown() {
-        if self.cardState == .open || self.cardState == .enable {
+        if self.properties.cardState == .open || self.properties.cardState == .enable {
             hideCard()
         }
     }
     
     func processCardWithState() {
-        switch self.cardState {
+        switch self.properties.cardState {
         case .preview:
             showCardAndPreviousCards()
         case .open:
@@ -46,7 +46,7 @@ extension TractCard {
     }
     
     func showCardAndPreviousCards() {
-        if self.cardState == .open {
+        if self.properties.cardState == .open {
             return
         }
         
@@ -55,7 +55,7 @@ extension TractCard {
     }
     
     func showCard() {
-        if self.cardState == .open {
+        if self.properties.cardState == .open {
             return
         }
         
@@ -70,7 +70,7 @@ extension TractCard {
     }
     
     func hideCard() {
-        if self.cardState == .close || self.cardState == .hidden {
+        if self.properties.cardState == .close || self.properties.cardState == .hidden {
             return
         }
         
@@ -86,7 +86,7 @@ extension TractCard {
     }
     
     func hideAllCards() {
-        if self.cardState == .close || self.cardState == .hidden {
+        if self.properties.cardState == .close || self.properties.cardState == .hidden {
             return
         }
         
@@ -95,7 +95,7 @@ extension TractCard {
     }
     
     func resetCard() {
-        if self.cardState == .preview {
+        if self.properties.cardState == .preview {
             return
         }
         
@@ -112,7 +112,7 @@ extension TractCard {
     // MARK: - ScrollView
     
     func disableScrollview() {
-        if self.cardState != .open {
+        if self.properties.cardState != .open {
             let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
             self.scrollView.isScrollEnabled = false
             self.scrollView.setContentOffset(startPoint, animated: true)
@@ -120,7 +120,7 @@ extension TractCard {
     }
     
     func enableScrollview() {
-        if self.cardState == .open {
+        if self.properties.cardState == .open {
             self.scrollView.isScrollEnabled = true
         }
     }
@@ -128,37 +128,37 @@ extension TractCard {
     // MARK: - Management of card state
     
     fileprivate func isHiddenKindCard() -> Bool {
-        return self.cardState == .hidden || self.cardState == .enable
+        return self.properties.cardState == .hidden || self.properties.cardState == .enable
     }
     
     fileprivate func setStateOpen() {
-        if self.cardState == .preview || self.cardState == .close {
-            self.cardState = .open
+        if self.properties.cardState == .preview || self.properties.cardState == .close {
+            self.properties.cardState = .open
         }
     }
     
     fileprivate func setStateClose() {
-        if self.cardState == .open || self.cardState == .preview {
-            self.cardState = .close
+        if self.properties.cardState == .open || self.properties.cardState == .preview {
+            self.properties.cardState = .close
         }
     }
     
     fileprivate func setStateHidden() {
-        if self.cardState == .enable {
-            self.cardState = .hidden
+        if self.properties.cardState == .enable {
+            self.properties.cardState = .hidden
         }
     }
     
     fileprivate func setStateEnable() {
-        if self.cardState == .hidden {
+        if self.properties.cardState == .hidden {
             self.isHidden = false
-            self.cardState = .enable
+            self.properties.cardState = .enable
         }
     }
     
     fileprivate func setStatePreview() {
-        if self.cardState == .open || self.cardState == .close {
-            self.cardState = .preview
+        if self.properties.cardState == .open || self.properties.cardState == .close {
+            self.properties.cardState = .preview
         }
     }
     

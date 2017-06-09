@@ -36,7 +36,7 @@ class TractHeader: BaseTractElement {
     
     // MARK: - Setup
     
-    var includesNumber = false
+    var properties = TractHeaderProperties()
     
     override func loadStyles() {
         self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)

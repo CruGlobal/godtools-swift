@@ -23,7 +23,6 @@ class TractModal: BaseTractElement {
     // MARK: - Object properties
     
     var properties = TractModalProperties()
-    var alreadyRendered = false
     
     // MARK: - Setup
     
@@ -44,9 +43,9 @@ class TractModal: BaseTractElement {
         let modalHeight = UIApplication.shared.keyWindow?.frame.size.height
         var startYPosition:CGFloat = 0
         
-        if self.alreadyRendered == false {
+        if self.properties.alreadyRendered == false {
             startYPosition = (modalHeight! - self.height) / CGFloat(2)
-            self.alreadyRendered = true
+            self.properties.alreadyRendered = true
         }
         
         for element in self.elements! {

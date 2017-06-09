@@ -10,6 +10,12 @@ import UIKit
 
 class TractCardProperties: XMLNode {
     
+    enum CardState {
+        case open, preview, close, hidden, enable
+    }
+    
+    var cardState = CardState.preview
+    var cardNumber = 0
     var backgroundProperties = TractBackgroundProperties()
     
     override func loadCustomProperties(_ properties: [String: Any]) {

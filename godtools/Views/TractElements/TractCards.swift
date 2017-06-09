@@ -20,13 +20,7 @@ import UIKit
 import SWXMLHash
 
 class TractCards: BaseTractElement {
-    
-    // MARK: - Configurations
-    
-    enum CardsState {
-        case open, preview
-    }
-    
+        
     // MARK: - Positions and Sizes
     
     var xPosition: CGFloat = 0.0
@@ -62,7 +56,7 @@ class TractCards: BaseTractElement {
     
     // MARK: - Object properties
     
-    var cardsState = CardsState.preview
+    var properties = TractCardsProperties()
     
     // MARK: - Setup
     
@@ -87,7 +81,7 @@ class TractCards: BaseTractElement {
             let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
-            element.cardNumber = cardNumber
+            element.properties.cardNumber = cardNumber
             elements.append(element)
             cardNumber += 1
         }

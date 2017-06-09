@@ -38,7 +38,10 @@ class TractNumber: BaseTractElement {
     
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
-        (self.parent as! TractHeader).includesNumber = true
+        
+        if self.parent != nil && self.parent!.isKind(of: TractHeader.self) {
+            (self.parent as! TractHeader).properties.includesNumber = true
+        }
     }
     
     override func textStyle() -> TractTextContentProperties {

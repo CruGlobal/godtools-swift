@@ -14,12 +14,6 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
-    // MARK: - Configurations
-    
-    enum CardState {
-        case open, preview, close, hidden, enable
-    }
-    
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
@@ -72,8 +66,6 @@ class TractCard: BaseTractElement {
     var shadowView = UIView()
     let scrollView = UIScrollView()
     let containerView = UIView()
-    var cardState = CardState.preview
-    var cardNumber = 0
     var cardsParentView: TractCards {
         return self.parent as! TractCards
     }
@@ -98,7 +90,7 @@ class TractCard: BaseTractElement {
         
         if self.properties.hidden {
             self.isHidden = true
-            self.cardState = .hidden
+            self.properties.cardState = .hidden
         }
     }
     
