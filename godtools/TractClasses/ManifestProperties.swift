@@ -18,6 +18,10 @@ class ManifestProperties: XMLNode {
     var textSize = "18px"
     var backgroundProperties = TractBackgroundProperties()
     
+    override func loadCustomProperties(_ properties: [String: Any]) {
+        self.backgroundProperties.load(properties)
+    }
+    
     func getTractColors() -> TractColors {
         return TractColors(navBarColor: self.navBarColor,
                            navBarControlColor: self.navBarControlColor,

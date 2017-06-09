@@ -43,6 +43,8 @@ class XMLManager: NSObject {
         for property in properties {
             assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
         }
+        
+        object.loadCustomProperties(properties)
     }
     
     func assignValueFromAttribute(object: XMLNode, attribute: String, value: String) {

@@ -28,6 +28,8 @@ class TractBackgroundProperties: XMLNode {
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
+        case "backgroundImage":
+            setupBackgroundImage(value)
         case "backgroundImageScaleType":
             setupBackgroundImageScaleType(value)
         case "backgroundImageAlign":
@@ -36,7 +38,7 @@ class TractBackgroundProperties: XMLNode {
         }
     }
     
-    private func setupBackground(_ string: String) {
+    private func setupBackgroundImage(_ string: String) {
         guard let backgroundImage = UIImage(named: string) else {
             return
         }
