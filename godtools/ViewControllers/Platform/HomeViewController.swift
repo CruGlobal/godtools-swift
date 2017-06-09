@@ -60,6 +60,11 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(reloadView),
                                                name: .initialAppStateCleanupCompleted,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
     }
     
     @objc private func presentLanguageSettings() {

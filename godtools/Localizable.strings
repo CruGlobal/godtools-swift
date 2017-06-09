@@ -57,6 +57,7 @@
 "dismiss" = "Dismiss";
 "done" = "Done";
 "remove" = "Remove";
+"clear" = "Clear";
 
 // Alerts
 "ok" = "Ok";
