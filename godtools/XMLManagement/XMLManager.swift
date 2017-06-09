@@ -14,16 +14,9 @@ class XMLManager: NSObject {
     
     func getContentElements(_ data: XMLIndexer) -> (elementName: String, namespace: String, kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
         let elementName = data.element?.name
-        let elementNameArray = elementName?.components(separatedBy: ":")
-        var namespace = ""
-        var kind = ""
-        
-        if (elementNameArray?.count)! > 1 {
-            namespace = elementNameArray![0] as String
-            kind = elementNameArray![1] as String
-        } else {
-            kind = elementNameArray![0] as String
-        }
+        let namespaceInfo = getNamespaceInfo(elementName!)
+        let namespace = namespaceInfo.namespace
+        let kind = namespaceInfo.kind
         
         var properties = [String: Any]()
         for item in (data.element?.allAttributes)! {
@@ -37,6 +30,21 @@ class XMLManager: NSObject {
         
         let children = data.children
         return (elementName!, namespace, kind, properties, children)
+    }
+    
+    private func getNamespaceInfo(_ elementName: String) -> (namespace: String, kind: String) {
+        let elementNameArray = elementName.components(separatedBy: ":")
+        var namespace = ""
+        var kind = ""
+        
+        if (elementNameArray.count) > 1 {
+            namespace = elementNameArray[0] as String
+            kind = elementNameArray[1] as String
+        } else {
+            kind = elementNameArray[0] as String
+        }
+        
+        return (namespace, kind)
     }
     
     func loadAttributesIntoObject(object: XMLNode, properties: [String: Any]) {
