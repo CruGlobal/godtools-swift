@@ -1,20 +1,20 @@
 //
-//  TractPage.swift
+//  XMLPage.swift
 //  godtools
 //
-//  Created by Pablo Marti on 6/1/17.
+//  Created by Pablo Marti on 6/9/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import UIKit
 import SWXMLHash
 
-class TractPage: NSObject {
+class XMLPage: NSObject {
     
     var content: XMLIndexer?
     var pagination: TractPagination?
     
-    init(withPageXML content: XMLIndexer) {
+    init(withXML content: XMLIndexer) {
         self.content = content
     }
     

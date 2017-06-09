@@ -19,8 +19,8 @@ class TractManager: GTDataManager {
 
 extension TractManager {
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [TractPage], manifestProperties: ManifestProperties) {
-        var pages = [TractPage]()
+    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLPage], manifestProperties: ManifestProperties) {
+        var pages = [XMLPage]()
         let manifestProperties = ManifestProperties()
         var xmlData: XMLIndexer?
         
@@ -63,10 +63,10 @@ extension TractManager {
         return (pages, manifestProperties)
     }
     
-    func loadPage(_ child: XMLIndexer) -> TractPage{
+    func loadPage(_ child: XMLIndexer) -> XMLPage{
         let resource = child.element?.attribute(by: "src")?.text
         let pageXML = loadXMLFile(resource!)
-        let page = TractPage(withPageXML: pageXML!)
+        let page = XMLPage(withXML: pageXML!)
         return page
     }
     

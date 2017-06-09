@@ -16,9 +16,9 @@ class TractViewController: BaseViewController {
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
-    var xmlPages = [TractPage]()
-    var xmlPagesForPrimaryLang = [TractPage]()
-    var xmlPagesForParallelLang = [TractPage]()
+    var xmlPages = [XMLPage]()
+    var xmlPagesForPrimaryLang = [XMLPage]()
+    var xmlPagesForParallelLang = [XMLPage]()
     var manifestProperties: ManifestProperties?
     var primaryTextColor: UIColor?
     var textColor: UIColor?

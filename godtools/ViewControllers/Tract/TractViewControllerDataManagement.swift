@@ -84,7 +84,7 @@ extension TractViewController {
         self.xmlPages = self.xmlPagesForParallelLang
     }
     
-    func getPage(_ pageNumber: Int) -> TractPage {
+    func getPage(_ pageNumber: Int) -> XMLPage {
         return self.xmlPages[pageNumber]
     }
     
