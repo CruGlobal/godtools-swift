@@ -29,7 +29,7 @@ class TractPage: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
-        self.elementFrame.y = self.yStartPosition
+        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }

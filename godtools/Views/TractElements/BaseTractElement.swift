@@ -172,16 +172,16 @@ class BaseTractElement: UIView {
                 continue
             }
             
-            if self.horizontalContainer && element.yEndPosition() > maxYPosition {
-                maxYPosition = element.yEndPosition()
+            if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
+                maxYPosition = element.elementFrame.yEndPosition()
             } else {
-                currentYPosition = element.yEndPosition()
+                currentYPosition = element.elementFrame.yEndPosition()
             }
         }
         
         if self.isKind(of: TractPage.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
             let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
-            currentYPosition = element.yEndPosition()
+            currentYPosition = element.elementFrame.yEndPosition()
             elements.append(element)
         }
         

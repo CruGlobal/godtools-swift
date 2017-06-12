@@ -66,7 +66,7 @@ class TractInput: BaseTractElement {
     // MARK: - Setup
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.yStartPosition = yPosition
+        self.elementFrame.yOrigin = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
         
         var elements = [XMLIndexer]()

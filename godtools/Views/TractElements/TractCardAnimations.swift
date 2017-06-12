@@ -12,7 +12,7 @@ import UIKit
 extension TractCard {
     
     func showCardAnimation() {
-        let translationY = TractCard.yTopMarginConstant - self.yPosition
+        let translationY = TractCard.yTopMarginConstant - self.elementFrame.y
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

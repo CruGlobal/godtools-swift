@@ -47,7 +47,7 @@ class TractCards: BaseTractElement {
     }
     
     var initialCardPosition: CGFloat {
-        return self.height - self.yStartPosition
+        return self.height - self.elementFrame.yOrigin
     }
     
     // MARK: - Object properties
@@ -74,7 +74,7 @@ class TractCards: BaseTractElement {
         for dictionary in normalCards {
             let deltaChange = CGFloat(normalCards.count - cardNumber)
             let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
-            let yDownPosition = self.yStartPosition + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
+            let yDownPosition = self.elementFrame.yOrigin + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.properties.cardNumber = cardNumber

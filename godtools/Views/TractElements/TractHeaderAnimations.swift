@@ -21,7 +21,7 @@ extension TractHeader {
     }
     
     func hideHeader() {
-        let translationY = -self.yPosition - self.height
+        let translationY = -self.elementFrame.y - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

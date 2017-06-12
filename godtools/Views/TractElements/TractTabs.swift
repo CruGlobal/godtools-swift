@@ -18,12 +18,8 @@ class TractTabs: BaseTractElement {
     
     // MARK: - Positions and Sizes
     
-    var xPosition: CGFloat {
-        return TractTabs.xMarginConstant
-    }
-    
     override var width: CGFloat {
-        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
+        return (self.parent?.width)! - (TractTabs.xMarginConstant * CGFloat(2))
     }
     
     // MARK: - Object properties
@@ -37,7 +33,7 @@ class TractTabs: BaseTractElement {
     var properties = TractTabsProperties()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.yStartPosition = yPosition
+        self.elementFrame.yOrigin = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
         
         var position = 0
@@ -94,8 +90,8 @@ class TractTabs: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.x = TractTabs.xMarginConstant
+        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant

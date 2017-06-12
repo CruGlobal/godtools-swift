@@ -59,14 +59,11 @@ class TractTextContent: BaseTractElement {
         } else {
             self.contentWidth = (self.parent?.width)!
         }
-        
-        self.xPosition = self.properties.xMargin
-        self.yPosition = self.yStartPosition + self.properties.yMargin
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.x = self.properties.xMargin
+        self.elementFrame.y = self.elementFrame.yOrigin + self.properties.yMargin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }
