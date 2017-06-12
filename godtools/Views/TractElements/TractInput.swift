@@ -25,10 +25,6 @@ class TractInput: BaseTractElement {
         return self.xMargin
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + self.yMargin
-    }
-    
     var textViewWidth: CGFloat {
         return self.properties.width > self.width ? self.width : self.properties.width
     }
@@ -56,10 +52,6 @@ class TractInput: BaseTractElement {
     
     var textViewYPosition: CGFloat {
         return super.height + self.yMargin
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + self.yMargin
     }
     
     override func textYPadding() -> CGFloat {
@@ -107,9 +99,11 @@ class TractInput: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = self.yMargin
+        self.elementFrame.yMarginBottom = self.yMargin
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

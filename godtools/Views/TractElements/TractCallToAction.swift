@@ -37,7 +37,7 @@ class TractCallToAction: BaseTractElement {
     }
     
     var yPosition: CGFloat {
-        var position = self.yStartPosition + TractCallToAction.yMarginConstant
+        var position = self.elementFrame.yOrigin + TractCallToAction.yMarginConstant
         if position < (self.parent?.maxHeight)! - self.height {
             position = (self.parent?.maxHeight)! - self.height
         }
@@ -50,10 +50,6 @@ class TractCallToAction: BaseTractElement {
     
     var buttonXPosition: CGFloat {
         return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + TractCallToAction.yMarginConstant
     }
     
     override func textYPadding() -> CGFloat {
@@ -82,6 +78,7 @@ class TractCallToAction: BaseTractElement {
         self.elementFrame.y = self.yPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
     }
     
     // MARK: - UI

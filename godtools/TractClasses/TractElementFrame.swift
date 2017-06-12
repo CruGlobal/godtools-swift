@@ -12,12 +12,15 @@ class TractElementFrame: NSObject {
     
     var x: CGFloat = 0.0
     var y: CGFloat = 0.0
+    var xOrigin: CGFloat = 0.0
     var yOrigin: CGFloat = 0.0
+    var yMarginTop: CGFloat = 0.0
+    var yMarginBottom: CGFloat = 0.0
     var width: CGFloat = 0.0
     var height: CGFloat = 0.0
     
     func yEndPosition() -> CGFloat {
-        return self.yOrigin + self.height
+        return self.yOrigin + self.height + self.yMarginTop + self.yMarginBottom
     }
     
     func getFrame() -> CGRect {

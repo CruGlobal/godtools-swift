@@ -17,10 +17,6 @@ class TractHeader: BaseTractElement {
         return 0.0
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + 1.0
-    }
-    
     override var height: CGFloat {
         get {
             return super.height + 10.0
@@ -28,10 +24,6 @@ class TractHeader: BaseTractElement {
         set {
             super.height = newValue
         }
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Setup
@@ -44,7 +36,7 @@ class TractHeader: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin + 1.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }

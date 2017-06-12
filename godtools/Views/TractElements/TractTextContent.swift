@@ -31,10 +31,6 @@ class TractTextContent: BaseTractElement {
         }
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
     override func textYPadding() -> CGFloat {
         return (self.parent?.textYPadding())!
     }

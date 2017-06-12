@@ -14,12 +14,6 @@ class TractModal: BaseTractElement {
     
     static let contentWidth: CGFloat = 275.0
     
-    // MARK: - Positions and Sizes
-    
-    override func yEndPosition() -> CGFloat {
-        return self.height
-    }
-    
     // MARK: - Object properties
     
     var properties = TractModalProperties()
@@ -37,8 +31,8 @@ class TractModal: BaseTractElement {
     
     override func loadFrameProperties() {
         let frame = (UIApplication.shared.keyWindow?.frame)!
-        self.elementFrame.x = frame.origin.x
-        self.elementFrame.y = frame.origin.y
+        self.elementFrame.x = 0.0
+        self.elementFrame.y = 0.0
         self.elementFrame.width = frame.size.width
         self.elementFrame.height = frame.size.height
     }

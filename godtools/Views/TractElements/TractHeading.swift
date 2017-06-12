@@ -15,16 +15,6 @@ class TractHeading: BaseTractElement {
     
     let marginConstant: CGFloat = 30.0
     
-    var xPosition: CGFloat = 0.0
-    
-    var yPosition: CGFloat {
-        return self.yStartPosition + self.marginConstant
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
     // MARK: - Setup
     
     var properties = TractHeadingProperties()
@@ -37,10 +27,11 @@ class TractHeading: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.properties.frame.x = self.xPosition
-        self.properties.frame.y = self.yPosition
-        self.properties.frame.width = self.width
-        self.properties.frame.height = self.height
+        self.elementFrame.x = 0.0
+        self.elementFrame.y = self.elementFrame.yOrigin
+        self.elementFrame.width = self.width
+        self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = self.marginConstant
     }
 
 }

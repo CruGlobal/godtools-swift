@@ -25,20 +25,12 @@ class TractParagraph: BaseTractElement {
         }
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + TractParagraph.marginConstant
-    }
-    
     override var width: CGFloat {
         if BaseTractElement.isModalElement(self) {
             return TractModal.contentWidth
         } else {
             return self.parent!.width - (self.xPosition * CGFloat(2))
         }
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Setup
@@ -55,7 +47,7 @@ class TractParagraph: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin + TractParagraph.marginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }

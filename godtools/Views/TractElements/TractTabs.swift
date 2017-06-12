@@ -22,16 +22,8 @@ class TractTabs: BaseTractElement {
         return TractTabs.xMarginConstant
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + TractTabs.yMarginConstant
-    }
-    
     override var width: CGFloat {
         return (self.parent?.width)! - (self.xPosition * CGFloat(2))
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
     }
     
     // MARK: - Object properties
@@ -106,6 +98,7 @@ class TractTabs: BaseTractElement {
         self.elementFrame.y = self.yPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = TractTabs.yMarginConstant
     }
     
     // MARK: - Segmented Control

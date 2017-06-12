@@ -23,10 +23,6 @@ class TractLabel: BaseTractElement {
         return TractLabel.xMarginConstant
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + TractLabel.yMarginConstant
-    }
-    
     override var width: CGFloat {
         return (self.parent?.width)! - self.xPosition - TractLabel.xMarginConstant
     }
@@ -38,10 +34,6 @@ class TractLabel: BaseTractElement {
         }
         
         return padding
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
     }
     
     // MARK: - Object properties
@@ -73,7 +65,7 @@ class TractLabel: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin + TractLabel.yMarginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }

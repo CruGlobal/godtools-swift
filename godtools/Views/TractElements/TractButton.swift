@@ -29,10 +29,6 @@ class TractButton: BaseTractElement {
         return self.xMargin
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + self.yMargin
-    }
-    
     override var width: CGFloat {
         return super.width - self.xPosition - self.xMargin
     }
@@ -46,10 +42,6 @@ class TractButton: BaseTractElement {
     }
     
     var textPadding: CGFloat = 8.0
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + self.yMargin
-    }
     
     override func textYPadding() -> CGFloat {
         return (self.parent?.textYPadding())!
@@ -84,9 +76,10 @@ class TractButton: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin + self.yMargin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = yMargin
     }
     
     override func textStyle() -> TractTextContentProperties {

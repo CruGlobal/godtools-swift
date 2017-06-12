@@ -15,12 +15,6 @@ class TractHero: BaseTractElement {
     
     static let width: CGFloat = 300
     
-    // MARK: - Positions and Sizes
-    
-    override func yEndPosition() -> CGFloat {
-        return self.properties.frame.y + self.height
-    }
-    
     // MARK: - Object properties
     
     var properties = TractHeroProperties()
@@ -29,9 +23,10 @@ class TractHero: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = (TractHero.width - TractHero.width) / CGFloat(2)
-        self.elementFrame.y = self.yStartPosition + BaseTractElement.yMargin
+        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = TractHero.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
         
 }
