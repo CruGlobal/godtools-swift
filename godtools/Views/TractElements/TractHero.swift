@@ -20,7 +20,6 @@ class TractHero: BaseTractElement {
     override func loadFrameProperties() {
         let width: CGFloat = 300
         self.elementFrame.x = (super.width - width) / CGFloat(2)
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin

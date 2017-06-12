@@ -39,7 +39,7 @@ class TractCards: BaseTractElement {
     }
     
     var initialCardPosition: CGFloat {
-        return self.height - self.elementFrame.yOrigin
+        return self.height - self.elementFrame.y
     }
     
     // MARK: - Object properties
@@ -66,7 +66,7 @@ class TractCards: BaseTractElement {
         for dictionary in normalCards {
             let deltaChange = CGFloat(normalCards.count - cardNumber)
             let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
-            let yDownPosition = self.elementFrame.yOrigin + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
+            let yDownPosition = self.elementFrame.y + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.properties.cardNumber = cardNumber
@@ -88,14 +88,13 @@ class TractCards: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        let yExternalPosition = self.elementFrame.yOrigin > self.minYPosition ? self.elementFrame.yOrigin : self.minYPosition
+        let yExternalPosition = self.elementFrame.y > self.minYPosition ? self.elementFrame.y : self.minYPosition
         
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
-        self.elementFrame.yMarginBottom = self.yExternalPosition
+        self.elementFrame.yMarginBottom = yExternalPosition
     }
     
     // MARK: - UI

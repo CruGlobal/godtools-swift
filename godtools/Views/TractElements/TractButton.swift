@@ -76,10 +76,10 @@ class TractButton: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin + self.yMargin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = yMargin
+        self.elementFrame.yMarginBottom = yMargin
     }
     
     override func textStyle() -> TractTextContentProperties {

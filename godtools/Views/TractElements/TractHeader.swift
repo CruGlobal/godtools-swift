@@ -21,9 +21,9 @@ class TractHeader: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
-        self.elementFrame.y = self.elementFrame.yOrigin + 1.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = 1.0
         self.elementFrame.yMarginBottom = 10.0
     }
     

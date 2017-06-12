@@ -67,7 +67,6 @@ class TractImage: BaseTractElement {
         let yMarginConstant: CGFloat = 16.0
         
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = yMarginConstant

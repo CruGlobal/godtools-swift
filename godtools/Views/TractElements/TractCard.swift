@@ -49,7 +49,7 @@ class TractCard: BaseTractElement {
     }
     
     var translationY: CGFloat {
-        return self.externalHeight - self.elementFrame.yOrigin
+        return self.externalHeight - self.elementFrame.y
     }
     
     // MARK: - Object properties
@@ -106,7 +106,6 @@ class TractCard: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.externalHeight
     }

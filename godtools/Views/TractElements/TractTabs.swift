@@ -33,7 +33,7 @@ class TractTabs: BaseTractElement {
     var properties = TractTabsProperties()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.elementFrame.yOrigin = yPosition
+        self.elementFrame.y = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
         
         var position = 0
@@ -91,7 +91,6 @@ class TractTabs: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = TractTabs.xMarginConstant
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant

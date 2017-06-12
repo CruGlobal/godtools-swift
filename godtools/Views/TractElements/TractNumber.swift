@@ -40,7 +40,6 @@ class TractNumber: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = TractNumber.marginConstant
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }

@@ -16,7 +16,7 @@ extension TractCards {
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: -self.yPosition) },
+                        self.transform = CGAffineTransform(translationX: 0, y: -self.elementFrame.y) },
                        completion: nil )
     }
     

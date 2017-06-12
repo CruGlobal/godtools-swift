@@ -61,9 +61,9 @@ class TractLabel: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = TractLabel.xMarginConstant
-        self.elementFrame.y = self.elementFrame.yOrigin + TractLabel.yMarginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = TractLabel.yMarginConstant
     }
     
     override func render() -> UIView {

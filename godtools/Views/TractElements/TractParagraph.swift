@@ -47,9 +47,9 @@ class TractParagraph: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin + TractParagraph.marginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = TractParagraph.marginConstant
     }
     
     // MARK: - Helpers

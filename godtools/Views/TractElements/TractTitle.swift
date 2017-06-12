@@ -47,7 +47,6 @@ class TractTitle: BaseTractElement {
         }
         
         self.elementFrame.x = xPosition
-        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = (self.parent?.width)! - xPosition - TractTitle.marginConstant
         self.elementFrame.height = self.height
     }

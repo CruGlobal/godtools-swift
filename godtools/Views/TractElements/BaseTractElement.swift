@@ -101,7 +101,7 @@ class BaseTractElement: UIView {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent
-        self.elementFrame.yOrigin = yPosition
+        self.elementFrame.y = yPosition
         buildChildrenForData(children)
         setupView(properties: [String: Any]())
     }
@@ -109,7 +109,7 @@ class BaseTractElement: UIView {
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
-        self.elementFrame.yOrigin = 0.0
+        self.elementFrame.y = 0.0
         self.maxHeight = height
         self.styleProperties = manifestProperties.styleProperties
         self.tractConfigurations = configurations
@@ -150,7 +150,7 @@ class BaseTractElement: UIView {
     var elementFrame: TractElementFrame = TractElementFrame()
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.elementFrame.yOrigin = yPosition
+        self.elementFrame.y = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
         loadElementProperties(contentElements.properties)
         buildChildrenForData(contentElements.children)
