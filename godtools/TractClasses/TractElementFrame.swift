@@ -12,7 +12,6 @@ class TractElementFrame: NSObject {
     
     var x: CGFloat = 0.0
     var y: CGFloat = 0.0
-    var xOrigin: CGFloat = 0.0
     var yMarginTop: CGFloat = 0.0
     var yMarginBottom: CGFloat = 0.0
     var width: CGFloat = 0.0
