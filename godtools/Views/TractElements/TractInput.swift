@@ -68,12 +68,10 @@ class TractInput: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractTextFieldProperties()
+    var properties = TractInputProperties()
     var textField = GTTextField()
     
     // MARK: - Setup
-    
-    var properties = TractInputProperties()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
@@ -103,18 +101,15 @@ class TractInput: BaseTractElement {
         self.textField.backgroundColor = self.properties.backgroundColor
         self.textField.placeholderTranslationKey = self.properties.placeholder ?? ""
         
+        loadFrameProperties()
         self.frame = buildFrame()
     }
     
-    func loadFrameProperties() {
-        self.properties.frame.x = self.xPosition
-        self.properties.frame.y = self.yPosition
-        self.properties.frame.width = self.width
-        self.properties.frame.height = self.height
-    }
-    
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
+    override func loadFrameProperties() {
+        self.elementFrame.x = self.xPosition
+        self.elementFrame.y = self.yPosition
+        self.elementFrame.width = self.width
+        self.elementFrame.height = self.height
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

@@ -50,6 +50,7 @@ class TractTextContent: BaseTractElement {
         super.setupView(properties: properties)
         buildLabel()
         
+        loadFrameProperties()
         self.frame = buildFrame()
         self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
         
@@ -67,15 +68,11 @@ class TractTextContent: BaseTractElement {
         self.yPosition = self.yStartPosition + self.properties.yMargin
     }
     
-    func loadFrameProperties() {
-        self.properties.frame.x = self.xPosition
-        self.properties.frame.y = self.yPosition
-        self.properties.frame.width = self.width
-        self.properties.frame.height = self.height
-    }
-    
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
+    override func loadFrameProperties() {
+        self.elementFrame.x = self.xPosition
+        self.elementFrame.y = self.yPosition
+        self.elementFrame.width = self.width
+        self.elementFrame.height = self.height
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

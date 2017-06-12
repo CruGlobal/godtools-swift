@@ -82,15 +82,11 @@ class TractButton: BaseTractElement {
         self.addSubview(self.button)
     }
     
-    func loadFrameProperties() {
-        self.properties.frame.x = self.xPosition
-        self.properties.frame.y = self.yPosition
-        self.properties.frame.width = self.width
-        self.properties.frame.height = self.height
-    }
-    
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
+    override func loadFrameProperties() {
+        self.elementFrame.x = self.xPosition
+        self.elementFrame.y = self.yPosition
+        self.elementFrame.width = self.width
+        self.elementFrame.height = self.height
     }
     
     override func textStyle() -> TractTextContentProperties {
@@ -128,6 +124,7 @@ class TractButton: BaseTractElement {
     func configureAsModalButton() {
         self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
         self.button.designAsTractModalButton()
+        loadFrameProperties()
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: TractButton.modalMarginConstant,
@@ -139,6 +136,7 @@ class TractButton: BaseTractElement {
         self.height = self.properties.height
         button.cornerRadius = self.properties.cornerRadius
         button.backgroundColor = self.properties.backgroundColor
+        loadFrameProperties()
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: 0.0,

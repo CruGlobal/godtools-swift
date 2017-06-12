@@ -21,10 +21,6 @@ class TractEmail: BaseTractElement {
         TractBindings.addBindings(self)
     }
     
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
-    }
-    
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {

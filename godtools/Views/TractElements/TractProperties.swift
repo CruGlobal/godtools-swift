@@ -9,7 +9,5 @@
 import UIKit
 
 class TractProperties: XMLNode {
-    
-    var frame = TractElementFrame()
 
 }

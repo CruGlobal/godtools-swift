@@ -42,15 +42,11 @@ class TractHeader: BaseTractElement {
         self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
     }
     
-    func loadFrameProperties() {
-        self.properties.frame.x = self.xPosition
-        self.properties.frame.y = self.yPosition
-        self.properties.frame.width = self.width
-        self.properties.frame.height = self.height
-    }
-    
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
+    override func loadFrameProperties() {
+        self.elementFrame.x = self.xPosition
+        self.elementFrame.y = self.yPosition
+        self.elementFrame.width = self.width
+        self.elementFrame.height = self.height
     }
     
     override var horizontalContainer: Bool {

@@ -36,15 +36,11 @@ class TractHeading: BaseTractElement {
         return textStyle
     }
     
-    func loadFrameProperties() {
+    override func loadFrameProperties() {
         self.properties.frame.x = self.xPosition
         self.properties.frame.y = self.yPosition
         self.properties.frame.width = self.width
         self.properties.frame.height = self.height
-    }
-    
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
     }
 
 }

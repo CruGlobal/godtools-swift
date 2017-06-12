@@ -23,7 +23,6 @@ class BaseTractElement: UIView {
     
     // MARK: - Positions and Sizes
     
-    var yStartPosition: CGFloat = 0.0
     var maxHeight: CGFloat = 0.0
     var height: CGFloat = 0.0
     var width: CGFloat {
@@ -32,10 +31,6 @@ class BaseTractElement: UIView {
         } else {
             return BaseTractElement.screenWidth
         }
-    }
-    
-    func yEndPosition() -> CGFloat {
-        return self.yStartPosition + self.height
     }
     
     func getMaxHeight() -> CGFloat {
@@ -106,7 +101,7 @@ class BaseTractElement: UIView {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent
-        self.yStartPosition = yPosition
+        self.elementFrame.yOrigin = yPosition
         buildChildrenForData(children)
         setupView(properties: [String: Any]())
     }
@@ -114,7 +109,7 @@ class BaseTractElement: UIView {
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
-        self.yStartPosition = 0.0
+        self.elementFrame.yOrigin = 0.0
         self.maxHeight = height
         self.styleProperties = manifestProperties.styleProperties
         self.tractConfigurations = configurations
@@ -152,8 +147,10 @@ class BaseTractElement: UIView {
     
     // MARK: - Build content
     
+    var elementFrame: TractElementFrame = TractElementFrame()
+    
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.yStartPosition = yPosition
+        self.elementFrame.yOrigin = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
         loadElementProperties(contentElements.properties)
         buildChildrenForData(contentElements.children)
@@ -198,6 +195,7 @@ class BaseTractElement: UIView {
     }
     
     func setupView(properties: Dictionary<String, Any>) {
+        loadFrameProperties()
         self.frame = buildFrame()
         loadStyles()
     }
@@ -206,8 +204,10 @@ class BaseTractElement: UIView {
     
     func loadStyles() { }
     
+    func loadFrameProperties() { }
+    
     func buildFrame() -> CGRect {
-        preconditionFailure("This function must be overridden")
+        return self.elementFrame.getFrame()
     }
     
     func render() -> UIView {

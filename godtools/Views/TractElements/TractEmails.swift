@@ -18,10 +18,6 @@ class TractEmails: BaseTractElement {
         self.isHidden = true
     }
     
-    override func buildFrame() -> CGRect {
-        return self.properties.frame.getFrame()
-    }
-    
     override func render() -> UIView {
         TractBindings.addBindings(self)
         return self
