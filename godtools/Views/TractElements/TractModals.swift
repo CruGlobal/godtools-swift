@@ -19,6 +19,7 @@ class TractModals: BaseTractElement {
     }
     
     override func buildFrame() -> CGRect {
+        loadFrameProperties()
         return (UIApplication.shared.keyWindow?.frame)!
     }
     

@@ -13,7 +13,6 @@ class TractImage: BaseTractElement {
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 0.0
-    static let yMarginConstant: CGFloat = 16.0
     
     // MARK: - Positions and Sizes
     
@@ -60,18 +59,19 @@ class TractImage: BaseTractElement {
         
         self.imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         self.addSubview(self.imageView)
-        loadFrameProperties()
         self.frame = buildFrame()
         self.height = height
     }
     
     override func loadFrameProperties() {
+        let yMarginConstant: CGFloat = 16.0
+        
         self.elementFrame.x = self.xPosition
         self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = TractImage.yMarginConstant
-        self.elementFrame.yMarginBottom = TractImage.yMarginConstant
+        self.elementFrame.yMarginTop = yMarginConstant
+        self.elementFrame.yMarginBottom = yMarginConstant
     }
     
     // MARK: - Helpers

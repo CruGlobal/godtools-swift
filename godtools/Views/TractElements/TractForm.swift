@@ -10,18 +10,12 @@ import UIKit
 
 class TractForm: BaseTractElement {
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return 0.0
-    }
-    
     // MARK - Setup
     
     var properties = TractFormProperties()
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
+        self.elementFrame.x = 0.0
         self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height

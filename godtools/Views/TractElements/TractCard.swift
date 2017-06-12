@@ -68,9 +68,9 @@ class TractCard: BaseTractElement {
         super.setupView(properties: properties)
         
         loadElementProperties(properties)
-        loadFrameProperties()
         
         self.frame = buildFrame()
+        
         setupStyle()
         setupScrollView()
         setBordersAndShadows()

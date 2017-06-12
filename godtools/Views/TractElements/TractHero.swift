@@ -11,10 +11,6 @@ import UIKit
 
 class TractHero: BaseTractElement {
     
-    // MARK: Positions constants
-    
-    static let width: CGFloat = 300
-    
     // MARK: - Object properties
     
     var properties = TractHeroProperties()
@@ -22,9 +18,10 @@ class TractHero: BaseTractElement {
     // MARK: - Setup
     
     override func loadFrameProperties() {
-        self.elementFrame.x = (TractHero.width - TractHero.width) / CGFloat(2)
+        let width: CGFloat = 300
+        self.elementFrame.x = (super.width - width) / CGFloat(2)
         self.elementFrame.y = self.elementFrame.yOrigin
-        self.elementFrame.width = TractHero.width
+        self.elementFrame.width = width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }

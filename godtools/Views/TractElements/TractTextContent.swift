@@ -46,7 +46,6 @@ class TractTextContent: BaseTractElement {
         super.setupView(properties: properties)
         buildLabel()
         
-        loadFrameProperties()
         self.frame = buildFrame()
         self.label.frame = CGRect(x: 0.0, y: 0.0, width: self.frame.size.width, height: self.frame.size.height)
         

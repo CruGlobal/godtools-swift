@@ -195,7 +195,6 @@ class BaseTractElement: UIView {
     }
     
     func setupView(properties: Dictionary<String, Any>) {
-        loadFrameProperties()
         self.frame = buildFrame()
         loadStyles()
     }
@@ -207,6 +206,7 @@ class BaseTractElement: UIView {
     func loadFrameProperties() { }
     
     func buildFrame() -> CGRect {
+        loadFrameProperties()
         return self.elementFrame.getFrame()
     }
     

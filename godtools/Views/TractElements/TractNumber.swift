@@ -16,16 +16,6 @@ class TractNumber: BaseTractElement {
     static let widthConstant: CGFloat = 70.0
     static let marginConstant: CGFloat = 8.0
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return TractNumber.marginConstant
-    }
-    
-    override var width: CGFloat {
-        return TractNumber.widthConstant
-    }
-    
     // MARK: - Setup
     
     var properties = TractNumberProperties()
@@ -41,7 +31,7 @@ class TractNumber: BaseTractElement {
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
         textStyle.font = .gtThin(size: 54.0)
-        textStyle.width = self.width
+        textStyle.width = TractNumber.widthConstant
         textStyle.height = 60.0
         textStyle.textAlign = .center
         textStyle.color = .gtWhite
@@ -49,7 +39,7 @@ class TractNumber: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
+        self.elementFrame.x = TractNumber.marginConstant
         self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height

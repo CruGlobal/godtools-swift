@@ -11,10 +11,6 @@ import UIKit
 
 class TractHeading: BaseTractElement {
     
-    // MARK: - Positions and Sizes
-    
-    let marginConstant: CGFloat = 30.0
-    
     // MARK: - Setup
     
     var properties = TractHeadingProperties()
@@ -31,7 +27,7 @@ class TractHeading: BaseTractElement {
         self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = self.marginConstant
+        self.elementFrame.yMarginTop = 30.0
     }
 
 }

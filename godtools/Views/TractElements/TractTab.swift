@@ -9,9 +9,7 @@
 import UIKit
 
 class TractTab: BaseTractElement {
-    
-    // MARK: - Positions and Sizes
-    
+        
     // MARK: - Setup
     
     var properties = TractTabProperties()

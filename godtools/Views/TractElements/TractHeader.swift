@@ -11,21 +11,6 @@ import UIKit
 
 class TractHeader: BaseTractElement {
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return 0.0
-    }
-    
-    override var height: CGFloat {
-        get {
-            return super.height + 10.0
-        }
-        set {
-            super.height = newValue
-        }
-    }
-    
     // MARK: - Setup
     
     var properties = TractHeaderProperties()
@@ -35,10 +20,11 @@ class TractHeader: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
+        self.elementFrame.x = 0.0
         self.elementFrame.y = self.elementFrame.yOrigin + 1.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginBottom = 10.0
     }
     
     override var horizontalContainer: Bool {

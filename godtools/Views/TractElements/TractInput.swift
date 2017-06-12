@@ -13,16 +13,12 @@ class TractInput: BaseTractElement {
     
     // MARK: - Positions and Sizes
     
-    var xMargin: CGFloat {
-        return TractCard.xPaddingConstant
-    }
-    
     var yMargin : CGFloat {
         return self.properties.yMargin
     }
     
     var xPosition: CGFloat {
-        return self.xMargin
+        return TractCard.xPaddingConstant
     }
     
     var textViewWidth: CGFloat {
@@ -34,7 +30,7 @@ class TractInput: BaseTractElement {
     }
     
     override var width: CGFloat {
-        return super.width - self.xPosition - self.xMargin
+        return super.width - self.xPosition - TractCard.xPaddingConstant
     }
     
     override var height: CGFloat {
@@ -93,7 +89,6 @@ class TractInput: BaseTractElement {
         self.textField.backgroundColor = self.properties.backgroundColor
         self.textField.placeholderTranslationKey = self.properties.placeholder ?? ""
         
-        loadFrameProperties()
         self.frame = buildFrame()
     }
     
