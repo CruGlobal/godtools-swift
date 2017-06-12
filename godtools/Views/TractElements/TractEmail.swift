@@ -22,7 +22,7 @@ class TractEmail: BaseTractElement {
     }
     
     override func buildFrame() -> CGRect {
-        return CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        return self.properties.frame.getFrame()
     }
     
     // MARK: - Bindings

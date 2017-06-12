@@ -42,6 +42,8 @@ class TractTabs: BaseTractElement {
     
     // MARK - Setup
     
+    var properties = TractTabsProperties()
+    
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.yStartPosition = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
@@ -99,11 +101,15 @@ class TractTabs: BaseTractElement {
         setupSegmentedControl()
     }
     
+    func loadFrameProperties() {
+        self.properties.frame.x = self.xPosition
+        self.properties.frame.y = self.yPosition
+        self.properties.frame.width = self.width
+        self.properties.frame.height = self.height
+    }
+    
     override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+        return self.properties.frame.getFrame()
     }
     
     // MARK: - Segmented Control

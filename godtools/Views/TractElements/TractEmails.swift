@@ -12,12 +12,14 @@ class TractEmails: BaseTractElement {
     
     // MARK: - Setup
     
+    var properties = TractEmailsProperties()
+    
     override func loadStyles() {
         self.isHidden = true
     }
     
     override func buildFrame() -> CGRect {
-        return CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        return self.properties.frame.getFrame()
     }
     
     override func render() -> UIView {

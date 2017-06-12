@@ -27,11 +27,15 @@ class TractPage: BaseTractElement {
         self.styleProperties?.overrideProperties(withProperties: self.properties.styleProperties)
     }
     
+    func loadFrameProperties() {
+        self.properties.frame.x = 0.0
+        self.properties.frame.y = self.yStartPosition
+        self.properties.frame.width = self.width
+        self.properties.frame.height = self.height
+    }
+    
     override func buildFrame() -> CGRect {
-        return CGRect(x: 0.0,
-                      y: self.yStartPosition,
-                      width: self.width,
-                      height: self.height)
+        return self.properties.frame.getFrame()
     }
     
     override func elementListeners() -> [String]? {

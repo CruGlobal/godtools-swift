@@ -35,8 +35,16 @@ class TractModal: BaseTractElement {
         self.backgroundColor = UIColor.black.withAlphaComponent(0.8)
     }
     
+    func loadFrameProperties() {
+        let frame = (UIApplication.shared.keyWindow?.frame)!
+        self.properties.frame.x = frame.origin.x
+        self.properties.frame.y = frame.origin.y
+        self.properties.frame.width = frame.size.width
+        self.properties.frame.height = frame.size.height
+    }
+    
     override func buildFrame() -> CGRect {
-        return (UIApplication.shared.keyWindow?.frame)!
+        return self.properties.frame.getFrame()
     }
     
     override func render() -> UIView {

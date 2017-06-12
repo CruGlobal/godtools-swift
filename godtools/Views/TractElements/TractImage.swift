@@ -40,6 +40,8 @@ class TractImage: BaseTractElement {
     
     // MARK: - Setup
     
+    var properties = TractImageProperties()
+    
     override func setupView(properties: [String: Any]) {
         self.imageView = UIImageView(image: loadImage(properties: properties))
         var width = self.imageView.frame.size.width
@@ -70,11 +72,15 @@ class TractImage: BaseTractElement {
         self.height = height
     }
     
+    func loadFrameProperties() {
+        self.properties.frame.x = self.xPosition
+        self.properties.frame.y = self.yPosition
+        self.properties.frame.width = self.width
+        self.properties.frame.height = self.height
+    }
+    
     override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+        return self.properties.frame.getFrame()
     }
     
     // MARK: - Helpers

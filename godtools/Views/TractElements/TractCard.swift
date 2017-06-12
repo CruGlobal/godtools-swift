@@ -111,11 +111,15 @@ class TractCard: BaseTractElement {
         return self
     }
     
+    func loadFrameProperties() {
+        self.properties.frame.x = self.xPosition
+        self.properties.frame.y = self.yPosition
+        self.properties.frame.width = self.width
+        self.properties.frame.height = self.externalHeight
+    }
+    
     override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.externalHeight)
+        return self.properties.frame.getFrame()
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

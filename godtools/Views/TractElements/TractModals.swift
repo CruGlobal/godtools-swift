@@ -12,6 +12,8 @@ class TractModals: BaseTractElement {
     
     // MARK: - Setup
     
+    var properties = TractModalsProperties()
+    
     override func loadStyles() {
         self.isHidden = true
     }

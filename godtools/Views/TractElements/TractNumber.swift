@@ -36,6 +36,8 @@ class TractNumber: BaseTractElement {
     
     // MARK: - Setup
     
+    var properties = TractNumberProperties()
+    
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
         
@@ -54,11 +56,15 @@ class TractNumber: BaseTractElement {
         return textStyle
     }
     
+    func loadFrameProperties() {
+        self.properties.frame.x = self.xPosition
+        self.properties.frame.y = self.yPosition
+        self.properties.frame.width = self.width
+        self.properties.frame.height = self.height
+    }
+    
     override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+        return self.properties.frame.getFrame()
     }
 
 }
