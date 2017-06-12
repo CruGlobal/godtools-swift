@@ -23,13 +23,9 @@ class TractCards: BaseTractElement {
         
     // MARK: - Positions and Sizes
     
-    var xPosition: CGFloat = 0.0
-    
-    let minYPosition: CGFloat = 110.0
-    
-    var constantYMarginTop: CGFloat = 60
-    
-    var constantYMarginBottom: CGFloat = 30
+    static let minYPosition: CGFloat = 110.0
+    static let constantYPaddingTop: CGFloat = 60
+    static let constantYPaddingBottom: CGFloat = 30
     
     override var height: CGFloat {
         get {
@@ -65,8 +61,8 @@ class TractCards: BaseTractElement {
         
         for dictionary in normalCards {
             let deltaChange = CGFloat(normalCards.count - cardNumber)
-            let yPosition = self.initialCardPosition - (deltaChange * self.constantYMarginTop)
-            let yDownPosition = self.elementFrame.y + (deltaChange * self.constantYMarginTop) - (deltaChange * self.constantYMarginBottom)
+            let yPosition = self.initialCardPosition - (deltaChange * TractCards.constantYPaddingTop)
+            let yDownPosition = self.elementFrame.y + (deltaChange * TractCards.constantYPaddingTop) - (deltaChange * TractCards.constantYPaddingBottom)
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
             element.yDownPosition = yDownPosition
             element.properties.cardNumber = cardNumber
@@ -88,9 +84,9 @@ class TractCards: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        let yExternalPosition = self.elementFrame.y > self.minYPosition ? self.elementFrame.y : self.minYPosition
+        let yExternalPosition = self.elementFrame.y > TractCards.minYPosition ? self.elementFrame.y : TractCards.minYPosition
         
-        self.elementFrame.x = self.xPosition
+        self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin

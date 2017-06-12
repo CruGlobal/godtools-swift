@@ -99,7 +99,7 @@ class TractTabs: BaseTractElement {
     // MARK: - Segmented Control
     
     func setupSegmentedControl() {
-        let width = self.width
+        let width = self.elementFrame.width
         let height: CGFloat = 28.0
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         
