@@ -27,14 +27,6 @@ class TractCards: BaseTractElement {
     
     let minYPosition: CGFloat = 110.0
     
-    var yPosition: CGFloat {
-        return self.elementFrame.yOrigin + BaseTractElement.yMargin
-    }
-    
-    var yExternalPosition: CGFloat {
-        return self.yPosition > self.minYPosition ? self.yPosition : self.minYPosition
-    }
-    
     var constantYMarginTop: CGFloat = 60
     
     var constantYMarginBottom: CGFloat = 30
@@ -96,10 +88,13 @@ class TractCards: BaseTractElement {
     }
     
     override func loadFrameProperties() {
+        let yExternalPosition = self.elementFrame.yOrigin > self.minYPosition ? self.elementFrame.yOrigin : self.minYPosition
+        
         self.elementFrame.x = self.xPosition
-        self.elementFrame.y = self.yPosition
+        self.elementFrame.y = self.elementFrame.yOrigin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin
         self.elementFrame.yMarginBottom = self.yExternalPosition
     }
     
