@@ -12,7 +12,7 @@ class TractPageProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var styleProperties = TractStyleProperties()
+    var styleProperties = MainStyleProperties()
     
     // MARK: - Setup of custom properties
     

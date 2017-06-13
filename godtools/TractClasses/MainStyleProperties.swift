@@ -1,14 +1,14 @@
 //
-//  TractStyleProperties.swift
+//  MainStyleProperties.swift
 //  godtools
 //
-//  Created by Pablo Marti on 6/8/17.
+//  Created by Pablo Marti on 6/13/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import UIKit
 
-class TractStyleProperties: TractProperties {
+class MainStyleProperties: XMLNode {
     
     enum BackgroundImageAlign {
         case center, start, end, top, bottom
@@ -20,12 +20,11 @@ class TractStyleProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var navBarColor = GTAppDefaultColors.navBarColor.getRGBAColor()
-    var navBarControlColor = GTAppDefaultColors.navBarControlColor.getRGBAColor()
-    var primaryColor = GTAppDefaultColors.primaryColor.getRGBAColor()
-    var primaryTextColor = GTAppDefaultColors.primaryTextColorString.getRGBAColor()
-    var textColor = GTAppDefaultColors.textColorString.getRGBAColor()
-    var backgroundColor: UIColor?
+    var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
+    var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
+    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    var textSize = 18
+    var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
     var backgroundImage: UIImage?
     var backgroundImageAlign: [BackgroundImageAlign] = [.center]
     var backgroundImageScaleType: BackgroundImageScaleType = .fit
@@ -90,16 +89,16 @@ class TractStyleProperties: TractProperties {
     
     // MARK: - Management functions
     
-    func overrideProperties(withProperties styleProperties: TractStyleProperties) {
-        self.navBarColor = styleProperties.navBarColor
-        self.navBarControlColor = styleProperties.navBarControlColor
-        self.primaryColor = styleProperties.primaryColor
-        self.primaryTextColor = styleProperties.primaryTextColor
-        self.textColor = styleProperties.textColor
-        self.backgroundColor = styleProperties.backgroundColor
-        self.backgroundImage = styleProperties.backgroundImage
-        self.backgroundImageAlign = styleProperties.backgroundImageAlign
-        self.backgroundImageScaleType = styleProperties.backgroundImageScaleType
+    func loadPropertiesFromObject(_ object: MainStyleProperties) {
+        self.primaryColor = object.primaryColor
+        self.primaryTextColor = object.primaryTextColor
+        self.textColor = object.textColor
+        self.textSize = object.textSize
+        self.backgroundColor = object.backgroundColor
+        self.backgroundImage = object.backgroundImage
+        self.backgroundImageAlign = object.backgroundImageAlign
+        self.backgroundImageScaleType = object.backgroundImageScaleType
+        
     }
-    
+
 }

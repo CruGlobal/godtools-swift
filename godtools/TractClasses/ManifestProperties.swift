@@ -10,8 +10,9 @@ import UIKit
 
 class ManifestProperties: XMLNode {
     
-    var textSize = "18px"
-    var styleProperties = TractStyleProperties()
+    var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
+    var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
+    var styleProperties = MainStyleProperties()
     
     override func loadCustomProperties(_ properties: [String: Any]) {
         self.styleProperties.load(properties)

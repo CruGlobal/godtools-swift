@@ -71,7 +71,7 @@ class BaseTractElement: UIView {
     var didFindCallToAction: Bool = false
     
     var manifestProperties = ManifestProperties()
-    var styleProperties: TractStyleProperties?
+    var styleProperties: MainStyleProperties?
     var primaryColor: UIColor? {
         get {
             return (self.styleProperties != nil ? self.styleProperties?.primaryColor : self.parent?.primaryColor)!

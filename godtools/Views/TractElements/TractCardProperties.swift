@@ -21,7 +21,7 @@ class TractCardProperties: TractProperties {
     
     // MARK: - View Properties
     
-    var styleProperties = TractStyleProperties()
+    var styleProperties = MainStyleProperties()
     
     // MARK: - Setup of custom properties
     
