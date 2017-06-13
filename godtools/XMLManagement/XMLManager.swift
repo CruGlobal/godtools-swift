@@ -12,6 +12,8 @@ import Crashlytics
 
 class XMLManager: NSObject {
     
+    var parser = XMLParseManager()
+    
     func getContentElements(_ data: XMLIndexer) -> (elementName: String, namespace: String, kind: String, properties: Dictionary<String, Any>, children: [XMLIndexer]) {
         let elementName = data.element?.name
         let namespaceInfo = getNamespaceInfo(elementName!)

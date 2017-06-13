@@ -40,12 +40,11 @@ class TractTabs: BaseTractElement {
         for item in data.children {
             self.tabs.append([XMLIndexer]())
             
-            for node in item.children {
-                let nodeElements = self.xmlManager.getContentElements(node)
-                
-                if nodeElements.kind == "label" {
-                    let text = node["content:text"].element?.text
-                    self.options.append(text!)
+            for node in item.children {                
+                if self.xmlManager.parser.nodeIsLabel(node: node) {
+                    if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
+                        self.options.append(textNode.text!)
+                    }
                 } else {
                     self.tabs[position].append(node)
                 }

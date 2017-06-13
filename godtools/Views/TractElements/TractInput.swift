@@ -67,12 +67,13 @@ class TractInput: BaseTractElement {
         
         var elements = [XMLIndexer]()
         for node in data.children {
-            let nodeElements = self.xmlManager.getContentElements(node)
-            
-            if nodeElements.kind == "label" {
+            if self.xmlManager.parser.nodeIsLabel(node: node) {
                 elements.append(node)
-            } else if nodeElements.kind == "placeholder" {
-                self.properties.placeholder = node["content:text"].element?.text
+            } else if self.xmlManager.parser.nodeIsPlaceholder(node: node) {
+                let textNode = self.xmlManager.parser.getTextContentFromElement(node)
+                if textNode != nil {
+                    self.properties.placeholder = textNode?.text
+                }
             }
         }
         

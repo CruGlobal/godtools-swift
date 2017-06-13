@@ -45,9 +45,6 @@ class TractCards: BaseTractElement {
     // MARK: - Setup
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
-        var elements:Array = [BaseTractElement]()
-        var cardNumber = 0
-        
         var normalCards = [XMLIndexer]()
         var hiddenCards = [XMLIndexer]()
         
@@ -63,27 +60,9 @@ class TractCards: BaseTractElement {
             }
         }
         
-        for dictionary in normalCards {
-            let deltaChange = CGFloat(normalCards.count - cardNumber)
-            let yPosition = self.initialCardPosition - (deltaChange * TractCards.constantYPaddingTop)
-            let yDownPosition = self.elementFrame.y + (deltaChange * TractCards.constantYPaddingTop)
-                - (deltaChange * TractCards.constantYPaddingBottom)
-            
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
-            element.yDownPosition = yDownPosition
-            element.properties.cardNumber = cardNumber
-            elements.append(element)
-            
-            cardNumber += 1
-        }
-        
-        for dictionary in hiddenCards {
-            let yPosition = self.initialCardPosition
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
-            elements.append(element)
-        }
-        
-        self.elements = elements
+        self.elements = [BaseTractElement]()
+        buildCards(normalCards)
+        buildHiddenCards(hiddenCards)
     }
     
     override func loadStyles() {
@@ -131,4 +110,34 @@ class TractCards: BaseTractElement {
         self.sendSubview(toBack: imageView)
     }
 
+}
+
+extension TractCards {
+    
+    func buildCards(_ cards: [XMLIndexer]) {
+        var cardNumber = 0
+        
+        for dictionary in cards {
+            let deltaChange = CGFloat(cards.count - cardNumber)
+            let yPosition = self.initialCardPosition - (deltaChange * TractCards.constantYPaddingTop)
+            let yDownPosition = self.elementFrame.y + (deltaChange * TractCards.constantYPaddingTop)
+                - (deltaChange * TractCards.constantYPaddingBottom)
+            
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
+            element.yDownPosition = yDownPosition
+            element.properties.cardNumber = cardNumber
+            self.elements?.append(element)
+            
+            cardNumber += 1
+        }
+    }
+    
+    func buildHiddenCards(_ cards: [XMLIndexer]) {
+        for dictionary in cards {
+            let yPosition = self.initialCardPosition
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
+            self.elements?.append(element)
+        }
+    }
+    
 }

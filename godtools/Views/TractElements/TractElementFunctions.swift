@@ -16,47 +16,47 @@ extension BaseTractElement {
         let contentElements = xmlManager.getContentElements(data)
         
         switch contentElements.kind {
-        case "hero":
+        case XMLParseManager.nodeHero:
             return TractHero(data: data, startOnY: yPosition, parent: self)
-        case "heading":
+        case XMLParseManager.nodeHeading:
             return TractHeading(data: data, startOnY: yPosition, parent: self)
-        case "paragraph":
+        case XMLParseManager.nodeParagraph:
             return TractParagraph(data: data, startOnY: yPosition, parent: self)
-        case "text":
+        case XMLParseManager.nodeText:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
-        case "image":
+        case XMLParseManager.nodeImage:
             return TractImage(data: data, startOnY: yPosition, parent: self)
-        case "header":
+        case XMLParseManager.nodeHeader:
             return TractHeader(data: data, startOnY: yPosition, parent: self)
-        case "number":
+        case XMLParseManager.nodeNumber:
             return TractNumber(data: data, startOnY: yPosition, parent: self)
-        case "title":
+        case XMLParseManager.nodeTitle:
             return TractTitle(data: data, startOnY: yPosition, parent: self)
-        case "cards":
+        case XMLParseManager.nodeCards:
             return TractCards(data: data, startOnY: yPosition, parent: self)
-        case "card":
+        case XMLParseManager.nodeCard:
             return TractCard(data: data, startOnY: yPosition, parent: self)
-        case "label":
+        case XMLParseManager.nodeLabel:
             return TractLabel(data: data, startOnY: yPosition, parent: self)
-        case "form":
+        case XMLParseManager.nodeForm:
             return TractForm(data: data, startOnY: yPosition, parent: self)
-        case "button":
+        case XMLParseManager.nodeButton:
             return TractButton(data: data, startOnY: yPosition, parent: self)
-        case "link":
+        case XMLParseManager.nodeLink:
             return TractLink(data: data, startOnY: yPosition, parent: self)
-        case "input":
+        case XMLParseManager.nodeInput:
             return TractInput(data: data, startOnY: yPosition, parent: self)
-        case "call-to-action":
+        case XMLParseManager.nodeCallToAction:
             return TractCallToAction(data: data, startOnY: yPosition, parent: self)
-        case "tabs":
+        case XMLParseManager.nodeTabs:
             return TractTabs(data: data, startOnY: yPosition, parent: self)
-        case "modals":
+        case XMLParseManager.nodeModals:
             return TractModals(data: data, parent: self)
-        case "modal":
+        case XMLParseManager.nodeModal:
             return TractModal(data: data, startOnY: yPosition, parent: self)
-        case "emails":
+        case XMLParseManager.nodeEmails:
             return TractEmails(data: data, parent: self)
-        case "email":
+        case XMLParseManager.nodeEmail:
             return TractEmail(data: data, parent: self)
         default:
             return TractTextContent(data: data, startOnY: yPosition, parent: self)
