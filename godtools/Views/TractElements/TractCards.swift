@@ -45,24 +45,10 @@ class TractCards: BaseTractElement {
     // MARK: - Setup
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
-        var normalCards = [XMLIndexer]()
-        var hiddenCards = [XMLIndexer]()
-        
-        for dictionary in data {
-            let contentElements = self.xmlManager.getContentElements(dictionary)
-            let card = TractCardProperties()
-            card.load(contentElements.properties)
-            
-            if card.hidden == true {
-                hiddenCards.append(dictionary)
-            } else {
-                normalCards.append(dictionary)
-            }
-        }
-        
         self.elements = [BaseTractElement]()
-        buildCards(normalCards)
-        buildHiddenCards(hiddenCards)
+        let cards = splitCardsByKind(data: data)
+        buildCards(cards.normal)
+        buildHiddenCards(cards.hidden)
     }
     
     override func loadStyles() {

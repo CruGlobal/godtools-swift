@@ -29,54 +29,12 @@ class TractTabs: BaseTractElement {
     var tabs = [[XMLIndexer]]()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        self.elementFrame.y = yPosition
         let contentElements = self.xmlManager.getContentElements(data)
+        self.elementFrame.y = yPosition
         
-        var position = 0
-        for item in data.children {
-            self.tabs.append([XMLIndexer]())
-            
-            for node in item.children {                
-                if self.xmlManager.parser.nodeIsLabel(node: node) {
-                    if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
-                        self.properties.options.append(textNode.text!)
-                    }
-                } else {
-                    self.tabs[position].append(node)
-                }
-            }
-            
-            position += 1
-        }
-        
-        buildChildrenForData(contentElements.children)
+        getTabsLabels(data: data)
+        buildTabs()
         setupView(properties: contentElements.properties)
-    }
-    
-    override func buildChildrenForData(_ data: [XMLIndexer]) {
-        let currentYPosition: CGFloat = 28.0
-        var maxHeight: CGFloat = currentYPosition
-        var elements = [BaseTractElement]()
-        var firstElement = true
-        
-        for tabData in self.tabs {
-            let element = TractTab(children: tabData, startOnY: currentYPosition, parent: self)
-            
-            if firstElement {
-                element.isHidden = false
-                firstElement = false
-            } else {
-                element.isHidden = true
-            }
-            
-            if element.height > maxHeight {
-                maxHeight = element.height
-            }
-            elements.append(element)
-        }
-        
-        self.height = maxHeight
-        self.elements = elements
     }
     
     override func setupView(properties: [String: Any]) {

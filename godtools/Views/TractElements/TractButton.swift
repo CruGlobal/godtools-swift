@@ -114,28 +114,6 @@ class TractButton: BaseTractElement {
     
     // MARK: - Helpers
     
-    func configureAsModalButton() {
-        self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
-        self.button.designAsTractModalButton()
-        self.frame = buildFrame()
-        self.button.frame = CGRect(x: self.buttonXPosition,
-                                   y: TractButton.modalMarginConstant,
-                                   width: self.buttonWidth,
-                                   height: self.properties.height)
-    }
-    
-    func configureAsStandardButton() {
-        self.height = self.properties.height
-        button.cornerRadius = self.properties.cornerRadius
-        button.backgroundColor = self.properties.backgroundColor
-        self.frame = buildFrame()
-        self.button.frame = CGRect(x: self.buttonXPosition,
-                                   y: 0.0,
-                                   width: self.buttonWidth,
-                                   height: self.height)
-        
-    }
-    
     func addTargetToButton() {
         if self.properties.type == .event || self.properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

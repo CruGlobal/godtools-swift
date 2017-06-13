@@ -179,6 +179,8 @@
 		ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5A1EF049E400A13849 /* TractLabel+UI.swift */; };
 		ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5C1EF04A2B00A13849 /* TractCallToAction+UI.swift */; };
 		ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5F1EF04A6E00A13849 /* TractTextContent+UI.swift */; };
+		ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */; };
+		ECBE2E671EF050D800A13849 /* TractButton+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E661EF050D800A13849 /* TractButton+UI.swift */; };
 		ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B51EEAF15500A56332 /* ManifestProperties.swift */; };
 		ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B71EEAF3BA00A56332 /* XMLNode.swift */; };
 		ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194BF1EEB32FA00A56332 /* XMLPage.swift */; };
@@ -378,6 +380,8 @@
 		ECBE2E5A1EF049E400A13849 /* TractLabel+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractLabel+UI.swift"; path = "Views/TractElements/TractLabel+UI.swift"; sourceTree = "<group>"; };
 		ECBE2E5C1EF04A2B00A13849 /* TractCallToAction+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCallToAction+UI.swift"; path = "Views/TractElements/TractCallToAction+UI.swift"; sourceTree = "<group>"; };
 		ECBE2E5F1EF04A6E00A13849 /* TractTextContent+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractTextContent+UI.swift"; path = "Views/TractElements/TractTextContent+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractTabs+ChildSetup.swift"; path = "Views/TractElements/TractTabs+ChildSetup.swift"; sourceTree = "<group>"; };
+		ECBE2E661EF050D800A13849 /* TractButton+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractButton+UI.swift"; path = "Views/TractElements/TractButton+UI.swift"; sourceTree = "<group>"; };
 		ECC194B51EEAF15500A56332 /* ManifestProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManifestProperties.swift; path = TractClasses/ManifestProperties.swift; sourceTree = "<group>"; };
 		ECC194B71EEAF3BA00A56332 /* XMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLNode.swift; path = XMLManagement/XMLNode.swift; sourceTree = "<group>"; };
 		ECC194BF1EEB32FA00A56332 /* XMLPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLPage.swift; path = XMLManagement/XMLPage.swift; sourceTree = "<group>"; };
@@ -938,6 +942,7 @@
 			isa = PBXGroup;
 			children = (
 				ECBE2E4B1EF040AF00A13849 /* TractTabs+UI.swift */,
+				ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */,
 			);
 			name = TractTabs;
 			sourceTree = "<group>";
@@ -993,6 +998,7 @@
 			isa = PBXGroup;
 			children = (
 				0F9E32421EDD182F0081DBB9 /* TractButton+Actions.swift */,
+				ECBE2E661EF050D800A13849 /* TractButton+UI.swift */,
 			);
 			name = TractButton;
 			sourceTree = "<group>";
@@ -1294,6 +1300,7 @@
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
 				ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
+				ECBE2E671EF050D800A13849 /* TractButton+UI.swift in Sources */,
 				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModal+Actions.swift in Sources */,
 				ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */,
@@ -1403,6 +1410,7 @@
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
+				ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */,
 				0F9E32351EDCC78A0081DBB9 /* TractButtonProperties.swift in Sources */,
 				EC8245CF1EEEF1B90023A203 /* TractTabProperties.swift in Sources */,
 				ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */,
