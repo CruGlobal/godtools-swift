@@ -120,7 +120,7 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: 0.0)
     }
     
-    init(data: XMLIndexer, parent: BaseTractElement) {
+    required init(data: XMLIndexer, parent: BaseTractElement) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent
@@ -133,7 +133,7 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: yPosition)
     }
     
-    init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent

@@ -34,6 +34,58 @@ class XMLParseManager: NSObject {
     static let nodeEmails: String = "emails"
     static let nodeEmail: String = "email"
     
+    func getNodeClass(_ data: XMLIndexer) -> BaseTractElement.Type {
+        let xmlManager = XMLManager()
+        let contentElements = xmlManager.getContentElements(data)
+        
+        switch contentElements.kind {
+        case XMLParseManager.nodeHero:
+            return TractHero.self
+        case XMLParseManager.nodeHeading:
+            return TractHeading.self
+        case XMLParseManager.nodeParagraph:
+            return TractParagraph.self
+        case XMLParseManager.nodeText:
+            return TractTextContent.self
+        case XMLParseManager.nodeImage:
+            return TractImage.self
+        case XMLParseManager.nodeHeader:
+            return TractHeader.self
+        case XMLParseManager.nodeNumber:
+            return TractNumber.self
+        case XMLParseManager.nodeTitle:
+            return TractTitle.self
+        case XMLParseManager.nodeCards:
+            return TractCards.self
+        case XMLParseManager.nodeCard:
+            return TractCard.self
+        case XMLParseManager.nodeLabel:
+            return TractLabel.self
+        case XMLParseManager.nodeForm:
+            return TractForm.self
+        case XMLParseManager.nodeButton:
+            return TractButton.self
+        case XMLParseManager.nodeLink:
+            return TractLink.self
+        case XMLParseManager.nodeInput:
+            return TractInput.self
+        case XMLParseManager.nodeCallToAction:
+            return TractCallToAction.self
+        case XMLParseManager.nodeTabs:
+            return TractTabs.self
+        case XMLParseManager.nodeModals:
+            return TractModals.self
+        case XMLParseManager.nodeModal:
+            return TractModal.self
+        case XMLParseManager.nodeEmails:
+            return TractEmails.self
+        case XMLParseManager.nodeEmail:
+            return TractEmail.self
+        default:
+            return TractTextContent.self
+        }
+    }
+    
     func nodeIsHero(node: XMLIndexer) -> Bool {
         return nodeIsOfKind(node: node, kind: XMLParseManager.nodeHero)
     }
