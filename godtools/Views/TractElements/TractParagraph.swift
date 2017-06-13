@@ -52,33 +52,4 @@ class TractParagraph: BaseTractElement {
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
     }
     
-    // MARK: - Helpers
-    
-    func buildModalParagraph() -> TractTextContentProperties {        
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.width
-        textStyle.xMargin = BaseTractElement.xMargin
-        textStyle.color = .gtWhite
-        textStyle.textAlign = .center
-        
-        return textStyle
-    }
-    
-    func buildStandardParagraph() -> TractTextContentProperties {
-        var xMargin = BaseTractElement.xMargin
-        
-        if BaseTractElement.isCardElement(self) {
-            xMargin = TractCard.xPaddingConstant
-        }
-        
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.width
-        textStyle.xMargin = xMargin
-        textStyle.color = self.textColor
-        
-        return textStyle
-    }
-    
 }

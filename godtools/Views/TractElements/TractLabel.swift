@@ -79,23 +79,5 @@ class TractLabel: BaseTractElement {
         TractBindings.addBindings(self)
         return self
     }
-    
-    // MARK: - UI
-    
-    func buildHorizontalLine() {
-        let xPosition = TractCard.xPaddingConstant
-        let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
-        let height: CGFloat = 1.0
-        
-        let horizontalLine = UIView()
-        horizontalLine.frame = CGRect(x: xPosition,
-                                      y: yPosition,
-                                      width: width,
-                                      height: height)
-        horizontalLine.backgroundColor = .gtGreyLight
-        self.addSubview(horizontalLine)
-        
-    }
 
 }

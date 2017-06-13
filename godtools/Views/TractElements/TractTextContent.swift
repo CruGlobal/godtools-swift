@@ -72,23 +72,4 @@ class TractTextContent: BaseTractElement {
         self.properties.load(properties)
     }
     
-    // MARK: - UI
-    
-    private func buildLabel() {
-        self.label = GTLabel(frame: buildFrame())
-        self.label.text = self.properties.value
-        self.label.textAlignment = self.properties.textAlign
-        self.label.font = self.properties.font
-        self.label.textColor = self.properties.color
-        self.label.lineBreakMode = .byWordWrapping
-        
-        if self.properties.height == 0.0 {
-            self.label.numberOfLines = 0
-            self.label.sizeToFit()
-            self.height = self.label.frame.height
-        } else {
-            self.height = self.properties.height
-        }
-    }
-    
 }

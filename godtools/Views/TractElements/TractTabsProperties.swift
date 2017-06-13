@@ -9,5 +9,7 @@
 import UIKit
 
 class TractTabsProperties: TractProperties {
+    
+    var options = [String]()
 
 }

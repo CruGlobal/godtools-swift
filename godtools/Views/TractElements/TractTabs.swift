@@ -22,15 +22,11 @@ class TractTabs: BaseTractElement {
         return (self.parent?.width)! - (TractTabs.xMarginConstant * CGFloat(2))
     }
     
-    // MARK: - Object properties
-    
-    var segmentedControl = UISegmentedControl()
-    var options = [String]()
-    var tabs = [[XMLIndexer]]()
-    
     // MARK - Setup
     
     var properties = TractTabsProperties()
+    var segmentedControl = UISegmentedControl()
+    var tabs = [[XMLIndexer]]()
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.elementFrame.y = yPosition
@@ -43,7 +39,7 @@ class TractTabs: BaseTractElement {
             for node in item.children {                
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
-                        self.options.append(textNode.text!)
+                        self.properties.options.append(textNode.text!)
                     }
                 } else {
                     self.tabs[position].append(node)
@@ -93,32 +89,6 @@ class TractTabs: BaseTractElement {
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant
-    }
-    
-    // MARK: - Segmented Control
-    
-    func setupSegmentedControl() {
-        let width = self.elementFrame.width
-        let height: CGFloat = 28.0
-        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-        
-        self.segmentedControl = UISegmentedControl(frame: frame)
-        for i in 0..<self.options.count {
-            self.segmentedControl.insertSegment(withTitle: self.options[i], at: i, animated: true)
-        }
-        
-        self.segmentedControl.selectedSegmentIndex = 0
-        self.segmentedControl.tintColor = self.primaryColor
-        self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
-        
-        self.addSubview(self.segmentedControl)
-    }
-    
-    func newOptionSelected() {
-        for element in self.elements! {
-            element.isHidden = true
-        }
-        self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
     }
 
 }
