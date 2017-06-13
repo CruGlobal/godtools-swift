@@ -25,7 +25,7 @@ class XMLNode: NSObject {
     func performCustomProperty(propertyName: String, value: String) {}
     
     func properties() -> [String] {
-        return Mirror(reflecting: self).children.flatMap{$0.label}
+        return Mirror(reflecting: self).children.flatMap{$0.label} + ["listeners", "dismissListeners", "hidden"]
     }
     
     func customProperties() -> [String]? {
