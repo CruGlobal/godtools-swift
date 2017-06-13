@@ -38,8 +38,8 @@ class TractCallToAction: BaseTractElement {
     
     var yPosition: CGFloat {
         var position = self.elementFrame.y + TractCallToAction.yMarginConstant
-        if position < (self.parent?.maxHeight)! - self.height {
-            position = (self.parent?.maxHeight)! - self.height
+        if position < (self.parent?.getMaxHeight())! - self.height {
+            position = (self.parent?.getMaxHeight())! - self.height
         }
         return position
     }

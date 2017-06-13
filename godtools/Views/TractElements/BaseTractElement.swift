@@ -23,7 +23,6 @@ class BaseTractElement: UIView {
     
     // MARK: - Positions and Sizes
     
-    var maxHeight: CGFloat = 0.0
     var height: CGFloat = 0.0
     var width: CGFloat {
         if (self.parent != nil) {
@@ -34,8 +33,8 @@ class BaseTractElement: UIView {
     }
     
     func getMaxHeight() -> CGFloat {
-        if self.maxHeight > 0.0 {
-            return self.maxHeight
+        if self.elementFrame.maxHeight > 0.0 {
+            return self.elementFrame.maxHeight
         } else if (self.parent != nil) {
             return (self.parent?.getMaxHeight())!
         } else {
@@ -94,6 +93,7 @@ class BaseTractElement: UIView {
     }
     
     var xmlManager = XMLManager()
+    var elementFrame: TractElementFrame = TractElementFrame()
         
     // MARK: - Initializers
     
@@ -109,8 +109,6 @@ class BaseTractElement: UIView {
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
-        self.elementFrame.y = 0.0
-        self.maxHeight = height
         self.styleProperties = manifestProperties.styleProperties
         self.tractConfigurations = configurations
         
@@ -118,6 +116,7 @@ class BaseTractElement: UIView {
             self._mainView = self as? TractPage
         }
         
+        self.elementFrame.maxHeight = height
         setupElement(data: data, startOnY: 0.0)
     }
     
@@ -147,11 +146,11 @@ class BaseTractElement: UIView {
     
     // MARK: - Build content
     
-    var elementFrame: TractElementFrame = TractElementFrame()
-    
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.elementFrame.y = yPosition
+        
         let contentElements = self.xmlManager.getContentElements(data)
+        
         loadElementProperties(contentElements.properties)
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)

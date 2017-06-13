@@ -12,7 +12,7 @@ import UIKit
 extension TractCallToAction {
     
     func showCallToActionAnimation() {
-        let translationY = (self.parent?.maxHeight)! - self.yPosition - self.height
+        let translationY = (self.parent?.getMaxHeight())! - self.yPosition - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

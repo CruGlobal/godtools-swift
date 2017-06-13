@@ -16,6 +16,7 @@ class TractElementFrame: NSObject {
     var yMarginBottom: CGFloat = 0.0
     var width: CGFloat = 0.0
     var height: CGFloat = 0.0
+    var maxHeight: CGFloat = 0.0
     
     func yEndPosition() -> CGFloat {
         return self.y + self.height + self.yMarginTop + self.yMarginBottom
