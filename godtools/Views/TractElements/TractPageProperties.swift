@@ -12,12 +12,14 @@ class TractPageProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var styleProperties = MainStyleProperties()
-    
-    // MARK: - Setup of custom properties
-    
-    override func loadCustomProperties(_ properties: [String: Any]) {
-        self.styleProperties.load(properties)
-    }
+    var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
+    var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
+    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
+    var backgroundImage: UIImage?
+    var backgroundImageAlign: [TractMainStyle.BackgroundImageAlign] = [.center]
+    var backgroundImageScaleType: TractMainStyle.BackgroundImageScaleType = .fill
+    var cardTextColor: UIColor?
+    var cardBackgroundColor: UIColor?
 
 }

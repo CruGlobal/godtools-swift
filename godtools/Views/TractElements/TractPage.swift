@@ -22,9 +22,9 @@ class TractPage: BaseTractElement {
     // MARK: - Setup
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.styleProperties.overrideProperties(withProperties: self.styleProperties!)
+        self.properties.styleProperties.loadPropertiesFromObject(self.styleProperties!)
         self.properties.load(properties)
-        self.styleProperties?.overrideProperties(withProperties: self.properties.styleProperties)
+        self.styleProperties?.loadPropertiesFromObject(self.properties.styleProperties)
     }
     
     override func loadFrameProperties() {

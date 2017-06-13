@@ -16,17 +16,15 @@ class TractCardProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var cardState = CardState.preview
-    var cardNumber = 0
+    var backgroundColor: UIColor?
+    var backgroundImage: UIImage?
+    var backgroundImageAlign: [TractMainStyle.BackgroundImageAlign] = [.center]
+    var backgroundImageScaleType: TractMainStyle.BackgroundImageScaleType = .fill
+    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
     
     // MARK: - View Properties
     
-    var styleProperties = MainStyleProperties()
-    
-    // MARK: - Setup of custom properties
-    
-    override func loadCustomProperties(_ properties: [String: Any]) {
-        self.styleProperties.load(properties)
-    }
+    var cardState = CardState.preview
+    var cardNumber = 0
     
 }

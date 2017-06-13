@@ -83,11 +83,38 @@ class XMLManager: NSObject {
         case is UIColor:
             let newValue = value.getRGBAColor()
             object.setValue(newValue, forKey: propertyName)
+        case is UIImage:
+            guard let image = UIImage(named: value) else {
+                return
+            }
+            object.setValue(image, forKey: propertyName)
+        case is TractMainStyle.BackgroundImageAlign:
+            setupImageAlign(object: object, propertyName: propertyName, kind: value)
+        case is [TractMainStyle.BackgroundImageAlign]:
+            setupImageAligns(object: object, propertyName: propertyName, kind: value)
         default:
             object.performCustomProperty(propertyName: propertyName, value: value)
         }
         
         _ = 1
+    }
+    
+    func setupImageAlign(object: XMLNode, propertyName: String, kind: String) {
+        object.setValue(TractMainStyle.getImageAlignKind(string: kind), forKey: propertyName)
+    }
+    
+    func setupImageAligns(object: XMLNode, propertyName: String, kind: String) {
+        var items: [TractMainStyle.BackgroundImageAlign] = []
+        
+        for value in kind.components(separatedBy: " ") {
+            items.append(TractMainStyle.getImageAlignKind(string: value))
+        }
+        
+        object.setValue(items, forKey: propertyName)
+    }
+    
+    func setupImageScaleType(object: XMLNode, propertyName: String, kind: String) {
+        object.setValue(TractMainStyle.getImageScaleType(string: kind), forKey: propertyName)
     }
 
 }
