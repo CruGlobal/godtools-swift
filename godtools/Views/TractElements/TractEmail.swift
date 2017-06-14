@@ -10,11 +10,11 @@ import UIKit
 
 class TractEmail: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var properties = TractEmailProperties()
-    
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractEmailProperties.self
+    }
     
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
@@ -24,13 +24,14 @@ class TractEmail: BaseTractElement {
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+        let properties = emailProperties()
+        return properties.listeners == nil ? nil : properties.listeners?.components(separatedBy: ",")
     }
     
     // MARK: - Helpers
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
+    private func emailProperties() -> TractEmailProperties {
+        return self.properties as! TractEmailProperties
     }
 
 }

@@ -42,11 +42,20 @@ class TractTabs: BaseTractElement {
         setupSegmentedControl()
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = TractTabs.xMarginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

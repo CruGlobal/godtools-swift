@@ -37,6 +37,19 @@ class TractButtonProperties: TractProperties {
     var xMargin = BaseTractElement.xMargin
     var yMargin = BaseTractElement.yMargin
     
+    override func getTextProperties() -> TractTextContentProperties {
+        let textProperties = TractTextContentProperties()
+        
+        textProperties.font = .gtRegular(size: 18.0)
+        textProperties.width = self.width
+        textProperties.textAlign = .center
+        textProperties.textColor = self.color
+        textProperties.xMargin = self.buttonXPosition
+        textProperties.yMargin = self.textPadding
+        
+        return textProperties
+    }
+    
     // MARK: - Setup of custom properties
     
     override func customProperties() -> [String]? {

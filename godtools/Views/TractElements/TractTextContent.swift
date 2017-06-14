@@ -60,6 +60,12 @@ class TractTextContent: BaseTractElement {
         }
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties = (self.parent?.textStyle())!
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.properties.xMargin
         self.elementFrame.width = self.width
@@ -67,9 +73,8 @@ class TractTextContent: BaseTractElement {
         self.elementFrame.yMarginTop = self.properties.yMargin
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties = (self.parent?.textStyle())!
-        self.properties.load(properties)
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
     
 }

@@ -17,12 +17,21 @@ class TractHero: BaseTractElement {
     
     // MARK: - Setup
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         let width: CGFloat = 300
         self.elementFrame.x = (super.width - width) / CGFloat(2)
         self.elementFrame.width = width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
         
 }

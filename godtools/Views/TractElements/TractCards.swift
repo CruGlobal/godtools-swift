@@ -55,6 +55,11 @@ class TractCards: BaseTractElement {
         setupBackground()
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         let yExternalPosition = self.elementFrame.y > TractCards.minYPosition ? self.elementFrame.y : TractCards.minYPosition
         
@@ -63,6 +68,10 @@ class TractCards: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
         self.elementFrame.yMarginBottom = yExternalPosition
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

@@ -73,12 +73,21 @@ class TractCallToAction: BaseTractElement {
         return textStyle
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.y = self.yPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

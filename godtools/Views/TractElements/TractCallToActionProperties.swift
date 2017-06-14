@@ -15,5 +15,16 @@ class TractCallToActionProperties: TractProperties {
     override func properties() -> [String]? {
         return ["events"]
     }
+    
+    override func getTextProperties() -> TractTextContentProperties {
+        let textProperties = TractTextContentProperties()
+        
+        textProperties.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
+        textProperties.xMargin = TractCallToAction.paddingConstant
+        textProperties.yMargin = TractCallToAction.paddingConstant
+        textProperties.textColor = self.textColor
+        
+        return textProperties
+    }
 
 }

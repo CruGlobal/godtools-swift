@@ -181,8 +181,6 @@ class BaseTractElement: UIView {
         loadStyles()
     }
     
-    func loadElementProperties(_ properties: [String: Any]) { }
-    
     func loadStyles() { }
     
     func loadFrameProperties() { }
@@ -204,14 +202,36 @@ class BaseTractElement: UIView {
     // MARK: - Style properties
     
     func textStyle() -> TractTextContentProperties {
-        let textStyle = TractTextContentProperties()
-        textStyle.textAlign = (self.tractConfigurations?.defaultTextAlignment)!
-        return textStyle
+        return self.manifestProperties.getTextProperties()
     }
     
     func buttonStyle() -> TractButtonProperties {
         let buttonStyle = TractButtonProperties()
         return buttonStyle
+    }
+    
+    var properties: TractProperties?
+}
+
+extension BaseTractElement {
+    
+    func propertiesKind() -> TractProperties.Type {
+        fatalError("propertiesKind() has not been implemented")
+    }
+    
+    func loadElementProperties(_ properties: [String: Any]) {
+        let kind = propertiesKind()
+        self.properties = kind.init()
+        self.properties?.load(properties)
+        self.properties?.parentProperties = getParentProperties()
+    }
+    
+    func getParentProperties() -> TractProperties? {
+        if self.parent != nil {
+            return self.parent?.properties
+        } else {
+            return self.manifestProperties
+        }
     }
     
 }

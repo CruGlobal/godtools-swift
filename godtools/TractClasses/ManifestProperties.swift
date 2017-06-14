@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ManifestProperties: XMLNode {
+class ManifestProperties: TractProperties {
     
     var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
     var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
@@ -19,5 +19,9 @@ class ManifestProperties: XMLNode {
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
     var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
+    
+    func getTextProperties() -> TractTextContentProperties {
+        return TractTextContentProperties()
+    }
     
 }

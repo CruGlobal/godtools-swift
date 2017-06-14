@@ -93,18 +93,19 @@ class TractInput: BaseTractElement {
         self.frame = buildFrame()
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.backgroundColor = .gtWhite
+        self.properties.color = self.manifestProperties.primaryColor
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = self.yMargin
         self.elementFrame.yMarginBottom = self.yMargin
-    }
-    
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.manifestProperties.primaryColor
     }
     
     override func render() -> UIView {
@@ -120,6 +121,10 @@ class TractInput: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

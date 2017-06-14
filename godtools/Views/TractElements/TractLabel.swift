@@ -59,6 +59,11 @@ class TractLabel: BaseTractElement {
         return textStyle
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = TractLabel.xMarginConstant
         self.elementFrame.width = self.width
@@ -78,6 +83,10 @@ class TractLabel: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

@@ -104,14 +104,19 @@ class TractCard: BaseTractElement {
         return self
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.externalHeight
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
 
 }

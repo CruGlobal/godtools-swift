@@ -74,6 +74,11 @@ class TractButton: BaseTractElement {
         self.addSubview(self.button)
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
@@ -83,14 +88,7 @@ class TractButton: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.buttonWidth
-        textStyle.textAlign = .center
-        textStyle.textColor = self.properties.color
-        textStyle.xMargin = self.buttonXPosition
-        textStyle.yMargin = self.textPadding
-        return textStyle
+        return self.properties.getTextProperties()
     }
     
     override func render() -> UIView {
@@ -110,6 +108,10 @@ class TractButton: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
     
     // MARK: - Helpers

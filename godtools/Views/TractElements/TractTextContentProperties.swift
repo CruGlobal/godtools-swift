@@ -15,7 +15,7 @@ class TractTextContentProperties: TractProperties {
     var i18nId: String = ""
     var textAlign: NSTextAlignment = .left
     var textColor: UIColor = .gtBlack
-    var textScale: CGFloat?
+    var textScale: CGFloat = 1.0
     
     override func properties() -> [String]? {
         return ["i18nId", "textColor", "textScale"]

@@ -14,11 +14,11 @@ class TractModal: BaseTractElement {
     
     static let contentWidth: CGFloat = 275.0
     
-    // MARK: - Object properties
-    
-    var properties = TractModalProperties()
-    
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractModalProperties.self
+    }
     
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
@@ -45,17 +45,19 @@ class TractModal: BaseTractElement {
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+        let properties = modalProperties()
+        return properties.listeners == nil ? nil : properties.listeners?.components(separatedBy: ",")
     }
     
     override func elementDismissListeners() -> [String]? {
-        return self.properties.dismissListeners == nil ? nil : self.properties.dismissListeners?.components(separatedBy: ",")
+        let properties = modalProperties()
+        return properties.dismissListeners == nil ? nil : properties.dismissListeners?.components(separatedBy: ",")
     }
     
     // MARK: - Helpers
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
+    private func modalProperties() -> TractModalProperties {
+        return self.properties as! TractModalProperties
     }
 
 }

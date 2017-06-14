@@ -27,5 +27,14 @@ class TractModals: BaseTractElement {
         TractBindings.addBindings(self)
         return self
     }
+    
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
+    }
 
 }

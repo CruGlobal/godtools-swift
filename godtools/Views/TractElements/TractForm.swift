@@ -14,10 +14,19 @@ class TractForm: BaseTractElement {
     
     var properties = TractFormProperties()
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
     
 }

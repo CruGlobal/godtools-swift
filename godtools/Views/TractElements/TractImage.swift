@@ -63,6 +63,11 @@ class TractImage: BaseTractElement {
         self.height = height
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties.load(properties)
+        self.properties.parentProperties = getParentProperties()
+    }
+    
     override func loadFrameProperties() {
         let yMarginConstant: CGFloat = 16.0
         
@@ -71,6 +76,10 @@ class TractImage: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = yMarginConstant
         self.elementFrame.yMarginBottom = yMarginConstant
+    }
+    
+    override func getElementProperties() -> TractProperties {
+        return self.properties
     }
     
     // MARK: - Helpers
