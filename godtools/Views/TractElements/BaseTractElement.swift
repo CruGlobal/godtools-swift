@@ -201,10 +201,23 @@ class BaseTractElement: UIView {
     
     // MARK: - Style properties
     
-    var properties: TractProperties?
+    private var _properties: TractProperties?
+    var properties: TractProperties {
+        get {
+            if _properties == nil {
+                _properties = propertiesKind().init()
+            }
+            return _properties!
+        }
+        set {
+            if _properties == nil {
+                _properties = newValue
+            }
+        }
+    }
     
     func textStyle() -> TractTextContentProperties {
-        return self.properties!.getTextProperties()
+        return self.properties.getTextProperties()
     }
     
     func buttonStyle() -> TractButtonProperties {
@@ -221,13 +234,13 @@ extension BaseTractElement {
     
     func loadElementProperties(_ properties: [String: Any]) {
         self.properties = propertiesKind().init()
-        self.properties?.setupDefaultProperties(properties: getParentProperties())
-        self.properties?.load(properties)
+        self.properties.setupDefaultProperties(properties: getParentProperties())
+        self.properties.load(properties)
     }
     
     func getParentProperties() -> TractProperties {
         if self.parent != nil {
-            return self.parent!.properties!
+            return self.parent!.properties
         } else {
             return self.manifestProperties
         }

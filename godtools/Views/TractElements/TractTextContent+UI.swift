@@ -12,7 +12,7 @@ import UIKit
 extension TractTextContent {
     
     func buildLabel() {
-        let properties = textContentProperties()
+        let properties = textProperties()
         
         self.label = GTLabel(frame: buildFrame())
         self.label.text = properties.value

@@ -107,7 +107,7 @@ class TractButton: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let properties = self.properties!.getTextProperties()
+        let properties = self.properties.getTextProperties()
         properties.xMargin = self.buttonXPosition
         properties.yMargin = self.textPadding
         return properties
