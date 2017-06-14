@@ -1,5 +1,5 @@
 //
-//  TractElementOperationFunctions.swift
+//  BaseTractElement+Functions.swift
 //  godtools
 //
 //  Created by Devserker on 5/1/17.

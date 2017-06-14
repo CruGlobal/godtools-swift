@@ -78,6 +78,21 @@ class BaseTractElement: UIView {
     
     var xmlManager = XMLManager()
     var elementFrame: TractElementFrame = TractElementFrame()
+    
+    private var _properties: TractProperties?
+    var properties: TractProperties {
+        get {
+            if _properties == nil {
+                _properties = propertiesKind().init()
+            }
+            return _properties!
+        }
+        set {
+            if _properties == nil {
+                _properties = newValue
+            }
+        }
+    }
         
     // MARK: - Initializers
     
@@ -127,7 +142,7 @@ class BaseTractElement: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Build content
+    // MARK: - Setup
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.elementFrame.y = yPosition
@@ -199,34 +214,7 @@ class BaseTractElement: UIView {
         return self
     }
     
-    // MARK: - Style properties
-    
-    private var _properties: TractProperties?
-    var properties: TractProperties {
-        get {
-            if _properties == nil {
-                _properties = propertiesKind().init()
-            }
-            return _properties!
-        }
-        set {
-            if _properties == nil {
-                _properties = newValue
-            }
-        }
-    }
-    
-    func textStyle() -> TractTextContentProperties {
-        return self.properties.getTextProperties()
-    }
-    
-    func buttonStyle() -> TractButtonProperties {
-        let buttonStyle = TractButtonProperties()
-        return buttonStyle
-    }
-}
-
-extension BaseTractElement {
+    // MARK: - Properties
     
     func propertiesKind() -> TractProperties.Type {
         fatalError("propertiesKind() has not been implemented")
@@ -246,4 +234,14 @@ extension BaseTractElement {
         }
     }
     
+    // MARK: - UI
+    
+    func textStyle() -> TractTextContentProperties {
+        return self.properties.getTextProperties()
+    }
+    
+    func buttonStyle() -> TractButtonProperties {
+        let buttonStyle = TractButtonProperties()
+        return buttonStyle
+    }
 }

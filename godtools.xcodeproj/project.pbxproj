@@ -31,8 +31,8 @@
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
 		0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */; };
 		0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */; };
-		0F6982721EB7D9E800CAA284 /* TractElementFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */; };
-		0F6982741EB7DA4500CAA284 /* TractElementStaticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */; };
+		0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */; };
+		0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */; };
 		0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982771EB8E31F00CAA284 /* TractCards.swift */; };
 		0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741D81EBB8A8900888D20 /* TractCard+Animations.swift */; };
 		0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DB1EBB8AFC00888D20 /* TractHeader+Animations.swift */; };
@@ -221,8 +221,8 @@
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNotifications.swift; sourceTree = "<group>"; };
-		0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementFunctions.swift; path = Views/TractElements/TractElementFunctions.swift; sourceTree = "<group>"; };
-		0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementStaticFunctions.swift; path = Views/TractElements/TractElementStaticFunctions.swift; sourceTree = "<group>"; };
+		0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+Functions.swift"; path = "Views/TractElements/BaseTractElement+Functions.swift"; sourceTree = "<group>"; };
+		0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+StaticFunctions.swift"; path = "Views/TractElements/BaseTractElement+StaticFunctions.swift"; sourceTree = "<group>"; };
 		0F6982771EB8E31F00CAA284 /* TractCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCards.swift; path = Views/TractElements/TractCards.swift; sourceTree = "<group>"; };
 		0F7741D81EBB8A8900888D20 /* TractCard+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+Animations.swift"; path = "Views/TractElements/TractCard+Animations.swift"; sourceTree = "<group>"; };
 		0F7741DB1EBB8AFC00888D20 /* TractHeader+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractHeader+Animations.swift"; path = "Views/TractElements/TractHeader+Animations.swift"; sourceTree = "<group>"; };
@@ -460,13 +460,13 @@
 			name = GeneralExtensions;
 			sourceTree = "<group>";
 		};
-		0F69826E1EB7D96100CAA284 /* Functions */ = {
+		0F69826E1EB7D96100CAA284 /* BaseTractElement */ = {
 			isa = PBXGroup;
 			children = (
-				0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */,
-				0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */,
+				0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */,
+				0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */,
 			);
-			name = Functions;
+			name = BaseTractElement;
 			sourceTree = "<group>";
 		};
 		0F6982751EB83A8E00CAA284 /* Containers */ = {
@@ -865,10 +865,10 @@
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
 			isa = PBXGroup;
 			children = (
-				0F9E322D1EDCC7150081DBB9 /* Properties */,
+				0F69826E1EB7D96100CAA284 /* BaseTractElement */,
 				0F6982751EB83A8E00CAA284 /* Containers */,
-				0F69826E1EB7D96100CAA284 /* Functions */,
 				0F6982761EB83AF700CAA284 /* Nodes */,
+				0F9E322D1EDCC7150081DBB9 /* Properties */,
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 			);
 			name = TractElements;
@@ -1352,7 +1352,7 @@
 				EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
-				0F6982741EB7DA4500CAA284 /* TractElementStaticFunctions.swift in Sources */,
+				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
@@ -1392,7 +1392,7 @@
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
-				0F6982721EB7D9E800CAA284 /* TractElementFunctions.swift in Sources */,
+				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,

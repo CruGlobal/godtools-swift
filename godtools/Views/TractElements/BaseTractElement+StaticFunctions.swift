@@ -1,5 +1,5 @@
 //
-//  CheckElementKind.swift
+//  BaseTractElement+StaticFunctions.swift
 //  godtools
 //
 //  Created by Devserker on 5/1/17.
