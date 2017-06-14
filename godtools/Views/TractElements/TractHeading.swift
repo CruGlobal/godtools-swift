@@ -30,5 +30,11 @@ class TractHeading: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = 30.0
     }
+    
+    // MARK: - Helpers
+    
+    func headingProperties() -> TractHeadingProperties {
+        return self.properties as! TractHeadingProperties
+    }
 
 }

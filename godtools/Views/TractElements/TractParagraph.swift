@@ -54,4 +54,10 @@ class TractParagraph: BaseTractElement {
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
     }
     
+    // MARK: - Helpers
+    
+    func paragraphProperties() -> TractParagraphProperties {
+        return self.properties as! TractParagraphProperties
+    }
+    
 }

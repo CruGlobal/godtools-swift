@@ -81,5 +81,11 @@ class TractLabel: BaseTractElement {
         TractBindings.addBindings(self)
         return self
     }
+    
+    // MARK: - Helpers
+    
+    func labelProperties() -> TractLabelProperties {
+        return self.properties as! TractLabelProperties
+    }
 
 }

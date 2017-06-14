@@ -21,5 +21,11 @@ class TractTab: BaseTractElement {
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }
+    
+    // MARK: - Helpers
+    
+    func tabProperties() -> TractTabProperties {
+        return self.properties as! TractTabProperties
+    }
 
 }

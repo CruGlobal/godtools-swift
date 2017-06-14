@@ -52,5 +52,11 @@ class TractTitle: BaseTractElement {
         self.elementFrame.width = (self.parent?.width)! - xPosition - TractTitle.marginConstant
         self.elementFrame.height = self.height
     }
+    
+    // MARK: - Helpers
+    
+    func titleProperties() -> TractTitleProperties {
+        return self.properties as! TractTitleProperties
+    }
 
 }

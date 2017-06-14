@@ -28,5 +28,11 @@ class TractModals: BaseTractElement {
         TractBindings.addBindings(self)
         return self
     }
+    
+    // MARK: - Helpers
+    
+    func modalsProperties() -> TractModalsProperties {
+        return self.properties as! TractModalsProperties
+    }
 
 }

@@ -24,5 +24,11 @@ class TractHero: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
+    
+    // MARK: - Helpers
+    
+    func heroProperties() -> TractHeroProperties {
+        return self.properties as! TractHeroProperties
+    }
         
 }

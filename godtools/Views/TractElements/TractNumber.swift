@@ -45,5 +45,11 @@ class TractNumber: BaseTractElement {
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
     }
+    
+    // MARK: - Helpers
+    
+    func numberProperties() -> TractNumberProperties {
+        return self.properties as! TractNumberProperties
+    }
 
 }

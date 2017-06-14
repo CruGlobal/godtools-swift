@@ -22,4 +22,10 @@ class TractForm: BaseTractElement {
         self.elementFrame.height = self.height
     }
     
+    // MARK: - Helpers
+    
+    func formProperties() -> TractFormProperties {
+        return self.properties as! TractFormProperties
+    }
+    
 }

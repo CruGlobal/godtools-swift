@@ -33,6 +33,8 @@ class TractHeader: BaseTractElement {
         return true
     }
     
+    // MARK: - Helpers
+    
     func headerProperties() -> TractHeaderProperties {
         return self.properties as! TractHeaderProperties
     }

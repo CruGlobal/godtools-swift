@@ -77,6 +77,10 @@ class TractImage: BaseTractElement {
     
     // MARK: - Helpers
     
+    func imageProperties() -> TractImageProperties {
+        return self.properties as! TractImageProperties
+    }
+    
     func loadImage(properties: [String: Any]) -> UIImage {
         let resource = properties["resource"] as! String?
         self.align = properties["align"] as? String ?? "center"

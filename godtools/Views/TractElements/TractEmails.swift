@@ -24,5 +24,11 @@ class TractEmails: BaseTractElement {
         TractBindings.addBindings(self)
         return self
     }
+    
+    // MARK: - Helpers
+    
+    func emailsProperties() -> TractEmailsProperties {
+        return self.properties as! TractEmailsProperties
+    }
 
 }

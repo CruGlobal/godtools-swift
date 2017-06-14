@@ -76,4 +76,10 @@ class TractTextContent: BaseTractElement {
         self.elementFrame.yMarginTop = self.properties.yMargin
     }
     
+    // MARK: - Helpers
+    
+    func textContentProperties() -> TractTextContentProperties {
+        return self.properties as! TractTextContentProperties
+    }
+    
 }

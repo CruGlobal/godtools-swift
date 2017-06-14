@@ -31,4 +31,10 @@ class TractPage: BaseTractElement {
         return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
     }
     
+    // MARK: - Helpers
+    
+    func pageProperties() -> TractPageProperties {
+        return self.properties as! TractPageProperties
+    }
+    
 }

@@ -82,5 +82,11 @@ class TractCallToAction: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
     }
+    
+    // MARK: - Helpers
+    
+    func callToActionProperties() -> TractCallToActionProperties {
+        return self.properties as! TractCallToActionProperties
+    }
 
 }
