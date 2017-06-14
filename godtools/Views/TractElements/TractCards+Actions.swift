@@ -83,7 +83,7 @@ extension TractCards {
     // MARK: - Animations for the Cards container and the Header
     
     func changeToOpenCards() {
-        let properties = cardProperties()
+        let properties = cardsProperties()
         
         if properties.cardsState == .open {
             return
@@ -97,7 +97,7 @@ extension TractCards {
     }
     
     func changeToPreviewCards() {
-        let properties = cardProperties()
+        let properties = cardsProperties()
         
         if properties.cardsState == .preview {
             return

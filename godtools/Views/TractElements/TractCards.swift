@@ -64,5 +64,9 @@ class TractCards: BaseTractElement {
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
         self.elementFrame.yMarginBottom = yExternalPosition
     }
+    
+    func cardsProperties() -> TractCardsProperties {
+        return self.properties as! TractCardsProperties
+    }
 
 }
