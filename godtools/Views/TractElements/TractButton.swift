@@ -119,7 +119,7 @@ class TractButton: BaseTractElement {
         }
     }
     
-    private func buttonProperties() -> TractButtonProperties {
+    func buttonProperties() -> TractButtonProperties {
         return self.properties as! TractButtonProperties
     }
 

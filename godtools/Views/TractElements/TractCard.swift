@@ -82,16 +82,18 @@ class TractCard: BaseTractElement {
     }
     
     func setupStyle() {
+        let properties = cardProperties()
         self.backgroundColor = .clear
         
-        if self.properties.hidden {
+        if properties.hidden {
             self.isHidden = true
-            self.properties.cardState = .hidden
+            properties.cardState = .hidden
         }
     }
     
     override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+        let properties = cardProperties()
+        return properties.listeners == nil ? nil : properties.listeners?.components(separatedBy: ",")
     }
     
     override func render() -> UIView {
@@ -111,6 +113,12 @@ class TractCard: BaseTractElement {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.externalHeight
+    }
+    
+    // MARK: - Helpers
+    
+    func cardProperties() -> TractCardProperties {
+        return self.properties as! TractCardProperties
     }
 
 }

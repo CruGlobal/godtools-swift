@@ -12,12 +12,13 @@ import UIKit
 extension TractModal {
     
     func renderModalElements() {
+        let properties = modalProperties()
         let modalHeight = UIApplication.shared.keyWindow?.frame.size.height
         var startYPosition:CGFloat = 0
         
-        if self.properties.alreadyRendered == false {
+        if properties.alreadyRendered == false {
             startYPosition = (modalHeight! - self.height) / CGFloat(2)
-            self.properties.alreadyRendered = true
+            properties.alreadyRendered = true
         }
         
         for element in self.elements! {

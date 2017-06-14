@@ -56,7 +56,7 @@ class TractModal: BaseTractElement {
     
     // MARK: - Helpers
     
-    private func modalProperties() -> TractModalProperties {
+    func modalProperties() -> TractModalProperties {
         return self.properties as! TractModalProperties
     }
 

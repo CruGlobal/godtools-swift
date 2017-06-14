@@ -22,7 +22,9 @@ extension TractCard {
     }
     
     func hideCardAnimation() {
+        let properties = cardProperties()
         let translationY = self.yDownPosition
+        
         UIView.animate(withDuration: 0.45,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
@@ -30,11 +32,11 @@ extension TractCard {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: { (completed) in
                         if completed {
-                            if self.properties.cardNumber == 0 {
+                            if properties.cardNumber == 0 {
                                 self.cardsParentView.resetEnvironment()
                             }
                             
-                            if self.properties.cardState == .hidden {
+                            if properties.cardState == .hidden {
                                 self.isHidden = true
                             }
                         }})

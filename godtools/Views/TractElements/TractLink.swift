@@ -19,27 +19,11 @@ class TractLink: TractButton {
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
-    override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
         
-        for property in properties.keys {
-            switch property {
-            case "events":
-                self.properties.events = properties[property] as! String?
-            default: break
-            }
-        }
-        
-        self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.manifestProperties.primaryColor
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
+        let properties = buttonProperties()
+        properties.backgroundColor = .clear
+        properties.color = self.manifestProperties.primaryColor
     }
 
 }

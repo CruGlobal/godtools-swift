@@ -20,8 +20,11 @@ class ManifestProperties: TractProperties {
     var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
     var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
     
-    func getTextProperties() -> TractTextContentProperties {
-        return TractTextContentProperties()
+    override func getTextProperties() -> TractTextContentProperties {
+        let properties = TractTextContentProperties()
+        properties.textColor = self.textColor
+        
+        return properties
     }
     
 }
