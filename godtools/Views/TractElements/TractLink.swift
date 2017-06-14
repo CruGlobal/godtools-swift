@@ -30,7 +30,7 @@ class TractLink: TractButton {
         }
         
         self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.primaryColor!
+        self.properties.color = self.manifestProperties.primaryColor
     }
 
 }

@@ -104,7 +104,7 @@ class TractInput: BaseTractElement {
     override func loadElementProperties(_ properties: [String: Any]) {
         self.properties.load(properties)
         self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.primaryColor!
+        self.properties.color = self.manifestProperties.primaryColor
     }
     
     override func render() -> UIView {

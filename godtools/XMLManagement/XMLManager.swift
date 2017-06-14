@@ -88,9 +88,9 @@ class XMLManager: NSObject {
                 return
             }
             object.setValue(image, forKey: propertyName)
-        case is TractMainStyle.BackgroundImageAlign:
+        case is TractImageConfig.ImageAlign:
             setupImageAlign(object: object, propertyName: propertyName, kind: value)
-        case is [TractMainStyle.BackgroundImageAlign]:
+        case is [TractImageConfig.ImageAlign]:
             setupImageAligns(object: object, propertyName: propertyName, kind: value)
         default:
             object.performCustomProperty(propertyName: propertyName, value: value)
@@ -100,21 +100,21 @@ class XMLManager: NSObject {
     }
     
     func setupImageAlign(object: XMLNode, propertyName: String, kind: String) {
-        object.setValue(TractMainStyle.getImageAlignKind(string: kind), forKey: propertyName)
+        object.setValue(TractImageConfig.getImageAlignKind(string: kind), forKey: propertyName)
     }
     
     func setupImageAligns(object: XMLNode, propertyName: String, kind: String) {
-        var items: [TractMainStyle.BackgroundImageAlign] = []
+        var items: [TractImageConfig.ImageAlign] = []
         
         for value in kind.components(separatedBy: " ") {
-            items.append(TractMainStyle.getImageAlignKind(string: value))
+            items.append(TractImageConfig.getImageAlignKind(string: value))
         }
         
         object.setValue(items, forKey: propertyName)
     }
     
     func setupImageScaleType(object: XMLNode, propertyName: String, kind: String) {
-        object.setValue(TractMainStyle.getImageScaleType(string: kind), forKey: propertyName)
+        object.setValue(TractImageConfig.getImageScaleType(string: kind), forKey: propertyName)
     }
 
 }

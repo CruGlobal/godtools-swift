@@ -22,7 +22,7 @@ extension TractTabs {
         }
         
         self.segmentedControl.selectedSegmentIndex = 0
-        self.segmentedControl.tintColor = self.primaryColor
+        self.segmentedControl.tintColor = self.manifestProperties.primaryColor
         self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)
         
         self.addSubview(self.segmentedControl)

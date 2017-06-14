@@ -18,8 +18,8 @@ class TractCardProperties: TractProperties {
     
     var backgroundColor: UIColor?
     var backgroundImage: UIImage?
-    var backgroundImageAlign: [TractMainStyle.BackgroundImageAlign] = [.center]
-    var backgroundImageScaleType: TractMainStyle.BackgroundImageScaleType = .fill
+    var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
+    var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
     
     // MARK: - View Properties

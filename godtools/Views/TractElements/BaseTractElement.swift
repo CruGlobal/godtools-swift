@@ -71,22 +71,6 @@ class BaseTractElement: UIView {
     var didFindCallToAction: Bool = false
     
     var manifestProperties = ManifestProperties()
-    var styleProperties: MainStyleProperties?
-    var primaryColor: UIColor? {
-        get {
-            return (self.styleProperties != nil ? self.styleProperties?.primaryColor : self.parent?.primaryColor)!
-        }
-    }
-    var primaryTextColor: UIColor {
-        get {
-            return (self.styleProperties != nil ? self.styleProperties?.primaryTextColor : self.parent?.primaryTextColor)!
-        }
-    }
-    var textColor: UIColor {
-        get {
-            return (self.styleProperties != nil ? self.styleProperties?.textColor : self.parent?.textColor)!
-        }
-    }
     
     var horizontalContainer: Bool {
         return false
@@ -109,7 +93,6 @@ class BaseTractElement: UIView {
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
-        self.styleProperties = manifestProperties.styleProperties
         self.tractConfigurations = configurations
         
         if self.isKind(of: TractPage.self) {

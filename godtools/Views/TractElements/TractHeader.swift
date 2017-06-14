@@ -16,7 +16,7 @@ class TractHeader: BaseTractElement {
     var properties = TractHeaderProperties()
     
     override func loadStyles() {
-        self.backgroundColor = self.primaryColor?.withAlphaComponent(0.9)
+        self.backgroundColor = self.manifestProperties.primaryColor.withAlphaComponent(0.9)
     }
     
     override func loadFrameProperties() {
