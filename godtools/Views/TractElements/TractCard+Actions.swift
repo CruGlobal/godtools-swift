@@ -82,7 +82,7 @@ extension TractCard {
     func hideCard() {
         let properties = cardProperties()
         
-        if properties.cardState == .close || self.properties.cardState == .hidden {
+        if properties.cardState == .close || properties.cardState == .hidden {
             return
         }
         
