@@ -201,7 +201,7 @@ class BaseTractElement: UIView {
     
     // MARK: - Style properties
     
-    var properties: TractProperties? //TODO: should be manifestProperties
+    var properties: TractProperties?
     
     func textStyle() -> TractTextContentProperties {
         return self.properties!.getTextProperties()

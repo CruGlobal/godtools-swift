@@ -16,6 +16,17 @@ class TractProperties: XMLNode {
         super.init()
     }
     
+    func setupDefaultProperties(properties: TractProperties) {
+        let set1 = Set(self.properties()!.map { $0 })
+        let set2 = Set(properties.properties()!.map { $0 })
+        let commonProperties = set1.intersection(set2)
+        
+        for property in commonProperties {
+            let value = properties.value(forKey: property)
+            self.setValue(value, forKey: property)
+        }
+    }
+    
     func getTextProperties() -> TractTextContentProperties {
         return TractTextContentProperties()
     }
