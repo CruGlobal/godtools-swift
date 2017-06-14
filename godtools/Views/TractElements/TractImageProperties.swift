@@ -9,5 +9,13 @@
 import UIKit
 
 class TractImageProperties: TractProperties {
+    
+    // MARK: - XML Properties
+    
+    var resource: UIColor?
+    
+    override func properties() -> [String]? {
+        return ["resource"]
+    }
 
 }

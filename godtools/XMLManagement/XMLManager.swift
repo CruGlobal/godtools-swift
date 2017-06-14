@@ -34,38 +34,21 @@ class XMLManager: NSObject {
         return (elementName!, namespace, kind, properties, children)
     }
     
-    private func getNamespaceInfo(_ elementName: String) -> (namespace: String, kind: String) {
-        let elementNameArray = elementName.components(separatedBy: ":")
-        var namespace = ""
-        var kind = ""
-        
-        if (elementNameArray.count) > 1 {
-            namespace = elementNameArray[0] as String
-            kind = elementNameArray[1] as String
-        } else {
-            kind = elementNameArray[0] as String
-        }
-        
-        return (namespace, kind)
-    }
-    
     func loadAttributesIntoObject(object: XMLNode, properties: [String: Any]) {
         for property in properties {
             assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
         }
-        
-        object.loadCustomProperties(properties)
     }
     
     func assignValueFromAttribute(object: XMLNode, attribute: String, value: String) {
         let propertyName = attribute.camelCased
         
-        if object.customProperties() != nil && (object.customProperties()?.contains(propertyName))! {
+        if object.customProperties() != nil && object.customProperties()!.contains(propertyName) {
             object.performCustomProperty(propertyName: propertyName, value: value)
             return
         }
         
-        if !object.properties().contains(propertyName) {
+        if object.properties() == nil || !object.properties()!.contains(propertyName) {
             return
         }
         
@@ -93,10 +76,8 @@ class XMLManager: NSObject {
         case is [TractImageConfig.ImageAlign]:
             setupImageAligns(object: object, propertyName: propertyName, kind: value)
         default:
-            object.performCustomProperty(propertyName: propertyName, value: value)
+            break
         }
-        
-        _ = 1
     }
     
     func setupImageAlign(object: XMLNode, propertyName: String, kind: String) {
@@ -115,6 +96,21 @@ class XMLManager: NSObject {
     
     func setupImageScaleType(object: XMLNode, propertyName: String, kind: String) {
         object.setValue(TractImageConfig.getImageScaleType(string: kind), forKey: propertyName)
+    }
+    
+    private func getNamespaceInfo(_ elementName: String) -> (namespace: String, kind: String) {
+        let elementNameArray = elementName.components(separatedBy: ":")
+        var namespace = ""
+        var kind = ""
+        
+        if (elementNameArray.count) > 1 {
+            namespace = elementNameArray[0] as String
+            kind = elementNameArray[1] as String
+        } else {
+            kind = elementNameArray[0] as String
+        }
+        
+        return (namespace, kind)
     }
 
 }

@@ -21,7 +21,7 @@ class TractTitle: BaseTractElement {
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
-        textStyle.color = .gtWhite
+        textStyle.textColor = .gtWhite
         
         if BaseTractElement.isModalElement(self) {
             textStyle.font = .gtThin(size: 54.0)

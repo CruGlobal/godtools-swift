@@ -47,7 +47,7 @@ class TractLabel: BaseTractElement {
         
         if BaseTractElement.isFormElement(self) {
             textStyle.font = .gtRegular(size: 16.0)
-            textStyle.color = self.textColor
+            textStyle.textColor = self.textColor
             textStyle.xMargin = CGFloat(0.0)
             textStyle.yMargin = CGFloat(0.0)
             textStyle.height = CGFloat(22.0)

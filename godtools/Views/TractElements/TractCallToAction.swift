@@ -69,7 +69,7 @@ class TractCallToAction: BaseTractElement {
         textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
         textStyle.xMargin = TractCallToAction.paddingConstant
         textStyle.yMargin = TractCallToAction.paddingConstant
-        textStyle.color = self.textColor
+        textStyle.textColor = self.textColor
         return textStyle
     }
     

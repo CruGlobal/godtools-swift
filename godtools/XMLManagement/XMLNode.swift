@@ -10,26 +10,20 @@ import UIKit
 
 class XMLNode: NSObject {
     
-    var listeners: String?
-    var dismissListeners: String?
-    var hidden = false
-    
     let xmlManager = XMLManager()
     
     final func load(_ properties: [String: Any]) {
         xmlManager.loadAttributesIntoObject(object: self, properties: properties)
     }
     
-    func loadCustomProperties(_ properties: [String: Any]) { }
-    
-    func performCustomProperty(propertyName: String, value: String) {}
-    
-    func properties() -> [String] {
-        return Mirror(reflecting: self).children.flatMap{$0.label} + ["listeners", "dismissListeners", "hidden"]
+    func properties() -> [String]? {
+        return nil
     }
     
     func customProperties() -> [String]? {
         return nil
     }
+    
+    func performCustomProperty(propertyName: String, value: String) {}
 
 }

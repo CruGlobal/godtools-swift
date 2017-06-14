@@ -16,7 +16,7 @@ extension TractParagraph {
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = BaseTractElement.xMargin
-        textStyle.color = .gtWhite
+        textStyle.textColor = .gtWhite
         textStyle.textAlign = .center
         
         return textStyle
@@ -33,7 +33,7 @@ extension TractParagraph {
         textStyle.font = .gtRegular(size: 18.0)
         textStyle.width = self.width
         textStyle.xMargin = xMargin
-        textStyle.color = self.textColor
+        textStyle.textColor = self.textColor
         
         return textStyle
     }

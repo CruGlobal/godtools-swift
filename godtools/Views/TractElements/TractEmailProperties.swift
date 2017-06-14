@@ -15,5 +15,10 @@ class TractEmailProperties: TractProperties {
     var subject: String?
     var content: String?
     var html: Bool = true
+    var listeners: String?
+    
+    override func properties() -> [String]? {
+        return ["subject", "content", "html", "listeners"]
+    }
     
 }

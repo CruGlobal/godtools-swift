@@ -16,17 +16,22 @@ class TractButtonProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var i18nId: String?
-    var value: String?
-    var events: String?
-    var cornerRadius: CGFloat = 5.0
-    var backgroundColor = UIColor.gtBlue
-    var color = UIColor.gtBlack
-    var font = UIFont.gtRegular(size: 15.0)
     var type: ButtonType = .url
+    var events: String?
+    var url: String?
+    var color = UIColor.gtBlack
+    
+    override func properties() -> [String]? {
+        return ["type", "events", "url", "color"]
+    }
     
     // MARK: - View Properties
     
+    var i18nId: String?
+    var value: String?
+    var cornerRadius: CGFloat = 5.0
+    var backgroundColor = UIColor.gtBlue
+    var font = UIFont.gtRegular(size: 15.0)
     var width: CGFloat = 300.0
     var height: CGFloat = 44.0
     var xMargin = BaseTractElement.xMargin

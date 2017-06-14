@@ -10,18 +10,18 @@ import UIKit
 
 class TractTextContentProperties: TractProperties {
     
-    var i18nId: String = ""
-    var color: UIColor = .gtBlack
-    var scale: CGFloat?
-    var textAlign: NSTextAlignment = .left
-    var width: CGFloat = 0.0
-    var height: CGFloat = 0.0
-    var xMargin: CGFloat = BaseTractElement.xMargin
-    var yMargin: CGFloat = BaseTractElement.yMargin
-    var value: String = ""
-    var font = UIFont.gtRegular(size: 15.0)
+    // MARK: - XML Properties
     
-    // MARK: - Setup of custom properties
+    var i18nId: String = ""
+    var textAlign: NSTextAlignment = .left
+    var textColor: UIColor = .gtBlack
+    var textScale: CGFloat?
+    
+    override func properties() -> [String]? {
+        return ["i18nId", "textColor", "textScale"]
+    }
+    
+    // MARK: - XML Custom Properties
     
     override func customProperties() -> [String]? {
         return ["textAlign"]
@@ -47,5 +47,14 @@ class TractTextContentProperties: TractProperties {
             self.textAlign = .left
         }
     }
+    
+    // MARK: - View Properties
+    
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
+    var xMargin: CGFloat = BaseTractElement.xMargin
+    var yMargin: CGFloat = BaseTractElement.yMargin
+    var value: String = ""
+    var font = UIFont.gtRegular(size: 15.0)
 
 }

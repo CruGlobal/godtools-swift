@@ -10,9 +10,18 @@ import UIKit
 
 class TractInputProperties: TractProperties {
     
-    var type: String?
+    // MARK: - XML Properties
+    
     var name: String?
+    var type: String?
     var value: String?
+    
+    override func properties() -> [String]? {
+        return ["name", "type", "value"]
+    }
+    
+    // MARK: - View Properties
+    
     var width: CGFloat = 300.0
     var height: CGFloat = 44.0
     var xMargin = BaseTractElement.xMargin

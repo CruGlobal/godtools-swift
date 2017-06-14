@@ -10,6 +10,14 @@ import UIKit
 
 class TractHeaderProperties: TractProperties {
     
+    // MARK: - XML Properties
+    
+    var backgroundColor: UIColor?
+    
+    override func properties() -> [String]? {
+        return ["backgroundColor"]
+    }
+    
     // MARK: - View Properties
     
     var includesNumber = false

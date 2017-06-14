@@ -34,7 +34,7 @@ class TractNumber: BaseTractElement {
         textStyle.width = TractNumber.widthConstant
         textStyle.height = 60.0
         textStyle.textAlign = .center
-        textStyle.color = .gtWhite
+        textStyle.textColor = .gtWhite
         return textStyle
     }
     

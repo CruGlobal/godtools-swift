@@ -10,6 +10,8 @@ import UIKit
 
 class TractTabsProperties: TractProperties {
     
+    // MARK: - View Properties
+    
     var options = [String]()
 
 }

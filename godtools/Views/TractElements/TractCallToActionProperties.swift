@@ -9,5 +9,11 @@
 import UIKit
 
 class TractCallToActionProperties: TractProperties {
+    
+    var events: String?
+    
+    override func properties() -> [String]? {
+        return ["events"]
+    }
 
 }
