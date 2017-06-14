@@ -56,24 +56,28 @@ class TractTextContent: BaseTractElement {
     }
     
     override func loadStyles() {
-        if self.properties.width > CGFloat(0.0) {
-            self.contentWidth = self.properties.width
+        let properties = textContentProperties()
+        
+        if properties.width > CGFloat(0.0) {
+            self.contentWidth = properties.width
         } else {
             self.contentWidth = (self.parent?.width)!
         }
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties = (self.parent?.textStyle())!
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
+        var currentProperties = textContentProperties()
+        currentProperties = (self.parent?.textStyle())!
+        super.loadElementProperties(properties)
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.properties.xMargin
+        let properties = textContentProperties()
+        
+        self.elementFrame.x = properties.xMargin
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = self.properties.yMargin
+        self.elementFrame.yMarginTop = properties.yMargin
     }
     
     // MARK: - Helpers
