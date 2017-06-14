@@ -12,29 +12,21 @@ class TractModals: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractModalsProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractModalsProperties.self
+    }
     
     override func loadStyles() {
         self.isHidden = true
     }
     
     override func buildFrame() -> CGRect {
-        loadFrameProperties()
         return (UIApplication.shared.keyWindow?.frame)!
     }
     
     override func render() -> UIView {
         TractBindings.addBindings(self)
         return self
-    }
-    
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

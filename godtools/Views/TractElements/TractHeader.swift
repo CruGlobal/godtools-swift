@@ -13,15 +13,12 @@ class TractHeader: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractHeaderProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractHeaderProperties.self
+    }
     
     override func loadStyles() {
         self.backgroundColor = self.manifestProperties.primaryColor.withAlphaComponent(0.9)
-    }
-    
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
     }
     
     override func loadFrameProperties() {
@@ -30,10 +27,6 @@ class TractHeader: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = 1.0
         self.elementFrame.yMarginBottom = 10.0
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
     
     override var horizontalContainer: Bool {

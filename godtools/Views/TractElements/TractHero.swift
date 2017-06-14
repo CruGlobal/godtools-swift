@@ -11,15 +11,10 @@ import UIKit
 
 class TractHero: BaseTractElement {
     
-    // MARK: - Object properties
-    
-    var properties = TractHeroProperties()
-    
     // MARK: - Setup
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractHeroProperties.self
     }
     
     override func loadFrameProperties() {
@@ -28,10 +23,6 @@ class TractHero: BaseTractElement {
         self.elementFrame.width = width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
         
 }
