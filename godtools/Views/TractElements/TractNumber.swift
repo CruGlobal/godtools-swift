@@ -18,7 +18,9 @@ class TractNumber: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractNumberProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractNumberProperties.self
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
@@ -38,19 +40,10 @@ class TractNumber: BaseTractElement {
         return textStyle
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         self.elementFrame.x = TractNumber.marginConstant
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

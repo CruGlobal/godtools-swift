@@ -17,7 +17,9 @@ class TractTitle: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractTitleProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractTitleProperties.self
+    }
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -35,11 +37,6 @@ class TractTitle: BaseTractElement {
         return textStyle
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         var xPosition: CGFloat {
             if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).properties.includesNumber {
@@ -54,10 +51,6 @@ class TractTitle: BaseTractElement {
         self.elementFrame.x = xPosition
         self.elementFrame.width = (self.parent?.width)! - xPosition - TractTitle.marginConstant
         self.elementFrame.height = self.height
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

@@ -31,7 +31,9 @@ class TractImage: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractImageProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractImageProperties.self
+    }
     
     override func setupView(properties: [String: Any]) {
         self.imageView = UIImageView(image: loadImage(properties: properties))
@@ -63,11 +65,6 @@ class TractImage: BaseTractElement {
         self.height = height
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         let yMarginConstant: CGFloat = 16.0
         
@@ -76,10 +73,6 @@ class TractImage: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = yMarginConstant
         self.elementFrame.yMarginBottom = yMarginConstant
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
     
     // MARK: - Helpers

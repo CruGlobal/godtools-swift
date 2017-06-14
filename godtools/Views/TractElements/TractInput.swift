@@ -56,10 +56,13 @@ class TractInput: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractInputProperties()
     var textField = GTTextField()
     
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractInputProperties.self
+    }
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.elementFrame.y = yPosition
@@ -84,20 +87,21 @@ class TractInput: BaseTractElement {
     override func setupView(properties: [String: Any]) {
         loadElementProperties(properties)
         
-        self.textField.cornerRadius = self.properties.cornerRadius
-        self.textField.borderColor = self.properties.color
-        self.textField.borderWidth = self.properties.borderWidth
-        self.textField.backgroundColor = self.properties.backgroundColor
-        self.textField.placeholderTranslationKey = self.properties.placeholder ?? ""
+        let properties = inputProperties()
+        
+        self.textField.cornerRadius = properties.cornerRadius
+        self.textField.borderColor = properties.color
+        self.textField.borderWidth = properties.borderWidth
+        self.textField.backgroundColor = properties.backgroundColor
+        self.textField.placeholderTranslationKey = properties.placeholder ?? ""
         
         self.frame = buildFrame()
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
+        super.loadElementProperties(properties)
         self.properties.backgroundColor = .gtWhite
         self.properties.color = self.manifestProperties.primaryColor
-        self.properties.parentProperties = getParentProperties()
     }
     
     override func loadFrameProperties() {
@@ -123,8 +127,10 @@ class TractInput: BaseTractElement {
         return self
     }
     
-    override func getElementProperties() -> TractProperties {
-        return self.properties
+    // MARK: - Helpers
+    
+    private func inputProperties() -> TractInputProperties {
+        return self.properties as! TractInputProperties
     }
 
 }

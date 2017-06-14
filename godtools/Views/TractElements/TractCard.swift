@@ -54,7 +54,6 @@ class TractCard: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractCardProperties()
     var shadowView = UIView()
     let scrollView = UIScrollView()
     let containerView = UIView()
@@ -63,6 +62,10 @@ class TractCard: BaseTractElement {
     }
     
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractCardProperties.self
+    }
     
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
@@ -104,19 +107,10 @@ class TractCard: BaseTractElement {
         return self
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
         self.elementFrame.height = self.externalHeight
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

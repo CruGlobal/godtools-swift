@@ -13,7 +13,9 @@ class TractHeading: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractHeadingProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractHeadingProperties.self
+    }
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -22,20 +24,11 @@ class TractHeading: BaseTractElement {
         return textStyle
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = 30.0
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

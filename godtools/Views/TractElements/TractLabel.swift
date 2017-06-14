@@ -38,7 +38,9 @@ class TractLabel: BaseTractElement {
     
     // MARK: - Setup
     
-    var properties = TractLabelProperties()
+    override func propertiesKind() -> TractProperties.Type {
+        return TractLabelProperties.self
+    }
     
     override func textStyle() -> TractTextContentProperties {
         let textStyle = super.textStyle()
@@ -57,11 +59,6 @@ class TractLabel: BaseTractElement {
         }
         
         return textStyle
-    }
-    
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
     }
     
     override func loadFrameProperties() {
@@ -83,10 +80,6 @@ class TractLabel: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
 
 }

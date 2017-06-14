@@ -37,10 +37,13 @@ class TractTextContent: BaseTractElement {
     
     // MARK: - Object properties
     
-    var properties = TractTextContentProperties()
     var label: GTLabel = GTLabel()
     
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractTextContentProperties.self
+    }
     
     override func setupView(properties: [String: Any]) {
         super.setupView(properties: properties)
@@ -71,10 +74,6 @@ class TractTextContent: BaseTractElement {
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = self.properties.yMargin
-    }
-    
-    override func getElementProperties() -> TractProperties {
-        return self.properties
     }
     
 }

@@ -50,9 +50,12 @@ class TractButton: BaseTractElement {
     // MARK: - Object properties
     
     var button: GTButton = GTButton()
-    var properties = TractButtonProperties()
     
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractButtonProperties.self
+    }
     
     override func loadElementProperties(_ properties: [String: Any]) {
         self.properties = (self.parent?.buttonStyle())!
@@ -74,11 +77,6 @@ class TractButton: BaseTractElement {
         self.addSubview(self.button)
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
-        self.properties.parentProperties = getParentProperties()
-    }
-    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
@@ -93,13 +91,14 @@ class TractButton: BaseTractElement {
     
     override func render() -> UIView {
         if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
+            let properties = buttonProperties()
             let element = self.elements?.first as! TractTextContent
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
-            self.button.setTitleColor(self.properties.color, for: .normal)
-            self.button.setTitleColor(self.properties.color.withAlphaComponent(0.5), for: .highlighted)
+            self.button.setTitleColor(properties.color, for: .normal)
+            self.button.setTitleColor(properties.color.withAlphaComponent(0.5), for: .highlighted)
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
@@ -110,16 +109,18 @@ class TractButton: BaseTractElement {
         return self
     }
     
-    override func getElementProperties() -> TractProperties {
-        return self.properties
-    }
-    
     // MARK: - Helpers
     
     func addTargetToButton() {
-        if self.properties.type == .event || self.properties.type == .url {
+        let properties = buttonProperties()
+        
+        if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
         }
+    }
+    
+    private func buttonProperties() -> TractButtonProperties {
+        return self.properties as! TractButtonProperties
     }
 
 }
