@@ -12,7 +12,7 @@ class TractProperties: XMLNode {
     
     var parentProperties: TractProperties?
     
-    required init() {
+    required override init() {
         super.init()
     }
     
