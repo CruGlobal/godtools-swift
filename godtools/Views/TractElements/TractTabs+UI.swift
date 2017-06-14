@@ -12,13 +12,14 @@ import UIKit
 extension TractTabs {
     
     func setupSegmentedControl() {
+        let properties = tabsProperties()
         let width = self.elementFrame.width
         let height: CGFloat = 28.0
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         
         self.segmentedControl = UISegmentedControl(frame: frame)
-        for i in 0..<self.properties.options.count {
-            self.segmentedControl.insertSegment(withTitle: self.properties.options[i], at: i, animated: true)
+        for i in 0..<properties.options.count {
+            self.segmentedControl.insertSegment(withTitle: properties.options[i], at: i, animated: true)
         }
         
         self.segmentedControl.selectedSegmentIndex = 0

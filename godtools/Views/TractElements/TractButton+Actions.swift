@@ -12,13 +12,15 @@ import UIKit
 extension TractButton {
     
     func buttonTarget() {
-        if self.properties.type == .event {
-            let values = self.properties.value!.components(separatedBy: " ")
-            for value in values {
-                sendMessageToElement(listener: value)
+        let properties = buttonProperties()
+        
+        if properties.type == .event {
+            let events = properties.events!.components(separatedBy: " ")
+            for event in events {
+                sendMessageToElement(listener: event)
             }
-        } else if self.properties.type == .url {
-            if let url = URL(string: self.properties.value!) {
+        } else if properties.type == .url {
+            if let url = URL(string: properties.url!) {
                 UIApplication.shared.openURL(url)
             }
         }

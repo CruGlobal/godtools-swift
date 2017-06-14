@@ -51,5 +51,11 @@ class TractTabs: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant
     }
+    
+    // MARK - Helpers
+    
+    func tabsProperties() -> TractTabsProperties {
+        return self.properties as! TractTabsProperties
+    }
 
 }

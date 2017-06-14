@@ -26,7 +26,7 @@ class TractNumber: BaseTractElement {
         super.setupView(properties: properties)
         
         if self.parent != nil && self.parent!.isKind(of: TractHeader.self) {
-            (self.parent as! TractHeader).properties.includesNumber = true
+            (self.parent as! TractHeader).headerProperties().includesNumber = true
         }
     }
     

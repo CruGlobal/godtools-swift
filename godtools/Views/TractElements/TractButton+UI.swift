@@ -12,19 +12,21 @@ import UIKit
 extension TractButton {
     
     func configureAsModalButton() {
-        self.height = self.properties.height + (TractButton.modalMarginConstant * CGFloat(2))
+        let properties = buttonProperties()
+        self.height = properties.height + (TractButton.modalMarginConstant * CGFloat(2))
         self.button.designAsTractModalButton()
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: TractButton.modalMarginConstant,
                                    width: self.buttonWidth,
-                                   height: self.properties.height)
+                                   height: properties.height)
     }
     
     func configureAsStandardButton() {
-        self.height = self.properties.height
-        button.cornerRadius = self.properties.cornerRadius
-        button.backgroundColor = self.properties.backgroundColor
+        let properties = buttonProperties()
+        self.height = properties.height
+        button.cornerRadius = properties.cornerRadius
+        button.backgroundColor = properties.backgroundColor
         self.frame = buildFrame()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: 0.0,

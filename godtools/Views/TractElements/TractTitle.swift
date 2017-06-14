@@ -39,7 +39,7 @@ class TractTitle: BaseTractElement {
     
     override func loadFrameProperties() {
         var xPosition: CGFloat {
-            if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).properties.includesNumber {
+            if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).headerProperties().includesNumber {
                 return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
             } else if (BaseTractElement.isModalElement(self)) {
                 return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)

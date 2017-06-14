@@ -22,7 +22,7 @@ class TractButton: BaseTractElement {
     }
     
     var yMargin : CGFloat {
-        return self.properties.yMargin
+        return buttonProperties().yMargin
     }
     
     var xPosition: CGFloat {
@@ -34,7 +34,7 @@ class TractButton: BaseTractElement {
     }
     
     var buttonWidth: CGFloat {
-        return self.properties.width > self.width ? self.width : self.properties.width
+        return buttonProperties().width > self.width ? self.width : self.properties.width
     }
     
     var buttonXPosition: CGFloat {
@@ -58,10 +58,11 @@ class TractButton: BaseTractElement {
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties = (self.parent?.buttonStyle())!
-        self.properties.load(properties)
-        self.properties.backgroundColor = self.manifestProperties.primaryColor
-        self.properties.color = .gtWhite
+        super.loadElementProperties(properties)
+        
+        let properties = buttonProperties()
+        properties.backgroundColor = self.manifestProperties.primaryColor
+        properties.color = .gtWhite
     }
     
     override func loadStyles() {
@@ -83,10 +84,6 @@ class TractButton: BaseTractElement {
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = yMargin
         self.elementFrame.yMarginBottom = yMargin
-    }
-    
-    override func textStyle() -> TractTextContentProperties {
-        return self.properties.getTextProperties()
     }
     
     override func render() -> UIView {

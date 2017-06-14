@@ -32,5 +32,9 @@ class TractHeader: BaseTractElement {
     override var horizontalContainer: Bool {
         return true
     }
+    
+    func headerProperties() -> TractHeaderProperties {
+        return self.properties as! TractHeaderProperties
+    }
 
 }

@@ -83,11 +83,13 @@ extension TractCards {
     // MARK: - Animations for the Cards container and the Header
     
     func changeToOpenCards() {
-        if self.properties.cardsState == .open {
+        let properties = cardProperties()
+        
+        if properties.cardsState == .open {
             return
         }
         
-        self.properties.cardsState = .open
+        properties.cardsState = .open
         
         let pageView = self.parent as! TractPage
         pageView.hideHeader()
@@ -95,11 +97,13 @@ extension TractCards {
     }
     
     func changeToPreviewCards() {
-        if self.properties.cardsState == .preview {
+        let properties = cardProperties()
+        
+        if properties.cardsState == .preview {
             return
         }
         
-        self.properties.cardsState = .preview
+        properties.cardsState = .preview
         
         let pageView = self.parent as! TractPage
         pageView.showHeader()

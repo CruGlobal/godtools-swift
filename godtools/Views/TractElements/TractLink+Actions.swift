@@ -11,7 +11,8 @@ import Foundation
 extension TractLink {
     
     override func buttonTarget() {
-        guard let events = self.properties.events?.components(separatedBy: " ") else {
+        let properties = buttonProperties()
+        guard let events = properties.events?.components(separatedBy: " ") else {
             return
         }
         

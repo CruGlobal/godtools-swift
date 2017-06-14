@@ -201,16 +201,16 @@ class BaseTractElement: UIView {
     
     // MARK: - Style properties
     
+    var properties: TractProperties? //TODO: should be manifestProperties
+    
     func textStyle() -> TractTextContentProperties {
-        return self.manifestProperties.getTextProperties()
+        return self.properties!.getTextProperties()
     }
     
     func buttonStyle() -> TractButtonProperties {
         let buttonStyle = TractButtonProperties()
         return buttonStyle
     }
-    
-    var properties: TractProperties?
 }
 
 extension BaseTractElement {
