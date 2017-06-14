@@ -14,8 +14,8 @@ class TractImageProperties: TractProperties {
     
     var resource: UIColor?
     
-    override func properties() -> [String]? {
-        return ["resource"]
+    override func defineProperties() {
+        self.properties = ["resource"]
     }
 
 }

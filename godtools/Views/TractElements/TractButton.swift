@@ -34,7 +34,7 @@ class TractButton: BaseTractElement {
     }
     
     var buttonWidth: CGFloat {
-        return buttonProperties().width > self.width ? self.width : self.properties.width
+        return buttonProperties().width > self.width ? self.width : buttonProperties().width
     }
     
     var buttonXPosition: CGFloat {
@@ -104,6 +104,13 @@ class TractButton: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        let properties = self.properties!.getTextProperties()
+        properties.xMargin = self.buttonXPosition
+        properties.yMargin = self.textPadding
+        return properties
     }
     
     // MARK: - Helpers

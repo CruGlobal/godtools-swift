@@ -67,12 +67,11 @@ class TractCallToAction: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
-        textStyle.xMargin = TractCallToAction.paddingConstant
-        textStyle.yMargin = TractCallToAction.paddingConstant
-        textStyle.textColor = self.textColor
-        return textStyle
+        let properties = super.textStyle()
+        properties.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
+        properties.xMargin = TractCallToAction.paddingConstant
+        properties.yMargin = TractCallToAction.paddingConstant
+        return properties
     }
     
     override func loadFrameProperties() {

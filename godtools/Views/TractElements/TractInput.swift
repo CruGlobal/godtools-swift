@@ -14,7 +14,7 @@ class TractInput: BaseTractElement {
     // MARK: - Positions and Sizes
     
     var yMargin : CGFloat {
-        return self.properties.yMargin
+        return inputProperties().yMargin
     }
     
     var xPosition: CGFloat {
@@ -22,11 +22,12 @@ class TractInput: BaseTractElement {
     }
     
     var textViewWidth: CGFloat {
-        return self.properties.width > self.width ? self.width : self.properties.width
+        let properties = inputProperties()
+        return properties.width > self.width ? self.width : properties.width
     }
     
     var textViewHeight: CGFloat {
-        return self.properties.height
+        return inputProperties().height
     }
     
     override var width: CGFloat {
@@ -75,7 +76,7 @@ class TractInput: BaseTractElement {
             } else if self.xmlManager.parser.nodeIsPlaceholder(node: node) {
                 let textNode = self.xmlManager.parser.getTextContentFromElement(node)
                 if textNode != nil {
-                    self.properties.placeholder = textNode?.text
+                    self.inputProperties().placeholder = textNode?.text
                 }
             }
         }
@@ -100,8 +101,9 @@ class TractInput: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
-        self.properties.backgroundColor = .gtWhite
-        self.properties.color = self.manifestProperties.primaryColor
+        let newProperties = inputProperties()
+        newProperties.backgroundColor = .gtWhite
+        newProperties.color = self.manifestProperties.primaryColor
     }
     
     override func loadFrameProperties() {

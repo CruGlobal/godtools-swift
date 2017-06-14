@@ -21,8 +21,8 @@ class TractButtonProperties: TractProperties {
     var url: String?
     var color = UIColor.gtBlack
     
-    override func properties() -> [String]? {
-        return ["type", "events", "url", "color"]
+    override func defineProperties() {
+        self.properties = ["type", "events", "url", "color"]
     }
     
     // MARK: - View Properties
@@ -44,8 +44,6 @@ class TractButtonProperties: TractProperties {
         textProperties.width = self.width
         textProperties.textAlign = .center
         textProperties.textColor = self.color
-        textProperties.xMargin = self.buttonXPosition
-        textProperties.yMargin = self.textPadding
         
         return textProperties
     }

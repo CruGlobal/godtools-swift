@@ -10,21 +10,11 @@ import UIKit
 
 class ManifestProperties: TractProperties {
     
-    var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
-    var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
-    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
     var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
     var backgroundImage: UIImage?
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
     var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
-    
-    override func getTextProperties() -> TractTextContentProperties {
-        let properties = TractTextContentProperties()
-        properties.textColor = self.textColor
-        
-        return properties
-    }
     
 }

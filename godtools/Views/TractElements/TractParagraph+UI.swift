@@ -12,14 +12,13 @@ import UIKit
 extension TractParagraph {
     
     func buildModalParagraph() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.width
-        textStyle.xMargin = BaseTractElement.xMargin
-        textStyle.textColor = .gtWhite
-        textStyle.textAlign = .center
-        
-        return textStyle
+        let properties = super.textStyle()
+        properties.font = .gtRegular(size: 18.0)
+        properties.width = self.width
+        properties.xMargin = BaseTractElement.xMargin
+        properties.textColor = .gtWhite
+        properties.textAlign = .center
+        return properties
     }
     
     func buildStandardParagraph() -> TractTextContentProperties {
@@ -29,13 +28,11 @@ extension TractParagraph {
             xMargin = TractCard.xPaddingConstant
         }
         
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 18.0)
-        textStyle.width = self.width
-        textStyle.xMargin = xMargin
-        textStyle.textColor = self.textColor
-        
-        return textStyle
+        let properties = super.textStyle()
+        properties.font = .gtRegular(size: 18.0)
+        properties.width = self.width
+        properties.xMargin = xMargin
+        return properties
     }
     
 }

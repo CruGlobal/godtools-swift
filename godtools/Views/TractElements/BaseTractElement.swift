@@ -220,15 +220,14 @@ extension BaseTractElement {
     }
     
     func loadElementProperties(_ properties: [String: Any]) {
-        let kind = propertiesKind()
-        self.properties = kind.init()
+        self.properties = propertiesKind().init()
+        self.properties?.setupDefaultProperties(properties: getParentProperties())
         self.properties?.load(properties)
-        self.properties?.parentProperties = getParentProperties()
     }
     
-    func getParentProperties() -> TractProperties? {
+    func getParentProperties() -> TractProperties {
         if self.parent != nil {
-            return self.parent?.properties
+            return self.parent!.properties!
         } else {
             return self.manifestProperties
         }

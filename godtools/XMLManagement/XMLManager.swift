@@ -48,7 +48,7 @@ class XMLManager: NSObject {
             return
         }
         
-        if object.properties() == nil || !object.properties()!.contains(propertyName) {
+        if !object.getProperties().contains(propertyName) {
             return
         }
         

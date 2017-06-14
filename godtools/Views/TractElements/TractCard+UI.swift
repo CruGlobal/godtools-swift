@@ -14,7 +14,7 @@ extension TractCard {
     func setupBackground() {
         self.backgroundColor = .clear
         
-        guard let image = self.properties.backgroundImage else {
+        guard let image = self.cardProperties().backgroundImage else {
             return
         }
         let imageView = UIImageView(image: image)

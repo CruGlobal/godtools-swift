@@ -28,7 +28,8 @@ class TractPage: BaseTractElement {
     }
     
     override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
+        let properties = pageProperties()
+        return properties.listeners == nil ? nil : properties.listeners?.components(separatedBy: ",")
     }
     
     // MARK: - Helpers

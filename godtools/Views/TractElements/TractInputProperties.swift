@@ -16,8 +16,8 @@ class TractInputProperties: TractProperties {
     var type: String?
     var value: String?
     
-    override func properties() -> [String]? {
-        return ["name", "type", "value"]
+    override func defineProperties() {
+        self.properties = ["name", "type", "value"]
     }
     
     // MARK: - View Properties

@@ -12,9 +12,9 @@ class TractPageProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
-    var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
-    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    // primaryColor
+    // primaryTextColor
+    // textColor
     var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
     var backgroundImage: UIImage?
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
@@ -23,9 +23,10 @@ class TractPageProperties: TractProperties {
     var cardBackgroundColor: UIColor?
     var listeners: String?
     
-    override func properties() -> [String]? {
-        return ["primaryColor", "primaryTextColor", "textColor", "backgroundColor", "backgroundImage", "backgroundImageAlign",
-        "backgroundImageScaleType", "cardTextColor", "cardBackgroundColor", "listeners"]
+    override func defineProperties() {
+        self.properties = ["backgroundColor", "backgroundImage", "backgroundImageAlign",
+                           "backgroundImageScaleType", "cardTextColor", "cardBackgroundColor",
+                           "listeners"]
     }
 
 }

@@ -31,13 +31,13 @@ class TractNumber: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 54.0)
-        textStyle.width = TractNumber.widthConstant
-        textStyle.height = 60.0
-        textStyle.textAlign = .center
-        textStyle.textColor = .gtWhite
-        return textStyle
+        let properties = super.textStyle()
+        properties.font = .gtThin(size: 54.0)
+        properties.width = TractNumber.widthConstant
+        properties.height = 60.0
+        properties.textAlign = .center
+        properties.textColor = .gtWhite
+        return properties
     }
     
     override func loadFrameProperties() {

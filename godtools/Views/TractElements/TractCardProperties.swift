@@ -20,13 +20,13 @@ class TractCardProperties: TractProperties {
     var backgroundImage: UIImage?
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
-    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    // textColor
     var hidden = false
     var listeners: String?
     
-    override func properties() -> [String]? {
-        return ["backgroundColor", "backgroundImage", "backgroundImageAlign", "backgroundImageScaleType", "textColor",
-        "hidden", "listeners"]
+    override func defineProperties() {
+        self.properties = ["backgroundColor", "backgroundImage", "backgroundImageAlign",
+                           "backgroundImageScaleType", "hidden", "listeners"]
     }
     
     // MARK: - View Properties

@@ -17,8 +17,8 @@ class TractEmailProperties: TractProperties {
     var html: Bool = true
     var listeners: String?
     
-    override func properties() -> [String]? {
-        return ["subject", "content", "html", "listeners"]
+    override func defineProperties() {
+        self.properties = ["subject", "content", "html", "listeners"]
     }
     
 }

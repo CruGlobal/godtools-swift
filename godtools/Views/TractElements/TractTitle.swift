@@ -22,19 +22,19 @@ class TractTitle: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.textColor = .gtWhite
+        let properties = super.textStyle()
+        properties.textColor = .gtWhite
         
         if BaseTractElement.isModalElement(self) {
-            textStyle.font = .gtThin(size: 54.0)
-            textStyle.width = TractModal.contentWidth
-            textStyle.textAlign = .center
+            properties.font = .gtThin(size: 54.0)
+            properties.width = TractModal.contentWidth
+            properties.textAlign = .center
         } else {
-            textStyle.font = .gtThin(size: 18.0)
-            textStyle.width = self.width
+            properties.font = .gtThin(size: 18.0)
+            properties.width = self.width
         }
         
-        return textStyle
+        return properties
     }
     
     override func loadFrameProperties() {

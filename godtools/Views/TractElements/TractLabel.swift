@@ -43,22 +43,21 @@ class TractLabel: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.width = self.width
-        textStyle.xMargin = TractCard.xPaddingConstant
+        let properties = super.textStyle()
+        properties.width = self.width
+        properties.xMargin = TractCard.xPaddingConstant
         
         if BaseTractElement.isFormElement(self) {
-            textStyle.font = .gtRegular(size: 16.0)
-            textStyle.textColor = self.textColor
-            textStyle.xMargin = CGFloat(0.0)
-            textStyle.yMargin = CGFloat(0.0)
-            textStyle.height = CGFloat(22.0)
+            properties.font = .gtRegular(size: 16.0)
+            properties.xMargin = CGFloat(0.0)
+            properties.yMargin = CGFloat(0.0)
+            properties.height = CGFloat(22.0)
         } else {
-            textStyle.font = .gtSemiBold(size: 18.0)
-            textStyle.color = self.primaryColor!
+            properties.font = .gtSemiBold(size: 18.0)
+            properties.textColor = properties.primaryColor
         }
         
-        return textStyle
+        return properties
     }
     
     override func loadFrameProperties() {

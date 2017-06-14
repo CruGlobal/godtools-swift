@@ -15,8 +15,8 @@ class TractModalProperties: TractProperties {
     var listeners: String?
     var dismissListeners: String?
     
-    override func properties() -> [String]? {
-        return ["listeners", "dismissListeners"]
+    override func defineProperties() {
+        self.properties = ["listeners", "dismissListeners"]
     }
     
     // MARK: - View Properties

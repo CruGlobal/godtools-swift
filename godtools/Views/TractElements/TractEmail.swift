@@ -30,7 +30,7 @@ class TractEmail: BaseTractElement {
     
     // MARK: - Helpers
     
-    private func emailProperties() -> TractEmailProperties {
+    func emailProperties() -> TractEmailProperties {
         return self.properties as! TractEmailProperties
     }
 

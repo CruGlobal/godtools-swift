@@ -14,8 +14,8 @@ class TractHeaderProperties: TractProperties {
     
     var backgroundColor: UIColor?
     
-    override func properties() -> [String]? {
-        return ["backgroundColor"]
+    override func defineProperties() {
+        self.properties = ["backgroundColor"]
     }
     
     // MARK: - View Properties

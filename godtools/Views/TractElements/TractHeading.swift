@@ -18,10 +18,9 @@ class TractHeading: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtThin(size: 54.0)
-        textStyle.textColor = self.primaryColor!
-        return textStyle
+        let properties = super.textStyle()
+        properties.font = .gtThin(size: 54.0)
+        return properties
     }
     
     override func loadFrameProperties() {

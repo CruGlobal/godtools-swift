@@ -13,9 +13,9 @@ class TractLink: TractButton {
     // MARK: - Setup
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.font = .gtRegular(size: 16.0)
-        return textStyle
+        let properties = super.textStyle()
+        properties.font = .gtRegular(size: 16.0)
+        return properties
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

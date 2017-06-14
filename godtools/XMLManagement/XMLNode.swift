@@ -11,13 +11,16 @@ import UIKit
 class XMLNode: NSObject {
     
     let xmlManager = XMLManager()
+    var properties = [String]()
     
     final func load(_ properties: [String: Any]) {
         xmlManager.loadAttributesIntoObject(object: self, properties: properties)
     }
     
-    func properties() -> [String]? {
-        return nil
+    func defineProperties() { }
+    
+    func getProperties() -> [String] {
+        return self.properties
     }
     
     func customProperties() -> [String]? {
