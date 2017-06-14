@@ -16,9 +16,10 @@ class TractTextContentProperties: TractProperties {
     var textAlign: NSTextAlignment = .left
     // textColor
     var textScale: CGFloat = 1.0
+    var value: String = ""
     
     override func defineProperties() {
-        self.properties = ["i18nId", "textScale"]
+        self.properties = ["i18nId", "textScale", "value"]
     }
     
     // MARK: - XML Custom Properties
@@ -54,7 +55,6 @@ class TractTextContentProperties: TractProperties {
     var height: CGFloat = 0.0
     var xMargin: CGFloat = BaseTractElement.xMargin
     var yMargin: CGFloat = BaseTractElement.yMargin
-    var value: String = ""
     var font = UIFont.gtRegular(size: 15.0)
 
 }

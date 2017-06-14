@@ -27,6 +27,6 @@ class XMLNode: NSObject {
         return nil
     }
     
-    func performCustomProperty(propertyName: String, value: String) {}
+    func performCustomProperty(propertyName: String, value: String) { }
 
 }

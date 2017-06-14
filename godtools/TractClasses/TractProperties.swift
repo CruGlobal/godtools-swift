@@ -19,6 +19,7 @@ class TractProperties: XMLNode {
     }
     
     override func getProperties() -> [String] {
+        defineProperties()
         return ["primaryColor", "primaryTextColor", "textColor"] + self.properties
     }
     
