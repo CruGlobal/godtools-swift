@@ -20,7 +20,7 @@ class TractModals: BaseTractElement {
         self.isHidden = true
     }
     
-    override func buildFrame() -> CGRect {
+    override func getFrame() -> CGRect {
         return (UIApplication.shared.keyWindow?.frame)!
     }
     

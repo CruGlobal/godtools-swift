@@ -72,7 +72,7 @@ class TractCard: BaseTractElement {
         
         loadElementProperties(properties)
         
-        self.frame = buildFrame()
+        updateFrameHeight()
         
         setupStyle()
         setupScrollView()

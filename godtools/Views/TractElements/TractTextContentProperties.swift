@@ -51,7 +51,15 @@ class TractTextContentProperties: TractProperties {
     
     // MARK: - View Properties
     
-    var width: CGFloat = 0.0
+    private var _width: CGFloat = 0.0
+    var width: CGFloat {
+        get {
+            return _width - (self.xMargin * 2)
+        }
+        set {
+            _width = newValue
+        }
+    }
     var height: CGFloat = 0.0
     var xMargin: CGFloat = BaseTractElement.xMargin
     var yMargin: CGFloat = BaseTractElement.yMargin

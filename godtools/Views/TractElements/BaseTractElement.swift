@@ -101,6 +101,7 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.parent = parent
         self.elementFrame.y = yPosition
+        buildFrame()
         buildChildrenForData(children)
         setupView(properties: [String: Any]())
     }
@@ -150,6 +151,7 @@ class BaseTractElement: UIView {
         let contentElements = self.xmlManager.getContentElements(data)
         
         loadElementProperties(contentElements.properties)
+        buildFrame()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
     }
@@ -192,7 +194,7 @@ class BaseTractElement: UIView {
     }
     
     func setupView(properties: Dictionary<String, Any>) {
-        self.frame = buildFrame()
+        updateFrameHeight()
         loadStyles()
     }
     
@@ -200,9 +202,18 @@ class BaseTractElement: UIView {
     
     func loadFrameProperties() { }
     
-    func buildFrame() -> CGRect {
+    func buildFrame() {
+        self.frame = getFrame()
+    }
+    
+    func getFrame() -> CGRect {
         loadFrameProperties()
         return self.elementFrame.getFrame()
+    }
+    
+    func updateFrameHeight() {
+        self.elementFrame.height = self.height
+        self.frame = self.elementFrame.getFrame()
     }
     
     func render() -> UIView {
@@ -237,7 +248,9 @@ class BaseTractElement: UIView {
     // MARK: - UI
     
     func textStyle() -> TractTextContentProperties {
-        return self.properties.getTextProperties()
+        let properties = self.properties.getTextProperties()
+        properties.width = self.elementFrame.width
+        return properties
     }
     
     func buttonStyle() -> TractButtonProperties {

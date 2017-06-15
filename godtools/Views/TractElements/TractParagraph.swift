@@ -15,23 +15,6 @@ class TractParagraph: BaseTractElement {
     
     static let marginConstant: CGFloat = 8.0
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        if BaseTractElement.isModalElement(self) {
-            return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
-        } else {
-            return CGFloat(0)
-        }
-    }
-    
-    override var width: CGFloat {
-        if BaseTractElement.isModalElement(self) {
-            return TractModal.contentWidth
-        } else {
-            return self.parent!.width - (self.xPosition * CGFloat(2))
-        }
-    }
     
     // MARK: - Setup
     
@@ -48,8 +31,24 @@ class TractParagraph: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.width = self.width
+        var x: CGFloat {
+            if BaseTractElement.isModalElement(self) {
+                return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
+            } else {
+                return CGFloat(0)
+            }
+        }
+        
+        var width: CGFloat {
+            if BaseTractElement.isModalElement(self) {
+                return TractModal.contentWidth
+            } else {
+                return self.parent!.elementFrame.width - (x * CGFloat(2))
+            }
+        }
+        
+        self.elementFrame.x = x
+        self.elementFrame.width = width
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
     }

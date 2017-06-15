@@ -14,7 +14,7 @@ extension TractTextContent {
     func buildLabel() {
         let properties = textProperties()
         
-        self.label = GTLabel(frame: buildFrame())
+        self.label = GTLabel(frame: getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
         self.label.font = properties.font

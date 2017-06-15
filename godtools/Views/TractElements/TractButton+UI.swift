@@ -15,7 +15,7 @@ extension TractButton {
         let properties = buttonProperties()
         self.height = properties.height + (TractButton.modalMarginConstant * CGFloat(2))
         self.button.designAsTractModalButton()
-        self.frame = buildFrame()
+        updateFrameHeight()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: TractButton.modalMarginConstant,
                                    width: self.buttonWidth,
@@ -27,7 +27,7 @@ extension TractButton {
         self.height = properties.height
         button.cornerRadius = properties.cornerRadius
         button.backgroundColor = properties.backgroundColor
-        self.frame = buildFrame()
+        updateFrameHeight()
         self.button.frame = CGRect(x: self.buttonXPosition,
                                    y: 0.0,
                                    width: self.buttonWidth,

@@ -30,7 +30,6 @@ extension TractParagraph {
         
         let properties = super.textStyle()
         properties.font = .gtRegular(size: 18.0)
-        properties.width = self.width
         properties.xMargin = xMargin
         return properties
     }

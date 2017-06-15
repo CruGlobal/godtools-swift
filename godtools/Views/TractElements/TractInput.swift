@@ -96,7 +96,7 @@ class TractInput: BaseTractElement {
         self.textField.backgroundColor = properties.backgroundColor
         self.textField.placeholderTranslationKey = properties.placeholder ?? ""
         
-        self.frame = buildFrame()
+        updateFrameHeight()
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {

@@ -61,8 +61,8 @@ class TractImage: BaseTractElement {
         
         self.imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         self.addSubview(self.imageView)
-        self.frame = buildFrame()
         self.height = height
+        updateFrameHeight()
     }
     
     override func loadFrameProperties() {
