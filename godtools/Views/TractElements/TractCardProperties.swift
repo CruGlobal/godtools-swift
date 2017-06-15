@@ -25,8 +25,35 @@ class TractCardProperties: TractProperties {
     var listeners: String?
     
     override func defineProperties() {
-        self.properties = ["backgroundColor", "backgroundImage", "backgroundImageAlign",
-                           "backgroundImageScaleType", "hidden", "listeners"]
+        self.properties = ["backgroundColor", "backgroundImage", "hidden", "listeners"]
+    }
+    
+    override func customProperties() -> [String]? {
+        return ["backgroundImageAlign", "backgroundImageScaleType"]
+    }
+    
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "backgroundImageAlign":
+            setupImageAligns(kind: value)
+        case "backgroundImageScaleType":
+            setupImageScaleType(kind: value)
+        default: break
+        }
+    }
+    
+    func setupImageAligns(kind: String) {
+        var items: [TractImageConfig.ImageAlign] = []
+        
+        for value in kind.components(separatedBy: " ") {
+            items.append(TractImageConfig.getImageAlignKind(string: value))
+        }
+        
+        self.backgroundImageAlign = items
+    }
+    
+    func setupImageScaleType(kind: String) {
+        self.backgroundImageScaleType = TractImageConfig.getImageScaleType(string: kind)
     }
     
     // MARK: - View Properties

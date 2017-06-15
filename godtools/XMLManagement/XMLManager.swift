@@ -71,31 +71,9 @@ class XMLManager: NSObject {
                 return
             }
             object.setValue(image, forKey: propertyName)
-        case is TractImageConfig.ImageAlign:
-            setupImageAlign(object: object, propertyName: propertyName, kind: value)
-        case is [TractImageConfig.ImageAlign]:
-            setupImageAligns(object: object, propertyName: propertyName, kind: value)
         default:
             break
         }
-    }
-    
-    func setupImageAlign(object: XMLNode, propertyName: String, kind: String) {
-        object.setValue(TractImageConfig.getImageAlignKind(string: kind), forKey: propertyName)
-    }
-    
-    func setupImageAligns(object: XMLNode, propertyName: String, kind: String) {
-        var items: [TractImageConfig.ImageAlign] = []
-        
-        for value in kind.components(separatedBy: " ") {
-            items.append(TractImageConfig.getImageAlignKind(string: value))
-        }
-        
-        object.setValue(items, forKey: propertyName)
-    }
-    
-    func setupImageScaleType(object: XMLNode, propertyName: String, kind: String) {
-        object.setValue(TractImageConfig.getImageScaleType(string: kind), forKey: propertyName)
     }
     
     private func getNamespaceInfo(_ elementName: String) -> (namespace: String, kind: String) {
