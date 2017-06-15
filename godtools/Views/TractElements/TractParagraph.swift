@@ -49,7 +49,6 @@ class TractParagraph: BaseTractElement {
         
         self.elementFrame.x = x
         self.elementFrame.width = width
-        self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
     }
     

@@ -24,10 +24,15 @@ extension TractTextContent {
         if properties.height == 0.0 {
             self.label.numberOfLines = 0
             self.label.sizeToFit()
-            self.height = self.label.frame.height
-        } else {
+            properties.height = self.label.frame.size.height
             self.height = properties.height
         }
+        
+        let labelFrame = getFrame()
+        self.label.frame = labelFrame
+        updateFrameHeight()
+        
+        self.addSubview(self.label)
     }
     
 }

@@ -51,18 +51,74 @@ class TractTextContentProperties: TractProperties {
     
     // MARK: - View Properties
     
-    private var _width: CGFloat = 0.0
+    private var _width: CGFloat?
     var width: CGFloat {
         get {
-            return _width - (self.xMargin * 2)
+            if _width == nil {
+                return 0.0
+            } else {
+                return _width! - (self.xMargin * 2)
+            }
         }
         set {
             _width = newValue
         }
     }
-    var height: CGFloat = 0.0
-    var xMargin: CGFloat = BaseTractElement.xMargin
-    var yMargin: CGFloat = BaseTractElement.yMargin
-    var font = UIFont.gtRegular(size: 15.0)
+    
+    private var _height: CGFloat?
+    var height: CGFloat {
+        get {
+            if _height == nil {
+                return 0.0
+            } else {
+                return _height! + self.yMargin
+            }
+        }
+        set {
+            _height = newValue
+        }
+    }
+    
+    private var _xMargin: CGFloat?
+    var xMargin: CGFloat {
+        get {
+            if _xMargin == nil {
+                return BaseTractElement.xMargin
+            } else {
+                return _xMargin!
+            }
+        }
+        set {
+            _xMargin = newValue
+        }
+    }
+    
+    private var _yMargin: CGFloat?
+    var yMargin: CGFloat {
+        get {
+            if _yMargin == nil {
+                return BaseTractElement.yMargin
+            } else {
+                return _yMargin!
+            }
+        }
+        set {
+            _yMargin = newValue
+        }
+    }
+    
+    private var _font: UIFont?
+    var font: UIFont {
+        get {
+            if _font == nil {
+                return UIFont.gtRegular(size: 15.0)
+            } else {
+                return _font!
+            }
+        }
+        set {
+            _font = newValue
+        }
+    }
 
 }

@@ -21,7 +21,6 @@ class TractHero: BaseTractElement {
         let width: CGFloat = 300
         self.elementFrame.x = (super.width - width) / CGFloat(2)
         self.elementFrame.width = width
-        self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
     

@@ -22,10 +22,13 @@ extension TractParagraph {
     }
     
     func buildStandardParagraph() -> TractTextContentProperties {
-        var xMargin = BaseTractElement.xMargin
-        
-        if BaseTractElement.isCardElement(self) {
-            xMargin = TractCard.xPaddingConstant
+        var xMargin: CGFloat{
+            if BaseTractElement.isCardElement(self) {
+                return TractCard.xPaddingConstant
+            } else {
+                return BaseTractElement.xMargin
+            }
+            
         }
         
         let properties = super.textStyle()
