@@ -15,7 +15,7 @@ extension TractButton {
         let properties = buttonProperties()
         
         if properties.type == .event {
-            let events = properties.events!.components(separatedBy: " ")
+            let events = properties.buttonEvents!.components(separatedBy: " ")
             for event in events {
                 sendMessageToElement(listener: event)
             }

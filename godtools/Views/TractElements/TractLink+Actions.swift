@@ -12,7 +12,7 @@ extension TractLink {
     
     override func buttonTarget() {
         let properties = buttonProperties()
-        guard let events = properties.events?.components(separatedBy: " ") else {
+        guard let events = properties.buttonEvents?.components(separatedBy: " ") else {
             return
         }
         
