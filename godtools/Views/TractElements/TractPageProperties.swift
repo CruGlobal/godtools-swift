@@ -21,7 +21,7 @@ class TractPageProperties: TractProperties {
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var cardTextColor: UIColor?
     var cardBackgroundColor: UIColor?
-    var listeners: String?
+    var listeners: String = ""
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "cardTextColor",

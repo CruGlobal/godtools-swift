@@ -22,7 +22,7 @@ class TractCardProperties: TractProperties {
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     // textColor
     var hidden = false
-    var listeners: String?
+    var listeners: String = ""
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "hidden", "listeners"]

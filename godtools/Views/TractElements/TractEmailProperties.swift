@@ -12,10 +12,10 @@ class TractEmailProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var subject: String?
-    var content: String?
+    var subject: String = ""
+    var content: String = ""
     var html: Bool = true
-    var listeners: String?
+    var listeners: String = ""
     
     override func defineProperties() {
         self.properties = ["subject", "content", "html", "listeners"]

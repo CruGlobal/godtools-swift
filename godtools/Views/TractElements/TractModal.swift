@@ -46,12 +46,12 @@ class TractModal: BaseTractElement {
     
     override func elementListeners() -> [String]? {
         let properties = modalProperties()
-        return properties.listeners == nil ? nil : properties.listeners?.components(separatedBy: ",")
+        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
     }
     
     override func elementDismissListeners() -> [String]? {
         let properties = modalProperties()
-        return properties.dismissListeners == nil ? nil : properties.dismissListeners?.components(separatedBy: ",")
+        return properties.dismissListeners == "" ? nil : properties.dismissListeners.components(separatedBy: ",")
     }
     
     // MARK: - Helpers
