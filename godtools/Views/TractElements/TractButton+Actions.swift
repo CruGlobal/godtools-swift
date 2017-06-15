@@ -15,12 +15,12 @@ extension TractButton {
         let properties = buttonProperties()
         
         if properties.type == .event {
-            let events = properties.buttonEvents!.components(separatedBy: " ")
+            let events = properties.events.components(separatedBy: " ")
             for event in events {
                 sendMessageToElement(listener: event)
             }
         } else if properties.type == .url {
-            if let url = URL(string: properties.url!) {
+            if let url = URL(string: properties.url) {
                 UIApplication.shared.openURL(url)
             }
         }

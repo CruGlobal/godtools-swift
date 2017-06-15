@@ -12,10 +12,7 @@ extension TractLink {
     
     override func buttonTarget() {
         let properties = buttonProperties()
-        guard let events = properties.buttonEvents?.components(separatedBy: " ") else {
-            return
-        }
-        
+        let events = properties.events.components(separatedBy: " ")
         for event in events {
             sendMessageToElement(listener: event)
         }

@@ -17,8 +17,8 @@ class TractButtonProperties: TractProperties {
     // MARK: - XML Properties
     
     var type: ButtonType = .url
-    var buttonEvents: String?
-    var url: String?
+    var events: String = ""
+    var url: String = ""
     var color = UIColor.gtBlack
     
     override func defineProperties() {
@@ -26,15 +26,13 @@ class TractButtonProperties: TractProperties {
     }
     
     override func customProperties() -> [String]? {
-        return ["events", "type"]
+        return ["type"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
         case "type":
             setupType(value)
-        case "events":
-            setupButtonEvents(kind: value)
         default: break
         }
     }
@@ -47,10 +45,6 @@ class TractButtonProperties: TractProperties {
             self.type = .event
         default: break
         }
-    }
-    
-    func setupButtonEvents(kind: String) {
-        self.buttonEvents = kind
     }
     
     // MARK: - View Properties
