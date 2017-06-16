@@ -39,7 +39,6 @@ class TractTextContent: BaseTractElement {
     override func setupView(properties: [String: Any]) {
         buildLabel()
         updateFrameHeight()
-        // self.backgroundColor = .blue
     }
     
     // MARK: - Helpers

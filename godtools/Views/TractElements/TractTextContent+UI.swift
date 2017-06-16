@@ -16,7 +16,7 @@ extension TractTextContent {
         
         let originalFrame = getFrame()
         let labelFrame = CGRect(x: 0.0,
-                                y: 0.0,
+                                y: self.elementFrame.yMarginTop,
                                 width: originalFrame.size.width,
                                 height: 0.0)
         
@@ -28,9 +28,8 @@ extension TractTextContent {
         self.label.lineBreakMode = .byWordWrapping
         self.label.numberOfLines = 0
         self.label.sizeToFit()
-        // self.label.backgroundColor = .red
         
-        self.height = self.label.frame.size.height - self.elementFrame.yMarginBottom
+        self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom
         
         self.addSubview(self.label)
     }
