@@ -24,10 +24,26 @@ class TractElementFrame: NSObject {
     }
     
     func getFrame() -> CGRect {
-        return CGRect(x: self.x + self.xMargin,
-                      y: self.y + self.yMarginTop,
-                      width: self.width - (self.xMargin * 2),
-                      height: self.height + self.yMarginBottom)
+        return CGRect(x: finalX(),
+                      y: finalY(),
+                      width: finalWidth(),
+                      height: finalHeight())
+    }
+    
+    func finalX() -> CGFloat {
+        return self.x + self.xMargin
+    }
+    
+    func finalY() -> CGFloat {
+        return self.y + self.yMarginTop
+    }
+    
+    func finalWidth() -> CGFloat {
+        return self.width - (self.xMargin * 2)
+    }
+    
+    func finalHeight() -> CGFloat {
+        return self.height + self.yMarginBottom
     }
 
 }

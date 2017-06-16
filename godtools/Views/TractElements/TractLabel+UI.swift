@@ -14,7 +14,7 @@ extension TractLabel {
     func buildHorizontalLine() {
         let xPosition: CGFloat = 0.0
         let yPosition = self.frame.size.height - 1
-        let width = self.elementFrame.width
+        let width = self.elementFrame.finalWidth()
         let height: CGFloat = 1.0
         
         let horizontalLine = UIView()
