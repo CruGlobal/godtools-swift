@@ -22,6 +22,12 @@ class TractNumber: BaseTractElement {
         return TractNumberProperties.self
     }
     
+    override func loadElementProperties(_ properties: [String: Any]) {
+        self.properties = propertiesKind().init()
+        self.properties.setupDefaultProperties(properties: getParentProperties())
+        self.properties.load(properties)
+    }
+    
     override func setupView(properties: Dictionary<String, Any>) {
         super.setupView(properties: properties)
         
@@ -31,12 +37,11 @@ class TractNumber: BaseTractElement {
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let properties = super.textStyle()
+        let properties = self.parent!.textStyle()
         properties.font = .gtThin(size: 54.0)
         properties.width = TractNumber.widthConstant
         properties.height = 60.0
         properties.textAlign = .center
-        properties.textColor = .gtWhite
         return properties
     }
     

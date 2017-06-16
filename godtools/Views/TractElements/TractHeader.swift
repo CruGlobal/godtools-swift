@@ -21,6 +21,11 @@ class TractHeader: BaseTractElement {
         self.backgroundColor = self.manifestProperties.primaryColor.withAlphaComponent(0.9)
     }
     
+    override func loadElementProperties(_ properties: [String : Any]) {
+        super.loadElementProperties(properties)
+        self.properties.textColor = .gtWhite
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
