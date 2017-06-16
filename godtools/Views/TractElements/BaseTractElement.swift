@@ -32,6 +32,10 @@ class BaseTractElement: UIView {
         }
     }
     
+    var maxWidth: CGFloat {
+        return BaseTractElement.screenWidth
+    }
+    
     func getMaxHeight() -> CGFloat {
         if self.elementFrame.maxHeight > 0.0 {
             return self.elementFrame.maxHeight
@@ -247,6 +251,14 @@ class BaseTractElement: UIView {
     }
     
     // MARK: - UI
+    
+    func parentWidth() -> CGFloat {
+        if self.parent != nil {
+            return self.parent!.elementFrame.finalWidth()
+        } else {
+            return self.maxWidth
+        }
+    }
     
     func textStyle() -> TractTextContentProperties {
         let properties = self.properties.getTextProperties()

@@ -38,4 +38,18 @@ extension TractParagraph {
         return properties
     }
     
+    func buildStandardFrame() {
+        self.elementFrame.x = 0
+        self.elementFrame.width = parentWidth()
+        self.elementFrame.yMarginTop = TractParagraph.marginConstant
+        self.elementFrame.xMargin = TractParagraph.marginConstant
+    }
+    
+    func buildModalFrame() {
+        let width = TractModal.contentWidth
+        self.elementFrame.x = (self.parent!.width - width) / CGFloat(2)
+        self.elementFrame.width = width
+        self.elementFrame.yMarginTop = TractParagraph.marginConstant
+    }
+    
 }
