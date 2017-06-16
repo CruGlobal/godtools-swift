@@ -28,6 +28,7 @@ extension TractTextContent {
         self.label.lineBreakMode = .byWordWrapping
         self.label.numberOfLines = 0
         self.label.sizeToFit()
+        self.label.backgroundColor = .blue
         
         self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom
 

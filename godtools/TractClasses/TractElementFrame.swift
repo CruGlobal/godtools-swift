@@ -13,6 +13,32 @@ class TractElementFrame: NSObject {
     var x: CGFloat = 0.0
     var y: CGFloat = 0.0
     var xMargin: CGFloat = 0.0
+    private var _xMargingLeft: CGFloat?
+    var xMarginLeft: CGFloat {
+        get {
+            if _xMargingLeft == nil {
+                return xMargin
+            } else {
+                return _xMargingLeft!
+            }
+        }
+        set {
+            _xMargingLeft = newValue
+        }
+    }
+    private var _xMargingRight: CGFloat?
+    var xMarginRight: CGFloat {
+        get {
+            if _xMargingRight == nil {
+                return xMargin
+            } else {
+                return _xMargingRight!
+            }
+        }
+        set {
+            _xMargingRight = newValue
+        }
+    }
     var yMarginTop: CGFloat = 0.0
     var yMarginBottom: CGFloat = 0.0
     var width: CGFloat = 0.0
@@ -31,7 +57,7 @@ class TractElementFrame: NSObject {
     }
     
     func finalX() -> CGFloat {
-        return self.x + self.xMargin
+        return self.x + self.xMarginLeft
     }
     
     func finalY() -> CGFloat {
@@ -39,7 +65,7 @@ class TractElementFrame: NSObject {
     }
     
     func finalWidth() -> CGFloat {
-        return self.width - (self.xMargin * 2)
+        return self.width - self.xMarginLeft - self.xMarginRight
     }
     
     func finalHeight() -> CGFloat {

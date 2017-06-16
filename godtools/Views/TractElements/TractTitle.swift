@@ -23,7 +23,6 @@ class TractTitle: BaseTractElement {
     
     override func textStyle() -> TractTextContentProperties {
         let properties = super.textStyle()
-        properties.textColor = .gtWhite
         
         if BaseTractElement.isModalElement(self) {
             properties.font = .gtThin(size: 54.0)
@@ -31,26 +30,34 @@ class TractTitle: BaseTractElement {
             properties.textAlign = .center
         } else {
             properties.font = .gtThin(size: 18.0)
-            properties.width = self.width
         }
         
         return properties
     }
     
     override func loadFrameProperties() {
+        var width = self.parent!.elementFrame.finalWidth()
+        var xMarginLeft: CGFloat = TractTitle.marginConstant
+        var xMarginRight: CGFloat = TractTitle.marginConstant
         var xPosition: CGFloat {
             if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).headerProperties().includesNumber {
-                return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+                let difference =  TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+                width -= difference
+                return difference
             } else if (BaseTractElement.isModalElement(self)) {
-                return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
+                xMarginLeft = 0.0
+                xMarginRight = 0.0
+                return (width - TractModal.contentWidth) / CGFloat(2)
             } else {
-                return TractTitle.marginConstant
+                return 0
             }
         }
         
         self.elementFrame.x = xPosition
-        self.elementFrame.width = (self.parent?.width)! - xPosition - TractTitle.marginConstant
-        self.elementFrame.height = self.height
+        self.elementFrame.width = width
+        self.elementFrame.xMarginLeft = xMarginLeft
+        self.elementFrame.xMarginRight = xMarginRight
+        self.backgroundColor = .black
     }
     
     // MARK: - Helpers

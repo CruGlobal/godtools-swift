@@ -250,7 +250,7 @@ class BaseTractElement: UIView {
     
     func textStyle() -> TractTextContentProperties {
         let properties = self.properties.getTextProperties()
-        properties.width = self.elementFrame.width
+        properties.width = self.elementFrame.finalWidth()
         return properties
     }
     

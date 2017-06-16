@@ -23,25 +23,22 @@ class TractParagraph: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        var x: CGFloat {
-            if BaseTractElement.isModalElement(self) {
-                return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
-            } else {
-                return CGFloat(0)
-            }
-        }
+        var x: CGFloat = 0.0
         
         var width: CGFloat {
             if BaseTractElement.isModalElement(self) {
-                return TractModal.contentWidth
+                let width = TractModal.contentWidth
+                x = (self.parent!.width - width) / CGFloat(2)
+                return width
             } else {
-                return self.parent!.elementFrame.width - (x * CGFloat(2))
+                return self.parent!.elementFrame.finalWidth()
             }
         }
         
         self.elementFrame.x = x
         self.elementFrame.width = width
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
+        self.backgroundColor = .red
     }
     
     override func textStyle() -> TractTextContentProperties {

@@ -26,6 +26,7 @@ class TractTextContent: BaseTractElement {
         textProperties.setupDefaultProperties(properties: getParentProperties())
         textProperties.load(properties)
         self.properties = textProperties
+        self.backgroundColor = .green
     }
     
     override func loadFrameProperties() {

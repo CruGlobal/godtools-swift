@@ -22,6 +22,11 @@ class TractLabel: BaseTractElement {
         return TractLabelProperties.self
     }
     
+    override func loadElementProperties(_ properties: [String : Any]) {
+        super.loadElementProperties(properties)
+        self.properties.textColor = self.properties.primaryColor
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.parent!.elementFrame.width
