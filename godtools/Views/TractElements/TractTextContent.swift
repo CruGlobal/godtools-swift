@@ -21,11 +21,6 @@ class TractTextContent: BaseTractElement {
         return TractTextContentProperties.self
     }
     
-    override func setupView(properties: [String: Any]) {
-        super.setupView(properties: properties)
-        buildLabel()
-    }
-    
     override func loadElementProperties(_ properties: [String: Any]) {
         let textProperties = self.parent!.textStyle()
         textProperties.setupDefaultProperties(properties: getParentProperties())
@@ -41,6 +36,12 @@ class TractTextContent: BaseTractElement {
         self.elementFrame.yMarginTop = properties.yMargin
         self.elementFrame.yMarginBottom = properties.yMargin
         // self.backgroundColor = .red
+    }
+    
+    override func setupView(properties: [String: Any]) {
+        buildLabel()
+        updateFrameHeight()
+        self.backgroundColor = .red
     }
     
     // MARK: - Helpers

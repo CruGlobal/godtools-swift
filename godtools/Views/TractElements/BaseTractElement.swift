@@ -101,6 +101,7 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.parent = parent
         self.elementFrame.y = yPosition
+        loadFrameProperties()
         buildFrame()
         buildChildrenForData(children)
         setupView(properties: [String: Any]())
@@ -151,6 +152,7 @@ class BaseTractElement: UIView {
         let contentElements = self.xmlManager.getContentElements(data)
         
         loadElementProperties(contentElements.properties)
+        loadFrameProperties()
         buildFrame()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
@@ -207,7 +209,6 @@ class BaseTractElement: UIView {
     }
     
     func getFrame() -> CGRect {
-        loadFrameProperties()
         return self.elementFrame.getFrame()
     }
     

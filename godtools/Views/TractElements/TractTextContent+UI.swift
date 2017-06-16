@@ -14,23 +14,22 @@ extension TractTextContent {
     func buildLabel() {
         let properties = textProperties()
         
-        self.label = GTLabel(frame: getFrame())
+        let originalFrame = getFrame()
+        let labelFrame = CGRect(x: originalFrame.origin.x,
+                                y: originalFrame.origin.y,
+                                width: originalFrame.size.width,
+                                height: 0.0)
+        
+        self.label = GTLabel(frame: labelFrame)
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
         self.label.font = properties.font
         self.label.textColor = properties.textColor
         self.label.lineBreakMode = .byWordWrapping
+        self.label.numberOfLines = 0
+        self.label.sizeToFit()
         
-        if properties.height == 0.0 {
-            self.label.numberOfLines = 0
-            self.label.sizeToFit()
-            properties.height = self.label.frame.size.height
-            self.height = properties.height
-        }
-        
-        let labelFrame = getFrame()
-        self.label.frame = labelFrame
-        updateFrameHeight()
+        self.height = self.label.frame.size.height + labelFrame.origin.y
         
         self.addSubview(self.label)
     }

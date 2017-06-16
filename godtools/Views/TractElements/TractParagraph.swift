@@ -22,14 +22,6 @@ class TractParagraph: BaseTractElement {
         return TractParagraphProperties.self
     }
     
-    override func textStyle() -> TractTextContentProperties {
-        if BaseTractElement.isModalElement(self) {
-            return buildModalParagraph()
-        } else {
-            return buildStandardParagraph()
-        }
-    }
-    
     override func loadFrameProperties() {
         var x: CGFloat {
             if BaseTractElement.isModalElement(self) {
@@ -50,6 +42,14 @@ class TractParagraph: BaseTractElement {
         self.elementFrame.x = x
         self.elementFrame.width = width
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        if BaseTractElement.isModalElement(self) {
+            return buildModalParagraph()
+        } else {
+            return buildStandardParagraph()
+        }
     }
     
     // MARK: - Helpers
