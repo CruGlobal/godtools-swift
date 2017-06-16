@@ -31,17 +31,15 @@ class TractTextContent: BaseTractElement {
     override func loadFrameProperties() {
         let properties = textProperties()
         self.elementFrame.width = properties.width
-        self.elementFrame.height = properties.height
         self.elementFrame.xMargin = properties.xMargin
         self.elementFrame.yMarginTop = properties.yMargin
         self.elementFrame.yMarginBottom = properties.yMargin
-        // self.backgroundColor = .red
     }
     
     override func setupView(properties: [String: Any]) {
         buildLabel()
         updateFrameHeight()
-        self.backgroundColor = .red
+        // self.backgroundColor = .blue
     }
     
     // MARK: - Helpers

@@ -27,7 +27,7 @@ class TractElementFrame: NSObject {
         return CGRect(x: self.x + self.xMargin,
                       y: self.y + self.yMarginTop,
                       width: self.width - (self.xMargin * 2),
-                      height: self.height - self.yMarginTop - self.yMarginBottom)
+                      height: self.height + self.yMarginBottom)
     }
 
 }
