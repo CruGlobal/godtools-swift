@@ -67,39 +67,25 @@ class TractCard: BaseTractElement {
         return TractCardProperties.self
     }
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        super.setupView(properties: properties)
+    override func loadStyles() {
+        let properties = cardProperties()
         
-        loadElementProperties(properties)
+        if properties.hidden {
+            self.isHidden = true
+            properties.cardState = .hidden
+        }
         
-        updateFrameHeight()
-        
-        setupStyle()
         setupScrollView()
         setBordersAndShadows()
         disableScrollview()
         setupSwipeGestures()
     }
     
-    func setupStyle() {
-        let properties = cardProperties()
-        self.backgroundColor = .clear
-        
-        if properties.hidden {
-            self.isHidden = true
-            properties.cardState = .hidden
-        }
-    }
-    
-    override func elementListeners() -> [String]? {
-        let properties = cardProperties()
-        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
-    }
-    
     override func render() -> UIView {
         for element in self.elements! {
             self.containerView.addSubview(element.render())
         }
+        
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)
         self.addSubview(self.scrollView)
@@ -109,16 +95,29 @@ class TractCard: BaseTractElement {
         return self
     }
     
+    override func elementListeners() -> [String]? {
+        let properties = cardProperties()
+        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = self.xPosition
         self.elementFrame.width = self.width
-        self.elementFrame.height = self.externalHeight
+    }
+    
+    override func updateFrameHeight() {
+        self.height = cardHeight()
+        super.updateFrameHeight()
     }
     
     // MARK: - Helpers
     
     func cardProperties() -> TractCardProperties {
         return self.properties as! TractCardProperties
+    }
+    
+    func cardHeight() -> CGFloat {
+        return self.getMaxHeight() - TractCard.yBottomMarginConstant
     }
 
 }

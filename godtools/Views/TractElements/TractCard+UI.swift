@@ -61,18 +61,6 @@ extension TractCard {
         self.addSubview(transparentView)
     }
     
-    func setBordersAndShadows() {
-        self.shadowView.frame = self.bounds
-        self.shadowView.backgroundColor = .white
-        let shadowLayer = self.shadowView.layer
-        shadowLayer.cornerRadius = 3.0
-        shadowLayer.shadowColor = UIColor.black.cgColor
-        shadowLayer.shadowRadius = 3.0
-        shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
-        shadowLayer.shadowOpacity = 0.4
-        shadowLayer.shouldRasterize = true
-    }
-    
     func setupScrollView() {
         let height = self.bounds.size.height
         let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
@@ -88,6 +76,18 @@ extension TractCard {
                                           width: self.contentWidth,
                                           height: contentHeight)
         self.containerView.backgroundColor = .clear
+    }
+    
+    func setBordersAndShadows() {
+        self.shadowView.frame = self.bounds
+        self.shadowView.backgroundColor = .white
+        let shadowLayer = self.shadowView.layer
+        shadowLayer.cornerRadius = 3.0
+        shadowLayer.shadowColor = UIColor.black.cgColor
+        shadowLayer.shadowRadius = 3.0
+        shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        shadowLayer.shadowOpacity = 0.4
+        shadowLayer.shouldRasterize = true
     }
     
 }

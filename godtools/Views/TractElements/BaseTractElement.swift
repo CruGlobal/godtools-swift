@@ -19,7 +19,7 @@ class BaseTractElement: UIView {
     static let xPadding: CGFloat = 0.0
     static let yPadding: CGFloat = 0.0
     static let screenWidth = UIScreen.main.bounds.size.width
-    static let textContentWidth = UIScreen.main.bounds.size.width - BaseTractElement.xMargin * CGFloat(2)
+    static let screenHeight = UIScreen.main.bounds.size.height
     
     // MARK: - Positions and Sizes
     
@@ -141,7 +141,7 @@ class BaseTractElement: UIView {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Setup
