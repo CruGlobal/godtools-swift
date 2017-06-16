@@ -12,9 +12,9 @@ import UIKit
 extension TractLabel {
     
     func buildHorizontalLine() {
-        let xPosition = TractCard.xPaddingConstant
+        let xPosition: CGFloat = 0.0
         let yPosition = self.frame.size.height - 1
-        let width = self.frame.size.width - (TractCard.xPaddingConstant * CGFloat(2))
+        let width = self.elementFrame.width
         let height: CGFloat = 1.0
         
         let horizontalLine = UIView()

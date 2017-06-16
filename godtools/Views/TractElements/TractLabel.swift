@@ -19,10 +19,6 @@ class TractLabel: BaseTractElement {
     
     // MARK: - Positions and Sizes
     
-    override var width: CGFloat {
-        return (self.parent?.width)! - TractLabel.xMarginConstant - TractLabel.xMarginConstant
-    }
-    
     override func textYPadding() -> CGFloat {
         var padding: CGFloat = 15.0
         if BaseTractElement.isFormElement(self) {
@@ -42,29 +38,11 @@ class TractLabel: BaseTractElement {
         return TractLabelProperties.self
     }
     
-    override func textStyle() -> TractTextContentProperties {
-        let properties = super.textStyle()
-        properties.width = self.width
-        properties.xMargin = TractCard.xPaddingConstant
-        
-        if BaseTractElement.isFormElement(self) {
-            properties.font = .gtRegular(size: 16.0)
-            properties.xMargin = CGFloat(0.0)
-            properties.yMargin = CGFloat(0.0)
-            properties.height = CGFloat(22.0)
-        } else {
-            properties.font = .gtSemiBold(size: 18.0)
-            properties.textColor = properties.primaryColor
-        }
-        
-        return properties
-    }
-    
     override func loadFrameProperties() {
-        self.elementFrame.x = TractLabel.xMarginConstant
-        self.elementFrame.width = self.width
-        self.elementFrame.height = self.height
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = self.parent!.elementFrame.width
         self.elementFrame.yMarginTop = TractLabel.yMarginConstant
+        self.elementFrame.xMargin = TractCard.xPaddingConstant
     }
     
     override func render() -> UIView {
@@ -79,6 +57,21 @@ class TractLabel: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        let properties = super.textStyle()
+        properties.width = self.elementFrame.getFrame().width
+        properties.xMargin = 0.0
+        
+        if BaseTractElement.isFormElement(self) {
+            properties.font = .gtRegular(size: 16.0)
+        } else {
+            properties.font = .gtSemiBold(size: 18.0)
+            properties.textColor = properties.primaryColor
+        }
+        
+        return properties
     }
     
     // MARK: - Helpers

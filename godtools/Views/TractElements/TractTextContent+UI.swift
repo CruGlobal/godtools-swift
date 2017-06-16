@@ -30,7 +30,7 @@ extension TractTextContent {
         self.label.sizeToFit()
         
         self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom
-        
+
         self.addSubview(self.label)
     }
     
