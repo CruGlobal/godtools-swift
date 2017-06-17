@@ -27,9 +27,7 @@ class TractParagraph: BaseTractElement {
             buildModalFrame()
         } else {
             buildStandardFrame()
-        }
-        
-        self.backgroundColor = .red
+        }        
     }
     
     override func textStyle() -> TractTextContentProperties {

@@ -26,13 +26,11 @@ class TractTextContent: BaseTractElement {
         textProperties.setupDefaultProperties(properties: getParentProperties())
         textProperties.load(properties)
         self.properties = textProperties
-        self.backgroundColor = .green
     }
     
     override func loadFrameProperties() {
         let properties = textProperties()
-        self.elementFrame.width = properties.width
-        self.elementFrame.xMargin = properties.xMargin
+        self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginTop = properties.yMargin
         self.elementFrame.yMarginBottom = properties.yMargin
     }

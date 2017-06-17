@@ -22,7 +22,6 @@ class TractHero: BaseTractElement {
         self.elementFrame.x = (parentWidth() - width) / CGFloat(2)
         self.elementFrame.width = width
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
-        self.backgroundColor = .yellow
     }
     
     // MARK: - Helpers

@@ -41,7 +41,7 @@ class TractTitle: BaseTractElement {
         var xMarginRight: CGFloat = TractTitle.marginConstant
         var xPosition: CGFloat {
             if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).headerProperties().includesNumber {
-                let difference =  TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
+                let difference =  TractNumber.marginConstant + TractNumber.widthConstant
                 width -= difference
                 return difference
             } else if (BaseTractElement.isModalElement(self)) {
@@ -57,7 +57,6 @@ class TractTitle: BaseTractElement {
         self.elementFrame.width = width
         self.elementFrame.xMarginLeft = xMarginLeft
         self.elementFrame.xMarginRight = xMarginRight
-        self.backgroundColor = .black
     }
     
     // MARK: - Helpers

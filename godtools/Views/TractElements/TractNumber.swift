@@ -13,7 +13,7 @@ class TractNumber: BaseTractElement {
     
     // MARK: Positions constants
     
-    static let widthConstant: CGFloat = 70.0
+    static let widthConstant: CGFloat = 50.0
     static let marginConstant: CGFloat = 8.0
     
     // MARK: - Setup
@@ -47,7 +47,7 @@ class TractNumber: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = TractNumber.marginConstant
-        self.elementFrame.width = self.width
+        self.elementFrame.width = TractNumber.widthConstant
         self.elementFrame.height = self.height
     }
     
