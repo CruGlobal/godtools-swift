@@ -13,39 +13,9 @@ class TractButton: BaseTractElement {
     
     // MARK: Positions constants
     
+    static let standardMarginConstant: CGFloat = 24.0
     static let modalMarginConstant: CGFloat = 50.0
-    
-    // MARK: - Positions and Sizes
-    
-    var xMargin: CGFloat {
-        return TractCard.xPaddingConstant
-    }
-    
-    var yMargin : CGFloat {
-        return buttonProperties().yMargin
-    }
-    
-    var xPosition: CGFloat {
-        return self.xMargin
-    }
-    
-    override var width: CGFloat {
-        return super.width - self.xPosition - self.xMargin
-    }
-    
-    var buttonWidth: CGFloat {
-        return buttonProperties().width > self.width ? self.width : buttonProperties().width
-    }
-    
-    var buttonXPosition: CGFloat {
-        return (self.width - self.buttonWidth) / 2
-    }
-    
-    var textPadding: CGFloat = 8.0
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
-    }
+    static let textPaddingConstant: CGFloat = 8.0
     
     // MARK: - Object properties
     
@@ -79,11 +49,9 @@ class TractButton: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.width = self.width
-        self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = yMargin
-        self.elementFrame.yMarginBottom = yMargin
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = parentWidth()
+        self.elementFrame.yMarginTop = TractButton.standardMarginConstant
     }
     
     override func render() -> UIView {
@@ -108,8 +76,9 @@ class TractButton: BaseTractElement {
     
     override func textStyle() -> TractTextContentProperties {
         let properties = self.properties.getTextProperties()
-        properties.xMargin = self.buttonXPosition
-        properties.yMargin = self.textPadding
+        properties.xMargin = TractButton.textPaddingConstant
+        properties.yMargin = 0.0
+        properties.height = 22.0
         return properties
     }
     

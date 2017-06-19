@@ -23,18 +23,22 @@ extension TractTextContent {
     
     func buildStandardLabel() {
         let properties = textProperties()
+        
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
         self.label.font = properties.font
         self.label.textColor = properties.textColor
-        self.label.lineBreakMode = .byWordWrapping
-        self.label.numberOfLines = 0
-        self.label.sizeToFit()
         
-        properties.height = self.label.frame.size.height
+        if properties.height == 0 {
+            self.label.lineBreakMode = .byWordWrapping
+            self.label.numberOfLines = 0
+            self.label.sizeToFit()
+            properties.height = self.label.frame.size.height
+            self.label.frame = properties.getFrame()
+        }
+        
         self.height = properties.finalHeight
-        self.label.frame = properties.getFrame()
     }
     
     func buildNumberLabel() {

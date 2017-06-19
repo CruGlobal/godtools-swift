@@ -13,25 +13,32 @@ extension TractButton {
     
     func configureAsModalButton() {
         let properties = buttonProperties()
-        self.height = properties.height + (TractButton.modalMarginConstant * CGFloat(2))
+        let width = self.elementFrame.finalWidth() - (TractButton.modalMarginConstant * 2.0)
+        let height = properties.height + TractButton.modalMarginConstant
         self.button.designAsTractModalButton()
-        updateFrameHeight()
-        self.button.frame = CGRect(x: self.buttonXPosition,
+        self.button.frame = CGRect(x: TractButton.modalMarginConstant,
                                    y: TractButton.modalMarginConstant,
-                                   width: self.buttonWidth,
-                                   height: properties.height)
+                                   width: width,
+                                   height: height)
+        
+        
+        self.height = height + TractButton.modalMarginConstant
+        updateFrameHeight()
     }
     
     func configureAsStandardButton() {
         let properties = buttonProperties()
-        self.height = properties.height
+        let width = self.elementFrame.finalWidth() - (TractButton.standardMarginConstant * 2.0)
+        let height = properties.height
         button.cornerRadius = properties.cornerRadius
         button.backgroundColor = properties.backgroundColor
-        updateFrameHeight()
-        self.button.frame = CGRect(x: self.buttonXPosition,
+        self.button.frame = CGRect(x: TractButton.standardMarginConstant,
                                    y: 0.0,
-                                   width: self.buttonWidth,
-                                   height: self.height)
+                                   width: width,
+                                   height: height)
+        
+        self.height = height
+        updateFrameHeight()
         
     }
     
