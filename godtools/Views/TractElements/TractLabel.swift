@@ -32,7 +32,10 @@ class TractLabel: BaseTractElement {
         self.elementFrame.width = self.parentWidth()
         self.elementFrame.yMarginTop = 0.0
         self.elementFrame.yMarginBottom = 8.0
-        self.elementFrame.xMargin = TractCard.xPaddingConstant
+        
+        if !BaseTractElement.isFormElement(self) {
+            self.elementFrame.xMargin = TractCard.xPaddingConstant
+        }
     }
     
     override func render() -> UIView {

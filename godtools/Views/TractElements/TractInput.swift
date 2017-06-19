@@ -11,50 +11,6 @@ import SWXMLHash
 
 class TractInput: BaseTractElement {
     
-    // MARK: - Positions and Sizes
-    
-    var yMargin : CGFloat {
-        return inputProperties().yMargin
-    }
-    
-    var xPosition: CGFloat {
-        return TractCard.xPaddingConstant
-    }
-    
-    var textViewWidth: CGFloat {
-        let properties = inputProperties()
-        return properties.width > self.width ? self.width : properties.width
-    }
-    
-    var textViewHeight: CGFloat {
-        return inputProperties().height
-    }
-    
-    override var width: CGFloat {
-        return super.width - self.xPosition - TractCard.xPaddingConstant
-    }
-    
-    override var height: CGFloat {
-        get {
-            return super.height + self.yMargin + self.textViewHeight
-        }
-        set {
-            super.height = newValue
-        }
-    }
-    
-    var textViewXPosition: CGFloat {
-        return (self.width - self.textViewWidth) / 2
-    }
-    
-    var textViewYPosition: CGFloat {
-        return super.height + self.yMargin
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return (self.parent?.textYPadding())!
-    }
-    
     // MARK: - Object properties
     
     var textField = GTTextField()
@@ -81,21 +37,32 @@ class TractInput: BaseTractElement {
             }
         }
         
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
         buildChildrenForData(elements)
+        buildFrame()
+        updateFrameHeight()
         setupView(properties: contentElements.properties)
     }
     
     override func setupView(properties: [String: Any]) {
-        loadElementProperties(properties)
+        setupTextField()
+    }
+    
+    func setupTextField() {
+        let elementProperties = inputProperties()
         
-        let properties = inputProperties()
+        self.textField.cornerRadius = elementProperties.cornerRadius
+        self.textField.borderColor = elementProperties.color
+        self.textField.borderWidth = elementProperties.borderWidth
+        self.textField.backgroundColor = elementProperties.backgroundColor
+        self.textField.placeholderTranslationKey = elementProperties.placeholder ?? ""
+        self.textField.frame = CGRect(x: 0.0,
+                                      y: self.height,
+                                      width: self.elementFrame.finalWidth(),
+                                      height: elementProperties.height)
         
-        self.textField.cornerRadius = properties.cornerRadius
-        self.textField.borderColor = properties.color
-        self.textField.borderWidth = properties.borderWidth
-        self.textField.backgroundColor = properties.backgroundColor
-        self.textField.placeholderTranslationKey = properties.placeholder ?? ""
-        
+        self.height += elementProperties.height
         updateFrameHeight()
     }
     
@@ -107,22 +74,15 @@ class TractInput: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.width = self.width
-        self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = self.yMargin
-        self.elementFrame.yMarginBottom = self.yMargin
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = parentWidth()
     }
     
-    override func render() -> UIView {
+    override func render() -> UIView {        
         for element in self.elements! {
             self.addSubview(element.render())
         }
         
-        self.textField.frame = CGRect(x: self.textViewXPosition,
-                                      y: self.textViewYPosition,
-                                      width: self.textViewWidth,
-                                      height: self.textViewHeight)
         self.addSubview(self.textField)
         
         TractBindings.addBindings(self)

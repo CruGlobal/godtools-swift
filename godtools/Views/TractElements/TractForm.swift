@@ -19,6 +19,7 @@ class TractForm: BaseTractElement {
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = parentWidth()
+        self.elementFrame.xMargin = TractCard.xPaddingConstant
     }
     
     // MARK: - Helpers
