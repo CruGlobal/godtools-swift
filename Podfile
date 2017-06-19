@@ -13,7 +13,7 @@ target 'godtools' do
   pod 'PromiseKit/Alamofire', '~> 4.1'
   pod 'RealmSwift', '~> 2.8.0'
   pod 'SSZipArchive'
-  pod 'SWXMLHash', '~> 3.0.0'
+  pod 'SWXMLHash', '~> 4.1.0'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Spine', :git => 'https://github.com/CruGlobal/Spine.git', :tag => '0.3.1'
