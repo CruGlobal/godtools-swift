@@ -62,19 +62,20 @@ extension TractCard {
     }
     
     func setupScrollView() {
+        let width = self.elementFrame.finalWidth() - (TractCard.shadowPaddingConstant * CGFloat(2))
+        let xPosition = (self.elementFrame.finalWidth() - width) / CGFloat(2)
         let height = self.bounds.size.height
-        let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
+        let scrollViewFrame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
         
-        let contentHeight = self.internalHeight
-        self.scrollView.contentSize = CGSize(width: self.contentWidth, height: contentHeight)
+        self.scrollView.contentSize = CGSize(width: width, height: self.internalHeight)
         self.scrollView.frame = scrollViewFrame
         self.scrollView.delegate = self
         self.scrollView.backgroundColor = .gtWhite
         self.scrollView.showsVerticalScrollIndicator = false
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
-                                          width: self.contentWidth,
-                                          height: contentHeight)
+                                          width: width,
+                                          height: self.internalHeight)
         self.containerView.backgroundColor = .clear
     }
     

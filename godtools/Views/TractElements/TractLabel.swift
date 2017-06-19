@@ -29,7 +29,7 @@ class TractLabel: BaseTractElement {
     
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
-        self.elementFrame.width = self.parent!.elementFrame.width
+        self.elementFrame.width = self.parentWidth()
         self.elementFrame.yMarginTop = 0.0
         self.elementFrame.xMargin = TractCard.xPaddingConstant
     }

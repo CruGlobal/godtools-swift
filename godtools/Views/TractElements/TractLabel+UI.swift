@@ -12,15 +12,12 @@ import UIKit
 extension TractLabel {
     
     func buildHorizontalLine() {
-        let xPosition: CGFloat = 0.0
-        let yPosition = self.frame.size.height - 1
-        let width = self.elementFrame.finalWidth()
         let height: CGFloat = 1.0
-        
+        let yPosition = self.frame.size.height - height
         let horizontalLine = UIView()
-        horizontalLine.frame = CGRect(x: xPosition,
+        horizontalLine.frame = CGRect(x: 0.0,
                                       y: yPosition,
-                                      width: width,
+                                      width: self.elementFrame.finalWidth(),
                                       height: height)
         horizontalLine.backgroundColor = .gtGreyLight
         self.addSubview(horizontalLine)

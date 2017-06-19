@@ -27,18 +27,6 @@ class TractCard: BaseTractElement {
     
     var yDownPosition: CGFloat = 0.0
     
-    var xPosition: CGFloat {
-        return TractCard.xMarginConstant
-    }
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
-    }
-    
-    var contentWidth: CGFloat {
-        return self.width - (TractCard.shadowPaddingConstant * CGFloat(2))
-    }
-    
     var externalHeight: CGFloat {
         return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
     }
@@ -101,8 +89,9 @@ class TractCard: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.width = self.width
+        self.elementFrame.x = 0
+        self.elementFrame.width = self.parentWidth()
+        self.elementFrame.xMargin = TractCard.xMarginConstant
     }
     
     override func updateFrameHeight() {

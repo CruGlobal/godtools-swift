@@ -24,11 +24,10 @@ extension TractParagraph {
     func buildStandardParagraph() -> TractTextContentProperties {
         var xMargin: CGFloat{
             if BaseTractElement.isCardElement(self) {
-                return TractCard.xPaddingConstant
+                return 0.0
             } else {
                 return BaseTractElement.xMargin
             }
-            
         }
         
         let properties = super.textStyle()
@@ -39,10 +38,18 @@ extension TractParagraph {
     }
     
     func buildStandardFrame() {
+        var xMargin: CGFloat{
+            if BaseTractElement.isCardElement(self) {
+                return TractCard.xPaddingConstant
+            } else {
+                return TractParagraph.marginConstant
+            }
+        }
+        
         self.elementFrame.x = 0
         self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginTop = TractParagraph.marginConstant
-        self.elementFrame.xMargin = TractParagraph.marginConstant
+        self.elementFrame.xMargin = xMargin
     }
     
     func buildModalFrame() {
