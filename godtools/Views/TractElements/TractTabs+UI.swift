@@ -13,7 +13,7 @@ extension TractTabs {
     
     func setupSegmentedControl() {
         let properties = tabsProperties()
-        let width = self.elementFrame.width
+        let width = self.elementFrame.finalWidth()
         let height: CGFloat = 28.0
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         

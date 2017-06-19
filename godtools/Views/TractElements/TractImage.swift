@@ -10,19 +10,10 @@ import UIKit
 
 class TractImage: BaseTractElement {
     
-    // MARK: Positions constants
+     // MARK: Positions constants
     
-    static let xMarginConstant: CGFloat = 0.0
-    
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return CGFloat(0.0)
-    }
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - (self.xPosition * CGFloat(2))
-    }
+    static let xMarginConstant: CGFloat = 8.0
+    static let yMarginConstant: CGFloat = 16.0
     
     // MARK: - Object properties
     
@@ -37,42 +28,38 @@ class TractImage: BaseTractElement {
     
     override func setupView(properties: [String: Any]) {
         self.imageView = UIImageView(image: loadImage(properties: properties))
+        let viewWidth = self.elementFrame.finalWidth()
         var width = self.imageView.frame.size.width
         var height = self.imageView.frame.size.height
         var xPosition: CGFloat = 0.0
-        let yPosition: CGFloat = 0.0
         
-        if width > self.width {
-            height = self.width * height / width
-            width = self.width
+        if width > viewWidth {
+            height = viewWidth * height / width
+            width = viewWidth
         } else {
             switch self.align {
             case "center":
-                xPosition = (self.width - width) / 2
+                xPosition = (viewWidth - width) / 2
             case "left":
                 xPosition = TractImage.xMarginConstant
             case "right":
-                xPosition = self.width - width - TractImage.xMarginConstant
+                xPosition = viewWidth - width - TractImage.xMarginConstant
             default:
-                xPosition = (self.width - width) / 2
+                xPosition = (viewWidth - width) / 2
             }
-            
         }
         
-        self.imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
+        self.imageView.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
         self.addSubview(self.imageView)
         self.height = height
         updateFrameHeight()
     }
     
     override func loadFrameProperties() {
-        let yMarginConstant: CGFloat = 16.0
-        
-        self.elementFrame.x = self.xPosition
-        self.elementFrame.width = self.width
-        self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = yMarginConstant
-        self.elementFrame.yMarginBottom = yMarginConstant
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = parentWidth()
+        self.elementFrame.yMarginTop = TractImage.yMarginConstant
+        self.elementFrame.yMarginBottom = TractImage.yMarginConstant
     }
     
     // MARK: - Helpers
