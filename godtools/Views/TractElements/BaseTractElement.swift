@@ -32,7 +32,7 @@ class BaseTractElement: UIView {
         }
     }
     
-    var maxWidth: CGFloat {
+    func getMaxWidth() -> CGFloat {
         return BaseTractElement.screenWidth
     }
     
@@ -256,7 +256,7 @@ class BaseTractElement: UIView {
         if self.parent != nil {
             return self.parent!.elementFrame.finalWidth()
         } else {
-            return self.maxWidth
+            return getMaxWidth()
         }
     }
     
