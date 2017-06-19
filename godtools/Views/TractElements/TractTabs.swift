@@ -16,12 +16,6 @@ class TractTabs: BaseTractElement {
     static let xMarginConstant: CGFloat = 16.0
     static let yMarginConstant: CGFloat = 16.0
     
-    // MARK: - Positions and Sizes
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - (TractTabs.xMarginConstant * CGFloat(2))
-    }
-    
     // MARK - Setup
     
     var segmentedControl = UISegmentedControl()
@@ -32,8 +26,12 @@ class TractTabs: BaseTractElement {
     }
     
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
-        let contentElements = self.xmlManager.getContentElements(data)
         self.elementFrame.y = yPosition
+        
+        let contentElements = self.xmlManager.getContentElements(data)
+        
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
         
         getTabsLabels(data: data)
         buildTabs()
@@ -46,10 +44,11 @@ class TractTabs: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = TractTabs.xMarginConstant
-        self.elementFrame.width = self.width
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = self.parentWidth()
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant
+        self.elementFrame.xMargin = TractTabs.xMarginConstant
     }
     
     // MARK - Helpers
