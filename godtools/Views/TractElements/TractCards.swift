@@ -24,8 +24,8 @@ class TractCards: BaseTractElement {
     // MARK: - Positions and Sizes
     
     static let minYPosition: CGFloat = 110.0
-    static let constantYPaddingTop: CGFloat = 60
-    static let constantYPaddingBottom: CGFloat = 30
+    static let constantYPaddingTop: CGFloat = 45
+    static let constantYPaddingBottom: CGFloat = 20
     
     override var height: CGFloat {
         get {
