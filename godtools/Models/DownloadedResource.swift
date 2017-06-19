@@ -13,6 +13,7 @@ typealias DownloadedResources = List<DownloadedResource>
 
 class DownloadedResource: Object {
     dynamic var bannerRemoteId: String?
+    dynamic var aboutBannerRemoteId: String?
     dynamic var code = ""
     dynamic var copyrightDescription: String?
     dynamic var name = ""

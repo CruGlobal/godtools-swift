@@ -19,12 +19,15 @@ class GTDataManager: NSObject {
     let bannersPath: URL
     
     let serializer = Serializer()
-    let realm = try! Realm()
+    let realm: Realm
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = documentsPath.appending("/").appending("Resources")
         bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
+    
+        Realm.Configuration.defaultConfiguration = GTDataManager.config()
+        realm = try! Realm()
         
         super.init()
     }
