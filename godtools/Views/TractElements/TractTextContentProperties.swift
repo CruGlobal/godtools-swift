@@ -51,33 +51,15 @@ class TractTextContentProperties: TractProperties {
     
     // MARK: - View Properties
     
-    private var _width: CGFloat?
-    var width: CGFloat {
-        get {
-            if _width == nil {
-                return 0.0
-            } else {
-                return _width! - (self.xMargin * 2)
-            }
-        }
-        set {
-            _width = newValue
-        }
+    var finalWidth: CGFloat {
+        return self.width - (self.xMargin * 2)
+    }
+    var finalHeight: CGFloat {
+        return self.height + (self.yMargin * 2)
     }
     
-    private var _height: CGFloat?
-    var height: CGFloat {
-        get {
-            if _height == nil {
-                return 0.0
-            } else {
-                return _height! + self.yMargin
-            }
-        }
-        set {
-            _height = newValue
-        }
-    }
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
     
     private var _xMargin: CGFloat?
     var xMargin: CGFloat {
@@ -119,6 +101,13 @@ class TractTextContentProperties: TractProperties {
         set {
             _font = newValue
         }
+    }
+    
+    func getFrame() -> CGRect {
+        return CGRect(x: self.xMargin,
+                      y: self.yMargin,
+                      width: self.finalWidth,
+                      height: self.height + self.yMargin)
     }
 
 }

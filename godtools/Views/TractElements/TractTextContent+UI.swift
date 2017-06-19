@@ -23,14 +23,7 @@ extension TractTextContent {
     
     func buildStandardLabel() {
         let properties = textProperties()
-        
-        let originalFrame = getFrame()
-        let labelFrame = CGRect(x: 0.0,
-                                y: self.elementFrame.yMarginTop,
-                                width: originalFrame.size.width,
-                                height: 0.0)
-        
-        self.label = GTLabel(frame: labelFrame)
+        self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
         self.label.font = properties.font
@@ -39,7 +32,9 @@ extension TractTextContent {
         self.label.numberOfLines = 0
         self.label.sizeToFit()
         
-        self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom
+        properties.height = self.label.frame.size.height
+        self.height = properties.finalHeight
+        self.label.frame = properties.getFrame()
     }
     
     func buildNumberLabel() {

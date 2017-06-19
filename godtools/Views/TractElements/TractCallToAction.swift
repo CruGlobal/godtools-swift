@@ -14,7 +14,7 @@ class TractCallToAction: BaseTractElement {
     // MARK: Positions constants
     
     static let yMarginConstant: CGFloat = 8.0
-    static let paddingConstant: CGFloat = 8.0
+    static let paddingConstant: CGFloat = 16.0
     static let minHeight: CGFloat = 80.0
     
     // MARK: - Positions and Sizes
@@ -51,7 +51,7 @@ class TractCallToAction: BaseTractElement {
         
         self.elementFrame.x = 0
         self.elementFrame.y = yPosition
-        self.elementFrame.width = super.parent!.elementFrame.finalWidth()
+        self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
         self.elementFrame.xMargin = TractCallToAction.paddingConstant
     }

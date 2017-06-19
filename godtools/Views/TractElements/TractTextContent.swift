@@ -30,9 +30,11 @@ class TractTextContent: BaseTractElement {
     
     override func loadFrameProperties() {
         let properties = textProperties()
-        self.elementFrame.width = parentWidth()
-        self.elementFrame.yMarginTop = properties.yMargin
-        self.elementFrame.yMarginBottom = properties.yMargin
+        if properties.width == 0 {
+            properties.width = parentWidth()
+        }
+        
+        self.elementFrame.width = properties.width
     }
     
     override func setupView(properties: [String: Any]) {
