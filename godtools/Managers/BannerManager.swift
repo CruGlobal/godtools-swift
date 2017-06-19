@@ -32,7 +32,7 @@ class BannerManager: GTDataManager {
             })
         }
 
-        let aboutBannerAttachment = loadAttachment(remoteId: resource.bannerRemoteId)
+        let aboutBannerAttachment = loadAttachment(remoteId: resource.aboutBannerRemoteId)
 
         if aboutBannerAttachment != nil && bannerHasChanged(attachment: aboutBannerAttachment!) {
             _ = issueDownloadRequest(attachment: aboutBannerAttachment!)
@@ -49,8 +49,8 @@ class BannerManager: GTDataManager {
             })
     }
     
-    func loadFor(_ resource: DownloadedResource) -> UIImage? {
-        guard let remoteId = resource.bannerRemoteId else {
+    func loadFor(remoteId: String?) -> UIImage? {
+        guard let remoteId = remoteId  else {
             return nil
         }
         
