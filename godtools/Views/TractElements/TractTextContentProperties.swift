@@ -93,7 +93,7 @@ class TractTextContentProperties: TractProperties {
     var font: UIFont {
         get {
             if _font == nil {
-                return UIFont.gtRegular(size: 15.0)
+                return UIFont.gtRegular(size: 16.0)
             } else {
                 return _font!
             }
