@@ -71,11 +71,15 @@ class TractTextContentProperties: TractProperties {
             return localTextColor!
         }
         
-        if BaseTractElement.isHeaderElement(element) ||
-            BaseTractElement.isHeadingElement(element) ||
-            BaseTractElement.isTitleElement(element) ||
+        if BaseTractElement.isHeadingElement(element) ||
             BaseTractElement.isLabelElement(element) {
             return primaryColor
+        }
+        
+        if BaseTractElement.isHeaderElement(element) ||
+            BaseTractElement.isTitleElement(element) ||
+            BaseTractElement.isNumberElement(element) {
+            return primaryTextColor
         }
         
         return textColor
