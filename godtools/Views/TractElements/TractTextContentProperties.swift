@@ -15,7 +15,7 @@ class TractTextContentProperties: TractProperties {
     var i18nId: String = ""
     var textAlign: NSTextAlignment = .left
     // textColor
-    // textScale
+    var textScale: CGFloat = 1.0
     var value: String = ""
     
     override func defineProperties() {
@@ -25,13 +25,16 @@ class TractTextContentProperties: TractProperties {
     // MARK: - XML Custom Properties
     
     override func customProperties() -> [String]? {
-        return ["textAlign"]
+        return ["textAlign", "textScale"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
         case "textAlign":
             setupTextAlign(value)
+        case "textScale":
+            setupTextScale(value)
+            
         default: break
         }
     }
@@ -47,6 +50,16 @@ class TractTextContentProperties: TractProperties {
         default:
             self.textAlign = .left
         }
+    }
+    
+    private func setupTextScale(_ string: String) {
+        let stringValue = string as NSString
+        let floatValue = stringValue.floatValue
+        self.textScale = CGFloat(floatValue)
+    }
+    
+    func scaledFont() -> UIFont {
+        return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
     }
     
     // MARK: - View Properties
