@@ -18,10 +18,6 @@ class TractHeaderProperties: TractProperties {
         self.properties = ["backgroundColor"]
     }
     
-    override func setupDefaultProperties() {
-        self.textColor = .gtWhite
-    }
-    
     // MARK: - View Properties
     
     var includesNumber = false

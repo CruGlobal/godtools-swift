@@ -28,7 +28,7 @@ extension TractTextContent {
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
         self.label.font = properties.scaledFont()
-        self.label.textColor = properties.textColor
+        self.label.textColor = properties.colorFor(self.parent!)
         
         if properties.height == 0 {
             self.label.lineBreakMode = .byWordWrapping
@@ -54,7 +54,7 @@ extension TractTextContent {
         self.label.text = properties.value
         self.label.textAlignment = .center
         self.label.font = properties.scaledFont()
-        self.label.textColor = properties.textColor
+        self.label.textColor = properties.colorFor(self.parent!)
         self.label.numberOfLines = 1
         
         self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom

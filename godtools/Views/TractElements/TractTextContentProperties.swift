@@ -14,7 +14,7 @@ class TractTextContentProperties: TractProperties {
     
     var i18nId: String = ""
     var textAlign: NSTextAlignment = .left
-    // textColor
+    var localTextColor: UIColor?
     var textScale: CGFloat = 1.0
     var value: String = ""
     
@@ -25,7 +25,7 @@ class TractTextContentProperties: TractProperties {
     // MARK: - XML Custom Properties
     
     override func customProperties() -> [String]? {
-        return ["textAlign", "textScale"]
+        return ["textAlign", "textScale", "textColor"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
@@ -34,7 +34,8 @@ class TractTextContentProperties: TractProperties {
             setupTextAlign(value)
         case "textScale":
             setupTextScale(value)
-            
+        case "textColor":
+            self.localTextColor = value.getRGBAColor()
         default: break
         }
     }
@@ -65,6 +66,20 @@ class TractTextContentProperties: TractProperties {
         return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
     }
     
+    func colorFor(_ element: BaseTractElement) -> UIColor {
+        if localTextColor != nil {
+            return localTextColor!
+        }
+        
+        if BaseTractElement.isHeaderElement(element) ||
+            BaseTractElement.isHeadingElement(element) ||
+            BaseTractElement.isTitleElement(element) ||
+            BaseTractElement.isLabelElement(element) {
+            return primaryColor
+        }
+        
+        return textColor
+    }
     // MARK: - View Properties
     
     var finalWidth: CGFloat {
