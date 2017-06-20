@@ -14,24 +14,28 @@ class TractTextContentProperties: TractProperties {
     
     var i18nId: String = ""
     var textAlign: NSTextAlignment = .left
-    // textColor
+    var localTextColor: UIColor?
     var textScale: CGFloat = 1.0
     var value: String = ""
     
     override func defineProperties() {
-        self.properties = ["i18nId", "textScale", "value"]
+        self.properties = ["i18nId", "value"]
     }
     
     // MARK: - XML Custom Properties
     
     override func customProperties() -> [String]? {
-        return ["textAlign"]
+        return ["textAlign", "textScale", "textColor"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
         case "textAlign":
             setupTextAlign(value)
+        case "textScale":
+            setupTextScale(value)
+        case "textColor":
+            self.localTextColor = value.getRGBAColor()
         default: break
         }
     }
@@ -49,6 +53,37 @@ class TractTextContentProperties: TractProperties {
         }
     }
     
+    private func setupTextScale(_ string: String) {
+        let stringValue = string as NSString
+        let floatValue = stringValue.floatValue
+        self.textScale = CGFloat(floatValue)
+    }
+    
+    func scaledFont() -> UIFont {
+        if textScale == 1.0 {
+            return font
+        }
+        return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
+    }
+    
+    func colorFor(_ element: BaseTractElement) -> UIColor {
+        if localTextColor != nil {
+            return localTextColor!
+        }
+        
+        if BaseTractElement.isHeadingElement(element) ||
+            BaseTractElement.isLabelElement(element) {
+            return primaryColor
+        }
+        
+        if BaseTractElement.isHeaderElement(element) ||
+            BaseTractElement.isTitleElement(element) ||
+            BaseTractElement.isNumberElement(element) {
+            return primaryTextColor
+        }
+        
+        return textColor
+    }
     // MARK: - View Properties
     
     var finalWidth: CGFloat {
@@ -93,7 +128,7 @@ class TractTextContentProperties: TractProperties {
     var font: UIFont {
         get {
             if _font == nil {
-                return UIFont.gtRegular(size: 16.0)
+                return UIFont.gtRegular(size: 18.0)
             } else {
                 return _font!
             }

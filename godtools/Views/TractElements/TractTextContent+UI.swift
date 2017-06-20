@@ -27,8 +27,8 @@ extension TractTextContent {
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
-        self.label.font = properties.font
-        self.label.textColor = properties.textColor
+        self.label.font = properties.scaledFont()
+        self.label.textColor = properties.colorFor(self.parent!)
         
         if properties.height == 0 {
             self.label.lineBreakMode = .byWordWrapping
@@ -53,11 +53,11 @@ extension TractTextContent {
         self.label = GTLabel(frame: labelFrame)
         self.label.text = properties.value
         self.label.textAlignment = .center
-        self.label.font = properties.font
-        self.label.textColor = properties.textColor
+        self.label.font = properties.scaledFont()
+        self.label.textColor = properties.colorFor(self.parent!)
         self.label.numberOfLines = 1
         
         self.height = self.label.frame.size.height + self.elementFrame.yMarginBottom
     }
-    
+
 }
