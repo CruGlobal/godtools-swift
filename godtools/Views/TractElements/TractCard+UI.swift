@@ -20,7 +20,12 @@ extension TractCard {
         }
         
         let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
-        guard let image = UIImage(named: imagePath) else {
+        
+        guard let data = NSData(contentsOfFile: imagePath) else {
+            return
+        }
+        
+        guard let image = UIImage(data: data as Data) else {
             return
         }
         
