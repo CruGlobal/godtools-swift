@@ -16,6 +16,10 @@ class TractProperties: XMLNode {
     var textScale: CGFloat = 1.0
     var textSize: Int = 18
     
+    var finalTextSize: CGFloat {
+        return CGFloat(self.textSize) * self.textScale
+    }
+    
     required override init() {
         super.init()
     }
