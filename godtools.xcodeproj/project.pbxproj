@@ -164,6 +164,7 @@
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
 		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
+		ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA2C151EF9B4770067ED78 /* TractResource.swift */; };
 		ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2E2991EE9FB0600346FBE /* XMLManager.swift */; };
 		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
@@ -366,6 +367,7 @@
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
 		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
+		ECAA2C151EF9B4770067ED78 /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractResource.swift; path = TractClasses/TractResource.swift; sourceTree = "<group>"; };
 		ECB2E2991EE9FB0600346FBE /* XMLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLManager.swift; path = XMLManagement/XMLManager.swift; sourceTree = "<group>"; };
 		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
@@ -896,6 +898,7 @@
 				ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */,
 				ECBE2E6A1EF1053000A13849 /* TractProperties.swift */,
 				ECC194B51EEAF15500A56332 /* ManifestProperties.swift */,
+				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
 			);
 			name = TractClasses;
 			sourceTree = "<group>";
@@ -1273,6 +1276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,

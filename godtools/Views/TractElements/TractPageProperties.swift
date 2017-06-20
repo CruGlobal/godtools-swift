@@ -16,7 +16,7 @@ class TractPageProperties: TractProperties {
     // primaryTextColor
     // textColor
     var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
-    var backgroundImage: UIImage?
+    var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var cardTextColor: UIColor?

@@ -66,11 +66,6 @@ class XMLManager: NSObject {
         case is UIColor:
             let newValue = value.getRGBAColor()
             object.setValue(newValue, forKey: propertyName)
-        case is UIImage:
-            guard let image = UIImage(named: value) else {
-                return
-            }
-            object.setValue(image, forKey: propertyName)
         default:
             break
         }

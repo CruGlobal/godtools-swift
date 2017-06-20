@@ -14,11 +14,18 @@ extension TractCards {
     func setupBackground() {
         self.backgroundColor = .clear
         
-        guard let image = self.page?.pageProperties().backgroundImage else {
+        let elementProperties = self.page!.pageProperties()
+        
+        if elementProperties.backgroundImage == "" {
             return
         }
-        let imageView = UIImageView(image: image)
         
+        let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
+        guard let image = UIImage(named: imagePath) else {
+            return
+        }
+        
+        let imageView = UIImageView(image: image)
         let viewWidth = self.frame.size.width
         let viewHeight = self.frame.size.height
         var width = image.size.width

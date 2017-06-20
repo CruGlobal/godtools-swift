@@ -60,6 +60,12 @@ extension TractManager {
             }
         }
         
+        for child in manifest["resources"].children {
+            let filename = child.element?.attribute(by: "filename")?.text
+            let src = child.element?.attribute(by: "src")?.text
+            manifestProperties.resources[filename!] = src
+        }
+        
         return (pages, manifestProperties)
     }
     

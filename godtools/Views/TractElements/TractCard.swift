@@ -78,6 +78,7 @@ class TractCard: BaseTractElement {
         self.addSubview(self.shadowView)
         self.addSubview(self.scrollView)
         setupTransparentView()
+        setupBackground()
         
         TractBindings.addBindings(self)
         return self

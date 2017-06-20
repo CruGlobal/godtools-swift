@@ -11,11 +11,12 @@ import UIKit
 class ManifestProperties: TractProperties {
     
     var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
-    var backgroundImage: UIImage?
+    var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
     var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
+    var resources = [String: String]()
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "navBarColor",
@@ -31,6 +32,8 @@ class ManifestProperties: TractProperties {
         case "backgroundImageAlign":
             setupImageAligns(kind: value)
         case "backgroundImageScaleType":
+            setupImageScaleType(kind: value)
+        case "resources":
             setupImageScaleType(kind: value)
         default: break
         }
@@ -48,6 +51,13 @@ class ManifestProperties: TractProperties {
     
     func setupImageScaleType(kind: String) {
         self.backgroundImageScaleType = TractImageConfig.getImageScaleType(string: kind)
+    }
+    
+    func getResourceForFile(filename: String) -> String {
+        guard let image = self.resources[filename] else {
+            return ""
+        }
+        return image
     }
     
 }

@@ -74,7 +74,23 @@ class BaseTractElement: UIView {
     var elements:[BaseTractElement]?
     var didFindCallToAction: Bool = false
     
-    var manifestProperties = ManifestProperties()
+    var _manifestProperties: ManifestProperties = ManifestProperties()
+    var manifestProperties: ManifestProperties {
+        get {
+            if self.parent != nil {
+                return self.parent!.manifestProperties
+            } else {
+                return self._manifestProperties
+            }
+        }
+        set {
+            if self.parent != nil {
+                self.parent!.manifestProperties = newValue
+            } else {
+                self._manifestProperties = newValue
+            }
+        }
+    }
     
     var horizontalContainer: Bool {
         return false
@@ -114,6 +130,7 @@ class BaseTractElement: UIView {
     init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
+        self.manifestProperties = manifestProperties
         self.tractConfigurations = configurations
         
         if self.isKind(of: TractPage.self) {
