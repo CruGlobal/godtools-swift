@@ -59,6 +59,9 @@ class TractTextContentProperties: TractProperties {
     }
     
     func scaledFont() -> UIFont {
+        if textScale == 1.0 {
+            return font
+        }
         return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
     }
     
