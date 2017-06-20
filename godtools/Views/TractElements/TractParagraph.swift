@@ -13,7 +13,7 @@ class TractParagraph: BaseTractElement {
     
     // MARK: Positions constants
     
-    static let marginConstant: CGFloat = 8.0
+    static let marginConstant: CGFloat = 0.0
     
     
     // MARK: - Setup
