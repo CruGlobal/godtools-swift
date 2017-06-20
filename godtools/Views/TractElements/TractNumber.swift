@@ -24,7 +24,7 @@ class TractNumber: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         self.properties = propertiesKind().init()
-        self.properties.setupDefaultProperties(properties: getParentProperties())
+        self.properties.setupParentProperties(properties: getParentProperties())
         self.properties.load(properties)
     }
     

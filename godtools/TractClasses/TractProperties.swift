@@ -13,6 +13,7 @@ class TractProperties: XMLNode {
     var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
     var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
     var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    var textScale: Int = 1
     
     required override init() {
         super.init()
@@ -20,10 +21,12 @@ class TractProperties: XMLNode {
     
     override func getProperties() -> [String] {
         defineProperties()
-        return ["primaryColor", "primaryTextColor", "textColor"] + self.properties
+        return ["primaryColor", "primaryTextColor", "textColor", "textScale"] + self.properties
     }
     
-    func setupDefaultProperties(properties: TractProperties) {
+    func setupDefaultProperties() { }
+    
+    func setupParentProperties(properties: TractProperties) {
         let set1 = Set(self.getProperties().map { $0 })
         let set2 = Set(properties.getProperties().map { $0 })
         let commonProperties = set1.intersection(set2)

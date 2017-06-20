@@ -15,11 +15,11 @@ class TractTextContentProperties: TractProperties {
     var i18nId: String = ""
     var textAlign: NSTextAlignment = .left
     // textColor
-    var textScale: CGFloat = 1.0
+    // textScale
     var value: String = ""
     
     override func defineProperties() {
-        self.properties = ["i18nId", "textScale", "value"]
+        self.properties = ["i18nId", "value"]
     }
     
     // MARK: - XML Custom Properties
