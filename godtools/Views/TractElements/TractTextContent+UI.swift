@@ -23,12 +23,11 @@ extension TractTextContent {
     
     func buildStandardLabel() {
         let properties = textProperties()
-        let font = UIFont (name: properties.font.fontName, size: properties.finalTextSize)
         
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
-        self.label.font = font
+        self.label.font = properties.font
         self.label.textColor = properties.textColor
         
         if properties.height == 0 {
