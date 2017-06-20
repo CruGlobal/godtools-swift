@@ -13,7 +13,6 @@ extension TractParagraph {
     
     func buildModalParagraph() -> TractTextContentProperties {
         let properties = super.textStyle()
-        properties.font = .gtRegular(size: 18.0)
         properties.width = self.elementFrame.finalWidth()
         properties.xMargin = BaseTractElement.xMargin
         properties.textColor = .gtWhite
@@ -32,7 +31,6 @@ extension TractParagraph {
         
         let properties = super.textStyle()
         properties.width = self.elementFrame.finalWidth()
-        properties.font = .gtRegular(size: 18.0)
         properties.xMargin = xMargin
         return properties
     }
