@@ -21,6 +21,7 @@ class TractModal: BaseTractElement {
     }
     
     override func setupView(properties: [String: Any]) {
+        self.height = BaseTractElement.screenHeight
         super.setupView(properties: properties)
         TractBindings.addBindings(self)
     }
@@ -38,7 +39,6 @@ class TractModal: BaseTractElement {
         self.elementFrame.x = 0.0
         self.elementFrame.y = 0.0
         self.elementFrame.width = getMaxWidth()
-        self.elementFrame.height = getMaxHeight()
     }
     
     override func render() -> UIView {

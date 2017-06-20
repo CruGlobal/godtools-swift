@@ -13,7 +13,7 @@ extension TractModal {
     
     override func receiveMessage() {
         _ = render()
-        
+                
         let currentWindow = UIApplication.shared.keyWindow
         currentWindow?.addSubview(self)
         
