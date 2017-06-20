@@ -57,7 +57,7 @@ class DownloadedResource: Object {
                 return name
             }
             
-            return translation.localizedName! 
+            return translation.localizedName ?? name
         }
         
         return name
