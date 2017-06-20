@@ -255,7 +255,8 @@ class BaseTractElement: UIView {
     
     func loadElementProperties(_ properties: [String: Any]) {
         self.properties = propertiesKind().init()
-        self.properties.setupDefaultProperties(properties: getParentProperties())
+        self.properties.setupParentProperties(properties: getParentProperties())
+        self.properties.setupDefaultProperties()
         self.properties.load(properties)
     }
     

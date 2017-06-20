@@ -9,5 +9,11 @@
 import UIKit
 
 class TractHeadingProperties: TractProperties {
-
+    let defaultHeadingFontSize: CGFloat = 30.0
+    
+    override func getTextProperties() -> TractTextContentProperties {
+        let properties = super.getTextProperties()
+        properties.font = .gtRegular(size: defaultHeadingFontSize)
+        return properties
+    }
 }

@@ -23,7 +23,6 @@ class TractHeader: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String : Any]) {
         super.loadElementProperties(properties)
-        self.properties.textColor = .gtWhite
     }
     
     override func loadFrameProperties() {

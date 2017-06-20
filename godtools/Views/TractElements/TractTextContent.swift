@@ -23,7 +23,7 @@ class TractTextContent: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         let textProperties = self.parent!.textStyle()
-        textProperties.setupDefaultProperties(properties: getParentProperties())
+        textProperties.setupParentProperties(properties: getParentProperties())
         textProperties.load(properties)
         self.properties = textProperties
     }

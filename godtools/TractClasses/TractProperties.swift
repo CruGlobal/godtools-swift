@@ -9,6 +9,7 @@
 import UIKit
 
 class TractProperties: XMLNode {
+    let defaultBodyFontSize: CGFloat = 18.0
     
     var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
     var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
@@ -23,7 +24,9 @@ class TractProperties: XMLNode {
         return ["primaryColor", "primaryTextColor", "textColor"] + self.properties
     }
     
-    func setupDefaultProperties(properties: TractProperties) {
+    func setupDefaultProperties() { }
+    
+    func setupParentProperties(properties: TractProperties) {
         let set1 = Set(self.getProperties().map { $0 })
         let set2 = Set(properties.getProperties().map { $0 })
         let commonProperties = set1.intersection(set2)
@@ -39,6 +42,7 @@ class TractProperties: XMLNode {
         properties.primaryColor = self.primaryColor
         properties.primaryTextColor = self.primaryTextColor
         properties.textColor = self.textColor
+        properties.font = .gtRegular(size: defaultBodyFontSize)
         return properties
     }
 
