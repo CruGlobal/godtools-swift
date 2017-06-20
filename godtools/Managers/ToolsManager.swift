@@ -120,7 +120,7 @@ extension ToolsManager: UITableViewDataSource {
         cell.configure(resource: resource,
                        primaryLanguage: languagesManager.loadPrimaryLanguageFromDisk(),
                        parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
-                       banner: BannerManager().loadFor(resource),
+                       banner: BannerManager().loadFor(remoteId: resource.bannerRemoteId),
                        delegate: self)
                 
         return cell

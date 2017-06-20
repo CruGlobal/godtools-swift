@@ -43,7 +43,7 @@ class ToolDetailViewController: BaseViewController {
             .joined(separator: ", ")
         
         self.displayButton()
-        self.bannerImageView.image = BannerManager().loadFor(resource!)
+        self.bannerImageView.image = BannerManager().loadFor(remoteId: resource!.aboutBannerRemoteId)
     }
     
     private func displayButton() {
