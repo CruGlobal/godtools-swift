@@ -16,7 +16,7 @@ class TractCardProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var backgroundColor: UIColor = UIColor()
+    var backgroundColor: UIColor = .gtWhite
     var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill

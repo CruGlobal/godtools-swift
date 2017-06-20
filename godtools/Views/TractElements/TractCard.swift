@@ -44,6 +44,7 @@ class TractCard: BaseTractElement {
     
     var shadowView = UIView()
     let scrollView = UIScrollView()
+    let backgroundView = UIView()
     let containerView = UIView()
     var cardsParentView: TractCards {
         return self.parent as! TractCards
@@ -76,7 +77,9 @@ class TractCard: BaseTractElement {
         
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)
+        self.addSubview(self.backgroundView)
         self.addSubview(self.scrollView)
+        
         setupTransparentView()
         setupBackground()
         

@@ -12,8 +12,6 @@ import UIKit
 extension TractCard {
     
     func setupBackground() {
-        self.backgroundColor = .clear
-        
         let elementProperties = self.cardProperties()
         if elementProperties.backgroundImage == "" {
             return
@@ -47,8 +45,7 @@ extension TractCard {
         imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         imageView.contentMode = .scaleAspectFit
         
-        self.addSubview(imageView)
-        self.sendSubview(toBack: imageView)
+        self.backgroundView.addSubview(imageView)
     }
     
     func setupTransparentView() {
@@ -81,8 +78,11 @@ extension TractCard {
         self.scrollView.contentSize = CGSize(width: width, height: self.internalHeight)
         self.scrollView.frame = scrollViewFrame
         self.scrollView.delegate = self
-        self.scrollView.backgroundColor = .gtWhite
+        self.scrollView.backgroundColor = .clear
         self.scrollView.showsVerticalScrollIndicator = false
+        
+        self.backgroundView.frame = scrollViewFrame
+        
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
                                           width: width,
@@ -92,7 +92,7 @@ extension TractCard {
     
     func setBordersAndShadows() {
         self.shadowView.frame = self.bounds
-        self.shadowView.backgroundColor = .white
+        self.shadowView.backgroundColor = cardBackgroundColor()
         let shadowLayer = self.shadowView.layer
         shadowLayer.cornerRadius = 3.0
         shadowLayer.shadowColor = UIColor.black.cgColor
@@ -100,6 +100,11 @@ extension TractCard {
         shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         shadowLayer.shadowOpacity = 0.4
         shadowLayer.shouldRasterize = true
+    }
+    
+    func cardBackgroundColor() -> UIColor {
+        let elementProperties = cardProperties()
+        return elementProperties.backgroundColor
     }
     
 }
