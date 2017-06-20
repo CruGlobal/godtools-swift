@@ -14,7 +14,7 @@ extension TractButton {
     func configureAsModalButton() {
         let properties = buttonProperties()
         let width = self.elementFrame.finalWidth() - (TractButton.modalMarginConstant * 2.0)
-        let height = properties.height + TractButton.modalMarginConstant
+        let height = properties.height
         self.button.designAsTractModalButton()
         self.button.frame = CGRect(x: TractButton.modalMarginConstant,
                                    y: TractButton.modalMarginConstant,

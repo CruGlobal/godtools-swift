@@ -13,7 +13,7 @@ extension TractModal {
     
     func renderModalElements() {
         let properties = modalProperties()
-        let modalHeight = getMaxHeight()
+        let modalHeight = BaseTractElement.screenHeight
         var startYPosition:CGFloat = 0
         
         if properties.alreadyRendered == false {

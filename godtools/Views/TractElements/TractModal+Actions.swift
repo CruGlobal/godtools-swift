@@ -13,7 +13,12 @@ extension TractModal {
     
     override func receiveMessage() {
         _ = render()
-                
+        
+        self.frame = CGRect(x: 0.0,
+                            y: 0.0,
+                            width: BaseTractElement.screenWidth,
+                            height: BaseTractElement.screenHeight)
+        
         let currentWindow = UIApplication.shared.keyWindow
         currentWindow?.addSubview(self)
         
