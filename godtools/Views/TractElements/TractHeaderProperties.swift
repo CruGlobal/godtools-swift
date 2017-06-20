@@ -19,7 +19,6 @@ class TractHeaderProperties: TractProperties {
     }
     
     override func setupDefaultProperties() {
-        self.textScale = 3
         self.textColor = .gtWhite
     }
     
