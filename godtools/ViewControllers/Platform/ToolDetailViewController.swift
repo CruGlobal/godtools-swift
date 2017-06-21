@@ -33,10 +33,13 @@ class ToolDetailViewController: BaseViewController {
     // MARK: Present data
     
     fileprivate func displayData() {
+        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
-        self.titleLabel.text = resource!.localizedName(language: LanguagesManager().loadPrimaryLanguageFromDisk())
-
+        self.titleLabel.text = resource!.localizedName(language: primaryLanguage)
+        self.descriptionLabel.text = loadDescription()
+        
         self.languagesLabel.text = Array(resource!.translations)
             .map({ "\($0.language!.localizedName)"})
             .sorted(by: { $0 < $1 })
@@ -52,6 +55,22 @@ class ToolDetailViewController: BaseViewController {
         } else {
             mainButton.designAsDownloadButton()
         }
+    }
+    
+    private func loadDescription() -> String {
+        var language: Language? = nil
+        
+        language = LanguagesManager().loadPrimaryLanguageFromDisk()
+        
+        if language == nil {
+            language = LanguagesManager().loadFromDisk(code: "en")!
+        }
+        
+        if language == nil {
+            return ""
+        }
+        
+        return resource?.getTranslationForLanguage(language!)?.localizedDescription ?? ""
     }
     
     private func registerForDownloadProgressNotifications() {
