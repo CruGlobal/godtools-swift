@@ -15,11 +15,6 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
-    func condenseWhitespace() -> String {
-        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
-        return components.filter { !$0.isEmpty }.joined(separator: " ")
-    }
-    
     func getRGBAColor() -> UIColor {
         let components = self.components(separatedBy: ",")
         var values = [CGFloat]()

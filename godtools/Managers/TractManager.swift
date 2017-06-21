@@ -83,12 +83,7 @@ extension TractManager {
         var xml: XMLIndexer?
         do {
             let content = try String(contentsOfFile: file!, encoding: String.Encoding.utf8)
-            
-            let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
-            let range = NSMakeRange(0, content.characters.count)
-            let modString = regex.stringByReplacingMatches(in: content, options: [], range: range, withTemplate: "")
-            
-            xml = SWXMLHash.parse(modString.condenseWhitespace())
+            xml = SWXMLHash.parse(content)
         }
         catch {
             Crashlytics().recordError(error,
