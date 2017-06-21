@@ -48,26 +48,31 @@ class XMLManager: NSObject {
             return
         }
         
-        if !object.getProperties().contains(propertyName) {
+        var objectMirror: Mirror? = Mirror(reflecting: object)
+        var matchedProperty: Mirror.Child?
+        
+        repeat {
+            matchedProperty = objectMirror?.children.filter( { $0.label == propertyName }).first
+            objectMirror = objectMirror?.superclassMirror
+        } while (matchedProperty == nil && objectMirror != nil)
+        
+        if matchedProperty == nil {
             return
         }
         
-        let property = object.value(forKey: propertyName)
+        let propertyType = type(of: matchedProperty!.value)
         
-        switch property {
-        case is String:
+        if propertyType == String.self || propertyType == Optional<String>.self {
             object.setValue(value, forKey: propertyName)
-        case is CGFloat:
+        } else if propertyType == CGFloat.self {
             guard let newValue = NumberFormatter().number(from: value) else { return }
             object.setValue(newValue, forKey: propertyName)
-        case is Bool:
+        } else if propertyType == Bool.self {
             let newValue = value == "true" ? true : false
             object.setValue(newValue, forKey: propertyName)
-        case is UIColor:
+        } else if propertyType == UIColor.self || propertyType == Optional<UIColor>.self || String(describing: propertyType) == "UIDeviceRGBColor" {
             let newValue = value.getRGBAColor()
             object.setValue(newValue, forKey: propertyName)
-        default:
-            break
         }
     }
     
