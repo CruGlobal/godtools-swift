@@ -19,7 +19,7 @@ class TractCardProperties: TractProperties {
     var backgroundColor: UIColor = .gtWhite
     var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
-    var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
+    var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
     // textColor
     var hidden = false
     var listeners: String = ""

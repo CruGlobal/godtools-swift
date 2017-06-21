@@ -18,7 +18,7 @@ class TractPageProperties: TractProperties {
     var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
     var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
-    var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
+    var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
     var cardTextColor: UIColor?
     var cardBackgroundColor: UIColor?
     var listeners: String = ""
