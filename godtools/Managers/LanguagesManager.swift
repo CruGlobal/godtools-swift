@@ -28,6 +28,10 @@ class LanguagesManager: GTDataManager {
         return findEntityByRemoteId(Language.self, remoteId: id)
     }
     
+    func loadFromDisk(code: String) -> Language? {
+        return findEntity(Language.self, byAttribute: "code", withValue: code)
+    }
+    
     func loadPrimaryLanguageFromDisk() -> Language? {
         if GTSettings.shared.primaryLanguageId == nil {
             return nil
