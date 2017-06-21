@@ -72,19 +72,19 @@ class TractTextContentProperties: TractProperties {
         }
         
         if BaseTractElement.isElement(element, kindOf: TractCard.self) {
+            if BaseTractElement.isElement(element, kindOf: TractLabel.self) {
+                return primaryColor
+            }
             if pageProperties.cardTextColor != nil {
                 return pageProperties.cardTextColor!
             }
         }
         
-        if BaseTractElement.isElement(element, kindOf: TractHeading.self) ||
-            BaseTractElement.isLabelElement(element) {
+        if BaseTractElement.isElement(element, kindOf: TractHeading.self) {
             return primaryColor
         }
         
-        if BaseTractElement.isHeaderElement(element) ||
-            BaseTractElement.isTitleElement(element) ||
-            BaseTractElement.isNumberElement(element) {
+        if BaseTractElement.isElement(element, kindOf: TractHeader.self) {
             return primaryTextColor
         }
         
