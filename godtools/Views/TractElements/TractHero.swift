@@ -29,18 +29,23 @@ class TractHero: BaseTractElement {
     }
     
     override func render() -> UIView {
-        updateHeroHeight()
-        setupScrollView()
-        
-        for element in self.elements! {
-            self.containerView.addSubview(element.render())
+        let followingElement = getFollowingElement()
+        if followingElement != nil && followingElement!.isKind(of: TractCards.self) {
+            updateHeroHeight()
+            setupScrollView()
+            
+            for element in self.elements! {
+                self.containerView.addSubview(element.render())
+            }
+            
+            self.scrollView.addSubview(self.containerView)
+            self.addSubview(self.scrollView)
+            
+            TractBindings.addBindings(self)
+            return self
+        } else {
+            return super.render()
         }
-        
-        self.scrollView.addSubview(self.containerView)
-        self.addSubview(self.scrollView)
-        
-        TractBindings.addBindings(self)
-        return self
     }
     
     func updateHeroHeight() {
