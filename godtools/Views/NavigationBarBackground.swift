@@ -27,6 +27,6 @@ class NavigationBarBackground {
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        return image
+        return image.resizableImage(withCapInsets: .zero, resizingMode: .stretch)
     }
 }
