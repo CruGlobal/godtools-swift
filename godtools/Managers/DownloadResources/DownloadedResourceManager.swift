@@ -76,7 +76,7 @@ class DownloadedResourceManager: GTDataManager {
                     cachedAttachment.resource = cachedResource
                 }
                 
-                if cachedResource.bannerRemoteId != nil {
+                if cachedResource.bannerRemoteId != nil || cachedResource.aboutBannerRemoteId != nil {
                     _ = BannerManager().downloadFor(cachedResource)
                 }
                 
@@ -122,6 +122,7 @@ class DownloadedResourceManager: GTDataManager {
         cachedResource.name = remoteResource.name!
         cachedResource.copyrightDescription = remoteResource.copyrightDescription
         cachedResource.bannerRemoteId = remoteResource.bannerId
+        cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId
         cachedResource.totalViews = remoteResource.totalViews!.int32Value
         
         return cachedResource

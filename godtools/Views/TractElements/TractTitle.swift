@@ -15,52 +15,54 @@ class TractTitle: BaseTractElement {
     
     static let marginConstant: CGFloat = 8.0
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).includesNumber {
-            return TractNumber.marginConstant + TractNumber.widthConstant + TractTitle.marginConstant
-        } else if (BaseTractElement.isModalElement(self)) {
-            return (self.parent!.width - TractModal.contentWidth) / CGFloat(2)
-        } else {
-            return TractTitle.marginConstant
-        }
-    }
-    var yPosition: CGFloat {
-        return self.yStartPosition
-    }
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - TractTitle.marginConstant
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
     // MARK: - Setup
     
-    override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.color = .gtWhite
-        
-        if BaseTractElement.isModalElement(self) {
-            textStyle.font = .gtThin(size: 54.0)
-            textStyle.width = TractModal.contentWidth
-            textStyle.align = .center
-        } else {
-            textStyle.font = .gtThin(size: 18.0)
-            textStyle.width = self.width
-        }
-        
-        return textStyle
+    override func propertiesKind() -> TractProperties.Type {
+        return TractTitleProperties.self
     }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+    override func textStyle() -> TractTextContentProperties {
+        let properties = super.textStyle()
+        
+        if BaseTractElement.isModalElement(self) {
+            properties.font = .gtThin(size: 54.0)
+            properties.width = TractModal.contentWidth
+            properties.textAlign = .center
+        } else {
+            properties.font = .gtThin(size: 18.0)
+        }
+        
+        return properties
+    }
+    
+    override func loadFrameProperties() {
+        var width = self.parent!.elementFrame.finalWidth()
+        var xMarginLeft: CGFloat = TractTitle.marginConstant
+        var xMarginRight: CGFloat = TractTitle.marginConstant
+        var xPosition: CGFloat {
+            if (self.parent?.isKind(of: TractHeader.self))! && (self.parent as! TractHeader).headerProperties().includesNumber {
+                let difference =  TractNumber.marginConstant + TractNumber.widthConstant
+                width -= difference
+                return difference
+            } else if (BaseTractElement.isModalElement(self)) {
+                xMarginLeft = 0.0
+                xMarginRight = 0.0
+                return (width - TractModal.contentWidth) / CGFloat(2)
+            } else {
+                return 0
+            }
+        }
+        
+        self.elementFrame.x = xPosition
+        self.elementFrame.width = width
+        self.elementFrame.xMarginLeft = xMarginLeft
+        self.elementFrame.xMarginRight = xMarginRight
+    }
+    
+    // MARK: - Helpers
+    
+    func titleProperties() -> TractTitleProperties {
+        return self.properties as! TractTitleProperties
     }
 
 }

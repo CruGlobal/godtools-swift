@@ -10,26 +10,22 @@ import UIKit
 
 class TractForm: BaseTractElement {
     
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return 0.0
-    }
-    var yPosition: CGFloat {
-        return self.yStartPosition
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
     // MARK - Setup
-        
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractFormProperties.self
+    }
+    
+    override func loadFrameProperties() {
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = parentWidth()
+        self.elementFrame.xMargin = TractCard.xPaddingConstant
+    }
+    
+    // MARK: - Helpers
+    
+    func formProperties() -> TractFormProperties {
+        return self.properties as! TractFormProperties
     }
     
 }

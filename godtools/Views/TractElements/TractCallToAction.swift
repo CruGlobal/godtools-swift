@@ -13,18 +13,16 @@ class TractCallToAction: BaseTractElement {
     
     // MARK: Positions constants
     
-    static let yMarginConstant: CGFloat = 16.0
+    static let yMarginConstant: CGFloat = 8.0
     static let paddingConstant: CGFloat = 16.0
     static let minHeight: CGFloat = 80.0
     
     // MARK: - Positions and Sizes
     
-    var xPosition: CGFloat {
-        return TractCard.xMarginConstant
-    }
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
+    let buttonSizeConstant: CGFloat = 22.0
+    let buttonSizeXMargin: CGFloat = 8.0
+    var buttonXPosition: CGFloat {
+        return self.elementFrame.finalWidth() - self.buttonSizeConstant - self.buttonSizeXMargin
     }
     
     override var height: CGFloat {
@@ -36,65 +34,44 @@ class TractCallToAction: BaseTractElement {
         }
     }
     
-    var yPosition: CGFloat {
-        var position = self.yStartPosition + TractCallToAction.yMarginConstant
-        if position < (self.parent?.maxHeight)! - self.height {
-            position = (self.parent?.maxHeight)! - self.height
-        }
-        return position
-    }
-    
-    let buttonSizeConstant: CGFloat = 22.0
-    
-    let buttonSizeXMargin: CGFloat = 8.0
-    
-    var buttonXPosition: CGFloat {
-        return self.width - self.buttonSizeConstant - self.buttonSizeXMargin
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height + TractCallToAction.yMarginConstant
-    }
-    
-    override func textYPadding() -> CGFloat {
-        return 15.0
-    }
-    
     // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractCallToActionProperties.self
+    }
+    
+    override func loadFrameProperties() {
+        var yPosition: CGFloat {
+            var position = self.elementFrame.y + TractCallToAction.yMarginConstant
+            if position < (self.parent?.getMaxHeight())! - self.height {
+                position = (self.parent?.getMaxHeight())! - self.height
+            }
+            return position
+        }
+        
+        self.elementFrame.x = 0
+        self.elementFrame.y = yPosition
+        self.elementFrame.width = parentWidth()
+        self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
+        self.elementFrame.xMargin = TractCallToAction.paddingConstant
+    }
     
     override func loadStyles() {
         addArrowButton()
     }
     
     override func textStyle() -> TractTextContentProperties {
-        let textStyle = super.textStyle()
-        textStyle.width = self.width - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
-        textStyle.xMargin = TractCallToAction.paddingConstant
-        textStyle.yMargin = TractCallToAction.paddingConstant
-        textStyle.color = self.textColor
-        return textStyle
+        let properties = super.textStyle()
+        properties.width = self.elementFrame.finalWidth() - self.buttonSizeConstant - (self.buttonSizeXMargin * CGFloat(2))
+        properties.xMargin = TractCallToAction.paddingConstant
+        properties.yMargin = TractCallToAction.paddingConstant
+        return properties
     }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
-    }
+    // MARK: - Helpers
     
-    // MARK: - UI
-    
-    func addArrowButton() {
-        let xPosition = self.buttonXPosition
-        let yPosition = (self.height - self.buttonSizeConstant) / 2
-        let origin = CGPoint(x: xPosition, y: yPosition)
-        let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
-        let buttonFrame = CGRect(origin: origin, size: size)
-        let button = UIButton(frame: buttonFrame)
-        let image = UIImage(named: "right_arrow_blue")
-        button.setBackgroundImage(image, for: UIControlState.normal)
-        button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
-        self.addSubview(button)
+    func callToActionProperties() -> TractCallToActionProperties {
+        return self.properties as! TractCallToActionProperties
     }
 
 }

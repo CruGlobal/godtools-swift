@@ -8,50 +8,147 @@
 
 import UIKit
 
-class TractTextContentProperties: TractElementProperties {
+class TractTextContentProperties: TractProperties {
     
-    var i18nId: String?
-    var color: UIColor = .gtBlack
-    var scale: CGFloat?
-    var align: NSTextAlignment = .left
-    var width: CGFloat = 0.0
-    var height: CGFloat = 0.0
-    var xMargin: CGFloat = BaseTractElement.xMargin
-    var yMargin: CGFloat = BaseTractElement.yMargin
-    var value: String?
-    var font = UIFont.gtRegular(size: 15.0)
+    // MARK: - XML Properties
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
-        for property in properties.keys {
-            switch property {
-            case "value":
-                self.value = properties[property] as? String
-            case "i18n-id":
-                self.i18nId = properties[property] as? String
-            case "text-color":
-                self.color = (properties[property] as? String)!.getRGBAColor()
-            case "text-scale":
-                self.scale = properties[property] as? CGFloat
-            case "text-align":
-                self.align = convertTextAlignmentString(properties[property] as! String?)
-            default: break
-            }
+    var i18nId: String = ""
+    var textAlign: NSTextAlignment = .left
+    var localTextColor: UIColor?
+    var textScale: CGFloat = 1.0
+    var value: String = ""
+    
+    override func defineProperties() {
+        self.properties = ["i18nId", "value"]
+    }
+    
+    // MARK: - XML Custom Properties
+    
+    override func customProperties() -> [String]? {
+        return ["textAlign", "textScale", "textColor"]
+    }
+    
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "textAlign":
+            setupTextAlign(value)
+        case "textScale":
+            setupTextScale(value)
+        case "textColor":
+            self.localTextColor = value.getRGBAColor()
+        default: break
         }
     }
     
-    private func convertTextAlignmentString(_ string: String?) -> NSTextAlignment {
-        guard let string = string else {
-            return .left
+    private func setupTextAlign(_ string: String) {
+        switch string {
+        case "start":
+            self.textAlign = .left
+        case "end":
+            self.textAlign = .right
+        case "center":
+            self.textAlign = .center
+        default:
+            self.textAlign = .left
+        }
+    }
+    
+    private func setupTextScale(_ string: String) {
+        let stringValue = string as NSString
+        let floatValue = stringValue.floatValue
+        self.textScale = CGFloat(floatValue)
+    }
+    
+    func scaledFont() -> UIFont {
+        if textScale == 1.0 {
+            return font
+        }
+        return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
+    }
+    
+    func colorFor(_ element: BaseTractElement, pageProperties: TractPageProperties) -> UIColor {
+        if localTextColor != nil {
+            return localTextColor!
         }
         
-        switch string {
-            case "start": return .left
-            case "end": return .right
-            case "center": return .center
-        default: return .left
+        if BaseTractElement.isElement(element, kindOf: TractCard.self) {
+            if BaseTractElement.isElement(element, kindOf: TractLabel.self) {
+                return primaryColor
+            }
+            if pageProperties.cardTextColor != nil {
+                return pageProperties.cardTextColor!
+            }
         }
+        
+        if BaseTractElement.isElement(element, kindOf: TractHeading.self) {
+            return primaryColor
+        }
+        
+        if BaseTractElement.isElement(element, kindOf: TractHeader.self) {
+            return primaryTextColor
+        }
+        
+        return textColor
+    }
+    // MARK: - View Properties
+    
+    var finalWidth: CGFloat {
+        return self.width - (self.xMargin * 2)
+    }
+    var finalHeight: CGFloat {
+        return self.height + (self.yMargin * 2)
+    }
+    
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
+    
+    private var _xMargin: CGFloat?
+    var xMargin: CGFloat {
+        get {
+            if _xMargin == nil {
+                return BaseTractElement.xMargin
+            } else {
+                return _xMargin!
+            }
+        }
+        set {
+            _xMargin = newValue
+        }
+    }
+    
+    private var _yMargin: CGFloat?
+    var yMargin: CGFloat {
+        get {
+            if _yMargin == nil {
+                return BaseTractElement.yMargin
+            } else {
+                return _yMargin!
+            }
+        }
+        set {
+            _yMargin = newValue
+        }
+    }
+    
+    private var _font: UIFont?
+    var font: UIFont {
+        get {
+            if _font == nil {
+                return UIFont.gtRegular(size: 18.0)
+            } else {
+                return _font!
+            }
+        }
+        set {
+            _font = newValue
+        }
+    }
+    
+    func getFrame() -> CGRect {
+        return CGRect(x: self.xMargin,
+                      y: self.yMargin,
+                      width: self.finalWidth,
+                      height: self.height + self.yMargin)
     }
 
 }

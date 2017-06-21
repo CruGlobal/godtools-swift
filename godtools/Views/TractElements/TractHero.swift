@@ -11,31 +11,23 @@ import UIKit
 
 class TractHero: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    // MARK: - Setup
     
-    override var width: CGFloat {
-        return 300
+    override func propertiesKind() -> TractProperties.Type {
+        return TractHeroProperties.self
     }
     
-    var xPosition: CGFloat {
-        return (super.width - self.width) / CGFloat(2)
+    override func loadFrameProperties() {
+        let width: CGFloat = 300
+        self.elementFrame.x = (parentWidth() - width) / CGFloat(2)
+        self.elementFrame.width = width
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.yMargin
-    }
+    // MARK: - Helpers
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
-    }
-    
-    // MARK: - Setup 
-    
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+    func heroProperties() -> TractHeroProperties {
+        return self.properties as! TractHeroProperties
     }
         
 }

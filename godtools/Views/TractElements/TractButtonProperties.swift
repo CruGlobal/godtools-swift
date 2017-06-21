@@ -8,44 +8,36 @@
 
 import UIKit
 
-class TractButtonProperties: TractElementProperties {
+class TractButtonProperties: TractProperties {
     
     enum ButtonType {
         case url, event
     }
     
-    var i18nId: String?
-    var type: ButtonType = .url
-    var value: String?
-    var events: String?
-    var width: CGFloat = 300.0
-    var height: CGFloat = 44.0
-    var xMargin = BaseTractElement.xMargin
-    var yMargin = BaseTractElement.yMargin
-    var cornerRadius: CGFloat = 5.0
-    var backgroundColor = UIColor.gtBlue
-    var color = UIColor.gtBlack
-    var font = UIFont.gtRegular(size: 15.0)
+    // MARK: - XML Properties
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
-        for property in properties.keys {
-            switch property {
-            case "value":
-                self.value = properties[property] as! String?
-            case "events":
-                self.events = properties[property] as! String?
-            case "i18n-id":
-                self.i18nId = properties[property] as! String?
-            case "type":
-                self.setupType(properties[property] as! String)
-            default: break
-            }
+    var type: ButtonType = .url
+    var events: String = ""
+    var url: String = ""
+    var color = UIColor.gtBlack
+    
+    override func defineProperties() {
+        self.properties = ["type", "events", "url", "color"]
+    }
+    
+    override func customProperties() -> [String]? {
+        return ["type"]
+    }
+    
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "type":
+            setupType(value)
+        default: break
         }
     }
     
-    func setupType(_ type: String) {
+    private func setupType(_ type: String) {
         switch type {
         case "url":
             self.type = .url
@@ -53,6 +45,29 @@ class TractButtonProperties: TractElementProperties {
             self.type = .event
         default: break
         }
+    }
+    
+    // MARK: - View Properties
+    
+    var i18nId: String?
+    var value: String?
+    var cornerRadius: CGFloat = 5.0
+    var backgroundColor = UIColor.gtBlue
+    var font = UIFont.gtRegular(size: 15.0)
+    var width: CGFloat = 300.0
+    var height: CGFloat = 44.0
+    var xMargin = BaseTractElement.xMargin
+    var yMargin = BaseTractElement.yMargin
+    
+    override func getTextProperties() -> TractTextContentProperties {
+        let textProperties = TractTextContentProperties()
+        
+        textProperties.font = .gtRegular(size: 18.0)
+        textProperties.width = self.width
+        textProperties.textAlign = .center
+        textProperties.textColor = self.color
+        
+        return textProperties
     }
     
 }

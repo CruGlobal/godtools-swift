@@ -12,17 +12,23 @@ class TractEmails: BaseTractElement {
     
     // MARK: - Setup
     
-    override func loadStyles() {
-        self.isHidden = true
+    override func propertiesKind() -> TractProperties.Type {
+        return TractEmailsProperties.self
     }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+    override func loadStyles() {
+        self.isHidden = true
     }
     
     override func render() -> UIView {
         TractBindings.addBindings(self)
         return self
+    }
+    
+    // MARK: - Helpers
+    
+    func emailsProperties() -> TractEmailsProperties {
+        return self.properties as! TractEmailsProperties
     }
 
 }

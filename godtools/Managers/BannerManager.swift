@@ -9,6 +9,7 @@
 import Foundation
 import PromiseKit
 import Crashlytics
+import Alamofire
 
 class BannerManager: GTDataManager {
     let path = "attachments"
@@ -20,36 +21,36 @@ class BannerManager: GTDataManager {
     }
     
     let defaultExtension = "png"
-    var bannerId: String?
     
-    func downloadFor(_ resource: DownloadedResource) -> Promise<UIImage?> {
-        guard let remoteId = resource.bannerRemoteId else {
-            return Promise<UIImage?>(value: nil)
+    func downloadFor(_ resource: DownloadedResource) {
+        
+        let homeBannerAttachment = loadAttachment(remoteId: resource.bannerRemoteId)
+        
+        if homeBannerAttachment != nil && bannerHasChanged(attachment: homeBannerAttachment!) {
+            _ = issueDownloadRequest(attachment: homeBannerAttachment!).then(execute: { (image) -> Void in
+                self.postCompletedNotification(resource: resource)
+            })
         }
-        
-        guard let attachment = loadAttachment(remoteId: remoteId) else {
-            return Promise<UIImage?>(value: nil)
+
+        let aboutBannerAttachment = loadAttachment(remoteId: resource.aboutBannerRemoteId)
+
+        if aboutBannerAttachment != nil && bannerHasChanged(attachment: aboutBannerAttachment!) {
+            _ = issueDownloadRequest(attachment: aboutBannerAttachment!)
         }
-        
-        if !bannerHasChanged(attachment: attachment) {
-            return Promise(value: loadFor(resource))
-        }
-        
-        bannerId = remoteId
-        
-        return issueGETRequest().then { image -> Promise<UIImage?> in
-            self.saveImageToDisk(image, attachment: attachment)
-            
-            self.postCompletedNotification(resource: resource)
-            
-            return Promise(value: UIImage(data: image))
-        }.catch(execute: { error in
-            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error downloading banner w/ id \(self.bannerId)."])
-        })
     }
     
-    func loadFor(_ resource: DownloadedResource) -> UIImage? {
-        guard let remoteId = resource.bannerRemoteId else {
+    private func issueDownloadRequest(attachment: Attachment) -> Promise<UIImage?> {
+        return issueGETRequest(bannerId: attachment.remoteId).then { image -> Promise<UIImage?> in
+            self.saveImageToDisk(image, attachment: attachment)
+            
+            return Promise<UIImage?>(value: UIImage(data: image))
+            }.catch(execute: { error in
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error downloading banner."])
+            })
+    }
+    
+    func loadFor(remoteId: String?) -> UIImage? {
+        guard let remoteId = remoteId  else {
             return nil
         }
         
@@ -67,17 +68,16 @@ class BannerManager: GTDataManager {
         
         return UIImage(contentsOfFile: path)
     }
-
-    override func buildURL() -> URL? {
-        guard let bannerID = self.bannerId else {
-            return nil
-        }
-        return Config.shared().baseUrl?
+    
+    func issueGETRequest(bannerId: String) -> Promise<Data> {
+        let url = Config.shared().baseUrl?
             .appendingPathComponent(self.path)
-            .appendingPathComponent(bannerID)
+            .appendingPathComponent(bannerId)
             .appendingPathComponent("download")
+        
+        return Alamofire.request(url!).responseData()
     }
-
+    
     private func postCompletedNotification(resource: DownloadedResource) {
         NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
                                         object: nil,
@@ -98,20 +98,26 @@ class BannerManager: GTDataManager {
     private func saveImageToDisk(_ image: Data, attachment: Attachment) {
         let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension)
         
-        do {
-            try image.write(to: path)
-            
-            //NOTE: This could require a realm.write block, but I'm not sure. It's operating in a thread that *should*
-            //already be in a block, but given the nesting of promises, i'm not 100% sure. -RTC
-            attachment.isBanner = true
-
-        } catch {
-            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner w/ id \(bannerId) to disk."])
+        safelyWriteToRealm {
+            do {
+                try image.write(to: path)
+                
+                //NOTE: This could require a realm.write block, but I'm not sure. It's operating in a thread that *should*
+                //already be in a block, but given the nesting of promises, i'm not 100% sure. -RTC
+                attachment.isBanner = true
+                
+            } catch {
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner."])
+            }
         }
     }
     
-    private func loadAttachment(remoteId: String) -> Attachment? {
-        return findEntityByRemoteId(Attachment.self, remoteId: remoteId)
+    private func loadAttachment(remoteId: String?) -> Attachment? {
+        if remoteId == nil {
+            return nil
+        }
+        
+        return findEntityByRemoteId(Attachment.self, remoteId: remoteId!)
     }
     
     private func createBannersDirectoryIfNecessary() {

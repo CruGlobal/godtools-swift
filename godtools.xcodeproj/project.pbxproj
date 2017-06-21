@@ -13,7 +13,7 @@
 		0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */; };
 		0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */; };
 		0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0F0352C61EC2273B006CD4E5 /* kgp-3.xml */; };
-		0F0352CB1EC27CA4006CD4E5 /* TractCallToActionAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352CA1EC27CA4006CD4E5 /* TractCallToActionAnimations.swift */; };
+		0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0352CA1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift */; };
 		0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0853101ECB571E00DDC86D /* GTTextField.swift */; };
 		0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0853161ECBAEEA00DDC86D /* TractModals.swift */; };
 		0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0853181ECBAF0400DDC86D /* TractModal.swift */; };
@@ -31,29 +31,29 @@
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
 		0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */; };
 		0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */; };
-		0F6982721EB7D9E800CAA284 /* TractElementFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */; };
-		0F6982741EB7DA4500CAA284 /* TractElementStaticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */; };
+		0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */; };
+		0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */; };
 		0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982771EB8E31F00CAA284 /* TractCards.swift */; };
-		0F7741D91EBB8A8900888D20 /* TractCardAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741D81EBB8A8900888D20 /* TractCardAnimations.swift */; };
-		0F7741DC1EBB8AFC00888D20 /* TractHeaderAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DB1EBB8AFC00888D20 /* TractHeaderAnimations.swift */; };
-		0F7741E01EBB8BF300888D20 /* TractCardsAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DF1EBB8BF300888D20 /* TractCardsAnimations.swift */; };
-		0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */; };
-		0F7741E51EBBCB8400888D20 /* TractCardGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741E41EBBCB8400888D20 /* TractCardGestures.swift */; };
+		0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741D81EBB8A8900888D20 /* TractCard+Animations.swift */; };
+		0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DB1EBB8AFC00888D20 /* TractHeader+Animations.swift */; };
+		0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741DF1EBB8BF300888D20 /* TractCards+Animations.swift */; };
+		0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741E21EBB8CE600888D20 /* TractLabel+Gestures.swift */; };
+		0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7741E41EBBCB8400888D20 /* TractCard+Gestures.swift */; };
 		0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50221EA933B000F5957E /* HomeViewController.swift */; };
 		0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50231EA933B000F5957E /* HomeViewController.xib */; };
 		0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */; };
 		0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */; };
 		0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C541EB2893500F3ED2B /* TractHeading.swift */; };
-		0F806C571EB28D6000F3ED2B /* TractRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C561EB28D6000F3ED2B /* TractRoot.swift */; };
+		0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C561EB28D6000F3ED2B /* TractPage.swift */; };
 		0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C661EB3E69D00F3ED2B /* TractHeader.swift */; };
 		0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C681EB3E6B100F3ED2B /* TractNumber.swift */; };
 		0F806C6B1EB3E6C300F3ED2B /* TractTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6A1EB3E6C300F3ED2B /* TractTitle.swift */; };
 		0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6C1EB3E6D700F3ED2B /* TractCard.swift */; };
 		0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */; };
 		0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F806C701EB3E72C00F3ED2B /* TractCallToAction.swift */; };
-		0F85C7931ECCAA4400023723 /* TractRootActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7921ECCAA4400023723 /* TractRootActions.swift */; };
-		0F85C7951ECCAAA000023723 /* TractCardsActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7941ECCAAA000023723 /* TractCardsActions.swift */; };
-		0F85C7981ECCAC2400023723 /* TractCardActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7971ECCAC2400023723 /* TractCardActions.swift */; };
+		0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7921ECCAA4400023723 /* TractPage+Actions.swift */; };
+		0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7941ECCAAA000023723 /* TractCards+Actions.swift */; };
+		0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F85C7971ECCAC2400023723 /* TractCard+Actions.swift */; };
 		0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9331EAA56EC0049C110 /* ToolsManager.swift */; };
 		0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9351EAA6FF80049C110 /* ToolDetailViewController.swift */; };
 		0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */; };
@@ -63,13 +63,11 @@
 		0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32311EDCC78A0081DBB9 /* TractCardProperties.swift */; };
 		0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32321EDCC78A0081DBB9 /* TractModalProperties.swift */; };
 		0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */; };
-		0F9E32391EDCC78A0081DBB9 /* TractTextFieldProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32341EDCC78A0081DBB9 /* TractTextFieldProperties.swift */; };
-		0F9E323D1EDCD56A0081DBB9 /* TractElementProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E323C1EDCD56A0081DBB9 /* TractElementProperties.swift */; };
-		0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */; };
-		0F9E32411EDD170C0081DBB9 /* TractCallToActionActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32401EDD170C0081DBB9 /* TractCallToActionActions.swift */; };
-		0F9E32431EDD182F0081DBB9 /* TractButtonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32421EDD182F0081DBB9 /* TractButtonActions.swift */; };
-		0F9E32451EDD1A4C0081DBB9 /* TractLinkActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32441EDD1A4C0081DBB9 /* TractLinkActions.swift */; };
-		0F9E32491EDD22960081DBB9 /* TractRootProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32481EDD22960081DBB9 /* TractRootProperties.swift */; };
+		0F9E323F1EDCEDEE0081DBB9 /* TractModal+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E323E1EDCEDEE0081DBB9 /* TractModal+Actions.swift */; };
+		0F9E32411EDD170C0081DBB9 /* TractCallToAction+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32401EDD170C0081DBB9 /* TractCallToAction+Actions.swift */; };
+		0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32421EDD182F0081DBB9 /* TractButton+Actions.swift */; };
+		0F9E32451EDD1A4C0081DBB9 /* TractLink+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32441EDD1A4C0081DBB9 /* TractLink+Actions.swift */; };
+		0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32481EDD22960081DBB9 /* TractPageProperties.swift */; };
 		0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E324B1EDE77AE0081DBB9 /* TractViewControllerGestures.swift */; };
 		0F9E324E1EDE78590081DBB9 /* TractViewControllerContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E324D1EDE78590081DBB9 /* TractViewControllerContent.swift */; };
 		0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E324F1EDE78940081DBB9 /* TractViewControllerPageMovements.swift */; };
@@ -95,7 +93,7 @@
 		0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */; };
 		0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */; };
 		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
-		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */; };
+		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
@@ -104,11 +102,12 @@
 		4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */; };
 		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
 		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
-		4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A301EB0DF3E00C03447 /* BaseTractView.swift */; };
+		4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A301EB0DF3E00C03447 /* TractView.swift */; };
 		4F462A391EB0E28900C03447 /* TractHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A351EB0E28900C03447 /* TractHero.swift */; };
 		4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A361EB0E28900C03447 /* TractParagraph.swift */; };
 		4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A371EB0E28900C03447 /* TractTextContent.swift */; };
 		4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */; };
+		4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */; };
 		4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707D81EAE760D00A540C2 /* GTDataManager.swift */; };
 		4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5707E01EAE8CA300A540C2 /* TractViewController.xib */; };
 		4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707E21EAE8CB600A540C2 /* TractViewController.swift */; };
@@ -137,22 +136,56 @@
 		68C0A3841ED4C65400CC97A3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C0A3831ED4C65400CC97A3 /* config.plist */; };
 		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
+		EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15BE5E1EEB5447006B2E1A /* TractHeaderProperties.swift */; };
+		EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15BE601EEB54C5006B2E1A /* TractCardsProperties.swift */; };
 		EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140BB1EE76A9E009347D3 /* TractViewControllerActions.swift */; };
 		EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140BE1EE76DD7009347D3 /* TractEmails.swift */; };
 		EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C01EE76E6C009347D3 /* TractEmail.swift */; };
-		EC3140C31EE76F1D009347D3 /* TractEmailActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */; };
+		EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C21EE76F1D009347D3 /* TractEmail+Actions.swift */; };
 		EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */; };
 		EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61E1EE0AC37000235CA /* TractBindings.swift */; };
-		EC55A6221EE0AC37000235CA /* TractColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A61F1EE0AC37000235CA /* TractColors.swift */; };
 		EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6201EE0AC37000235CA /* TractConfigurations.swift */; };
-		EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6241EE0AD03000235CA /* TractPage.swift */; };
+		EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */; };
+		EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B21EEEEA520023A203 /* TractHeroProperties.swift */; };
+		EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B41EEEEB340023A203 /* TractFormProperties.swift */; };
+		EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B61EEEEB810023A203 /* TractTabsProperties.swift */; };
+		EC8245B91EEEEBCC0023A203 /* TractModalsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B81EEEEBCC0023A203 /* TractModalsProperties.swift */; };
+		EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245BA1EEEEE180023A203 /* TractEmailsProperties.swift */; };
+		EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245BC1EEEEE880023A203 /* TractHeadingProperties.swift */; };
+		EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245BE1EEEEED10023A203 /* TractNumberProperties.swift */; };
+		EC8245C11EEEEF090023A203 /* TractTitleProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245C01EEEEF090023A203 /* TractTitleProperties.swift */; };
+		EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245C21EEEEF6E0023A203 /* TractParagraphProperties.swift */; };
+		EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245C41EEEF0020023A203 /* TractLabelProperties.swift */; };
+		EC8245C71EEEF0660023A203 /* TractCallToActionProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245C61EEEF0660023A203 /* TractCallToActionProperties.swift */; };
+		EC8245C91EEEF0DD0023A203 /* TractImageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245C81EEEF0DD0023A203 /* TractImageProperties.swift */; };
+		EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245CC1EEEF1A00023A203 /* TractInputProperties.swift */; };
+		EC8245CF1EEEF1B90023A203 /* TractTabProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245CE1EEEF1B90023A203 /* TractTabProperties.swift */; };
+		EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245D31EEFA3430023A203 /* XMLParseManager.swift */; };
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
 		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
+		ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA2C151EF9B4770067ED78 /* TractResource.swift */; };
+		ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2E2991EE9FB0600346FBE /* XMLManager.swift */; };
 		ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */; };
 		ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */; };
 		ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */; };
 		ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */; };
+		ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E471EF03CD500A13849 /* TractCards+ChildSetup.swift */; };
+		ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E491EF03F6800A13849 /* TractCards+UI.swift */; };
+		ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E4B1EF040AF00A13849 /* TractTabs+UI.swift */; };
+		ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E4E1EF0480D00A13849 /* TractModal+ChildSetup.swift */; };
+		ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E511EF048B700A13849 /* TractParagraph+UI.swift */; };
+		ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E541EF048F600A13849 /* TractCard+UI.swift */; };
+		ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5A1EF049E400A13849 /* TractLabel+UI.swift */; };
+		ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5C1EF04A2B00A13849 /* TractCallToAction+UI.swift */; };
+		ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E5F1EF04A6E00A13849 /* TractTextContent+UI.swift */; };
+		ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */; };
+		ECBE2E671EF050D800A13849 /* TractButton+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E661EF050D800A13849 /* TractButton+UI.swift */; };
+		ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */; };
+		ECBE2E6B1EF1053000A13849 /* TractProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E6A1EF1053000A13849 /* TractProperties.swift */; };
+		ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B51EEAF15500A56332 /* ManifestProperties.swift */; };
+		ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B71EEAF3BA00A56332 /* XMLNode.swift */; };
+		ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194BF1EEB32FA00A56332 /* XMLPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,7 +205,7 @@
 		0F0352B81EC0CD03006CD4E5 /* kgp-manifest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-manifest.xml"; sourceTree = "<group>"; };
 		0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractManager.swift; path = Managers/TractManager.swift; sourceTree = "<group>"; };
 		0F0352C61EC2273B006CD4E5 /* kgp-3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-3.xml"; sourceTree = "<group>"; };
-		0F0352CA1EC27CA4006CD4E5 /* TractCallToActionAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCallToActionAnimations.swift; path = Views/TractElements/TractCallToActionAnimations.swift; sourceTree = "<group>"; };
+		0F0352CA1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCallToAction+Animations.swift"; path = "Views/TractElements/TractCallToAction+Animations.swift"; sourceTree = "<group>"; };
 		0F0853101ECB571E00DDC86D /* GTTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTTextField.swift; path = Views/TextViews/GTTextField.swift; sourceTree = "<group>"; };
 		0F0853161ECBAEEA00DDC86D /* TractModals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractModals.swift; path = Views/TractElements/TractModals.swift; sourceTree = "<group>"; };
 		0F0853181ECBAF0400DDC86D /* TractModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractModal.swift; path = Views/TractElements/TractModal.swift; sourceTree = "<group>"; };
@@ -190,29 +223,29 @@
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNotifications.swift; sourceTree = "<group>"; };
-		0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementFunctions.swift; path = Views/TractElements/TractElementFunctions.swift; sourceTree = "<group>"; };
-		0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementStaticFunctions.swift; path = Views/TractElements/TractElementStaticFunctions.swift; sourceTree = "<group>"; };
+		0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+Functions.swift"; path = "Views/TractElements/BaseTractElement+Functions.swift"; sourceTree = "<group>"; };
+		0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+StaticFunctions.swift"; path = "Views/TractElements/BaseTractElement+StaticFunctions.swift"; sourceTree = "<group>"; };
 		0F6982771EB8E31F00CAA284 /* TractCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCards.swift; path = Views/TractElements/TractCards.swift; sourceTree = "<group>"; };
-		0F7741D81EBB8A8900888D20 /* TractCardAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardAnimations.swift; path = Views/TractElements/TractCardAnimations.swift; sourceTree = "<group>"; };
-		0F7741DB1EBB8AFC00888D20 /* TractHeaderAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeaderAnimations.swift; path = Views/TractElements/TractHeaderAnimations.swift; sourceTree = "<group>"; };
-		0F7741DF1EBB8BF300888D20 /* TractCardsAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardsAnimations.swift; path = Views/TractElements/TractCardsAnimations.swift; sourceTree = "<group>"; };
-		0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLabelGestures.swift; path = Views/TractElements/TractLabelGestures.swift; sourceTree = "<group>"; };
-		0F7741E41EBBCB8400888D20 /* TractCardGestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardGestures.swift; path = Views/TractElements/TractCardGestures.swift; sourceTree = "<group>"; };
+		0F7741D81EBB8A8900888D20 /* TractCard+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+Animations.swift"; path = "Views/TractElements/TractCard+Animations.swift"; sourceTree = "<group>"; };
+		0F7741DB1EBB8AFC00888D20 /* TractHeader+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractHeader+Animations.swift"; path = "Views/TractElements/TractHeader+Animations.swift"; sourceTree = "<group>"; };
+		0F7741DF1EBB8BF300888D20 /* TractCards+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Animations.swift"; path = "Views/TractElements/TractCards+Animations.swift"; sourceTree = "<group>"; };
+		0F7741E21EBB8CE600888D20 /* TractLabel+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractLabel+Gestures.swift"; path = "Views/TractElements/TractLabel+Gestures.swift"; sourceTree = "<group>"; };
+		0F7741E41EBBCB8400888D20 /* TractCard+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+Gestures.swift"; path = "Views/TractElements/TractCard+Gestures.swift"; sourceTree = "<group>"; };
 		0F7D50221EA933B000F5957E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0F7D50231EA933B000F5957E /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeToolTableViewCell.swift; sourceTree = "<group>"; };
 		0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeToolTableViewCell.xib; sourceTree = "<group>"; };
 		0F806C541EB2893500F3ED2B /* TractHeading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeading.swift; path = Views/TractElements/TractHeading.swift; sourceTree = "<group>"; };
-		0F806C561EB28D6000F3ED2B /* TractRoot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractRoot.swift; path = Views/TractElements/TractRoot.swift; sourceTree = "<group>"; };
+		0F806C561EB28D6000F3ED2B /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = Views/TractElements/TractPage.swift; sourceTree = "<group>"; };
 		0F806C661EB3E69D00F3ED2B /* TractHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeader.swift; path = Views/TractElements/TractHeader.swift; sourceTree = "<group>"; };
 		0F806C681EB3E6B100F3ED2B /* TractNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractNumber.swift; path = Views/TractElements/TractNumber.swift; sourceTree = "<group>"; };
 		0F806C6A1EB3E6C300F3ED2B /* TractTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTitle.swift; path = Views/TractElements/TractTitle.swift; sourceTree = "<group>"; };
 		0F806C6C1EB3E6D700F3ED2B /* TractCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCard.swift; path = Views/TractElements/TractCard.swift; sourceTree = "<group>"; };
 		0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLabel.swift; path = Views/TractElements/TractLabel.swift; sourceTree = "<group>"; };
 		0F806C701EB3E72C00F3ED2B /* TractCallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCallToAction.swift; path = Views/TractElements/TractCallToAction.swift; sourceTree = "<group>"; };
-		0F85C7921ECCAA4400023723 /* TractRootActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractRootActions.swift; path = Views/TractElements/TractRootActions.swift; sourceTree = "<group>"; };
-		0F85C7941ECCAAA000023723 /* TractCardsActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardsActions.swift; path = Views/TractElements/TractCardsActions.swift; sourceTree = "<group>"; };
-		0F85C7971ECCAC2400023723 /* TractCardActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardActions.swift; path = Views/TractElements/TractCardActions.swift; sourceTree = "<group>"; };
+		0F85C7921ECCAA4400023723 /* TractPage+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractPage+Actions.swift"; path = "Views/TractElements/TractPage+Actions.swift"; sourceTree = "<group>"; };
+		0F85C7941ECCAAA000023723 /* TractCards+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Actions.swift"; path = "Views/TractElements/TractCards+Actions.swift"; sourceTree = "<group>"; };
+		0F85C7971ECCAC2400023723 /* TractCard+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+Actions.swift"; path = "Views/TractElements/TractCard+Actions.swift"; sourceTree = "<group>"; };
 		0F93A9331EAA56EC0049C110 /* ToolsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolsManager.swift; path = Managers/ToolsManager.swift; sourceTree = "<group>"; };
 		0F93A9351EAA6FF80049C110 /* ToolDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolDetailViewController.swift; sourceTree = "<group>"; };
 		0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToolDetailViewController.xib; sourceTree = "<group>"; };
@@ -222,13 +255,11 @@
 		0F9E32311EDCC78A0081DBB9 /* TractCardProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardProperties.swift; path = Views/TractElements/TractCardProperties.swift; sourceTree = "<group>"; };
 		0F9E32321EDCC78A0081DBB9 /* TractModalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractModalProperties.swift; path = Views/TractElements/TractModalProperties.swift; sourceTree = "<group>"; };
 		0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTextContentProperties.swift; path = Views/TractElements/TractTextContentProperties.swift; sourceTree = "<group>"; };
-		0F9E32341EDCC78A0081DBB9 /* TractTextFieldProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTextFieldProperties.swift; path = Views/TractElements/TractTextFieldProperties.swift; sourceTree = "<group>"; };
-		0F9E323C1EDCD56A0081DBB9 /* TractElementProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementProperties.swift; path = Views/TractElements/TractElementProperties.swift; sourceTree = "<group>"; };
-		0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractModalActions.swift; path = Views/TractElements/TractModalActions.swift; sourceTree = "<group>"; };
-		0F9E32401EDD170C0081DBB9 /* TractCallToActionActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCallToActionActions.swift; path = Views/TractElements/TractCallToActionActions.swift; sourceTree = "<group>"; };
-		0F9E32421EDD182F0081DBB9 /* TractButtonActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractButtonActions.swift; path = Views/TractElements/TractButtonActions.swift; sourceTree = "<group>"; };
-		0F9E32441EDD1A4C0081DBB9 /* TractLinkActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLinkActions.swift; path = Views/TractElements/TractLinkActions.swift; sourceTree = "<group>"; };
-		0F9E32481EDD22960081DBB9 /* TractRootProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractRootProperties.swift; path = Views/TractElements/TractRootProperties.swift; sourceTree = "<group>"; };
+		0F9E323E1EDCEDEE0081DBB9 /* TractModal+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractModal+Actions.swift"; path = "Views/TractElements/TractModal+Actions.swift"; sourceTree = "<group>"; };
+		0F9E32401EDD170C0081DBB9 /* TractCallToAction+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCallToAction+Actions.swift"; path = "Views/TractElements/TractCallToAction+Actions.swift"; sourceTree = "<group>"; };
+		0F9E32421EDD182F0081DBB9 /* TractButton+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractButton+Actions.swift"; path = "Views/TractElements/TractButton+Actions.swift"; sourceTree = "<group>"; };
+		0F9E32441EDD1A4C0081DBB9 /* TractLink+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractLink+Actions.swift"; path = "Views/TractElements/TractLink+Actions.swift"; sourceTree = "<group>"; };
+		0F9E32481EDD22960081DBB9 /* TractPageProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPageProperties.swift; path = Views/TractElements/TractPageProperties.swift; sourceTree = "<group>"; };
 		0F9E324B1EDE77AE0081DBB9 /* TractViewControllerGestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerGestures.swift; path = Tract/TractViewControllerGestures.swift; sourceTree = "<group>"; };
 		0F9E324D1EDE78590081DBB9 /* TractViewControllerContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerContent.swift; path = Tract/TractViewControllerContent.swift; sourceTree = "<group>"; };
 		0F9E324F1EDE78940081DBB9 /* TractViewControllerPageMovements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerPageMovements.swift; path = Tract/TractViewControllerPageMovements.swift; sourceTree = "<group>"; };
@@ -254,7 +285,7 @@
 		0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguagesTableViewController.xib; sourceTree = "<group>"; };
 		0FB73E731EA906A7000BA60D /* GTUIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTUIExtensions.swift; sourceTree = "<group>"; };
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
-		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultColors.swift; sourceTree = "<group>"; };
+		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultStyle.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
@@ -263,11 +294,12 @@
 		4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceJson.swift; path = Managers/DownloadResources/DownloadedResourceJson.swift; sourceTree = "<group>"; };
 		4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationResource.swift; path = Managers/Translations/TranslationResource.swift; sourceTree = "<group>"; };
 		4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceManager.swift; path = Managers/DownloadResources/DownloadedResourceManager.swift; sourceTree = "<group>"; };
-		4F462A301EB0DF3E00C03447 /* BaseTractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractView.swift; path = Views/BaseTractView.swift; sourceTree = "<group>"; };
+		4F462A301EB0DF3E00C03447 /* TractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractView.swift; path = Views/TractView.swift; sourceTree = "<group>"; };
 		4F462A351EB0E28900C03447 /* TractHero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHero.swift; path = Views/TractElements/TractHero.swift; sourceTree = "<group>"; };
 		4F462A361EB0E28900C03447 /* TractParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractParagraph.swift; path = Views/TractElements/TractParagraph.swift; sourceTree = "<group>"; };
 		4F462A371EB0E28900C03447 /* TractTextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTextContent.swift; path = Views/TractElements/TractTextContent.swift; sourceTree = "<group>"; };
 		4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractElement.swift; path = Views/TractElements/BaseTractElement.swift; sourceTree = "<group>"; };
+		4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GTDataManager+Migrations.swift"; path = "Managers/GTDataManager+Migrations.swift"; sourceTree = "<group>"; };
 		4F5707D81EAE760D00A540C2 /* GTDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTDataManager.swift; path = Managers/GTDataManager.swift; sourceTree = "<group>"; };
 		4F5707E01EAE8CA300A540C2 /* TractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TractViewController.xib; path = Tract/TractViewController.xib; sourceTree = "<group>"; };
 		4F5707E21EAE8CB600A540C2 /* TractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewController.swift; path = Tract/TractViewController.swift; sourceTree = "<group>"; };
@@ -307,22 +339,56 @@
 		CD0BB9EE680C408F30B182B6 /* Pods-godtoolsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.release.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC15BE5E1EEB5447006B2E1A /* TractHeaderProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeaderProperties.swift; path = Views/TractElements/TractHeaderProperties.swift; sourceTree = "<group>"; };
+		EC15BE601EEB54C5006B2E1A /* TractCardsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardsProperties.swift; path = Views/TractElements/TractCardsProperties.swift; sourceTree = "<group>"; };
 		EC3140BB1EE76A9E009347D3 /* TractViewControllerActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerActions.swift; path = Tract/TractViewControllerActions.swift; sourceTree = "<group>"; };
 		EC3140BE1EE76DD7009347D3 /* TractEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmails.swift; path = Views/TractElements/TractEmails.swift; sourceTree = "<group>"; };
 		EC3140C01EE76E6C009347D3 /* TractEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmail.swift; path = Views/TractElements/TractEmail.swift; sourceTree = "<group>"; };
-		EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmailActions.swift; path = Views/TractElements/TractEmailActions.swift; sourceTree = "<group>"; };
+		EC3140C21EE76F1D009347D3 /* TractEmail+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractEmail+Actions.swift"; path = "Views/TractElements/TractEmail+Actions.swift"; sourceTree = "<group>"; };
 		EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmailProperties.swift; path = Views/TractElements/TractEmailProperties.swift; sourceTree = "<group>"; };
 		EC55A61E1EE0AC37000235CA /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractBindings.swift; path = TractClasses/TractBindings.swift; sourceTree = "<group>"; };
-		EC55A61F1EE0AC37000235CA /* TractColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractColors.swift; path = TractClasses/TractColors.swift; sourceTree = "<group>"; };
 		EC55A6201EE0AC37000235CA /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractConfigurations.swift; path = TractClasses/TractConfigurations.swift; sourceTree = "<group>"; };
-		EC55A6241EE0AD03000235CA /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPage.swift; path = TractClasses/TractPage.swift; sourceTree = "<group>"; };
+		EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementFrame.swift; path = TractClasses/TractElementFrame.swift; sourceTree = "<group>"; };
+		EC8245B21EEEEA520023A203 /* TractHeroProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeroProperties.swift; path = Views/TractElements/TractHeroProperties.swift; sourceTree = "<group>"; };
+		EC8245B41EEEEB340023A203 /* TractFormProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormProperties.swift; path = Views/TractElements/TractFormProperties.swift; sourceTree = "<group>"; };
+		EC8245B61EEEEB810023A203 /* TractTabsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabsProperties.swift; path = Views/TractElements/TractTabsProperties.swift; sourceTree = "<group>"; };
+		EC8245B81EEEEBCC0023A203 /* TractModalsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractModalsProperties.swift; path = Views/TractElements/TractModalsProperties.swift; sourceTree = "<group>"; };
+		EC8245BA1EEEEE180023A203 /* TractEmailsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractEmailsProperties.swift; path = Views/TractElements/TractEmailsProperties.swift; sourceTree = "<group>"; };
+		EC8245BC1EEEEE880023A203 /* TractHeadingProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeadingProperties.swift; path = Views/TractElements/TractHeadingProperties.swift; sourceTree = "<group>"; };
+		EC8245BE1EEEEED10023A203 /* TractNumberProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractNumberProperties.swift; path = Views/TractElements/TractNumberProperties.swift; sourceTree = "<group>"; };
+		EC8245C01EEEEF090023A203 /* TractTitleProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTitleProperties.swift; path = Views/TractElements/TractTitleProperties.swift; sourceTree = "<group>"; };
+		EC8245C21EEEEF6E0023A203 /* TractParagraphProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractParagraphProperties.swift; path = Views/TractElements/TractParagraphProperties.swift; sourceTree = "<group>"; };
+		EC8245C41EEEF0020023A203 /* TractLabelProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLabelProperties.swift; path = Views/TractElements/TractLabelProperties.swift; sourceTree = "<group>"; };
+		EC8245C61EEEF0660023A203 /* TractCallToActionProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCallToActionProperties.swift; path = Views/TractElements/TractCallToActionProperties.swift; sourceTree = "<group>"; };
+		EC8245C81EEEF0DD0023A203 /* TractImageProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractImageProperties.swift; path = Views/TractElements/TractImageProperties.swift; sourceTree = "<group>"; };
+		EC8245CC1EEEF1A00023A203 /* TractInputProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractInputProperties.swift; path = Views/TractElements/TractInputProperties.swift; sourceTree = "<group>"; };
+		EC8245CE1EEEF1B90023A203 /* TractTabProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabProperties.swift; path = Views/TractElements/TractTabProperties.swift; sourceTree = "<group>"; };
+		EC8245D31EEFA3430023A203 /* XMLParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLParseManager.swift; path = XMLManagement/XMLParseManager.swift; sourceTree = "<group>"; };
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
 		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
+		ECAA2C151EF9B4770067ED78 /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractResource.swift; path = TractClasses/TractResource.swift; sourceTree = "<group>"; };
+		ECB2E2991EE9FB0600346FBE /* XMLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLManager.swift; path = XMLManagement/XMLManager.swift; sourceTree = "<group>"; };
 		ECB5A8BC1EE5CA1F008E4AB7 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ECB5A8BD1EE5CA1F008E4AB7 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
 		ECB5A8C01EE5E326008E4AB7 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
+		ECBE2E471EF03CD500A13849 /* TractCards+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+ChildSetup.swift"; path = "Views/TractElements/TractCards+ChildSetup.swift"; sourceTree = "<group>"; };
+		ECBE2E491EF03F6800A13849 /* TractCards+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+UI.swift"; path = "Views/TractElements/TractCards+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E4B1EF040AF00A13849 /* TractTabs+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractTabs+UI.swift"; path = "Views/TractElements/TractTabs+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E4E1EF0480D00A13849 /* TractModal+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractModal+ChildSetup.swift"; path = "Views/TractElements/TractModal+ChildSetup.swift"; sourceTree = "<group>"; };
+		ECBE2E511EF048B700A13849 /* TractParagraph+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractParagraph+UI.swift"; path = "Views/TractElements/TractParagraph+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E541EF048F600A13849 /* TractCard+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+UI.swift"; path = "Views/TractElements/TractCard+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E5A1EF049E400A13849 /* TractLabel+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractLabel+UI.swift"; path = "Views/TractElements/TractLabel+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E5C1EF04A2B00A13849 /* TractCallToAction+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCallToAction+UI.swift"; path = "Views/TractElements/TractCallToAction+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E5F1EF04A6E00A13849 /* TractTextContent+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractTextContent+UI.swift"; path = "Views/TractElements/TractTextContent+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractTabs+ChildSetup.swift"; path = "Views/TractElements/TractTabs+ChildSetup.swift"; sourceTree = "<group>"; };
+		ECBE2E661EF050D800A13849 /* TractButton+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractButton+UI.swift"; path = "Views/TractElements/TractButton+UI.swift"; sourceTree = "<group>"; };
+		ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractImageConfig.swift; path = TractClasses/TractImageConfig.swift; sourceTree = "<group>"; };
+		ECBE2E6A1EF1053000A13849 /* TractProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractProperties.swift; path = TractClasses/TractProperties.swift; sourceTree = "<group>"; };
+		ECC194B51EEAF15500A56332 /* ManifestProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManifestProperties.swift; path = TractClasses/ManifestProperties.swift; sourceTree = "<group>"; };
+		ECC194B71EEAF3BA00A56332 /* XMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLNode.swift; path = XMLManagement/XMLNode.swift; sourceTree = "<group>"; };
+		ECC194BF1EEB32FA00A56332 /* XMLPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLPage.swift; path = XMLManagement/XMLPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -398,28 +464,30 @@
 			name = GeneralExtensions;
 			sourceTree = "<group>";
 		};
-		0F69826E1EB7D96100CAA284 /* Functions */ = {
+		0F69826E1EB7D96100CAA284 /* BaseTractElement */ = {
 			isa = PBXGroup;
 			children = (
-				0F6982731EB7DA4500CAA284 /* TractElementStaticFunctions.swift */,
-				0F6982711EB7D9E800CAA284 /* TractElementFunctions.swift */,
+				0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */,
+				0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */,
 			);
-			name = Functions;
+			name = BaseTractElement;
 			sourceTree = "<group>";
 		};
 		0F6982751EB83A8E00CAA284 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
-				0F85C7911ECCAA0C00023723 /* Actions */,
-				0F7741DA1EBB8AD400888D20 /* Animations */,
-				0F806C561EB28D6000F3ED2B /* TractRoot.swift */,
-				4F462A351EB0E28900C03447 /* TractHero.swift */,
-				0F806C661EB3E69D00F3ED2B /* TractHeader.swift */,
+				ECBE2E451EF03CA400A13849 /* TractCards */,
+				0F7741DA1EBB8AD400888D20 /* TractHeader */,
+				0F85C7911ECCAA0C00023723 /* TractPage */,
+				ECBE2E461EF03CAE00A13849 /* TractTabs */,
 				0F6982771EB8E31F00CAA284 /* TractCards.swift */,
-				0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */,
-				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
-				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
 				EC3140BE1EE76DD7009347D3 /* TractEmails.swift */,
+				0F13B5FE1EC4C8E300C55B2A /* TractForm.swift */,
+				0F806C661EB3E69D00F3ED2B /* TractHeader.swift */,
+				4F462A351EB0E28900C03447 /* TractHero.swift */,
+				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
+				0F806C561EB28D6000F3ED2B /* TractPage.swift */,
+				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -427,53 +495,40 @@
 		0F6982761EB83AF700CAA284 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				0F85C7961ECCAC0100023723 /* Actions */,
-				0F7741D71EBB8A7300888D20 /* Animations */,
-				0F7741E11EBB8CCD00888D20 /* Gestures */,
-				0F806C541EB2893500F3ED2B /* TractHeading.swift */,
-				0F806C681EB3E6B100F3ED2B /* TractNumber.swift */,
-				0F806C6A1EB3E6C300F3ED2B /* TractTitle.swift */,
-				4F462A361EB0E28900C03447 /* TractParagraph.swift */,
-				0F806C6C1EB3E6D700F3ED2B /* TractCard.swift */,
-				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
-				0F806C701EB3E72C00F3ED2B /* TractCallToAction.swift */,
-				4F462A371EB0E28900C03447 /* TractTextContent.swift */,
-				0F13B5F61EC4C85000C55B2A /* TractImage.swift */,
+				ECBE2E581EF0497200A13849 /* TractButton */,
+				ECBE2E571EF0494900A13849 /* TractCallToAction */,
+				ECBE2E531EF048E100A13849 /* TractCard */,
+				0F85C7961ECCAC0100023723 /* TractEmail */,
+				ECBE2E561EF0493500A13849 /* TractLabel */,
+				ECBE2E591EF0497D00A13849 /* TractLink */,
+				ECBE2E4D1EF047ED00A13849 /* TractModal */,
+				ECBE2E501EF048A100A13849 /* TractParagraph */,
+				ECBE2E5E1EF04A5400A13849 /* TractTextContent */,
 				0F13B5F81EC4C86D00C55B2A /* TractButton.swift */,
-				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
-				0F2837971EC62D3F0049CCE5 /* TractLink.swift */,
-				0F28379B1EC65A330049CCE5 /* TractTab.swift */,
-				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
+				0F806C701EB3E72C00F3ED2B /* TractCallToAction.swift */,
+				0F806C6C1EB3E6D700F3ED2B /* TractCard.swift */,
 				EC3140C01EE76E6C009347D3 /* TractEmail.swift */,
+				0F806C541EB2893500F3ED2B /* TractHeading.swift */,
+				0F13B5F61EC4C85000C55B2A /* TractImage.swift */,
+				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
+				0F806C6E1EB3E6FA00F3ED2B /* TractLabel.swift */,
+				0F2837971EC62D3F0049CCE5 /* TractLink.swift */,
+				0F0853181ECBAF0400DDC86D /* TractModal.swift */,
+				0F806C681EB3E6B100F3ED2B /* TractNumber.swift */,
+				4F462A361EB0E28900C03447 /* TractParagraph.swift */,
+				0F28379B1EC65A330049CCE5 /* TractTab.swift */,
+				4F462A371EB0E28900C03447 /* TractTextContent.swift */,
+				0F806C6A1EB3E6C300F3ED2B /* TractTitle.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
 		};
-		0F7741D71EBB8A7300888D20 /* Animations */ = {
+		0F7741DA1EBB8AD400888D20 /* TractHeader */ = {
 			isa = PBXGroup;
 			children = (
-				0F7741D81EBB8A8900888D20 /* TractCardAnimations.swift */,
-				0F0352CA1EC27CA4006CD4E5 /* TractCallToActionAnimations.swift */,
+				0F7741DB1EBB8AFC00888D20 /* TractHeader+Animations.swift */,
 			);
-			name = Animations;
-			sourceTree = "<group>";
-		};
-		0F7741DA1EBB8AD400888D20 /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				0F7741DB1EBB8AFC00888D20 /* TractHeaderAnimations.swift */,
-				0F7741DF1EBB8BF300888D20 /* TractCardsAnimations.swift */,
-			);
-			name = Animations;
-			sourceTree = "<group>";
-		};
-		0F7741E11EBB8CCD00888D20 /* Gestures */ = {
-			isa = PBXGroup;
-			children = (
-				0F7741E21EBB8CE600888D20 /* TractLabelGestures.swift */,
-				0F7741E41EBBCB8400888D20 /* TractCardGestures.swift */,
-			);
-			name = Gestures;
+			name = TractHeader;
 			sourceTree = "<group>";
 		};
 		0F7D50201EA931A600F5957E /* Languages */ = {
@@ -503,39 +558,47 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
-		0F85C7911ECCAA0C00023723 /* Actions */ = {
+		0F85C7911ECCAA0C00023723 /* TractPage */ = {
 			isa = PBXGroup;
 			children = (
-				0F85C7921ECCAA4400023723 /* TractRootActions.swift */,
-				0F85C7941ECCAAA000023723 /* TractCardsActions.swift */,
+				0F85C7921ECCAA4400023723 /* TractPage+Actions.swift */,
 			);
-			name = Actions;
+			name = TractPage;
 			sourceTree = "<group>";
 		};
-		0F85C7961ECCAC0100023723 /* Actions */ = {
+		0F85C7961ECCAC0100023723 /* TractEmail */ = {
 			isa = PBXGroup;
 			children = (
-				0F85C7971ECCAC2400023723 /* TractCardActions.swift */,
-				0F9E32401EDD170C0081DBB9 /* TractCallToActionActions.swift */,
-				0F9E32421EDD182F0081DBB9 /* TractButtonActions.swift */,
-				0F9E32441EDD1A4C0081DBB9 /* TractLinkActions.swift */,
-				0F9E323E1EDCEDEE0081DBB9 /* TractModalActions.swift */,
-				EC3140C21EE76F1D009347D3 /* TractEmailActions.swift */,
+				EC3140C21EE76F1D009347D3 /* TractEmail+Actions.swift */,
 			);
-			name = Actions;
+			name = TractEmail;
 			sourceTree = "<group>";
 		};
 		0F9E322D1EDCC7150081DBB9 /* Properties */ = {
 			isa = PBXGroup;
 			children = (
-				0F9E323C1EDCD56A0081DBB9 /* TractElementProperties.swift */,
-				0F9E32481EDD22960081DBB9 /* TractRootProperties.swift */,
 				0F9E32301EDCC78A0081DBB9 /* TractButtonProperties.swift */,
+				EC8245C61EEEF0660023A203 /* TractCallToActionProperties.swift */,
 				0F9E32311EDCC78A0081DBB9 /* TractCardProperties.swift */,
-				0F9E32321EDCC78A0081DBB9 /* TractModalProperties.swift */,
-				0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */,
-				0F9E32341EDCC78A0081DBB9 /* TractTextFieldProperties.swift */,
+				EC15BE601EEB54C5006B2E1A /* TractCardsProperties.swift */,
 				EC3140C41EE76F99009347D3 /* TractEmailProperties.swift */,
+				EC8245BA1EEEEE180023A203 /* TractEmailsProperties.swift */,
+				EC8245B41EEEEB340023A203 /* TractFormProperties.swift */,
+				EC15BE5E1EEB5447006B2E1A /* TractHeaderProperties.swift */,
+				EC8245BC1EEEEE880023A203 /* TractHeadingProperties.swift */,
+				EC8245B21EEEEA520023A203 /* TractHeroProperties.swift */,
+				EC8245C81EEEF0DD0023A203 /* TractImageProperties.swift */,
+				EC8245CC1EEEF1A00023A203 /* TractInputProperties.swift */,
+				EC8245C41EEEF0020023A203 /* TractLabelProperties.swift */,
+				0F9E32321EDCC78A0081DBB9 /* TractModalProperties.swift */,
+				EC8245B81EEEEBCC0023A203 /* TractModalsProperties.swift */,
+				EC8245BE1EEEEED10023A203 /* TractNumberProperties.swift */,
+				0F9E32481EDD22960081DBB9 /* TractPageProperties.swift */,
+				EC8245C21EEEEF6E0023A203 /* TractParagraphProperties.swift */,
+				EC8245CE1EEEF1B90023A203 /* TractTabProperties.swift */,
+				EC8245B61EEEEB810023A203 /* TractTabsProperties.swift */,
+				0F9E32331EDCC78A0081DBB9 /* TractTextContentProperties.swift */,
+				EC8245C01EEEEF090023A203 /* TractTitleProperties.swift */,
 			);
 			name = Properties;
 			sourceTree = "<group>";
@@ -649,7 +712,7 @@
 				0FB73E741EA906A7000BA60D /* GTConstants.swift */,
 				0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */,
 				4F8048041EB3A2FB00943DFF /* GTSettings.swift */,
-				0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultColors.swift */,
+				0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -678,13 +741,12 @@
 		4F1C953A1EA6B850007B47DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				ECC194BE1EEB2CDB00A56332 /* Tract */,
 				0FB0E7C31EB00C5300583BF3 /* Switch */,
 				0FB73E4B1EA9063E000BA60D /* Buttons */,
 				0FB73E4E1EA9063E000BA60D /* Cells */,
 				0FB73E511EA9063E000BA60D /* Labels */,
 				0F08530F1ECB56DA00DDC86D /* Text */,
-				4FF82B9A1EB0D85800890E53 /* TractElements */,
-				4F462A301EB0DF3E00C03447 /* BaseTractView.swift */,
 				4FEE566E1EC4EAD20085249E /* GTProgressView.swift */,
 			);
 			name = Views;
@@ -698,6 +760,7 @@
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
+				4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
 				4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */,
 				4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */,
@@ -780,6 +843,7 @@
 				4F1C95391EA6B84A007B47DB /* Models */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
+				ECB2E2981EE9FAC300346FBE /* XMLManagement */,
 				0F0352B31EC0CD03006CD4E5 /* XMLContent */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
@@ -806,10 +870,10 @@
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
 			isa = PBXGroup;
 			children = (
-				0F9E322D1EDCC7150081DBB9 /* Properties */,
+				0F69826E1EB7D96100CAA284 /* BaseTractElement */,
 				0F6982751EB83A8E00CAA284 /* Containers */,
-				0F69826E1EB7D96100CAA284 /* Functions */,
 				0F6982761EB83AF700CAA284 /* Nodes */,
+				0F9E322D1EDCC7150081DBB9 /* Properties */,
 				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 			);
 			name = TractElements;
@@ -828,12 +892,34 @@
 			isa = PBXGroup;
 			children = (
 				EC55A61E1EE0AC37000235CA /* TractBindings.swift */,
-				EC55A61F1EE0AC37000235CA /* TractColors.swift */,
 				EC55A6201EE0AC37000235CA /* TractConfigurations.swift */,
-				EC55A6241EE0AD03000235CA /* TractPage.swift */,
 				EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */,
+				EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */,
+				ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */,
+				ECBE2E6A1EF1053000A13849 /* TractProperties.swift */,
+				ECC194B51EEAF15500A56332 /* ManifestProperties.swift */,
+				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
 			);
 			name = TractClasses;
+			sourceTree = "<group>";
+		};
+		EC8245D21EEFA3290023A203 /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				EC8245D31EEFA3430023A203 /* XMLParseManager.swift */,
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
+		ECB2E2981EE9FAC300346FBE /* XMLManagement */ = {
+			isa = PBXGroup;
+			children = (
+				EC8245D21EEFA3290023A203 /* Parse */,
+				ECB2E2991EE9FB0600346FBE /* XMLManager.swift */,
+				ECC194B71EEAF3BA00A56332 /* XMLNode.swift */,
+				ECC194BF1EEB32FA00A56332 /* XMLPage.swift */,
+			);
+			name = XMLManagement;
 			sourceTree = "<group>";
 		};
 		ECB5A8BB1EE5C9E1008E4AB7 /* General */ = {
@@ -845,6 +931,107 @@
 				ECB5A8C11EE5E326008E4AB7 /* WebViewController.xib */,
 			);
 			name = General;
+			sourceTree = "<group>";
+		};
+		ECBE2E451EF03CA400A13849 /* TractCards */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE2E471EF03CD500A13849 /* TractCards+ChildSetup.swift */,
+				ECBE2E491EF03F6800A13849 /* TractCards+UI.swift */,
+				0F7741DF1EBB8BF300888D20 /* TractCards+Animations.swift */,
+				0F85C7941ECCAAA000023723 /* TractCards+Actions.swift */,
+			);
+			name = TractCards;
+			sourceTree = "<group>";
+		};
+		ECBE2E461EF03CAE00A13849 /* TractTabs */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE2E4B1EF040AF00A13849 /* TractTabs+UI.swift */,
+				ECBE2E611EF04EFB00A13849 /* TractTabs+ChildSetup.swift */,
+			);
+			name = TractTabs;
+			sourceTree = "<group>";
+		};
+		ECBE2E4D1EF047ED00A13849 /* TractModal */ = {
+			isa = PBXGroup;
+			children = (
+				0F9E323E1EDCEDEE0081DBB9 /* TractModal+Actions.swift */,
+				ECBE2E4E1EF0480D00A13849 /* TractModal+ChildSetup.swift */,
+			);
+			name = TractModal;
+			sourceTree = "<group>";
+		};
+		ECBE2E501EF048A100A13849 /* TractParagraph */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE2E511EF048B700A13849 /* TractParagraph+UI.swift */,
+			);
+			name = TractParagraph;
+			sourceTree = "<group>";
+		};
+		ECBE2E531EF048E100A13849 /* TractCard */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE2E541EF048F600A13849 /* TractCard+UI.swift */,
+				0F7741E41EBBCB8400888D20 /* TractCard+Gestures.swift */,
+				0F7741D81EBB8A8900888D20 /* TractCard+Animations.swift */,
+				0F85C7971ECCAC2400023723 /* TractCard+Actions.swift */,
+			);
+			name = TractCard;
+			sourceTree = "<group>";
+		};
+		ECBE2E561EF0493500A13849 /* TractLabel */ = {
+			isa = PBXGroup;
+			children = (
+				0F7741E21EBB8CE600888D20 /* TractLabel+Gestures.swift */,
+				ECBE2E5A1EF049E400A13849 /* TractLabel+UI.swift */,
+			);
+			name = TractLabel;
+			sourceTree = "<group>";
+		};
+		ECBE2E571EF0494900A13849 /* TractCallToAction */ = {
+			isa = PBXGroup;
+			children = (
+				0F0352CA1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift */,
+				0F9E32401EDD170C0081DBB9 /* TractCallToAction+Actions.swift */,
+				ECBE2E5C1EF04A2B00A13849 /* TractCallToAction+UI.swift */,
+			);
+			name = TractCallToAction;
+			sourceTree = "<group>";
+		};
+		ECBE2E581EF0497200A13849 /* TractButton */ = {
+			isa = PBXGroup;
+			children = (
+				0F9E32421EDD182F0081DBB9 /* TractButton+Actions.swift */,
+				ECBE2E661EF050D800A13849 /* TractButton+UI.swift */,
+			);
+			name = TractButton;
+			sourceTree = "<group>";
+		};
+		ECBE2E591EF0497D00A13849 /* TractLink */ = {
+			isa = PBXGroup;
+			children = (
+				0F9E32441EDD1A4C0081DBB9 /* TractLink+Actions.swift */,
+			);
+			name = TractLink;
+			sourceTree = "<group>";
+		};
+		ECBE2E5E1EF04A5400A13849 /* TractTextContent */ = {
+			isa = PBXGroup;
+			children = (
+				ECBE2E5F1EF04A6E00A13849 /* TractTextContent+UI.swift */,
+			);
+			name = TractTextContent;
+			sourceTree = "<group>";
+		};
+		ECC194BE1EEB2CDB00A56332 /* Tract */ = {
+			isa = PBXGroup;
+			children = (
+				4FF82B9A1EB0D85800890E53 /* TractElements */,
+				4F462A301EB0DF3E00C03447 /* TractView.swift */,
+			);
+			name = Tract;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1089,59 +1276,72 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
+				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
+				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
 				0FB73E751EA906A7000BA60D /* GTUIExtensions.swift in Sources */,
-				0F7741D91EBB8A8900888D20 /* TractCardAnimations.swift in Sources */,
+				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
+				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
-				0F9E32391EDCC78A0081DBB9 /* TractTextFieldProperties.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
-				0F9E32491EDD22960081DBB9 /* TractRootProperties.swift in Sources */,
+				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
+				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
-				0F7741E31EBB8CE600888D20 /* TractLabelGestures.swift in Sources */,
-				EC55A6251EE0AD03000235CA /* TractPage.swift in Sources */,
+				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
+				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
-				0F0352CB1EC27CA4006CD4E5 /* TractCallToActionAnimations.swift in Sources */,
+				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
 				4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */,
 				0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */,
 				0F806C711EB3E72C00F3ED2B /* TractCallToAction.swift in Sources */,
+				ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */,
 				0F806C691EB3E6B100F3ED2B /* TractNumber.swift in Sources */,
+				ECBE2E671EF050D800A13849 /* TractButton+UI.swift in Sources */,
 				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
-				0F9E323F1EDCEDEE0081DBB9 /* TractModalActions.swift in Sources */,
+				0F9E323F1EDCEDEE0081DBB9 /* TractModal+Actions.swift in Sources */,
+				ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
-				0F9E32451EDD1A4C0081DBB9 /* TractLinkActions.swift in Sources */,
+				0F9E32451EDD1A4C0081DBB9 /* TractLink+Actions.swift in Sources */,
+				EC8245C91EEEF0DD0023A203 /* TractImageProperties.swift in Sources */,
 				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
+				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
-				0F9E32431EDD182F0081DBB9 /* TractButtonActions.swift in Sources */,
-				EC3140C31EE76F1D009347D3 /* TractEmailActions.swift in Sources */,
+				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
+				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
+				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
-				0F7741DC1EBB8AFC00888D20 /* TractHeaderAnimations.swift in Sources */,
+				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
+				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
-				0F85C7981ECCAC2400023723 /* TractCardActions.swift in Sources */,
+				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
-				EC55A6221EE0AC37000235CA /* TractColors.swift in Sources */,
 				4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */,
 				0F9E324E1EDE78590081DBB9 /* TractViewControllerContent.swift in Sources */,
+				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
-				0F85C7951ECCAAA000023723 /* TractCardsActions.swift in Sources */,
+				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
+				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
+				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
-				0F85C7931ECCAA4400023723 /* TractRootActions.swift in Sources */,
+				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
@@ -1149,62 +1349,82 @@
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
 				4FE4AF2C1EE0F386000E3125 /* ResourceViews.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
-				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultColors.swift in Sources */,
+				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
 				0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				0F806C6B1EB3E6C300F3ED2B /* TractTitle.swift in Sources */,
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
+				ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */,
 				EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
-				0F6982741EB7DA4500CAA284 /* TractElementStaticFunctions.swift in Sources */,
+				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
+				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
+				ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
-				0F7741E51EBBCB8400888D20 /* TractCardGestures.swift in Sources */,
+				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
-				0F806C571EB28D6000F3ED2B /* TractRoot.swift in Sources */,
+				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
+				EC8245B91EEEEBCC0023A203 /* TractModalsProperties.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
+				EC8245C11EEEEF090023A203 /* TractTitleProperties.swift in Sources */,
+				EC8245C71EEEF0660023A203 /* TractCallToActionProperties.swift in Sources */,
+				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
+				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
-				0F7741E01EBB8BF300888D20 /* TractCardsAnimations.swift in Sources */,
+				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
+				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
+				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
+				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
+				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
+				0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
-				0F6982721EB7D9E800CAA284 /* TractElementFunctions.swift in Sources */,
+				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
+				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
+				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
-				0F9E323D1EDCD56A0081DBB9 /* TractElementProperties.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
-				4F462A311EB0DF3E00C03447 /* BaseTractView.swift in Sources */,
+				4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
+				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
 				ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
+				ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */,
 				0F9E32351EDCC78A0081DBB9 /* TractButtonProperties.swift in Sources */,
+				EC8245CF1EEEF1B90023A203 /* TractTabProperties.swift in Sources */,
+				ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */,
 				0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
-				0F9E32411EDD170C0081DBB9 /* TractCallToActionActions.swift in Sources */,
+				4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */,
+				0F9E32411EDD170C0081DBB9 /* TractCallToAction+Actions.swift in Sources */,
+				ECBE2E6B1EF1053000A13849 /* TractProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

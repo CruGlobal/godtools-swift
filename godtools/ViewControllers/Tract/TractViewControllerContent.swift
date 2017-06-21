@@ -33,7 +33,7 @@ extension TractViewController {
         removeSnapshotView()
     }
     
-    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat) -> BaseTractView {
+    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat) -> TractView {
         let xPosition = (width * CGFloat(pageNumber))
         let frame = CGRect(x: xPosition,
                            y: 0.0,
@@ -45,7 +45,7 @@ extension TractViewController {
         configurations.defaultTextAlignment = getLanguageTextAlignment()
         configurations.pagination = page.pagination
         
-        let view = BaseTractView(frame: frame, data: page.pageContent(), colors: self.colors!, configurations: configurations)
+        let view = TractView(frame: frame, data: page.pageContent(), manifestProperties: self.manifestProperties, configurations: configurations)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.tag = self.viewTagOrigin + pageNumber
         
@@ -57,7 +57,7 @@ extension TractViewController {
         let width = self.containerView.frame.size.width
         let height = self.containerView.frame.size.height
         let lastPosition = self.totalPages() - 1
-        var tmpPagesViews = [BaseTractView?](repeating: nil, count: totalPages())
+        var tmpPagesViews = [TractView?](repeating: nil, count: totalPages())
         
         for position in range.start...range.end {
             if let pageView = self.pagesViews[position] {
@@ -108,7 +108,7 @@ extension TractViewController {
     }
     
     func resetPagesView() {
-        self.pagesViews = [BaseTractView?](repeating: nil, count: totalPages())
+        self.pagesViews = [TractView?](repeating: nil, count: totalPages())
     }
     
     private func addSnapshotView() {
