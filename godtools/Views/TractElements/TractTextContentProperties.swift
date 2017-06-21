@@ -66,19 +66,25 @@ class TractTextContentProperties: TractProperties {
         return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
     }
     
-    func colorFor(_ element: BaseTractElement) -> UIColor {
+    func colorFor(_ element: BaseTractElement, pageProperties: TractPageProperties) -> UIColor {
         if localTextColor != nil {
             return localTextColor!
         }
         
-        if BaseTractElement.isHeadingElement(element) ||
-            BaseTractElement.isLabelElement(element) {
+        if BaseTractElement.isElement(element, kindOf: TractCard.self) {
+            if BaseTractElement.isElement(element, kindOf: TractLabel.self) {
+                return primaryColor
+            }
+            if pageProperties.cardTextColor != nil {
+                return pageProperties.cardTextColor!
+            }
+        }
+        
+        if BaseTractElement.isElement(element, kindOf: TractHeading.self) {
             return primaryColor
         }
         
-        if BaseTractElement.isHeaderElement(element) ||
-            BaseTractElement.isTitleElement(element) ||
-            BaseTractElement.isNumberElement(element) {
+        if BaseTractElement.isElement(element, kindOf: TractHeader.self) {
             return primaryTextColor
         }
         

@@ -24,8 +24,7 @@ class TractPageProperties: TractProperties {
     var listeners: String = ""
     
     override func defineProperties() {
-        self.properties = ["backgroundColor", "backgroundImage", "cardTextColor",
-                           "cardBackgroundColor", "listeners"]
+        self.properties = ["backgroundColor", "backgroundImage", "cardTextColor", "cardBackgroundColor", "listeners"]
     }
     
     override func customProperties() -> [String]? {
