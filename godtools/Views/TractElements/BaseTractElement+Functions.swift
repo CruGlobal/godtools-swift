@@ -25,26 +25,41 @@ extension BaseTractElement {
     func buildScaledImageView(parentView: UIView, image: UIImage, aligns: [TractImageConfig.ImageAlign], scaleType: TractImageConfig.ImageScaleType) -> UIImageView {
         let viewWidth = parentView.frame.size.width
         let viewHeight = parentView.frame.size.height
-        var width = image.size.width
-        var height = image.size.height
+        let viewRatio = viewWidth / viewHeight
+        var imageWidth = image.size.width
+        var imageHeight = image.size.height
+        let imageRatio = imageWidth / imageHeight
         
         let imageView = UIImageView(image: image)
         
-        switch scaleType {
-        case .fill:
-            width = viewWidth
-            height = viewHeight
-            imageView.contentMode = .scaleAspectFill
-        case .fit:
-            width = viewWidth
-            height = viewHeight
-            imageView.contentMode = .scaleAspectFit
-        case .fillX:
-            height = height * viewWidth / width
-            width = viewWidth
-        case .fillY:
-            width = width * viewHeight / height
-            height = viewHeight
+        if viewRatio == imageRatio {
+            imageWidth = viewWidth
+            imageHeight = viewHeight
+        } else {
+            switch scaleType {
+            case .fill:
+                if viewRatio > imageRatio {
+                    imageHeight = imageHeight * viewWidth / imageWidth
+                    imageWidth = viewWidth
+                } else {
+                    imageWidth = imageWidth * viewHeight / imageHeight
+                    imageHeight = viewHeight
+                }
+            case .fit:
+                if viewRatio > imageRatio {
+                    imageWidth = imageWidth * viewHeight / imageHeight
+                    imageHeight = viewHeight
+                } else {
+                    imageHeight = imageHeight * viewWidth / imageWidth
+                    imageWidth = viewWidth
+                }
+            case .fillX:
+                imageHeight = imageHeight * viewWidth / imageWidth
+                imageWidth = viewWidth
+            case .fillY:
+                imageWidth = imageWidth * viewHeight / imageHeight
+                imageHeight = viewHeight
+            }
         }
         
         var xPosition: CGFloat = 0.0
@@ -53,25 +68,24 @@ extension BaseTractElement {
         if aligns.contains(.top) {
             yPosition = 0.0
         } else if aligns.contains(.bottom) {
-            yPosition = viewHeight - height
+            yPosition = viewHeight - imageHeight
         }
         
         if aligns.contains(.end) {
-            xPosition = viewWidth - width
+            xPosition = viewWidth - imageWidth
         } else if aligns.contains(.start) {
             xPosition = 0.0
         }
         
         if aligns.contains(.center) {
-            xPosition = (viewWidth - width) / CGFloat(2.0)
-            yPosition = (viewHeight - height) / CGFloat(2.0)
+            xPosition = (viewWidth - imageWidth) / CGFloat(2.0)
+            yPosition = (viewHeight - imageHeight) / CGFloat(2.0)
         }
         
         imageView.frame = CGRect(x: xPosition,
                                  y: yPosition,
-                                 width: width,
-                                 height: height)
-        
+                                 width: imageWidth,
+                                 height: imageHeight)
         return imageView
     }
     
