@@ -48,8 +48,13 @@ class XMLManager: NSObject {
             return
         }
         
-        let objectMirror = Mirror(reflecting: object)
-        let matchedProperty = objectMirror.children.filter( { $0.label == propertyName }).first
+        var objectMirror: Mirror? = Mirror(reflecting: object)
+        var matchedProperty: Mirror.Child?
+        
+        repeat {
+            matchedProperty = objectMirror?.children.filter( { $0.label == propertyName }).first
+            objectMirror = objectMirror?.superclassMirror
+        } while (matchedProperty == nil && objectMirror != nil)
         
         if matchedProperty == nil {
             return
