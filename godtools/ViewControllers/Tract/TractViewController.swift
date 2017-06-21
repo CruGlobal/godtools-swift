@@ -85,7 +85,7 @@ class TractViewController: BaseViewController {
     
     fileprivate func setupContainerView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        let startingYPos = navigationBarFrame.origin.y
         
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingYPos
