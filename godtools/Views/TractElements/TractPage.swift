@@ -51,4 +51,35 @@ class TractPage: BaseTractElement {
         return self.properties as! TractPageProperties
     }
     
+    final func setupBackgroundPage() {
+        let width = BaseTractElement.screenWidth
+        let height = BaseTractElement.screenHeight
+        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+        let backgroundView = UIView(frame: frame)
+        
+        let elementProperties = pageProperties()
+        if elementProperties.backgroundImage == "" {
+            return
+        }
+        
+        let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
+        
+        guard let data = NSData(contentsOfFile: imagePath) else {
+            return
+        }
+        
+        guard let image = UIImage(data: data as Data) else {
+            return
+        }
+        
+        let imageView = buildScaledImageView(parentView: backgroundView,
+                                             image: image,
+                                             aligns: elementProperties.backgroundImageAlign,
+                                             scaleType: elementProperties.backgroundImageScaleType)
+        backgroundView.addSubview(imageView)
+        backgroundView.clipsToBounds = true
+        
+        self.addSubview(backgroundView)
+    }
+    
 }
