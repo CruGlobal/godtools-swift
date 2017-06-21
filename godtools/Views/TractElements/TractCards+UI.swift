@@ -11,40 +11,4 @@ import UIKit
 
 extension TractCards {
     
-    func setupBackground() {
-        self.backgroundColor = .clear
-        
-        let elementProperties = self.page!.pageProperties()
-        
-        if elementProperties.backgroundImage == "" {
-            return
-        }
-        
-        let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
-        guard let image = UIImage(named: imagePath) else {
-            return
-        }
-        
-        let imageView = UIImageView(image: image)
-        let viewWidth = self.frame.size.width
-        let viewHeight = self.frame.size.height
-        var width = image.size.width
-        var height = image.size.height
-        let ratio = width / height
-        
-        if height > viewHeight || width > viewWidth {
-            width = viewWidth
-            height = width / ratio
-        }
-        
-        let xPosition = (viewWidth - width) / CGFloat(2.0)
-        let yPosition: CGFloat = 0.0
-        
-        imageView.frame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
-        imageView.contentMode = .scaleAspectFit
-        
-        self.addSubview(imageView)
-        self.sendSubview(toBack: imageView)
-    }
-    
 }

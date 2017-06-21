@@ -30,8 +30,10 @@ extension TractCard {
         let imageView = buildScaledImageView(parentView: self.backgroundView,
                                              image: image,
                                              aligns: elementProperties.backgroundImageAlign,
-                                             scaleType: elementProperties.backgroundImageScaleType)        
+                                             scaleType: elementProperties.backgroundImageScaleType)
+        
         self.backgroundView.addSubview(imageView)
+        self.backgroundView.clipsToBounds = true
     }
     
     func setupTransparentView() {

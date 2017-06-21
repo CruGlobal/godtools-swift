@@ -51,10 +51,6 @@ class TractCards: BaseTractElement {
         buildHiddenCards(cards.hidden)
     }
     
-    override func loadStyles() {
-        setupBackground()
-    }
-    
     override func loadFrameProperties() {
         let yExternalPosition = self.elementFrame.y > TractCards.minYPosition ? self.elementFrame.y : TractCards.minYPosition
         

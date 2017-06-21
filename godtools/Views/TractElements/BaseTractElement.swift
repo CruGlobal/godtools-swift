@@ -192,6 +192,8 @@ class BaseTractElement: UIView {
                 self.didFindCallToAction = true
             } else if element.isKind(of: TractModals.self) {
                 continue
+            } else if element.isKind(of: TractHeader.self) {
+                setupBackgroundPage(startOnY: element.elementFrame.yEndPosition())
             }
             
             if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
@@ -214,6 +216,38 @@ class BaseTractElement: UIView {
         }
         
         self.elements = elements
+    }
+    
+    final func setupBackgroundPage(startOnY y: CGFloat) {
+        let height = BaseTractElement.screenHeight - y
+        let frame = CGRect(x: 0.0, y: y, width: BaseTractElement.screenWidth, height: height)
+        let backgroundView = UIView(frame: frame)
+        
+        if self.isKind(of: TractPage.self) {
+            let elementProperties = self.properties as! TractPageProperties
+            if elementProperties.backgroundImage == "" {
+                return
+            }
+            
+            let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
+            
+            guard let data = NSData(contentsOfFile: imagePath) else {
+                return
+            }
+            
+            guard let image = UIImage(data: data as Data) else {
+                return
+            }
+            
+            let imageView = buildScaledImageView(parentView: backgroundView,
+                                                 image: image,
+                                                 aligns: elementProperties.backgroundImageAlign,
+                                                 scaleType: elementProperties.backgroundImageScaleType)
+            backgroundView.addSubview(imageView)
+            backgroundView.clipsToBounds = true
+        }
+        
+        self.addSubview(backgroundView)
     }
     
     func setupView(properties: Dictionary<String, Any>) {
