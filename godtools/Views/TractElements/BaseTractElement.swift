@@ -192,8 +192,6 @@ class BaseTractElement: UIView {
                 self.didFindCallToAction = true
             } else if element.isKind(of: TractModals.self) {
                 continue
-            } else if element.isKind(of: TractHeader.self) {
-                setupBackgroundPage(startOnY: element.elementFrame.yEndPosition())
             }
             
             if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
@@ -218,9 +216,10 @@ class BaseTractElement: UIView {
         self.elements = elements
     }
     
-    final func setupBackgroundPage(startOnY y: CGFloat) {
-        let height = BaseTractElement.screenHeight - y
-        let frame = CGRect(x: 0.0, y: y, width: BaseTractElement.screenWidth, height: height)
+    final func setupBackgroundPage() {
+        let width = BaseTractElement.screenWidth
+        let height = BaseTractElement.screenHeight
+        let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
         let backgroundView = UIView(frame: frame)
         
         if self.isKind(of: TractPage.self) {

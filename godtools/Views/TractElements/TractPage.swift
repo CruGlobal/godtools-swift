@@ -21,6 +21,19 @@ class TractPage: BaseTractElement {
         return TractPageProperties.self
     }
     
+    override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
+        self.elementFrame.y = yPosition
+        
+        let contentElements = self.xmlManager.getContentElements(data)
+        
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
+        buildFrame()
+        setupBackgroundPage()
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
