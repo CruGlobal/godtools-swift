@@ -70,7 +70,7 @@ class XMLManager: NSObject {
         } else if propertyType == Bool.self {
             let newValue = value == "true" ? true : false
             object.setValue(newValue, forKey: propertyName)
-        } else if propertyType == UIColor.self || propertyType == Optional<UIColor>.self {
+        } else if propertyType == UIColor.self || propertyType == Optional<UIColor>.self || String(describing: propertyType) == "UIDeviceRGBColor" {
             let newValue = value.getRGBAColor()
             object.setValue(newValue, forKey: propertyName)
         }
