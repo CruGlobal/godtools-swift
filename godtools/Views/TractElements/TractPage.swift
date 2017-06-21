@@ -46,6 +46,10 @@ class TractPage: BaseTractElement {
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
     }
     
+    override func startingYPos() -> CGFloat {
+        return TractPage.navbarHeight
+    }
+    
     // MARK: - Helpers
     
     func pageProperties() -> TractPageProperties {
