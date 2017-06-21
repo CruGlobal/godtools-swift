@@ -14,13 +14,13 @@ class ManifestProperties: TractProperties {
     var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
-    var navBarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
-    var navBarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
+    var navbarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
+    var navbarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
     var resources = [String: String]()
     
     override func defineProperties() {
-        self.properties = ["backgroundColor", "backgroundImage", "navBarColor",
-                           "navBarControlColor"]
+        self.properties = ["backgroundColor", "backgroundImage", "navbarColor",
+                           "navbarControlColor"]
     }
     
     override func customProperties() -> [String]? {
