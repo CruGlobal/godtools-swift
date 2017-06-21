@@ -135,6 +135,8 @@ class TractViewController: BaseViewController {
         navigationBar.addSubview(self.progressView)
         
         setupNavigationBarFrame()
+        
+        TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
     @objc fileprivate func setupNavigationBarFrame() {

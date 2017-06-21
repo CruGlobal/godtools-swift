@@ -16,6 +16,7 @@ import SWXMLHash
 class TractPage: BaseTractElement {
     
     // MARK: - Setup
+    static var navbarHeight: CGFloat = 0.0
     
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self
