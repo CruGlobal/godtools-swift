@@ -15,6 +15,7 @@ class TractHero: BaseTractElement {
     
     let scrollView = UIScrollView()
     let containerView = UIView()
+    var heroHeight: CGFloat = 0.0
     
     override func propertiesKind() -> TractProperties.Type {
         return TractHeroProperties.self
@@ -48,10 +49,9 @@ class TractHero: BaseTractElement {
             let cardsElement = element as! TractCards
             let initialPosition = cardsElement.elementFrame.y + (cardsElement.elements?[0].elementFrame.y)!
             let maxHeight = BaseTractElement.screenHeight
-            let newHeight = maxHeight - (maxHeight - initialPosition)
-            self.elementFrame.height = newHeight - 8
+            self.heroHeight = maxHeight - (maxHeight - initialPosition) - 8
+            self.elementFrame.height = self.heroHeight
             self.frame = self.elementFrame.getFrame()
-            self.backgroundColor = .blue
         }
     }
     
@@ -62,23 +62,14 @@ class TractHero: BaseTractElement {
     }
     
     func setupScrollView() {
-        let width = self.elementFrame.finalWidth() - (TractCard.shadowPaddingConstant * CGFloat(2))
-        let xPosition = (self.elementFrame.finalWidth() - width) / CGFloat(2)
-        let height = self.bounds.size.height
-        let scrollViewFrame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
-        
-        self.scrollView.contentSize = CGSize(width: width, height: self.internalHeight)
-        self.scrollView.frame = scrollViewFrame
-        self.scrollView.delegate = self
+        self.scrollView.contentSize = CGSize(width: self.elementFrame.width, height: self.height)
+        self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: self.elementFrame.width, height: self.heroHeight)
         self.scrollView.backgroundColor = .clear
-        self.scrollView.showsVerticalScrollIndicator = false
-        
-        self.backgroundView.frame = scrollViewFrame
         
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
-                                          width: width,
-                                          height: self.internalHeight)
+                                          width: self.elementFrame.width,
+                                          height: self.height)
         self.containerView.backgroundColor = .clear
     }
         
