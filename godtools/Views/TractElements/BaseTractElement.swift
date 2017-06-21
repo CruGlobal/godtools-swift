@@ -235,13 +235,7 @@ class BaseTractElement: UIView {
         }
         
         self.elements = elements
-        
-        for element in self.elements! {
-            element.processAfterBuildOfChildren()
-        }
     }
-    
-    func processAfterBuildOfChildren() { }
     
     func setupView(properties: Dictionary<String, Any>) {
         updateFrameHeight()
