@@ -59,11 +59,12 @@ class ToolDetailViewController: BaseViewController {
     
     private func loadDescription() -> String {
         var language: Language? = nil
+        let languagesManager = LanguagesManager()
         
-        language = LanguagesManager().loadPrimaryLanguageFromDisk()
+        language = languagesManager.loadPrimaryLanguageFromDisk()
         
         if language == nil {
-            language = LanguagesManager().loadFromDisk(code: "en")!
+            language = languagesManager.loadFromDisk(code: "en")!
         }
         
         if language == nil {
