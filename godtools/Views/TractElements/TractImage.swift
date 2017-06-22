@@ -69,12 +69,19 @@ class TractImage: BaseTractElement {
     }
     
     func loadImage(properties: [String: Any]) -> UIImage {
-        let resource = properties["resource"] as! String?
+        let resource = properties["resource"] as! String
         self.align = properties["align"] as? String ?? "center"
         
-        guard let image = UIImage(named: resource!) else {
+        let imagePath = self.manifestProperties.getResourceForFile(filename: resource)
+        
+        guard let data = NSData(contentsOfFile: imagePath) else {
             return UIImage()
         }
+        
+        guard let image = UIImage(data: data as Data) else {
+            return UIImage()
+        }
+        
         return image
     }
 
