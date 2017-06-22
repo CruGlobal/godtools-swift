@@ -183,6 +183,27 @@ class BaseTractElement: UIView {
         setupView(properties: contentElements.properties)
     }
     
+    func getPreviousElement() -> BaseTractElement? {
+        guard let index = self.parent?.elements?.index(of: self) else {
+            return nil
+        }
+        if index > 0 {
+            return self.parent!.elements?[index - 1]
+        }
+        return nil
+    }
+    
+    func getFollowingElement() -> BaseTractElement? {
+        guard let index = self.parent?.elements?.index(of: self) else {
+            return nil
+        }
+        if index < (self.parent?.elements?.count)! - 1 {
+            return self.parent?.elements?[index + 1]
+        }
+        
+        return nil
+    }
+    
     func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
