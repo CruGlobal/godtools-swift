@@ -16,6 +16,7 @@ import SWXMLHash
 class TractPage: BaseTractElement {
     
     // MARK: - Setup
+    static var navbarHeight: CGFloat = 0.0
     
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self
@@ -43,6 +44,10 @@ class TractPage: BaseTractElement {
     override func elementListeners() -> [String]? {
         let properties = pageProperties()
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
+    }
+    
+    override func startingYPos() -> CGFloat {
+        return TractPage.navbarHeight
     }
     
     // MARK: - Helpers
