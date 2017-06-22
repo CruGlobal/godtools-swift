@@ -21,19 +21,20 @@ class TractCard: BaseTractElement {
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 120.0
     static let xPaddingConstant: CGFloat = 28.0
-    static let contentBottomPadding: CGFloat = 70.0
+    static let contentBottomPadding: CGFloat = 8.0
+    static let transparentViewHeight: CGFloat = 60.0
     
     // MARK: - Positions and Sizes
     
     var yDownPosition: CGFloat = 0.0
     
     var externalHeight: CGFloat {
-        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
+        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant - TractPage.navbarHeight
     }
     
     var internalHeight: CGFloat {
         if self.height > self.externalHeight {
-            return self.height + TractCard.contentBottomPadding + TractPage.navbarHeight
+            return self.height + TractCard.transparentViewHeight + TractCard.contentBottomPadding
         } else {
             return self.externalHeight
         }
@@ -66,14 +67,14 @@ class TractCard: BaseTractElement {
             self.isHidden = true
             properties.cardState = .hidden
         }
-        
+    }
+    
+    override func render() -> UIView {
         setupScrollView()
         setBordersAndShadows()
         disableScrollview()
         setupSwipeGestures()
-    }
-    
-    override func render() -> UIView {
+        
         for element in self.elements! {
             self.containerView.addSubview(element.render())
         }
@@ -102,8 +103,8 @@ class TractCard: BaseTractElement {
     }
     
     override func updateFrameHeight() {
-        self.height = cardHeight()
-        super.updateFrameHeight()
+        self.elementFrame.height = cardHeight()
+        self.frame = self.elementFrame.getFrame()
     }
     
     // MARK: - Helpers
