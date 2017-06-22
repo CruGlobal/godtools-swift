@@ -128,18 +128,11 @@ extension BaseFlowController: BaseViewControllerDelegate {
     }
     
     func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
-        print("bg: %@, cont: %@", backgroundColor, controlColor)
         let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
         
-//        if backgroundColor.colorWithoutTransparency() != nil {
-//            configureNavigationColor(navigationController: navigationController, color: backgroundColor.colorWithoutTransparency()!)
-//        } else {
-            configureNavigationColor(navigationController: navigationController, color: backgroundColor)
-//        }
-        
+        configureNavigationColor(navigationController: navigationController, color: backgroundColor)
         navigationController.navigationBar.tintColor = controlColor
     }
-    
 }
 
 extension BaseFlowController: MenuViewControllerDelegate {
