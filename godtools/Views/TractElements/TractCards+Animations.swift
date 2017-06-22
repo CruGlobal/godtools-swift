@@ -12,11 +12,13 @@ import UIKit
 extension TractCards {
     
     func transformToOpenUpCardsAnimation() {
+        let yPos = -self.elementFrame.y + TractPage.navbarHeight
+        
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: -self.elementFrame.y) },
+                        self.transform = CGAffineTransform(translationX: 0, y: yPos) },
                        completion: nil )
     }
     
