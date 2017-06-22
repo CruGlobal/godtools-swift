@@ -40,7 +40,7 @@ extension TractCards {
                 - (deltaChange * TractCards.constantYPaddingBottom)
             
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
-            element.yDownPosition = yDownPosition
+            element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
             self.elements?.append(element)
             
