@@ -63,6 +63,7 @@ class TractHero: BaseTractElement {
         
         self.scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
         self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentWidth, height: self.heroHeight)
+        self.scrollView.showsVerticalScrollIndicator = false
         self.scrollView.backgroundColor = .clear
         
         self.containerView.frame = CGRect(x: 0.0,
