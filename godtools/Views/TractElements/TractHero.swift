@@ -11,6 +11,9 @@ import UIKit
 
 class TractHero: BaseTractElement {
     
+    static let marginBottom: CGFloat = 8.0
+    static let paddingBottom: CGFloat = 24.0
+    
     // MARK: - Setup
     
     let scrollView = UIScrollView()
@@ -55,14 +58,17 @@ class TractHero: BaseTractElement {
     }
     
     func setupScrollView() {
-        self.scrollView.contentSize = CGSize(width: self.elementFrame.width, height: self.height)
-        self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: self.elementFrame.width, height: self.heroHeight)
+        let contentHeight: CGFloat = self.height + TractHero.paddingBottom
+        let contentWidth: CGFloat = self.elementFrame.width
+        
+        self.scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
+        self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentWidth, height: self.heroHeight)
         self.scrollView.backgroundColor = .clear
         
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
-                                          width: self.elementFrame.width,
-                                          height: self.height)
+                                          width: contentWidth,
+                                          height: contentHeight)
         self.containerView.backgroundColor = .clear
     }
     
@@ -72,7 +78,7 @@ class TractHero: BaseTractElement {
             let cardsElement = element as! TractCards
             let initialPosition = cardsElement.elementFrame.y + (cardsElement.elements?[0].elementFrame.y)!
             let maxHeight = BaseTractElement.screenHeight
-            self.heroHeight = maxHeight - (maxHeight - initialPosition) - 8
+            self.heroHeight = maxHeight - (maxHeight - initialPosition) - parent!.startingYPos() - TractHero.marginBottom
             self.elementFrame.height = self.heroHeight
             self.frame = self.elementFrame.getFrame()
         }
