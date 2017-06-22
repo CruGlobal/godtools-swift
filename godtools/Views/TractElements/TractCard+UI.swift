@@ -42,7 +42,7 @@ extension TractCard {
         }
         
         let width = self.scrollView.frame.size.width - 6.0
-        let height: CGFloat = 60.0
+        let height: CGFloat = TractCard.transparentViewHeight
         let xPosition: CGFloat = 3.0
         let yPosition = self.scrollView.frame.size.height - height - 1.0
         let transparentViewFrame = CGRect(x: xPosition, y: yPosition, width: width, height: height)

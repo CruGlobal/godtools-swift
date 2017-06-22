@@ -29,13 +29,13 @@ class TractCards: BaseTractElement {
     
     override var height: CGFloat {
         get {
-            return self.getMaxHeight()
+            return self.getMaxHeight() - TractPage.navbarHeight
         }
         set { } // Unused
     }
     
     var initialCardPosition: CGFloat {
-        return self.height - self.elementFrame.y
+        return self.height - self.elementFrame.y + TractPage.navbarHeight
     }
     
     // MARK: - Setup

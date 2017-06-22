@@ -130,7 +130,7 @@ extension TractCard {
     func disableScrollview() {
         let properties = cardProperties()
         
-        if properties.cardState != .open {
+        if properties.cardState != .open && properties.cardState != .enable {
             let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
             self.scrollView.isScrollEnabled = false
             self.scrollView.setContentOffset(startPoint, animated: true)
@@ -140,7 +140,7 @@ extension TractCard {
     func enableScrollview() {
         let properties = cardProperties()
         
-        if properties.cardState == .open {
+        if properties.cardState == .open || properties.cardState == .enable {
             self.scrollView.isScrollEnabled = true
         }
     }
