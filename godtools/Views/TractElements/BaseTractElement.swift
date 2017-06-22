@@ -50,6 +50,10 @@ class BaseTractElement: UIView {
         return BaseTractElement.yPadding
     }
     
+    func startingYPos() -> CGFloat {
+        return 0.0
+    }
+    
     // MARK: Main properties
     
     private var _mainView: TractPage?
@@ -201,7 +205,7 @@ class BaseTractElement: UIView {
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
-        var currentYPosition: CGFloat = 0.0
+        var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
         var elements = [BaseTractElement]()
         

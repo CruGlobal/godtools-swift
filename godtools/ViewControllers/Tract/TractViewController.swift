@@ -85,7 +85,7 @@ class TractViewController: BaseViewController {
     
     fileprivate func setupContainerView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingYPos = navigationBarFrame.origin.y + navigationBarFrame.size.height
+        let startingYPos = navigationBarFrame.origin.y
         
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingYPos
@@ -108,7 +108,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.navBarColor, controlColor: self.manifestProperties.navBarControlColor)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.navbarColor, controlColor: self.manifestProperties.navbarControlColor)
         
         let navigationBar = navigationController!.navigationBar
         
@@ -135,6 +135,8 @@ class TractViewController: BaseViewController {
         navigationBar.addSubview(self.progressView)
         
         setupNavigationBarFrame()
+        
+        TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
     @objc fileprivate func setupNavigationBarFrame() {

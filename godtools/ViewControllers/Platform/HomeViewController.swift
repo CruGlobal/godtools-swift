@@ -47,6 +47,7 @@ class HomeViewController: BaseViewController {
         
         toolsManager.delegate = self
         reloadView()
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
     }
     
     // Notifications

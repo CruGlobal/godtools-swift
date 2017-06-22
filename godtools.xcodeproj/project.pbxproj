@@ -122,6 +122,7 @@
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
+		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
 		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
 		4FE4AF2C1EE0F386000E3125 /* ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
@@ -316,6 +317,7 @@
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BannerManager.swift; path = Managers/BannerManager.swift; sourceTree = "<group>"; };
 		4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttachmentResource.swift; path = Managers/Attachments/AttachmentResource.swift; sourceTree = "<group>"; };
+		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
 		4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResourceViews.swift; path = Managers/ResourceViews.swift; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
@@ -741,6 +743,7 @@
 		4F1C953A1EA6B850007B47DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FDFC8DD1EFB17BC00B8CC33 /* Navbar */,
 				ECC194BE1EEB2CDB00A56332 /* Tract */,
 				0FB0E7C31EB00C5300583BF3 /* Switch */,
 				0FB73E4B1EA9063E000BA60D /* Buttons */,
@@ -865,6 +868,14 @@
 				4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */,
 			);
 			name = Attachments;
+			sourceTree = "<group>";
+		};
+		4FDFC8DD1EFB17BC00B8CC33 /* Navbar */ = {
+			isa = PBXGroup;
+			children = (
+				4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */,
+			);
+			name = Navbar;
 			sourceTree = "<group>";
 		};
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
@@ -1301,6 +1312,7 @@
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
+				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
 				4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */,
 				0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */,
