@@ -21,7 +21,7 @@ class TractCard: BaseTractElement {
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 120.0
     static let xPaddingConstant: CGFloat = 28.0
-    static let contentBottomPadding: CGFloat = 50.0
+    static let contentBottomPadding: CGFloat = 70.0
     
     // MARK: - Positions and Sizes
     
@@ -32,8 +32,11 @@ class TractCard: BaseTractElement {
     }
     
     var internalHeight: CGFloat {
-        let internalHeight = self.height > self.externalHeight ? self.height + TractCard.contentBottomPadding : self.externalHeight
-        return internalHeight
+        if self.height > self.externalHeight {
+            return self.height + TractCard.contentBottomPadding + TractPage.navbarHeight
+        } else {
+            return self.externalHeight
+        }
     }
     
     var translationY: CGFloat {
@@ -110,7 +113,7 @@ class TractCard: BaseTractElement {
     }
     
     func cardHeight() -> CGFloat {
-        return self.getMaxHeight() - TractCard.yBottomMarginConstant
+        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
     }
 
 }
