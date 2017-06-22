@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -30,11 +31,9 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_white" translatesAutoresizingMaskIntoConstraints="NO" id="oOT-tw-Fzu">
                             <rect key="frame" x="142" y="0.0" width="90" height="90"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="em1-c0-ZDg" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="91" y="110" width="193" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="130" y="110" width="115" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -57,9 +56,13 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="em1-c0-ZDg" firstAttribute="top" secondItem="oOT-tw-Fzu" secondAttribute="bottom" constant="20" id="1OZ-uH-jdn"/>
                         <constraint firstAttribute="height" constant="307" id="1sA-Bb-fvi"/>
+                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="top" secondItem="szd-6r-28H" secondAttribute="top" id="2Bl-Gr-XPf"/>
                         <constraint firstAttribute="bottom" secondItem="utk-V8-xg4" secondAttribute="bottom" constant="33" id="Kix-mJ-OBz"/>
+                        <constraint firstItem="em1-c0-ZDg" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="O0K-iC-wqe"/>
                         <constraint firstItem="utk-V8-xg4" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="gje-gs-x5u"/>
+                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="wH1-AX-Cem"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-5X-XL9">
@@ -67,11 +70,9 @@
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo_white" translatesAutoresizingMaskIntoConstraints="NO" id="JLw-YN-BDG">
                             <rect key="frame" x="142" y="0.0" width="90" height="90"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Your Languages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYK-jH-Vat" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="42" y="110" width="291" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="111" y="110" width="153.5" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -81,10 +82,9 @@
                             </userDefinedRuntimeAttributes>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-ip-VQi" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="54" y="226" width="130" height="48"/>
+                            <rect key="frame" x="71.5" y="226" width="107" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Hy4-vf-QFo"/>
-                                <constraint firstAttribute="width" constant="130" id="WLG-kO-dXm"/>
                             </constraints>
                             <state key="normal" title="Now"/>
                             <connections>
@@ -92,9 +92,8 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="192" y="226" width="130" height="48"/>
+                            <rect key="frame" x="259" y="226" width="107" height="48"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="130" id="hXd-Tk-uAZ"/>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
                             <state key="normal" title="Later"/>
@@ -106,10 +105,16 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="307" id="167-Sm-eql"/>
-                        <constraint firstItem="1GS-ip-VQi" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" constant="-68.5" id="4u1-Fy-QjN"/>
+                        <constraint firstItem="1GS-ip-VQi" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="6:11" id="4u1-Fy-QjN"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="5qw-0i-P67"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="DO9-yc-kfv"/>
                         <constraint firstAttribute="bottom" secondItem="1GS-ip-VQi" secondAttribute="bottom" constant="33" id="HsN-Hp-CA6"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" id="Tey-Kr-hpb"/>
+                        <constraint firstItem="1GS-ip-VQi" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="ZGK-jw-SqN"/>
                         <constraint firstAttribute="bottom" secondItem="jRo-pJ-Pjn" secondAttribute="bottom" constant="33" id="ZzX-vv-Uid"/>
-                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" constant="69.5" id="zy5-1Q-Us8"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="top" secondItem="JLw-YN-BDG" secondAttribute="bottom" constant="20" id="cZr-Sb-C7R"/>
+                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="qRC-SC-Mge"/>
+                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="16:11" id="zy5-1Q-Us8"/>
                     </constraints>
                 </view>
             </subviews>
