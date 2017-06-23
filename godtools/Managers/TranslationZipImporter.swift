@@ -188,7 +188,6 @@ class TranslationZipImporter: GTDataManager {
         
         let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
         
-        print(files.count)
         safelyWriteToRealm {
             for file in files {
                 let filename = file.lastPathComponent
