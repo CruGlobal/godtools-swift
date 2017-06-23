@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
+        print(NSHomeDirectory())
+        
         return true
     }
     
