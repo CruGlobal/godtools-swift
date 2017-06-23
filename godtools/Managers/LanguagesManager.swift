@@ -11,14 +11,12 @@ import UIKit
 import Alamofire
 import PromiseKit
 import Spine
-import MagicalRecord
+import RealmSwift
 
 class LanguagesManager: GTDataManager {
-    static let shared = LanguagesManager()
     
     let path = "languages"
     
-    var languages = [Language]()
     var selectingPrimaryLanguage = true
     
     override init() {
@@ -27,7 +25,11 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language? {
-        return findEntity(Language.self, byAttribute: "remoteId", withValue: id)
+        return findEntityByRemoteId(Language.self, remoteId: id)
+    }
+    
+    func loadFromDisk(code: String) -> Language? {
+        return findEntity(Language.self, byAttribute: "code", withValue: code)
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
@@ -46,21 +48,15 @@ class LanguagesManager: GTDataManager {
         return loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
     }
     
-    func loadFromDisk() -> [Language] {
-        languages = findAllEntities(Language.self)
-        
-        languages = languages.sorted { (language1, language2) -> Bool in
-            return language1.localizedName().compare(language2.localizedName()).rawValue < 0
-        }
-        
-        return languages
+    func loadFromDisk() -> Languages {
+        return findAllEntities(Language.self, sortedByKeyPath: "localizedName")
     }
     
-    func loadFromRemote() -> Promise<[Language]> {
+    func loadFromRemote() -> Promise<Languages> {
         showNetworkingIndicator()
         
         return issueGETRequest()
-            .then { data -> Promise<[Language]> in
+            .then { data -> Promise<Languages> in
                 do {
                     let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
                     
@@ -72,33 +68,39 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    
     func recordLanguageShouldDownload(language: Language) {
-        language.shouldDownload = true
-        saveToDisk()
+        safelyWriteToRealm {
+            language.shouldDownload = true
+        }
     }
     
     func recordLanguageShouldDelete(language: Language) {
-        language.shouldDownload = false
-        for translation in language.translationsAsArray() {
-            translation.isDownloaded = false
-            translation.removeFromReferencedFiles(translation.referencedFiles!)
+        safelyWriteToRealm {
+            language.shouldDownload = false
+            for translation in language.translations {
+                translation.isDownloaded = false
+            }
+            TranslationFileRemover().deleteUnusedPages()
         }
-        
-        TranslationFileRemover().deleteUnusedPages()
-    
-        saveToDisk()
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {
-        for remoteLanguage in languages {
-            let cachedlanguage = findFirstOrCreateEntity(Language.self, byAttribute: "remoteId", withValue: remoteLanguage.id!)
-            cachedlanguage.code = remoteLanguage.code
+        safelyWriteToRealm {
+            for remoteLanguage in languages {
+                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
+                    cachedlanguage.code = remoteLanguage.code!
+                    return
+                }
+                
+                let newCachedLanguage = Language()
+                newCachedLanguage.remoteId = remoteLanguage.id!
+                newCachedLanguage.code = remoteLanguage.code!
+                realm.add(newCachedLanguage)
+            }
         }
-        saveToDisk()
     }
-
-    fileprivate func selectedLanguageId() -> String? {
+    
+    func selectedLanguageId() -> String? {
         if selectingPrimaryLanguage {
             return GTSettings.shared.primaryLanguageId
         } else {
@@ -106,7 +108,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    fileprivate func setSelectedLanguageId(_ id: String) {
+    func setSelectedLanguageId(_ id: String) {
         if selectingPrimaryLanguage {
             GTSettings.shared.primaryLanguageId = id
             if id == GTSettings.shared.parallelLanguageId {
@@ -121,65 +123,5 @@ class LanguagesManager: GTDataManager {
     override func buildURL() -> URL? {
         return Config.shared().baseUrl?
                               .appendingPathComponent(self.path)
-    }
-}
-
-extension LanguagesManager: LanguageTableViewCellDelegate {
-    func deleteButtonWasPressed(_ cell: LanguageTableViewCell) {
-        self.recordLanguageShouldDelete(language: cell.language!)
-    }
-    
-    func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
-        self.recordLanguageShouldDownload(language: cell.language!)
-        TranslationZipImporter.shared.download(language: cell.language!)
-    }
-}
-
-extension LanguagesManager: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
-        self.setSelectedLanguageId(language.remoteId!)
-        self.recordLanguageShouldDownload(language: language)
-        TranslationZipImporter.shared.download(language: language)
-        self.refreshCellState(tableView: tableView, indexPath: indexPath)
-    }
-    
-    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
-        let cell = self.tableView(tableView, cellForRowAt: indexPath) as! LanguageTableViewCell
-        cell.language = self.languages[indexPath.section]
-        tableView.reloadData()
-    }
-}
-
-extension LanguagesManager: UITableViewDataSource {
-    
-    static let languageCellIdentifier = "languageCell"
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let language = languages[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesManager.languageCellIdentifier) as! LanguageTableViewCell
-        
-        cell.cellDelegate = self
-        cell.language = language
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
-        let selected = language.remoteId == self.selectedLanguageId()
-        
-        if selected {
-            cell.setSelected(selected, animated: true)
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        }
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
     }
 }

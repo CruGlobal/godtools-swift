@@ -7,11 +7,10 @@
 //
 
 import UIKit
-import CoreData
-import MagicalRecord
 import Fabric
 import Crashlytics
 import PromiseKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        initializeCoreDataStack()
         Fabric.with([Crashlytics.self, Answers.self])
         self.startFlowController(launchOptions: launchOptions)
         
@@ -29,11 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
+        #if DEBUG
+            print(NSHomeDirectory())
+        #endif
+        
         return true
-    }
-    
-    fileprivate func initializeCoreDataStack() {
-        MagicalRecord.setupCoreDataStack(withAutoMigratingSqliteStoreNamed: "godtools-5.sqlite")
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
@@ -55,11 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        cleanupCoreData()
-    }
     
-    fileprivate func cleanupCoreData() {
-        MagicalRecord.cleanUp()
     }
     
     // MARK: - Flow controllers setup
@@ -72,20 +66,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState() -> Promise<Any> {
-        // Initializes the importer so the resources directory can be created.
-        TranslationZipImporter.setup()
-        BannerManager.setup()
-        
+    private func initalizeAppState() -> Promise<Any> {        
         if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
             initializeAppStateOnFirstLaunch()
         }
         
-        return LanguagesManager.shared.loadFromRemote().then { (languages) -> Promise<[DownloadedResource]> in
-            return DownloadedResourceManager.shared.loadFromRemote()
-        }.then { (resources) -> Promise<[DownloadedResource]> in
+        return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+            return DownloadedResourceManager().loadFromRemote()
+        }.then { (resources) -> Promise<DownloadedResources> in
+
             FirstLaunchInitializer().cleanupInitialAppState()
-            TranslationZipImporter.shared.catchupMissedDownloads()
+            TranslationZipImporter().catchupMissedDownloads()
             return Promise(value: resources)
         }
     }

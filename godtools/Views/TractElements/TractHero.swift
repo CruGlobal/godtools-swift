@@ -11,31 +11,78 @@ import UIKit
 
 class TractHero: BaseTractElement {
     
-    // MARK: - Positions and Sizes
+    static let marginBottom: CGFloat = 8.0
+    static let paddingBottom: CGFloat = 24.0
     
-    override var width: CGFloat {
-        return 300
+    // MARK: - Setup
+    
+    let scrollView = UIScrollView()
+    let containerView = UIView()
+    var heroHeight: CGFloat = 0.0
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractHeroProperties.self
     }
     
-    var xPosition: CGFloat {
-        return (super.width - self.width) / CGFloat(2)
+    override func loadFrameProperties() {
+        let width: CGFloat = 300
+        self.elementFrame.x = (parentWidth() - width) / CGFloat(2)
+        self.elementFrame.width = width
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
     
-    var yPosition: CGFloat {
-        return self.yStartPosition + BaseTractElement.yMargin
+    override func render() -> UIView {
+        let followingElement = getFollowingElement()
+        if followingElement != nil && followingElement!.isKind(of: TractCards.self) {
+            updateHeroHeight()
+            setupScrollView()
+            
+            for element in self.elements! {
+                self.containerView.addSubview(element.render())
+            }
+            
+            self.scrollView.addSubview(self.containerView)
+            self.addSubview(self.scrollView)
+            
+            TractBindings.addBindings(self)
+            return self
+        } else {
+            return super.render()
+        }
     }
     
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.height
+    // MARK: - Helpers
+    
+    func heroProperties() -> TractHeroProperties {
+        return self.properties as! TractHeroProperties
     }
     
-    // MARK: - Setup 
+    func setupScrollView() {
+        let contentHeight: CGFloat = self.height + TractHero.paddingBottom
+        let contentWidth: CGFloat = self.elementFrame.width
+        
+        self.scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
+        self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentWidth, height: self.heroHeight)
+        self.scrollView.showsVerticalScrollIndicator = false
+        self.scrollView.backgroundColor = .clear
+        
+        self.containerView.frame = CGRect(x: 0.0,
+                                          y: 0.0,
+                                          width: contentWidth,
+                                          height: contentHeight)
+        self.containerView.backgroundColor = .clear
+    }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+    func updateHeroHeight() {
+        let element = getFollowingElement()
+        if element != nil && element!.isKind(of: TractCards.self) {
+            let cardsElement = element as! TractCards
+            let initialPosition = cardsElement.elementFrame.y + (cardsElement.elements?[0].elementFrame.y)!
+            let maxHeight = BaseTractElement.screenHeight
+            self.heroHeight = maxHeight - (maxHeight - initialPosition) - parent!.startingYPos() - TractHero.marginBottom
+            self.elementFrame.height = self.heroHeight
+            self.frame = self.elementFrame.getFrame()
+        }
     }
         
 }

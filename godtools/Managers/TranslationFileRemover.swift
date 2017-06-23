@@ -14,11 +14,12 @@ class TranslationFileRemover: GTDataManager {
     func deleteUnusedPages() {
         for page in findAllEntities(ReferencedFile.self) {
             do {
-                if page.translationsAsArray().filter({ $0.isDownloaded }).count == 0 {
-                    try FileManager.default.removeItem(atPath: "\(resourcesPath)/\(page.filename!)")
+                if page.translations.filter({ $0.isDownloaded }).count == 0 {
+                    try FileManager.default.removeItem(atPath: "\(resourcesPath)/\(page.filename)")
+                    realm.delete(page)
                 }
             } catch {
-                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error deleting file \(page.filename!) no longer referenced by any translations"])
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error deleting file \(page.filename) no longer referenced by any translations"])
             }
         }
     }

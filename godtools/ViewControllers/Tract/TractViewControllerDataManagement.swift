@@ -14,7 +14,7 @@ extension TractViewController {
     // MARK: - Management of languages
     
     func parallelLanguageIsAvailable() -> Bool {
-        guard let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk() else {
+        guard let parallelLanguage = languagesManager.loadParallelLanguageFromDisk() else {
             return false
         }
         
@@ -22,19 +22,19 @@ extension TractViewController {
     }
     
     func determinePrimaryLabel() -> String {
-        let primaryLanguage = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         
         if primaryLanguage == nil {
             return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
         } else {
-            return primaryLanguage!.localizedName()
+            return primaryLanguage!.localizedName
         }
     }
     
     func determineParallelLabel() -> String {
-        let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+        let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
         
-        return parallelLanguage!.localizedName()
+        return parallelLanguage!.localizedName
     }
     
     func getLanguageTextAlignment() -> NSTextAlignment {
@@ -51,15 +51,15 @@ extension TractViewController {
     }
     
     func loadResourcesForLanguage() {
-        let language = LanguagesManager.shared.loadPrimaryLanguageFromDisk()
+        let language = languagesManager.loadPrimaryLanguageFromDisk()
         let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
         self.xmlPagesForPrimaryLang = content.pages
-        self.colors = content.colors
+        self.manifestProperties = content.manifestProperties
     }
     
     func loadResourcesForParallelLanguage() {
         if parallelLanguageIsAvailable() {
-            let parallelLanguage = LanguagesManager.shared.loadParallelLanguageFromDisk()
+            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
             let content = self.tractsManager.loadResource(resource: self.resource!, language: parallelLanguage!)
             self.xmlPagesForParallelLang = content.pages
         }
@@ -84,7 +84,7 @@ extension TractViewController {
         self.xmlPages = self.xmlPagesForParallelLang
     }
     
-    func getPage(_ pageNumber: Int) -> TractPage {
+    func getPage(_ pageNumber: Int) -> XMLPage {
         return self.xmlPages[pageNumber]
     }
     

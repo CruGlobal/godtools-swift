@@ -15,6 +15,7 @@ class DownloadedResourceJson: Resource {
     var abbreviation: String?
     var copyrightDescription: String?
     var bannerId: String?
+    var aboutBannerId: String?
     var totalViews: NSNumber?
     
     var latestTranslations: LinkedResourceCollection?
@@ -33,9 +34,9 @@ class DownloadedResourceJson: Resource {
             "translations" : ToManyRelationship(TranslationResource.self),
             "copyrightDescription": Attribute().serializeAs("attr-copyright"),
             "bannerId": Attribute().serializeAs("attr-banner"),
+            "aboutBannerId": Attribute().serializeAs("attr-banner-about"),
             "totalViews": Attribute().serializeAs("total-views"),
             "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
-            "attachments": ToManyRelationship(AttachmentResource.self),
-            "pages" : ToManyRelationship(PageResource.self)])
+            "attachments": ToManyRelationship(AttachmentResource.self)])
     }
 }

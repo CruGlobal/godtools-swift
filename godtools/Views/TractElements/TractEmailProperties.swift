@@ -8,26 +8,17 @@
 
 import UIKit
 
-class TractEmailProperties: TractElementProperties {
+class TractEmailProperties: TractProperties {
     
-    var subject: String?
-    var content: String?
+    // MARK: - XML Properties
+    
+    var subject: String = ""
+    var content: String = ""
     var html: Bool = true
+    var listeners: String = ""
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
-        for property in properties.keys {
-            switch property {
-            case "subject":
-                self.subject = properties[property] as! String?
-            case "content":
-                self.content = properties[property] as! String?
-            case "html":
-                self.html = (properties[property] as! String) == "true"
-            default: break
-            }
-        }
+    override func defineProperties() {
+        self.properties = ["subject", "content", "html", "listeners"]
     }
     
 }

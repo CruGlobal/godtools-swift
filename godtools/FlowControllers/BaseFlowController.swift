@@ -48,7 +48,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
     func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
         navigationController.navigationBar.tintColor = .gtWhite
-        navigationController.navigationBar.barTintColor = color
+        navigationController.navigationBar.barTintColor = .clear
+        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
         navigationController.navigationBar.isOpaque = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
@@ -129,15 +130,9 @@ extension BaseFlowController: BaseViewControllerDelegate {
     func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
         let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
         
-        if backgroundColor.colorWithoutTransparency() != nil {
-            configureNavigationColor(navigationController: navigationController, color: backgroundColor.colorWithoutTransparency()!)
-        } else {
-            configureNavigationColor(navigationController: navigationController, color: backgroundColor)
-        }
-        
+        configureNavigationColor(navigationController: navigationController, color: backgroundColor)
         navigationController.navigationBar.tintColor = controlColor
     }
-    
 }
 
 extension BaseFlowController: MenuViewControllerDelegate {
@@ -164,7 +159,7 @@ extension BaseFlowController: LanguageSettingsViewControllerDelegate {
     func moveToLanguagesList(primaryLanguage: Bool) {
         let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
         viewController.delegate = self
-        viewController.selectingPrimaryLanguage(primaryLanguage)
+        viewController.selectingForPrimary = primaryLanguage
         self.pushViewController(viewController: viewController)
     }
 }

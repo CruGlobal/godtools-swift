@@ -33,17 +33,20 @@ class ToolDetailViewController: BaseViewController {
     // MARK: Present data
     
     fileprivate func displayData() {
+        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
-        self.titleLabel.text = resource!.localizedName(language: LanguagesManager.shared.loadPrimaryLanguageFromDisk())
-
-        self.languagesLabel.text = Array(resource!.translations!)
-            .map({ "\(($0 as! Translation).language!.localizedName())"})
+        self.titleLabel.text = resource!.localizedName(language: primaryLanguage)
+        self.descriptionLabel.text = loadDescription()
+        
+        self.languagesLabel.text = Array(resource!.translations)
+            .map({ "\($0.language!.localizedName)"})
             .sorted(by: { $0 < $1 })
             .joined(separator: ", ")
         
         self.displayButton()
-        self.bannerImageView.image = BannerManager.shared.loadFor(resource!)
+        self.bannerImageView.image = BannerManager().loadFor(remoteId: resource!.aboutBannerRemoteId)
     }
     
     private func displayButton() {
@@ -52,6 +55,23 @@ class ToolDetailViewController: BaseViewController {
         } else {
             mainButton.designAsDownloadButton()
         }
+    }
+    
+    private func loadDescription() -> String {
+        var language: Language? = nil
+        let languagesManager = LanguagesManager()
+        
+        language = languagesManager.loadPrimaryLanguageFromDisk()
+        
+        if language == nil {
+            language = languagesManager.loadFromDisk(code: "en")!
+        }
+        
+        if language == nil {
+            return ""
+        }
+        
+        return resource?.getTranslationForLanguage(language!)?.localizedDescription ?? ""
     }
     
     private func registerForDownloadProgressNotifications() {
@@ -66,7 +86,7 @@ class ToolDetailViewController: BaseViewController {
             return
         }
         
-        if resourceId != resource!.remoteId! {
+        if resourceId != resource!.remoteId {
             return
         }
         
@@ -85,14 +105,13 @@ class ToolDetailViewController: BaseViewController {
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         if resource!.shouldDownload {
-            toolsManager.delete(resource: self.resource!)
+            DownloadedResourceManager().delete(self.resource!)
             downloadProgressView.setProgress(0.0, animated: false)
-            displayButton()
-            returnToHome()
         } else {
-            toolsManager.download(resource: self.resource!)
-            displayButton()
+            DownloadedResourceManager().download(self.resource!)
         }
+        displayButton()
+        returnToHome()
     }
     
     private func returnToHome() {

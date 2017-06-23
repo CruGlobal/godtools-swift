@@ -10,7 +10,8 @@ import Foundation
 import Alamofire
 import PromiseKit
 import Spine
-import CoreData
+import RealmSwift
+import Crashlytics
 
 class GTDataManager: NSObject {
     let documentsPath: String
@@ -18,12 +19,15 @@ class GTDataManager: NSObject {
     let bannersPath: URL
     
     let serializer = Serializer()
-    let context = NSManagedObjectContext.mr_rootSaving()
+    let realm: Realm
     
     override init() {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = documentsPath.appending("/").appending("Resources")
         bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
+    
+        Realm.Configuration.defaultConfiguration = GTDataManager.config()
+        realm = try! Realm()
         
         super.init()
     }
@@ -51,52 +55,48 @@ class GTDataManager: NSObject {
             .responseData()
     }
     
-    func rollbackContext() {
-        context.rollback()
+    func findEntity<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
+        return findEntities(entityClass, matching: matching).first
     }
     
-    func saveToDisk() {
-        saveToDisk(nil)
+    func findEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
+        let predicate = NSPredicate(format: attribute.appending(" = %@"), value as! CVarArg)
+        return findEntity(entityClass, matching: predicate)
     }
     
-    func saveToDisk(_ completion: ((Bool, Error?) -> Void)?) {
-        context.mr_saveToPersistentStore(completion: completion)
+    func findEntityByRemoteId<T: Object>(_ entityClass: T.Type, remoteId: String) -> T? {
+        return findEntity(entityClass, byAttribute: "remoteId", withValue: remoteId)
     }
     
-    func saveToDiskAndWait() {
-        context.mr_saveToPersistentStoreAndWait()
+    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> List<T> {
+        let objects = realm.objects(entityClass)
+        let filteredObjects = objects.filter(matching)
+        return asList(filteredObjects)
     }
     
-    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> T? {
-        return entityClass.mr_findFirst(with: matching, in: context)
+    func findAllEntities<T: Object>(_ entityClass: T.Type) -> List<T> {
+        return asList(realm.objects(entityClass))
     }
     
-    func findEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
-        return entityClass.mr_findFirst(byAttribute: attribute, withValue: value, in: context)
+    func findAllEntities<T: Object>(_ entityClass: T.Type, sortedByKeyPath: String) -> List<T> {
+        return asList(realm.objects(entityClass).sorted(byKeyPath: sortedByKeyPath))
+    }
+
+    func safelyWriteToRealm(_ writeBlock: () -> Void ) {
+        do {
+            try realm.write {
+                writeBlock()
+            }
+        } catch {
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error saving to realm!"])
+        }
     }
     
-    func findEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) -> [T] {
-        return entityClass.mr_findAll(with: matching, in: context) as! [T]
-    }
-    
-    func findFirstOrCreateEntity<T: NSManagedObject>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T {
-        return entityClass.mr_findFirstOrCreate(byAttribute: attribute, withValue: value, in: context)
-    }
-    
-    func findAllEntities<T: NSManagedObject>(_ entityClass: T.Type) -> [T] {
-        return entityClass.mr_findAll(in: context) as! [T]
-    }
-    
-    func createEntity<T: NSManagedObject>(_ entityClass: T.Type) -> T? {
-        return entityClass.mr_createEntity(in: context)
-    }
-    
-    func deleteEntities<T: NSManagedObject>(_ entityClass: T.Type, matching: NSPredicate) {
-        entityClass.mr_deleteAll(matching: matching, in: context)
-    }
-    
-    func deleteEntity<T: NSManagedObject>(_ entity: T) {
-        entity.mr_deleteEntity(in: context)
+    func asList<T: Object>(_ results: Results<T>) -> List<T> {
+        return results.reduce(List<T>()) { (list, element) -> List<T> in
+            list.append(element)
+            return list
+        }
     }
     
     func buildURL() -> URL? {

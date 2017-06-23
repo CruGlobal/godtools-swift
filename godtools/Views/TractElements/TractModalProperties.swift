@@ -8,6 +8,19 @@
 
 import UIKit
 
-class TractModalProperties: TractElementProperties {
+class TractModalProperties: TractProperties {
+    
+    // MARK: - XML Properties
+    
+    var listeners: String = ""
+    var dismissListeners: String = ""
+    
+    override func defineProperties() {
+        self.properties = ["listeners", "dismissListeners"]
+    }
+    
+    // MARK: - View Properties
+    
+    var alreadyRendered = false
     
 }

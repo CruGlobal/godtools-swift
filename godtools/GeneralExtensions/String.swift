@@ -15,11 +15,6 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
-    func condenseWhitespace() -> String {
-        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
-        return components.filter { !$0.isEmpty }.joined(separator: " ")
-    }
-    
     func getRGBAColor() -> UIColor {
         let components = self.components(separatedBy: ",")
         var values = [CGFloat]()
@@ -49,6 +44,23 @@ extension String {
         }
         
         return finalValue
+    }
+    
+    var dashCased: String? {
+        let pattern = "([a-z0-9])([A-Z])"
+        
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: self.characters.count)
+        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1-$2").lowercased()
+    }
+    
+    var camelCased: String {
+        let items = self.components(separatedBy: "-")
+        var camelCase = ""
+        items.enumerated().forEach {
+            camelCase += 0 == $0 ? $1 : $1.capitalized
+        }
+        return camelCase
     }
     
 }

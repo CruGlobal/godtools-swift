@@ -9,23 +9,22 @@
 import UIKit
 
 class TractTab: BaseTractElement {
-    
-    // MARK: - Positions and Sizes
-    
-    var xPosition: CGFloat {
-        return 0.0
-    }
-    var yPosition: CGFloat {
-        return self.yStartPosition
-    }
-    
+        
     // MARK: - Setup
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.height)
+    override func propertiesKind() -> TractProperties.Type {
+        return TractTabProperties.self
+    }
+    
+    override func loadFrameProperties() {
+        self.elementFrame.x = 0.0
+        self.elementFrame.width = self.parentWidth()
+    }
+    
+    // MARK: - Helpers
+    
+    func tabProperties() -> TractTabProperties {
+        return self.properties as! TractTabProperties
     }
 
 }

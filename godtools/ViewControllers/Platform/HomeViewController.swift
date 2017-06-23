@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
@@ -20,6 +21,7 @@ class HomeViewController: BaseViewController {
     var delegate: HomeViewControllerDelegate?
     
     let toolsManager = ToolsManager.shared
+    var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var normalStateView: UIView!
@@ -36,15 +38,19 @@ class HomeViewController: BaseViewController {
         self.registerCells()
         self.setupStyle()
         self.defineObservers()
+        addRefreshControl()
         
-        if LanguagesManager.shared.loadPrimaryLanguageFromDisk() == nil {
+        if LanguagesManager().loadPrimaryLanguageFromDisk() == nil {
             self.displayOnboarding()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        toolsManager.delegate = self
         reloadView()
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
     }
     
     // Notifications
@@ -59,6 +65,16 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(reloadView),
                                                name: .initialAppStateCleanupCompleted,
                                                object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .reloadHomeListNotification,
+                                               object: nil)
     }
     
     @objc private func presentLanguageSettings() {
@@ -66,12 +82,30 @@ class HomeViewController: BaseViewController {
     }
     
     @objc private func reloadView() {
-        toolsManager.delegate = self
+        toolsManager.loadResourceList()
         
         emptyStateView.isHidden = toolsManager.hasResources()
         normalStateView.isHidden = !toolsManager.hasResources()
 
         tableView.reloadData()
+    }
+    
+    @objc private func loadLatestResources() {
+        _ = DownloadedResourceManager().loadFromRemote()
+            .then { (resources) -> Promise<Void> in
+                TranslationZipImporter().catchupMissedDownloads()
+                return Promise(value: ())
+            }.always {
+                self.refreshControl.endRefreshing()
+                self.reloadView()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+    }
+    
+    private func addRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(loadLatestResources), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
     }
     
     // MARK: - Actions

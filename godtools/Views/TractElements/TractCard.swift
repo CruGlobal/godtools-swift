@@ -14,174 +14,107 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
-    // MARK: - Configurations
-    
-    enum CardState {
-        case open, preview, close, hidden, enable
-    }
-    
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
     static let shadowPaddingConstant: CGFloat = 2.0
     static let yTopMarginConstant: CGFloat = 8.0
-    static let yBottomMarginConstant: CGFloat = 80.0
+    static let yBottomMarginConstant: CGFloat = 120.0
     static let xPaddingConstant: CGFloat = 28.0
-    static let contentBottomPadding: CGFloat = 50.0
+    static let contentBottomPadding: CGFloat = 8.0
+    static let transparentViewHeight: CGFloat = 60.0
     
     // MARK: - Positions and Sizes
     
     var yDownPosition: CGFloat = 0.0
     
-    var xPosition: CGFloat {
-        return TractCard.xMarginConstant
-    }
-    
-    var yPosition: CGFloat {
-        return self.yStartPosition
-    }
-    
-    override var width: CGFloat {
-        return (self.parent?.width)! - self.xPosition - TractCard.xMarginConstant
-    }
-    
-    var contentWidth: CGFloat {
-        return self.width - (TractCard.shadowPaddingConstant * CGFloat(2))
-    }
-    
     var externalHeight: CGFloat {
-        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant
+        return (self.parent?.height)! - TractCard.yTopMarginConstant - TractCard.yBottomMarginConstant - TractPage.navbarHeight
     }
     
     var internalHeight: CGFloat {
-        let internalHeight = self.height > self.externalHeight ? self.height + TractCard.contentBottomPadding : self.externalHeight
-        return internalHeight
+        if self.height > self.externalHeight {
+            return self.height + TractCard.transparentViewHeight + TractCard.contentBottomPadding
+        } else {
+            return self.externalHeight
+        }
     }
     
     var translationY: CGFloat {
-        return self.externalHeight - self.yStartPosition
-    }
-    
-    override func yEndPosition() -> CGFloat {
-        return self.yPosition + self.externalHeight
+        return self.externalHeight - self.elementFrame.y
     }
     
     // MARK: - Object properties
     
-    var properties = TractCardProperties()
     var shadowView = UIView()
     let scrollView = UIScrollView()
+    let backgroundView = UIView()
     let containerView = UIView()
-    var cardState = CardState.preview
-    var cardNumber = 0
     var cardsParentView: TractCards {
         return self.parent as! TractCards
     }
     
     // MARK: - Setup
     
-    override func setupView(properties: Dictionary<String, Any>) {
-        super.setupView(properties: properties)
+    override func propertiesKind() -> TractProperties.Type {
+        return TractCardProperties.self
+    }
+    
+    override func loadStyles() {
+        let properties = cardProperties()
         
-        loadElementProperties(properties)
-        
-        self.frame = buildFrame()
-        setupStyle()
+        if properties.hidden {
+            self.isHidden = true
+            properties.cardState = .hidden
+        }
+    }
+    
+    override func render() -> UIView {
         setupScrollView()
         setBordersAndShadows()
         disableScrollview()
         setupSwipeGestures()
-    }
-    
-    func setupStyle() {
-        self.backgroundColor = .clear
         
-        if self.properties.hidden {
-            self.isHidden = true
-            self.cardState = .hidden
-        }
-    }
-    
-    override func elementListeners() -> [String]? {
-        return self.properties.listeners == nil ? nil : self.properties.listeners?.components(separatedBy: ",")
-    }
-    
-    override func render() -> UIView {
         for element in self.elements! {
             self.containerView.addSubview(element.render())
         }
+        
         self.scrollView.addSubview(self.containerView)
         self.addSubview(self.shadowView)
+        self.addSubview(self.backgroundView)
         self.addSubview(self.scrollView)
+        
         setupTransparentView()
+        setupBackground()
         
         TractBindings.addBindings(self)
         return self
     }
     
-    override func buildFrame() -> CGRect {
-        return CGRect(x: self.xPosition,
-                      y: self.yPosition,
-                      width: self.width,
-                      height: self.externalHeight)
+    override func elementListeners() -> [String]? {
+        let properties = cardProperties()
+        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
     }
     
-    override func loadElementProperties(_ properties: [String: Any]) {
-        self.properties.load(properties)
+    override func loadFrameProperties() {
+        self.elementFrame.x = 0
+        self.elementFrame.width = self.parentWidth()
+        self.elementFrame.xMargin = TractCard.xMarginConstant
     }
     
-    // MARK: - ScrollView
-    
-    func setupScrollView() {
-        let height = self.bounds.size.height
-        let scrollViewFrame = CGRect(x: 0.0, y: 0.0, width: self.contentWidth, height: height)
-        
-        let contentHeight = self.internalHeight
-        self.scrollView.contentSize = CGSize(width: self.contentWidth, height: contentHeight)
-        self.scrollView.frame = scrollViewFrame
-        self.scrollView.delegate = self
-        self.scrollView.backgroundColor = .gtWhite
-        self.scrollView.showsVerticalScrollIndicator = false
-        self.containerView.frame = CGRect(x: 0.0,
-                                          y: 0.0,
-                                          width: self.contentWidth,
-                                          height: contentHeight)
-        self.containerView.backgroundColor = .clear
+    override func updateFrameHeight() {
+        self.elementFrame.height = cardHeight()
+        self.frame = self.elementFrame.getFrame()
     }
     
-    // MARK: - UI
+    // MARK: - Helpers
     
-    func setupTransparentView() {
-        if self.externalHeight >= self.internalHeight {
-            return
-        }
-        
-        let width = self.scrollView.frame.size.width - 6.0
-        let height: CGFloat = 60.0
-        let xPosition: CGFloat = 3.0
-        let yPosition = self.scrollView.frame.size.height - height - 1.0
-        let transparentViewFrame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
-        let transparentView = UIView(frame: transparentViewFrame)
-        transparentView.backgroundColor = .clear
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = transparentView.bounds
-        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor, UIColor.white.cgColor]
-        transparentView.layer.insertSublayer(gradientLayer, at: 0)
-        
-        self.addSubview(transparentView)
+    func cardProperties() -> TractCardProperties {
+        return self.properties as! TractCardProperties
     }
     
-    func setBordersAndShadows() {
-        self.shadowView.frame = self.bounds
-        self.shadowView.backgroundColor = .white
-        let shadowLayer = self.shadowView.layer
-        shadowLayer.cornerRadius = 3.0
-        shadowLayer.shadowColor = UIColor.black.cgColor
-        shadowLayer.shadowRadius = 3.0
-        shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
-        shadowLayer.shadowOpacity = 0.4
-        shadowLayer.shouldRasterize = true
+    func cardHeight() -> CGFloat {
+        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
     }
 
 }

@@ -2,26 +2,18 @@
 //  TractFormProperties.swift
 //  godtools
 //
-//  Created by Pablo Marti on 6/7/17.
+//  Created by Pablo Marti on 6/12/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import UIKit
 
-class TractFormProperties: TractElementProperties {
+class TractFormProperties: TractProperties {
     
-    var action: String?
+    var action: String = ""
     
-    override func load(_ properties: [String: Any]) {
-        super.load(properties)
-        
-        for property in properties.keys {
-            switch property {
-            case "action":
-                self.action = properties[property] as? String
-            default: break
-            }
-        }
+    override func defineProperties() {
+        self.properties = ["action"]
     }
 
 }
