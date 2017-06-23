@@ -14,14 +14,15 @@ class TractView: UIView {
     
     var contentView: TractPage?
     
-    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
+    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         super.init(frame: frame)
         
         let height = self.frame.size.height
         self.contentView = TractPage(startWithData: data,
                                      withMaxHeight: height,
                                      manifestProperties: manifestProperties,
-                                     configurations: configurations)
+                                     configurations: configurations,
+                                     parallelElement: parallelElement)
     }
     
     required init?(coder aDecoder: NSCoder) {

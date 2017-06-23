@@ -76,6 +76,7 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    var parallelElement: BaseTractElement?
     var didFindCallToAction: Bool = false
     
     var _manifestProperties: ManifestProperties = ManifestProperties()
@@ -131,11 +132,12 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.manifestProperties = manifestProperties
         self.tractConfigurations = configurations
+        self.parallelElement = parallelElement
         
         if self.isKind(of: TractPage.self) {
             self._mainView = self as? TractPage
@@ -178,6 +180,8 @@ class BaseTractElement: UIView {
         
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
+        setupParallelElement()
+        loadParallelElementProperties()
         buildFrame()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
@@ -293,7 +297,20 @@ class BaseTractElement: UIView {
         }
     }
     
-    func copyStateFromParallelElement(element: BaseTractElement) { }
+    func setupParallelElement() {
+        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil {
+            return
+        }
+        
+        for element in self.parent!.parallelElement!.elements! {
+            if type(of: element) == type(of: self) {
+                self.parallelElement = element
+                break
+            }
+        }
+    }
+    
+    func loadParallelElementProperties() { }
     
     // MARK: - UI
     

@@ -14,6 +14,10 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
+    enum CardAnimation {
+        case show, hide, none
+    }
+    
     // MARK: Positions constants
     
     static let xMarginConstant: CGFloat = 8.0
@@ -52,6 +56,17 @@ class TractCard: BaseTractElement {
     let containerView = UIView()
     var cardsParentView: TractCards {
         return self.parent as! TractCards
+    }
+    var currentAnimation: TractCard.CardAnimation = .none
+    var animationYPos: CGFloat {
+        switch self.currentAnimation {
+        case .show:
+            return TractCard.yTopMarginConstant - self.elementFrame.y
+        case .hide:
+            return self.yDownPosition
+        case .none:
+            return 0.0
+        }
     }
     
     // MARK: - Setup
@@ -107,12 +122,28 @@ class TractCard: BaseTractElement {
         self.frame = self.elementFrame.getFrame()
     }
     
-    override func copyStateFromParallelElement(element: BaseTractElement) {
+    override func loadParallelElementProperties() {
+        guard let element = self.parallelElement else {
+            return
+        }
+        
         let cardElement = element as! TractCard
+        self.isHidden = cardElement.isHidden
+        self.currentAnimation = cardElement.currentAnimation
+        self.scrollView.isScrollEnabled = cardElement.scrollView.isScrollEnabled
+        
         let currentProperties = cardElement.cardProperties()
         let properties = self.cardProperties()
-        
         properties.cardState = currentProperties.cardState
+        
+        switch cardElement.currentAnimation {
+        case .show:
+            showCardAnimation()
+        case .hide:
+            hideCardAnimation()
+        default:
+            break
+        }
     }
     
     // MARK: - Helpers

@@ -55,13 +55,19 @@ class TractCards: BaseTractElement {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = BaseTractElement.yMargin + self.animationYPos
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin
         self.elementFrame.yMarginBottom = yExternalPosition
     }
     
-    override func copyStateFromParallelElement(element: BaseTractElement) {
+    override func loadParallelElementProperties() {
+        guard let element = self.parallelElement else {
+            return
+        }
+        
         let cardsElement = element as! TractCards
-        self.isOnInitialPosition = cardsElement.isOnInitialPosition
+        if cardsElement.isOnInitialPosition == false {
+            transformToOpenUpCardsAnimation()
+        }
     }
     
     // MARK: - Helpers

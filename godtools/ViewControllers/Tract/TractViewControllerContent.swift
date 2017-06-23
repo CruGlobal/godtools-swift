@@ -24,7 +24,7 @@ extension TractViewController {
         cleanContainerView()
     
         for pageNumber in range.start...range.end {
-            let view = buildPage(pageNumber, width: width, height: height)
+            let view = buildPage(pageNumber, width: width, height: height, parallelElement: parallelElement)
             self.pagesViews[pageNumber] = view
             self.containerView.addSubview(view)
         }
@@ -32,7 +32,7 @@ extension TractViewController {
         removeSnapshotView()
     }
     
-    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat) -> TractView {
+    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
         let xPosition = (width * CGFloat(pageNumber))
         let frame = CGRect(x: xPosition,
                            y: 0.0,
@@ -44,7 +44,7 @@ extension TractViewController {
         configurations.defaultTextAlignment = getLanguageTextAlignment()
         configurations.pagination = page.pagination
         
-        let view = TractView(frame: frame, data: page.pageContent(), manifestProperties: self.manifestProperties, configurations: configurations)
+        let view = TractView(frame: frame, data: page.pageContent(), manifestProperties: self.manifestProperties, configurations: configurations, parallelElement: parallelElement)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.tag = self.viewTagOrigin + pageNumber
         
@@ -62,7 +62,7 @@ extension TractViewController {
             if let pageView = self.pagesViews[position] {
                 tmpPagesViews[position] = pageView
             } else {
-                let view = buildPage(position, width: width, height: height)
+                let view = buildPage(position, width: width, height: height, parallelElement: nil)
                 tmpPagesViews[position] = view
                 self.containerView.addSubview(view)
                 
