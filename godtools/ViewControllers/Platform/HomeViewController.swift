@@ -98,6 +98,7 @@ class HomeViewController: BaseViewController {
             }.always {
                 self.refreshControl.endRefreshing()
                 self.reloadView()
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
