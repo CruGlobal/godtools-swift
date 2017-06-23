@@ -80,8 +80,8 @@ class LanguagesManager: GTDataManager {
             for translation in language.translations {
                 translation.isDownloaded = false
             }
+            TranslationFileRemover().deleteUnusedPages()
         }
-        TranslationFileRemover().deleteUnusedPages()
     }
 
     private func saveToDisk(_ languages: [LanguageResource]) {

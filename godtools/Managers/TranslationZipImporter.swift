@@ -192,8 +192,8 @@ class TranslationZipImporter: GTDataManager {
             for file in files {
                 let filename = file.lastPathComponent
                 if let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) {
-                    referencedFile.filename = file.lastPathComponent
                     referencedFile.translations.append(translation)
+                    continue
                 }
                 
                 let referencedFile = ReferencedFile()
