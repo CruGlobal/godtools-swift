@@ -148,7 +148,6 @@
 		EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC55A6201EE0AC37000235CA /* TractConfigurations.swift */; };
 		EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61B9CE1EFDDBC300615840 /* GTGlobalTractBindings.swift */; };
 		EC61B9D11EFDDBE900615840 /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61B9D01EFDDBE900615840 /* FollowUpsManager.swift */; };
-		EC61B9D41EFDDC2800615840 /* TractFormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61B9D31EFDDC2800615840 /* TractFormManager.swift */; };
 		EC61B9D71EFDDC6B00615840 /* TractForm+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61B9D61EFDDC6B00615840 /* TractForm+Actions.swift */; };
 		EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */; };
 		EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245B21EEEEA520023A203 /* TractHeroProperties.swift */; };
@@ -356,7 +355,6 @@
 		EC55A6201EE0AC37000235CA /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractConfigurations.swift; path = TractClasses/TractConfigurations.swift; sourceTree = "<group>"; };
 		EC61B9CE1EFDDBC300615840 /* GTGlobalTractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTGlobalTractBindings.swift; sourceTree = "<group>"; };
 		EC61B9D01EFDDBE900615840 /* FollowUpsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpsManager.swift; path = Managers/FollowUpsManager.swift; sourceTree = "<group>"; };
-		EC61B9D31EFDDC2800615840 /* TractFormManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractFormManager.swift; path = Managers/Tracts/TractFormManager.swift; sourceTree = "<group>"; };
 		EC61B9D61EFDDC6B00615840 /* TractForm+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractForm+Actions.swift"; path = "Views/TractElements/TractForm+Actions.swift"; sourceTree = "<group>"; };
 		EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractElementFrame.swift; path = TractClasses/TractElementFrame.swift; sourceTree = "<group>"; };
 		EC8245B21EEEEA520023A203 /* TractHeroProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeroProperties.swift; path = Views/TractElements/TractHeroProperties.swift; sourceTree = "<group>"; };
@@ -772,7 +770,6 @@
 				4F1C959B1EA7EA8A007B47DB /* Translations */,
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
-				EC61B9D21EFDDC0C00615840 /* Tracts */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
 				4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
@@ -924,14 +921,6 @@
 				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
 			);
 			name = TractClasses;
-			sourceTree = "<group>";
-		};
-		EC61B9D21EFDDC0C00615840 /* Tracts */ = {
-			isa = PBXGroup;
-			children = (
-				EC61B9D31EFDDC2800615840 /* TractFormManager.swift */,
-			);
-			name = Tracts;
 			sourceTree = "<group>";
 		};
 		EC61B9D51EFDDC4D00615840 /* TractForm */ = {
@@ -1420,7 +1409,6 @@
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
-				EC61B9D41EFDDC2800615840 /* TractFormManager.swift in Sources */,
 				EC8245B91EEEEBCC0023A203 /* TractModalsProperties.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
