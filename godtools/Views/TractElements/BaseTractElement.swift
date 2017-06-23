@@ -183,6 +183,8 @@ class BaseTractElement: UIView {
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
         buildFrame()
+        setupParallelElement()
+        loadParallelElementProperties()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
     }
@@ -253,8 +255,6 @@ class BaseTractElement: UIView {
         }
         
         self.elements = elements
-        
-        loadParallelElements()
     }
     
     func setupView(properties: Dictionary<String, Any>) {
@@ -309,12 +309,6 @@ class BaseTractElement: UIView {
         }
     }
     
-    func loadParallelElements() {
-        for element in self.elements! {
-            element.setupParallelElement()
-        }
-    }
-    
     func setupParallelElement() {
         if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 {
             return
@@ -326,7 +320,6 @@ class BaseTractElement: UIView {
         
         if type(of: parallelElement) == type(of: self) {
             self.parallelElement = parallelElement
-            self.loadParallelElementProperties()
         }
     }
     
