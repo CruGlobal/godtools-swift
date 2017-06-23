@@ -11,6 +11,11 @@ import UIKit
 
 extension TractCards {
     
+    func transformToOpenUpCardsWithouAnimation() {
+        self.isOnInitialPosition = false
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
     func transformToOpenUpCardsAnimation() {
         self.isOnInitialPosition = false
         UIView.animate(withDuration: 0.35,

@@ -66,7 +66,7 @@ class TractCards: BaseTractElement {
         
         let cardsElement = element as! TractCards
         if cardsElement.isOnInitialPosition == false {
-            transformToOpenUpCardsAnimation()
+            transformToOpenUpCardsWithouAnimation()
         }
     }
     
