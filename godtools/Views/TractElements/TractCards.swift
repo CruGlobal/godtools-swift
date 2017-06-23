@@ -59,7 +59,7 @@ class TractCards: BaseTractElement {
         self.elementFrame.yMarginBottom = yExternalPosition
     }
     
-    override func loadParallelElementProperties() {
+    override func loadParallelElementState() {
         guard let element = self.parallelElement else {
             return
         }

@@ -43,7 +43,7 @@ class TractHeader: BaseTractElement {
         return true
     }
     
-    override func loadParallelElementProperties() {
+    override func loadParallelElementState() {
         guard let element = self.parallelElement else {
             return
         }

@@ -186,7 +186,6 @@ class BaseTractElement: UIView {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
-        loadParallelElementProperties()
     }
     
     func getPreviousElement() -> BaseTractElement? {
@@ -280,6 +279,8 @@ class BaseTractElement: UIView {
     }
     
     func render() -> UIView {
+        loadParallelElementState()
+        
         for element in self.elements! {
             self.addSubview(element.render())
         }
@@ -323,7 +324,7 @@ class BaseTractElement: UIView {
         }
     }
     
-    func loadParallelElementProperties() { }
+    func loadParallelElementState() { }
     
     // MARK: - UI
     

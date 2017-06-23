@@ -89,6 +89,7 @@ class TractCard: BaseTractElement {
         setBordersAndShadows()
         disableScrollview()
         setupSwipeGestures()
+        loadParallelElementState()
         
         for element in self.elements! {
             self.containerView.addSubview(element.render())
@@ -122,7 +123,7 @@ class TractCard: BaseTractElement {
         self.frame = self.elementFrame.getFrame()
     }
     
-    override func loadParallelElementProperties() {
+    override func loadParallelElementState() {
         guard let element = self.parallelElement else {
             return
         }
