@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -112,7 +112,7 @@
                                         <rect key="frame" x="200" y="0.0" width="84" height="49"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="19" width="50" height="12"/>
+                                                <rect key="frame" x="0.0" y="18.5" width="49" height="12"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -120,10 +120,12 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackTextLegend"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zf0-VZ-Gbm">
-                                                <rect key="frame" x="54" y="13" width="22" height="22"/>
+                                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zf0-VZ-Gbm">
+                                                <rect key="frame" x="53" y="10" width="28" height="28"/>
+                                                <color key="backgroundColor" red="1" green="0.38774441910000002" blue="0.97172717129999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="22" id="PPh-bV-mUY"/>
+                                                    <constraint firstAttribute="height" constant="28" id="5dz-Ni-Uah"/>
+                                                    <constraint firstAttribute="width" constant="28" id="PPh-bV-mUY"/>
                                                 </constraints>
                                                 <state key="normal" image="info_blue"/>
                                                 <connections>
@@ -134,7 +136,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="mo2-YN-vLH" firstAttribute="centerY" secondItem="KFJ-L0-hFD" secondAttribute="centerY" id="62K-mZ-Ge2"/>
-                                            <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="8" id="VCM-Ua-hAm"/>
+                                            <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="3" id="VCM-Ua-hAm"/>
                                             <constraint firstItem="mo2-YN-vLH" firstAttribute="leading" secondItem="KFJ-L0-hFD" secondAttribute="leading" id="XM8-xB-MI1"/>
                                             <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="leading" secondItem="mo2-YN-vLH" secondAttribute="trailing" constant="4" id="Z9X-1p-diX"/>
                                             <constraint firstAttribute="width" constant="84" id="bo8-dz-tU8"/>
