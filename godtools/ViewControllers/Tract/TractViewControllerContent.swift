@@ -21,7 +21,10 @@ extension TractViewController {
             return
         }
         
-        let currentElement = self.pagesViews[self.currentPage]?.contentView
+        var currentElement: BaseTractElement?
+        if self.pagesViews.count > self.currentPage {
+            currentElement = self.pagesViews[self.currentPage]?.contentView
+        }
         cleanContainerView()
     
         for pageNumber in range.start...range.end {

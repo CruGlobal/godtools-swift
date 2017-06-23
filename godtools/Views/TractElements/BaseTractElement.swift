@@ -180,15 +180,13 @@ class BaseTractElement: UIView {
         
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
-        setupParallelElement()
-        loadParallelElementProperties()
         buildFrame()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
     }
     
     func getPreviousElement() -> BaseTractElement? {
-        guard let index = self.parent?.elements?.index(of: self) else {
+        guard let index = getElementPosition() else {
             return nil
         }
         if index > 0 {
@@ -198,7 +196,7 @@ class BaseTractElement: UIView {
     }
     
     func getFollowingElement() -> BaseTractElement? {
-        guard let index = self.parent?.elements?.index(of: self) else {
+        guard let index = getElementPosition() else {
             return nil
         }
         if index < (self.parent?.elements?.count)! - 1 {
@@ -206,6 +204,13 @@ class BaseTractElement: UIView {
         }
         
         return nil
+    }
+    
+    func getElementPosition() -> Int? {
+        guard let index = self.parent?.elements?.index(of: self) else {
+            return nil
+        }
+        return index
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
@@ -243,6 +248,8 @@ class BaseTractElement: UIView {
         }
         
         self.elements = elements
+        
+        loadParallelElements()
     }
     
     func setupView(properties: Dictionary<String, Any>) {
@@ -297,16 +304,28 @@ class BaseTractElement: UIView {
         }
     }
     
+    func loadParallelElements() {
+        for element in self.elements! {
+            element.setupParallelElement()
+        }
+    }
+    
     func setupParallelElement() {
         if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil {
             return
         }
         
-        for element in self.parent!.parallelElement!.elements! {
-            if type(of: element) == type(of: self) {
-                self.parallelElement = element
-                break
-            }
+        guard let index = getElementPosition() else {
+            return
+        }
+        
+        guard let parallelElement = self.parent!.parallelElement!.elements?[index] else {
+            return
+        }
+        
+        if type(of: parallelElement) == type(of: self) {
+            self.parallelElement = parallelElement
+            self.loadParallelElementProperties()
         }
     }
     

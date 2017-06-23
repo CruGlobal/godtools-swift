@@ -47,6 +47,7 @@ class TractCards: BaseTractElement {
         let cards = splitCardsByKind(data: data)
         buildCards(cards.normal)
         buildHiddenCards(cards.hidden)
+        loadParallelElements()
     }
     
     override func loadFrameProperties() {
