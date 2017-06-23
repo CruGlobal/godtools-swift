@@ -107,6 +107,14 @@ class TractCard: BaseTractElement {
         self.frame = self.elementFrame.getFrame()
     }
     
+    override func copyStateFromParallelElement(element: BaseTractElement) {
+        let cardElement = element as! TractCard
+        let currentProperties = cardElement.cardProperties()
+        let properties = self.cardProperties()
+        
+        properties.cardState = currentProperties.cardState
+    }
+    
     // MARK: - Helpers
     
     func cardProperties() -> TractCardProperties {

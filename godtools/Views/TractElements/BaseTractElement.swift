@@ -293,6 +293,8 @@ class BaseTractElement: UIView {
         }
     }
     
+    func copyStateFromParallelElement(element: BaseTractElement) { }
+    
     // MARK: - UI
     
     func parentWidth() -> CGFloat {

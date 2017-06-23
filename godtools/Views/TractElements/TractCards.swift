@@ -6,15 +6,6 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-//  NOTES ABOUT THE COMPONENT
-//  * Cards is a component that is not present on the XML. The component was generate
-//  because of the need to have a container to store all the cards. The cards container
-//  will only store elements of the kind Card.
-//  * Following the XML structure, the Cards container will always be a children of
-//  TractPage container. Also, the Cards container will always be at the same level of a
-//  Header component.
-//  * The height size of this component will always be the same of TractPage.height
-
 import Foundation
 import UIKit
 import SWXMLHash
@@ -38,6 +29,13 @@ class TractCards: BaseTractElement {
         return self.height - self.elementFrame.y + TractPage.navbarHeight
     }
     
+    // MARK: - Dynamic settings
+    
+    var isOnInitialPosition: Bool = true
+    var animationYPos: CGFloat {
+        return self.isOnInitialPosition == true ? 0.0 : -self.elementFrame.y + TractPage.navbarHeight
+    }
+    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
@@ -57,8 +55,13 @@ class TractCards: BaseTractElement {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
-        self.elementFrame.yMarginTop = BaseTractElement.yMargin
+        self.elementFrame.yMarginTop = BaseTractElement.yMargin + self.animationYPos
         self.elementFrame.yMarginBottom = yExternalPosition
+    }
+    
+    override func copyStateFromParallelElement(element: BaseTractElement) {
+        let cardsElement = element as! TractCards
+        self.isOnInitialPosition = cardsElement.isOnInitialPosition
     }
     
     // MARK: - Helpers

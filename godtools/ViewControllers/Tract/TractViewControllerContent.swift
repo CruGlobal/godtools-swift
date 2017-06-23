@@ -14,15 +14,14 @@ extension TractViewController {
     static let snapshotViewTag = 3210123
     
     func buildPages(width: CGFloat, height: CGFloat) {
-        cleanContainerView()
-        
         let range = getRangeOfViews()
-        
         if range.end < range.start {
             baseDelegate?.goHome()
             showErrorMessage()
             return
         }
+        
+        cleanContainerView()
     
         for pageNumber in range.start...range.end {
             let view = buildPage(pageNumber, width: width, height: height)
