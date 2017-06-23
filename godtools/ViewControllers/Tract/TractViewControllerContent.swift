@@ -21,9 +21,15 @@ extension TractViewController {
             return
         }
         
+        let currentElement = self.pagesViews[self.currentPage]?.contentView
         cleanContainerView()
     
         for pageNumber in range.start...range.end {
+            var parallelElement: BaseTractElement?
+            if pageNumber == self.currentPage {
+                parallelElement = currentElement
+            }
+            
             let view = buildPage(pageNumber, width: width, height: height, parallelElement: parallelElement)
             self.pagesViews[pageNumber] = view
             self.containerView.addSubview(view)
