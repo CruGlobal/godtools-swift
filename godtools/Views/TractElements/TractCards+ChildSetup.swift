@@ -31,7 +31,12 @@ extension TractCards {
     }
     
     func buildCards(_ cards: [XMLIndexer]) {
-        var cardNumber = 0
+        if self.elements == nil {
+            self.elements = [BaseTractElement]()
+        }
+        
+        var elementNumber: Int = self.elements!.count
+        var cardNumber: Int = 0
         
         for dictionary in cards {
             let deltaChange = CGFloat(cards.count - cardNumber)
@@ -39,20 +44,28 @@ extension TractCards {
             let yDownPosition = self.elementFrame.y + (deltaChange * TractCards.constantYPaddingTop)
                 - (deltaChange * TractCards.constantYPaddingBottom)
             
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
             self.elements?.append(element)
             
             cardNumber += 1
+            elementNumber += 1
         }
     }
     
     func buildHiddenCards(_ cards: [XMLIndexer]) {
+        if self.elements == nil {
+            self.elements = [BaseTractElement]()
+        }
+        
+        var elementNumber: Int = self.elements!.count
+        
         for dictionary in cards {
             let yPosition = self.initialCardPosition
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             self.elements?.append(element)
+            elementNumber += 1
         }
     }
     

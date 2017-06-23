@@ -77,6 +77,7 @@ class BaseTractElement: UIView {
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
     var parallelElement: BaseTractElement?
+    var elementNumber: Int = -1
     var didFindCallToAction: Bool = false
     
     var _manifestProperties: ManifestProperties = ManifestProperties()
@@ -160,10 +161,11 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: yPosition)
     }
     
-    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent
+        self.elementNumber = elementNumber
         setupElement(data: data, startOnY: yPosition)
     }
     
@@ -217,9 +219,10 @@ class BaseTractElement: UIView {
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
         var elements = [BaseTractElement]()
+        var elementNumber: Int = 0
         
         for dictionary in data {
-            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             elements.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
@@ -233,6 +236,8 @@ class BaseTractElement: UIView {
             } else {
                 currentYPosition = element.elementFrame.yEndPosition()
             }
+            
+            elementNumber += 1
         }
         
         if self.isKind(of: TractPage.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
@@ -311,15 +316,11 @@ class BaseTractElement: UIView {
     }
     
     func setupParallelElement() {
-        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil {
+        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 {
             return
         }
         
-        guard let index = getElementPosition() else {
-            return
-        }
-        
-        guard let parallelElement = self.parent!.parallelElement!.elements?[index] else {
+        guard let parallelElement = self.parent!.parallelElement!.elements?[self.elementNumber] else {
             return
         }
         
