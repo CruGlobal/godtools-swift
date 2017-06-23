@@ -12,6 +12,7 @@ import UIKit
 extension TractHeader {
     
     func showHeader() {
+        self.currentAnimation = .none
         UIView.animate(withDuration: 0.30,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
@@ -21,6 +22,7 @@ extension TractHeader {
     }
     
     func hideHeader() {
+        self.currentAnimation = .hide
         let translationY = -self.elementFrame.y - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,

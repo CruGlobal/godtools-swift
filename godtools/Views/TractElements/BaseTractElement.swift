@@ -184,9 +184,9 @@ class BaseTractElement: UIView {
         loadFrameProperties()
         buildFrame()
         setupParallelElement()
-        loadParallelElementProperties()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
+        loadParallelElementProperties()
     }
     
     func getPreviousElement() -> BaseTractElement? {

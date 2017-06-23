@@ -14,7 +14,7 @@ import UIKit
 
 class TractCard: BaseTractElement {
     
-    enum CardAnimation {
+    enum CardAnimationState {
         case show, hide, none
     }
     
@@ -57,7 +57,7 @@ class TractCard: BaseTractElement {
     var cardsParentView: TractCards {
         return self.parent as! TractCards
     }
-    var currentAnimation: TractCard.CardAnimation = .none
+    var currentAnimation: TractCard.CardAnimationState = .none
     var animationYPos: CGFloat {
         switch self.currentAnimation {
         case .show:
