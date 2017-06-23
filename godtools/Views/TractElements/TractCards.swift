@@ -65,6 +65,10 @@ class TractCards: BaseTractElement {
         }
         
         let cardsElement = element as! TractCards
+        let cardsElementProperties = cardsElement.cardsProperties()
+        let properties = self.cardsProperties()
+        properties.cardsState = cardsElementProperties.cardsState
+        
         if cardsElement.isOnInitialPosition == false {
             transformToOpenUpCardsWithouAnimation()
         }

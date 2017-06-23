@@ -279,12 +279,11 @@ class BaseTractElement: UIView {
     }
     
     func render() -> UIView {
-        loadParallelElementState()
-        
         for element in self.elements! {
             self.addSubview(element.render())
         }
         
+        loadParallelElementState()
         TractBindings.addBindings(self)
         return self
     }

@@ -89,7 +89,6 @@ class TractCard: BaseTractElement {
         setBordersAndShadows()
         disableScrollview()
         setupSwipeGestures()
-        loadParallelElementState()
         
         for element in self.elements! {
             self.containerView.addSubview(element.render())
@@ -102,6 +101,7 @@ class TractCard: BaseTractElement {
         
         setupTransparentView()
         setupBackground()
+        loadParallelElementState()
         
         TractBindings.addBindings(self)
         return self
