@@ -11,6 +11,17 @@ import UIKit
 
 extension TractHeader {
     
+    func showHeaderWithoutAnimation() {
+        self.currentAnimation = .none
+        self.transform = CGAffineTransform(translationX: 0, y: 0.0)
+    }
+    
+    func hideHeaderWithoutAnimation() {
+        self.currentAnimation = .hide
+        let translationY = -self.elementFrame.y - self.height
+        self.transform = CGAffineTransform(translationX: 0, y: translationY)
+    }
+    
     func showHeader() {
         self.currentAnimation = .none
         UIView.animate(withDuration: 0.30,

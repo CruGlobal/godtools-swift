@@ -11,6 +11,21 @@ import UIKit
 
 extension TractCard {
     
+    func showCardWithoutAnimation() {
+        self.currentAnimation = .show
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
+    func hideCardWithoutAnimation() {
+        self.currentAnimation = .hide
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
+    func resetCardToOriginalPositionWithoutAnimation() {
+        self.currentAnimation = .none
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
     func showCardAnimation() {
         self.currentAnimation = .show
         UIView.animate(withDuration: 0.35,

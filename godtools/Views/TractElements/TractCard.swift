@@ -138,9 +138,9 @@ class TractCard: BaseTractElement {
         
         switch cardElement.currentAnimation {
         case .show:
-            showCardAnimation()
+            showCardWithoutAnimation()
         case .hide:
-            hideCardAnimation()
+            hideCardWithoutAnimation()
         default:
             break
         }
