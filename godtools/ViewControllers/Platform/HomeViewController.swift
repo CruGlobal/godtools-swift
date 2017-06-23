@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
@@ -20,6 +21,7 @@ class HomeViewController: BaseViewController {
     var delegate: HomeViewControllerDelegate?
     
     let toolsManager = ToolsManager.shared
+    var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var normalStateView: UIView!
@@ -36,6 +38,7 @@ class HomeViewController: BaseViewController {
         self.registerCells()
         self.setupStyle()
         self.defineObservers()
+        addRefreshControl()
         
         if LanguagesManager().loadPrimaryLanguageFromDisk() == nil {
             self.displayOnboarding()
@@ -85,6 +88,23 @@ class HomeViewController: BaseViewController {
         normalStateView.isHidden = !toolsManager.hasResources()
 
         tableView.reloadData()
+    }
+    
+    @objc private func loadLatestResources() {
+        _ = DownloadedResourceManager().loadFromRemote()
+            .then { (resources) -> Promise<Void> in
+                TranslationZipImporter().catchupMissedDownloads()
+                return Promise(value: ())
+            }.always {
+                self.refreshControl.endRefreshing()
+                self.reloadView()
+        }
+    }
+    
+    private func addRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(loadLatestResources), for: .valueChanged)
+        self.tableView.addSubview(refreshControl)
     }
     
     // MARK: - Actions
