@@ -93,7 +93,8 @@ class TractInput: BaseTractElement {
     // MARK: - Form Functions
     
     override func formName() -> String {
-        return self.properties.name ?? ""
+        let properties = inputProperties()
+        return properties.name ?? ""
     }
     
     override func formValue() -> String {

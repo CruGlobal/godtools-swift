@@ -117,4 +117,27 @@ extension BaseTractElement {
     
     func receiveDismissMessage() { }
     
+    // MARK: - Form Functions
+    
+    func attachToForm() {
+        if let form = BaseTractElement.getFormForElement(self) {
+            form.attachElementToForm(element: self)
+        }
+    }
+    
+    func formName() -> String {
+        return ""
+    }
+    
+    func formValue() -> String {
+        return ""
+    }
+    
+    func getFormData() -> [String: String]? {
+        if let form = BaseTractElement.getFormForElement(self) {
+            return form.getFormData()
+        }
+        return nil
+    }
+    
 }
