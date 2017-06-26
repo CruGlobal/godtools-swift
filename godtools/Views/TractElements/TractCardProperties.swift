@@ -25,7 +25,7 @@ class TractCardProperties: TractProperties {
     var listeners: String = ""
     
     override func defineProperties() {
-        self.properties = ["backgroundColor", "backgroundImage", "hidden", "listeners"]
+        self.properties = ["backgroundColor", "backgroundImage", "hidden", "listeners", "dismissListeners"]
     }
     
     override func customProperties() -> [String]? {
