@@ -109,7 +109,7 @@ class TractCard: BaseTractElement {
     
     override func elementListeners() -> [String]? {
         let properties = cardProperties()
-        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
+        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: " ")
     }
     
     override func loadFrameProperties() {
