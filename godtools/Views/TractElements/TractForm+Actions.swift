@@ -13,7 +13,24 @@ extension TractForm {
     override func receiveMessage() { }
     
     func attachElementToForm(element: BaseTractElement) {
-        formElements.append(element)
+        self.formElements.append(element)
+    }
+    
+    func getFollowingInputForInput(element: TractInput) -> TractInput? {
+        var elementFound = false
+        for item in self.formElements {
+            if elementFound == false && item == element {
+                elementFound = true
+                continue
+            }
+            
+            if elementFound == true {
+                if item.isKind(of: TractInput.self) {
+                    return item as? TractInput
+                }
+            }
+        }
+        return nil
     }
     
     override func getFormData() -> [String: String] {

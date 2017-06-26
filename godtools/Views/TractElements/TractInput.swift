@@ -67,6 +67,15 @@ class TractInput: BaseTractElement {
         updateFrameHeight()
     }
     
+    func updateTextFieldReturnKey() {
+        self.textField.returnKeyType = .done
+        if let form = BaseTractElement.getFormForElement(self) {
+            if form.getFollowingInputForInput(element: self) != nil {
+                self.textField.returnKeyType = .next
+            }
+        }
+    }
+    
     override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
         let newProperties = inputProperties()

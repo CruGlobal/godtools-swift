@@ -16,9 +16,20 @@ extension TractCard: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        moveViewForDismissingKeyboardAnimation()
-        endCardEditing()
-        return true
+        if textField.returnKeyType == .done {
+            moveViewForDismissingKeyboardAnimation()
+            endCardEditing()
+            return true
+        } else {
+            let tractInput = textField.superview as! TractInput
+            if let form = BaseTractElement.getFormForElement(tractInput) {
+                if let followingTractInput = form.getFollowingInputForInput(element: tractInput) {
+                    followingTractInput.textField.becomeFirstResponder()
+                }
+            }
+            
+            return false
+        }
     }
     
 }
