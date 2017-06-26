@@ -31,7 +31,7 @@ class TractCards: BaseTractElement {
     
     // MARK: - Dynamic settings
     
-    var isOnInitialPosition: Bool = true
+    var isOnInitialPosition = true
     var animationYPos: CGFloat {
         return self.isOnInitialPosition == true ? 0.0 : -self.elementFrame.y + TractPage.navbarHeight
     }
