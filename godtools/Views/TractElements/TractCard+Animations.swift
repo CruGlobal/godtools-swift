@@ -66,4 +66,22 @@ extension TractCard {
                        completion: nil )
     }
     
+    func moveViewForPresentingKeyboardAnimation() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.containerView.transform = CGAffineTransform(translationX: 0, y: TractCard.keyboardYTransformation) },
+                       completion: nil )
+    }
+    
+    func moveViewForDismissingKeyboardAnimation() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.containerView.transform = CGAffineTransform(translationX: 0, y: 0) },
+                       completion: nil )
+    }
+    
 }
