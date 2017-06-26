@@ -61,6 +61,7 @@ class TractInput: BaseTractElement {
                                       y: self.height,
                                       width: self.elementFrame.finalWidth(),
                                       height: elementProperties.height)
+        self.textField.delegate = getParentCard()
         
         self.height += elementProperties.height
         updateFrameHeight()

@@ -156,5 +156,9 @@ class TractCard: BaseTractElement {
     func cardHeight() -> CGFloat {
         return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
     }
+    
+    func endCardEditing() {
+        self.endEditing(true)
+    }
 
 }
