@@ -36,7 +36,6 @@ class DownloadedResourceManager: GTDataManager {
         
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
-                self.hideNetworkIndicator()
                 do {
                     let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
                     
@@ -46,6 +45,9 @@ class DownloadedResourceManager: GTDataManager {
                 }
                 return Promise(value:self.loadFromDisk())
             }
+            .always {
+                self.hideNetworkIndicator()
+        }
     }
     
     func download(_ resource: DownloadedResource) {

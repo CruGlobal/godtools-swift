@@ -57,7 +57,6 @@ class LanguagesManager: GTDataManager {
         
         return issueGETRequest()
             .then { data -> Promise<Languages> in
-                self.hideNetworkIndicator()
                 do {
                     let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
                     
@@ -66,6 +65,9 @@ class LanguagesManager: GTDataManager {
                     return Promise(error: error)
                 }
                 return Promise(value:self.loadFromDisk())
+        }
+            .always {
+                self.hideNetworkIndicator()
         }
     }
     

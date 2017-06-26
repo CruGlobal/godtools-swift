@@ -19,13 +19,14 @@ class FollowUpsManager: GTDataManager {
         
         return issuePOSTRequest(params)
             .then { data -> Promise<Void> in
-                self.hideNetworkIndicator()
                 return Promise(value: ())
         }
             .catch(execute: { error in
-                self.hideNetworkIndicator()
                 Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
             })
+            .always {
+                self.hideNetworkIndicator()
+        }
     }
     
     override func buildURL() -> URL? {
