@@ -107,4 +107,8 @@ class GTDataManager: NSObject {
     func showNetworkingIndicator() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
+    
+    func hideNetworkIndicator() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
 }
