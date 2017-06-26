@@ -8,6 +8,7 @@
 
 import UIKit
 import PromiseKit
+import Crashlytics
 
 class FollowUpsManager: GTDataManager {
     
@@ -20,6 +21,9 @@ class FollowUpsManager: GTDataManager {
             .then { data -> Promise<Void> in
                 return Promise(value: ())
         }
+            .catch(execute: { error in
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
+            })
     }
     
     override func buildURL() -> URL? {

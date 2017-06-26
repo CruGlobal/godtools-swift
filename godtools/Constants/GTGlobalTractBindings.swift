@@ -18,7 +18,10 @@ class GTGlobalTractBindings: NSObject {
         switch listener {
         case Bindings.followUp.rawValue:
             let manager = FollowUpsManager()
-            _ = manager.createSubscriber(params: element.getFormData()!)
+            guard let params = element.getFormData() else {
+                return
+            }
+            _ = manager.createSubscriber(params: params)
             break
         default: break
         }
