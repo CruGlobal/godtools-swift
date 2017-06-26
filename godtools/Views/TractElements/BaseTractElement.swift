@@ -76,6 +76,8 @@ class BaseTractElement: UIView {
     
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
+    var parallelElement: BaseTractElement?
+    var elementNumber: Int = -1
     var didFindCallToAction: Bool = false
     
     var _manifestProperties: ManifestProperties = ManifestProperties()
@@ -131,11 +133,12 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.manifestProperties = manifestProperties
         self.tractConfigurations = configurations
+        self.parallelElement = parallelElement
         
         if self.isKind(of: TractPage.self) {
             self._mainView = self as? TractPage
@@ -158,10 +161,11 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: yPosition)
     }
     
-    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement) {
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.parent = parent
+        self.elementNumber = elementNumber
         setupElement(data: data, startOnY: yPosition)
     }
     
@@ -179,12 +183,13 @@ class BaseTractElement: UIView {
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
         buildFrame()
+        setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
     }
     
     func getPreviousElement() -> BaseTractElement? {
-        guard let index = self.parent?.elements?.index(of: self) else {
+        guard let index = getElementPosition() else {
             return nil
         }
         if index > 0 {
@@ -194,7 +199,7 @@ class BaseTractElement: UIView {
     }
     
     func getFollowingElement() -> BaseTractElement? {
-        guard let index = self.parent?.elements?.index(of: self) else {
+        guard let index = getElementPosition() else {
             return nil
         }
         if index < (self.parent?.elements?.count)! - 1 {
@@ -204,13 +209,21 @@ class BaseTractElement: UIView {
         return nil
     }
     
+    func getElementPosition() -> Int? {
+        guard let index = self.parent?.elements?.index(of: self) else {
+            return nil
+        }
+        return index
+    }
+    
     func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
         var elements = [BaseTractElement]()
+        var elementNumber: Int = 0
         
         for dictionary in data {
-            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition)
+            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             elements.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
@@ -224,6 +237,8 @@ class BaseTractElement: UIView {
             } else {
                 currentYPosition = element.elementFrame.yEndPosition()
             }
+            
+            elementNumber += 1
         }
         
         if self.isKind(of: TractPage.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
@@ -268,6 +283,7 @@ class BaseTractElement: UIView {
             self.addSubview(element.render())
         }
         
+        loadParallelElementState()
         TractBindings.addBindings(self)
         return self
     }
@@ -292,6 +308,22 @@ class BaseTractElement: UIView {
             return self.manifestProperties
         }
     }
+    
+    func setupParallelElement() {
+        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 {
+            return
+        }
+        
+        guard let parallelElement = self.parent!.parallelElement!.elements?[self.elementNumber] else {
+            return
+        }
+        
+        if type(of: parallelElement) == type(of: self) {
+            self.parallelElement = parallelElement
+        }
+    }
+    
+    func loadParallelElementState() { }
     
     // MARK: - UI
     

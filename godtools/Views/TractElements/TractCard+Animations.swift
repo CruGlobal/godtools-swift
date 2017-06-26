@@ -11,25 +11,39 @@ import UIKit
 
 extension TractCard {
     
+    func showCardWithoutAnimation() {
+        self.currentAnimation = .show
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
+    func hideCardWithoutAnimation() {
+        self.currentAnimation = .hide
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
+    func resetCardToOriginalPositionWithoutAnimation() {
+        self.currentAnimation = .none
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
     func showCardAnimation() {
-        let translationY = TractCard.yTopMarginConstant - self.elementFrame.y
+        self.currentAnimation = .show
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
+                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
     }
     
     func hideCardAnimation() {
+        self.currentAnimation = .hide
         let properties = cardProperties()
-        let translationY = self.yDownPosition
-        
         UIView.animate(withDuration: 0.45,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
+                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: { (completed) in
                         if completed {
                             if properties.cardNumber == 0 {
@@ -43,11 +57,12 @@ extension TractCard {
     }
     
     func resetCardToOriginalPositionAnimation() {
+        self.currentAnimation = .none
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0) },
+                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
     }
     

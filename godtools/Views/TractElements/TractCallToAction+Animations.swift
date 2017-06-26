@@ -11,7 +11,19 @@ import UIKit
 
 extension TractCallToAction {
     
+    func showCallToActionWithoutAnimation() {
+        self.currentAnimation = .show
+        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height
+        self.transform = CGAffineTransform(translationX: 0, y: translationY)
+    }
+    
+    func hideCallToActionWithoutAnimation() {
+        self.currentAnimation = .none
+        self.transform = CGAffineTransform(translationX: 0, y: 0.0)
+    }
+    
     func showCallToActionAnimation() {
+        self.currentAnimation = .show
         let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -22,6 +34,7 @@ extension TractCallToAction {
     }
     
     func hideCallToActionAnimation() {
+        self.currentAnimation = .none
         UIView.animate(withDuration: 0.30,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,

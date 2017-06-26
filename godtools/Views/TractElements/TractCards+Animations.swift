@@ -11,23 +11,28 @@ import UIKit
 
 extension TractCards {
     
+    func transformToOpenUpCardsWithouAnimation() {
+        self.isOnInitialPosition = false
+        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
+    }
+    
     func transformToOpenUpCardsAnimation() {
-        let yPos = -self.elementFrame.y + TractPage.navbarHeight
-        
+        self.isOnInitialPosition = false
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: yPos) },
+                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
     }
     
     func transformToInitialPositionAnimation() {
+        self.isOnInitialPosition = true
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
+                        self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
     }
     

@@ -11,6 +11,12 @@ import UIKit
 
 class TractHeader: BaseTractElement {
     
+    enum HeaderAnimationState {
+        case none, hide
+    }
+    
+    var currentAnimation: TractHeader.HeaderAnimationState = .none
+    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
@@ -35,6 +41,20 @@ class TractHeader: BaseTractElement {
     
     override var horizontalContainer: Bool {
         return true
+    }
+    
+    override func loadParallelElementState() {
+        guard let element = self.parallelElement else {
+            return
+        }
+        
+        let headerElement = element as! TractHeader
+        switch headerElement.currentAnimation {
+        case .hide:
+            hideHeaderWithoutAnimation()
+        default:
+            break
+        }
     }
     
     // MARK: - Helpers

@@ -11,14 +11,14 @@ import SWXMLHash
 
 extension BaseTractElement {
     
-    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat) -> BaseTractElement {
+    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat, elementNumber: Int) -> BaseTractElement {
         let xmlManager = XMLManager()
         let nodeClassType = xmlManager.parser.getNodeClass(data)
         
         if nodeClassType == TractModals.self || nodeClassType == TractEmails.self || nodeClassType == TractEmail.self {
             return nodeClassType.init(data: data, parent: self)
         } else {
-            return nodeClassType.init(data: data, startOnY: yPosition, parent: self)
+            return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
     }
     

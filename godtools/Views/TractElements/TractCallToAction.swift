@@ -11,6 +11,10 @@ import UIKit
 
 class TractCallToAction: BaseTractElement {
     
+    enum CallToActionAnimationState {
+        case none, show
+    }
+    
     // MARK: Positions constants
     
     static let yMarginConstant: CGFloat = 8.0
@@ -33,6 +37,8 @@ class TractCallToAction: BaseTractElement {
             super.height = newValue
         }
     }
+    
+    var currentAnimation: TractCallToAction.CallToActionAnimationState = .none
     
     // MARK: - Setup
     
@@ -66,6 +72,20 @@ class TractCallToAction: BaseTractElement {
         properties.xMargin = TractCallToAction.paddingConstant
         properties.yMargin = TractCallToAction.paddingConstant
         return properties
+    }
+    
+    override func loadParallelElementState() {
+        guard let element = self.parallelElement else {
+            return
+        }
+        
+        let callToActionElement = element as! TractCallToAction
+        switch callToActionElement.currentAnimation {
+        case .show:
+            showCallToActionWithoutAnimation()
+        default:
+            break
+        }
     }
     
     // MARK: - Helpers
