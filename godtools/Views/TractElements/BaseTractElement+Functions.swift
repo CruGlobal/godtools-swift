@@ -111,10 +111,35 @@ extension BaseTractElement {
         if TractBindings.pageBindings[listener] != nil {
             NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
         }
+        
+        GTGlobalTractBindings.listen(listener: listener, element: self)
     }
     
     func receiveMessage() { }
     
     func receiveDismissMessage() { }
+    
+    // MARK: - Form Functions
+    
+    func attachToForm() {
+        if let form = BaseTractElement.getFormForElement(self) {
+            form.attachElementToForm(element: self)
+        }
+    }
+    
+    func formName() -> String {
+        return ""
+    }
+    
+    func formValue() -> String {
+        return ""
+    }
+    
+    func getFormData() -> [String: String]? {
+        if let form = BaseTractElement.getFormForElement(self) {
+            return form.getFormData()
+        }
+        return nil
+    }
     
 }

@@ -85,8 +85,20 @@ class TractInput: BaseTractElement {
         
         self.addSubview(self.textField)
         
+        attachToForm()
         TractBindings.addBindings(self)
         return self
+    }
+    
+    // MARK: - Form Functions
+    
+    override func formName() -> String {
+        let properties = inputProperties()
+        return properties.name ?? ""
+    }
+    
+    override func formValue() -> String {
+        return self.textField.text!
     }
     
     // MARK: - Helpers

@@ -38,6 +38,14 @@ class GTDataManager: NSObject {
             .responseData()
     }
     
+    func issuePOSTRequest(_ params: Parameters) -> Promise<Data> {
+        return Alamofire
+            .request(buildURL() ?? "",
+                     method: HTTPMethod.post,
+                     parameters: params)
+            .responseData()
+    }
+    
     func issueGETRequest(_ params: Parameters) -> Promise<Data> {
         return Alamofire.request(buildURL() ?? "",
                                  method: HTTPMethod.get,
@@ -98,5 +106,9 @@ class GTDataManager: NSObject {
     
     func showNetworkingIndicator() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func hideNetworkIndicator() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }

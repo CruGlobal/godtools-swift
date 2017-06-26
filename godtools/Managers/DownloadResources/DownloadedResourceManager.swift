@@ -45,6 +45,9 @@ class DownloadedResourceManager: GTDataManager {
                 }
                 return Promise(value:self.loadFromDisk())
             }
+            .always {
+                self.hideNetworkIndicator()
+        }
     }
     
     func download(_ resource: DownloadedResource) {

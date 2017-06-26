@@ -54,6 +54,19 @@ extension BaseTractElement {
         return BaseTractElement.isElement(element, kindOf: TractLabel.self)
     }
     
+    static func getFormForElement(_ element: BaseTractElement) -> TractForm? {
+        var elementCopy: BaseTractElement? = element
+        
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: TractForm.self) {
+                return elementCopy as? TractForm
+            }
+            elementCopy = elementCopy!.parent
+        }
+        
+        return nil
+    }
+    
     static func isElement(_ element: BaseTractElement, kindOf tractClass: AnyClass) -> Bool {
         var elementCopy: BaseTractElement? = element
         

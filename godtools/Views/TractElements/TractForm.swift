@@ -9,6 +9,10 @@
 import UIKit
 
 class TractForm: BaseTractElement {
+
+    // MARK: - Object properties
+    
+    var formElements = [BaseTractElement]()
     
     // MARK - Setup
     
@@ -21,7 +25,7 @@ class TractForm: BaseTractElement {
         self.elementFrame.width = parentWidth()
         self.elementFrame.xMargin = TractCard.xPaddingConstant
     }
-    
+
     // MARK: - Helpers
     
     func formProperties() -> TractFormProperties {

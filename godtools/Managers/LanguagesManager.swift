@@ -66,6 +66,9 @@ class LanguagesManager: GTDataManager {
                 }
                 return Promise(value:self.loadFromDisk())
         }
+            .always {
+                self.hideNetworkIndicator()
+        }
     }
     
     func recordLanguageShouldDownload(language: Language) {

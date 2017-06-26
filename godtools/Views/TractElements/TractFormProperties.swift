@@ -9,5 +9,11 @@
 import UIKit
 
 class TractFormProperties: TractProperties {
+    
+    var action: String = ""
+    
+    override func defineProperties() {
+        self.properties = ["action"]
+    }
 
 }
