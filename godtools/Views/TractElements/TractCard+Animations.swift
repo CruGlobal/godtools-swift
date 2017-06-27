@@ -21,7 +21,7 @@ extension TractCard {
         
         UIView.animate(withDuration: TractCard.bounceDuration,
                        delay: delay,
-                       options: UIViewAnimationOptions.curveEaseOut,
+                       options: .curveEaseOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
                        completion: { finished in
