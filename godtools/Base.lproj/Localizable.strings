@@ -1,0 +1,85 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Add New Tools";
+"set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"now" = "Now";
+"later" = "Later";
+
+// Menu
+"menu_general" = "General";
+"menu_share" = "Share";
+"menu_legal" = "Legal";
+"language_settings" = "Language Settings";
+"about" = "About";
+"help" = "Help";
+"contact_us" = "Contact Us";
+"notifications" = "Notifications";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "Share GodTools";
+"share_a_story_with_us" = "Share a Story With Us";
+"terms_of_use" = "Terms of Use";
+"privacy_policy" = "Privacy Policy";
+"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Add Tools";
+
+// Tool Detail
+"about" = "About";
+"total_views" = "%d views";
+"total_languages" = "%d languages";
+
+// Language Settings
+"primary_language" = "Primary Language";
+"select_primary_language" = "Select a Primary Language";
+"parallel_language" = "Parallel Language";
+"select_parallel_language" = "Select a Parallel Language";
+"share_god_tools_native_language" = "Share God Tools with someone in their native language";
+"not_every_tool_is_available" = "Not every tool is available in every language";
+
+// Settings
+"settings" = "Settings";
+
+// Alert Controllers
+"download_error" = "Download Error";
+"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
+"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+
+// Actions
+"yes" = "Yes";
+"no" = "No";
+
+// Tract - Sharing
+"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+
+// Buttons
+"download" = "Download";
+"dismiss" = "Dismiss";
+"done" = "Done";
+"remove" = "Remove";
+"clear" = "Clear";
+
+// Alerts
+"error" = "Error";
+"ok" = "Ok";
+"error_can_not_send_email" = "There is no configured email on your device.";
+
+// About
+"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
+"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
+"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
+"general_about_4" = "Links to other resources are included at the end of each tool.";
+"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
+"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
+"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
+"general_about_8" = "Visit godtoolsapp.com for more information.";
+"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
+"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";

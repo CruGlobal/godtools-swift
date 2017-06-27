@@ -27,14 +27,14 @@ extension TractViewController {
         if primaryLanguage == nil {
             return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
         } else {
-            return primaryLanguage!.localizedName
+            return primaryLanguage!.localizedName()
         }
     }
     
     func determineParallelLabel() -> String {
         let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
         
-        return parallelLanguage!.localizedName
+        return parallelLanguage!.localizedName()
     }
     
     func getLanguageTextAlignment() -> NSTextAlignment {
