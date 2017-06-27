@@ -119,6 +119,10 @@ extension BaseTractElement {
     
     func receiveDismissMessage() { }
     
+    func getParentCard() -> TractCard? {
+        return BaseTractElement.getParentCardForElement(self)
+    }
+    
     // MARK: - Form Functions
     
     func attachToForm() {
