@@ -115,7 +115,7 @@ class TractCard: BaseTractElement {
     
     override func elementDismissListeners() -> [String]? {
         let properties = cardProperties()
-        return properties.dismissListeners == "" ? nil : properties.dismissListeners.components(separatedBy: ",")
+        return properties.dismissListeners == "" ? nil : properties.dismissListeners.components(separatedBy: " ")
     }
     
     override func loadFrameProperties() {
