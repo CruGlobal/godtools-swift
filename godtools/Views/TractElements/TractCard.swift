@@ -145,7 +145,13 @@ class TractCard: BaseTractElement {
     }
     
     override func viewDidAppearOnTract() {
-        loadFirstTimeAccessAnimation()
+        guard let cardsElement = self.parent as? TractCards else {
+            return
+        }
+        
+        if self == cardsElement.elements?.first {
+            loadFirstTimeAccessAnimation()
+        }
     }
     
     // MARK: - Helpers
