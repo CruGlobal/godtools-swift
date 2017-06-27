@@ -25,6 +25,24 @@ class TractForm: BaseTractElement {
         self.elementFrame.width = parentWidth()
         self.elementFrame.xMargin = TractCard.xPaddingConstant
     }
+    
+    override func render() -> UIView {
+        for element in self.elements! {
+            self.addSubview(element.render())
+        }
+        
+        loadParallelElementState()
+        TractBindings.addBindings(self)
+        
+        for element in formElements {
+            if element.isKind(of: TractInput.self) {
+                let tractInput = element as? TractInput
+                tractInput?.updateTextFieldReturnKey()
+            }
+        }
+        
+        return self
+    }
 
     // MARK: - Helpers
     

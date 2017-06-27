@@ -12,19 +12,9 @@ import RealmSwift
 typealias Languages = List<Language>
 
 class Language: Object {
-    dynamic var code = "" {
-        didSet {
-            guard let nameInLocale = NSLocale.current.localizedString(forIdentifier: self.code) else {
-                self.localizedName = self.code
-                return
-            }
-            
-            self.localizedName = nameInLocale
-        }
-    }
+    dynamic var code = ""
     dynamic var remoteId = ""
     dynamic var shouldDownload = false
-    dynamic var localizedName = ""
     
     let translations = List<Translation>()
     
@@ -38,5 +28,13 @@ class Language: Object {
     
     func isParallel() -> Bool {
         return remoteId == GTSettings.shared.parallelLanguageId
+    }
+    
+    func localizedName() -> String {
+        guard let nameInLocale = NSLocale.current.localizedString(forIdentifier: self.code) else {
+            return self.code
+        }
+        
+        return nameInLocale
     }
 }

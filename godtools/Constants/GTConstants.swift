@@ -15,4 +15,6 @@ struct GTConstants {
     static let kDownloadBannerResourceIdKey = "org.cru.godtools.downloadBannerResourceIdKey"
     
     static let kFirstLaunchKey = "org.cru.godtools.firstLaunchKey"
+    
+    static let kAlreadyAccessTract = "org.cru.godtools.defaults.tract.alreadyAccess"
 }

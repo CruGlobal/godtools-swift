@@ -17,6 +17,10 @@ extension TractCard {
         }
     }
     
+    override func receiveDismissMessage() {
+        hideCard()
+    }
+    
     func processSwipeUp() {
         let properties = cardProperties()
         

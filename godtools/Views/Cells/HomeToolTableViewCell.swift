@@ -76,7 +76,7 @@ class HomeToolTableViewCell: UITableViewCell {
         titleLabel.isEnabled = isAvailableInPrimaryLanguage
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
-        languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName : nil
+        languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
         
         numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
     }

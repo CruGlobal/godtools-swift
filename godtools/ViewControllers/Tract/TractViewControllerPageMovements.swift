@@ -103,7 +103,14 @@ extension TractViewController {
                             }
                             view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
-                       completion: nil )
+                       completion: { finished in
+                        self.notifyCurrentViewDidAppearOnTract()
+        } )
+    }
+    
+    func notifyCurrentViewDidAppearOnTract() {
+        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as! TractView
+        currentTractView.contentView?.notifyViewDidAppearOnTract()
     }
     
     fileprivate func buildProgressViewFrame() -> CGRect {
