@@ -22,7 +22,7 @@ extension TractViewController {
         
         self.currentPage = page
         reloadPagesViews()
-        moveViews()
+        moveBackward()
     }
     
     func moveToNextPage() {
@@ -31,7 +31,7 @@ extension TractViewController {
         }
         
         self.currentPage += 1
-        moveViews()
+        moveForeward()
         reloadPagesViews()
     }
     
@@ -41,9 +41,8 @@ extension TractViewController {
         }
         
         self.currentPage -= 1
-        moveViews()
+        moveBackward()
         reloadPagesViews()
-        moveViews()
     }
     
     func removeViewsBeforeCurrentView() {
@@ -61,22 +60,24 @@ extension TractViewController {
         }
     }
     
-    fileprivate func moveViews() {
-        let newCurrentProgressViewFrame = CGRect(x: 0.0,
-                                                 y: 0.0,
-                                                 width: currentProgressWidth(),
-                                                 height: self.currentProgressView.frame.size.height)
-
+    fileprivate func moveBackward() {
+        let newCurrentProgressViewFrame = buildProgressViewFrame()
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.currentProgressView.frame = newCurrentProgressViewFrame
+                        for view in self.pagesViews {
+                            view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+                        } },
+                       completion: nil )
+        
+    }
+    
+    fileprivate func moveForeward() {
+        let newCurrentProgressViewFrame = buildProgressViewFrame()
         guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
             return
-        }
-        
-        for view in self.pagesViews {
-            if view == nil || view == currentPageView {
-                continue
-            }
-            
-            self.view.sendSubview(toBack: view!)
         }
         
         UIView.animate(withDuration: 0.35,
@@ -103,5 +104,12 @@ extension TractViewController {
                             view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
                        completion: nil )
+    }
+    
+    fileprivate func buildProgressViewFrame() -> CGRect {
+        return CGRect(x: 0.0,
+                      y: 0.0,
+                      width: currentProgressWidth(),
+                      height: self.currentProgressView.frame.size.height)
     }
 }

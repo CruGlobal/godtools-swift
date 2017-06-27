@@ -74,8 +74,13 @@ extension TractViewController {
             } else {
                 let view = buildPage(position, width: width, height: height, parallelElement: nil)
                 tmpPagesViews[position] = view
-                self.containerView.addSubview(view)
                 
+                let firstView = self.containerView.subviews.first
+                if firstView != nil && firstView!.tag > view.tag {
+                    self.containerView.insertSubview(view, at: 0)
+                } else {
+                    self.containerView.addSubview(view)
+                }
             }
         }
         
