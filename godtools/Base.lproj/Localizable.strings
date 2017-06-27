@@ -9,6 +9,9 @@
 // Onboarding
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"now" = "Now";
+"later" = "Later";
 
 // Menu
 "menu_general" = "General";
