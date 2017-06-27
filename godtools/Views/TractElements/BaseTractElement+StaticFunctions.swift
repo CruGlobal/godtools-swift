@@ -61,7 +61,20 @@ extension BaseTractElement {
             if elementCopy!.isKind(of: TractForm.self) {
                 return elementCopy as? TractForm
             }
-            elementCopy = elementCopy!.parent
+            elementCopy = elementCopy?.parent
+        }
+        
+        return nil
+    }
+    
+    static func getParentCardForElement(_ element: BaseTractElement) -> TractCard? {
+        var elementCopy: BaseTractElement? = element
+        
+        while elementCopy != nil {
+            if elementCopy!.isKind(of: TractCard.self) {
+                return elementCopy as? TractCard
+            }
+            elementCopy = elementCopy?.parent
         }
         
         return nil
@@ -74,7 +87,7 @@ extension BaseTractElement {
             if elementCopy!.isKind(of: tractClass) {
                 return true
             }
-            elementCopy = elementCopy!.parent
+            elementCopy = elementCopy?.parent
         }
         
         return false

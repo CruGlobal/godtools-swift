@@ -51,19 +51,42 @@ class TractInput: BaseTractElement {
     
     func setupTextField() {
         let elementProperties = inputProperties()
+        if elementProperties.type == .hidden {
+            return
+        }
         
         self.textField.cornerRadius = elementProperties.cornerRadius
         self.textField.borderColor = elementProperties.color
         self.textField.borderWidth = elementProperties.borderWidth
         self.textField.backgroundColor = elementProperties.backgroundColor
         self.textField.placeholderTranslationKey = elementProperties.placeholder ?? ""
+        self.textField.text = elementProperties.inputValue()
         self.textField.frame = CGRect(x: 0.0,
                                       y: self.height,
                                       width: self.elementFrame.finalWidth(),
                                       height: elementProperties.height)
+        self.textField.delegate = getParentCard()
+        
+        switch elementProperties.type {
+        case .email:
+            self.textField.keyboardType = .emailAddress
+        case .phone:
+            self.textField.keyboardType = .phonePad
+        default:
+            self.textField.keyboardType = .default
+        }
         
         self.height += elementProperties.height
         updateFrameHeight()
+    }
+    
+    func updateTextFieldReturnKey() {
+        self.textField.returnKeyType = .done
+        if let form = BaseTractElement.getFormForElement(self) {
+            if form.getFollowingInputForInput(element: self) != nil {
+                self.textField.returnKeyType = .next
+            }
+        }
     }
     
     override func loadElementProperties(_ properties: [String: Any]) {
@@ -78,12 +101,17 @@ class TractInput: BaseTractElement {
         self.elementFrame.width = parentWidth()
     }
     
-    override func render() -> UIView {        
-        for element in self.elements! {
-            self.addSubview(element.render())
+    override func render() -> UIView {
+        let properties = inputProperties()
+        if properties.type == .hidden {
+            self.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        } else {
+            for element in self.elements! {
+                self.addSubview(element.render())
+            }
+            
+            self.addSubview(self.textField)
         }
-        
-        self.addSubview(self.textField)
         
         attachToForm()
         TractBindings.addBindings(self)
@@ -98,7 +126,12 @@ class TractInput: BaseTractElement {
     }
     
     override func formValue() -> String {
-        return self.textField.text!
+        let properties = inputProperties()
+        if properties.type == .hidden {
+            return properties.inputValue()
+        } else {
+            return self.textField.text!
+        }
     }
     
     // MARK: - Helpers

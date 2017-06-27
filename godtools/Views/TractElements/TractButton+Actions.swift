@@ -12,8 +12,9 @@ import UIKit
 extension TractButton {
     
     func buttonTarget() {
-        let properties = buttonProperties()
+        getParentCard()?.endCardEditing()
         
+        let properties = buttonProperties()
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
             for event in events {

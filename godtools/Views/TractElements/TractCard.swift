@@ -9,9 +9,6 @@
 import Foundation
 import UIKit
 
-//  NOTES ABOUT THE COMPONENT
-//  * The height size of this component will always be the size of Cards.height minus the margins
-
 class TractCard: BaseTractElement {
     
     enum CardAnimationState {
@@ -27,6 +24,7 @@ class TractCard: BaseTractElement {
     static let xPaddingConstant: CGFloat = 28.0
     static let contentBottomPadding: CGFloat = 8.0
     static let transparentViewHeight: CGFloat = 60.0
+    static let keyboardYTransformation: CGFloat = -80.0
     
     // MARK: - Positions and Sizes
     
@@ -112,6 +110,11 @@ class TractCard: BaseTractElement {
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: " ")
     }
     
+    override func elementDismissListeners() -> [String]? {
+        let properties = cardProperties()
+        return properties.dismissListeners == "" ? nil : properties.dismissListeners.components(separatedBy: " ")
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0
         self.elementFrame.width = self.parentWidth()
@@ -147,6 +150,16 @@ class TractCard: BaseTractElement {
         }
     }
     
+    override func viewDidAppearOnTract() {
+        guard let cardsElement = self.parent as? TractCards else {
+            return
+        }
+        
+        if self == cardsElement.elements?.first {
+            loadFirstTimeAccessAnimation()
+        }
+    }
+    
     // MARK: - Helpers
     
     func cardProperties() -> TractCardProperties {
@@ -155,6 +168,17 @@ class TractCard: BaseTractElement {
     
     func cardHeight() -> CGFloat {
         return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
+    }
+    
+    func endCardEditing() {
+        self.endEditing(true)
+    }
+    
+    func loadFirstTimeAccessAnimation() {
+        if TractConfigurations.isFirstTimeAccess() {
+            TractConfigurations.didAccessToTract()
+            openingAnimation()
+        }
     }
 
 }

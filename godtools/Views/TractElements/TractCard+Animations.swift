@@ -11,6 +11,48 @@ import UIKit
 
 extension TractCard {
     
+    static let bounceDecayFactor: CGFloat = 0.75
+    static let bounceCycles = 3
+    static let numberOfBounces = 3
+    static let secondsBetweenCycles: Double = 0.6
+    static let bounceDuration: Double = 0.15
+    
+    func openingAnimation(yTransformation: CGFloat = -50.0, delay: Double = 0.0, cycleNumber: Int = 1, bounceNumber: Int = 1 ) {
+        
+        UIView.animate(withDuration: TractCard.bounceDuration,
+                       delay: delay,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
+                       completion: { finished in
+                        self.closingAnimation(cycleNumber: cycleNumber,
+                                              bounceNumber: bounceNumber,
+                                              yOpeningTransformation: yTransformation)
+        } )
+    }
+    
+    func closingAnimation(cycleNumber: Int, bounceNumber: Int, yOpeningTransformation: CGFloat) {
+        let yTransformation: CGFloat = 0.0
+        UIView.animate(withDuration: TractCard.bounceDuration,
+                       delay: 0.1,
+                       options: .curveEaseOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
+                       completion: { finished in
+                        
+                        if bounceNumber < TractCard.numberOfBounces {
+                            self.openingAnimation(yTransformation: yOpeningTransformation * TractCard.bounceDecayFactor,
+                                                  delay: 0.1,
+                                                  cycleNumber: cycleNumber,
+                                                  bounceNumber: bounceNumber + 1)
+                        } else if cycleNumber < TractCard.bounceCycles {
+                            self.openingAnimation(delay: TractCard.secondsBetweenCycles,
+                                                  cycleNumber: cycleNumber + 1)
+                        }
+                        
+        })
+    }
+    
     func showCardWithoutAnimation() {
         self.currentAnimation = .show
         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)
@@ -63,6 +105,24 @@ extension TractCard {
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
+                       completion: nil )
+    }
+    
+    func moveViewForPresentingKeyboardAnimation() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.containerView.transform = CGAffineTransform(translationX: 0, y: TractCard.keyboardYTransformation) },
+                       completion: nil )
+    }
+    
+    func moveViewForDismissingKeyboardAnimation() {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.containerView.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: nil )
     }
     
