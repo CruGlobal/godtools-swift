@@ -17,6 +17,7 @@ class TractCards: BaseTractElement {
     static let minYPosition: CGFloat = 110.0
     static let constantYPaddingTop: CGFloat = 45
     static let constantYPaddingBottom: CGFloat = 16
+    static let constantYBottomSpace: CGFloat = 6
     
     override var height: CGFloat {
         get {
@@ -26,7 +27,7 @@ class TractCards: BaseTractElement {
     }
     
     var initialCardPosition: CGFloat {
-        return self.height - self.elementFrame.y + TractPage.navbarHeight
+        return self.height - self.elementFrame.y + TractPage.navbarHeight - TractCards.constantYBottomSpace
     }
     
     // MARK: - Dynamic settings
