@@ -11,27 +11,35 @@ import UIKit
 
 extension TractCard {
     
-    func openingAnimation() {
+    static let bounceDecayFactor: CGFloat = 0.75
+    static let bounceRepetitions = 2
+    static let bouncePauseSeconds: Double = 0.6
+    
+    func openingAnimation(repetition: Int = 0, delay: Double = 0.0) {
         let yTransformation: CGFloat = -50.0
         UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
+                       delay: delay,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
                        completion: { finished in
-                        self.closingAnimation()
+                        self.closingAnimation(repetition: repetition)
         } )
         
     }
     
-    func closingAnimation() {
+    func closingAnimation(repetition: Int = 0) {
         let yTransformation: CGFloat = 0.0
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
-                       completion: nil )
+                       completion: { finished in
+                        if repetition < TractCard.bounceRepetitions {
+                            self.openingAnimation(repetition: repetition + 1, delay: TractCard.bouncePauseSeconds)
+                        } 
+        })
     }
     
     func showCardWithoutAnimation() {
