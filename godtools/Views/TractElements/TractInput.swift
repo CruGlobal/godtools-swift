@@ -62,6 +62,15 @@ class TractInput: BaseTractElement {
                                       width: self.elementFrame.finalWidth(),
                                       height: elementProperties.height)
         
+        switch elementProperties.type {
+        case .email:
+            self.textField.keyboardType = .emailAddress
+        case .phone:
+            self.textField.keyboardType = .phonePad
+        default:
+            self.textField.keyboardType = .default
+        }
+        
         self.height += elementProperties.height
         updateFrameHeight()
     }
