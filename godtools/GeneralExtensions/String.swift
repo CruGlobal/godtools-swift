@@ -11,11 +11,17 @@ import UIKit
 
 extension String {
     
+    static var godtoolsRGBANumberFormatter: NumberFormatter?
+    
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
     func getRGBAColor() -> UIColor {
+        if String.godtoolsRGBANumberFormatter == nil {
+            initializeGodToolsRGBANumberFormatter()
+        }
+        
         let components = self.components(separatedBy: ",")
         var values = [CGFloat]()
         
@@ -23,11 +29,18 @@ extension String {
             let result = String(component.characters.filter {
                 String($0).rangeOfCharacter(from: CharacterSet(charactersIn: ".0123456789")) != nil
             })
-            let value = NumberFormatter().number(from: result)
+
+            
+            let value = String.godtoolsRGBANumberFormatter!.number(from: result)
             values.append(CGFloat(value!))
         }
         
         return UIColor(red: values[0]/255.0, green: values[1]/255.0, blue: values[2]/255.0, alpha: values[3])
+    }
+    
+    private func initializeGodToolsRGBANumberFormatter() {
+        String.godtoolsRGBANumberFormatter = NumberFormatter()
+        String.godtoolsRGBANumberFormatter!.decimalSeparator = "."
     }
     
     func transformToNumber() -> Int {
