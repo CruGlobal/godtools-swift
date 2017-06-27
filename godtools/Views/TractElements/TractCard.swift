@@ -102,6 +102,7 @@ class TractCard: BaseTractElement {
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
+        loadFirstTimeAccessAnimation()
         
         TractBindings.addBindings(self)
         return self
@@ -155,6 +156,13 @@ class TractCard: BaseTractElement {
     
     func cardHeight() -> CGFloat {
         return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
+    }
+    
+    func loadFirstTimeAccessAnimation() {
+        if self.page!.firstTimeAccess == true {
+            self.page!.firstTimeAccess = false
+            openingAnimation()
+        }
     }
 
 }

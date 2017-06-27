@@ -11,6 +11,29 @@ import UIKit
 
 extension TractCard {
     
+    func openingAnimation() {
+        let yTransformation: CGFloat = -100.0
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
+                       completion: { finished in
+                        self.closingAnimation()
+        } )
+        
+    }
+    
+    func closingAnimation() {
+        let yTransformation: CGFloat = 0.0
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform(translationX: 0, y: yTransformation) },
+                       completion: nil )
+    }
+    
     func showCardWithoutAnimation() {
         self.currentAnimation = .show
         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos)

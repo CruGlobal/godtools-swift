@@ -140,6 +140,7 @@ class BaseTractElement: UIView {
         self.manifestProperties = manifestProperties
         self.tractConfigurations = configurations
         self.parallelElement = parallelElement
+        self.firstTimeAccess = firstTimeAccess
         
         if self.isKind(of: TractPage.self) {
             self._mainView = self as? TractPage
