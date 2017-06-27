@@ -16,13 +16,13 @@ extension String {
     }
     
     func removeBreaklines() -> String {
-        let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
+        let regex = try! NSRegularExpression(pattern: "\n", options: .caseInsensitive)
         let range = NSMakeRange(0, self.characters.count)
         return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "")
     }
     
     func condenseWhitespaces() -> String {
-        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
+        let components = self.components(separatedBy: .whitespacesAndNewlines)
         return components.filter { !$0.isEmpty }.joined(separator: " ")
     }
     
