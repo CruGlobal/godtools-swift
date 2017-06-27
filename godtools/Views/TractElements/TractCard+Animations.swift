@@ -11,9 +11,9 @@ import UIKit
 
 extension TractCard {
     
-    static let bounceDecayFactor: CGFloat = 0.75
+    static let bounceDecayFactor: CGFloat = 0.2
     static let bounceCycles = 3
-    static let numberOfBounces = 3
+    static let numberOfBounces = 2
     static let secondsBetweenCycles: Double = 0.6
     static let bounceDuration: Double = 0.15
     

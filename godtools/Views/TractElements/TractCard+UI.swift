@@ -82,9 +82,9 @@ extension TractCard {
         self.shadowView.frame = self.bounds
         self.shadowView.backgroundColor = cardBackgroundColor()
         let shadowLayer = self.shadowView.layer
-        shadowLayer.cornerRadius = 3.0
+        shadowLayer.cornerRadius = 8.0
         shadowLayer.shadowColor = UIColor.black.cgColor
-        shadowLayer.shadowRadius = 3.0
+        shadowLayer.shadowRadius = 8.0
         shadowLayer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         shadowLayer.shadowOpacity = 0.4
         shadowLayer.shouldRasterize = true
