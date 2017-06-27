@@ -113,6 +113,11 @@ class TractCard: BaseTractElement {
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: " ")
     }
     
+    override func elementDismissListeners() -> [String]? {
+        let properties = cardProperties()
+        return properties.dismissListeners == "" ? nil : properties.dismissListeners.components(separatedBy: ",")
+    }
+    
     override func loadFrameProperties() {
         self.elementFrame.x = 0
         self.elementFrame.width = self.parentWidth()
