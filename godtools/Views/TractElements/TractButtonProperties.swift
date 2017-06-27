@@ -22,7 +22,7 @@ class TractButtonProperties: TractProperties {
     var color = UIColor.gtBlack
     
     override func defineProperties() {
-        self.properties = ["type", "events", "url", "color"]
+        self.properties = ["events", "url", "color"]
     }
     
     override func customProperties() -> [String]? {
