@@ -346,10 +346,10 @@ class BaseTractElement: UIView {
     
     // MARK: View flow management
     
-    func notifyViewsDidAppearOnTract() {
+    func notifyViewDidAppearOnTract() {
         self.viewDidAppearOnTract()
         for element in self.elements! {
-            element.notifyViewsDidAppearOnTract()
+            element.notifyViewDidAppearOnTract()
         }
     }
     

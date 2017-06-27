@@ -74,17 +74,14 @@ extension TractViewController {
                         for view in self.pagesViews {
                             view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
-                       completion: nil )
+                       completion: { finished in
+                        self.notifyCurrentViewDidAppearOnTract()
+        } )
     }
     
-    func notifyViewDidAppearOnTract() {
-        let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin)
-        
-        for pageView in self.pagesViews {
-            if pageView == currentPageView {
-                break
-            }
-        }
+    func notifyCurrentViewDidAppearOnTract() {
+        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as! TractView
+        currentTractView.contentView?.notifyViewDidAppearOnTract()
     }
     
 }
