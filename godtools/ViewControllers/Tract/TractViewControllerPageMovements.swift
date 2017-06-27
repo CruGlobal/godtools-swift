@@ -31,8 +31,8 @@ extension TractViewController {
         }
         
         self.currentPage += 1
-        reloadPagesViews()
         moveViews()
+        reloadPagesViews()
     }
     
     func moveToPreviousPage() {
@@ -41,6 +41,7 @@ extension TractViewController {
         }
         
         self.currentPage -= 1
+        moveViews()
         reloadPagesViews()
         moveViews()
     }
@@ -65,16 +66,42 @@ extension TractViewController {
                                                  y: 0.0,
                                                  width: currentProgressWidth(),
                                                  height: self.currentProgressView.frame.size.height)
+
+        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
+            return
+        }
+        
+        for view in self.pagesViews {
+            if view == nil || view == currentPageView {
+                continue
+            }
+            
+            self.view.sendSubview(toBack: view!)
+        }
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         self.currentProgressView.frame = newCurrentProgressViewFrame
+                        currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+                        },
+                       completion: { finished in
+                        self.moveViewsExceptCurrentView(currentPageView: currentPageView)
+        } )
+    }
+    
+    fileprivate func moveViewsExceptCurrentView(currentPageView: UIView) {
+        UIView.animate(withDuration: 0.35,
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseInOut,
+                       animations: {
                         for view in self.pagesViews {
+                            if view == currentPageView {
+                                continue
+                            }
                             view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
                         } },
                        completion: nil )
     }
-    
 }

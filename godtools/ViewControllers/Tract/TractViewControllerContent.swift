@@ -12,6 +12,7 @@ import UIKit
 extension TractViewController {
     
     static let snapshotViewTag = 3210123
+    static let distanceToCurrentView = 2
     
     func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
@@ -89,12 +90,12 @@ extension TractViewController {
     }
     
     func getRangeOfViews() -> (start: Int, end: Int) {
-        var start = self.currentPage - 2
+        var start = self.currentPage - TractViewController.distanceToCurrentView
         if start < 0 {
             start = 0
         }
         
-        var end = self.currentPage + 2
+        var end = self.currentPage + TractViewController.distanceToCurrentView
         if end >= self.totalPages() {
             end = totalPages() - 1
         }
