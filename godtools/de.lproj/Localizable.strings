@@ -1,0 +1,61 @@
+"set_your_languages" = "Sprache wählen";
+
+// Menu
+"menu_general" = "Allgemein";
+"language_settings" = "Spracheinstellungen";
+// Tool Detail
+"about" = "Über uns";
+"menu_legal" = "Rechtliche Hinweise";
+// Onboarding
+"add_new_tools" = "Neue Tools hinzufügen";
+"help" = "Hilfe";
+"menu_share" = "Teilen";
+"contact_us" = "Kontakt";
+"notifications" = "Mitteilungen";
+"preview_mode_translators_only" = "Vorschau-Modus (für Übersetzer)";
+"share_god_tools" = "Teile GodTools";
+"share_a_story_with_us" = "Teile eine Geschichte mit uns";
+"terms_of_use" = "Nutzungsbedingungen";
+// Add Tools
+"add_tools" = "Neue Tools hinzufügen";
+
+"privacy_policy" = "Datenschutzbestimmungen";
+
+"total_views" = "%d Aufrufe";
+"total_languages" = "%d Sprachen";
+
+"select_primary_language" = "Wähle eine Hauptsprache";
+// Language Settings
+"primary_language" = "Hauptsprache";
+"parallel_language" = "Zweite Sprache";
+"share_god_tools_native_language" = "Teile GodTools mit jemandem in seiner Muttersprache";
+"select_parallel_language" = "Wähle eine zweite Sprache";
+"not_every_tool_is_available" = "Nicht jedes Tool ist in jeder Sprache verfügbar";
+
+// Settings
+"settings" = "Einstellungen";
+
+// Alert Controllers
+"download_error" = "Fehler beim Download";
+"language_download_error" = "Die verfügbaren Sprachen konnten diesmal nicht heruntergeladen werden. Bitte überprüfe deine Internetverbindung oder versuche es später erneut.";
+
+// Tract - Sharing
+"tract_share_message" ="Dieser Link bringt dich zu der Web-Version der Seite, die wir heute zusammen angeschaut haben: %@. Lass uns weiter im Gespräch bleiben.";
+
+// Buttons
+"download" = "Herunterladen";
+"dismiss" = "Schließen";
+"done" = "Fertig";
+// About
+"general_about_1" = "GodTools hilft dir, deinen Glauben einfach und verständlich mitzuteilen.";
+"general_about_2" = "Diese Tools helfen dir jemandem zu erklären, wie er/sie eine Beziehung mit Gott durch Jesus Christus anfangen kann, selbst wenn du noch nie vorher deinen Glauben mit jemandem geteilt hast oder wenn dein Gesprächspartner eine andere Sprache spricht.";
+"remove" = "Entfernen";
+
+"general_about_4" = "Weiterführende Links sind am Ende jedes Tools zu finden.";
+"general_about_3" = "Wähle aus verschiedenen Tools das Passende für dich und deinen Gesprächspartner aus. Nicht alle Tools sind in jeder Sprache verfügbar.";
+"general_about_5" = "Eine Internetverbindung wird für den Download eines neuen Tools und/oder einer neuen Sprache benötigt. Nach einmaligem Download können sie offline verwendet werden.";
+"general_about_6" = "Fragen? Vorschläge? Wünsche? Kontaktiere uns über support@godtoolsapp.com";
+"general_about_7" = "Eine Webversion dieser Tools ist auf knowgod.com verfügbar. Binde sie in deine eigene Seite ein!";
+"general_about_8" = "Besuche godtoolsapp.com für weitere Informationen.";
+"general_about_9" = "Wenn du ein Gespräch über deinen Glauben initiierst, erinnere dich daran, dass Gott derjenige ist, der die Herzen verändert. Liebe jede Person, indem du zuhörst, um sie zu verstehen.";
+"general_about_10" = "\"Redet mit jedem Menschen freundlich; alles, was ihr sagt, soll gut und hilfreich sein. Bemüht euch darum, für jeden die richtigen Worte zu finden.\" Kolosses 4,6";

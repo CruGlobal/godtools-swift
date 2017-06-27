@@ -26,7 +26,6 @@
 		0F2837981EC62D3F0049CCE5 /* TractLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837971EC62D3F0049CCE5 /* TractLink.swift */; };
 		0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837991EC65A140049CCE5 /* TractTabs.swift */; };
 		0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F28379B1EC65A330049CCE5 /* TractTab.swift */; };
-		0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D971EAE77CD0025C4BB /* Localizable.strings */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
 		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
 		0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */; };
@@ -120,6 +119,7 @@
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
+		4FAF20781F02933900C43AFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
 		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
 		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
@@ -222,7 +222,6 @@
 		0F2837971EC62D3F0049CCE5 /* TractLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractLink.swift; path = Views/TractElements/TractLink.swift; sourceTree = "<group>"; };
 		0F2837991EC65A140049CCE5 /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabs.swift; path = Views/TractElements/TractTabs.swift; sourceTree = "<group>"; };
 		0F28379B1EC65A330049CCE5 /* TractTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTab.swift; path = Views/TractElements/TractTab.swift; sourceTree = "<group>"; };
-		0F350D971EAE77CD0025C4BB /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
 		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
@@ -318,6 +317,9 @@
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
+		4FAF20771F02930900C43AFC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		4FAF20791F02933900C43AFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4FAF207C1F02934100C43AFC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BannerManager.swift; path = Managers/BannerManager.swift; sourceTree = "<group>"; };
 		4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttachmentResource.swift; path = Managers/Attachments/AttachmentResource.swift; sourceTree = "<group>"; };
 		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
@@ -866,7 +868,7 @@
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				68EE51D71EBBA1E400596250 /* release_notes */,
 				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
-				0F350D971EAE77CD0025C4BB /* Localizable.strings */,
+				4FAF207A1F02933900C43AFC /* Localizable.strings */,
 			);
 			path = godtools;
 			sourceTree = "<group>";
@@ -1137,6 +1139,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1155,7 +1158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
-				0F350D981EAE77CD0025C4BB /* Localizable.strings in Resources */,
+				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				68C0A3841ED4C65400CC97A3 /* config.plist in Resources */,
 				ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
@@ -1483,8 +1486,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				4F5732991EA69CF00082035C /* Base */,
+				4FAF20771F02930900C43AFC /* de */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		4FAF207A1F02933900C43AFC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4FAF20791F02933900C43AFC /* Base */,
+				4FAF207C1F02934100C43AFC /* de */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1494,6 +1507,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1543,6 +1557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
