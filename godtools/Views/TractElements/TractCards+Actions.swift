@@ -30,7 +30,7 @@ extension TractCards {
             }
         }
         
-        if card == elements?.last {
+        if card == self.lastCard {
             showCallToAction()
         } else {
             hideCallToAction()
