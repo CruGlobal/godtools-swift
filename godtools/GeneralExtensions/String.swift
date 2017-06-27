@@ -15,6 +15,17 @@ extension String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
     
+    func removeBreaklines() -> String {
+        let regex = try! NSRegularExpression(pattern: "\n", options: NSRegularExpression.Options.caseInsensitive)
+        let range = NSMakeRange(0, self.characters.count)
+        return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "")
+    }
+    
+    func condenseWhitespaces() -> String {
+        let components = self.components(separatedBy: NSCharacterSet.whitespacesAndNewlines)
+        return components.filter { !$0.isEmpty }.joined(separator: " ")
+    }
+    
     func getRGBAColor() -> UIColor {
         let components = self.components(separatedBy: ",")
         var values = [CGFloat]()

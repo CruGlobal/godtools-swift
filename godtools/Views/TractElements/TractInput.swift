@@ -57,6 +57,7 @@ class TractInput: BaseTractElement {
         self.textField.borderWidth = elementProperties.borderWidth
         self.textField.backgroundColor = elementProperties.backgroundColor
         self.textField.placeholderTranslationKey = elementProperties.placeholder ?? ""
+        self.textField.text = elementProperties.inputValue()
         self.textField.frame = CGRect(x: 0.0,
                                       y: self.height,
                                       width: self.elementFrame.finalWidth(),
@@ -114,7 +115,7 @@ class TractInput: BaseTractElement {
     override func formValue() -> String {
         let properties = inputProperties()
         if properties.type == .hidden {
-            return properties.value ?? ""
+            return properties.inputValue()
         } else {
             return self.textField.text!
         }

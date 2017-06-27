@@ -50,6 +50,10 @@ class TractInputProperties: TractProperties {
         }
     }
     
+    func inputValue() -> String {
+        return self.value?.removeBreaklines().condenseWhitespaces() ?? ""
+    }
+    
     // MARK: - View Properties
     
     var width: CGFloat = 300.0
