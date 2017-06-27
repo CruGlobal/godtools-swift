@@ -12,7 +12,7 @@ import UIKit
 extension TractViewController {
     
     static let snapshotViewTag = 3210123
-    static let distanceToCurrentView = 2
+    static let distanceToCurrentView = 1
     
     func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
