@@ -33,7 +33,6 @@ class TractViewController: BaseViewController {
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
     let viewTagOrigin = 100
-    var firstTimeAccess = false
     
     override var prefersStatusBarHidden: Bool {
         return true
@@ -56,7 +55,6 @@ class TractViewController: BaseViewController {
         }
         
         setupContainerView()
-        checkFirstTimeAccess()
         loadPagesViews()
         self.viewsWereGenerated = true
     }

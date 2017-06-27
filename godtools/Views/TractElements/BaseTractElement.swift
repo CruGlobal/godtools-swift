@@ -79,7 +79,6 @@ class BaseTractElement: UIView {
     var parallelElement: BaseTractElement?
     var elementNumber: Int = -1
     var didFindCallToAction: Bool = false
-    var firstTimeAccess: Bool = false
     
     var _manifestProperties: ManifestProperties = ManifestProperties()
     var manifestProperties: ManifestProperties {
@@ -134,13 +133,12 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, firstTimeAccess: Bool) {
+    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.manifestProperties = manifestProperties
         self.tractConfigurations = configurations
         self.parallelElement = parallelElement
-        self.firstTimeAccess = firstTimeAccess
         
         if self.isKind(of: TractPage.self) {
             self._mainView = self as? TractPage

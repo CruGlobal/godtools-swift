@@ -159,9 +159,9 @@ class TractCard: BaseTractElement {
     }
     
     func loadFirstTimeAccessAnimation() {
-        if self.page!.firstTimeAccess == true {
-            self.page!.firstTimeAccess = false
-            openingAnimation()
+        if TractConfigurations.isFirstTimeAccess() {
+            TractConfigurations.didAccessToTract()
+            loadFirstTimeAccessAnimation()
         }
     }
 
