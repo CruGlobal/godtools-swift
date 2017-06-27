@@ -14,6 +14,10 @@ class OnboardingViewController: BaseViewController {
     @IBOutlet weak var page2View: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
+    @IBOutlet weak var nowButton: TransparentButton!
+    @IBOutlet weak var laterButton: TransparentButton!
+    @IBOutlet weak var okayButton: TransparentButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initialSetup()
@@ -27,10 +31,18 @@ class OnboardingViewController: BaseViewController {
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    fileprivate func initialSetup() {
+    private func initialSetup() {
         let viewWidth = self.view.frame.width
         self.page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
         self.pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0);
+        
+        setupButtonLabels()
+    }
+    
+    private func setupButtonLabels() {
+        nowButton.setTitle("now".localized, for: .normal)
+        okayButton.setTitle("okay".localized, for: .normal)
+        laterButton.setTitle("later".localized, for: .normal)
     }
     
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {

@@ -11,6 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="laterButton" destination="jRo-pJ-Pjn" id="ZTq-JI-5Fk"/>
+                <outlet property="nowButton" destination="1GS-ip-VQi" id="Ftd-4X-Eg0"/>
+                <outlet property="okayButton" destination="utk-V8-xg4" id="8Hu-4c-TVm"/>
                 <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
                 <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
                 <outlet property="pageControl" destination="hSP-YK-jb4" id="r0q-Uj-ZrA"/>
@@ -82,7 +85,7 @@
                             </userDefinedRuntimeAttributes>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-ip-VQi" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="71.5" y="226" width="107" height="48"/>
+                            <rect key="frame" x="40" y="226" width="125" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Hy4-vf-QFo"/>
                             </constraints>
@@ -92,7 +95,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="259" y="226" width="107" height="48"/>
+                            <rect key="frame" x="210" y="226" width="125" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
