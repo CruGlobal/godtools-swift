@@ -49,7 +49,8 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> Languages {
-        return findAllEntities(Language.self, sortedByKeyPath: "localizedName")
+        let languages = findAllEntities(Language.self)
+        return Languages(languages.sorted(by: { return $0.localizedName() < $1.localizedName() }))
     }
     
     func loadFromRemote() -> Promise<Languages> {
