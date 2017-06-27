@@ -17,7 +17,7 @@ class TractCard: BaseTractElement {
     
     // MARK: Positions constants
     
-    static let xMarginConstant: CGFloat = 8.0
+    static let xMarginConstant: CGFloat = 12.0
     static let shadowPaddingConstant: CGFloat = 2.0
     static let yTopMarginConstant: CGFloat = 8.0
     static let yBottomMarginConstant: CGFloat = 120.0
