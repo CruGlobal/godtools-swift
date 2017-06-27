@@ -13,6 +13,12 @@ extension TractViewController {
     
     static let snapshotViewTag = 3210123
     
+    func checkFirstTimeAccess() {
+        if TractConfigurations.isFirstTimeUse() {
+            self.firstTimeAccess = true
+        }
+    }
+    
     func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
         if range.end < range.start {
@@ -53,9 +59,10 @@ extension TractViewController {
         configurations.defaultTextAlignment = getLanguageTextAlignment()
         configurations.pagination = page.pagination
         
-        let view = TractView(frame: frame, data: page.pageContent(), manifestProperties: self.manifestProperties, configurations: configurations, parallelElement: parallelElement)
+        let view = TractView(frame: frame, data: page.pageContent(), manifestProperties: self.manifestProperties, configurations: configurations, parallelElement: parallelElement, firstTimeAccess: self.firstTimeAccess)
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         view.tag = self.viewTagOrigin + pageNumber
+        self.firstTimeAccess = false
         
         return view
     }

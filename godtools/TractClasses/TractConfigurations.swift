@@ -13,4 +13,12 @@ class TractConfigurations: NSObject {
     var defaultTextAlignment: NSTextAlignment = .left
     var pagination: TractPagination?
     
+    static func isFirstTimeUse() -> Bool {
+        return !UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
+    }
+    
+    static func didAccessToTract() {
+        UserDefaults.standard.set(false, forKey: GTConstants.kAlreadyAccessTract)
+    }
+    
 }
