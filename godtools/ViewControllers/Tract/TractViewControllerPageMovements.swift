@@ -77,4 +77,14 @@ extension TractViewController {
                        completion: nil )
     }
     
+    func notifyViewDidAppearOnTract() {
+        let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin)
+        
+        for pageView in self.pagesViews {
+            if pageView == currentPageView {
+                break
+            }
+        }
+    }
+    
 }

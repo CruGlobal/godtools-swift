@@ -9,9 +9,6 @@
 import Foundation
 import UIKit
 
-//  NOTES ABOUT THE COMPONENT
-//  * The height size of this component will always be the size of Cards.height minus the margins
-
 class TractCard: BaseTractElement {
     
     enum CardAnimationState {
@@ -102,7 +99,6 @@ class TractCard: BaseTractElement {
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
-        loadFirstTimeAccessAnimation()
         
         TractBindings.addBindings(self)
         return self
@@ -146,6 +142,10 @@ class TractCard: BaseTractElement {
         default:
             break
         }
+    }
+    
+    override func viewDidAppearOnTract() {
+        loadFirstTimeAccessAnimation()
     }
     
     // MARK: - Helpers
