@@ -10,14 +10,44 @@ import UIKit
 
 class TractInputProperties: TractProperties {
     
+    enum InputType {
+        case text, email, phone, hidden
+    }
+    
     // MARK: - XML Properties
     
     var name: String?
-    var type: String?
+    var type: InputType = .text
     var value: String?
     
     override func defineProperties() {
-        self.properties = ["name", "type", "value"]
+        self.properties = ["name", "value"]
+    }
+    
+    override func customProperties() -> [String]? {
+        return ["type"]
+    }
+    
+    override func performCustomProperty(propertyName: String, value: String) {
+        switch propertyName {
+        case "type":
+            setupType(value)
+        default: break
+        }
+    }
+    
+    private func setupType(_ type: String) {
+        switch type {
+        case "text":
+            self.type = .text
+        case "email":
+            self.type = .email
+        case "phone":
+            self.type = .phone
+        case "hidden":
+            self.type = .hidden
+        default: break
+        }
     }
     
     // MARK: - View Properties
