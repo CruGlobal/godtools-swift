@@ -12,7 +12,7 @@ import UIKit
 extension TractCard {
     
     func openingAnimation() {
-        let yTransformation: CGFloat = -100.0
+        let yTransformation: CGFloat = -50.0
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
