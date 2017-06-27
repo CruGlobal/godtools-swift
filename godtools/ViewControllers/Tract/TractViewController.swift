@@ -208,8 +208,14 @@ class TractViewController: BaseViewController {
     // MARK: - Helpers
     
     func currentProgressWidth() -> CGFloat {
-        let parentWidth = self.navigationController?.navigationBar.frame.size.width
-        return CGFloat(self.currentPage) * parentWidth! / CGFloat(self.totalPages() - 1)
+        let parentWidth = self.navigationController!.navigationBar.frame.size.width
+        let numPages = totalPages()
+        
+        if numPages == 1 {
+            return parentWidth
+        }
+        
+        return CGFloat(self.currentPage) * parentWidth / CGFloat(numPages - 1)
     }
     
 }
