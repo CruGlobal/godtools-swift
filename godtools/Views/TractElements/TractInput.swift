@@ -78,12 +78,17 @@ class TractInput: BaseTractElement {
         self.elementFrame.width = parentWidth()
     }
     
-    override func render() -> UIView {        
-        for element in self.elements! {
-            self.addSubview(element.render())
+    override func render() -> UIView {
+        let properties = inputProperties()
+        if properties.type == .hidden {
+            self.frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        } else {
+            for element in self.elements! {
+                self.addSubview(element.render())
+            }
+            
+            self.addSubview(self.textField)
         }
-        
-        self.addSubview(self.textField)
         
         attachToForm()
         TractBindings.addBindings(self)
@@ -98,7 +103,12 @@ class TractInput: BaseTractElement {
     }
     
     override func formValue() -> String {
-        return self.textField.text!
+        let properties = inputProperties()
+        if properties.type == .hidden {
+            return properties.value ?? ""
+        } else {
+            return self.textField.text!
+        }
     }
     
     // MARK: - Helpers
