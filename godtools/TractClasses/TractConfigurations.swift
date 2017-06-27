@@ -18,7 +18,7 @@ class TractConfigurations: NSObject {
     }
     
     static func didAccessToTract() {
-        UserDefaults.standard.set(false, forKey: GTConstants.kAlreadyAccessTract)
+        UserDefaults.standard.set(true, forKey: GTConstants.kAlreadyAccessTract)
     }
     
 }

@@ -161,7 +161,7 @@ class TractCard: BaseTractElement {
     func loadFirstTimeAccessAnimation() {
         if TractConfigurations.isFirstTimeAccess() {
             TractConfigurations.didAccessToTract()
-            loadFirstTimeAccessAnimation()
+            openingAnimation()
         }
     }
 
