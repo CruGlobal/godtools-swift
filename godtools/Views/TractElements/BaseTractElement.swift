@@ -343,4 +343,15 @@ class BaseTractElement: UIView {
         let buttonStyle = TractButtonProperties()
         return buttonStyle
     }
+    
+    // MARK: View flow management
+    
+    func notifyViewDidAppearOnTract() {
+        self.viewDidAppearOnTract()
+        for element in self.elements! {
+            element.notifyViewDidAppearOnTract()
+        }
+    }
+    
+    func viewDidAppearOnTract() { }
 }
