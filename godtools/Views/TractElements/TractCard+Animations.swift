@@ -14,7 +14,7 @@ extension TractCard {
     static let bounceDecayFactor: CGFloat = 0.75
     static let bounceCycles = 3
     static let numberOfBounces = 3
-    static let bouncePauseSeconds: Double = 0.6
+    static let secondsBetweenCycles: Double = 0.6
     static let bounceDuration: Double = 0.15
     
     func openingAnimation(yTransformation: CGFloat = -50.0, delay: Double = 0.0, cycleNumber: Int = 1, bounceNumber: Int = 1 ) {
@@ -46,7 +46,7 @@ extension TractCard {
                                                   cycleNumber: cycleNumber,
                                                   bounceNumber: bounceNumber + 1)
                         } else if cycleNumber < TractCard.bounceCycles {
-                            self.openingAnimation(delay: TractCard.bouncePauseSeconds,
+                            self.openingAnimation(delay: TractCard.secondsBetweenCycles,
                                                   cycleNumber: cycleNumber + 1)
                         }
                         
