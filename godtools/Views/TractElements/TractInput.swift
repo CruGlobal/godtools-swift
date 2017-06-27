@@ -51,6 +51,9 @@ class TractInput: BaseTractElement {
     
     func setupTextField() {
         let elementProperties = inputProperties()
+        if elementProperties.type == .hidden {
+            return
+        }
         
         self.textField.cornerRadius = elementProperties.cornerRadius
         self.textField.borderColor = elementProperties.color
