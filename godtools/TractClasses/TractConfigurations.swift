@@ -14,7 +14,8 @@ class TractConfigurations: NSObject {
     var pagination: TractPagination?
     
     static func isFirstTimeAccess() -> Bool {
-        return !UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
+        return true
+//        return !UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
     }
     
     static func didAccessToTract() {
