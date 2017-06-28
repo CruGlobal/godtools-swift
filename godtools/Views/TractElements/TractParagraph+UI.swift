@@ -40,13 +40,13 @@ extension TractParagraph {
             if BaseTractElement.isCardElement(self) {
                 return TractCard.xPaddingConstant
             } else {
-                return TractParagraph.marginConstant
+                return TractParagraph.xMarginConstant
             }
         }
         
         self.elementFrame.x = 0
         self.elementFrame.width = parentWidth()
-        self.elementFrame.yMarginTop = TractParagraph.marginConstant
+        self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
         self.elementFrame.xMargin = xMargin
     }
     
@@ -54,7 +54,7 @@ extension TractParagraph {
         let width = TractModal.contentWidth
         self.elementFrame.x = (self.parent!.width - width) / CGFloat(2)
         self.elementFrame.width = width
-        self.elementFrame.yMarginTop = TractParagraph.marginConstant
+        self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
     }
     
 }
