@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol BaseViewControllerDelegate {
-    mutating func goBack()
-    mutating func goHome()
-    mutating func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor)
+protocol BaseViewControllerDelegate: class {
+    func goBack()
+    func goHome()
+    func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor)
 }
 
 class BaseViewController: UIViewController {
     
-    var baseDelegate: BaseViewControllerDelegate?
+    weak var baseDelegate: BaseViewControllerDelegate?
     
     let kNavigationItemInitialSpace:CGFloat = -7.0
     let kNavigationItemSpace:CGFloat = 26.0
