@@ -48,6 +48,7 @@ class TractTabs: BaseTractElement {
         self.elementFrame.width = self.parentWidth()
         self.elementFrame.height = self.height
         self.elementFrame.yMarginTop = TractTabs.yMarginConstant
+        self.elementFrame.yMarginBottom = TractTabs.yMarginConstant
         self.elementFrame.xMargin = 0.0
     }
     
