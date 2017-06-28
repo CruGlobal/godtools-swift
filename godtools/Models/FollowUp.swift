@@ -14,7 +14,9 @@ class FollowUp: Object {
     dynamic var email: String?
     dynamic var destinationId: String?
     dynamic var languageId: String?
-    
+    dynamic var responseStatusCode: String?
+    dynamic var createdAtTime: NSDate?
+    dynamic var retryCount: Int = 0
     
     convenience init(jsonAPIFollowUp: FollowUpResource) {
         self.init()
