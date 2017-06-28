@@ -124,6 +124,7 @@
 		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
 		4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */; };
+		4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8021F042CAD00A70A0D /* FollowUp.swift */; };
 		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
 		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
 		4FE4AF2C1EE0F386000E3125 /* ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */; };
@@ -326,6 +327,7 @@
 		4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BannerManager.swift; path = Managers/BannerManager.swift; sourceTree = "<group>"; };
 		4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AttachmentResource.swift; path = Managers/Attachments/AttachmentResource.swift; sourceTree = "<group>"; };
 		4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpsManager.swift; path = Managers/FollowUps/FollowUpsManager.swift; sourceTree = "<group>"; };
+		4FD8F8021F042CAD00A70A0D /* FollowUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUp.swift; path = Models/FollowUp.swift; sourceTree = "<group>"; };
 		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
 		4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResourceViews.swift; path = Managers/ResourceViews.swift; sourceTree = "<group>"; };
@@ -747,6 +749,7 @@
 			children = (
 				4FEF812C1EE775F3002B77C8 /* Attachment.swift */,
 				4FEF81301EE77B16002B77C8 /* DownloadedResource.swift */,
+				4FD8F8021F042CAD00A70A0D /* FollowUp.swift */,
 				4FEF81341EE7815F002B77C8 /* Language.swift */,
 				4FEF812E1EE779AA002B77C8 /* ReferencedFile.swift */,
 				4FEF81321EE77FF8002B77C8 /* Translation.swift */,
@@ -1410,6 +1413,7 @@
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
+				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,

@@ -28,17 +28,20 @@ class FollowUpsManager: GTDataManager {
         showNetworkingIndicator()
         
         if !validate(params: params) {
-            let error = FollowUpError.MissingParameter("invalid params")
-            
-            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber, invalid params."])
-            return Promise(error: error)
+            return validationError()
         }
         
-        let paramsData = try! self.serializer.serializeResources(createFollowUpResource(params: params))
+        let jsonAPIResource = createFollowUpResource(params: params)
+        let localFollowUp = FollowUp(jsonAPIFollowUp: jsonAPIResource)
+        
+        saveLocalCopy(localFollowUp)
+        
+        let paramsData = try! self.serializer.serializeResources([jsonAPIResource])
         let paramsJSON = try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
         
         return issuePOSTRequest(paramsJSON)
             .then { data -> Promise<Void> in
+                self.removeLocalCopy(localFollowUp)
                 return Promise(value: ())
             }
             .catch(execute: { error in
@@ -65,11 +68,30 @@ class FollowUpsManager: GTDataManager {
         return true
     }
     
-    private func createFollowUpResource(params: [String: String]) -> [FollowUpResource] {
-        return [FollowUpResource(email: params["email"]!,
+    private func validationError() -> Promise<Void> {
+        let error = FollowUpError.MissingParameter("invalid params")
+        
+        Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber, invalid params."])
+        return Promise(error: error)
+    }
+    
+    private func createFollowUpResource(params: [String: String]) -> FollowUpResource {
+        return FollowUpResource(email: params["email"]!,
                                 name: params["name"]!,
                                 destination: params["destination_id"]!,
-                                language: GTSettings.shared.primaryLanguageId!)]
+                                language: GTSettings.shared.primaryLanguageId!)
+    }
+    
+    private func saveLocalCopy(_ localFollowUp: FollowUp) {
+        safelyWriteToRealm {
+            realm.add(localFollowUp)
+        }
+    }
+    
+    private func removeLocalCopy(_ localFollowUp: FollowUp) {
+        safelyWriteToRealm {
+            realm.delete(localFollowUp)
+        }
     }
     
     override func buildURL() -> URL? {
