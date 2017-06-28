@@ -34,4 +34,10 @@ class TractView: UIView {
         self.addSubview(self.contentView!.render())
     }
     
+    deinit {
+        #if DEBUG
+            print("deinit TractView")
+        #endif
+    }
+    
 }

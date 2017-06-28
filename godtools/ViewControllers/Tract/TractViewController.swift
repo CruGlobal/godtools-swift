@@ -61,6 +61,12 @@ class TractViewController: BaseViewController {
         defineObservers()
     }
     
+    deinit {
+        #if DEBUG
+            print("deinit for TractViewController")
+        #endif
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         

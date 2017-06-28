@@ -87,4 +87,10 @@ class TractPage: BaseTractElement {
         self.addSubview(backgroundView)
     }
     
+    deinit {
+        #if DEBUG
+            print("deinit for TractPage")
+        #endif
+    }
+    
 }
