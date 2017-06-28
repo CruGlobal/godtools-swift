@@ -66,14 +66,13 @@ extension TractViewController {
         let width = self.containerView.frame.size.width
         let height = self.containerView.frame.size.height
         let lastPosition = self.totalPages() - 1
-        var tmpPagesViews = [TractView?](repeating: nil, count: totalPages())
         
         for position in range.start...range.end {
             if let pageView = self.pagesViews[position] {
-                tmpPagesViews[position] = pageView
+                self.pagesViews[position] = pageView
             } else {
                 let view = buildPage(position, width: width, height: height, parallelElement: nil)
-                tmpPagesViews[position] = view
+                self.pagesViews[position] = view
                 
                 let firstView = self.containerView.subviews.first
                 if firstView != nil && firstView!.tag > view.tag {
@@ -84,14 +83,25 @@ extension TractViewController {
             }
         }
         
-        for position in 0...lastPosition {
-            let pageView = self.pagesViews[position]
-            if pageView != nil && (position < range.start || position > range.end) {
-                pageView?.removeFromSuperview()
+        if range.start > 0 {
+            for position in 0...(range.start - 1) {
+                let pageView = self.pagesViews[position]
+                if pageView != nil {
+                    pageView!.removeFromSuperview()
+                    self.pagesViews[position] = nil
+                }
             }
         }
         
-        self.pagesViews = tmpPagesViews
+        if range.end < lastPosition {
+            for position in (range.end + 1)...lastPosition {
+                let pageView = self.pagesViews[position]
+                if pageView != nil {
+                    pageView!.removeFromSuperview()
+                    self.pagesViews[position] = nil
+                }
+            }
+        }
     }
     
     func getRangeOfViews() -> (start: Int, end: Int) {

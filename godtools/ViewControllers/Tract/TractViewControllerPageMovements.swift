@@ -32,13 +32,16 @@ extension TractViewController {
         }
         
         self.currentPage += 1
-        _ = moveForeward()
-        .then { (success) -> Promise<Bool> in
-            if success == true {
-                self.reloadPagesViews()
-                return Promise(value: true)
+        _ = self.mainPromise!
+            .then { (complete) -> Promise<Bool> in
+                return self.moveForeward()
             }
-            return Promise(value: false)
+            .then { (success) -> Promise<Bool> in
+                if success == true {
+                    self.reloadPagesViews()
+                    return Promise(value: true)
+                }
+                return Promise(value: false)
         }
     }
     
@@ -48,8 +51,17 @@ extension TractViewController {
         }
         
         self.currentPage -= 1
-        _ = moveBackward()
-        reloadPagesViews()
+        _ = self.mainPromise!
+            .then { (complete) -> Promise<Bool> in
+                return self.moveBackward()
+            }
+            .then { (success) -> Promise<Bool> in
+                if success == true {
+                    self.reloadPagesViews()
+                    return Promise(value: true)
+                }
+                return Promise(value: false)
+        }
     }
     
     func removeViewsBeforeCurrentView() {

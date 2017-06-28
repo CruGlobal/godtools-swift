@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 import MessageUI
+import PromiseKit
 
 class TractViewController: BaseViewController {
     
@@ -33,6 +34,19 @@ class TractViewController: BaseViewController {
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
     let viewTagOrigin = 100
+    
+    var _mainPromise: Promise<Any>?
+    var mainPromise: Promise<Any>? {
+        get {
+            if _mainPromise == nil {
+                _mainPromise = Promise(value: true)
+            }
+            return _mainPromise
+        }
+        set {
+            _mainPromise = newValue
+        }
+    }
     
     override var prefersStatusBarHidden: Bool {
         return true
