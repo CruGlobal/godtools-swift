@@ -56,7 +56,7 @@ class BaseTractElement: UIView {
     
     // MARK: Main properties
     
-    private var _mainView: TractPage?
+    private weak var _mainView: TractPage?
     var page: TractPage? {
         get {
             return self._mainView != nil ? self._mainView : self.parent!.page
