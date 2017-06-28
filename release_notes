@@ -1,1 +1,6 @@
-test 3 of automatic deployments
+- Adds animation to cards on first view of a tract after install (or in our case, first view of a tract after launching this build)
+- Adds line separator to KGP prayer page card
+- Adds more rounding to card corners and makes bottom card more visible
+- Shows "call to action" on pages with hidden cards
+- Fixes margins on tab content
+- Tool detail "About" screen, gap above banner image removed
