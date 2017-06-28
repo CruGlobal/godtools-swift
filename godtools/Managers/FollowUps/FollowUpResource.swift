@@ -12,15 +12,15 @@ import Spine
 class FollowUpResource: Resource {
     var email: String?
     var name: String?
-    var destination: String?
-    var language: String?
+    var destination_id: String?
+    var language_id: String?
     
-    convenience init(emailP: String, name: String, destination: String, language: String) {
+    convenience init(email: String, name: String, destination: String, language: String) {
         self.init()
         self.email = email
         self.name = name
-        self.destination = destination
-        self.language = language
+        self.destination_id = destination
+        self.language_id = language
     }
     
     override class var resourceType: ResourceType {
@@ -31,8 +31,8 @@ class FollowUpResource: Resource {
         return fieldsFromDictionary([
             "email" : Attribute(),
             "name" : Attribute(),
-            "destination" : Attribute(),
-            "language" : Attribute()
+            "destination_id" : Attribute(),
+            "language_id" : Attribute()
             ])
     }
 }
