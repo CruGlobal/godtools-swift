@@ -22,7 +22,7 @@ extension TractViewController {
         guard let page = TractBindings.pageBindings[pageListener] else { return }
         
         self.currentPage = page
-        reloadPagesViews()
+        _ = reloadPagesViews()
         _ = moveBackward()
     }
     
@@ -42,7 +42,7 @@ extension TractViewController {
         }
             .then { (success) -> Promise<Bool> in
                 if success == true {
-                    self.reloadPagesViews()
+                    _ = self.reloadPagesViews()
                     return Promise(value: true)
                 }
                 return Promise(value: false)
@@ -65,7 +65,7 @@ extension TractViewController {
             }
             .then { (success) -> Promise<Bool> in
                 if success == true {
-                    self.reloadPagesViews()
+                    _ = self.reloadPagesViews()
                     return Promise(value: true)
                 }
                 return Promise(value: false)

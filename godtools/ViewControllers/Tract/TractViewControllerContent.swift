@@ -62,26 +62,30 @@ extension TractViewController {
         return view
     }
     
-    func reloadPagesViews() {
-        let range = getRangeOfViews()
-        let lastPosition = self.totalPages() - 1
-        let width = self.containerView.frame.size.width
-        let height = self.containerView.frame.size.height
-        
-        for position in range.start...range.end {
-            _ = addPageViewAtPosition(position: position, width: width, height: height)
-        }
-        
-        if range.start > 0 {
-            for position in 0...(range.start - 1) {
-                _ = removePageViewAtPosition(position: position)
+    func reloadPagesViews() -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            let range = getRangeOfViews()
+            let lastPosition = self.totalPages() - 1
+            let width = self.containerView.frame.size.width
+            let height = self.containerView.frame.size.height
+            
+            for position in range.start...range.end {
+                _ = addPageViewAtPosition(position: position, width: width, height: height)
             }
-        }
-        
-        if range.end < lastPosition {
-            for position in (range.end + 1)...lastPosition {
-                _ = removePageViewAtPosition(position: position)
+            
+            if range.start > 0 {
+                for position in 0...(range.start - 1) {
+                    _ = removePageViewAtPosition(position: position)
+                }
             }
+            
+            if range.end < lastPosition {
+                for position in (range.end + 1)...lastPosition {
+                    _ = removePageViewAtPosition(position: position)
+                }
+            }
+            
+            fulfill(true)
         }
     }
     
