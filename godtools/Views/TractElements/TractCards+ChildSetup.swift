@@ -52,6 +52,8 @@ extension TractCards {
             cardNumber += 1
             elementNumber += 1
         }
+        
+        self.lastCard = self.elements?.last
     }
     
     func buildHiddenCards(_ cards: [XMLIndexer]) {
