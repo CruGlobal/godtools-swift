@@ -35,8 +35,8 @@ class TractViewController: BaseViewController {
     var currentProgressView = UIView()
     let viewTagOrigin = 100
     
-    var _mainPromise: Promise<Any>?
-    var mainPromise: Promise<Any>? {
+    var _mainPromise: Promise<Bool>?
+    var mainPromise: Promise<Bool>? {
         get {
             if _mainPromise == nil {
                 _mainPromise = Promise(value: true)

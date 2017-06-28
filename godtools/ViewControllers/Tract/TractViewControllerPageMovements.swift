@@ -32,10 +32,14 @@ extension TractViewController {
         }
         
         self.currentPage += 1
-        _ = self.mainPromise!
-            .then { (complete) -> Promise<Bool> in
-                return self.moveForeward()
-            }
+        
+        _ = self.mainPromise?
+            .then { (success) -> Promise<Bool> in
+                if success {
+                    return self.moveForeward()
+                }
+                return Promise(value: false)
+        }
             .then { (success) -> Promise<Bool> in
                 if success == true {
                     self.reloadPagesViews()
@@ -51,9 +55,13 @@ extension TractViewController {
         }
         
         self.currentPage -= 1
-        _ = self.mainPromise!
-            .then { (complete) -> Promise<Bool> in
-                return self.moveBackward()
+        
+        _ = self.mainPromise?
+            .then { (success) -> Promise<Bool> in
+                if success {
+                    return self.moveBackward()
+                }
+                return Promise(value: false)
             }
             .then { (success) -> Promise<Bool> in
                 if success == true {
@@ -120,8 +128,8 @@ extension TractViewController {
     }
     
     fileprivate func notifyCurrentViewDidAppearOnTract() {
-        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as! TractView
-        currentTractView.contentView?.notifyViewDidAppearOnTract()
+        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as? TractView
+        currentTractView?.contentView?.notifyViewDidAppearOnTract()
     }
     
     // MARK: - Helpers
