@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension TractForm {
     
@@ -45,4 +46,40 @@ extension TractForm {
         return data
     }
     
+    override func validateForm() -> Bool {
+        var validationErrors = [String]()
+        
+        for element in formElements {
+            let input = element as! TractInput
+            let inputProperties = input.properties as! TractInputProperties
+            
+            if inputProperties.required && input.textField.text?.characters.count == 0 {
+                let fieldName = inputProperties.name ?? ""
+                validationErrors.append(String(format: "required_field_missing".localized, fieldName))
+            }
+        }
+        
+        if validationErrors.count == 0 {
+            return true
+        }
+ 
+        showAlert(validationErrors)
+        return false
+    }
+    
+    private func showAlert(_ validationErrors: [String]) {
+        let alert = UIAlertController(title: "error".localized,
+                                      message: validationErrors.joined(separator: "\n"),
+                                      preferredStyle: .alert)
+        
+        weak var weakAlert = alert
+        
+        alert.addAction(UIAlertAction(title: "ok".localized,
+                                      style: .default,
+                                      handler: { (action) in
+                                        weakAlert?.dismiss(animated: true, completion: nil)
+        }))
+        
+        getDelegate()?.showAlert(alert)
+    }
 }

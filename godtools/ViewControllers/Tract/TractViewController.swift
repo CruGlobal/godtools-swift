@@ -219,3 +219,9 @@ class TractViewController: BaseViewController {
     }
     
 }
+
+extension TractViewController: BaseTractElementDelegate {
+    func showAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+}

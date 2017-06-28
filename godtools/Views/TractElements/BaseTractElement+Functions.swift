@@ -145,5 +145,8 @@ extension BaseTractElement {
         }
         return nil
     }
-    
+ 
+    func validateForm() -> Bool {
+        return false
+    }
 }

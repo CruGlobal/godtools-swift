@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import SWXMLHash
 
+protocol BaseTractElementDelegate {
+    func showAlert(_ alert: UIAlertController)
+}
+
 class BaseTractElement: UIView {
     
     // MARK: Positions constants
@@ -119,6 +123,8 @@ class BaseTractElement: UIView {
             }
         }
     }
+    
+    private var delegate: BaseTractElementDelegate?
         
     // MARK: - Initializers
     
@@ -354,4 +360,19 @@ class BaseTractElement: UIView {
     }
     
     func viewDidAppearOnTract() { }
+    
+    // MARK: Delegate getter & setter
+    func setDelegate(_ delegate: BaseTractElementDelegate) {
+        self.delegate = delegate
+    }
+    
+    func getDelegate() -> BaseTractElementDelegate? {
+        var parent = self.parent
+        
+        while parent?.parent != nil {
+            parent = parent?.parent
+        }
+        
+        return parent!.delegate
+    }
 }

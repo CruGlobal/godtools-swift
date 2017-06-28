@@ -49,5 +49,4 @@ class TractForm: BaseTractElement {
     func formProperties() -> TractFormProperties {
         return self.properties as! TractFormProperties
     }
-    
 }
