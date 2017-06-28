@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PromiseKit
 
 extension TractViewController {
     
@@ -68,43 +69,49 @@ extension TractViewController {
         let height = self.containerView.frame.size.height
         
         for position in range.start...range.end {
-            addPageViewAtPosition(position: position, width: width, height: height)
+            _ = addPageViewAtPosition(position: position, width: width, height: height)
         }
         
         if range.start > 0 {
             for position in 0...(range.start - 1) {
-                removePageViewAtPosition(position: position)
+                _ = removePageViewAtPosition(position: position)
             }
         }
         
         if range.end < lastPosition {
             for position in (range.end + 1)...lastPosition {
-                removePageViewAtPosition(position: position)
+                _ = removePageViewAtPosition(position: position)
             }
         }
     }
     
-    func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) {
-        if let pageView = self.pagesViews[position] {
-            self.pagesViews[position] = pageView
-        } else {
-            let view = buildPage(position, width: width, height: height, parallelElement: nil)
-            self.pagesViews[position] = view
-            
-            let firstView = self.containerView.subviews.first
-            if firstView != nil && firstView!.tag > view.tag {
-                self.containerView.insertSubview(view, at: 0)
+    func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            if let pageView = self.pagesViews[position] {
+                self.pagesViews[position] = pageView
             } else {
-                self.containerView.addSubview(view)
+                let view = buildPage(position, width: width, height: height, parallelElement: nil)
+                self.pagesViews[position] = view
+                
+                let firstView = self.containerView.subviews.first
+                if firstView != nil && firstView!.tag > view.tag {
+                    self.containerView.insertSubview(view, at: 0)
+                } else {
+                    self.containerView.addSubview(view)
+                }
             }
+            fulfill(true)
         }
     }
     
-    func removePageViewAtPosition(position: Int) {
-        let pageView = self.pagesViews[position]
-        if pageView != nil {
-            pageView!.removeFromSuperview()
-            self.pagesViews[position] = nil
+    func removePageViewAtPosition(position: Int) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            let pageView = self.pagesViews[position]
+            if pageView != nil {
+                pageView!.removeFromSuperview()
+                self.pagesViews[position] = nil
+            }
+            fulfill(true)
         }
     }
     
