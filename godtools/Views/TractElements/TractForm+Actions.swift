@@ -34,7 +34,7 @@ extension TractForm {
         return nil
     }
     
-    override func getFormData() -> [String: String] {
+    func getFormData() -> [String: String] {
         var data = [String: String]()
         
         for element in self.formElements {
@@ -46,7 +46,7 @@ extension TractForm {
         return data
     }
     
-    override func validateForm() -> Bool {
+    func validateForm() -> Bool {
         var validationErrors = [String]()
         
         for element in formElements {

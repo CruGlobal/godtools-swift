@@ -138,15 +138,4 @@ extension BaseTractElement {
     func formValue() -> String {
         return ""
     }
-    
-    func getFormData() -> [String: String]? {
-        if let form = BaseTractElement.getFormForElement(self) {
-            return form.getFormData()
-        }
-        return nil
-    }
- 
-    func validateForm() -> Bool {
-        return false
-    }
 }
