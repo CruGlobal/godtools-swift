@@ -52,10 +52,10 @@ extension TractForm {
         for element in formElements {
             let input = element as! TractInput
             let inputProperties = input.properties as! TractInputProperties
-            
-            if inputProperties.required && input.textField.text?.characters.count == 0 {
+            let trimmedInputText = input.textField.text?.trimmingCharacters(in: .whitespaces)
+            if inputProperties.required && trimmedInputText?.characters.count == 0 {
                 let fieldName = inputProperties.name ?? ""
-                validationErrors.append(String(format: "required_field_missing".localized, fieldName))
+                validationErrors.append(String(format: "required_field_missing".localized, fieldName.localizedCapitalized))
             }
         }
         
