@@ -23,6 +23,7 @@ extension TractViewController {
     
     @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
+            print("New gesture")
             moveToPreviousPage()
         } else if sender.direction == .left {
             moveToNextPage()

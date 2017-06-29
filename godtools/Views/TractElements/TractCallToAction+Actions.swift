@@ -11,6 +11,7 @@ import Foundation
 extension TractCallToAction {
     
     func moveToNextView() {
+        print("Move to next view")
         NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
     }
     
