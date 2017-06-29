@@ -9,6 +9,10 @@
 import Foundation
 import SWXMLHash
 
+enum EventResult {
+    case success, failure, viewNotFound
+}
+
 extension BaseTractElement {
     
     func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat, elementNumber: Int) -> BaseTractElement {
@@ -97,14 +101,14 @@ extension BaseTractElement {
         return nil
     }
     
-    func sendMessageToElement(listener: String) {
+    func sendMessageToElement(listener: String) -> EventResult {
         if TractBindings.bindings[listener] != nil {
-            guard let view = TractBindings.bindings[listener] else { return }
+            guard let view = TractBindings.bindings[listener] else { return .viewNotFound }
             view.receiveMessage()
         }
         
         if TractBindings.dismissBindings[listener] != nil {
-            guard let view = TractBindings.dismissBindings[listener] else { return }
+            guard let view = TractBindings.dismissBindings[listener] else { return .viewNotFound }
             view.receiveDismissMessage()
         }
         
@@ -112,7 +116,7 @@ extension BaseTractElement {
             NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
         }
         
-        GTGlobalTractBindings.listen(listener: listener, element: self)
+        return GTGlobalTractBindings.listen(listener: listener, element: self)        
     }
     
     func receiveMessage() { }

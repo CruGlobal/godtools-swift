@@ -18,7 +18,9 @@ extension TractButton {
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
             for event in events {
-                sendMessageToElement(listener: event)
+                if sendMessageToElement(listener: event) == .failure {
+                    break
+                }
             }
         } else if properties.type == .url {
             if let url = URL(string: properties.url) {

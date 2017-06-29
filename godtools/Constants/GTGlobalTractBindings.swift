@@ -14,24 +14,26 @@ class GTGlobalTractBindings: NSObject {
         case followUp = "followup:send"
     }
     
-    static func listen(listener: String, element: BaseTractElement) {
+    static func listen(listener: String, element: BaseTractElement) -> EventResult {
         switch listener {
         case Bindings.followUp.rawValue:
             let manager = FollowUpsManager()
             guard let form = BaseTractElement.getFormForElement(element) else {
-                return
+                return .viewNotFound
             }
             
             if(!form.validateForm()) {
-                return
+                return .failure
             }
             
             let params = form.getFormData()
             
             _ = manager.createSubscriber(params: params)
-            break
+            
         default: break
+
         }
+        return .success
     }
 
 }
