@@ -12,7 +12,7 @@ import CoreData
 class FirstLaunchInitializer: GTDataManager {
     
     private let magicId = "temporaryRecordId"
-    private let initialPackageCodes = ["kgp", "fourlaws", "sat"]
+    private let initialPackageCodes = ["kgp", "4sl", "sat"]
     
     func initializeAppState() {
         safelyWriteToRealm {
@@ -67,7 +67,7 @@ class FirstLaunchInitializer: GTDataManager {
         kgp.shouldDownload = true
         
         let fourlaws = DownloadedResource()
-        fourlaws.code = "fourlaws"
+        fourlaws.code = "4sl"
         fourlaws.name = "Four Spiritual Laws"
         fourlaws.remoteId = magicId
         fourlaws.shouldDownload = true
