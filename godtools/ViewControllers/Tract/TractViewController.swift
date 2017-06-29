@@ -32,7 +32,7 @@ class TractViewController: BaseViewController {
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
-    weak var languageSegmentedControl: UISegmentedControl?
+    var languageSegmentedControl: UISegmentedControl?
     
     let viewTagOrigin = 100
     
