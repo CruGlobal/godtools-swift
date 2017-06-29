@@ -71,6 +71,7 @@
 "error" = "Error";
 "ok" = "Ok";
 "error_can_not_send_email" = "There is no configured email on your device.";
+"required_field_missing" = "\"%@\" is a required field.";
 
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";

@@ -70,8 +70,12 @@ class TractInput: BaseTractElement {
         switch elementProperties.type {
         case .email:
             self.textField.keyboardType = .emailAddress
+            self.textField.autocapitalizationType = .none
+            self.textField.autocorrectionType = .no
         case .phone:
             self.textField.keyboardType = .phonePad
+            self.textField.autocapitalizationType = .none
+            self.textField.autocorrectionType = .no
         default:
             self.textField.keyboardType = .default
         }

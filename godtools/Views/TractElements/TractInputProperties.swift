@@ -19,9 +19,10 @@ class TractInputProperties: TractProperties {
     var name: String?
     var type: InputType = .text
     var value: String?
+    var required: Bool = false
     
     override func defineProperties() {
-        self.properties = ["name", "value"]
+        self.properties = ["name", "value", "required"]
     }
     
     override func customProperties() -> [String]? {
