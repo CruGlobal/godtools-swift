@@ -53,9 +53,11 @@ extension TractForm {
             let input = element as! TractInput
             let inputProperties = input.properties as! TractInputProperties
             let trimmedInputText = input.textField.text?.trimmingCharacters(in: .whitespaces)
+            let fieldName = nameForInput(input, properties: inputProperties)
+            
             if inputProperties.required && trimmedInputText?.characters.count == 0 {
-                let fieldName = inputProperties.name ?? ""
-                validationErrors.append(String(format: "required_field_missing".localized, fieldName.localizedCapitalized))
+                validationErrors.append(String(format: "required_field_missing".localized,
+                                               fieldName.localizedCapitalized))
             }
         }
         
@@ -65,6 +67,24 @@ extension TractForm {
  
         showAlert(validationErrors)
         return false
+    }
+    
+    private func nameForInput(_ input: TractInput, properties: TractInputProperties) -> String {
+        let inputName = properties.name ?? ""
+        
+        guard let elements = input.elements else {
+            return inputName
+        }
+        
+        for element in elements {
+            if element is TractLabel {
+                let textNode = element.elements?.first as? TractTextContent
+                let properties = textNode?.textProperties()
+                return properties?.value ?? inputName
+            }
+        }
+        
+        return inputName
     }
     
     private func showAlert(_ validationErrors: [String]) {
