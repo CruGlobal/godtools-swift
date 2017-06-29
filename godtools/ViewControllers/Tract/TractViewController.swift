@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 import MessageUI
+import PromiseKit
 
 class TractViewController: BaseViewController {
     
@@ -49,6 +50,12 @@ class TractViewController: BaseViewController {
         defineObservers()
     }
     
+    deinit {
+        #if DEBUG
+            print("deinit for TractViewController")
+        #endif
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -67,9 +74,10 @@ class TractViewController: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         self.progressViewHelper.removeFromSuperview()
         self.progressView.removeFromSuperview()
+        TractBindings.clearAllBindings()
     }
     
     // MARK: - UI setup

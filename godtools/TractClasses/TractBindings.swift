@@ -14,6 +14,12 @@ class TractBindings: NSObject {
     @nonobjc static var bindings = [String: BaseTractElement]()
     @nonobjc static var dismissBindings = [String: BaseTractElement]()
     
+    static func clearAllBindings() {
+        pageBindings.removeAll()
+        bindings.removeAll()
+        dismissBindings.removeAll()
+    }
+    
     static func setupBindings() {
         TractBindings.pageBindings = [String: Int]()
         TractBindings.bindings = [String: BaseTractElement]()

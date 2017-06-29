@@ -61,7 +61,7 @@ class BaseTractElement: UIView {
     
     // MARK: Main properties
     
-    private var _mainView: TractPage?
+    private weak var _mainView: TractPage?
     var page: TractPage? {
         get {
             return self._mainView != nil ? self._mainView : self.parent!.page
@@ -317,7 +317,7 @@ class BaseTractElement: UIView {
     }
     
     func setupParallelElement() {
-        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 {
+        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 || self.parent!.parallelElement!.elements!.count <= self.elementNumber {
             return
         }
         

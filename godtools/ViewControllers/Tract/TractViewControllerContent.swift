@@ -8,10 +8,12 @@
 
 import Foundation
 import UIKit
+import PromiseKit
 
 extension TractViewController {
     
     static let snapshotViewTag = 3210123
+    static let distanceToCurrentView = 1
     
     func buildPages(width: CGFloat, height: CGFloat) {
         let range = getRangeOfViews()
@@ -66,41 +68,73 @@ extension TractViewController {
         return view
     }
     
-    func reloadPagesViews() {
-        let range = getRangeOfViews()
-        let width = self.containerView.frame.size.width
-        let height = self.containerView.frame.size.height
-        let lastPosition = self.totalPages() - 1
-        var tmpPagesViews = [TractView?](repeating: nil, count: totalPages())
-        
-        for position in range.start...range.end {
-            if let pageView = self.pagesViews[position] {
-                tmpPagesViews[position] = pageView
-            } else {
-                let view = buildPage(position, width: width, height: height, parallelElement: nil)
-                tmpPagesViews[position] = view
-                self.containerView.addSubview(view)
+    func reloadPagesViews() -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            let range = getRangeOfViews()
+            let lastPosition = self.totalPages() - 1
+            let width = self.containerView.frame.size.width
+            let height = self.containerView.frame.size.height
+            
+            for position in range.start...range.end {
+                _ = addPageViewAtPosition(position: position, width: width, height: height)
+            }
+            
+            if range.start > 0 {
+                for position in 0...(range.start - 1) {
+                    _ = removePageViewAtPosition(position: position)
+                }
+            }
+            
+            if range.end < lastPosition {
+                for position in (range.end + 1)...lastPosition {
+                    _ = removePageViewAtPosition(position: position)
+                }
+            }
+            
+            fulfill(true)
+        }
+    }
+    
+    func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            
+            if self.pagesViews[position] == nil {
+                guard let firstView = self.containerView.subviews.first else {
+                    fulfill(false)
+                    return
+                }
                 
+                let view = buildPage(position, width: width, height: height, parallelElement: nil)
+                self.pagesViews[position] = view
+                if firstView.tag > view.tag {
+                    self.containerView.insertSubview(view, at: 0)
+                } else {
+                    self.containerView.addSubview(view)
+                }
             }
+            
+            fulfill(true)
         }
-        
-        for position in 0...lastPosition {
+    }
+    
+    func removePageViewAtPosition(position: Int) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
             let pageView = self.pagesViews[position]
-            if pageView != nil && (position < range.start || position > range.end) {
-                pageView?.removeFromSuperview()
+            if pageView != nil {
+                pageView!.removeFromSuperview()
+                self.pagesViews[position] = nil
             }
+            fulfill(true)
         }
-        
-        self.pagesViews = tmpPagesViews
     }
     
     func getRangeOfViews() -> (start: Int, end: Int) {
-        var start = self.currentPage - 2
+        var start = self.currentPage - TractViewController.distanceToCurrentView
         if start < 0 {
             start = 0
         }
         
-        var end = self.currentPage + 2
+        var end = self.currentPage + TractViewController.distanceToCurrentView
         if end >= self.totalPages() {
             end = totalPages() - 1
         }
