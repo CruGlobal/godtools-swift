@@ -310,7 +310,7 @@ class BaseTractElement: UIView {
     }
     
     func setupParallelElement() {
-        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 {
+        if self.parallelElement != nil || self.parent == nil || self.parent!.parallelElement == nil || self.elementNumber == -1 || self.parent!.parallelElement!.elements!.count <= self.elementNumber {
             return
         }
         
