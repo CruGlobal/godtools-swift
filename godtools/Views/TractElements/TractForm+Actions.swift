@@ -52,6 +52,10 @@ extension TractForm {
         var validationErrors = [String]()
         
         for element in formElements {
+            if !element.isKind(of: TractInput.self) {
+                continue
+            }
+            
             let input = element as! TractInput
             let inputProperties = input.properties as! TractInputProperties
             let trimmedInputText = input.textField.text?.trimmingCharacters(in: .whitespaces)
