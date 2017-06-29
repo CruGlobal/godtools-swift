@@ -12,6 +12,7 @@ import SWXMLHash
 
 protocol BaseTractElementDelegate: class {
     func showAlert(_ alert: UIAlertController)
+    func displayedLanguage() -> Language
 }
 
 class BaseTractElement: UIView {

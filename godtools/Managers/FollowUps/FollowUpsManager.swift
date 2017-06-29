@@ -79,7 +79,7 @@ class FollowUpsManager: GTDataManager {
         return FollowUpResource(email: params["email"]!,
                                 name: params["name"]!,
                                 destination: params["destination_id"]!,
-                                language: GTSettings.shared.primaryLanguageId!)
+                                language: params["language_id"]!)
     }
     
     private func saveLocalCopy(_ localFollowUp: FollowUp) {
