@@ -23,7 +23,7 @@ extension TractViewController {
         
         self.currentPage = page
         _ = reloadPagesViews()
-        _ = moveBackward()
+        _ = moveViews()
     }
     
     func moveToNextPage() {
@@ -36,7 +36,7 @@ extension TractViewController {
         _ = self.mainPromise?
             .then { (success) -> Promise<Bool> in
                 if success {
-                    return self.moveForeward()
+                    return self.moveForewards()
                 }
                 return Promise(value: false)
         }
@@ -59,7 +59,7 @@ extension TractViewController {
         _ = self.mainPromise?
             .then { (success) -> Promise<Bool> in
                 if success {
-                    return self.moveBackward()
+                    return self.moveBackwards()
                 }
                 return Promise(value: false)
             }
@@ -89,17 +89,20 @@ extension TractViewController {
     
     // MARK: - Promises
     
-    fileprivate func moveBackward() -> Promise<Bool> {
+    fileprivate func moveViews() -> Promise<Bool> {
         let newCurrentProgressViewFrame = buildProgressViewFrame()
         return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: { 
             self.currentProgressView.frame = newCurrentProgressViewFrame
             for view in self.pagesViews {
                 view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
             }
-        })
+        }).then { _ in
+            self.notifyCurrentViewDidAppearOnTract()
+            return Promise(value: true)
+        }
     }
     
-    fileprivate func moveForeward() -> Promise<Bool> {
+    fileprivate func moveForewards() -> Promise<Bool> {
         let newCurrentProgressViewFrame = buildProgressViewFrame()
         guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
             return Promise(value: false)
@@ -109,22 +112,39 @@ extension TractViewController {
             self.currentProgressView.frame = newCurrentProgressViewFrame
             currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         }).then { _ in
-            return self.moveViewsExceptCurrentView(currentPageView: currentPageView)
+            self.moveViewsExceptCurrentViews(pageViews: [currentPageView])
+            return Promise(value: true)
         }
     }
     
-    fileprivate func moveViewsExceptCurrentView(currentPageView: UIView) -> Promise<Bool> {
-        return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut) {
-            for view in self.pagesViews {
-                if view == currentPageView {
-                    continue
-                }
-                view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-            }
-        }.then { _ in
-            self.notifyCurrentViewDidAppearOnTract()
+    fileprivate func moveBackwards() -> Promise<Bool> {
+        let newCurrentProgressViewFrame = buildProgressViewFrame()
+        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
+            return Promise(value: false)
+        }
+        guard let nextPageView = self.view.viewWithTag(self.currentPage + 1 + self.viewTagOrigin) else {
+            return Promise(value: false)
+        }
+        
+        currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
+            self.currentProgressView.frame = newCurrentProgressViewFrame
+            nextPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        }).then { _ in
+            self.moveViewsExceptCurrentViews(pageViews: [currentPageView, nextPageView])
             return Promise(value: true)
         }
+    }
+    
+    fileprivate func moveViewsExceptCurrentViews(pageViews: [UIView]) {
+        for view in self.pagesViews {
+            if view == nil || pageViews.index(of: view!) != nil {
+                continue
+            }
+            
+            view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        }
+        self.notifyCurrentViewDidAppearOnTract()
     }
     
     fileprivate func notifyCurrentViewDidAppearOnTract() {
