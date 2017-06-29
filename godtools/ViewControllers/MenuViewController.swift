@@ -20,7 +20,7 @@ class MenuViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     let general = ["language_settings", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
-    let legal = ["terms_of_use", "privacy_policy"]
+    let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
     
     let headerHeight: CGFloat = 40.0
@@ -134,6 +134,8 @@ extension MenuViewController: UITableViewDelegate {
             break
         case 1:
             handleShareSectionCellSelection(rowIndex: indexPath.row)
+        case 2:
+            handleLegalSectionCellSelection(rowIndex: indexPath.row)
         default: break
         }
     }
@@ -191,6 +193,21 @@ extension MenuViewController {
         }
     }
     
+    fileprivate func handleLegalSectionCellSelection(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            break
+        case 1:
+            openPrivacyPolicy()
+            break
+        case 2:
+            openCopyrightInfo()
+            break
+        default: break
+        }
+        
+    }
+    
     fileprivate func openHelp() {
         let url = URL(string: "http://godtoolsapp.com")
         self.delegate?.openWebView(url: url!, title: "help".localized)
@@ -218,6 +235,16 @@ extension MenuViewController {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")
             self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized)
         }
+    }
+    
+    fileprivate func openPrivacyPolicy() {
+        let url = URL(string: "https://www.cru.org/about/privacy.html")
+        self.delegate?.openWebView(url: url!, title: "privacy_policy".localized)
+    }
+    
+    fileprivate func openCopyrightInfo() {
+        let url = URL(string: "https://www.cru.org/about/privacy.html")
+        self.delegate?.openWebView(url: url!, title: "copyright_info".localized)
     }
     
 }
