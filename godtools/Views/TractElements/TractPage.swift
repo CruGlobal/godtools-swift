@@ -60,9 +60,13 @@ class TractPage: BaseTractElement {
         let width = BaseTractElement.screenWidth
         let height = BaseTractElement.screenHeight
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-        let backgroundView = UIView(frame: frame)
-        
         let elementProperties = pageProperties()
+        
+        let backgroundView = UIView(frame: frame)
+        backgroundView.backgroundColor = elementProperties.backgroundColor
+        backgroundView.clipsToBounds = true
+        self.addSubview(backgroundView)
+        
         if elementProperties.backgroundImage == "" {
             return
         }
@@ -82,9 +86,6 @@ class TractPage: BaseTractElement {
                                              aligns: elementProperties.backgroundImageAlign,
                                              scaleType: elementProperties.backgroundImageScaleType)
         backgroundView.addSubview(imageView)
-        backgroundView.clipsToBounds = true
-        
-        self.addSubview(backgroundView)
     }
     
     deinit {
