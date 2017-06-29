@@ -91,20 +91,20 @@ extension TractViewController {
     
     func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
         return Promise<Bool> { fulfill, reject in
-            let firstView = self.containerView.subviews.first
-            var view: TractView?
             
-            if let pageView = self.pagesViews[position] {
-                view = pageView
-            } else {
-                view = buildPage(position, width: width, height: height, parallelElement: nil)
-            }
-            
-            self.pagesViews[position] = view
-            if firstView != nil && firstView!.tag > view!.tag {
-                self.containerView.insertSubview(view!, at: 0)
-            } else {
-                self.containerView.addSubview(view!)
+            if self.pagesViews[position] == nil {
+                guard let firstView = self.containerView.subviews.first else {
+                    fulfill(false)
+                    return
+                }
+                
+                let view = buildPage(position, width: width, height: height, parallelElement: nil)
+                self.pagesViews[position] = view
+                if firstView.tag > view.tag {
+                    self.containerView.insertSubview(view, at: 0)
+                } else {
+                    self.containerView.addSubview(view)
+                }
             }
             
             fulfill(true)
@@ -113,7 +113,7 @@ extension TractViewController {
     
     func removePageViewAtPosition(position: Int) -> Promise<Bool> {
         return Promise<Bool> { fulfill, reject in
-            var pageView = self.pagesViews[position]
+            let pageView = self.pagesViews[position]
             if pageView != nil {
                 pageView!.removeFromSuperview()
                 self.pagesViews[position] = nil
