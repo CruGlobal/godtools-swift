@@ -85,7 +85,7 @@ class TractViewController: BaseViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         self.progressViewHelper.removeFromSuperview()
         self.progressView.removeFromSuperview()
     }
