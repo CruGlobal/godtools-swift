@@ -88,6 +88,7 @@ class TractViewController: BaseViewController {
         super.viewWillDisappear(animated)
         self.progressViewHelper.removeFromSuperview()
         self.progressView.removeFromSuperview()
+        TractBindings.clearAllBindings()
     }
     
     // MARK: - UI setup
