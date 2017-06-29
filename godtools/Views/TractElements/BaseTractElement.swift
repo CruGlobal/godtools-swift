@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-protocol BaseTractElementDelegate {
+protocol BaseTractElementDelegate: class {
     func showAlert(_ alert: UIAlertController)
 }
 
@@ -124,7 +124,7 @@ class BaseTractElement: UIView {
         }
     }
     
-    private var delegate: BaseTractElementDelegate?
+    weak private var delegate: BaseTractElementDelegate?
         
     // MARK: - Initializers
     
