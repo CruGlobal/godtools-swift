@@ -35,19 +35,6 @@ class TractViewController: BaseViewController {
     var currentProgressView = UIView()
     let viewTagOrigin = 100
     
-    var _mainPromise: Promise<Bool>?
-    var mainPromise: Promise<Bool>? {
-        get {
-            if _mainPromise == nil {
-                _mainPromise = Promise(value: true)
-            }
-            return _mainPromise
-        }
-        set {
-            _mainPromise = newValue
-        }
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }

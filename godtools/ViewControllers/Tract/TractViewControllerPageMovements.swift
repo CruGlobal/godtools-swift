@@ -33,15 +33,7 @@ extension TractViewController {
             return
         }
         
-        _ = self.mainPromise?
-            .then { (success) -> Promise<Bool> in
-                if success {
-                    print("Move forward")
-                    return self.moveForewards()
-                }
-                print("Fail Move forward")
-                return Promise(value: false)
-        }
+        _ = self.moveForewards()
             .then { (success) -> Promise<Bool> in
                 if success == true {
                     print("Reload pages")
@@ -58,20 +50,14 @@ extension TractViewController {
             return
         }
         
-        self.currentPage -= 1
-        
-        _ = self.mainPromise?
-            .then { (success) -> Promise<Bool> in
-                if success {
-                    return self.moveBackwards()
-                }
-                return Promise(value: false)
-            }
+        _ = self.moveBackwards()
             .then { (success) -> Promise<Bool> in
                 if success == true {
+                    print("Reload pages")
                     _ = self.reloadPagesViews()
                     return Promise(value: true)
                 }
+                print("Fail Reload pages")
                 return Promise(value: false)
         }
     }
@@ -123,6 +109,7 @@ extension TractViewController {
     }
     
     fileprivate func moveBackwards() -> Promise<Bool> {
+        self.currentPage -= 1
         let newCurrentProgressViewFrame = buildProgressViewFrame()
         guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
             return Promise(value: false)
