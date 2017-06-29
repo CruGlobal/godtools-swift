@@ -27,20 +27,16 @@ extension TractViewController {
     }
     
     func moveToNextPage() {
-        print("Move next")
         if self.currentPage >= totalPages() - 1 {
-            print("Fail and return")
             return
         }
         
         _ = self.moveForewards()
             .then { (success) -> Promise<Bool> in
-                if success == true {
-                    print("Reload pages")
+                if success {
                     _ = self.reloadPagesViews()
                     return Promise(value: true)
                 }
-                print("Fail Reload pages")
                 return Promise(value: false)
         }
     }
@@ -53,11 +49,9 @@ extension TractViewController {
         _ = self.moveBackwards()
             .then { (success) -> Promise<Bool> in
                 if success == true {
-                    print("Reload pages")
                     _ = self.reloadPagesViews()
                     return Promise(value: true)
                 }
-                print("Fail Reload pages")
                 return Promise(value: false)
         }
     }
