@@ -14,7 +14,7 @@ class TractView: UIView {
     
     var contentView: TractPage?
     
-    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
+    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, delegate: BaseTractElementDelegate) {
         super.init(frame: frame)
         
         let height = self.frame.size.height
@@ -23,6 +23,8 @@ class TractView: UIView {
                                      manifestProperties: manifestProperties,
                                      configurations: configurations,
                                      parallelElement: parallelElement)
+        
+        self.contentView?.setDelegate(delegate)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -32,6 +32,8 @@ class TractViewController: BaseViewController {
     var progressView = UIView()
     var progressViewHelper = UIView()
     var currentProgressView = UIView()
+    var languageSegmentedControl: UISegmentedControl?
+    
     let viewTagOrigin = 100
     
     override var prefersStatusBarHidden: Bool {
@@ -79,7 +81,8 @@ class TractViewController: BaseViewController {
 
     override func displayScreenTitle() {
         if parallelLanguageIsAvailable() && determinePrimaryLabel() != determineParallelLabel() {
-            self.navigationItem.titleView = languageSegmentedControl()
+            configureLanguageSegmentedControl()
+            self.navigationItem.titleView = languageSegmentedControl
         }
     }
     
@@ -152,14 +155,13 @@ class TractViewController: BaseViewController {
     
     // MARK: - Segmented Control
     
-    fileprivate func languageSegmentedControl() -> UISegmentedControl {
+    fileprivate func configureLanguageSegmentedControl() {
         let primaryLabel = self.determinePrimaryLabel()
         let parallelLabel = self.determineParallelLabel()
         
-        let segmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
-        return segmentedControl
+        languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
+        languageSegmentedControl!.selectedSegmentIndex = 0
+        languageSegmentedControl!.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
     }
     
     @objc fileprivate func didSelectLanguage(segmentedControl: UISegmentedControl) {
@@ -218,4 +220,22 @@ class TractViewController: BaseViewController {
         return CGFloat(self.currentPage) * parentWidth / CGFloat(numPages - 1)
     }
     
+}
+
+extension TractViewController: BaseTractElementDelegate {
+    func showAlert(_ alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func displayedLanguage() -> Language {
+        if languageSegmentedControl == nil {
+            return languagesManager.loadPrimaryLanguageFromDisk()!
+        }
+        
+        if languageSegmentedControl?.selectedSegmentIndex == 0 {
+            return languagesManager.loadPrimaryLanguageFromDisk()!
+        } else {
+            return languagesManager.loadParallelLanguageFromDisk()!
+        }
+    }
 }

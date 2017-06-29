@@ -13,6 +13,10 @@ import Spine
 import RealmSwift
 import Crashlytics
 
+enum DataManagerError: Error {
+    case StatusCodeError(Int)
+}
+
 class GTDataManager: NSObject {
     let documentsPath: String
     let resourcesPath: String
@@ -37,12 +41,19 @@ class GTDataManager: NSObject {
             .request(buildURL() ?? "")
             .responseData()
     }
-    
+        
     func issuePOSTRequest(_ params: Parameters) -> Promise<Data> {
         return Alamofire
             .request(buildURL() ?? "",
                      method: HTTPMethod.post,
                      parameters: params)
+            .validate({ (request, response, data) -> Request.ValidationResult in
+                if response.statusCode / 100 != 2 {
+                    return .failure(DataManagerError.StatusCodeError(response.statusCode))
+                }
+                
+                return .success
+            })
             .responseData()
     }
     
