@@ -15,10 +15,12 @@ class FirstLaunchInitializer: GTDataManager {
     private let initialPackageCodes = ["kgp", "4sl", "sat"]
     
     func initializeAppState() {
+        initializeInitialLanguages()
+        let englishLanguage = findEntity(Language.self, byAttribute: "code", withValue: "en")!
+        
         safelyWriteToRealm {
-            let language = initializeInitialLanguage()
-            let resources = initializeInitialResources(language: language)
-            initializeInitialTranslations(language: language, resources: resources)
+            let resources = initializeInitialResources(language: englishLanguage)
+            initializeInitialTranslations(language: englishLanguage, resources: resources)
         }
         
         GTSettings.shared.primaryLanguageId = magicId
@@ -50,13 +52,8 @@ class FirstLaunchInitializer: GTDataManager {
         sendCompletedNotification()
     }
     
-    private func initializeInitialLanguage() -> Language {
-        let language = Language()
-        
-        language.code = "en-US"
-        language.remoteId = magicId
-        
-        return language
+    private func initializeInitialLanguages() {
+        LanguagesManager().loadInitialContentFromDisk()
     }
     
     private func initializeInitialResources(language: Language?) -> [DownloadedResource] {
