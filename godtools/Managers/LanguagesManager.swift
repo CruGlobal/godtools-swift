@@ -24,6 +24,20 @@ class LanguagesManager: GTDataManager {
         serializer.registerResource(LanguageResource.self)
     }
     
+    func loadDevicePreferredLanguageFromDisk() -> Language? {
+        if let preferredLanguageCode = Locale.preferredLanguages.first {
+            if let preferredLanguage = loadFromDisk(code: preferredLanguageCode) {
+                return preferredLanguage
+            }
+        }
+        
+        if let localeCode = Locale.current.languageCode {
+            return loadFromDisk(code: localeCode)
+        }
+
+        return nil
+    }
+    
     func loadFromDisk(id: String) -> Language? {
         return findEntityByRemoteId(Language.self, remoteId: id)
     }

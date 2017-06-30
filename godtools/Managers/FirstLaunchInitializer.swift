@@ -11,14 +11,17 @@ import CoreData
 
 class FirstLaunchInitializer: GTDataManager {
     
+    let languagesManager = LanguagesManager()
+    
     func initializeAppState() {
         initializeInitialLanguages()
         initializeInitialResources()
         extractInitialZipFiles()
+        setInitialPrimaryLanguage()
     }
     
     private func initializeInitialLanguages() {
-        LanguagesManager().loadInitialContentFromDisk()
+        languagesManager.loadInitialContentFromDisk()
         let englishLanguage = findEntity(Language.self, byAttribute: "code", withValue: "en")
         
         safelyWriteToRealm {
@@ -66,6 +69,16 @@ class FirstLaunchInitializer: GTDataManager {
                 let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: resourceCode)
                 resource?.shouldDownload = true
             }
+        }
+    }
+    
+    private func setInitialPrimaryLanguage() {
+        if let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk() {
+            GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+        }
+        
+        if let english = languagesManager.loadFromDisk(code: "en") {
+            GTSettings.shared.primaryLanguageId = english.remoteId
         }
     }
 }
