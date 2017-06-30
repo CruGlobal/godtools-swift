@@ -16,7 +16,9 @@ extension ToolsManager {
     
     func recordViewed(_ resource: DownloadedResource) {
         recordViewOnRemote(resource, quantity: 1).catch { (error) in
-            resource.myViews += 1
+            self.safelyWriteToRealm {
+                resource.myViews += 1
+            }
             self.record(error, resource: resource)
         }
     }
