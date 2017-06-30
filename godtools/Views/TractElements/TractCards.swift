@@ -32,6 +32,7 @@ class TractCards: BaseTractElement {
     
     // MARK: - Dynamic settings
     
+    var cardsData: [XMLIndexer]?
     var lastCard: BaseTractElement?
     var isOnInitialPosition = true
     var animationYPos: CGFloat {
@@ -45,8 +46,9 @@ class TractCards: BaseTractElement {
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
+        self.cardsData = data
         self.elements = [BaseTractElement]()
-        let cards = splitCardsByKind(data: data)
+        let cards = splitCardsByKind()
         buildCards(cards.normal)
         buildHiddenCards(cards.hidden)
     }
@@ -54,6 +56,7 @@ class TractCards: BaseTractElement {
     override func loadFrameProperties() {
         let yExternalPosition = self.elementFrame.y > TractCards.minYPosition ? self.elementFrame.y : TractCards.minYPosition
         
+        setCardsYPosition()
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
@@ -80,6 +83,31 @@ class TractCards: BaseTractElement {
     
     func cardsProperties() -> TractCardsProperties {
         return self.properties as! TractCardsProperties
+    }
+    
+    func getHeightOfClosedCards() -> CGFloat {
+        let cards = splitCardsByKind()
+        return CGFloat(cards.normal.count) * TractCards.constantYPaddingTop
+    }
+    
+    func getMaxHeroHeight() -> CGFloat {
+        let element = getPreviousElement()
+        if element != nil && element!.isKind(of: TractHero.self) {
+            let maxHeight = BaseTractElement.screenHeight
+            let initialPosition = maxHeight - getHeightOfClosedCards()
+            return maxHeight - (maxHeight - initialPosition) - parent!.startingYPos() - TractHero.marginBottom - TractPage.navbarHeight
+        }
+        return 0.0
+    }
+    
+    func setCardsYPosition() {
+        let element = getPreviousElement()
+        if element != nil && element!.isKind(of: TractHero.self) {
+            let initialYPosition = getMaxHeroHeight()
+            if initialYPosition < self.elementFrame.y {
+                self.elementFrame.y = initialYPosition
+            }
+        }
     }
 
 }

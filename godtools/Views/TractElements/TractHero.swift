@@ -64,7 +64,7 @@ class TractHero: BaseTractElement {
         self.scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
         self.scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentWidth, height: self.heroHeight)
         self.scrollView.showsVerticalScrollIndicator = false
-        self.scrollView.backgroundColor = .clear
+        self.scrollView.backgroundColor = .red
         
         self.containerView.frame = CGRect(x: 0.0,
                                           y: 0.0,
@@ -77,9 +77,7 @@ class TractHero: BaseTractElement {
         let element = getFollowingElement()
         if element != nil && element!.isKind(of: TractCards.self) {
             let cardsElement = element as! TractCards
-            let initialPosition = cardsElement.elementFrame.y + (cardsElement.elements?[0].elementFrame.y)!
-            let maxHeight = BaseTractElement.screenHeight
-            self.heroHeight = maxHeight - (maxHeight - initialPosition) - parent!.startingYPos() - TractHero.marginBottom
+            self.heroHeight = cardsElement.getMaxHeroHeight()
             self.elementFrame.height = self.heroHeight
             self.frame = self.elementFrame.getFrame()
         }

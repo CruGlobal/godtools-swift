@@ -11,11 +11,11 @@ import SWXMLHash
 
 extension TractCards {
     
-    func splitCardsByKind(data: [XMLIndexer]) -> (normal: [XMLIndexer], hidden: [XMLIndexer]) {
+    func splitCardsByKind() -> (normal: [XMLIndexer], hidden: [XMLIndexer]) {
         var normalCards = [XMLIndexer]()
         var hiddenCards = [XMLIndexer]()
         
-        for dictionary in data {
+        for dictionary in self.cardsData! {
             let contentElements = self.xmlManager.getContentElements(dictionary)
             let card = TractCardProperties()
             card.load(contentElements.properties)
