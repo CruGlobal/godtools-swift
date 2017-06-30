@@ -30,7 +30,9 @@ extension ToolsManager {
             }
             recordViewOnRemote(resource, quantity: NSNumber(value: resource.myViews))
                 .then(execute: { (_) -> Promise<Void> in
-                    resource.myViews = 0
+                    self.safelyWriteToRealm {
+                        resource.myViews = 0
+                    }
                     return Promise(value: ())
                 })
                 .catch(execute: { (error) in
