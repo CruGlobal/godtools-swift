@@ -45,8 +45,21 @@ class TractCards: BaseTractElement {
         return TractCardsProperties.self
     }
     
+    override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
+        self.elementFrame.y = yPosition
+        
+        let contentElements = self.xmlManager.getContentElements(data)
+        
+        self.cardsData = contentElements.children
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
+        buildFrame()
+        setupParallelElement()
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
+    }
+    
     override func buildChildrenForData(_ data: [XMLIndexer]) {
-        self.cardsData = data
         self.elements = [BaseTractElement]()
         let cards = splitCardsByKind()
         buildCards(cards.normal)
