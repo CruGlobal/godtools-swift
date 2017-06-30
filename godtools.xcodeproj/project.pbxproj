@@ -118,6 +118,11 @@
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
+		4F8495541F069CEF0015A6BB /* translations.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* translations.json */; };
+		4F8495561F069D130015A6BB /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
+		4F84955A1F069D530015A6BB /* 4sl.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495571F069D530015A6BB /* 4sl.zip */; };
+		4F84955B1F069D530015A6BB /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495581F069D530015A6BB /* kgp.zip */; };
+		4F84955C1F069D530015A6BB /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495591F069D530015A6BB /* satisfied.zip */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4FAF20781F02933900C43AFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
@@ -319,6 +324,11 @@
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
+		4F8495531F069CEF0015A6BB /* translations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = translations.json; path = InitialContent/translations.json; sourceTree = "<group>"; };
+		4F8495551F069D130015A6BB /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = languages.json; path = InitialContent/languages.json; sourceTree = "<group>"; };
+		4F8495571F069D530015A6BB /* 4sl.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = 4sl.zip; path = InitialContent/4sl.zip; sourceTree = "<group>"; };
+		4F8495581F069D530015A6BB /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
+		4F8495591F069D530015A6BB /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4FAF20771F02930900C43AFC /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -884,9 +894,22 @@
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				68EE51D71EBBA1E400596250 /* release_notes */,
 				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
+				4F84954C1F069C8B0015A6BB /* InitialContent */,
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
 			);
 			path = godtools;
+			sourceTree = "<group>";
+		};
+		4F84954C1F069C8B0015A6BB /* InitialContent */ = {
+			isa = PBXGroup;
+			children = (
+				4F8495571F069D530015A6BB /* 4sl.zip */,
+				4F8495581F069D530015A6BB /* kgp.zip */,
+				4F8495591F069D530015A6BB /* satisfied.zip */,
+				4F8495531F069CEF0015A6BB /* translations.json */,
+				4F8495551F069D130015A6BB /* languages.json */,
+			);
+			name = InitialContent;
 			sourceTree = "<group>";
 		};
 		4FC74ED61ED5E2A200D6BFFF /* Attachments */ = {
@@ -1184,9 +1207,11 @@
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
+				4F84955C1F069D530015A6BB /* satisfied.zip in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
+				4F8495561F069D130015A6BB /* languages.json in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
@@ -1194,8 +1219,11 @@
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
+				4F84955A1F069D530015A6BB /* 4sl.zip in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
+				4F84955B1F069D530015A6BB /* kgp.zip in Resources */,
+				4F8495541F069CEF0015A6BB /* translations.json in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
