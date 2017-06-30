@@ -95,7 +95,7 @@ class BannerManager: GTDataManager {
         )
     }
     
-    private func saveImageToDisk(_ image: Data, attachment: Attachment) {
+    func saveImageToDisk(_ image: Data, attachment: Attachment) {
         let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension)
         
         safelyWriteToRealm {

@@ -12,11 +12,13 @@ import CoreData
 class FirstLaunchInitializer: GTDataManager {
     
     let languagesManager = LanguagesManager()
+    let resourceCodes = ["kgp","sat","4sl"]
     
     func initializeAppState() {
         initializeInitialLanguages()
         initializeInitialResources()
         extractInitialZipFiles()
+        saveInitialBanners()
     }
     
     private func initializeInitialLanguages() {
@@ -30,11 +32,11 @@ class FirstLaunchInitializer: GTDataManager {
     
     private func initializeInitialResources() {
         DownloadedResourceManager().loadInitialContentFromDisk()
-        setResourceShouldDownload(resourceCodes: ["kgp","sat","4sl"])
+        setResourceShouldDownload()
     }
     
     private func extractInitialZipFiles() {
-        for code in ["kgp","sat","4sl"] {
+        for code in resourceCodes {
             extractZipFile(resourceCode: code)
         }
     }
@@ -56,13 +58,33 @@ class FirstLaunchInitializer: GTDataManager {
         }
     }
     
+    private func saveInitialBanners() {
+        let bannerManager = BannerManager()
+        
+        for code in resourceCodes {
+            let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: code)!
+            let homeBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.bannerRemoteId!)
+            let aboutBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.aboutBannerRemoteId!)
+
+            let homeBannerSHA = homeBanner!.sha!
+            let homeBannerURL = Bundle.main.url(forResource: homeBannerSHA, withExtension: "png")!
+            let homeBannerData = try! Data(contentsOf: homeBannerURL)
+            bannerManager.saveImageToDisk(homeBannerData, attachment: homeBanner!)
+            
+            let aboutBannerURL = Bundle.main.url(forResource: aboutBanner!.sha!, withExtension: "png")!
+            let aboutBannerData = try! Data(contentsOf: aboutBannerURL)
+            bannerManager.saveImageToDisk(aboutBannerData, attachment: aboutBanner!)
+
+        }
+    }
+    
     private func fileURLForResource(code: String) -> URL {
         let pathToZip = Bundle.main.path(forResource: code, ofType: "zip")!
         let zipFileURL = URL(fileURLWithPath: pathToZip)
         return zipFileURL
     }
     
-    private func setResourceShouldDownload(resourceCodes: [String]) {
+    private func setResourceShouldDownload() {
         safelyWriteToRealm {
             for resourceCode in resourceCodes {
                 let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: resourceCode)
