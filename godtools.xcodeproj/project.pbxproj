@@ -118,7 +118,7 @@
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
-		4F8495541F069CEF0015A6BB /* translations.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* translations.json */; };
+		4F8495541F069CEF0015A6BB /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* resources.json */; };
 		4F8495561F069D130015A6BB /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
 		4F84955A1F069D530015A6BB /* 4sl.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495571F069D530015A6BB /* 4sl.zip */; };
 		4F84955B1F069D530015A6BB /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495581F069D530015A6BB /* kgp.zip */; };
@@ -324,7 +324,7 @@
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
-		4F8495531F069CEF0015A6BB /* translations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = translations.json; path = InitialContent/translations.json; sourceTree = "<group>"; };
+		4F8495531F069CEF0015A6BB /* resources.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = resources.json; path = InitialContent/resources.json; sourceTree = "<group>"; };
 		4F8495551F069D130015A6BB /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = languages.json; path = InitialContent/languages.json; sourceTree = "<group>"; };
 		4F8495571F069D530015A6BB /* 4sl.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = 4sl.zip; path = InitialContent/4sl.zip; sourceTree = "<group>"; };
 		4F8495581F069D530015A6BB /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
@@ -906,7 +906,7 @@
 				4F8495571F069D530015A6BB /* 4sl.zip */,
 				4F8495581F069D530015A6BB /* kgp.zip */,
 				4F8495591F069D530015A6BB /* satisfied.zip */,
-				4F8495531F069CEF0015A6BB /* translations.json */,
+				4F8495531F069CEF0015A6BB /* resources.json */,
 				4F8495551F069D130015A6BB /* languages.json */,
 			);
 			name = InitialContent;
@@ -1223,7 +1223,7 @@
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
 				4F84955B1F069D530015A6BB /* kgp.zip in Resources */,
-				4F8495541F069CEF0015A6BB /* translations.json in Resources */,
+				4F8495541F069CEF0015A6BB /* resources.json in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,

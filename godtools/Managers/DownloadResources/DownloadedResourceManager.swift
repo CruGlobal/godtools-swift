@@ -50,6 +50,14 @@ class DownloadedResourceManager: GTDataManager {
         }
     }
     
+    func loadInitialContentFromDisk() {
+        let resourcesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "resources", ofType: "json")!)
+        let resourcesData = try! Data(contentsOf: resourcesPath)
+        let resourcesDeserialized = try! serializer.deserializeData(resourcesData).data as! [DownloadedResourceJson]
+        
+        saveToDisk(resourcesDeserialized)
+    }
+    
     func download(_ resource: DownloadedResource) {
         safelyWriteToRealm {
             resource.shouldDownload = true
