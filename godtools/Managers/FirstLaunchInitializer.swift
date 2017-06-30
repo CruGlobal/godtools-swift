@@ -48,6 +48,10 @@ class FirstLaunchInitializer: GTDataManager {
 
         let zippedData = try! Data(contentsOf: zipFileURL)
         zipImporter.handleZippedData(zipData: zippedData, translation: translation)
+        
+        safelyWriteToRealm {
+            translation.isDownloaded = true
+        }
     }
     
     private func fileURLForResource(code: String) -> URL {
