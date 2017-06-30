@@ -146,6 +146,17 @@ class LanguagesManager: GTDataManager {
         }
     }
     
+    func setInitialPrimaryLanguage(forceEnglish: Bool = false) {
+        if !forceEnglish {
+            if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
+                GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+            }
+        }
+        if let english = loadFromDisk(code: "en") {
+            GTSettings.shared.primaryLanguageId = english.remoteId
+        }
+    }
+
     override func buildURL() -> URL? {
         return Config.shared().baseUrl?
                               .appendingPathComponent(self.path)

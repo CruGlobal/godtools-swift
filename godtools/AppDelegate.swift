@@ -17,20 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var flowController: BaseFlowController?
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self, Answers.self])
-        self.startFlowController(launchOptions: launchOptions)
         
         #if DEBUG
             print(NSHomeDirectory())
         #endif
         
-        self.initalizeAppState()
+        self.initalizeAppState(launchOptions: launchOptions)
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-        
+                
         return true
     }
     
@@ -66,22 +65,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState() -> Promise<Any> {        
-        if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
-            initializeAppStateOnFirstLaunch()
+    private func initalizeAppState(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Promise<Any> {
+        let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
+        let languagesManager = LanguagesManager()
+        
+        if isFirstLaunch {
+            FirstLaunchInitializer().initializeAppState()
+            UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
+        } else {
+            self.startFlowController(launchOptions: launchOptions)
         }
         
-        return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+        return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
-        }.then { (resources) -> Promise<DownloadedResources> in
-            TranslationZipImporter().catchupMissedDownloads()
-            return Promise(value: resources)
+            }.then { (resources) -> Promise<DownloadedResources> in
+                if GTSettings.shared.primaryLanguageId == nil {
+                    languagesManager.setInitialPrimaryLanguage()
+                }
+                TranslationZipImporter().catchupMissedDownloads()
+                return Promise(value: resources)
+            }.catch(execute: { (error) in
+                if isFirstLaunch {
+                    languagesManager.setInitialPrimaryLanguage(forceEnglish: true)
+                }
+            }).always {
+                if isFirstLaunch {
+                    self.startFlowController(launchOptions: launchOptions)
+                }
         }
-    }
-    
-    private func initializeAppStateOnFirstLaunch() {
-        FirstLaunchInitializer().initializeAppState()
-        UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
     }
 }
 

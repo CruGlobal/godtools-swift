@@ -17,7 +17,6 @@ class FirstLaunchInitializer: GTDataManager {
         initializeInitialLanguages()
         initializeInitialResources()
         extractInitialZipFiles()
-        setInitialPrimaryLanguage()
     }
     
     private func initializeInitialLanguages() {
@@ -69,16 +68,6 @@ class FirstLaunchInitializer: GTDataManager {
                 let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: resourceCode)
                 resource?.shouldDownload = true
             }
-        }
-    }
-    
-    private func setInitialPrimaryLanguage() {
-        if let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk() {
-            GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
-        }
-        
-        if let english = languagesManager.loadFromDisk(code: "en") {
-            GTSettings.shared.primaryLanguageId = english.remoteId
         }
     }
 }
