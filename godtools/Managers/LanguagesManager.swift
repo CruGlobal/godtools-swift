@@ -147,13 +147,18 @@ class LanguagesManager: GTDataManager {
     }
     
     func setInitialPrimaryLanguage(forceEnglish: Bool = false) {
-        if !forceEnglish {
-            if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
-                GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+        safelyWriteToRealm {
+            if !forceEnglish {
+                if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
+                    GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+                    preferredLanguage.shouldDownload = true
+                    return
+                }
             }
-        }
-        if let english = loadFromDisk(code: "en") {
-            GTSettings.shared.primaryLanguageId = english.remoteId
+            if let english = loadFromDisk(code: "en") {
+                english.shouldDownload = true
+                GTSettings.shared.primaryLanguageId = english.remoteId
+            }
         }
     }
 
