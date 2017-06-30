@@ -76,7 +76,7 @@ class TractHero: BaseTractElement {
         let element = getFollowingElement()
         if element != nil && element!.isKind(of: TractCards.self) {
             let cardsElement = element as! TractCards
-            self.heroHeight = cardsElement.getMaxHeroHeight()
+            self.heroHeight = cardsElement.getMaxFreeHeight()
             self.elementFrame.height = self.heroHeight
             self.frame = self.elementFrame.getFrame()
         }
