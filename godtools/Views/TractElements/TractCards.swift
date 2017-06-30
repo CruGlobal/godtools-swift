@@ -118,7 +118,7 @@ class TractCards: BaseTractElement {
         if element != nil && element!.isKind(of: TractHero.self) {
             let initialYPosition = getMaxHeroHeight()
             if initialYPosition < self.elementFrame.y {
-                self.elementFrame.y = initialYPosition
+                self.elementFrame.y = initialYPosition + TractPage.navbarHeight
             }
         }
     }
