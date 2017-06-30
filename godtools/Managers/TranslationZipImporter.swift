@@ -107,37 +107,37 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func download(translation: Translation) -> Promise<Void> {
-        let translationId = translation.remoteId
-        let filename = createFilename(translationId: translationId)
-        
-        guard let tempDirectoryPath = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) else {
-            return Promise(value: ())
-        }
-        
         return downloadFromRemote(translation: translation).then { zipFileData -> Promise<Void> in
-
-            try FileManager.default.createDirectory(at: tempDirectoryPath, withIntermediateDirectories: true, attributes: nil)
-            
-            let zipFile = tempDirectoryPath.appendingPathComponent(filename)
-            
-            try self.writeDataFileToDisk(data: zipFileData, to: zipFile)
-            self.extractZipFile(zipFile, translationId: translationId)
-            
-            let translationsManager = TranslationsManager()
-            translationsManager.translationWasDownloaded(translation)
-            translationsManager.purgeTranslationsOlderThan(translation)
+            self.handleZippedData(zipData: zipFileData, translation: translation)
             
             if translation.language!.isPrimary() {
                 self.primaryDownloadComplete(translation: translation)
             }
             return Promise(value: ())
-        }.always {
-            do {
-                try FileManager.default.removeItem(at: tempDirectoryPath)
-            } catch {
-                Crashlytics().recordError(error,
-                                          withAdditionalUserInfo: ["customMessage": "Error deleting temporary directory after downloading translation w/ id: \(translationId)."])
-            }
+        }
+    }
+    
+    func handleZippedData(zipData: Data, translation: Translation) {
+        do {
+            let filename = createFilename(translationId: translation.remoteId)
+            
+            let tempDirectoryPath = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString)!
+            
+            try FileManager.default.createDirectory(at: tempDirectoryPath, withIntermediateDirectories: true, attributes: nil)
+            
+            let zipFile = tempDirectoryPath.appendingPathComponent(filename)
+            
+            try self.writeDataFileToDisk(data: zipData, to: zipFile)
+            self.extractZipFile(zipFile, translationId: translation.remoteId)
+            
+            let translationsManager = TranslationsManager()
+            translationsManager.translationWasDownloaded(translation)
+            translationsManager.purgeTranslationsOlderThan(translation)
+            
+            try FileManager.default.removeItem(at: tempDirectoryPath)
+        } catch {
+            Crashlytics().recordError(error,
+                                      withAdditionalUserInfo: ["customMessage": "Error deleting temporary directory after downloading translation w/ id: \(translation.remoteId)."])
         }
     }
     
