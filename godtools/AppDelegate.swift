@@ -22,14 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self, Answers.self])
         self.startFlowController(launchOptions: launchOptions)
         
+        #if DEBUG
+            print(NSHomeDirectory())
+        #endif
+        
         self.initalizeAppState()
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-        
-        #if DEBUG
-            print(NSHomeDirectory())
-        #endif
         
         return true
     }
