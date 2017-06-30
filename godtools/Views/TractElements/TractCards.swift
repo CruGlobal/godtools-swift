@@ -106,9 +106,8 @@ class TractCards: BaseTractElement {
     func getMaxHeroHeight() -> CGFloat {
         let element = getPreviousElement()
         if element != nil && element!.isKind(of: TractHero.self) {
-            let maxHeight = BaseTractElement.screenHeight
-            let initialPosition = maxHeight - getHeightOfClosedCards()
-            return maxHeight - (maxHeight - initialPosition) - parent!.startingYPos() - TractHero.marginBottom - TractPage.navbarHeight
+            let maxHeight = BaseTractElement.screenHeight - element!.elementFrame.y - TractHero.marginBottom
+            return maxHeight - getHeightOfClosedCards()
         }
         return 0.0
     }
