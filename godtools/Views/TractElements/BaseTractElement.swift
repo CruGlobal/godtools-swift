@@ -197,12 +197,12 @@ class BaseTractElement: UIView {
     
     func getPreviousElement() -> BaseTractElement? {
         guard let index = getElementPosition() else {
-            return self.elements?.last
+            return self.parent?.elements?.last
         }
         if index > 0 {
-            return self.parent!.elements?[index - 1]
+            return self.parent?.elements?[index - 1]
         }
-        return self.elements?.last
+        return self.parent?.elements?.last
     }
     
     func getFollowingElement() -> BaseTractElement? {
