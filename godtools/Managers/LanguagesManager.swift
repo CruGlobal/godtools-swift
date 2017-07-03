@@ -38,6 +38,16 @@ class LanguagesManager: GTDataManager {
         return nil
     }
     
+    func loadNonEnglishPreferredLanguageFromDisk() -> Language? {
+        let devicePreferredLanguage = loadDevicePreferredLanguageFromDisk()
+        
+        if devicePreferredLanguage?.code == "en" {
+            return nil
+        }
+
+        return devicePreferredLanguage
+    }
+    
     func loadFromDisk(id: String) -> Language? {
         return findEntityByRemoteId(Language.self, remoteId: id)
     }

@@ -67,6 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initalizeAppState(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Promise<Any> {
         let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
+        let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
+        
         let languagesManager = LanguagesManager()
         
         if isFirstLaunch {
@@ -78,8 +80,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
             }.then { (resources) -> Promise<DownloadedResources> in
-                languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
-                TranslationZipImporter().catchupMissedDownloads()
+                if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
+                    self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
+                } else if isFirstLaunch {
+                    languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
+                    TranslationZipImporter().catchupMissedDownloads()
+                } else {
+                    TranslationZipImporter().catchupMissedDownloads()
+                }
+                
                 return Promise(value: resources)
             }.always {
                 // if on first launch, earlier the app waited for the initial downloads to work, so the flow controller did not no start.
@@ -87,7 +96,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if isFirstLaunch {
                     self.startFlowController(launchOptions: launchOptions)
                 }
-        }
+                
+        }.catch(execute: { (error) in
+            if isFirstLaunch {
+                self.flowController?.showDeviceLocaleDownloadFailedAlert()
+            }
+        })
     }
 }
 

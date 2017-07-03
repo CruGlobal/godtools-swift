@@ -54,6 +54,12 @@
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
 "tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
 
+//"English" is an adjective describing resources and should be replaced with the localized name of this language's translation as an adjective describing resources.
+"device_locale_download_error" = "The latest English GodTools resources could not be downloaded at this time. English resources are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing resources and should be replaced with the localized name of this language's translation as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this language's translation.
+"device_locale_download_success" = "The latest English GodTools resources can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
 // Actions
 "yes" = "Yes";
 "no" = "No";
