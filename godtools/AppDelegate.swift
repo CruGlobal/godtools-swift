@@ -78,7 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
             }.then { (resources) -> Promise<DownloadedResources> in
-                self.setPrimaryLanguageForInitialDeviceLanguageDownload(manager: languagesManager)
+                languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
                 TranslationZipImporter().catchupMissedDownloads()
                 return Promise(value: resources)
             }.always {
@@ -87,13 +87,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if isFirstLaunch {
                     self.startFlowController(launchOptions: launchOptions)
                 }
-        }
-    }
-    
-    private func setPrimaryLanguageForInitialDeviceLanguageDownload(manager: LanguagesManager) {
-        if !UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey) {
-            manager.setInitialPrimaryLanguage()
-            UserDefaults.standard.set(true, forKey: GTConstants.kDownloadDeviceLocaleKey)
         }
     }
 }

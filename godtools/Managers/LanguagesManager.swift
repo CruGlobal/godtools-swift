@@ -162,6 +162,13 @@ class LanguagesManager: GTDataManager {
         }
     }
 
+    func setPrimaryLanguageForInitialDeviceLanguageDownload() {
+        if !UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey) {
+            setInitialPrimaryLanguage()
+            UserDefaults.standard.set(true, forKey: GTConstants.kDownloadDeviceLocaleKey)
+        }
+    }
+    
     override func buildURL() -> URL? {
         return Config.shared().baseUrl?
                               .appendingPathComponent(self.path)
