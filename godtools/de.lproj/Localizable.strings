@@ -49,7 +49,7 @@
 "device_locale_download_error" = "Die aktuellen deutschen Tools konnten nicht heruntergeladen werden. Die englischen Tools stehen zur Verfügung. Bitte überprüfe deine Internetverbindung oder versuche es später noch einmal.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Es können neue deutsche Tools heruntergeladen werden. \n\n Möchtest du deine Hauptsprache auf Deutsch setzen und diese Tools herunterladen?";
 
 // Actions
 "yes" = "Ja";
@@ -69,7 +69,7 @@
 "error" = "Fehler";
 "ok" = "Ok";
 "error_can_not_send_email" = "Auf diesem Gerät ist keine E-Mail-Adresse konfiguriert.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" ist ein Pflichtfeld.";
 
 // About
 "general_about_1" = "GodTools hilft dir, deinen Glauben einfach und verständlich mitzuteilen.";
