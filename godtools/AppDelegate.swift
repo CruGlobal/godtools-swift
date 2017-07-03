@@ -71,7 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if isFirstLaunch {
             FirstLaunchInitializer().initializeAppState()
-            UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
         } else {
             self.startFlowController(launchOptions: launchOptions)
         }
@@ -79,19 +78,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
             }.then { (resources) -> Promise<DownloadedResources> in
-                if GTSettings.shared.primaryLanguageId == nil {
-                    languagesManager.setInitialPrimaryLanguage()
-                }
+                self.setPrimaryLanguageForInitialDeviceLanguageDownload(manager: languagesManager)
                 TranslationZipImporter().catchupMissedDownloads()
                 return Promise(value: resources)
-            }.catch(execute: { (error) in
-                if isFirstLaunch {
-                    languagesManager.setInitialPrimaryLanguage(forceEnglish: true)
-                }
-            }).always {
+            }.always {
+                // if on first launch, earlier the app waited for the initial downloads to work, so the flow controller did not no start.
+                // so now, start the flow controller.
                 if isFirstLaunch {
                     self.startFlowController(launchOptions: launchOptions)
                 }
+        }
+    }
+    
+    private func setPrimaryLanguageForInitialDeviceLanguageDownload(manager: LanguagesManager) {
+        if !UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey) {
+            manager.setInitialPrimaryLanguage()
+            UserDefaults.standard.set(true, forKey: GTConstants.kDownloadDeviceLocaleKey)
         }
     }
 }

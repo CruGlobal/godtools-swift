@@ -19,6 +19,8 @@ class FirstLaunchInitializer: GTDataManager {
         initializeInitialResources()
         extractInitialZipFiles()
         saveInitialBanners()
+        
+        UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
     }
     
     private func initializeInitialLanguages() {
@@ -28,6 +30,8 @@ class FirstLaunchInitializer: GTDataManager {
         safelyWriteToRealm {
             englishLanguage?.shouldDownload = true
         }
+        
+        languagesManager.setInitialPrimaryLanguage(forceEnglish: true)
     }
     
     private func initializeInitialResources() {
