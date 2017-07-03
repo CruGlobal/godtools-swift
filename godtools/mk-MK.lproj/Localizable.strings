@@ -1,87 +1,84 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "Додај нови алатки";
+"set_your_languages" = "Постави ги јазиците";
+"okay" = "Добро";
+"now" = "Сега";
+"later" = "Подоцна";
 
 // Menu
-"menu_general" = "General";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
-"about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"menu_general" = "Општо";
+"menu_share" = "Сподели";
+"menu_legal" = "Правно";
+"language_settings" = "Јазични поставки";
+// Tool Detail
+"about" = "За";
+"help" = "Помош";
+"contact_us" = "Обрати ни се";
+"notifications" = "Известувања";
+"preview_mode_translators_only" = "Режим за преглед (само за преведувачите)";
+"share_god_tools" = "Сподели ја GodTools";
+"share_a_story_with_us" = "Сподели приказна со нас";
+"terms_of_use" = "Одредби за употреба";
+"privacy_policy" = "Политика за приватност";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Овде може да ја преземеш апл. GodTools: http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "Додај алатки";
 
-// Tool Detail
-"about" = "About";
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d прегледи";
+"total_languages" = "%d јазици";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Примарен јазик";
+"select_primary_language" = "Избери примарен јазик";
+"parallel_language" = "Паралелен јазик";
+"select_parallel_language" = "Избери паралелен јазик";
+"share_god_tools_native_language" = "Сподели ја God Tools со некого на нивниот мајчин јазик";
+"not_every_tool_is_available" = "Не се сите алатки достапни на сите јазици";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Поставки";
 
 // Alert Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"download_error" = "Грешка при преземањето";
+"language_download_error" = "Достапните јазици не може да се преземат сега. Провери ја конекцијата или обиди се подоцна.";
+"tract_loading_error_message" = "Имаше проблем при отворањето на овој ресурс. Проблемот најчесто се решава со повторно преземање. \n\n Сакаш да го преземеш повторно?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Да";
+"no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="Овој линк ќе те однесе до веб верзијата на страницата што последно ја гледавме заедно денеска: %@. Да зборуваме повеќе!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
+"download" = "Преземи";
+"dismiss" = "Откажи";
+"done" = "Завршено";
+"remove" = "Отстрани";
+"clear" = "Избриши";
 
 // Alerts
-"error" = "Error";
-"ok" = "Ok";
-"error_can_not_send_email" = "There is no configured email on your device.";
+"error" = "Грешка";
+"ok" = "Добро";
+"error_can_not_send_email" = "На уредот нема конфигурирана е-пошта.";
 "required_field_missing" = "\"%@\" is a required field.";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"general_about_1" = "GodTools ти помага да ја шириш верата на лесен и јасен начин.";
+"general_about_2" = "Овие алатки ти помагаат доверливо да објасниш некому како може да започне релација со Бог преку Исус Христос, дури и ако никогаш претходно ја немаш ширено верата или тој/таа зборува друг јазик.";
+"general_about_3" = "Избери од многуте алатки врз основа на она што го претпочиташ и на публиката. Не се сите алатки достапни на сите јазици.";
+"general_about_4" = "Линкови до други ресурси се дадени на крајот на секоја алатка.";
+"general_about_5" = "Потребна е мрежна конекција за преземање на секоја нова алатка и/или јазик. Штом ги преземете, може да се користат офлајн.";
+"general_about_6" = "Прашања? Предлози? Барања? Обрати ни се на support@godtoolsapp.com";
+"general_about_7" = "Мрежна верзија на овие алатки може да се најде на knowgod.com. Постави ја на својата веб-локација!";
+"general_about_8" = "Посети ја godtoolsapp.com за повеќе информации.";
+"general_about_9" = "Со оглед на тоа што преземаш иницијатива да ја шириш верата, запомни дека Бог е оној што ти го менува срцето. Сакај ги сите луѓе слушајќи ги за да ги разбереш.";
+"general_about_10" = "„Нека разговорот секогаш биде исполнет со милост, зачинет со сол, така што би знаел/а како да одговориш секому.“ Послание до Колосјаните 4:6";

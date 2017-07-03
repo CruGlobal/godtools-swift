@@ -1,87 +1,85 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "Új eszközök hozzáadása";
+"set_your_languages" = "A nyelvek beállítása";
+"okay" = "OK";
+"now" = "Most";
+"later" = "Később";
 
 // Menu
-"menu_general" = "General";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
-"about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"menu_general" = "Általános";
+"menu_share" = "Megosztás";
+"menu_legal" = "Jogi információk";
+"language_settings" = "Nyelvbeállítások";
+// Tool Detail
+"about" = "Névjegy";
+"help" = "Súgó";
+"contact_us" = "Kapcsolatfelvétel";
+"notifications" = "Értesítések";
+"preview_mode_translators_only" = "Előnézet mód (csak fordítóknak)";
+"share_god_tools" = "GodTools megosztása";
+"share_a_story_with_us" = "Ossz meg velünk egy történetet";
+"terms_of_use" = "Használati feltételek";
+"privacy_policy" = "Adatvédelmi irányelvek";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Itt töltheted le a GodTools alkalmazást:
+http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "Eszközök hozzáadása";
 
-// Tool Detail
-"about" = "About";
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d nézet";
+"total_languages" = "%d nyelv";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Elsődleges nyelv";
+"select_primary_language" = "Válassz ki egy elsődleges nyelvet";
+"parallel_language" = "Párhuzamos nyelv";
+"select_parallel_language" = "Válassz egy párhuzamos nyelvet";
+"share_god_tools_native_language" = "Oszd meg a God Tools alkalmazást valakivel az illető anyanyelvén";
+"not_every_tool_is_available" = "Nem minden eszköz áll rendelkezésre minden nyelven";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Beállítások";
 
 // Alert Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"download_error" = "Letöltés hibája";
+"language_download_error" = "Az elérhető nyelvek letöltése ezúttal sikertelen volt. Ellenőrizd a kapcsolatot, vagy próbálkozz később.";
+"tract_loading_error_message" = "A forrás megnyitásánál hiba történt.\nAz ismételt letöltés gyakran megoldja a problémát.\n\nKívánod letölteni újra?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Igen";
+"no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. Beszélgessünk még!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
+"download" = "Letöltés";
+"dismiss" = "Elvet";
+"done" = "Kész";
+"remove" = "Eltávolítás";
+"clear" = "Törlés";
 
 // Alerts
-"error" = "Error";
-"ok" = "Ok";
-"error_can_not_send_email" = "There is no configured email on your device.";
+"error" = "Hiba";
+"ok" = "OK";
+"error_can_not_send_email" = "Az eszközödön nincs e-mail konfigurálva";
 "required_field_missing" = "\"%@\" is a required field.";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"general_about_1" = "A GodTools segít, hogy megoszd hitedet egyszerű és közérthető módon.";
+"general_about_2" = "Ezek az eszközök segítségedre vannak abban, hogy magabiztosan elmagyarázd valakinek, hogyan alakíthat ki kapcsolatot Istennel Jézus Krisztus közvetítésével, még akkor is, ha eddig még sohasem osztottad meg hitedet másokkal, vagy ha az illető más nyelvet beszél.";
+"general_about_3" = "Számos eszköz közül választhatsz tetszésed szerint, vagy a hallgatóságodnak megfelelően. Nem minden eszköz áll rendelkezésre minden nyelven.";
+"general_about_4" = "Az egyes eszközök végén további forrásokra mutató hivatkozásokat találsz.";
+"general_about_5" = "Az új eszközök vagy nyelvek letöltéséhez internetkapcsolat szükséges. A letöltés után internetkapcsolat nélkül is használhatók.";
+"general_about_6" = "Kérdések? Javaslatok? Kérések? Lépj velünk kapcsolatba a support@godtoolsapp.com címen";
+"general_about_7" = "Az eszközök online verzióját megtalálhatod a knowgod.com címen. Építsd be a saját oldaladba!";
+"general_about_8" = "További információk a godtoolsapp.com címen.";
+"general_about_9" = "Ha magadhoz ragadod a kezdeményezést, és megosztod hitedet, ne feledd, hogy Isten az, aki az emberek szívét megváltoztatja. Szeress mindenkit, hallgasd meg és értsd meg őket.";
+"general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";

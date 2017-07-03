@@ -1,87 +1,86 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "افزودن ابزار جدید";
+"set_your_languages" = "زبان خود را تنظیم کنید";
+"okay" = "تأیید";
+"now" = "اکنون";
+"later" = "بعداً";
 
 // Menu
-"menu_general" = "General";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
-"about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"menu_general" = "عمومی";
+"menu_share" = "اشتراک‌گذاری";
+"menu_legal" = "قانونی";
+"language_settings" = "تنظیمات زبان";
+// Tool Detail
+"about" = "درباره";
+"help" = "راهنمایی";
+"contact_us" = "تماس با ما";
+"notifications" = "اعلان‌ها";
+"preview_mode_translators_only" = "حالت پیش‌نمایش (فقط مترجمان)";
+"share_god_tools" = "اشتراک‌گذاری GodTools";
+"share_a_story_with_us" = "یک داستان با ما به اشتراک بگذارید";
+"terms_of_use" = "شرایط استفاده";
+"privacy_policy" = "خط‌مشی حریم خصوصی";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید:
+http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "افزدون ابزار";
 
-// Tool Detail
-"about" = "About";
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d مشاهده";
+"total_languages" = "%d زبان";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "زبان اصلی";
+"select_primary_language" = "زبان اصلی را انتخاب کنید";
+"parallel_language" = "زبان موازی";
+"select_parallel_language" = "یک زبان موازی انتخاب کنید";
+"share_god_tools_native_language" = "برنامه GodTools را با دیگران به زبان اصلی آن‌ها به اشتراک بگذارید";
+"not_every_tool_is_available" = "تمام ابزار به تمام زبان‌ها در دسترس قرار ندارند";
 
 // Settings
-"settings" = "Settings";
+"settings" = "تنظیمات";
 
 // Alert Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"download_error" = "خطای دانلود";
+"language_download_error" = "زبان‌های در دسترس را می‌توان هم اکنون دانلود کرد. لطفاً اتصال خود را بررسی و دوباره امتحان کنید.";
+"tract_loading_error_message" = "در هنگام باز کردن این منبع اشکالی به وجود آمد. معمولاً دانلود دوباره این مشکل را حل می‌کند.\n\nآیا مایلید دوباره آن را دانلود کنید؟";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "بله";
+"no" = "خیر";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
+"download" = "دانلود";
+"dismiss" = "مرخص";
+"done" = "انجام شد";
+"remove" = "حذف";
+"clear" = "پاک";
 
 // Alerts
-"error" = "Error";
-"ok" = "Ok";
-"error_can_not_send_email" = "There is no configured email on your device.";
+"error" = "خطا";
+"ok" = "تأیید";
+"error_can_not_send_email" = "هیچ ایمیلی روی دستگاه شما پیکربندی نشده است.";
 "required_field_missing" = "\"%@\" is a required field.";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"general_about_1" = "برنامه GodTools به شما کمک می‌کند ایمان خود را به شکلی راحت و صریح به اشتراک بگذارید.";
+"general_about_2" = "این ابزار به شما کمک می‌کند با اطمینان به دیگران توضیح بدهید چطور می‌توانند از طریق عیسی مسیح رابطه خود با خداوند را آغاز کنند، حتی اگر هرگز پیش از این درباره ایمان خود با دیگران صحبت نکرده‌اید و یا شنوندکان شما به زبان دیگری صحبت می‌کنند.";
+"general_about_3" = "از میان مجموعه‌ای از ابزار مختلف با توجه به علایق و مخاطب خود انتخاب کنید. تمام ابزارها در تمام زبان‌ها در دسترس قرار ندارند.";
+"general_about_4" = "پیوندهای مربوط به منابع دیگر در پایان هر ابزار قرار دارند.";
+"general_about_5" = "برای دانلود هر زبان و/یا ابزار جدید به اتصال به اینترنت نیاز دارید. پس از دانلود، می‌توان از آن‌ها به صورت آفلاین هم استفاده کرد.";
+"general_about_6" = "پرسش‌ها؟ پیشنهادات؟ درخواست‌ها؟ با ما از طریق آدرس support@godtoolsapp.com تماس بگیرید.";
+"general_about_7" = "می‌توان در knowgod.com یک نسخه آنلاین از این ابزار را پیدا کرد. آن را در داخل سایت خودتان قرار دهید!";
+"general_about_8" = "برای کسب اطلاعات بیشتر به godtoolsapp.com مراجعه کنید.";
+"general_about_9" = "وقتی انگیزه لازم برای صحبت درباره ایمان خود را پیدا می‌کنید، به یاد داشته باشید که خداوند یگانه فردی است که قلب‌ها را تغییر می‌دهد. هر کسی را با شنیدن و درک سخنانش دوست بدارید";
+"general_about_10" = "«بگذار صحبت‌های تو همیشه مملؤ از متانت باشد، کی به آن نمک اضافه کن، تا از این طریق برای همه پاسخی داشته باشی.»
+کولسیان‌ها ۴:۶";
