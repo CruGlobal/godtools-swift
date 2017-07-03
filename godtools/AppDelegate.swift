@@ -90,18 +90,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 
                 return Promise(value: resources)
-            }.always {
+            }.catch(execute: { (error) in
+                if isFirstLaunch {
+                    self.flowController?.showDeviceLocaleDownloadFailedAlert()
+                }
+            }).always {
                 // if on first launch, earlier the app waited for the initial downloads to work, so the flow controller did not no start.
                 // so now, start the flow controller.
                 if isFirstLaunch {
                     self.startFlowController(launchOptions: launchOptions)
                 }
-                
-        }.catch(execute: { (error) in
-            if isFirstLaunch {
-                self.flowController?.showDeviceLocaleDownloadFailedAlert()
-            }
-        })
+        }
     }
 }
 
