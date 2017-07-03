@@ -1,0 +1,84 @@
+// Onboarding
+"add_new_tools" = "Προσθήκη Νέων Εργαλείων";
+"set_your_languages" = "Ορίστε τις γλώσσες σας";
+"okay" = "Εντάξει";
+"now" = "Τώρα";
+"later" = "Αργότερα";
+
+// Menu
+"menu_general" = "Γενικά";
+"menu_share" = "Κοινοποίηση";
+"menu_legal" = "Νομικά";
+"language_settings" = "Ρυθμίσεις Γλώσσας";
+// Tool Detail
+"about" = "Σχετικά";
+"help" = "Βοήθεια";
+"contact_us" = "Επικοινωνήστε μαζί μας";
+"notifications" = "Ειδοποιήσεις";
+"preview_mode_translators_only" = "Λειτουργία Προεπισκόπησης (Μόνο Μεταφραστές)";
+"share_god_tools" = "Κοινοποίηση Θεϊκών Εργαλείων";
+"share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
+"terms_of_use" = "Όροι χρήσης";
+"privacy_policy" = "Πολιτική Απορρήτου";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "Εδώ μπορείτε να κατεβάσετε την εφαρμογή Θεϊκών Εργαλείων: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Προσθέστε Εργαλεία";
+
+"total_views" = "%d προβολές";
+"total_languages" = "%d γλώσσες";
+
+// Language Settings
+"primary_language" = "Κύρια Γλώσσα";
+"select_primary_language" = "Επιλέξτε μία Κύρια Γλώσσα";
+"parallel_language" = "Παράλληλη Γλώσσα";
+"select_parallel_language" = "Επιλέξτε μία Παράλληλη Γλώσσα";
+"share_god_tools_native_language" = "Μοιραστείτε τα Θεϊκά Εργαλεία με κάποιον στη μητρική του γλώσσα";
+"not_every_tool_is_available" = "Δεν είναι διαθέσιμο κάθε εργαλείο σε κάθε γλώσσα";
+
+// Settings
+"settings" = "Ρυθμίσεις";
+
+// Alert Controllers
+"download_error" = "Σφάλμα Λήψης";
+"language_download_error" = "Δεν ήταν δυνατή η λήψη των διαθέσιμων γλωσσών αυτήν τη στιγμή. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
+"tract_loading_error_message" = "Παρουσιάστηκε πρόβλημα κατά το άνοιγμα αυτού του πόρου. Η λήψη του ξανά συχνά επιλύει αυτό το πρόβλημα.\n\nΘα θέλατε να τον κατεβάσετε ξανά;";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
+// Actions
+"yes" = "Ναι";
+"no" = "Όχι";
+
+// Tract - Sharing
+"tract_share_message" ="Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. Ας μιλήσουμε περισσότερο!";
+
+// Buttons
+"download" = "Λήψη";
+"dismiss" = "Απόρριψη";
+"done" = "Έγινε";
+"remove" = "Αφαίρεση";
+"clear" = "Καθαρισμός";
+
+// Alerts
+"error" = "Σφάλμα";
+"ok" = "Ok";
+"error_can_not_send_email" = "Δεν υπάρχει διαμορφωμένο email στη συσκευή σας.";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "Τα Θεϊκά Εργαλεία σας βοηθούν να μοιράζεστε την πίστη σας με έναν εύκολο και ξεκάθαρο τρόπο.";
+"general_about_2" = "Αυτά τα εργαλεία σας βοηθούν να εξηγήσετε με σιγουριά σε κάποιον πώς μπορεί να ξεκινήσει μια σχέση με τον Θεό μέσω του Ιησού Χριστού, ακόμα κι αν δεν έχετε μοιραστεί ποτέ την πίστη σας πριν ή αυτός μιλάει διαφορετική γλώσσα.";
+"general_about_3" = "Διαλέξτε από μια ποικιλία εργαλείων που βασίζονται στην προτίμησή σας και το κοινό σας. Δεν είναι διαθέσιμα όλα τα εργαλεία σε όλες τις γλώσσες.";
+"general_about_4" = "Οι σύνδεσμοι προς άλλους πόρους περιλαμβάνονται στο τέλος κάθε εργαλείου.";
+"general_about_5" = "Απαιτείται σύνδεση στο διαδίκτυο για τη λήψη κάθε νέου εργαλείου και/ή γλώσσας. Μετά τη λήψη τους, μπορούν να χρησιμοποιηθούν εκτός σύνδεσης.";
+"general_about_6" = "Απορίες; Προτάσεις; Αιτήματα; Επικοινωνήστε μαζί μας στο support@godtoolsapp.com";
+"general_about_7" = "Μπορείτε να βρείτε μια online έκδοση αυτών των εργαλείων στο knowgod.com. Ενσωματώστε το στον δικό σας ιστότοπο!";
+"general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
+"general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
+"general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";

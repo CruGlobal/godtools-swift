@@ -1,0 +1,84 @@
+// Onboarding
+"add_new_tools" = "Přidat nové nástroje";
+"set_your_languages" = "Nastavení jazyků";
+"okay" = "OK";
+"now" = "Nyní";
+"later" = "Později";
+
+// Menu
+"menu_general" = "Obecné";
+"menu_share" = "Sdílet";
+"menu_legal" = "Pravidla užívání a ochrany soukromí";
+"language_settings" = "Jazyková nastavení";
+// Tool Detail
+"about" = "O aplikaci";
+"help" = "Nápověda";
+"contact_us" = "Kontaktujte nás";
+"notifications" = "Upozornění";
+"preview_mode_translators_only" = "Režim náhledu (pouze překladatelé)";
+"share_god_tools" = "Sdílet GodTools";
+"share_a_story_with_us" = "Napište nám příběh";
+"terms_of_use" = "Pravidla užívání";
+"privacy_policy" = "Ochrana soukromí";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "Zde si můžete stáhnout aplikaci GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Přidat nástroje";
+
+"total_views" = "%d zhlédnutí";
+"total_languages" = "%d jazyků";
+
+// Language Settings
+"primary_language" = "Primární jazyk";
+"select_primary_language" = "Vyberte primární jazyk";
+"parallel_language" = "Paralelní jazyk";
+"select_parallel_language" = "Vyberte paralelní jazyk";
+"share_god_tools_native_language" = "Sdílejte God Tools s někým v jejich rodném jazyce";
+"not_every_tool_is_available" = "Ne každý nástroj je dostupný ve všech jazycích";
+
+// Settings
+"settings" = "Nastavení";
+
+// Alert Controllers
+"download_error" = "Chyba při stahování";
+"language_download_error" = "Dostupné jazykové verze nemohly být teď staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
+"tract_loading_error_message" = "Při otevírání tohoto zdroje nastala chyba. Častým řešením tohoto problému je jeho opětovné stažení.\n\nChcete ho stáhnout znovu?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
+// Actions
+"yes" = "Ano";
+"no" = "Ne";
+
+// Tract - Sharing
+"tract_share_message" ="Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ Pojďme si o tom ještě povykládat!";
+
+// Buttons
+"download" = "Stáhnout";
+"dismiss" = "Zrušit";
+"done" = "Hotovo";
+"remove" = "Odstranit";
+"clear" = "Smazat";
+
+// Alerts
+"error" = "Chyba";
+"ok" = "OK";
+"error_can_not_send_email" = "Na svém přístroji nemáte nakonfigurován e-mail.";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "GodTools vám pomohou jednoduše a jasně sdílet svoji víru.";
+"general_about_2" = "Tyto nástroje vám napomohou někomu sebejistě vysvětlit, jak si mohou vytvořit vztah k Bohu prostřednictvím Ježíše Krista, i když jste se nikdy předtím o své víře nebavili nebo mluví-li jiným jazykem.";
+"general_about_3" = "Vyberte si z široké palety nástrojů dle vašich preferencí a publika. Ne všechny nástroje jsou dostupné ve všech jazycích.";
+"general_about_4" = "Odkazy na další zdroje jsou umístěny na konci každého nástroje.";
+"general_about_5" = "Připojení k internetu je nutné pro stažení každého nového nástroje a/nebo jazyka. Po stažení je lze používat i v režimu offline.";
+"general_about_6" = "Otázky? Náměty? Žádosti? Napište nám na support@godtoolsapp.com";
+"general_about_7" = "Online verze těchto nástrojů je dostupná na knowgod.com. Vložte je na svou stránku!";
+"general_about_8" = "Více informací naleznete na stránce godtoolsapp.com.";
+"general_about_9" = "Při chopení se iniciativy o sdílení vaší víry si pamatujte, že Bůh je ten, kdo mění srdce. Miluj všechny posloucháním, které vede k porozumění.";
+"general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";

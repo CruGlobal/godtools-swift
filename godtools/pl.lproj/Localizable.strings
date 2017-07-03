@@ -1,0 +1,86 @@
+// Onboarding
+"add_new_tools" = "Dodaj Nowe Narzędzia";
+"set_your_languages" = "Ustaw języki";
+"okay" = "Okej";
+"now" = "Teraz";
+"later" = "Później";
+
+// Menu
+"menu_general" = "Ogólne";
+"menu_share" = "Udostępnij";
+"menu_legal" = "Prawne";
+"language_settings" = "Ustawienia języka";
+// Tool Detail
+"about" = "O aplikacji";
+"help" = "Pomoc";
+"contact_us" = "Kontakt";
+"notifications" = "Powiadomienia";
+"preview_mode_translators_only" = "Tryb podglądu (tylko dla tłumaczy)";
+"share_god_tools" = "Udostępnij GodTools";
+"share_a_story_with_us" = "Podziel się z nami swoją historią";
+"terms_of_use" = "Warunki użytkowania";
+"privacy_policy" = "Polityka prywatności";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj:
+http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Dodaj Narzędzia";
+
+"total_views" = "%d wizyt";
+"total_languages" = "%d języków";
+
+// Language Settings
+"primary_language" = "Język podstawowy";
+"select_primary_language" = "Wybierz język podstawowy";
+"parallel_language" = "Język równoległy";
+"select_parallel_language" = "Wybierz język równoległy";
+"share_god_tools_native_language" = "Udostępnij GodTools dla kogoś w jego języku";
+"not_every_tool_is_available" = "Nie każde narzędzie jest dostępne w każdym języku";
+
+// Settings
+"settings" = "Ustawienia";
+
+// Alert Controllers
+"download_error" = "Błąd pobrania";
+"language_download_error" = "Nie można obecnie pobrać dostępnych języków. Sprawdź połączenie lub spróbuj ponownie później.";
+"tract_loading_error_message" = "Podczas otwierania tego zasobu wystąpił problem. Ponowne jego pobranie zazwyczaj rozwiązuje problem.\n\nCzy pobrać ponownie?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
+// Actions
+"yes" = "Tak";
+"no" = "Nie";
+
+// Tract - Sharing
+"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. Bądźmy w kontakcie!";
+
+// Buttons
+"download" = "Pobierz";
+"dismiss" = "Porzuć";
+"done" = "Gotowe";
+"remove" = "Usuń";
+"clear" = "Wyczyść";
+
+// Alerts
+"error" = "Błąd";
+"ok" = "OK";
+"error_can_not_send_email" = "Na Twoim urządzeniu nie ma skonfigurowanego adresu e-mail.";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "GodToold pomaga dzielić się wiarą w prosty i przejrzysty sposób.";
+"general_about_2" = "Narzędzia te pomogą Ci  wytłumaczyć komuś, jak można zbudować własną relację z Bogiem poprzez Jezusa Chrystusa, nawet jeśli ta osoba nigdy wcześniej z nikim nie dzieliła się  własną wiarą lub mówi innym językiem.";
+"general_about_3" = "Wybierz odpowiednie narzędzia w zależności od preferencji własnych i rodzaju odbiorców. Nie wszystkie narzędzia są dostępne w każdym języku.";
+"general_about_4" = "Linki do innych zasobów podane są na końcu każdego z narzędzi.";
+"general_about_5" = "Aby pobrać każde nowe narzędzie lub język, konieczne jest połączenie z Internetem. Po pobraniu mogą one być używane w trybie offline.";
+"general_about_6" = "Pytania? Propozycje? Wnioski? Skontaktuj się z nami pod support@godtoolsapp.com";
+"general_about_7" = "Wersja online tych narzędzi dostępna jest pod adresem knowgod.com. Umieść je na własnej stronie!";
+"general_about_8" = "Więcej informacji znajdziesz na stronie godtoolsapp.com.";
+"general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
+"general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
+List do Kolosan 4, 6";
