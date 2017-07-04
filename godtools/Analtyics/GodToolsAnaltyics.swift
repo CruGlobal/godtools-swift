@@ -46,8 +46,13 @@ class GodToolsAnaltyics {
         guard let screenName = userInfo[GTConstants.kAnalyticsScreenNameKey] as? String else {
             return
         }
-        
+
         tracker?.set(kGAIScreenName, value: screenName)
-        tracker?.send(GAIDictionaryBuilder.createScreenView().build() as! [AnyHashable : Any]!)
+
+        guard let screenViewInfo = GAIDictionaryBuilder.createScreenView().build() as? [AnyHashable : Any] else {
+            return
+        }
+        
+        tracker?.send(screenViewInfo)
     }
 }
