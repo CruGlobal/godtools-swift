@@ -315,6 +315,7 @@
 		4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationResource.swift; path = Managers/Translations/TranslationResource.swift; sourceTree = "<group>"; };
 		4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceManager.swift; path = Managers/DownloadResources/DownloadedResourceManager.swift; sourceTree = "<group>"; };
 		4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseFlowController+Alerts.swift"; sourceTree = "<group>"; };
+		4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "godtools-Bridging-Header.h"; sourceTree = "<group>"; };
 		4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpResource.swift; path = Managers/FollowUps/FollowUpResource.swift; sourceTree = "<group>"; };
 		4F462A301EB0DF3E00C03447 /* TractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractView.swift; path = Views/TractView.swift; sourceTree = "<group>"; };
 		4F462A351EB0E28900C03447 /* TractHero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHero.swift; path = Views/TractElements/TractHero.swift; sourceTree = "<group>"; };
@@ -915,6 +916,7 @@
 				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
 				4F84954C1F069C8B0015A6BB /* InitialContent */,
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
+				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 			);
 			path = godtools;
 			sourceTree = "<group>";
@@ -1698,6 +1700,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1718,6 +1721,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
