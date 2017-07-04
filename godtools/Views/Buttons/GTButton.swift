@@ -51,6 +51,20 @@ class GTButton: UIButton {
         }
     }
     
+    func designAsUnavailableButton() {
+        self.color = .gtWhite
+        self.tintColor = .gtWhite
+        self.borderWidth = 0.0
+        self.borderColor = .clear
+        self.backgroundColor = .gtGrey
+        self.setImage(#imageLiteral(resourceName: "download_white"), for: .disabled)
+        self.translationKey = "unavailable"
+        
+        self.isEnabled = false
+        
+        self.layoutSubviews()
+    }
+    
     func designAsDownloadButton() {
         self.designAsToolDetailButton()
         
@@ -61,6 +75,8 @@ class GTButton: UIButton {
         self.backgroundColor = .gtGreen
         self.setImage(#imageLiteral(resourceName: "download_white"), for: .normal)
         self.translationKey = "download"
+        
+        self.isEnabled = true
         
         self.layoutSubviews()
     }
@@ -76,6 +92,8 @@ class GTButton: UIButton {
         self.setImage(#imageLiteral(resourceName: "delete_red"), for: .normal)
         self.translationKey = "remove"
         
+        self.isEnabled = true
+        
         self.layoutSubviews()
     }
     
@@ -87,6 +105,8 @@ class GTButton: UIButton {
         self.borderColor = .gtWhite
         self.backgroundColor = .clear
         
+        self.isEnabled = true
+        
         self.layoutSubviews()
     }
     
@@ -95,6 +115,8 @@ class GTButton: UIButton {
         self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
         self.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 10.0)
         self.titleEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 0.0)
+        
+        self.isEnabled = true
         
         self.increaseTitleWidth()
     }
