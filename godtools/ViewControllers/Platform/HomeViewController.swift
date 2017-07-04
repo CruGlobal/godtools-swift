@@ -146,6 +146,12 @@ class HomeViewController: BaseViewController {
         onboardingViewController.modalPresentationStyle = .overCurrentContext
         self.present(onboardingViewController, animated: true, completion: nil)
     }
+
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "HomeScreen-v5"
+    }
 }
 
 extension HomeViewController: ToolsManagerDelegate {
