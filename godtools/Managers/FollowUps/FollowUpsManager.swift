@@ -84,6 +84,7 @@ class FollowUpsManager: GTDataManager {
                 return Promise(value: ())
             }
             .catch(execute: { error in
+                self.incrementRetryCount(cachedFollowUp)
                 Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
             })
             .always {
@@ -114,6 +115,7 @@ class FollowUpsManager: GTDataManager {
     
     private func saveLocalCopy(_ localFollowUp: FollowUp) {
         safelyWriteToRealm {
+            localFollowUp.createdAtTime = NSDate()
             realm.add(localFollowUp)
         }
     }
@@ -121,6 +123,12 @@ class FollowUpsManager: GTDataManager {
     private func removeLocalCopy(_ localFollowUp: FollowUp) {
         safelyWriteToRealm {
             realm.delete(localFollowUp)
+        }
+    }
+    
+    private func incrementRetryCount(_ localFollowUp: FollowUp) {
+        safelyWriteToRealm {
+            localFollowUp.retryCount += 1
         }
     }
     
