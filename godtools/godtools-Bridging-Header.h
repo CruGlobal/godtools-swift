@@ -9,6 +9,8 @@
 #ifndef godtools_Bridging_Header_h
 #define godtools_Bridging_Header_h
 
-#import <Google/Analytics.h>
+#import <GoogleAnalytics/GAI.h>
+#import <GoogleAnalytics/GAIDictionaryBuilder.h>
+#import <GoogleAnalytics/GAIFields.h>
 
 #endif /* godtools_Bridging_Header_h */

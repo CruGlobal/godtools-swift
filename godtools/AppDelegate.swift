@@ -11,7 +11,6 @@ import Fabric
 import Crashlytics
 import PromiseKit
 import RealmSwift
- 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self, Answers.self])
-        configureGoogleAnalytics()
+        GodToolsAnaltyics.setup()
         
         #if DEBUG
             print(NSHomeDirectory())
@@ -103,21 +102,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.startFlowController(launchOptions: launchOptions)
                 }
         }
-    }
-    
-    private func configureGoogleAnalytics() {
-        let trackingID = Config().googleAnalyticsApiKey
-        
-        guard let gai = GAI.sharedInstance() else {
-            return
-        }
-        
-        gai.tracker(withTrackingId: trackingID)
-        
-        #if DEBUG
-            gai.logger.logLevel = .verbose
-//            gai.dryRun = true
-        #endif
     }
 }
 

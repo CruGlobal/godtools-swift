@@ -102,6 +102,7 @@
 		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
 		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
 		4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */; };
+		4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */; };
 		4F40C8B11F0414D600CB3864 /* FollowUpResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */; };
 		4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A301EB0DF3E00C03447 /* TractView.swift */; };
 		4F462A391EB0E28900C03447 /* TractHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A351EB0E28900C03447 /* TractHero.swift */; };
@@ -316,6 +317,7 @@
 		4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceManager.swift; path = Managers/DownloadResources/DownloadedResourceManager.swift; sourceTree = "<group>"; };
 		4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BaseFlowController+Alerts.swift"; sourceTree = "<group>"; };
 		4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "godtools-Bridging-Header.h"; sourceTree = "<group>"; };
+		4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsAnaltyics.swift; path = Analtyics/GodToolsAnaltyics.swift; sourceTree = "<group>"; };
 		4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpResource.swift; path = Managers/FollowUps/FollowUpResource.swift; sourceTree = "<group>"; };
 		4F462A301EB0DF3E00C03447 /* TractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractView.swift; path = Views/TractView.swift; sourceTree = "<group>"; };
 		4F462A351EB0E28900C03447 /* TractHero.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHero.swift; path = Views/TractElements/TractHero.swift; sourceTree = "<group>"; };
@@ -851,6 +853,14 @@
 			name = Translations;
 			sourceTree = "<group>";
 		};
+		4F33042A1F0C1073009D92A0 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */,
+			);
+			name = Analytics;
+			sourceTree = "<group>";
+		};
 		4F40C8AF1F0414B900CB3864 /* FollowUps */ = {
 			isa = PBXGroup;
 			children = (
@@ -895,6 +905,7 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
+				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
 				EC55A61D1EE0AC2B000235CA /* TractClasses */,
 				0FB73E5E1EA90669000BA60D /* FlowControllers */,
@@ -1438,6 +1449,7 @@
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
+				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
