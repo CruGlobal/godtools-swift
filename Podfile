@@ -19,7 +19,8 @@ target 'godtools' do
   pod 'Spine', :git => 'https://github.com/CruGlobal/Spine.git', :tag => '0.3.1'
   pod 'CRUConfig', '~> 1.2'
   pod 'GoogleAnalytics'
-
+  pod 'GoogleConversionTracking'
+  
   target 'godtoolsTests' do
     inherit! :search_paths
     pod 'Quick', '1.1'
