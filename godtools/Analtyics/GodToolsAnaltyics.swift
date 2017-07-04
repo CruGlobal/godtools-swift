@@ -35,8 +35,16 @@ class GodToolsAnaltyics {
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
                                                object: nil)
+        
+        recordAdwordsConversion()
     }
     
+    private func recordAdwordsConversion() {
+        let conversionId = Config().googleAdwordsConversionId
+        let label = Config().googleAdwordsLabel
+        
+        ACTConversionReporter.report(withConversionID: conversionId, label: label, value: "1.00", isRepeatable: false)
+    }
     
     @objc private func recordScreenView(notification: Notification) {
         guard let userInfo = notification.userInfo else {
