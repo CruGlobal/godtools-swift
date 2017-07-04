@@ -62,7 +62,7 @@ class HomeToolTableViewCell: UITableViewCell {
         selectionStyle = isAvailableInPrimaryLanguage ? .default : .none
         isAvailable = isAvailableInPrimaryLanguage
         
-        if (resource.shouldDownload || resource.translations.filter({ $0.isPublished }).count == 0) {
+        if (resource.shouldDownload || resource.numberOfAvailableLanguages() == 0 {
             setCellAsDisplayOnly()
         }
         
