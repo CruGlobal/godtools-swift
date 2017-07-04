@@ -31,25 +31,31 @@ class FollowUpsManager: GTDataManager {
             return validationError()
         }
         
-        let jsonAPIResource = createFollowUpResource(params: params)
-        let localFollowUp = FollowUp(jsonAPIFollowUp: jsonAPIResource)
+        let resource = createFollowUpResource(params: params)
+        let localFollowUp = FollowUp(jsonAPIFollowUp: resource)
         
         saveLocalCopy(localFollowUp)
         
-        let paramsData = try! self.serializer.serializeResources([jsonAPIResource])
-        let paramsJSON = try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
+        return postFollowUp(resource: resource, cachedFollowUp: localFollowUp)
+    }
+    
+    func syncCachedFollowUps() -> [Promise<Void>] {
+        let predicate = NSPredicate(format: "retryCount < 3")
+        let cachedFollowUps = findEntities(FollowUp.self, matching: predicate)
         
-        return issuePOSTRequest(paramsJSON)
-            .then { data -> Promise<Void> in
-                self.removeLocalCopy(localFollowUp)
-                return Promise(value: ())
-            }
-            .catch(execute: { error in
-                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
-            })
-            .always {
-                self.hideNetworkIndicator()
+        if cachedFollowUps.count == 0 {
+            return [Promise(value: ())]
         }
+        
+        var promises = [Promise<Void>]()
+        
+        for followUp in cachedFollowUps {
+            let resource = createFollowUpResource(cachedFollowUp: followUp)
+            
+            promises.append(self.postFollowUp(resource: resource, cachedFollowUp: followUp))
+        }
+        
+        return promises
     }
     
     private func validate(params: [String: String]) -> Bool {
@@ -68,6 +74,23 @@ class FollowUpsManager: GTDataManager {
         return true
     }
     
+    private func postFollowUp(resource: FollowUpResource, cachedFollowUp: FollowUp) -> Promise<Void> {
+        let paramsData = try! self.serializer.serializeResources([resource])
+        let paramsJSON = try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
+        
+        return issuePOSTRequest(paramsJSON)
+            .then { data -> Promise<Void> in
+                self.removeLocalCopy(cachedFollowUp)
+                return Promise(value: ())
+            }
+            .catch(execute: { error in
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
+            })
+            .always {
+                self.hideNetworkIndicator()
+        }
+    }
+    
     private func validationError() -> Promise<Void> {
         let error = FollowUpError.MissingParameter("invalid params")
         
@@ -80,6 +103,13 @@ class FollowUpsManager: GTDataManager {
                                 name: params["name"]!,
                                 destination: params["destination_id"]!,
                                 language: params["language_id"]!)
+    }
+    
+    private func createFollowUpResource(cachedFollowUp: FollowUp) -> FollowUpResource {
+        return FollowUpResource(email: cachedFollowUp.email!,
+                                name: cachedFollowUp.name!,
+                                destination: cachedFollowUp.destinationId!,
+                                language: cachedFollowUp.languageId!)
     }
     
     private func saveLocalCopy(_ localFollowUp: FollowUp) {
