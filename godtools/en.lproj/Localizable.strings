@@ -1,20 +1,16 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
 // Onboarding
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
+"okay" = "Okay";
+"now" = "Now";
+"later" = "Later";
 
 // Menu
 "menu_general" = "General";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
+// Tool Detail
 "about" = "About";
 "help" = "Help";
 "contact_us" = "Contact Us";
@@ -24,13 +20,12 @@
 "share_a_story_with_us" = "Share a Story With Us";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
+"copyright_info" = "Copyright Info";
 "share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Add Tools";
 
-// Tool Detail
-"about" = "About";
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 
@@ -50,6 +45,12 @@
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
 "tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
 
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
 // Actions
 "yes" = "Yes";
 "no" = "No";
@@ -68,6 +69,7 @@
 "error" = "Error";
 "ok" = "Ok";
 "error_can_not_send_email" = "There is no configured email on your device.";
+"required_field_missing" = "\"%@\" is a required field.";
 
 // About
 "general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
