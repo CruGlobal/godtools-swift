@@ -31,7 +31,7 @@ class DownloadedResourceJson: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "name" : Attribute(),
-            "description": Attribute(),
+            "descr": Attribute().serializeAs("description"),
             "abbreviation" : Attribute(),
             "translations" : ToManyRelationship(TranslationResource.self),
             "copyrightDescription": Attribute().serializeAs("attr-copyright"),
