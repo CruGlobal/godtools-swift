@@ -6,6 +6,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - CRUConfig (1.2.0)
   - Fabric (1.6.11)
+  - GoogleAnalytics (3.17.0)
   - Nimble (6.1.0)
   - PromiseKit (4.1.7):
     - PromiseKit/Foundation (= 4.1.7)
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
+  - GoogleAnalytics
   - Nimble (~> 6.1)
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
@@ -65,6 +67,7 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   Nimble: c53e6903fee94041b90ded74f135820437d8bf59
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
@@ -76,6 +79,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
 
-PODFILE CHECKSUM: 2cda1987ceaec935d56c1babd9f6928e3ea522b6
+PODFILE CHECKSUM: 00d4957eba6febe1374b6c167a57cbe5d120a37e
 
 COCOAPODS: 1.2.1
