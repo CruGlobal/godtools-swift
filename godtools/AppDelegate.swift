@@ -103,5 +103,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
         }
     }
+    
+    private func configureGoogleAnalytics() {
+        let trackingID = Config().googleAnalyticsApiKey
+        
+        guard let gai = GAI.sharedInstance() else {
+            return
+        }
+        
+        gai.tracker(withTrackingId: trackingID)
+        
+        #if DEBUG
+            gai.logger.logLevel = .verbose
+//            gai.dryRun = true
+        #endif
+    }
 }
 
