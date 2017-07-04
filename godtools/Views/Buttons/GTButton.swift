@@ -47,17 +47,21 @@ class GTButton: UIButton {
     
     @IBInspectable var translationKey: String = "" {
         didSet {
-            self.setTitle(translationKey.localized, for: .normal)
+            let state = self.isEnabled ? UIControlState.normal : UIControlState.disabled
+            
+            self.setTitle(translationKey.localized, for: state)
         }
     }
     
     func designAsUnavailableButton() {
+        self.designAsToolDetailButton()
+        
         self.color = .gtWhite
         self.tintColor = .gtWhite
         self.borderWidth = 0.0
         self.borderColor = .clear
         self.backgroundColor = .gtGrey
-        self.setImage(#imageLiteral(resourceName: "download_white"), for: .disabled)
+        self.setImage(#imageLiteral(resourceName: "download_white"), for: .normal)
         self.translationKey = "unavailable"
         
         self.isEnabled = false
@@ -76,8 +80,6 @@ class GTButton: UIButton {
         self.setImage(#imageLiteral(resourceName: "download_white"), for: .normal)
         self.translationKey = "download"
         
-        self.isEnabled = true
-        
         self.layoutSubviews()
     }
     
@@ -92,8 +94,6 @@ class GTButton: UIButton {
         self.setImage(#imageLiteral(resourceName: "delete_red"), for: .normal)
         self.translationKey = "remove"
         
-        self.isEnabled = true
-        
         self.layoutSubviews()
     }
     
@@ -104,9 +104,7 @@ class GTButton: UIButton {
         self.borderWidth = 1.0
         self.borderColor = .gtWhite
         self.backgroundColor = .clear
-        
-        self.isEnabled = true
-        
+                
         self.layoutSubviews()
     }
     
