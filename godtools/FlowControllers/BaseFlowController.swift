@@ -12,7 +12,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
     var currentViewController: UIViewController?
     
-    init(window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    init(window: UIWindow) {
         super.init()
         self.currentViewController = self.initialViewController()
         let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
