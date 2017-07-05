@@ -197,12 +197,12 @@ class BaseTractElement: UIView {
     
     func getPreviousElement() -> BaseTractElement? {
         guard let index = getElementPosition() else {
-            return nil
+            return self.parent?.elements?.last
         }
         if index > 0 {
-            return self.parent!.elements?[index - 1]
+            return self.parent?.elements?[index - 1]
         }
-        return nil
+        return self.parent?.elements?.last
     }
     
     func getFollowingElement() -> BaseTractElement? {
@@ -226,12 +226,15 @@ class BaseTractElement: UIView {
     func buildChildrenForData(_ data: [XMLIndexer]) {
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
-        var elements = [BaseTractElement]()
         var elementNumber: Int = 0
+        
+        if self.elements == nil {
+            self.elements = [BaseTractElement]()
+        }
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
-            elements.append(element)
+            self.elements!.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
                 self.didFindCallToAction = true
@@ -251,7 +254,7 @@ class BaseTractElement: UIView {
         if self.isKind(of: TractPage.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
             let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
             currentYPosition = element.elementFrame.yEndPosition()
-            elements.append(element)
+            self.elements!.append(element)
         }
         
         if self.horizontalContainer {
@@ -259,8 +262,6 @@ class BaseTractElement: UIView {
         } else {
             self.height = currentYPosition
         }
-        
-        self.elements = elements
     }
     
     func setupView(properties: Dictionary<String, Any>) {

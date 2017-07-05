@@ -32,6 +32,7 @@ class TractCards: BaseTractElement {
     
     // MARK: - Dynamic settings
     
+    var cardsData: [XMLIndexer]?
     var lastCard: BaseTractElement?
     var isOnInitialPosition = true
     var animationYPos: CGFloat {
@@ -44,9 +45,23 @@ class TractCards: BaseTractElement {
         return TractCardsProperties.self
     }
     
+    override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
+        self.elementFrame.y = yPosition
+        
+        let contentElements = self.xmlManager.getContentElements(data)
+        
+        self.cardsData = contentElements.children
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
+        buildFrame()
+        setupParallelElement()
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
+    }
+    
     override func buildChildrenForData(_ data: [XMLIndexer]) {
         self.elements = [BaseTractElement]()
-        let cards = splitCardsByKind(data: data)
+        let cards = splitCardsByKind()
         buildCards(cards.normal)
         buildHiddenCards(cards.hidden)
     }
@@ -54,6 +69,7 @@ class TractCards: BaseTractElement {
     override func loadFrameProperties() {
         let yExternalPosition = self.elementFrame.y > TractCards.minYPosition ? self.elementFrame.y : TractCards.minYPosition
         
+        setCardsYPosition()
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.width
         self.elementFrame.height = self.height
