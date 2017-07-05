@@ -1,5 +1,7 @@
-- Improves performance when swiping through screens
-- Adds validations so we can now indicate which are required fields
-- Fixes follow-up subscriptions
-- Failed follow-up subscriptions are now cached for retry (retry not implemented yet)
-- Fixed several memory leaks
+- Adds basic Google Analytics (only HomeScreen. all others are "unknown")
+- Adds AdWords tracking
+- Submits cached follow-ups, either taken off-line or retry those failed on initial submission
+- Fixes hero sections that are covered up by cards
+- Bundle initial English KGP, fourlaws and Satisfied with app
+- Adds many language localizations
+- Shows alert to device owners with non-English locales when initial localized content fails, and again when it can be done. (Shown one time each)
