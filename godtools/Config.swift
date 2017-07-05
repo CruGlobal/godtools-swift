@@ -13,4 +13,6 @@ class Config: CRUEmptyConfig {
     var baseUrl: URL? = nil
     var apiKey: String = ""
     var googleAnalyticsApiKey: String = ""
+    var googleAdwordsConversionId: String = ""
+    var googleAdwordsLabel: String = ""
 }
