@@ -11,93 +11,89 @@ import CoreData
 
 class FirstLaunchInitializer: GTDataManager {
     
-    private let magicId = "temporaryRecordId"
-    private let initialPackageCodes = ["kgp", "4sl", "sat"]
+    let languagesManager = LanguagesManager()
+    let resourceCodes = ["kgp","sat","4sl"]
     
     func initializeAppState() {
+        initializeInitialLanguages()
+        initializeInitialResources()
+        extractInitialZipFiles()
+        saveInitialBanners()
+        
+        UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
+    }
+    
+    private func initializeInitialLanguages() {
+        languagesManager.loadInitialContentFromDisk()
+        let englishLanguage = findEntity(Language.self, byAttribute: "code", withValue: "en")
+        
         safelyWriteToRealm {
-            let language = initializeInitialLanguage()
-            let resources = initializeInitialResources(language: language)
-            initializeInitialTranslations(language: language, resources: resources)
+            englishLanguage?.shouldDownload = true
         }
         
-        GTSettings.shared.primaryLanguageId = magicId
+        languagesManager.setInitialPrimaryLanguage(forceEnglish: true)
     }
     
-    func cleanupInitialAppState() {
-        let predicate = NSPredicate(format: "remoteId = %@", magicId)
+    private func initializeInitialResources() {
+        DownloadedResourceManager().loadInitialContentFromDisk()
+        setResourceShouldDownload()
+    }
+    
+    private func extractInitialZipFiles() {
+        for code in resourceCodes {
+            extractZipFile(resourceCode: code)
+        }
+    }
+    
+    private func extractZipFile(resourceCode: String) {
+        let zipImporter = TranslationZipImporter()
+        let translationsManager = TranslationsManager()
+        
+        let zipFileURL = fileURLForResource(code: resourceCode)
+        let translation = translationsManager.loadTranslation(resourceCode: resourceCode,
+                                                              languageCode: "en",
+                                                              published: true)!
+
+        let zippedData = try! Data(contentsOf: zipFileURL)
+        zipImporter.handleZippedData(zipData: zippedData, translation: translation)
         
         safelyWriteToRealm {
-            realm.delete(findEntities(Translation.self, matching: predicate))
-            realm.delete(findEntities(Language.self, matching: predicate))
-            realm.delete(findEntities(DownloadedResource.self, matching: predicate))
-            
-            if GTSettings.shared.primaryLanguageId == magicId {
-                let primaryLanguageCode = Locale.preferredLanguages.first ?? "en"
-                let primaryLanguage = findEntity(Language.self, byAttribute: "code", withValue: primaryLanguageCode) ??
-                    findEntity(Language.self, byAttribute: "code", withValue: "en")
-                
-                primaryLanguage?.shouldDownload = true
-                
-                for resource in findEntities(DownloadedResource.self, matching: NSPredicate(format:"code IN %@", initialPackageCodes)) {
-                    resource.shouldDownload = true
-                }
-                
-                GTSettings.shared.primaryLanguageId = primaryLanguage?.remoteId
-            }
-            
-        }
-        sendCompletedNotification()
-    }
-    
-    private func initializeInitialLanguage() -> Language {
-        let language = Language()
-        
-        language.code = "en-US"
-        language.remoteId = magicId
-        
-        return language
-    }
-    
-    private func initializeInitialResources(language: Language?) -> [DownloadedResource] {
-        let kgp = DownloadedResource()
-        kgp.code = "kgp"
-        kgp.name = "Knowing God Personally"
-        kgp.remoteId = magicId
-        kgp.shouldDownload = true
-        
-        let fourlaws = DownloadedResource()
-        fourlaws.code = "4sl"
-        fourlaws.name = "Four Spiritual Laws"
-        fourlaws.remoteId = magicId
-        fourlaws.shouldDownload = true
-        
-        let satisfied = DownloadedResource()
-        satisfied.code = "satisfied"
-        satisfied.name = "Satisfied?"
-        satisfied.remoteId = magicId
-        satisfied.shouldDownload = true
-        
-        return [kgp, fourlaws, satisfied]
-    }
-    
-    private func initializeInitialTranslations(language: Language,
-                                               resources: [DownloadedResource]) {
-        for resource in resources {
-            let translation = Translation()
-            
-            translation.remoteId = magicId
-            translation.isPublished = true
             translation.isDownloaded = true
-            translation.version = 0
-            translation.localizedName = resource.name
-            
-            language.translations.append(translation)
-            resource.translations.append(translation)
         }
     }
     
-    private func sendCompletedNotification() {
-        NotificationCenter.default.post(name: .initialAppStateCleanupCompleted, object: nil)
+    private func saveInitialBanners() {
+        let bannerManager = BannerManager()
+        
+        for code in resourceCodes {
+            let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: code)!
+            let homeBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.bannerRemoteId!)
+            let aboutBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.aboutBannerRemoteId!)
+
+            let homeBannerSHA = homeBanner!.sha!
+            let homeBannerURL = Bundle.main.url(forResource: homeBannerSHA, withExtension: "png")!
+            let homeBannerData = try! Data(contentsOf: homeBannerURL)
+            bannerManager.saveImageToDisk(homeBannerData, attachment: homeBanner!)
+            
+            let aboutBannerURL = Bundle.main.url(forResource: aboutBanner!.sha!, withExtension: "png")!
+            let aboutBannerData = try! Data(contentsOf: aboutBannerURL)
+            bannerManager.saveImageToDisk(aboutBannerData, attachment: aboutBanner!)
+
+        }
+    }
+    
+    private func fileURLForResource(code: String) -> URL {
+        let pathToZip = Bundle.main.path(forResource: code, ofType: "zip")!
+        let zipFileURL = URL(fileURLWithPath: pathToZip)
+        return zipFileURL
+    }
+    
+    private func setResourceShouldDownload() {
+        safelyWriteToRealm {
+            for resourceCode in resourceCodes {
+                let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: resourceCode)
+                resource?.shouldDownload = true
+            }
+        }
     }
 }

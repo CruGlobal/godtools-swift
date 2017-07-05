@@ -24,6 +24,30 @@ class LanguagesManager: GTDataManager {
         serializer.registerResource(LanguageResource.self)
     }
     
+    func loadDevicePreferredLanguageFromDisk() -> Language? {
+        if let preferredLanguageCode = Locale.preferredLanguages.first {
+            if let preferredLanguage = loadFromDisk(code: preferredLanguageCode) {
+                return preferredLanguage
+            }
+        }
+        
+        if let localeCode = Locale.current.languageCode {
+            return loadFromDisk(code: localeCode)
+        }
+
+        return nil
+    }
+    
+    func loadNonEnglishPreferredLanguageFromDisk() -> Language? {
+        let devicePreferredLanguage = loadDevicePreferredLanguageFromDisk()
+        
+        if devicePreferredLanguage?.code == "en" {
+            return nil
+        }
+
+        return devicePreferredLanguage
+    }
+    
     func loadFromDisk(id: String) -> Language? {
         return findEntityByRemoteId(Language.self, remoteId: id)
     }
@@ -70,6 +94,14 @@ class LanguagesManager: GTDataManager {
             .always {
                 self.hideNetworkIndicator()
         }
+    }
+    
+    func loadInitialContentFromDisk() {
+        let languagesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "languages", ofType: "json")!)
+        let languagesData = try! Data(contentsOf: languagesPath)
+        let languagesDeserialized = try! serializer.deserializeData(languagesData).data as! [LanguageResource]
+        
+        saveToDisk(languagesDeserialized)
     }
     
     func recordLanguageShouldDownload(language: Language) {
@@ -121,6 +153,29 @@ class LanguagesManager: GTDataManager {
 
         } else {
             GTSettings.shared.parallelLanguageId = id
+        }
+    }
+    
+    func setInitialPrimaryLanguage(forceEnglish: Bool = false) {
+        safelyWriteToRealm {
+            if !forceEnglish {
+                if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
+                    GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+                    preferredLanguage.shouldDownload = true
+                    return
+                }
+            }
+            if let english = loadFromDisk(code: "en") {
+                english.shouldDownload = true
+                GTSettings.shared.primaryLanguageId = english.remoteId
+            }
+        }
+    }
+
+    func setPrimaryLanguageForInitialDeviceLanguageDownload() {
+        if !UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey) {
+            setInitialPrimaryLanguage()
+            UserDefaults.standard.set(true, forKey: GTConstants.kDownloadDeviceLocaleKey)
         }
     }
     

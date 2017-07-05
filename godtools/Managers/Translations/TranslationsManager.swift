@@ -39,4 +39,10 @@ class TranslationsManager: GTDataManager {
             }
         }
     }
+    
+    func loadTranslation(resourceCode: String, languageCode: String, published: Bool) -> Translation? {
+        let predicate = NSPredicate(format: "language.code = %@ AND downloadedResource.code = %@", languageCode, resourceCode )
+        
+        return findEntity(Translation.self, matching: predicate)
+    }
 }

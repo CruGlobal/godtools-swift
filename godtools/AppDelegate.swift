@@ -17,20 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var flowController: BaseFlowController?
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self, Answers.self])
-        self.startFlowController(launchOptions: launchOptions)
-        
-        self.initalizeAppState()
-            .always {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
         
         #if DEBUG
             print(NSHomeDirectory())
         #endif
         
+        self.initalizeAppState()
+            .always {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+                
         return true
     }
     
@@ -58,32 +57,49 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Flow controllers setup
     
-    func startFlowController(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    func startFlowController() {
         self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = PlatformFlowController(window: self.window!, launchOptions: launchOptions)
+        self.flowController = PlatformFlowController(window: self.window!)
         self.window?.makeKeyAndVisible()
     }
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState() -> Promise<Any> {        
-        if !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey) {
-            initializeAppStateOnFirstLaunch()
+    private func initalizeAppState() -> Promise<Any> {
+        let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
+        let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
+        
+        let languagesManager = LanguagesManager()
+        
+        if isFirstLaunch {
+            FirstLaunchInitializer().initializeAppState()
+        } else {
+            self.startFlowController()
         }
         
-        return LanguagesManager().loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+        return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
-        }.then { (resources) -> Promise<DownloadedResources> in
-
-            FirstLaunchInitializer().cleanupInitialAppState()
-            TranslationZipImporter().catchupMissedDownloads()
-            return Promise(value: resources)
+            }.then { (resources) -> Promise<DownloadedResources> in
+                if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
+                    self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
+                } else if isFirstLaunch {
+                    languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
+                    TranslationZipImporter().catchupMissedDownloads()
+                } else {
+                    TranslationZipImporter().catchupMissedDownloads()
+                }
+                
+                return Promise(value: resources)
+            }.catch(execute: { (error) in
+                if isFirstLaunch {
+                    self.startFlowController()
+                    self.flowController?.showDeviceLocaleDownloadFailedAlert()
+                }
+            }).always {
+                if self.flowController == nil {
+                    self.startFlowController()
+                }
         }
-    }
-    
-    private func initializeAppStateOnFirstLaunch() {
-        FirstLaunchInitializer().initializeAppState()
-        UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
     }
 }
 
