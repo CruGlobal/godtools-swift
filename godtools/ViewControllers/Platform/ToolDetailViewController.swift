@@ -58,20 +58,17 @@ class ToolDetailViewController: BaseViewController {
     }
     
     private func loadDescription() -> String {
-        var language: Language? = nil
         let languagesManager = LanguagesManager()
         
-        language = languagesManager.loadPrimaryLanguageFromDisk()
-        
-        if language == nil {
-            language = languagesManager.loadFromDisk(code: "en")!
+        guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
+            return resource!.descr ?? ""
         }
         
-        if language == nil {
-            return ""
+        if let translation = resource!.getTranslationForLanguage(language) {
+            return translation.localizedDescription ?? ""
         }
         
-        return resource?.getTranslationForLanguage(language!)?.localizedDescription ?? ""
+        return resource!.descr ?? ""
     }
     
     private func registerForDownloadProgressNotifications() {

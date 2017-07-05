@@ -12,6 +12,7 @@ import Spine
 class DownloadedResourceJson: Resource {
     
     var name: String?
+    var descr: String?
     var abbreviation: String?
     var copyrightDescription: String?
     var bannerId: String?
@@ -30,6 +31,7 @@ class DownloadedResourceJson: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "name" : Attribute(),
+            "descr": Attribute().serializeAs("description"),
             "abbreviation" : Attribute(),
             "translations" : ToManyRelationship(TranslationResource.self),
             "copyrightDescription": Attribute().serializeAs("attr-copyright"),
