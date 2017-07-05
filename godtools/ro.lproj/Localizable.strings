@@ -1,0 +1,84 @@
+// Onboarding
+"add_new_tools" = "Adaugă instrumente noi";
+"set_your_languages" = "Setează limba";
+"okay" = "Ok";
+"now" = "Acum";
+"later" = "Mai târziu";
+
+// Menu
+"menu_general" = "General";
+"menu_share" = "Distribuie";
+"menu_legal" = "Juridic";
+"language_settings" = "Setări de limbă";
+// Tool Detail
+"about" = "Despre noi";
+"help" = "Ajutor";
+"contact_us" = "Contactează-ne";
+"notifications" = "Notificări";
+"preview_mode_translators_only" = "Mod previzualizare (doar traducători)";
+"share_god_tools" = "Distribuie GodTools";
+"share_a_story_with_us" = "Împărtășește o poveste cu noi";
+"terms_of_use" = "Condiții de utilizare";
+"privacy_policy" = "Politica de confidențialitate";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "De aici poți descărca aplicația GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Adaugă instrumente";
+
+"total_views" = "%d vizualizări";
+"total_languages" = "%d limbi";
+
+// Language Settings
+"primary_language" = "Limba principală";
+"select_primary_language" = "Selectează o limbă principală";
+"parallel_language" = "Limbă secundară";
+"select_parallel_language" = "Selectează o limbă secundară";
+"share_god_tools_native_language" = "Distribuie God Tools unei persoane în limba nativă a acesteia";
+"not_every_tool_is_available" = "Nu toate instrumentele sunt disponibile în toate limbile";
+
+// Settings
+"settings" = "Setări";
+
+// Alert Controllers
+"download_error" = "Eroare de descărcare";
+"language_download_error" = "Limbile disponibile nu au putut fi descărcate în acest moment. Verifică conexiunea sau încearcă mai târziu.";
+"tract_loading_error_message" = "A apărut o problemă la descărcarea resursei. Descărcarea din nou rezolvă deseori problema. \n\n Vrei să o descarci din nou?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
+// Actions
+"yes" = "Da";
+"no" = "Nu";
+
+// Tract - Sharing
+"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. Să discutăm mai multe!";
+
+// Buttons
+"download" = "Descarcă";
+"dismiss" = "Anulează";
+"done" = "Terminat";
+"remove" = "Elimină";
+"clear" = "Șterge";
+
+// Alerts
+"error" = "Eroare";
+"ok" = "Ok";
+"error_can_not_send_email" = "Nu există e-mail configurat pe dispozitivul tău.";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "GodTools te ajută să-ți împărtășești credința în mod ușor și simplu.";
+"general_about_2" = "Aceste instrumente te ajută să explici celorlalți cum pot pune bazele unei relații cu Dumnezeu prin Iisus Hristos, chiar dacă nu ți-ai împărtășit credința până acum sau persoanele vorbesc o altă limbă.";
+"general_about_3" = "Alege din varietatea de instrumente pe baza preferințelor tale și a audienței. Nu toate instrumentele sunt disponibile în toate limbile.";
+"general_about_4" = "La sfârșitul fiecărui instrument sunt incluse link-uri către alte resurse.";
+"general_about_5" = "Este nevoie de conexiune online pentru a descărca fiecare instrument și/sau limbă nouă. După descărcare, acestea pot fi folosite offline.";
+"general_about_6" = "Întrebări? Sugestii? Solicitări? Contactați-ne la support@godtoolsapp.com";
+"general_about_7" = "Puteți găsi versiunea online a instrumentelor pe knowgod.com. Implementați-o pe site-ul vostru!";
+"general_about_8" = "Vizitați godtoolsapp.com pentru mai multe informații.";
+"general_about_9" = "Atunci când adopți inițiativa de a-ți împărtăși credința, nu uita că Dumnezeu este cel care schimbă inimile. Iubește fiecare persoană și ascult-o pentru a o înțelege.";
+"general_about_10" = "„Vorbirea voastră să fie totdeauna cu har, dreasă cu sare, ca să ştiţi cum trebuie să răspundeţi fiecăruia.” Coloseni 4:6";

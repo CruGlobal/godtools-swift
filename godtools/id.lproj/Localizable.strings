@@ -1,0 +1,87 @@
+// Onboarding
+"add_new_tools" = "Tambah Alat Baru";
+"set_your_languages" = "Tetapkan Bahasa Anda";
+"okay" = "Oke";
+"now" = "Sekarang";
+"later" = "Nanti";
+
+// Menu
+"menu_general" = "Umum";
+"menu_share" = "Berbagi";
+"menu_legal" = "Legal";
+"language_settings" = "Pengaturan Bahasa";
+// Tool Detail
+"about" = "Tentang";
+"help" = "Bantuan";
+"contact_us" = "Hubungi Kami";
+"notifications" = "Notifikasi";
+"preview_mode_translators_only" = "Mode Pratinjau (Hanya Penerjemah)";
+"share_god_tools" = "Berbagi GodTools";
+"share_a_story_with_us" = "Berbagi Cerita Dengan Kami";
+"terms_of_use" = "Syarat Penggunaan";
+"privacy_policy" = "Kebijakan Privasi";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools:
+http://godtoolsapp.com
+";
+
+// Add Tools
+"add_tools" = "Tambah Alat";
+
+"total_views" = "Dilihat %d";
+"total_languages" = "%d Bahasa";
+
+// Language Settings
+"primary_language" = "Bahasa Utama";
+"select_primary_language" = "Pilih Bahasa Utama";
+"parallel_language" = "Bahasa Paralel";
+"select_parallel_language" = "Pilih Bahasa Paralel";
+"share_god_tools_native_language" = "Berbagi God Tools dengan seseorang dalam bahasa asli mereka";
+"not_every_tool_is_available" = "Tidak semua alat tersedia dalam setiap bahasa";
+
+// Settings
+"settings" = "Pengaturan";
+
+// Alert Controllers
+"download_error" = "Kesalahan Unduhan";
+"language_download_error" = "Bahasa yang tersedia tidak dapat diunduh saat ini. Silakan periksa jaringan koneksi atau coba lagi nanti.";
+"tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+
+// Actions
+"yes" = "Iya";
+"no" = "Tidak";
+
+// Tract - Sharing
+"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. Mari kita bicarakan lebih lanjut!";
+
+// Buttons
+"download" = "Unduh";
+"dismiss" = "Memberhentikan";
+"done" = "Selesai";
+"remove" = "Hapus";
+"clear" = "Hapus";
+
+// Alerts
+"error" = "Kesalahan";
+"ok" = "Oke";
+"error_can_not_send_email" = "Tidak ada email yang dikonfigurasi dalam perangkat Anda.";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "GodTools membantu Anda berbagi kayakinan dalam cara yang mudah dan jelas.";
+"general_about_2" = "Alat ini akan membantu Anda dengan penuh percaya diri untuk menjelaskan kepada seseorang bagaimana mereka dapat memulai hubungan mereka dengan Tuhan melalui Yesus Kristus, bahkan jika Anda tidak pernah berbagi keyakinan sebelumnya atau berbicara dalam bahasa lain.";
+"general_about_3" = "Pilih dari berbagai jenis alat berdasarkan prefrensi dan audiens Anda. Tidak semua alat tersedia dalam setiap bahasa.";
+"general_about_4" = "Hubungkan ke sumber daya lain yang termasuk dalam setiap alat.";
+"general_about_5" = "Koneksi online dibutuhkan untuk mengunduh setiap alat dan/atau bahasa baru. Setelah diunduh, akan bisa digunakan secara offline.";
+"general_about_6" = "Pertanyaan? Saran? Permintaan? Hubungi kami di support@godtoolsapp.com";
+"general_about_7" = "Versi online alat ini dapat ditemukan di knowgod.com. Sematkan pada situs Anda!";
+"general_about_8" = "Kunjungi godtoolsapp.com untuk informasi lebih lanjut.";
+"general_about_9" = "Sewaktu Anda mengambil inisiatif untuk membagikan keyakinan Anda, ingatlah bahwa Tuhanlah yang mengubah hati. Cintai setiap orang dengan baik dengan mendengarkan untuk dapat memahami.";
+"general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\"
+Kolose 4:6";

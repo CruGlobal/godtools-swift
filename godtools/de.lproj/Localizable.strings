@@ -1,35 +1,40 @@
+// Onboarding
+"add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
+"okay" = "Okay";
+"now" = "Jetzt";
+"later" = "Später";
 
 // Menu
 "menu_general" = "Allgemein";
+"menu_share" = "Teilen";
+"menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
 // Tool Detail
-"about" = "Über uns";
-"menu_legal" = "Rechtliche Hinweise";
-// Onboarding
-"add_new_tools" = "Neue Tools hinzufügen";
+"about" = "Über";
 "help" = "Hilfe";
-"menu_share" = "Teilen";
 "contact_us" = "Kontakt";
 "notifications" = "Mitteilungen";
 "preview_mode_translators_only" = "Vorschau-Modus (für Übersetzer)";
 "share_god_tools" = "Teile GodTools";
 "share_a_story_with_us" = "Teile eine Geschichte mit uns";
 "terms_of_use" = "Nutzungsbedingungen";
+"privacy_policy" = "Datenschutzbestimmungen";
+"copyright_info" = "Copyright Hinweise";
+"share_god_tools_share_sheet_text" = "Hier kannst du die GodTools-App herunterladen: http://godtoolsapp.com";
+
 // Add Tools
 "add_tools" = "Neue Tools hinzufügen";
-
-"privacy_policy" = "Datenschutzbestimmungen";
 
 "total_views" = "%d Aufrufe";
 "total_languages" = "%d Sprachen";
 
-"select_primary_language" = "Wähle eine Hauptsprache";
 // Language Settings
 "primary_language" = "Hauptsprache";
+"select_primary_language" = "Wähle eine Hauptsprache";
 "parallel_language" = "Zweite Sprache";
-"share_god_tools_native_language" = "Teile GodTools mit jemandem in seiner Muttersprache";
 "select_parallel_language" = "Wähle eine zweite Sprache";
+"share_god_tools_native_language" = "Teile GodTools mit jemandem in seiner Muttersprache";
 "not_every_tool_is_available" = "Nicht jedes Tool ist in jeder Sprache verfügbar";
 
 // Settings
@@ -38,6 +43,17 @@
 // Alert Controllers
 "download_error" = "Fehler beim Download";
 "language_download_error" = "Die verfügbaren Sprachen konnten diesmal nicht heruntergeladen werden. Bitte überprüfe deine Internetverbindung oder versuche es später erneut.";
+"tract_loading_error_message" = "Es gab ein Problem beim Öffnen dieser Ressource. Erneutes Herunterladen löst dieses Problem oft.\n\nMöchtest du sie erneut herunterladen?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Die aktuellen deutschen Tools konnten nicht heruntergeladen werden. Die englischen Tools stehen zur Verfügung. Bitte überprüfe deine Internetverbindung oder versuche es später noch einmal.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Es können neue deutsche Tools heruntergeladen werden. \n\n Möchtest du deine Hauptsprache auf Deutsch setzen und diese Tools herunterladen?";
+
+// Actions
+"yes" = "Ja";
+"no" = "Nein";
 
 // Tract - Sharing
 "tract_share_message" ="Dieser Link bringt dich zu der Web-Version der Seite, die wir heute zusammen angeschaut haben: %@. Lass uns weiter im Gespräch bleiben.";
@@ -46,16 +62,23 @@
 "download" = "Herunterladen";
 "dismiss" = "Schließen";
 "done" = "Fertig";
+"remove" = "Entfernen";
+"clear" = "Löschen";
+
+// Alerts
+"error" = "Fehler";
+"ok" = "Ok";
+"error_can_not_send_email" = "Auf diesem Gerät ist keine E-Mail-Adresse konfiguriert.";
+"required_field_missing" = "\"%@\" ist ein Pflichtfeld.";
+
 // About
 "general_about_1" = "GodTools hilft dir, deinen Glauben einfach und verständlich mitzuteilen.";
 "general_about_2" = "Diese Tools helfen dir jemandem zu erklären, wie er/sie eine Beziehung mit Gott durch Jesus Christus anfangen kann, selbst wenn du noch nie vorher deinen Glauben mit jemandem geteilt hast oder wenn dein Gesprächspartner eine andere Sprache spricht.";
-"remove" = "Entfernen";
-
-"general_about_4" = "Weiterführende Links sind am Ende jedes Tools zu finden.";
 "general_about_3" = "Wähle aus verschiedenen Tools das Passende für dich und deinen Gesprächspartner aus. Nicht alle Tools sind in jeder Sprache verfügbar.";
+"general_about_4" = "Weiterführende Links sind am Ende jedes Tools zu finden.";
 "general_about_5" = "Eine Internetverbindung wird für den Download eines neuen Tools und/oder einer neuen Sprache benötigt. Nach einmaligem Download können sie offline verwendet werden.";
 "general_about_6" = "Fragen? Vorschläge? Wünsche? Kontaktiere uns über support@godtoolsapp.com";
-"general_about_7" = "Eine Webversion dieser Tools ist auf knowgod.com verfügbar. Binde sie in deine eigene Seite ein!";
+"general_about_7" = "Eine Online-Version dieser Tools ist auf knowgod.com zu finden. Binde sie in deine eigene Website ein!";
 "general_about_8" = "Besuche godtoolsapp.com für weitere Informationen.";
-"general_about_9" = "Wenn du ein Gespräch über deinen Glauben initiierst, erinnere dich daran, dass Gott derjenige ist, der die Herzen verändert. Liebe jede Person, indem du zuhörst, um sie zu verstehen.";
+"general_about_9" = "Wenn du ein Gespräch über deinen Glauben initiierst, vergiss nicht, dass Gott derjenige ist, der die Herzen verändert. Liebe jede Person, indem du zuhörst, um sie zu verstehen.";
 "general_about_10" = "\"Redet mit jedem Menschen freundlich; alles, was ihr sagt, soll gut und hilfreich sein. Bemüht euch darum, für jeden die richtigen Worte zu finden.\" Kolosses 4,6";

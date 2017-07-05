@@ -73,6 +73,7 @@
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
+"unavailable" = "Unavailable";
 
 // Alerts
 "error" = "Error";

@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(NSHomeDirectory())
         #endif
         
-        self.initalizeAppState(launchOptions: launchOptions)
+        self.initalizeAppState()
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
@@ -58,15 +58,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Flow controllers setup
     
-    func startFlowController(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) {
+    func startFlowController() {
         self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = PlatformFlowController(window: self.window!, launchOptions: launchOptions)
+        self.flowController = PlatformFlowController(window: self.window!)
         self.window?.makeKeyAndVisible()
     }
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState(launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Promise<Any> {
+    private func initalizeAppState() -> Promise<Any> {
         let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
         let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
         
@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if isFirstLaunch {
             FirstLaunchInitializer().initializeAppState()
         } else {
-            self.startFlowController(launchOptions: launchOptions)
+            self.startFlowController()
         }
         
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
@@ -93,13 +93,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return Promise(value: resources)
             }.catch(execute: { (error) in
                 if isFirstLaunch {
+                    self.startFlowController()
                     self.flowController?.showDeviceLocaleDownloadFailedAlert()
                 }
             }).always {
-                // if on first launch, earlier the app waited for the initial downloads to work, so the flow controller did not no start.
-                // so now, start the flow controller.
-                if isFirstLaunch {
-                    self.startFlowController(launchOptions: launchOptions)
+                if self.flowController == nil {
+                    self.startFlowController()
                 }
         }
     }

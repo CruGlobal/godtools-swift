@@ -17,6 +17,7 @@ class DownloadedResource: Object {
     dynamic var code = ""
     dynamic var copyrightDescription: String?
     dynamic var name = ""
+    dynamic var descr: String?
     dynamic var remoteId = ""
     dynamic var shouldDownload = false
     dynamic var totalViews: Int32 = 0
