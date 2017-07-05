@@ -40,6 +40,7 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.displayScreenTitle()
+        sendScreenViewNotification()
     }
     
     // MARK: - Navigation Bar
@@ -183,4 +184,18 @@ class BaseViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
 
+    // MARK: - Analytics Helpers
+    
+    private func sendScreenViewNotification() {
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName()]
+        
+        NotificationCenter.default.post(name: .screenViewNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+    }
+    func screenName() -> String {
+//        assertionFailure("method must be overriden by view controller")
+        
+        return "unknown"
+    }
 }
