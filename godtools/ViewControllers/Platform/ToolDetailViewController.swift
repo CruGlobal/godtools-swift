@@ -50,7 +50,9 @@ class ToolDetailViewController: BaseViewController {
     }
     
     private func displayButton() {
-        if resource!.shouldDownload {
+        if resource!.numberOfAvailableLanguages() == 0 {
+            mainButton.designAsUnavailableButton()
+        } else if resource!.shouldDownload {
             mainButton.designAsDeleteButton()
         } else {
             mainButton.designAsDownloadButton()
