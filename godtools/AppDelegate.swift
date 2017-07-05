@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(NSHomeDirectory())
         #endif
         
+        _ = FollowUpsManager().syncCachedFollowUps()
+        
         self.initalizeAppState()
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
