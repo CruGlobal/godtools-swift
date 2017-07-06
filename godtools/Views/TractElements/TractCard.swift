@@ -142,6 +142,7 @@ class TractCard: BaseTractElement {
         
         switch cardElement.currentAnimation {
         case .show:
+            self.cardsParentView.lastCardOpened = self
             showCardWithoutAnimation()
         case .hide:
             hideCardWithoutAnimation()
