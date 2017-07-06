@@ -209,6 +209,7 @@
 		ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B51EEAF15500A56332 /* ManifestProperties.swift */; };
 		ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B71EEAF3BA00A56332 /* XMLNode.swift */; };
 		ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194BF1EEB32FA00A56332 /* XMLPage.swift */; };
+		ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -461,6 +462,7 @@
 		ECC194B51EEAF15500A56332 /* ManifestProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManifestProperties.swift; path = TractClasses/ManifestProperties.swift; sourceTree = "<group>"; };
 		ECC194B71EEAF3BA00A56332 /* XMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLNode.swift; path = XMLManagement/XMLNode.swift; sourceTree = "<group>"; };
 		ECC194BF1EEB32FA00A56332 /* XMLPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLPage.swift; path = XMLManagement/XMLPage.swift; sourceTree = "<group>"; };
+		ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Gestures.swift"; path = "Views/TractElements/TractCards+Gestures.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1072,6 +1074,7 @@
 		ECBE2E451EF03CA400A13849 /* TractCards */ = {
 			isa = PBXGroup;
 			children = (
+				ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */,
 				ECBE2E471EF03CD500A13849 /* TractCards+ChildSetup.swift */,
 				ECBE2E491EF03F6800A13849 /* TractCards+UI.swift */,
 				0F7741DF1EBB8BF300888D20 /* TractCards+Animations.swift */,
@@ -1587,6 +1590,7 @@
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
+				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,

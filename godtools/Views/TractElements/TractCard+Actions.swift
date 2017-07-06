@@ -81,6 +81,8 @@ extension TractCard {
         
         showCardAnimation()
         enableScrollview()
+        
+        self.cardsParentView.lastCardOpened = self
     }
     
     func hideCard() {

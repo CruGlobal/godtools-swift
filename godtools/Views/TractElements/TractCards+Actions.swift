@@ -39,6 +39,7 @@ extension TractCards {
     
     func resetEnvironment() {
         changeToPreviewCards()
+        self.lastCardOpened = nil
         
         for element in elements! {
             let elementCard = element as! TractCard

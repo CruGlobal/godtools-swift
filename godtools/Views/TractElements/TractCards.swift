@@ -18,6 +18,7 @@ class TractCards: BaseTractElement {
     static let constantYPaddingTop: CGFloat = 45
     static let constantYPaddingBottom: CGFloat = 16
     static let constantYBottomSpace: CGFloat = 6
+    static let tapViewHeightConstant: CGFloat = 300
     
     override var height: CGFloat {
         get {
@@ -32,8 +33,10 @@ class TractCards: BaseTractElement {
     
     // MARK: - Dynamic settings
     
+    var tapView: UIView = UIView()
     var cardsData: [XMLIndexer]?
     var lastCard: BaseTractElement?
+    var lastCardOpened: TractCard?
     var isOnInitialPosition = true
     var animationYPos: CGFloat {
         return self.isOnInitialPosition == true ? 0.0 : -self.elementFrame.y + TractPage.navbarHeight
@@ -57,6 +60,8 @@ class TractCards: BaseTractElement {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
+        setupSwipeGestures()
+        setupPressGestures()
     }
     
     override func buildChildrenForData(_ data: [XMLIndexer]) {
