@@ -10,6 +10,7 @@ import UIKit
 
 class WebViewController: BaseViewController {
 
+    var pageTitleForAnalytics: String?
     var pageTitle: String?
     var websiteUrl: URL?
     @IBOutlet weak var webView: UIWebView!
@@ -27,6 +28,12 @@ class WebViewController: BaseViewController {
         get {
             return self.pageTitle?.localized ?? ""
         }
+    }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return self.pageTitleForAnalytics ?? ""
     }
 
 }
