@@ -23,6 +23,7 @@ extension TractViewController {
         
         self.currentPage = page
         _ = reloadPagesViews()
+        sendPageToAnalytics()
         _ = moveViews()
     }
     
@@ -35,6 +36,7 @@ extension TractViewController {
             .then { (success) -> Promise<Bool> in
                 if success {
                     _ = self.reloadPagesViews()
+                    self.sendPageToAnalytics()
                     return Promise(value: true)
                 }
                 return Promise(value: false)
@@ -50,6 +52,7 @@ extension TractViewController {
             .then { (success) -> Promise<Bool> in
                 if success == true {
                     _ = self.reloadPagesViews()
+                    self.sendPageToAnalytics()
                     return Promise(value: true)
                 }
                 return Promise(value: false)
