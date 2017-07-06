@@ -12,7 +12,7 @@ import MessageUI
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAbout()
-    mutating func openWebView(url: URL, title: String)
+    mutating func openWebView(url: URL, title: String, analyticsTitle: String)
 }
 
 class MenuViewController: BaseViewController {
@@ -77,6 +77,12 @@ class MenuViewController: BaseViewController {
     
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuViewController.menuCellIdentifier)
+    }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Menu"
     }
 
 }
@@ -210,7 +216,7 @@ extension MenuViewController {
     
     fileprivate func openHelp() {
         let url = URL(string: "http://godtoolsapp.com")
-        self.delegate?.openWebView(url: url!, title: "help".localized)
+        self.delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
     }
     
     fileprivate func contactUs() {
@@ -218,7 +224,7 @@ extension MenuViewController {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")
-            self.delegate?.openWebView(url: url!, title: "contact_us".localized)
+            self.delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
         }
     }
     
@@ -233,18 +239,18 @@ extension MenuViewController {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")
-            self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized)
+            self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
         }
     }
     
     fileprivate func openPrivacyPolicy() {
         let url = URL(string: "https://www.cru.org/about/privacy.html")
-        self.delegate?.openWebView(url: url!, title: "privacy_policy".localized)
+        self.delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
     }
     
     fileprivate func openCopyrightInfo() {
         let url = URL(string: "https://www.cru.org/about/privacy.html")
-        self.delegate?.openWebView(url: url!, title: "copyright_info".localized)
+        self.delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
     }
     
 }

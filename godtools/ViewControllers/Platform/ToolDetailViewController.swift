@@ -119,4 +119,10 @@ class ToolDetailViewController: BaseViewController {
             self.baseDelegate?.goHome()
         }
     }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Tool Info"
+    }
 }

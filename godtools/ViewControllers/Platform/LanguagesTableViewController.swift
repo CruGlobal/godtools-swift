@@ -91,6 +91,12 @@ class LanguagesTableViewController: BaseViewController {
         tableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil),
                            forCellReuseIdentifier: LanguagesTableViewController.languageCellIdentifier)
     }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Select Language"
+    }
 }
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {

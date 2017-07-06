@@ -150,7 +150,7 @@ class HomeViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        return "HomeScreen-v5"
+        return "Home"
     }
 }
 
