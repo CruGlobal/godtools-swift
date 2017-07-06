@@ -232,12 +232,10 @@ extension MenuViewController {
         let textToShare = [ "share_god_tools_share_sheet_text".localized ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
-        sendScreenViewNotification(screenName: "Share App")
     }
     
     fileprivate func shareAStoryWithUs() {
         if MFMailComposeViewController.canSendMail() {
-            sendScreenViewNotification(screenName: "Share Story")
             sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/contact.html")

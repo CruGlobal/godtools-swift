@@ -33,7 +33,7 @@ class WebViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        return self.pageTitleForAnalytics ?? ""
+        return self.pageTitleForAnalytics ?? "unknown"
     }
 
 }
