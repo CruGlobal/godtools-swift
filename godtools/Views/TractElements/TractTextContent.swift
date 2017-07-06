@@ -11,6 +11,11 @@ import UIKit
 
 class TractTextContent: BaseTractElement {
     
+    // MARK: Positions constants
+    
+    static let xTextMargin: CGFloat = 8.0
+    static let yTextMargin: CGFloat = 0.0
+    
     // MARK: - Object properties
     
     var label: GTLabel = GTLabel()
