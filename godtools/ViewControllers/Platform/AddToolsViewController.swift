@@ -61,6 +61,12 @@ class AddToolsViewController: BaseViewController {
         self.tableView.separatorStyle = .none
     }
     
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Add Tools"
+    }
+    
 }
 
 extension AddToolsViewController: ToolsManagerDelegate {

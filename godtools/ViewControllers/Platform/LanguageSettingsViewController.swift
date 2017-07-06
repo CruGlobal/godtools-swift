@@ -60,4 +60,10 @@ class LanguageSettingsViewController: BaseViewController {
         self.delegate?.moveToLanguagesList(primaryLanguage: false)
     }
     
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Language Settings"
+    }
+    
 }

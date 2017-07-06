@@ -78,6 +78,12 @@ class MenuViewController: BaseViewController {
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuViewController.menuCellIdentifier)
     }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Menu"
+    }
 
 }
 

@@ -20,4 +20,10 @@ class AboutViewController: BaseViewController {
         }
     }
     
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "About"
+    }
+    
 }
