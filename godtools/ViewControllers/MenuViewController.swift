@@ -202,6 +202,7 @@ extension MenuViewController {
     fileprivate func handleLegalSectionCellSelection(rowIndex: Int) {
         switch rowIndex {
         case 0:
+            openTermsOfUse()
             break
         case 1:
             openPrivacyPolicy()
