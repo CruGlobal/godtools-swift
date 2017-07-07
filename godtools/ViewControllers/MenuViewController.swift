@@ -202,6 +202,7 @@ extension MenuViewController {
     fileprivate func handleLegalSectionCellSelection(rowIndex: Int) {
         switch rowIndex {
         case 0:
+            openTermsOfUse()
             break
         case 1:
             openPrivacyPolicy()
@@ -215,7 +216,7 @@ extension MenuViewController {
     }
     
     fileprivate func openHelp() {
-        let url = URL(string: "http://godtoolsapp.com")
+        let url = URL(string: "http://www.godtoolsapp.com/faq")
         self.delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
     }
     
@@ -243,13 +244,18 @@ extension MenuViewController {
         }
     }
     
+    fileprivate func openTermsOfUse() {
+        let url = URL(string: "http://www.godtoolsapp.com/terms")
+        self.delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
+    }
+    
     fileprivate func openPrivacyPolicy() {
         let url = URL(string: "https://www.cru.org/about/privacy.html")
         self.delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
     }
     
     fileprivate func openCopyrightInfo() {
-        let url = URL(string: "https://www.cru.org/about/privacy.html")
+        let url = URL(string: "http://www.godtoolsapp.com/copyright")
         self.delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
     }
     
