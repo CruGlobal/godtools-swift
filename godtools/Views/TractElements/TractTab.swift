@@ -9,6 +9,11 @@
 import UIKit
 
 class TractTab: BaseTractElement {
+    
+    // MARK: Positions constants
+    
+    static let xMarginConstant: CGFloat = 0.0
+    static let yMarginConstant: CGFloat = 8.0
         
     // MARK: - Setup
     
@@ -19,6 +24,7 @@ class TractTab: BaseTractElement {
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = self.parentWidth()
+        self.elementFrame.yMarginBottom = TractTab.yMarginConstant
     }
     
     // MARK: - Helpers

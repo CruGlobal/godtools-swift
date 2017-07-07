@@ -15,7 +15,6 @@ extension TractParagraph {
         let properties = super.textStyle()
         properties.width = self.elementFrame.finalWidth()
         properties.xMargin = BaseTractElement.xMargin
-        properties.yMargin = TractParagraph.yMarginConstant
         properties.textColor = .gtWhite
         properties.textAlign = .center
         return properties
@@ -33,7 +32,6 @@ extension TractParagraph {
         let properties = super.textStyle()
         properties.width = self.elementFrame.finalWidth()
         properties.xMargin = xMargin
-        properties.yMargin = TractParagraph.yMarginConstant
         return properties
     }
     
@@ -48,6 +46,8 @@ extension TractParagraph {
         
         self.elementFrame.x = 0
         self.elementFrame.width = parentWidth()
+        self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
+        self.elementFrame.yMarginBottom = TractParagraph.yMarginConstant
         self.elementFrame.xMargin = xMargin
     }
     
@@ -55,6 +55,8 @@ extension TractParagraph {
         let width = TractModal.contentWidth
         self.elementFrame.x = (self.parent!.width - width) / CGFloat(2)
         self.elementFrame.width = width
+        self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
+        self.elementFrame.yMarginBottom = TractParagraph.yMarginConstant
     }
     
 }
