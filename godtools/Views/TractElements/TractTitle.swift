@@ -23,6 +23,7 @@ class TractTitle: BaseTractElement {
     
     override func textStyle() -> TractTextContentProperties {
         let properties = super.textStyle()
+        properties.yMargin = BaseTractElement.yMargin
         
         if BaseTractElement.isModalElement(self) {
             properties.font = .gtThin(size: 54.0)

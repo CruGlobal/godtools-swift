@@ -106,7 +106,7 @@ class TractTextContentProperties: TractProperties {
     var xMargin: CGFloat {
         get {
             if _xMargin == nil {
-                return BaseTractElement.xMargin
+                return TractTextContent.xTextMargin
             } else {
                 return _xMargin!
             }
@@ -120,7 +120,7 @@ class TractTextContentProperties: TractProperties {
     var yMargin: CGFloat {
         get {
             if _yMargin == nil {
-                return BaseTractElement.yMargin
+                return TractTextContent.yTextMargin
             } else {
                 return _yMargin!
             }

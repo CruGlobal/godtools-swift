@@ -42,6 +42,7 @@ class TractNumber: BaseTractElement {
         properties.width = TractNumber.widthConstant
         properties.height = 60.0
         properties.textAlign = .center
+        properties.yMargin = BaseTractElement.yMargin
         return properties
     }
     

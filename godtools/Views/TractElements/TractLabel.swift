@@ -56,6 +56,7 @@ class TractLabel: BaseTractElement {
         let properties = super.textStyle()
         properties.width = self.elementFrame.finalWidth()
         properties.xMargin = 0.0
+        properties.yMargin = BaseTractElement.yMargin
         
         if BaseTractElement.isFormElement(self) {
             properties.font = .gtRegular(size: 16.0)
