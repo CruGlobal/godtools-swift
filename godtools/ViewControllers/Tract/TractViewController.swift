@@ -86,9 +86,11 @@ class TractViewController: BaseViewController {
     override func configureNavigationButtons() {
         self.addHomeButton()
         
-        if self.resource?.code != "kgp-us" {
-            self.addShareButton()
+        if self.resource?.code == nil || GTSettings.ignoredTools.contains(self.resource!.code) {
+            return
         }
+        
+        self.addShareButton()
     }
 
     override func displayScreenTitle() {
