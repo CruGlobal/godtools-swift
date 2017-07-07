@@ -77,10 +77,12 @@ extension TractViewController {
     }
     
     func usePrimaryLanguageResources() {
+        self.selectedLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         self.xmlPages = self.xmlPagesForPrimaryLang
     }
     
     func useParallelLanguageResources() {
+        self.selectedLanguage = languagesManager.loadParallelLanguageFromDisk()
         self.xmlPages = self.xmlPagesForParallelLang
     }
     

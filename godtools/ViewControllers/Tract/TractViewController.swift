@@ -15,6 +15,7 @@ import PromiseKit
 class TractViewController: BaseViewController {
     
     let languagesManager = LanguagesManager()
+    var selectedLanguage: Language?
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
@@ -84,6 +85,11 @@ class TractViewController: BaseViewController {
     
     override func configureNavigationButtons() {
         self.addHomeButton()
+        
+        if self.resource?.code == nil || GTSettings.ignoredTools.contains(self.resource!.code) {
+            return
+        }
+        
         self.addShareButton()
     }
 
@@ -190,7 +196,13 @@ class TractViewController: BaseViewController {
     }
     
     override func shareButtonAction() {
-        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, "www.knowgod.com")], applicationActivities: nil)
+        let languageCode = self.selectedLanguage?.code ?? "en"
+        guard let resourceCode = self.resource?.code else {
+            return
+        }
+        
+        let path = "www.knowgod.com/\(languageCode)/\(resourceCode)/\(self.currentPage)"
+        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, path)], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
     
