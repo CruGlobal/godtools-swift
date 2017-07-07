@@ -23,9 +23,19 @@ extension TractButton {
                 }
             }
         } else if properties.type == .url {
-            if let url = URL(string: properties.url) {
+            let propertiesString = properties.url
+            let stringWithProtocol = prependProtocolToURLStringIfNecessary(propertiesString)
+            if let url = URL(string: stringWithProtocol) {
                 UIApplication.shared.openURL(url)
             }
         }
+    }
+    
+    private func prependProtocolToURLStringIfNecessary(_ original: String) -> String {
+        if original.hasPrefix("http://") || original.hasPrefix("https://") {
+            return original
+        }
+        
+        return "http://\(original)"
     }
 }
