@@ -44,7 +44,7 @@ extension TractCard {
         let width = self.scrollView.frame.size.width - 6.0
         let height: CGFloat = TractCard.transparentViewHeight
         let xPosition: CGFloat = 3.0
-        let yPosition = self.scrollView.frame.size.height - height - 1.0
+        let yPosition = self.scrollView.frame.size.height - height
         let transparentViewFrame = CGRect(x: xPosition, y: yPosition, width: width, height: height)
         let transparentView = UIView(frame: transparentViewFrame)
         transparentView.backgroundColor = .clear
@@ -60,7 +60,7 @@ extension TractCard {
     func setupScrollView() {
         let width = self.elementFrame.finalWidth() - (TractCard.shadowPaddingConstant * CGFloat(2))
         let xPosition = (self.elementFrame.finalWidth() - width) / CGFloat(2)
-        let height = self.bounds.size.height
+        let height = self.bounds.size.height - 1.0
         let scrollViewFrame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
         
         self.scrollView.contentSize = CGSize(width: width, height: self.internalHeight)
