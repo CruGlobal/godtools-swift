@@ -60,7 +60,7 @@ extension TractCards {
                 elementCard.showCard()
                 
                 
-                if elementCard == elements?.last {
+                if elementCard == self.lastCard {
                     showCallToAction()
                 } else {
                     hideCallToAction()
