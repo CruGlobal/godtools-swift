@@ -47,6 +47,7 @@ extension TractParagraph {
         self.elementFrame.x = 0
         self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
+        self.elementFrame.yMarginBottom = TractParagraph.yMarginConstant
         self.elementFrame.xMargin = xMargin
     }
     
@@ -55,6 +56,7 @@ extension TractParagraph {
         self.elementFrame.x = (self.parent!.width - width) / CGFloat(2)
         self.elementFrame.width = width
         self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
+        self.elementFrame.yMarginBottom = TractParagraph.yMarginConstant
     }
     
 }
