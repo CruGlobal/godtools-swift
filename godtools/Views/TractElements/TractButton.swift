@@ -51,7 +51,7 @@ class TractButton: BaseTractElement {
     override func loadFrameProperties() {
         self.elementFrame.x = 0.0
         self.elementFrame.width = parentWidth()
-        self.elementFrame.yMarginTop = TractButton.standardMarginConstant
+        self.elementFrame.yMarginTop = 0
     }
     
     override func render() -> UIView {
