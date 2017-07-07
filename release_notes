@@ -1,7 +1,3 @@
-- Adds basic Google Analytics (only HomeScreen. all others are "unknown")
-- Adds AdWords tracking
-- Submits cached follow-ups, either taken off-line or retry those failed on initial submission
-- Fixes hero sections that are covered up by cards
-- Bundle initial English KGP, fourlaws and Satisfied with app
-- Adds many language localizations
-- Shows alert to device owners with non-English locales when initial localized content fails, and again when it can be done. (Shown one time each)
+- Reduces text spacing for plain text elements, those not inside a paragraph
+- Updates links for terms of use, copyright, help/faq
+- Adds analytics screen names for full app
