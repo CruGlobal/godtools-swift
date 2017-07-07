@@ -28,11 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         _ = FollowUpsManager().syncCachedFollowUps()
         
+        self.startFlowController()
+        
         self.initalizeAppState()
             .always {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-                
+        
         return true
     }
     
@@ -76,8 +78,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if isFirstLaunch {
             FirstLaunchInitializer().initializeAppState()
-        } else {
-            self.startFlowController()
         }
         
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
@@ -95,14 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return Promise(value: resources)
             }.catch(execute: { (error) in
                 if isFirstLaunch {
-                    self.startFlowController()
                     self.flowController?.showDeviceLocaleDownloadFailedAlert()
                 }
-            }).always {
-                if self.flowController == nil {
-                    self.startFlowController()
-                }
-        }
+            })
     }
 }
 
