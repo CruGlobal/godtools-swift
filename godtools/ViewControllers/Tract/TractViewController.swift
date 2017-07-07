@@ -85,7 +85,10 @@ class TractViewController: BaseViewController {
     
     override func configureNavigationButtons() {
         self.addHomeButton()
-        self.addShareButton()
+        
+        if self.resource?.code != "kgp-us" {
+            self.addShareButton()
+        }
     }
 
     override func displayScreenTitle() {
