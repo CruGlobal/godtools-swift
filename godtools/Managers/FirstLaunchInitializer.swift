@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import Crashlytics
 
 class FirstLaunchInitializer: GTDataManager {
     
@@ -20,6 +21,7 @@ class FirstLaunchInitializer: GTDataManager {
         extractInitialZipFiles()
         saveInitialBanners()
         
+        deleteLegacyFiles()
         UserDefaults.standard.set(true, forKey: GTConstants.kFirstLaunchKey)
     }
     
@@ -94,6 +96,18 @@ class FirstLaunchInitializer: GTDataManager {
                 let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: resourceCode)
                 resource?.shouldDownload = true
             }
+        }
+    }
+    
+    private func deleteLegacyFiles() {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let documentsURL = URL(fileURLWithPath: documentsPath)
+        let legacyFilesFolder = documentsURL.appendingPathComponent("Packages", isDirectory: true)
+        
+        do {
+            try FileManager.default.removeItem(at: legacyFilesFolder)
+        } catch {
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error removing legacy files folder."])
         }
     }
 }
