@@ -40,7 +40,7 @@ class HomeViewController: BaseViewController {
         self.defineObservers()
         addRefreshControl()
         
-        if LanguagesManager().loadPrimaryLanguageFromDisk() == nil {
+        if onboardingShouldDisplay() {
             self.displayOnboarding()
         }
     }
@@ -145,8 +145,15 @@ class HomeViewController: BaseViewController {
         let onboardingViewController = OnboardingViewController(nibName: String(describing:OnboardingViewController.self), bundle: nil)
         onboardingViewController.modalPresentationStyle = .overCurrentContext
         self.present(onboardingViewController, animated: true, completion: nil)
+        UserDefaults.standard.set(true, forKey: GTConstants.kOnboardingScreensShownKey)
     }
 
+    private func onboardingShouldDisplay() -> Bool {
+        let hasAlreadyShown = UserDefaults.standard.bool(forKey: GTConstants.kOnboardingScreensShownKey)
+        
+        return !hasAlreadyShown
+    }
+    
     // MARK: - Analytics
     
     override func screenName() -> String {
