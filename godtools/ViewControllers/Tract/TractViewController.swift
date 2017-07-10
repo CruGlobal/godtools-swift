@@ -157,7 +157,11 @@ class TractViewController: BaseViewController {
     }
     
     @objc fileprivate func setupNavigationBarFrame() {
-        let navigationBar = navigationController!.navigationBar
+        guard let navController = navigationController else {
+            return
+        }
+        
+        let navigationBar = navController.navigationBar
         
         let xOrigin: CGFloat = 0.0
         let yOrigin: CGFloat = 0.0
