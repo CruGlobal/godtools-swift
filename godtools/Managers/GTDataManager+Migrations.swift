@@ -12,7 +12,7 @@ import RealmSwift
 extension GTDataManager {
     static func config() -> Realm.Configuration  {
         return Realm.Configuration(
-            schemaVersion: 4,
+            schemaVersion: 5,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
@@ -35,6 +35,16 @@ extension GTDataManager {
                 if oldSchemaVersion < 4 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
                         new!["descr"] = nil
+                    })
+                }
+                
+                if oldSchemaVersion < 5 {
+                    migration.enumerateObjects(ofType: Language.className(), { (old, new) in
+                        let stringId = old!["remoteId"] as! String
+                        
+                        if stringId == "38" {
+                            migration.delete(old!)
+                        }
                     })
                 }
         })
