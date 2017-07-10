@@ -7,14 +7,14 @@
 */
 
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "Yeni Araçlar Ekle";
+"set_your_languages" = "Dillerinizi Ayarlayın";
+"okay" = "Tamam";
+"now" = "Şimdi";
+"later" = "Daha Sonra";
 
 // Menu
-"menu_general" = "General";
+"menu_general" = "Genel";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
@@ -72,7 +72,7 @@
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
-"unavailable" = "Unavailable";
+"unavailable" = "Mevcut Değil";
 
 // Alerts
 "error" = "Error";
