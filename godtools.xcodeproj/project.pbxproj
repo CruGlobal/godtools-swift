@@ -467,6 +467,13 @@
 		ECD344F51F13FC3F00906471 /* te-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "te-IN"; path = "te-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECD344F61F1401BF00906471 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECD344F81F14089D00906471 /* sr-RS */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sr-RS"; path = "sr-RS.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD344F91F1412D000906471 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344FA1F1419A000906471 /* th-TH */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "th-TH"; path = "th-TH.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD344FB1F1419CE00906471 /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344FC1F141A0100906471 /* zh-Hans-CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans-CN"; path = "zh-Hans-CN.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD344FD1F141A1900906471 /* sw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sw; path = sw.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344FE1F141A2600906471 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD344FF1F141A4700906471 /* tr-TR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "tr-TR"; path = "tr-TR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Gestures.swift"; path = "Views/TractElements/TractCards+Gestures.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1284,6 +1291,13 @@
 				"te-IN",
 				sl,
 				"sr-RS",
+				da,
+				"th-TH",
+				fil,
+				"zh-Hans-CN",
+				sw,
+				"pt-PT",
+				"tr-TR",
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1687,6 +1701,13 @@
 				ECD344F51F13FC3F00906471 /* te-IN */,
 				ECD344F61F1401BF00906471 /* sl */,
 				ECD344F81F14089D00906471 /* sr-RS */,
+				ECD344F91F1412D000906471 /* da */,
+				ECD344FA1F1419A000906471 /* th-TH */,
+				ECD344FB1F1419CE00906471 /* fil */,
+				ECD344FC1F141A0100906471 /* zh-Hans-CN */,
+				ECD344FD1F141A1900906471 /* sw */,
+				ECD344FE1F141A2600906471 /* pt-PT */,
+				ECD344FF1F141A4700906471 /* tr-TR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

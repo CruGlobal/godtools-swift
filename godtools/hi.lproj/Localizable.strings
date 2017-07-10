@@ -20,7 +20,7 @@
 "share_a_story_with_us" = "हमसे कोई कहानी शेयर करें";
 "terms_of_use" = "प्रयोग की शर्तें";
 "privacy_policy" = "निजता नीति";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "कॉपीराइट सूचना";
 "share_god_tools_share_sheet_text" = "यहां आप GodTools ऐप डाउनलोड कर सकते हैं: http://godtoolsapp.com";
 
 // Add Tools
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "इस संसाधन को खोलने में एक समस्या आई। इसे दुबारा डाउनलोड करना अक्सर समस्या का समाधान कर देता है।\n\nक्या आप इसे दुबारा डाउनलोड करना चाहते हैं?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "नवीनतम अंग्रेजी के टूल्स अभी डाउनलोड नहीं किए जा सके। अंग्रेजी के टूल्स उपलब्ध हैं। अपना कनेक्शन जांचें या बाद में दुबारा प्रयास करें।";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं। \n\n क्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
 
 // Actions
 "yes" = "हां";
@@ -64,12 +64,13 @@
 "done" = "पूरा हुआ";
 "remove" = "हटाएं";
 "clear" = "साफ करें";
+"unavailable" = "अनुपलब्ध";
 
 // Alerts
 "error" = "त्रुटि";
 "ok" = "ठीक";
 "error_can_not_send_email" = "आपके डिवाइस पर कोई भी ईमेल कनफिगर नहीं है।";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" एक आवश्यक फील्ड है।";
 
 // About
 "general_about_1" = "GodTools आपको अपने विश्वास/धर्म को आसान और साफ तरीके शेयर करने में मदद करता है।";

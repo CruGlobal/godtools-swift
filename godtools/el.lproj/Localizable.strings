@@ -10,7 +10,6 @@
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
-// Tool Detail
 "about" = "Σχετικά";
 "help" = "Βοήθεια";
 "contact_us" = "Επικοινωνήστε μαζί μας";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
 "terms_of_use" = "Όροι χρήσης";
 "privacy_policy" = "Πολιτική Απορρήτου";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Στοιχεία πνευματικών δικαιωμάτων";
 "share_god_tools_share_sheet_text" = "Εδώ μπορείτε να κατεβάσετε την εφαρμογή Θεϊκών Εργαλείων: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Προσθέστε Εργαλεία";
 
+// Tool Detail
 "total_views" = "%d προβολές";
 "total_languages" = "%d γλώσσες";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Παρουσιάστηκε πρόβλημα κατά το άνοιγμα αυτού του πόρου. Η λήψη του ξανά συχνά επιλύει αυτό το πρόβλημα.\n\nΘα θέλατε να τον κατεβάσετε ξανά;";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Δεν ήταν δυνατή η λήψη των πιο πρόσφατων εργαλείων Ελληνικών αυτήν τη στιγμή. Εργαλεία Ελληνικών είναι διαθέσιμα. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Μπορείτε να κατεβάσετε τα πιο πρόσφατα εργαλεία Ελληνικών. \n\n Θέλετε να ορίσετε ως κύρια γλώσσα σας τα Ελληνικά και να κατεβάσετε αυτά τα μέσα;";
 
 // Actions
 "yes" = "Ναι";
@@ -64,12 +64,13 @@
 "done" = "Έγινε";
 "remove" = "Αφαίρεση";
 "clear" = "Καθαρισμός";
+"unavailable" = "Μη διαθέσιμο";
 
 // Alerts
 "error" = "Σφάλμα";
 "ok" = "Ok";
 "error_can_not_send_email" = "Δεν υπάρχει διαμορφωμένο email στη συσκευή σας.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" είναι απαιτούμενο πεδίο.";
 
 // About
 "general_about_1" = "Τα Θεϊκά Εργαλεία σας βοηθούν να μοιράζεστε την πίστη σας με έναν εύκολο και ξεκάθαρο τρόπο.";
