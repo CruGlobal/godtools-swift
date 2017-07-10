@@ -96,9 +96,9 @@
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
-		4F123FB11F140F1000309DAD /* 4sl.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* 4sl.zip */; };
+		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
 		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
-		4F123FB31F140F1000309DAD /* sat.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* sat.zip */; };
+		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
 		4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95821EA7B05D007B47DB /* LanguageResource.swift */; };
 		4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */; };
@@ -312,9 +312,9 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		4F123FAE1F140F1000309DAD /* 4sl.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = 4sl.zip; path = InitialContent/4sl.zip; sourceTree = "<group>"; };
+		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
 		4F123FAF1F140F1000309DAD /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
-		4F123FB01F140F1000309DAD /* sat.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = sat.zip; path = InitialContent/sat.zip; sourceTree = "<group>"; };
+		4F123FB01F140F1000309DAD /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };
 		4F1C95701EA70582007B47DB /* LanguagesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguagesManager.swift; path = Managers/LanguagesManager.swift; sourceTree = "<group>"; };
 		4F1C95821EA7B05D007B47DB /* LanguageResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LanguageResource.swift; path = Managers/LanguageResource.swift; sourceTree = "<group>"; };
 		4F1C95991EA7E859007B47DB /* DownloadedResourceJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResourceJson.swift; path = Managers/DownloadResources/DownloadedResourceJson.swift; sourceTree = "<group>"; };
@@ -964,9 +964,9 @@
 		4F84954C1F069C8B0015A6BB /* InitialContent */ = {
 			isa = PBXGroup;
 			children = (
-				4F123FAE1F140F1000309DAD /* 4sl.zip */,
+				4F123FAE1F140F1000309DAD /* fourlaws.zip */,
 				4F123FAF1F140F1000309DAD /* kgp.zip */,
-				4F123FB01F140F1000309DAD /* sat.zip */,
+				4F123FB01F140F1000309DAD /* satisfied.zip */,
 				4F8495951F06E6BE0015A6BB /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.png */,
 				4F8495961F06E6BE0015A6BB /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png */,
 				4F8495971F06E6BE0015A6BB /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png */,
@@ -1296,7 +1296,7 @@
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				68C0A3841ED4C65400CC97A3 /* config.plist in Resources */,
 				ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */,
-				4F123FB11F140F1000309DAD /* 4sl.zip in Resources */,
+				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				4F8495A01F06E6BE0015A6BB /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.png in Resources */,
@@ -1323,7 +1323,7 @@
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
-				4F123FB31F140F1000309DAD /* sat.zip in Resources */,
+				4F123FB31F140F1000309DAD /* satisfied.zip in Resources */,
 				4F8495541F069CEF0015A6BB /* resources.json in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
