@@ -125,7 +125,7 @@ class LanguagesManager: GTDataManager {
             for remoteLanguage in languages {
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
                     cachedlanguage.code = remoteLanguage.code!
-                    return
+                    continue
                 }
                 
                 let newCachedLanguage = Language()
