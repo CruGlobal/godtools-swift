@@ -25,9 +25,17 @@ class TranslationsManager: GTDataManager {
     }
     
     func purgeTranslationsOlderThan(_ latest: Translation) {
+        guard let language = latest.language else {
+            return
+        }
+        
+        guard let resource = latest.downloadedResource else {
+            return
+        }
+        
         let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
-                                    latest.language!.remoteId,
-                                    latest.downloadedResource!.remoteId,
+                                    language.remoteId,
+                                    resource.remoteId,
                                     latest.version,
                                     NSNumber(booleanLiteral: latest.isDownloaded))
         
