@@ -1,11 +1,4 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
+"unavailable" = "Mevcut Değil";
 // Onboarding
 "add_new_tools" = "Yeni Araçlar Ekle";
 "set_your_languages" = "Dillerinizi Ayarlayın";
@@ -15,79 +8,78 @@
 
 // Menu
 "menu_general" = "Genel";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
-"about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"menu_share" = "Paylaş";
+"menu_legal" = "Yasal";
+"language_settings" = "Dil Ayarları";
+// Tool Detail
+"about" = "Hakkında";
+"help" = "Yardım";
+"contact_us" = "Bize Ulaşın";
+"notifications" = "Bildirimler";
+"preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
+"share_god_tools" = "GodTools'u Paylaş";
+"share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";
+"terms_of_use" = "Kullanım Koşulları";
+"privacy_policy" = "Gizlilik Politikası";
+"copyright_info" = "Telif Hakkı Bilgisi";
+"share_god_tools_share_sheet_text" = "Buradan GodTools uygulamasını indirebilirsiniz: http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "Araçlar Ekle";
 
-// Tool Detail
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d görüntüleme";
+"total_languages" = "%d dil";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Birincil Dil";
+"select_primary_language" = "Bir Birincil Dil Seçin";
+"parallel_language" = "Paralel Dil";
+"select_parallel_language" = "Paralel bir Dil Seçin";
+"share_god_tools_native_language" = "God Tools'u birisiyle kendi ana dilinde paylaşın";
+"not_every_tool_is_available" = "Her araç her dilde kullanıma hazır değildir";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Ayarlar";
 
 // Alert Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"download_error" = "İndirme Hatası";
+"language_download_error" = "Mevcut diller bu kez indirilemedi. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+"tract_loading_error_message" = "Bu kaynağın açılmasında bir sorun oluştu. Kaynağı tekrar indirmek genelde bu sorunu çözer.\n\nKaynağı tekrar indirmek ister misiniz?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "En güncel Türkçe araçlar bu seferlik indirilemedi. Türkçe araçlar kullanıma hazır. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Evet";
+"no" = "Hayır";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın ağ sürümüne götürecek: %@. Daha çok konuşalım!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
-"unavailable" = "Mevcut Değil";
+"download" = "İndir";
+"dismiss" = "Bırak";
+"done" = "Bitti";
+"remove" = "Kaldır";
+"clear" = "Temizle";
 
 // Alerts
-"error" = "Error";
-"ok" = "Ok";
-"error_can_not_send_email" = "There is no configured email on your device.";
-"required_field_missing" = "\"%@\" is a required field.";
+"error" = "Hata";
+"ok" = "Tamam";
+"error_can_not_send_email" = "Cihazınızda yapılandırılmış bir e-posta yok.";
+"required_field_missing" = "\"%@\" gerekli bir alandır.";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+"general_about_1" = "GodTools, inancınızı kolay ve açık bir biçimde paylaşmanıza yardımcı olur.";
+"general_about_2" = "Bu araçlar, daha önce inancınızı hiç paylaşmamış olsanız veya onlar farklı bir dil konuşuyor olsalar bile birilerine İsa Mesih aracılığıyla Tanrı'yla nasıl bir ilişki başlatabileceklerini güvenli biçimde açıklamanıza yardımcı olur.";
+"general_about_3" = "Tercihinize ve seyirci kitlenize bağlı olarak çeşitli araçların arasından seçim yapın. Her araç, her dilde mevcut değildir.";
+"general_about_4" = "Her aracın sonunda diğer kaynaklara bağlantılar eklenmiştir.";
+"general_about_5" = "Her yeni araç ve/veya dili indirmek için çevrim içi bağlantı gerekir. İndirildikten sonra bunlar çevrim dışı olarak kullanılabilir.";
+"general_about_6" = "Sorularınız, önerileriniz, talepleriniz mi var? support@godtoolsapp.com adresinden bize ulaşın";
+"general_about_7" = "Bu araçların çevrim içi versiyonu, knowgod.com adresinde bulunabilir. Bunu kendi sitenize ekleyin!";
+"general_about_8" = "Daha fazla bilgi için godtoolsapp.com adresini ziyaret edin.";
+"general_about_9" = "İnancınızı paylaşma inisiyatifi alırken, Tanrı'nın kalbi değiştiren olduğunu aklınızda bulundurun. Anlamak için dinleyerek, her kişiyi güzelce sevin.";
+"general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";

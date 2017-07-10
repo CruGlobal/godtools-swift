@@ -1,3 +1,4 @@
+"unavailable" = "خارج از دسترس";
 // Onboarding
 "add_new_tools" = "افزودن ابزار جدید";
 "set_your_languages" = "زبان خود را تنظیم کنید";
@@ -21,7 +22,8 @@
 "terms_of_use" = "شرایط استفاده";
 "privacy_policy" = "خط‌مشی حریم خصوصی";
 "copyright_info" = "اطلاعات حق نسخه‌برداری";
-"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید:
+http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "افزدون ابزار";
@@ -49,7 +51,7 @@
 "device_locale_download_error" = "در حال حاضر امکان دانلود جدیدترین ابزار انگلیسی وجود ندارد. ابزار انگلیسی در دسترس هستند. لطفاً اتصال خود را بررسی یا بعداً دوباره امتحان کنید.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "می‌توان آخرین ابزار انگلیسی را دانلود کرد. \n\nآیا مایل هستید زبان اصلی خود را روی انگلیسی تنظیم و این منابع را دانلود کنید؟";
+"device_locale_download_success" = "می‌توان آخرین ابزار انگلیسی را دانلود کرد.\n\nآیا مایل هستید زبان اصلی خود را روی انگلیسی تنظیم و این منابع را دانلود کنید؟";
 
 // Actions
 "yes" = "بله";
@@ -64,7 +66,6 @@
 "done" = "انجام شد";
 "remove" = "حذف";
 "clear" = "پاک";
-"unavailable" = "خارج از دسترس";
 
 // Alerts
 "error" = "خطا";

@@ -474,6 +474,7 @@
 		ECD344FD1F141A1900906471 /* sw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sw; path = sw.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECD344FE1F141A2600906471 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECD344FF1F141A4700906471 /* tr-TR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "tr-TR"; path = "tr-TR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD345001F142C3000906471 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Gestures.swift"; path = "Views/TractElements/TractCards+Gestures.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1298,6 +1299,7 @@
 				sw,
 				"pt-PT",
 				"tr-TR",
+				"ko-KR",
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1708,6 +1710,7 @@
 				ECD344FD1F141A1900906471 /* sw */,
 				ECD344FE1F141A2600906471 /* pt-PT */,
 				ECD344FF1F141A4700906471 /* tr-TR */,
+				ECD345001F142C3000906471 /* ko-KR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
