@@ -86,10 +86,12 @@ class HomeViewController: BaseViewController {
     }
     
     @objc private func loadLatestResources() {
-        _ = DownloadedResourceManager().loadFromRemote()
-            .then { (resources) -> Promise<Void> in
-                TranslationZipImporter().catchupMissedDownloads()
-                return Promise(value: ())
+        _ = LanguagesManager().loadFromRemote().then { (languages) -> Promise<Void> in
+            return DownloadedResourceManager().loadFromRemote()
+                .then { (resources) -> Promise<Void> in
+                    TranslationZipImporter().catchupMissedDownloads()
+                    return Promise(value: ())
+            }
             }.always {
                 self.refreshControl.endRefreshing()
                 self.reloadView()
