@@ -10,7 +10,6 @@
 "menu_share" = "Podijeli";
 "menu_legal" = "Pravno";
 "language_settings" = "Postavke jezika";
-// Tool Detail
 "about" = "O nama";
 "help" = "Pomoć";
 "contact_us" = "Kontaktirajte nas";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Podijelite svoju priču s nama";
 "terms_of_use" = "Uvjeti upotrebe";
 "privacy_policy" = "Pravila privatnosti";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informacije o autorskim pravima";
 "share_god_tools_share_sheet_text" = "Aplikaciju GodTools možete preuzeti na adresi: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Dodajte alate";
 
+// Tool Detail
 "total_views" = "%d pregleda";
 "total_languages" = "%d jezika";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Postoji problem s otvaranjem ovog resursa. Ponovno preuzimanje često rješava ovaj problem.\n\n Želite li ponovno preuzeti?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Najnovije alate za engleski jezik trenutno nije moguće preuzeti. Dostupni su alati za engleski jezik. Provjerite svoju vezu ili pokušajte kasnije.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Moguće je preuzeti najnovije alate za engleski jezik.\n\n Želite li engleski jezik postaviti kao primarni jezik i preuzeti te sadržaje?";
 
 // Actions
 "yes" = "Da";
@@ -64,12 +64,13 @@
 "done" = "Gotovo";
 "remove" = "Ukloni";
 "clear" = "Očisti";
+"unavailable" = "Nedostupno";
 
 // Alerts
 "error" = "Pogreška";
 "ok" = "U redu";
 "error_can_not_send_email" = "Nema konfigurirane e-pošte na vašem uređaju";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" je obvezno polje.";
 
 // About
 "general_about_1" = "GodTools vam pomaže podijeliti vašu vjeri na jednostavan i jasan način.";

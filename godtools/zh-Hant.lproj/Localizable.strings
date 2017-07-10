@@ -20,7 +20,7 @@
 "share_a_story_with_us" = "與我們分享故事";
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "著作權資訊";
 "share_god_tools_share_sheet_text" = "您可在此下載GodTools應用程式：http://godtoolsapp.com";
 
 // Add Tools
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "下載此資源時遇到了問題。可嘗試重新下載以解決此問題。\n\n您要重新嘗試下載嗎？";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "目前無法下載最新英文工具。有英文工具可供使用。請確認您的網路已連線，或稍後再試。";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "最新的英文工具現在可以下載了。 \n\n 您想將您的主要語言設定成英文，下載這些資源嗎？";
 
 // Actions
 "yes" = "好";
@@ -64,12 +64,13 @@
 "done" = "完成";
 "remove" = "移除";
 "clear" = "清空";
+"unavailable" = "無法使用";
 
 // Alerts
 "error" = "錯誤";
 "ok" = "好";
 "error_can_not_send_email" = "您的裝置上沒有建立電子郵件帳戶。";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "必須輸入「%@」。";
 
 // About
 "general_about_1" = "GodTools幫助您以簡單清楚的方式分享您的信仰。";

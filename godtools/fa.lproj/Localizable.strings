@@ -20,9 +20,8 @@
 "share_a_story_with_us" = "یک داستان با ما به اشتراک بگذارید";
 "terms_of_use" = "شرایط استفاده";
 "privacy_policy" = "خط‌مشی حریم خصوصی";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید:
-http://godtoolsapp.com";
+"copyright_info" = "اطلاعات حق نسخه‌برداری";
+"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "افزدون ابزار";
@@ -47,10 +46,10 @@ http://godtoolsapp.com";
 "tract_loading_error_message" = "در هنگام باز کردن این منبع اشکالی به وجود آمد. معمولاً دانلود دوباره این مشکل را حل می‌کند.\n\nآیا مایلید دوباره آن را دانلود کنید؟";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "در حال حاضر امکان دانلود جدیدترین ابزار انگلیسی وجود ندارد. ابزار انگلیسی در دسترس هستند. لطفاً اتصال خود را بررسی یا بعداً دوباره امتحان کنید.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "می‌توان آخرین ابزار انگلیسی را دانلود کرد. \n\nآیا مایل هستید زبان اصلی خود را روی انگلیسی تنظیم و این منابع را دانلود کنید؟";
 
 // Actions
 "yes" = "بله";
@@ -65,12 +64,13 @@ http://godtoolsapp.com";
 "done" = "انجام شد";
 "remove" = "حذف";
 "clear" = "پاک";
+"unavailable" = "خارج از دسترس";
 
 // Alerts
 "error" = "خطا";
 "ok" = "تأیید";
 "error_can_not_send_email" = "هیچ ایمیلی روی دستگاه شما پیکربندی نشده است.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "کادر «%@» باید تکمیل شود.";
 
 // About
 "general_about_1" = "برنامه GodTools به شما کمک می‌کند ایمان خود را به شکلی راحت و صریح به اشتراک بگذارید.";

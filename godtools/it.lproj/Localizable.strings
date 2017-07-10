@@ -10,7 +10,6 @@
 "menu_share" = "Condividi";
 "menu_legal" = "Legale";
 "language_settings" = "Impostazioni della lingua";
-// Tool Detail
 "about" = "Informazioni";
 "help" = "Assistenza";
 "contact_us" = "Contattaci";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Condividi con noi una storia";
 "terms_of_use" = "Condizioni d'utilizzo";
 "privacy_policy" = "Informativa sulla privacy";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informazioni sul copyright";
 "share_god_tools_share_sheet_text" = "Qui puoi scaricare l'app GodTools: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Aggiungi strumenti";
 
+// Tool Detail
 "total_views" = "%d visualizzazioni";
 "total_languages" = "%d lingue";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Si è verificato un problema in fase di apertura della risorsa. Il problema è normalmente risolvibile effettuando nuovamente il download. \n\nPuoi effettuare di nuovo il download?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Non è attualmente possibile scaricare i nuovi strumenti in italiano. Sono disponibili gli strumenti in inglese. Verifica di essere collegato a Internet e riprova.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "I nuovi strumenti in italiano sono ora disponibili per il download. \n\n Vuoi impostare l'italiano come lingua principale e scaricare queste risorse?";
 
 // Actions
 "yes" = "Sì";
@@ -64,12 +64,13 @@
 "done" = "Fatto";
 "remove" = "Rimuovi";
 "clear" = "Elimina";
+"unavailable" = "Non disponibile";
 
 // Alerts
 "error" = "Errore";
 "ok" = "OK";
 "error_can_not_send_email" = "Non è stata configurata nessuna e-mail sul dispositivo.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" è un campo obbligatorio.";
 
 // About
 "general_about_1" = "GodTools ti aiuta a condividere le tue credenze in modo facile e chiaro.";

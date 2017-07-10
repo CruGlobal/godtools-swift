@@ -20,9 +20,8 @@
 "share_a_story_with_us" = "Berbagi Cerita Dengan Kami";
 "terms_of_use" = "Syarat Penggunaan";
 "privacy_policy" = "Kebijakan Privasi";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools:
-http://godtoolsapp.com
+"copyright_info" = "Info Hak cipta";
+"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools: http://godtoolsapp.com
 ";
 
 // Add Tools
@@ -48,10 +47,10 @@ http://godtoolsapp.com
 "tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Alat Bahasa Inggris tidak dapat diunduh saat ini. Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh. \n\n Apakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
 
 // Actions
 "yes" = "Iya";
@@ -66,12 +65,13 @@ http://godtoolsapp.com
 "done" = "Selesai";
 "remove" = "Hapus";
 "clear" = "Hapus";
+"unavailable" = "Tidak tersedia";
 
 // Alerts
 "error" = "Kesalahan";
 "ok" = "Oke";
 "error_can_not_send_email" = "Tidak ada email yang dikonfigurasi dalam perangkat Anda.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" wajib diisi.";
 
 // About
 "general_about_1" = "GodTools membantu Anda berbagi kayakinan dalam cara yang mudah dan jelas.";
@@ -83,5 +83,4 @@ http://godtoolsapp.com
 "general_about_7" = "Versi online alat ini dapat ditemukan di knowgod.com. Sematkan pada situs Anda!";
 "general_about_8" = "Kunjungi godtoolsapp.com untuk informasi lebih lanjut.";
 "general_about_9" = "Sewaktu Anda mengambil inisiatif untuk membagikan keyakinan Anda, ingatlah bahwa Tuhanlah yang mengubah hati. Cintai setiap orang dengan baik dengan mendengarkan untuk dapat memahami.";
-"general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\"
-Kolose 4:6";
+"general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\" Kolose 4:6";

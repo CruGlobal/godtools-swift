@@ -10,7 +10,6 @@
 "menu_share" = "Chia sẻ";
 "menu_legal" = "Hợp pháp";
 "language_settings" = "Các thiết lập ngôn ngữ";
-// Tool Detail
 "about" = "Giới thiệu về";
 "help" = "Trợ giúp";
 "contact_us" = "Liên hệ chúng tôi";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Chia sẻ một Câu chuyện với Chúng tôi";
 "terms_of_use" = "Điều khoản Sử dụng";
 "privacy_policy" = "Chính sách Quyền riêng tư";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Thông tin Bản quyền";
 "share_god_tools_share_sheet_text" = "Tại đây bạn có thể tải về ứng dụng GodTools. http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Thêm Công cụ";
 
+// Tool Detail
 "total_views" = "%d lượt xem";
 "total_languages" = "%d ngôn ngữ";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Đã xảy ra lỗi khi mở nguồn này. Tải nó về lần nữa sẽ giải quyết được vấn đề này.\n\nBạn có muốn tải nó về lần nữa không?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Không thể tải về các công cụ tiếng Việt mới nhất vào lúc này. Các công cụ tiếng Anh luôn sẵn có. Xin hãy kiểm tra kết nối của bạn hoặc thử lại sau.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất. \n\n Bạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
 
 // Actions
 "yes" = "Có";
@@ -64,12 +64,13 @@
 "done" = "Đã xong";
 "remove" = "Loại bỏ";
 "clear" = "Rõ ràng";
+"unavailable" = "Không sẵn có";
 
 // Alerts
 "error" = "Lỗi";
 "ok" = "Ok";
 "error_can_not_send_email" = "Không có email được cấu hình nào trên thiết bị của bạn.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" là một trường bắt buộc.";
 
 // About
 "general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo một cách dễ hiểu và dễ dàng.";

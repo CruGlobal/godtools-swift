@@ -10,7 +10,6 @@
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
-// Tool Detail
 "about" = "Perihal";
 "help" = "Bantuan";
 "contact_us" = "Hubungi Kami";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Kongsikan sebuah Kisah Bersama Kami";
 "terms_of_use" = "Terma Penggunaan";
 "privacy_policy" = "Dasar Privasi";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Maklumat Hak Cipta";
 "share_god_tools_share_sheet_text" = "Di sini anda boleh memuat turun aplikasi GodTools: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Tambah Alat";
 
+// Tool Detail
 "total_views" = "%d melihat";
 "total_languages" = "%d bahasa";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Terdapat masalah membuka sumber ini.\nMuat turunnya sekali lagi sering menyelesaikan masalah ini.\n\nAdakah anda ingin memuat turunnya sekali lagi?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Alat bahasa Melayu terkini tidak dapat dimuat turun pada masa ini. Alat bahasa Inggeris tersedia. Sila semak ketersambungan anda atau cuba semula kemudian.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun. \n\n Adakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
 
 // Actions
 "yes" = "Ya";
@@ -64,12 +64,13 @@
 "done" = "Selesai";
 "remove" = "Alih Keluar";
 "clear" = "Kosongkan";
+"unavailable" = "Tidak tersedia";
 
 // Alerts
 "error" = "Ralat";
 "ok" = "Ok";
 "error_can_not_send_email" = "Tiada e-mel yang dikonfigurasikan pada peranti anda.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" ialah medan yang diperlukan.";
 
 // About
 "general_about_1" = "GodTools membantu anda berkongsi kepercayaan anda dengan cara yang mudah dan jelas.";

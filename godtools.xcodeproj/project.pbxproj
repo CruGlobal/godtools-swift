@@ -462,6 +462,11 @@
 		ECC194B51EEAF15500A56332 /* ManifestProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManifestProperties.swift; path = TractClasses/ManifestProperties.swift; sourceTree = "<group>"; };
 		ECC194B71EEAF3BA00A56332 /* XMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLNode.swift; path = XMLManagement/XMLNode.swift; sourceTree = "<group>"; };
 		ECC194BF1EEB32FA00A56332 /* XMLPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLPage.swift; path = XMLManagement/XMLPage.swift; sourceTree = "<group>"; };
+		ECD344F31F13E79400906471 /* et */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = et; path = et.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344F41F13F16100906471 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344F51F13FC3F00906471 /* te-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "te-IN"; path = "te-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		ECD344F61F1401BF00906471 /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ECD344F81F14089D00906471 /* sr-RS */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "sr-RS"; path = "sr-RS.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Gestures.swift"; path = "Views/TractElements/TractCards+Gestures.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1274,6 +1279,11 @@
 				cs,
 				sk,
 				de,
+				et,
+				ja,
+				"te-IN",
+				sl,
+				"sr-RS",
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1672,6 +1682,11 @@
 				4F1F09DF1F0A98D400757879 /* cs */,
 				4F1F09E01F0A98DB00757879 /* sk */,
 				4F1F09E11F0A9AD900757879 /* de */,
+				ECD344F31F13E79400906471 /* et */,
+				ECD344F41F13F16100906471 /* ja */,
+				ECD344F51F13FC3F00906471 /* te-IN */,
+				ECD344F61F1401BF00906471 /* sl */,
+				ECD344F81F14089D00906471 /* sr-RS */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

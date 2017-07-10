@@ -10,7 +10,6 @@
 "menu_share" = "Partager";
 "menu_legal" = "Légal";
 "language_settings" = "Paramètres de langue";
-// Tool Detail
 "about" = "À propos";
 "help" = "Aide";
 "contact_us" = "Nous contacter";
@@ -21,12 +20,12 @@
 "terms_of_use" = "Conditions d'utilisation";
 "privacy_policy" = "Politique de confidentialité";
 "copyright_info" = "Copyright Détails";
-"share_god_tools_share_sheet_text" = "Vous pouvez télécharger l'application GodTools ici :
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Vous pouvez télécharger l'application GodTools ici: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Ajouter des outils";
 
+// Tool Detail
 "total_views" = "%d vues";
 "total_languages" = "%d langues";
 
@@ -44,7 +43,7 @@ http://godtoolsapp.com";
 // Alert Controllers
 "download_error" = "Erreur de téléchargement";
 "language_download_error" = "Les langues disponibles n'ont pas pu être téléchargées. Veillez vérifier votre connexion et réessayez plus tard.";
-"tract_loading_error_message" = "Un problème est survenu lors de l'ouverture de cet outil. La télécharger à nouveau résout souvent ce problème.\n\nVoulez-vous le télécharger à nouveau ?";
+"tract_loading_error_message" = "Un problème est survenu lors de l'ouverture de cet outil. La télécharger à nouveau résout souvent ce problème.\n\nVoulez-vous le télécharger à nouveau?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Les derniers outils français actuellement ne peuvent pas se télécharger. Les outils anglais sont disponibles pour l'instant. Veillez vérifier votre connexion et réessayez plus tard. ";
@@ -65,6 +64,7 @@ http://godtoolsapp.com";
 "done" = "Terminé";
 "remove" = "Supprimer";
 "clear" = "Effacer";
+"unavailable" = "Non disponible";
 
 // Alerts
 "error" = "Erreur";
@@ -82,5 +82,4 @@ http://godtoolsapp.com";
 "general_about_7" = "Une version en ligne de ces outils se trouve sur knowgod.com. Intégrez-le à votre propre site !";
 "general_about_8" = "Visitez godtoolsapp.com pour plus d'information";
 "general_about_9" = "Lorsque vous prenez l'initiative de partager votre foi, rappelez-vous que Dieu est celui qui change le cœur. Aimez chacun bien en écoutant pour comprendre.";
-"general_about_10" = "« Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun. »
-Colossiens 4:6";
+"general_about_10" = "« Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun. » Colossiens 4:6";
