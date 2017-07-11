@@ -186,9 +186,9 @@ platform :ios do
     )
 
     appstore(
-      screenshots_path: ENV['SNAPSHOT_OUTPUT_DIRECTORY'],
+      skip_screenshots: true,
       force: true,
-      skip_waiting_for_build_processing: true
+      skip_metadata: true
     )
 
     # Tag new release
