@@ -224,7 +224,7 @@ extension MenuViewController {
         if MFMailComposeViewController.canSendMail() {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
         } else {
-            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            let url = URL(string: "http://www.godtoolsapp.com/#contact")
             self.delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
         }
     }
@@ -239,13 +239,13 @@ extension MenuViewController {
         if MFMailComposeViewController.canSendMail() {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
         } else {
-            let url = URL(string: "http://www.godtoolsapp.com/contact.html")
+            let url = URL(string: "http://www.godtoolsapp.com/#contact")
             self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
         }
     }
     
     fileprivate func openTermsOfUse() {
-        let url = URL(string: "http://www.godtoolsapp.com/terms")
+        let url = URL(string: "http://www.godtoolsapp.com/user-agreement/")
         self.delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
     }
     
