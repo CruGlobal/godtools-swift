@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="laterButton" destination="jRo-pJ-Pjn" id="ZTq-JI-5Fk"/>
+                <outlet property="nowButton" destination="1GS-ip-VQi" id="Ftd-4X-Eg0"/>
+                <outlet property="okayButton" destination="utk-V8-xg4" id="8Hu-4c-TVm"/>
+                <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
+                <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
+                <outlet property="pageControl" destination="hSP-YK-jb4" id="r0q-Uj-ZrA"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="hSP-YK-jb4">
+                    <rect key="frame" x="168" y="590" width="39" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </pageControl>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szd-6r-28H">
+                    <rect key="frame" x="0.0" y="180" width="375" height="307"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_white" translatesAutoresizingMaskIntoConstraints="NO" id="oOT-tw-Fzu">
+                            <rect key="frame" x="142" y="0.0" width="90" height="90"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="em1-c0-ZDg" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="130" y="110" width="115" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteTitle"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="add_new_tools"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utk-V8-xg4" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="122" y="226" width="130" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="j5R-7w-ZPh"/>
+                                <constraint firstAttribute="width" constant="130" id="q8j-i5-Y0H"/>
+                            </constraints>
+                            <state key="normal" title="Okay"/>
+                            <connections>
+                                <action selector="pressOkayButton:" destination="-1" eventType="touchUpInside" id="TAz-YP-Mwa"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="em1-c0-ZDg" firstAttribute="top" secondItem="oOT-tw-Fzu" secondAttribute="bottom" constant="20" id="1OZ-uH-jdn"/>
+                        <constraint firstAttribute="height" constant="307" id="1sA-Bb-fvi"/>
+                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="top" secondItem="szd-6r-28H" secondAttribute="top" id="2Bl-Gr-XPf"/>
+                        <constraint firstAttribute="bottom" secondItem="utk-V8-xg4" secondAttribute="bottom" constant="33" id="Kix-mJ-OBz"/>
+                        <constraint firstItem="em1-c0-ZDg" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="O0K-iC-wqe"/>
+                        <constraint firstItem="utk-V8-xg4" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="gje-gs-x5u"/>
+                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="wH1-AX-Cem"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-5X-XL9">
+                    <rect key="frame" x="0.0" y="180" width="375" height="307"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo_white" translatesAutoresizingMaskIntoConstraints="NO" id="JLw-YN-BDG">
+                            <rect key="frame" x="142" y="0.0" width="90" height="90"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Your Languages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYK-jH-Vat" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="111" y="110" width="153.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteTitle"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="set_your_languages"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-ip-VQi" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="40" y="226" width="125" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="Hy4-vf-QFo"/>
+                            </constraints>
+                            <state key="normal" title="Now"/>
+                            <connections>
+                                <action selector="pressNowButton:" destination="-1" eventType="touchUpInside" id="FMs-jy-kZ8"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="210" y="226" width="125" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
+                            </constraints>
+                            <state key="normal" title="Later"/>
+                            <connections>
+                                <action selector="pressLaterButton:" destination="-1" eventType="touchUpInside" id="D7U-VW-uG7"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="307" id="167-Sm-eql"/>
+                        <constraint firstItem="1GS-ip-VQi" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="6:11" id="4u1-Fy-QjN"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="5qw-0i-P67"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="DO9-yc-kfv"/>
+                        <constraint firstAttribute="bottom" secondItem="1GS-ip-VQi" secondAttribute="bottom" constant="33" id="HsN-Hp-CA6"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" id="Tey-Kr-hpb"/>
+                        <constraint firstItem="1GS-ip-VQi" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="ZGK-jw-SqN"/>
+                        <constraint firstAttribute="bottom" secondItem="jRo-pJ-Pjn" secondAttribute="bottom" constant="33" id="ZzX-vv-Uid"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="top" secondItem="JLw-YN-BDG" secondAttribute="bottom" constant="20" id="cZr-Sb-C7R"/>
+                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="qRC-SC-Mge"/>
+                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="16:11" id="zy5-1Q-Us8"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.69894935344827591" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="szd-6r-28H" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="1kE-92-2Zt"/>
+                <constraint firstItem="szd-6r-28H" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ggs-7i-ala"/>
+                <constraint firstItem="Czx-5X-XL9" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="M2l-FE-iu5"/>
+                <constraint firstItem="Czx-5X-XL9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sq1-Yt-80d"/>
+                <constraint firstItem="Czx-5X-XL9" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="bjc-jt-Zfz"/>
+                <constraint firstItem="szd-6r-28H" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="eAO-qN-y2A"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="54.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="language_logo_white" width="90" height="90"/>
+        <image name="plus_white" width="90" height="90"/>
+    </resources>
+</document>

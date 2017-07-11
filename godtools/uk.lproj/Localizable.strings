@@ -1,0 +1,85 @@
+// Onboarding
+"add_new_tools" = "Додати інструмент";
+"set_your_languages" = "Встановіть мови";
+"okay" = "Добре";
+"now" = "Зараз";
+"later" = "Потім";
+
+// Menu
+"menu_general" = "Основне";
+"menu_share" = "Переслати";
+"menu_legal" = "Юридичні відомості";
+"language_settings" = "Налаштування мови";
+// Tool Detail
+"about" = "Про програму";
+"help" = "Довідка";
+"contact_us" = "Контакт";
+"notifications" = "Сповіщення";
+"preview_mode_translators_only" = "Режим перегляду (тільки перекладачі)";
+"share_god_tools" = "Поширити GodTools";
+"share_a_story_with_us" = "Розкажіть нам історію";
+"terms_of_use" = "Умови користування";
+"privacy_policy" = "Політика конфіденційності";
+"copyright_info" = "Авторське право";
+"share_god_tools_share_sheet_text" = "Тут ви можете завантажити програму GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Додати інструменти";
+
+"total_views" = "%d перегл.";
+"total_languages" = "%d мов(и)";
+
+// Language Settings
+"primary_language" = "Основна мова";
+"select_primary_language" = "Оберіть основну мову";
+"parallel_language" = "Додаткова мова";
+"select_parallel_language" = "Оберіть додаткову мову";
+"share_god_tools_native_language" = "Перешліть God Tools знайомим (програма на їх рідній мові)";
+"not_every_tool_is_available" = "Деякі інструменти недоступні на усіх мовах";
+
+// Settings
+"settings" = "Параметри";
+
+// Alert Controllers
+"download_error" = "Не завантажено";
+"language_download_error" = "Доступні мови наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
+"tract_loading_error_message" = "Сталася помилка під час завантаження. Спобуйте завантажити знову.\n\nЗавантажити зараз?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Останню версію на українській мові наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\n Бажаєте встановити англійську мову і завантажити ресурси на цій мові?";
+
+// Actions
+"yes" = "Так";
+"no" = "Ні";
+
+// Tract - Sharing
+"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. Поспілкуємось!";
+
+// Buttons
+"download" = "Завантажити";
+"dismiss" = "Закрити";
+"done" = "Готово";
+"remove" = "Видалити";
+"clear" = "Очистити";
+"unavailable" = "Недоступно";
+
+// Alerts
+"error" = "Помилка";
+"ok" = "Добре";
+"error_can_not_send_email" = "Ел. пошту не налаштовано на вашому пристрої.";
+"required_field_missing" = "\"%@\" є обов'язковим пунктом";
+
+// About
+"general_about_1" = "З допомогою програми GodTools поширювати Божу вістку легко та зручно.";
+"general_about_2" = "Ви зможете впевнено розповісти комусь, як познайомитись із Богом через Ісуса — навіть, якщо ви цього ніколи ще не робили або та людина розмовляє іншої мовою.";
+"general_about_3" = "На ваш вибір є багато інструментів, які підійдуть до різних ситуацій та людей. Деякі інструменти недоступні на всіх мовах.";
+"general_about_4" = "Внизу сторінок інструментів приведені посилання на додаткові ресурси.";
+"general_about_5" = "Вам знадобиться інтернет-зв'язок, щоб завантажити інструменти та мови. Після завантаження їх можна використовувати без Інтернету.";
+"general_about_6" = "Ви никли питання, пропозиції чи прохання? Звертайтеся за адресою support@godtoolsapp.com";
+"general_about_7" = "Онлайн версію програми можна знайти на веб-сайті knowgod.com. Ви також можете розмістити інструменти на вашому веб-сайті!";
+"general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
+"general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
+"general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";

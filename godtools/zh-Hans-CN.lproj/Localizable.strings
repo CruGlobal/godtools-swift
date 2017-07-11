@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "添加新工具";
+"set_your_languages" = "设置您的语言";
+"okay" = "确定";
+"now" = "现在";
+"later" = "稍后";
+
+// Menu
+"menu_general" = "通用";
+"menu_share" = "分享";
+"menu_legal" = "法律";
+"language_settings" = "语言设置";
+"about" = "关于";
+"help" = "帮助";
+"contact_us" = "请联系我们";
+"notifications" = "通知";
+"preview_mode_translators_only" = "预览模式（仅限译员）";
+"share_god_tools" = "分享GodTools";
+"share_a_story_with_us" = "和我们分享你的故事";
+"terms_of_use" = "使用条款";
+"privacy_policy" = "隐私政策";
+"copyright_info" = "版权信息";
+"share_god_tools_share_sheet_text" = "您可以在这里下载GodTools：http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "添加工具";
+
+// Tool Detail
+"total_views" = "%d次浏览";
+"total_languages" = "%d种语言";
+
+// Language Settings
+"primary_language" = "主要语言";
+"select_primary_language" = "选择主要语言";
+"parallel_language" = "同步语言";
+"select_parallel_language" = "选择同步语言";
+"share_god_tools_native_language" = "用他人的母语与他们分享GodTools";
+"not_every_tool_is_available" = "有些工具不能涵盖所有的语种";
+
+// Settings
+"settings" = "设置";
+
+// Alert Controllers
+"download_error" = "下载错误";
+"language_download_error" = "目前无法下载可用的语言。请检查您的网络连接或稍后重试。";
+"tract_loading_error_message" = "打开此资源时出现问题。请尝试重新下载。\n\n 您想重新下载吗？";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "最新的中文版本目前无法下载。有英文版本可以下载。请检查您的网络连接或者稍后重试。";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "有最新的中文版本可以下载。\n\n 您要将主要语言设置为中文并下载这些资源吗？";
+
+// Actions
+"yes" = "是";
+"no" = "否";
+
+// Tract - Sharing
+"tract_share_message" ="点击这个链接，您会看到我们今天谈论内容的网页版：%@。更多谈论！";
+
+// Buttons
+"download" = "下载";
+"dismiss" = "取消";
+"done" = "完成";
+"remove" = "删除";
+"clear" = "清除";
+"unavailable" = "不可用";
+
+// Alerts
+"error" = "错误";
+"ok" = "确定";
+"error_can_not_send_email" = "您没有在此设备上设置电子邮件。";
+"required_field_missing" = "\"%@\" 是必填项";
+
+// About
+"general_about_1" = "GodTools帮助您以简单明了的方式分享您的信仰。";
+"general_about_2" = "从未分享过福音？对方的母语与您不同？没关系，这些工具仍然能帮助您清楚地向他人解释如何通过耶稣基督与神建立关系。";
+"general_about_3" = "根据您的偏好和受众选择需用的工具。有些工具不能涵盖所有语种。";
+"general_about_4" = "每个工具的末尾都附有其他资源的链接。";
+"general_about_5" = "下载每种新工具和/或语言都需要网络连接。下载后即可离线使用。";
+"general_about_6" = "如有任何问题、建议或要求，请通过support@godtoolsapp.com与我们联系";
+"general_about_7" = "这些工具的在线版本请见knowgod.com。将它嵌入您自己的网站吧！";
+"general_about_8" = "请访问godtoolsapp.com了解更多信息。";
+"general_about_9" = "当您主动分享您的信仰时，请记住，唯有神能改变人心。聆听每一个人，理解每一个人， 这才是真心去爱每一个人。";
+"general_about_10" = "“你们的言语要常常带着和气，好像用盐调和，就可知道该怎样回答各人。”歌罗西书4:6";

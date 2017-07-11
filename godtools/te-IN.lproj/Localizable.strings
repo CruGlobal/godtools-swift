@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
+"set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
+"okay" = "సరే";
+"now" = "ఇప్పుడు";
+"later" = "తరువాత";
+
+// Menu
+"menu_general" = "సాధారణం";
+"menu_share" = "షేర్ చెయ్యండి";
+"menu_legal" = "చట్టపరమైన";
+"language_settings" = "భాష సెట్టింగ్స్";
+"about" = "గూర్చి";
+"help" = "సహాయం";
+"contact_us" = "సంప్రదించండి";
+"notifications" = "నోటిఫికేషన్లు";
+"preview_mode_translators_only" = "ప్రివ్యూ మోడ్ (అనువాదకులకు మాత్రమే)";
+"share_god_tools" = "GodTools షేర్ చెయ్యండి";
+"share_a_story_with_us" = "మాతో మీ అనుభవాలను పంచుకోండి";
+"terms_of_use" = "ఉపయోగించు షరతులు ";
+"privacy_policy" = "ప్రైవసీ పాలసీ";
+"copyright_info" = "కాపిరైట్ సమాచారం";
+"share_god_tools_share_sheet_text" = "GodTool యాప్ ను ఇక్కడ డౌన్లోడ్ చేసుకోవచ్చు: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "టూల్స్ జోడించండి";
+
+// Tool Detail
+"total_views" = "%d వ్యూస్";
+"total_languages" = "%d భాషలు";
+
+// Language Settings
+"primary_language" = "ప్రాథమిక భాష";
+"select_primary_language" = "ప్రాథమిక భాషను ఎంచుకోండి";
+"parallel_language" = "సమాంతర భాషలు ";
+"select_parallel_language" = "సమాంతర భాషను ఎంచుకోండి";
+"share_god_tools_native_language" = "GodTools ను వారి సొంత భాషలో ఇతరులతో పంచండి";
+"not_every_tool_is_available" = "ప్రతి టూల్ ప్రతి భాషలో అందుబాటులో ఉండదు";
+
+// Settings
+"settings" = "సెట్టింగ్స్";
+
+// Alert Controllers
+"download_error" = "డౌన్లోడ్ ఎర్రర్";
+"language_download_error" = "అందుబాటులో ఉన్న భాషలు ఇప్పుడు డౌన్లోడ్ కావడం లేదు. మీ కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
+"tract_loading_error_message" = "ఈ నిధిని తెరచుటలో సమస్య ఉంది. దీనిని మరలా డౌన్లోడ్ చేయుట ద్వారా చాలా సార్లు సమస్య పరిష్కరించబడుతుంది. మీరు దీనిని మరలా డౌన్లోడ్ చెయ్యాలని అనుకుంటున్నారా? ";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "అధునాతన తెలుగు టూల్స్ ఇప్పుడు డౌన్లోడ్ అవ్వడం లేదు. తెలుగు టూల్స్ లభ్యమవుతాయి. కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "అధునాతన తెలుగు టూల్స్ డౌన్లోడ్ చేసుకోవచ్చు. \n\n మీ ప్రాథమిక భాషను తెలుగుగా సెట్ చేసి ఈ నిధులను డౌన్లోడ్ చెయ్యాలనుకుంటున్నారా? ";
+
+// Actions
+"yes" = "అవును";
+"no" = "కాదు";
+
+// Tract - Sharing
+"tract_share_message" ="ఈ లింక్ మిమ్మును ఈ రోజు మనం చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. మరింత మాట్లాడదాము! ";
+
+// Buttons
+"download" = "డౌన్లోడ్";
+"dismiss" = "డిస్మిస్";
+"done" = "అయ్యిపోయింది";
+"remove" = "తొలగించు";
+"clear" = "క్లియర్";
+"unavailable" = "అందుబాటులో లేదు";
+
+// Alerts
+"error" = "Error";
+"ok" = "సరే";
+"error_can_not_send_email" = "మీ డివైస్ లో ఈమెయిలు అందుబాటులో లేదు. ";
+"required_field_missing" = "\"%@\" ఇది అవసరమైనది. ";
+
+// About
+"general_about_1" = "మీ విశ్వాసమును సులువైన స్పష్టమైన మార్గములో పంచుకొనుటకు GodTools సహాయపడతాయి. ";
+"general_about_2" = "మీరు ఇంతకు ముందు మీ విశ్వాసమును ఎవరితో పంచుకోనప్పటికీ, లేక వారు వేరే భాష మాట్లాడువారైనప్పటికీ, యేసు క్రీస్తు ద్వారా దేవునితో అనుబంధమును ఆరంభించుటను గూర్చి మీరు ఇతరులతో ధైర్యంగా పంచుకొనుటకు ఈ టూల్స్ మీకు సహాయం చేస్తాయి.  ";
+"general_about_3" = "మీ ఇష్టములు మరియు శ్రోతల ఆధారముగా వేర్వేరు టూల్స్ నుండి ఎంపిక చేసుకోండి. అన్ని టూల్స్ అన్ని భాషలలో అందుబాటులో లేవు. ";
+"general_about_4" = "ప్రతి టూల్ కి చివరిలో ఇతర నిధులకు వెళ్లుటకు లింక్స్ ఇవ్వబడినవి. ";
+"general_about_5" = "ప్రతి క్రొత్త టూల్ మరియు/లేక భాషను డౌన్లోడ్ చేయుటకు ఆన్లైన్ కనెక్షన్ కావలెను. డౌన్లోడ్ అయ్యినతరువాత వాటిని ఆఫ్ లైన్లో ఉపయోగించవచ్చు. ";
+"general_about_6" = "ప్రశ్నలు? సలహాలు? విన్నపాలు? మాకు వ్రాయండి support@godtoolsapp.com";
+"general_about_7" = "ఈ టూల్స్ యొక్క ఆన్లైన్ వెర్షన్ knowgod.comలో లభ్యమవుతుంది. దానిని మీ సొంత సైట్ లో జతపరచుకోండి! ";
+"general_about_8" = "అధిక సమాచారం కొరకు చూడండి godtoolsapp.com";
+"general_about_9" = "మీ విశ్వాసమును పంచుకొనుటకు మీరు సిద్ధపడుచుండగా, హృదయాలను మార్చువాడు దేవుడని గుర్తుంచుకోండి. ప్రతి వ్యక్తిని అర్థము చేసుకొనుటకు వినుట ద్వారా వారిని ప్రేమించండి. ";
+"general_about_10" = "\"ప్రతి మనుష్యునికి ఏలాగు ప్రత్యుత్తరమియ్య వలెనో అది మీరు తెలిసికొనుటకై మీ సంభాషణ ఉప్పు వేసినట్టు ఎల్లప్పుడు రుచిగలదిగాను కృపాసహితముగాను ఉండనియ్యుడి.\" కొలస్సి. 4:6";

@@ -1,0 +1,85 @@
+// Onboarding
+"add_new_tools" = "添加新工具";
+"set_your_languages" = "設定語言";
+"okay" = "好";
+"now" = "現在";
+"later" = "待會";
+
+// Menu
+"menu_general" = "一般";
+"menu_share" = "分享";
+"menu_legal" = "法律條款";
+"language_settings" = "語言選項";
+// Tool Detail
+"about" = "關於";
+"help" = "協助";
+"contact_us" = "聯絡我們";
+"notifications" = "通知";
+"preview_mode_translators_only" = "預覽模式（只適用於譯者）";
+"share_god_tools" = "分享GodTools";
+"share_a_story_with_us" = "與我們分享故事";
+"terms_of_use" = "使用條款";
+"privacy_policy" = "隱私政策";
+"copyright_info" = "著作權資訊";
+"share_god_tools_share_sheet_text" = "您可在此下載GodTools應用程式：http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "添加工具";
+
+"total_views" = "%d 個瀏覽次數";
+"total_languages" = "%d 種語言";
+
+// Language Settings
+"primary_language" = "主要語言";
+"select_primary_language" = "選擇主要語言";
+"parallel_language" = "平行語言";
+"select_parallel_language" = "選擇平行語言";
+"share_god_tools_native_language" = "以他人的母語與他人分享God Tools";
+"not_every_tool_is_available" = "並非所有工具都包含所有語言的版本";
+
+// Settings
+"settings" = "設定";
+
+// Alert Controllers
+"download_error" = "下載錯誤";
+"language_download_error" = "目前無法下載可用語言。請確認您的網路已連線，或稍後再試。";
+"tract_loading_error_message" = "下載此資源時遇到了問題。可嘗試重新下載以解決此問題。\n\n您要重新嘗試下載嗎？";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "目前無法下載最新英文工具。有英文工具可供使用。請確認您的網路已連線，或稍後再試。";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "最新的英文工具現在可以下載了。 \n\n 您想將您的主要語言設定成英文，下載這些資源嗎？";
+
+// Actions
+"yes" = "好";
+"no" = "不好";
+
+// Tract - Sharing
+"tract_share_message" ="還記得我們今天一起查看的頁面嗎？點擊此連結，可看到網路版本：%@。快去看看，我們再一起討論吧！";
+
+// Buttons
+"download" = "下載";
+"dismiss" = "略過";
+"done" = "完成";
+"remove" = "移除";
+"clear" = "清空";
+"unavailable" = "無法使用";
+
+// Alerts
+"error" = "錯誤";
+"ok" = "好";
+"error_can_not_send_email" = "您的裝置上沒有建立電子郵件帳戶。";
+"required_field_missing" = "必須輸入「%@」。";
+
+// About
+"general_about_1" = "GodTools幫助您以簡單清楚的方式分享您的信仰。";
+"general_about_2" = "我們提供的工具，能夠幫助您自信地與他人分享信仰，介紹如何透過耶穌基督開始建立與上帝的關係。即使您是第一次與他人分享您的信仰，或對方講的是別的語言，您依然能夠利用我們的工具順利介紹。";
+"general_about_3" = "依據您的喜好與分享對象，您可選擇各式各樣的工具。請注意，並非所有工具都包含所有語言的版本。";
+"general_about_4" = "各個工具的結尾處可以找到其他資源的連結。";
+"general_about_5" = "下載各個新工具或語言需要連線至網路。下載完成後，不需網路連線即可使用。";
+"general_about_6" = "有疑問、建議、請求嗎？請寫電子郵件至support@godtoolsapp.com與我們聯絡。";
+"general_about_7" = "這些工具的線上版可在knowgod.com找到。把它嵌入在您的個人網站上吧！";
+"general_about_8" = "如需更多資訊，請前往godtoolsapp.com。";
+"general_about_9" = "在您踏出第一步分享您的信仰同時，也別忘了只有上帝能夠改變人心。請愛每個人，仔細聆聽對方的話，確認對方是否理解。";
+"general_about_10" = "「你們的話語總要帶著恩惠，像用鹽調和過的，好使你們知道該怎樣回答每一個人。」—歌羅西書 4:6";

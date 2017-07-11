@@ -1,0 +1,85 @@
+// Onboarding
+"add_new_tools" = "नए टूल जोड़ें";
+"set_your_languages" = "अपनी भाषा निर्धारित करें";
+"okay" = "ठीक";
+"now" = "अभी";
+"later" = "बाद में";
+
+// Menu
+"menu_general" = "सामान्य";
+"menu_share" = "शेयर करें";
+"menu_legal" = "कानूनी";
+"language_settings" = "भाषा सेटिंग्स";
+// Tool Detail
+"about" = "परिचय";
+"help" = "मदद";
+"contact_us" = "हमसे संपर्क करें";
+"notifications" = "अधिसूचनाएं";
+"preview_mode_translators_only" = "प्रीव्यू मोड (केवल अनुवादक)";
+"share_god_tools" = "GodTools शेयर करें";
+"share_a_story_with_us" = "हमसे कोई कहानी शेयर करें";
+"terms_of_use" = "प्रयोग की शर्तें";
+"privacy_policy" = "निजता नीति";
+"copyright_info" = "कॉपीराइट सूचना";
+"share_god_tools_share_sheet_text" = "यहां आप GodTools ऐप डाउनलोड कर सकते हैं: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "टूल्स जोड़ें";
+
+"total_views" = "%d दृश्य";
+"total_languages" = "%d भाषाएं";
+
+// Language Settings
+"primary_language" = "प्राथमिक भाषा";
+"select_primary_language" = "प्राथमिक भाषा चुनें";
+"parallel_language" = "समानंतर भाषा";
+"select_parallel_language" = "एक समानांतर भाषा चुनें";
+"share_god_tools_native_language" = "किसी के साथ GodTools उनकी मातृभाषा में शेयर करें";
+"not_every_tool_is_available" = "सभी टूल सभी भाषा में उपलब्ध नहीं होते";
+
+// Settings
+"settings" = "सेटिंग्स";
+
+// Alert Controllers
+"download_error" = "डाउनलोड त्रुटि";
+"language_download_error" = "इस समय उपलब्ध भाषाएं डाउनलोड नहीं हो सकीं। कृपया अपना कनेक्शन जांचे या बाद में पुनः प्रयास करें।";
+"tract_loading_error_message" = "इस संसाधन को खोलने में एक समस्या आई। इसे दुबारा डाउनलोड करना अक्सर समस्या का समाधान कर देता है।\n\nक्या आप इसे दुबारा डाउनलोड करना चाहते हैं?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "नवीनतम अंग्रेजी के टूल्स अभी डाउनलोड नहीं किए जा सके। अंग्रेजी के टूल्स उपलब्ध हैं। अपना कनेक्शन जांचें या बाद में दुबारा प्रयास करें।";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं। \n\n क्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
+
+// Actions
+"yes" = "हां";
+"no" = "नहीं";
+
+// Tract - Sharing
+"tract_share_message" ="यह लिंक आपको उस पेज पर ले जाएगा जहां हम इस पहले काम कर रहे थे: %@. चलिए और बात करते हैं!";
+
+// Buttons
+"download" = "डाउनलोड";
+"dismiss" = "डिसमिस करें";
+"done" = "पूरा हुआ";
+"remove" = "हटाएं";
+"clear" = "साफ करें";
+"unavailable" = "अनुपलब्ध";
+
+// Alerts
+"error" = "त्रुटि";
+"ok" = "ठीक";
+"error_can_not_send_email" = "आपके डिवाइस पर कोई भी ईमेल कनफिगर नहीं है।";
+"required_field_missing" = "\"%@\" एक आवश्यक फील्ड है।";
+
+// About
+"general_about_1" = "GodTools आपको अपने विश्वास/धर्म को आसान और साफ तरीके शेयर करने में मदद करता है।";
+"general_about_2" = "ये टूल आपको विश्वास के किसी अन्य को ये समझाने में मदद करता है कि वे कैसे भगवान के साथ जीसस क्राइस्ट के सहारे एक रिश्ते की शुरूआत कर सकते हैं, भले ही आपने अपना विश्वास इससे पहले कभी नहीं किया या वे कोई दूसरी भाषा बोलते हों।";
+"general_about_3" = "अपनी प्राथमिकताओं और अपने श्रोता के आधार पर विभिन्न टूल्स में से चुनें। सभी टूल हरेक भाषा में उपलब्ध नहीं हैं।";
+"general_about_4" = "अन्य संसाधनों के लिंक हरेक टूल के नीचे शामिल हैं।";
+"general_about_5" = "हरेक नए टूल और/या भाषा के लिए ऑनलाइन कनेक्शन का होना आवश्यक है। डाउनलोड होने के बाद उनका प्रयोग ऑफलाइन किया जा सकता है।";
+"general_about_6" = "प्रश्न? सुझाव? आग्रह? support@godtoolsapp.com पर हमसे संपर्क करें।";
+"general_about_7" = "इन टूल्स के ऑनलाइन संस्करण knowgod.com पर भी हैं। इसे अपने वेबसाइट से जोड़ें।";
+"general_about_8" = "अधिक जानकारी के लिए godtoolsapp.com पर जाएं।";
+"general_about_9" = "अपना विश्वास प्रकट करने के दौरान याद रखें कि केवल भगवान ही हृदय परिवर्तन कराता है। समझने के लिए सुनकर हरेक व्यक्ति से प्रेम करें।";
+"general_about_10" = "\"अपनी बातचीत को हमेशा भावपूर्ण बनाएं रखें, परिपक्व रखें, ताकि आप समझ सकें हरेक व्यक्ति को कैसे उत्तर देना है।\" कोलोसियन्स 4:6";

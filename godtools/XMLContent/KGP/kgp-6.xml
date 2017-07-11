@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://projects.invisionapp.com/d/main#/console/10765517/228342261/preview -->
+<page xmlns="http://mobile-content-api.cru.org/xmlns/tract"
+    xmlns:content="https://mobile-content-api.cru.org/xmlns/content"
+    background-image="jesus_saves_us.png"
+    listeners="follow-up-thank-you-done">
+    <header>
+        <title>
+            <content:text i18n-id="{{uuid}}">What happens when you put your trust in Jesus?
+            </content:text>
+        </title>
+    </header>
+    <cards>
+        <card>
+        </card>
+    </cards>
+    <call-to-action>
+        <content:text i18n-id="{{uuid}}"></content:text>
+    </call-to-action>
+</page>

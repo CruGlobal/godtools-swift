@@ -1,0 +1,85 @@
+// Onboarding
+"add_new_tools" = "Thêm các Công cụ Mới";
+"set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
+"okay" = "Ok";
+"now" = "Ngay bây giờ";
+"later" = "Để sau";
+
+// Menu
+"menu_general" = "Nói chung";
+"menu_share" = "Chia sẻ";
+"menu_legal" = "Hợp pháp";
+"language_settings" = "Các thiết lập ngôn ngữ";
+"about" = "Giới thiệu về";
+"help" = "Trợ giúp";
+"contact_us" = "Liên hệ chúng tôi";
+"notifications" = "Thông báo";
+"preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
+"share_god_tools" = "Chia sẻ GodTools";
+"share_a_story_with_us" = "Chia sẻ một Câu chuyện với Chúng tôi";
+"terms_of_use" = "Điều khoản Sử dụng";
+"privacy_policy" = "Chính sách Quyền riêng tư";
+"copyright_info" = "Thông tin Bản quyền";
+"share_god_tools_share_sheet_text" = "Tại đây bạn có thể tải về ứng dụng GodTools. http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Thêm Công cụ";
+
+// Tool Detail
+"total_views" = "%d lượt xem";
+"total_languages" = "%d ngôn ngữ";
+
+// Language Settings
+"primary_language" = "Ngôn ngữ Chính";
+"select_primary_language" = "Chọn một Ngôn ngữ Chính";
+"parallel_language" = "Ngôn ngữ Tương đương";
+"select_parallel_language" = "Chọn một Ngôn ngữ Tương đương";
+"share_god_tools_native_language" = "Chia sẻ GodTools với một ai đó bằng ngôn ngữ bản địa của họ";
+"not_every_tool_is_available" = "Không phải tất cả các công cụ đều có sẵn trong mọi ngôn ngữ";
+
+// Settings
+"settings" = "Các thiết lập";
+
+// Alert Controllers
+"download_error" = "Lỗi Tải về";
+"language_download_error" = "Không thể tải về các ngôn ngữ sẵn có vào lúc này. Xin vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.";
+"tract_loading_error_message" = "Đã xảy ra lỗi khi mở nguồn này. Tải nó về lần nữa sẽ giải quyết được vấn đề này.\n\nBạn có muốn tải nó về lần nữa không?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Không thể tải về các công cụ tiếng Việt mới nhất vào lúc này. Các công cụ tiếng Anh luôn sẵn có. Xin hãy kiểm tra kết nối của bạn hoặc thử lại sau.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất. \n\n Bạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
+
+// Actions
+"yes" = "Có";
+"no" = "Không";
+
+// Tract - Sharing
+"tract_share_message" ="Đường dẫn này sẽ đưa bạn đến phiên bản web của trang chúng tôi đã xem lần cuối cùng nhau ngày hôm nay: %@. Hãy cùng nói chuyện nhiều hơn!";
+
+// Buttons
+"download" = "Tải về";
+"dismiss" = "Bỏ qua";
+"done" = "Đã xong";
+"remove" = "Loại bỏ";
+"clear" = "Rõ ràng";
+"unavailable" = "Không sẵn có";
+
+// Alerts
+"error" = "Lỗi";
+"ok" = "Ok";
+"error_can_not_send_email" = "Không có email được cấu hình nào trên thiết bị của bạn.";
+"required_field_missing" = "\"%@\" là một trường bắt buộc.";
+
+// About
+"general_about_1" = "GodTools giúp bạn chia sẻ niềm tin của mình theo một cách dễ hiểu và dễ dàng.";
+"general_about_2" = "Những công cụ này giúp bạn giải thích một cách tự tin với một ai đó cách thức họ bắt đầu một mối quan hệ với Chúa qua Jesus Christ, ngay cả khi bạn chưa từng chia sẻ niềm tin của mình trước đó hoặc họ nói một thứ ngôn ngữ khác";
+"general_about_3" = "Chọn từ vô số các công cụ dựa trên ưu tiên và khán giả của bạn. Không phải tất cả các công cụ đều sẵn có trong mọi ngôn ngữ.";
+"general_about_4" = "Các đường dẫn đến các nguồn khác được gộp lại ở cuối mỗi công cụ.";
+"general_about_5" = "Kết nối trực tuyến là cần thiết để tải về mỗi công cụ và/hoặc ngôn ngữ mới. Khi đã tải về rồi, chúng có thể được sử dụng trực tuyến.";
+"general_about_6" = "Thắc mắc? Gợi ý? Yêu cầu? Hãy liên hệ chúng tôi tại support@godtoolsapp.com";
+"general_about_7" = "Bạn có thể tìm thấy một phiên bản trực tuyến của những công cụ này tại knowgod.com. Được gắn vào nó trên trang của riêng bạn!";
+"general_about_8" = "Ghé thăm godtoolsapp.com để biết thêm thông tin.";
+"general_about_9" = "Vì bạn đã bắt đầu chia sẻ niềm tin của mình, hãy ghi nhớ rằng Chúa là người thay đổi trái tim. Hãy yêu thương từng người thật tốt bằng cách lắng nghe để thấu hiểu.";
+"general_about_10" = "\"Hãy để cuộc hội thoại của bạn luôn chứa đầy sự duyên dáng, nồng nhiệt để bạn có thể biết cách trả lời mọi người.\" Colossians 4:6";

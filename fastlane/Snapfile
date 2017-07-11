@@ -1,0 +1,41 @@
+# Uncomment the lines below you want to change by removing the # in the beginning
+
+ devices([
+   "iPhone 6 Plus",
+   "iPhone 6",
+   "iPhone 5",
+   "iPhone 4s",
+   "iPad Retina",
+   "iPad Pro"
+ ])
+
+languages([
+  "de-DE",
+  "en-US",
+  "es-ES",
+  "pt-BR",
+  "fr-FR",
+  "ru",
+  "zh-Hant",
+  "zh-Hans",
+  "tr",
+  "ja",
+  "ko",
+  "id"
+])
+
+
+
+scheme "godtools"
+
+workspace "godtools.xcworkspace"
+
+clean true
+
+clear_previous_screenshots true
+
+stop_after_first_error true
+
+erase_simulator true
+
+number_of_retries 3

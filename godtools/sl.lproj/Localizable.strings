@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Dodaj nova orodja";
+"set_your_languages" = "Izberi jezike";
+"okay" = "V redu";
+"now" = "Zdaj";
+"later" = "Kasneje";
+
+// Menu
+"menu_general" = "Splošno";
+"menu_share" = "Deli";
+"menu_legal" = "Zakonito";
+"language_settings" = "Jezikovne nastavitve";
+"about" = "O aplikaciji";
+"help" = "Pomoč";
+"contact_us" = "Vprašaj nas";
+"notifications" = "Obvestila";
+"preview_mode_translators_only" = "Predogled (samo za prevajalce)";
+"share_god_tools" = "Deli GodTools";
+"share_a_story_with_us" = "Deli zgodbo z nami";
+"terms_of_use" = "Pogoji uporabe";
+"privacy_policy" = "Pravilnik o zasebnosti";
+"copyright_info" = "Založniške pravice";
+"share_god_tools_share_sheet_text" = "Naloži aplikacijo GodTools tukaj: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Dodaj orodja";
+
+// Tool Detail
+"total_views" = "%d ogledov";
+"total_languages" = "%d jezikov";
+
+// Language Settings
+"primary_language" = "Osnovni jezik";
+"select_primary_language" = "Izberi osnovni jezik";
+"parallel_language" = "Vzporedni jezik";
+"select_parallel_language" = "Izberi vzporedni jezik";
+"share_god_tools_native_language" = "Deli GodTools z drugimi v njihovem maternem jeziku";
+"not_every_tool_is_available" = "Vsa orodja niso na voljo v vseh jezikih";
+
+// Settings
+"settings" = "Nastavitve";
+
+// Alert Controllers
+"download_error" = "Napaka pri nalaganju";
+"language_download_error" = "Trenutno ni mogoče naložiti razpoložjivih jezikov. Preveri svojo povezavo ali poskusi ponovno kasneje.";
+"tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\n Ali ga želiš naložiti še enkrat?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Trenutno ni mogoče naložiti najsodobnejših slovenskih orodij. Na voljo so angleška orodja. Preveri svojo povezavo ali poskusi ponovno kasneje.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\n Ali želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
+
+// Actions
+"yes" = "Ja";
+"no" = "Ne";
+
+// Tract - Sharing
+"tract_share_message" ="S klikom na to povezavo boš prišel/a na spletno verzijo strani, ki sva si jo danes nazadnje ogledala skupaj: %@. Pogovoriva se več o tem!";
+
+// Buttons
+"download" = "Naloži";
+"dismiss" = "Zapri";
+"done" = "Zaključi";
+"remove" = "Odstrani";
+"clear" = "Izbriši";
+"unavailable" = "Ni na voljo";
+
+// Alerts
+"error" = "Napaka";
+"ok" = "V redu";
+"error_can_not_send_email" = "Na napravi nimaš sinhorniziranega računa za elektronsko pošto.";
+"required_field_missing" = "\"%@\" je obvesno polje.";
+
+// About
+"general_about_1" = "GodTools ti pomaga deliti svojo vero na enostavni in jasni način. ";
+"general_about_2" = "Ta orodja so ti v pomoč pri tem, da nekomu razložiš, kako lahko začne odnos z Bogom preko Jezusa Kristusa, četudi prej nikoli nisi delil/a svoje vere ali pa ta oseba govori drug jezik.";
+"general_about_3" = "Med različnimi orodji izbiraj na podlagi svojih prednosti in publike. Vsa orodja niso na voljo v vseh jezikih.";
+"general_about_4" = "Povezave na druga gradiva so vključene na koncu vsakega orodja.";
+"general_about_5" = "Pri nalaganju novih orodij in/ali jezikov je obvezna internetna povezava. Potem pa jih lahko uporabljaš tudi brez povezave.";
+"general_about_6" = "Vprašanja? Predlogi? Prošnje? Kontaktiraj nas na support@godtoolsapp.com";
+"general_about_7" = "Spletno verzijo teh orodij lahko najdeš na knowgod.com. Vstavi jo na svojo stran!";
+"general_about_8" = "Obišči godtoolsapp.com za več informacij.";
+"general_about_9" = "Pri prevzemanju pobude za deljenje svoje vere ne pozabi, da je le Bog tisti, ki spreminja srca ljudi. Izrazi skrb za vsako osebo s poslušanjem z namenom razumevanja.";
+"general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";

@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Adicionar novas ferramentas";
+"set_your_languages" = "Definir os idiomas";
+"okay" = "OK";
+"now" = "Agora";
+"later" = "Mais tarde";
+
+// Menu
+"menu_general" = "Geral";
+"menu_share" = "Partilhar";
+"menu_legal" = "Aviso legal";
+"language_settings" = "Definições de idioma";
+"about" = "Sobre";
+"help" = "Ajuda";
+"contact_us" = "Contactar-nos";
+"notifications" = "Notificações";
+"preview_mode_translators_only" = "Modo de pré-visualização (apenas para tradutores)";
+"share_god_tools" = "Partilhar GodTools";
+"share_a_story_with_us" = "Partilhar uma história connosco";
+"terms_of_use" = "Termos de Utilização";
+"privacy_policy" = "Política de Privacidade";
+"copyright_info" = "Informações de Direitos de Autor";
+"share_god_tools_share_sheet_text" = "Aqui podes transferir a aplicação GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Adicionar ferramentas";
+
+// Tool Detail
+"total_views" = "%d visualizações";
+"total_languages" = "%d idiomas";
+
+// Language Settings
+"primary_language" = "Idioma principal";
+"select_primary_language" = "Seleciona um idioma principal";
+"parallel_language" = "Idioma paralelo";
+"select_parallel_language" = "Seleciona um idioma paralelo";
+"share_god_tools_native_language" = "Partilha a aplicação GodTools com uma pessoa no seu idioma nativo";
+"not_every_tool_is_available" = "Nem todas as ferramentas estão disponíveis em todos os idiomas";
+
+// Settings
+"settings" = "Definições";
+
+// Alert Controllers
+"download_error" = "Erro ao transferir";
+"language_download_error" = "Neste momento, não é possível transferir os idiomas disponíveis. Verifica a ligação à Internet ou tenta novamente mais tarde.";
+"tract_loading_error_message" = "Ocorreu um problema ao abrir este recurso. Voltar a transferir costuma resolver este problema. \n\n Gostarias de voltar a transferi-lo?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Neste momento, não é possível transferir as ferramentas em português mais recentes. Verifica a ligação à Internet ou tenta novamente mais tarde.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "É possível transferir as ferramentas em português mais recentes. \n\n Gostarias de definir o teu idioma principal como Português e transferir estes recursos?";
+
+// Actions
+"yes" = "Sim";
+"no" = "Não";
+
+// Tract - Sharing
+"tract_share_message" ="Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!";
+
+// Buttons
+"download" = "Transferir";
+"dismiss" = "Cancelar";
+"done" = "Concluído";
+"remove" = "Remover";
+"clear" = "Limpar";
+"unavailable" = "Indisponível";
+
+// Alerts
+"error" = "Erro";
+"ok" = "OK";
+"error_can_not_send_email" = "Não existe nenhum e-mail configurado no teu dispositivo.";
+"required_field_missing" = "\"%@\" é um campo obrigatório.";
+
+// About
+"general_about_1" = "A aplicação GodTools ajuda-te a partilhar a tua fé de uma forma fácil e clara.";
+"general_about_2" = "Estas ferramentas ajudam-te a explicar com segurança a outra pessoa como pode iniciar uma relação com Deus através de Jesus Cristo, mesmo que nunca tenhas partilhado a tua fé ou que a outra pessoa fale num idioma diferente.";
+"general_about_3" = "Escolhe entre várias ferramentas com base na tua preferência e destinatário. Nem todas as ferramentas estão disponíveis em todos os idiomas.";
+"general_about_4" = "Encontras ligações para outros recursos no final de cada ferramenta.";
+"general_about_5" = "Tens de ter ligação à Internet para transferir cada nova ferramenta e/ou idioma. Assim que efetuares a transferência, a ferramenta e/ou idioma pode ser utilizada offline.";
+"general_about_6" = "Perguntas? Sugestões? Pedidos? Contacta-nos através do e-mail support@godtoolsapp.com";
+"general_about_7" = "Encontras uma versão online destas ferramentas em knowgod.com. Incorpora esta versão no teu próprio site!";
+"general_about_8" = "Visita godtoolsapp.com para obteres mais informações.";
+"general_about_9" = "Quando tomas a iniciativa de partilhar a tua fé, lembra-te de que Deus é quem muda o coração. Ama cada pessoa ouvindo-a atentamente para a compreenderes.";
+"general_about_10" = "\"Que a vossa palavra seja sempre amável, temperada de sal, para que saibais responder a cada um como deveis.\" Colossenses 4:6";
