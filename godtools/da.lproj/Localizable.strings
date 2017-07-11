@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Tilføj nye værktøjer";
+"set_your_languages" = "Angiv dine sprog";
+"okay" = "OK";
+"now" = "Nu";
+"later" = "Senere";
+
+// Menu
+"menu_general" = "Generelt";
+"menu_share" = "Del";
+"menu_legal" = "Juridisk";
+"language_settings" = "Sprogindstillinger";
+"about" = "Om";
+"help" = "Hjælp";
+"contact_us" = "Kontakt os";
+"notifications" = "Notifikationer";
+"preview_mode_translators_only" = "Eksempeltilstand (kun for oversættere)";
+"share_god_tools" = "Del GodTools";
+"share_a_story_with_us" = "Del en historie med os";
+"terms_of_use" = "Vilkår for brug";
+"privacy_policy" = "Fortrolighedspolitik";
+"copyright_info" = "Copyright-oplysninger";
+"share_god_tools_share_sheet_text" = "Her kan du hente GodTools-appen: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Tilføj værktøjer";
+
+// Tool Detail
+"total_views" = "%d visninger";
+"total_languages" = "%d sprog";
+
+// Language Settings
+"primary_language" = "Primært sprog";
+"select_primary_language" = "Vælg et primært sprog";
+"parallel_language" = "Parallelt sprog";
+"select_parallel_language" = "Vælg et parallelt sprog";
+"share_god_tools_native_language" = "Del God Tools med en på deres eget sprog";
+"not_every_tool_is_available" = "Ikke alle værktøjer findes på alle sprog";
+
+// Settings
+"settings" = "Indstillinger";
+
+// Alert Controllers
+"download_error" = "Overførselsfejl";
+"language_download_error" = "De tilgængelige sprog kunne ikke hentes i øjeblikket. Tjek din forbindelse, eller prøv igen senere.";
+"tract_loading_error_message" = "Der var et problem med at åbne denne ressource. Det løser ofte problemet at prøve at hente den igen. \n\n Vil du hente den igen?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "De seneste danske værktøjer kunne ikke hentes i øjeblikket. Værktøjer på engelsk er tilgængelig. Tjek din forbindelse, eller prøv igen senere.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "De seneste danske værktøjer kan hentes. \n\n Vil du angive dit primære sprog til dansk og hente disse ressourcer?";
+
+// Actions
+"yes" = "Ja";
+"no" = "Nej";
+
+// Tract - Sharing
+"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. Lad os tale noget mere sammen!";
+
+// Buttons
+"download" = "Hent";
+"dismiss" = "Afvis";
+"done" = "Fuldfør";
+"remove" = "Fjern";
+"clear" = "Ryd";
+"unavailable" = "Ikke tilgængelig";
+
+// Alerts
+"error" = "Fejl";
+"ok" = "Ok";
+"error_can_not_send_email" = "Der er ingen konfigureret e-mail på din enhed.";
+"required_field_missing" = "\"%@\" er et påkrævet felt.";
+
+// About
+"general_about_1" = "GodTools hjælper dig med at dele din tro på en let og tydelig måde.";
+"general_about_2" = "Disse værktøjer hjælper dig med at forklare andre på en overbevisende måde, hvordan de kan begynde deres forhold med Gud gennem Jesus Kristus, selv om du aldrig har delt din tro før, eller de taler et andet sprog.";
+"general_about_3" = "Vælg mellem en række forskellige værktøjer baseret på dine præferencer og dit publikum. Ikke alle værktøjer findes på alle sprog.";
+"general_about_4" = "Links til andre ressourcer er inkluderet ved afslutningen af hvert værktøj.";
+"general_about_5" = "Online forbindelse er nødvendig for at kunne hente hvert nyt værktøj og/eller sprog. Når de er hentet, kan de bruges offline.";
+"general_about_6" = "Spørgsmål? Forslag? Anmodninger? Kontakt os på support@godtoolsapp.com";
+"general_about_7" = "Der findes en online version af disse værktøjer på knowgod.com. Integrer dem på dit eget websted.";
+"general_about_8" = "Besøg godtoolsapp.com for at få flere oplysninger.";
+"general_about_9" = "Når du tager initiativ til at dele din tro, skal du huske, at Gud er den, som ændrer hjertet. Elsk alle personer ved at lytte og forstå dem.";
+"general_about_10" = "\"Eders Tale være altid med Ynde, krydret med Salt, saa I vide, hvorledes I bør svare enhver især.\" Kolossenserne 4:6";

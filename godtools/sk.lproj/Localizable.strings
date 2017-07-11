@@ -10,7 +10,6 @@
 "menu_share" = "Zdieľanie";
 "menu_legal" = "Právne informácie";
 "language_settings" = "Nastavenia jazyka";
-// Tool Detail
 "about" = "Informácie";
 "help" = "Pomoc";
 "contact_us" = "Kontaktujte nás";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Podeľte sa s nami o príbeh";
 "terms_of_use" = "Zmluvné podmienky";
 "privacy_policy" = "Pravidlá ochrany súkromia";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informácie o autorských právach";
 "share_god_tools_share_sheet_text" = "Aplikáciu GodTools si môžete stiahnuť tu: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Pridať nástroje";
 
+// Tool Detail
 "total_views" = "Zobrazenia: %d";
 "total_languages" = "Jazyky: %d";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Pri otváraní zdroja sa vyskytol problém. Tento problém sa často vyrieši opätovným stiahnutím zdroja.\n\nChcete ho stiahnuť znova?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Najnovšie slovenské nástroje sa momentálne nepodarilo stiahnuť. K dispozícii sú anglické nástroje. Skontrolujte si svoje pripojenie alebo to skúste znova neskôr.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Je možné stiahnuť najnovšie slovenské nástroje.\n\n Chcete nastaviť svoj hlavný jazyk na slovenčinu a stiahnuť si tieto zdroje?";
 
 // Actions
 "yes" = "Áno";
@@ -69,7 +69,7 @@
 "error" = "Chyba";
 "ok" = "OK";
 "error_can_not_send_email" = "Vo vašom zariadení nie je nastavený e-mail.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" je povinné pole.";
 
 // About
 "general_about_1" = "Aplikácia GodTools vám pomáha zdieľať vieru jednoducho a jasne.";

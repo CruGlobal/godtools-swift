@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Ongeza Vifaa Vipya";
+"set_your_languages" = "Weka Lugha Zako";
+"okay" = "Sawa";
+"now" = "Sasa";
+"later" = "Baadaye";
+
+// Menu
+"menu_general" = "Kuu";
+"menu_share" = "Shirikisha";
+"menu_legal" = "Kisheria";
+"language_settings" = "Mipangilio ya Lugha";
+"about" = "Kuhusu";
+"help" = "Msaada";
+"contact_us" = "Wasiliana Nasi";
+"notifications" = "Arifa";
+"preview_mode_translators_only" = "Angalia Hali (Watafsiri Pekee)";
+"share_god_tools" = "Shirikisha GodTools";
+"share_a_story_with_us" = "Tushirikishe Kwenye Hadithi Yako";
+"terms_of_use" = "Masharti ya Matumizi";
+"privacy_policy" = "Sera ya Faragha";
+"copyright_info" = "Maelezo ya Hakimiliki";
+"share_god_tools_share_sheet_text" = "Hapa unaweza kupakua programu ya GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Ongeza Vifaa";
+
+// Tool Detail
+"total_views" = "Asilimia (%d) ya maoni";
+"total_languages" = "Asilimia (%d) ya lugha";
+
+// Language Settings
+"primary_language" = "Lugha ya Msingi";
+"select_primary_language" = "Chagua Lugha ya Msingi";
+"parallel_language" = "Lugha Sambamba";
+"select_parallel_language" = "Chagua Lugha Sambamba";
+"share_god_tools_native_language" = "Shirikisha programu ya GodTools na mtu mwingine ukitumia lugha yao ya asili.";
+"not_every_tool_is_available" = "Si kila chombo kinapatikana kwa kila lugha";
+
+// Settings
+"settings" = "Mipangilio";
+
+// Alert Controllers
+"download_error" = "Makosa ya Upakuzi";
+"language_download_error" = "Lugha zilizopo hazikuweza kupakuliwa kwa wakati huu.  Tafadhali angalia uunganisho wako au ujaribu tena baadaye.";
+"tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo. \n\nJe, ungependa kupakua rasilimali hii tena?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Vifaa vya hivi karibuni ve Kiingereza havingeweza kupakuliwa kwa wakati huu. Vifaa vya Kiingereza vinapatikana. Tafadhali angalia uunganisho wako ama ujaribu tena baadaye.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa. \n\n Je, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?";
+
+// Actions
+"yes" = "Ndio";
+"no" = "La";
+
+// Tract - Sharing
+"tract_share_message" ="Kiungo hiki kitakuingiza kwenye toleo la wavuti la ukurasa tulikuwa tukiangalia kwa pamoja leo: %@. Hebu tuzungumze zaidi!";
+
+// Buttons
+"download" = "Pakua";
+"dismiss" = "Futa";
+"done" = "Imefanywa";
+"remove" = "Ondoa";
+"clear" = "Futa";
+"unavailable" = "Hazipatikani";
+
+// Alerts
+"error" = "Kosa";
+"ok" = "Sawa";
+"error_can_not_send_email" = "Hakuna barua pepe iliyowekwa kwenye kifaa chako.";
+"required_field_missing" = "\"%@\" ni sharti ambalo lazima litimizwe.";
+
+// About
+"general_about_1" = "GodTools inakusaidia kueneza imani yako kwa njia rahisi na ya wazi.";
+"general_about_2" = "Vifaa hivi vinasaidia kumwambia mtu kwa ujasiri jinsi wanaweza kuanzisha uhusiano na Mungu kupitia Yesu Kristo, hata kama hujawahi kushiriki imani yako kabla au wanasema ama wanaongea lugha tofauti.";
+"general_about_3" = "Chagua kutoka kwa aina mbalimbali za zana kulingana na upendeleo wako na watumiaji wako. Sio zana zote zinazopatikana kwa kila lugha.";
+"general_about_4" = "Viungo vya rasilimali nyingine vinajumuishwa mwishoni mwa kila chombo.";
+"general_about_5" = "Uunganisho wa mtandaoni unahitajika kupakua kila chombo kipya na / au lugha. Mara baada ya kupakuliwa, inaweza kutumika nje ya mtandao.";
+"general_about_6" = "Maswali? Mapendekezo? Maombi? Wasiliana nasi kupitia support@godtoolsapp.com";
+"general_about_7" = "Toleo la mtandaoni la zana hizi linaweza kupatikana kwenya knowgod.com. Ingiza kwenye tovuti yako mwenyewe!";
+"general_about_8" = "Tembelea godtoolsapp.com kwa maelezo zaidi.";
+"general_about_9" = "Unapopata hatua ya kushiriki imani yako, kumbuka kwamba Mungu ndiye anayebadilisha moyo. Mpende kila mtu vizuri kwa kusikiliza kwa ufahamu.";
+"general_about_10" = "\"Hebu mazungumzo yako yote yawe kamili ya neema, iliyohifadhiwa na chumvi, ili uweze kujua jinsi ya kujibu kila mtu.\" Wakolosai, sura ya Nne, aya ya sita (Wakolosai  4:6).";

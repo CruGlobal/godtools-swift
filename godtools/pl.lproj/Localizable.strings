@@ -20,9 +20,8 @@
 "share_a_story_with_us" = "Podziel się z nami swoją historią";
 "terms_of_use" = "Warunki użytkowania";
 "privacy_policy" = "Polityka prywatności";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj:
-http://godtoolsapp.com";
+"copyright_info" = "Informacja o prawach autorskich";
+"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Dodaj Narzędzia";
@@ -47,10 +46,10 @@ http://godtoolsapp.com";
 "tract_loading_error_message" = "Podczas otwierania tego zasobu wystąpił problem. Ponowne jego pobranie zazwyczaj rozwiązuje problem.\n\nCzy pobrać ponownie?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Nie można obecnie pobrać najnowszych narzędzi w języku angielskim. Narzędzia w języku angielskim są dostępne. Sprawdź połączenie lub spróbuj ponownie później.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Można obecnie pobrać najnowsze narzędzia w języku angielskim. \n\n Czy chciałbyś ustawić język angielski jako język główny aby pobrać te zasoby?";
 
 // Actions
 "yes" = "Tak";
@@ -65,12 +64,13 @@ http://godtoolsapp.com";
 "done" = "Gotowe";
 "remove" = "Usuń";
 "clear" = "Wyczyść";
+"unavailable" = "Niedostępne";
 
 // Alerts
 "error" = "Błąd";
 "ok" = "OK";
 "error_can_not_send_email" = "Na Twoim urządzeniu nie ma skonfigurowanego adresu e-mail.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" jest polem wymaganym.";
 
 // About
 "general_about_1" = "GodToold pomaga dzielić się wiarą w prosty i przejrzysty sposób.";
@@ -82,5 +82,4 @@ http://godtoolsapp.com";
 "general_about_7" = "Wersja online tych narzędzi dostępna jest pod adresem knowgod.com. Umieść je na własnej stronie!";
 "general_about_8" = "Więcej informacji znajdziesz na stronie godtoolsapp.com.";
 "general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
-"general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
-List do Kolosan 4, 6";
+"general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\" List do Kolosan 4, 6";

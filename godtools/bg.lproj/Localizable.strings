@@ -20,7 +20,7 @@
 "share_a_story_with_us" = "Споделете една история с нас";
 "terms_of_use" = "Условия за употреба";
 "privacy_policy" = "Политика за поверителност";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Информация за авторско право";
 "share_god_tools_share_sheet_text" = "Тук можете да изтеглите приложението GodTools: http://godtoolsapp.com";
 
 // Add Tools
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Имаше проблем с отварянето на този източник. Повторното му изтегляне често разрешава този проблем.\n\nИскате ли да го изтеглите отново?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Неуспешно изтегляне на най-новите инструменти на английски език. Налични са инструменти на английски език. Моля, проверете Вашата връзка или опитайте отново по-късно.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Най-новите инструменти на английски език могат да бъдат изтеглени. \n\n Искате ли да изберете английския за Ваш главен език и да изтеглите тези ресурси?";
 
 // Actions
 "yes" = "Да";
@@ -64,12 +64,13 @@
 "done" = "Направено";
 "remove" = "Отстраняване";
 "clear" = "Изтриване";
+"unavailable" = "Не е наличен";
 
 // Alerts
 "error" = "Грешка";
 "ok" = "ОК";
 "error_can_not_send_email" = "Няма конфигуриран имейл на Вашето устройство.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" е задължително поле.";
 
 // About
 "general_about_1" = "GodTools помага да споделяте Вашата вяра по лесен и ясен начин.";

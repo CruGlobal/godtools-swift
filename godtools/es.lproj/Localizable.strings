@@ -64,6 +64,7 @@
 "done" = "Listo";
 "remove" = "Quitar";
 "clear" = "Borrar";
+"unavailable" = "No Disponible";
 
 // Alerts
 "error" = "Error";

@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "เพิ่มเครื่องมือใหม่";
+"set_your_languages" = "ตั้งค่าภาษา";
+"okay" = "โอเค";
+"now" = "ตอนนี้";
+"later" = "ภายหลัง";
+
+// Menu
+"menu_general" = "ทั่วไป";
+"menu_share" = "แชร์";
+"menu_legal" = "กฎหมาย";
+"language_settings" = "การตั้งค่าภาษา";
+"about" = "เกี่ยวกับ";
+"help" = "ช่วยเหลือ";
+"contact_us" = "ติดต่อเรา";
+"notifications" = "การแจ้งเตือน";
+"preview_mode_translators_only" = "โหมดพรีวิว (นักแปลเท่านั้น)";
+"share_god_tools" = "แชร์ GodTools";
+"share_a_story_with_us" = "แชร์เรื่องราวกับเรา";
+"terms_of_use" = "เงื่อนไขการใช้งาน";
+"privacy_policy" = "นโยบายความเป็นส่วนตัว";
+"copyright_info" = "ข้อมูลลิขสิทธิ์";
+"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "เพิ่มเครื่องมือ";
+
+// Tool Detail
+"total_views" = "ดู %d ครั้ง";
+"total_languages" = "%d ภาษา";
+
+// Language Settings
+"primary_language" = "ภาษาหลัก";
+"select_primary_language" = "เลือกภาษาหลัก";
+"parallel_language" = "ภาษาพาราเลล";
+"select_parallel_language" = "เลือกภาษาพาราเลล";
+"share_god_tools_native_language" = "แชร์ God Tools เป็นภาษาของผู้รับ";
+"not_every_tool_is_available" = "มีเครื่องมือไม่ครบทุกภาษา";
+
+// Settings
+"settings" = "การตั้งค่า";
+
+// Alert Controllers
+"download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
+"language_download_error" = "ไม่สามารถดาวน์โหลดภาษาที่มีได้ตอนนี้ โปรดตรวจสอบการเชื่อมต่อหรือลองอีกครั้งภายหลัง";
+"tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้ \n\n ต้องการดาวน์โหลดอีกครั้งหรือไม่";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "ไม่สามารถดาวน์โหลดเครื่องมือภาษาไทยได้ตอนนี้ มีเครื่องมือภาษาอังกฤษให้บริการ โปรดตรวจสอบการเชื่อมต่อหรือลองใหม่ภายหลัง";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้ \n\n ต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
+
+// Actions
+"yes" = "ใช่";
+"no" = "ไม่";
+
+// Tract - Sharing
+"tract_share_message" ="ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!";
+
+// Buttons
+"download" = "ดาวน์โหลด";
+"dismiss" = "ยกเลิก";
+"done" = "เสร็จ";
+"remove" = "ลบออก";
+"clear" = "ล้าง";
+"unavailable" = "ใช้ไม่ได้";
+
+// Alerts
+"error" = "ข้อผิดพลาด";
+"ok" = "โอเค";
+"error_can_not_send_email" = "ไม่มีอีเมลที่กำหนดค่าในอุปกรณ์ของคุณ";
+"required_field_missing" = "\"%@\" เป็นช่องบังคับ";
+
+// About
+"general_about_1" = "GodTools เป็นแอปที่ให้คุณแชร์ศรัทธาที่มีได้อย่างง่ายดายและชัดเจน";
+"general_about_2" = "เครื่องมือเหล่านี้จะช่วยให้คุณอธิบายได้อย่างมั่นใจถึงวิธีเริ่มต้นความสัมพันธ์กับพระผู้เป็นเจ้าผ่านพระเยซูคริสต์ ถึงแม้คุณจะไม่เคยเผยแผ่ศรัทธามาก่อนหรือผู้ฟังไม่ได้พูดภาษาเดียวกันกับคุณ";
+"general_about_3" = "เลือกเครื่องมือต่างๆ ได้ตามการกำหนดลักษณะและผู้รับฟัง มีเครื่องมือไม่ครบทุกภาษา";
+"general_about_4" = "ลิงก์ไปยังทรัพยากรอื่นๆ จะอยู่ที่ด้านท้ายของเครื่องมือ";
+"general_about_5" = "โปรดเชื่อมต่ออินเทอร์เน็ตเพื่อดาวน์โหลดเครื่องมือและ/หรือภาษาใหม่ หลังจากดาวน์โหลดแล้ว คุณสามารถใช้เครื่องมือเหล่านี้ได้ในขณะออฟไลน์";
+"general_about_6" = "หากมีคำถาม ข้อเสนอแนะ หรือต้องการความช่วยเหลือ โปรดติดต่อเราที่ support@godtoolsapp.com";
+"general_about_7" = "ค้นเครื่องมือออนไลน์ได้จาก knowgod.com แล้วดาวน์โหลดไว้ในเว็บไซต์ของคุณ!";
+"general_about_8" = "ดูข้อมูลเพิ่มเติมได้ที่ godtoolsapp.com";
+"general_about_9" = "ในการเผยแผ่ศรัทธาที่คุณมีต่อพระผู้เป็นเจ้า โปรดระลึกว่าพระองค์เป็นผู้เปลี่ยนแปลงจิตใจ ขอให้เปิดใจฟังอย่างเข้าอกเข้าใจ";
+"general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";

@@ -10,7 +10,6 @@
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
-// Tool Detail
 "about" = "Despre noi";
 "help" = "Ajutor";
 "contact_us" = "Contactează-ne";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Împărtășește o poveste cu noi";
 "terms_of_use" = "Condiții de utilizare";
 "privacy_policy" = "Politica de confidențialitate";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informații copyright";
 "share_god_tools_share_sheet_text" = "De aici poți descărca aplicația GodTools: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Adaugă instrumente";
 
+// Tool Detail
 "total_views" = "%d vizualizări";
 "total_languages" = "%d limbi";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "A apărut o problemă la descărcarea resursei. Descărcarea din nou rezolvă deseori problema. \n\n Vrei să o descarci din nou?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Ultimele instrumente în limba engleză nu au putut fi descărcate în acest moment. Sunt disponibile instrumente în limba engleză. Verifică conexiunea sau încearcă mai târziu.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Ultimele instrumente în limba engleză pot fi descărcate. Dorești să setezi engleza ca limbă principală și să descarci aceste resurse?";
 
 // Actions
 "yes" = "Da";
@@ -64,12 +64,13 @@
 "done" = "Terminat";
 "remove" = "Elimină";
 "clear" = "Șterge";
+"unavailable" = "Indisponibil";
 
 // Alerts
 "error" = "Eroare";
 "ok" = "Ok";
 "error_can_not_send_email" = "Nu există e-mail configurat pe dispozitivul tău.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" este un câmp obligatoriu.";
 
 // About
 "general_about_1" = "GodTools te ajută să-ți împărtășești credința în mod ușor și simplu.";

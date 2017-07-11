@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "新しいツールを追加";
+"set_your_languages" = "言語を設定";
+"okay" = "OK";
+"now" = "今すぐ";
+"later" = "後で";
+
+// Menu
+"menu_general" = "一般";
+"menu_share" = "シェア";
+"menu_legal" = "法定事項";
+"language_settings" = "言語設定";
+"about" = "情報";
+"help" = "ヘルプ";
+"contact_us" = "お問い合わせ";
+"notifications" = "通知";
+"preview_mode_translators_only" = "プレビューモード（翻訳者限定";
+"share_god_tools" = "GodToolsをシェア";
+"share_a_story_with_us" = "体験談を紹介";
+"terms_of_use" = "利用規約";
+"privacy_policy" = "プライバシーポリシー";
+"copyright_info" = "著作権情報";
+"share_god_tools_share_sheet_text" = "こちらからGodToolsアプリをダウンロードできます: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "ツールを追加";
+
+// Tool Detail
+"total_views" = "表示回数%d回";
+"total_languages" = "%d言語";
+
+// Language Settings
+"primary_language" = "第1言語";
+"select_primary_language" = "第1言語を選択";
+"parallel_language" = "並列言語";
+"select_parallel_language" = "並列言語を選択";
+"share_god_tools_native_language" = "シェア相手の母国語でGod Toolsをシェア";
+"not_every_tool_is_available" = "全言語ですべてのツールが利用できるわけではありません";
+
+// Settings
+"settings" = "設定";
+
+// Alert Controllers
+"download_error" = "ダウンロードエラー";
+"language_download_error" = "利用可能な言語を現在ダウンロードできません。インターネット接続を確認するか、または後ほど再度お試しください。";
+"tract_loading_error_message" = "このリソースを開く際に問題が発生しました。もう一度ダウンロードすると高い確率で問題が解決する場合があります。\n\n もう一度ダウンロードしますか？";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "最新の英語ツールを現在ダウンロードできません。英語ツールは利用可能です。インターネット接続を確認するか、または後ほど再度お試しください。";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "最新の英語ツールをダウンロードできます。 \n\n 第1言語を英語に設定してこれらのリソースをダウンロードしますか？";
+
+// Actions
+"yes" = "はい";
+"no" = "いいえ";
+
+// Tract - Sharing
+"tract_share_message" ="このリンクは私たちが今日最後に見ていたウェブ版のページに移動します: %@。もっと話しましょう！";
+
+// Buttons
+"download" = "ダウンロード";
+"dismiss" = "無視";
+"done" = "完了";
+"remove" = "削除";
+"clear" = "消去";
+"unavailable" = "利用不可";
+
+// Alerts
+"error" = "エラー";
+"ok" = "OK";
+"error_can_not_send_email" = "お使いの端末にメールが設定されていません。";
+"required_field_missing" = "「%@」は必須記入欄です。";
+
+// About
+"general_about_1" = "GodToolsは、簡単で明確な方法で信仰をシェアすることができます。";
+"general_about_2" = "これらのツールがあれば、これまで信仰をシェアシたことがない人でも、言語が異なる人でも、イエス・キリストを通じて神との関係をどのように始めることができるかを自信をもって他者に伝えることができるようになります。";
+"general_about_3" = "好みと相手に応じてさまざまなツールから選択ができます。全言語ですべてのツールが利用できるわけではありません。";
+"general_about_4" = "各ツールの最後に、他の資料へのリンクが含まれています。";
+"general_about_5" = "新しいツールおよび言語のダウンロードにはインターネット接続が必要です。一度ダウンロードすれば、オフラインでも利用できるようになります。";
+"general_about_6" = "質問、提案、リクエストは、support@godtoolsapp.comまでご連絡ください。";
+"general_about_7" = "これらのツールのオンライン版は、knowgod.comでも紹介しています。ご自分のサイトに埋め込んでお使いください。";
+"general_about_8" = "詳しくは、godtoolsapp.comをご覧ください。";
+"general_about_9" = "率先して信仰をシェアするために、神が心を変える存在であることを思い出してください。理解するために耳を傾け、一人一人を愛してください。";
+"general_about_10" = "「あなたがたの会話が、良識に富み、善意にあふれるよう心がけなさい。そうすれば、相手の一人一人に適切な答えができます。 」コロサイ人への手紙4:6";

@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Додај нове алатке";
+"set_your_languages" = "Подесите своје језике";
+"okay" = "У реду";
+"now" = "Сад";
+"later" = "Касније";
+
+// Menu
+"menu_general" = "Опште";
+"menu_share" = "Подели";
+"menu_legal" = "Правно";
+"language_settings" = "Подешавање језика";
+"about" = "О";
+"help" = "Помоћ";
+"contact_us" = "Контактирајте нас";
+"notifications" = "Обавештења";
+"preview_mode_translators_only" = "Режим прегледа (само за преводиоце)";
+"share_god_tools" = "Поделите апликацију GodTools";
+"share_a_story_with_us" = "Поделите причу са нама";
+"terms_of_use" = "Услови коришћења";
+"privacy_policy" = "Политика приватности";
+"copyright_info" = "Информације о ауторском праву";
+"share_god_tools_share_sheet_text" = "Овде можете преузети апликацију GodTools: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Додај алатке";
+
+// Tool Detail
+"total_views" = "%d прегледа";
+"total_languages" = "%d језика";
+
+// Language Settings
+"primary_language" = "Примарни језик";
+"select_primary_language" = "Изаберите примарни језик";
+"parallel_language" = "Паралелни језик";
+"select_parallel_language" = "Изаберите паралелни језик";
+"share_god_tools_native_language" = "Поделите апликацију God Tools са неким на њиховом матерњем језику";
+"not_every_tool_is_available" = "Сви алати нису доступни на сваком језику";
+
+// Settings
+"settings" = "Подешавања";
+
+// Alert Controllers
+"download_error" = "Грешка приликом преузимања";
+"language_download_error" = "Преузимање доступних језика није могуће у овом тренутку. Проверите могућност повезивања или покушајте касније.";
+"tract_loading_error_message" = "Дошло је до проблема приликом отварања овог ресурса. Поновно преузимање обично решава тај проблем. \n\n Желите ли да га преузмете поново?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Преузимање алата на енглеском није могуће у овом тренутку. Алати на енглеском су доступни. Проверите могућност повезивања или покушајте касније.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Најновији алати на енглеском се могу преузети. \n\n Желите ли да поставите свој примарни језик на енглески и да преузмете ове ресурсе?";
+
+// Actions
+"yes" = "Да";
+"no" = "Не";
+
+// Tract - Sharing
+"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. Хајде да разговарамо више!";
+
+// Buttons
+"download" = "Преузми";
+"dismiss" = "Одбаци";
+"done" = "Готово";
+"remove" = "Уклони";
+"clear" = "Обриши";
+"unavailable" = "Недоступно";
+
+// Alerts
+"error" = "Грешка";
+"ok" = "У реду";
+"error_can_not_send_email" = "На вашем уређају е-пошта није конфигурисана.";
+"required_field_missing" = "\"%@\" је обавезно поље.";
+
+// About
+"general_about_1" = "Апликација GodTools вам помаже да поделите своју веру на лак и јасан начин.";
+"general_about_2" = "Ови алати вам помажу да некоме објасните сигурно како могу да започну везу са Богом кроз Исуса Христа, чак и ако никада раније нису делили своју веру или говорили на другом језику.";
+"general_about_3" = "Одаберите различите алате на основу ваших подешавања и ваше публике. Нису сви алати доступни на сваком језику.";
+"general_about_4" = "Везе са другим ресурсима су садржане на крају сваког алата.";
+"general_about_5" = "Мрежна веза је неопходна за преузимање сваког новог алата и/или језика. Чим се преузму, могу се користити ван мреже.";
+"general_about_6" = "Питања? Предлози? Захтеви? Контактирајте нас на support@godtoolsapp.com";
+"general_about_7" = "Верзија ових алата на мрежи се може наћи на knowgod.com. Уградите га на свом сајту!";
+"general_about_8" = "Посетите godtoolsapp.com за више информација.";
+"general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
+"general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";

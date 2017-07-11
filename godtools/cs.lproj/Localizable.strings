@@ -10,7 +10,6 @@
 "menu_share" = "Sdílet";
 "menu_legal" = "Pravidla užívání a ochrany soukromí";
 "language_settings" = "Jazyková nastavení";
-// Tool Detail
 "about" = "O aplikaci";
 "help" = "Nápověda";
 "contact_us" = "Kontaktujte nás";
@@ -20,12 +19,13 @@
 "share_a_story_with_us" = "Napište nám příběh";
 "terms_of_use" = "Pravidla užívání";
 "privacy_policy" = "Ochrana soukromí";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informace o autorských právech";
 "share_god_tools_share_sheet_text" = "Zde si můžete stáhnout aplikaci GodTools: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Přidat nástroje";
 
+// Tool Detail
 "total_views" = "%d zhlédnutí";
 "total_languages" = "%d jazyků";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Při otevírání tohoto zdroje nastala chyba. Častým řešením tohoto problému je jeho opětovné stažení.\n\nChcete ho stáhnout znovu?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Nejnovější české nástroje teď nemohly být staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Nejnovější české nástroje jsou připraveny ke stažení. \n\n Chcete si nastavit češtinu jako primární jazyk a stáhnout tyto zdroje?";
 
 // Actions
 "yes" = "Ano";
@@ -64,12 +64,13 @@
 "done" = "Hotovo";
 "remove" = "Odstranit";
 "clear" = "Smazat";
+"unavailable" = "Nedostupný";
 
 // Alerts
 "error" = "Chyba";
 "ok" = "OK";
 "error_can_not_send_email" = "Na svém přístroji nemáte nakonfigurován e-mail.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" je povinné pole.";
 
 // About
 "general_about_1" = "GodTools vám pomohou jednoduše a jasně sdílet svoji víru.";

@@ -20,7 +20,7 @@
 "share_a_story_with_us" = "Розкажіть нам історію";
 "terms_of_use" = "Умови користування";
 "privacy_policy" = "Політика конфіденційності";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Авторське право";
 "share_god_tools_share_sheet_text" = "Тут ви можете завантажити програму GodTools: http://godtoolsapp.com";
 
 // Add Tools
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Сталася помилка під час завантаження. Спобуйте завантажити знову.\n\nЗавантажити зараз?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Останню версію на українській мові наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\n Бажаєте встановити англійську мову і завантажити ресурси на цій мові?";
 
 // Actions
 "yes" = "Так";
@@ -64,12 +64,13 @@
 "done" = "Готово";
 "remove" = "Видалити";
 "clear" = "Очистити";
+"unavailable" = "Недоступно";
 
 // Alerts
 "error" = "Помилка";
 "ok" = "Добре";
 "error_can_not_send_email" = "Ел. пошту не налаштовано на вашому пристрої.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" є обов'язковим пунктом";
 
 // About
 "general_about_1" = "З допомогою програми GodTools поширювати Божу вістку легко та зручно.";

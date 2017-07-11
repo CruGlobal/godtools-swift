@@ -10,7 +10,6 @@
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
-// Tool Detail
 "about" = "Über";
 "help" = "Hilfe";
 "contact_us" = "Kontakt";
@@ -26,6 +25,7 @@
 // Add Tools
 "add_tools" = "Neue Tools hinzufügen";
 
+// Tool Detail
 "total_views" = "%d Aufrufe";
 "total_languages" = "%d Sprachen";
 
@@ -64,6 +64,7 @@
 "done" = "Fertig";
 "remove" = "Entfernen";
 "clear" = "Löschen";
+"unavailable" = "Nicht verfügbar";
 
 // Alerts
 "error" = "Fehler";

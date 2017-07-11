@@ -10,7 +10,6 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
-// Tool Detail
 "about" = "О приложении";
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
@@ -26,6 +25,7 @@
 // Add Tools
 "add_tools" = "Добавить инструменты";
 
+// Tool Detail
 "total_views" = "Просмотры: %d";
 "total_languages" = "Языки: %d";
 
@@ -46,10 +46,10 @@
 "tract_loading_error_message" = "Возникла проблема при открытии данного ресурса. Повторная загрузка может помочь устранить эту проблему.\n\nХотите выполнить загрузку снова?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Не удалось загрузить последние инструменты на русском языке. Инструменты доступны на английском языке. Проверьте подключение к сети или повторите попытку позже.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке.\n\n Хотите сделать основным языком русский и загрузить эти материалы?";
 
 // Actions
 "yes" = "Да";
@@ -64,12 +64,13 @@
 "done" = "Готово";
 "remove" = "Удалить";
 "clear" = "Очистить";
+"unavailable" = "Недоступно";
 
 // Alerts
 "error" = "Ошибка";
 "ok" = "ОК";
 "error_can_not_send_email" = "На вашем устройстве нет настроенной учетной записи эл. почты.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" является обязательным полем.";
 
 // About
 "general_about_1" = "GodTools помогает вам делиться своей верой простым и понятным способом.";

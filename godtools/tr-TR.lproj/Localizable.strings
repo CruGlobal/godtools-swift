@@ -1,0 +1,85 @@
+"unavailable" = "Mevcut Değil";
+// Onboarding
+"add_new_tools" = "Yeni Araçlar Ekle";
+"set_your_languages" = "Dillerinizi Ayarlayın";
+"okay" = "Tamam";
+"now" = "Şimdi";
+"later" = "Daha Sonra";
+
+// Menu
+"menu_general" = "Genel";
+"menu_share" = "Paylaş";
+"menu_legal" = "Yasal";
+"language_settings" = "Dil Ayarları";
+// Tool Detail
+"about" = "Hakkında";
+"help" = "Yardım";
+"contact_us" = "Bize Ulaşın";
+"notifications" = "Bildirimler";
+"preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
+"share_god_tools" = "GodTools'u Paylaş";
+"share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";
+"terms_of_use" = "Kullanım Koşulları";
+"privacy_policy" = "Gizlilik Politikası";
+"copyright_info" = "Telif Hakkı Bilgisi";
+"share_god_tools_share_sheet_text" = "Buradan GodTools uygulamasını indirebilirsiniz: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Araçlar Ekle";
+
+"total_views" = "%d görüntüleme";
+"total_languages" = "%d dil";
+
+// Language Settings
+"primary_language" = "Birincil Dil";
+"select_primary_language" = "Bir Birincil Dil Seçin";
+"parallel_language" = "Paralel Dil";
+"select_parallel_language" = "Paralel bir Dil Seçin";
+"share_god_tools_native_language" = "God Tools'u birisiyle kendi ana dilinde paylaşın";
+"not_every_tool_is_available" = "Her araç her dilde kullanıma hazır değildir";
+
+// Settings
+"settings" = "Ayarlar";
+
+// Alert Controllers
+"download_error" = "İndirme Hatası";
+"language_download_error" = "Mevcut diller bu kez indirilemedi. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+"tract_loading_error_message" = "Bu kaynağın açılmasında bir sorun oluştu. Kaynağı tekrar indirmek genelde bu sorunu çözer.\n\nKaynağı tekrar indirmek ister misiniz?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "En güncel Türkçe araçlar bu seferlik indirilemedi. Türkçe araçlar kullanıma hazır. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
+
+// Actions
+"yes" = "Evet";
+"no" = "Hayır";
+
+// Tract - Sharing
+"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın ağ sürümüne götürecek: %@. Daha çok konuşalım!";
+
+// Buttons
+"download" = "İndir";
+"dismiss" = "Bırak";
+"done" = "Bitti";
+"remove" = "Kaldır";
+"clear" = "Temizle";
+
+// Alerts
+"error" = "Hata";
+"ok" = "Tamam";
+"error_can_not_send_email" = "Cihazınızda yapılandırılmış bir e-posta yok.";
+"required_field_missing" = "\"%@\" gerekli bir alandır.";
+
+// About
+"general_about_1" = "GodTools, inancınızı kolay ve açık bir biçimde paylaşmanıza yardımcı olur.";
+"general_about_2" = "Bu araçlar, daha önce inancınızı hiç paylaşmamış olsanız veya onlar farklı bir dil konuşuyor olsalar bile birilerine İsa Mesih aracılığıyla Tanrı'yla nasıl bir ilişki başlatabileceklerini güvenli biçimde açıklamanıza yardımcı olur.";
+"general_about_3" = "Tercihinize ve seyirci kitlenize bağlı olarak çeşitli araçların arasından seçim yapın. Her araç, her dilde mevcut değildir.";
+"general_about_4" = "Her aracın sonunda diğer kaynaklara bağlantılar eklenmiştir.";
+"general_about_5" = "Her yeni araç ve/veya dili indirmek için çevrim içi bağlantı gerekir. İndirildikten sonra bunlar çevrim dışı olarak kullanılabilir.";
+"general_about_6" = "Sorularınız, önerileriniz, talepleriniz mi var? support@godtoolsapp.com adresinden bize ulaşın";
+"general_about_7" = "Bu araçların çevrim içi versiyonu, knowgod.com adresinde bulunabilir. Bunu kendi sitenize ekleyin!";
+"general_about_8" = "Daha fazla bilgi için godtoolsapp.com adresini ziyaret edin.";
+"general_about_9" = "İnancınızı paylaşma inisiyatifi alırken, Tanrı'nın kalbi değiştiren olduğunu aklınızda bulundurun. Anlamak için dinleyerek, her kişiyi güzelce sevin.";
+"general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";

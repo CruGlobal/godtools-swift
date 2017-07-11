@@ -1,0 +1,93 @@
+/* 
+  Localizable.strings
+  godtools
+
+  Created by Devserker on 4/24/17.
+  Copyright © 2017 Cru. All rights reserved.
+*/
+
+// Onboarding
+"add_new_tools" = "Magdagdag ng Mga Bagong Tool";
+"set_your_languages" = "I-set ang Iyong Mga Wika";
+"okay" = "Okay";
+"now" = "Ngayon";
+"later" = "Mamaya";
+
+// Menu
+"menu_general" = "Pangkalahatan";
+"menu_share" = "Pagbabahagi";
+"menu_legal" = "Ayon sa Batas";
+"language_settings" = "Mga Setting ng Wika";
+"about" = "Tungkol dito";
+"help" = "Tulong";
+"contact_us" = "Kontakin Kami";
+"notifications" = "Mga Notification";
+"preview_mode_translators_only" = "Preview Mode (Mga Tagapagsalin-wika Lang)";
+"share_god_tools" = "Ibahagi ang GodTools";
+"share_a_story_with_us" = "Magbahagi ng Kuwento Sa Amin";
+"terms_of_use" = "Mga Tuntunin ng Paggamit";
+"privacy_policy" = "Patakaran sa Pagkapribado";
+"copyright_info" = "Impormasyon sa Copyright";
+"share_god_tools_share_sheet_text" = "Mada-download mo rito ang GodTools app: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Magdagdag ng Mga Tool";
+
+// Tool Detail
+"total_views" = "%d (na) pagtingin";
+"total_languages" = "%d (na) wika";
+
+// Language Settings
+"primary_language" = "Pangunahing Wika";
+"select_primary_language" = "Pumili ng Pangunahing Wika";
+"parallel_language" = "Parallel na Wika";
+"select_parallel_language" = "Pumili ng Parallel na Wika";
+"share_god_tools_native_language" = "Ibahagi ang God Tools sa isang tao sa kanilang katutubong wika";
+"not_every_tool_is_available" = "Ang bawat tool ay hindi available sa bawat wika";
+
+// Settings
+"settings" = "Mga Setting";
+
+// Alert Controllers
+"download_error" = "Error sa Pag-download";
+"language_download_error" = "Hindi ma-download sa ngayon ang mga available na wika. Pakitingnan ang iyong koneksyon o subukan muli sa ibang pagkakataon.";
+"tract_loading_error_message" = "Nagkaroon ng problema sa pagbukas ng mapagkukunang ito. Ang pag-download nito muli ay kadalasang naaayos ang problemang ito. \n\n Gusto mo bang i-download ito muli?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Hindi ma-download sa ngayon ang pinakabagong mga Ingles na tool. Available ang mga Ingles na tool. Pakitingnan ang iyong koneksyon o subukan muli sa ibang pagkakataon.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Mada-download ang pinakabagong mga Ingles na tool. \n\n Gusto mo bang i-set ang iyong pangunahing wika sa Ingles at i-download ang mga mapagkukunang ito?";
+
+// Actions
+"yes" = "Oo";
+"no" = "Hindi";
+
+// Tract - Sharing
+"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. Mag-usap pa tayo!";
+
+// Buttons
+"download" = "I-download";
+"dismiss" = "I-dismiss";
+"done" = "Tapos na";
+"remove" = "Alisin";
+"clear" = "I-clear";
+"unavailable" = "Hindi available";
+
+// Alerts
+"error" = "Error";
+"ok" = "Ok";
+"error_can_not_send_email" = "Walang naka-configure na email sa iyong device.";
+"required_field_missing" = "Ang \"%@\" ay kinakailangang field.";
+
+// About
+"general_about_1" = "Tinutulungan ka ng GodTools na ibahagi ang iyong pananampalataya sa isang madali at malinaw na paraan.";
+"general_about_2" = "Tinutulungan ka ng mga tool na ito na kumpiyansang maipaliwanag sa isang tao kung paano nila masisimulan ang isang relasyon sa Diyos sa pamamagitan ni Hesukristo, kahit na kailanman ay hindi mo pa naibahagi ang iyong pananalampalataya dati o iba ang wikang sinasalita nila.";
+"general_about_3" = "Pumili mula sa iba't ibang tool batay sa iyong kagustuhan at sa iyong audience. Hindi lahat ng tool ay available sa bawat wika.";
+"general_about_4" = "Kasama sa dulo ng bawat tool ang mga link sa iba pang mga mapagkukunan.";
+"general_about_5" = "Kailangan ng koneksyon sa online para i-download ang bawat bagong tool at/o wika. Kapag na-download na, magagamit ang mga ito sa offline.";
+"general_about_6" = "May mga tanong? Mga mungkahi? Mga kahilingan? Kontakin kami sa support@godtoolsapp.com";
+"general_about_7" = "Makikita sa knowgod.com ang online na bersyon ng mga tool na ito. I-embed ito sa iyong sariling site!";
+"general_about_8" = "Pumunta sa godtoolsapp.com para sa karagdagang impormasyon.";
+"general_about_9" = "Habang ginagawa mo ang inisiyatiba para ibahagi ang iyong pananalampalataya, tandaan na ang Diyos ang siyang nagbabago sa puso. Mahaling mabuti ang bawat tao sa pamamagitan ng pakikinig para magkaunawaan.";
+"general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Colossians 4:6";

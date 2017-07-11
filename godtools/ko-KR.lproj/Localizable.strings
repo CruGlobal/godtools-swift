@@ -1,0 +1,85 @@
+"unavailable" = "사용 불가";
+// Onboarding
+"add_new_tools" = "새 도구 추가";
+"set_your_languages" = "언어 설정";
+"okay" = "확인";
+"now" = "지금";
+"later" = "나중에";
+
+// Menu
+"menu_general" = "일반";
+"menu_share" = "공유";
+"menu_legal" = "법률";
+"language_settings" = "언어 설정";
+// Tool Detail
+"about" = "정보";
+"help" = "도움말";
+"contact_us" = "연락처";
+"notifications" = "알림";
+"preview_mode_translators_only" = "미리보기 모드 (번역가 전용)";
+"share_god_tools" = "GodTools 공유";
+"share_a_story_with_us" = "이야기를 공유해요";
+"terms_of_use" = "이용 약관";
+"privacy_policy" = "개인정보 보호정책";
+"copyright_info" = "저장권 정보";
+"share_god_tools_share_sheet_text" = "여기에서 GodTools 앱 다운로드: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "도구 추가";
+
+"total_views" = "%d 뷰";
+"total_languages" = "%d 언어";
+
+// Language Settings
+"primary_language" = "기본 언어";
+"select_primary_language" = "기본 언어 선택";
+"parallel_language" = "병행 언어";
+"select_parallel_language" = "병행 언어 선택";
+"share_god_tools_native_language" = "모국어로 God Tools를 공유하세요";
+"not_every_tool_is_available" = "모든 언어로 모든 도구를 이용할 수 있지는 않습니다";
+
+// Settings
+"settings" = "설정";
+
+// Alert Controllers
+"download_error" = "다운로드 오류";
+"language_download_error" = "이용 가능한 언어를 지금 다운로드할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요.";
+"tract_loading_error_message" = "이 리소스를 열 때 문제가 생겼습니다. 다시 다운로드하면 가끔 이 문제가 해결됩니다.\n\n다시 다운로드하시겠습니까?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "최신 영어 도구를 지금 다운로드할 수 없습니다. 영어 도구를 이용할 수 있습니다. 연결을 확인하거나 나중에 다시 시도하세요.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "최신 영어 도구를 다운로드할 수 있습니다.\n\n기본 언어를 영어로 설정하고 관련 리소스를 다운로드하시겠습니까?";
+
+// Actions
+"yes" = "예";
+"no" = "아니요";
+
+// Tract - Sharing
+"tract_share_message" ="이 링크가 오늘 같이 본 %@ 페이지의 웹 버전으로 이동시킵니다. 더 대화하세요!";
+
+// Buttons
+"download" = "다운로드";
+"dismiss" = "취소";
+"done" = "완료";
+"remove" = "제거";
+"clear" = "삭제";
+
+// Alerts
+"error" = "오류";
+"ok" = "확인";
+"error_can_not_send_email" = "장치에 구성된 이메일이 없습니다.";
+"required_field_missing" = "\"%@\"은(는) 필수 입력란입니다.";
+
+// About
+"general_about_1" = "GodTools가 쉽고 깨끗한 방식으로 신념을 공유할 수 있게 해줍니다.";
+"general_about_2" = "이러한 도구를 활용하여 한 번도 신념을 공유하지 않았거나 다른 언어로 이야기하더라도 예수 그리스도를 통해 신과의 관계를 시작할 수 있는 방법을 자신있게 설명할 수 있습니다.";
+"general_about_3" = "선호 사항 및 대상을 기준으로 다양한 도구를 선택하세요. 모든 도구를 모든 언어로 이용할 수 있는 것은 아닙니다.";
+"general_about_4" = "다른 리소스에 대한 링크가 각 도구 종료 시 포함됩니다.";
+"general_about_5" = "각 새로운 도구 또는 언어 다운로드에는 온라인 연결이 필요합니다. 다운로드가 끝나면 오프라인으로 사용할 수 있습니다.";
+"general_about_6" = "질문? 제안? 요청? support@godtoolsapp.com에 문의하세요";
+"general_about_7" = "이러한 도구의 온라인 버전은 knowgod.com에서 찾을 수 있습니다. 자신의 사이트에 임베드하세요!";
+"general_about_8" = "자세한 정보는 godtoolsapp.com을 방문하세요.";
+"general_about_9" = "신념을 공유하는 데 결단이 섰다면 오직 신만이 마음을 바꾸는 존재라는 걸 기억하세요. 이해를하며 서로를 사랑하세요.";
+"general_about_10" = "\"여러분은 언제나, 소금으로 맛을 내는 것과 같이, 은혜가 넘치게 말을 하십시오.\" 골로새서 4:6";
