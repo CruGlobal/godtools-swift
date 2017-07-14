@@ -378,6 +378,7 @@
 		4F5732961EA69CF00082035C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F5732991EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F57329B1EA69CF00082035C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = godtools.entitlements; sourceTree = "<group>"; };
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
@@ -981,6 +982,7 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
+				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
 				EC55A61D1EE0AC2B000235CA /* TractClasses */,
@@ -1290,6 +1292,11 @@
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					684328F01EB7CF66005E9131 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1943,6 +1950,7 @@
 			baseConfigurationReference = 3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
