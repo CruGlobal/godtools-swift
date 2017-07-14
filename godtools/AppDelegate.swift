@@ -80,6 +80,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirstLaunchInitializer().initializeAppState()
         }
         
+        self.flowController?.goToUniversalLinkedResource(DownloadedResourceManager().loadFromDisk(code: "kgp")!,
+                                                         language: languagesManager.loadFromDisk(code: "en")!,
+                                                         page: 5)
+        
         return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
             return DownloadedResourceManager().loadFromRemote()
             }.then { (resources) -> Promise<DownloadedResources> in

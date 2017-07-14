@@ -36,6 +36,7 @@ class TractViewController: BaseViewController {
     var languageSegmentedControl: UISegmentedControl?
     
     var arrivedByUniversalLink = false
+    var universalLinkLanguage: Language?
     
     let viewTagOrigin = 100
     
@@ -121,6 +122,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
+        let primaryLanguage = resolvePrimaryLanguage()
         return resource!.localizedName(language: primaryLanguage)
     }
     
@@ -257,6 +259,16 @@ class TractViewController: BaseViewController {
         
         parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
     }
+    
+    func resolvePrimaryLanguage() -> Language? {
+        let languagesManager = LanguagesManager()
+        
+        if arrivedByUniversalLink {
+            return universalLinkLanguage
+        } else {
+            return languagesManager.loadPrimaryLanguageFromDisk()
+        }
+    }
 }
 
 extension TractViewController: BaseTractElementDelegate {
@@ -265,6 +277,16 @@ extension TractViewController: BaseTractElementDelegate {
     }
     
     func displayedLanguage() -> Language {
-        return selectedLanguage!
+        let languagesManager = LanguagesManager()
+        
+        if languageSegmentedControl == nil {
+            return resolvePrimaryLanguage()!
+        }
+        
+        if languageSegmentedControl?.selectedSegmentIndex == 0 {
+            return resolvePrimaryLanguage()!
+        } else {
+            return languagesManager.loadParallelLanguageFromDisk()!
+        }
     }
 }

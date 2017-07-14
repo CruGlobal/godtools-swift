@@ -20,7 +20,7 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
         viewController.resource = resource
         viewController.currentPage = page
-        viewController.selectedLanguage = language
+        viewController.universalLinkLanguage = language
         viewController.arrivedByUniversalLink = true
         
         pushViewController(viewController: viewController)
