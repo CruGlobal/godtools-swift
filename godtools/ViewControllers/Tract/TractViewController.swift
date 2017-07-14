@@ -36,6 +36,8 @@ class TractViewController: BaseViewController {
     var currentProgressView = UIView()
     var languageSegmentedControl: UISegmentedControl?
     
+    var arrivedByUniversalLink = false
+    
     let viewTagOrigin = 100
     
     override var prefersStatusBarHidden: Bool {

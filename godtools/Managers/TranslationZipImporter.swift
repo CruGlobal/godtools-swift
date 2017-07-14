@@ -43,6 +43,15 @@ class TranslationZipImporter: GTDataManager {
         }
     }
 
+    func downloadSpecificTranslation(_ translation: Translation) -> Promise<Data> {
+        safelyWriteToRealm {
+            translation.language?.shouldDownload = true
+            translation.downloadedResource?.shouldDownload = true
+        }
+        
+        return downloadFromRemote(translation: translation)
+    }
+    
     func catchupMissedDownloads() {
         addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         
