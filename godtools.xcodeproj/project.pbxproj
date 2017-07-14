@@ -124,6 +124,7 @@
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
+		4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */; };
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
@@ -379,6 +380,7 @@
 		4F5732991EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F57329B1EA69CF00082035C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = godtools.entitlements; sourceTree = "<group>"; };
+		4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AppDelegate+UniversalLinks.swift"; path = "AppDelegateExtensions/AppDelegate+UniversalLinks.swift"; sourceTree = "<group>"; };
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
@@ -982,6 +984,7 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
+				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
@@ -1009,6 +1012,14 @@
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 			);
 			path = godtools;
+			sourceTree = "<group>";
+		};
+		4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */,
+			);
+			name = AppDelegateExtensions;
 			sourceTree = "<group>";
 		};
 		4F84954C1F069C8B0015A6BB /* InitialContent */ = {
@@ -1672,6 +1683,7 @@
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
 				ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */,
 				EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */,
+				4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
