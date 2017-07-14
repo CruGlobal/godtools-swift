@@ -26,7 +26,10 @@ class DownloadedResourceManager: GTDataManager {
     
     func loadFromDisk() -> DownloadedResources {
         return findAllEntities(DownloadedResource.self)
-
+    }
+    
+    func loadFromDisk(code: String) -> DownloadedResource? {
+        return findEntity(DownloadedResource.self, byAttribute: "code", withValue: code)
     }
     
     func loadFromRemote() -> Promise<DownloadedResources> {
