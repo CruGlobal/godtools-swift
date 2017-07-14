@@ -35,6 +35,8 @@ class TractViewController: BaseViewController {
     var pagesViews = [TractView?]()
     var languageSegmentedControl: UISegmentedControl?
     
+    var arrivedByUniversalLink = false
+    
     let viewTagOrigin = 100
     
     static let iPhoneXStatusBarHeight: CGFloat = 44.0

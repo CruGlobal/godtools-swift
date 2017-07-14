@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import PromiseKit
 
 extension AppDelegate {
     
@@ -30,7 +30,9 @@ extension AppDelegate {
         
         let pageNumber = parsePageNumberFrom(url)
         
-//        self.flowController
+        _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
+            self.flowController?.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
+        }
         return true
     }
     
@@ -64,5 +66,21 @@ extension AppDelegate {
         }
         
         return Int(pathParts[2]) ?? 0
+    }
+    
+    private func ensureResourceIsAvailable(resource: DownloadedResource, language: Language) -> Promise<Bool> {
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return Promise(value: false)
+        }
+        
+        if translation.isDownloaded {
+            return Promise(value: true)
+        }
+        
+        let importer = TranslationZipImporter()
+        
+        return importer.downloadSpecificTranslation(translation).then { (obj) -> Promise<Bool> in
+            return Promise(value: true)
+        }
     }
 }
