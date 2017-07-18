@@ -22,6 +22,11 @@ extension TractTabs {
             self.segmentedControl.insertSegment(withTitle: properties.options[i], at: i, animated: true)
         }
         
+        let originalAttributes = segmentedControl.titleTextAttributes(for: .normal)
+        let originalFont = originalAttributes?[NSFontAttributeName] as! UIFont
+        let font = originalFont.transformToAppropriateFontByLanguage(self.tractConfigurations!.language!, textScale: 1.0)
+        
+        self.segmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         self.segmentedControl.selectedSegmentIndex = 0
         self.segmentedControl.tintColor = self.manifestProperties.primaryColor
         self.segmentedControl.addTarget(self, action: #selector(newOptionSelected), for: .valueChanged)

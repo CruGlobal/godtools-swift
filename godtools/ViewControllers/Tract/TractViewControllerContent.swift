@@ -54,6 +54,7 @@ extension TractViewController {
         let configurations = TractConfigurations()
         configurations.defaultTextAlignment = getLanguageTextAlignment()
         configurations.pagination = page.pagination
+        configurations.language = self.selectedLanguage
         
         let view = TractView(frame: frame,
                              data: page.pageContent(),

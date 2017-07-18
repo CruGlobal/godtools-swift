@@ -59,11 +59,8 @@ class TractTextContentProperties: TractProperties {
         self.textScale = CGFloat(floatValue)
     }
     
-    func scaledFont() -> UIFont {
-        if textScale == 1.0 {
-            return font
-        }
-        return UIFont(name: font.fontName, size: font.pointSize * self.textScale) ?? font
+    func scaledFont(language: Language) -> UIFont {
+        return self.font.transformToAppropriateFontByLanguage(language, textScale: self.textScale)
     }
     
     func colorFor(_ element: BaseTractElement, pageProperties: TractPageProperties) -> UIColor {

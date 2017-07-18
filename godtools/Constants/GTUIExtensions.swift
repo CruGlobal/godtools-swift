@@ -37,4 +37,17 @@ extension UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
     }
     
+    func transformToAppropriateFontByLanguage(_ language: Language, textScale: CGFloat = 1.0) -> UIFont {
+        var fontSize = self.pointSize
+        var fontName = self.fontName
+        
+        if language.code == "am-ET" {
+            fontName = "NotoSansEthiopic"
+        }
+        
+        fontSize = fontSize * textScale
+        
+        return UIFont(name: fontName, size: fontSize)!
+    }
+    
 }
