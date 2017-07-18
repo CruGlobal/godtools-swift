@@ -122,16 +122,35 @@ class LanguagesManager: GTDataManager {
 
     private func saveToDisk(_ languages: [LanguageResource]) {
         safelyWriteToRealm {
+            var cachedLanguages = [Language]()
             for remoteLanguage in languages {
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
                     cachedlanguage.code = remoteLanguage.code!
+                    cachedLanguages.append(cachedlanguage)
                     continue
                 }
                 
                 let newCachedLanguage = Language()
                 newCachedLanguage.remoteId = remoteLanguage.id!
                 newCachedLanguage.code = remoteLanguage.code!
+                cachedLanguages.append(newCachedLanguage)
                 realm.add(newCachedLanguage)
+            }
+            
+            purgeDeletedLanguages(foundLanguages: cachedLanguages)
+        }
+    }
+    
+    private func purgeDeletedLanguages(foundLanguages: [Language]) {
+        let allLanguages = findAllEntities(Language.self)
+        
+        if foundLanguages.count == allLanguages.count {
+            return
+        }
+        
+        for language in allLanguages {
+            if !foundLanguages.contains(where: { return $0.remoteId == language.remoteId }) {
+                realm.delete(language)
             }
         }
     }
