@@ -75,10 +75,13 @@ class HomeToolTableViewCell: UITableViewCell {
                                  parallelLanguage: Language?) {
         titleLabel.isEnabled = isAvailableInPrimaryLanguage
         titleLabel.text = resource.localizedName(language: primaryLanguage)
+        titleLabel.font = titleLabel.font.transformToAppropriateFont()
         
         languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
+        languageLabel.font = numberOfViewsLabel.font.transformToAppropriateFont()
         
         numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+        numberOfViewsLabel.font = numberOfViewsLabel.font.transformToAppropriateFont()
     }
     
     private func setCellAsDisplayOnly() {
@@ -134,6 +137,7 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: Present data
     
     fileprivate func displayData() {
+        self.numberOfViewsLabel.font = self.numberOfViewsLabel.font.transformToAppropriateFont()
         self.numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
