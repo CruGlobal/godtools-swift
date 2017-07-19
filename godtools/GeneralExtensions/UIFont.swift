@@ -1,23 +1,12 @@
 //
-//  GTConstants.swift
+//  UIFont.swift
 //  godtools
 //
-//  Created by Devserker on 4/19/17.
+//  Created by Pablo Marti on 7/18/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
 import UIKit
-
-extension UIColor {
-    
-    static let gtWhite = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0)
-    static let gtBlue = UIColor(red: 59.0/255.0, green: 164.0/255.0, blue: 219.0/255.0, alpha: 1.0)
-    static let gtBlack = UIColor(red: 90.0/255.0, green: 90.0/255.0, blue: 90.0/255.0, alpha: 1.0)
-    static let gtGrey = UIColor(red: 190.0/255.0, green: 190.0/255.0, blue: 190.0/255.0, alpha: 1.0)
-    static let gtGreyLight = UIColor(red: 230.0/255.0, green: 230.0/255.0, blue: 230.0/255.0, alpha: 1.0)
-    static let gtRed = UIColor(red: 229.0/255.0, green: 91.0/255.0, blue: 54.0/255.0, alpha: 1.0)
-    static let gtGreen = UIColor(red: 110.0/255.0, green: 220.0/255.0, blue: 80.0/255.0, alpha: 1.0)
-}
 
 extension UIFont {
     
@@ -37,12 +26,27 @@ extension UIFont {
         return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
     }
     
+    func transformToAppropriateFont() -> UIFont {
+        if GTSettings.shared.primaryLanguageId == nil {
+            return self
+        }
+        
+        let languagesManager = LanguagesManager()
+        let language = languagesManager.loadPrimaryLanguageFromDisk()
+        
+        return transformToAppropriateFontByLanguage(language!, textScale: 1.0)
+    }
+    
     func transformToAppropriateFontByLanguage(_ language: Language, textScale: CGFloat = 1.0) -> UIFont {
         var fontSize = self.pointSize
         var fontName = self.fontName
         
         if language.code == "am-ET" {
-            fontName = "NotoSansEthiopic"
+            if self.fontName.lowercased().contains("bold") {
+                fontName = "NotoSansEthiopic-Bold"
+            } else {
+                fontName = "NotoSansEthiopic"
+            }
         }
         
         fontSize = fontSize * textScale
