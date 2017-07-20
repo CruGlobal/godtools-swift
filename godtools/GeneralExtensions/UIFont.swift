@@ -35,25 +35,17 @@ extension UIFont {
     }
     
     static func buildCustomGTFontWithSize(_ size: CGFloat, weight: CGFloat) -> UIFont {
-        guard let language = LanguagesManager.defaultLanguage else {
-            return UIFont.systemFont(ofSize: size, weight: weight)
-        }
+        let language = LanguagesManager.defaultLanguage
         
-        var fontName = ""
-        
-        if language.code == "am-ET" {
+        if language?.code == "am" {
             if weight == UIFontWeightSemibold || weight == UIFontWeightBold {
-                fontName = "NotoSansEthiopic-Bold"
+                return UIFont(name: "NotoSansEthiopic-Bold", size: size)!
             } else {
-                fontName = "NotoSansEthiopic"
+                return UIFont(name: "NotoSansEthiopic", size: size)!
             }
         }
         
-        if fontName == "" {
-            return UIFont.systemFont(ofSize: size, weight: weight)
-        } else {
-            return UIFont(name: fontName, size: size)!
-        }
+        return UIFont.systemFont(ofSize: size, weight: weight)
     }
     
     static func shouldTransformLanguage() -> Bool {
