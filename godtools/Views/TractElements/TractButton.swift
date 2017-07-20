@@ -64,6 +64,8 @@ class TractButton: BaseTractElement {
             self.button.titleLabel?.font = label.font
             self.button.setTitleColor(properties.color, for: .normal)
             self.button.setTitleColor(properties.color.withAlphaComponent(0.5), for: .highlighted)
+            self.button.titleLabel?.lineBreakMode = .byWordWrapping
+            self.button.titleLabel?.textAlignment = .center
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
