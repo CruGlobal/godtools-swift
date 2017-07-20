@@ -53,7 +53,7 @@ extension UIFont {
             return false
         }
         
-        if language.code == "am-ET" {
+        if language.code == "am" {
             return true
         } else {
             return false
@@ -64,7 +64,7 @@ extension UIFont {
         var fontSize = self.pointSize
         var fontName = self.fontName
         
-        if language.code == "am-ET" {
+        if language.code == "am" {
             if self.fontName.lowercased().contains("bold") {
                 fontName = "NotoSansEthiopic-Bold"
             } else {
