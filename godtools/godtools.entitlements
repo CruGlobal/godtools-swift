@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:knowgod.com</string>
+		<string>applinks:d1eykrfvo4c86k.cloudfront.net</string>
 	</array>
 </dict>
 </plist>
