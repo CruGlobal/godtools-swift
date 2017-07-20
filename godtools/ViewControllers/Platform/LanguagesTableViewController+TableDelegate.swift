@@ -12,7 +12,7 @@ import UIKit
 extension LanguagesTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let language = languages[indexPath.row]
-        languagesManager.setSelectedLanguageId(language.remoteId)
+        languagesManager.setSelectedLanguage(language)
         languagesManager.recordLanguageShouldDownload(language: language)
         zipImporter.download(language: language)
         self.refreshCellState(tableView: tableView, indexPath: indexPath)

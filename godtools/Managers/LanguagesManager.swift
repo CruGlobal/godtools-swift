@@ -159,15 +159,16 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func setSelectedLanguageId(_ id: String) {
+    func setSelectedLanguageId(_ language: Language) {
         if selectingPrimaryLanguage {
-            GTSettings.shared.primaryLanguageId = id
-            if id == GTSettings.shared.parallelLanguageId {
+            LanguagesManager.defaultLanguage = language
+            GTSettings.shared.primaryLanguageId = language.remoteId
+            if language.remoteId == GTSettings.shared.parallelLanguageId {
                 GTSettings.shared.parallelLanguageId = nil
             }
 
         } else {
-            GTSettings.shared.parallelLanguageId = id
+            GTSettings.shared.parallelLanguageId = language.remoteId
         }
     }
     
