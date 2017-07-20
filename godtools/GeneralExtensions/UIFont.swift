@@ -11,19 +11,19 @@ import UIKit
 extension UIFont {
     
     static func gtRegular(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightRegular)
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightRegular).transformToAppropriateFont()
     }
     
     static func gtLight(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight)
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight).transformToAppropriateFont()
     }
     
     static func gtThin(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin)
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin).transformToAppropriateFont()
     }
     
     static func gtSemiBold(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold)
+        return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold).transformToAppropriateFont()
     }
     
     func transformToAppropriateFont() -> UIFont {

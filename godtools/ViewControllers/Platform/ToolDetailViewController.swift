@@ -36,22 +36,17 @@ class ToolDetailViewController: BaseViewController {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
-        self.totalViewsLabel.font = self.totalViewsLabel.font.transformToAppropriateFont()
         
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
-        self.totalLanguagesLabel.font = self.totalLanguagesLabel.font.transformToAppropriateFont()
         
         self.titleLabel.text = resource!.localizedName(language: primaryLanguage)
-        self.titleLabel.font = self.titleLabel.font.transformToAppropriateFont()
         
         self.descriptionLabel.text = loadDescription()
-        self.descriptionLabel.font = self.descriptionLabel.font.transformToAppropriateFont()
         
         self.languagesLabel.text = Array(resource!.translations)
             .map({ "\($0.language!.localizedName())"})
             .sorted(by: { $0 < $1 })
             .joined(separator: ", ")
-        self.languagesLabel.font = self.languagesLabel.font.transformToAppropriateFont()
         
         self.displayButton()
         self.bannerImageView.image = BannerManager().loadFor(remoteId: resource!.aboutBannerRemoteId)
