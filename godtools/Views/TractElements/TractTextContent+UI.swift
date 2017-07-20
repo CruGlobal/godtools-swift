@@ -27,7 +27,7 @@ extension TractTextContent {
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
         self.label.textAlignment = properties.textAlign
-        self.label.font = properties.scaledFont()
+        self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
         self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
         
         if properties.height == 0 {
@@ -53,7 +53,7 @@ extension TractTextContent {
         self.label = GTLabel(frame: labelFrame)
         self.label.text = properties.value
         self.label.textAlignment = .center
-        self.label.font = properties.scaledFont()
+        self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
         self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
         self.label.numberOfLines = 1
         
