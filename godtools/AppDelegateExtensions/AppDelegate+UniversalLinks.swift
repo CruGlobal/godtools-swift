@@ -39,33 +39,33 @@ extension AppDelegate {
     private func parseLangaugeFrom(_ url: URL) -> Language? {
         let pathParts = url.pathComponents
         
-        if pathParts.count < 1 {
+        if pathParts.count < 2 {
             return nil
         }
         
         let languagesManager = LanguagesManager()
-        return languagesManager.loadFromDisk(code: pathParts[0])
+        return languagesManager.loadFromDisk(code: pathParts[1])
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
         let pathParts = url.pathComponents
         
-        if pathParts.count < 2 {
+        if pathParts.count < 3 {
             return nil
         }
         
         let resourcesManager = DownloadedResourceManager()
-        return resourcesManager.loadFromDisk(code: pathParts[1])
+        return resourcesManager.loadFromDisk(code: pathParts[2])
     }
     
     private func parsePageNumberFrom(_ url: URL) -> Int {
         let pathParts = url.pathComponents
         
-        if pathParts.count < 3 {
+        if pathParts.count < 4 {
             return 0
         }
         
-        return Int(pathParts[2]) ?? 0
+        return Int(pathParts[3]) ?? 0
     }
     
     private func ensureResourceIsAvailable(resource: DownloadedResource, language: Language) -> Promise<Bool> {
