@@ -159,7 +159,7 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func setSelectedLanguageId(_ language: Language) {
+    func setSelectedLanguage(_ language: Language) {
         if selectingPrimaryLanguage {
             LanguagesManager.defaultLanguage = language
             GTSettings.shared.primaryLanguageId = language.remoteId
