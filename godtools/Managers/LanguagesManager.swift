@@ -19,6 +19,21 @@ class LanguagesManager: GTDataManager {
     
     var selectingPrimaryLanguage = true
     
+    static var _defaultLanguage: Language?
+    static var defaultLanguage: Language? {
+        get {
+            if _defaultLanguage == nil {
+                let languagesManager = LanguagesManager()
+                _defaultLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+            }
+            
+            return _defaultLanguage
+        }
+        set {
+            _defaultLanguage = newValue
+        }
+    }
+    
     override init() {
         super.init()
         serializer.registerResource(LanguageResource.self)

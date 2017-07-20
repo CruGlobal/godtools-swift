@@ -11,30 +11,61 @@ import UIKit
 extension UIFont {
     
     static func gtRegular(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightRegular).transformToAppropriateFont()
+        return UIFont.buildGTFont(size: size, weight: UIFontWeightRegular)
     }
     
     static func gtLight(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightLight).transformToAppropriateFont()
+        return UIFont.buildGTFont(size: size, weight: UIFontWeightLight)
     }
     
     static func gtThin(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightThin).transformToAppropriateFont()
+        return UIFont.buildGTFont(size: size, weight: UIFontWeightThin)
     }
     
     static func gtSemiBold(size: CGFloat) -> UIFont {
-        return UIFont.systemFont(ofSize: size, weight: UIFontWeightSemibold).transformToAppropriateFont()
+        return UIFont.buildGTFont(size: size, weight: UIFontWeightSemibold)
     }
     
-    func transformToAppropriateFont() -> UIFont {
-        if GTSettings.shared.primaryLanguageId == nil {
-            return self
+    static func buildGTFont(size: CGFloat, weight: CGFloat) -> UIFont {
+        if shouldTransformLanguage() {
+            return UIFont.buildCustomGTFontWithSize(size, weight: weight)
+        } else {
+            return UIFont.systemFont(ofSize: size, weight: weight)
+        }
+    }
+    
+    static func buildCustomGTFontWithSize(_ size: CGFloat, weight: CGFloat) -> UIFont {
+        guard let language = LanguagesManager.defaultLanguage else {
+            return UIFont.systemFont(ofSize: size, weight: weight)
         }
         
-        let languagesManager = LanguagesManager()
-        let language = languagesManager.loadPrimaryLanguageFromDisk()
+        var fontName = ""
         
-        return transformToAppropriateFontByLanguage(language!, textScale: 1.0)
+        if language.code == "am-ET" {
+            if weight == UIFontWeightSemibold || weight == UIFontWeightBold {
+                fontName = "NotoSansEthiopic-Bold"
+            } else {
+                fontName = "NotoSansEthiopic"
+            }
+        }
+        
+        if fontName == "" {
+            return UIFont.systemFont(ofSize: size, weight: weight)
+        } else {
+            return UIFont(name: fontName, size: size)!
+        }
+    }
+    
+    static func shouldTransformLanguage() -> Bool {
+        guard let language = LanguagesManager.defaultLanguage else {
+            return false
+        }
+        
+        if language.code == "am-ET" {
+            return true
+        } else {
+            return false
+        }
     }
     
     func transformToAppropriateFontByLanguage(_ language: Language, textScale: CGFloat = 1.0) -> UIFont {
