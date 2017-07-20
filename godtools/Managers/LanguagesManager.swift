@@ -19,6 +19,21 @@ class LanguagesManager: GTDataManager {
     
     var selectingPrimaryLanguage = true
     
+    static var _defaultLanguage: Language?
+    static var defaultLanguage: Language? {
+        get {
+            if _defaultLanguage == nil {
+                let languagesManager = LanguagesManager()
+                _defaultLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+            }
+            
+            return _defaultLanguage
+        }
+        set {
+            _defaultLanguage = newValue
+        }
+    }
+    
     override init() {
         super.init()
         serializer.registerResource(LanguageResource.self)
@@ -163,15 +178,16 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func setSelectedLanguageId(_ id: String) {
+    func setSelectedLanguage(_ language: Language) {
         if selectingPrimaryLanguage {
-            GTSettings.shared.primaryLanguageId = id
-            if id == GTSettings.shared.parallelLanguageId {
+            LanguagesManager.defaultLanguage = language
+            GTSettings.shared.primaryLanguageId = language.remoteId
+            if language.remoteId == GTSettings.shared.parallelLanguageId {
                 GTSettings.shared.parallelLanguageId = nil
             }
 
         } else {
-            GTSettings.shared.parallelLanguageId = id
+            GTSettings.shared.parallelLanguageId = language.remoteId
         }
     }
     

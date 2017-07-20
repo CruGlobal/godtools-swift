@@ -57,5 +57,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NotoSansEthiopic-Regular.ttf</string>
+		<string>NotoSansEthiopic-Bold.ttf</string>
+		<string>AbyssinicaSIL-R.ttf</string>
+	</array>
 </dict>
 </plist>

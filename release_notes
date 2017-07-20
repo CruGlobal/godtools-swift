@@ -1,1 +1,3 @@
-- Fixes crash on adding new language to database
+- Adds support for Amharic language tracts
+- Long button titles wrap to two lines
+- Languages deleted from API now are deleted from devices

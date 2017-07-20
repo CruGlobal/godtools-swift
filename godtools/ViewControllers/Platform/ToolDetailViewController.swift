@@ -36,8 +36,11 @@ class ToolDetailViewController: BaseViewController {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
+        
         self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
+        
         self.titleLabel.text = resource!.localizedName(language: primaryLanguage)
+        
         self.descriptionLabel.text = loadDescription()
         
         self.languagesLabel.text = Array(resource!.translations)
