@@ -49,6 +49,7 @@ class TractViewController: BaseViewController {
         getResourceData()
         setupSwipeGestures()
         defineObservers()
+        sendPageToAnalytics()
     }
     
     deinit {
