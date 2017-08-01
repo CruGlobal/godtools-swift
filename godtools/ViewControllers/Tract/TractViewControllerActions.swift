@@ -43,8 +43,13 @@ extension TractViewController: MFMailComposeViewControllerDelegate {
     }
     
     func sendPageToAnalytics() {
-        let screenName = "\(self.resource?.code)-\(self.currentPage)"
+        guard let resource = self.resource else {
+            return
+        }
+        
+        let screenName = "\(resource.code)-\(self.currentPage)"
         sendScreenViewNotification(screenName: screenName)
+        
     }
     
 }

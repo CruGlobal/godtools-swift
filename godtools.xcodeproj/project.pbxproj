@@ -190,7 +190,6 @@
 		EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */; };
 		EC98C0D21F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */; };
 		EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */; };
-		EC98C0D61F1EE27E00A68FF5 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */; };
 		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
 		ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA2C151EF9B4770067ED78 /* TractResource.swift */; };
 		ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB2E2991EE9FB0600346FBE /* XMLManager.swift */; };
@@ -1669,7 +1668,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC98C0D61F1EE27E00A68FF5 /* UIFont.swift in Sources */,
 				684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1849,7 +1847,7 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
@@ -1870,7 +1868,7 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
