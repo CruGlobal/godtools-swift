@@ -206,8 +206,15 @@ class TractViewController: BaseViewController {
             return
         }
         
-        let path = "www.knowgod.com/\(languageCode)/\(resourceCode)/\(self.currentPage)"
-        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, path)], applicationActivities: nil)
+        var shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
+        
+        if currentPage > 0 {
+            shareURLString = shareURLString.appending("/").appending("\(currentPage)")
+        }
+        
+        shareURLString = shareURLString.appending(" ")
+        
+        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
     }
     
