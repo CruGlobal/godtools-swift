@@ -96,6 +96,7 @@
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F1029601F34BB090073399A /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F10295B1F34BAE20073399A /* ADBMobileConfig.json */; };
+		4F1029611F34BB6B0073399A /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */; };
 		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
 		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
 		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
@@ -497,6 +498,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1029611F34BB6B0073399A /* AdobeMobileLibrary.a in Frameworks */,
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
 			);
@@ -1869,6 +1871,10 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AdobeMobileLibrary",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
@@ -1890,6 +1896,10 @@
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/AdobeMobileLibrary",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
