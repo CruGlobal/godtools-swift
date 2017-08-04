@@ -8,6 +8,20 @@
 
 import Foundation
 
+struct AdobeAnalyticsConstants {
+    struct Keys {
+        static let appName = "cru.appname"
+        static let loggedInStatus = "cru.loggedinstatus"
+        static let marketingCloudID = "cru.mcid"
+        static let screenName = "cru.screenname"
+        static let previousScreenName = "cru.previousscreenname"
+    }
+    
+    struct Values {
+        static let godTools = "GodTools"
+        static let notLoggedIn = "not logged in"
+    }
+}
 class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
@@ -51,9 +65,9 @@ class GodToolsAnaltyics {
     
     private func configureAdobeAnalytics() {
         var properties: [String: String] = [:]
-        properties["cru.appname"] = "GodTools"
-        properties["cru.loggedinstatus"] = "not logged in"
-        properties["cru.mcid"] = ADBMobile.visitorMarketingCloudID()
+        properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
+        properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
     }
@@ -81,11 +95,11 @@ class GodToolsAnaltyics {
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
         
-        properties["cru.screenname"] = "GodTools : \(screenName)"
-        properties["cru.previousscreenname"] = "GodTools : \(previousScreenName)"
-        properties["cru.appname"] = "GodTools"
-        properties["cru.loggedinstatus"] = "not logged in"
-        properties["cru.mcid"] = ADBMobile.visitorMarketingCloudID()
+        properties[AdobeAnalyticsConstants.Keys.screenName] = "GodTools : \(screenName)"
+        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "GodTools : \(previousScreenName)"
+        properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
+        properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         previousScreenName = screenName
         
