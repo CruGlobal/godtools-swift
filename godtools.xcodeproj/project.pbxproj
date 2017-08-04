@@ -315,6 +315,12 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		4F10295A1F34BAE20073399A /* ADBMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADBMobile.h; sourceTree = "<group>"; };
+		4F10295B1F34BAE20073399A /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
+		4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary.a; sourceTree = "<group>"; };
+		4F10295D1F34BAE20073399A /* AdobeMobileLibrary_Extension.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_Extension.a; sourceTree = "<group>"; };
+		4F10295E1F34BAE20073399A /* AdobeMobileLibrary_TV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_TV.a; sourceTree = "<group>"; };
+		4F10295F1F34BAE20073399A /* AdobeMobileLibrary_Watch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_Watch.a; sourceTree = "<group>"; };
 		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
 		4F123FAF1F140F1000309DAD /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
 		4F123FB01F140F1000309DAD /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };
@@ -825,6 +831,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F1029591F34BAE20073399A /* AdobeMobileLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				4F10295A1F34BAE20073399A /* ADBMobile.h */,
+				4F10295B1F34BAE20073399A /* ADBMobileConfig.json */,
+				4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */,
+				4F10295D1F34BAE20073399A /* AdobeMobileLibrary_Extension.a */,
+				4F10295E1F34BAE20073399A /* AdobeMobileLibrary_TV.a */,
+				4F10295F1F34BAE20073399A /* AdobeMobileLibrary_Watch.a */,
+			);
+			path = AdobeMobileLibrary;
+			sourceTree = "<group>";
+		};
 		4F1C95391EA6B84A007B47DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,6 +951,7 @@
 		4F5732801EA69CF00082035C = {
 			isa = PBXGroup;
 			children = (
+				4F1029591F34BAE20073399A /* AdobeMobileLibrary */,
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328F21EB7CF66005E9131 /* godtoolsTests */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
