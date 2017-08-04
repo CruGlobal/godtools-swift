@@ -1,3 +1,4 @@
-- Adds support for Amharic language tracts
-- Long button titles wrap to two lines
-- Languages deleted from API now are deleted from devices
+- Adds Adobe Analytics, including: 
+   - Marketing Cloud ID
+   - basic "lifecycle data" (sessions, users, duration, general location etc...)
+   - page views
