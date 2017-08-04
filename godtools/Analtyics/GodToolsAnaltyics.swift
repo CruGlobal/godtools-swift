@@ -11,6 +11,8 @@ import Foundation
 class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
+    var previousScreenName = ""
+    
     private static var sharedInstance: GodToolsAnaltyics?
     
     static func setup() {
@@ -37,6 +39,7 @@ class GodToolsAnaltyics {
                                                object: nil)
         
         recordAdwordsConversion()
+        configureAdobeAnalytics()
     }
     
     private func recordAdwordsConversion() {
@@ -44,6 +47,14 @@ class GodToolsAnaltyics {
         let label = Config().googleAdwordsLabel
         
         ACTConversionReporter.report(withConversionID: conversionId, label: label, value: "1.00", isRepeatable: false)
+    }
+    
+    private func configureAdobeAnalytics() {
+        var properties: [String: String] = [:]
+        properties["cru.appname"] = "GodTools"
+        properties["cru.loggedinstatus"] = "not logged in"
+        
+        ADBMobile.collectLifecycleData(withAdditionalData: properties)
     }
     
     @objc private func recordScreenView(notification: Notification) {
@@ -62,5 +73,20 @@ class GodToolsAnaltyics {
         }
         
         tracker?.send(screenViewInfo)
+        
+        recordScreenViewInAdobe(screenName: screenName)
+    }
+    
+    private func recordScreenViewInAdobe(screenName: String) {
+        var properties: [String: String] = [:]
+        
+        properties["cru.screenname"] = "GodTools : \(screenName)"
+        properties["cru.previousscreenname"] = "GodTools : \(previousScreenName)"
+        properties["cru.appname"] = "GodTools"
+        properties["cru.loggedinstatus"] = "not logged in"
+
+        previousScreenName = screenName
+        
+        ADBMobile.trackState(screenName, data: properties)
     }
 }
