@@ -53,6 +53,7 @@ class GodToolsAnaltyics {
         var properties: [String: String] = [:]
         properties["cru.appname"] = "GodTools"
         properties["cru.loggedinstatus"] = "not logged in"
+        properties["cru.mcid"] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
     }
@@ -84,7 +85,8 @@ class GodToolsAnaltyics {
         properties["cru.previousscreenname"] = "GodTools : \(previousScreenName)"
         properties["cru.appname"] = "GodTools"
         properties["cru.loggedinstatus"] = "not logged in"
-
+        properties["cru.mcid"] = ADBMobile.visitorMarketingCloudID()
+        
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
