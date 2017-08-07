@@ -22,7 +22,7 @@ extension TractViewController {
     }
     
     func determinePrimaryLabel() -> String {
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        let primaryLanguage = resolvePrimaryLanguage()
         
         if primaryLanguage == nil {
             return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
@@ -51,7 +51,7 @@ extension TractViewController {
     }
     
     func loadResourcesForLanguage() {
-        let language = languagesManager.loadPrimaryLanguageFromDisk()
+        let language = resolvePrimaryLanguage()
         let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
         self.xmlPagesForPrimaryLang = content.pages
         self.manifestProperties = content.manifestProperties
@@ -77,7 +77,7 @@ extension TractViewController {
     }
     
     func usePrimaryLanguageResources() {
-        self.selectedLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        self.selectedLanguage = resolvePrimaryLanguage()
         self.xmlPages = self.xmlPagesForPrimaryLang
     }
     
@@ -93,5 +93,4 @@ extension TractViewController {
     func totalPages() -> Int {
         return self.xmlPages.count;
     }
-    
 }
