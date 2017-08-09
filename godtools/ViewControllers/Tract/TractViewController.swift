@@ -49,7 +49,6 @@ class TractViewController: BaseViewController {
         getResourceData()
         setupSwipeGestures()
         defineObservers()
-        sendPageToAnalytics()
     }
     
     deinit {
@@ -250,6 +249,13 @@ class TractViewController: BaseViewController {
         }
         
         return CGFloat(self.currentPage) * parentWidth / CGFloat(numPages - 1)
+    }
+    
+    override func screenName() -> String {
+        guard let resource = self.resource else {
+            return super.screenName()
+        }
+        return "\(resource.code)-\(self.currentPage)"
     }
     
 }
