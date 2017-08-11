@@ -34,14 +34,14 @@ class DownloadedResource: Object {
     }
     
     func isAvailableInLanguage(_ language: Language?) -> Bool {
-        return queryStatusWithRegardToLanuguage(language, downloaded: false)
+        return isTranslationAvailableInLanguage(language, mustItBeDownloaded: false)
     }
     
     func isDownloadedInLanguage(_ language: Language?) -> Bool {
-        return queryStatusWithRegardToLanuguage(language, downloaded: true)
+        return isTranslationAvailableInLanguage(language, mustItBeDownloaded: true)
     }
     
-    private func queryStatusWithRegardToLanuguage(_ language: Language?, downloaded: Bool) -> Bool {
+    private func isTranslationAvailableInLanguage(_ language: Language?, mustItBeDownloaded: Bool) -> Bool {
         guard let language = language else {
             return false
         }
@@ -49,7 +49,7 @@ class DownloadedResource: Object {
         
         var predicate: NSPredicate
             
-        if downloaded {
+        if mustItBeDownloaded {
             predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true AND isDownloaded = true", languageId)
         } else {
             predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", languageId)
