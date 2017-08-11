@@ -18,7 +18,7 @@ extension TractViewController {
             return false
         }
         
-        return resource!.isAvailableInLanguage(parallelLanguage)
+        return resource!.isDownloadedInLanguage(parallelLanguage)
     }
     
     func determinePrimaryLabel() -> String {

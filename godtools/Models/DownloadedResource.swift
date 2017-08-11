@@ -71,7 +71,7 @@ class DownloadedResource: Object {
             return name
         }
         
-        if isAvailableInLanguage(language) {
+        if isDownloadedInLanguage(language) {
             guard let translation = getTranslationForLanguage(language) else {
                 return name
             }
