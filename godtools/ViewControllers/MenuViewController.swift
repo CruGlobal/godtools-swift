@@ -103,6 +103,8 @@ extension MenuViewController: UITableViewDataSource {
             cell.isSwitchCell = false
         }
         
+        cell.delegate = self
+        
         return cell
     }
     
@@ -275,4 +277,13 @@ extension MenuViewController: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension MenuViewController: MenuTableViewCellDelegate {
+    func menuNextButtonWasPressed(sender: MenuTableViewCell) {
+        if let indexPath = tableView.indexPath(for: sender) {
+            tableView(tableView, didSelectRowAt: indexPath)
+            sender.setSelected(true, animated: false)
+        }
+    }
 }

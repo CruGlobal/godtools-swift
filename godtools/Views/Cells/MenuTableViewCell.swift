@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol MenuTableViewCellDelegate {
+    func menuNextButtonWasPressed(sender: MenuTableViewCell)
+}
+
 class MenuTableViewCell: UITableViewCell {
     
     var value = ""
     var isSwitchCell = false
-
+    
+    var delegate: MenuTableViewCellDelegate?
+    
     @IBOutlet weak var settingLabel: GTLabel!
     @IBOutlet weak var settingSwitch: GTSwitch!
     @IBOutlet weak var nextButton: UIButton!
@@ -23,6 +29,10 @@ class MenuTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    @IBAction func nextButtonWasPressed(_ sender: Any) {
+        delegate?.menuNextButtonWasPressed(sender: self)
     }
     
     override func layoutSubviews() {
