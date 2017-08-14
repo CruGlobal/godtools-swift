@@ -16,6 +16,7 @@ extension LanguagesTableViewController: UITableViewDelegate {
         languagesManager.recordLanguageShouldDownload(language: language)
         zipImporter.download(language: language)
         self.refreshCellState(tableView: tableView, indexPath: indexPath)
+        baseDelegate?.goBack()
     }
     
     private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
