@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,14 +22,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk">
-                    <rect key="frame" x="158" y="124" width="60" height="60"/>
+                    <rect key="frame" x="158" y="99" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="26C-fX-oLX"/>
                         <constraint firstAttribute="width" constant="60" id="mEt-cr-TNZ"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="88" y="221" width="200" height="22"/>
+                    <rect key="frame" x="119" y="196" width="138.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="5bn-pM-ha9"/>
                     </constraints>
@@ -42,7 +42,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="251" width="260" height="48"/>
+                    <rect key="frame" x="58" y="226" width="260" height="48"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="4Ta-gu-BSe"/>
                         <constraint firstAttribute="height" constant="48" id="CPc-21-Fgk"/>
@@ -61,7 +61,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="88" y="348" width="200" height="22"/>
+                    <rect key="frame" x="120.5" y="323" width="135.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="tSj-gF-6XC"/>
                     </constraints>
@@ -74,7 +74,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="378" width="260" height="56"/>
+                    <rect key="frame" x="58" y="353" width="260" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="wal-lI-811"/>
                     </constraints>
@@ -87,7 +87,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="442" width="260" height="48"/>
+                    <rect key="frame" x="58" y="397" width="260" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="B7i-pN-iv9"/>
                         <constraint firstAttribute="width" constant="260" id="BNf-Su-7st"/>
@@ -110,12 +110,16 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="not_every_tool_is_available"/>
                     </userDefinedRuntimeAttributes>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH">
+                    <rect key="frame" x="147" y="463" width="80" height="80"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="04v-yM-ZEj"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="10" id="05d-jA-pxh"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="3:4" id="859-CQ-k5c"/>
+                <constraint firstItem="4sz-fA-Y1h" firstAttribute="top" secondItem="ttT-jJ-AoH" secondAttribute="bottom" constant="12" id="9hu-Vv-Dmk"/>
                 <constraint firstItem="2n1-cR-Y3q" firstAttribute="top" secondItem="wUa-h5-W1Y" secondAttribute="bottom" constant="49" id="CAg-jS-0n3"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IPj-S7-m6T"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="McU-E7-KVx"/>
@@ -125,6 +129,7 @@
                 <constraint firstItem="2QP-b4-GGk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="f4t-bV-Iwj"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="top" secondItem="1hm-LH-y2y" secondAttribute="bottom" constant="8" id="hGT-E2-gao"/>
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="top" secondItem="2QP-b4-GGk" secondAttribute="bottom" priority="750" constant="37" id="jCf-qZ-DPM"/>
+                <constraint firstItem="ttT-jJ-AoH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kv7-ZQ-XWa"/>
                 <constraint firstItem="2QP-b4-GGk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="nIo-UJ-rCZ"/>
                 <constraint firstItem="2n1-cR-Y3q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ncb-9H-vNO"/>
                 <constraint firstItem="1hm-LH-y2y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qlD-Be-SKC"/>
@@ -135,6 +140,7 @@
         </view>
     </objects>
     <resources>
+        <image name="exclamation_red" width="44" height="44"/>
         <image name="language_logo" width="60" height="60"/>
     </resources>
 </document>
