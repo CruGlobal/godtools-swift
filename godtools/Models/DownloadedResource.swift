@@ -34,12 +34,30 @@ class DownloadedResource: Object {
     }
     
     func isAvailableInLanguage(_ language: Language?) -> Bool {
+        return isTranslationAvailableInLanguage(language, mustItBeDownloaded: false)
+    }
+    
+    func isDownloadedInLanguage(_ language: Language?) -> Bool {
+        return isTranslationAvailableInLanguage(language, mustItBeDownloaded: true)
+    }
+    
+    private func isTranslationAvailableInLanguage(_ language: Language?, mustItBeDownloaded: Bool) -> Bool {
         guard let language = language else {
             return false
         }
+        let languageId = language.remoteId
         
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true AND isDownloaded = true", language.remoteId)
-        return translations.filter(predicate).count > 0
+        var predicate: NSPredicate
+            
+        if mustItBeDownloaded {
+            predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true AND isDownloaded = true", languageId)
+        } else {
+            predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", languageId)
+        }
+        
+        let matchingTranslations = translations.filter(predicate).count > 0
+        
+        return matchingTranslations
     }
     
     func getTranslationForLanguage(_ language: Language) -> Translation? {
@@ -53,7 +71,7 @@ class DownloadedResource: Object {
             return name
         }
         
-        if isAvailableInLanguage(language) {
+        if isDownloadedInLanguage(language) {
             guard let translation = getTranslationForLanguage(language) else {
                 return name
             }

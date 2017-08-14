@@ -50,7 +50,7 @@ class HomeToolTableViewCell: UITableViewCell {
         self.resource = resource
         self.cellDelegate = delegate
         
-        let isAvailableInPrimaryLanguage = resource.isAvailableInLanguage(primaryLanguage)
+        let isAvailableInPrimaryLanguage = resource.isDownloadedInLanguage(primaryLanguage)
         
         configureLabels(resource: resource,
                         isAvailableInPrimaryLanguage: isAvailableInPrimaryLanguage,
@@ -76,8 +76,11 @@ class HomeToolTableViewCell: UITableViewCell {
         titleLabel.isEnabled = isAvailableInPrimaryLanguage
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
-        languageLabel.text = resource.isAvailableInLanguage(parallelLanguage) ? parallelLanguage!.localizedName() : nil
+        let isAvailableInParallelLanguage = resource.isAvailableInLanguage(parallelLanguage)
+        let parallelLanguageName = parallelLanguage!.localizedName()
         
+        languageLabel.text = isAvailableInParallelLanguage ? parallelLanguageName : nil
+
         numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
     }
     
