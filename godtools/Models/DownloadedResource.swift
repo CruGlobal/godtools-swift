@@ -61,7 +61,7 @@ class DownloadedResource: Object {
     }
     
     func getTranslationForLanguage(_ language: Language) -> Translation? {
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND isDownloaded = true", language.remoteId)
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", language.remoteId)
         
         return translations.filter(predicate).first
     }
@@ -71,7 +71,7 @@ class DownloadedResource: Object {
             return name
         }
         
-        if isDownloadedInLanguage(language) {
+        if isAvailableInLanguage(language) {
             guard let translation = getTranslationForLanguage(language) else {
                 return name
             }
