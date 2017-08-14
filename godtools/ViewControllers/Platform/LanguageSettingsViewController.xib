@@ -61,7 +61,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="120.5" y="323" width="135.5" height="22"/>
+                    <rect key="frame" x="120.5" y="314" width="135.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="tSj-gF-6XC"/>
                     </constraints>
@@ -74,7 +74,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="353" width="260" height="36"/>
+                    <rect key="frame" x="58" y="344" width="260" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="wal-lI-811"/>
                     </constraints>
@@ -87,7 +87,7 @@
                     </userDefinedRuntimeAttributes>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="397" width="260" height="48"/>
+                    <rect key="frame" x="58" y="388" width="260" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="B7i-pN-iv9"/>
                         <constraint firstAttribute="width" constant="260" id="BNf-Su-7st"/>
@@ -98,7 +98,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="67" y="577" width="242" height="52"/>
+                    <rect key="frame" x="67" y="606" width="242" height="41"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="242" id="jwl-EJ-icG"/>
                     </constraints>
@@ -110,21 +110,22 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="not_every_tool_is_available"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH">
-                    <rect key="frame" x="147" y="463" width="80" height="80"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH">
+                    <rect key="frame" x="165" y="550" width="44" height="44"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mQB-PV-ktd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="04v-yM-ZEj"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="10" id="05d-jA-pxh"/>
+                <constraint firstAttribute="bottom" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="20" id="05d-jA-pxh"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="3:4" id="859-CQ-k5c"/>
                 <constraint firstItem="4sz-fA-Y1h" firstAttribute="top" secondItem="ttT-jJ-AoH" secondAttribute="bottom" constant="12" id="9hu-Vv-Dmk"/>
-                <constraint firstItem="2n1-cR-Y3q" firstAttribute="top" secondItem="wUa-h5-W1Y" secondAttribute="bottom" constant="49" id="CAg-jS-0n3"/>
+                <constraint firstItem="2n1-cR-Y3q" firstAttribute="top" secondItem="wUa-h5-W1Y" secondAttribute="bottom" constant="40" id="CAg-jS-0n3"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IPj-S7-m6T"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="McU-E7-KVx"/>
                 <constraint firstItem="wUa-h5-W1Y" firstAttribute="top" secondItem="mQB-PV-ktd" secondAttribute="bottom" constant="8" id="PJM-Sq-DjY"/>
                 <constraint firstItem="4sz-fA-Y1h" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Pvp-Th-BiN"/>
+                <constraint firstItem="ttT-jJ-AoH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iQc-Pj-d7G" secondAttribute="bottom" constant="22" id="ZQd-Pp-ptK"/>
                 <constraint firstItem="1hm-LH-y2y" firstAttribute="top" secondItem="2n1-cR-Y3q" secondAttribute="bottom" constant="8" id="bZk-2f-Q9t"/>
                 <constraint firstItem="2QP-b4-GGk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="f4t-bV-Iwj"/>
                 <constraint firstItem="iQc-Pj-d7G" firstAttribute="top" secondItem="1hm-LH-y2y" secondAttribute="bottom" constant="8" id="hGT-E2-gao"/>
