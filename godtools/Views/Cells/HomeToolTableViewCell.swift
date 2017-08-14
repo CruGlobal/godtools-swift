@@ -76,12 +76,18 @@ class HomeToolTableViewCell: UITableViewCell {
         titleLabel.isEnabled = isAvailableInPrimaryLanguage
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
-        let isAvailableInParallelLanguage = resource.isAvailableInLanguage(parallelLanguage)
-        let parallelLanguageName = parallelLanguage!.localizedName()
-        
-        languageLabel.text = isAvailableInParallelLanguage ? parallelLanguageName : nil
+        configureParallelLanguageLabel(parallelLanguage: parallelLanguage)
 
         numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+    }
+    
+    private func configureParallelLanguageLabel(parallelLanguage: Language?) {
+        if resource != nil && resource!.isAvailableInLanguage(parallelLanguage)  {
+            languageLabel.text = parallelLanguage!.localizedName()
+            return
+        }
+        
+        languageLabel.text = nil
     }
     
     private func setCellAsDisplayOnly() {
