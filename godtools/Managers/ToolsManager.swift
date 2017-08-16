@@ -104,10 +104,8 @@ extension ToolsManager: UITableViewDelegate {
             return
         }
         
-        if cell.isAvailable {
-            recordViewed(cell.resource!)
-            delegate?.didSelectTableViewRow!(cell: cell)
-        }
+        recordViewed(cell.resource!)
+        delegate?.didSelectTableViewRow!(cell: cell)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
