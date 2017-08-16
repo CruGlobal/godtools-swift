@@ -13,9 +13,7 @@ import MessageUI
 import PromiseKit
 
 class TractViewController: BaseViewController {
-    
-//    let languagesManager = LanguagesManager()
-    
+        
     var primaryLanguage: Language?
     var parallelLanguage: Language?
     var selectedLanguage: Language?
