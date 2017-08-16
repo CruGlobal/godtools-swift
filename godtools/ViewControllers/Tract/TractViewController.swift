@@ -14,8 +14,12 @@ import PromiseKit
 
 class TractViewController: BaseViewController {
     
-    let languagesManager = LanguagesManager()
+//    let languagesManager = LanguagesManager()
+    
+    var primaryLanguage: Language?
+    var parallelLanguage: Language?
     var selectedLanguage: Language?
+    
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
@@ -46,6 +50,7 @@ class TractViewController: BaseViewController {
         super.viewDidLoad()
         
         TractBindings.setupBindings()
+        loadLanguages()
         getResourceData()
         setupSwipeGestures()
         defineObservers()
@@ -116,7 +121,6 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         return resource!.localizedName(language: primaryLanguage)
     }
     
@@ -270,6 +274,17 @@ class TractViewController: BaseViewController {
         return "\(resource.code)-\(self.currentPage)"
     }
     
+    private func loadLanguages() {
+        let languagesManager = LanguagesManager()
+        
+        primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        
+        if resource!.getTranslationForLanguage(primaryLanguage!) == nil {
+            primaryLanguage = languagesManager.loadFromDisk(code: "en")
+        }
+        
+        parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+    }
 }
 
 extension TractViewController: BaseTractElementDelegate {
@@ -278,14 +293,6 @@ extension TractViewController: BaseTractElementDelegate {
     }
     
     func displayedLanguage() -> Language {
-        if languageSegmentedControl == nil {
-            return languagesManager.loadPrimaryLanguageFromDisk()!
-        }
-        
-        if languageSegmentedControl?.selectedSegmentIndex == 0 {
-            return languagesManager.loadPrimaryLanguageFromDisk()!
-        } else {
-            return languagesManager.loadParallelLanguageFromDisk()!
-        }
+        return selectedLanguage!
     }
 }
