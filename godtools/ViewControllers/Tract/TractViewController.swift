@@ -205,16 +205,28 @@ class TractViewController: BaseViewController {
             return
         }
         
-        var shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
+        let shareURLString = buildShareURLString(resourceCode, languageCode)
         
-        if currentPage > 0 {
-            shareURLString = shareURLString.appending("/").appending("\(currentPage)")
+        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+    }
+    
+    private func buildShareURLString(_ resourceCode: String, _ languageCode: String) -> String {
+        var shareURLString: String
+        
+        if resourceCode == "kgp-us" {
+            shareURLString = "https://www.knowgod.com/\(languageCode)/kgp"
+        } else {
+            shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
+            
+            if currentPage > 0 {
+                shareURLString = shareURLString.appending("/").appending("\(currentPage)")
+            }
         }
         
         shareURLString = shareURLString.appending(" ")
         
-        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
+        return shareURLString
     }
     
     // Notifications
