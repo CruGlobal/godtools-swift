@@ -59,7 +59,6 @@ class HomeToolTableViewCell: UITableViewCell {
         
         downloadProgressView.setProgress(0.0, animated: false)
         
-        selectionStyle = isAvailableInPrimaryLanguage ? .default : .none
         isAvailable = isAvailableInPrimaryLanguage
         
         if resource.shouldDownload || resource.numberOfAvailableLanguages() == 0 {
@@ -73,7 +72,7 @@ class HomeToolTableViewCell: UITableViewCell {
                                  isAvailableInPrimaryLanguage: Bool,
                                  primaryLanguage: Language?,
                                  parallelLanguage: Language?) {
-        titleLabel.isEnabled = isAvailableInPrimaryLanguage
+
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         configureParallelLanguageLabel(parallelLanguage: parallelLanguage)

@@ -14,7 +14,7 @@ extension TractViewController {
     // MARK: - Management of languages
     
     func parallelLanguageIsAvailable() -> Bool {
-        guard let parallelLanguage = languagesManager.loadParallelLanguageFromDisk() else {
+        if parallelLanguage == nil {
             return false
         }
         
@@ -22,8 +22,6 @@ extension TractViewController {
     }
     
     func determinePrimaryLabel() -> String {
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
-        
         if primaryLanguage == nil {
             return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
         } else {
@@ -32,8 +30,6 @@ extension TractViewController {
     }
     
     func determineParallelLabel() -> String {
-        let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
-        
         return parallelLanguage!.localizedName()
     }
     
@@ -51,15 +47,13 @@ extension TractViewController {
     }
     
     func loadResourcesForLanguage() {
-        let language = languagesManager.loadPrimaryLanguageFromDisk()
-        let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
+        let content = self.tractsManager.loadResource(resource: self.resource!, language: primaryLanguage!)
         self.xmlPagesForPrimaryLang = content.pages
         self.manifestProperties = content.manifestProperties
     }
     
     func loadResourcesForParallelLanguage() {
         if parallelLanguageIsAvailable() {
-            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
             let content = self.tractsManager.loadResource(resource: self.resource!, language: parallelLanguage!)
             self.xmlPagesForParallelLang = content.pages
         }
@@ -77,12 +71,12 @@ extension TractViewController {
     }
     
     func usePrimaryLanguageResources() {
-        self.selectedLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        self.selectedLanguage = primaryLanguage
         self.xmlPages = self.xmlPagesForPrimaryLang
     }
     
     func useParallelLanguageResources() {
-        self.selectedLanguage = languagesManager.loadParallelLanguageFromDisk()
+        self.selectedLanguage = parallelLanguage
         self.xmlPages = self.xmlPagesForParallelLang
     }
     
