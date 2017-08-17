@@ -399,6 +399,7 @@
 		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
 		4FE4AF2B1EE0F386000E3125 /* ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResourceViews.swift; path = Managers/ResourceViews.swift; sourceTree = "<group>"; };
+		4FED858D1F461691003038BB /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
 		4FEF812C1EE775F3002B77C8 /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Attachment.swift; path = Models/Attachment.swift; sourceTree = "<group>"; };
 		4FEF812E1EE779AA002B77C8 /* ReferencedFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReferencedFile.swift; path = Models/ReferencedFile.swift; sourceTree = "<group>"; };
@@ -1341,6 +1342,7 @@
 				"pt-PT",
 				"tr-TR",
 				"ko-KR",
+				lv,
 			);
 			mainGroup = 4F5732801EA69CF00082035C;
 			productRefGroup = 4F57328A1EA69CF00082035C /* Products */;
@@ -1757,6 +1759,7 @@
 				ECD344FE1F141A2600906471 /* pt-PT */,
 				ECD344FF1F141A4700906471 /* tr-TR */,
 				ECD345001F142C3000906471 /* ko-KR */,
+				4FED858D1F461691003038BB /* lv */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
