@@ -12,7 +12,7 @@ import Foundation
 
 class GTSettings {
     static let shared = GTSettings()
-    static let ignoredTools = ["kgp-us"]
+    static let ignoredTools: [String] = []
     
     private var primaryLanguageIdInternal: String?
     private var parallelLanguageIdInternal: String?

@@ -13,9 +13,11 @@ import MessageUI
 import PromiseKit
 
 class TractViewController: BaseViewController {
-    
-    let languagesManager = LanguagesManager()
+        
+    var primaryLanguage: Language?
+    var parallelLanguage: Language?
     var selectedLanguage: Language?
+    
     let tractsManager: TractManager = TractManager()
     var resource: DownloadedResource?
     var viewsWereGenerated = false
@@ -46,6 +48,7 @@ class TractViewController: BaseViewController {
         super.viewDidLoad()
         
         TractBindings.setupBindings()
+        loadLanguages()
         getResourceData()
         setupSwipeGestures()
         defineObservers()
@@ -116,7 +119,6 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         return resource!.localizedName(language: primaryLanguage)
     }
     
@@ -205,16 +207,28 @@ class TractViewController: BaseViewController {
             return
         }
         
-        var shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
+        let shareURLString = buildShareURLString(resourceCode, languageCode)
         
-        if currentPage > 0 {
-            shareURLString = shareURLString.appending("/").appending("\(currentPage)")
+        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+    }
+    
+    private func buildShareURLString(_ resourceCode: String, _ languageCode: String) -> String {
+        var shareURLString: String
+        
+        if resourceCode == "kgp-us" {
+            shareURLString = "https://www.knowgod.com/\(languageCode)/kgp"
+        } else {
+            shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
+            
+            if currentPage > 0 {
+                shareURLString = shareURLString.appending("/").appending("\(currentPage)")
+            }
         }
         
         shareURLString = shareURLString.appending(" ")
         
-        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
+        return shareURLString
     }
     
     // Notifications
@@ -258,6 +272,17 @@ class TractViewController: BaseViewController {
         return "\(resource.code)-\(self.currentPage)"
     }
     
+    private func loadLanguages() {
+        let languagesManager = LanguagesManager()
+        
+        primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        
+        if resource!.getTranslationForLanguage(primaryLanguage!) == nil {
+            primaryLanguage = languagesManager.loadFromDisk(code: "en")
+        }
+        
+        parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+    }
 }
 
 extension TractViewController: BaseTractElementDelegate {
@@ -266,14 +291,6 @@ extension TractViewController: BaseTractElementDelegate {
     }
     
     func displayedLanguage() -> Language {
-        if languageSegmentedControl == nil {
-            return languagesManager.loadPrimaryLanguageFromDisk()!
-        }
-        
-        if languageSegmentedControl?.selectedSegmentIndex == 0 {
-            return languagesManager.loadPrimaryLanguageFromDisk()!
-        } else {
-            return languagesManager.loadParallelLanguageFromDisk()!
-        }
+        return selectedLanguage!
     }
 }
