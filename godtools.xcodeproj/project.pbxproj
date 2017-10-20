@@ -104,6 +104,7 @@
 		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
 		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
 		4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */; };
+		4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */; };
 		4F40C8B11F0414D600CB3864 /* FollowUpResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */; };
@@ -349,6 +350,7 @@
 		4F1F09DF1F0A98D400757879 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F1F09E01F0A98DB00757879 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F1F09E11F0A9AD900757879 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = Analtyics/ADBMobileConfig.json; sourceTree = "<group>"; };
 		4F2500611F0C1E8D00364FBC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "godtools-Bridging-Header.h"; sourceTree = "<group>"; };
 		4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsAnaltyics.swift; path = Analtyics/GodToolsAnaltyics.swift; sourceTree = "<group>"; };
@@ -907,6 +909,7 @@
 			isa = PBXGroup;
 			children = (
 				4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */,
+				4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -1337,6 +1340,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4F8495A31F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
