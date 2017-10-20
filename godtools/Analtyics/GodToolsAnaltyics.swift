@@ -108,8 +108,8 @@ class GodToolsAnaltyics {
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
         
-        properties[AdobeAnalyticsConstants.Keys.screenName] = "GodTools : \(screenName)"
-        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "GodTools : \(previousScreenName)"
+        properties[AdobeAnalyticsConstants.Keys.screenName] = "\(screenName)"
+        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "\(previousScreenName)"
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
