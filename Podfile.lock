@@ -52,10 +52,10 @@ DEPENDENCIES:
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
   - Quick (= 1.1)
-  - RealmSwift (~> 2.10.0)
+  - RealmSwift (~> 2.10)
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
-  - SWXMLHash (~> 4.1.0)
+  - SWXMLHash (~> 4.1)
 
 EXTERNAL SOURCES:
   Spine:
