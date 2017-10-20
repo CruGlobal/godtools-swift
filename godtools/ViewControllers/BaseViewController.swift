@@ -21,6 +21,9 @@ class BaseViewController: UIViewController {
     let kNavigationItemInitialSpace:CGFloat = -7.0
     let kNavigationItemSpace:CGFloat = 26.0
     
+    let kNavigationItemHeight: CGFloat = 22.0
+    let kNavigationItemWidth: CGFloat = 22.0
+    
     var navigationLeftButtons = [UIBarButtonItem]()
     var navigationRightButtons = [UIBarButtonItem]()
     
@@ -60,7 +63,8 @@ class BaseViewController: UIViewController {
     }
     
     func displayNavigationLeftButtons() {
-        self.navigationItem.setLeftBarButtonItems(self.navigationLeftButtons.reversed(), animated: true)
+        addConstraintsToNavigationButtons(navigationLeftButtons)
+        self.navigationItem.setLeftBarButtonItems(navigationLeftButtons.reversed(), animated: true)
         navigationController?.navigationBar.topItem?.title = ""
     }
     
@@ -83,6 +87,8 @@ class BaseViewController: UIViewController {
             rightButtons.append(buttonItem)
         }
         
+        addConstraintsToNavigationButtons(rightButtons)
+
         self.navigationItem.setRightBarButtonItems(rightButtons.reversed(), animated: true)
     }
     
@@ -131,13 +137,27 @@ class BaseViewController: UIViewController {
     }
     
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
-        let buttonFrame = CGRect(x: 0.0, y: 0.0, width: 22.0, height: 22.0)
+        let buttonFrame = CGRect(x: 0.0, y: 0.0, width: kNavigationItemWidth, height: kNavigationItemHeight)
         let button: UIButton = UIButton(frame: buttonFrame)
         button.setBackgroundImage(UIImage(named: imageName), for: UIControlState.normal)
         button.addTarget(self, action: action, for: UIControlEvents.touchUpInside)
+        
         return UIBarButtonItem(customView: button)
     }
-    
+
+    private func addConstraintsToNavigationButtons(_ buttonItems: [UIBarButtonItem]) {
+        for buttonItem in buttonItems {
+            guard let button = buttonItem.customView else {
+                continue
+            }
+
+            button.addConstraint(NSLayoutConstraint(item: button,attribute: .height, relatedBy: .equal, toItem: nil,
+                                                    attribute: .notAnAttribute,multiplier: 1.0, constant: kNavigationItemHeight))
+            
+            button.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil,
+                                                    attribute: .notAnAttribute, multiplier: 1.0, constant: kNavigationItemWidth))
+        }
+    }
     // MARK: - Navigation Buttons Actions
     
     func navigationBurgerButtonAction() {
