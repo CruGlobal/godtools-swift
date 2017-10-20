@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AdobeMobileSDK
 
 struct AdobeAnalyticsConstants {
     struct Keys {
