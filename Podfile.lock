@@ -1,4 +1,7 @@
 PODS:
+  - AdobeMobileSDK (4.13.7):
+    - AdobeMobileSDK/iOS (= 4.13.7)
+  - AdobeMobileSDK/iOS (4.13.7)
   - Alamofire (4.4.0)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
@@ -38,6 +41,7 @@ PODS:
   - SWXMLHash (3.0.4)
 
 DEPENDENCIES:
+  - AdobeMobileSDK (~> 4.13)
   - Alamofire (~> 4.4)
   - Crashlytics
   - CRUConfig (~> 1.2)
@@ -64,6 +68,7 @@ CHECKOUT OPTIONS:
     :tag: 0.3.1
 
 SPEC CHECKSUMS:
+  AdobeMobileSDK: 3194eebe127f43a9ca2096d81ea833c7f8168a78
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
@@ -82,6 +87,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 29d20b84692fc319ea8ed933058fe7d8d005139b
 
-PODFILE CHECKSUM: 82c6947aa9a3b94b8353e5eb36aa055e6356fa89
+PODFILE CHECKSUM: 81f96d7df7dcf6b3b3edf7c1a6ae4af14319a2ec
 
 COCOAPODS: 1.2.1
