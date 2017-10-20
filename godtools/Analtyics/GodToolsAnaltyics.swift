@@ -65,12 +65,24 @@ class GodToolsAnaltyics {
     }
     
     private func configureAdobeAnalytics() {
+        loadAdobeAnalyticsConfigurationFile()
         var properties: [String: String] = [:]
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
+    }
+    
+    private func loadAdobeAnalyticsConfigurationFile() {
+        var fileName = "ADBMobileConfig"
+        
+        #if DEBUG
+            fileName = "ADBMobileConfig_debug"
+        #endif
+        
+        let filePath = Bundle.main.path(forResource: fileName, ofType: "json")
+        ADBMobile.overrideConfigPath(filePath)
     }
     
     @objc private func recordScreenView(notification: Notification) {
