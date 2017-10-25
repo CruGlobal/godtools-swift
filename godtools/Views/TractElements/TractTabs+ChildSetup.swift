@@ -19,7 +19,7 @@ extension TractTabs {
             for node in item.children {
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
-                        self.tabsProperties().options.append(textNode.text!)
+                        self.tabsProperties().options.append(textNode.text)
                     }
                 } else {
                     self.tabs[position].append(node)

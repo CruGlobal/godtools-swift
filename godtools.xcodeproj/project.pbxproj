@@ -95,8 +95,6 @@
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
-		4F1029601F34BB090073399A /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F10295B1F34BAE20073399A /* ADBMobileConfig.json */; };
-		4F1029611F34BB6B0073399A /* AdobeMobileLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */; };
 		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
 		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
 		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
@@ -106,6 +104,8 @@
 		4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C959E1EA7EB65007B47DB /* TranslationResource.swift */; };
 		4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95A01EA7ED43007B47DB /* DownloadedResourceManager.swift */; };
 		4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */; };
+		4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */; };
+		4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */; };
 		4F40C8B11F0414D600CB3864 /* FollowUpResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */; };
@@ -317,12 +317,6 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
-		4F10295A1F34BAE20073399A /* ADBMobile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADBMobile.h; sourceTree = "<group>"; };
-		4F10295B1F34BAE20073399A /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
-		4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary.a; sourceTree = "<group>"; };
-		4F10295D1F34BAE20073399A /* AdobeMobileLibrary_Extension.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_Extension.a; sourceTree = "<group>"; };
-		4F10295E1F34BAE20073399A /* AdobeMobileLibrary_TV.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_TV.a; sourceTree = "<group>"; };
-		4F10295F1F34BAE20073399A /* AdobeMobileLibrary_Watch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = AdobeMobileLibrary_Watch.a; sourceTree = "<group>"; };
 		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
 		4F123FAF1F140F1000309DAD /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
 		4F123FB01F140F1000309DAD /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };
@@ -357,6 +351,8 @@
 		4F1F09DF1F0A98D400757879 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F1F09E01F0A98DB00757879 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F1F09E11F0A9AD900757879 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = ADBMobileConfig.json; path = Analtyics/ADBMobileConfig.json; sourceTree = "<group>"; };
+		4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ADBMobileConfig_debug.json; path = Analtyics/ADBMobileConfig_debug.json; sourceTree = "<group>"; };
 		4F2500611F0C1E8D00364FBC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "godtools-Bridging-Header.h"; sourceTree = "<group>"; };
 		4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsAnaltyics.swift; path = Analtyics/GodToolsAnaltyics.swift; sourceTree = "<group>"; };
@@ -499,7 +495,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F1029611F34BB6B0073399A /* AdobeMobileLibrary.a in Frameworks */,
 				4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */,
 				1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */,
 			);
@@ -835,19 +830,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4F1029591F34BAE20073399A /* AdobeMobileLibrary */ = {
-			isa = PBXGroup;
-			children = (
-				4F10295A1F34BAE20073399A /* ADBMobile.h */,
-				4F10295B1F34BAE20073399A /* ADBMobileConfig.json */,
-				4F10295C1F34BAE20073399A /* AdobeMobileLibrary.a */,
-				4F10295D1F34BAE20073399A /* AdobeMobileLibrary_Extension.a */,
-				4F10295E1F34BAE20073399A /* AdobeMobileLibrary_TV.a */,
-				4F10295F1F34BAE20073399A /* AdobeMobileLibrary_Watch.a */,
-			);
-			path = AdobeMobileLibrary;
-			sourceTree = "<group>";
-		};
 		4F1C95391EA6B84A007B47DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,6 +911,8 @@
 			isa = PBXGroup;
 			children = (
 				4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */,
+				4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */,
+				4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */,
 			);
 			name = Analytics;
 			sourceTree = "<group>";
@@ -955,7 +939,6 @@
 		4F5732801EA69CF00082035C = {
 			isa = PBXGroup;
 			children = (
-				4F1029591F34BAE20073399A /* AdobeMobileLibrary */,
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328F21EB7CF66005E9131 /* godtoolsTests */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
@@ -1287,7 +1270,7 @@
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = DQ48D9BF2V;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					684328F01EB7CF66005E9131 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1360,7 +1343,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F1029601F34BB090073399A /* ADBMobileConfig.json in Resources */,
+				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4F8495A31F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
@@ -1385,6 +1368,7 @@
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
+				4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */,
 				4F84959E1F06E6BE0015A6BB /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				4F84959F1F06E6BE0015A6BB /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
@@ -1869,9 +1853,10 @@
 			baseConfigurationReference = B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1880,8 +1865,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
-				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1894,9 +1879,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1905,8 +1891,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools.beta;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(PROFILE_UUID)";
-				PROVISIONING_PROFILE_SPECIFIER = "$(PROFILE_UUID)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";

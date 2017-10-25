@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AdobeMobileSDK
 
 struct AdobeAnalyticsConstants {
     struct Keys {
@@ -64,12 +65,24 @@ class GodToolsAnaltyics {
     }
     
     private func configureAdobeAnalytics() {
+        loadAdobeAnalyticsConfigurationFile()
         var properties: [String: String] = [:]
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
+    }
+    
+    private func loadAdobeAnalyticsConfigurationFile() {
+        var fileName = "ADBMobileConfig"
+        
+        #if DEBUG
+            fileName = "ADBMobileConfig_debug"
+        #endif
+        
+        let filePath = Bundle.main.path(forResource: fileName, ofType: "json")
+        ADBMobile.overrideConfigPath(filePath)
     }
     
     @objc private func recordScreenView(notification: Notification) {
@@ -95,8 +108,8 @@ class GodToolsAnaltyics {
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
         
-        properties[AdobeAnalyticsConstants.Keys.screenName] = "GodTools : \(screenName)"
-        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "GodTools : \(previousScreenName)"
+        properties[AdobeAnalyticsConstants.Keys.screenName] = "\(screenName)"
+        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "\(previousScreenName)"
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
