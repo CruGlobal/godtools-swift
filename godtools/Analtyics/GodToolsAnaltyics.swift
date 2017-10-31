@@ -27,6 +27,8 @@ class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
     var previousScreenName = ""
+    var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
+                                                      qos: .background)
     
     private static var sharedInstance: GodToolsAnaltyics?
     
@@ -54,7 +56,10 @@ class GodToolsAnaltyics {
                                                object: nil)
         
         recordAdwordsConversion()
-        configureAdobeAnalytics()
+        
+        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
+            self.configureAdobeAnalytics()
+        }
     }
     
     private func recordAdwordsConversion() {
@@ -102,14 +107,17 @@ class GodToolsAnaltyics {
         
         tracker?.send(screenViewInfo)
         
-        recordScreenViewInAdobe(screenName: screenName)
+        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
+            self.recordScreenViewInAdobe(screenName: screenName)
+        }
+
     }
     
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
         
-        properties[AdobeAnalyticsConstants.Keys.screenName] = "\(screenName)"
-        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = "\(previousScreenName)"
+        properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
+        properties[AdobeAnalyticsConstants.Keys.previousScreenName] = previousScreenName
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
