@@ -72,13 +72,13 @@ extension TractCards {
     }
     
     func showCallToAction() {
-        let pageView = self.parent as! TractPage
-        pageView.showCallToAction()
+        let pageView = self.page
+        pageView?.showCallToAction()
     }
     
     func hideCallToAction() {
-        let pageView = self.parent as! TractPage
-        pageView.hideCallToAction()
+        let pageView = self.page
+        pageView?.hideCallToAction()
     }
     
     // MARK: - Animations for the Cards container and the Header
@@ -92,8 +92,8 @@ extension TractCards {
         
         properties.cardsState = .open
         
-        let pageView = self.parent as! TractPage
-        pageView.hideHeader()
+        let pageView = self.page
+        pageView?.hideHeader()
         transformToOpenUpCardsAnimation()
     }
     
@@ -106,8 +106,8 @@ extension TractCards {
         
         properties.cardsState = .preview
         
-        let pageView = self.parent as! TractPage
-        pageView.showHeader()
+        let pageView = self.page
+        pageView?.showHeader()
         transformToInitialPositionAnimation()
     }
     
