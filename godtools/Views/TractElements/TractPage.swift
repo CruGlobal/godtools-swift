@@ -18,6 +18,10 @@ class TractPage: BaseTractElement {
     // MARK: - Setup
     static var navbarHeight: CGFloat = 0.0
     
+    static var statusbarHeight: CGFloat {
+        return UIDevice.current.iPhoneX() ? CGFloat(44) : CGFloat(0)
+    }
+    
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self
     }
@@ -47,7 +51,7 @@ class TractPage: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.navbarHeight
+        return TractPage.navbarHeight + TractPage.statusbarHeight
     }
     
     // MARK: - Helpers
@@ -81,10 +85,12 @@ class TractPage: BaseTractElement {
             return
         }
         
+        //TODO: remove the .fill attribute and get the scale type assigned for the page
+        let scaleType: TractImageConfig.ImageScaleType = UIDevice.current.iPhoneX() ? .fill : elementProperties.backgroundImageScaleType
         let imageView = buildScaledImageView(parentView: backgroundView,
                                              image: image,
                                              aligns: elementProperties.backgroundImageAlign,
-                                             scaleType: elementProperties.backgroundImageScaleType)
+                                             scaleType: scaleType)
         backgroundView.addSubview(imageView)
     }
     
