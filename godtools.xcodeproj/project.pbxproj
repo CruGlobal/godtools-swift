@@ -212,6 +212,7 @@
 		ECBE2E671EF050D800A13849 /* TractButton+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E661EF050D800A13849 /* TractButton+UI.swift */; };
 		ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */; };
 		ECBE2E6B1EF1053000A13849 /* TractProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBE2E6A1EF1053000A13849 /* TractProperties.swift */; };
+		ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBF59BB1FB2531600FAFC01 /* TractPageContainer.swift */; };
 		ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B51EEAF15500A56332 /* ManifestProperties.swift */; };
 		ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194B71EEAF3BA00A56332 /* XMLNode.swift */; };
 		ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECC194BF1EEB32FA00A56332 /* XMLPage.swift */; };
@@ -472,6 +473,7 @@
 		ECBE2E661EF050D800A13849 /* TractButton+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractButton+UI.swift"; path = "Views/TractElements/TractButton+UI.swift"; sourceTree = "<group>"; };
 		ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractImageConfig.swift; path = TractClasses/TractImageConfig.swift; sourceTree = "<group>"; };
 		ECBE2E6A1EF1053000A13849 /* TractProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractProperties.swift; path = TractClasses/TractProperties.swift; sourceTree = "<group>"; };
+		ECBF59BB1FB2531600FAFC01 /* TractPageContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TractPageContainer.swift; path = Views/TractElements/TractPageContainer.swift; sourceTree = "<group>"; };
 		ECC194B51EEAF15500A56332 /* ManifestProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManifestProperties.swift; path = TractClasses/ManifestProperties.swift; sourceTree = "<group>"; };
 		ECC194B71EEAF3BA00A56332 /* XMLNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLNode.swift; path = XMLManagement/XMLNode.swift; sourceTree = "<group>"; };
 		ECC194BF1EEB32FA00A56332 /* XMLPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLPage.swift; path = XMLManagement/XMLPage.swift; sourceTree = "<group>"; };
@@ -593,6 +595,7 @@
 				0F0853161ECBAEEA00DDC86D /* TractModals.swift */,
 				0F806C561EB28D6000F3ED2B /* TractPage.swift */,
 				0F2837991EC65A140049CCE5 /* TractTabs.swift */,
+				ECBF59BB1FB2531600FAFC01 /* TractPageContainer.swift */,
 			);
 			name = Containers;
 			sourceTree = "<group>";
@@ -1530,6 +1533,7 @@
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
+				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,

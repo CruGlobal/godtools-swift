@@ -35,7 +35,7 @@ class TractPage: BaseTractElement {
         loadFrameProperties()
         buildFrame()
         setupBackgroundPage()
-        buildChildrenForData(contentElements.children)
+        buildPageContainer(data: contentElements.children)
         setupView(properties: contentElements.properties)
     }
     
@@ -51,7 +51,14 @@ class TractPage: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.navbarHeight + TractPage.statusbarHeight
+        return TractPage.statusbarHeight
+    }
+    
+    func buildPageContainer(data: [XMLIndexer]) {
+        self.elements = [BaseTractElement]()
+        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
+        self.elements!.append(element)
+        self.height = element.elementFrame.yEndPosition()
     }
     
     // MARK: - Helpers
