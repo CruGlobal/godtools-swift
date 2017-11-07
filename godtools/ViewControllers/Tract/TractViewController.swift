@@ -41,7 +41,7 @@ class TractViewController: BaseViewController {
     let viewTagOrigin = 100
     
     override var prefersStatusBarHidden: Bool {
-        return true
+        return !UIDevice.current.iPhoneX()
     }
     
     override func viewDidLoad() {
@@ -105,7 +105,7 @@ class TractViewController: BaseViewController {
     
     fileprivate func setupContainerView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingYPos = navigationBarFrame.origin.y
+        let startingYPos = UIDevice.current.iPhoneX() ? 0.0 : navigationBarFrame.origin.y
         
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingYPos
@@ -130,7 +130,17 @@ class TractViewController: BaseViewController {
         self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.navbarColor, controlColor: self.manifestProperties.navbarControlColor)
         
         let navigationBar = navigationController!.navigationBar
+        TractPage.navbarHeight = navigationBar.frame.size.height
         
+        if (!UIDevice.current.iPhoneX()) {
+            setNavigationProgressView()
+        }
+        
+        setupNavigationBarFrame()
+    }
+    
+    fileprivate func setNavigationProgressView() {
+        let navigationBar = navigationController!.navigationBar
         let width = navigationBar.frame.size.width
         let height: CGFloat = 4.0
         let xOrigin: CGFloat = 0.0
@@ -152,10 +162,6 @@ class TractViewController: BaseViewController {
         
         navigationBar.addSubview(self.progressViewHelper)
         navigationBar.addSubview(self.progressView)
-        
-        setupNavigationBarFrame()
-        
-        TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
     @objc fileprivate func setupNavigationBarFrame() {
@@ -166,9 +172,14 @@ class TractViewController: BaseViewController {
         let navigationBar = navController.navigationBar
         
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = 0.0
+        var yOrigin: CGFloat = 0.0
         let width = navigationBar.frame.size.width
-        let navigationBarHeight: CGFloat = 64.0
+        var navigationBarHeight: CGFloat = 64.0
+        
+        if (UIDevice.current.iPhoneX()) {
+            yOrigin = 44.0
+            navigationBarHeight = 44.0
+        }
         
         navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: navigationBarHeight)
     }
