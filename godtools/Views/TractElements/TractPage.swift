@@ -15,6 +15,8 @@ import SWXMLHash
 
 class TractPage: BaseTractElement {
     
+    var pageContainer: TractPageContainer?
+    
     // MARK: - Setup
     static var navbarHeight: CGFloat = 0.0
     
@@ -59,6 +61,7 @@ class TractPage: BaseTractElement {
         let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
         self.elements!.append(element)
         self.height = element.elementFrame.yEndPosition()
+        self.pageContainer = element
     }
     
     // MARK: - Helpers
