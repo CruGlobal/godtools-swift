@@ -27,7 +27,7 @@ class TractPageContainer: BaseTractElement {
     }
     
     override func updateFrameHeight() {
-        self.elementFrame.height = self.parent!.getMaxHeight() - TractPage.navbarHeight - TractPageContainer.marginBottom
+        self.elementFrame.height = self.parent!.getMaxHeight() - TractPage.statusbarHeight - TractPageContainer.marginBottom
         self.frame = self.elementFrame.getFrame()
     }
     
@@ -37,6 +37,7 @@ class TractPageContainer: BaseTractElement {
     
     override func loadStyles() {
         self.clipsToBounds = true
+        //self.backgroundColor = .red
     }
     
     // MARK: - Helpers
