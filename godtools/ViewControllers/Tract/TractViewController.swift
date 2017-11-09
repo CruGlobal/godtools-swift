@@ -40,6 +40,12 @@ class TractViewController: BaseViewController {
     
     let viewTagOrigin = 100
     
+    static let progressViewHeight: CGFloat = 4.0
+    
+    static var progressViewMarginBottom: CGFloat {
+        return UIDevice.current.iPhoneX() ? 0.0 : 20.0 - TractViewController.progressViewHeight
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return !UIDevice.current.iPhoneX()
     }
@@ -105,7 +111,7 @@ class TractViewController: BaseViewController {
     
     fileprivate func setupContainerView() {
         let navigationBarFrame = navigationController!.navigationBar.frame
-        let startingYPos = UIDevice.current.iPhoneX() ? 0.0 : navigationBarFrame.origin.y
+        let startingYPos: CGFloat = 0.0
         
         let width = self.view.frame.size.width
         let height = self.view.frame.size.height - startingYPos
@@ -142,7 +148,7 @@ class TractViewController: BaseViewController {
     fileprivate func setNavigationProgressView() {
         let navigationBar = navigationController!.navigationBar
         let width = navigationBar.frame.size.width
-        let height: CGFloat = 20.0
+        let height: CGFloat = TractViewController.progressViewHeight
         let xOrigin: CGFloat = 0.0
         let yOrigin: CGFloat = -20.0
         let progressViewFrame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
