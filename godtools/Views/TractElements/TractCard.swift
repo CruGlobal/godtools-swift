@@ -97,6 +97,7 @@ class TractCard: BaseTractElement {
         self.addSubview(self.backgroundView)
         self.addSubview(self.scrollView)
         
+        hideTexts()
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
