@@ -22,7 +22,7 @@ extension UIDevice {
     }
     
     func iPhoneX() -> Bool {
-        return modelName == "x86_64"
+        return modelName == "iPhone10,3" || modelName == "iPhone10,6"
     }
     
 }
