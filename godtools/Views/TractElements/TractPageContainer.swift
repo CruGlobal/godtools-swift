@@ -27,17 +27,16 @@ class TractPageContainer: BaseTractElement {
     }
     
     override func updateFrameHeight() {
-        self.elementFrame.height = self.parent!.getMaxHeight() - TractPage.statusbarHeight - TractPageContainer.marginBottom
+        self.elementFrame.height = self.parent!.getMaxHeight() - TractPage.statusbarHeight
         self.frame = self.elementFrame.getFrame()
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.navbarHeight
+        return TractPage.navbarHeight + TractViewController.progressViewMarginBottom
     }
     
     override func loadStyles() {
         self.clipsToBounds = true
-        //self.backgroundColor = .red
     }
     
     // MARK: - Helpers
