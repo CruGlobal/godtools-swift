@@ -142,9 +142,9 @@ class TractViewController: BaseViewController {
     fileprivate func setNavigationProgressView() {
         let navigationBar = navigationController!.navigationBar
         let width = navigationBar.frame.size.width
-        let height: CGFloat = 4.0
+        let height: CGFloat = 20.0
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = 0.0
+        let yOrigin: CGFloat = -20.0
         let progressViewFrame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
         
         self.currentProgressView = UIView()
@@ -172,13 +172,12 @@ class TractViewController: BaseViewController {
         let navigationBar = navController.navigationBar
         
         let xOrigin: CGFloat = 0.0
-        var yOrigin: CGFloat = 0.0
+        var yOrigin: CGFloat = 20.0
         let width = navigationBar.frame.size.width
-        var navigationBarHeight: CGFloat = 64.0
+        let navigationBarHeight: CGFloat = 44.0
         
         if (UIDevice.current.iPhoneX()) {
             yOrigin = 44.0
-            navigationBarHeight = 44.0
         }
         
         navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: navigationBarHeight)
