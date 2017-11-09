@@ -15,7 +15,7 @@ class TractCards: BaseTractElement {
     // MARK: - Positions and Sizes
     
     static var minYPosition: CGFloat {
-        return 110.0// + TractPage.statusbarHeight
+        return 110.0
     }
     static let constantYPaddingTop: CGFloat = 45
     static let constantYPaddingBottom: CGFloat = 16
