@@ -77,9 +77,7 @@ extension TractViewController {
     // MARK: - Promises
     
     fileprivate func moveViews() -> Promise<Bool> {
-        let newCurrentProgressViewFrame = buildProgressViewFrame()
         return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: { 
-            self.currentProgressView.frame = newCurrentProgressViewFrame
             for view in self.pagesViews {
                 view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
             }
@@ -118,10 +116,7 @@ extension TractViewController {
     }
     
     fileprivate func movePageView(_ pageView: UIView) -> Promise<Bool> {
-        let newCurrentProgressViewFrame = buildProgressViewFrame()
-        
         return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-            self.currentProgressView.frame = newCurrentProgressViewFrame
             pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
         })
     }
@@ -140,14 +135,5 @@ extension TractViewController {
     fileprivate func notifyCurrentViewDidAppearOnTract() {
         let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as? TractView
         currentTractView?.contentView?.notifyViewDidAppearOnTract()
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func buildProgressViewFrame() -> CGRect {
-        return CGRect(x: 0.0,
-                      y: 0.0,
-                      width: currentProgressWidth(),
-                      height: self.currentProgressView.frame.size.height)
     }
 }
