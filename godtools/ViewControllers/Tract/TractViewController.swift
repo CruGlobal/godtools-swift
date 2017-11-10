@@ -139,7 +139,7 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navController.navigationBar
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = 20.0
+        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? 44.0 : 20.0
         let width = navigationBar.frame.size.width
         let height: CGFloat = 44.0
         
