@@ -33,17 +33,12 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [TractView?]()
-    var progressView = UIView()
-    var progressViewHelper = UIView()
-    var currentProgressView = UIView()
     var languageSegmentedControl: UISegmentedControl?
     
     let viewTagOrigin = 100
     
-    static let progressViewHeight: CGFloat = 4.0
-    
     static var progressViewMarginBottom: CGFloat {
-        return UIDevice.current.iPhoneX() ? 0.0 : 20.0 - TractViewController.progressViewHeight
+        return UIDevice.current.iPhoneX() ? 0.0 : 20.0
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -74,6 +69,7 @@ class TractViewController: BaseViewController {
         }
         
         setupContainerView()
+        setupNavigationBarFrame()
         loadPagesViews()
         self.viewsWereGenerated = true
     }
@@ -85,8 +81,6 @@ class TractViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.progressViewHelper.removeFromSuperview()
-        self.progressView.removeFromSuperview()
         TractBindings.clearAllBindings()
     }
     
@@ -110,7 +104,6 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupContainerView() {
-        let navigationBarFrame = navigationController!.navigationBar.frame
         let startingYPos: CGFloat = 0.0
         
         let width = self.view.frame.size.width
@@ -137,37 +130,6 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navigationController!.navigationBar
         TractPage.navbarHeight = navigationBar.frame.size.height
-        
-        if (!UIDevice.current.iPhoneX()) {
-            setNavigationProgressView()
-        }
-        
-        setupNavigationBarFrame()
-    }
-    
-    fileprivate func setNavigationProgressView() {
-        let navigationBar = navigationController!.navigationBar
-        let width = navigationBar.frame.size.width
-        let height: CGFloat = TractViewController.progressViewHeight
-        let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = -20.0
-        let progressViewFrame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
-        
-        self.currentProgressView = UIView()
-        self.currentProgressView.frame = CGRect(x: 0.0, y: 0.0, width: currentProgressWidth(), height: height)
-        self.currentProgressView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-        
-        self.progressViewHelper = UIView()
-        self.progressViewHelper.frame = progressViewFrame
-        self.progressViewHelper.backgroundColor = .white
-        
-        self.progressView = UIView()
-        self.progressView.frame = progressViewFrame
-        self.progressView.backgroundColor = self.manifestProperties.primaryColor.withAlphaComponent(0.65)
-        self.progressView.addSubview(self.currentProgressView)
-        
-        navigationBar.addSubview(self.progressViewHelper)
-        navigationBar.addSubview(self.progressView)
     }
     
     @objc fileprivate func setupNavigationBarFrame() {
@@ -176,17 +138,12 @@ class TractViewController: BaseViewController {
         }
         
         let navigationBar = navController.navigationBar
-        
         let xOrigin: CGFloat = 0.0
-        var yOrigin: CGFloat = 20.0
+        let yOrigin: CGFloat = 20.0
         let width = navigationBar.frame.size.width
-        let navigationBarHeight: CGFloat = 44.0
+        let height: CGFloat = 44.0
         
-        if (UIDevice.current.iPhoneX()) {
-            yOrigin = 44.0
-        }
-        
-        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: navigationBarHeight)
+        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
     }
     
     // MARK: - Segmented Control
@@ -251,10 +208,6 @@ class TractViewController: BaseViewController {
     
     func defineObservers() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(setupNavigationBarFrame),
-                                               name: NSNotification.Name.UIApplicationDidBecomeActive,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToPage),
                                                name: NSNotification.Name.moveToPageNotification,
                                                object: nil)
@@ -269,17 +222,6 @@ class TractViewController: BaseViewController {
     }
     
     // MARK: - Helpers
-    
-    func currentProgressWidth() -> CGFloat {
-        let parentWidth = self.navigationController!.navigationBar.frame.size.width
-        let numPages = totalPages()
-        
-        if numPages == 1 {
-            return parentWidth
-        }
-        
-        return CGFloat(self.currentPage) * parentWidth / CGFloat(numPages - 1)
-    }
     
     override func screenName() -> String {
         guard let resource = self.resource else {
