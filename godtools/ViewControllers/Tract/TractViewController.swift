@@ -13,7 +13,10 @@ import MessageUI
 import PromiseKit
 
 class TractViewController: BaseViewController {
-        
+    
+    let iPhoneXNavigationBarYPos: CGFloat = 44.0
+    let standardNavigationBarYPos: CGFloat = 0.0
+    
     var primaryLanguage: Language?
     var parallelLanguage: Language?
     var selectedLanguage: Language?
@@ -135,7 +138,7 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navController.navigationBar
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? 44.0 : 20.0
+        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? iPhoneXNavigationBarYPos : standardNavigationBarYPos
         let width = navigationBar.frame.size.width
         let height: CGFloat = 44.0
         
