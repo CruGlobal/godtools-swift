@@ -97,6 +97,7 @@ class TractCard: BaseTractElement {
         self.addSubview(self.backgroundView)
         self.addSubview(self.scrollView)
         
+        hideTexts()
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
@@ -168,7 +169,7 @@ class TractCard: BaseTractElement {
     }
     
     func cardHeight() -> CGFloat {
-        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight
+        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight - TractPage.statusbarHeight - TractPageContainer.marginBottom
     }
     
     func endCardEditing() {

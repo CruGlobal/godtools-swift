@@ -13,7 +13,7 @@ extension TractCallToAction {
     
     func showCallToActionWithoutAnimation() {
         self.currentAnimation = .show
-        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height
+        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height - bottomConstant()
         self.transform = CGAffineTransform(translationX: 0, y: translationY)
     }
     
@@ -24,7 +24,7 @@ extension TractCallToAction {
     
     func showCallToActionAnimation() {
         self.currentAnimation = .show
-        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height
+        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height - bottomConstant()
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
@@ -41,6 +41,10 @@ extension TractCallToAction {
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
                        completion: nil )
+    }
+    
+    private func bottomConstant() -> CGFloat {
+        return TractPage.statusbarHeight + TractPageContainer.marginBottom
     }
     
 }

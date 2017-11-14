@@ -79,6 +79,7 @@ extension TractCard {
             setStateOpen()
         }
         
+        showTexts()
         showCardAnimation()
         enableScrollview()
         
@@ -98,6 +99,7 @@ extension TractCard {
             setStateClose()
         }
         
+        hideTexts()
         self.cardsParentView.hideCallToAction()
         hideCardAnimation()
         disableScrollview()
@@ -110,6 +112,7 @@ extension TractCard {
             return
         }
         
+        hideTexts()
         self.cardsParentView.resetEnvironment()
         self.cardsParentView.hideCallToAction()
     }
@@ -127,8 +130,29 @@ extension TractCard {
             setStatePreview()
         }
         
+        hideTexts()
         resetCardToOriginalPositionAnimation()
         disableScrollview()
+    }
+    
+    func showTexts() {
+        for element in self.elements! {
+            if BaseTractElement.isLabelElement(element) {
+                continue
+            }
+            
+            element.isHidden = false
+        }
+    }
+    
+    func hideTexts() {
+        for element in self.elements! {
+            if BaseTractElement.isLabelElement(element) {
+                continue
+            }
+            
+            element.isHidden = true
+        }
     }
     
     // MARK: - ScrollView

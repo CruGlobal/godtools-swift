@@ -47,16 +47,15 @@ class TractCallToAction: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        var yPosition: CGFloat {
-            var position = self.elementFrame.y + TractCallToAction.yMarginConstant
-            if position < (self.parent?.getMaxHeight())! - self.height {
-                position = (self.parent?.getMaxHeight())! - self.height
-            }
-            return position
+        let bottomConstant = TractPageContainer.marginBottom
+        let minPosition = self.parent!.getMaxHeight() - self.height - bottomConstant
+        var position = self.elementFrame.y + TractCallToAction.yMarginConstant - bottomConstant
+        if position < minPosition {
+            position = minPosition
         }
         
         self.elementFrame.x = 0
-        self.elementFrame.y = yPosition
+        self.elementFrame.y = position
         self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
         self.elementFrame.xMargin = TractCallToAction.paddingConstant
