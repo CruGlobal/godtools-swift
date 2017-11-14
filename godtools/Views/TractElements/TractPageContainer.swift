@@ -12,6 +12,13 @@ import SWXMLHash
 
 class TractPageContainer: BaseTractElement {
     
+    override var properties: TractProperties {
+        get {
+            return (self.parent?.properties)!
+        }
+        set { }
+    }
+    
     // MARK: - Setup
     static var marginBottom: CGFloat {
         return UIDevice.current.iPhoneX() ? CGFloat(44.0) : CGFloat(0.0)
@@ -38,11 +45,4 @@ class TractPageContainer: BaseTractElement {
     override func loadStyles() {
         self.clipsToBounds = true
     }
-    
-    // MARK: - Helpers
-    
-    func pageProperties() -> TractPageProperties {
-        return self.properties as! TractPageProperties
-    }
-    
 }
