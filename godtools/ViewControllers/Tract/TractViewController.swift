@@ -37,10 +37,6 @@ class TractViewController: BaseViewController {
     
     let viewTagOrigin = 100
     
-    static var progressViewMarginBottom: CGFloat {
-        return UIDevice.current.iPhoneX() ? 0.0 : 20.0
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return !UIDevice.current.iPhoneX()
     }

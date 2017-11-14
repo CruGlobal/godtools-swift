@@ -39,7 +39,7 @@ class TractPageContainer: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.navbarHeight + TractViewController.progressViewMarginBottom
+        return TractPage.navbarHeight
     }
     
     override func loadStyles() {
