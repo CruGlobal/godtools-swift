@@ -13,7 +13,7 @@ import MessageUI
 import PromiseKit
 
 class TractViewController: BaseViewController {
-        
+    
     var primaryLanguage: Language?
     var parallelLanguage: Language?
     var selectedLanguage: Language?
@@ -40,11 +40,7 @@ class TractViewController: BaseViewController {
     static let iPhoneXStatusBarHeight: CGFloat = 44.0
     static let iPhoneXMarginBottomToSafeArea: CGFloat = 44.0
     static let navigationBarHeight: CGFloat = 44.0
-    static let statusBarHeight: CGFloat = 20.0
-    
-    static var progressViewMarginBottom: CGFloat {
-        return UIDevice.current.iPhoneX() ? 0.0 : 20.0
-    }
+    static let standardStatusBarInitialYPosition: CGFloat = 0.0
     
     override var prefersStatusBarHidden: Bool {
         return !UIDevice.current.iPhoneX()
@@ -144,7 +140,7 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navController.navigationBar
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.statusBarHeight
+        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.standardStatusBarInitialYPosition
         let width = navigationBar.frame.size.width
         let height: CGFloat = TractViewController.navigationBarHeight
         
