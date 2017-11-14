@@ -48,7 +48,7 @@ class TractCallToAction: BaseTractElement {
     
     override func loadFrameProperties() {
         let bottomConstant = TractPageContainer.marginBottom
-        let minPosition = (self.parent?.getMaxHeight())! - self.height - bottomConstant
+        let minPosition = self.parent!.getMaxHeight() - self.height - bottomConstant
         var position = self.elementFrame.y + TractCallToAction.yMarginConstant - bottomConstant
         if position < minPosition {
             position = minPosition

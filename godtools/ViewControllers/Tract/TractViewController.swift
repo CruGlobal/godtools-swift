@@ -37,6 +37,11 @@ class TractViewController: BaseViewController {
     
     let viewTagOrigin = 100
     
+    static let iPhoneXStatusBarHeight: CGFloat = 44.0
+    static let iPhoneXMarginBottomToSafeArea: CGFloat = 44.0
+    static let navigationBarHeight: CGFloat = 44.0
+    static let statusBarHeight: CGFloat = 20.0
+    
     static var progressViewMarginBottom: CGFloat {
         return UIDevice.current.iPhoneX() ? 0.0 : 20.0
     }
@@ -139,9 +144,9 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navController.navigationBar
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? 44.0 : 20.0
+        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.statusBarHeight
         let width = navigationBar.frame.size.width
-        let height: CGFloat = 44.0
+        let height: CGFloat = TractViewController.navigationBarHeight
         
         navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
     }

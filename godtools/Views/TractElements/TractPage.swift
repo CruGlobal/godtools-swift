@@ -21,7 +21,7 @@ class TractPage: BaseTractElement {
     static var navbarHeight: CGFloat = 0.0
     
     static var statusbarHeight: CGFloat {
-        return UIDevice.current.iPhoneX() ? CGFloat(44) : CGFloat(0)
+        return UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : CGFloat(0)
     }
     
     override func propertiesKind() -> TractProperties.Type {

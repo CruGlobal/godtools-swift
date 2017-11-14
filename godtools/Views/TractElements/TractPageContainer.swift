@@ -21,7 +21,7 @@ class TractPageContainer: BaseTractElement {
     
     // MARK: - Setup
     static var marginBottom: CGFloat {
-        return UIDevice.current.iPhoneX() ? CGFloat(44.0) : CGFloat(0.0)
+        return UIDevice.current.iPhoneX() ? TractViewController.iPhoneXMarginBottomToSafeArea : CGFloat(0.0)
     }
     
     override func propertiesKind() -> TractProperties.Type {
