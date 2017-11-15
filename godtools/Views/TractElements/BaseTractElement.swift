@@ -136,6 +136,7 @@ class BaseTractElement: UIView {
         self.elementFrame.y = yPosition
         loadFrameProperties()
         buildFrame()
+        setupParallelElement()
         buildChildrenForData(children)
         setupView(properties: [String: Any]())
     }
