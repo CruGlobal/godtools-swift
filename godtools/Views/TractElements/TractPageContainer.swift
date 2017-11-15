@@ -45,4 +45,10 @@ class TractPageContainer: BaseTractElement {
     override func loadStyles() {
         self.clipsToBounds = true
     }
+    
+    override func setupParallelElement() {
+        if (self.parent!.parallelElement != nil) {
+            self.parallelElement = self.parent!.parallelElement!.elements?[0]
+        }
+    }
 }

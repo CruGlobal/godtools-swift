@@ -145,6 +145,7 @@ class TractCard: BaseTractElement {
         case .show:
             self.cardsParentView.lastCardOpened = self
             showCardWithoutAnimation()
+            showTexts()
         case .hide:
             hideCardWithoutAnimation()
         default:

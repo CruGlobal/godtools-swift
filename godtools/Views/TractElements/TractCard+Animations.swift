@@ -18,7 +18,6 @@ extension TractCard {
     static let bounceDuration: Double = 0.15
     
     func openingAnimation(yTransformation: CGFloat = -50.0, delay: Double = 0.0, cycleNumber: Int = 1, bounceNumber: Int = 1 ) {
-        
         UIView.animate(withDuration: TractCard.bounceDuration,
                        delay: delay,
                        options: .curveEaseOut,
