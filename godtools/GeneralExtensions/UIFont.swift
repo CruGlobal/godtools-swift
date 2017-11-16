@@ -90,21 +90,18 @@ extension UIFont {
         if isBold {
             return self
         } else {
-            var symTraits = fontDescriptor.symbolicTraits
-            symTraits.insert([.traitBold])
-            let fontDescriptorVar = fontDescriptor.withSymbolicTraits(symTraits)
-            return UIFont(descriptor: fontDescriptorVar!, size: 0)
+            let fontDescriptorVar: UIFontDescriptor = fontDescriptor.withSymbolicTraits(.traitBold)!
+            return UIFont(descriptor: fontDescriptorVar, size: 0)
         }
     }
     
     func setItalic()-> UIFont {
-        var fontDescriptorVar: UIFontDescriptor
         if(isItalic) {
             return self
         } else {
-            fontDescriptorVar = fontDescriptor.withSymbolicTraits(.traitItalic)!
+            let fontDescriptorVar: UIFontDescriptor = fontDescriptor.withSymbolicTraits(.traitItalic)!
+            return UIFont(descriptor: fontDescriptorVar, size: 0)
         }
-        return UIFont(descriptor: fontDescriptorVar, size: 0)
     }
     
     func setBoldItalic()-> UIFont {
