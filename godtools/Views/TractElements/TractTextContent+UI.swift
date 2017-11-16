@@ -30,6 +30,24 @@ extension TractTextContent {
         self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
         self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
         
+        if properties.bold && properties.italic {
+            self.label.font = self.label.font.setBoldItalic()
+        } else {
+            if properties.bold {
+                self.label.font = self.label.font.setBold()
+            }
+            
+            if properties.italic {
+                self.label.font = self.label.font.setItalic()
+            }
+        }
+        
+        if properties.underline {
+            let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let underlineAttributedString = NSAttributedString(string: properties.value, attributes: underlineAttribute)
+            self.label.attributedText = underlineAttributedString
+        }
+        
         if properties.height == 0 {
             self.label.lineBreakMode = .byWordWrapping
             self.label.numberOfLines = 0

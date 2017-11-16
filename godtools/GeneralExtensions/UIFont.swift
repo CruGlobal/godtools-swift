@@ -10,6 +10,14 @@ import UIKit
 
 extension UIFont {
     
+    var isBold: Bool {
+        return fontDescriptor.symbolicTraits.contains(.traitBold)
+    }
+    
+    var isItalic: Bool {
+        return fontDescriptor.symbolicTraits.contains(.traitItalic)
+    }
+    
     static func gtRegular(size: CGFloat) -> UIFont {
         return UIFont.buildGTFont(size: size, weight: UIFontWeightRegular)
     }
@@ -77,4 +85,30 @@ extension UIFont {
         return UIFont(name: fontName, size: fontSize)!
     }
     
+    
+    func setBold() -> UIFont {
+        if isBold {
+            return self
+        } else {
+            var symTraits = fontDescriptor.symbolicTraits
+            symTraits.insert([.traitBold])
+            let fontDescriptorVar = fontDescriptor.withSymbolicTraits(symTraits)
+            return UIFont(descriptor: fontDescriptorVar!, size: 0)
+        }
+    }
+    
+    func setItalic()-> UIFont {
+        var fontDescriptorVar: UIFontDescriptor
+        if(isItalic) {
+            return self
+        } else {
+            fontDescriptorVar = fontDescriptor.withSymbolicTraits(.traitItalic)!
+        }
+        return UIFont(descriptor: fontDescriptorVar, size: 0)
+    }
+    
+    func setBoldItalic()-> UIFont {
+        let fontDescriptorVar = fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(arrayLiteral: .traitBold, .traitItalic))
+        return UIFont(descriptor: fontDescriptorVar!, size: 0)
+    }
 }
