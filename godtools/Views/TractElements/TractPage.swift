@@ -15,8 +15,14 @@ import SWXMLHash
 
 class TractPage: BaseTractElement {
     
+    var pageContainer: TractPageContainer?
+    
     // MARK: - Setup
     static var navbarHeight: CGFloat = 0.0
+    
+    static var statusbarHeight: CGFloat {
+        return UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : CGFloat(0)
+    }
     
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self
@@ -31,7 +37,7 @@ class TractPage: BaseTractElement {
         loadFrameProperties()
         buildFrame()
         setupBackgroundPage()
-        buildChildrenForData(contentElements.children)
+        buildPageContainer(data: contentElements.children)
         setupView(properties: contentElements.properties)
     }
     
@@ -47,7 +53,15 @@ class TractPage: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.navbarHeight
+        return TractPage.statusbarHeight
+    }
+    
+    func buildPageContainer(data: [XMLIndexer]) {
+        self.elements = [BaseTractElement]()
+        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
+        self.elements!.append(element)
+        self.height = element.elementFrame.yEndPosition()
+        self.pageContainer = element
     }
     
     // MARK: - Helpers
@@ -81,10 +95,12 @@ class TractPage: BaseTractElement {
             return
         }
         
+        //TODO: remove the .fill attribute and get the scale type assigned for the page
+        let scaleType: TractImageConfig.ImageScaleType = UIDevice.current.iPhoneX() ? .fill : elementProperties.backgroundImageScaleType
         let imageView = buildScaledImageView(parentView: backgroundView,
                                              image: image,
                                              aligns: elementProperties.backgroundImageAlign,
-                                             scaleType: elementProperties.backgroundImageScaleType)
+                                             scaleType: scaleType)
         backgroundView.addSubview(imageView)
     }
     

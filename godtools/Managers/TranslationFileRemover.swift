@@ -14,7 +14,7 @@ class TranslationFileRemover: GTDataManager {
     func deleteUnusedPages() {
         for page in findAllEntities(ReferencedFile.self) {
             do {
-                if page.translations.filter({ $0.isDownloaded }).count == 0 {
+                if (page.translations.filter({ $0.isDownloaded }) as [Translation]).count == 0 {
                     try FileManager.default.removeItem(atPath: "\(resourcesPath)/\(page.filename)")
                     realm.delete(page)
                 }

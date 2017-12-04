@@ -11,7 +11,7 @@ import Foundation
 extension TractPage {
     
     func showHeader() {
-        for element in self.elements! {
+        for element in self.pageContainer!.elements! {
             if BaseTractElement.isHeaderElement(element) {
                 let header = element as! TractHeader
                 header.showHeader()
@@ -21,7 +21,7 @@ extension TractPage {
     }
     
     func hideHeader() {
-        for element in self.elements! {
+        for element in self.pageContainer!.elements! {
             if BaseTractElement.isHeaderElement(element) {
                 let header = element as! TractHeader
                 header.hideHeader()
@@ -31,7 +31,7 @@ extension TractPage {
     }
     
     func showCallToAction() {
-        for element in self.elements! {
+        for element in self.pageContainer!.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
                 callToAction.showCallToActionAnimation()
@@ -41,7 +41,7 @@ extension TractPage {
     }
     
     func hideCallToAction() {
-        for element in self.elements! {
+        for element in self.pageContainer!.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
                 callToAction.hideCallToActionAnimation()
