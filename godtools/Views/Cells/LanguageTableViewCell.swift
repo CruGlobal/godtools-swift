@@ -22,6 +22,7 @@ class LanguageTableViewCell: UITableViewCell {
     var language: Language? {
         didSet {
             guard let language = language else {
+                languageExists(false)
                 return
             }
             languageExists(language.shouldDownload)
