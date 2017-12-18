@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +26,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="hSP-YK-jb4">
+                <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="hSP-YK-jb4">
                     <rect key="frame" x="168" y="590" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
@@ -47,6 +48,7 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utk-V8-xg4" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
                             <rect key="frame" x="122" y="226" width="130" height="48"/>
+                            <accessibility key="accessibilityConfiguration" identifier="ok"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="j5R-7w-ZPh"/>
                                 <constraint firstAttribute="width" constant="130" id="q8j-i5-Y0H"/>
@@ -86,6 +88,7 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-ip-VQi" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
                             <rect key="frame" x="40" y="226" width="125" height="48"/>
+                            <accessibility key="accessibilityConfiguration" identifier="now"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="Hy4-vf-QFo"/>
                             </constraints>
@@ -96,6 +99,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
                             <rect key="frame" x="210" y="226" width="125" height="48"/>
+                            <accessibility key="accessibilityConfiguration" identifier="later"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
