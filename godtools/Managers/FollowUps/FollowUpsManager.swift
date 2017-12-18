@@ -59,15 +59,15 @@ class FollowUpsManager: GTDataManager {
     }
     
     private func validate(params: [String: String]) -> Bool {
-        if params["email"]?.characters.count == 0 {
+        if params["email"]?.count == 0 {
             return false
         }
         
-        if params["name"]?.characters.count == 0  {
+        if params["name"]?.count == 0  {
             return false
         }
         
-        if params["destination_id"]?.characters.count == 0  {
+        if params["destination_id"]?.count == 0  {
             return false
         }
         
