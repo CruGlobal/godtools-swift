@@ -34,6 +34,9 @@ class godtoolsUITests: XCTestCase {
         }
         
         snapshot("01_HomeScreen")
+        
+        XCUIApplication().navigationBars["GodTools"].buttons["nav_languages"].tap()
+        
 //
 //
 //        snapshot("02_LanguagesScreen")
