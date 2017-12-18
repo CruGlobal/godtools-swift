@@ -146,7 +146,10 @@ class TranslationZipImporter: GTDataManager {
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
-                if !translation.language!.isPrimary() {
+                guard let language = translation.language else {
+                    return
+                }
+                if !language.isPrimary() {
                     return
                 }
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
