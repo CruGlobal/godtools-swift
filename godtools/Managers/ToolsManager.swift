@@ -123,7 +123,7 @@ extension ToolsManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ToolsManager.toolCellIdentifier) as! HomeToolTableViewCell
         if indexPath.section >= resources.count {
-            return cell
+            return UITableViewCell()
         }
         
         let resource = resources[indexPath.section]
