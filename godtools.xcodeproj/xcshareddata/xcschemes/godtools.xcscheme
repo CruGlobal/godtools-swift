@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
@@ -36,6 +37,16 @@
                BlueprintIdentifier = "684328F01EB7CF66005E9131"
                BuildableName = "godtoolsTests.xctest"
                BlueprintName = "godtoolsTests"
+               ReferencedContainer = "container:godtools.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F4DD6901FE85EAD00D35625"
+               BuildableName = "godtoolsUITests.xctest"
+               BlueprintName = "godtoolsUITests"
                ReferencedContainer = "container:godtools.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -56,6 +67,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"

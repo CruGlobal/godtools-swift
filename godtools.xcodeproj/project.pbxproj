@@ -114,6 +114,7 @@
 		4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A361EB0E28900C03447 /* TractParagraph.swift */; };
 		4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A371EB0E28900C03447 /* TractTextContent.swift */; };
 		4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */; };
+		4F4DD6941FE85EAD00D35625 /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DD6931FE85EAD00D35625 /* godtoolsUITests.swift */; };
 		4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */; };
 		4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707D81EAE760D00A540C2 /* GTDataManager.swift */; };
 		4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5707E01EAE8CA300A540C2 /* TractViewController.xib */; };
@@ -221,6 +222,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F4DD6961FE85EAD00D35625 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F5732881EA69CF00082035C;
+			remoteInfo = godtools;
+		};
 		684328F61EB7CF66005E9131 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
@@ -364,6 +372,9 @@
 		4F462A361EB0E28900C03447 /* TractParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractParagraph.swift; path = Views/TractElements/TractParagraph.swift; sourceTree = "<group>"; };
 		4F462A371EB0E28900C03447 /* TractTextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTextContent.swift; path = Views/TractElements/TractTextContent.swift; sourceTree = "<group>"; };
 		4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractElement.swift; path = Views/TractElements/BaseTractElement.swift; sourceTree = "<group>"; };
+		4F4DD6911FE85EAD00D35625 /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F4DD6931FE85EAD00D35625 /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
+		4F4DD6951FE85EAD00D35625 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GTDataManager+Migrations.swift"; path = "Managers/GTDataManager+Migrations.swift"; sourceTree = "<group>"; };
 		4F5707D81EAE760D00A540C2 /* GTDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTDataManager.swift; path = Managers/GTDataManager.swift; sourceTree = "<group>"; };
 		4F5707E01EAE8CA300A540C2 /* TractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TractViewController.xib; path = Tract/TractViewController.xib; sourceTree = "<group>"; };
@@ -495,6 +506,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F4DD68E1FE85EAD00D35625 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732861EA69CF00082035C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -932,6 +950,15 @@
 			name = FollowUps;
 			sourceTree = "<group>";
 		};
+		4F4DD6921FE85EAD00D35625 /* godtoolsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4F4DD6931FE85EAD00D35625 /* godtoolsUITests.swift */,
+				4F4DD6951FE85EAD00D35625 /* Info.plist */,
+			);
+			path = godtoolsUITests;
+			sourceTree = "<group>";
+		};
 		4F5707DF1EAE8C8B00A540C2 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
@@ -948,6 +975,7 @@
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328F21EB7CF66005E9131 /* godtoolsTests */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
+				4F4DD6921FE85EAD00D35625 /* godtoolsUITests */,
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
@@ -960,6 +988,7 @@
 			children = (
 				4F5732891EA69CF00082035C /* godtools.app */,
 				684328F11EB7CF66005E9131 /* godtoolsTests.xctest */,
+				4F4DD6911FE85EAD00D35625 /* godtoolsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1221,6 +1250,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F4DD6901FE85EAD00D35625 /* godtoolsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F4DD69A1FE85EAD00D35625 /* Build configuration list for PBXNativeTarget "godtoolsUITests" */;
+			buildPhases = (
+				4F4DD68D1FE85EAD00D35625 /* Sources */,
+				4F4DD68E1FE85EAD00D35625 /* Frameworks */,
+				4F4DD68F1FE85EAD00D35625 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F4DD6971FE85EAD00D35625 /* PBXTargetDependency */,
+			);
+			name = godtoolsUITests;
+			productName = godtoolsUITests;
+			productReference = 4F4DD6911FE85EAD00D35625 /* godtoolsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4F5732881EA69CF00082035C /* godtools */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F57329E1EA69CF00082035C /* Build configuration list for PBXNativeTarget "godtools" */;
@@ -1269,10 +1316,16 @@
 		4F5732811EA69CF00082035C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
+					4F4DD6901FE85EAD00D35625 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = DQ48D9BF2V;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4F5732881EA69CF00082035C;
+					};
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Manual;
@@ -1339,11 +1392,19 @@
 			targets = (
 				4F5732881EA69CF00082035C /* godtools */,
 				684328F01EB7CF66005E9131 /* godtoolsTests */,
+				4F4DD6901FE85EAD00D35625 /* godtoolsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F4DD68F1FE85EAD00D35625 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732871EA69CF00082035C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1549,6 +1610,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F4DD68D1FE85EAD00D35625 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F4DD6941FE85EAD00D35625 /* godtoolsUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732851EA69CF00082035C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1728,6 +1797,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4F4DD6971FE85EAD00D35625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F5732881EA69CF00082035C /* godtools */;
+			targetProxy = 4F4DD6961FE85EAD00D35625 /* PBXContainerItemProxy */;
+		};
 		684328F71EB7CF66005E9131 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4F5732881EA69CF00082035C /* godtools */;
@@ -1794,6 +1868,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F4DD6981FE85EAD00D35625 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Debug;
+		};
+		4F4DD6991FE85EAD00D35625 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Release;
+		};
 		4F57329C1EA69CF00082035C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1979,6 +2109,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F4DD69A1FE85EAD00D35625 /* Build configuration list for PBXNativeTarget "godtoolsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F4DD6981FE85EAD00D35625 /* Debug */,
+				4F4DD6991FE85EAD00D35625 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F5732841EA69CF00082035C /* Build configuration list for PBXProject "godtools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
