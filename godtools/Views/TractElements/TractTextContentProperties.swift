@@ -16,6 +16,9 @@ class TractTextContentProperties: TractProperties {
     var textAlign: NSTextAlignment = .left
     var localTextColor: UIColor?
     var textScale: CGFloat = 1.0
+    var bold: Bool = false
+    var italic: Bool = false
+    var underline: Bool = false
     var value: String = ""
     
     override func defineProperties() {
@@ -25,7 +28,7 @@ class TractTextContentProperties: TractProperties {
     // MARK: - XML Custom Properties
     
     override func customProperties() -> [String]? {
-        return ["textAlign", "textScale", "textColor"]
+        return ["textAlign", "textScale", "textColor", "textStyle"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
@@ -36,6 +39,8 @@ class TractTextContentProperties: TractProperties {
             setupTextScale(value)
         case "textColor":
             self.localTextColor = value.getRGBAColor()
+        case "textStyle":
+            setupTextStyle(value)
         default: break
         }
     }
@@ -57,6 +62,20 @@ class TractTextContentProperties: TractProperties {
         let stringValue = string as NSString
         let floatValue = stringValue.floatValue
         self.textScale = CGFloat(floatValue)
+    }
+    
+    private func setupTextStyle(_ string: String) {
+        if string.range(of:"bold") != nil {
+            self.bold = true
+        }
+        
+        if string.range(of:"italic") != nil {
+            self.italic = true
+        }
+        
+        if string.range(of:"underline") != nil {
+            self.underline = true
+        }
     }
     
     func scaledFont(language: Language) -> UIFont {
