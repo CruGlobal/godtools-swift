@@ -38,6 +38,7 @@ class BaseViewController: UIViewController {
         self.displayNavigationButtons()
         
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.accessibilityIdentifier = "navbar"
     }
     
     override func viewWillAppear(_ animated: Bool) {
