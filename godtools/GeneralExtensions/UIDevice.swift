@@ -10,19 +10,10 @@ import Foundation
 
 extension UIDevice {
     
-    var modelName: String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machineMirror = Mirror(reflecting: systemInfo.machine)
-        let identifier = machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8, value != 0 else { return identifier }
-            return identifier + String(UnicodeScalar(UInt8(value)))
-        }
-        return identifier
-    }
-    
     func iPhoneX() -> Bool {
-        return modelName == "iPhone10,3" || modelName == "iPhone10,6"
+        if UIDevice().userInterfaceIdiom == .phone {
+            return 2436 == UIScreen.main.nativeBounds.height
+        }
+        return false
     }
-    
 }
