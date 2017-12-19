@@ -10,8 +10,8 @@ devices([
 
 languages([
   "fr",
-  "zh-Hans",
-  "zh-Hant",
+#  "zh-hans",
+#  "zh-hant",
   "de",
   "el",
   "it",
