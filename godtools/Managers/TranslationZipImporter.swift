@@ -149,13 +149,16 @@ class TranslationZipImporter: GTDataManager {
                 guard let language = translation.language else {
                     return
                 }
+                guard let resource = translation.downloadedResource else {
+                    return
+                }
                 if !language.isPrimary() {
                     return
                 }
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
-                                                           GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
+                                                           GTConstants.kDownloadProgressResourceIdKey: resource.remoteId])
             }
             .responseData()
     }
