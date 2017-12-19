@@ -110,7 +110,13 @@ class TranslationZipImporter: GTDataManager {
         return downloadFromRemote(translation: translation).then { zipFileData -> Promise<Void> in
             self.handleZippedData(zipData: zipFileData, translation: translation)
             
-            if translation.language!.isPrimary() {
+            guard let language = translation.language else {
+                return Promise(value: ())
+            }
+            
+            let isAvailableInPrimary = self.isTranslationAvailableInPrimaryLanguage(translation: translation)
+            
+            if language.isPrimary() || (!isAvailableInPrimary && language.code == "en") {
                 self.primaryDownloadComplete(translation: translation)
             }
             return Promise(value: ())
@@ -143,6 +149,7 @@ class TranslationZipImporter: GTDataManager {
     
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
         let translationId = translation.remoteId
+        let isAvailableInPrimary = isTranslationAvailableInPrimaryLanguage(translation: translation)
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
@@ -152,9 +159,13 @@ class TranslationZipImporter: GTDataManager {
                 guard let resource = translation.downloadedResource else {
                     return
                 }
-                if !language.isPrimary() {
+                if isAvailableInPrimary && !language.isPrimary() {
                     return
                 }
+                if !isAvailableInPrimary && language.code != "en" {
+                    return
+                }
+                
                 NotificationCenter.default.post(name: .downloadProgressViewUpdateNotification,
                                                 object: nil,
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
@@ -253,4 +264,12 @@ class TranslationZipImporter: GTDataManager {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating Resources directory on device."])
         }
     }
+    
+    private func isTranslationAvailableInPrimaryLanguage(translation: Translation) -> Bool {
+        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        let isAvailableInPrimary = translation.downloadedResource?.isAvailableInLanguage(primaryLanguage) ?? false
+        
+        return isAvailableInPrimary
+    }
+    
 }
