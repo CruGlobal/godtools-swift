@@ -66,6 +66,8 @@ class HomeToolTableViewCell: UITableViewCell {
         }
         
         bannerImageView.image = banner ?? #imageLiteral(resourceName: "cell_banner_placeholder")
+        
+        accessibilityIdentifier = resource.code
     }
     
     private func configureLabels(resource: DownloadedResource,

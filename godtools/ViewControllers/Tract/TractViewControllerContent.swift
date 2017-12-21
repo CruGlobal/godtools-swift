@@ -61,6 +61,7 @@ extension TractViewController {
                              manifestProperties: self.manifestProperties,
                              configurations: configurations,
                              parallelElement: parallelElement,
+                             pageNumber: pageNumber,
                              delegate: self)
         
         view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)

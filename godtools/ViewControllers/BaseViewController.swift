@@ -38,6 +38,7 @@ class BaseViewController: UIViewController {
         self.displayNavigationButtons()
         
         navigationController?.navigationBar.barStyle = .black
+        navigationController?.navigationBar.accessibilityIdentifier = "navbar"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,26 +104,31 @@ class BaseViewController: UIViewController {
     
     func addNavigationBurgerButton() {
         let button = self.buildNavigationButton(imageName: "burger_white", action: #selector(navigationBurgerButtonAction))
+        button.accessibilityIdentifier = "nav_burger"
         self.navigationLeftButtons.append(button)
     }
     
     func addNavigationPlusButton() {
         let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))
+        button.accessibilityIdentifier = "nav_add"
         self.navigationRightButtons.append(button)
     }
     
     func addNavigationLanguageButton() {
         let button = self.buildNavigationButton(imageName: "language_logo_white", action: #selector(navigationLanguageButtonAction))
+        button.accessibilityIdentifier = "nav_languages"
         self.navigationRightButtons.append(button)
     }
     
     func addHomeButton() {
         let button = UIBarButtonItem(image: #imageLiteral(resourceName: "home"), style: UIBarButtonItemStyle.done, target: self, action: #selector(homeButtonAction))
+        button.accessibilityIdentifier = "nav_home"
         self.navigationLeftButtons.append(button)
     }
     
     func addShareButton() {
         let button = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItemStyle.done, target: self, action: #selector(shareButtonAction))
+        button.accessibilityIdentifier = "nav_share"
         self.navigationRightButtons.append(button)
     }
     

@@ -19,6 +19,7 @@ extension LanguagesTableViewController: UITableViewDataSource {
         
         cell.cellDelegate = self
         cell.language = language
+        cell.accessibilityIdentifier = cell.language?.code
         
         return cell
     }

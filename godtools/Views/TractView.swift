@@ -14,7 +14,7 @@ class TractView: UIView {
     
     var contentView: TractPage?
     
-    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, delegate: BaseTractElementDelegate) {
+    init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, pageNumber: Int, delegate: BaseTractElementDelegate) {
         super.init(frame: frame)
         
         let height = self.frame.size.height
@@ -25,6 +25,7 @@ class TractView: UIView {
                                      parallelElement: parallelElement)
         
         self.contentView?.setDelegate(delegate)
+        accessibilityIdentifier = "Page \(pageNumber)"
     }
     
     required init?(coder aDecoder: NSCoder) {
