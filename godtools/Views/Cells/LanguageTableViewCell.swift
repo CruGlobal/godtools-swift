@@ -21,8 +21,12 @@ class LanguageTableViewCell: UITableViewCell {
     var cellDelegate: LanguageTableViewCellDelegate?
     var language: Language? {
         didSet {
-            languageExists(language!.shouldDownload)
-            languageLabel.text = language!.localizedName()
+            guard let language = language else {
+                languageExists(false)
+                return
+            }
+            languageExists(language.shouldDownload)
+            languageLabel.text = language.localizedName()
         }
     }
     
