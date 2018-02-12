@@ -24,7 +24,13 @@ class TractHeader: BaseTractElement {
     }
     
     override func loadStyles() {
-        self.backgroundColor = self.page!.pageProperties().primaryColor
+        guard let page = page else {
+            return
+        }
+        
+        let backgroundColor = page.pageProperties().backgroundColor
+        
+        self.backgroundColor = backgroundColor
     }
     
     override func loadElementProperties(_ properties: [String : Any]) {
