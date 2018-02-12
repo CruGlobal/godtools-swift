@@ -26,9 +26,26 @@ extension TractTextContent {
         
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
-        self.label.textAlignment = properties.value.naturalTextAlignment()
-        self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
-        self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
+        
+        if let tractConfigurations = tractConfigurations, let language = tractConfigurations.language {
+            let alignment = properties.textAlign
+            label.textAlignment = alignment
+            if language.isRightToLeft() {
+                switch alignment {
+                case .left:
+                    label.textAlignment = .right
+                case .right:
+                    label.textAlignment = .left
+                default:
+                    label.textAlignment = alignment
+                }
+            }
+            self.label.font = properties.scaledFont(language: language)
+        }
+        
+        if let page = page {
+            self.label.textColor = properties.colorFor(self, pageProperties: page.pageProperties())
+        }
         
         if properties.bold && properties.italic {
             self.label.font = self.label.font.setBoldItalic()

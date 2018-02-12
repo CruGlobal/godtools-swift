@@ -37,4 +37,8 @@ class Language: Object {
         
         return nameInLocale
     }
+    
+    func isRightToLeft() -> Bool {
+        return code == "ar" || code == "he"
+    }
 }

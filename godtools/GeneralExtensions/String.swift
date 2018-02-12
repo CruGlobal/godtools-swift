@@ -70,21 +70,6 @@ extension String {
         return finalValue
     }
     
-    func naturalTextAlignment() -> NSTextAlignment {
-        let tagSchemes = Array.init(arrayLiteral: NSLinguisticTagSchemeLanguage)
-        let tagger = NSLinguisticTagger(tagSchemes: tagSchemes, options: 0)
-        
-        tagger.string = self
-        
-        let language = tagger.tag(at: 0, scheme: NSLinguisticTagSchemeLanguage, tokenRange: nil, sentenceRange: nil)
-        
-        if language == "ar" || language == "he" {
-            return .right
-        }
-        
-        return .left
-    }
-    
     var dashCased: String? {
         let pattern = "([a-z0-9])([A-Z])"
         
