@@ -14,9 +14,8 @@ class OnboardingViewController: BaseViewController {
     @IBOutlet weak var page2View: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBOutlet weak var nowButton: TransparentButton!
-    @IBOutlet weak var laterButton: TransparentButton!
-    @IBOutlet weak var okayButton: TransparentButton!
+    @IBOutlet weak var languagesOkayButton: TransparentButton!
+    @IBOutlet weak var toolsOkayButton: TransparentButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +39,8 @@ class OnboardingViewController: BaseViewController {
     }
     
     private func setupButtonLabels() {
-        nowButton.setTitle("now".localized, for: .normal)
-        okayButton.setTitle("okay".localized, for: .normal)
-        laterButton.setTitle("later".localized, for: .normal)
+        toolsOkayButton.setTitle("okay".localized, for: .normal)
+        languagesOkayButton.setTitle("okay".localized, for: .normal)
     }
     
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
@@ -59,16 +57,11 @@ class OnboardingViewController: BaseViewController {
     
     // MARK: - Actions
     
-    @IBAction func pressOkayButton(_ sender: Any) {
+    @IBAction func pressToolsOkayButton(_ sender: Any) {
         displayPage2()
     }
-    
-    @IBAction func pressNowButton(_ sender: Any) {
-        dismissOnboarding()
-        NotificationCenter.default.post(name: .presentLanguageSettingsNotification, object: nil)
-    }
-    
-    @IBAction func pressLaterButton(_ sender: Any) {
+
+    @IBAction func pressLanguagesOkayButton(_ sender: Any) {
         dismissOnboarding()
     }
     

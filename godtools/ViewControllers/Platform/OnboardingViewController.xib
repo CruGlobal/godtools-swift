@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="laterButton" destination="jRo-pJ-Pjn" id="ZTq-JI-5Fk"/>
-                <outlet property="nowButton" destination="1GS-ip-VQi" id="Ftd-4X-Eg0"/>
-                <outlet property="okayButton" destination="utk-V8-xg4" id="8Hu-4c-TVm"/>
+                <outlet property="languagesOkayButton" destination="jRo-pJ-Pjn" id="TQS-T5-T4G"/>
                 <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
                 <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
                 <outlet property="pageControl" destination="hSP-YK-jb4" id="r0q-Uj-ZrA"/>
+                <outlet property="toolsOkayButton" destination="utk-V8-xg4" id="8Ci-am-7M3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="hSP-YK-jb4">
+                <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" translatesAutoresizingMaskIntoConstraints="NO" id="hSP-YK-jb4">
                     <rect key="frame" x="168" y="590" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
@@ -53,7 +53,7 @@
                             </constraints>
                             <state key="normal" title="Okay"/>
                             <connections>
-                                <action selector="pressOkayButton:" destination="-1" eventType="touchUpInside" id="TAz-YP-Mwa"/>
+                                <action selector="pressToolsOkayButton:" destination="-1" eventType="touchUpInside" id="tLN-CB-0p2"/>
                             </connections>
                         </button>
                     </subviews>
@@ -84,40 +84,27 @@
                                 <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="set_your_languages"/>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1GS-ip-VQi" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="40" y="226" width="125" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="Hy4-vf-QFo"/>
-                            </constraints>
-                            <state key="normal" title="Now"/>
-                            <connections>
-                                <action selector="pressNowButton:" destination="-1" eventType="touchUpInside" id="FMs-jy-kZ8"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="210" y="226" width="125" height="48"/>
+                            <rect key="frame" x="125" y="226" width="125" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
                             <state key="normal" title="Later"/>
                             <connections>
-                                <action selector="pressLaterButton:" destination="-1" eventType="touchUpInside" id="D7U-VW-uG7"/>
+                                <action selector="pressLanguagesOkayButton:" destination="-1" eventType="touchUpInside" id="MgN-hA-cEP"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="307" id="167-Sm-eql"/>
-                        <constraint firstItem="1GS-ip-VQi" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="6:11" id="4u1-Fy-QjN"/>
                         <constraint firstItem="JLw-YN-BDG" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="5qw-0i-P67"/>
                         <constraint firstItem="cYK-jH-Vat" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="DO9-yc-kfv"/>
-                        <constraint firstAttribute="bottom" secondItem="1GS-ip-VQi" secondAttribute="bottom" constant="33" id="HsN-Hp-CA6"/>
                         <constraint firstItem="JLw-YN-BDG" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" id="Tey-Kr-hpb"/>
-                        <constraint firstItem="1GS-ip-VQi" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="ZGK-jw-SqN"/>
                         <constraint firstAttribute="bottom" secondItem="jRo-pJ-Pjn" secondAttribute="bottom" constant="33" id="ZzX-vv-Uid"/>
                         <constraint firstItem="cYK-jH-Vat" firstAttribute="top" secondItem="JLw-YN-BDG" secondAttribute="bottom" constant="20" id="cZr-Sb-C7R"/>
                         <constraint firstItem="jRo-pJ-Pjn" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="qRC-SC-Mge"/>
-                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" multiplier="16:11" id="zy5-1Q-Us8"/>
+                        <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="zy5-1Q-Us8"/>
                     </constraints>
                 </view>
             </subviews>
