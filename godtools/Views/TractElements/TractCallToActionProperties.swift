@@ -11,9 +11,14 @@ import UIKit
 class TractCallToActionProperties: TractProperties {
     
     var events: String?
+    var controlColor: UIColor?
     
     override func defineProperties() {
         self.properties = ["events"]
+    }
+    
+    override func customProperties() -> [String]? {
+        return ["controlColor"]
     }
     
     override func getTextProperties() -> TractTextContentProperties {
@@ -26,4 +31,9 @@ class TractCallToActionProperties: TractProperties {
         return textProperties
     }
 
+    override func performCustomProperty(propertyName: String, value: String) {
+        if propertyName == "controlColor" {
+            controlColor = value.getRGBAColor()
+        }
+    }
 }
