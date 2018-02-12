@@ -19,21 +19,21 @@ class OnboardingViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialSetup()
+        initialSetup()
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeLeft)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
+        view.addGestureRecognizer(swipeRight)
     }
     
     private func initialSetup() {
-        let viewWidth = self.view.frame.width
-        self.page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
-        self.pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0);
+        let viewWidth = view.frame.width
+        page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
+        pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0);
         
         setupButtonLabels()
     }
@@ -68,8 +68,8 @@ class OnboardingViewController: BaseViewController {
     // MARK: Movement
     
     fileprivate func displayPage1() {
-        self.pageControl.currentPage -= 1
-        let viewWidth = self.view.frame.width
+        pageControl.currentPage -= 1
+        let viewWidth = view.frame.width
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -81,8 +81,8 @@ class OnboardingViewController: BaseViewController {
     }
     
     fileprivate func displayPage2() {
-        self.pageControl.currentPage += 1
-        let viewWidth = self.view.frame.width
+        pageControl.currentPage += 1
+        let viewWidth = view.frame.width
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -96,7 +96,7 @@ class OnboardingViewController: BaseViewController {
     // MARK: - Helpers
     
     fileprivate func dismissOnboarding() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }
