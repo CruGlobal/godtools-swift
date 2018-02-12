@@ -17,13 +17,25 @@ extension TractCallToAction {
         let origin = CGPoint(x: xPosition, y: yPosition)
         let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
         let buttonFrame = CGRect(origin: origin, size: size)
-        let button = UIButton(type: .system)
-        button.frame = buttonFrame
-        let image = UIImage(named: "right_arrow_blue")
-        button.setImage(image, for: UIControlState.normal)
-        button.tintColor = callToActionProperties().controlColor
-        button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
+        
+        let button = createButton(with: buttonFrame)
+        
         self.addSubview(button)
     }
     
+    private func createButton(with frame: CGRect) -> UIButton {
+        let button = UIButton(type: .system)
+        button.frame = frame
+        
+        let image = UIImage(named: "right_arrow_blue")
+        
+        let controlColor = callToActionProperties().controlColor;
+        let pagePrimaryColor = page?.pageProperties().primaryColor;
+        
+        button.setImage(image, for: UIControlState.normal)
+        button.tintColor = controlColor != nil ? controlColor : pagePrimaryColor
+        button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
+        
+        return button
+    }
 }

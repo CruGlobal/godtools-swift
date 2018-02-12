@@ -11,7 +11,7 @@ import UIKit
 class TractCallToActionProperties: TractProperties {
     
     var events: String?
-    var controlColor = UIColor.gtBlue
+    var controlColor: UIColor?
     
     override func defineProperties() {
         self.properties = ["events"]
