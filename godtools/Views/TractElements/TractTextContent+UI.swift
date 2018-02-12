@@ -26,7 +26,7 @@ extension TractTextContent {
         
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
-        self.label.textAlignment = properties.textAlign
+        self.label.textAlignment = properties.value.naturalTextAlignment()
         self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
         self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
         
