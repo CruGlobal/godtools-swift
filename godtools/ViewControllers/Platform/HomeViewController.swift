@@ -57,11 +57,6 @@ class HomeViewController: BaseViewController {
     
     func defineObservers() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(presentLanguageSettings),
-                                               name: .presentLanguageSettingsNotification,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
                                                selector: #selector(reloadView),
                                                name: .downloadPrimaryTranslationCompleteNotification,
                                                object: nil)
@@ -70,10 +65,6 @@ class HomeViewController: BaseViewController {
                                                selector: #selector(reloadView),
                                                name: .reloadHomeListNotification,
                                                object: nil)
-    }
-    
-    @objc private func presentLanguageSettings() {
-        self.delegate?.moveToUpdateLanguageSettings()
     }
     
     @objc private func reloadView() {

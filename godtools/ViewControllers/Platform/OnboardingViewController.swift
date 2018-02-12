@@ -14,35 +14,33 @@ class OnboardingViewController: BaseViewController {
     @IBOutlet weak var page2View: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    @IBOutlet weak var nowButton: TransparentButton!
-    @IBOutlet weak var laterButton: TransparentButton!
-    @IBOutlet weak var okayButton: TransparentButton!
+    @IBOutlet weak var languagesOkayButton: TransparentButton!
+    @IBOutlet weak var toolsOkayButton: TransparentButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initialSetup()
+        initialSetup()
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeLeft)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
+        view.addGestureRecognizer(swipeRight)
     }
     
     private func initialSetup() {
-        let viewWidth = self.view.frame.width
-        self.page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
-        self.pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0);
+        let viewWidth = view.frame.width
+        page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
+        pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0);
         
         setupButtonLabels()
     }
     
     private func setupButtonLabels() {
-        nowButton.setTitle("now".localized, for: .normal)
-        okayButton.setTitle("okay".localized, for: .normal)
-        laterButton.setTitle("later".localized, for: .normal)
+        toolsOkayButton.setTitle("okay".localized, for: .normal)
+        languagesOkayButton.setTitle("okay".localized, for: .normal)
     }
     
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
@@ -59,24 +57,19 @@ class OnboardingViewController: BaseViewController {
     
     // MARK: - Actions
     
-    @IBAction func pressOkayButton(_ sender: Any) {
+    @IBAction func pressToolsOkayButton(_ sender: Any) {
         displayPage2()
     }
-    
-    @IBAction func pressNowButton(_ sender: Any) {
-        dismissOnboarding()
-        NotificationCenter.default.post(name: .presentLanguageSettingsNotification, object: nil)
-    }
-    
-    @IBAction func pressLaterButton(_ sender: Any) {
+
+    @IBAction func pressLanguagesOkayButton(_ sender: Any) {
         dismissOnboarding()
     }
     
     // MARK: Movement
     
     fileprivate func displayPage1() {
-        self.pageControl.currentPage -= 1
-        let viewWidth = self.view.frame.width
+        pageControl.currentPage -= 1
+        let viewWidth = view.frame.width
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -88,8 +81,8 @@ class OnboardingViewController: BaseViewController {
     }
     
     fileprivate func displayPage2() {
-        self.pageControl.currentPage += 1
-        let viewWidth = self.view.frame.width
+        pageControl.currentPage += 1
+        let viewWidth = view.frame.width
         
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
@@ -103,7 +96,7 @@ class OnboardingViewController: BaseViewController {
     // MARK: - Helpers
     
     fileprivate func dismissOnboarding() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }
