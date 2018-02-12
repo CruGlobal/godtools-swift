@@ -17,9 +17,11 @@ extension TractCallToAction {
         let origin = CGPoint(x: xPosition, y: yPosition)
         let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
         let buttonFrame = CGRect(origin: origin, size: size)
-        let button = UIButton(frame: buttonFrame)
+        let button = UIButton(type: .system)
+        button.frame = buttonFrame
         let image = UIImage(named: "right_arrow_blue")
-        button.setBackgroundImage(image, for: UIControlState.normal)
+        button.setImage(image, for: UIControlState.normal)
+        button.tintColor = callToActionProperties().controlColor
         button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
         self.addSubview(button)
     }
