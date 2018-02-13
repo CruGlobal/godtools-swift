@@ -30,6 +30,14 @@ extension TractTextContent {
         if let tractConfigurations = tractConfigurations, let language = tractConfigurations.language {
             let alignment = properties.textAlign
             label.textAlignment = alignment
+            
+            /* When the language that this label belongs to is rendered right to left, the text alignment
+             needs to be inverted. label.textAlignment has already taken into account the renderer's default
+             of "start" and a possible overriding value of "center" or "end" set by the text-align attribute.
+             
+             Up to this point we are assuming that textAlignment is set correctly and that the language is left to right.
+             If we find out here the language is right to left, we simply need to invert the value. left becomes right
+             and vice versa.*/
             if language.isRightToLeft() {
                 switch alignment {
                 case .left:
