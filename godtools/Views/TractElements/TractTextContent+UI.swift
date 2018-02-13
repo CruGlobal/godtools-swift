@@ -26,9 +26,34 @@ extension TractTextContent {
         
         self.label = GTLabel(frame: properties.getFrame())
         self.label.text = properties.value
-        self.label.textAlignment = properties.textAlign
-        self.label.font = properties.scaledFont(language: self.tractConfigurations!.language!)
-        self.label.textColor = properties.colorFor(self, pageProperties: page!.pageProperties())
+        
+        if let tractConfigurations = tractConfigurations, let language = tractConfigurations.language {
+            let alignment = properties.textAlign
+            label.textAlignment = alignment
+            
+            /* When the language that this label belongs to is rendered right to left, the text alignment
+             needs to be inverted. label.textAlignment has already taken into account the renderer's default
+             of "start" and a possible overriding value of "center" or "end" set by the text-align attribute.
+             
+             Up to this point we are assuming that textAlignment is set correctly and that the language is left to right.
+             If we find out here the language is right to left, we simply need to invert the value. left becomes right
+             and vice versa.*/
+            if language.isRightToLeft() {
+                switch alignment {
+                case .left:
+                    label.textAlignment = .right
+                case .right:
+                    label.textAlignment = .left
+                default:
+                    label.textAlignment = alignment
+                }
+            }
+            self.label.font = properties.scaledFont(language: language)
+        }
+        
+        if let page = page {
+            self.label.textColor = properties.colorFor(self, pageProperties: page.pageProperties())
+        }
         
         if properties.bold && properties.italic {
             self.label.font = self.label.font.setBoldItalic()

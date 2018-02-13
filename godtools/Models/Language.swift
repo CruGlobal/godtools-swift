@@ -15,6 +15,7 @@ class Language: Object {
     dynamic var code = ""
     dynamic var remoteId = ""
     dynamic var shouldDownload = false
+    dynamic var direction = ""
     
     let translations = List<Translation>()
     
@@ -36,5 +37,9 @@ class Language: Object {
         }
         
         return nameInLocale
+    }
+    
+    func isRightToLeft() -> Bool {
+        return direction == "rtl"
     }
 }
