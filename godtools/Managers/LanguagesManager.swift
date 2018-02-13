@@ -141,6 +141,11 @@ class LanguagesManager: GTDataManager {
             for remoteLanguage in languages {
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
                     cachedlanguage.code = remoteLanguage.code!
+                    
+                    if let direction = remoteLanguage.direction {
+                        cachedlanguage.direction = direction
+                    }
+                    
                     cachedLanguages.append(cachedlanguage)
                     continue
                 }

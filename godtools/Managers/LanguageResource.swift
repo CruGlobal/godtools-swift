@@ -12,6 +12,7 @@ import Spine
 class LanguageResource: Resource {
 
     var code: String?
+    var direction: String?
     
     override class var resourceType: ResourceType {
         return "language"
@@ -20,6 +21,7 @@ class LanguageResource: Resource {
     override class var fields: [Field] {
         return fieldsFromDictionary([
             "code" : Attribute(),
+            "direction" : Attribute()
             ])
     }
 }
