@@ -28,8 +28,7 @@ class TractHeader: BaseTractElement {
             return
         }
         
-        let backgroundColor = page.pageProperties().backgroundColor
-        
+        let backgroundColor = page.pageProperties().primaryColor
         self.backgroundColor = backgroundColor
     }
     
