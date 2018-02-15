@@ -181,21 +181,30 @@ class TractViewController: BaseViewController {
             return
         }
         
-        let shareURLString = buildShareURLString(resourceCode, languageCode)
+        let shareMessage = buildShareMessage(resourceCode, languageCode)
         
-        let activityController = UIActivityViewController(activityItems: [String.localizedStringWithFormat("tract_share_message".localized, shareURLString)], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: [shareMessage], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+    }
+    
+    private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {
+        // this if branch is temporary until knowgod.com is updated
+        if "honorrestored" == resourceCode {
+            return "https://www.godtoolsapp.com"
+        }
+        
+        let shareURLString = buildShareURLString(resourceCode, languageCode)
+        return String.localizedStringWithFormat("tract_share_message".localized, shareURLString)
     }
     
     private func buildShareURLString(_ resourceCode: String, _ languageCode: String) -> String {
         var shareURLString: String
         
+        // this is temporary up until the final else block until knowgod.com is updated
         if resourceCode == "kgp-us" {
             shareURLString = "https://www.knowgod.com/\(languageCode)/kgp"
         } else if resourceCode == "thefour" {
             shareURLString = "https://www.thefour.com"
-        } else if resourceCode == "honorrestored" {
-            shareURLString = "https://www.godtoolsapp.com"
         } else {
             shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
             
