@@ -192,6 +192,10 @@ class TractViewController: BaseViewController {
         
         if resourceCode == "kgp-us" {
             shareURLString = "https://www.knowgod.com/\(languageCode)/kgp"
+        } else if resourceCode == "thefour" {
+            shareURLString = "https://www.thefour.com"
+        } else if resourceCode == "honorrestored" {
+            shareURLString = "https://www.godtoolsapp.com"
         } else {
             shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
             
