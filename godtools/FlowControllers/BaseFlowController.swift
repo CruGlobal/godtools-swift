@@ -143,7 +143,7 @@ extension BaseFlowController: MenuViewControllerDelegate {
     }
     
     func moveToLogin() {
-        let viewController = UIViewController()
+        let viewController = LoginViewController(nibName: String(describing:LoginViewController.self), bundle: nil)
         pushViewController(viewController: viewController)
     }
     
