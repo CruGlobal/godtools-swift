@@ -18,10 +18,17 @@ class LoginViewController: BaseViewController {
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewWasTapped))
+        view.addGestureRecognizer(tapRecognizer)
     }
     
     @IBAction func loginButtonWasPressed(_ sender: Any) {
         
+    }
+    
+    @objc func viewWasTapped() {
+        self.view.endEditing(true)
     }
 }
 
