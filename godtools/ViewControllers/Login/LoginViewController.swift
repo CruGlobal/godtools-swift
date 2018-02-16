@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import TheKeyOAuth2
 
 class LoginViewController: BaseViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    private let serverURL = URL(string: "https://thekey.me/cas/")!
+    private let clientId = " "
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +35,13 @@ class LoginViewController: BaseViewController {
         self.view.endEditing(true)
     }
     
-    private func validateInputs() -> Bool {
-        guard let username = usernameTextField.text, username.count > 0 else {
+    private func validateInputs(_ username: String?, _ password: String?) -> Bool {
+        guard let username = username, username.count > 0 else {
             showAlert(withTitle: "Username is required", message: "Please enter your username.")
             return false
         }
         
-        guard let password = passwordTextField.text, password.count > 0 else {
+        guard let password = password, password.count > 0 else {
             showAlert(withTitle: "Password is required", message: "Please enter your password.")
             return false
         }
@@ -46,8 +50,31 @@ class LoginViewController: BaseViewController {
     }
     
     fileprivate func processLogin() {
-        if !validateInputs() {
+        let username = usernameTextField.text
+        let password = passwordTextField.text
+        
+        if !validateInputs(username, password) {
             return
+        }
+        
+        guard let loginClient = TheKeyOAuth2Client.shared() else {
+            return
+        }
+        
+        if !loginClient.isConfigured() {
+            loginClient.setServerURL(serverURL, clientId: clientId)
+        }
+        
+        loginClient.passwordGrantLogin(for: username!, password: password!) { (result, error) in
+            switch result {
+            case .success:
+                debugPrint(loginClient.guid())
+                debugPrint(loginClient.isAuthenticated())
+            case .badPassword:
+                self.showAlert(withTitle: "Bad password", message: "Please check your password and try again.")
+            default:
+                debugPrint(loginClient.isAuthenticated())
+            }
         }
     }
     
