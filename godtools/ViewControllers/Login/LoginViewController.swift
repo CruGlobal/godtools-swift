@@ -20,13 +20,13 @@ class LoginViewController: BaseViewController {
     private let serverURL = URL(string: "https://thekey.me/cas/")!
     private let clientId = " "
     
-    let loginClient = TheKeyOAuth2Client.shared()
+    let loginClient = TheKeyOAuth2Client()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !loginClient!.isConfigured() {
-            loginClient!.setServerURL(serverURL, clientId: clientId)
+        if let loginClient = loginClient, !loginClient.isConfigured() {
+            loginClient.setServerURL(serverURL, clientId: clientId)
         }
         
         usernameTextField.delegate = self
