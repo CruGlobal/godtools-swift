@@ -12,6 +12,7 @@ import MessageUI
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToAbout()
+    mutating func moveToLogin()
     mutating func openWebView(url: URL, title: String, analyticsTitle: String)
 }
 
@@ -176,6 +177,7 @@ extension MenuViewController {
             delegate?.moveToUpdateLanguageSettings()
             break
         case 1:
+            delegate?.moveToLogin()
             break
         case 2:
             delegate?.moveToAbout()
