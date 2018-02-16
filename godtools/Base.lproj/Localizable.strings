@@ -29,6 +29,7 @@
 "privacy_policy" = "Privacy Policy";
 "copyright_info" = "Copyright Info";
 "share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"login" = "Login";
 
 // Add Tools
 "add_tools" = "Add Tools";

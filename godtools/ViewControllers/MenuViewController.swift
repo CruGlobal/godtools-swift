@@ -18,7 +18,7 @@ protocol MenuViewControllerDelegate {
 class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let general = ["language_settings", "about", "help", "contact_us"]
+    let general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -176,6 +176,8 @@ extension MenuViewController {
             delegate?.moveToUpdateLanguageSettings()
             break
         case 1:
+            break
+        case 2:
             delegate?.moveToAbout()
             break
         case 2:
