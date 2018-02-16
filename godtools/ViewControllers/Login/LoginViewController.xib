@@ -13,6 +13,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="loginButton" destination="J5Z-Pf-8oC" id="1jM-vD-mcf"/>
+                <outlet property="logoutButton" destination="aGc-Ur-Irk" id="V1o-S4-hhj"/>
                 <outlet property="passwordTextField" destination="0Xi-UB-J2K" id="JHe-Kp-Bvb"/>
                 <outlet property="usernameTextField" destination="fOp-1T-VCs" id="5CL-Ef-KH9"/>
                 <outlet property="view" destination="iN0-l3-epB" id="W9f-oK-bON"/>
@@ -48,6 +50,13 @@
                         <action selector="loginButtonWasPressed:" destination="-1" eventType="touchUpInside" id="B7T-8g-ryH"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aGc-Ur-Irk" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="93.5" y="318" width="187.5" height="30"/>
+                    <state key="normal" title="Logout"/>
+                    <connections>
+                        <action selector="logoutButtonWasPressed:" destination="-1" eventType="touchUpInside" id="KAh-eL-eR4"/>
+                    </connections>
+                </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fOp-1T-VCs">
                     <rect key="frame" x="62.5" y="122.5" width="250" height="30"/>
                     <nil key="textColor"/>
@@ -59,14 +68,17 @@
             <constraints>
                 <constraint firstItem="fOp-1T-VCs" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="2:3" id="0vO-SX-Z5E"/>
                 <constraint firstItem="fOp-1T-VCs" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" multiplier="2:5" id="7tb-Sz-SVe"/>
+                <constraint firstItem="aGc-Ur-Irk" firstAttribute="top" secondItem="J5Z-Pf-8oC" secondAttribute="bottom" constant="9.5" id="Jcj-eF-raN"/>
                 <constraint firstItem="0Xi-UB-J2K" firstAttribute="top" secondItem="b7C-Wl-p8f" secondAttribute="bottom" constant="5" id="Q0p-R6-ns5"/>
                 <constraint firstItem="fOp-1T-VCs" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="UtZ-1v-rgW"/>
                 <constraint firstItem="J5Z-Pf-8oC" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="1:2" id="VC7-ez-dA5"/>
+                <constraint firstItem="aGc-Ur-Irk" firstAttribute="width" secondItem="J5Z-Pf-8oC" secondAttribute="width" id="b5C-y2-dEa"/>
                 <constraint firstItem="b7C-Wl-p8f" firstAttribute="top" secondItem="fOp-1T-VCs" secondAttribute="bottom" constant="30" id="f6g-op-3Cy"/>
                 <constraint firstItem="J5Z-Pf-8oC" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="g5M-Ri-fdk"/>
                 <constraint firstItem="J5Z-Pf-8oC" firstAttribute="top" secondItem="0Xi-UB-J2K" secondAttribute="bottom" constant="40" id="gbb-hX-uP2"/>
                 <constraint firstItem="0Xi-UB-J2K" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="2:3" id="m0t-P7-4mF"/>
                 <constraint firstItem="fOp-1T-VCs" firstAttribute="top" secondItem="3ke-ap-VzD" secondAttribute="bottom" constant="5" id="mWA-rF-Hho"/>
+                <constraint firstItem="aGc-Ur-Irk" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="nSP-S9-MIA"/>
                 <constraint firstItem="b7C-Wl-p8f" firstAttribute="leading" secondItem="0Xi-UB-J2K" secondAttribute="leading" id="p7O-wo-fbo"/>
                 <constraint firstItem="0Xi-UB-J2K" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="p9S-TT-qlw"/>
                 <constraint firstItem="3ke-ap-VzD" firstAttribute="leading" secondItem="fOp-1T-VCs" secondAttribute="leading" id="x1m-oj-Lm0"/>

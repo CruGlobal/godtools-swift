@@ -14,8 +14,13 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var loginButton: BlueButton!
+    @IBOutlet weak var logoutButton: BlueButton!
+    
     private let serverURL = URL(string: "https://thekey.me/cas/")!
     private let clientId = " "
+    
+    let loginClient = TheKeyOAuth2Client.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +30,34 @@ class LoginViewController: BaseViewController {
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewWasTapped))
         view.addGestureRecognizer(tapRecognizer)
+        
+        setViewState()
     }
     
     @IBAction func loginButtonWasPressed(_ sender: Any) {
         processLogin()
     }
     
+    @IBAction func logoutButtonWasPressed(_ sender: Any) {
+        loginClient?.logout()
+        setViewState()
+    }
+    
     @objc func viewWasTapped() {
         self.view.endEditing(true)
+    }
+    
+    private func setViewState() {
+        guard let loginClient = loginClient else {
+            return
+        }
+        
+        let isAuthenticated = loginClient.isAuthenticated()
+        
+        logoutButton.isHidden = !isAuthenticated
+        loginButton.isEnabled = !isAuthenticated
+        passwordTextField.isEnabled = !isAuthenticated
+        usernameTextField.isEnabled = !isAuthenticated
     }
     
     private func validateInputs(_ username: String?, _ password: String?) -> Bool {
@@ -57,7 +82,7 @@ class LoginViewController: BaseViewController {
             return
         }
         
-        guard let loginClient = TheKeyOAuth2Client.shared() else {
+        guard let loginClient = loginClient else {
             return
         }
         
@@ -68,6 +93,8 @@ class LoginViewController: BaseViewController {
         loginClient.passwordGrantLogin(for: username!, password: password!) { (result, error) in
             switch result {
             case .success:
+                self.showAlert(withTitle: "Success!", message: "You are now logged in!")
+                self.setViewState()
                 debugPrint(loginClient.guid())
                 debugPrint(loginClient.isAuthenticated())
             case .badPassword:
