@@ -98,3 +98,6 @@
 "bad_password" = "Your username or password were incorrect. Please check these values and try again.";
 "username_required" = "Username is a required field.";
 "password_required" = "Password is a required field.";
+"logout" = "Logout";
+"username" = "Username";
+"password" = "Password";

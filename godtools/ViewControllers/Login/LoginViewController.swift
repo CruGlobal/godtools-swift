@@ -28,6 +28,9 @@ class LoginViewController: BaseViewController {
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         
+        loginButton.setTitle("login".localized, for: .normal)
+        logoutButton.setTitle("logout".localized, for: .normal)
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewWasTapped))
         view.addGestureRecognizer(tapRecognizer)
         
