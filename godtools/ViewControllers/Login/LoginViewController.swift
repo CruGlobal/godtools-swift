@@ -62,12 +62,12 @@ class LoginViewController: BaseViewController {
     
     private func validateInputs(_ username: String?, _ password: String?) -> Bool {
         guard let username = username, username.count > 0 else {
-            showAlert(withTitle: "Username is required", message: "Please enter your username.")
+            showAlert(withTitle: "error".localized, message: "username_required".localized)
             return false
         }
         
         guard let password = password, password.count > 0 else {
-            showAlert(withTitle: "Password is required", message: "Please enter your password.")
+            showAlert(withTitle: "error".localized, message: "password_required".localized)
             return false
         }
         
@@ -93,12 +93,12 @@ class LoginViewController: BaseViewController {
         loginClient.passwordGrantLogin(for: username!, password: password!) { (result, error) in
             switch result {
             case .success:
-                self.showAlert(withTitle: "Success!", message: "You are now logged in!")
+                self.showAlert(withTitle: "success".localized, message: "")
                 self.setViewState()
                 debugPrint(loginClient.guid())
                 debugPrint(loginClient.isAuthenticated())
             case .badPassword:
-                self.showAlert(withTitle: "Bad password", message: "Please check your password and try again.")
+                self.showAlert(withTitle: "error".localized, message: "bad_password".localized)
             default:
                 debugPrint(loginClient.isAuthenticated())
             }
