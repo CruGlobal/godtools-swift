@@ -93,7 +93,7 @@ class LoginViewController: BaseViewController {
             return
         }
         
-        loginClient.passwordGrantLogin(for: username!, password: password!) { (result, error) in
+        loginClient.passwordGrantLogin(for: username!, password: password!) { [unowned self] (result, error) in
             switch result {
             case .success:
                 self.showAlert(withTitle: "success".localized, message: "")
