@@ -25,6 +25,10 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !loginClient!.isConfigured() {
+            loginClient!.setServerURL(serverURL, clientId: clientId)
+        }
+        
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         
@@ -58,7 +62,7 @@ class LoginViewController: BaseViewController {
         let isAuthenticated = loginClient.isAuthenticated()
         
         logoutButton.isHidden = !isAuthenticated
-        loginButton.isEnabled = !isAuthenticated
+        loginButton.isHidden = isAuthenticated
         passwordTextField.isEnabled = !isAuthenticated
         usernameTextField.isEnabled = !isAuthenticated
     }
@@ -87,10 +91,6 @@ class LoginViewController: BaseViewController {
         
         guard let loginClient = loginClient else {
             return
-        }
-        
-        if !loginClient.isConfigured() {
-            loginClient.setServerURL(serverURL, clientId: clientId)
         }
         
         loginClient.passwordGrantLogin(for: username!, password: password!) { (result, error) in
