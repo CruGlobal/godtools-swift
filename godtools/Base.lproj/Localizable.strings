@@ -29,6 +29,7 @@
 "privacy_policy" = "Privacy Policy";
 "copyright_info" = "Copyright Info";
 "share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
+"login" = "Login";
 
 // Add Tools
 "add_tools" = "Add Tools";
@@ -91,3 +92,12 @@
 "general_about_8" = "Visit godtoolsapp.com for more information.";
 "general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+
+// Login
+"success" = "Success!";
+"bad_password" = "Your username or password were incorrect. Please check these values and try again.";
+"username_required" = "Username is a required field.";
+"password_required" = "Password is a required field.";
+"logout" = "Logout";
+"username" = "Username";
+"password" = "Password";

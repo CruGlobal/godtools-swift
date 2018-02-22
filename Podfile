@@ -21,7 +21,8 @@ target 'godtools' do
   pod 'GoogleAnalytics'
   pod 'GoogleConversionTracking'
   pod 'AdobeMobileSDK', '~> 4.13'
-
+  pod 'TheKeyOAuth2', '~> 1.0'
+  
   target 'godtoolsTests' do
     inherit! :search_paths
     pod 'Quick', '1.1'
