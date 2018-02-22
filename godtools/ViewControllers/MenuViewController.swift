@@ -19,7 +19,9 @@ protocol MenuViewControllerDelegate {
 class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let general = ["language_settings", "login", "about", "help", "contact_us"]
+    let general = ["language_settings", "about", "help", "contact_us"]
+    // when login becomes available, use general below:
+//    let general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -171,7 +173,8 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController {
     
-    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+    // use this function when login becomes available. rename it to: handleGeneralSectionCellSelection.
+    fileprivate func handleGeneralSectionCellSelectionFuture(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
@@ -186,6 +189,26 @@ extension MenuViewController {
             openHelp()
             break
         case 3:
+            contactUs()
+            break
+        default: break
+        }
+        if rowIndex == 0 {
+        }
+    }
+    
+    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            delegate?.moveToUpdateLanguageSettings()
+            break
+        case 1:
+            delegate?.moveToAbout()
+            break
+        case 2:
+            openHelp()
+            break
+        case 2:
             contactUs()
             break
         default: break
