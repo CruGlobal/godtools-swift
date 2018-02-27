@@ -101,7 +101,15 @@ class LanguagesTableViewController: BaseViewController {
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
-        languagesManager.recordLanguageShouldDownload(language: cell.language!)
-        zipImporter.download(language: cell.language!)
+        guard let language = cell.language else {
+            return
+        }
+        
+        languagesManager.setSelectedLanguage(language)
+        languagesManager.recordLanguageShouldDownload(language: language)
+
+        zipImporter.download(language: language)
+        
+        navigationController?.popViewController(animated: true)
     }
 }
