@@ -125,16 +125,6 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func recordLanguageShouldDelete(language: Language) {
-        safelyWriteToRealm {
-            language.shouldDownload = false
-            for translation in language.translations {
-                translation.isDownloaded = false
-            }
-            TranslationFileRemover().deleteUnusedPages()
-        }
-    }
-
     private func saveToDisk(_ languages: [LanguageResource]) {
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
