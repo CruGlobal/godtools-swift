@@ -10,7 +10,6 @@ import UIKit
 
 protocol LanguageTableViewCellDelegate {
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell)
-    func deleteButtonWasPressed(_ cell: LanguageTableViewCell)
 }
 
 class LanguageTableViewCell: UITableViewCell {

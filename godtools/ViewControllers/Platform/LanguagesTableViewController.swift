@@ -100,10 +100,6 @@ class LanguagesTableViewController: BaseViewController {
 }
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {
-    func deleteButtonWasPressed(_ cell: LanguageTableViewCell) {
-        languagesManager.recordLanguageShouldDelete(language: cell.language!)
-    }
-    
     func downloadButtonWasPressed(_ cell: LanguageTableViewCell) {
         languagesManager.recordLanguageShouldDownload(language: cell.language!)
         zipImporter.download(language: cell.language!)
