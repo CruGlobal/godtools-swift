@@ -31,7 +31,9 @@ extension AppDelegate {
         let pageNumber = parsePageNumberFrom(url)
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
-            self.flowController?.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
+            if success {
+                self.flowController?.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
+            }
         }
         return true
     }
