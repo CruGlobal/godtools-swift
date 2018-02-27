@@ -249,11 +249,15 @@ class TractViewController: BaseViewController {
     }
     
     private func loadLanguages() {
+        guard let resource = resource else {
+            return
+        }
+        
         let languagesManager = LanguagesManager()
         
         primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         
-        if resource!.getTranslationForLanguage(primaryLanguage!) == nil {
+        if resource.getTranslationForLanguage(primaryLanguage!) == nil {
             primaryLanguage = languagesManager.loadFromDisk(code: "en")
         }
         
@@ -276,17 +280,17 @@ extension TractViewController: BaseTractElementDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func displayedLanguage() -> Language {
+    func displayedLanguage() -> Language? {
         let languagesManager = LanguagesManager()
         
-        if languageSegmentedControl == nil {
-            return resolvePrimaryLanguage()!
+        guard let languageSegmentedControl = languageSegmentedControl else {
+            return resolvePrimaryLanguage()
         }
         
-        if languageSegmentedControl?.selectedSegmentIndex == 0 {
-            return resolvePrimaryLanguage()!
+        if languageSegmentedControl.selectedSegmentIndex == 0 {
+            return resolvePrimaryLanguage()
         } else {
-            return languagesManager.loadParallelLanguageFromDisk()!
+            return languagesManager.loadParallelLanguageFromDisk()
         }
     }
 }
