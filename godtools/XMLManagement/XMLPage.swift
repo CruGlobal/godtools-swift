@@ -30,7 +30,7 @@ class XMLPage: NSObject {
                 return listeners
             }
             
-            for listener in listenersString.components(separatedBy: ",") {
+            for listener in listenersString.components(separatedBy: " ") {
                 listeners.append(listener)
             }
         }
