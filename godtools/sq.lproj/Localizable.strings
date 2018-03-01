@@ -1,103 +1,86 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
+"unavailable" = "I padisponueshëm";
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "Shto mjete të reja";
+"set_your_languages" = "Cakto gjuhën";
+"okay" = "Në rregull";
+"now" = "Tani";
+"later" = "Më vonë";
 
 // Menu
-"menu_general" = "General";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
-"about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
-"copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
-"login" = "Login";
+"menu_general" = "E përgjithshme";
+"menu_share" = "Ndaj";
+"menu_legal" = "Ligjore";
+"language_settings" = "Kushtet e gjuhës";
+// Tool Detail
+"about" = "Rreth";
+"help" = "Ndihmë";
+"contact_us" = "Na kontakto";
+"notifications" = "Lajmërime";
+"preview_mode_translators_only" = "Pamje (Vetëm për përkthyesit)";
+"share_god_tools" = "Shpërndaj GodTools";
+"share_a_story_with_us" = "Na trego një histori";
+"terms_of_use" = "Kushtet e përdorimit";
+"privacy_policy" = "Politika e privatësisë";
+"copyright_info" = "Informacion për të drejtat e autorit";
+"share_god_tools_share_sheet_text" = "Këtu mund të  shkarkosh aplikacionin e GodTools: http://godtoolsapp.com
+";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "Shto mjete";
 
-// Tool Detail
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d e shikuesve";
+"total_languages" = "%d e gjuhëve";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Gjuha kryesore";
+"select_primary_language" = "Zgjidh një gjuhë kryesore";
+"parallel_language" = "Gjuha paralele";
+"select_parallel_language" = "Zgjidh një gjuhë paralele";
+"share_god_tools_native_language" = "Ndaj God Tools me dikë në gjuhën e tyre.";
+"not_every_tool_is_available" = "Jo çdo mjet është i disponueshëm në çdo gjuhë";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Kushtet";
 
 // Alert Controllers
-"download_error" = "Download Error";
-"language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"download_error" = "Shkarkuar gabim";
+"language_download_error" = "Gjuhët e disponueshme nuk mund të shkarkohen në këtë kohë.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
+"tract_loading_error_message" = "Kishte probleme ndërsa po hapej materiali.\nShkarkoje përsëri ,kjo shpesh e zgjidh problemin.\n\nDo doje të provoje ta shkarkoje përsëri?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Mjetet e fundit nuk mund të shkarkohen  për momentin.Por janë të disponueshme në Anglisht.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "Mjetet e fundit Anglisht mund të shkarkohen.\n\nDo të doje të zgjidhje si gjuhën tënde kryesore Anglisht dhe t`i shkarkoje këto burime?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Po";
+"no" = "Jo";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="Ky link do t`ju çojë në versionin e uebit të faqes ku ishim së fundi duke kërkuar bashkë sot:%@. Le të flasim më shumë!";
 
 // Buttons
-"download" = "Download";
-"dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
-"unavailable" = "Unavailable";
+"download" = "Shkarko";
+"dismiss" = "Hiq";
+"done" = "E kryer";
+"remove" = "Fshij";
+"clear" = "E qartë";
 
 // Alerts
-"error" = "Error";
-"ok" = "Ok";
-"error_can_not_send_email" = "There is no configured email on your device.";
-"required_field_missing" = "\"%@\" is a required field.";
+"error" = "Gabim";
+"ok" = "Në rregull";
+"error_can_not_send_email" = "Nuk ka imel të konfiguruar në pajisjen tënde.";
+"required_field_missing" = "\"%@\" është e detyrueshme";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
-"general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
-"general_about_4" = "Links to other resources are included at the end of each tool.";
-"general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
-"general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
-"general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
-
-// Login
-"success" = "Success!";
-"bad_password" = "Your username or password were incorrect. Please check these values and try again.";
-"username_required" = "Username is a required field.";
-"password_required" = "Password is a required field.";
-"logout" = "Logout";
-"username" = "Username";
-"password" = "Password";
+"general_about_1" = "GodTools të ndihmon të ndash besimin tënd në një mënyrë të lehtë dhe të qartë.  ";
+"general_about_2" = "Këto mjete të ndihmojnë që në mënyrë konfidente t`i shpegosh dikujt se si të fillojnë një marrëdhënie me Perëndinë përmes Jezus Krishtit,edhe nëse  nuk e ke ndarë  asnjëherë më parë besimin tënd apo nëse ata flasin një  gjuhë tjetër.";
+"general_about_3" = "Zgjidhni nga një shumëllojshmëri mjetesh bazuar në preferencën tuaj dhe audiencën tuaj. Jo të gjitha mjetet janë të disponueshme në çdo gjuhë.";
+"general_about_4" = "Linqe me burime të tjera përfshihen në fund të secilit mjet.";
+"general_about_5" = "Nevojitet lidhje online për të shkarkuar çdo mjet dhe/  ose gjuhë të re. Pasi të shkarkohen, ato mund të përdoren dhe ofline.";
+"general_about_6" = "Pyetje? Sygjerime? Kërkesa? Na kontakto te support@godtoolsapp.com";
+"general_about_7" = "Një version online i këtyre mjeteve mund të gjendet tek knowgod.com.Fute në sitin tënd.";
+"general_about_8" = "Vizito godtoolsapp.com për më shumë informacion.";
+"general_about_9" = "Ndërsa merr iniciativën të ndash besimin tënd,kujto që Perëndia është Ai që ndryshon zemrën.Trego dashuri ndaj cdo personi duke i dëgjuar që t`i kuptosh.";
+"general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
