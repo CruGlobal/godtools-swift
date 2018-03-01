@@ -1,103 +1,86 @@
-/* 
-  Localizable.strings
-  godtools
-
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
-
+"unavailable" = "Tsy vonona";
 // Onboarding
-"add_new_tools" = "Add New Tools";
-"set_your_languages" = "Set Your Languages";
-"okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
+"add_new_tools" = "Hanampy Fitaovana vaovao";
+"set_your_languages" = "Safidio ny Teninao";
+"okay" = "OK";
+"now" = "Ankehitriny";
+"later" = "Aoriana";
 
 // Menu
-"menu_general" = "General";
-"menu_share" = "Share";
-"menu_legal" = "Legal";
-"language_settings" = "Language Settings";
+"menu_general" = "Ankapobeny";
+"menu_share" = "Mizara";
+"menu_legal" = "Ara-dalàna";
+"language_settings" = "Fanovana fiteny";
+// Tool Detail
 "about" = "About";
-"help" = "Help";
-"contact_us" = "Contact Us";
-"notifications" = "Notifications";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
-"share_a_story_with_us" = "Share a Story With Us";
-"terms_of_use" = "Terms of Use";
-"privacy_policy" = "Privacy Policy";
+"help" = "Fanampiana";
+"contact_us" = "Te hifandray aminay";
+"notifications" = "Fanambarana";
+"preview_mode_translators_only" = "Fomba Fijerena (Mpandika teny ihany)";
+"share_god_tools" = "Hizara GodTools";
+"share_a_story_with_us" = "Hizara Tantara Aminay";
+"terms_of_use" = "Fepetra Fampiasana";
+"privacy_policy" = "Politika Fiarovana ";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
-"login" = "Login";
+"share_god_tools_share_sheet_text" = "Alaivo eto ny fampiarana GodTools: http://godtoolsapp.com";
 
 // Add Tools
-"add_tools" = "Add Tools";
+"add_tools" = "Hanampy Fitaovana";
 
-// Tool Detail
-"total_views" = "%d views";
-"total_languages" = "%d languages";
+"total_views" = "%d Hita";
+"total_languages" = "%d Fiteny";
 
 // Language Settings
-"primary_language" = "Primary Language";
-"select_primary_language" = "Select a Primary Language";
-"parallel_language" = "Parallel Language";
-"select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
-"not_every_tool_is_available" = "Not every tool is available in every language";
+"primary_language" = "Fiteny fototra";
+"select_primary_language" = "Safidio ny Fiteny Fototra";
+"parallel_language" = "Fiteny Mitovy";
+"select_parallel_language" = "Safidio ny Fiteny Mitovy";
+"share_god_tools_native_language" = "Zarao amin'ny olona amin'ny fitenindrazany ny God Tools";
+"not_every_tool_is_available" = "Tsy ny fitaovana rehetra no voadika amin'ny fiteny samihafa";
 
 // Settings
-"settings" = "Settings";
+"settings" = "Fikirakiràna";
 
 // Alert Controllers
 "download_error" = "Download Error";
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
-"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\nWould you like to download it again?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "The latest English tools can be downloaded. \n\nWould you like to set your primary language to English and download these resources?";
 
 // Actions
-"yes" = "Yes";
-"no" = "No";
+"yes" = "Eny";
+"no" = "Tsia";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="Ity rohy ity dia hitondra anao any amin'ny tranonkala  hitantsika farany niaraka androany:%@. Andao hiresaka bebe kokoa! ";
 
 // Buttons
-"download" = "Download";
+"download" = "Alaivo";
 "dismiss" = "Dismiss";
-"done" = "Done";
-"remove" = "Remove";
-"clear" = "Clear";
-"unavailable" = "Unavailable";
+"done" = "Vita";
+"remove" = "Esorina";
+"clear" = "Mazava";
 
 // Alerts
 "error" = "Error";
-"ok" = "Ok";
+"ok" = "OK";
 "error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 
 // About
-"general_about_1" = "GodTools helps you share your faith in an easy and clear way.";
-"general_about_2" = "These tools help you confidently explain to someone how they can begin a relationship with God through Jesus Christ, even if you've never shared your faith before or they speak a different language.";
+"general_about_1" = "God Tools dia manampy anao hizara ny finoanao amin'ny fomba tsotra sady mazava.";
+"general_about_2" = "Ireo fitaovana ireo dia manampy anao hanazava amim-pahatokiana amin'ny olona ny fomba ahafahan'izy ireo manomboka fifandraisana amin'Andriamanitra amin'ny alalan'i Jesoa Kristy, eny fa na dia mbola  tsy nizara ny finoanao mihitsy aza ianao na miteny amin'ny fiteny hafa ny olona itoriana.";
 "general_about_3" = "Choose from a variety of tools based on your preference and your audience. Not all tools are available in every language.";
 "general_about_4" = "Links to other resources are included at the end of each tool.";
 "general_about_5" = "Online connection is needed to download each new tool and/or language. Once downloaded, they can be used offline.";
 "general_about_6" = "Questions? Suggestions? Requests? Contact us at support@godtoolsapp.com";
 "general_about_7" = "An online version of these tools can be found at knowgod.com. Embed it on your own site!";
-"general_about_8" = "Visit godtoolsapp.com for more information.";
-"general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
-"general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
-
-// Login
-"success" = "Success!";
-"bad_password" = "Your username or password were incorrect. Please check these values and try again.";
-"username_required" = "Username is a required field.";
-"password_required" = "Password is a required field.";
-"logout" = "Logout";
-"username" = "Username";
-"password" = "Password";
+"general_about_8" = "Tsidiho ny godtoolsapp.com raha mila fanazavana fanampiny.";
+"general_about_9" = "Rehefa mandray ny dingana hizara ny finoanao ianao dia tadidio fa Andriamanitra no manova ny fon'ny olona. Tiavo ny olona tsirairay amin'ny fihainoana mba iheveranao azy.";
+"general_about_10" = "\"Aoka ny fiteninareo ho amin'ny fahasoavana mandrakariva, ho mamy sira, mba ho fantatrareo izay tokony havalinareo ny olona rehetra.\"
+Kolosiana 4:6";
