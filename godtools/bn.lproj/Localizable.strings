@@ -1,0 +1,89 @@
+"unavailable" = "অপ্রাপ্য";
+// Onboarding
+"add_new_tools" = "নতুন সরঞ্জাম যোগ করুন";
+"set_your_languages" = "আপনার ভাষা সেট করুন";
+"okay" = "ঠিক আছে";
+"now" = "ekhon";
+"later" = "পরে";
+
+// Menu
+"menu_general" = "সাধারণ";
+"menu_share" = "ভাগ করুন";
+"menu_legal" = "আইনগত";
+"language_settings" = "ভাষা ব্যাবস্থা";
+// Tool Detail
+"about" = "বিষয়ে";
+"help" = "সাহায্য";
+"contact_us" = "আমাদের সঙ্গে সম্পর্ক করুন";
+"notifications" = "বিজ্ঞপ্তিগুলি";
+"preview_mode_translators_only" = "পূর্বরূপ মোড (শুধুমাত্র অনুবাদক)";
+"share_god_tools" = "GodTools ভাগ করুন";
+"share_a_story_with_us" = "আমাদের সঙ্গে একটি গল্প শেয়ার করুন";
+"terms_of_use" = "ব্যবহারের শর্তাবলী";
+"privacy_policy" = "গোপনীয়তা নীতি";
+"copyright_info" = "কপিরাইট তথ্য";
+"share_god_tools_share_sheet_text" = "এখানে আপনি Godtools app ডাউনলোড করতে পারেন:
+http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "টুল যোগ করুন";
+
+"total_views" = "%d মতামত";
+"total_languages" = "%d ভাষাগুলি";
+
+// Language Settings
+"primary_language" = "প্রাথমিক ভাষা";
+"select_primary_language" = "একটি প্রাথমিক ভাষা নির্বাচন করুন";
+"parallel_language" = "সমান্তরাল ভাষা";
+"select_parallel_language" = "একটি সমান্তরাল ভাষা নির্বাচন করুন";
+"share_god_tools_native_language" = "স্থানীয় ভাষায় কেউ সঙ্গে  God Tools শেয়ার করুন";
+"not_every_tool_is_available" = "সব রকম টুল সব ককম ভাষায় উপলব্ধ নয়";
+
+// Settings
+"settings" = "সেটিংস";
+
+// Alert Controllers
+"download_error" = "ডাউনলোড এরর";
+"language_download_error" = "এই সময়ে উপলব্ধ ভাষার ডাউনলোড করা উপলব্ধ নয়. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
+"tract_loading_error_message" = "এই পুজি খোলার দরুন একটা সমস্যা হয়েছে. পুনরয় ডাউনলোড করলে বেশিরভাগ সমসস্যা সমাধান করে থাকে.\n\nকি আপনি এটি পুনুরায় ডাউনলোড করতে চান?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "এই মুহুর্তে সর্বশেষ ইংরেজি সরঞ্জামগুলি ডাউনলোড করা যায়নি. ইংরেজি সরঞ্জাম উপলব্ধ. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "সর্বশেষ ইংরেজি সরঞ্জাম ডাউনলোড করা যাবে.\n\nআপনি কি আপনার প্রাথমিক ভাষা ইংরেজিতে সেট করতে এবং এই সম্পদগুলি ডাউনলোড করতে চান?";
+
+// Actions
+"yes" = "হ্যা";
+"no" = "না";
+
+// Tract - Sharing
+"tract_share_message" ="এই লিঙ্কটি আপনাকে পৃষ্ঠাটির ওয়েব সংস্করণে নিয়ে যাবে যা আমরা আজ একসাথে অন্তিমে দেখছিলাম: %@. 
+আসুন আমরা আরো আলোচনা করি!";
+
+// Buttons
+"download" = "ডাউনলোড";
+"dismiss" = "খারিজ কর";
+"done" = "সম্পন্ন";
+"remove" = "অপসারণ করুন";
+"clear" = "পরিষ্কার করুন";
+
+// Alerts
+"error" = "ভুল";
+"ok" = "থক আছে";
+"error_can_not_send_email" = "আপনার ডিভাইসে কোনও কনফিগার করা ইমেল নেই.";
+"required_field_missing" = "\"%@\" একটি প্রয়োজনীয় ক্ষেত্র";
+
+// About
+"general_about_1" = "GodTools আপনাকে আপনার আস্থাকে সহজ ও পরিস্কার ভাবে করে অন্যকে বলতে সাহায্য করে.";
+"general_about_2" = "এই সরঞ্জামগুলি ঈশ্বরের সাথে যীশু খ্রিষ্টের মাধ্যমে সম্পর্ক কি করে সুরু করতে হয় তা আত্মবিশ্বাসীভাবে কারো কাছে ব্যাখ্যা করতে সহায়তা করে, যদিও আপনি কোনদিন আপনার আস্থা কারো কাছে বলেননি বা তারা যদি কোনো অন্য ভাষা বলে থাকে.";
+"general_about_3" = "আপনার পছন্দ এবং আপনার শ্রোতাদের উপর ভিত্তি করে বিভিন্ন সরঞ্জাম থেকে বেছে  নিন.  সব রকম সরঞ্জাম সব ভাষায় উপলব্ধ নয়.";
+"general_about_4" = "প্রত্যেক সরঞ্জামের অন্তে অন্য সম্পদের সঙ্গে লিংক করা আছে.";
+"general_about_5" = "প্রতিটি নতুন সরঞ্জাম এবং / অথবা ভাষা ডাউনলোড করার জন্য অনলাইন সংযোগ প্রয়োজন. এক বার দব্ন্লদ হয়ে গেলে, সেটা অফ্লিনে ও বেবহার করা যাবে.";
+"general_about_6" = "প্রশ্ন? পরামর্শ? অনুরোধ? আমাদের  সম্পর্ক করুন এখানে support@godtoolsapp.com";
+"general_about_7" = "এই সরম্জামের একটি ভার্সন পাওয়া যেতে পারে এখানে 
+knowgod.com. আপনার নিজের সাইটে স্থাপ  করুন.";
+"general_about_8" = "আরো বেশি জানার জন্য godtoolsapp.com ভিসিট করুন.";
+"general_about_9" = "আপনি যখন উদ্যোগী হবেন আপনার আস্থা অন্যকে বলার জন্য, মনে রাখবেন ঈশ্বরই হৃদয়ে পরিবর্তন আনতে পারেন. 
+প্রত্যেককে ভালবাসুন তাদের কথা সুনে বোঝার জন্য.";
+"general_about_10" = "\"তোমরা সব সময় করুণাবিষ্ট হয়ে কথা বল। লবণের মত স্বাদযুক্ত হও এবং প্রত্যেক জনকে কিভাবে উত্তর দেবে তা জানো.\" কলশিও ৪:৬";
