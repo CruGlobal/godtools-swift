@@ -32,7 +32,10 @@ extension AppDelegate {
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
-                self.flowController?.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
+                guard let platformFlowController = self.flowController as? PlatformFlowController else {
+                    return
+                }
+                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
             }
         }
         return true
