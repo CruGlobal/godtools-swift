@@ -1,0 +1,85 @@
+"unavailable" = "ਅਣਉਪਲਬਧ";
+// Onboarding
+"add_new_tools" = "ਨਵੇਂ ਟੂਲ ਨੂੰ ਜੋੜੋ";
+"set_your_languages" = "ਆਪਣੀ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ";
+"okay" = "ਠੀਕ ਹੈ";
+"now" = "ਹੁਣ";
+"later" = "ਬਾਅਦ ਵਿੱਚ";
+
+// Menu
+"menu_general" = "ਆਮ ਗੱਲਾਂ";
+"menu_share" = "ਦੱਸੋ";
+"menu_legal" = "ਕਾਨੂੰਨੀ";
+"language_settings" = "ਭਾਸ਼ਾ ਦੀ ਚੋਂਣ ਕਰੋ";
+// Tool Detail
+"about" = "ਇਸਦੇ ਬਾਰੇ";
+"help" = "ਮਦਦ";
+"contact_us" = "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ";
+"notifications" = "ਸੂਚਨਾਵਾਂ";
+"preview_mode_translators_only" = "ਝਲਕੀ ਰੂਪ (ਕੇਵਲ ਅਨੁਵਾਦਕਾਂ ਲਈ)";
+"share_god_tools" = "ਗੋਡਟੂਲ ਦੇ ਬਾਰੇ ਦੱਸੋ";
+"share_a_story_with_us" = "ਸਾਨੂੰ ਆਪਣੀ ਕਹਾਣੀ ਦੱਸੋ";
+"terms_of_use" = "ਵਰਤੋ ਦੀਆਂ ਸ਼ਰਤਾਂ";
+"privacy_policy" = "ਗੋਪਨੀਯ ਨੀਤੀ";
+"copyright_info" = "ਕਾਪੀਰਾਈਟ ਸੂਚਨਾ";
+"share_god_tools_share_sheet_text" = "ਤੁਸੀਂ ਇੱਥੋਂ ਗੋਡਟੂਲ ਐਪ ਨੂੰ ਡਾਉਨਲੋਡ ਕਰ ਸੱਕਦੇ ਹੋ: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "ਟੂਲ ਨੂੰ ਜੋੜੋ";
+
+"total_views" = "%d ਨੇ ਵੇਖਿਆ";
+"total_languages" = "%d ਭਾਸ਼ਾਵਾਂ";
+
+// Language Settings
+"primary_language" = "ਮੂਲ ਭਾਸ਼ਾ";
+"select_primary_language" = "ਮੂਲ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ";
+"parallel_language" = "ਸਮਾਨੰਤਰ ਭਾਸ਼ਾ";
+"select_parallel_language" = "ਸਮਾਨੰਤਰ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ";
+"share_god_tools_native_language" = "ਗੋਡਟੂਲ ਨੂੰ ਕਿਸੇ ਦੂਜੇ ਨਾਲ ਉਸ ਦੀ ਹੀ ਭਾਸ਼ਾ ਵਿੱਚ ਸਾਂਝਿਆਂ ਕਰੋ।";
+"not_every_tool_is_available" = "ਹਰੋਕ ਡੂਲ ਹਰੇਕ ਭਾਸ਼ਾ ਵਿੱਚ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ ।";
+
+// Settings
+"settings" = "ਸੈਟਿੰਗ";
+
+// Alert Controllers
+"download_error" = "ਡਾਊਨਲੋਡ ਗਲਤੀ";
+"language_download_error" = "ਇਸ ਸਮੇਂ ਉਪਲਬਧ ਭਾਸ਼ਾਵਾਂ ਨੂੰ ਡਾਉਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸੱਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
+"tract_loading_error_message" = "ਇਸ ਸਾਮ੍ਰਗੀ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਇੱਕ ਸਮੱਸਿਆ ਪੈਦਾ ਹੋਈ ਹੈ। ਇਸ ਸਮੱਸਿਆ ਦਾ ਹੱਲ ਅਕਸਰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨ ਦੇ ਨਾਲ ਹੋ ਜਾਂਦਾ ਹੈ।\n\nਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੋਗੇ?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਉਪਲਬਧ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। \n\nਕੀ ਤੁਸੀਂ ਆਪਣੀ ਮੁਢਲੀ ਭਾਸ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਵਿਚ ਸੈਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਅਤੇ ਇਨ੍ਹਾਂ ਸਾਮਗ੍ਰਿਆਂ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?";
+
+// Actions
+"yes" = "ਹਾਂ";
+"no" = "ਨਹੀਂ";
+
+// Tract - Sharing
+"tract_share_message" ="ਇਹ ਲਿੰਕ ਤੁਹਾਨੂੰ ਉਹ ਸਫ਼ੇ ਦੇ ਵੈਬਸਾਈਟ ਅਨੁਵਾਦ 'ਤੇ ਲੈ ਜਾਵੇਗਾ ਜਿਸ ਨੂੰ ਅਸੀਂ ਅੱਜ ਆਖਰ ਵਿੱਚ ਇਕੱਠੇ ਦੇਖ ਰਹੇ ਸਾਂ : %@. ਆਓ ਹੋਰ ਗੱਲ ਕਰੀਏ!";
+
+// Buttons
+"download" = "ਡਾਊਨਲੋਡ ਕਰੋ";
+"dismiss" = "ਰਹਿਣ ਦਿਓ";
+"done" = "ਹੋ ਗਿਆ";
+"remove" = "ਹਟਾਓ";
+"clear" = "ਸਾਫ਼";
+
+// Alerts
+"error" = "ਗਲਤੀ";
+"ok" = "ਠੀਕ ਹੈ";
+"error_can_not_send_email" = "ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਤੇ ਕੋਈ ਕੌਂਫਿਗਰ ਈਮੇਲ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ।";
+"required_field_missing" = "\"%@\" ਇੱਕ ਲੋੜੀਂਦਾ ਖੇਤਰ ਹੈ।";
+
+// About
+"general_about_1" = "ਗੋਡਟੂਲ ਤੁਹਾਨੂੰ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਨੂੰ ਆਸਾਨੀ ਅਤੇ ਸਾਫ਼ ਸ਼ਬਦਾਂ ਦੇ ਵਿੱਚ ਦੂਜਿਆਂ ਨਾਲ ਸਾਂਝਿਆਂ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ।";
+"general_about_2" = "ਇਹ ਟੂਲ ਤੁਹਾਨੂੰ ਬੜੇ ਭਰੋਸੇ ਨਾਲ ਕਿਸੇ ਨੂੰ ਵੀ ਇਹ ਸਪੱਸ਼ਟ ਕਰਨ ਵਿੱਚ ਮਦਦ ਦਿੰਦੇ ਹਨ ਕਿ ਉਹ ਕਿਵੇਂ ਯਿਸੂ ਮਸੀਹ ਦੇ ਰਾਹੀਂ ਪਰਮੇਸ਼ੁਰ ਨਾਲ ਇੱਕ ਰਿਸ਼ਤਾ ਨੂੰ ਅਰੰਭ ਕਰ ਸਕਦੇ ਹਨ, ਭਾਵੇਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਨੂੰ ਪਹਿਲਾਂ ਕਦੇ ਵੀ ਸਾਂਝਾ ਨਹੀਂ ਕੀਤਾ ਜਾਂ ਉਹ ਇੱਕ ਵੱਖਰੀ ਹੀ ਭਾਸ਼ਾ ਕਿਉਂ ਨਾ ਬੋਲਦੇ ਹੋਣ।";
+"general_about_3" = "ਤੁਹਾਡੀ ਪ੍ਰਾਥਮਿਕਤਾ ਅਤੇ ਤੁਹਾਡੇ ਪਾਠਕਾਂ ਦੇ ਆਧਾਰ ਤੇ ਕਈ ਤਰ੍ਹਾਂ ਦੇ ਦਿੱਤੇ ਹੋਏ ਟੂਲਾਂ ਵਿੱਚੋਂ ਚੁਣੋ। ਸਾਰੀਆਂ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਟੂਲ ਉਪਲਬਧ ਨਹੀਂ ਹਨ।";
+"general_about_4" = "ਹੋਰ ਸਾਮ੍ਰਗੀਆਂ ਦੇ ਲਿੰਕ ਹਰੇਕ ਟੂਲ ਦੇ ਅੰਤ ਵਿੱਚ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ ਹਨ।";
+"general_about_5" = "ਹਰੇਕ ਨਵੇਂ ਟੂਲ ਅਤੇ/ਜਾਂ ਭਾਸ਼ਾ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰਨ ਲਈ ਔਨਲਾਈਨ ਸੰਪਰਕ ਲੋੜਦਾ ਹੁੰਦਾ ਹੈ, ਇੱਕ ਵਾਰ ਡਾਊਨਲੋਡ ਹੋਂਣ ਤੋਂ ਬਾਅਦ, ਉਹ ਔਫਲਾਈਨ ਵੀ ਵਰਤਿਆ ਜਾ ਸਕਦਾ ਹੈ।";
+"general_about_6" = "ਸਵਾਲ? ਸੁਝਾਅ? ਬੇਨਤੀਆਂ? ਦੇ ਲਈ Support@godtoolsapp.com ਤੇ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ";
+"general_about_7" = "ਇਹਨਾਂ ਟੂਲਾਂ ਦੇ ਔਨਲਾਈਨ ਅਨੁਵਾਦ knowgod.com 'ਤੇ ਪਾਏ ਜਾ ਸਕਦਾੇ ਹਨ। ਇਸ ਨੂੰ ਆਪਣੀ ਵੈਬਸਾਈਟ 'ਤੇ ਸ਼ਾਮਿਲ ਕਰੋ!";
+"general_about_8" = "ਹੋਰ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ godtoolsapp.com ਨੂੰ ਵੇਖੋ।";
+"general_about_9" = "ਜਦੋਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਸਾਂਝਿਆਂ ਕਰਨ ਲਈ ਪਹਿਲ ਕਰਦੇ ਹੋ, ਤਾਂ ਯਾਦ ਰੱਖੋ ਕਿ ਪਰਮੇਸ਼ੁਰ ਹੀ ਹੈ ਜਿਹੜਾ ਦਿਲ ਨੂੰ ਬਦਲਦਾ ਹੈ। ਹਰੇਕ ਵਿਅਕਤੀ ਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਸੁਣ ਕੇ ਸਮਝਦੇ ਹੋ ਏ ਪਿਆਰ ਕਰੋ।";
+"general_about_10" = "“ਤੁਹਾਡੀ ਗੱਲ ਬਾਤ ਸਦਾ ਕਿਰਪਾਮਈ ਅਤੇ ਸਲੂਣੀ ਹੋਵੇ ਤਾਂ ਜੋ ਤੁਸੀ ਜਾਣੋ ਭਈ ਹਰੋਕ ਨੂੰ ਕਿਵੇਂ ਉੱਤਰ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।” (ਕੁਲੁੱਸੀਆਂ 4:6)";

@@ -1,0 +1,85 @@
+"unavailable" = "Niet beschikbaar";
+// Onboarding
+"add_new_tools" = "Voeg nieuwe hulpmiddelen toe";
+"set_your_languages" = "Stel je talen in";
+"okay" = "Oke";
+"now" = "Nu";
+"later" = "Later";
+
+// Menu
+"menu_general" = "Algemeen";
+"menu_share" = "Delen";
+"menu_legal" = "Legaal";
+"language_settings" = "Taal Instellingen";
+// Tool Detail
+"about" = "Over";
+"help" = "Hulp";
+"contact_us" = "Contacteer Ons";
+"notifications" = "Meldingen";
+"preview_mode_translators_only" = "Voorbeeldmodus (Alleen Vertalers)";
+"share_god_tools" = "Deel GodTools";
+"share_a_story_with_us" = "Deel een verhaal met ons";
+"terms_of_use" = "Gebruiksvoorwaarden";
+"privacy_policy" = "Privacybeleid";
+"copyright_info" = "Copyright Info";
+"share_god_tools_share_sheet_text" = "Hier kunt u GodTools app downloaden: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Tools Toevoegen";
+
+"total_views" = "%d weergaven";
+"total_languages" = "%d talen";
+
+// Language Settings
+"primary_language" = "Hoofdtaal";
+"select_primary_language" = "Selecteer een hoofdtaal";
+"parallel_language" = "Parallelle Taal";
+"select_parallel_language" = "Selecteer een parallelle taal";
+"share_god_tools_native_language" = "Deel God Tools met iemand in hun moedertaal";
+"not_every_tool_is_available" = "Niet elke tool is beschikbaar in elke taal";
+
+// Settings
+"settings" = "Instellingen";
+
+// Alert Controllers
+"download_error" = "Downloadfout";
+"language_download_error" = "De beschikbare talen kunnen op dit moment niet worden gedownload. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
+"tract_loading_error_message" = "Er was een probleem bij het openen van deze bron. Met het opnieuw downloaden kun je dit probleem vaak oplossen.\n\n Wil je het nogmaals downloaden?";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "De nieuwste Nederlandse tools kunnen op dit moment niet worden gedownload. Nederlandse gereedschappen zijn beschikbaar. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "De nieuwste Nederlandse tools kunnen worden gedownload.\n\nWil je je hoofdtaal naar Nederlands veranderen en deze bronnen downloaden?";
+
+// Actions
+"yes" = "Ja";
+"no" = "Nee";
+
+// Tract - Sharing
+"tract_share_message" ="Deze link brengt je naar de webversie van de pagina die we vandaag vandaag samen bekeken: %@. Laten we verder praten!";
+
+// Buttons
+"download" = "Download";
+"dismiss" = "Verbergen";
+"done" = "Klaar";
+"remove" = "Verwijderen";
+"clear" = "Legen";
+
+// Alerts
+"error" = "Fout";
+"ok" = "Oke";
+"error_can_not_send_email" = "Er is geen geconfigureerd e-mailadres op je apparaat.";
+"required_field_missing" = "\"%@\" Is een verplicht veld.";
+
+// About
+"general_about_1" = "GodTools helpt je je geloof op een gemakkelijke en duidelijke manier te delen.";
+"general_about_2" = "Deze hulpmiddelen helpen je met vertrouwen aan iemand te kunnen vertellen hoe ze een relatie met God kunnen beginnen door Jezus Christus, zelfs als je je geloof nooit eerder hebt gedeeld of een andere taal spreekt.";
+"general_about_3" = "Kies uit een verscheidenheid aan hulpmiddelen op basis van je voorkeur en je publiek. Niet alle hulpmiddelen zijn beschikbaar in elke taal.";
+"general_about_4" = "Links naar andere bronnen zijn aan het eind van elk gereedschap opgenomen.";
+"general_about_5" = "Online verbinding is nodig om elk nieuw gereedschap en/of taal te downloaden. Eenmaal gedownload, kunnen ze offline worden gebruikt.";
+"general_about_6" = "Vragen? Iets te melden? Verzoeken? Contacteer ons op support@godtoolsapp.com";
+"general_about_7" = "Een online versie van deze tools is te vinden op knowgod.com. Plaats het op je eigen site!";
+"general_about_8" = "Bezoek godtoolsapp.com voor meer informatie.";
+"general_about_9" = "Terwijl je het initiatief neemt om je geloof te delen, is het belangrijk om te onthouden dat God degene is die het hart verandert. Hou van elke persoon door met begrip naar ze te luisteren.";
+"general_about_10" = "\"Laat uw woord altijd in genade zijn, met een snuifje zout, en weet hoe gij aan een ieder moet antwoorden.\" Kolossenzen 4:6";
