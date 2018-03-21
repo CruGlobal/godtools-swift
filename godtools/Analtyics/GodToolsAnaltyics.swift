@@ -16,11 +16,30 @@ struct AdobeAnalyticsConstants {
         static let marketingCloudID = "cru.mcid"
         static let screenName = "cru.screenname"
         static let previousScreenName = "cru.previousscreenname"
+        static let shareAction = "cru.shareiconengaged"
+        static let exitAction = "cru.mobileexitlink"
+        static let toggleAction = "cru.toggleswitch"
+        static let gospelPresentedTimedAction = "cru.presentingthegospel"
+        static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
+        static let newProfessingBelieverAction = "cru.newprofessingbelievers"
+        static let emailSignUpAction = "cru.emailsignup"
     }
     
     struct Values {
         static let godTools = "GodTools"
         static let notLoggedIn = "not logged in"
+        static let share = "Share Icon Engaged"
+        static let kgpUSCircleToggled = "KGP-US Circle Toggled"
+        static let kgpUSGospelPresented = "KGP-US Gospel Presented"
+        static let fourLawsGospelPresented = "FourLaws Gospel Presented"
+        static let theFourPresented = "TheFour Gospel Presented"
+        static let holySpiritPresented = "Satisfied Holy Spirit Presented"
+        static let honorRestoredPresented = "HonorRestored Gospel Presented"
+        static let kgpUSNewProfessingBeliever = "KGP-US New Professing Believer"
+        static let fourLawsNewProfessingBeliever = "FourLaws New Professing Believer"
+        static let theFourNewProfessingBeliever = "TheFour New Professing Believer"
+        static let kgpEmailSignUp = "KGP Email Sign Up"
+        static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
     }
 }
 class GodToolsAnaltyics {
@@ -111,6 +130,16 @@ class GodToolsAnaltyics {
             self.recordScreenViewInAdobe(screenName: screenName)
         }
 
+    }
+    
+    private func trackActionInAdobe(screenName: String, actionPerformed: String) {
+        var properties: [String: String] = [:]
+        properties[AdobeAnalyticsConstants.Keys.shareAction] = actionPerformed
+        properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
+        properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        
+        ADBMobile.trackAction(screenName, data: properties)
     }
     
     private func recordScreenViewInAdobe(screenName: String) {
