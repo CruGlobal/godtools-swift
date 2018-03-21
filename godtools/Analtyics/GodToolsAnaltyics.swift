@@ -74,6 +74,11 @@ class GodToolsAnaltyics {
                                                name: .screenViewNotification,
                                                object: nil)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(recordActionForADBMobile(notification:)),
+                                               name: .actionTrackNotification,
+                                               object: nil)
+        
         recordAdwordsConversion()
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
@@ -132,14 +137,23 @@ class GodToolsAnaltyics {
 
     }
     
-    private func trackActionInAdobe(screenName: String, actionPerformed: String) {
-        var properties: [String: String] = [:]
-        properties[AdobeAnalyticsConstants.Keys.shareAction] = actionPerformed
-        properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
-        properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+    @objc private func recordActionForADBMobile(notification: Notification) {
+        var contextData: [String: Any] = [:]
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let action = userInfo["action"] as? String else { return }
+
+        contextData = userInfo
+        contextData.removeValue(forKey: "action")
         
-        ADBMobile.trackAction(screenName, data: properties)
+        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
+            self.trackActionInAdobe(actionName: action, data: contextData)
+            print("\(contextData.debugDescription)")
+        }
+    }
+
+    
+    private func trackActionInAdobe(actionName: String, data: [String: Any]) {
+        ADBMobile.trackAction(actionName, data: data)
     }
     
     private func recordScreenViewInAdobe(screenName: String) {

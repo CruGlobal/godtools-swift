@@ -20,4 +20,5 @@ extension Notification.Name {
     static let reloadHomeListNotification = Notification.Name("reloadHomeListNotification")
     
     static let screenViewNotification = Notification.Name("screenViewNotification")
+    static let actionTrackNotification = Notification.Name("actionTrackNotification")
 }
