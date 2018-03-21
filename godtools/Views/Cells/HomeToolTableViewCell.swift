@@ -77,7 +77,8 @@ class HomeToolTableViewCell: UITableViewCell {
         
         configureParallelLanguageLabel(parallelLanguage: parallelLanguage)
 
-        numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+        numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally in a person's life. "
+        //String.localizedStringWithFormat("total_views".localized, resource.totalViews)
     }
     
     private func configureParallelLanguageLabel(parallelLanguage: Language?) {
@@ -142,7 +143,8 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: Present data
     
     fileprivate func displayData() {
-        self.numberOfViewsLabel.text = String.localizedStringWithFormat("total_views".localized, "5,000,000")
+        self.numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally in a person's life. "
+        //String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
     // MARK: Progress view listener
