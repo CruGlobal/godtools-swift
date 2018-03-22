@@ -16,6 +16,8 @@ struct AdobeAnalyticsConstants {
         static let marketingCloudID = "cru.mcid"
         static let screenName = "cru.screenname"
         static let previousScreenName = "cru.previousscreenname"
+        static let contentLanguage = "cru.contentlanguage"
+        static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let shareAction = "cru.shareiconengaged"
         static let exitAction = "cru.mobileexitlink"
         static let toggleAction = "cru.toggleswitch"
@@ -149,7 +151,7 @@ class GodToolsAnaltyics {
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.trackActionInAdobe(actionName: action, data: contextData)
-            print("\(contextData.debugDescription)")
+            print("\(contextData.debugDescription)\n")
         }
     }
 
@@ -160,9 +162,13 @@ class GodToolsAnaltyics {
     
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
+        let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
+        let parallelLanguageCode = UserDefaults.standard.string(forKey: "kParallelLanguageCode") ?? ""
         
         properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
         properties[AdobeAnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
+        properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
@@ -170,5 +176,6 @@ class GodToolsAnaltyics {
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
+        print("\(properties.debugDescription)\n")
     }
 }
