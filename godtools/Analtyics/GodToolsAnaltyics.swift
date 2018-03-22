@@ -143,6 +143,8 @@ class GodToolsAnaltyics {
         guard let action = userInfo["action"] as? String else { return }
 
         contextData = userInfo
+        contextData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        contextData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         contextData.removeValue(forKey: "action")
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
