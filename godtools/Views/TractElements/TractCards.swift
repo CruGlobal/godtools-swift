@@ -62,6 +62,9 @@ class TractCards: BaseTractElement {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
+        let relay = AnalyticsRelay.shared
+        relay.elementsDictionary.removeAll()
+        relay.elementsDictionary = contentElements.properties
         setupSwipeGestures()
         setupPressGestures()
     }

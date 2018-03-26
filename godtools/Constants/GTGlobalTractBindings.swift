@@ -41,8 +41,6 @@ class GTGlobalTractBindings: NSObject {
                 case "fourlaws":
                     userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsEmailSignUp
                 default :
-                    print("resource.code is: \(code)\n")
-                    print("resource.name is: \(resource.name)\n")
                     break
                 }
                 NotificationCenter.default.post(name: .actionTrackNotification,
