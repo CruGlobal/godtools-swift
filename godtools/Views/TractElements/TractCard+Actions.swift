@@ -23,11 +23,13 @@ extension TractCard {
     
     func processSwipeUp() {
         let properties = cardProperties()
-        
+        let cardName = properties.cardIdName
         if properties.cardState == .preview || properties.cardState == .close {
             showCardAndPreviousCards()
+            print("showCardAndPreviousCards() Card Name is?? >>> \(cardName)")
         } else if properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
+            print("cardsParentView.showFollowingCardToCard() Card Name is?? >>> \(cardName)")
         }
     }
     
@@ -68,15 +70,17 @@ extension TractCard {
     
     func showCard() {
         let properties = cardProperties()
-        
+        let cardName = properties.cardIdName
         if properties.cardState == .open {
             return
         }
         
         if isHiddenKindCard() {
             setStateEnable()
+            print("showCard setStateEnable() >> cardName is: \(cardName)")
         } else {
             setStateOpen()
+            print("showCard setStateOpen() >> cardName is: \(cardName)")
         }
         
         showTexts()

@@ -51,9 +51,9 @@ extension TractCards {
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
-            self.elements?.append(element)
-            
             let alphaCode = element.cardProperties().cardNumber.convertToLetter()
+            element.cardProperties().cardIdName = "\(relay.tractName)\(alphaCode)"
+            self.elements?.append(element)
             
             relay.tractCardNextNames.append(alphaCode)
 
