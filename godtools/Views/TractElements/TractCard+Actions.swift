@@ -68,7 +68,7 @@ extension TractCard {
         showCard()
         
         if !relay.isTimerRunning {
-            relay.timerCounter = 5
+            relay.timerCounter = 6
             relay.runTimer()
         }
         

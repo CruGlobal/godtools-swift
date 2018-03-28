@@ -23,7 +23,7 @@ class AnalyticsRelay {
     var currentCard: String = ""
     var viewListener: String = ""
     var timer = Timer()
-    var timerCounter = 5
+    var timerCounter = 6
     var isTimerRunning = false
     
     func runTimer() {
