@@ -30,6 +30,8 @@
 "copyright_info" = "Copyright Info";
 "share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
 "login" = "Login";
+"my_tools" = "My Tools";
+"find_tools" = "Find Tools";
 
 // Add Tools
 "add_tools" = "Add Tools";

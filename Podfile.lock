@@ -46,7 +46,7 @@ PODS:
   - SSZipArchive (1.8.1)
   - SwiftyJSON (3.1.4)
   - SWXMLHash (4.1.0)
-  - TheKeyOAuth2 (1.0.0):
+  - TheKeyOAuth2 (0.6.9):
     - GTMOAuth2 (~> 1.1.1)
 
 DEPENDENCIES:
@@ -65,17 +65,23 @@ DEPENDENCIES:
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 4.1)
-  - TheKeyOAuth2 (~> 1.0)
+  - TheKeyOAuth2 (from `https://github.com/CruGlobal/TheKeyOAuth2.git`, tag `0.6.9`)
 
 EXTERNAL SOURCES:
   Spine:
     :git: https://github.com/CruGlobal/Spine.git
     :tag: 0.3.1
+  TheKeyOAuth2:
+    :git: https://github.com/CruGlobal/TheKeyOAuth2.git
+    :tag: 0.6.9
 
 CHECKOUT OPTIONS:
   Spine:
     :git: https://github.com/CruGlobal/Spine.git
     :tag: 0.3.1
+  TheKeyOAuth2:
+    :git: https://github.com/CruGlobal/TheKeyOAuth2.git
+    :tag: 0.6.9
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 3194eebe127f43a9ca2096d81ea833c7f8168a78
@@ -98,8 +104,8 @@ SPEC CHECKSUMS:
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
-  TheKeyOAuth2: 752398ba0ae4b23438d11909e5106e892eb4109a
+  TheKeyOAuth2: e6042036a849d950a9f3daa622788e21f952cac2
 
-PODFILE CHECKSUM: 6050429afcd8b3d1f22b424b0fae0e56d53bf8e5
+PODFILE CHECKSUM: 471c95805157d890c66339a1b5bc8cc69fcc3af4
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

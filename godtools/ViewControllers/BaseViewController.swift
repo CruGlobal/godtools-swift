@@ -49,7 +49,12 @@ class BaseViewController: UIViewController {
     // MARK: - Navigation Bar
     
     func displayScreenTitle() {
-        self.navigationItem.title = self.screenTitle
+        switch screenTitle {
+        case "GodTools":
+            self.addMyToolsFindToolsControl()
+        default:
+            self.navigationItem.title = self.screenTitle
+        }
     }
     
     func hideScreenTitle() {
@@ -106,9 +111,55 @@ class BaseViewController: UIViewController {
         self.navigationLeftButtons.append(button)
     }
     
+    func addMyToolsFindToolsControl() {
+        let myTools = determineMyToolsSegment()
+        let findTools = determineFindToolsSegment()
+        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
+        let segment: UISegmentedControl = UISegmentedControl(items: [myTools, findTools])
+        segment.addTarget(self, action: #selector(navigationPlusButtonAction), for: .valueChanged)
+        let font = UIFont.systemFont(ofSize: fontSize)
+        segment.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        segment.sizeToFit()
+        segment.tintColor = .white
+        segment.selectedSegmentIndex = 0
+        
+        self.navigationItem.titleView = segment
+    }
+    
+    func determineMyToolsSegment() -> String {
+        let myTools = "my_tools".localized
+        return myTools
+    }
+    
+    func determineFindToolsSegment() -> String {
+        let findTools = "find_tools".localized
+        return findTools
+    }
+    
+    func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
+        let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
+        var fontSize: CGFloat = 15.0
+        if count > 14 {
+            switch count {
+            case 15:
+                fontSize = 14.0
+            case 16:
+                fontSize = 13.5
+            case 17:
+                fontSize = 13.0
+            case 18:
+                fontSize = 12.5
+            default:
+                fontSize = 12.0
+            }
+        }
+      
+        return fontSize
+    }
+    
     func addNavigationPlusButton() {
-        let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))
-        self.navigationRightButtons.append(button)
+//        let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))
+//        self.navigationRightButtons.append(button)
     }
     
     func addNavigationLanguageButton() {
