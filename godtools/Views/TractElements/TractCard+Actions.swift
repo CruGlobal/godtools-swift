@@ -75,7 +75,10 @@ extension TractCard {
         let cardName = properties.cardIdName
         let tractPlusCardName = "\(relay.tractName)\(cardName)"
         relay.tractPlusCardName = tractPlusCardName
-        sendScreenViewNotification(screenName: tractPlusCardName)
+        
+        // TODO - This isn't quite tracking correct values. It's appending letters and not replacing???
+        
+        //sendScreenViewNotification(screenName: tractPlusCardName)
     }
     
     func showCard() {
