@@ -50,10 +50,36 @@ class AnalyticsRelay {
     
     func sendToAnalyticsIfRelevant(tractCardName: String) {
         if !isTimerRunning {
-            print("You Read this card for more than 7s >> \(tractCardName)")
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
+            var userInfo: [String: Any] = [:]
+            
+            switch tractCardName {
+            case "kgp-us-5a":
+                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
+            case "satisfied-6a":
+                userInfo[AdobeAnalyticsConstants.Keys.presentingHolySpiritTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.satisfiedHolySpiritPresented
+            case "honorrestored-4d":
+                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.honorRestoredPresented
+            case "thefour-5":
+                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.theFourGospelPresented
+            case "kgp-5a":
+                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpGospelPresented
+            case "fourlaws-6a":
+                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
+                userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsGospelPresented
+            default :
+                break
+            }
+            NotificationCenter.default.post(name: .actionTrackNotification,
+                                            object: nil,
+                                            userInfo: userInfo)
         }
     }
 
