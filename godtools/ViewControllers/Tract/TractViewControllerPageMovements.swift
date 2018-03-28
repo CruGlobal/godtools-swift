@@ -25,9 +25,6 @@ extension TractViewController {
         _ = reloadPagesViews()
         sendPageToAnalytics()
         
-        let relay = AnalyticsRelay.shared
-        relay.tractName = self.screenName()
-        
         _ = moveViews()
     }
     
@@ -41,8 +38,6 @@ extension TractViewController {
                 if success {
                     _ = self.reloadPagesViews()
                     self.sendPageToAnalytics()
-                    let relay = AnalyticsRelay.shared
-                    relay.tractName = self.screenName()
                     print("screenName : \(self.screenName()) currentPage: \(self.currentPage) totalPages: \(self.totalPages())\n")
                     return Promise(value: true)
                 }
@@ -60,8 +55,6 @@ extension TractViewController {
                 if success == true {
                     _ = self.reloadPagesViews()
                     self.sendPageToAnalytics()
-                    let relay = AnalyticsRelay.shared
-                    relay.tractName = self.screenName()
                     return Promise(value: true)
                 }
                 return Promise(value: false)

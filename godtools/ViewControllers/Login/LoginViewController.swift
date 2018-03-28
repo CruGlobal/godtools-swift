@@ -25,9 +25,9 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let loginClient = loginClient, !loginClient.isConfigured() {
-            loginClient.setServerURL(serverURL, clientId: clientId)
-        }
+//        if let loginClient = loginClient, !loginClient.isConfigured() {
+//            loginClient.setServerURL(serverURL, clientId: clientId)
+//        }
         
         usernameTextField.delegate = self
         passwordTextField.delegate = self
@@ -93,7 +93,7 @@ class LoginViewController: BaseViewController {
             return
         }
         
-        loginClient.passwordGrantLogin(for: username!, password: password!) { [unowned self] (result, error) in
+       /* loginClient.passwordGrantLogin(for: username!, password: password!) { [unowned self] (result, error) in
             switch result {
             case .success:
                 self.showAlert(withTitle: "success".localized, message: "")
@@ -105,7 +105,7 @@ class LoginViewController: BaseViewController {
             default:
                 debugPrint(loginClient.isAuthenticated())
             }
-        }
+        }*/
     }
     
     private func showAlert(withTitle title: String, message: String) {

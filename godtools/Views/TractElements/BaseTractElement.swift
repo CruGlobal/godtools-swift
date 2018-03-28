@@ -194,9 +194,6 @@ class BaseTractElement: UIView {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
-        let relay = AnalyticsRelay.shared
-        relay.cardsDictionary.removeAll()
-        relay.cardsDictionary = contentElements.properties
     }
     
     func getPreviousElement() -> BaseTractElement? {

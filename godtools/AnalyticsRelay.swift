@@ -22,7 +22,5 @@ class AnalyticsRelay {
     var currentCard: String = ""
     var viewListener: String = ""
     var analyticsElement: BaseTractElement? = nil
-    var cardsDictionary: [String: Any] = [:]
-    var elementsDictionary: [String: Any] = [:]
-    var parentDictionary: [String: Any] = [:]
+
 }

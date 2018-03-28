@@ -126,6 +126,8 @@ class GodToolsAnaltyics {
         guard let screenName = userInfo[GTConstants.kAnalyticsScreenNameKey] as? String else {
             return
         }
+        let relay = AnalyticsRelay.shared
+        relay.tractName = screenName
 
         tracker?.set(kGAIScreenName, value: screenName)
 

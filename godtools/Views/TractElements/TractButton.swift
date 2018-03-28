@@ -29,9 +29,6 @@ class TractButton: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
-        let relay = AnalyticsRelay.shared
-        relay.parentDictionary.removeAll()
-        relay.parentDictionary = properties
         
         let properties = buttonProperties()
         properties.backgroundColor = self.manifestProperties.primaryColor

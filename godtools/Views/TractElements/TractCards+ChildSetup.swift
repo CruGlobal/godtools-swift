@@ -52,7 +52,7 @@ extension TractCards {
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
             let alphaCode = element.cardProperties().cardNumber.convertToLetter()
-            element.cardProperties().cardIdName = "\(relay.tractName)\(alphaCode)"
+            element.cardProperties().cardIdName = "\(alphaCode)"
             self.elements?.append(element)
             
             relay.tractCardNextNames.append(alphaCode)
