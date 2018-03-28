@@ -55,6 +55,9 @@ extension TractCard {
     }
     
     func showCardAndPreviousCards() {
+        let relay = AnalyticsRelay.shared
+        relay.timer.invalidate()
+        relay.isTimerRunning = false
         let properties = cardProperties()
         
         if properties.cardState == .open {
@@ -63,9 +66,16 @@ extension TractCard {
         
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
+        
+        if !relay.isTimerRunning {
+            relay.timerCounter = 5
+            relay.runTimer()
+        }
+        
         let cardName = properties.cardIdName
-        let relay = AnalyticsRelay.shared
+        
         let tractPlusCardName = "\(relay.tractName)\(cardName)"
+        relay.tractPlusCardName = tractPlusCardName
         
         print("func showCardAndPreviousCards() tractPlusCardName Name is?? >>> \(tractPlusCardName)")
     }
