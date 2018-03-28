@@ -73,11 +73,9 @@ extension TractCard {
         }
         
         let cardName = properties.cardIdName
-        
         let tractPlusCardName = "\(relay.tractName)\(cardName)"
         relay.tractPlusCardName = tractPlusCardName
-        
-        print("func showCardAndPreviousCards() tractPlusCardName Name is?? >>> \(tractPlusCardName)")
+        sendScreenViewNotification(screenName: tractPlusCardName)
     }
     
     func showCard() {
@@ -235,6 +233,15 @@ extension TractCard {
         if properties.cardState == .open || properties.cardState == .close {
             properties.cardState = .preview
         }
+    }
+    
+    // MARK - Analytics helper
+    
+    func sendScreenViewNotification(screenName: String) {
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
+        NotificationCenter.default.post(name: .screenViewNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
     }
     
 }
