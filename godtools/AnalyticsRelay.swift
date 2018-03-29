@@ -13,14 +13,9 @@ class AnalyticsRelay {
     static let shared = AnalyticsRelay()
     
     var tractName: String = ""
-    var tractCardName: String = ""
-    var tractButtonName: String = ""
     var tractPlusCardName: String = ""
     var tractCardCurrentNames: [String] = []
     var tractCardNextNames: [String] = []
-    var tractCardNumbers: [Int] = []
-    var currentTractCardCount = 0
-    var currentCard: String = ""
     var viewListener: String = ""
     var timer = Timer()
     var timerCounter = 6
