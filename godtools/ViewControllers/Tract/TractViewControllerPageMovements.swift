@@ -38,7 +38,6 @@ extension TractViewController {
                 if success {
                     _ = self.reloadPagesViews()
                     self.sendPageToAnalytics()
-                    print("screenName : \(self.screenName()) currentPage: \(self.currentPage) totalPages: \(self.totalPages())\n")
                     return Promise(value: true)
                 }
                 return Promise(value: false)
