@@ -25,7 +25,10 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
     @IBOutlet weak var titleLabel: GTLabel!
-    @IBOutlet weak var numberOfViewsLabel: GTLabel!
+    
+    // Now using this for description of Tract
+    @IBOutlet weak var tractDescriptionLabel: GTLabel!
+    
     @IBOutlet weak var languageLabel: GTLabel!
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
@@ -76,11 +79,8 @@ class HomeToolTableViewCell: UITableViewCell {
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         configureParallelLanguageLabel(parallelLanguage: parallelLanguage)
-        
-        // TODO - Need to change the asset that this label is reading from
 
-        numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally."
-        //String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+        tractDescriptionLabel.text = loadDescription(resource: resource)
     }
     
     private func configureParallelLanguageLabel(parallelLanguage: Language?) {
@@ -100,6 +100,20 @@ class HomeToolTableViewCell: UITableViewCell {
         numberOfViewsLeadingConstraint.constant = leftConstraintValue
     }
     
+    private func loadDescription(resource: DownloadedResource) -> String {
+        let languagesManager = LanguagesManager()
+        
+        guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
+            return resource.descr ?? ""
+        }
+
+        if let translation = resource.getTranslationForLanguage(language) {
+            return translation.localizedDescription ?? ""
+        }
+
+        return resource.descr ?? ""
+    }
+
     // MARK: - Actions
     
     @IBAction func pressDownloadButton(_ sender: Any) {
@@ -117,7 +131,9 @@ class HomeToolTableViewCell: UITableViewCell {
         self.backgroundColor = .gtWhite
         self.setBorders()
         self.setShadows()
-        self.displayData()
+        if let resource = self.resource {
+           self.displayData(resource: resource)
+        }
     }
     
     func setBorders() {
@@ -145,9 +161,8 @@ class HomeToolTableViewCell: UITableViewCell {
     
     // MARK: Present data
     
-    fileprivate func displayData() {
-        self.numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally."
-        //String.localizedStringWithFormat("total_views".localized, "5,000,000")
+    fileprivate func displayData(resource: DownloadedResource) {
+        self.tractDescriptionLabel.text = loadDescription(resource: resource)
     }
     
     // MARK: Progress view listener

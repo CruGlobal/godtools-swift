@@ -87,7 +87,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackTextSmall"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackTextSmaller"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                         </subviews>
@@ -98,7 +98,7 @@
                                             <constraint firstAttribute="trailing" secondItem="WtK-SD-emW" secondAttribute="trailing" constant="2" id="8oE-7B-P2s"/>
                                             <constraint firstItem="qZt-B6-a2j" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JrU-rG-bBE" secondAttribute="top" constant="4" id="AyB-au-YdO"/>
                                             <constraint firstItem="ZbI-hf-Sfh" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="8" id="IAM-u7-rKa"/>
-                                            <constraint firstItem="WtK-SD-emW" firstAttribute="top" secondItem="qZt-B6-a2j" secondAttribute="bottom" constant="2" id="Jue-gY-Ueg"/>
+                                            <constraint firstItem="WtK-SD-emW" firstAttribute="top" secondItem="qZt-B6-a2j" secondAttribute="bottom" constant="4" id="Jue-gY-Ueg"/>
                                             <constraint firstItem="ZbI-hf-Sfh" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="Jxh-LP-Z2U"/>
                                             <constraint firstItem="mDc-DS-b34" firstAttribute="leading" secondItem="ZbI-hf-Sfh" secondAttribute="trailing" constant="8" id="ZHf-MV-fDs"/>
                                             <constraint firstItem="WtK-SD-emW" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="ewo-hI-cIe"/>
@@ -134,12 +134,12 @@
                                         <constraints>
                                             <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" constant="53" id="Obc-JY-Yok"/>
                                             <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="8" id="VCM-Ua-hAm"/>
-                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" constant="0.5" id="XM8-xB-MI1"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="70" id="bo8-dz-tU8"/>
-                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="top" constant="3.5" id="ce6-zU-Qtn"/>
+                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" id="XM8-xB-MI1"/>
+                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="bo8-dz-tU8"/>
+                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="top" constant="1" id="ce6-zU-Qtn"/>
                                             <constraint firstAttribute="trailing" secondItem="mo2-YN-vLH" secondAttribute="trailing" constant="8" id="gPc-8O-A58"/>
                                             <constraint firstAttribute="bottom" secondItem="Zf0-VZ-Gbm" secondAttribute="bottom" constant="8" id="lLP-BC-HDU"/>
-                                            <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="top" secondItem="mo2-YN-vLH" secondAttribute="bottom" constant="2" id="mMl-cq-YUF"/>
+                                            <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mo2-YN-vLH" secondAttribute="bottom" constant="1" id="mMl-cq-YUF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -182,14 +182,14 @@
                         <rect key="frame" x="8" y="0.5" width="18" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="18" id="cpH-5C-0xf"/>
+                            <constraint firstAttribute="width" constant="9" id="cpH-5C-0xf"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-9e-kQd" userLabel="Right Padding Spacer View">
                         <rect key="frame" x="263.5" y="0.0" width="18" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="18" id="i42-EE-7Ek"/>
+                            <constraint firstAttribute="width" constant="9" id="i42-EE-7Ek"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -227,11 +227,11 @@
                 <outlet property="greyVerticalLine" destination="mDc-DS-b34" id="J5F-IZ-qCO"/>
                 <outlet property="languageLabel" destination="mo2-YN-vLH" id="xd0-E6-cW3"/>
                 <outlet property="mainContentView" destination="JrU-rG-bBE" id="QY5-rn-SgV"/>
-                <outlet property="numberOfViewsLabel" destination="WtK-SD-emW" id="jsV-Rz-3Nh"/>
                 <outlet property="numberOfViewsLeadingConstraint" destination="ewo-hI-cIe" id="Pgf-3g-FXH"/>
                 <outlet property="shadowView" destination="S2s-WS-dBD" id="6Kj-AU-ipS"/>
                 <outlet property="titleLabel" destination="qZt-B6-a2j" id="KB6-Yj-Nwk"/>
                 <outlet property="titleLeadingConstraint" destination="675-xf-new" id="vg6-Ct-5MQ"/>
+                <outlet property="tractDescriptionLabel" destination="WtK-SD-emW" id="BHg-Hq-bCJ"/>
             </connections>
             <point key="canvasLocation" x="44" y="67"/>
         </tableViewCell>
