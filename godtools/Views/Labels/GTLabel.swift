@@ -44,6 +44,9 @@ class GTLabel: UILabel {
             case "blackText":
                 self.font = .gtRegular(size: 15.0)
                 self.textColor = .gtBlack
+            case "blackTextSemiBold":
+                self.font = .gtSemiBold(size: 15.0)
+                self.textColor = .gtBlack
             case "blackTextSmall":
                 self.font = .gtRegular(size: 13.0)
                 self.textColor = .gtBlack

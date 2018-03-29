@@ -76,14 +76,17 @@ class HomeToolTableViewCell: UITableViewCell {
         titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         configureParallelLanguageLabel(parallelLanguage: parallelLanguage)
+        
+        // TODO - Need to change the asset that this label is reading from
 
-        numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally in a person's life. "
+        numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally."
         //String.localizedStringWithFormat("total_views".localized, resource.totalViews)
     }
     
     private func configureParallelLanguageLabel(parallelLanguage: Language?) {
         if resource != nil && resource!.isAvailableInLanguage(parallelLanguage)  {
-            languageLabel.text = parallelLanguage!.localizedName()
+            let check: String = "✓ "
+            languageLabel.text = check + parallelLanguage!.localizedName()
             return
         }
         
@@ -143,7 +146,7 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: Present data
     
     fileprivate func displayData() {
-        self.numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally in a person's life. "
+        self.numberOfViewsLabel.text = "A Gospel presentation that uses hand drawn images to help illustrate God's invitation to know Him personally."
         //String.localizedStringWithFormat("total_views".localized, "5,000,000")
     }
     
