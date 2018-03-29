@@ -157,6 +157,11 @@ extension BaseFlowController: MenuViewControllerDelegate {
         viewController.websiteUrl = url
         viewController.pageTitle = title
         viewController.pageTitleForAnalytics = analyticsTitle
+        var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: "\(url)"]
+        userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
         self.pushViewController(viewController: viewController)
     }
 }

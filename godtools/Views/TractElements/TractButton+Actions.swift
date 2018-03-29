@@ -44,6 +44,9 @@ extension TractButton {
             let propertiesString = properties.url
             let stringWithProtocol = prependProtocolToURLStringIfNecessary(propertiesString)
             if let url = URL(string: stringWithProtocol) {
+                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
+                userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
+                sendNotificationForAction(userInfo: userInfo)
                 UIApplication.shared.openURL(url)
             }
         }

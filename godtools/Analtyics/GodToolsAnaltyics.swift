@@ -31,6 +31,7 @@ struct AdobeAnalyticsConstants {
         static let godTools = "GodTools"
         static let notLoggedIn = "not logged in"
         static let share = "Share Icon Engaged"
+        static let exitLink = "Exit Link Engaged"
         static let kgpUSCircleToggled = "KGP-US Circle Toggled"
         static let kgpCircleToggled = "KGP Circle Toggled"
         static let kgpGospelPresented = "KGP Gospel Presented"
