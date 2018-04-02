@@ -42,7 +42,7 @@ class BaseViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.displayScreenTitle()
+       // self.displayScreenTitle()
         sendScreenViewNotification(screenName: screenName())
     }
     
@@ -51,7 +51,8 @@ class BaseViewController: UIViewController {
     func displayScreenTitle() {
         switch screenTitle {
         case "GodTools":
-            self.addMyToolsFindToolsControl()
+            print("GodTools")
+            //self.addMyToolsFindToolsControl()
         default:
             self.navigationItem.title = self.screenTitle
         }
@@ -111,20 +112,20 @@ class BaseViewController: UIViewController {
         self.navigationLeftButtons.append(button)
     }
     
-    func addMyToolsFindToolsControl() {
-        let myTools = determineMyToolsSegment()
-        let findTools = determineFindToolsSegment()
-        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
-        let segment: UISegmentedControl = UISegmentedControl(items: [myTools, findTools])
-        segment.addTarget(self, action: #selector(navigationPlusButtonAction), for: .valueChanged)
-        let font = UIFont.systemFont(ofSize: fontSize)
-        segment.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
-        segment.sizeToFit()
-        segment.tintColor = .white
-        segment.selectedSegmentIndex = 0
-        
-        self.navigationItem.titleView = segment
-    }
+//    func addMyToolsFindToolsControl() {
+//        let myTools = determineMyToolsSegment()
+//        let findTools = determineFindToolsSegment()
+//        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
+//        let segment: UISegmentedControl = UISegmentedControl(items: [myTools, findTools])
+//        segment.addTarget(self, action: #selector(navigationPlusButtonAction), for: .valueChanged)
+//        let font = UIFont.systemFont(ofSize: fontSize)
+//        segment.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+//        segment.sizeToFit()
+//        segment.tintColor = .white
+//        segment.selectedSegmentIndex = 0
+//
+//        self.navigationItem.titleView = segment
+//    }
     
     func addNavigationPlusButton() {
 //        let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))

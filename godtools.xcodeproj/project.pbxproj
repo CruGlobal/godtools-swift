@@ -94,6 +94,8 @@
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
+		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		4F05F49C203735A600A3D01C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05F49B203735A600A3D01C /* LoginViewController.swift */; };
 		4F05F49E203735B900A3D01C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F05F49D203735B900A3D01C /* LoginViewController.xib */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
@@ -319,6 +321,8 @@
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultStyle.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
+		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
+		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F05F49B203735A600A3D01C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		4F05F49D203735B900A3D01C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
@@ -799,6 +803,8 @@
 				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
 				4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */,
 				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
+				1E7A11872072892900AE047D /* MasterHomeViewController.swift */,
+				1E7A11882072892900AE047D /* MasterHomeViewController.xib */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -1381,6 +1387,7 @@
 				68C0A3841ED4C65400CC97A3 /* config.plist in Resources */,
 				ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */,
 				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
+				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
@@ -1643,6 +1650,7 @@
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
+				1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */,
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */,

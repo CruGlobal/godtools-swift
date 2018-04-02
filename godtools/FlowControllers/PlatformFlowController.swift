@@ -11,17 +11,17 @@ import UIKit
 class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
-        let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        viewController.delegate = self
+        let viewController = MasterHomeViewController(nibName: "MasterHomeViewController", bundle: nil)
+        //viewController.delegate = self
         return viewController
     }
     
     // MARK: - HomeViewControllerDelegate
         
     func moveToAddNewTool() {
-        let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
-        viewController.delegate = self
-        self.pushViewController(viewController: viewController)
+//        let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
+//        viewController.delegate = self
+//        self.pushViewController(viewController: viewController)
     }
     
     func moveToToolDetail(resource: DownloadedResource) {
@@ -35,4 +35,5 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         viewController.resource = resource
         pushViewController(viewController: viewController)
     }
+    
 }
