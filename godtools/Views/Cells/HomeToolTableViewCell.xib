@@ -20,36 +20,36 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2s-WS-dBD">
-                        <rect key="frame" x="26" y="1" width="237.5" height="135.5"/>
+                        <rect key="frame" x="17" y="1" width="306" height="135.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="YVO-FN-WKK"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1lJ-vJ-aCT">
-                        <rect key="frame" x="26" y="1" width="237.5" height="135.5"/>
+                        <rect key="frame" x="17" y="1" width="306" height="135.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fV-zY-aHB">
-                                <rect key="frame" x="0.0" y="0.0" width="237.5" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="306" height="60"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-nQ-kW7" userLabel="Banner View">
-                                <rect key="frame" x="0.0" y="0.0" width="237.5" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="306" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="dtP-Xy-5eP"/>
                                 </constraints>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="58" width="237.5" height="2"/>
+                                <rect key="frame" x="0.0" y="58" width="306" height="2"/>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
-                                <rect key="frame" x="0.0" y="60" width="237.5" height="75.5"/>
+                                <rect key="frame" x="0.0" y="60" width="306" height="75.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrU-rG-bBE">
-                                        <rect key="frame" x="0.0" y="0.0" width="153.5" height="74.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="226" height="74.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
                                                 <rect key="frame" x="8.5" y="26" width="22" height="22"/>
@@ -70,7 +70,7 @@
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="5" width="100" height="38.5"/>
+                                                <rect key="frame" x="47.5" y="4" width="172.5" height="37.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="45.5" width="104" height="21"/>
+                                                <rect key="frame" x="47.5" y="45.5" width="176.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Byn-jY-nQf"/>
                                                 </constraints>
@@ -95,7 +95,7 @@
                                         <constraints>
                                             <constraint firstItem="mDc-DS-b34" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="2pf-Q8-c6C"/>
                                             <constraint firstItem="qZt-B6-a2j" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="675-xf-new"/>
-                                            <constraint firstAttribute="trailing" secondItem="WtK-SD-emW" secondAttribute="trailing" constant="2" id="8oE-7B-P2s"/>
+                                            <constraint firstAttribute="trailing" secondItem="WtK-SD-emW" secondAttribute="trailing" id="8oE-7B-P2s"/>
                                             <constraint firstItem="qZt-B6-a2j" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JrU-rG-bBE" secondAttribute="top" constant="4" id="AyB-au-YdO"/>
                                             <constraint firstItem="ZbI-hf-Sfh" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="8" id="IAM-u7-rKa"/>
                                             <constraint firstItem="WtK-SD-emW" firstAttribute="top" secondItem="qZt-B6-a2j" secondAttribute="bottom" constant="4" id="Jue-gY-Ueg"/>
@@ -107,10 +107,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-L0-hFD">
-                                        <rect key="frame" x="153.5" y="0.0" width="84" height="74.5"/>
+                                        <rect key="frame" x="226" y="0.0" width="80" height="74.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="34" y="20.5" width="42" height="16"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="right" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="mo2-YN-vLH" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                                                <rect key="frame" x="30" y="15" width="42" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -119,7 +119,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zf0-VZ-Gbm">
-                                                <rect key="frame" x="48" y="38.5" width="28" height="28"/>
+                                                <rect key="frame" x="44" y="38.5" width="28" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="5dz-Ni-Uah"/>
                                                     <constraint firstAttribute="width" constant="28" id="PPh-bV-mUY"/>
@@ -135,7 +135,7 @@
                                             <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" constant="53" id="Obc-JY-Yok"/>
                                             <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="8" id="VCM-Ua-hAm"/>
                                             <constraint firstItem="mo2-YN-vLH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" id="XM8-xB-MI1"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="bo8-dz-tU8"/>
+                                            <constraint firstAttribute="width" constant="80" id="bo8-dz-tU8"/>
                                             <constraint firstItem="mo2-YN-vLH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="top" constant="1" id="ce6-zU-Qtn"/>
                                             <constraint firstAttribute="trailing" secondItem="mo2-YN-vLH" secondAttribute="trailing" constant="8" id="gPc-8O-A58"/>
                                             <constraint firstAttribute="bottom" secondItem="Zf0-VZ-Gbm" secondAttribute="bottom" constant="8" id="lLP-BC-HDU"/>
@@ -179,14 +179,14 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1f0-ik-Nxc" userLabel="Left Padding Spacer View">
-                        <rect key="frame" x="8" y="0.5" width="18" height="153"/>
+                        <rect key="frame" x="8" y="0.5" width="9" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="9" id="cpH-5C-0xf"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-9e-kQd" userLabel="Right Padding Spacer View">
-                        <rect key="frame" x="263.5" y="0.0" width="18" height="153"/>
+                        <rect key="frame" x="323" y="0.0" width="9" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="9" id="i42-EE-7Ek"/>
