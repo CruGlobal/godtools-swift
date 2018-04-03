@@ -84,13 +84,16 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     private func configureParallelLanguageLabel(parallelLanguage: Language?) {
-        if resource != nil && resource!.isAvailableInLanguage(parallelLanguage)  {
-            let check: String = "✓ "
-            languageLabel.text = check + parallelLanguage!.localizedName()
+        guard let resource = resource, let parallelLanguage = parallelLanguage else {
+            languageLabel.text = nil
             return
         }
-        
-        languageLabel.text = nil
+        if resource.isAvailableInLanguage(parallelLanguage)  {
+            let check: String = "✓ "
+            languageLabel.text = check + parallelLanguage.localizedName()
+        } else {
+            languageLabel.text = nil
+        }
     }
     
     private func setCellAsDisplayOnly() {
