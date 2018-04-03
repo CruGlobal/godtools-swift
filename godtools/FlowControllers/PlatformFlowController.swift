@@ -12,7 +12,7 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
     
     override func initialViewController() -> UIViewController {
         let viewController = MasterHomeViewController(nibName: "MasterHomeViewController", bundle: nil)
-        //viewController.delegate = self
+        viewController.delegate = self
         return viewController
     }
     

@@ -114,9 +114,9 @@ class HomeViewController: BaseViewController {
      //   self.delegate?.moveToAddNewTool()
     }
     
-    override func navigationLanguageButtonAction() {
-        self.delegate?.moveToUpdateLanguageSettings()
-    }
+//    override func navigationLanguageButtonAction() {
+//        self.delegate?.moveToUpdateLanguageSettings()
+//    }
     
     // MARK: - Helpers
     

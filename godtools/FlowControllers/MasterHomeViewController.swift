@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import PromiseKit
 
-class MasterHomeViewController: UIViewController, AddToolsViewControllerDelegate, HomeViewControllerDelegate, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate {
+class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelegate, HomeViewControllerDelegate, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate, ToolsManagerDelegate {
     
     var segmentedControl = UISegmentedControl()
+    
+    let toolsManager = ToolsManager.shared
+    
+    var delegate: HomeViewControllerDelegate?
     
     private lazy var homeViewController: HomeViewController = {
         
@@ -37,7 +42,8 @@ class MasterHomeViewController: UIViewController, AddToolsViewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
        // self.displayNavigationButtons()
-        
+        self.defineObservers()
+        toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
         setupView()
     }
@@ -91,6 +97,14 @@ class MasterHomeViewController: UIViewController, AddToolsViewControllerDelegate
     func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
     }
+    
+    override func homeButtonAction() {
+        self.baseDelegate?.goHome()
+    }
+    
+    override func navigationLanguageButtonAction() {
+        self.delegate?.moveToUpdateLanguageSettings()
+    }
 
     // MARK: - Helper Methods
     
@@ -120,9 +134,48 @@ class MasterHomeViewController: UIViewController, AddToolsViewControllerDelegate
         viewController.removeFromParentViewController()
     }
     
+    // Notifications
+    
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .reloadHomeListNotification,
+                                               object: nil)
+    }
+    
+    @objc private func reloadView() {
+        toolsManager.loadResourceList()
+    }
+    
+    // MARK: - Navigation Buttons
+    
+    override func configureNavigationButtons() {
+        self.addNavigationBurgerButton()
+        self.addNavigationLanguageButton()
+    }
+    
+    override func navigationPlusButtonAction() {
+        //  self.delegate?.moveToAddNewTool()
+    }
+    
+    // MARK: - Analytics
+    
+    override func screenName() -> String {
+        return "Home"
+    }
+    
     // MARK: - Delegate Methods
     
     func moveToAddNewTool() {
+        //
+    }
+    
+    func infoButtonWasPressed(resource: DownloadedResource) {
         //
     }
     
@@ -156,39 +209,30 @@ class MasterHomeViewController: UIViewController, AddToolsViewControllerDelegate
         //pushViewController(viewController: viewController)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-    
-    
-    // MARK: - Helper Methods
-    
-    func determineMyToolsSegment() -> String {
-        let myTools = "my_tools".localized
-        return myTools
-    }
-    
-    func determineFindToolsSegment() -> String {
-        let findTools = "find_tools".localized
-        return findTools
-    }
-    
-    func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
-        let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
-        var fontSize: CGFloat = 15.0
-        if count > 14 {
-            switch count {
-            case 15:
-                fontSize = 14.0
-            case 16:
-                fontSize = 13.5
-            case 17:
-                fontSize = 13.0
-            case 18:
-                fontSize = 12.5
-            default:
-                fontSize = 12.0
-            }
+
+}
+
+extension MasterHomeViewController: BaseViewControllerDelegate {
+
+        func goHome() {
+            _ = self.navigationController?.popToRootViewController(animated: true)
+           // resetNavigationControllerColorToDefault()
         }
         
-        return fontSize
-    }
-
+        func goBack() {
+            _ = self.navigationController?.popViewController(animated: true)
+           // resetNavigationControllerColorToDefault()
+        }
+        
+        func changeNavigationBarColor(_ color: UIColor) {
+            let navigationController: UINavigationController = (self.navigationController)!
+           // configureNavigationColor(navigationController: navigationController, color: color)
+        }
+        
+        func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
+            let navigationController: UINavigationController = (self.navigationController)!
+            
+           // configureNavigationColor(navigationController: navigationController, color: backgroundColor)
+            navigationController.navigationBar.tintColor = controlColor
+        }
 }
