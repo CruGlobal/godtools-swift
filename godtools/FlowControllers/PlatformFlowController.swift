@@ -16,6 +16,16 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         return viewController
     }
     
+    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int) {
+        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        viewController.resource = resource
+        viewController.currentPage = page
+        viewController.universalLinkLanguage = language
+        viewController.arrivedByUniversalLink = true
+        
+        pushViewController(viewController: viewController)
+    }
+    
     // MARK: - HomeViewControllerDelegate
         
     func moveToAddNewTool() {
