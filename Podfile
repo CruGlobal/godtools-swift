@@ -21,7 +21,7 @@ target 'godtools' do
   pod 'GoogleAnalytics'
   pod 'GoogleConversionTracking'
   pod 'AdobeMobileSDK', '~> 4.13'
-  pod 'TheKeyOAuth2', '~> 1.0'
+  pod 'TheKeyOAuth2', { :git => 'https://github.com/CruGlobal/TheKeyOAuth2.git', :tag => '0.6.9' }
   
   target 'godtoolsTests' do
     inherit! :search_paths
