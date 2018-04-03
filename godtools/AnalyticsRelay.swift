@@ -14,8 +14,6 @@ class AnalyticsRelay {
     
     var tractName: String = ""
     var tractPlusCardName: String = ""
-    var tractCardCurrentNames: [String] = []
-    var tractCardNextNames: [String] = []
     var viewListener: String = ""
     var timer = Timer()
     var timerCounter = 6
