@@ -105,9 +105,9 @@ class HomeViewController: BaseViewController {
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
-        self.addNavigationBurgerButton()
+        //self.addNavigationBurgerButton()
        // self.addNavigationPlusButton()
-        self.addNavigationLanguageButton()
+       // self.addNavigationLanguageButton()
     }
     
     override func navigationPlusButtonAction() {

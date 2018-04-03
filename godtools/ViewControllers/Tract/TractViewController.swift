@@ -173,6 +173,7 @@ class TractViewController: BaseViewController {
     override func homeButtonAction() {
         removeViewsBeforeCurrentView()
         super.homeButtonAction()
+        navigationController?.popToRootViewController(animated: true)
     }
     
     override func shareButtonAction() {

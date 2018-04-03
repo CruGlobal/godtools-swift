@@ -58,14 +58,12 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
         segmentedControl = UISegmentedControl(items: [myTools, findTools])
         segmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
         segmentedControl.sizeToFit()
-        //segmentedControl.tintColor = .white
     }
     
     // MARK: - View Methods
     
     private func setupView() {
         setupSegmentedControl()
-        
         updateView()
     }
     
@@ -100,6 +98,7 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
     
     override func homeButtonAction() {
         self.baseDelegate?.goHome()
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     override func navigationLanguageButtonAction() {
@@ -159,10 +158,6 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
         self.addNavigationLanguageButton()
     }
     
-    override func navigationPlusButtonAction() {
-        //  self.delegate?.moveToAddNewTool()
-    }
-    
     // MARK: - Analytics
     
     override func screenName() -> String {
@@ -210,29 +205,4 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 
-}
-
-extension MasterHomeViewController: BaseViewControllerDelegate {
-
-        func goHome() {
-            _ = self.navigationController?.popToRootViewController(animated: true)
-           // resetNavigationControllerColorToDefault()
-        }
-        
-        func goBack() {
-            _ = self.navigationController?.popViewController(animated: true)
-           // resetNavigationControllerColorToDefault()
-        }
-        
-        func changeNavigationBarColor(_ color: UIColor) {
-            let navigationController: UINavigationController = (self.navigationController)!
-           // configureNavigationColor(navigationController: navigationController, color: color)
-        }
-        
-        func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
-            let navigationController: UINavigationController = (self.navigationController)!
-            
-           // configureNavigationColor(navigationController: navigationController, color: backgroundColor)
-            navigationController.navigationBar.tintColor = controlColor
-        }
 }
