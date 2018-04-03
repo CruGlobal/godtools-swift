@@ -157,7 +157,7 @@ class GodToolsAnaltyics {
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.trackActionInAdobe(actionName: action, data: contextData)
-            print("\(contextData.debugDescription)\n")
+            debugPrint("\(contextData.debugDescription)\n")
         }
     }
 
@@ -182,6 +182,6 @@ class GodToolsAnaltyics {
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
-        print("\(properties.debugDescription)\n")
+        debugPrint("\(properties.debugDescription)\n")
     }
 }

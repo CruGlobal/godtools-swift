@@ -26,11 +26,12 @@ class LanguagesManager: GTDataManager {
                 let languagesManager = LanguagesManager()
                 _defaultLanguage = languagesManager.loadPrimaryLanguageFromDisk()
             }
-            
+            UserDefaults.standard.set(( _defaultLanguage?.code ?? "en"), forKey: "kPrimaryLanguageCode")
             return _defaultLanguage
         }
         set {
             _defaultLanguage = newValue
+            UserDefaults.standard.set(( _defaultLanguage?.code ?? "en"), forKey: "kPrimaryLanguageCode")
         }
     }
     
@@ -75,8 +76,7 @@ class LanguagesManager: GTDataManager {
         if GTSettings.shared.primaryLanguageId == nil {
             return nil
         }
-        let primaryLanguage: Language? = loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
-        UserDefaults.standard.set((primaryLanguage?.code ?? ""), forKey: "kPrimaryLanguageCode")
+        let primaryLanguage = loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
         return primaryLanguage
     }
     
@@ -84,8 +84,7 @@ class LanguagesManager: GTDataManager {
         if GTSettings.shared.parallelLanguageId == nil {
             return nil
         }
-        let parallelLanguage: Language? = loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
-        UserDefaults.standard.set((parallelLanguage?.code ?? ""), forKey: "kParallelLanguageCode")
+        let parallelLanguage = loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
         return parallelLanguage
     }
     
@@ -185,6 +184,7 @@ class LanguagesManager: GTDataManager {
 
         } else {
             GTSettings.shared.parallelLanguageId = language.remoteId
+            UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
         }
     }
     
