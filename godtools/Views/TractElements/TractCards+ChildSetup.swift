@@ -51,11 +51,11 @@ extension TractCards {
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
-            let alphaCode = element.cardProperties().cardNumber.convertToLetter()
-            element.cardProperties().cardIdName = "\(alphaCode)"
+            let letterName = cardNumber.convertToLetter()
+            element.cardProperties().cardLetterName = "\(letterName)"
             self.elements?.append(element)
             
-            relay.tractCardNextNames.append(alphaCode)
+            relay.tractCardNextNames.append(letterName)
 
             cardNumber += 1
             elementNumber += 1

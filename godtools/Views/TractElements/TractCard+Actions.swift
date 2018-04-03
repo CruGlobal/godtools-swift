@@ -72,7 +72,7 @@ extension TractCard {
             relay.runTimer()
         }
         
-        let cardName = properties.cardIdName
+        let cardName = properties.cardLetterName
         let tractPlusCardName = "\(relay.tractName)\(cardName)"
         relay.tractPlusCardName = tractPlusCardName
         
