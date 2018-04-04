@@ -33,6 +33,8 @@ extension TractCards {
     func buildCards(_ cards: [XMLIndexer]) {
         let relay = AnalyticsRelay.shared
         
+        // These arrays keep track of what current cards are in a viewable stack.
+        // This is used for preventing a false report being sent to analytics tracking.
         relay.tractCardCurrentLetterNames.removeAll()
         relay.tractCardCurrentLetterNames = relay.tractCardNextLetterNames
         relay.tractCardNextLetterNames.removeAll()

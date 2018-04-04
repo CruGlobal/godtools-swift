@@ -42,6 +42,13 @@ extension TractCard {
         
         if properties.cardState == .open || properties.cardState == .enable {
             hideCard()
+            
+            // Need to adjust the Card number/letterName for proper analytics tracking
+            let adjustedLetterName = (properties.cardNumber - 1).convertToLetter()
+            let relay = AnalyticsRelay.shared
+            if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
+            }
         }
     }
     

@@ -14,8 +14,12 @@ class AnalyticsRelay {
     
     var screenName: String = ""
     var screenNamePlusCardLetterName: String = ""
+    
+    // These arrays keep track of what current cards are in a viewable stack.
+    // This is used for preventing a false report being sent to analytics tracking.
     var tractCardCurrentLetterNames: [String] = []
     var tractCardNextLetterNames: [String] = []
+    
     var viewListener: String = ""
     var timer = Timer()
     var timerCounter = 6
