@@ -90,7 +90,4 @@ fastlane/fastlane_cleanup_script.sh
 encrypted
 .env*
 !.env.local.sample
-config.plist
-!config.sample.plist
-config.*.plist
 fastlane_cleanup_script.sh
