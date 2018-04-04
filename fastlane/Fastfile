@@ -6,11 +6,11 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do |options|
-    profile_name = 'match AppStore com.missionhub'
+    profile_name = 'match AppStore org.cru.godtools'
     submit_for_review = options.key?(:submit) && options[:submit] || false
     automatic_release = options.key?(:auto_release) && options[:auto_release] || false
     version_number = get_version_number(
-        target: 'MissionHub'
+        target: 'GodTools'
     )
 
     if options.key?(:version)
@@ -21,18 +21,11 @@ platform :ios do
 
     build_number = cru_increment_build_number
 
-    automatic_code_signing(
-        use_automatic_signing: false,
-        profile_name: profile_name
-    )
-
-    cru_fetch_certs
-
     cru_build_app(export_method: 'app-store', profile_name: profile_name)
 
     upload_to_app_store(
-        app_identifier: 'com.missionhub',
-        ipa: './MissionHub.ipa',
+        app_identifier: 'org.cru.godtools',
+        ipa: './godtools.ipa',
         skip_screenshots: true,
         skip_metadata: true,
         app_version: version_number,
@@ -49,25 +42,11 @@ platform :ios do
     end
   end
 
-  desc "Build and sign the app"
-  lane :cru_build do |options|
-    profile_name = 'match AdHoc org.cru.godtools'
-
-    cru_fetch_certs
-
-    cru_build_app(export_method: options[:export_method], profile_name: profile_name)
-  end
-
   desc "Push a new (beta) release build to Crashlytics"
   lane :beta do |options|
     build_number = cru_increment_build_number
 
-    automatic_code_signing(
-        use_automatic_signing: false,
-        profile_name: profile_name
-    )
-
-    cru_build(export_method: 'ad-hoc')
+    cru_build_app(export_method: 'ad-hoc')
 
     crashlytics(
         crashlytics_path: "./Pods/Crashlytics",
@@ -90,6 +69,15 @@ platform :ios do
   end
 
   lane :cru_build_app do |options|
+    profile_name = options[:profile_name] || 'match AdHoc org.cru.godtools'
+
+    automatic_code_signing(
+        use_automatic_signing: false,
+        profile_name: profile_name
+    )
+
+    cru_fetch_certs
+
     cocoapods(
         podfile: './Podfile'
     )
@@ -99,7 +87,7 @@ platform :ios do
         export_method: options[:export_method],
         export_options: {
             provisioningProfiles: {
-                'org.cru.godtools' => options[:profile_name]
+                'org.cru.godtools' => profile_name
             }
         }
     )
