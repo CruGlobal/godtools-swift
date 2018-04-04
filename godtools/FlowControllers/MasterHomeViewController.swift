@@ -9,7 +9,7 @@
 import UIKit
 import PromiseKit
 
-class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelegate, HomeViewControllerDelegate, LanguageSettingsViewControllerDelegate, LanguagesTableViewControllerDelegate, ToolsManagerDelegate {
+class MasterHomeViewController: BaseViewController,  LanguagesTableViewControllerDelegate, ToolsManagerDelegate {
     
     var segmentedControl = UISegmentedControl()
     
@@ -41,7 +41,7 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       // self.displayNavigationButtons()
+        // self.configureNavigation(navigationController: self.navigationController!)
         self.defineObservers()
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
@@ -166,29 +166,30 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
     
     // MARK: - Delegate Methods
     
-    func moveToAddNewTool() {
-        //
-    }
-    
     func infoButtonWasPressed(resource: DownloadedResource) {
-        //
+        // Tools Manager Delegate required
     }
+
+}
+
+extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {
     
     func moveToLanguagesList(primaryLanguage: Bool) {
-            let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
-            viewController.delegate = self
-            viewController.selectingForPrimary = primaryLanguage
-           // self.pushViewController(viewController: viewController)
+        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
+        viewController.delegate = self
+        viewController.selectingForPrimary = primaryLanguage
+        // self.pushViewController(viewController: viewController)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-    
+}
+
+extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     
     func moveToUpdateLanguageSettings() {
             let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
             viewController.delegate = self
             //self.pushViewController(viewController: viewController)
         self.navigationController?.pushViewController(viewController, animated: true)
-
     }
     
     func moveToToolDetail(resource: DownloadedResource) {
@@ -204,5 +205,9 @@ class MasterHomeViewController: BaseViewController, AddToolsViewControllerDelega
         //pushViewController(viewController: viewController)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-
+    
+    func moveToAddNewTool() {
+        // Don't need now we are using Segment Control
+    }
+    
 }

@@ -47,10 +47,6 @@ class AddToolsViewController: BaseViewController {
         self.addNavigationLanguageButton()
     }
     
-//    override func navigationLanguageButtonAction() {
-//        self.delegate?.moveToUpdateLanguageSettings()
-//    }
-    
     // MARK: - Helpers
     
     fileprivate func registerCells() {

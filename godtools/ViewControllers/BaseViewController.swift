@@ -49,11 +49,7 @@ class BaseViewController: UIViewController {
     // MARK: - Navigation Bar
     
     func displayScreenTitle() {
-            print("GodTools")
-            //self.addMyToolsFindToolsControl()
-        
-            //self.navigationItem.title = self.screenTitle
-        
+        self.navigationItem.title = self.screenTitle
     }
     
     func hideScreenTitle() {
