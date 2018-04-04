@@ -62,7 +62,7 @@ platform :ios do
 
     cru_fetch_certs
 
-    # cru_build_app(export_method: 'ad-hoc', profile_name: profile_name)
+    cru_build_app(export_method: 'ad-hoc', profile_name: profile_name)
 
     crashlytics(
         crashlytics_path: "./Pods/Crashlytics",
