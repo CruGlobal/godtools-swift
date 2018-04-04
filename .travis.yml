@@ -1,6 +1,17 @@
 matrix:
   include:
   - language: objective-c
+    if: type = pull_request
+    xcode_project: godtools.xcworkspace
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane gym
+
+  - language: objective-c
     if: branch = master and type = push
     xcode_project: godtools.xcworkspace
     os: osx
