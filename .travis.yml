@@ -8,7 +8,7 @@ matrix:
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
     - bundler install
-    - fastlane match
+    - fastlane match --readonly
     script:
     - fastlane gym
   - language: objective-c
