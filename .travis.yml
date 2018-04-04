@@ -1,0 +1,28 @@
+matrix:
+  include:
+  - language: objective-c
+    if: branch = master and type = push
+    xcode_project: godtools.xcworkspace
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane ios beta
+
+  - language: objective-c
+    if: tag =~ ^v(\d+\.){1,}\d+
+    xcode_project: ios/Missionhub.xcodeproj
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane ios release version:$TRAVIS_TAG submit:true auto_release:false
+env:
+  global:
+  - secure: q2M9EPibGqOtemjBBIlapeMs5EC8YXyUrE/fApqGfxzyNtqmZnfBfwEHF6UQPqgpjXuNozQUES50YQubPeG/V3r0JzDHAKytgMteupb3Ji/3BAPFU/5Wtbf8m2LKECV+5tYT8NJEwwd0KnJ2Px4yBfUGdav9O9A9fTc+3ZLYkan4ZdCEtTU8xzwfeyVvOy1ZxgEj57oNXjZUimh/KOZavQqLqJaavWU0n+TyObwWTVTNQAp0KGyMQAoBmejkwtKzAROfvDNwS3gAVRgaJw0t4xBJgmD38RCgTlyxca3JKMJKZvtGsGmiFuowG6maFCMPrTVA0kr7P6YiEwkCOiY582BjIMrDuC+4NPQL43DKm6Sp3A3KWZSfKwnccUj4F+aIOEtpmSIkT2FqS9N4nkRLWkdcoWL70nH8cu3JMJZ0uManuLpaEgtDlDtLnHIx0/kNJc1SLBM1lr+8TKfApF+aKq06PgShUcZodcPduKXpVIb9EXc5dOmZCQR9ISc8MFSnjwzwpIrT7q/0mB6JKbRuw/WeLp0u5X9SYj3SAwu5iAE7geArs1OuHaVhpqqxVJtrCwpWHruJtvoM2eHtv2ETCEm0rsYCKKNhx8z1ATXPTFKdk61NWo0UfdnKrBbaucn7HXx9OhlaJwzLyKLqFgItMUTEKxXMWyyBlcWGAOOwAbE=
+  - secure: XJOva1ugQzc/6itLQfrBaPQkgUmziSU4NtEz1ezSO4IGerbsux+QDos/8+o1pmRS8dnm0Uag0cALaK0FTsl1xxdrIad6sCAxWzERUALk2cWyMmtBzB3gcRqhefJ4W1NOX3LEw+UxLaAELYZp/9nSInJqqvrKZ1/NvGVhvBY7DpSYQcnVI/vFaPtKJTRxFxa4YP1K9XZ7JlOcEpp6tuz93IX7UASyNvVRSeqYd2riwTCwm5+ctDjuSjKqt6P5cb3yjPQlyD4dHWLY5BiWIF94r1zHSewTyEvQC5CThR4IhSGd2AkPX6osyAXaruWVtMhipgx6dKdsK4Yw7SjHo7EOSgOfc/mR10ZQmQvMDHm+l67C4Gr+mQR4WixhSUFotV1URkH/bsDbaKEmZIdR8QJ5AbzR42kp5sIteHzFKB+GqbL8vaELNkeRHPLMCh+Um2YFz5tz8wWdfjsbZ1AyU9qZBXJtzHBBi/RdRvidZTXSlaxrz2//8gJZTys1b67uy4M+F71ox5GX55O4HcH4Sxg5O3RACwemIkm+33p9+r3YprOsTQrFtg5zi/X/HfBIVwsKVfSqmNUSi8Tlfd+wn8OQbyrdM55lt1xLi9bYOOdJedK4ym1SpdbDEd1Srfv2Fp/TLvXw+lJzPr0fSbQ7pZqdF4Hc7jlSVNpeLyZpclWWTkk=
+  - secure: Za9p1cw62RPSAw7mmPTJNOHMjObPWBN7kKzGviK1AYsEb7fexL6/FDu8VoLMk4SeD6yHW/UmjTOZUBD5vV+GmlttXTZxh55qPt2d2fHqkmbSRfcjtRR082riMMBka3p/CiavZE49sfWMTUGKVHwa5SIuRxV9pbntPcbRMhTDYxjBYmmkvpkiPWOXdLX+FgIhxWA5ujMzBrodDq8bs/oZShWwTSHXHe2VFpKN2Zx4oe4w+nve0w5ThbMf4aeRLGYqax0LB9ANtiQPqKwSvdVApxfkGht9ki3mJvCnTzQx+BB9+BRlupM8GhP476nd6V6OdqzaNC/fjxKcfQaBKvm0f/ze3W3wL9TcZrTx5JUTpVhcQqkZtTsMwUCsqfcA9FgSvCFSckLIDTC6xwH9C3FW1rxUvBkuMuZhxEi5VyPQm9981k41iUzNaZTNiHJFEay6WHJhVMZgB62AaIihHFUO+k84hIlOYfhSoDhyfzJ7/xflKM6IVKVW6fb2o/S0EfyYPuIQpVmSV8QXdeKhlqvaNp6yeYHCOi1idV7CBcoNXGSQKWfbow4DbznKkBG6bSx19/3te0pahdarNs68eIF9kFv//fKv78LO5j4HpndTVxUU1vxK6B3KKV7RWvgJ+JWJ1GD+QeebGzuSMhLEkMbfc57QcPHP0Tswt4j928Js4Rg=
