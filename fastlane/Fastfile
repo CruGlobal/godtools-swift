@@ -90,7 +90,7 @@ platform :ios do
     )
 
     gym(
-        scheme: "GodTools",
+        scheme: "godtools",
         export_method: options[:export_method],
         export_options: {
             provisioningProfiles: {
