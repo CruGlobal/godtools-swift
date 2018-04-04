@@ -27,9 +27,13 @@ extension TractCard {
             showCardAndPreviousCards()
         } else if properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
-            let adjustedProperties = properties
-            adjustedProperties.cardLetterName = (properties.cardNumber + 1).convertToLetter()
-            processCardForAnalytics(properties: adjustedProperties)
+            
+            // Need to adjust the Card number/letterName for proper analytics tracking
+            let adjustedLetterName = (properties.cardNumber + 1).convertToLetter()
+            let relay = AnalyticsRelay.shared
+            if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
+            }
         }
     }
     
@@ -66,7 +70,7 @@ extension TractCard {
         
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
-        processCardForAnalytics(properties: properties)
+        processCardForAnalytics(cardLetterName: properties.cardLetterName)
     }
     
     func showCard() {
@@ -228,7 +232,7 @@ extension TractCard {
     
     // MARK - Analytics helper
     
-    func processCardForAnalytics(properties: TractCardProperties) {
+    func processCardForAnalytics(cardLetterName: String) {
         let relay = AnalyticsRelay.shared
         relay.timer.invalidate()
         relay.isTimerRunning = false
@@ -238,7 +242,6 @@ extension TractCard {
             relay.runTimer()
         }
         
-        let cardLetterName = properties.cardLetterName
         relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
         
         sendScreenViewNotification(screenName: relay.screenName + cardLetterName)

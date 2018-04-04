@@ -31,6 +31,12 @@ extension TractCards {
     }
     
     func buildCards(_ cards: [XMLIndexer]) {
+        let relay = AnalyticsRelay.shared
+        
+        relay.tractCardCurrentLetterNames.removeAll()
+        relay.tractCardCurrentLetterNames = relay.tractCardNextLetterNames
+        relay.tractCardNextLetterNames.removeAll()
+        
         if self.elements == nil {
             self.elements = [BaseTractElement]()
         }
@@ -50,6 +56,8 @@ extension TractCards {
             let letterName = cardNumber.convertToLetter()
             element.cardProperties().cardLetterName = letterName
             self.elements?.append(element)
+            
+            relay.tractCardNextLetterNames.append(letterName)
             
             cardNumber += 1
             elementNumber += 1
