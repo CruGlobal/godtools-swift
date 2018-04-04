@@ -1,0 +1,9 @@
+git_url("https://github.com/CruGlobal/ios-signing-credentials")
+
+type("adhoc") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier("org.cru.godtools")
+username("cruapps@cru.org") # Your Apple Developer Portal username
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
