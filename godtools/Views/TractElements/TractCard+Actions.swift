@@ -27,6 +27,9 @@ extension TractCard {
             showCardAndPreviousCards()
         } else if properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
+            let adjustedProperties = properties
+            adjustedProperties.cardLetterName = (properties.cardNumber + 1).convertToLetter()
+            processCardForAnalytics(properties: adjustedProperties)
         }
     }
     
@@ -55,9 +58,6 @@ extension TractCard {
     }
     
     func showCardAndPreviousCards() {
-        let relay = AnalyticsRelay.shared
-        relay.timer.invalidate()
-        relay.isTimerRunning = false
         let properties = cardProperties()
         
         if properties.cardState == .open {
@@ -66,19 +66,7 @@ extension TractCard {
         
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
-        
-        if !relay.isTimerRunning {
-            relay.timerCounter = 6
-            relay.runTimer()
-        }
-        
-        let cardName = properties.cardLetterName
-        let tractPlusCardName = "\(relay.tractName)\(cardName)"
-        relay.tractPlusCardName = tractPlusCardName
-        
-        // TODO - This isn't quite tracking correct values. It's appending letters and not replacing???
-        
-        //sendScreenViewNotification(screenName: tractPlusCardName)
+        processCardForAnalytics(properties: properties)
     }
     
     func showCard() {
@@ -239,6 +227,22 @@ extension TractCard {
     }
     
     // MARK - Analytics helper
+    
+    func processCardForAnalytics(properties: TractCardProperties) {
+        let relay = AnalyticsRelay.shared
+        relay.timer.invalidate()
+        relay.isTimerRunning = false
+        
+        if !relay.isTimerRunning {
+            relay.timerCounter = 6
+            relay.runTimer()
+        }
+        
+        let cardLetterName = properties.cardLetterName
+        relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
+        
+        sendScreenViewNotification(screenName: relay.screenName + cardLetterName)
+    }
     
     func sendScreenViewNotification(screenName: String) {
         let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]

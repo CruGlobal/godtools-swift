@@ -12,8 +12,8 @@ class AnalyticsRelay {
     
     static let shared = AnalyticsRelay()
     
-    var tractName: String = ""
-    var tractPlusCardName: String = ""
+    var screenName: String = ""
+    var screenNamePlusCardLetterName: String = ""
     var viewListener: String = ""
     var timer = Timer()
     var timerCounter = 6
@@ -29,7 +29,7 @@ class AnalyticsRelay {
             timer.invalidate()
             timerCounter = 0
             isTimerRunning = false
-            let tractCardName = tractPlusCardName
+            let tractCardName = screenNamePlusCardLetterName
             sendToAnalyticsIfRelevant(tractCardName: tractCardName)
         } else if isTimerRunning {
             timerCounter = self.timerCounter - 1

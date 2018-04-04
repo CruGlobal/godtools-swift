@@ -23,7 +23,7 @@ extension TractButton {
                 }
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
                 let relay = AnalyticsRelay.shared
-                switch (relay.tractName, relay.viewListener) {
+                switch (relay.screenName, relay.viewListener) {
                 case ("kgp-us-5", "followup-form"):
                     userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
                     sendNotificationForAction(userInfo: userInfo)
