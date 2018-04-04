@@ -9,7 +9,7 @@
 import UIKit
 import PromiseKit
 
-class MasterHomeViewController: BaseViewController,  LanguagesTableViewControllerDelegate, ToolsManagerDelegate {
+class MasterHomeViewController: BaseViewController  {
     
     var segmentedControl = UISegmentedControl()
     
@@ -41,7 +41,6 @@ class MasterHomeViewController: BaseViewController,  LanguagesTableViewControlle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // self.configureNavigation(navigationController: self.navigationController!)
         self.defineObservers()
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
@@ -163,12 +162,6 @@ class MasterHomeViewController: BaseViewController,  LanguagesTableViewControlle
     override func screenName() -> String {
         return "Home"
     }
-    
-    // MARK: - Delegate Methods
-    
-    func infoButtonWasPressed(resource: DownloadedResource) {
-        // Tools Manager Delegate required
-    }
 
 }
 
@@ -208,6 +201,14 @@ extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewCont
     
     func moveToAddNewTool() {
         // Don't need now we are using Segment Control
+    }
+    
+}
+
+extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewControllerDelegate {
+
+    func infoButtonWasPressed(resource: DownloadedResource) {
+        // Tools Manager Delegate required
     }
     
 }
