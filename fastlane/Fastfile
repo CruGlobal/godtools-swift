@@ -67,7 +67,7 @@ platform :ios do
     crashlytics(
         crashlytics_path: "./Pods/Crashlytics",
         ipa_path: "./godtools.ipa",
-        emails: "ryan.t.carlson@cru.org",
+        groups: 'god-tools-ios',
         notes: 'Beta build for GodTools iOS. See Jira board for issues that are "Ready for QA"'
     )
 
