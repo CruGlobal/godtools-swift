@@ -89,7 +89,7 @@ platform :ios do
     build_number
   end
 
-  private lane :cru_build_app do |options|
+  lane :cru_build_app do |options|
     cocoapods(
         podfile: './Podfile'
     )
