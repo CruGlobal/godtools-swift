@@ -49,10 +49,17 @@ platform :ios do
     end
   end
 
-  desc "Push a new (beta) release build to Crashlytics"
-  lane :beta do |options|
+  desc "Build and sign the app"
+  lane :cru_build do |options|
     profile_name = 'match AdHoc org.cru.godtools'
 
+    cru_fetch_certs
+
+    cru_build_app(export_method: options[:export_method], profile_name: profile_name)
+  end
+
+  desc "Push a new (beta) release build to Crashlytics"
+  lane :beta do |options|
     build_number = cru_increment_build_number
 
     automatic_code_signing(
@@ -60,9 +67,7 @@ platform :ios do
         profile_name: profile_name
     )
 
-    cru_fetch_certs
-
-    cru_build_app(export_method: 'ad-hoc', profile_name: profile_name)
+    cru_build(export_method: 'ad-hoc')
 
     crashlytics(
         crashlytics_path: "./Pods/Crashlytics",
@@ -84,7 +89,7 @@ platform :ios do
     build_number
   end
 
-  lane :cru_build_app do |options|
+  private lane :cru_build_app do |options|
     cocoapods(
         podfile: './Podfile'
     )
