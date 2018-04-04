@@ -190,10 +190,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods (~> 1.2.1)
-  fastlane (~> 2.35)
+  cocoapods
+  fastlane
   xcode-install (~> 2.0)
   xcov (~> 1.2)
 
 BUNDLED WITH
-   1.14.6
+   1.16.1
