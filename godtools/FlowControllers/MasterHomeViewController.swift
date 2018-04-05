@@ -72,7 +72,7 @@ class MasterHomeViewController: BaseViewController  {
         updateView()
     }
     
-    private func updateView() {
+    func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
             remove(asChildViewController: addToolsViewController)
             add(asChildViewController: homeViewController)
@@ -195,6 +195,12 @@ extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewCont
     func moveToTract(resource: DownloadedResource) {
         delegate?.moveToTract(resource: resource)
     }
+    
+    func goToFindTools() {
+        segmentedControl.selectedSegmentIndex = 1
+        updateView()
+    }
+
 }
 
 extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewControllerDelegate {

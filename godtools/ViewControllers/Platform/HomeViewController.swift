@@ -13,6 +13,7 @@ protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
+    func goToFindTools()
 }
 
 class HomeViewController: BaseViewController {
@@ -98,7 +99,7 @@ class HomeViewController: BaseViewController {
     // MARK: - Actions
     
     @IBAction func pressAddNewToolsButton(_ sender: Any) {
-     
+        delegate?.goToFindTools()
     }
     
     // MARK: - Helpers

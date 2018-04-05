@@ -28,11 +28,9 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
     
     // MARK: - HomeViewControllerDelegate
         
-    func moveToAddNewTool() {
-//        let viewController = AddToolsViewController(nibName: String(describing:AddToolsViewController.self), bundle: nil)
-//        viewController.delegate = self
-//        self.pushViewController(viewController: viewController)
-    }
+    func moveToAddNewTool() { }
+    
+    func goToFindTools() { }
     
     func moveToToolDetail(resource: DownloadedResource) {
         let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
