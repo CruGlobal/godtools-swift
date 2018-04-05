@@ -35,6 +35,9 @@ class TractViewController: BaseViewController {
     var pagesViews = [TractView?]()
     var languageSegmentedControl: UISegmentedControl?
     
+    var arrivedByUniversalLink = false
+    var universalLinkLanguage: Language?
+    
     let viewTagOrigin = 100
     
     static let iPhoneXStatusBarHeight: CGFloat = 44.0
@@ -119,6 +122,7 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
+        let primaryLanguage = resolvePrimaryLanguage()
         return resource!.localizedName(language: primaryLanguage)
     }
     
@@ -252,15 +256,29 @@ class TractViewController: BaseViewController {
     }
     
     private func loadLanguages() {
+        guard let resource = resource else {
+            return
+        }
+        
         let languagesManager = LanguagesManager()
         
         primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         
-        if resource!.getTranslationForLanguage(primaryLanguage!) == nil {
+        if resource.getTranslationForLanguage(primaryLanguage!) == nil {
             primaryLanguage = languagesManager.loadFromDisk(code: "en")
         }
         
         parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+    }
+    
+    func resolvePrimaryLanguage() -> Language? {
+        let languagesManager = LanguagesManager()
+        
+        if arrivedByUniversalLink {
+            return universalLinkLanguage
+        } else {
+            return languagesManager.loadPrimaryLanguageFromDisk()
+        }
     }
 }
 
@@ -269,7 +287,17 @@ extension TractViewController: BaseTractElementDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func displayedLanguage() -> Language {
-        return selectedLanguage!
+    func displayedLanguage() -> Language? {
+        let languagesManager = LanguagesManager()
+        
+        guard let languageSegmentedControl = languageSegmentedControl else {
+            return resolvePrimaryLanguage()
+        }
+        
+        if languageSegmentedControl.selectedSegmentIndex == 0 {
+            return resolvePrimaryLanguage()
+        } else {
+            return languagesManager.loadParallelLanguageFromDisk()
+        }
     }
 }

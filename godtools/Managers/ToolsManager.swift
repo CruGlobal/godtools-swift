@@ -79,13 +79,13 @@ extension ToolsManager {
 extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        return 138.0
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let resource = resources[indexPath.section]
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
-        if resource.localizedName(language: primaryLanguage).characters.count > 25 {
+        if resource.localizedName(language: primaryLanguage).count > 25 {
             return 133.0
         }
         

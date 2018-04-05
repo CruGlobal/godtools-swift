@@ -51,6 +51,8 @@ struct AdobeAnalyticsConstants {
 class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
+    // Testing 2FA
+    
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
                                                       qos: .background)
