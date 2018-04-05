@@ -60,6 +60,26 @@ platform :ios do
     cru_notify_users(message: "#{target}{ iOS Beta Build ##{build_number} released to Crashlytics.")
   end
 
+  # Localization functions
+
+  desc "Download latest localization files from Onesky"
+  lane :cru_download_localizations do
+    locale = 'fr'
+    filename = ENV["ONESKY_FILENAME"]
+
+    onesky_download(
+        public_key: ENV["ONESKY_PUBLIC_KEY"],
+        secret_key: ENV["ONESKY_SECRET_KEY"],
+        project_id: ENV["ONESKY_PROJECT_ID"],
+        locale: locale,
+        filename: filename,
+        destination: "./godtools/#{locale}.lproj/#{filename}"
+    )
+
+  end
+
+  # Helper functions
+
   lane :cru_increment_build_number do
     build_number = ENV["TRAVIS_BUILD_NUMBER"] || get_build_number.to_i + 1
 
