@@ -43,6 +43,10 @@ class TranslationZipImporter: GTDataManager {
         }
     }
 
+    func downloadSpecificTranslation(_ translation: Translation) -> Promise<Void> {
+        return download(translation: translation)
+    }
+    
     func catchupMissedDownloads() {
         addTranslationsToQueue(TranslationsManager().translationsNeedingDownloaded())
         

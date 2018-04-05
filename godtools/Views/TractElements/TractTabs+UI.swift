@@ -40,6 +40,27 @@ extension TractTabs {
             element.isHidden = true
         }
         self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
+        
+        if self.segmentedControl.selectedSegmentIndex == 1 {
+            let elementAnalytics = self.elements!.first
+            guard let resourceCode = elementAnalytics?.tractConfigurations?.resource?.code else { return }
+            switch resourceCode {
+            case "kgp-us":
+                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.toggleAction: 1]
+                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSCircleToggled
+                NotificationCenter.default.post(name: .actionTrackNotification,
+                                                object: nil,
+                                                userInfo: userInfo)
+            case "kgp":
+                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.toggleAction: 1]
+                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpCircleToggled
+                NotificationCenter.default.post(name: .actionTrackNotification,
+                                                object: nil,
+                                                userInfo: userInfo)
+            default:
+                return
+            }
+        }
     }
     
 }

@@ -1,296 +1,147 @@
-# Customise this file, documentation can be found here:
-# https://docs.fastlane.tools
-# All available actions: https://docs.fastlane.tools/actions/
-# can also be listed using the `fastlane actions` command
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
 
-# Change the syntax highlighting to Ruby
-# All lines starting with a # are ignored when running `fastlane`
-
-opt_out_usage
-
-# This is the minimum version number required.
-# Update this, if you use features of a newer version
-fastlane_version "2.35.0"
-
-default_platform :ios
+default_platform(:ios)
 
 platform :ios do
-  
-  
-  
-########### LANE SETUP ###########
-  
-  
+  desc "Push a new release build to the App Store"
+  lane :release do |options|
+    profile_name = 'match AppStore org.cru.godtools'
+    submit_for_review = options.key?(:submit) && options[:submit] || false
+    automatic_release = options.key?(:auto_release) && options[:auto_release] || false
+    version_number = get_version_number(
+        target: 'GodTools'
+    )
 
-  before_all do |lane, options|
-
-    @run_once_before_all ||= begin
-      if options.key?(:setup_fastfile_path)
-        import(options[:setup_fastfile_path])
-      else
-        import_from_git(url: 'git@github.com:CruGlobal/mobile-deployment-config.git',
-                        path: 'ios/Fastfile')
-      end
-      
-      options[:project_name] = "godtools"
-
-      if is_ci
-        cru_remote_setup(options)
-      else
-        cru_local_setup(options)
-      end
-
-      true
+    if options.key?(:version)
+      version_number = increment_version_number(
+          version_number: options[:version] # Automatically increment major version number
+      )
     end
 
-  end
+    build_number = cru_increment_build_number
 
+    cru_build_app(export_method: 'app-store', profile_name: profile_name)
 
+    upload_to_app_store(
+        app_identifier: 'org.cru.godtools',
+        ipa: './godtools.ipa',
+        skip_screenshots: true,
+        skip_metadata: true,
+        app_version: version_number,
+        automatic_release: automatic_release,
+        submit_for_review: submit_for_review,
+    )
 
-########### TESTS ###########
+    cru_update_commit(message: "[skip ci] Version number bump to #{version_number}, Build number bump to ##{build_number}")
 
+    cru_notify_users("MissionHub iOS Release Build #{version_number} (#{build_number}) submitted to App Store.")
 
-
-  desc "Runs all the tests"
-  desc "can take skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
-  desc "e.g. `bundle exec fastlane run_tests skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env test`"
-  desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
-  lane :run_tests do
-
-    run_all_tests_and_generate_reports
-
-  end
-
-  # We use a method instead of a lane for defining tests so we don't clean up too many times
-  def run_all_tests_and_generate_reports
-
-    if is_ci
-      clear_derived_data
+    if submit_for_review
+      cru_notify_users("Build has been submitted for review and will be #{automatic_release ? 'automatically' : 'manually'} released.")
     end
-
-    scan(workspace: "godtools.xcworkspace", scheme: "godtools", code_coverage: true, devices: ["iPhone 7"])
-    xcov(workspace: "godtools.xcworkspace", scheme: "godtools", only_project_targets: true)
-
   end
 
-
-
-########### BETA ###########
-
-
-
-  desc "Creates a beta build"
-  desc "can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
-  desc "e.g. `bundle exec fastlane beta skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env beta`"
-  desc "(Note: the Fastfile path must be relative to this project's main Fastfile)"
+  desc "Push a new (beta) release build to Crashlytics"
   lane :beta do |options|
+    build_number = cru_increment_build_number
 
-    cru_git_setup
+    cru_build_app(export_method: 'ad-hoc')
 
-    run_all_tests_and_generate_reports unless options.key?(:skip_tests)
-    
-    increment_build_number
-
-    deploy_to_crashlytics
-
-    deploy_to_testflight
-
-    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools.beta")
-
-    clean_build_artifacts
-    commit_version_bump(xcodeproj: "godtools.xcodeproj",
-                        message: "Build number bump for Beta build #{lane_context[SharedValues::BUILD_NUMBER]}",
-                        force: true)
-    add_git_tag
-    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch,
-                       force: true)
-    create_pull_request(repo: "CruGlobal/godtools-swift",
-                        title: "Build Number Bump - #{lane_context[SharedValues::BUILD_NUMBER]}",
-                        head: ENV['GIT_BUILD_NUMBER_BRANCH'],
-                        base: ENV['GIT_BRANCH'],
-                        body: "Automatically generated by build server during last beta build. MUST BE MERGED BEFORE ALL OTHER PRs!")
-
-    cru_instant_message(message: "Beta build #{lane_context[SharedValues::BUILD_NUMBER]} released via Crashlytics")
-
-  end
-
-  def deploy_to_crashlytics
-    
-    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools.beta")
-    
-    sigh(app_identifier: "org.cru.godtools.beta",  adhoc: true, force: true)
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
-    
-    gym(
-      configuration: "Release",
-      xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
-      export_method: "ad-hoc",
-      build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric",
-      output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/fabric"
+    crashlytics(
+        crashlytics_path: "./Pods/Crashlytics",
+        ipa_path: "./godtools.ipa",
+        groups: 'god-tools-ios',
+        notes: 'Beta build for GodTools iOS. See Jira board for issues that are "Ready for QA"'
     )
 
-    crashlytics(notes_path: "#{ENV['CRU_PROJECT_ROOT_DIRECTORY']}/release_notes",
-                groups: [ ENV["CRASHLYTICS_GROUP"] ])
-    
+    cru_notify_users(message: "GodTools iOS Beta Build ##{build_number} released to Crashlytics.")
   end
 
-  def deploy_to_testflight
-    
-    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools")
-    
-    sigh(app_identifier: "org.cru.godtools", force: true)
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
-                               
-    gym(
-      configuration: "Release",
-      xcargs: "ARCHIVE=YES", # Used to tell the Fabric run script to upload dSYM file
-      export_method: "app-store",
-      build_path: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/testflight",
-      output_directory: "#{ENV['CRU_OUTPUT_DIRECTORY']}/builds/testflight",
-      clean: true
+  lane :cru_increment_build_number do
+    build_number = ENV["TRAVIS_BUILD_NUMBER"] || get_build_number.to_i + 1
+
+    increment_build_number(
+        build_number: build_number
     )
-       
-    testflight(distribute_external: true, skip_waiting_for_build_processing: true)
-    
+
+    build_number
   end
 
+  lane :cru_build_app do |options|
+    profile_name = options[:profile_name] || 'match AdHoc org.cru.godtools'
 
+    automatic_code_signing(
+        use_automatic_signing: false,
+        profile_name: profile_name
+    )
 
-########### PRODUCTION ###########
+    cru_fetch_certs
 
-
-
-  desc "Deploy a new version to the App Store"
-  desc "can take skip_tests, skip_install_dependencies and setup_fastfile_path to improve speed if you have the setup Fastfile already checked out."
-  desc "e.g. `bundle exec fastlane production skip_tests:true skip_install_dependencies:true setup_fastfile_path:/path/to/common/Fastfile --env production`"
-  desc "(path must be relative to this project's main Fastfile)"
-  lane :production do |options|
-
-    cru_git_setup
-
-    update_app_identifier(xcodeproj: "godtools.xcodeproj", plist_path: "godtools/Info.plist", app_identifier: "org.cru.godtools")
-
-    sigh(force: true)
-    ENV["PROFILE_UUID"] = lane_context[SharedValues::SIGH_UDID] # store UUID of provision profile generated by sigh for use in xcode project
-
-    run_all_tests_and_generate_reports unless options.key?(:skip_tests)
-
-    #snapshot
-
-    increment_build_number
+    cocoapods(
+        podfile: './Podfile'
+    )
 
     gym(
-      configuration: "Release",
-      xcargs: "ARCHIVE=YES",
-      export_method: "app-store"
+        scheme: "godtools",
+        export_method: options[:export_method],
+        export_options: {
+            provisioningProfiles: {
+                'org.cru.godtools' => profile_name
+            }
+        }
     )
-
-    appstore(
-      skip_screenshots: true,
-      force: true,
-      skip_metadata: true
-    )
-
-    # Tag new release
-    clean_build_artifacts
-    version = get_version_number(xcodeproj: "godtools.xcodeproj")
-    commit_version_bump(xcodeproj: "godtools.xcodeproj",
-                        message: "Build number bump for Appstore release: version #{version} build #{lane_context[SharedValues::BUILD_NUMBER]}",
-                        force: true)
-    add_git_tag(grouping: 'release', build_number: version)
-    push_to_git_remote(local_branch: ENV['GIT_BUILD_NUMBER_BRANCH'] || git_branch,
-                       force: true)
-    create_pull_request(repo: "CruGlobal/godtools-swift",
-                        title: "Build Number Bump - #{lane_context[SharedValues::BUILD_NUMBER]}",
-                        head: ENV['GIT_BUILD_NUMBER_BRANCH'],
-                        base: ENV['GIT_BRANCH'],
-                        body: "Automatically generated by build server during last production build. MUST BE MERGED BEFORE ALL OTHER PRs!")
-
-    cru_instant_message(message: "Appstore build has been delivered to iTunesConnect!")
-
   end
 
-
-
-########### LANE CLEANUP ###########
-
-
-
-  after_all do |lane, options|
-
-    # This block is called, only if the executed lane was successful
-    @run_once_after_all ||= begin
-      if is_ci
-        cru_remote_cleanup
-      else
-        cru_local_cleanup
-        notification(subtitle: "Lane: #{lane}", message: "Successfully built lane!")
-      end
-
-      true
-    end
-
-  end
-
-  error do |lane, exception|
-
-    UI.error("Error in lane: #{lane}")
-    UI.error("Error Message: #{exception.message}")
-
-    if is_ci
-
-      if lane == :beta || lane == :production
-        reset_git_repo(
-          disregard_gitignore: false,
-          force: true
-        )
-      end
-
-      cru_instant_message(
-        message: "Build Failed because: #{exception.message}<br /><a href=\"#{ENV['JOB_URL']}#{ENV['BUILD_ID']}/console\">#{ENV['JOB_URL']}#{ENV['BUILD_ID']}/console</a>",
-        success: false
+  lane :cru_fetch_certs do
+    # Travis requires a keychain to be created to store the certificates in, however
+    # using this utility to create a keychain locally will really mess up local keychains
+    # and is not required for a successful build
+    if is_ci?
+      create_keychain(
+          name: ENV["MATCH_KEYCHAIN_NAME"],
+          password: ENV["MATCH_PASSWORD"],
+          default_keychain: true,
+          unlock: true,
+          timeout: 3600,
+          add_to_search_list: true
       )
 
-      cru_remote_cleanup
-
+      match(readonly: true,
+            keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+            keychain_password: ENV["MATCH_PASSWORD"])
     else
-      cru_local_cleanup
-      notification(subtitle: "Lane: #{lane}", message: "Error: #{exception.message}")
+      # Locally match will prompt on the first run for the "MATCH_PASSWORD" and remember it
+      # in the environment after that.
+      match(readonly: false)
     end
-
   end
 
+  lane :cru_update_commit do |options|
+    clean_build_artifacts
 
+    if is_ci?
+      travis_branch = ENV["TRAVIS_BRANCH"]
 
-########### HELPERS ###########
-
-
-
-  def cru_instant_message(options)
-
-    message = options[:message]
-    success = true
-    success = options[:success] if options.key?(:success)
-
-    if ENV["SLACK_URL"].to_s.length > 0
-      slack(
-        message: message,
-        success: success
-      )
-    elsif ENV["HIPCHAT_API_TOKEN"].to_s.length > 0
-      hipchat(
-        from: "Cru Mobile Build Server",
-        message: message,
-        success: success
-      )
+      sh('git', 'checkout', travis_branch)
     end
 
+    commit_version_bump(
+        xcodeproj: 'godtools.xcodeproj',
+        message: options[:message]
+    )
+
+    push_to_git_remote
   end
 
-  def cru_git_setup
-    build_number = get_build_number(xcodeproj: "godtools.xcodeproj").to_i + 1
-    ENV["GIT_BUILD_NUMBER_BRANCH"] = "build-number-bump-#{build_number}"
-    Actions.sh("git checkout -B #{ENV["GIT_BUILD_NUMBER_BRANCH"]}", log: true)
+  lane :cru_notify_users do |options|
+    hipchat(
+        message: options[:message],
+        channel: "GodTools",
+        version: "2",
+        custom_color: "green"
+    )
   end
 
 end
+

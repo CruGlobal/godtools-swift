@@ -102,18 +102,22 @@ extension BaseTractElement {
     }
     
     func sendMessageToElement(listener: String) -> EventResult {
+        let relay = AnalyticsRelay.shared
         if TractBindings.bindings[listener] != nil {
             guard let view = TractBindings.bindings[listener] else { return .viewNotFound }
             view.receiveMessage()
+            relay.viewListener = listener
         }
         
         if TractBindings.dismissBindings[listener] != nil {
             guard let view = TractBindings.dismissBindings[listener] else { return .viewNotFound }
             view.receiveDismissMessage()
+            relay.viewListener = listener
         }
         
         if TractBindings.pageBindings[listener] != nil {
             NotificationCenter.default.post(name: .moveToPageNotification, object: nil, userInfo: ["pageListener": listener])
+            relay.viewListener = listener
         }
         
         return GTGlobalTractBindings.listen(listener: listener, element: self)        

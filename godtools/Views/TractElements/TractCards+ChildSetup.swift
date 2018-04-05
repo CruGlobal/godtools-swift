@@ -31,6 +31,14 @@ extension TractCards {
     }
     
     func buildCards(_ cards: [XMLIndexer]) {
+        let relay = AnalyticsRelay.shared
+        
+        // These arrays keep track of what current cards are in a viewable stack.
+        // This is used for preventing a false report being sent to analytics tracking.
+        relay.tractCardCurrentLetterNames.removeAll()
+        relay.tractCardCurrentLetterNames = relay.tractCardNextLetterNames
+        relay.tractCardNextLetterNames.removeAll()
+        
         if self.elements == nil {
             self.elements = [BaseTractElement]()
         }
@@ -47,7 +55,11 @@ extension TractCards {
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
+            let letterName = cardNumber.convertToLetter()
+            element.cardProperties().cardLetterName = letterName
             self.elements?.append(element)
+            
+            relay.tractCardNextLetterNames.append(letterName)
             
             cardNumber += 1
             elementNumber += 1

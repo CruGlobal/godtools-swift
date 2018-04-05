@@ -96,6 +96,9 @@
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
 		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
+		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
+		1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */; };
+		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
 		4F05F49C203735A600A3D01C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05F49B203735A600A3D01C /* LoginViewController.swift */; };
 		4F05F49E203735B900A3D01C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F05F49D203735B900A3D01C /* LoginViewController.xib */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
@@ -126,6 +129,7 @@
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
+		4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */; };
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
@@ -158,7 +162,6 @@
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
 		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
 		684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684328F31EB7CF66005E9131 /* godtoolsTests.swift */; };
-		68C0A3841ED4C65400CC97A3 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C0A3831ED4C65400CC97A3 /* config.plist */; };
 		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		B8B4A339692B030741575ABA /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC00B0051F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift */; };
@@ -323,6 +326,9 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
+		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
+		1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRelay.swift; sourceTree = "<group>"; };
+		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F05F49B203735A600A3D01C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		4F05F49D203735B900A3D01C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
@@ -382,6 +388,8 @@
 		4F5732961EA69CF00082035C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F5732991EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F57329B1EA69CF00082035C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = godtools.entitlements; sourceTree = "<group>"; };
+		4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AppDelegate+UniversalLinks.swift"; path = "AppDelegateExtensions/AppDelegate+UniversalLinks.swift"; sourceTree = "<group>"; };
 		4F6FC0EC204854AB003A87DF /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F6FC0ED204854BD003A87DF /* sq */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sq; path = sq.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F6FC0EE204854D2003A87DF /* mg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = mg; path = mg.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -425,7 +433,6 @@
 		684328F31EB7CF66005E9131 /* godtoolsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsTests.swift; sourceTree = "<group>"; };
 		684328F51EB7CF66005E9131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68C0A3811ED4C63200CC97A3 /* config.sample.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.sample.plist; sourceTree = "<group>"; };
-		68C0A3831ED4C65400CC97A3 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		68C0A3851ED4C6B100CC97A3 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		68EE51D71EBBA1E400596250 /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = SOURCE_ROOT; };
 		833F80AED79E5E59CFA6D123 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -576,6 +583,7 @@
 			isa = PBXGroup;
 			children = (
 				0F350D9A1EAE786A0025C4BB /* String.swift */,
+				1E9973C6206591FC00AFEEE4 /* Integer.swift */,
 				0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */,
 				ECA4B3431EE7119A00BAE23C /* UIColor.swift */,
 				EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */,
@@ -943,6 +951,7 @@
 			isa = PBXGroup;
 			children = (
 				4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */,
+				1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */,
 				4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */,
 				4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */,
 			);
@@ -993,6 +1002,8 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
+				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
+				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
 				EC55A61D1EE0AC2B000235CA /* TractClasses */,
@@ -1008,8 +1019,8 @@
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4F5732961EA69CF00082035C /* Assets.xcassets */,
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
+				1EE2ADFC20618A0800D8F120 /* config.plist */,
 				4F57329B1EA69CF00082035C /* Info.plist */,
-				68C0A3831ED4C65400CC97A3 /* config.plist */,
 				68C0A3811ED4C63200CC97A3 /* config.sample.plist */,
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				68EE51D71EBBA1E400596250 /* release_notes */,
@@ -1019,6 +1030,14 @@
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 			);
 			path = godtools;
+			sourceTree = "<group>";
+		};
+		4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */ = {
+			isa = PBXGroup;
+			children = (
+				4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */,
+			);
+			name = AppDelegateExtensions;
 			sourceTree = "<group>";
 		};
 		4F84954C1F069C8B0015A6BB /* InitialContent */ = {
@@ -1301,12 +1320,18 @@
 				TargetAttributes = {
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = DQ48D9BF2V;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					684328F01EB7CF66005E9131 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = DQ48D9BF2V;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = 4F5732881EA69CF00082035C;
 					};
 				};
@@ -1384,7 +1409,6 @@
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4F8495A31F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
-				68C0A3841ED4C65400CC97A3 /* config.plist in Resources */,
 				ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */,
 				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
 				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
@@ -1396,6 +1420,7 @@
 				4F8495A11F06E6BE0015A6BB /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
+				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
 				4F84959D1F06E6BE0015A6BB /* 8a2312f958cdf6548a1637347bf89560f6ebf284549669638dfef944d8268a08.png in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
@@ -1456,7 +1481,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		23565315AB9417BD82C7FE1A /* [CP] Copy Pods Resources */ = {
@@ -1489,7 +1514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		4F5707E51EAFCA7F00A540C2 /* ShellScript */ = {
@@ -1623,6 +1648,7 @@
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
 				EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */,
+				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
 				4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */,
@@ -1685,6 +1711,7 @@
 				0F7D50241EA933B000F5957E /* HomeViewController.swift in Sources */,
 				ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */,
 				EC3140BC1EE76A9E009347D3 /* TractViewControllerActions.swift in Sources */,
+				4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
@@ -1702,6 +1729,7 @@
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
+				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
@@ -1944,10 +1972,11 @@
 			baseConfigurationReference = B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 47;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1956,8 +1985,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "60a4d603-07a0-42fc-ba32-0626b6f74bb3";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.cru.godtools";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1969,10 +1998,11 @@
 			baseConfigurationReference = 3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 47;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1983,7 +2013,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
-				PROVISIONING_PROFILE_SPECIFIER = GodTools;
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.cru.godtools";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1996,12 +2026,14 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.cru.godtools";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
 			};
@@ -2013,12 +2045,14 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtoolsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc org.cru.godtools";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
 			};

@@ -1,0 +1,32 @@
+matrix:
+  include:
+  - language: objective-c
+    if: type = pull_request
+    xcode_project: godtools.xcworkspace
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane cru_build_app export_method:"ad-hoc"
+  - language: objective-c
+    if: branch = master and type = push
+    xcode_project: godtools.xcworkspace
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane ios beta
+  - language: objective-c
+    if: tag =~ ^v(\d+\.){1,}\d+
+    xcode_project: ios/Missionhub.xcodeproj
+    os: osx
+    osx_image: xcode9.2
+    install:
+    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
+    - bundler install
+    script:
+    - fastlane ios release version:$TRAVIS_TAG submit:true auto_release:false
