@@ -85,10 +85,14 @@ platform :ios do
         travis_branch = ENV["TRAVIS_BRANCH"]
 
         sh('git', 'checkout', travis_branch)
-      end
-
-      git_add(pathspec: "*/#{filename}")
-      git_commit(message: "[skip ci] Adding latest localization files from Onesky")
+    end
+    
+    begin
+      git_commit(path: "*/#{filename}",
+                 message: "[skip ci] Adding latest localization files from Onesky")
+      push_to_git_remote
+    rescue
+      puts("Failed to commit localization files.. maybe none to commit?")
     end
   end
 
