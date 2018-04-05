@@ -6,11 +6,12 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new release build to the App Store"
   lane :release do |options|
-    profile_name = 'match AppStore org.cru.godtools'
+    profile_name = ENV["CRU_APPSTORE_PROFILE_NAME"]
+    target = ENV["CRU_TARGET"]
     submit_for_review = options.key?(:submit) && options[:submit] || false
     automatic_release = options.key?(:auto_release) && options[:auto_release] || false
     version_number = get_version_number(
-        target: 'GodTools'
+        target: target
     )
 
     if options.key?(:version)
@@ -24,8 +25,8 @@ platform :ios do
     cru_build_app(export_method: 'app-store', profile_name: profile_name)
 
     upload_to_app_store(
-        app_identifier: 'org.cru.godtools',
-        ipa: './godtools.ipa',
+        app_identifier: ENV["CRU_APP_IDENTIFIER"],
+        ipa: ENV["CRU_IPA_PATH"],
         skip_screenshots: true,
         skip_metadata: true,
         app_version: version_number,
@@ -35,7 +36,7 @@ platform :ios do
 
     cru_update_commit(message: "[skip ci] Version number bump to #{version_number}, Build number bump to ##{build_number}")
 
-    cru_notify_users("MissionHub iOS Release Build #{version_number} (#{build_number}) submitted to App Store.")
+    cru_notify_users("#{target} iOS Release Build #{version_number} (#{build_number}) submitted to App Store.")
 
     if submit_for_review
       cru_notify_users("Build has been submitted for review and will be #{automatic_release ? 'automatically' : 'manually'} released.")
@@ -43,20 +44,62 @@ platform :ios do
   end
 
   desc "Push a new (beta) release build to Crashlytics"
-  lane :beta do |options|
+  lane :beta do
     build_number = cru_increment_build_number
+    target = ENV["CRU_TARGET"]
 
+    cru_download_localizations
+    
     cru_build_app(export_method: 'ad-hoc')
 
     crashlytics(
-        crashlytics_path: "./Pods/Crashlytics",
-        ipa_path: "./godtools.ipa",
-        groups: 'god-tools-ios',
-        notes: 'Beta build for GodTools iOS. See Jira board for issues that are "Ready for QA"'
+        crashlytics_path: ENV["CRASHLYTICS_FRAMEWORK_PATH"],
+        ipa_path: ENV["CRU_IPA_PATH"],
+        groups: ENV["CRASHLYTICS_GROUPS"],
+        notes: "Beta build for #{target} iOS. See Jira board for issues that are \"Ready for QA\""
     )
 
-    cru_notify_users(message: "GodTools iOS Beta Build ##{build_number} released to Crashlytics.")
+    cru_notify_users(message: "#{target}{ iOS Beta Build ##{build_number} released to Crashlytics.")
   end
+
+  # Localization functions
+
+  desc "Download latest localization files from Onesky"
+  lane :cru_download_localizations do
+    locales = ENV["ONESKY_ENABLED_LOCALIZATIONS"].split(',')
+    filename = ENV["ONESKY_FILENAME"]
+
+    locales.each do |locale|
+      begin
+      onesky_download(
+          public_key: ENV["ONESKY_PUBLIC_KEY"],
+          secret_key: ENV["ONESKY_SECRET_KEY"],
+          project_id: ENV["ONESKY_PROJECT_ID"],
+          locale: locale,
+          filename: filename,
+          destination: "./godtools/#{locale}.lproj/#{filename}"
+      )
+      rescue
+        puts("Failed to import #{locale}")
+      end
+
+    end
+      if is_ci?
+        travis_branch = ENV["TRAVIS_BRANCH"]
+
+        sh('git', 'checkout', travis_branch)
+    end
+    
+    begin
+      git_commit(path: "*/#{filename}",
+                 message: "[skip ci] Adding latest localization files from Onesky")
+      push_to_git_remote
+    rescue
+      puts("Failed to commit localization files.. maybe none to commit?")
+    end
+  end
+
+  # Helper functions
 
   lane :cru_increment_build_number do
     build_number = ENV["TRAVIS_BUILD_NUMBER"] || get_build_number.to_i + 1
@@ -69,7 +112,7 @@ platform :ios do
   end
 
   lane :cru_build_app do |options|
-    profile_name = options[:profile_name] || 'match AdHoc org.cru.godtools'
+    profile_name = options[:profile_name] || ENV["CRU_ADHOC_PROFILE_NAME"]
 
     automatic_code_signing(
         use_automatic_signing: false,
@@ -83,11 +126,11 @@ platform :ios do
     )
 
     gym(
-        scheme: "godtools",
+        scheme: ENV["CRU_SCHEME"],
         export_method: options[:export_method],
         export_options: {
             provisioningProfiles: {
-                'org.cru.godtools' => profile_name
+                ENV["CRU_APP_IDENTIFIER"] => profile_name
             }
         }
     )
@@ -127,7 +170,7 @@ platform :ios do
     end
 
     commit_version_bump(
-        xcodeproj: 'godtools.xcodeproj',
+        xcodeproj: ENV["CRU_XCODEPROJ"],
         message: options[:message]
     )
 
@@ -137,7 +180,7 @@ platform :ios do
   lane :cru_notify_users do |options|
     hipchat(
         message: options[:message],
-        channel: "GodTools",
+        channel: ENV["HIPCHAT_CHANNEL"],
         version: "2",
         custom_color: "green"
     )
