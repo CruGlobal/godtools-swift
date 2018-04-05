@@ -106,11 +106,6 @@ class BaseViewController: UIViewController {
         self.navigationLeftButtons.append(button)
     }
     
-    func addNavigationPlusButton() {
-        let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))
-        self.navigationRightButtons.append(button)
-    }
-    
     func addNavigationLanguageButton() {
         let button = self.buildNavigationButton(imageName: "language_logo_white", action: #selector(navigationLanguageButtonAction))
         self.navigationRightButtons.append(button)
@@ -202,6 +197,37 @@ class BaseViewController: UIViewController {
         
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func determineMyToolsSegment() -> String {
+        let myTools = "my_tools".localized
+        return myTools
+    }
+    
+    func determineFindToolsSegment() -> String {
+        let findTools = "find_tools".localized
+        return findTools
+    }
+    
+    func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
+        let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
+        var fontSize: CGFloat = 15.0
+        if count > 14 {
+            switch count {
+            case 15:
+                fontSize = 14.0
+            case 16:
+                fontSize = 13.5
+            case 17:
+                fontSize = 13.0
+            case 18:
+                fontSize = 12.5
+            default:
+                fontSize = 12.0
+            }
+        }
+        
+        return fontSize
     }
 
     // MARK: - Analytics Helpers

@@ -11,7 +11,6 @@ import PromiseKit
 
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
-    mutating func moveToAddNewTool()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
 }
@@ -99,23 +98,7 @@ class HomeViewController: BaseViewController {
     // MARK: - Actions
     
     @IBAction func pressAddNewToolsButton(_ sender: Any) {
-        self.delegate?.moveToAddNewTool()
-    }
-    
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-        self.addNavigationBurgerButton()
-        self.addNavigationPlusButton()
-        self.addNavigationLanguageButton()
-    }
-    
-    override func navigationPlusButtonAction() {
-        self.delegate?.moveToAddNewTool()
-    }
-    
-    override func navigationLanguageButtonAction() {
-        self.delegate?.moveToUpdateLanguageSettings()
+     
     }
     
     // MARK: - Helpers

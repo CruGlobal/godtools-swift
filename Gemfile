@@ -4,3 +4,6 @@ gem 'fastlane'
 gem 'cocoapods', '~> 1.4'
 gem 'xcov', '~> 1.2'
 gem 'xcode-install', '~> 2.0'
+
+plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)

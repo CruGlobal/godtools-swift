@@ -94,6 +94,8 @@
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
+		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
+		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
 		1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
@@ -322,6 +324,8 @@
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultStyle.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
+		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
+		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRelay.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
@@ -807,6 +811,8 @@
 				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
 				4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */,
 				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
+				1E7A11872072892900AE047D /* MasterHomeViewController.swift */,
+				1E7A11882072892900AE047D /* MasterHomeViewController.xib */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -1405,6 +1411,7 @@
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				ECB5A8C31EE5E326008E4AB7 /* WebViewController.xib in Resources */,
 				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
+				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
@@ -1474,7 +1481,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		23565315AB9417BD82C7FE1A /* [CP] Copy Pods Resources */ = {
@@ -1507,7 +1514,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4F5707E51EAFCA7F00A540C2 /* ShellScript */ = {
@@ -1669,6 +1676,7 @@
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
+				1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */,
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */,
