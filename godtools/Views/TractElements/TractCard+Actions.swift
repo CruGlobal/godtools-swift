@@ -23,11 +23,17 @@ extension TractCard {
     
     func processSwipeUp() {
         let properties = cardProperties()
-        
         if properties.cardState == .preview || properties.cardState == .close {
             showCardAndPreviousCards()
         } else if properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
+            
+            // Need to adjust the Card number/letterName for proper analytics tracking
+            let adjustedLetterName = (properties.cardNumber + 1).convertToLetter()
+            let relay = AnalyticsRelay.shared
+            if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
+            }
         }
     }
     
@@ -36,6 +42,13 @@ extension TractCard {
         
         if properties.cardState == .open || properties.cardState == .enable {
             hideCard()
+            
+            // Need to adjust the Card number/letterName for proper analytics tracking
+            let adjustedLetterName = (properties.cardNumber - 1).convertToLetter()
+            let relay = AnalyticsRelay.shared
+            if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
+            }
         }
     }
     
@@ -64,11 +77,11 @@ extension TractCard {
         
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
+        processCardForAnalytics(cardLetterName: properties.cardLetterName)
     }
     
     func showCard() {
         let properties = cardProperties()
-        
         if properties.cardState == .open {
             return
         }
@@ -222,6 +235,30 @@ extension TractCard {
         if properties.cardState == .open || properties.cardState == .close {
             properties.cardState = .preview
         }
+    }
+    
+    // MARK - Analytics helper
+    
+    func processCardForAnalytics(cardLetterName: String) {
+        let relay = AnalyticsRelay.shared
+        relay.timer.invalidate()
+        relay.isTimerRunning = false
+        
+        if !relay.isTimerRunning {
+            relay.timerCounter = 6
+            relay.runTimer()
+        }
+        
+        relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
+        
+        sendScreenViewNotification(screenName: relay.screenName + cardLetterName)
+    }
+    
+    func sendScreenViewNotification(screenName: String) {
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
+        NotificationCenter.default.post(name: .screenViewNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
     }
     
 }

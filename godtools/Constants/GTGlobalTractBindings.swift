@@ -28,7 +28,25 @@ class GTGlobalTractBindings: NSObject {
             
             let params = form.getFormData()
             
-            _ = manager.createSubscriber(params: params)
+            _ = manager.createSubscriber(params: params)?.then(execute: { (_) -> Void in
+                
+                guard let resource = form.tractConfigurations?.resource else { return }
+                let code = resource.code
+                
+                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.emailSignUpAction: 1]
+
+                switch code {
+                case "kgp":
+                    userInfo["action"] = AdobeAnalyticsConstants.Values.kgpEmailSignUp
+                case "fourlaws":
+                    userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsEmailSignUp
+                default :
+                    break
+                }
+                NotificationCenter.default.post(name: .actionTrackNotification,
+                                                object: nil,
+                                                userInfo: userInfo)
+            })
             
         default: break
 

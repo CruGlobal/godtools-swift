@@ -24,6 +24,7 @@ extension TractViewController {
         self.currentPage = page
         _ = reloadPagesViews()
         sendPageToAnalytics()
+        
         _ = moveViews()
     }
     

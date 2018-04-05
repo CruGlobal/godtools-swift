@@ -61,5 +61,6 @@ class TractCardProperties: TractProperties {
     
     var cardState = CardState.preview
     var cardNumber = 0
+    var cardLetterName = ""
     
 }

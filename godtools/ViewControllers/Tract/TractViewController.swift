@@ -189,6 +189,13 @@ class TractViewController: BaseViewController {
         
         let activityController = UIActivityViewController(activityItems: [shareMessage], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
+        
+        let userInfo: [String: Any] = ["action": AdobeAnalyticsConstants.Values.share,
+                        AdobeAnalyticsConstants.Keys.shareAction: 1,
+                        GTConstants.kAnalyticsScreenNameKey: screenName()]
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
     }
     
     private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {

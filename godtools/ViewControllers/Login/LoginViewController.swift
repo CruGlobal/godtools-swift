@@ -93,19 +93,19 @@ class LoginViewController: BaseViewController {
             return
         }
         
-//        loginClient.passwordGrantLogin(for: username!, password: password!) { [unowned self] (result, error) in
-//            switch result {
-//            case .success:
+       /* loginClient.passwordGrantLogin(for: username!, password: password!) { [unowned self] (result, error) in
+            switch result {
+            case .success:
                 self.showAlert(withTitle: "success".localized, message: "")
                 self.setViewState()
-//                debugPrint(loginClient.guid())
-//                debugPrint(loginClient.isAuthenticated())
-//            case .badPassword:
-//                self.showAlert(withTitle: "error".localized, message: "bad_password".localized)
-//            default:
-//                debugPrint(loginClient.isAuthenticated())
-//            }
- //       }
+                debugPrint(loginClient.guid())
+                debugPrint(loginClient.isAuthenticated())
+            case .badPassword:
+                self.showAlert(withTitle: "error".localized, message: "bad_password".localized)
+            default:
+                debugPrint(loginClient.isAuthenticated())
+            }
+        }*/
     }
     
     private func showAlert(withTitle title: String, message: String) {

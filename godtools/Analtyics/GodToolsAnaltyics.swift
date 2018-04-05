@@ -16,11 +16,36 @@ struct AdobeAnalyticsConstants {
         static let marketingCloudID = "cru.mcid"
         static let screenName = "cru.screenname"
         static let previousScreenName = "cru.previousscreenname"
+        static let contentLanguage = "cru.contentlanguage"
+        static let contentLanguageSecondary = "cru.contentlanguagesecondary"
+        static let shareAction = "cru.shareiconengaged"
+        static let exitAction = "cru.mobileexitlink"
+        static let toggleAction = "cru.toggleswitch"
+        static let gospelPresentedTimedAction = "cru.presentingthegospel"
+        static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
+        static let newProfessingBelieverAction = "cru.newprofessingbelievers"
+        static let emailSignUpAction = "cru.emailsignup"
     }
     
     struct Values {
         static let godTools = "GodTools"
         static let notLoggedIn = "not logged in"
+        static let share = "Share Icon Engaged"
+        static let exitLink = "Exit Link Engaged"
+        static let kgpUSCircleToggled = "KGP-US Circle Toggled"
+        static let kgpCircleToggled = "KGP Circle Toggled"
+        static let kgpGospelPresented = "KGP Gospel Presented"
+        static let kgpUSGospelPresented = "KGP-US Gospel Presented"
+        static let fourLawsGospelPresented = "FourLaws Gospel Presented"
+        static let theFourGospelPresented = "TheFour Gospel Presented"
+        static let satisfiedHolySpiritPresented = "Satisfied Holy Spirit Presented"
+        static let honorRestoredPresented = "HonorRestored Gospel Presented"
+        static let kgpNewProfessingBeliever = "KGP New Professing Believer"
+        static let kgpUSNewProfessingBeliever = "KGP-US New Professing Believer"
+        static let fourLawsNewProfessingBeliever = "FourLaws New Professing Believer"
+        static let theFourNewProfessingBeliever = "TheFour New Professing Believer"
+        static let kgpEmailSignUp = "KGP Email Sign Up"
+        static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
     }
 }
 class GodToolsAnaltyics {
@@ -55,6 +80,11 @@ class GodToolsAnaltyics {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(recordActionForADBMobile(notification:)),
+                                               name: .actionTrackNotification,
                                                object: nil)
         
         recordAdwordsConversion()
@@ -115,11 +145,36 @@ class GodToolsAnaltyics {
 
     }
     
+    @objc private func recordActionForADBMobile(notification: Notification) {
+        var contextData: [String: Any] = [:]
+        guard let userInfo = notification.userInfo as? [String: Any] else { return }
+        guard let action = userInfo["action"] as? String else { return }
+
+        contextData = userInfo
+        contextData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        contextData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        contextData.removeValue(forKey: "action")
+        
+        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
+            self.trackActionInAdobe(actionName: action, data: contextData)
+            debugPrint("\(contextData.debugDescription)\n")
+        }
+    }
+
+    
+    private func trackActionInAdobe(actionName: String, data: [String: Any]) {
+        ADBMobile.trackAction(actionName, data: data)
+    }
+    
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
+        let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
+        let parallelLanguageCode = UserDefaults.standard.string(forKey: "kParallelLanguageCode") ?? ""
         
         properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
         properties[AdobeAnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
+        properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
@@ -127,5 +182,6 @@ class GodToolsAnaltyics {
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
+        debugPrint("\(properties.debugDescription)\n")
     }
 }

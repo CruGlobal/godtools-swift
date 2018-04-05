@@ -261,6 +261,13 @@ extension MenuViewController {
     fileprivate func shareGodToolsApp() {
         let textToShare = [ "share_god_tools_share_sheet_text".localized ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        
+        var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.shareAction: 1]
+        userInfo["action"] = AdobeAnalyticsConstants.Values.share
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+        
         self.present(activityViewController, animated: true, completion: nil)
     }
     
