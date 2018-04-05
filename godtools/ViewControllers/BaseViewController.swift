@@ -106,12 +106,6 @@ class BaseViewController: UIViewController {
         self.navigationLeftButtons.append(button)
     }
     
-    
-    func addNavigationPlusButton() {
-//        let button = self.buildNavigationButton(imageName: "plus_white", action: #selector(navigationPlusButtonAction))
-//        self.navigationRightButtons.append(button)
-    }
-    
     func addNavigationLanguageButton() {
         let button = self.buildNavigationButton(imageName: "language_logo_white", action: #selector(navigationLanguageButtonAction))
         self.navigationRightButtons.append(button)
