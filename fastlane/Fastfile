@@ -81,6 +81,7 @@ platform :ios do
         puts("Failed to import #{locale}")
       end
 
+    end
       if is_ci?
         travis_branch = ENV["TRAVIS_BRANCH"]
 
