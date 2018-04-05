@@ -80,6 +80,15 @@ platform :ios do
       rescue
         puts("Failed to import #{locale}")
       end
+
+      if is_ci?
+        travis_branch = ENV["TRAVIS_BRANCH"]
+
+        sh('git', 'checkout', travis_branch)
+      end
+
+      git_add(pathspec: "*/#{filename}")
+      git_commit(message: "[skip ci] Adding latest localization files from Onesky")
     end
   end
 
