@@ -64,18 +64,23 @@ platform :ios do
 
   desc "Download latest localization files from Onesky"
   lane :cru_download_localizations do
-    locale = 'fr'
+    locales = ENV["ONESKY_ENABLED_LOCALIZATIONS"].split(',')
     filename = ENV["ONESKY_FILENAME"]
 
-    onesky_download(
-        public_key: ENV["ONESKY_PUBLIC_KEY"],
-        secret_key: ENV["ONESKY_SECRET_KEY"],
-        project_id: ENV["ONESKY_PROJECT_ID"],
-        locale: locale,
-        filename: filename,
-        destination: "./godtools/#{locale}.lproj/#{filename}"
-    )
-
+    locales.each do |locale|
+      begin
+      onesky_download(
+          public_key: ENV["ONESKY_PUBLIC_KEY"],
+          secret_key: ENV["ONESKY_SECRET_KEY"],
+          project_id: ENV["ONESKY_PROJECT_ID"],
+          locale: locale,
+          filename: filename,
+          destination: "./godtools/#{locale}.lproj/#{filename}"
+      )
+      rescue
+        puts("Failed to import #{locale}")
+      end
+    end
   end
 
   # Helper functions
