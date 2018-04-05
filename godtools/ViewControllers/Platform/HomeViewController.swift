@@ -11,7 +11,6 @@ import PromiseKit
 
 protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
-    mutating func moveToAddNewTool()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
 }

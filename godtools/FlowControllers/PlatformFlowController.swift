@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, AddToolsViewControllerDelegate {
+class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, AddToolsViewControllerDelegate, MasterHomeViewControllerDelegate {
     
     override func initialViewController() -> UIViewController {
         let viewController = MasterHomeViewController(nibName: "MasterHomeViewController", bundle: nil)

@@ -9,13 +9,19 @@
 import UIKit
 import PromiseKit
 
+protocol MasterHomeViewControllerDelegate {
+    mutating func moveToUpdateLanguageSettings()
+    mutating func moveToToolDetail(resource: DownloadedResource)
+    mutating func moveToTract(resource: DownloadedResource)
+}
+
 class MasterHomeViewController: BaseViewController  {
     
     var segmentedControl = UISegmentedControl()
     
     let toolsManager = ToolsManager.shared
     
-    var delegate: HomeViewControllerDelegate?
+    var delegate: MasterHomeViewControllerDelegate?
     
     private lazy var homeViewController: HomeViewController = {
         
@@ -179,30 +185,16 @@ extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {
 extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewControllerDelegate {
     
     func moveToUpdateLanguageSettings() {
-            let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
-            viewController.delegate = self
-            //self.pushViewController(viewController: viewController)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        delegate?.moveToUpdateLanguageSettings()
     }
     
     func moveToToolDetail(resource: DownloadedResource) {
-        let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
-        viewController.resource = resource
-        //navigationController?.pushViewController(viewController: viewController)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        delegate?.moveToToolDetail(resource: resource)
     }
     
     func moveToTract(resource: DownloadedResource) {
-        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
-        viewController.resource = resource
-        //pushViewController(viewController: viewController)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        delegate?.moveToTract(resource: resource)
     }
-    
-    func moveToAddNewTool() {
-        // Don't need now we are using Segment Control
-    }
-    
 }
 
 extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewControllerDelegate {
