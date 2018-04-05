@@ -57,6 +57,7 @@ class TractViewController: BaseViewController {
         getResourceData()
         setupSwipeGestures()
         defineObservers()
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     deinit {
@@ -86,6 +87,7 @@ class TractViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TractBindings.clearAllBindings()
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     // MARK: - UI setup

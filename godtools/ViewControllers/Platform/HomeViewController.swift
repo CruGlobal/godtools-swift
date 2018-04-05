@@ -98,7 +98,7 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Actions
     
-    @IBAction func pressAddNewToolsButton(_ sender: Any) {
+    @IBAction func pressFindToolsButton(_ sender: Any) {
         delegate?.goToFindTools()
     }
     
