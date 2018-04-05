@@ -48,6 +48,8 @@ platform :ios do
     build_number = cru_increment_build_number
     target = ENV["CRU_TARGET"]
 
+    cru_download_localizations
+    
     cru_build_app(export_method: 'ad-hoc')
 
     crashlytics(
