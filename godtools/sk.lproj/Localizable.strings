@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Moje nástroje";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Nájsť nástroje";
+
+"unavailable" = "Nedostupné";
 // Onboarding
 "add_new_tools" = "Pridať nové nástroje";
 "set_your_languages" = "Nastavte si jazyky";
@@ -10,6 +17,7 @@
 "menu_share" = "Zdieľanie";
 "menu_legal" = "Právne informácie";
 "language_settings" = "Nastavenia jazyka";
+// Tool Detail
 "about" = "Informácie";
 "help" = "Pomoc";
 "contact_us" = "Kontaktujte nás";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Pridať nástroje";
 
-// Tool Detail
 "total_views" = "Zobrazenia: %d";
 "total_languages" = "Jazyky: %d";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Najnovšie slovenské nástroje sa momentálne nepodarilo stiahnuť. K dispozícii sú anglické nástroje. Skontrolujte si svoje pripojenie alebo to skúste znova neskôr.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Je možné stiahnuť najnovšie slovenské nástroje.\n\n Chcete nastaviť svoj hlavný jazyk na slovenčinu a stiahnuť si tieto zdroje?";
+"device_locale_download_success" = "Je možné stiahnuť najnovšie slovenské nástroje.\n\nChcete nastaviť svoj hlavný jazyk na slovenčinu a stiahnuť si tieto zdroje?";
 
 // Actions
 "yes" = "Áno";
@@ -69,7 +76,7 @@
 "error" = "Chyba";
 "ok" = "OK";
 "error_can_not_send_email" = "Vo vašom zariadení nie je nastavený e-mail.";
-"required_field_missing" = "\"%@\" je povinné pole.";
+"required_field_missing" = "%@ je povinné pole.";
 
 // About
 "general_about_1" = "Aplikácia GodTools vám pomáha zdieľať vieru jednoducho a jasne.";

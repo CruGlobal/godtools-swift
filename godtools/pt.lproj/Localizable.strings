@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Minhas ferramentas";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Encontrar ferramentas";
+
+"unavailable" = "Indisponível";
 // Onboarding
 "add_new_tools" = "Adicionar novas ferramentas";
 "set_your_languages" = "Definir os idiomas";
@@ -20,7 +27,7 @@
 "share_a_story_with_us" = "Partilhar uma história connosco";
 "terms_of_use" = "Termos de Utilização";
 "privacy_policy" = "Política de Privacidade";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Informações de Direitos de Autor";
 "share_god_tools_share_sheet_text" = "Aqui podes transferir a aplicação GodTools: http://godtoolsapp.com";
 
 // Add Tools
@@ -46,10 +53,10 @@
 "tract_loading_error_message" = "Ocorreu um problema ao abrir este recurso. Voltar a transferir costuma resolver este problema. \n\n Gostarias de voltar a transferi-lo?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "Neste momento, não é possível transferir as ferramentas em português mais recentes. Verifique a ligação à Internet ou tente novamente mais tarde.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "É possível transferir as ferramentas em português mais recentes. \n\n Gostaria de definir o seu idioma principal como Português e transferir esses recursos?";
 
 // Actions
 "yes" = "Sim";
@@ -69,7 +76,7 @@
 "error" = "Erro";
 "ok" = "OK";
 "error_can_not_send_email" = "Não existe nenhum e-mail configurado no teu dispositivo.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" é um campo obrigatório.";
 
 // About
 "general_about_1" = "A aplicação GodTools ajuda-te a partilhar a tua fé de uma forma fácil e clara.";

@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "నా సాధనాలు";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "సాధనాలను కనుగొనండి";
 
+"unavailable" = "అందుబాటులో లేదు";
 // Onboarding
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
@@ -18,6 +17,7 @@
 "menu_share" = "షేర్ చెయ్యండి";
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
+// Tool Detail
 "about" = "గూర్చి";
 "help" = "సహాయం";
 "contact_us" = "సంప్రదించండి";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "టూల్స్ జోడించండి";
 
-// Tool Detail
 "total_views" = "%d వ్యూస్";
 "total_languages" = "%d భాషలు";
 
@@ -51,13 +50,13 @@
 // Alert Controllers
 "download_error" = "డౌన్లోడ్ ఎర్రర్";
 "language_download_error" = "అందుబాటులో ఉన్న భాషలు ఇప్పుడు డౌన్లోడ్ కావడం లేదు. మీ కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
-"tract_loading_error_message" = "ఈ నిధిని తెరచుటలో సమస్య ఉంది. దీనిని మరలా డౌన్లోడ్ చేయుట ద్వారా చాలా సార్లు సమస్య పరిష్కరించబడుతుంది. మీరు దీనిని మరలా డౌన్లోడ్ చెయ్యాలని అనుకుంటున్నారా? ";
+"tract_loading_error_message" = "ఈ నిధిని తెరచుటలో సమస్య ఉంది. దీనిని మరలా డౌన్లోడ్ చేయుట ద్వారా చాలా సార్లు సమస్య పరిష్కరించబడుతుంది.\nమీరు దీనిని మరలా డౌన్లోడ్ చెయ్యాలని అనుకుంటున్నారా? ";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "అధునాతన తెలుగు టూల్స్ ఇప్పుడు డౌన్లోడ్ అవ్వడం లేదు. తెలుగు టూల్స్ లభ్యమవుతాయి. కనెక్షన్ సరి చూసుకోండి లేక తరువాత ప్రయత్నించండి. ";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "అధునాతన తెలుగు టూల్స్ డౌన్లోడ్ చేసుకోవచ్చు. \n\n మీ ప్రాథమిక భాషను తెలుగుగా సెట్ చేసి ఈ నిధులను డౌన్లోడ్ చెయ్యాలనుకుంటున్నారా? ";
+"device_locale_download_success" = "అధునాతన తెలుగు టూల్స్ డౌన్లోడ్ చేసుకోవచ్చు.\nమీ ప్రాథమిక భాషను తెలుగుగా సెట్ చేసి ఈ నిధులను డౌన్లోడ్ చెయ్యాలనుకుంటున్నారా? ";
 
 // Actions
 "yes" = "అవును";
@@ -72,10 +71,9 @@
 "done" = "అయ్యిపోయింది";
 "remove" = "తొలగించు";
 "clear" = "క్లియర్";
-"unavailable" = "అందుబాటులో లేదు";
 
 // Alerts
-"error" = "Error";
+"error" = "error";
 "ok" = "సరే";
 "error_can_not_send_email" = "మీ డివైస్ లో ఈమెయిలు అందుబాటులో లేదు. ";
 "required_field_missing" = "\"%@\" ఇది అవసరమైనది. ";

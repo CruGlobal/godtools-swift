@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Τα Εργαλεία μου";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Βρείτε Εργαλεία";
+
+"unavailable" = "Μη διαθέσιμο";
 // Onboarding
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
 "set_your_languages" = "Ορίστε τις γλώσσες σας";
@@ -10,6 +17,7 @@
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
+// Tool Detail
 "about" = "Σχετικά";
 "help" = "Βοήθεια";
 "contact_us" = "Επικοινωνήστε μαζί μας";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Προσθέστε Εργαλεία";
 
-// Tool Detail
 "total_views" = "%d προβολές";
 "total_languages" = "%d γλώσσες";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Δεν ήταν δυνατή η λήψη των πιο πρόσφατων εργαλείων Ελληνικών αυτήν τη στιγμή. Εργαλεία Ελληνικών είναι διαθέσιμα. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Μπορείτε να κατεβάσετε τα πιο πρόσφατα εργαλεία Ελληνικών. \n\n Θέλετε να ορίσετε ως κύρια γλώσσα σας τα Ελληνικά και να κατεβάσετε αυτά τα μέσα;";
+"device_locale_download_success" = "Μπορείτε να κατεβάσετε τα πιο πρόσφατα εργαλεία Ελληνικών.\n\nΘέλετε να ορίσετε ως κύρια γλώσσα σας τα Ελληνικά και να κατεβάσετε αυτά τα μέσα;";
 
 // Actions
 "yes" = "Ναι";
@@ -64,7 +71,6 @@
 "done" = "Έγινε";
 "remove" = "Αφαίρεση";
 "clear" = "Καθαρισμός";
-"unavailable" = "Μη διαθέσιμο";
 
 // Alerts
 "error" = "Σφάλμα";

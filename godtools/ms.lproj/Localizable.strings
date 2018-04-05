@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Alat Saya";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Cari Alat";
+
+"unavailable" = "Tidak tersedia";
 // Onboarding
 "add_new_tools" = "Tambah Alat Baharu";
 "set_your_languages" = "Tetapkan Bahasa Anda";
@@ -10,6 +17,7 @@
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
+// Tool Detail
 "about" = "Perihal";
 "help" = "Bantuan";
 "contact_us" = "Hubungi Kami";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Tambah Alat";
 
-// Tool Detail
 "total_views" = "%d melihat";
 "total_languages" = "%d bahasa";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Alat bahasa Melayu terkini tidak dapat dimuat turun pada masa ini. Alat bahasa Inggeris tersedia. Sila semak ketersambungan anda atau cuba semula kemudian.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun. \n\n Adakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
+"device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun.\n\nAdakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
 
 // Actions
 "yes" = "Ya";
@@ -64,7 +71,6 @@
 "done" = "Selesai";
 "remove" = "Alih Keluar";
 "clear" = "Kosongkan";
-"unavailable" = "Tidak tersedia";
 
 // Alerts
 "error" = "Ralat";

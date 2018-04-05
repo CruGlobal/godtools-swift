@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "أدواتي";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "إيجاد أدوات";
+
+"unavailable" = "غير متوفر";
 // Onboarding
 "add_new_tools" = "إضافة مزيد من الأدوات";
 "set_your_languages" = "حدد لغاتك";
@@ -20,7 +27,7 @@
 "share_a_story_with_us" = "شارك قصة معنا";
 "terms_of_use" = "شروط الاستخدام";
 "privacy_policy" = "سياسة الخصوصية";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "معلومات حق النشر والتأليف";
 "share_god_tools_share_sheet_text" = "هنا يمكنك تحميل تطبيق GodTools:
 http://godtoolsapp.com";
 
@@ -47,10 +54,10 @@ http://godtoolsapp.com";
 "tract_loading_error_message" = "كان هناك مشكل في فتح هذ المصدر. تحميله مجدداً يحل المشكل عادة.\n\nهل ترغب في تحميله مجدداً؟";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
+"device_locale_download_error" = "لا يمكن تحميل وسائل اللغة الإنجليزية الحديثة في هذا الوقت. أدوات اللغة الإنجليزية متوفرة. الرّجاء تفقد اتصالك أو أعد المحاولة لاحقاً.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"device_locale_download_success" = "يمكن تحميل أدوات اللغة الإنجليزية الحديثة.\n\nهل ترغب في جعل الإنجليزية هي اللغة الرئيسية و تحميل هذه المصادر؟";
 
 // Actions
 "yes" = "نعم";
@@ -70,7 +77,7 @@ http://godtoolsapp.com";
 "error" = "خطأ";
 "ok" = "موافق";
 "error_can_not_send_email" = "لا يوجد هناك بريد الكتروني معد على جهازك.";
-"required_field_missing" = "\"%@\" is a required field.";
+"required_field_missing" = "\"%@\" هو حقل مطلوب.";
 
 // About
 "general_about_1" = "GodTools يساعدك على مشاركة إيمانك بطريقة سهلة وواضحة.";

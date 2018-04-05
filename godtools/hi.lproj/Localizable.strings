@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "मेरे टूल्स";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "टूल्स खोजें";
+
+"unavailable" = "अनुपलब्ध";
 // Onboarding
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "नवीनतम अंग्रेजी के टूल्स अभी डाउनलोड नहीं किए जा सके। अंग्रेजी के टूल्स उपलब्ध हैं। अपना कनेक्शन जांचें या बाद में दुबारा प्रयास करें।";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं। \n\n क्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
+"device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं।\n\nक्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
 
 // Actions
 "yes" = "हां";
@@ -64,7 +71,6 @@
 "done" = "पूरा हुआ";
 "remove" = "हटाएं";
 "clear" = "साफ करें";
-"unavailable" = "अनुपलब्ध";
 
 // Alerts
 "error" = "त्रुटि";

@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "我的工具";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "搜尋工具";
+
+"unavailable" = "無法使用";
 // Onboarding
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "設定語言";
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "目前無法下載最新英文工具。有英文工具可供使用。請確認您的網路已連線，或稍後再試。";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "最新的英文工具現在可以下載了。 \n\n 您想將您的主要語言設定成英文，下載這些資源嗎？";
+"device_locale_download_success" = "最新的英文工具現在可以下載了。\n\n您想將您的主要語言設定成英文，下載這些資源嗎？";
 
 // Actions
 "yes" = "好";
@@ -64,7 +71,6 @@
 "done" = "完成";
 "remove" = "移除";
 "clear" = "清空";
-"unavailable" = "無法使用";
 
 // Alerts
 "error" = "錯誤";
