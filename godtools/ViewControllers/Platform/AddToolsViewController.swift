@@ -25,18 +25,21 @@ class AddToolsViewController: BaseViewController {
             tableView.dataSource = toolsManager
         }
     }
+    var emptyView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCells()
         self.setupStyle()
+        emptyView = addMessageForEmptyResources()
+        self.view.addSubview(emptyView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.toolsManager.delegate = self
         self.toolsManager.loadResourceList()
-        self.tableView.reloadData()
+        refreshView()
     }
 
     override func displayScreenTitle() {
@@ -57,6 +60,39 @@ class AddToolsViewController: BaseViewController {
         self.tableView.separatorStyle = .none
     }
     
+    func refreshView() {
+        self.tableView.reloadData()
+        self.emptyView.isHidden = self.toolsManager.hasResources()
+       // self.emptyView.isHidden = (self.toolsManager.resources.count > 1)
+        self.view.setNeedsDisplay()
+    }
+    
+    func addMessageForEmptyResources() -> UIView {
+        let messageLabel = UILabel()
+        let emptyBaseView = UIView()
+        
+        messageLabel.numberOfLines = 3
+        messageLabel.layer.masksToBounds = true
+        let screenSize = UIScreen.main.bounds
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        let centerX = screenSize.width/2
+        let centerY = screenSize.height/2
+        messageLabel.textAlignment = .center
+        messageLabel.lineBreakMode = .byWordWrapping
+
+        let labelWidth: CGFloat = 250.0
+        let labelHeight: CGFloat = 90.0
+        let x = (centerX - (labelWidth/2))
+        let y = (centerY - (labelHeight/2))
+        emptyBaseView.frame = CGRect(x: x, y: y - topBarHeight, width: labelWidth, height: labelHeight)
+        messageLabel.frame = CGRect(x: 0, y: 0, width: labelWidth, height: labelHeight)
+        messageLabel.text = "You have downloaded all available tools."
+        emptyBaseView.addSubview(messageLabel)
+        
+        return emptyBaseView
+    }
+    
     // MARK: - Analytics
     
     override func screenName() -> String {
@@ -75,7 +111,7 @@ extension AddToolsViewController: ToolsManagerDelegate {
     }
     
     func downloadButtonWasPressed(resource: DownloadedResource) {
-        self.tableView.reloadData()
+        refreshView()
     }
     
     func primaryTranslationDownloadCompleted(at index: Int) {
@@ -83,5 +119,6 @@ extension AddToolsViewController: ToolsManagerDelegate {
         ToolsManager.shared.resources.remove(at: index)
         self.tableView.deleteSections(IndexSet(integer: index), with: .fade)
         self.tableView.endUpdates()
+        refreshView()
     }
 }
