@@ -72,6 +72,8 @@ class AddToolsViewController: BaseViewController {
         let emptyBaseView = UIView()
         
         messageLabel.numberOfLines = 3
+        messageLabel.font = UIFont.gtRegular(size: 16)
+        messageLabel.textColor = UIColor.gtBlack
         messageLabel.layer.masksToBounds = true
         let screenSize = UIScreen.main.bounds
         let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
@@ -87,6 +89,8 @@ class AddToolsViewController: BaseViewController {
         let y = (centerY - (labelHeight/2))
         emptyBaseView.frame = CGRect(x: x, y: y - topBarHeight, width: labelWidth, height: labelHeight)
         messageLabel.frame = CGRect(x: 0, y: 0, width: labelWidth, height: labelHeight)
+        
+        // TODO - This will need to be localized
         messageLabel.text = "You have downloaded all available tools."
         emptyBaseView.addSubview(messageLabel)
         
