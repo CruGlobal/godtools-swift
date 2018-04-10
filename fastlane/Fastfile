@@ -59,7 +59,7 @@ platform :ios do
         notes: "Beta build for #{target} iOS. See Jira board for issues that are \"Ready for QA\""
     )
 
-    cru_notify_users(message: "#{target}{ iOS Beta Build ##{build_number} released to Crashlytics.")
+    cru_notify_users(message: "#{target} iOS Beta Build ##{build_number} released to Crashlytics.")
   end
 
   # Localization functions
