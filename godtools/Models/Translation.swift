@@ -19,6 +19,7 @@ class Translation: Object {
     dynamic var version: Int16 = 0
     dynamic var language: Language?
     dynamic var downloadedResource: DownloadedResource?
+    dynamic var tagline: String?
     let referencedFiles = LinkingObjects(fromType: ReferencedFile.self, property: "translations")
     let attachments = LinkingObjects(fromType: Attachment.self, property: "translations")
     
