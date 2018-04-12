@@ -111,7 +111,7 @@ class HomeToolTableViewCell: UITableViewCell {
         }
 
         if let translation = resource.getTranslationForLanguage(language) {
-            return translation.localizedDescription ?? ""
+            return translation.tagline ?? ""
         }
 
         return resource.descr ?? ""
