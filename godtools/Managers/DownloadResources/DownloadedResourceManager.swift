@@ -179,6 +179,7 @@ class DownloadedResourceManager: GTDataManager {
         cachedTranslation.manifestFilename = remoteTranslation.manifestName
         cachedTranslation.localizedName = remoteTranslation.translatedName
         cachedTranslation.localizedDescription = remoteTranslation.translatedDescription
+        cachedTranslation.tagline = remoteTranslation.tagline
         
         return cachedTranslation
     }

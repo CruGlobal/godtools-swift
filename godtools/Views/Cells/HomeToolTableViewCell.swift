@@ -110,11 +110,15 @@ class HomeToolTableViewCell: UITableViewCell {
             return resource.descr ?? ""
         }
 
-        if let translation = resource.getTranslationForLanguage(language) {
-            return translation.tagline ?? ""
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return resource.descr ?? ""
         }
-
-        return resource.descr ?? ""
+        
+        // First check if tagline is empty string. Use translated description as a fallback
+        let tagline = (translation.tagline != "") ? (translation.tagline ?? "") : (translation.localizedDescription ?? "")
+        
+        // Returning the translated tagline, using the default resource description as a fallback(usually English).
+        return (tagline != "") ? (tagline) : (resource.descr ?? "")
     }
 
     // MARK: - Actions
