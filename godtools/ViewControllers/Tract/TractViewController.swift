@@ -273,13 +273,11 @@ class TractViewController: BaseViewController {
         parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
     }
     
-    func resolvePrimaryLanguage() -> Language? {
-        let languagesManager = LanguagesManager()
-        
+    func resolvePrimaryLanguage() -> Language? {        
         if arrivedByUniversalLink {
             return universalLinkLanguage
         } else {
-            return languagesManager.loadPrimaryLanguageFromDisk()
+            return primaryLanguage
         }
     }
 }
