@@ -135,6 +135,13 @@ class HomeViewController: BaseViewController {
     override func screenName() -> String {
         return "Home"
     }
+    
+    // MARK: - Accessiblity
+    
+    override func addAccessibilityIdentifiers() {
+        self.view.accessibilityIdentifier = GTAccessibilityConstants.Home.homeMyToolsView
+        self.tableView.accessibilityIdentifier = GTAccessibilityConstants.Home.homeTableView
+    }
 }
 
 extension HomeViewController: ToolsManagerDelegate {

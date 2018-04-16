@@ -168,6 +168,12 @@ class MasterHomeViewController: BaseViewController  {
     override func screenName() -> String {
         return "Home"
     }
+    
+    // MARK: - Accessiblity
+    
+    override func addAccessibilityIdentifiers() {
+        segmentedControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
+    }
 
 }
 
