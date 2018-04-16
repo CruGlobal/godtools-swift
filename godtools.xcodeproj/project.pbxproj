@@ -332,7 +332,7 @@
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F05F49B203735A600A3D01C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		4F05F49D203735B900A3D01C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
-		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
 		4F123FAF1F140F1000309DAD /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
 		4F123FB01F140F1000309DAD /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };

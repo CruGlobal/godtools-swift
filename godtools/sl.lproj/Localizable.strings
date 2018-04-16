@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Moja orodja";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Dodaj orodje";
 
+"unavailable" = "Ni na voljo";
 // Onboarding
 "add_new_tools" = "Dodaj nova orodja";
 "set_your_languages" = "Izberi jezike";
@@ -18,6 +17,7 @@
 "menu_share" = "Deli";
 "menu_legal" = "Zakonito";
 "language_settings" = "Jezikovne nastavitve";
+// Tool Detail
 "about" = "O aplikaciji";
 "help" = "Pomoč";
 "contact_us" = "Vprašaj nas";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "Dodaj orodja";
 
-// Tool Detail
 "total_views" = "%d ogledov";
 "total_languages" = "%d jezikov";
 
@@ -51,13 +50,14 @@
 // Alert Controllers
 "download_error" = "Napaka pri nalaganju";
 "language_download_error" = "Trenutno ni mogoče naložiti razpoložjivih jezikov. Preveri svojo povezavo ali poskusi ponovno kasneje.";
-"tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\n Ali ga želiš naložiti še enkrat?";
+"tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\nAli ga želiš naložiti še enkrat?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Trenutno ni mogoče naložiti najsodobnejših slovenskih orodij. Na voljo so angleška orodja. Preveri svojo povezavo ali poskusi ponovno kasneje.";
+"device_locale_download_error" = "Trenutno ni mogoče naložiti najsodobnejših slovenskih orodij. Na voljo so angleška orodja. 
+Preveri svojo povezavo ali poskusi ponovno kasneje.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\n Ali želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
+"device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\nAli želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
 
 // Actions
 "yes" = "Ja";
@@ -72,7 +72,6 @@
 "done" = "Zaključi";
 "remove" = "Odstrani";
 "clear" = "Izbriši";
-"unavailable" = "Ni na voljo";
 
 // Alerts
 "error" = "Napaka";

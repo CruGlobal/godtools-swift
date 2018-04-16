@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "マイツール";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "ツールを探す";
 
+"unavailable" = "利用不可";
 // Onboarding
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
@@ -18,11 +17,12 @@
 "menu_share" = "シェア";
 "menu_legal" = "法定事項";
 "language_settings" = "言語設定";
+// Tool Detail
 "about" = "情報";
 "help" = "ヘルプ";
 "contact_us" = "お問い合わせ";
 "notifications" = "通知";
-"preview_mode_translators_only" = "プレビューモード（翻訳者限定";
+"preview_mode_translators_only" = "プレビューモード（翻訳者限定）";
 "share_god_tools" = "GodToolsをシェア";
 "share_a_story_with_us" = "体験談を紹介";
 "terms_of_use" = "利用規約";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "ツールを追加";
 
-// Tool Detail
 "total_views" = "表示回数%d回";
 "total_languages" = "%d言語";
 
@@ -51,13 +50,13 @@
 // Alert Controllers
 "download_error" = "ダウンロードエラー";
 "language_download_error" = "利用可能な言語を現在ダウンロードできません。インターネット接続を確認するか、または後ほど再度お試しください。";
-"tract_loading_error_message" = "このリソースを開く際に問題が発生しました。もう一度ダウンロードすると高い確率で問題が解決する場合があります。\n\n もう一度ダウンロードしますか？";
+"tract_loading_error_message" = "このリソースを開く際に問題が発生しました。もう一度ダウンロードすると高い確率で問題が解決する場合があります。\n\nもう一度ダウンロードしますか？";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "最新の英語ツールを現在ダウンロードできません。英語ツールは利用可能です。インターネット接続を確認するか、または後ほど再度お試しください。";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "最新の英語ツールをダウンロードできます。 \n\n 第1言語を英語に設定してこれらのリソースをダウンロードしますか？";
+"device_locale_download_success" = "最新の英語ツールをダウンロードできます。\n\n第1言語を英語に設定してこれらのリソースをダウンロードしますか？";
 
 // Actions
 "yes" = "はい";
@@ -72,7 +71,6 @@
 "done" = "完了";
 "remove" = "削除";
 "clear" = "消去";
-"unavailable" = "利用不可";
 
 // Alerts
 "error" = "エラー";

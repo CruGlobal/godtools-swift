@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Công cụ của Tôi";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Tìm Công cụ";
+
+"unavailable" = "Không sẵn có";
 // Onboarding
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
@@ -10,6 +17,7 @@
 "menu_share" = "Chia sẻ";
 "menu_legal" = "Hợp pháp";
 "language_settings" = "Các thiết lập ngôn ngữ";
+// Tool Detail
 "about" = "Giới thiệu về";
 "help" = "Trợ giúp";
 "contact_us" = "Liên hệ chúng tôi";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Thêm Công cụ";
 
-// Tool Detail
 "total_views" = "%d lượt xem";
 "total_languages" = "%d ngôn ngữ";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Không thể tải về các công cụ tiếng Việt mới nhất vào lúc này. Các công cụ tiếng Anh luôn sẵn có. Xin hãy kiểm tra kết nối của bạn hoặc thử lại sau.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất. \n\n Bạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
+"device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất.\n\nBạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
 
 // Actions
 "yes" = "Có";
@@ -64,7 +71,6 @@
 "done" = "Đã xong";
 "remove" = "Loại bỏ";
 "clear" = "Rõ ràng";
-"unavailable" = "Không sẵn có";
 
 // Alerts
 "error" = "Lỗi";

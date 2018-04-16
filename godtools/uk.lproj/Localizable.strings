@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Інструменти";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Шукати інструменти";
+
+"unavailable" = "Недоступно";
 // Onboarding
 "add_new_tools" = "Додати інструмент";
 "set_your_languages" = "Встановіть мови";
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Останню версію на українській мові наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\n Бажаєте встановити англійську мову і завантажити ресурси на цій мові?";
+"device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\nБажаєте встановити англійську мову і завантажити ресурси на цій мові?";
 
 // Actions
 "yes" = "Так";
@@ -64,7 +71,6 @@
 "done" = "Готово";
 "remove" = "Видалити";
 "clear" = "Очистити";
-"unavailable" = "Недоступно";
 
 // Alerts
 "error" = "Помилка";

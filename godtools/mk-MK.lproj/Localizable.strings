@@ -20,7 +20,6 @@
 "share_a_story_with_us" = "Сподели приказна со нас";
 "terms_of_use" = "Одредби за употреба";
 "privacy_policy" = "Политика за приватност";
-"copyright_info" = "Copyright Info";
 "share_god_tools_share_sheet_text" = "Овде може да ја преземеш апл. GodTools: http://godtoolsapp.com";
 
 // Add Tools
@@ -45,12 +44,6 @@
 "language_download_error" = "Достапните јазици не може да се преземат сега. Провери ја конекцијата или обиди се подоцна.";
 "tract_loading_error_message" = "Имаше проблем при отворањето на овој ресурс. Проблемот најчесто се решава со повторно преземање. \n\n Сакаш да го преземеш повторно?";
 
-// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
-
-// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
-
 // Actions
 "yes" = "Да";
 "no" = "Не";
@@ -69,8 +62,6 @@
 "error" = "Грешка";
 "ok" = "Добро";
 "error_can_not_send_email" = "На уредот нема конфигурирана е-пошта.";
-"required_field_missing" = "\"%@\" is a required field.";
-
 // About
 "general_about_1" = "GodTools ти помага да ја шириш верата на лесен и јасен начин.";
 "general_about_2" = "Овие алатки ти помагаат доверливо да објасниш некому како може да започне релација со Бог преку Исус Христос, дури и ако никогаш претходно ја немаш ширено верата или тој/таа зборува друг јазик.";

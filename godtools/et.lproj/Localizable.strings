@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Minu tööriistad";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Leia tööriistu";
 
+"unavailable" = "Ei ole saadaval";
 // Onboarding
 "add_new_tools" = "Lisa uusi tööriistu";
 "set_your_languages" = "Seadista oma keeled";
@@ -18,6 +17,7 @@
 "menu_share" = "Jagamine";
 "menu_legal" = "Juriidiline teave";
 "language_settings" = "Keeleseaded";
+// Tool Detail
 "about" = "Teave";
 "help" = "Abi";
 "contact_us" = "Kontakt";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "Lisa tööriistu";
 
-// Tool Detail
 "total_views" = "%d külastust";
 "total_languages" = "%d keelt";
 
@@ -57,7 +56,7 @@
 "device_locale_download_error" = "Viimaseid eestikeelseid tööriistu ei olnud võimalik seekord alla laadida. Kontrolli võrguühenduse olemasolu või proovi hiljem uuesti.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Nüüd on võimalik alla laadida uusimaid eestikeelseid tööriistu.\n\n Kas tahad seada põhikeeleks eesti keele ja need tööriistad alla laadida?";
+"device_locale_download_success" = "Nüüd on võimalik alla laadida uusimaid eestikeelseid tööriistu.\n\nKas tahad seada põhikeeleks eesti keele ja need tööriistad alla laadida?";
 
 // Actions
 "yes" = "Jah";
@@ -72,13 +71,12 @@
 "done" = "Valmis";
 "remove" = "Eemalda";
 "clear" = "Kustuta";
-"unavailable" = "Ei ole saadaval";
 
 // Alerts
 "error" = "Viga";
 "ok" = "Nõus";
 "error_can_not_send_email" = "Sa ei ole oma seadmes meilikontot seadistanud.";
-"required_field_missing" = "\"%@\" on kohustuslik väli.";
+"required_field_missing" = "%@ on kohustuslik väli.";
 
 // About
 "general_about_1" = "Jumala Tööriistad aitavad sul jagada oma usku lihtsalt ja selgelt.";

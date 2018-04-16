@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "เครื่องมือของฉัน";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "ค้นหาเครื่องมือ";
 
+"unavailable" = "ใช้ไม่ได้";
 // Onboarding
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";
 "set_your_languages" = "ตั้งค่าภาษา";
@@ -18,6 +17,7 @@
 "menu_share" = "แชร์";
 "menu_legal" = "กฎหมาย";
 "language_settings" = "การตั้งค่าภาษา";
+// Tool Detail
 "about" = "เกี่ยวกับ";
 "help" = "ช่วยเหลือ";
 "contact_us" = "ติดต่อเรา";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "เพิ่มเครื่องมือ";
 
-// Tool Detail
 "total_views" = "ดู %d ครั้ง";
 "total_languages" = "%d ภาษา";
 
@@ -51,13 +50,13 @@
 // Alert Controllers
 "download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
 "language_download_error" = "ไม่สามารถดาวน์โหลดภาษาที่มีได้ตอนนี้ โปรดตรวจสอบการเชื่อมต่อหรือลองอีกครั้งภายหลัง";
-"tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้ \n\n ต้องการดาวน์โหลดอีกครั้งหรือไม่";
+"tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้\n\nต้องการดาวน์โหลดอีกครั้งหรือไม่";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "ไม่สามารถดาวน์โหลดเครื่องมือภาษาไทยได้ตอนนี้ มีเครื่องมือภาษาอังกฤษให้บริการ โปรดตรวจสอบการเชื่อมต่อหรือลองใหม่ภายหลัง";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้ \n\n ต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
+"device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้\n\nต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
 
 // Actions
 "yes" = "ใช่";
@@ -72,7 +71,6 @@
 "done" = "เสร็จ";
 "remove" = "ลบออก";
 "clear" = "ล้าง";
-"unavailable" = "ใช้ไม่ได้";
 
 // Alerts
 "error" = "ข้อผิดพลาด";

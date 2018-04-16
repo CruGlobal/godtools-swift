@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Moji alati";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Pronađi alate";
+
+"unavailable" = "Nedostupno";
 // Onboarding
 "add_new_tools" = "Dodajte novi alat";
 "set_your_languages" = "Odredite svoje jezike";
@@ -10,6 +17,7 @@
 "menu_share" = "Podijeli";
 "menu_legal" = "Pravno";
 "language_settings" = "Postavke jezika";
+// Tool Detail
 "about" = "O nama";
 "help" = "Pomoć";
 "contact_us" = "Kontaktirajte nas";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Dodajte alate";
 
-// Tool Detail
 "total_views" = "%d pregleda";
 "total_languages" = "%d jezika";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Najnovije alate za engleski jezik trenutno nije moguće preuzeti. Dostupni su alati za engleski jezik. Provjerite svoju vezu ili pokušajte kasnije.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Moguće je preuzeti najnovije alate za engleski jezik.\n\n Želite li engleski jezik postaviti kao primarni jezik i preuzeti te sadržaje?";
+"device_locale_download_success" = "Moguće je preuzeti najnovije alate za engleski jezik. \n\n Želite li engleski jezik postaviti kao primarni jezik i preuzeti te sadržaje?";
 
 // Actions
 "yes" = "Da";
@@ -64,7 +71,6 @@
 "done" = "Gotovo";
 "remove" = "Ukloni";
 "clear" = "Očisti";
-"unavailable" = "Nedostupno";
 
 // Alerts
 "error" = "Pogreška";

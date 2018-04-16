@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Mes outils";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Trouver des outils";
+
+"unavailable" = "Non disponible";
 // Onboarding
 "add_new_tools" = "Ajouter de nouveaux outils";
 "set_your_languages" = "Réglez vos languages";
@@ -10,6 +17,7 @@
 "menu_share" = "Partager";
 "menu_legal" = "Légal";
 "language_settings" = "Paramètres de langue";
+// Tool Detail
 "about" = "À propos";
 "help" = "Aide";
 "contact_us" = "Contactez-nous";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Ajouter des outils";
 
-// Tool Detail
 "total_views" = "%d vues";
 "total_languages" = "%d langues";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Les outils en français les plus récents n'ont pas pu être téléchargés à ce moment. Les outils en anglais sont disponibles. Veuillez vérifier votre connectivité ou réessayer plus tard.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Les outils en anglais les plus récents peuvent être téléchargés.\n\n Souhaitez-vous régler votre langue primaire à l'anglais et télécharger ces ressources?";
+"device_locale_download_success" = "Les outils en anglais les plus récents peuvent être téléchargés.\n\nSouhaitez-vous régler votre langue primaire à l'anglais et télécharger ces ressources?";
 
 // Actions
 "yes" = "Oui";
@@ -64,13 +71,12 @@
 "done" = "Terminé";
 "remove" = "Retirer";
 "clear" = "Effacer";
-"unavailable" = "Non disponible";
 
 // Alerts
 "error" = "Erreur";
 "ok" = "D'accord";
 "error_can_not_send_email" = "Il n'y a aucune adresse courriel configurée sur votre appareil.";
-"required_field_missing" = "\"%@\" est un champ requis.";
+"required_field_missing" = "« %@ » est un champ requis.";
 
 // About
 "general_about_1" = "GodTools vous aide à partager votre foi facilement et de façon claire.";

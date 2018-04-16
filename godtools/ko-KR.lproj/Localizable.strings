@@ -1,3 +1,9 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "내 도구";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "도구 찾기";
+
 "unavailable" = "사용 불가";
 // Onboarding
 "add_new_tools" = "새 도구 추가";

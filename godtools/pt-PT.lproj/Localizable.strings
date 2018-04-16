@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "As minhas ferramentas";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Encontrar ferramentas";
 
+"unavailable" = "Indisponível";
 // Onboarding
 "add_new_tools" = "Adicionar novas ferramentas";
 "set_your_languages" = "Definir os idiomas";
@@ -18,6 +17,7 @@
 "menu_share" = "Partilhar";
 "menu_legal" = "Aviso legal";
 "language_settings" = "Definições de idioma";
+// Tool Detail
 "about" = "Sobre";
 "help" = "Ajuda";
 "contact_us" = "Contactar-nos";
@@ -33,7 +33,6 @@
 // Add Tools
 "add_tools" = "Adicionar ferramentas";
 
-// Tool Detail
 "total_views" = "%d visualizações";
 "total_languages" = "%d idiomas";
 
@@ -72,7 +71,6 @@
 "done" = "Concluído";
 "remove" = "Remover";
 "clear" = "Limpar";
-"unavailable" = "Indisponível";
 
 // Alerts
 "error" = "Erro";

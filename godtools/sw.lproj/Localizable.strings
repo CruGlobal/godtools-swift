@@ -1,11 +1,10 @@
-/* 
-  Localizable.strings
-  godtools
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Zana Zangu";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Pata Zana";
 
+"unavailable" = "Hazipatikani";
 // Onboarding
 "add_new_tools" = "Ongeza Vifaa Vipya";
 "set_your_languages" = "Weka Lugha Zako";
@@ -18,6 +17,7 @@
 "menu_share" = "Shirikisha";
 "menu_legal" = "Kisheria";
 "language_settings" = "Mipangilio ya Lugha";
+// Tool Detail
 "about" = "Kuhusu";
 "help" = "Msaada";
 "contact_us" = "Wasiliana Nasi";
@@ -28,12 +28,12 @@
 "terms_of_use" = "Masharti ya Matumizi";
 "privacy_policy" = "Sera ya Faragha";
 "copyright_info" = "Maelezo ya Hakimiliki";
-"share_god_tools_share_sheet_text" = "Hapa unaweza kupakua programu ya GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Hapa unaweza kupakua programu ya GodTools:
+http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Ongeza Vifaa";
 
-// Tool Detail
 "total_views" = "Asilimia (%d) ya maoni";
 "total_languages" = "Asilimia (%d) ya lugha";
 
@@ -51,13 +51,13 @@
 // Alert Controllers
 "download_error" = "Makosa ya Upakuzi";
 "language_download_error" = "Lugha zilizopo hazikuweza kupakuliwa kwa wakati huu.  Tafadhali angalia uunganisho wako au ujaribu tena baadaye.";
-"tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo. \n\nJe, ungependa kupakua rasilimali hii tena?";
+"tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo.\n\nJe, ungependa kupakua rasilimali hii tena?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Vifaa vya hivi karibuni ve Kiingereza havingeweza kupakuliwa kwa wakati huu. Vifaa vya Kiingereza vinapatikana. Tafadhali angalia uunganisho wako ama ujaribu tena baadaye.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa. \n\n Je, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?";
+"device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa.\n\nJe, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?\n";
 
 // Actions
 "yes" = "Ndio";
@@ -72,13 +72,12 @@
 "done" = "Imefanywa";
 "remove" = "Ondoa";
 "clear" = "Futa";
-"unavailable" = "Hazipatikani";
 
 // Alerts
 "error" = "Kosa";
 "ok" = "Sawa";
 "error_can_not_send_email" = "Hakuna barua pepe iliyowekwa kwenye kifaa chako.";
-"required_field_missing" = "\"%@\" ni sharti ambalo lazima litimizwe.";
+"required_field_missing" = " \"%@\" ni sharti ambalo lazima litimizwe.";
 
 // About
 "general_about_1" = "GodTools inakusaidia kueneza imani yako kwa njia rahisi na ya wazi.";
@@ -87,7 +86,8 @@
 "general_about_4" = "Viungo vya rasilimali nyingine vinajumuishwa mwishoni mwa kila chombo.";
 "general_about_5" = "Uunganisho wa mtandaoni unahitajika kupakua kila chombo kipya na / au lugha. Mara baada ya kupakuliwa, inaweza kutumika nje ya mtandao.";
 "general_about_6" = "Maswali? Mapendekezo? Maombi? Wasiliana nasi kupitia support@godtoolsapp.com";
-"general_about_7" = "Toleo la mtandaoni la zana hizi linaweza kupatikana kwenya knowgod.com. Ingiza kwenye tovuti yako mwenyewe!";
+"general_about_7" = "Toleo la mtandaoni la zana hizi linaweza kupatikana kwenya knowgod.com. Ingiza kwenye tovuti yako mwenyewe!
+";
 "general_about_8" = "Tembelea godtoolsapp.com kwa maelezo zaidi.";
 "general_about_9" = "Unapopata hatua ya kushiriki imani yako, kumbuka kwamba Mungu ndiye anayebadilisha moyo. Mpende kila mtu vizuri kwa kusikiliza kwa ufahamu.";
 "general_about_10" = "\"Hebu mazungumzo yako yote yawe kamili ya neema, iliyohifadhiwa na chumvi, ili uweze kujua jinsi ya kujibu kila mtu.\" Wakolosai, sura ya Nne, aya ya sita (Wakolosai  4:6).";

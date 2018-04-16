@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Moje Prezentacje";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Znajdź Prezentacje";
+
+"unavailable" = "Niedostępne";
 // Onboarding
 "add_new_tools" = "Dodaj Nowe Narzędzia";
 "set_your_languages" = "Ustaw języki";
@@ -21,7 +28,8 @@
 "terms_of_use" = "Warunki użytkowania";
 "privacy_policy" = "Polityka prywatności";
 "copyright_info" = "Informacja o prawach autorskich";
-"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj:
+http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Dodaj Narzędzia";
@@ -49,7 +57,7 @@
 "device_locale_download_error" = "Nie można obecnie pobrać najnowszych narzędzi w języku angielskim. Narzędzia w języku angielskim są dostępne. Sprawdź połączenie lub spróbuj ponownie później.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Można obecnie pobrać najnowsze narzędzia w języku angielskim. \n\n Czy chciałbyś ustawić język angielski jako język główny aby pobrać te zasoby?";
+"device_locale_download_success" = "Można obecnie pobrać najnowsze narzędzia w języku angielskim.\n\nCzy chciałbyś ustawić język angielski jako język główny aby pobrać te zasoby?";
 
 // Actions
 "yes" = "Tak";
@@ -64,7 +72,6 @@
 "done" = "Gotowe";
 "remove" = "Usuń";
 "clear" = "Wyczyść";
-"unavailable" = "Niedostępne";
 
 // Alerts
 "error" = "Błąd";
@@ -82,4 +89,5 @@
 "general_about_7" = "Wersja online tych narzędzi dostępna jest pod adresem knowgod.com. Umieść je na własnej stronie!";
 "general_about_8" = "Więcej informacji znajdziesz na stronie godtoolsapp.com.";
 "general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
-"general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\" List do Kolosan 4, 6";
+"general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
+List do Kolosan 4, 6";

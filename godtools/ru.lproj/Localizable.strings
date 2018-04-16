@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Мои инструменты";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Другие";
+
+"unavailable" = "Недоступно";
 // Onboarding
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
@@ -10,6 +17,7 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
+// Tool Detail
 "about" = "О приложении";
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
@@ -19,13 +27,12 @@
 "share_a_story_with_us" = "Поделиться с нами историей";
 "terms_of_use" = "Условия использования";
 "privacy_policy" = "Политика конфиденциальности";
-"copyright_info" = "Copyright Info";
+"copyright_info" = "Информация об авторском праве";
 "share_god_tools_share_sheet_text" = "Вы можете загрузить приложение GodTools здесь: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Добавить инструменты";
 
-// Tool Detail
 "total_views" = "Просмотры: %d";
 "total_languages" = "Языки: %d";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Не удалось загрузить последние инструменты на русском языке. Инструменты доступны на английском языке. Проверьте подключение к сети или повторите попытку позже.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке.\n\n Хотите сделать основным языком русский и загрузить эти материалы?";
+"device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке. \n\nХотите сделать основным языком русский и загрузить эти материалы?";
 
 // Actions
 "yes" = "Да";
@@ -64,7 +71,6 @@
 "done" = "Готово";
 "remove" = "Удалить";
 "clear" = "Очистить";
-"unavailable" = "Недоступно";
 
 // Alerts
 "error" = "Ошибка";

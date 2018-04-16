@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Alat Saya";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Cari Alat";
+
+"unavailable" = "Tidak tersedia";
 // Onboarding
 "add_new_tools" = "Tambah Alat Baru";
 "set_your_languages" = "Tetapkan Bahasa Anda";
@@ -21,7 +28,8 @@
 "terms_of_use" = "Syarat Penggunaan";
 "privacy_policy" = "Kebijakan Privasi";
 "copyright_info" = "Info Hak cipta";
-"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools:
+http://godtoolsapp.com
 ";
 
 // Add Tools
@@ -47,10 +55,11 @@
 "tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Alat Bahasa Inggris tidak dapat diunduh saat ini. Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti.";
+"device_locale_download_error" = "Alat Bahasa Inggris tidak dapat diunduh saat ini.
+Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh. \n\n Apakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
+"device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh.\n\nApakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
 
 // Actions
 "yes" = "Iya";
@@ -65,7 +74,6 @@
 "done" = "Selesai";
 "remove" = "Hapus";
 "clear" = "Hapus";
-"unavailable" = "Tidak tersedia";
 
 // Alerts
 "error" = "Kesalahan";
@@ -83,4 +91,5 @@
 "general_about_7" = "Versi online alat ini dapat ditemukan di knowgod.com. Sematkan pada situs Anda!";
 "general_about_8" = "Kunjungi godtoolsapp.com untuk informasi lebih lanjut.";
 "general_about_9" = "Sewaktu Anda mengambil inisiatif untuk membagikan keyakinan Anda, ingatlah bahwa Tuhanlah yang mengubah hati. Cintai setiap orang dengan baik dengan mendengarkan untuk dapat memahami.";
-"general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\" Kolose 4:6";
+"general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\"
+Kolose 4:6";

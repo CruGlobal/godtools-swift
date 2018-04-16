@@ -1,3 +1,10 @@
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "I miei strumenti";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Trova strumenti";
+
+"unavailable" = "Non disponibile";
 // Onboarding
 "add_new_tools" = "Aggiungi nuovi strumenti";
 "set_your_languages" = "Imposta le lingue";
@@ -10,6 +17,7 @@
 "menu_share" = "Condividi";
 "menu_legal" = "Legale";
 "language_settings" = "Impostazioni della lingua";
+// Tool Detail
 "about" = "Informazioni";
 "help" = "Assistenza";
 "contact_us" = "Contattaci";
@@ -25,7 +33,6 @@
 // Add Tools
 "add_tools" = "Aggiungi strumenti";
 
-// Tool Detail
 "total_views" = "%d visualizzazioni";
 "total_languages" = "%d lingue";
 
@@ -49,7 +56,7 @@
 "device_locale_download_error" = "Non è attualmente possibile scaricare i nuovi strumenti in italiano. Sono disponibili gli strumenti in inglese. Verifica di essere collegato a Internet e riprova.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "I nuovi strumenti in italiano sono ora disponibili per il download. \n\n Vuoi impostare l'italiano come lingua principale e scaricare queste risorse?";
+"device_locale_download_success" = "I nuovi strumenti in italiano sono ora disponibili per il download. \n\nVuoi impostare l'italiano come lingua principale e scaricare queste risorse?";
 
 // Actions
 "yes" = "Sì";
@@ -64,7 +71,6 @@
 "done" = "Fatto";
 "remove" = "Rimuovi";
 "clear" = "Elimina";
-"unavailable" = "Non disponibile";
 
 // Alerts
 "error" = "Errore";
