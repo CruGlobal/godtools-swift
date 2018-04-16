@@ -17,6 +17,9 @@ class OnboardingViewController: BaseViewController {
     @IBOutlet weak var languagesOkayButton: TransparentButton!
     @IBOutlet weak var toolsOkayButton: TransparentButton!
     
+    @IBOutlet weak var addToolsLabel: GTLabel!
+    @IBOutlet weak var addLanguagesLabel: GTLabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetup()
@@ -99,4 +102,16 @@ class OnboardingViewController: BaseViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    // MARK: - Add accessibility identifiers
+    
+    override func addAccessibilityIdentifiers() {
+        page1View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsView
+        page2View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesView
+        toolsOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.toolsOkayButton
+        languagesOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.languagesOkayButton
+        addToolsLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsLabel
+        addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
+    }
 }
+
+

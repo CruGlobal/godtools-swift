@@ -37,6 +37,8 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.displayNavigationButtons()
         
+        self.addAccessibilityIdentifiers()
+        
         navigationController?.navigationBar.barStyle = .black
     }
     
@@ -180,6 +182,12 @@ class BaseViewController: UIViewController {
         
     }
     
+    // MARK: - Accessibility ID SetupAccessibility
+    
+    func addAccessibilityIdentifiers() {
+        
+    }
+    
     // MARK: - Helpers
     
     func hideNetworkActivityIndicator() {
@@ -247,3 +255,4 @@ class BaseViewController: UIViewController {
         return "unknown"
     }
 }
+
