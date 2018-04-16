@@ -13,11 +13,17 @@ protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
+
+}
+
+protocol FindToolsDelegate: class {
+    func goToFindTools()
 }
 
 class HomeViewController: BaseViewController {
     
     var delegate: HomeViewControllerDelegate?
+    weak var findDelegate: FindToolsDelegate?
     
     let toolsManager = ToolsManager.shared
     var refreshControl = UIRefreshControl()
@@ -97,8 +103,8 @@ class HomeViewController: BaseViewController {
     
     // MARK: - Actions
     
-    @IBAction func pressAddNewToolsButton(_ sender: Any) {
-     
+    @IBAction func pressFindToolsButton(_ sender: Any) {
+        findDelegate?.goToFindTools()
     }
     
     // MARK: - Helpers

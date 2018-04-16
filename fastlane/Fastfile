@@ -22,7 +22,9 @@ platform :ios do
 
     build_number = cru_increment_build_number
 
-    cru_build_app(export_method: 'app-store', profile_name: profile_name)
+    cru_build_app(export_method: 'app-store',
+                  type: 'appstore',
+                  profile_name: profile_name)
 
     upload_to_app_store(
         app_identifier: ENV["CRU_APP_IDENTIFIER"],
@@ -49,8 +51,10 @@ platform :ios do
     target = ENV["CRU_TARGET"]
 
     cru_download_localizations
-    
-    cru_build_app(export_method: 'ad-hoc')
+
+    cru_build_app(export_method: 'ad-hoc',
+                  type: 'adhoc',
+                  profile_name: ENV["CRU_ADHOC_PROFILE_NAME"])
 
     crashlytics(
         crashlytics_path: ENV["CRASHLYTICS_FRAMEWORK_PATH"],
@@ -113,13 +117,15 @@ platform :ios do
 
   lane :cru_build_app do |options|
     profile_name = options[:profile_name] || ENV["CRU_ADHOC_PROFILE_NAME"]
+    type = options[:type] || 'adhoc'
+    export_method = options[:export_method] || 'ad-hoc'
 
     automatic_code_signing(
         use_automatic_signing: false,
         profile_name: profile_name
     )
 
-    cru_fetch_certs
+    cru_fetch_certs(type: type)
 
     cocoapods(
         podfile: './Podfile'
@@ -127,7 +133,7 @@ platform :ios do
 
     gym(
         scheme: ENV["CRU_SCHEME"],
-        export_method: options[:export_method],
+        export_method: export_method,
         export_options: {
             provisioningProfiles: {
                 ENV["CRU_APP_IDENTIFIER"] => profile_name
@@ -136,7 +142,7 @@ platform :ios do
     )
   end
 
-  lane :cru_fetch_certs do
+  lane :cru_fetch_certs do |options|
     # Travis requires a keychain to be created to store the certificates in, however
     # using this utility to create a keychain locally will really mess up local keychains
     # and is not required for a successful build
@@ -151,12 +157,14 @@ platform :ios do
       )
 
       match(readonly: true,
+            type: options[:type],
             keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
             keychain_password: ENV["MATCH_PASSWORD"])
     else
       # Locally match will prompt on the first run for the "MATCH_PASSWORD" and remember it
       # in the environment after that.
-      match(readonly: false)
+      match(readonly: false,
+            type: options[:type])
     end
   end
 
