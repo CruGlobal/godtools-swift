@@ -25,35 +25,35 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guW-AD-oGH">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_blue" translatesAutoresizingMaskIntoConstraints="NO" id="CJI-MH-4gB">
-                            <rect key="frame" x="142" y="220" width="90" height="90"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSearch" highlightedImage="iconSearch" translatesAutoresizingMaskIntoConstraints="NO" id="CJI-MH-4gB">
+                            <rect key="frame" x="112" y="190" width="150" height="150"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="90" id="ixe-sw-Haj"/>
-                                <constraint firstAttribute="width" constant="90" id="k7P-An-lWO"/>
+                                <constraint firstAttribute="height" constant="150" id="ixe-sw-Haj"/>
+                                <constraint firstAttribute="width" constant="150" id="k7P-An-lWO"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIe-Xs-ogX" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="87" y="330" width="200" height="34"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invisible Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIe-Xs-ogX" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="87" y="346" width="200" height="2"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="34" id="Bey-DB-wKX"/>
+                                <constraint firstAttribute="height" constant="2" id="Bey-DB-wKX"/>
                                 <constraint firstAttribute="width" constant="200" id="c1r-sh-j3j"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="1"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueTitle"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteTitle"/>
                             </userDefinedRuntimeAttributes>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KgQ-8a-Aea" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="57" y="398" width="260" height="48"/>
+                            <rect key="frame" x="112" y="367.5" width="150" height="48"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="260" id="3Ve-s2-z6t"/>
+                                <constraint firstAttribute="width" constant="150" id="3Ve-s2-z6t"/>
                                 <constraint firstAttribute="height" constant="48" id="NA1-MT-uvL"/>
                             </constraints>
-                            <state key="normal" title="Add New Tools"/>
+                            <state key="normal" title="Find Tools"/>
                             <connections>
-                                <action selector="pressAddNewToolsButton:" destination="-1" eventType="touchUpInside" id="gAs-2D-3h3"/>
+                                <action selector="pressFindToolsButton:" destination="-1" eventType="touchUpInside" id="NsH-E2-tx7"/>
                             </connections>
                         </button>
                     </subviews>
@@ -63,7 +63,7 @@
                         <constraint firstItem="OIe-Xs-ogX" firstAttribute="centerY" secondItem="guW-AD-oGH" secondAttribute="centerY" constant="13.5" id="Zry-6g-SY5"/>
                         <constraint firstItem="KgQ-8a-Aea" firstAttribute="centerX" secondItem="guW-AD-oGH" secondAttribute="centerX" id="nJt-Yb-pjK"/>
                         <constraint firstItem="OIe-Xs-ogX" firstAttribute="centerX" secondItem="guW-AD-oGH" secondAttribute="centerX" id="tXY-XX-xX0"/>
-                        <constraint firstItem="KgQ-8a-Aea" firstAttribute="centerY" secondItem="guW-AD-oGH" secondAttribute="centerY" constant="88.5" id="tlu-vg-hH0"/>
+                        <constraint firstItem="KgQ-8a-Aea" firstAttribute="centerY" secondItem="guW-AD-oGH" secondAttribute="centerY" constant="58" id="tlu-vg-hH0"/>
                         <constraint firstItem="CJI-MH-4gB" firstAttribute="centerY" secondItem="guW-AD-oGH" secondAttribute="centerY" constant="-68.5" id="xPB-rp-gVA"/>
                     </constraints>
                 </view>
@@ -100,6 +100,6 @@
         </view>
     </objects>
     <resources>
-        <image name="plus_blue" width="90" height="90"/>
+        <image name="iconSearch" width="144" height="144"/>
     </resources>
 </document>

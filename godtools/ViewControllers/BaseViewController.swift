@@ -161,9 +161,6 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
     }
     
-    func navigationPlusButtonAction() {
-    }
-    
     func navigationLanguageButtonAction() {
     }
     
