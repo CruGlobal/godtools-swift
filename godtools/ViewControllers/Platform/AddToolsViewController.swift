@@ -90,8 +90,7 @@ class AddToolsViewController: BaseViewController {
         emptyBaseView.frame = CGRect(x: x, y: y - topBarHeight, width: labelWidth, height: labelHeight)
         messageLabel.frame = CGRect(x: 0, y: 0, width: labelWidth, height: labelHeight)
         
-        // TODO - This will need to be localized
-        messageLabel.text = "You have downloaded all available tools."
+        messageLabel.text = "You have downloaded all available tools.".localized
         emptyBaseView.addSubview(messageLabel)
         
         return emptyBaseView

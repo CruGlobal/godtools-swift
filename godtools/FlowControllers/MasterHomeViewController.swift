@@ -27,6 +27,7 @@ class MasterHomeViewController: BaseViewController  {
         
         let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
         viewController.delegate = self
+        viewController.findDelegate = self
         
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -195,6 +196,10 @@ extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewCont
     func moveToTract(resource: DownloadedResource) {
         delegate?.moveToTract(resource: resource)
     }
+    
+}
+
+extension MasterHomeViewController: FindToolsDelegate {
     
     func goToFindTools() {
         segmentedControl.selectedSegmentIndex = 1
