@@ -17,4 +17,10 @@ struct GTAccessibilityConstants {
         static let addToolsLabel = "onboarding_add_tools_label"
         static let addLanguagesLabel = "onbboarding_add_langauges_label"
     }
+    
+    struct Home {
+        static let homeMyToolsView = "home_my_tools_view"
+        static let homeTableView = "home_table_view"
+        static let homeNavSegmentedControl = "home_nav_segmented_control"
+    }
 }
