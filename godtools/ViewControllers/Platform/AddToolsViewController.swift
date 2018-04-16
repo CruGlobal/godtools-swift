@@ -38,10 +38,6 @@ class AddToolsViewController: BaseViewController {
         self.toolsManager.loadResourceList()
         self.tableView.reloadData()
     }
-
-    override func displayScreenTitle() {
-        self.navigationItem.title = "add_tools".localized
-    }
     
     override func configureNavigationButtons() {
         self.addNavigationLanguageButton()
@@ -60,7 +56,9 @@ class AddToolsViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        return "Add Tools"
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = relay.convertScreenNameToSiteSection(screenName: "Find Tools")
+        return "Find Tools"
     }
     
 }

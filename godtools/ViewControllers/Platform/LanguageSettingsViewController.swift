@@ -63,6 +63,8 @@ class LanguageSettingsViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = relay.convertScreenNameToSiteSection(screenName: "Language Settings")
         return "Language Settings"
     }
     

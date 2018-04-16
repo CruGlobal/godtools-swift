@@ -114,6 +114,8 @@ extension BaseFlowController: BaseViewControllerDelegate {
     
     func goHome() {
         _ = self.currentViewController?.navigationController?.popToRootViewController(animated: true)
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = ""
         resetNavigationControllerColorToDefault()
     }
     

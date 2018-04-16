@@ -85,6 +85,8 @@ class MenuViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = relay.convertScreenNameToSiteSection(screenName: "Menu")
         return "Menu"
     }
 

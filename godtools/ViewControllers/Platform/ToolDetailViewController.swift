@@ -126,6 +126,8 @@ class ToolDetailViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = relay.convertScreenNameToSiteSection(screenName: "Tool Info")
         return "Tool Info"
     }
 }

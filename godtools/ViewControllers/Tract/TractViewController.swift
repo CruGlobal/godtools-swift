@@ -226,7 +226,7 @@ class TractViewController: BaseViewController {
         
         shareURLString = shareURLString.appending(" ")
         
-        return shareURLString
+        return shareURLString + "?icid=gtshare"
     }
     
     // Notifications
@@ -252,6 +252,14 @@ class TractViewController: BaseViewController {
         guard let resource = self.resource else {
             return super.screenName()
         }
+        
+        let relay = AnalyticsRelay.shared
+        relay.currentResource = resource
+        guard let currentResource = relay.currentResource else {
+            return "\(resource.code)-\(self.currentPage)"
+        }
+        relay.siteSection = currentResource.code
+        
         return "\(resource.code)-\(self.currentPage)"
     }
     

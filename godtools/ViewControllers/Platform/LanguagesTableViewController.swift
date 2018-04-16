@@ -95,6 +95,8 @@ class LanguagesTableViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
+        let relay = AnalyticsRelay.shared
+        relay.siteSection = relay.convertScreenNameToSiteSection(screenName: "Select Language")
         return "Select Language"
     }
 }

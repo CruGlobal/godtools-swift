@@ -20,6 +20,11 @@ class AnalyticsRelay {
     var tractCardCurrentLetterNames: [String] = []
     var tractCardNextLetterNames: [String] = []
     
+    // This is used for pulling out data on the current Tract being viewed
+    var currentResource: DownloadedResource?
+    var siteSection = ""
+    var languageOnScreen = ""
+    
     var viewListener: String = ""
     var timer = Timer()
     var timerCounter = 6
@@ -80,6 +85,21 @@ class AnalyticsRelay {
                                             object: nil,
                                             userInfo: userInfo)
         }
+    }
+    
+    func convertScreenNameToSiteSection(screenName: String) -> String {
+        var siteSection = screenName
+        switch siteSection {
+        case "Home":
+            siteSection = ""
+        case "Find Tools":
+            siteSection = "tools"
+        case "Tool Info":
+            siteSection = "tools"
+        default:
+            siteSection = "menu"
+        }
+        return siteSection
     }
 
 }

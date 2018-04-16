@@ -103,7 +103,6 @@ class MasterHomeViewController: BaseViewController  {
     
     override func homeButtonAction() {
         self.baseDelegate?.goHome()
-        self.navigationController?.popToRootViewController(animated: true)
     }
     
     override func navigationLanguageButtonAction() {

@@ -16,6 +16,8 @@ struct AdobeAnalyticsConstants {
         static let marketingCloudID = "cru.mcid"
         static let screenName = "cru.screenname"
         static let previousScreenName = "cru.previousscreenname"
+        static let siteSection = "cru.sitesection"
+        static let siteSubSection = "cru.sitesubsection"
         static let contentLanguage = "cru.contentlanguage"
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let shareAction = "cru.shareiconengaged"
@@ -50,8 +52,6 @@ struct AdobeAnalyticsConstants {
 }
 class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
-    
-    // Testing 2FA
     
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
@@ -168,11 +168,13 @@ class GodToolsAnaltyics {
     
     private func recordScreenViewInAdobe(screenName: String) {
         var properties: [String: String] = [:]
+        let relay = AnalyticsRelay.shared
         let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
         let parallelLanguageCode = UserDefaults.standard.string(forKey: "kParallelLanguageCode") ?? ""
         
         properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
         properties[AdobeAnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AdobeAnalyticsConstants.Keys.siteSection] = relay.siteSection
         properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
         properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
