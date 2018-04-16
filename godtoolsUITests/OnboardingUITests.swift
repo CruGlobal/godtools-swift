@@ -31,7 +31,7 @@ class OnboardingUITests: XCTestCase {
     
     func testAddToolsViewSwipeRight() {
         let app = XCUIApplication()
-        app.otherElements["onboarding_add_tools_view"].swipeLeft()
+        app.otherElements[GTAccessibilityConstants.Onboarding.addToolsView].swipeLeft()
         
         XCTAssert(app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].exists)
         XCTAssert(app.staticTexts[GTAccessibilityConstants.Onboarding.addLanguagesLabel].exists)
