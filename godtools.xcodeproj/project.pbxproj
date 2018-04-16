@@ -102,7 +102,6 @@
 		4F05F49C203735A600A3D01C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05F49B203735A600A3D01C /* LoginViewController.swift */; };
 		4F05F49E203735B900A3D01C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F05F49D203735B900A3D01C /* LoginViewController.xib */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
-		4F12296720852B8E008842CC /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
 		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
 		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
 		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
@@ -116,6 +115,8 @@
 		4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */; };
+		4F388686208531C00022E0B2 /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */; };
+		4F388687208534C10022E0B2 /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
 		4F40C8B11F0414D600CB3864 /* FollowUpResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F40C8B01F0414D600CB3864 /* FollowUpResource.swift */; };
 		4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A301EB0DF3E00C03447 /* TractView.swift */; };
 		4F462A391EB0E28900C03447 /* TractHero.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A351EB0E28900C03447 /* TractHero.swift */; };
@@ -131,6 +132,8 @@
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
 		4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */; };
+		4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
+		4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */; };
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
@@ -407,6 +410,7 @@
 		4F6FC0EF204854E8003A87DF /* pa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pa; path = pa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F6FC0F02048550E003A87DF /* ru-MD */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-MD"; path = "ru-MD.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4F6FC0F120485520003A87DF /* bn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTAccessibilityConstants.swift; sourceTree = "<group>"; };
 		4F8048001EB38B4F00943DFF /* TranslationsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationsManager.swift; path = Managers/Translations/TranslationsManager.swift; sourceTree = "<group>"; };
 		4F8048041EB3A2FB00943DFF /* GTSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSettings.swift; sourceTree = "<group>"; };
 		4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDataSource.swift"; sourceTree = "<group>"; };
@@ -865,6 +869,7 @@
 				0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */,
 				4F8048041EB3A2FB00943DFF /* GTSettings.swift */,
 				0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */,
+				4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1679,6 +1684,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */,
+				4F388686208531C00022E0B2 /* GTAccessibilityConstants.swift in Sources */,
+				4F388687208534C10022E0B2 /* GTConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1797,6 +1805,7 @@
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
+				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
@@ -1859,7 +1868,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F12296720852B8E008842CC /* OnboardingUITests.swift in Sources */,
 				684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

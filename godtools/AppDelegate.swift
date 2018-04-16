@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        resetStateIfUITesting()
+        
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()
         
@@ -98,6 +100,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.flowController?.showDeviceLocaleDownloadFailedAlert()
                 }
             })
+    }
+    
+    private func resetStateIfUITesting() {
+        if ProcessInfo.processInfo.arguments.contains("UI-Testing") {
+            UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        }
     }
 }
 
