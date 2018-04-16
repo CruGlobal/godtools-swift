@@ -102,6 +102,7 @@
 		4F05F49C203735A600A3D01C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05F49B203735A600A3D01C /* LoginViewController.swift */; };
 		4F05F49E203735B900A3D01C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F05F49D203735B900A3D01C /* LoginViewController.xib */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
+		4F12296720852B8E008842CC /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
 		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
 		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
 		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
@@ -228,6 +229,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4F12297120852BE3008842CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F5732881EA69CF00082035C;
+			remoteInfo = godtools;
+		};
 		684328F61EB7CF66005E9131 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
@@ -333,6 +341,9 @@
 		4F05F49B203735A600A3D01C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		4F05F49D203735B900A3D01C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		4F12296620852B8E008842CC /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
+		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
 		4F123FAF1F140F1000309DAD /* kgp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = kgp.zip; path = InitialContent/kgp.zip; sourceTree = "<group>"; };
 		4F123FB01F140F1000309DAD /* satisfied.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = satisfied.zip; path = InitialContent/satisfied.zip; sourceTree = "<group>"; };
@@ -516,6 +527,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4F12296920852BE3008842CC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732861EA69CF00082035C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -870,6 +888,15 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4F12296620852B8E008842CC /* OnboardingUITests.swift */,
+				4F12297020852BE3008842CC /* Info.plist */,
+			);
+			path = godtoolsUITests;
+			sourceTree = "<group>";
+		};
 		4F1C95391EA6B84A007B47DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -983,6 +1010,7 @@
 				4F57328B1EA69CF00082035C /* godtools */,
 				684328F21EB7CF66005E9131 /* godtoolsTests */,
 				684328EB1EB7C7F4005E9131 /* fastlane */,
+				4F12296D20852BE3008842CC /* godtoolsUITests */,
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
@@ -995,6 +1023,7 @@
 			children = (
 				4F5732891EA69CF00082035C /* godtools.app */,
 				684328F11EB7CF66005E9131 /* godtoolsTests.xctest */,
+				4F12296C20852BE3008842CC /* godtoolsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1266,6 +1295,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4F12296B20852BE3008842CC /* godtoolsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */;
+			buildPhases = (
+				4F12296820852BE3008842CC /* Sources */,
+				4F12296920852BE3008842CC /* Frameworks */,
+				4F12296A20852BE3008842CC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4F12297220852BE3008842CC /* PBXTargetDependency */,
+			);
+			name = godtoolsUITests;
+			productName = godtoolsUITests;
+			productReference = 4F12296C20852BE3008842CC /* godtoolsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4F5732881EA69CF00082035C /* godtools */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F57329E1EA69CF00082035C /* Build configuration list for PBXNativeTarget "godtools" */;
@@ -1314,10 +1361,16 @@
 		4F5732811EA69CF00082035C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
+					4F12296B20852BE3008842CC = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = DQ48D9BF2V;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4F5732881EA69CF00082035C;
+					};
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = DQ48D9BF2V;
@@ -1396,11 +1449,19 @@
 			targets = (
 				4F5732881EA69CF00082035C /* godtools */,
 				684328F01EB7CF66005E9131 /* godtoolsTests */,
+				4F12296B20852BE3008842CC /* godtoolsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4F12296A20852BE3008842CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732871EA69CF00082035C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1614,6 +1675,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4F12296820852BE3008842CC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F5732851EA69CF00082035C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1791,6 +1859,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F12296720852B8E008842CC /* OnboardingUITests.swift in Sources */,
 				684328F41EB7CF66005E9131 /* godtoolsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1798,6 +1867,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4F12297220852BE3008842CC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F5732881EA69CF00082035C /* godtools */;
+			targetProxy = 4F12297120852BE3008842CC /* PBXContainerItemProxy */;
+		};
 		684328F71EB7CF66005E9131 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4F5732881EA69CF00082035C /* godtools */;
@@ -1870,6 +1944,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4F12297420852BE3008842CC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Debug;
+		};
+		4F12297520852BE3008842CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Release;
+		};
 		4F57329C1EA69CF00082035C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2061,6 +2191,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4F12297420852BE3008842CC /* Debug */,
+				4F12297520852BE3008842CC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F5732841EA69CF00082035C /* Build configuration list for PBXProject "godtools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
