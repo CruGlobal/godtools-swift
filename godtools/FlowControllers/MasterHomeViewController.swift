@@ -27,6 +27,7 @@ class MasterHomeViewController: BaseViewController  {
         
         let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
         viewController.delegate = self
+        viewController.findDelegate = self
         
         // Add View Controller as Child View Controller
         self.add(asChildViewController: viewController)
@@ -72,7 +73,7 @@ class MasterHomeViewController: BaseViewController  {
         updateView()
     }
     
-    private func updateView() {
+    func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
             remove(asChildViewController: addToolsViewController)
             add(asChildViewController: homeViewController)
@@ -195,6 +196,16 @@ extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewCont
     func moveToTract(resource: DownloadedResource) {
         delegate?.moveToTract(resource: resource)
     }
+    
+}
+
+extension MasterHomeViewController: FindToolsDelegate {
+    
+    func goToFindTools() {
+        segmentedControl.selectedSegmentIndex = 1
+        updateView()
+    }
+
 }
 
 extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewControllerDelegate {
