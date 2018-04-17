@@ -26,6 +26,11 @@ Push a new release build to the App Store
 fastlane ios beta
 ```
 Push a new (beta) release build to Crashlytics
+### ios test
+```
+fastlane ios test
+```
+Run tests
 ### ios cru_download_localizations
 ```
 fastlane ios cru_download_localizations
