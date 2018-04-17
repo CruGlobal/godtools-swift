@@ -27,9 +27,26 @@ class HomeUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testFindToolsButton() {
+        
+        let app = XCUIApplication()
+        let godtoolsNavigationBar = app.navigationBars["GodTools"]
+        godtoolsNavigationBar/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".staticTexts[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        let table = app.tables[GTAccessibilityConstants.AddTools.tableView]
+        debugPrint(table.cells.count)
+        XCTAssert(table.cells.count == 4)
     }
     
+    func testMyToolsButton() {
+        let app = XCUIApplication()
+        let godtoolsNavigationBar = app.navigationBars["GodTools"]
+        
+        godtoolsNavigationBar/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".staticTexts[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        godtoolsNavigationBar/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".staticTexts[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        let table = app.tables[GTAccessibilityConstants.Home.homeTableView]
+        
+        XCTAssert(table.cells.count == 3)
+    }
 }

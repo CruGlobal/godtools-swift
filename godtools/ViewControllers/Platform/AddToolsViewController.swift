@@ -96,6 +96,12 @@ class AddToolsViewController: BaseViewController {
         return emptyBaseView
     }
     
+    // MARK: - Accessibility
+    
+    override func addAccessibilityIdentifiers() {
+        tableView.accessibilityIdentifier = GTAccessibilityConstants.AddTools.tableView
+    }
+    
     // MARK: - Analytics
     
     override func screenName() -> String {
