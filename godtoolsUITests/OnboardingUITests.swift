@@ -21,25 +21,8 @@ class OnboardingUITests: XCTestCase {
         app.launch()
     }
     
-    func testAddToolsViewButtonPress() {
-        let app = XCUIApplication()
-        app.buttons[GTAccessibilityConstants.Onboarding.toolsOkayButton].tap()
-
-        XCTAssert(app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].exists)
-        XCTAssert(app.staticTexts[GTAccessibilityConstants.Onboarding.addLanguagesLabel].exists)
-    }
-    
-    func testAddToolsViewSwipeRight() {
-        let app = XCUIApplication()
-        app.otherElements[GTAccessibilityConstants.Onboarding.addToolsView].swipeLeft()
-        
-        XCTAssert(app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].exists)
-        XCTAssert(app.staticTexts[GTAccessibilityConstants.Onboarding.addLanguagesLabel].exists)
-    }
-    
     func testAddLanguagesButtonPress() {
         let app = XCUIApplication()
-        app.buttons[GTAccessibilityConstants.Onboarding.toolsOkayButton].tap()
         app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].tap()
 
         let homeTableView = app.tables[GTAccessibilityConstants.Home.homeTableView]
