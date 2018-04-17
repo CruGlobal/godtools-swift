@@ -16,6 +16,7 @@ class TranslationResource: Resource {
     var manifestName: String?
     var translatedName: String?
     var translatedDescription: String?
+    var tagline: String?
     
     var language: LanguageResource?
     
@@ -30,7 +31,8 @@ class TranslationResource: Resource {
             "manifestName" : Attribute().serializeAs("manifest-name"),
             "translatedName": Attribute().serializeAs("translated-name"),
             "translatedDescription": Attribute().serializeAs("translated-description"),
-            "language" : ToOneRelationship(LanguageResource.self)
+            "language" : ToOneRelationship(LanguageResource.self),
+            "tagline": Attribute().serializeAs("translated-tagline")
         ])
     }
 }

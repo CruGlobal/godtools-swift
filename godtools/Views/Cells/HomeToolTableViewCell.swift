@@ -110,11 +110,14 @@ class HomeToolTableViewCell: UITableViewCell {
             return resource.descr ?? ""
         }
 
-        if let translation = resource.getTranslationForLanguage(language) {
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return resource.descr ?? ""
+        }
+        guard let tagline = translation.tagline else {
             return translation.localizedDescription ?? ""
         }
 
-        return resource.descr ?? ""
+        return tagline
     }
 
     // MARK: - Actions
