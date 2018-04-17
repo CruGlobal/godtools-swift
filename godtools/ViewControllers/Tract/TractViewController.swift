@@ -196,6 +196,7 @@ class TractViewController: BaseViewController {
         NotificationCenter.default.post(name: .actionTrackNotification,
                                         object: nil,
                                         userInfo: userInfo)
+        self.sendScreenViewNotification(screenName: screenName())
     }
     
     private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {
@@ -286,6 +287,7 @@ class TractViewController: BaseViewController {
             return primaryLanguage
         }
     }
+    
 }
 
 extension TractViewController: BaseTractElementDelegate {

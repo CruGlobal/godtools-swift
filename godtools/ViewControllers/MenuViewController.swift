@@ -269,6 +269,7 @@ extension MenuViewController {
         NotificationCenter.default.post(name: .actionTrackNotification,
                                         object: nil,
                                         userInfo: userInfo)
+        self.sendScreenViewNotification(screenName: "Share App")
         
         self.present(activityViewController, animated: true, completion: nil)
     }
@@ -280,6 +281,7 @@ extension MenuViewController {
             let url = URL(string: "http://www.godtoolsapp.com/#contact")
             self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
         }
+        self.sendScreenViewNotification(screenName: "Share Story")
     }
     
     fileprivate func openTermsOfUse() {
