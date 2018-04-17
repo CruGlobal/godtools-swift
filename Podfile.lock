@@ -18,7 +18,6 @@ PODS:
   - GTMSessionFetcher/Core (1.1.12)
   - GTMSessionFetcher/Full (1.1.12):
     - GTMSessionFetcher/Core (= 1.1.12)
-  - Nimble (6.1.0)
   - PromiseKit (4.1.7):
     - PromiseKit/Foundation (= 4.1.7)
     - PromiseKit/QuartzCore (= 4.1.7)
@@ -33,7 +32,6 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.1.7):
     - PromiseKit/CorePromise
-  - Quick (1.1.0)
   - Realm (2.10.2):
     - Realm/Headers (= 2.10.2)
   - Realm/Headers (2.10.2)
@@ -57,10 +55,8 @@ DEPENDENCIES:
   - Fabric
   - GoogleAnalytics
   - GoogleConversionTracking
-  - Nimble (~> 6.1)
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
-  - Quick (= 1.1)
   - RealmSwift (~> 2.10)
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
@@ -94,9 +90,7 @@ SPEC CHECKSUMS:
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
-  Nimble: c53e6903fee94041b90ded74f135820437d8bf59
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
-  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
@@ -106,6 +100,6 @@ SPEC CHECKSUMS:
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
   TheKeyOAuth2: e6042036a849d950a9f3daa622788e21f952cac2
 
-PODFILE CHECKSUM: 471c95805157d890c66339a1b5bc8cc69fcc3af4
+PODFILE CHECKSUM: 6d9d8ff481fe7a555d0326ee34c3baae8157a4ef
 
 COCOAPODS: 1.4.0

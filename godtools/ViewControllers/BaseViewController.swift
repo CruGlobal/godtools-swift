@@ -37,6 +37,8 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         self.displayNavigationButtons()
         
+        self.addAccessibilityIdentifiers()
+        
         navigationController?.navigationBar.barStyle = .black
     }
     
@@ -159,6 +161,9 @@ class BaseViewController: UIViewController {
         NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
     }
     
+    func navigationPlusButtonAction() {
+    }
+    
     func navigationLanguageButtonAction() {
     }
     
@@ -174,6 +179,12 @@ class BaseViewController: UIViewController {
     }
     
     func clearButtonAction() {
+        
+    }
+    
+    // MARK: - Accessibility ID SetupAccessibility
+    
+    func addAccessibilityIdentifiers() {
         
     }
     
@@ -244,3 +255,4 @@ class BaseViewController: UIViewController {
         return "unknown"
     }
 }
+
