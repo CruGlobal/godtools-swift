@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        resetStateIfUITesting()
+        setStateIfUITesting()
         
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()
@@ -102,9 +102,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
     }
     
-    private func resetStateIfUITesting() {
+    private func setStateIfUITesting() {
         if ProcessInfo.processInfo.arguments.contains("UI-Testing") {
             UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        }
+        
+        if ProcessInfo.processInfo.arguments.contains("UI-Testing-Skip-Onboarding") {
+            UserDefaults.standard.set(true, forKey: GTConstants.kOnboardingScreensShownKey)
         }
     }
 }
