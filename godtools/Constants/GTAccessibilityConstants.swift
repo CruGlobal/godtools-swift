@@ -23,4 +23,10 @@ struct GTAccessibilityConstants {
         static let homeTableView = "home_table_view"
         static let homeNavSegmentedControl = "home_nav_segmented_control"
     }
+    
+    struct ToolTableCell {
+        static let titleLabel = "tool_table_cell_title_label"
+        static let infoButton = "tool_table_cell_info_button"
+        static let downloadButton = "tool_table_cell_download_button"
+    }
 }

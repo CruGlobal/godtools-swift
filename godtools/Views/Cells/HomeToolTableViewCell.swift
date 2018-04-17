@@ -14,7 +14,7 @@ protocol HomeToolTableViewCellDelegate {
 }
 
 @IBDesignable
-class HomeToolTableViewCell: UITableViewCell {
+class HomeToolTableViewCell: BaseTableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var borderView: UIView!
@@ -23,6 +23,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var mainContentView: UIView!
     @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var infoButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
     @IBOutlet weak var titleLabel: GTLabel!
     
@@ -160,6 +161,15 @@ class HomeToolTableViewCell: UITableViewCell {
 
     func setLanguage(_ language: String?) {
         self.languageLabel.text = language
+    }
+    
+    // MARK: Accessibility
+    
+    override func addAccessibilityIdentifiers() {
+        super.addAccessibilityIdentifiers()
+        titleLabel.accessibilityIdentifier = GTAccessibilityConstants.ToolTableCell.titleLabel
+        downloadButton.accessibilityIdentifier = GTAccessibilityConstants.ToolTableCell.downloadButton
+        infoButton.accessibilityIdentifier = GTAccessibilityConstants.ToolTableCell.infoButton
     }
     
     // MARK: Present data
