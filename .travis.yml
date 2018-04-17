@@ -7,9 +7,9 @@ matrix:
     osx_image: xcode9.2
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
-    - bundler install
+    - bundle install
     script:
-    - fastlane cru_build_app
+    - fastlane ios test
   - language: objective-c
     if: branch = master and type = push
     xcode_project: godtools.xcworkspace
@@ -18,7 +18,7 @@ matrix:
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
     - chmod 600 ~/.netrc
-    - bundler install
+    - bundle install
     script:
     - fastlane ios beta
   - language: objective-c
@@ -29,6 +29,6 @@ matrix:
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
     - chmod 600 ~/.netrc
-    - bundler install
+    - bundle install
     script:
     - fastlane ios release version:$TRAVIS_TAG submit:true auto_release:false

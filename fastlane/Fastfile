@@ -75,7 +75,6 @@ platform :ios do
     run_tests(
         workspace: ENV["CRU_XCWORKSPACE"],
         scheme: ENV["CRU_TEST_SCHEME"],
-        # project: ENV["CRU_XCODEPROJ"],
         devices: ENV["CRU_TEST_DEVICES"].split(',')
     )
 
@@ -155,10 +154,7 @@ platform :ios do
             }
         }
     )
-    
-    run_tests(
-    
-    )
+
   end
 
   lane :cru_fetch_certs do |options|
