@@ -66,6 +66,20 @@ platform :ios do
     cru_notify_users(message: "#{target} iOS Beta Build ##{build_number} released to Crashlytics.")
   end
 
+  desc "Run tests"
+  lane :test do
+    cocoapods(
+        podfile: './Podfile'
+    )
+
+    run_tests(
+        workspace: ENV["CRU_XCWORKSPACE"],
+        scheme: ENV["CRU_TEST_SCHEME"],
+        devices: ENV["CRU_TEST_DEVICES"].split(',')
+    )
+
+  end
+
   # Localization functions
 
   desc "Download latest localization files from Onesky"
@@ -140,6 +154,7 @@ platform :ios do
             }
         }
     )
+
   end
 
   lane :cru_fetch_certs do |options|

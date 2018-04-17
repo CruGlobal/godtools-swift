@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="addLanguagesLabel" destination="cYK-jH-Vat" id="gHT-OU-GGd"/>
+                <outlet property="addToolsLabel" destination="em1-c0-ZDg" id="aoh-4S-97J"/>
                 <outlet property="languagesOkayButton" destination="jRo-pJ-Pjn" id="TQS-T5-T4G"/>
                 <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
                 <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
