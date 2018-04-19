@@ -124,6 +124,10 @@ extension TractCard {
         if properties.cardState == .close || properties.cardState == .hidden {
             return
         }
+        // Need to adjust the Card number/letterName for proper analytics tracking
+        let adjustedLetterName = ""
+        processCardForAnalytics(cardLetterName: adjustedLetterName)
+        AnalyticsRelay.shared.boolTracker[1] = false
         
         hideTexts()
         self.cardsParentView.resetEnvironment()

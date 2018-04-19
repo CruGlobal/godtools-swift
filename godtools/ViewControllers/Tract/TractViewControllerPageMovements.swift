@@ -32,12 +32,17 @@ extension TractViewController {
         if self.currentPage >= totalPages() - 1 {
             return
         }
+        let relay = AnalyticsRelay.shared
+
+        relay.boolTracker[0] = relay.boolTracker[1]
+        relay.boolTracker[1] = relay.boolTracker[2]
+        relay.boolTracker[2] = false
         
         _ = self.moveForewards()
             .then { (success) -> Promise<Bool> in
                 if success {
                     _ = self.reloadPagesViews()
-                    self.sendPageToAnalytics()
+                    self.sendPageToAnalytics(useAlternate: true)
                     return Promise(value: true)
                 }
                 return Promise(value: false)
@@ -48,12 +53,17 @@ extension TractViewController {
         if self.currentPage == 0 {
             return
         }
+        let relay = AnalyticsRelay.shared
+
+        relay.boolTracker[2] = relay.boolTracker[1]
+        relay.boolTracker[1] = relay.boolTracker[0]
+        relay.boolTracker[0] = false
         
         _ = self.moveBackwards()
             .then { (success) -> Promise<Bool> in
                 if success == true {
                     _ = self.reloadPagesViews()
-                    self.sendPageToAnalytics()
+                    self.sendPageToAnalytics(useAlternate: true)
                     return Promise(value: true)
                 }
                 return Promise(value: false)

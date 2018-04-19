@@ -86,6 +86,11 @@ class TractViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TractBindings.clearAllBindings()
+        let relay = AnalyticsRelay.shared
+        relay.currentSpecialScreenNames.removeAll()
+        relay.boolTracker[0] = false
+        relay.boolTracker[1] = false
+        relay.boolTracker[2] = false
     }
     
     // MARK: - UI setup

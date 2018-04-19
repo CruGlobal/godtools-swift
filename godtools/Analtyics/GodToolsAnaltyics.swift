@@ -127,8 +127,16 @@ class GodToolsAnaltyics {
             return
         }
         
-        guard let screenName = userInfo[GTConstants.kAnalyticsScreenNameKey] as? String else {
+        guard let nameOfScreen = userInfo[GTConstants.kAnalyticsScreenNameKey] as? String else {
             return
+        }
+        var screenName = nameOfScreen
+        let checkForTrueName = nameOfScreen
+        if let hasAlternateScreen = userInfo["hasAlternateName"] as? String {
+            debugPrint("hasAlternateScreen word is: \(hasAlternateScreen)")
+            if AnalyticsRelay.shared.boolTracker[1] {
+                screenName = getTrueName(screenName: checkForTrueName)
+            }
         }
 
         tracker?.set(kGAIScreenName, value: screenName)
@@ -166,7 +174,7 @@ class GodToolsAnaltyics {
         ADBMobile.trackAction(actionName, data: data)
     }
     
-    private func recordScreenViewInAdobe(screenName: String) {
+    private func recordScreenViewInAdobe(screenName: String, useAlternate: Bool = false) {
         var properties: [String: String] = [:]
         let relay = AnalyticsRelay.shared
         let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
@@ -180,10 +188,32 @@ class GodToolsAnaltyics {
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
-        
+
+        let nameParts = screenName.components(separatedBy: "-")
+        let lastNamePart = nameParts.last ?? ""
+        if lastNamePart.count > 1  && lastNamePart != "Home" {
+            relay.currentSpecialScreenNames.append(screenName)
+            relay.boolTracker[1] = true
+        }
+
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
         debugPrint("\(properties.debugDescription)\n")
+    }
+    
+    func getTrueName(screenName: String) -> String {
+        var newScreenName = ""
+        let relay = AnalyticsRelay.shared
+        let nameParts = screenName.components(separatedBy: "-")
+        let comparePart =  nameParts.last ?? ""
+        let screenNamesReversed = relay.currentSpecialScreenNames.reversed()
+        for name in screenNamesReversed {
+            if name.contains(comparePart) {
+                newScreenName = name
+                break
+            }
+        }
+        return newScreenName
     }
 }

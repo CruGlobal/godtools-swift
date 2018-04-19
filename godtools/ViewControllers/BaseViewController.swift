@@ -232,10 +232,15 @@ class BaseViewController: UIViewController {
 
     // MARK: - Analytics Helpers
     
-    func sendScreenViewNotification(screenName: String) {
+    func sendScreenViewNotification(screenName: String, useAlternative: Bool = false) {
         let relay = AnalyticsRelay.shared
         relay.screenName = screenName
-        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
+        var userInfo: [String: String] = [:]
+        if useAlternative {
+             userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, "hasAlternateName": "true"]
+        } else {
+             userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
+        }
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,
                                         userInfo: userInfo)

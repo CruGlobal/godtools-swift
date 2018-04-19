@@ -42,9 +42,25 @@ extension TractViewController: MFMailComposeViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func sendPageToAnalytics() {
+    func sendPageToAnalytics(useAlternate: Bool = false, swipeState: SwipeAnalyticState = .none, pageInt: Int = 0) {
         let screenName = self.screenName()
-        sendScreenViewNotification(screenName: screenName)
+        sendScreenViewNotification(screenName: screenName, useAlternative: useAlternate)
+    }
+    
+    // TODO - Don't think this is needed. Probably delete?
+    func getTrueName(screenName: String) -> String {
+        var newScreenName = ""
+        let relay = AnalyticsRelay.shared
+        let nameParts = screenName.components(separatedBy: "-")
+        let comparePart =  nameParts.last ?? ""
+        let screenNamesReversed = relay.currentSpecialScreenNames.reversed()
+        for name in screenNamesReversed {
+            if name.contains(comparePart) {
+                newScreenName = name
+                break
+            }
+        }
+        return newScreenName
     }
     
 }
