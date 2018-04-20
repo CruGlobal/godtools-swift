@@ -23,19 +23,14 @@ class AnalyticsRelay {
     
     var screenName: String = ""
     var screenNamePlusCardLetterName: String = ""
-    var leftScreen: String = ""
-    var rightScreen: String = ""
     var useAlternate = false
     var alternateCounter = 0
     var previousScreenName: String = ""
-    var leftScreenName: String = ""
-    var rightScreeenName: String = ""
 
     var currentSpecialScreenNames: [String] = []
 
     var boolTracker: [Bool] = [false, false, false]
 
-    
     // These arrays keep track of what current cards are in a viewable stack.
     // This is used for preventing a false report being sent to analytics tracking.
     var tractCardCurrentLetterNames: [String] = []

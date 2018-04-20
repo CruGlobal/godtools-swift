@@ -33,6 +33,8 @@ extension TractCard {
             let relay = AnalyticsRelay.shared
             if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
+            } else if relay.boolTracker[1] {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
     }
@@ -47,6 +49,8 @@ extension TractCard {
             let adjustedLetterName = (properties.cardNumber - 1).convertToLetter()
             let relay = AnalyticsRelay.shared
             if relay.tractCardCurrentLetterNames.contains(adjustedLetterName) {
+                processCardForAnalytics(cardLetterName: adjustedLetterName)
+            } else if relay.boolTracker[1] {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
@@ -110,6 +114,12 @@ extension TractCard {
             setStateHidden()
         } else {
             setStateClose()
+        }
+        
+        if properties.cardNumber == 0 {
+            let adjustedLetterName = ""
+            processCardForAnalytics(cardLetterName: adjustedLetterName)
+            AnalyticsRelay.shared.boolTracker[1] = false
         }
         
         hideTexts()

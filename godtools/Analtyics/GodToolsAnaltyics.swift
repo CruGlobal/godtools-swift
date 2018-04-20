@@ -133,9 +133,10 @@ class GodToolsAnaltyics {
         var screenName = nameOfScreen
         let checkForTrueName = nameOfScreen
         if let hasAlternateScreen = userInfo["hasAlternateName"] as? String {
-            debugPrint("hasAlternateScreen word is: \(hasAlternateScreen)")
-            if AnalyticsRelay.shared.boolTracker[1] {
-                screenName = getTrueName(screenName: checkForTrueName)
+            if hasAlternateScreen == "true" {
+                if AnalyticsRelay.shared.boolTracker[1] {
+                    screenName = getTrueName(screenName: checkForTrueName)
+                }
             }
         }
 
