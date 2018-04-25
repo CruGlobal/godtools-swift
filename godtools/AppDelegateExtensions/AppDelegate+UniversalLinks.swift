@@ -11,51 +11,29 @@ import PromiseKit
 
 extension AppDelegate {
     
-    static let kCustomURLScheme = "godToolsCustomUrlScheme://"
+    static let kCustomURLScheme = "GodTools://"
     
-    static let gtURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
+    static let appStoreGodToolsURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
     
     static let appStoreAppID = "542773210?ls=1&mt=8"
     
-
+    // MARK: - URL Structure: "h ttp://d14vilcp0lqeut.cloudfront.net/fr/kgp/2")
+    // URL PATHCOMPONENTS example -> [ "/", "fr", "kgp", "2"]
+    // PATHCOMPONENT[0] = "/"
+    // PATHCOMPONENT[1] = language code
+    // PATHCOMPONENT[2] = resource code (Tract)
+    // PATHCOMPONENt[3] = page number (of Tract)
     
-    class func openCustomApp() {
-        if openCustomURLScheme(customURLScheme: kCustomURLScheme) {
-            // app was opened successfully
-        } else {
-            // handle unable to open the app, perhaps redirect to the App Store
-            UIApplication.shared.openURL(URL(string: "itms://itunes.apple.com/app/id" + appStoreAppID)!)
-        }
-    }
-    
-    
-    class func openCustomURLScheme(customURLScheme: String) -> Bool {
-        guard let customURL = URL(string: customURLScheme) else { return false }
-        if UIApplication.shared.canOpenURL(customURL) {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(customURL, options: [:], completionHandler: { (true) in
-                    // Do something here?
-                })
-            } else {
-                UIApplication.shared.openURL(customURL)
-            }
-            return true
-        }
-        
-        return false
-    }
+     // MARK: - This is for using when coming from JesusFilm App.
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        let message = url.host?.removingPercentEncoding
-        let alertController = UIAlertController(title: "Incoming Message", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil)
-        alertController.addAction(okAction)
-        
-        window?.rootViewController?.present(alertController, animated: true, completion: nil)
+        processForDeepLinking(from: url)
         
         return true
     }
+    
+    // MARK: - This is for using when coming from Safari.
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
@@ -66,12 +44,18 @@ extension AppDelegate {
             return false
         }
         
+        processForDeepLinking(from: url)
+        
+        return true
+    }
+    
+    private func processForDeepLinking(from url: URL) {
         guard let language = parseLangaugeFrom(url) else {
-            return false
+            return
         }
         
         guard let resource = parseResourceFrom(url) else {
-            return false
+            return
         }
         
         let pageNumber = parsePageNumberFrom(url)
@@ -87,15 +71,10 @@ extension AppDelegate {
                 self.fallbackToOtherLanguage(url: url)
             }
         }
-        return true
     }
     
     private func parseLangaugeFrom(_ url: URL) -> Language? {
-        // URL PATHCOMPONENTS example -> [ "/", "fr", "kgp", "2"]
-        // PATHCOMPONENT[1] = language code
-        // PATHCOMPONENT[2] = resource code (Tract)
-        // PATHCOMPONENt[3] = page number (of Tract)
-        // let url2 = URL(string: "http://d14vilcp0lqeut.cloudfront.net/fr/kgp/2")
+
         let pathParts = url.pathComponents
         
         if pathParts.count < 2 {
@@ -154,6 +133,8 @@ extension AppDelegate {
         let languagesManager = LanguagesManager()
         var language: Language?
         
+        // TODO: - Find out where in the URL we are putting fallbacks??
+        
         switch pathParts.count {
 
         case 5:
@@ -165,7 +146,7 @@ extension AppDelegate {
         default:
             language = languagesManager.loadFromDisk(code: "en")
         }
-        // TODO: - Find out where in the URL we are putting fallbacks
+        
         return language
     }
     
@@ -201,9 +182,10 @@ extension AppDelegate {
             }
             else {
                 let backupURL = URL(string: "https://www.knowgod.com/")!
-                UIApplication.shared.openURL(backupURL)
+                UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
             }
         }
         
     }
+    
 }
