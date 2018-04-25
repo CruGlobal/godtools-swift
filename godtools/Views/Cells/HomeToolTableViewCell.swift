@@ -33,6 +33,8 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
+    @IBInspectable var defaultTitleLeadingConstraint: CGFloat = 47.0
+    @IBInspectable var defaultNumberOfViewsLeadingConstraint: CGFloat = 47.0
     @IBOutlet weak var downloadProgressView: GTProgressView!
     
     private (set) var resource: DownloadedResource?
@@ -43,6 +45,13 @@ class HomeToolTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         registerProgressViewListener()
+    }
+    
+    override func prepareForReuse() {
+        downloadButton.isHidden = false
+        greyVerticalLine.isHidden = false
+        titleLeadingConstraint.constant = defaultTitleLeadingConstraint
+        numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
     }
     
     func configure(resource: DownloadedResource,
