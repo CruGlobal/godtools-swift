@@ -171,7 +171,7 @@ platform :ios do
           add_to_search_list: true
       )
 
-      match(readonly: true,
+      match(readonly: false,
             type: options[:type],
             keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
             keychain_password: ENV["MATCH_PASSWORD"])
