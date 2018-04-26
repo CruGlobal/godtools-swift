@@ -11,33 +11,23 @@ import PromiseKit
 
 extension AppDelegate {
     
+    // MARK: - Data that may be relevant to give to Jesus Film Project
+    
     static let kCustomURLScheme = "GodTools://"
     
     static let appStoreGodToolsURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
     
     static let appStoreAppID = "542773210?ls=1&mt=8"
     
-    // MARK: - URL Structure: "h ttp://d14vilcp0lqeut.cloudfront.net/fr/kgp/2")
-    // New URL Structure: http://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
-    //                   https://knowgod.com/ar/fourlaws/4
-    // URL PATHCOMPONENTS example -> [ "/", "fr", "kgp", "2"]
+    // NEW URL Structure!! h ttp://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
+    
     // PATHCOMPONENT[0] = "/"
-    // PATHCOMPONENT[1] = language code
-    // PATHCOMPONENT[2] = resource code (Tract)
-    // PATHCOMPONENt[3] = page number (of Tract)
-    
-    
-    // New URL Structure!!!!!!!!!!!!!
-    // PATHCOMPONENT[0] = ?
-    // PATHCOMPONENT[1] = ?
-    // PATHCOMPONENT[2] = ?
-    // PATHCOMPONENt[3] = ?
+    // PATHCOMPONENT[1] = known language code
+    // PATHCOMPONENT[2] = tract
+    // PATHCOMPONENt[3] = query for possible languages
     // PATHCOMPONENT[4] = ?
-    // PATHCOMPONENT[5] = ?
-    // PATHCOMPONENT[6] = ?
-    // PATHCOMPONENt[7] = ?
     
-     // MARK: - This is for using when coming from JesusFilm App.
+    // MARK: - This is for using when coming from JesusFilm App.
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
@@ -63,11 +53,8 @@ extension AppDelegate {
     }
     
     private func processForDeepLinking(from url: URL) {
-//        let path = url.path
-//        guard let queryParts = url.query else { return }
-//        let languageOptions = filterURLQuery(queryString: queryParts)
-        
-        guard let language = parseLangaugeFrom(url) else {
+
+        guard let language = parseUsableLanguageFrom(url) else {
             return
         }
         
@@ -75,7 +62,7 @@ extension AppDelegate {
             return
         }
         
-        let pageNumber = parsePageNumberFrom(url)
+        let pageNumber = parsePageNumberFrom(url) ?? 0
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
@@ -88,6 +75,24 @@ extension AppDelegate {
                 self.fallbackToOtherLanguage(url: url)
             }
         }
+    }
+    
+    private func parseUsableLanguageFrom(_ url: URL) -> Language? {
+        let languagesManager = LanguagesManager()
+        let knownLanguage = url.pathComponents[1]
+        
+        guard let queryParts = url.query else {
+            return languagesManager.loadFromDisk(code: knownLanguage)
+        }
+        let languageOptions = filterURLQuery(queryString: queryParts)
+        
+        if languageOptions.isEmpty {
+            return languagesManager.loadFromDisk(code: knownLanguage)
+        }
+        
+        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
+        return tryLanguages.first
+        
     }
     
     private func filterURLQuery(queryString: String) -> [String] {
@@ -108,18 +113,6 @@ extension AppDelegate {
         return languageExtras.last ?? ""
     }
     
-    private func parseLangaugeFrom(_ url: URL) -> Language? {
-
-        let pathParts = url.pathComponents
-        
-        if pathParts.count < 2 {
-            return nil
-        }
-        
-        let languagesManager = LanguagesManager()
-        return languagesManager.loadFromDisk(code: pathParts[1])
-    }
-    
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
         let pathParts = url.pathComponents
         
@@ -131,7 +124,7 @@ extension AppDelegate {
         return resourcesManager.loadFromDisk(code: pathParts[2])
     }
     
-    private func parsePageNumberFrom(_ url: URL) -> Int {
+    private func parsePageNumberFrom(_ url: URL) -> Int? {
         let pathParts = url.pathComponents
         
         if pathParts.count < 4 {
@@ -157,49 +150,14 @@ extension AppDelegate {
         }
     }
     
-    private func parseUsableLanguageFrom(_ url: URL) -> Language? {
+    private func returnAlternateLanguage(from code: String = "en") -> Language? {
         let languagesManager = LanguagesManager()
-        
-        guard let queryParts = url.query else { return nil }
-        let languageOptions = filterURLQuery(queryString: queryParts)
-        
-        if languageOptions.isEmpty {
-            return languagesManager.loadFromDisk(code: "en")
-        }
-        
-        var language: Language?
-        
-        // TODO: - Find out where in the URL we are putting fallbacks??
-        
-        switch languageOptions.count {
-
-        case 2:
-           language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
-        case 3:
-            language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
-        case 4:
-            language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
-        default:
-            language = languagesManager.loadFromDisk(code: "en")
-        }
-        
-        return language
-    }
-    
-    private func returnAlternateLanguage(_ pathParts: [String], primary: Int, secondary: Int, manager: LanguagesManager) -> Language? {
-        if let languagePrimary = manager.loadFromDisk(code: pathParts[primary])  {
-            return languagePrimary
-        } else if let languageSecondary = manager.loadFromDisk(code: pathParts[secondary]) {
-            return languageSecondary
-        } else {
-            return manager.loadFromDisk(code: "en")
-        }
-        
+        return languagesManager.loadFromDisk(code: code)
     }
     
     private func fallbackToOtherLanguage(url: URL)  {
         
-        guard let language = parseUsableLanguageFrom(url) else {
+        guard let language = returnAlternateLanguage() else {
             return
         }
         
@@ -207,7 +165,7 @@ extension AppDelegate {
             return 
         }
         
-        let pageNumber = parsePageNumberFrom(url)
+        let pageNumber = parsePageNumberFrom(url) ?? 0
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
@@ -221,7 +179,6 @@ extension AppDelegate {
                 UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
             }
         }
-        
     }
     
 }
