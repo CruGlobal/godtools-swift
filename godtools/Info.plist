@@ -67,6 +67,7 @@
 	<array>
 		<string>GodTools</string>
 		<string>JFilmTest</string>
+		<string>gtTestCustomUrlScheme</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
