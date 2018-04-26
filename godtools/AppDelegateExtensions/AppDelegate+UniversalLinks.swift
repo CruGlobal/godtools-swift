@@ -18,11 +18,24 @@ extension AppDelegate {
     static let appStoreAppID = "542773210?ls=1&mt=8"
     
     // MARK: - URL Structure: "h ttp://d14vilcp0lqeut.cloudfront.net/fr/kgp/2")
+    // New URL Structure: http://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
+    //                   https://knowgod.com/ar/fourlaws/4
     // URL PATHCOMPONENTS example -> [ "/", "fr", "kgp", "2"]
     // PATHCOMPONENT[0] = "/"
     // PATHCOMPONENT[1] = language code
     // PATHCOMPONENT[2] = resource code (Tract)
     // PATHCOMPONENt[3] = page number (of Tract)
+    
+    
+    // New URL Structure!!!!!!!!!!!!!
+    // PATHCOMPONENT[0] = ?
+    // PATHCOMPONENT[1] = ?
+    // PATHCOMPONENT[2] = ?
+    // PATHCOMPONENt[3] = ?
+    // PATHCOMPONENT[4] = ?
+    // PATHCOMPONENT[5] = ?
+    // PATHCOMPONENT[6] = ?
+    // PATHCOMPONENt[7] = ?
     
      // MARK: - This is for using when coming from JesusFilm App.
     
@@ -50,6 +63,10 @@ extension AppDelegate {
     }
     
     private func processForDeepLinking(from url: URL) {
+//        let path = url.path
+//        guard let queryParts = url.query else { return }
+//        let languageOptions = filterURLQuery(queryString: queryParts)
+        
         guard let language = parseLangaugeFrom(url) else {
             return
         }
@@ -71,6 +88,24 @@ extension AppDelegate {
                 self.fallbackToOtherLanguage(url: url)
             }
         }
+    }
+    
+    private func filterURLQuery(queryString: String) -> [String] {
+        var languageOptions: [String] = []
+        let languageParts = queryString.components(separatedBy: ",")
+        for language in languageParts {
+            if language.contains("=") {
+                languageOptions.append(handleEqualSign(stringWithEquals: language))
+            } else {
+                languageOptions.append(language)
+            }
+        }
+        return languageOptions
+    }
+    
+    private func handleEqualSign(stringWithEquals: String) -> String {
+        let languageExtras = stringWithEquals.components(separatedBy: "=")
+        return languageExtras.last ?? ""
     }
     
     private func parseLangaugeFrom(_ url: URL) -> Language? {
@@ -122,27 +157,28 @@ extension AppDelegate {
         }
     }
     
-    private func parseEnglishFrom(_ url: URL) -> Language? {
-
-        let pathParts = url.pathComponents
+    private func parseUsableLanguageFrom(_ url: URL) -> Language? {
+        let languagesManager = LanguagesManager()
         
-        if pathParts.count < 2 {
-            return nil
+        guard let queryParts = url.query else { return nil }
+        let languageOptions = filterURLQuery(queryString: queryParts)
+        
+        if languageOptions.isEmpty {
+            return languagesManager.loadFromDisk(code: "en")
         }
         
-        let languagesManager = LanguagesManager()
         var language: Language?
         
         // TODO: - Find out where in the URL we are putting fallbacks??
         
-        switch pathParts.count {
+        switch languageOptions.count {
 
-        case 5:
-           language = returnAlternateLanguage(pathParts, primary: 1, secondary: 4, manager: languagesManager)
-        case 6:
-            language = returnAlternateLanguage(pathParts, primary: 1, secondary: 5, manager: languagesManager)
-        case 7:
-            language = returnAlternateLanguage(pathParts, primary: 1, secondary: 6, manager: languagesManager)
+        case 2:
+           language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
+        case 3:
+            language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
+        case 4:
+            language = returnAlternateLanguage(languageOptions, primary: 0, secondary: 1, manager: languagesManager)
         default:
             language = languagesManager.loadFromDisk(code: "en")
         }
@@ -163,7 +199,7 @@ extension AppDelegate {
     
     private func fallbackToOtherLanguage(url: URL)  {
         
-        guard let language = parseEnglishFrom(url) else {
+        guard let language = parseUsableLanguageFrom(url) else {
             return
         }
         
