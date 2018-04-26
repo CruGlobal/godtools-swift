@@ -35,5 +35,9 @@ class WebViewController: BaseViewController {
     override func screenName() -> String {
         return self.pageTitleForAnalytics ?? "unknown"
     }
+    
+    override func siteSection() -> String {
+        return "menu"
+    }
 
 }

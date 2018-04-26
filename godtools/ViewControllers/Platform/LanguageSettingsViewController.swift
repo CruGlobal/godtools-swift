@@ -66,4 +66,8 @@ class LanguageSettingsViewController: BaseViewController {
         return "Language Settings"
     }
     
+    override func siteSection() -> String {
+        return "menu"
+    }
+    
 }
