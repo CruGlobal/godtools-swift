@@ -265,10 +265,6 @@ class TractViewController: BaseViewController {
         return "\(resource.code)"
     }
     
-    override func siteSubSection() -> String {
-        return ""
-    }
-    
     private func loadLanguages() {
         guard let resource = resource else {
             return

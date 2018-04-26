@@ -247,19 +247,16 @@ class BaseViewController: UIViewController {
     }
     
     func screenName() -> String {
-        //        assertionFailure("method must be overriden by view controller")
         
         return "unknown screenName"
     }
     
     func siteSection() -> String {
-        //        assertionFailure("method must be overriden by view controller")
         
         return ""
     }
     
     func siteSubSection() -> String {
-        //        assertionFailure("method must be overriden by view controller")
         
         return ""
     }
