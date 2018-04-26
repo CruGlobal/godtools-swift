@@ -97,6 +97,14 @@ class LanguagesTableViewController: BaseViewController {
     override func screenName() -> String {
         return "Select Language"
     }
+    
+    override func siteSection() -> String {
+        return "menu"
+    }
+    
+    override func siteSubSection() -> String {
+        return "language settings"
+    }
 }
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {

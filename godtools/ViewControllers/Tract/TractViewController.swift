@@ -198,6 +198,7 @@ class TractViewController: BaseViewController {
         NotificationCenter.default.post(name: .actionTrackNotification,
                                         object: nil,
                                         userInfo: userInfo)
+        self.sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: siteSubSection())
     }
     
     private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {
@@ -228,7 +229,7 @@ class TractViewController: BaseViewController {
         
         shareURLString = shareURLString.appending(" ")
         
-        return shareURLString
+        return shareURLString + "?icid=gtshare"
     }
     
     // Notifications
@@ -255,6 +256,17 @@ class TractViewController: BaseViewController {
             return super.screenName()
         }
         return "\(resource.code)-\(self.currentPage)"
+    }
+    
+    override func siteSection() -> String {
+        guard let resource = self.resource else {
+            return super.siteSection()
+        }
+        return "\(resource.code)"
+    }
+    
+    override func siteSubSection() -> String {
+        return ""
     }
     
     private func loadLanguages() {

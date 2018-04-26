@@ -251,10 +251,11 @@ extension TractCard {
         
         relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
         
-        sendScreenViewNotification(screenName: relay.screenName + cardLetterName)
+        screenViewNotification(screenName: relay.screenName + cardLetterName)
     }
     
-    func sendScreenViewNotification(screenName: String) {
+    func screenViewNotification(screenName: String) {
+        
         let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,

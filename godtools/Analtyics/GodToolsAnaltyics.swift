@@ -15,6 +15,8 @@ struct AdobeAnalyticsConstants {
         static let loggedInStatus = "cru.loggedinstatus"
         static let marketingCloudID = "cru.mcid"
         static let screenName = "cru.screenname"
+        static let siteSection = "cru.siteSection"
+        static let siteSubSection = "cru.siteSubSection"
         static let previousScreenName = "cru.previousscreenname"
         static let contentLanguage = "cru.contentlanguage"
         static let contentLanguageSecondary = "cru.contentlanguagesecondary"
@@ -50,8 +52,6 @@ struct AdobeAnalyticsConstants {
 }
 class GodToolsAnaltyics {
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
-    
-    // Testing 2FA
     
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
@@ -130,6 +130,8 @@ class GodToolsAnaltyics {
         guard let screenName = userInfo[GTConstants.kAnalyticsScreenNameKey] as? String else {
             return
         }
+        let siteSection = userInfo[AdobeAnalyticsConstants.Keys.siteSection] as? String ?? ""
+        let siteSubSection = userInfo[AdobeAnalyticsConstants.Keys.siteSubSection] as? String ?? ""
 
         tracker?.set(kGAIScreenName, value: screenName)
 
@@ -140,7 +142,7 @@ class GodToolsAnaltyics {
         tracker?.send(screenViewInfo)
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
-            self.recordScreenViewInAdobe(screenName: screenName)
+            self.recordScreenViewInAdobe(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         }
 
     }
@@ -157,7 +159,7 @@ class GodToolsAnaltyics {
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.trackActionInAdobe(actionName: action, data: contextData)
-            debugPrint("\(contextData.debugDescription)\n")
+            debugPrint("\(contextData.debugDescription)")
         }
     }
 
@@ -166,13 +168,15 @@ class GodToolsAnaltyics {
         ADBMobile.trackAction(actionName, data: data)
     }
     
-    private func recordScreenViewInAdobe(screenName: String) {
+    private func recordScreenViewInAdobe(screenName: String, siteSection: String, siteSubSection: String) {
         var properties: [String: String] = [:]
         let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
         let parallelLanguageCode = UserDefaults.standard.string(forKey: "kParallelLanguageCode") ?? ""
         
         properties[AdobeAnalyticsConstants.Keys.screenName] = screenName
         properties[AdobeAnalyticsConstants.Keys.previousScreenName] = previousScreenName
+        properties[AdobeAnalyticsConstants.Keys.siteSection] = siteSection
+        properties[AdobeAnalyticsConstants.Keys.siteSubSection] = siteSubSection
         properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
         properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
@@ -182,6 +186,6 @@ class GodToolsAnaltyics {
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
-        debugPrint("\(properties.debugDescription)\n")
+        debugPrint("\(properties.debugDescription)")
     }
 }

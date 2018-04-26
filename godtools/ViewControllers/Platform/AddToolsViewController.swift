@@ -41,10 +41,6 @@ class AddToolsViewController: BaseViewController {
         self.toolsManager.loadResourceList()
         refreshView()
     }
-
-    override func displayScreenTitle() {
-        self.navigationItem.title = "add_tools".localized
-    }
     
     override func configureNavigationButtons() {
         self.addNavigationLanguageButton()
@@ -63,7 +59,6 @@ class AddToolsViewController: BaseViewController {
     func refreshView() {
         self.tableView.reloadData()
         self.emptyView.isHidden = self.toolsManager.hasResources()
-       // self.emptyView.isHidden = (self.toolsManager.resources.count > 1)
         self.view.setNeedsDisplay()
     }
     
@@ -99,7 +94,11 @@ class AddToolsViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        return "Add Tools"
+        return "Find Tools"
+    }
+    
+    override func siteSection() -> String {
+        return "tools"
     }
     
 }
