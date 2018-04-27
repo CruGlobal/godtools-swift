@@ -24,8 +24,8 @@ extension AppDelegate {
     // PATHCOMPONENT[0] = "/"
     // PATHCOMPONENT[1] = known language code
     // PATHCOMPONENT[2] = tract
-    // PATHCOMPONENt[3] = query for possible languages
-    // PATHCOMPONENT[4] = ?
+    // PATHCOMPONENT[3] = page number
+    // PATHCOMPONENt[4] = query for possible languages and other parameters
     
     // MARK: - This is for using when coming from JesusFilm App.
     
@@ -79,12 +79,26 @@ extension AppDelegate {
     
     private func parseUsableLanguageFrom(_ url: URL) -> Language? {
         let languagesManager = LanguagesManager()
+        var linkDictionary: [String: Any] = [:]
+        
         let knownLanguage = url.pathComponents[1]
         
-        guard let queryParts = url.query else {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             return languagesManager.loadFromDisk(code: knownLanguage)
         }
-        let languageOptions = filterURLQuery(queryString: queryParts)
+        guard let componentItems = components.queryItems else {
+            return languagesManager.loadFromDisk(code: knownLanguage)
+        }
+        
+        for item in componentItems {
+            linkDictionary[item.name] = item.value ?? ""
+        }
+        
+        let languages = linkDictionary["primaryLanguage"] as? String ?? ""
+        let analyticsId = linkDictionary["mcid"] as? String ?? ""
+        sendAnalyticsData(fromString: analyticsId)
+        
+        let languageOptions = parseLanguages(fromString: languages)
         
         if languageOptions.isEmpty {
             return languagesManager.loadFromDisk(code: knownLanguage)
@@ -92,25 +106,15 @@ extension AppDelegate {
         
         let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         return tryLanguages.first
-        
     }
     
-    private func filterURLQuery(queryString: String) -> [String] {
+    private func parseLanguages(fromString: String) -> [String] {
         var languageOptions: [String] = []
-        let languageParts = queryString.components(separatedBy: ",")
+        let languageParts = fromString.components(separatedBy: ",")
         for language in languageParts {
-            if language.contains("=") {
-                languageOptions.append(handleEqualSign(stringWithEquals: language))
-            } else {
-                languageOptions.append(language)
-            }
+            languageOptions.append(language)
         }
         return languageOptions
-    }
-    
-    private func handleEqualSign(stringWithEquals: String) -> String {
-        let languageExtras = stringWithEquals.components(separatedBy: "=")
-        return languageExtras.last ?? ""
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
@@ -179,6 +183,10 @@ extension AppDelegate {
                 UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
             }
         }
+    }
+    
+    func sendAnalyticsData(fromString: String) {
+        debugPrint("\(fromString)")
     }
     
 }
