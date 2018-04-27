@@ -53,9 +53,10 @@ extension AppDelegate {
     }
     
     private func processForDeepLinking(from url: URL) {
+        let knownLanguage = url.pathComponents[1]
 
-        guard let language = parseUsableLanguageFrom(url) else {
-            return
+        guard let language = parseUsableLanguageFrom(url) ?? returnAlternateLanguage(from: knownLanguage) else {
+             return
         }
         
         guard let resource = parseResourceFrom(url) else {
