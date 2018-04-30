@@ -73,7 +73,7 @@ extension AppDelegate {
                 platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
             }
             else {
-                self.fallbackToOtherLanguage(url: url)
+                self.fallbackToEnglish(url: url)
             }
         }
     }
@@ -160,7 +160,7 @@ extension AppDelegate {
         return languagesManager.loadFromDisk(code: code)
     }
     
-    private func fallbackToOtherLanguage(url: URL)  {
+    private func fallbackToEnglish(url: URL)  {
         
         guard let language = returnAlternateLanguage() else {
             return
