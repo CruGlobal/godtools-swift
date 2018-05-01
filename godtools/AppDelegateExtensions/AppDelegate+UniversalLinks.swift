@@ -90,15 +90,31 @@ extension AppDelegate {
         }
         
         let languages = linkDictionary["primaryLanguage"] as? String ?? ""
+        
+        let parallelLanguages = linkDictionary["parallelLanguage"] as? String ?? ""
+        if let parallelLanguage = getParallelLanguage(using: languagesManager, parallelLanguages: parallelLanguages) {
+            handleTheParallelLanguage(parallelLanguage)
+        }
+        
         let analyticsId = linkDictionary["mcid"] as? String ?? ""
         sendAnalyticsData(fromString: analyticsId)
         
         let languageOptions = languages.components(separatedBy: ",")
-        
         if languageOptions.isEmpty { return nil }
         
         let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         return tryLanguages.first
+    }
+    
+    private func handleTheParallelLanguage(_ language: Language) {
+        // Do something with the parallel language?
+    }
+    
+    private func getParallelLanguage(using languagesManager: LanguagesManager, parallelLanguages: String) -> Language? {
+        let languageOptions = parallelLanguages.components(separatedBy: ",")
+        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
+        return tryLanguages.first
+        
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
