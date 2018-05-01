@@ -19,20 +19,23 @@ class TractButtonProperties: TractProperties {
     var type: ButtonType = .url
     var events: String = ""
     var url: String = ""
-    var color = UIColor.gtBlack
+    var buttonColor: UIColor? = nil
+    var buttonTextColor: UIColor? = nil
     
     override func defineProperties() {
-        self.properties = ["events", "url", "color"]
+        self.properties = ["events", "url"]
     }
     
     override func customProperties() -> [String]? {
-        return ["type"]
+        return ["type", "color"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
         switch propertyName {
         case "type":
             setupType(value)
+        case "color":
+            self.buttonColor = value.getRGBAColor()
         default: break
         }
     }
@@ -65,7 +68,7 @@ class TractButtonProperties: TractProperties {
         textProperties.font = .gtRegular(size: 18.0)
         textProperties.width = self.width
         textProperties.textAlign = .center
-        textProperties.textColor = self.color
+        textProperties.textColor = self.buttonTextColor ?? .gtWhite
         
         return textProperties
     }
