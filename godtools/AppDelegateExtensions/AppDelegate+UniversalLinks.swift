@@ -99,7 +99,7 @@ extension AppDelegate {
         let analyticsId = linkDictionary["mcid"] as? String ?? ""
         sendAnalyticsData(fromString: analyticsId)
         
-        let languageOptions = parseLanguages(fromString: languages)
+        let languageOptions = languages.components(separatedBy: ",")
         
         if languageOptions.isEmpty {
             return languagesManager.loadFromDisk(code: knownLanguage)
@@ -107,15 +107,6 @@ extension AppDelegate {
         
         let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         return tryLanguages.first
-    }
-    
-    private func parseLanguages(fromString: String) -> [String] {
-        var languageOptions: [String] = []
-        let languageParts = fromString.components(separatedBy: ",")
-        for language in languageParts {
-            languageOptions.append(language)
-        }
-        return languageOptions
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
