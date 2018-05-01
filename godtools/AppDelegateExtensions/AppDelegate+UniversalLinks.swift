@@ -82,14 +82,8 @@ extension AppDelegate {
         let languagesManager = LanguagesManager()
         var linkDictionary: [String: Any] = [:]
         
-        let knownLanguage = url.pathComponents[1]
-        
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            return languagesManager.loadFromDisk(code: knownLanguage)
-        }
-        guard let componentItems = components.queryItems else {
-            return languagesManager.loadFromDisk(code: knownLanguage)
-        }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
+        guard let componentItems = components.queryItems else { return nil }
         
         for item in componentItems {
             linkDictionary[item.name] = item.value ?? ""
@@ -101,9 +95,7 @@ extension AppDelegate {
         
         let languageOptions = languages.components(separatedBy: ",")
         
-        if languageOptions.isEmpty {
-            return languagesManager.loadFromDisk(code: knownLanguage)
-        }
+        if languageOptions.isEmpty { return nil }
         
         let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         return tryLanguages.first
