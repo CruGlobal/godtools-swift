@@ -20,6 +20,7 @@ extension AppDelegate {
     static let appStoreAppID = "542773210?ls=1&mt=8"
     static let kPrimaryLanguageKey = "primaryLanguage"
     static let kParallelLanguageKey = "parallelLanguage"
+    static let kMcidKey = "mcid"
     
     // NEW URL Structure!! h ttp://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
     
@@ -66,6 +67,7 @@ extension AppDelegate {
         }
         
         let pageNumber = parsePageNumberFrom(url) ?? 0
+        
         let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey)?.code
         if let parallelLanguage = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey) {
             DispatchQueue.main.async {
@@ -99,7 +101,7 @@ extension AppDelegate {
         
         let languages = linkDictionary[usingKey] as? String ?? ""
         
-        let analyticsId = linkDictionary["mcid"] as? String ?? ""
+        let analyticsId = linkDictionary[AppDelegate.kMcidKey] as? String ?? ""
         sendAnalyticsData(fromString: analyticsId)
         
         let languageOptions = languages.components(separatedBy: ",")
@@ -187,7 +189,12 @@ extension AppDelegate {
             }
             else {
                 let backupURL = URL(string: "https://www.knowgod.com/")!
-                UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(backupURL)
+                }
             }
         }
     }
