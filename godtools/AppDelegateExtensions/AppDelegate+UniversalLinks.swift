@@ -14,9 +14,7 @@ extension AppDelegate {
     // MARK: - Data that may be relevant to give to Jesus Film Project
     
     static let kCustomURLScheme = "GodTools://"
-    
     static let appStoreGodToolsURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
-    
     static let appStoreAppID = "542773210?ls=1&mt=8"
     static let kPrimaryLanguageKey = "primaryLanguage"
     static let kParallelLanguageKey = "parallelLanguage"
@@ -188,12 +186,11 @@ extension AppDelegate {
                 platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
             }
             else {
-                let backupURL = URL(string: "https://www.knowgod.com/")!
                 if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(backupURL, options: [:], completionHandler: nil)
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 } else {
                     // Fallback on earlier versions
-                    UIApplication.shared.openURL(backupURL)
+                    UIApplication.shared.openURL(url)
                 }
             }
         }
