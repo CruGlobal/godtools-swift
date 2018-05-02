@@ -18,6 +18,8 @@ extension AppDelegate {
     static let appStoreGodToolsURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
     
     static let appStoreAppID = "542773210?ls=1&mt=8"
+    static let kPrimaryLanguageKey = "primaryLanguage"
+    static let kParallelLanguageKey = "parallelLanguage"
     
     // NEW URL Structure!! h ttp://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
     
@@ -55,7 +57,7 @@ extension AppDelegate {
     private func processForDeepLinking(from url: URL) {
         let knownLanguage = url.pathComponents[1]
 
-        guard let language = parseUsableLanguageFrom(url, usingKey: "primaryLanguage") ?? returnAlternateLanguage(from: knownLanguage) else {
+        guard let language = parseUsableLanguageFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey) ?? returnAlternateLanguage(from: knownLanguage) else {
              return
         }
         
@@ -64,9 +66,11 @@ extension AppDelegate {
         }
         
         let pageNumber = parsePageNumberFrom(url) ?? 0
-        let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: "parallelLanguage")?.code
-      //  let plc = parseUsableLanguageFrom(url, usingKey: "parallelLanguage")?.code
-        
+        let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey)?.code
+        if let parallelLanguage = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey) {
+            verifyResource(resource: resource, language: parallelLanguage)
+        }
+                
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
                 guard let platformFlowController = self.flowController as? PlatformFlowController else {
@@ -101,25 +105,6 @@ extension AppDelegate {
         
         let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         return tryLanguages.first
-    }
-    
-    private func checkForParallelLanguage(_ url: URL) -> String? {
-        let languagesManager = LanguagesManager()
-        var linkDictionary: [String: Any] = [:]
-        
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
-        guard let componentItems = components.queryItems else { return nil }
-        
-        for item in componentItems {
-            linkDictionary[item.name] = item.value ?? ""
-        }
-        let parallelLanguages = linkDictionary["parallelLanguage"] as? String ?? ""
-        
-        let languageOptions = parallelLanguages.components(separatedBy: ",")
-        if languageOptions.isEmpty { return nil }
-        
-        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
-        return tryLanguages.first?.code
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
@@ -157,6 +142,17 @@ extension AppDelegate {
         return importer.downloadSpecificTranslation(translation).then { (obj) -> Promise<Bool> in
             return Promise(value: true)
         }
+    }
+    
+    private func verifyResource(resource: DownloadedResource, language: Language)  {
+        
+        guard let translation = resource.getTranslationForLanguage(language) else { return }
+        
+        if translation.isDownloaded { return }
+        
+        let importer = TranslationZipImporter()
+        
+        let _ = importer.downloadSpecificTranslation(translation)
     }
     
     private func returnAlternateLanguage(from code: String = "en") -> Language? {
