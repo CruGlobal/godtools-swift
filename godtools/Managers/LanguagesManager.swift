@@ -80,12 +80,26 @@ class LanguagesManager: GTDataManager {
         return primaryLanguage
     }
     
-    func loadParallelLanguageFromDisk() -> Language? {
-        if GTSettings.shared.parallelLanguageId == nil {
-            return nil
+    func loadParallelLanguageFromDisk(arrivingFromUniversalLink: Bool = false) -> Language? {
+        if !arrivingFromUniversalLink {
+            if GTSettings.shared.parallelLanguageId == nil {
+                return nil
+            }
+            
+            if let parallelLanguage = loadFromDisk(id: GTSettings.shared.parallelLanguageId!) {
+                return parallelLanguage
+            }
         }
-        let parallelLanguage = loadFromDisk(id: GTSettings.shared.parallelLanguageId!)
-        return parallelLanguage
+        else if arrivingFromUniversalLink {
+            if GTSettings.shared.parallelLanguageCode == nil {
+                return nil
+            }
+            if let parallelLanguageCode = loadFromDisk(code: GTSettings.shared.parallelLanguageCode!) {
+                return parallelLanguageCode
+            }
+        }
+        
+        return nil
     }
     
     func loadFromDisk() -> Languages {

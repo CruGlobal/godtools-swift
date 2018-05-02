@@ -27,7 +27,7 @@ extension AppDelegate {
     // PATHCOMPONENT[3] = page number
     // PATHCOMPONENt[4] = query for possible languages and other parameters
     
-    // MARK: - This is for using when coming from JesusFilm App.
+    // MARK: - This is for use when coming from JesusFilm App.
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
@@ -36,7 +36,7 @@ extension AppDelegate {
         return true
     }
     
-    // MARK: - This is for using when coming from Safari.
+    // MARK: - This is for use when coming from Safari or Universal Links.
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
@@ -55,7 +55,7 @@ extension AppDelegate {
     private func processForDeepLinking(from url: URL) {
         let knownLanguage = url.pathComponents[1]
 
-        guard let language = parseUsableLanguageFrom(url) ?? returnAlternateLanguage(from: knownLanguage) else {
+        guard let language = parseUsableLanguageFrom(url, usingKey: "primaryLanguage") ?? returnAlternateLanguage(from: knownLanguage) else {
              return
         }
         
@@ -64,13 +64,15 @@ extension AppDelegate {
         }
         
         let pageNumber = parsePageNumberFrom(url) ?? 0
+        let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: "parallelLanguage")?.code
+      //  let plc = parseUsableLanguageFrom(url, usingKey: "parallelLanguage")?.code
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
                 guard let platformFlowController = self.flowController as? PlatformFlowController else {
                     return
                 }
-                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
+                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
             }
             else {
                 self.fallbackToEnglish(url: url)
@@ -78,7 +80,7 @@ extension AppDelegate {
         }
     }
     
-    private func parseUsableLanguageFrom(_ url: URL) -> Language? {
+    private func parseUsableLanguageFrom(_ url: URL, usingKey: String) -> Language? {
         let languagesManager = LanguagesManager()
         var linkDictionary: [String: Any] = [:]
         
@@ -89,12 +91,7 @@ extension AppDelegate {
             linkDictionary[item.name] = item.value ?? ""
         }
         
-        let languages = linkDictionary["primaryLanguage"] as? String ?? ""
-        
-        let parallelLanguages = linkDictionary["parallelLanguage"] as? String ?? ""
-        if let parallelLanguage = getParallelLanguage(using: languagesManager, parallelLanguages: parallelLanguages) {
-            handleTheParallelLanguage(parallelLanguage)
-        }
+        let languages = linkDictionary[usingKey] as? String ?? ""
         
         let analyticsId = linkDictionary["mcid"] as? String ?? ""
         sendAnalyticsData(fromString: analyticsId)
@@ -106,15 +103,23 @@ extension AppDelegate {
         return tryLanguages.first
     }
     
-    private func handleTheParallelLanguage(_ language: Language) {
-        // Do something with the parallel language?
-    }
-    
-    private func getParallelLanguage(using languagesManager: LanguagesManager, parallelLanguages: String) -> Language? {
-        let languageOptions = parallelLanguages.components(separatedBy: ",")
-        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
-        return tryLanguages.first
+    private func checkForParallelLanguage(_ url: URL) -> String? {
+        let languagesManager = LanguagesManager()
+        var linkDictionary: [String: Any] = [:]
         
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
+        guard let componentItems = components.queryItems else { return nil }
+        
+        for item in componentItems {
+            linkDictionary[item.name] = item.value ?? ""
+        }
+        let parallelLanguages = linkDictionary["parallelLanguage"] as? String ?? ""
+        
+        let languageOptions = parallelLanguages.components(separatedBy: ",")
+        if languageOptions.isEmpty { return nil }
+        
+        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
+        return tryLanguages.first?.code
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {

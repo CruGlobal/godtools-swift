@@ -16,12 +16,13 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         return viewController
     }
     
-    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int) {
+    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
         viewController.resource = resource
         viewController.currentPage = page
         viewController.universalLinkLanguage = language
         viewController.arrivedByUniversalLink = true
+        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
         
         pushViewController(viewController: viewController)
     }
