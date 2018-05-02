@@ -68,9 +68,11 @@ extension AppDelegate {
         let pageNumber = parsePageNumberFrom(url) ?? 0
         let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey)?.code
         if let parallelLanguage = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey) {
-            verifyResource(resource: resource, language: parallelLanguage)
+            DispatchQueue.main.async {
+                self.verifyResource(resource: resource, language: parallelLanguage)
+            }
         }
-                
+        
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
                 guard let platformFlowController = self.flowController as? PlatformFlowController else {
@@ -146,9 +148,13 @@ extension AppDelegate {
     
     private func verifyResource(resource: DownloadedResource, language: Language)  {
         
-        guard let translation = resource.getTranslationForLanguage(language) else { return }
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return
+        }
         
-        if translation.isDownloaded { return }
+        if translation.isDownloaded {
+            return
+        }
         
         let importer = TranslationZipImporter()
         
