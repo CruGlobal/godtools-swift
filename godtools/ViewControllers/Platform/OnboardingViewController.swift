@@ -24,6 +24,11 @@ class OnboardingViewController: BaseViewController {
     }
     
     private func initialSetup() {
+        
+        let swipeAny = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeAny.direction = [.down, .up, .left, .right]
+        view.addGestureRecognizer(swipeAny)
+
         page2View.transform = CGAffineTransform(translationX: 0, y: 0)
         setupButtonLabels()
         displayPage2()
@@ -37,8 +42,8 @@ class OnboardingViewController: BaseViewController {
     }
     
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .right {
-            dismissOnboarding()
+        if gesture.direction == .up {
+            return
         } else {
             dismissOnboarding()
         }
@@ -51,20 +56,6 @@ class OnboardingViewController: BaseViewController {
     }
     
     // MARK: Movement
-    
-    // This is currently not used, but left for future use when onboarding expands
-    fileprivate func displayPage1() {
-        pageControl.currentPage -= 1
-        let viewWidth = view.frame.width
-        
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
-                        self.page1View.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: nil )
-    }
     
     fileprivate func displayPage2() {
         pageControl.currentPage += 1
@@ -95,5 +86,3 @@ class OnboardingViewController: BaseViewController {
         addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
     }
 }
-
-
