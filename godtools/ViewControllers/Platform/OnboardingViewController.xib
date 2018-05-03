@@ -55,6 +55,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <state key="normal" title="Later"/>
                             <connections>
                                 <action selector="pressLanguagesOkayButton:" destination="-1" eventType="touchUpInside" id="MgN-hA-cEP"/>
@@ -114,7 +115,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.76733548358526205" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.70336395105101546" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="szd-6r-28H" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="1kE-92-2Zt"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="BG7-s1-2zI"/>

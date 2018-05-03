@@ -15,70 +15,37 @@ class OnboardingViewController: BaseViewController {
     @IBOutlet weak var pageControl: UIPageControl!
     
     @IBOutlet weak var languagesOkayButton: TransparentButton!
-    @IBOutlet weak var toolsOkayButton: TransparentButton!
-    
-    @IBOutlet weak var addToolsLabel: GTLabel!
     @IBOutlet weak var addLanguagesLabel: GTLabel!
     @IBOutlet weak var numberOfLanguagesLabel: GTLabel!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initialSetup()
-        
-        // This is currently not used, but left for future use when onboarding expands
-        
-//        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-//        swipeLeft.direction = .left
-//        view.addGestureRecognizer(swipeLeft)
-//
-//        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-//        swipeRight.direction = .right
-//        view.addGestureRecognizer(swipeRight)
     }
     
     private func initialSetup() {
-        // This is currently not used, but left for future use when onboarding expands
-        
-//        let viewWidth = view.frame.width
-//        page2View.transform = CGAffineTransform(translationX: viewWidth, y: 0)
-//        pageControl.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
-        
         page2View.transform = CGAffineTransform(translationX: 0, y: 0)
-        
         setupButtonLabels()
         displayPage2()
     }
     
     private func setupButtonLabels() {
-        // This is currently not used, but left for future use when onboarding expands
-    //    toolsOkayButton.setTitle("okay".localized, for: .normal)
+        languagesOkayButton.titleLabel?.font = UIFont.gtLight(size: 26.0)
         numberOfLanguagesLabel.text = "60+\nLanguages"
         addLanguagesLabel.text = "Share GodTools with someone in their native language."
-        languagesOkayButton.setTitle("okay".localized, for: .normal)
+        languagesOkayButton.setTitle("OK".localized, for: .normal)
     }
     
     @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
-        // This is currently not used, but left for future use when onboarding expands
-        
-//        if gesture.direction == .right {
-//            displayPage1()
-//        } else if gesture.direction == .left {
-//            displayPage2()
- //       }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        if gesture.direction == .right {
+            dismissOnboarding()
+        } else {
+            dismissOnboarding()
+        }
     }
     
     // MARK: - Actions
     
-   // @IBAction func pressToolsOkayButton(_ sender: Any) {
-        // This is currently not used, but left for future use when onboarding expands
-    //    displayPage2()
-   // }
-
     @IBAction func pressLanguagesOkayButton(_ sender: Any) {
         dismissOnboarding()
     }
