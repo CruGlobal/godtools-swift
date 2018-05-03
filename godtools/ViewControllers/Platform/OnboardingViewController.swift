@@ -51,7 +51,7 @@ class OnboardingViewController: BaseViewController {
     private func setupButtonLabels() {
         // This is currently not used, but left for future use when onboarding expands
     //    toolsOkayButton.setTitle("okay".localized, for: .normal)
-        
+        addLanguagesLabel.text = "Share GodTools with someone in their native language."
         languagesOkayButton.setTitle("okay".localized, for: .normal)
     }
     
@@ -71,10 +71,10 @@ class OnboardingViewController: BaseViewController {
     
     // MARK: - Actions
     
-    @IBAction func pressToolsOkayButton(_ sender: Any) {
+   // @IBAction func pressToolsOkayButton(_ sender: Any) {
         // This is currently not used, but left for future use when onboarding expands
     //    displayPage2()
-    }
+   // }
 
     @IBAction func pressLanguagesOkayButton(_ sender: Any) {
         dismissOnboarding()
@@ -120,9 +120,8 @@ class OnboardingViewController: BaseViewController {
     override func addAccessibilityIdentifiers() {
         page1View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsView
         page2View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesView
-        toolsOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.toolsOkayButton
         languagesOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.languagesOkayButton
-        addToolsLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsLabel
+        
         addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
     }
 }
