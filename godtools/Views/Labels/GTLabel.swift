@@ -33,8 +33,11 @@ class GTLabel: UILabel {
                 self.font = .gtLight(size: 28.0)
                 self.textColor = .gtWhite
             case "whiteSubTitle":
-                self.font = .gtLight(size: 23.0)
+                self.font = .gtRegular(size: 23.0)
                 self.textColor = .gtWhite
+            case "blueSubTitle":
+                self.font = .gtRegular(size: 34.0)
+                self.textColor = .gtBlue
             case "blueTitle":
                 self.font = .gtSemiBold(size: 28.0)
                 self.textColor = .gtBlue

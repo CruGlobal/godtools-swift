@@ -19,6 +19,8 @@ class OnboardingViewController: BaseViewController {
     
     @IBOutlet weak var addToolsLabel: GTLabel!
     @IBOutlet weak var addLanguagesLabel: GTLabel!
+    @IBOutlet weak var numberOfLanguagesLabel: GTLabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +53,7 @@ class OnboardingViewController: BaseViewController {
     private func setupButtonLabels() {
         // This is currently not used, but left for future use when onboarding expands
     //    toolsOkayButton.setTitle("okay".localized, for: .normal)
+        numberOfLanguagesLabel.text = "60+\nLanguages"
         addLanguagesLabel.text = "Share GodTools with someone in their native language."
         languagesOkayButton.setTitle("okay".localized, for: .normal)
     }
@@ -121,7 +124,7 @@ class OnboardingViewController: BaseViewController {
         page1View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsView
         page2View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesView
         languagesOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.languagesOkayButton
-        
+        numberOfLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.numberOfLanguagesLabel
         addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
     }
 }

@@ -16,6 +16,7 @@ struct GTAccessibilityConstants {
         static let toolsOkayButton = "onboarding_tools_okay_button"
         static let addToolsLabel = "onboarding_add_tools_label"
         static let addLanguagesLabel = "onbboarding_add_langauges_label"
+        static let numberOfLanguagesLabel = "onbboarding_number_of_langauges_label"
     }
     
     struct Home {
