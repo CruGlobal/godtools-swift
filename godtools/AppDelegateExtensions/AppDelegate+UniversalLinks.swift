@@ -15,12 +15,12 @@ extension AppDelegate {
     
     static let kCustomURLScheme = "GodTools://"
     static let appStoreGodToolsURL = URL(string: "itms-apps://itunes.apple.com/app/godtools/id542773210?ls=1&mt=8")
-    static let appStoreAppID = "542773210?ls=1&mt=8"
+    static let appStoreAppID = "542773210"
     static let kPrimaryLanguageKey = "primaryLanguage"
     static let kParallelLanguageKey = "parallelLanguage"
     static let kMcidKey = "mcid"
     
-    // NEW URL Structure!! h ttp://knowgod.com/en/fourlaws?primaryLanguage=ts,ar,fr-CA,en
+    // NEW URL Structure!! h ttp://knowgod.com/en/fourlaws/3?primaryLanguage=ts,ar,fr-CA,en&mcid=6jaskdf&parallelLanguage=ez,fz,zh-hans,en
     
     // PATHCOMPONENT[0] = "/"
     // PATHCOMPONENT[1] = known language code
@@ -28,7 +28,7 @@ extension AppDelegate {
     // PATHCOMPONENT[3] = page number
     // PATHCOMPONENt[4] = query for possible languages and other parameters
     
-    // MARK: - This is for use when coming from JesusFilm App.
+    // MARK: - This is for use when coming from JesusFilm App (or other Apps) that have our URL scheme registered in their whitelist.
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
@@ -79,12 +79,20 @@ extension AppDelegate {
                     return
                 }
                 platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
+                self.sendAnalyticsData(from: url, usingKey: AppDelegate.kMcidKey)
             }
             else {
-                self.fallbackToEnglish(url: url)
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
             }
         }
     }
+    
+    // MARK: - Returns a Language from the query portion of a URL, using a given key - ie., primaryLanguage, parallelLanguage, etc,.
     
     private func parseUsableLanguageFrom(_ url: URL, usingKey: String) -> Language? {
         let languagesManager = LanguagesManager()
@@ -98,9 +106,6 @@ extension AppDelegate {
         }
         
         let languages = linkDictionary[usingKey] as? String ?? ""
-        
-        let analyticsId = linkDictionary[AppDelegate.kMcidKey] as? String ?? ""
-        sendAnalyticsData(fromString: analyticsId)
         
         let languageOptions = languages.components(separatedBy: ",")
         if languageOptions.isEmpty { return nil }
@@ -146,6 +151,8 @@ extension AppDelegate {
         }
     }
     
+    // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
+    
     private func verifyResource(resource: DownloadedResource, language: Language)  {
         
         guard let translation = resource.getTranslationForLanguage(language) else {
@@ -161,43 +168,29 @@ extension AppDelegate {
         let _ = importer.downloadSpecificTranslation(translation)
     }
     
+    // MARK: - This is a streamlined way to return a known Language, or fallback and return English.
+    
     private func returnAlternateLanguage(from code: String = "en") -> Language? {
         let languagesManager = LanguagesManager()
         return languagesManager.loadFromDisk(code: code)
     }
     
-    private func fallbackToEnglish(url: URL)  {
-        
-        guard let language = returnAlternateLanguage() else {
-            return
-        }
-        
-        guard let resource = parseResourceFrom(url) else {
-            return 
-        }
-        
-        let pageNumber = parsePageNumberFrom(url) ?? 0
-        
-        _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
-            if success {
-                guard let platformFlowController = self.flowController as? PlatformFlowController else {
-                    return
-                }
-                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber)
-            }
-            else {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    // Fallback on earlier versions
-                    UIApplication.shared.openURL(url)
-                }
-            }
-        }
-    }
+    // MARK: - Analytics helper...criteria not yet defined.
     
-    func sendAnalyticsData(fromString: String) {
-        debugPrint("\(fromString)")
+    func sendAnalyticsData(from url: URL, usingKey: String) {
+        var linkDictionary: [String: Any] = [:]
+        
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
+        guard let componentItems = components.queryItems else { return }
+        
+        for item in componentItems {
+            linkDictionary[item.name] = item.value ?? ""
+        }
+        
+        let analyticsId = linkDictionary[usingKey] as? String ?? ""
+        
+        // Do something for analytics here?
+        debugPrint("\(analyticsId)")
     }
     
 }
