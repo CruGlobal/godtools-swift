@@ -31,8 +31,9 @@ class TractButton: BaseTractElement {
         super.loadElementProperties(properties)
         
         let properties = buttonProperties()
-        properties.backgroundColor = self.manifestProperties.primaryColor
-        properties.color = .gtWhite
+        let pageProperties = page?.pageProperties()
+        
+        properties.backgroundColor = properties.buttonColor ?? pageProperties?.primaryColor ?? manifestProperties.primaryColor
     }
     
     override func loadStyles() {
@@ -56,14 +57,19 @@ class TractButton: BaseTractElement {
     
     override func render() -> UIView {
         if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
-            let properties = buttonProperties()
-            let element = self.elements?.first as! TractTextContent
+
+            guard let element = self.elements?.first as? TractTextContent else { return self }
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
-            self.button.setTitleColor(properties.color, for: .normal)
-            self.button.setTitleColor(properties.color.withAlphaComponent(0.5), for: .highlighted)
+
+            let textColorProperty = buttonTextColor(localColor: element.textProperties().localTextColor)
+            debugPrint(textColorProperty)
+            
+            self.button.setTitleColor(textColorProperty, for: .normal)
+            self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
+
             self.button.titleLabel?.lineBreakMode = .byWordWrapping
             self.button.titleLabel?.textAlignment = .center
         } else {
@@ -74,6 +80,10 @@ class TractButton: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    func buttonTextColor(localColor: UIColor?) -> UIColor {
+        return localColor ?? page?.pageProperties().primaryTextColor ?? manifestProperties.primaryTextColor
     }
     
     override func textStyle() -> TractTextContentProperties {
