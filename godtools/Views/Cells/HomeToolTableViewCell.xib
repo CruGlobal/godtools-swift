@@ -79,7 +79,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="45.5" width="176.5" height="21"/>
+                                                <rect key="frame" x="47.5" y="45.5" width="178.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Byn-jY-nQf"/>
                                                 </constraints>
@@ -225,6 +225,7 @@
                 <outlet property="downloadButton" destination="ZbI-hf-Sfh" id="aTN-VP-qAa"/>
                 <outlet property="downloadProgressView" destination="sTw-7d-Fpn" id="d8g-Bc-zni"/>
                 <outlet property="greyVerticalLine" destination="mDc-DS-b34" id="J5F-IZ-qCO"/>
+                <outlet property="infoButton" destination="Zf0-VZ-Gbm" id="kij-u2-QXa"/>
                 <outlet property="languageLabel" destination="mo2-YN-vLH" id="xd0-E6-cW3"/>
                 <outlet property="mainContentView" destination="JrU-rG-bBE" id="QY5-rn-SgV"/>
                 <outlet property="numberOfViewsLeadingConstraint" destination="ewo-hI-cIe" id="Pgf-3g-FXH"/>
