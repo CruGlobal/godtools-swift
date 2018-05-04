@@ -26,7 +26,6 @@ class OnboardingViewController: BaseViewController {
     private func initialSetup() {
         
         let anyTap = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
-        //swipeAny.direction = [.down, .up, .left, .right]
         view.addGestureRecognizer(anyTap)
         let swipeUpDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         swipeUpDown.direction = [.down, .up]
@@ -43,8 +42,8 @@ class OnboardingViewController: BaseViewController {
     private func setupButtonLabels() {
         languagesOkayButton.titleLabel?.font = UIFont.gtLight(size: 26.0)
         languagesOkayButton.borderColor = .clear
-        numberOfLanguagesLabel.text = "60+ Languages".localized
-        addLanguagesLabel.text = "Share GodTools with someone in their native language.".localized
+        numberOfLanguagesLabel.text = "60+_languages".localized
+        addLanguagesLabel.text = "share_godtools_with_someone_in_their_native_language.".localized
         languagesOkayButton.setTitle("OK".localized, for: .normal)
     }
     
@@ -66,15 +65,6 @@ class OnboardingViewController: BaseViewController {
     
     fileprivate func displayPage2() {
         pageControl.currentPage += 1
-        let viewWidth = view.frame.width
-        
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.page2View.transform = CGAffineTransform(translationX: 0, y: 0)
-                        self.page1View.transform = CGAffineTransform(translationX: -(viewWidth), y: 0) },
-                       completion: nil )
     }
     
     // MARK: - Helpers
