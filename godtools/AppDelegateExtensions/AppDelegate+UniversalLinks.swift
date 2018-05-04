@@ -54,52 +54,58 @@ extension AppDelegate {
     }
     
     private func processForDeepLinking(from url: URL) {
-        let knownLanguage = url.pathComponents[1]
-
-        guard let language = parseUsableLanguageFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey) ?? returnAlternateLanguage(from: knownLanguage) else {
-             return
-        }
+        
+        let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
         guard let resource = parseResourceFrom(url) else {
             return
         }
         
-        let pageNumber = parsePageNumberFrom(url) ?? 0
-        
-        let parallelLanguageCode = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey)?.code
-        if let parallelLanguage = parseUsableLanguageFrom(url, usingKey: AppDelegate.kParallelLanguageKey) {
-            DispatchQueue.main.async {
-                self.verifyResource(resource: resource, language: parallelLanguage)
-            }
+        guard let language = getLanguageFor(resource: resource, languageOptions: languageOptions) else {
+            return
+            
         }
+        
+        let pageNumber = parsePageNumberFrom(url) ?? 0
         
         _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
             if success {
                 guard let platformFlowController = self.flowController as? PlatformFlowController else {
                     return
                 }
-                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
-                self.sendAnalyticsData(from: url, usingKey: AppDelegate.kMcidKey)
+                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: nil)
             }
-            else {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    // Fallback on earlier versions
-                    UIApplication.shared.openURL(url)
-                }
+            else if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(url)
             }
         }
     }
     
-    // MARK: - Returns a Language from the query portion of a URL, using a given key - ie., primaryLanguage, parallelLanguage, etc,.
+    private func getLanguageFor(resource: DownloadedResource, languageOptions: [Language]) -> Language? {
+        var checkedLanguages: [Language] = []
+        for language in languageOptions {
+            if resource.isAvailableInLanguage(language) {
+                checkedLanguages.append(language)
+            }
+        }
+        return checkedLanguages.first
+    }
     
-    private func parseUsableLanguageFrom(_ url: URL, usingKey: String) -> Language? {
+    // MARK: - Returns Languages from the query portion of a URL, using a given key - ie., primaryLanguage, parallelLanguage, etc,.
+    
+    private func parseLanguagesFrom(_ url: URL, usingKey: String) -> [Language] {
         let languagesManager = LanguagesManager()
+        var tryLanguages: [Language] = []
+        let knownLanguageString = url.pathComponents[1]
+        guard let knownLanguage = returnAlternateLanguage(from: knownLanguageString) else { return tryLanguages }
+        tryLanguages.append(knownLanguage)
         var linkDictionary: [String: Any] = [:]
         
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return nil }
-        guard let componentItems = components.queryItems else { return nil }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return tryLanguages }
+        guard let componentItems = components.queryItems else { return tryLanguages }
         
         for item in componentItems {
             linkDictionary[item.name] = item.value ?? ""
@@ -108,10 +114,13 @@ extension AppDelegate {
         let languages = linkDictionary[usingKey] as? String ?? ""
         
         let languageOptions = languages.components(separatedBy: ",")
-        if languageOptions.isEmpty { return nil }
+        if languageOptions.isEmpty { return tryLanguages }
+        tryLanguages.remove(at: 0)
         
-        let tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
-        return tryLanguages.first
+        tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
+        tryLanguages.append(knownLanguage)
+        
+        return tryLanguages
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
