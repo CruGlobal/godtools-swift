@@ -25,9 +25,15 @@ class OnboardingViewController: BaseViewController {
     
     private func initialSetup() {
         
-        let swipeAny = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeAny.direction = [.down, .up, .left, .right]
-        view.addGestureRecognizer(swipeAny)
+        let anyTap = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
+        //swipeAny.direction = [.down, .up, .left, .right]
+        view.addGestureRecognizer(anyTap)
+        let swipeUpDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeUpDown.direction = [.down, .up]
+        view.addGestureRecognizer(swipeUpDown)
+        let swipeleftRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeleftRight.direction = [.left, .right]
+        view.addGestureRecognizer(swipeleftRight)
 
         page2View.transform = CGAffineTransform(translationX: 0, y: 0)
         setupButtonLabels()
@@ -36,17 +42,18 @@ class OnboardingViewController: BaseViewController {
     
     private func setupButtonLabels() {
         languagesOkayButton.titleLabel?.font = UIFont.gtLight(size: 26.0)
-        numberOfLanguagesLabel.text = "60+\nLanguages"
-        addLanguagesLabel.text = "Share GodTools with someone in their native language."
+        languagesOkayButton.borderColor = .clear
+        numberOfLanguagesLabel.text = "60+ Languages".localized
+        addLanguagesLabel.text = "Share GodTools with someone in their native language.".localized
         languagesOkayButton.setTitle("OK".localized, for: .normal)
     }
     
-    @objc fileprivate func handleGesture(gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .up {
-            return
-        } else {
-            dismissOnboarding()
-        }
+    @objc fileprivate func handleGesture(gesture: UITapGestureRecognizer) {
+        dismissOnboarding()
+    }
+    
+    @objc fileprivate func handleSwipe(gesture: UISwipeGestureRecognizer) {
+        dismissOnboarding()
     }
     
     // MARK: - Actions
