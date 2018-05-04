@@ -128,8 +128,7 @@ class HomeViewController: BaseViewController {
         onboardingViewController.modalPresentationStyle = .overCurrentContext
         self.present(onboardingViewController, animated: true, completion: nil)
         
-        // Change this back to true when done
-        UserDefaults.standard.set(false, forKey: GTConstants.kOnboardingScreensShownKey)
+        UserDefaults.standard.set(true, forKey: GTConstants.kOnboardingScreensShownKey)
     }
 
     private func onboardingShouldDisplay() -> Bool {

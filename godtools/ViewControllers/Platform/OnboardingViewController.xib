@@ -16,7 +16,6 @@
                 <outlet property="addLanguagesLabel" destination="cYK-jH-Vat" id="gHT-OU-GGd"/>
                 <outlet property="languagesOkayButton" destination="jRo-pJ-Pjn" id="TQS-T5-T4G"/>
                 <outlet property="numberOfLanguagesLabel" destination="n0y-5A-CDl" id="xFU-Dg-3BA"/>
-                <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
                 <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
                 <outlet property="pageControl" destination="hSP-YK-jb4" id="r0q-Uj-ZrA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,13 +30,6 @@
                     <rect key="frame" x="168" y="590" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szd-6r-28H">
-                    <rect key="frame" x="0.0" y="180" width="375" height="307"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="307" id="1sA-Bb-fvi"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-5X-XL9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
@@ -118,13 +110,10 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.70336395105101546" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="szd-6r-28H" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="1kE-92-2Zt"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="BG7-s1-2zI"/>
-                <constraint firstItem="szd-6r-28H" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ggs-7i-ala"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="M2l-FE-iu5"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sq1-Yt-80d"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="bjc-jt-Zfz"/>
-                <constraint firstItem="szd-6r-28H" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="eAO-qN-y2A"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>

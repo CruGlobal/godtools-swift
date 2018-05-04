@@ -10,7 +10,6 @@ import UIKit
 
 class OnboardingViewController: BaseViewController {
     
-    @IBOutlet weak var page1View: UIView!
     @IBOutlet weak var page2View: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
     
@@ -25,7 +24,7 @@ class OnboardingViewController: BaseViewController {
     
     private func initialSetup() {
         
-        let anyTap = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
+        let anyTap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(anyTap)
         let swipeUpDown = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         swipeUpDown.direction = [.down, .up]
@@ -35,11 +34,11 @@ class OnboardingViewController: BaseViewController {
         view.addGestureRecognizer(swipeleftRight)
 
         page2View.transform = CGAffineTransform(translationX: 0, y: 0)
-        setupButtonLabels()
+        setupButtonAndLabels()
         displayPage2()
     }
     
-    private func setupButtonLabels() {
+    private func setupButtonAndLabels() {
         languagesOkayButton.titleLabel?.font = UIFont.gtLight(size: 26.0)
         languagesOkayButton.borderColor = .clear
         numberOfLanguagesLabel.text = "60+_languages".localized
@@ -47,7 +46,7 @@ class OnboardingViewController: BaseViewController {
         languagesOkayButton.setTitle("OK".localized, for: .normal)
     }
     
-    @objc fileprivate func handleGesture(gesture: UITapGestureRecognizer) {
+    @objc fileprivate func handleTap(gesture: UITapGestureRecognizer) {
         dismissOnboarding()
     }
     
@@ -76,10 +75,10 @@ class OnboardingViewController: BaseViewController {
     // MARK: - Add accessibility identifiers
     
     override func addAccessibilityIdentifiers() {
-        page1View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addToolsView
         page2View.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesView
         languagesOkayButton.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.languagesOkayButton
         numberOfLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.numberOfLanguagesLabel
         addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
     }
+    
 }
