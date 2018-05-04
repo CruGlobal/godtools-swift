@@ -31,8 +31,9 @@ class TractButton: BaseTractElement {
         super.loadElementProperties(properties)
         
         let properties = buttonProperties()
+        let pageProperties = page?.pageProperties()
         
-        properties.backgroundColor = properties.buttonColor ?? self.manifestProperties.primaryColor
+        properties.backgroundColor = properties.buttonColor ?? pageProperties?.primaryColor ?? manifestProperties.primaryColor
     }
     
     override func loadStyles() {
@@ -56,14 +57,16 @@ class TractButton: BaseTractElement {
     
     override func render() -> UIView {
         if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
-            let properties = buttonProperties()
-            let element = self.elements?.first as! TractTextContent
+
+            guard let element = self.elements?.first as? TractTextContent else { return self }
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
 
-            let textColorProperty = UIColor.gtWhite
+            let textColorProperty = element.textProperties().localTextColor ?? page?.pageProperties().primaryTextColor ?? manifestProperties.primaryTextColor
+            debugPrint(textColorProperty)
+            
             self.button.setTitleColor(textColorProperty, for: .normal)
             self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
 

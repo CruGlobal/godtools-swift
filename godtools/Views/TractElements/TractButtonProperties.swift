@@ -19,7 +19,7 @@ class TractButtonProperties: TractProperties {
     var type: ButtonType = .url
     var events: String = ""
     var url: String = ""
-    var buttonColor: UIColor? = nil
+    var buttonColor: UIColor?
 //    var buttonTextColor: UIColor? = nil
     
     override func defineProperties() {
