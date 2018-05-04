@@ -64,7 +64,7 @@ class TractButton: BaseTractElement {
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
 
-            let textColorProperty = element.textProperties().localTextColor ?? page?.pageProperties().primaryTextColor ?? manifestProperties.primaryTextColor
+            let textColorProperty = buttonTextColor(localColor: element.textProperties().localTextColor)
             debugPrint(textColorProperty)
             
             self.button.setTitleColor(textColorProperty, for: .normal)
@@ -80,6 +80,10 @@ class TractButton: BaseTractElement {
         
         TractBindings.addBindings(self)
         return self
+    }
+    
+    func buttonTextColor(localColor: UIColor?) -> UIColor {
+        return localColor ?? page?.pageProperties().primaryTextColor ?? manifestProperties.primaryTextColor
     }
     
     override func textStyle() -> TractTextContentProperties {

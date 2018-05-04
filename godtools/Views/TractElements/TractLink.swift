@@ -25,4 +25,7 @@ class TractLink: TractButton {
         properties.backgroundColor = .clear
     }
 
+    override func buttonTextColor(localColor: UIColor?) -> UIColor {
+        return localColor ?? page?.pageProperties().primaryColor ?? manifestProperties.primaryColor
+    }
 }
