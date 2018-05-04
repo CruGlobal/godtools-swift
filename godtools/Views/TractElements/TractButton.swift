@@ -33,12 +33,6 @@ class TractButton: BaseTractElement {
         let properties = buttonProperties()
         
         properties.backgroundColor = properties.buttonColor ?? self.manifestProperties.primaryColor
-        properties.buttonTextColor = .gtWhite
-        
-        // This is here to check we are not setting the text and background to both white
-        if properties.backgroundColor.isEqual(UIColor.gtWhite) {
-            properties.buttonTextColor = UIColor.gtBlack
-        }
     }
     
     override func loadStyles() {
@@ -69,7 +63,7 @@ class TractButton: BaseTractElement {
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
 
-            let textColorProperty = properties.buttonTextColor ?? .gtWhite
+            let textColorProperty = UIColor.gtWhite
             self.button.setTitleColor(textColorProperty, for: .normal)
             self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
 

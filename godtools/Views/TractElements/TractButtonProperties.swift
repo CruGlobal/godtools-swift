@@ -20,7 +20,7 @@ class TractButtonProperties: TractProperties {
     var events: String = ""
     var url: String = ""
     var buttonColor: UIColor? = nil
-    var buttonTextColor: UIColor? = nil
+//    var buttonTextColor: UIColor? = nil
     
     override func defineProperties() {
         self.properties = ["events", "url"]
@@ -68,7 +68,6 @@ class TractButtonProperties: TractProperties {
         textProperties.font = .gtRegular(size: 18.0)
         textProperties.width = self.width
         textProperties.textAlign = .center
-        textProperties.textColor = self.buttonTextColor ?? .gtWhite
         
         return textProperties
     }

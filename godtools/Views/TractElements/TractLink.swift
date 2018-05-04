@@ -23,7 +23,6 @@ class TractLink: TractButton {
         
         let properties = buttonProperties()
         properties.backgroundColor = .clear
-        properties.buttonTextColor = self.manifestProperties.primaryColor
     }
 
 }
