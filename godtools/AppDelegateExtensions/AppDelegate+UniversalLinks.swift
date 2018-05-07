@@ -68,20 +68,55 @@ extension AppDelegate {
         
         let pageNumber = parsePageNumberFrom(url) ?? 0
         
-        _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
-            if success {
-                guard let platformFlowController = self.flowController as? PlatformFlowController else {
-                    return
+        let parallelLanguages = parseLanguagesFrom(url, usingKey: AppDelegate.kParallelLanguageKey)
+        for x in parallelLanguages {
+            debugPrint("\(x.code)")
+        }
+        var parallelLanguage: Language?
+        
+        // The language options needs more than 1 value because it will contain the known language at the end of the array and that won't be usable for parallel languages
+        parallelLanguage = (parallelLanguages.count > 1) ? getLanguageFor(resource: resource, languageOptions: parallelLanguages) : nil
+        
+        if let parallelLang = parallelLanguage {
+            
+            // Need to handle this way so all resources are in place before presenting tract.
+            _ = ensureResourceIsAvailable(resource: resource, language: parallelLang)
+            .then { (success) -> Void in
+                
+                if success {
+                    // Parallel language has succeeded
+                    
+                    _ = self.ensureResourceIsAvailable(resource: resource, language: language)
+                    .then { (success) -> Void in
+                        if success {
+                            // Primary language has succeeded
+                            // Go to that Tract with a parallel language
+                            self.shouldGoToUniversalLinkedResource(resource, language: language, pageNumber: pageNumber, parallelLanguageCode: parallelLang.code)
+                        }
+                    }
                 }
-                platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: nil)
-            }
-            else if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            } else {
-                // Fallback on earlier versions
-                UIApplication.shared.openURL(url)
             }
         }
+        
+        if parallelLanguage == nil {
+            _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
+                if success {
+                    self.shouldGoToUniversalLinkedResource(resource, language: language, pageNumber: pageNumber, parallelLanguageCode: parallelLanguage?.code)
+                } else if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                    UIApplication.shared.openURL(url)
+                }
+            }
+        }
+    }
+    
+    private func shouldGoToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, pageNumber: Int, parallelLanguageCode: String? = nil) {
+            guard let platformFlowController = self.flowController as? PlatformFlowController else {
+                return
+            }
+            platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
     }
     
     private func getLanguageFor(resource: DownloadedResource, languageOptions: [Language]) -> Language? {
