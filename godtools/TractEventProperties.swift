@@ -18,7 +18,7 @@ class TractEventProperties: TractProperties {
     var listeners: String = ""
     
     override func defineProperties() {
-        self.properties = ["subject", "content", "html", "listeners"]
+        self.properties = []
     }
     
 }

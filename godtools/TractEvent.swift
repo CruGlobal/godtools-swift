@@ -24,8 +24,7 @@ class TractEvent: BaseTractElement {
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {
-        let properties = eventProperties()
-        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
+        return nil
     }
     
     // MARK: - Helpers

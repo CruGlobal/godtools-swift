@@ -34,13 +34,12 @@ class XMLParseManager: NSObject {
     static let nodeEmails: String = "emails"
     static let nodeEmail: String = "email"
     static let nodeEvent: String = "event"
-//    static let nodeEvents: String = "events"
-//    static let nodeAttribute: String = "attribute"
+    static let nodeEvents: String = "events"
+    static let nodeAttribute: String = "attribute"
     
     func getNodeClass(_ data: XMLIndexer) -> BaseTractElement.Type {
         let xmlManager = XMLManager()
         let contentElements = xmlManager.getContentElements(data)
-       // debugPrint("\(contentElements)")
         
         switch contentElements.kind {
         case XMLParseManager.nodeHero:
@@ -87,12 +86,12 @@ class XMLParseManager: NSObject {
             return TractEmail.self
         case XMLParseManager.nodeEvent:
             return TractEvent.self
-//        case XMLParseManager.nodeEvents:
-//            return TractEvent.self
-//        case XMLParseManager.nodeAttribute:
-//            return TractEvent.self
+        case XMLParseManager.nodeEvents:
+            return TractEvent.self
+        case XMLParseManager.nodeAttribute:
+            return TractEvent.self
         default:
-            //return TractEvent.self
+            
             return TractTextContent.self
         }
     }
