@@ -90,7 +90,7 @@ class LanguagesManager: GTDataManager {
                 return parallelLanguage
             }
         }
-        else if arrivingFromUniversalLink {
+        else {
             if GTSettings.shared.parallelLanguageCode == nil {
                 return nil
             }
