@@ -1,3 +1,8 @@
+"language_onboard" = "60+ Bahasa";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Anda telah memuat turun semua alat yang tersedia.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Alat Saya";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Tambah Alat Baharu";
 "set_your_languages" = "Tetapkan Bahasa Anda";
 "okay" = "Okey";
-"now" = "Sekarang";
-"later" = "Kemudian";
-
 // Menu
 "menu_general" = "Umum";
 "menu_share" = "Kongsi";
@@ -21,7 +23,6 @@
 "about" = "Perihal";
 "help" = "Bantuan";
 "contact_us" = "Hubungi Kami";
-"notifications" = "Pemberitahuan";
 "preview_mode_translators_only" = "Mod Pratonton (Penterjemah Sahaja)";
 "share_god_tools" = "Kongsikan GodTools";
 "share_a_story_with_us" = "Kongsikan sebuah Kisah Bersama Kami";

@@ -1,3 +1,8 @@
+"language_onboard" = "60+ زبان";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "همه ابزارهای موجود را دانلود کرده‌اید.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "ابزار من";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "افزودن ابزار جدید";
 "set_your_languages" = "زبان خود را تنظیم کنید";
 "okay" = "تأیید";
-"now" = "اکنون";
-"later" = "بعداً";
-
 // Menu
 "menu_general" = "عمومی";
 "menu_share" = "اشتراک‌گذاری";
@@ -21,7 +23,6 @@
 "about" = "درباره";
 "help" = "راهنمایی";
 "contact_us" = "تماس با ما";
-"notifications" = "اعلان‌ها";
 "preview_mode_translators_only" = "حالت پیش‌نمایش (فقط مترجمان)";
 "share_god_tools" = "اشتراک‌گذاری GodTools";
 "share_a_story_with_us" = "یک داستان با ما به اشتراک بگذارید";

@@ -1,3 +1,8 @@
+"language_onboard" = "Hơn 60 Ngôn ngữ";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Bạn đã tải về tất cả các công cụ sẵn có.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Công cụ của Tôi";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
 "okay" = "Ok";
-"now" = "Ngay bây giờ";
-"later" = "Để sau";
-
 // Menu
 "menu_general" = "Nói chung";
 "menu_share" = "Chia sẻ";
@@ -21,7 +23,6 @@
 "about" = "Giới thiệu về";
 "help" = "Trợ giúp";
 "contact_us" = "Liên hệ chúng tôi";
-"notifications" = "Thông báo";
 "preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
 "share_god_tools" = "Chia sẻ GodTools";
 "share_a_story_with_us" = "Chia sẻ một Câu chuyện với Chúng tôi";

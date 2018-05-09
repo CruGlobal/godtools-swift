@@ -1,3 +1,8 @@
+"language_onboard" = "60+ keelt";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Sa oled alla laadinud kõik olemasolevad tööriistad.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Minu tööriistad";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Lisa uusi tööriistu";
 "set_your_languages" = "Seadista oma keeled";
 "okay" = "Nõus";
-"now" = "Kohe";
-"later" = "Hiljem";
-
 // Menu
 "menu_general" = "Üldised";
 "menu_share" = "Jagamine";
@@ -21,7 +23,6 @@
 "about" = "Teave";
 "help" = "Abi";
 "contact_us" = "Kontakt";
-"notifications" = "Teated";
 "preview_mode_translators_only" = "Eelvaaterežiim (ainult tõlkijatele)";
 "share_god_tools" = "Jaga Jumala Tööriistu";
 "share_a_story_with_us" = "Jaga meiega oma lugu";

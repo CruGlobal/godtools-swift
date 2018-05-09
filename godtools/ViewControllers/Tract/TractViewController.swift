@@ -278,7 +278,7 @@ class TractViewController: BaseViewController {
             primaryLanguage = languagesManager.loadFromDisk(code: "en")
         }
         
-        parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+        parallelLanguage = languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
     }
     
     func resolvePrimaryLanguage() -> Language? {        
@@ -305,7 +305,7 @@ extension TractViewController: BaseTractElementDelegate {
         if languageSegmentedControl.selectedSegmentIndex == 0 {
             return resolvePrimaryLanguage()
         } else {
-            return languagesManager.loadParallelLanguageFromDisk()
+            return languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
         }
     }
 }

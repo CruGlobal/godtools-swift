@@ -9,9 +9,6 @@
 "add_new_tools" = "Shto mjete të reja";
 "set_your_languages" = "Cakto gjuhën";
 "okay" = "Në rregull";
-"now" = "Tani";
-"later" = "Më vonë";
-
 // Menu
 "menu_general" = "E përgjithshme";
 "menu_share" = "Ndaj";
@@ -21,7 +18,6 @@
 "about" = "Rreth";
 "help" = "Ndihmë";
 "contact_us" = "Na kontakto";
-"notifications" = "Lajmërime";
 "preview_mode_translators_only" = "Pamje (Vetëm për përkthyesit)";
 "share_god_tools" = "Shpërndaj GodTools";
 "share_a_story_with_us" = "Na trego një histori";

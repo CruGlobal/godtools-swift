@@ -1,3 +1,8 @@
+"language_onboard" = "60+ भाषाएँ";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "आपने सभी उपलब्ध टूल्स डाउनलोड कर लिए हैं।";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "मेरे टूल्स";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
 "okay" = "ठीक";
-"now" = "अभी";
-"later" = "बाद में";
-
 // Menu
 "menu_general" = "सामान्य";
 "menu_share" = "शेयर करें";
@@ -21,7 +23,6 @@
 "about" = "परिचय";
 "help" = "मदद";
 "contact_us" = "हमसे संपर्क करें";
-"notifications" = "अधिसूचनाएं";
 "preview_mode_translators_only" = "प्रीव्यू मोड (केवल अनुवादक)";
 "share_god_tools" = "GodTools शेयर करें";
 "share_a_story_with_us" = "हमसे कोई कहानी शेयर करें";

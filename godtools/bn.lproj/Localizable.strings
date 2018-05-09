@@ -9,9 +9,6 @@
 "add_new_tools" = "নতুন সরঞ্জাম যোগ করুন";
 "set_your_languages" = "আপনার ভাষা সেট করুন";
 "okay" = "ঠিক আছে";
-"now" = "ekhon";
-"later" = "পরে";
-
 // Menu
 "menu_general" = "সাধারণ";
 "menu_share" = "ভাগ করুন";
@@ -21,7 +18,6 @@
 "about" = "বিষয়ে";
 "help" = "সাহায্য";
 "contact_us" = "আমাদের সঙ্গে সম্পর্ক করুন";
-"notifications" = "বিজ্ঞপ্তিগুলি";
 "preview_mode_translators_only" = "পূর্বরূপ মোড (শুধুমাত্র অনুবাদক)";
 "share_god_tools" = "GodTools ভাগ করুন";
 "share_a_story_with_us" = "আমাদের সঙ্গে একটি গল্প শেয়ার করুন";

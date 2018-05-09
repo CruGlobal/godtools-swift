@@ -1,3 +1,8 @@
+"language_onboard" = "60+ Valodas";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Mani rīki";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Pievienot jaunus rīkus";
 "set_your_languages" = "Iestatīt jūsu valodas";
 "okay" = "Labi";
-"now" = "Tagad";
-"later" = "Vēlāk";
-
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_share" = "Dalīties";
@@ -21,7 +23,6 @@
 "about" = "Par";
 "help" = "Palīdzība";
 "contact_us" = "Sazinieties ar mums";
-"notifications" = "Paziņojumi";
 "preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
 "share_god_tools" = "Dalīties ar GodTools";
 "share_a_story_with_us" = "Pastāstiet mums savu stāstu";

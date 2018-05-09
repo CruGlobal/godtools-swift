@@ -63,5 +63,22 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>GodTools</string>
+		<string>JFilmTest</string>
+		<string>gtTestCustomUrlScheme</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>GodTools</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>org.cru.godtools</string>
+		</dict>
+	</array>
 </dict>
 </plist>

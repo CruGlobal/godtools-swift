@@ -1,3 +1,8 @@
+"language_onboard" = "Более 60 языков";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Все доступные инструменты загружены.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Мои инструменты";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
 "okay" = "Хорошо";
-"now" = "Сейчас";
-"later" = "Позднее";
-
 // Menu
 "menu_general" = "Общие настройки";
 "menu_share" = "Поделиться";
@@ -21,7 +23,6 @@
 "about" = "О приложении";
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
-"notifications" = "Уведомления";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
 "share_god_tools" = "Поделиться GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";

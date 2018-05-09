@@ -1,3 +1,8 @@
+"language_onboard" = "Over 60 sprog";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Du har hentet alle tilgængelige værktøjer.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Mine værktøjer";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Tilføj nye værktøjer";
 "set_your_languages" = "Angiv dine sprog";
 "okay" = "OK";
-"now" = "Nu";
-"later" = "Senere";
-
 // Menu
 "menu_general" = "Generelt";
 "menu_share" = "Del";
@@ -21,7 +23,6 @@
 "about" = "Om";
 "help" = "Hjælp";
 "contact_us" = "Kontakt os";
-"notifications" = "Notifikationer";
 "preview_mode_translators_only" = "Eksempeltilstand (kun for oversættere)";
 "share_god_tools" = "Del GodTools";
 "share_a_story_with_us" = "Del en historie med os";
