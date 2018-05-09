@@ -12,10 +12,16 @@ class TractEventProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var subject: String = ""
-    var content: String = ""
-    var html: Bool = true
-    var listeners: String = ""
+    var system: String = ""
+    var action: String = ""
+    var key: String = ""
+    var value: String = ""
+    
+    var attribute: [String: String] {
+        get {
+            return [key: value]
+        }
+    }
     
     override func defineProperties() {
         self.properties = []
