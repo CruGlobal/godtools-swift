@@ -26,4 +26,8 @@ class AboutViewController: BaseViewController {
         return "About"
     }
     
+    override func siteSection() -> String {
+        return "menu"
+    }
+    
 }

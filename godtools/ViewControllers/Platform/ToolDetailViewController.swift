@@ -128,4 +128,13 @@ class ToolDetailViewController: BaseViewController {
     override func screenName() -> String {
         return "Tool Info"
     }
+    
+    override func siteSection() -> String {
+        return "tools"
+    }
+    
+    override func siteSubSection() -> String {
+        return "add tools"
+    }
+    
 }

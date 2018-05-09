@@ -45,7 +45,7 @@ class BaseViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.displayScreenTitle()
-        sendScreenViewNotification(screenName: screenName())
+        sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: siteSubSection())
     }
     
     // MARK: - Navigation Bar
@@ -237,19 +237,28 @@ class BaseViewController: UIViewController {
 
     // MARK: - Analytics Helpers
     
-    func sendScreenViewNotification(screenName: String) {
+    func sendScreenViewNotification(screenName: String, siteSection: String, siteSubSection: String) {
         let relay = AnalyticsRelay.shared
         relay.screenName = screenName
-        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName]
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsConstants.Keys.siteSection: siteSection, AdobeAnalyticsConstants.Keys.siteSubSection: siteSubSection]
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,
                                         userInfo: userInfo)
     }
     
     func screenName() -> String {
-//        assertionFailure("method must be overriden by view controller")
         
-        return "unknown"
+        return "unknown screenName"
     }
-}
+    
+    func siteSection() -> String {
+        
+        return ""
+    }
+    
+    func siteSubSection() -> String {
+        
+        return ""
+    }
 
+}
