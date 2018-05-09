@@ -1,3 +1,8 @@
+"language_onboard" = "Vyše 60 jazykov";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Stiahli ste si všetky dostupné nástroje.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Moje nástroje";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Pridať nové nástroje";
 "set_your_languages" = "Nastavte si jazyky";
 "okay" = "OK";
-"now" = "Teraz";
-"later" = "Neskôr";
-
 // Menu
 "menu_general" = "Všeobecné";
 "menu_share" = "Zdieľanie";
@@ -21,7 +23,6 @@
 "about" = "Informácie";
 "help" = "Pomoc";
 "contact_us" = "Kontaktujte nás";
-"notifications" = "Upozornenia";
 "preview_mode_translators_only" = "Režim ukážky (iba prekladatelia)";
 "share_god_tools" = "Zdieľanie aplikácie GodTools";
 "share_a_story_with_us" = "Podeľte sa s nami o príbeh";

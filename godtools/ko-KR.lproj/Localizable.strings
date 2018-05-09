@@ -1,3 +1,8 @@
+"language_onboard" = "60개 이상의 언어";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "모든 이용 가능한 도구를 다운로드했습니다.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "내 도구";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "새 도구 추가";
 "set_your_languages" = "언어 설정";
 "okay" = "확인";
-"now" = "지금";
-"later" = "나중에";
-
 // Menu
 "menu_general" = "일반";
 "menu_share" = "공유";
@@ -21,7 +23,6 @@
 "about" = "정보";
 "help" = "도움말";
 "contact_us" = "연락처";
-"notifications" = "알림";
 "preview_mode_translators_only" = "미리보기 모드 (번역가 전용)";
 "share_god_tools" = "GodTools 공유";
 "share_a_story_with_us" = "이야기를 공유해요";

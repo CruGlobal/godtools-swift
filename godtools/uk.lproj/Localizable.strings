@@ -1,3 +1,8 @@
+"language_onboard" = "Понад 60 мов";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Ви завантажили всі доступні інструменти.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Інструменти";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Додати інструмент";
 "set_your_languages" = "Встановіть мови";
 "okay" = "Добре";
-"now" = "Зараз";
-"later" = "Потім";
-
 // Menu
 "menu_general" = "Основне";
 "menu_share" = "Переслати";
@@ -21,7 +23,6 @@
 "about" = "Про програму";
 "help" = "Довідка";
 "contact_us" = "Контакт";
-"notifications" = "Сповіщення";
 "preview_mode_translators_only" = "Режим перегляду (тільки перекладачі)";
 "share_god_tools" = "Поширити GodTools";
 "share_a_story_with_us" = "Розкажіть нам історію";

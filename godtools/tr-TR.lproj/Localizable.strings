@@ -1,3 +1,8 @@
+"language_onboard" = "60'ı Aşkın Dil";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Araçlarım";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Yeni Araçlar Ekle";
 "set_your_languages" = "Dillerinizi Ayarlayın";
 "okay" = "Tamam";
-"now" = "Şimdi";
-"later" = "Daha Sonra";
-
 // Menu
 "menu_general" = "Genel";
 "menu_share" = "Paylaş";
@@ -21,7 +23,6 @@
 "about" = "Hakkında";
 "help" = "Yardım";
 "contact_us" = "Bize Ulaşın";
-"notifications" = "Bildirimler";
 "preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
 "share_god_tools" = "GodTools'u Paylaş";
 "share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";

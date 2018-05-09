@@ -9,9 +9,6 @@
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
 "okay" = "Хорошо";
-"now" = "Сейчас";
-"later" = "Позднее";
-
 // Menu
 "menu_general" = "Общие настройки";
 "menu_share" = "Поделиться";
@@ -21,7 +18,6 @@
 "about" = "О приложении";
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
-"notifications" = "Уведомления";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
 "share_god_tools" = "Поделиться GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";

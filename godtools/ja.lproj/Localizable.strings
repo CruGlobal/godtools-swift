@@ -1,3 +1,8 @@
+"language_onboard" = "60種類以上の言語";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "利用可能なツールをすべてダウンロードしました。";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "マイツール";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
 "okay" = "OK";
-"now" = "今すぐ";
-"later" = "後で";
-
 // Menu
 "menu_general" = "一般";
 "menu_share" = "シェア";
@@ -21,7 +23,6 @@
 "about" = "情報";
 "help" = "ヘルプ";
 "contact_us" = "お問い合わせ";
-"notifications" = "通知";
 "preview_mode_translators_only" = "プレビューモード（翻訳者限定）";
 "share_god_tools" = "GodToolsをシェア";
 "share_a_story_with_us" = "体験談を紹介";

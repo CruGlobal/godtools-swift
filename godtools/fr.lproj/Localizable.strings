@@ -9,9 +9,6 @@
 "add_new_tools" = "Ajouter de Nouveaux Outils";
 "set_your_languages" = "Définissez vos langues";
 "okay" = "Ok";
-"now" = "Maintenant";
-"later" = "Plus tard";
-
 // Menu
 "menu_general" = "Général";
 "menu_share" = "Partager";
@@ -21,7 +18,6 @@
 "about" = "À propos";
 "help" = "Aide";
 "contact_us" = "Nous contacter";
-"notifications" = "Notifications";
 "preview_mode_translators_only" = "Mode aperçu (traducteurs uniquement)";
 "share_god_tools" = "Partager GodTools";
 "share_a_story_with_us" = "Partager une histoire avec nous";

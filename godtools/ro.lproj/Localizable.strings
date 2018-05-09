@@ -1,3 +1,8 @@
+"language_onboard" = "Peste 60 de limbi";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Ai descărcat toate instrumentele disponibile.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Instrumentele mele";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Adaugă instrumente noi";
 "set_your_languages" = "Setează limba";
 "okay" = "Ok";
-"now" = "Acum";
-"later" = "Mai târziu";
-
 // Menu
 "menu_general" = "General";
 "menu_share" = "Distribuie";
@@ -21,7 +23,6 @@
 "about" = "Despre noi";
 "help" = "Ajutor";
 "contact_us" = "Contactează-ne";
-"notifications" = "Notificări";
 "preview_mode_translators_only" = "Mod previzualizare (doar traducători)";
 "share_god_tools" = "Distribuie GodTools";
 "share_a_story_with_us" = "Împărtășește o poveste cu noi";

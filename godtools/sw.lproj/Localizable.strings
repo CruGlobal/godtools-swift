@@ -1,3 +1,8 @@
+"language_onboard" = "Lugha Sitini na zaidi";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Umepakua zana zote zilizopo.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Zana Zangu";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Ongeza Vifaa Vipya";
 "set_your_languages" = "Weka Lugha Zako";
 "okay" = "Sawa";
-"now" = "Sasa";
-"later" = "Baadaye";
-
 // Menu
 "menu_general" = "Kuu";
 "menu_share" = "Shirikisha";
@@ -21,7 +23,6 @@
 "about" = "Kuhusu";
 "help" = "Msaada";
 "contact_us" = "Wasiliana Nasi";
-"notifications" = "Arifa";
 "preview_mode_translators_only" = "Angalia Hali (Watafsiri Pekee)";
 "share_god_tools" = "Shirikisha GodTools";
 "share_a_story_with_us" = "Tushirikishe Kwenye Hadithi Yako";

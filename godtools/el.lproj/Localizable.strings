@@ -1,3 +1,8 @@
+"language_onboard" = "60+ Γλώσσες";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Τα Εργαλεία μου";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
 "set_your_languages" = "Ορίστε τις γλώσσες σας";
 "okay" = "Εντάξει";
-"now" = "Τώρα";
-"later" = "Αργότερα";
-
 // Menu
 "menu_general" = "Γενικά";
 "menu_share" = "Κοινοποίηση";
@@ -21,7 +23,6 @@
 "about" = "Σχετικά";
 "help" = "Βοήθεια";
 "contact_us" = "Επικοινωνήστε μαζί μας";
-"notifications" = "Ειδοποιήσεις";
 "preview_mode_translators_only" = "Λειτουργία Προεπισκόπησης (Μόνο Μεταφραστές)";
 "share_god_tools" = "Κοινοποίηση Θεϊκών Εργαλείων";
 "share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
