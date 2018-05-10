@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>5.0.11</string>
 	<key>CFBundleVersion</key>
-	<string>47</string>
+	<string>100</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
