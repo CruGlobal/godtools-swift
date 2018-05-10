@@ -42,7 +42,7 @@
 "select_primary_language" = "เลือกภาษาหลัก";
 "parallel_language" = "ภาษาพาราเลล";
 "select_parallel_language" = "เลือกภาษาพาราเลล";
-"share_god_tools_native_language" = "แชร์ God Tools เป็นภาษาของผู้รับ";
+"share_god_tools_native_language" = "แชร์ GodTools เป็นภาษาของผู้รับ";
 "not_every_tool_is_available" = "มีเครื่องมือไม่ครบทุกภาษา";
 
 // Settings

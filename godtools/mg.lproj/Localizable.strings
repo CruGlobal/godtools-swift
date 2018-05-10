@@ -37,7 +37,7 @@
 "select_primary_language" = "Safidio ny Fiteny Fototra";
 "parallel_language" = "Fiteny Mitovy";
 "select_parallel_language" = "Safidio ny Fiteny Mitovy";
-"share_god_tools_native_language" = "Zarao amin'ny olona amin'ny fitenindrazany ny God Tools";
+"share_god_tools_native_language" = "Zarao amin'ny olona amin'ny fitenindrazany ny GodTools";
 "not_every_tool_is_available" = "Tsy ny fitaovana rehetra no voadika amin'ny fiteny samihafa";
 
 // Settings

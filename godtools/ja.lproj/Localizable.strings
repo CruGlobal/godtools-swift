@@ -42,7 +42,7 @@
 "select_primary_language" = "第1言語を選択";
 "parallel_language" = "並列言語";
 "select_parallel_language" = "並列言語を選択";
-"share_god_tools_native_language" = "シェア相手の母国語でGod Toolsをシェア";
+"share_god_tools_native_language" = "シェア相手の母国語でGodToolsをシェア";
 "not_every_tool_is_available" = "全言語ですべてのツールが利用できるわけではありません";
 
 // Settings

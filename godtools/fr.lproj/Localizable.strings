@@ -43,7 +43,7 @@ http://godtoolsapp.com";
 "select_primary_language" = "Sélectionnez une langue principale";
 "parallel_language" = "Langue secondaire";
 "select_parallel_language" = "Sélectionnez une langue secondaire";
-"share_god_tools_native_language" = "Partagez God Tools avec quelqu'un dans sa langue natale";
+"share_god_tools_native_language" = "Partagez GodTools avec quelqu'un dans sa langue natale";
 "not_every_tool_is_available" = "Tous les outils ne sont pas disponibles dans toutes les langues";
 
 // Settings

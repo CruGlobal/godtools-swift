@@ -42,7 +42,7 @@
 "select_primary_language" = "Bir Birincil Dil Seçin";
 "parallel_language" = "Paralel Dil";
 "select_parallel_language" = "Paralel bir Dil Seçin";
-"share_god_tools_native_language" = "God Tools'u birisiyle kendi ana dilinde paylaşın";
+"share_god_tools_native_language" = "GodTools'u birisiyle kendi ana dilinde paylaşın";
 "not_every_tool_is_available" = "Her araç her dilde kullanıma hazır değildir";
 
 // Settings

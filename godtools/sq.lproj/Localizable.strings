@@ -1,3 +1,5 @@
+"language_onboard" = "60+ Gjuhë";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Burimet e mia";
 
@@ -38,7 +40,7 @@
 "select_primary_language" = "Zgjidh një gjuhë kryesore";
 "parallel_language" = "Gjuha paralele";
 "select_parallel_language" = "Zgjidh një gjuhë paralele";
-"share_god_tools_native_language" = "Ndaj God Tools me dikë në gjuhën e tyre.";
+"share_god_tools_native_language" = "Ndaj GodTools me dikë në gjuhën e tyre.";
 "not_every_tool_is_available" = "Jo çdo mjet është i disponueshëm në çdo gjuhë";
 
 // Settings

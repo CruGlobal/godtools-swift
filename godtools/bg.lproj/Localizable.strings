@@ -42,7 +42,7 @@
 "select_primary_language" = "Изберете главен език";
 "parallel_language" = "Успореден език";
 "select_parallel_language" = "Изберете успореден език";
-"share_god_tools_native_language" = "Споделете God Tools с някого на родния му език";
+"share_god_tools_native_language" = "Споделете GodTools с някого на родния му език";
 "not_every_tool_is_available" = "Не всеки инструмент е наличен на всеки език";
 
 // Settings
