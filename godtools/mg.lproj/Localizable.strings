@@ -9,9 +9,6 @@
 "add_new_tools" = "Hanampy Fitaovana vaovao";
 "set_your_languages" = "Safidio ny Teninao";
 "okay" = "OK";
-"now" = "Ankehitriny";
-"later" = "Aoriana";
-
 // Menu
 "menu_general" = "Ankapobeny";
 "menu_share" = "Mizara";
@@ -21,7 +18,6 @@
 "about" = "About";
 "help" = "Fanampiana";
 "contact_us" = "Te hifandray aminay";
-"notifications" = "Fanambarana";
 "preview_mode_translators_only" = "Fomba Fijerena (Mpandika teny ihany)";
 "share_god_tools" = "Hizara GodTools";
 "share_a_story_with_us" = "Hizara Tantara Aminay";
@@ -41,7 +37,7 @@
 "select_primary_language" = "Safidio ny Fiteny Fototra";
 "parallel_language" = "Fiteny Mitovy";
 "select_parallel_language" = "Safidio ny Fiteny Mitovy";
-"share_god_tools_native_language" = "Zarao amin'ny olona amin'ny fitenindrazany ny God Tools";
+"share_god_tools_native_language" = "Zarao amin'ny olona amin'ny fitenindrazany ny GodTools";
 "not_every_tool_is_available" = "Tsy ny fitaovana rehetra no voadika amin'ny fiteny samihafa";
 
 // Settings

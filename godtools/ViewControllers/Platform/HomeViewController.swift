@@ -127,6 +127,7 @@ class HomeViewController: BaseViewController {
         let onboardingViewController = OnboardingViewController(nibName: String(describing:OnboardingViewController.self), bundle: nil)
         onboardingViewController.modalPresentationStyle = .overCurrentContext
         self.present(onboardingViewController, animated: true, completion: nil)
+        
         UserDefaults.standard.set(true, forKey: GTConstants.kOnboardingScreensShownKey)
     }
 

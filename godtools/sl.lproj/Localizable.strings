@@ -9,9 +9,6 @@
 "add_new_tools" = "Dodaj nova orodja";
 "set_your_languages" = "Izberi jezike";
 "okay" = "V redu";
-"now" = "Zdaj";
-"later" = "Kasneje";
-
 // Menu
 "menu_general" = "Splošno";
 "menu_share" = "Deli";
@@ -21,7 +18,6 @@
 "about" = "O aplikaciji";
 "help" = "Pomoč";
 "contact_us" = "Vprašaj nas";
-"notifications" = "Obvestila";
 "preview_mode_translators_only" = "Predogled (samo za prevajalce)";
 "share_god_tools" = "Deli GodTools";
 "share_a_story_with_us" = "Deli zgodbo z nami";

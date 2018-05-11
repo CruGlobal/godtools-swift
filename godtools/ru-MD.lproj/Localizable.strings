@@ -9,9 +9,6 @@
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
 "okay" = "Хорошо";
-"now" = "Сейчас";
-"later" = "Позднее";
-
 // Menu
 "menu_general" = "Общие настройки";
 "menu_share" = "Поделиться";
@@ -21,7 +18,6 @@
 "about" = "О приложении";
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
-"notifications" = "Уведомления";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
 "share_god_tools" = "Поделиться GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";
@@ -41,7 +37,7 @@
 "select_primary_language" = "Выберите основной язык";
 "parallel_language" = "Параллельный язык";
 "select_parallel_language" = "Выбрать параллельный язык";
-"share_god_tools_native_language" = "Поделиться God Tools с кем-нибудь на его/ее родном языке";
+"share_god_tools_native_language" = "Поделиться GodTools с кем-нибудь на его/ее родном языке";
 "not_every_tool_is_available" = "Не все инструменты доступны на всех языках";
 
 // Settings

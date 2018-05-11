@@ -1,3 +1,8 @@
+"language_onboard" = "กว่า 60 ภาษา";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "เครื่องมือของฉัน";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";
 "set_your_languages" = "ตั้งค่าภาษา";
 "okay" = "โอเค";
-"now" = "ตอนนี้";
-"later" = "ภายหลัง";
-
 // Menu
 "menu_general" = "ทั่วไป";
 "menu_share" = "แชร์";
@@ -21,7 +23,6 @@
 "about" = "เกี่ยวกับ";
 "help" = "ช่วยเหลือ";
 "contact_us" = "ติดต่อเรา";
-"notifications" = "การแจ้งเตือน";
 "preview_mode_translators_only" = "โหมดพรีวิว (นักแปลเท่านั้น)";
 "share_god_tools" = "แชร์ GodTools";
 "share_a_story_with_us" = "แชร์เรื่องราวกับเรา";
@@ -41,7 +42,7 @@
 "select_primary_language" = "เลือกภาษาหลัก";
 "parallel_language" = "ภาษาพาราเลล";
 "select_parallel_language" = "เลือกภาษาพาราเลล";
-"share_god_tools_native_language" = "แชร์ God Tools เป็นภาษาของผู้รับ";
+"share_god_tools_native_language" = "แชร์ GodTools เป็นภาษาของผู้รับ";
 "not_every_tool_is_available" = "มีเครื่องมือไม่ครบทุกภาษา";
 
 // Settings

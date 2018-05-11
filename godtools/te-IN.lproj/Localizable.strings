@@ -1,3 +1,8 @@
+"language_onboard" = "60+ భాషలు";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "అందుబాటులో ఉన్న అన్నిసాధనాలను మీరు డౌన్‌లోడ్ చేశారు.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "నా సాధనాలు";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
 "okay" = "సరే";
-"now" = "ఇప్పుడు";
-"later" = "తరువాత";
-
 // Menu
 "menu_general" = "సాధారణం";
 "menu_share" = "షేర్ చెయ్యండి";
@@ -21,14 +23,13 @@
 "about" = "గూర్చి";
 "help" = "సహాయం";
 "contact_us" = "సంప్రదించండి";
-"notifications" = "నోటిఫికేషన్లు";
 "preview_mode_translators_only" = "ప్రివ్యూ మోడ్ (అనువాదకులకు మాత్రమే)";
 "share_god_tools" = "GodTools షేర్ చెయ్యండి";
 "share_a_story_with_us" = "మాతో మీ అనుభవాలను పంచుకోండి";
 "terms_of_use" = "ఉపయోగించు షరతులు ";
 "privacy_policy" = "ప్రైవసీ పాలసీ";
 "copyright_info" = "కాపిరైట్ సమాచారం";
-"share_god_tools_share_sheet_text" = "GodTool యాప్ ను ఇక్కడ డౌన్లోడ్ చేసుకోవచ్చు: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "GodTools యాప్ ను ఇక్కడ డౌన్లోడ్ చేసుకోవచ్చు: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "టూల్స్ జోడించండి";

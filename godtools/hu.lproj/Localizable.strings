@@ -1,3 +1,8 @@
+"language_onboard" = "60+ nyelv";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Az összes elérhető eszközt letöltötted.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Saját eszközeim";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Új eszközök hozzáadása";
 "set_your_languages" = "A nyelvek beállítása";
 "okay" = "OK";
-"now" = "Most";
-"later" = "Később";
-
 // Menu
 "menu_general" = "Általános";
 "menu_share" = "Megosztás";
@@ -21,7 +23,6 @@
 "about" = "Névjegy";
 "help" = "Súgó";
 "contact_us" = "Kapcsolatfelvétel";
-"notifications" = "Értesítések";
 "preview_mode_translators_only" = "Előnézet mód (csak fordítóknak)";
 "share_god_tools" = "GodTools megosztása";
 "share_a_story_with_us" = "Ossz meg velünk egy történetet";
@@ -42,7 +43,7 @@ http://godtoolsapp.com";
 "select_primary_language" = "Válassz ki egy elsődleges nyelvet";
 "parallel_language" = "Párhuzamos nyelv";
 "select_parallel_language" = "Válassz egy párhuzamos nyelvet";
-"share_god_tools_native_language" = "Oszd meg a God Tools alkalmazást valakivel az illető anyanyelvén";
+"share_god_tools_native_language" = "Oszd meg a GodTools alkalmazást valakivel az illető anyanyelvén";
 "not_every_tool_is_available" = "Nem minden eszköz áll rendelkezésre minden nyelven";
 
 // Settings

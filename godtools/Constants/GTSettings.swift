@@ -16,6 +16,7 @@ class GTSettings {
     
     private var primaryLanguageIdInternal: String?
     private var parallelLanguageIdInternal: String?
+    var parallelLanguageCode: String?
     
     var primaryLanguageId: String? {
         get {

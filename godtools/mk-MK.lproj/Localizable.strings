@@ -2,9 +2,6 @@
 "add_new_tools" = "Додај нови алатки";
 "set_your_languages" = "Постави ги јазиците";
 "okay" = "Добро";
-"now" = "Сега";
-"later" = "Подоцна";
-
 // Menu
 "menu_general" = "Општо";
 "menu_share" = "Сподели";
@@ -14,7 +11,6 @@
 "about" = "За";
 "help" = "Помош";
 "contact_us" = "Обрати ни се";
-"notifications" = "Известувања";
 "preview_mode_translators_only" = "Режим за преглед (само за преведувачите)";
 "share_god_tools" = "Сподели ја GodTools";
 "share_a_story_with_us" = "Сподели приказна со нас";

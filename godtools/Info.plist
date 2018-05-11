@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -19,7 +21,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>5.0.11</string>
 	<key>CFBundleVersion</key>
-	<string>47</string>
+	<string>108</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -63,5 +65,22 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>GodTools</string>
+		<string>JFilmTest</string>
+		<string>gtTestCustomUrlScheme</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>GodTools</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>org.cru.godtools</string>
+		</dict>
+	</array>
 </dict>
 </plist>

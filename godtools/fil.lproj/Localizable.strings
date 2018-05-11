@@ -1,3 +1,8 @@
+"language_onboard" = "60+ na Wika";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Mga Tool Ko";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Magdagdag ng Mga Bagong Tool";
 "set_your_languages" = "I-set ang Iyong Mga Wika";
 "okay" = "Okay";
-"now" = "Ngayon";
-"later" = "Mamaya";
-
 // Menu
 "menu_general" = "Pangkalahatan";
 "menu_share" = "Pagbabahagi";
@@ -21,7 +23,6 @@
 "about" = "Tungkol dito";
 "help" = "Tulong";
 "contact_us" = "Kontakin Kami";
-"notifications" = "Mga Notification";
 "preview_mode_translators_only" = "Preview Mode (Mga Tagapagsalin-wika Lang)";
 "share_god_tools" = "Ibahagi ang GodTools";
 "share_a_story_with_us" = "Magbahagi ng Kuwento Sa Amin";
@@ -41,7 +42,7 @@
 "select_primary_language" = "Pumili ng Pangunahing Wika";
 "parallel_language" = "Parallel na Wika";
 "select_parallel_language" = "Pumili ng Parallel na Wika";
-"share_god_tools_native_language" = "Ibahagi ang God Tools sa isang tao sa kanilang katutubong wika";
+"share_god_tools_native_language" = "Ibahagi ang GodTools sa isang tao sa kanilang katutubong wika";
 "not_every_tool_is_available" = "Ang bawat tool ay hindi available sa bawat wika";
 
 // Settings

@@ -1,3 +1,8 @@
+"language_onboard" = "60多种语言";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "您已下载所有可用工具。";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "我的工具";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
 "okay" = "确定";
-"now" = "现在";
-"later" = "稍后";
-
 // Menu
 "menu_general" = "通用";
 "menu_share" = "分享";
@@ -21,7 +23,6 @@
 "about" = "关于";
 "help" = "帮助";
 "contact_us" = "请联系我们";
-"notifications" = "通知";
 "preview_mode_translators_only" = "预览模式（仅限译员）";
 "share_god_tools" = "分享GodTools";
 "share_a_story_with_us" = "和我们分享你的故事";

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,12 +14,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="addLanguagesLabel" destination="cYK-jH-Vat" id="gHT-OU-GGd"/>
-                <outlet property="addToolsLabel" destination="em1-c0-ZDg" id="aoh-4S-97J"/>
                 <outlet property="languagesOkayButton" destination="jRo-pJ-Pjn" id="TQS-T5-T4G"/>
-                <outlet property="page1View" destination="szd-6r-28H" id="pZu-HJ-HxD"/>
+                <outlet property="numberOfLanguagesLabel" destination="n0y-5A-CDl" id="xFU-Dg-3BA"/>
                 <outlet property="page2View" destination="Czx-5X-XL9" id="vLY-qS-5s8"/>
                 <outlet property="pageControl" destination="hSP-YK-jb4" id="r0q-Uj-ZrA"/>
-                <outlet property="toolsOkayButton" destination="utk-V8-xg4" id="8Ci-am-7M3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -31,99 +30,97 @@
                     <rect key="frame" x="168" y="590" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </pageControl>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szd-6r-28H">
-                    <rect key="frame" x="0.0" y="180" width="375" height="307"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_white" translatesAutoresizingMaskIntoConstraints="NO" id="oOT-tw-Fzu">
-                            <rect key="frame" x="142" y="0.0" width="90" height="90"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add New Tools" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="em1-c0-ZDg" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="130" y="110" width="115" height="20.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteTitle"/>
-                                <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="add_new_tools"/>
-                            </userDefinedRuntimeAttributes>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="utk-V8-xg4" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="122" y="226" width="130" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="j5R-7w-ZPh"/>
-                                <constraint firstAttribute="width" constant="130" id="q8j-i5-Y0H"/>
-                            </constraints>
-                            <state key="normal" title="Okay"/>
-                            <connections>
-                                <action selector="pressToolsOkayButton:" destination="-1" eventType="touchUpInside" id="tLN-CB-0p2"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="em1-c0-ZDg" firstAttribute="top" secondItem="oOT-tw-Fzu" secondAttribute="bottom" constant="20" id="1OZ-uH-jdn"/>
-                        <constraint firstAttribute="height" constant="307" id="1sA-Bb-fvi"/>
-                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="top" secondItem="szd-6r-28H" secondAttribute="top" id="2Bl-Gr-XPf"/>
-                        <constraint firstAttribute="bottom" secondItem="utk-V8-xg4" secondAttribute="bottom" constant="33" id="Kix-mJ-OBz"/>
-                        <constraint firstItem="em1-c0-ZDg" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="O0K-iC-wqe"/>
-                        <constraint firstItem="utk-V8-xg4" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="gje-gs-x5u"/>
-                        <constraint firstItem="oOT-tw-Fzu" firstAttribute="centerX" secondItem="szd-6r-28H" secondAttribute="centerX" id="wH1-AX-Cem"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Czx-5X-XL9">
-                    <rect key="frame" x="0.0" y="180" width="375" height="307"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo_white" translatesAutoresizingMaskIntoConstraints="NO" id="JLw-YN-BDG">
-                            <rect key="frame" x="142" y="0.0" width="90" height="90"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Your Languages" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYK-jH-Vat" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="111" y="110" width="153.5" height="20.5"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set Your Languages" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYK-jH-Vat" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="111" y="224" width="153.5" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                             <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteTitle"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="whiteSubTitle"/>
                                 <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="set_your_languages"/>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
-                            <rect key="frame" x="125" y="226" width="125" height="48"/>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jRo-pJ-Pjn" customClass="TransparentButton" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="125" y="580" width="125" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="48" id="nI2-Rt-UPg"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <state key="normal" title="Later"/>
                             <connections>
                                 <action selector="pressLanguagesOkayButton:" destination="-1" eventType="touchUpInside" id="MgN-hA-cEP"/>
                             </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="oval" translatesAutoresizingMaskIntoConstraints="NO" id="vkw-HJ-URr">
+                            <rect key="frame" x="295" y="0.0" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="vkw-HJ-URr" secondAttribute="height" multiplier="1:1" id="Bnu-xA-aFG"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo_white" translatesAutoresizingMaskIntoConstraints="NO" id="JLw-YN-BDG">
+                            <rect key="frame" x="338" y="28" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="JLw-YN-BDG" secondAttribute="height" multiplier="1:1" id="2DM-zK-bfa"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="roundArrow" translatesAutoresizingMaskIntoConstraints="NO" id="LAM-8F-Lj2">
+                            <rect key="frame" x="168" y="28" width="112" height="112"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="LAM-8F-Lj2" secondAttribute="height" multiplier="1:1" id="1gM-OC-IAR"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n0y-5A-CDl" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                            <rect key="frame" x="12" y="152" width="351" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="60+_languages"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueSubTitle"/>
+                            </userDefinedRuntimeAttributes>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="307" id="167-Sm-eql"/>
-                        <constraint firstItem="JLw-YN-BDG" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="5qw-0i-P67"/>
+                        <constraint firstItem="vkw-HJ-URr" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" id="6jW-VX-8LO"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="top" secondItem="n0y-5A-CDl" secondAttribute="bottom" constant="12" id="7ro-pZ-61c"/>
                         <constraint firstItem="cYK-jH-Vat" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="DO9-yc-kfv"/>
-                        <constraint firstItem="JLw-YN-BDG" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" id="Tey-Kr-hpb"/>
-                        <constraint firstAttribute="bottom" secondItem="jRo-pJ-Pjn" secondAttribute="bottom" constant="33" id="ZzX-vv-Uid"/>
-                        <constraint firstItem="cYK-jH-Vat" firstAttribute="top" secondItem="JLw-YN-BDG" secondAttribute="bottom" constant="20" id="cZr-Sb-C7R"/>
+                        <constraint firstItem="LAM-8F-Lj2" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" constant="32" id="OMl-Cb-rqA"/>
+                        <constraint firstAttribute="trailing" secondItem="JLw-YN-BDG" secondAttribute="trailing" constant="15" id="RNR-cw-FDf"/>
+                        <constraint firstItem="cYK-jH-Vat" firstAttribute="leading" secondItem="Czx-5X-XL9" secondAttribute="leading" constant="40" id="S2u-0s-39w"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="top" secondItem="Czx-5X-XL9" secondAttribute="top" constant="28" id="Tey-Kr-hpb"/>
+                        <constraint firstAttribute="trailing" secondItem="cYK-jH-Vat" secondAttribute="trailing" constant="40" id="UWx-ee-UyT"/>
+                        <constraint firstItem="n0y-5A-CDl" firstAttribute="leading" secondItem="Czx-5X-XL9" secondAttribute="leading" constant="12" id="Vza-Sh-CUk"/>
+                        <constraint firstItem="JLw-YN-BDG" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="0.0587" id="X4X-gK-zA4"/>
+                        <constraint firstAttribute="bottom" secondItem="jRo-pJ-Pjn" secondAttribute="bottom" constant="50" id="ZzX-vv-Uid"/>
+                        <constraint firstItem="vkw-HJ-URr" firstAttribute="leading" secondItem="LAM-8F-Lj2" secondAttribute="trailing" constant="15" id="akk-Xd-1QR"/>
+                        <constraint firstAttribute="trailing" secondItem="n0y-5A-CDl" secondAttribute="trailing" constant="12" id="f2G-cS-OvG"/>
+                        <constraint firstItem="n0y-5A-CDl" firstAttribute="top" secondItem="LAM-8F-Lj2" secondAttribute="bottom" constant="20" id="gVi-7p-s4l"/>
+                        <constraint firstItem="vkw-HJ-URr" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="0.2133" id="jfl-Xb-Yux"/>
+                        <constraint firstAttribute="trailing" secondItem="vkw-HJ-URr" secondAttribute="trailing" id="l6C-YT-wJe"/>
                         <constraint firstItem="jRo-pJ-Pjn" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="1:3" id="qRC-SC-Mge"/>
+                        <constraint firstItem="n0y-5A-CDl" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="stB-rf-N0d"/>
+                        <constraint firstItem="LAM-8F-Lj2" firstAttribute="width" secondItem="Czx-5X-XL9" secondAttribute="width" multiplier="0.2987" id="vig-8v-ORc"/>
                         <constraint firstItem="jRo-pJ-Pjn" firstAttribute="centerX" secondItem="Czx-5X-XL9" secondAttribute="centerX" id="zy5-1Q-Us8"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.69894935344827591" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.70336395105101546" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="szd-6r-28H" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="1kE-92-2Zt"/>
-                <constraint firstItem="szd-6r-28H" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Ggs-7i-ala"/>
+                <constraint firstItem="Czx-5X-XL9" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="BG7-s1-2zI"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="M2l-FE-iu5"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sq1-Yt-80d"/>
                 <constraint firstItem="Czx-5X-XL9" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="bjc-jt-Zfz"/>
-                <constraint firstItem="szd-6r-28H" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="eAO-qN-y2A"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
     </objects>
     <resources>
         <image name="language_logo_white" width="90" height="90"/>
-        <image name="plus_white" width="90" height="90"/>
+        <image name="oval" width="76" height="91"/>
+        <image name="roundArrow" width="100" height="112"/>
     </resources>
 </document>

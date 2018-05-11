@@ -1,3 +1,8 @@
+"language_onboard" = "Über 60 Sprachen";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Es wurden bereits alle verfügbaren Tools heruntergeladen.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Meine Tools";
 
@@ -9,9 +14,6 @@
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
 "okay" = "Okay";
-"now" = "Jetzt";
-"later" = "Später";
-
 // Menu
 "menu_general" = "Allgemein";
 "menu_share" = "Teilen";
@@ -21,7 +23,6 @@
 "about" = "Über";
 "help" = "Hilfe";
 "contact_us" = "Kontakt";
-"notifications" = "Mitteilungen";
 "preview_mode_translators_only" = "Vorschau-Modus (für Übersetzer)";
 "share_god_tools" = "Teile GodTools";
 "share_a_story_with_us" = "Teile eine Geschichte mit uns";
