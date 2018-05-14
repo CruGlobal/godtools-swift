@@ -1,4 +1,0 @@
-- Adds Adobe Analytics, including: 
-   - Marketing Cloud ID
-   - basic "lifecycle data" (sessions, users, duration, general location etc...)
-   - page views
