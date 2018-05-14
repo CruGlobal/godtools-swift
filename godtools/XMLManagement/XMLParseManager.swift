@@ -33,6 +33,9 @@ class XMLParseManager: NSObject {
     static let nodeModal: String = "modal"
     static let nodeEmails: String = "emails"
     static let nodeEmail: String = "email"
+    static let nodeEvent: String = "event"
+    static let nodeEvents: String = "events"
+    static let nodeAttribute: String = "attribute"
     
     func getNodeClass(_ data: XMLIndexer) -> BaseTractElement.Type {
         let xmlManager = XMLManager()
@@ -81,7 +84,14 @@ class XMLParseManager: NSObject {
             return TractEmails.self
         case XMLParseManager.nodeEmail:
             return TractEmail.self
+        case XMLParseManager.nodeEvent:
+            return TractEvent.self
+        case XMLParseManager.nodeEvents:
+            return TractEvent.self
+        case XMLParseManager.nodeAttribute:
+            return TractEvent.self
         default:
+            
             return TractTextContent.self
         }
     }
@@ -172,6 +182,10 @@ class XMLParseManager: NSObject {
     
     func nodeIsEmail(node: XMLIndexer) -> Bool {
         return nodeIsOfKind(node: node, kind: XMLParseManager.nodeEmail)
+    }
+    
+    func nodeIsEvent(node: XMLIndexer) -> Bool {
+        return nodeIsOfKind(node: node, kind: XMLParseManager.nodeEvent)
     }
     
     func getTextContentFromElement(_ node: XMLIndexer) -> XMLElement? {
