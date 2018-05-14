@@ -21,14 +21,11 @@ matrix:
     - bundler install
     script:
     - fastlane ios beta
-  - language: objective-c
+  - language: node_js
+    node_js:
+    - '9'
     if: tag =~ ^v(\d+\.){1,}\d+
-    xcode_project: ios/Missionhub.xcodeproj
-    os: osx
-    osx_image: xcode9.2
     install:
-    - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
-    - chmod 600 ~/.netrc
     - bundler install
     script:
     - fastlane ios release submit:true auto_release:false
