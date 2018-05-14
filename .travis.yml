@@ -21,10 +21,11 @@ matrix:
     - bundler install
     script:
     - fastlane ios beta
-  - language: node_js
-    node_js:
-    - '9'
+  - language: objective-c
     if: tag =~ ^v(\d+\.){1,}\d+
+    xcode_project: godtools.xcworkspace
+    os: osx
+    osx_image: xcode9.2
     install:
     - bundler install
     script:
