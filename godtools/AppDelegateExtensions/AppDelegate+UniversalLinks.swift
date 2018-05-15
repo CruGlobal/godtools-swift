@@ -148,10 +148,11 @@ extension AppDelegate {
         
         let languages = linkDictionary[usingKey] as? String ?? ""
         
-        let languageOptions = languages.components(separatedBy: ",")
+        var languageOptions = languages.components(separatedBy: ",")
         if languageOptions.isEmpty { return tryLanguages }
+        languageOptions = addExtraGenericLanguageFallbacks(languageStrings: languageOptions)
+
         tryLanguages.remove(at: 0)
-        
         tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         tryLanguages.append(knownLanguage)
         
@@ -193,6 +194,21 @@ extension AppDelegate {
         return importer.downloadSpecificTranslation(translation).then { (obj) -> Promise<Bool> in
             return Promise(value: true)
         }
+    }
+    
+    // MARK: - This was a request from JesusFilm to add extra fallbacks they don't provide in the query
+    
+    func addExtraGenericLanguageFallbacks(languageStrings: [String]) -> [String] {
+        var addedLanguages = languageStrings
+        var index = 0
+        for language in addedLanguages {
+            index += 1
+            if language.contains("-") {
+                let components = language.components(separatedBy: "-")
+                addedLanguages.insert(components[0], at: index)
+            }
+        }
+        return addedLanguages
     }
     
     // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
