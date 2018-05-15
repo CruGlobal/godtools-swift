@@ -20,6 +20,7 @@ class TractButtonProperties: TractProperties {
     var events: String = ""
     var url: String = ""
     var buttonColor: UIColor?
+    var analyticsUserInfo: [String: String] = [:]
     
     override func defineProperties() {
         self.properties = ["events", "url"]

@@ -8,6 +8,7 @@
 
 import UIKit
 import Crashlytics
+import SWXMLHash
 
 class TractButton: BaseTractElement {
     
@@ -20,6 +21,7 @@ class TractButton: BaseTractElement {
     // MARK: - Object properties
     
     var button: GTButton = GTButton()
+    var indexer: XMLIndexer?
     
     // MARK: - Setup
     
@@ -98,6 +100,8 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
+        
+//        let analyticEvent = TractEvent(data: <#T##XMLIndexer#>, parent: <#T##BaseTractElement#>)
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

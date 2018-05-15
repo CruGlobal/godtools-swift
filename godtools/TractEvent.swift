@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SWXMLHash
 
 class TractEvent: BaseTractElement {
+    
+    var analyticsEvents = [String: String]()
     
     // MARK: - Setup
     
@@ -21,6 +24,40 @@ class TractEvent: BaseTractElement {
         TractBindings.addBindings(self)
     }
     
+    override func attachAnalyticsData(data: XMLIndexer) {
+
+        var nodeMayHaveAttributes = false
+        var childrenMayHaveAttributes = false
+        // let contentElements = self.xmlManager.getContentElements(data)
+        // var elements = [XMLIndexer]()
+        
+        // MARK: - This parses out system info and action string !!!
+        for node in data.children {
+            if self.xmlManager.parser.nodeIsEvent(node: node) {
+                if let nodeAttributesIsEmpty = node.element?.allAttributes.isEmpty {
+                    nodeMayHaveAttributes = !nodeAttributesIsEmpty
+                }
+                if nodeMayHaveAttributes {
+                    for (num, dictionary) in (node.element!.allAttributes.enumerated()) {
+                        let _ = num
+                        analyticsEvents[dictionary.key] = dictionary.value.text
+                    }
+                }
+                
+                // MARK: - This parses out analytic key and value !!!
+                for child in node.children {
+                    if let childAttributesIsEmpty = child.element?.allAttributes.isEmpty {
+                        childrenMayHaveAttributes = !childAttributesIsEmpty
+                    }
+                    if childrenMayHaveAttributes {
+                        processNode(child)
+                    }
+                }
+            }
+        }
+        print("analytics EVENTS: \(analyticsEvents)\n")
+    }
+    
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {
@@ -31,6 +68,35 @@ class TractEvent: BaseTractElement {
     
     func eventProperties() -> TractEventProperties {
         return self.properties as! TractEventProperties
+    }
+    
+    func processNode(_ node: XMLIndexer) {
+        guard let key = node.element?.allAttributes["key"] else { return }
+        guard let value = node.element?.allAttributes["value"] else { return }
+        let keyString = "\(key)"
+        let valueString = "\(value)"
+        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
+    }
+    
+    func removeUnwantedCharacters(from xmlText: String) -> String {
+        var newXMLString = ""
+        let containsEquals = xmlText.contains("=")
+        let containsBackslashes = xmlText.contains("\\")
+        let containsQuotes = xmlText.contains("\"")
+        if containsEquals {
+            let components = xmlText.components(separatedBy: "=")
+            guard components.count > 1 else {
+                return newXMLString
+            }
+            newXMLString = components[1]
+        }
+        if containsBackslashes {
+            newXMLString = newXMLString.replacingOccurrences(of: "\\", with: "")
+        }
+        if containsQuotes {
+            newXMLString = newXMLString.replacingOccurrences(of: "\"", with: "")
+        }
+        return newXMLString
     }
     
 }
