@@ -207,7 +207,13 @@ extension AppDelegate {
             if language.contains("-") {
                 let components = language.components(separatedBy: "-")
                 
-                // Check for specified sub-regions first
+                // Check for specified sub-regions with a specialty?
+                if components.count > 3 {
+                    let combined = "\(components[0])-\(components[1])-\(components[2])"
+                    copiedLanguages.append(combined)
+                }
+                
+                // Check for specified sub-regions
                 if components.count > 2 {
                     let combined = "\(components[0])-\(components[1])"
                     copiedLanguages.append(combined)
@@ -219,6 +225,8 @@ extension AppDelegate {
         }
         return copiedLanguages
     }
+    
+
     
     // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
     
