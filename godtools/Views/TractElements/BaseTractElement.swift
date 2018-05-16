@@ -59,6 +59,10 @@ class BaseTractElement: UIView {
         return 0.0
     }
     
+    // MARK: Analytics properties
+    
+    var analyticsUserInfo: [String: String]?
+    
     // MARK: Main properties
     
     private weak var _mainView: TractPage?

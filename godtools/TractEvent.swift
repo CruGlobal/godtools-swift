@@ -9,11 +9,28 @@
 import UIKit
 import SWXMLHash
 
+protocol ButtonActionAnalyticsProtocol: class {
+    func handleTrackedAction()
+}
+
 class TractEvent: BaseTractElement {
     
-    var analyticsEvents = [String: String]()
+  public var analyticsEvents = [String: String]()
+    var analyticController: AnalyticButton!
     
     // MARK: - Setup
+//    convenience init() {
+//        self.init()
+//        analyticController = AnalyticButton(delegate: self)
+//    }
+    
+    static func handleTrackedAction() {
+//        let userInfo = analyticsEvents
+//        print("userInfo \(userInfo)\n")
+//        NotificationCenter.default.post(name: .screenViewNotification,
+//                                        object: nil,
+//                                        userInfo: userInfo)
+    }
     
     override func propertiesKind() -> TractProperties.Type {
         return TractEventProperties.self
@@ -25,6 +42,7 @@ class TractEvent: BaseTractElement {
     }
     
     override func attachAnalyticsData(data: XMLIndexer) {
+      //  analyticController = AnalyticButton(delegateR: self)
 
         var nodeMayHaveAttributes = false
         var childrenMayHaveAttributes = false
@@ -55,13 +73,25 @@ class TractEvent: BaseTractElement {
                 }
             }
         }
-        print("analytics EVENTS: \(analyticsEvents)\n")
+       // print("analytics EVENTS: \(analyticsEvents)\n")
+        
     }
+    
+    public static func getAnalyticsInfo(completion: @escaping ([String: String]) -> ()) {
+//        let dict = analyticsEvents
+//        completion(dictionary)
+       
+    }
+    
     
     // MARK: - Bindings
     
     override func elementListeners() -> [String]? {
         return nil
+    }
+    
+    override func receiveMessage() {
+        
     }
     
     // MARK: - Helpers

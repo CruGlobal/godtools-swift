@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension TractButton {
-    
+
     func buttonTarget() {
         getParentCard()?.endCardEditing()
         
@@ -21,6 +21,11 @@ extension TractButton {
                 if sendMessageToElement(listener: event) == .failure {
                     break
                 }
+                debugPrint("\(self.parent?.parent?.parent)")
+                if let info = self.parent?.analyticsUserInfo {
+                    print("super.analyticsUserInfo \(info)\n")
+                }
+            
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
                 let relay = AnalyticsRelay.shared
                 switch (relay.screenName, relay.viewListener) {
@@ -57,6 +62,7 @@ extension TractButton {
             }
         }
     }
+    
     
     func sendNotificationForAction(userInfo: [String: Any]) {
         NotificationCenter.default.post(name: .actionTrackNotification,
