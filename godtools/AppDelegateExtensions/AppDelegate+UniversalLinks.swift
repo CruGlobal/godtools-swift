@@ -199,16 +199,25 @@ extension AppDelegate {
     // MARK: - This was a request from JesusFilm to add extra fallbacks they don't provide in the query
     
     func addExtraGenericLanguageFallbacks(languageStrings: [String]) -> [String] {
-        var addedLanguages = languageStrings
-        var index = 0
-        for language in addedLanguages {
-            index += 1
+        var copiedLanguages: [String] = []
+        for language in languageStrings {
+            copiedLanguages.append(language)
+            
+            // Split out language components
             if language.contains("-") {
                 let components = language.components(separatedBy: "-")
-                addedLanguages.insert(components[0], at: index)
+                
+                // Check for specified sub-regions first
+                if components.count > 2 {
+                    let combined = "\(components[0])-\(components[1])"
+                    copiedLanguages.append(combined)
+                }
+                
+                // Finally add just the generic language
+                copiedLanguages.append(components[0])
             }
         }
-        return addedLanguages
+        return copiedLanguages
     }
     
     // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
