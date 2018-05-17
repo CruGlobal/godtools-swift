@@ -158,7 +158,6 @@ class BaseTractElement: UIView {
         
         self.elementFrame.maxHeight = height
         setupElement(data: data, startOnY: 0.0)
-        self.analyticsUserInfo = attachAnalyticsData(data: data)
     }
     
     required init(data: XMLIndexer, parent: BaseTractElement) {
@@ -166,7 +165,6 @@ class BaseTractElement: UIView {
         super.init(frame: frame)
         self.parent = parent
         setupElement(data: data, startOnY: CGFloat(0.0))
-        self.analyticsUserInfo = attachAnalyticsData(data: data)
     }
     
     init(data: XMLIndexer, startOnY yPosition: CGFloat) {
@@ -181,7 +179,6 @@ class BaseTractElement: UIView {
         self.parent = parent
         self.elementNumber = elementNumber
         setupElement(data: data, startOnY: yPosition)
-        self.analyticsUserInfo = attachAnalyticsData(data: data)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -100,7 +100,7 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        self.analyticsButtonDictionary = super.analyticsUserInfo
+        self.analyticsButtonDictionary = analyticsUserInfo
         debugPrint("self.analyticsButtonDictionary \(self.analyticsButtonDictionary)\n")
         
         if properties.type == .event || properties.type == .url {

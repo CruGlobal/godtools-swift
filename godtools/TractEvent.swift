@@ -15,7 +15,7 @@ protocol ButtonActionAnalyticsProtocol: class {
 
 class TractEvent: BaseTractElement {
     
-    var analyticsEvents = [String: String]()
+    var analyticsEvents: [String: String] = [:]
     
     override func propertiesKind() -> TractProperties.Type {
         return TractEventProperties.self
@@ -57,10 +57,12 @@ class TractEvent: BaseTractElement {
                 }
             }
         }
-        return analyticsEvents
-
+        if analyticsEvents.isEmpty {
+            return nil
+        } else {
+            return analyticsEvents
+        }
        // print("analytics EVENTS: \(analyticsEvents)\n")
-        
     }
     
     public static func getAnalyticsInfo(completion: @escaping ([String: String]) -> ()) {
