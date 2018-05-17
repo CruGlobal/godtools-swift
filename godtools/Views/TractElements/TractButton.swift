@@ -21,7 +21,7 @@ class TractButton: BaseTractElement {
     // MARK: - Object properties
     
     var button: GTButton = GTButton()
-    var indexer: XMLIndexer?
+    var analyticsButtonDictionary: [String: String]?
     
     // MARK: - Setup
     
@@ -100,8 +100,8 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        
-//        let analyticEvent = TractEvent(data: <#T##XMLIndexer#>, parent: <#T##BaseTractElement#>)
+        self.analyticsButtonDictionary = super.analyticsUserInfo
+        debugPrint("self.analyticsButtonDictionary \(self.analyticsButtonDictionary)\n")
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

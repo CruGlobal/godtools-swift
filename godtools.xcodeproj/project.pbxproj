@@ -96,7 +96,6 @@
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
-		1E443C9220AB66B600EAAD40 /* TractAnalyticsDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E443C9120AB66B600EAAD40 /* TractAnalyticsDelegation.swift */; };
 		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
 		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
@@ -338,7 +337,6 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEvent.swift; sourceTree = "<group>"; };
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
-		1E443C9120AB66B600EAAD40 /* TractAnalyticsDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticsDelegation.swift; sourceTree = "<group>"; };
 		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
@@ -658,7 +656,6 @@
 				0F806C6C1EB3E6D700F3ED2B /* TractCard.swift */,
 				EC3140C01EE76E6C009347D3 /* TractEmail.swift */,
 				1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */,
-				1E443C9120AB66B600EAAD40 /* TractAnalyticsDelegation.swift */,
 				0F806C541EB2893500F3ED2B /* TractHeading.swift */,
 				0F13B5F61EC4C85000C55B2A /* TractImage.swift */,
 				0F13B5FA1EC4C88200C55B2A /* TractInput.swift */,
@@ -1697,7 +1694,6 @@
 				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
 				4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */,
-				1E443C9220AB66B600EAAD40 /* TractAnalyticsDelegation.swift in Sources */,
 				0F9E324E1EDE78590081DBB9 /* TractViewControllerContent.swift in Sources */,
 				EC61B9D71EFDDC6B00615840 /* TractForm+Actions.swift in Sources */,
 				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,

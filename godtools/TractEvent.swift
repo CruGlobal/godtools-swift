@@ -15,22 +15,7 @@ protocol ButtonActionAnalyticsProtocol: class {
 
 class TractEvent: BaseTractElement {
     
-  public var analyticsEvents = [String: String]()
-    var analyticController: AnalyticButton!
-    
-    // MARK: - Setup
-//    convenience init() {
-//        self.init()
-//        analyticController = AnalyticButton(delegate: self)
-//    }
-    
-    static func handleTrackedAction() {
-//        let userInfo = analyticsEvents
-//        print("userInfo \(userInfo)\n")
-//        NotificationCenter.default.post(name: .screenViewNotification,
-//                                        object: nil,
-//                                        userInfo: userInfo)
-    }
+    var analyticsEvents = [String: String]()
     
     override func propertiesKind() -> TractProperties.Type {
         return TractEventProperties.self
@@ -41,9 +26,8 @@ class TractEvent: BaseTractElement {
         TractBindings.addBindings(self)
     }
     
-    override func attachAnalyticsData(data: XMLIndexer) {
-      //  analyticController = AnalyticButton(delegateR: self)
-
+    override func attachAnalyticsData(data: XMLIndexer) -> [String : String]? {
+      
         var nodeMayHaveAttributes = false
         var childrenMayHaveAttributes = false
         // let contentElements = self.xmlManager.getContentElements(data)
@@ -73,6 +57,8 @@ class TractEvent: BaseTractElement {
                 }
             }
         }
+        return analyticsEvents
+
        // print("analytics EVENTS: \(analyticsEvents)\n")
         
     }

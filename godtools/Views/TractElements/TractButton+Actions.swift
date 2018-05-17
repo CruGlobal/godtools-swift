@@ -13,18 +13,19 @@ extension TractButton {
 
     func buttonTarget() {
         getParentCard()?.endCardEditing()
+
         
         let properties = buttonProperties()
+        debugPrint("\(properties.analyticsButtonUserInfo)\n")
+
+        debugPrint("\(properties.analyticsButtonUserInfo)")
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
             for event in events {
                 if sendMessageToElement(listener: event) == .failure {
                     break
                 }
-                debugPrint("\(self.parent?.parent?.parent)")
-                if let info = self.parent?.analyticsUserInfo {
-                    print("super.analyticsUserInfo \(info)\n")
-                }
+
             
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
                 let relay = AnalyticsRelay.shared
@@ -85,13 +86,7 @@ extension TractButton {
     // MARK: - Helper methods
     
     func launchApp(decodedURL: String) {
-//        if let url = URL(string: decodedURL) {
-//            if UIApplication.shared.canOpenURL(url) {
-//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            }
-//        }
         
-       
         let alertPrompt = UIAlertController(title: "Open in App", message: "You're going to open the app \"Jesus Film Project\"", preferredStyle: .alert)
         let confirmAction = UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { (action) -> Void in
             
