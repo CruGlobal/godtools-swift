@@ -28,8 +28,4 @@ class TractEventProperties: TractProperties {
         return ["event", "attribute", "analytics"]
     }
     
-//    override func defineProperties() {
-//       // self.properties = []
-//    }
-    
 }

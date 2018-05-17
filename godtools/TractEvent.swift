@@ -9,10 +9,6 @@
 import UIKit
 import SWXMLHash
 
-protocol ButtonActionAnalyticsProtocol: class {
-    func handleTrackedAction()
-}
-
 class TractEvent: BaseTractElement {
     
     var analyticsEvents: [String: String] = [:]
@@ -30,8 +26,6 @@ class TractEvent: BaseTractElement {
       
         var nodeMayHaveAttributes = false
         var childrenMayHaveAttributes = false
-        // let contentElements = self.xmlManager.getContentElements(data)
-        // var elements = [XMLIndexer]()
         
         // MARK: - This parses out system info and action string !!!
         for node in data.children {
@@ -62,15 +56,7 @@ class TractEvent: BaseTractElement {
         } else {
             return analyticsEvents
         }
-       // print("analytics EVENTS: \(analyticsEvents)\n")
     }
-    
-    public static func getAnalyticsInfo(completion: @escaping ([String: String]) -> ()) {
-//        let dict = analyticsEvents
-//        completion(dictionary)
-       
-    }
-    
     
     // MARK: - Bindings
     

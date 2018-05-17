@@ -13,12 +13,8 @@ extension TractButton {
 
     func buttonTarget() {
         getParentCard()?.endCardEditing()
-
-        
         let properties = buttonProperties()
-        debugPrint("\(properties.analyticsButtonUserInfo)\n")
-
-        debugPrint("\(properties.analyticsButtonUserInfo)")
+        
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
             for event in events {
@@ -26,7 +22,6 @@ extension TractButton {
                     break
                 }
 
-            
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
                 let relay = AnalyticsRelay.shared
                 switch (relay.screenName, relay.viewListener) {
