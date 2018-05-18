@@ -11,21 +11,35 @@ import UIKit
 class LoadingViewController: UIViewController {
     
     @IBOutlet weak var loadingLabel: UILabel!
-    
     @IBOutlet weak var loadingImageView: UIImageView!
+    @IBOutlet weak var downloadProgressView: GTProgressView!
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadingLabel.text = "The_tool_you_requested_is_loading...".localized
+        downloadProgressView.setProgress(0.0, animated: true)
+        registerForDownloadProgressNotifications()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    // MARK: Progress view listener
+    
+    private func registerForDownloadProgressNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(progressViewListenerShouldUpdate),
+                                               name: .downloadProgressViewUpdateNotification,
+                                               object: nil)
+    }
+    
+    @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
 
+        guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+        }
+    }
  
 }

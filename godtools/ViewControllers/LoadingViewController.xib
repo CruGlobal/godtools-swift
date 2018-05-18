@@ -14,6 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="downloadProgressView" destination="22D-Qe-lw7" id="TjA-o1-a0v"/>
                 <outlet property="loadingImageView" destination="4m3-Ql-tel" id="heN-zY-pZj"/>
                 <outlet property="loadingLabel" destination="FZd-Ip-eYV" id="Dod-Wm-L9G"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -30,17 +31,18 @@
                     <color key="textColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4m3-Ql-tel">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greenCheck" translatesAutoresizingMaskIntoConstraints="NO" id="4m3-Ql-tel">
                     <rect key="frame" x="140.5" y="205" width="94" height="93.5"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="4m3-Ql-tel" secondAttribute="height" multiplier="1:1" id="trp-Ew-tqf"/>
                     </constraints>
                 </imageView>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="22D-Qe-lw7">
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="22D-Qe-lw7" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="85" y="328.5" width="205" height="10"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="10" id="hFl-8Y-mKp"/>
                     </constraints>
+                    <color key="progressTintColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </progressView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -59,4 +61,7 @@
             <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="greenCheck" width="90" height="90"/>
+    </resources>
 </document>
