@@ -6,12 +6,16 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoadingViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="loadingImageView" destination="4m3-Ql-tel" id="heN-zY-pZj"/>
+                <outlet property="loadingLabel" destination="FZd-Ip-eYV" id="Dod-Wm-L9G"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,28 +24,39 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading your tools..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZd-Ip-eYV">
-                    <rect key="frame" x="66" y="316.5" width="243" height="34"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The tool you requested is loading..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZd-Ip-eYV">
+                    <rect key="frame" x="35" y="358.5" width="305" height="67"/>
                     <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This has been presented from a deep link!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mOd-Qe-FMw">
-                    <rect key="frame" x="40" y="95" width="295" height="154"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="43"/>
-                    <color key="textColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4m3-Ql-tel">
+                    <rect key="frame" x="140.5" y="205" width="94" height="93.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="4m3-Ql-tel" secondAttribute="height" multiplier="1:1" id="trp-Ew-tqf"/>
+                    </constraints>
+                </imageView>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="22D-Qe-lw7">
+                    <rect key="frame" x="85" y="328.5" width="205" height="10"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="hFl-8Y-mKp"/>
+                    </constraints>
+                </progressView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="mOd-Qe-FMw" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="75" id="6Fi-WA-ePN"/>
-                <constraint firstItem="mOd-Qe-FMw" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="Gk6-Si-jNc"/>
-                <constraint firstItem="FZd-Ip-eYV" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IlA-34-zJE"/>
-                <constraint firstItem="FZd-Ip-eYV" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="lO7-f1-iaL"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mOd-Qe-FMw" secondAttribute="trailing" constant="40" id="usH-Rd-dd5"/>
+                <constraint firstItem="22D-Qe-lw7" firstAttribute="top" secondItem="4m3-Ql-tel" secondAttribute="bottom" constant="30" id="1Aj-K6-RDN"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FZd-Ip-eYV" secondAttribute="trailing" constant="35" id="I6P-Tg-goY"/>
+                <constraint firstAttribute="trailing" secondItem="22D-Qe-lw7" secondAttribute="trailing" constant="85" id="dHs-xE-9kj"/>
+                <constraint firstItem="FZd-Ip-eYV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="35" id="exK-RD-77P"/>
+                <constraint firstItem="FZd-Ip-eYV" firstAttribute="top" secondItem="22D-Qe-lw7" secondAttribute="bottom" constant="20" id="kDo-IA-wbW"/>
+                <constraint firstItem="4m3-Ql-tel" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.25" id="mZ8-oc-2un"/>
+                <constraint firstItem="22D-Qe-lw7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="85" id="rRz-TK-4Mc"/>
+                <constraint firstItem="22D-Qe-lw7" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="v6g-2U-qZy"/>
+                <constraint firstItem="4m3-Ql-tel" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="xGM-dA-1yz"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="34.5" y="54.5"/>
         </view>
     </objects>
 </document>

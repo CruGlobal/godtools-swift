@@ -9,6 +9,11 @@
 import UIKit
 
 class LoadingViewController: UIViewController {
+    
+    @IBOutlet weak var loadingLabel: UILabel!
+    
+    @IBOutlet weak var loadingImageView: UIImageView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +27,5 @@ class LoadingViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+ 
 }
