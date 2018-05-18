@@ -61,7 +61,7 @@ class BaseTractElement: UIView {
     
     // MARK: Analytics properties
     
-    var analyticsUserInfo: [String: String]?
+    var analyticsUserInfo: [String: String] = [:]
     
     // MARK: Main properties
     
@@ -113,6 +113,7 @@ class BaseTractElement: UIView {
     
     var xmlManager = XMLManager()
     var elementFrame: TractElementFrame = TractElementFrame()
+    //var userInfo: [String: String] = [:]
     
     private var _properties: TractProperties?
     var properties: TractProperties {
@@ -191,6 +192,7 @@ class BaseTractElement: UIView {
         self.elementFrame.y = yPosition
         
         let contentElements = self.xmlManager.getContentElements(data)
+       // print("\ncontentElements \(contentElements)\n\n")
         
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
@@ -238,8 +240,15 @@ class BaseTractElement: UIView {
             self.elements = [BaseTractElement]()
         }
         
+        // Tract if the following element is an Event, store reference to first element and then
+        // attach the analyticsUserInfo on the next pass ??
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
+            let userInfo = TractEvent.attachAnalyticsEvents(data: dictionary)
+            element.analyticsUserInfo = userInfo
+        
+//            print("element.debugDescription \(element.debugDescription)\n")
+//            print("userInfo.debugDescription \(userInfo.debugDescription)\n")
             self.elements!.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
@@ -268,6 +277,24 @@ class BaseTractElement: UIView {
         } else {
             self.height = currentYPosition
         }
+        
+        let elementsCount = self.elements!.count
+        guard elementsCount >= 1 else { return }
+        for index in stride(from: (elementsCount - 1), through: 1, by: -1) {
+            if self.elements![index].isKind(of: TractEvent.self) {
+                self.elements![index-1].analyticsUserInfo = self.elements![index-1].analyticsUserInfo.merging(self.elements![index].analyticsUserInfo, uniquingKeysWith: { (first, _) in first })
+            }
+        }
+        for xlement in self.elements! {
+            print("Element is >> \(xlement.debugDescription)\n")
+            print("xlement.analyticsUserInfo >> \(xlement.analyticsUserInfo)\n")
+        }
+//            if xlement.isKind(of: TractEvent.self) {
+//                dictionaryA = dictionaryA.merging(xlement.analyticsUserInfo!, uniquingKeysWith: { (first, _) in first })
+//
+//            }
+//
+//        }
     }
     
     func setupView(properties: Dictionary<String, Any>) {
@@ -279,7 +306,7 @@ class BaseTractElement: UIView {
     
     func loadFrameProperties() { }
     
-    func attachAnalyticsData(data: XMLIndexer) -> [String: String]? { return nil }
+    func attachAnalyticsData(data: XMLIndexer) -> [String: String] { return [:] }
     
     func buildFrame() {
         self.frame = getFrame()

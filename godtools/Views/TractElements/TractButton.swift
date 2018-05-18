@@ -21,7 +21,7 @@ class TractButton: BaseTractElement {
     // MARK: - Object properties
     
     var button: GTButton = GTButton()
-    var analyticsButtonDictionary: [String: String]?
+    var analyticsButtonDictionary: [String: String] = [:]
     
     // MARK: - Setup
     

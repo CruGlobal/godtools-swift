@@ -11,7 +11,7 @@ import SWXMLHash
 
 class TractEvent: BaseTractElement {
     
-    var analyticsEvents: [String: String] = [:]
+   // var analyticsEvents: [String: String] = [:]
     
     override func propertiesKind() -> TractProperties.Type {
         return TractEventProperties.self
@@ -22,7 +22,8 @@ class TractEvent: BaseTractElement {
         TractBindings.addBindings(self)
     }
     
-    override func attachAnalyticsData(data: XMLIndexer) -> [String : String]? {
+    override func attachAnalyticsData(data: XMLIndexer) -> [String : String] {
+        var analyticsEvents: [String: String] = [:]
       
         var nodeMayHaveAttributes = false
         var childrenMayHaveAttributes = false
@@ -46,13 +47,56 @@ class TractEvent: BaseTractElement {
                         childrenMayHaveAttributes = !childAttributesIsEmpty
                     }
                     if childrenMayHaveAttributes {
-                        processNode(child)
+                        analyticsEvents = processNode(child, analyticsDictionary: analyticsEvents)
                     }
                 }
             }
         }
         if analyticsEvents.isEmpty {
-            return nil
+            return [:]
+        } else {
+            return analyticsEvents
+        }
+    }
+    
+    static func attachAnalyticsEvents(data: XMLIndexer) -> [String : String] {
+        var analyticsEvents: [String: String] = [:]
+        let xmlManager = XMLManager()
+        
+        var nodeMayHaveAttributes = false
+        var childrenMayHaveAttributes = false
+        
+        // MARK: - This parses out system info and action string !!!
+        for node in data.children {
+            if xmlManager.parser.nodeIsEvent(node: node) {
+                if let nodeAttributesIsEmpty = node.element?.allAttributes.isEmpty {
+                    nodeMayHaveAttributes = !nodeAttributesIsEmpty
+                }
+                if nodeMayHaveAttributes {
+                    for (num, dictionary) in (node.element!.allAttributes.enumerated()) {
+                        let _ = num
+                        analyticsEvents[dictionary.key] = dictionary.value.text
+                    }
+                }
+                
+                // MARK: - This parses out analytic key and value !!!
+                for child in node.children {
+                    if let childAttributesIsEmpty = child.element?.allAttributes.isEmpty {
+                        childrenMayHaveAttributes = !childAttributesIsEmpty
+                    }
+                    if childrenMayHaveAttributes {
+                        guard let key = node.element?.allAttributes["key"] else { return analyticsEvents }
+                        guard let value = node.element?.allAttributes["value"] else { return analyticsEvents }
+                        let keyString = "\(key)"
+                        let valueString = "\(value)"
+                        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
+                        //analyticsEvents = processNode(child, analyticsDictionary: analyticsEvents)
+                    }
+                }
+            }
+        }
+        if analyticsEvents.isEmpty {
+            return [:]
         } else {
             return analyticsEvents
         }
@@ -74,15 +118,17 @@ class TractEvent: BaseTractElement {
         return self.properties as! TractEventProperties
     }
     
-    func processNode(_ node: XMLIndexer) {
-        guard let key = node.element?.allAttributes["key"] else { return }
-        guard let value = node.element?.allAttributes["value"] else { return }
+    func processNode(_ node: XMLIndexer, analyticsDictionary: [String: String]) -> [String: String] {
+        var newDictionary: [String: String] = analyticsDictionary
+        guard let key = node.element?.allAttributes["key"] else { return newDictionary }
+        guard let value = node.element?.allAttributes["value"] else { return newDictionary }
         let keyString = "\(key)"
         let valueString = "\(value)"
-        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
+      //  newDictionary[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
+        return newDictionary
     }
     
-    func removeUnwantedCharacters(from xmlText: String) -> String {
+   static func removeUnwantedCharacters(from xmlText: String) -> String {
         var newXMLString = ""
         let containsEquals = xmlText.contains("=")
         let containsBackslashes = xmlText.contains("\\")
