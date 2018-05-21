@@ -148,10 +148,11 @@ extension AppDelegate {
         
         let languages = linkDictionary[usingKey] as? String ?? ""
         
-        let languageOptions = languages.components(separatedBy: ",")
+        var languageOptions = languages.components(separatedBy: ",")
         if languageOptions.isEmpty { return tryLanguages }
+        languageOptions = parseForSubtagsAndDialects(languageStrings: languageOptions)
+
         tryLanguages.remove(at: 0)
-        
         tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
         tryLanguages.append(knownLanguage)
         
@@ -194,6 +195,65 @@ extension AppDelegate {
             return Promise(value: true)
         }
     }
+    
+    // MARK: - This was a request from JesusFilm to add extra fallbacks that aren't in the query
+    // For a language with a subtag and/or a dialect ex: "ms-pse-x-Ogan"
+    
+    func parseForSubtagsAndDialects(languageStrings: [String]) -> [String] {
+        
+        var copiedLanguages: [String] = []
+        
+        for language in languageStrings {
+
+            // Split out language components to check for subtags
+            if language.contains("-") {
+                let components = language.components(separatedBy: "-")
+                
+                // This means there is one or more subtags, so we will parse and return all options
+                copiedLanguages.append(contentsOf: parseSubtagComponents(languageComponents: components))
+                
+            } else {
+                copiedLanguages.append(language)
+            }
+        }
+        return copiedLanguages
+    }
+    
+    func parseSubtagComponents(languageComponents: [String]) -> [String] {
+        
+        // We need a mutatable copy so it can be used again as it shrinks
+        var copiedComponents: [String] = languageComponents
+        
+        // This will be the returned output that gets appended to
+        var newComponents: [String] = []
+        
+        // Find out how many times to iterate
+        let count = languageComponents.count
+        
+        // No need to iterate unless there is more than one
+        guard count > 1 else { return newComponents }
+        
+        for _ in 1...count {
+            
+            // This will assemble all the parts of the language together ex: ms-pse-x-Ogan-
+            // Notice the extra "-" at the end. (addressed below...)
+            var languageName = copiedComponents.reduce("") { part1, part2  in "\(part1)\(part2)-"}
+            
+            // This removes the extra "-" character
+            languageName.removeLast()
+            
+            // This adds the assembled name to our new list, starting with full name.
+            newComponents.append(languageName)
+            
+            // This removes the last component from our copy before we iterate through again.
+            copiedComponents.removeLast()
+        }
+        
+        // Here we now have the array of ["ms-pse-x-Ogan", "ms-pse-x", "ms-pse", "ms"]
+        return newComponents
+    }
+    
+
     
     // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
     
