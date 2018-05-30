@@ -63,6 +63,26 @@ DEPENDENCIES:
   - SWXMLHash (~> 4.1)
   - TheKeyOAuth2 (from `https://github.com/CruGlobal/TheKeyOAuth2.git`, tag `0.6.9`)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AdobeMobileSDK
+    - Alamofire
+    - BrightFutures
+    - Crashlytics
+    - CRUConfig
+    - Fabric
+    - GoogleAnalytics
+    - GoogleConversionTracking
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - PromiseKit
+    - Realm
+    - RealmSwift
+    - Result
+    - SSZipArchive
+    - SwiftyJSON
+    - SWXMLHash
+
 EXTERNAL SOURCES:
   Spine:
     :git: https://github.com/CruGlobal/Spine.git
@@ -102,4 +122,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 6d9d8ff481fe7a555d0326ee34c3baae8157a4ef
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
