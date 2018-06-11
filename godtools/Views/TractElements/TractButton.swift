@@ -31,6 +31,9 @@ class TractButton: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
+        let manager = XMLManager()
+        let parser = manager.parser
+        
         
         let properties = buttonProperties()
         let pageProperties = page?.pageProperties()
@@ -67,7 +70,6 @@ class TractButton: BaseTractElement {
             self.button.titleLabel?.font = label.font
 
             let textColorProperty = buttonTextColor(localColor: element.textProperties().localTextColor)
-            debugPrint(textColorProperty)
             
             self.button.setTitleColor(textColorProperty, for: .normal)
             self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
@@ -100,8 +102,8 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        self.analyticsButtonDictionary = analyticsUserInfo
-        debugPrint("self.analyticsButtonDictionary \(self.analyticsButtonDictionary)\n")
+        //self.analyticsButtonDictionary = analyticsUserInfo
+        debugPrint("self.analyticsButtonDictionary \(self.analyticsUserInfo)\n")
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

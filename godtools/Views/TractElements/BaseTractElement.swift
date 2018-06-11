@@ -192,7 +192,14 @@ class BaseTractElement: UIView {
         self.elementFrame.y = yPosition
         
         let contentElements = self.xmlManager.getContentElements(data)
-       // print("\ncontentElements \(contentElements)\n\n")
+        //print("\nElement Children \(contentElements.children)\n\n")
+        for child in contentElements.children {
+            if child.element!.name.contains("analytics") {
+                let userInfo = TractEvent.attachAnalyticsEvents(data: child)
+                self.analyticsUserInfo = userInfo
+            }
+
+        }
         
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
@@ -200,7 +207,7 @@ class BaseTractElement: UIView {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
-        self.analyticsUserInfo = attachAnalyticsData(data: data)
+       // self.analyticsUserInfo = attachAnalyticsData(data: data)
     }
     
     func getPreviousElement() -> BaseTractElement? {
@@ -235,6 +242,7 @@ class BaseTractElement: UIView {
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
         var elementNumber: Int = 0
+        
         
         if self.elements == nil {
             self.elements = [BaseTractElement]()
@@ -286,8 +294,8 @@ class BaseTractElement: UIView {
             }
         }
         for xlement in self.elements! {
-            print("Element is >> \(xlement.debugDescription)\n")
-            print("xlement.analyticsUserInfo >> \(xlement.analyticsUserInfo)\n")
+          //  print("Element is >> \(xlement.debugDescription)\n")
+         //   print("xlement.analyticsUserInfo >> \(xlement.analyticsUserInfo)\n")
         }
 //            if xlement.isKind(of: TractEvent.self) {
 //                dictionaryA = dictionaryA.merging(xlement.analyticsUserInfo!, uniquingKeysWith: { (first, _) in first })

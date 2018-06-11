@@ -85,11 +85,19 @@ class TractEvent: BaseTractElement {
                         childrenMayHaveAttributes = !childAttributesIsEmpty
                     }
                     if childrenMayHaveAttributes {
-                        guard let key = node.element?.allAttributes["key"] else { return analyticsEvents }
-                        guard let value = node.element?.allAttributes["value"] else { return analyticsEvents }
-                        let keyString = "\(key)"
-                        let valueString = "\(value)"
-                        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
+                        for (num, dictionary) in (child.element!.allAttributes.enumerated()) {
+                            let _ = num
+                            analyticsEvents[dictionary.key] = dictionary.value.text
+                        }
+//                        for x in child.element!.allAttributes {
+//                            analyticsEvents[x.key] = analyticsEvents[x.value.text]
+//                        }
+
+//                        guard let key = node.element?.allAttributes["key"] else { return analyticsEvents }
+//                        guard let value = node.element?.allAttributes["value"] else { return analyticsEvents }
+//                        let keyString = "\(key)"
+//                        let valueString = "\(value)"
+//                        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
                         //analyticsEvents = processNode(child, analyticsDictionary: analyticsEvents)
                     }
                 }
@@ -98,6 +106,9 @@ class TractEvent: BaseTractElement {
         if analyticsEvents.isEmpty {
             return [:]
         } else {
+            print("\(analyticsEvents)")
+
+            
             return analyticsEvents
         }
     }
