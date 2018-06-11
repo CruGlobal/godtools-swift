@@ -59,7 +59,7 @@ class TractEvent: BaseTractElement {
         }
     }
     
-    static func attachAnalyticsEvents(data: XMLIndexer) -> [String : String] {
+    static func attachAnalyticsEvents(data: XMLIndexer) -> [String: String] {
         var analyticsEvents: [String: String] = [:]
         let xmlManager = XMLManager()
         
@@ -89,16 +89,6 @@ class TractEvent: BaseTractElement {
                             let _ = num
                             analyticsEvents[dictionary.key] = dictionary.value.text
                         }
-//                        for x in child.element!.allAttributes {
-//                            analyticsEvents[x.key] = analyticsEvents[x.value.text]
-//                        }
-
-//                        guard let key = node.element?.allAttributes["key"] else { return analyticsEvents }
-//                        guard let value = node.element?.allAttributes["value"] else { return analyticsEvents }
-//                        let keyString = "\(key)"
-//                        let valueString = "\(value)"
-//                        analyticsEvents[removeUnwantedCharacters(from: keyString)] = removeUnwantedCharacters(from: valueString)
-                        //analyticsEvents = processNode(child, analyticsDictionary: analyticsEvents)
                     }
                 }
             }
@@ -107,8 +97,6 @@ class TractEvent: BaseTractElement {
             return [:]
         } else {
             print("\(analyticsEvents)")
-
-            
             return analyticsEvents
         }
     }
@@ -128,6 +116,7 @@ class TractEvent: BaseTractElement {
     func eventProperties() -> TractEventProperties {
         return self.properties as! TractEventProperties
     }
+    
     
     func processNode(_ node: XMLIndexer, analyticsDictionary: [String: String]) -> [String: String] {
         var newDictionary: [String: String] = analyticsDictionary

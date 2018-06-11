@@ -14,6 +14,7 @@ extension TractButton {
     func buttonTarget() {
         getParentCard()?.endCardEditing()
         let properties = buttonProperties()
+        print("properties.analyticsButtonUserInfo \(properties.analyticsButtonUserInfo)")
         
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
@@ -21,25 +22,26 @@ extension TractButton {
                 if sendMessageToElement(listener: event) == .failure {
                     break
                 }
+                sendNotificationForAction(userInfo: properties.analyticsButtonUserInfo)
 
-                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
-                let relay = AnalyticsRelay.shared
-                switch (relay.screenName, relay.viewListener) {
-                case ("kgp-us-5", "followup-form"):
-                    userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
-                    sendNotificationForAction(userInfo: userInfo)
-                case ("kgp-5", "followup-form"):
-                    userInfo["action"] = AdobeAnalyticsConstants.Values.kgpNewProfessingBeliever
-                    sendNotificationForAction(userInfo: userInfo)
-                case ("fourlaws-6", "followup-form"):
-                    userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsNewProfessingBeliever
-                    sendNotificationForAction(userInfo: userInfo)
-                case ("thefour-5", "followup-form"):
-                    userInfo["action"] = AdobeAnalyticsConstants.Values.theFourNewProfessingBeliever
-                    sendNotificationForAction(userInfo: userInfo)
-                default:
-                    print("no notifications")
-                }
+//                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.newProfessingBelieverAction: 1]
+//                let relay = AnalyticsRelay.shared
+//                switch (relay.screenName, relay.viewListener) {
+//                case ("kgp-us-5", "followup-form"):
+//                    userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
+//                    sendNotificationForAction(userInfo: userInfo)
+//                case ("kgp-5", "followup-form"):
+//                    userInfo["action"] = AdobeAnalyticsConstants.Values.kgpNewProfessingBeliever
+//                    sendNotificationForAction(userInfo: userInfo)
+//                case ("fourlaws-6", "followup-form"):
+//                    userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsNewProfessingBeliever
+//                    sendNotificationForAction(userInfo: userInfo)
+//                case ("thefour-5", "followup-form"):
+//                    userInfo["action"] = AdobeAnalyticsConstants.Values.theFourNewProfessingBeliever
+//                    sendNotificationForAction(userInfo: userInfo)
+//                default:
+//                    print("no notifications")
+//                }
             }
         } else if properties.type == .url {
             let propertiesString = properties.url

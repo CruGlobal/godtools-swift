@@ -196,9 +196,8 @@ class BaseTractElement: UIView {
         for child in contentElements.children {
             if child.element!.name.contains("analytics") {
                 let userInfo = TractEvent.attachAnalyticsEvents(data: child)
-                self.analyticsUserInfo = userInfo
+                self.analyticsUserInfo = adjustDictionary(oldDictionary: userInfo) 
             }
-
         }
         
         loadElementProperties(contentElements.properties)
@@ -253,7 +252,7 @@ class BaseTractElement: UIView {
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             let userInfo = TractEvent.attachAnalyticsEvents(data: dictionary)
-            element.analyticsUserInfo = userInfo
+            element.analyticsUserInfo = adjustDictionary(oldDictionary: userInfo)
         
 //            print("element.debugDescription \(element.debugDescription)\n")
 //            print("userInfo.debugDescription \(userInfo.debugDescription)\n")
@@ -285,24 +284,6 @@ class BaseTractElement: UIView {
         } else {
             self.height = currentYPosition
         }
-        
-        let elementsCount = self.elements!.count
-        guard elementsCount >= 1 else { return }
-        for index in stride(from: (elementsCount - 1), through: 1, by: -1) {
-            if self.elements![index].isKind(of: TractEvent.self) {
-                self.elements![index-1].analyticsUserInfo = self.elements![index-1].analyticsUserInfo.merging(self.elements![index].analyticsUserInfo, uniquingKeysWith: { (first, _) in first })
-            }
-        }
-        for xlement in self.elements! {
-          //  print("Element is >> \(xlement.debugDescription)\n")
-         //   print("xlement.analyticsUserInfo >> \(xlement.analyticsUserInfo)\n")
-        }
-//            if xlement.isKind(of: TractEvent.self) {
-//                dictionaryA = dictionaryA.merging(xlement.analyticsUserInfo!, uniquingKeysWith: { (first, _) in first })
-//
-//            }
-//
-//        }
     }
     
     func setupView(properties: Dictionary<String, Any>) {
@@ -375,6 +356,18 @@ class BaseTractElement: UIView {
     }
     
     func loadParallelElementState() { }
+    
+    // MARK: - Helpers
+    
+    func adjustDictionary(oldDictionary: [String: String]) -> [String: String] {
+        var copy = oldDictionary
+        if let copyKey = copy["key"], let copyValue = copy["value"] {
+            copy.removeValue(forKey: "key")
+            copy.removeValue(forKey: "value")
+            copy[copyKey] = copyValue
+        }
+        return copy
+    }
     
     // MARK: - UI
     

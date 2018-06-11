@@ -50,6 +50,7 @@ class TractButtonProperties: TractProperties {
         }
     }
     
+    
     // MARK: - View Properties
     
     var i18nId: String?

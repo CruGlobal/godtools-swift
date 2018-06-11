@@ -159,7 +159,7 @@ class GodToolsAnaltyics {
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.trackActionInAdobe(actionName: action, data: contextData)
-           // debugPrint("\(contextData.debugDescription)")
+            debugPrint("\(contextData.debugDescription)")
         }
     }
 
