@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Crashlytics
-import SWXMLHash
 
 class TractButton: BaseTractElement {
     
@@ -31,9 +29,6 @@ class TractButton: BaseTractElement {
     
     override func loadElementProperties(_ properties: [String: Any]) {
         super.loadElementProperties(properties)
-        let manager = XMLManager()
-        let parser = manager.parser
-        
         
         let properties = buttonProperties()
         let pageProperties = page?.pageProperties()
@@ -102,8 +97,8 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        properties.analyticsButtonUserInfo = self.analyticsUserInfo
         
+        properties.analyticsButtonUserInfo = self.analyticsUserInfo
         debugPrint("self.analyticsButtonDictionary \(self.analyticsUserInfo)\n")
         
         if properties.type == .event || properties.type == .url {

@@ -17,6 +17,11 @@ extension TractTabs {
             self.tabs.append([XMLIndexer]())
             
             for node in item.children {
+                
+                let userInfo = TractEvent.attachAnalyticsEvents(data: node)
+                let adjustedDictionary = adjustDictionary(oldDictionary: userInfo)
+                self.analyticsTabsDictionary = self.analyticsTabsDictionary.merging(adjustedDictionary) { (_, new) in new }
+                
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
                         self.tabsProperties().options.append(textNode.text)
