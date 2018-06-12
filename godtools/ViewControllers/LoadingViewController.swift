@@ -16,7 +16,7 @@ class LoadingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadingLabel.text = "The_tool_you_requested_is_loading...".localized
+        loadingLabel.text = "the_tool_you_requested_is_loading...".localized
         downloadProgressView.setProgress(0.0, animated: true)
         registerForDownloadProgressNotifications()
 
