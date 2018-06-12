@@ -113,7 +113,6 @@ class BaseTractElement: UIView {
     
     var xmlManager = XMLManager()
     var elementFrame: TractElementFrame = TractElementFrame()
-    //var userInfo: [String: String] = [:]
     
     private var _properties: TractProperties?
     var properties: TractProperties {
@@ -192,11 +191,10 @@ class BaseTractElement: UIView {
         self.elementFrame.y = yPosition
         
         let contentElements = self.xmlManager.getContentElements(data)
-        //print("\nElement Children \(contentElements.children)\n\n")
         for child in contentElements.children {
             if child.element!.name.contains("analytics") {
                 let userInfo = TractEvent.attachAnalyticsEvents(data: child)
-                self.analyticsUserInfo = adjustDictionary(oldDictionary: userInfo) 
+                self.analyticsUserInfo = adjustDictionary(from: userInfo)
             }
         }
         
@@ -206,7 +204,6 @@ class BaseTractElement: UIView {
         setupParallelElement()
         buildChildrenForData(contentElements.children)
         setupView(properties: contentElements.properties)
-       // self.analyticsUserInfo = attachAnalyticsData(data: data)
     }
     
     func getPreviousElement() -> BaseTractElement? {
@@ -247,15 +244,12 @@ class BaseTractElement: UIView {
             self.elements = [BaseTractElement]()
         }
         
-        // Tract if the following element is an Event, store reference to first element and then
-        // attach the analyticsUserInfo on the next pass ??
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
+            
             let userInfo = TractEvent.attachAnalyticsEvents(data: dictionary)
-            element.analyticsUserInfo = adjustDictionary(oldDictionary: userInfo)
+            element.analyticsUserInfo = adjustDictionary(from: userInfo)
         
-//            print("element.debugDescription \(element.debugDescription)\n")
-//            print("userInfo.debugDescription \(userInfo.debugDescription)\n")
             self.elements!.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
@@ -359,8 +353,8 @@ class BaseTractElement: UIView {
     
     // MARK: - Helpers
     
-    func adjustDictionary(oldDictionary: [String: String]) -> [String: String] {
-        var copy = oldDictionary
+    func adjustDictionary(from verboseDictionary: [String: String]) -> [String: String] {
+        var copy = verboseDictionary
         if let copyKey = copy["key"], let copyValue = copy["value"] {
             copy.removeValue(forKey: "key")
             copy.removeValue(forKey: "value")
