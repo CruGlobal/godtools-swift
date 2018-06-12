@@ -1,45 +1,41 @@
-/* 
-  Localizable.strings
-  godtools
+"language_onboard" = "60+ Languages";
 
-  Created by Devserker on 4/24/17.
-  Copyright © 2017 Cru. All rights reserved.
-*/
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
 
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "My Tools";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Find Tools";
+
+"unavailable" = "Unavailable";
 // Onboarding
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
 "okay" = "Okay";
-"now" = "Now";
-"later" = "Later";
-"60+_languages" = "60+ Languages";
-"share_godtools_with_someone_in_their_native_language." = "Share GodTools with someone in their native language.";
-"OK" = "OK";
-
 // Menu
 "menu_general" = "General";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
+// Tool Detail
 "about" = "About";
 "help" = "Help";
 "contact_us" = "Contact Us";
-"notifications" = "Notifications";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
-"share_god_tools" = "Share GodTools";
+"share_god_tools" = "Share the GodTools App";
 "share_a_story_with_us" = "Share a Story With Us";
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Here you can download GodTools app: http://godtoolsapp.com";
-"login" = "Login";
-"my_tools" = "My Tools";
-"find_tools" = "Find Tools";
+"share_god_tools_share_sheet_text" = "Download the GodTools app: http://godtoolsapp.com
+
+An online version can be found at https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Add Tools";
 
-// Tool Detail
 "total_views" = "%d views";
 "total_languages" = "%d languages";
 
@@ -48,7 +44,7 @@
 "select_primary_language" = "Select a Primary Language";
 "parallel_language" = "Parallel Language";
 "select_parallel_language" = "Select a Parallel Language";
-"share_god_tools_native_language" = "Share God Tools with someone in their native language";
+"share_god_tools_native_language" = "Share GodTools with someone in their native language";
 "not_every_tool_is_available" = "Not every tool is available in every language";
 
 // Settings
@@ -70,7 +66,9 @@
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!";
+"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!
+
+The app can be downloaded from godtoolsapp.com";
 
 // Buttons
 "download" = "Download";
@@ -78,7 +76,6 @@
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
-"unavailable" = "Unavailable";
 
 // Alerts
 "error" = "Error";
@@ -97,12 +94,3 @@
 "general_about_8" = "Visit godtoolsapp.com for more information.";
 "general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
-
-// Login
-"success" = "Success!";
-"bad_password" = "Your username or password were incorrect. Please check these values and try again.";
-"username_required" = "Username is a required field.";
-"password_required" = "Password is a required field.";
-"logout" = "Logout";
-"username" = "Username";
-"password" = "Password";
