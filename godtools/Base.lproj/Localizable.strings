@@ -21,6 +21,8 @@
 "language_settings" = "Language Settings";
 // Tool Detail
 "about" = "About";
+"login" = "Login";
+"account_login" = "Account Login";
 "help" = "Help";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";

@@ -19,9 +19,9 @@ protocol MenuViewControllerDelegate {
 class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let general = ["language_settings", "about", "help", "contact_us"]
+//    let general = ["language_settings", "about", "help", "contact_us"]
     // when login becomes available, use general below:
-//    let general = ["language_settings", "login", "about", "help", "contact_us"]
+    let general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -139,10 +139,10 @@ extension MenuViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.section {
         case 0:
             handleGeneralSectionCellSelection(rowIndex: indexPath.row)
-            break
         case 1:
             handleShareSectionCellSelection(rowIndex: indexPath.row)
         case 2:
@@ -173,48 +173,20 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController {
     
-    // use this function when login becomes available. rename it to: handleGeneralSectionCellSelection.
+    // MARK- There may be additional work to complete for logging in and not just using a web view
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
-            break
         case 1:
             openLoginWindow()
-            //delegate?.moveToLogin()
-            break
         case 2:
             delegate?.moveToAbout()
-            break
         case 3:
             openHelp()
-            break
         case 4:
             contactUs()
-            break
         default: break
-        }
-        if rowIndex == 0 {
-        }
-    }
-    
-    fileprivate func handleGeneralSectionCellSelectionOld(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            delegate?.moveToUpdateLanguageSettings()
-            break
-        case 1:
-            delegate?.moveToAbout()
-            break
-        case 2:
-            openHelp()
-            break
-        case 3:
-            contactUs()
-            break
-        default: break
-        }
-        if rowIndex == 0 {
         }
     }
     
@@ -222,7 +194,6 @@ extension MenuViewController {
         switch rowIndex {
         case 0:
             shareGodToolsApp()
-            break
         case 1:
             shareAStoryWithUs()
         default: break
@@ -233,13 +204,10 @@ extension MenuViewController {
         switch rowIndex {
         case 0:
             openTermsOfUse()
-            break
         case 1:
             openPrivacyPolicy()
-            break
         case 2:
             openCopyrightInfo()
-            break
         default: break
         }
         
