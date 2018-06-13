@@ -34,11 +34,9 @@ extension TractButton {
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
                 userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
                 sendNotificationForAction(userInfo: userInfo)
-
-                    UIApplication.shared.openURL(url)
-                }
+                UIApplication.shared.openURL(url)
             }
-        
+        }
     }
     
     

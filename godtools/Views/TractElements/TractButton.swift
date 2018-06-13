@@ -56,22 +56,19 @@ class TractButton: BaseTractElement {
     }
     
     override func render() -> UIView {
-        
-        
-        
         if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
-
+            
             guard let element = self.elements?.first as? TractTextContent else { return self }
             let label = element.label
             
             self.button.setTitle(label.text, for: .normal)
             self.button.titleLabel?.font = label.font
-
+            
             let textColorProperty = buttonTextColor(localColor: element.textProperties().localTextColor)
             
             self.button.setTitleColor(textColorProperty, for: .normal)
             self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
-
+            
             self.button.titleLabel?.lineBreakMode = .byWordWrapping
             self.button.titleLabel?.textAlignment = .center
         } else {
@@ -79,9 +76,9 @@ class TractButton: BaseTractElement {
                 self.addSubview(element.render())
             }
         }
-        
         TractBindings.addBindings(self)
         return self
+        
     }
     
     func buttonTextColor(localColor: UIColor?) -> UIColor {
