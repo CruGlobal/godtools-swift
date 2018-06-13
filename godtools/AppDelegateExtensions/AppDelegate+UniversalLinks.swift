@@ -54,6 +54,7 @@ extension AppDelegate {
     }
     
     private func processForDeepLinking(from url: URL) {
+        displayLoadingScreen()
         
         let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
@@ -113,6 +114,8 @@ extension AppDelegate {
     }
     
     private func shouldGoToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, pageNumber: Int, parallelLanguageCode: String? = nil) {
+        dismissLoadingScreen()
+
             guard let platformFlowController = self.flowController as? PlatformFlowController else {
                 return
             }
@@ -277,6 +280,17 @@ extension AppDelegate {
     private func returnAlternateLanguage(from code: String = "en") -> Language? {
         let languagesManager = LanguagesManager()
         return languagesManager.loadFromDisk(code: code)
+    }
+    
+    func displayLoadingScreen() {
+        let loadingViewController = LoadingViewController(nibName: String(describing:LoadingViewController.self), bundle: nil)
+        if let currentViewController = self.window?.rootViewController {
+            currentViewController.present(loadingViewController, animated: true, completion: nil)
+        }
+    }
+    
+    func dismissLoadingScreen() {
+        self.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Analytics helper...criteria not yet defined.

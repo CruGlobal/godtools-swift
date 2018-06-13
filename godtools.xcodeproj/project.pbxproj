@@ -100,6 +100,8 @@
 		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
 		1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */; };
+		1EC92E9920AF5F5300FAD93B /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC92E9720AF5F5300FAD93B /* LoadingViewController.swift */; };
+		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
 		4F05F49C203735A600A3D01C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F05F49B203735A600A3D01C /* LoginViewController.swift */; };
 		4F05F49E203735B900A3D01C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F05F49D203735B900A3D01C /* LoginViewController.xib */; };
@@ -341,6 +343,8 @@
 		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRelay.swift; sourceTree = "<group>"; };
+		1EC92E9720AF5F5300FAD93B /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4F05F49B203735A600A3D01C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
@@ -844,6 +848,7 @@
 				0FB73E651EA90669000BA60D /* Platform */,
 				4F5707DF1EAE8C8B00A540C2 /* Tract */,
 				0FB73E641EA90669000BA60D /* BaseViewController.swift */,
+				1EC92E9B20AF5F6100FAD93B /* Loading */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -869,6 +874,15 @@
 				4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		1EC92E9B20AF5F6100FAD93B /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				1EC92E9720AF5F5300FAD93B /* LoadingViewController.swift */,
+				1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */,
+			);
+			name = Loading;
 			sourceTree = "<group>";
 		};
 		20ECC28E617DF10976739E6B /* Frameworks */ = {
@@ -1486,6 +1500,7 @@
 				4F84959F1F06E6BE0015A6BB /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				4F8495A21F06E6BE0015A6BB /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
+				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
@@ -1696,6 +1711,7 @@
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
 				0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */,
+				1EC92E9920AF5F5300FAD93B /* LoadingViewController.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				0F806C6B1EB3E6C300F3ED2B /* TractTitle.swift in Sources */,
