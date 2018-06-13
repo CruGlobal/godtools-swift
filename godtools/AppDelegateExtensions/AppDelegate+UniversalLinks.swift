@@ -283,7 +283,7 @@ extension AppDelegate {
     }
     
     func displayLoadingScreen() {
-        let loadingViewController = LoadingViewController(nibName: "LoadingViewController", bundle: nil)
+        let loadingViewController = LoadingViewController(nibName: String(describing:LoadingViewController.self), bundle: nil)
         if let currentViewController = self.window?.rootViewController {
             currentViewController.present(loadingViewController, animated: true, completion: nil)
         }
