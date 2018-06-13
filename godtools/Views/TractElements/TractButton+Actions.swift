@@ -34,13 +34,11 @@ extension TractButton {
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
                 userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
                 sendNotificationForAction(userInfo: userInfo)
-                if openInJFPApp {
-                    launchApp(decodedURL: "gtTestCustomUrlScheme://"/*propertiesString*/)
-                } else {
+
                     UIApplication.shared.openURL(url)
                 }
             }
-        }
+        
     }
     
     
