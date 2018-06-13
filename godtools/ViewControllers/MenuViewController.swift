@@ -185,10 +185,10 @@ extension MenuViewController {
         case 2:
             delegate?.moveToAbout()
             break
-        case 2:
+        case 3:
             openHelp()
             break
-        case 3:
+        case 4:
             contactUs()
             break
         default: break
@@ -208,7 +208,7 @@ extension MenuViewController {
         case 2:
             openHelp()
             break
-        case 2:
+        case 3:
             contactUs()
             break
         default: break

@@ -1,7 +1,7 @@
 PODS:
-  - AdobeMobileSDK (4.13.7):
-    - AdobeMobileSDK/iOS (= 4.13.7)
-  - AdobeMobileSDK/iOS (4.13.7)
+  - AdobeMobileSDK (4.15.0):
+    - AdobeMobileSDK/iOS (= 4.15.0)
+  - AdobeMobileSDK/iOS (4.15.0)
   - Alamofire (4.4.0)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
@@ -48,7 +48,7 @@ PODS:
     - GTMOAuth2 (~> 1.1.1)
 
 DEPENDENCIES:
-  - AdobeMobileSDK (~> 4.13)
+  - AdobeMobileSDK (~> 4.15)
   - Alamofire (~> 4.4)
   - Crashlytics
   - CRUConfig (~> 1.2)
@@ -62,6 +62,26 @@ DEPENDENCIES:
   - SSZipArchive
   - SWXMLHash (~> 4.1)
   - TheKeyOAuth2 (from `https://github.com/CruGlobal/TheKeyOAuth2.git`, tag `0.6.9`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - AdobeMobileSDK
+    - Alamofire
+    - BrightFutures
+    - Crashlytics
+    - CRUConfig
+    - Fabric
+    - GoogleAnalytics
+    - GoogleConversionTracking
+    - GTMOAuth2
+    - GTMSessionFetcher
+    - PromiseKit
+    - Realm
+    - RealmSwift
+    - Result
+    - SSZipArchive
+    - SwiftyJSON
+    - SWXMLHash
 
 EXTERNAL SOURCES:
   Spine:
@@ -80,7 +100,7 @@ CHECKOUT OPTIONS:
     :tag: 0.6.9
 
 SPEC CHECKSUMS:
-  AdobeMobileSDK: 3194eebe127f43a9ca2096d81ea833c7f8168a78
+  AdobeMobileSDK: 7fd5a52302bcbb2ad24c6fb6ef4d1f58e0d654e3
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
@@ -100,6 +120,6 @@ SPEC CHECKSUMS:
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
   TheKeyOAuth2: e6042036a849d950a9f3daa622788e21f952cac2
 
-PODFILE CHECKSUM: 6d9d8ff481fe7a555d0326ee34c3baae8157a4ef
+PODFILE CHECKSUM: bf5a5fee3edc2ee3e202a61ef15d70cce91170b9
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.0
