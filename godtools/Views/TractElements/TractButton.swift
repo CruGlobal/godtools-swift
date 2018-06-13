@@ -74,7 +74,7 @@ class TractButton: BaseTractElement {
         } else {
             for element in self.elements! {
                 self.addSubview(element.render())
-            }
+            } 
         }
         TractBindings.addBindings(self)
         return self

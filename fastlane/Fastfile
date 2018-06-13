@@ -8,7 +8,9 @@ platform :ios do
   desc "Run tests"
   lane :test do
     cocoapods(
-        podfile: './Podfile'
+        podfile: './Podfile',
+        try_repo_update_on_error: true
+
     )
 
     run_tests(
