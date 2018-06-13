@@ -30,11 +30,10 @@ class TractEvent: BaseTractElement {
         // MARK: - This parses out system info and action string !!!
         for node in data.children {
             if xmlManager.parser.nodeIsEvent(node: node) {
-                if let nodeAttributesIsEmpty = node.element?.allAttributes.isEmpty {
-                    nodeMayHaveAttributes = !nodeAttributesIsEmpty
-                }
+                guard let nodeElement = node.element else { continue }
+                nodeMayHaveAttributes = !nodeElement.allAttributes.isEmpty
                 if nodeMayHaveAttributes {
-                    for (num, dictionary) in (node.element!.allAttributes.enumerated()) {
+                    for (num, dictionary) in (nodeElement.allAttributes.enumerated()) {
                         let _ = num
                         analyticsEvents[dictionary.key] = dictionary.value.text
                     }

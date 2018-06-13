@@ -62,40 +62,4 @@ extension TractButton {
         return original.contains("jesusfilm")
     }
     
-    // MARK: - Helper methods
-    
-    func launchApp(decodedURL: String) {
-        
-        let alertPrompt = UIAlertController(title: "Open in App", message: "You're going to open the app \"Jesus Film Project\"", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "Confirm", style: UIAlertActionStyle.default, handler: { (action) -> Void in
-            
-            if let url = URL(string: decodedURL) {
-                if UIApplication.shared.canOpenURL(url) {
-                    if #available(iOS 10.0, *) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    } else {
-                        // Fallback on earlier versions
-                        UIApplication.shared.openURL(url)
-                    }
-                }
-            }
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
-        
-        alertPrompt.addAction(confirmAction)
-        alertPrompt.addAction(cancelAction)
-        
-        var rootViewController = UIApplication.shared.keyWindow?.rootViewController
-        if let navigationController = rootViewController as? UINavigationController {
-            rootViewController = navigationController.viewControllers.first
-        }
-        if let tabBarController = rootViewController as? UITabBarController {
-            rootViewController = tabBarController.selectedViewController
-        }
-        rootViewController?.present(alertPrompt, animated: true, completion: nil)
-        
-        
-    }
-    
 }

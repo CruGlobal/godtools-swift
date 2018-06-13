@@ -56,6 +56,9 @@ class TractButton: BaseTractElement {
     }
     
     override func render() -> UIView {
+        
+        
+        
         if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
 
             guard let element = self.elements?.first as? TractTextContent else { return self }
