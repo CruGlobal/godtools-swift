@@ -174,13 +174,14 @@ extension MenuViewController: UITableViewDelegate {
 extension MenuViewController {
     
     // use this function when login becomes available. rename it to: handleGeneralSectionCellSelection.
-    fileprivate func handleGeneralSectionCellSelectionFuture(rowIndex: Int) {
+    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
             break
         case 1:
-            delegate?.moveToLogin()
+            openLoginWindow()
+            //delegate?.moveToLogin()
             break
         case 2:
             delegate?.moveToAbout()
@@ -197,7 +198,7 @@ extension MenuViewController {
         }
     }
     
-    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+    fileprivate func handleGeneralSectionCellSelectionOld(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
@@ -294,6 +295,11 @@ extension MenuViewController {
     fileprivate func openCopyrightInfo() {
         let url = URL(string: "http://www.godtoolsapp.com/copyright")
         self.delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
+    }
+    
+    fileprivate func openLoginWindow() {
+        let url = URL(string: "https://thekey.me/cas/login?")
+        self.delegate?.openWebView(url: url!, title: "account_login".localized, analyticsTitle: "Account Login Window")
     }
     
 }
