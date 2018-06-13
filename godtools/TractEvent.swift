@@ -20,7 +20,7 @@ class TractEvent: BaseTractElement {
         TractBindings.addBindings(self)
     }
     
-    static func attachAnalyticsEvents(data: XMLIndexer) -> [String: String] {
+    static func buildAnalyticsEvents(data: XMLIndexer) -> [String: String] {
         var analyticsEvents: [String: String] = [:]
         let xmlManager = XMLManager()
         
@@ -32,33 +32,29 @@ class TractEvent: BaseTractElement {
             if xmlManager.parser.nodeIsEvent(node: node) {
                 guard let nodeElement = node.element else { continue }
                 nodeMayHaveAttributes = !nodeElement.allAttributes.isEmpty
+                
                 if nodeMayHaveAttributes {
-                    for (num, dictionary) in (nodeElement.allAttributes.enumerated()) {
-                        let _ = num
+                    for (_, dictionary) in (nodeElement.allAttributes.enumerated()) {
                         analyticsEvents[dictionary.key] = dictionary.value.text
                     }
                 }
                 
                 // MARK: - This parses out analytic key and value !!!
                 for child in node.children {
-                    if let childAttributesIsEmpty = child.element?.allAttributes.isEmpty {
-                        childrenMayHaveAttributes = !childAttributesIsEmpty
-                    }
+                    guard let childElement = child.element else { continue }
+                    childrenMayHaveAttributes = !childElement.allAttributes.isEmpty
+                    
                     if childrenMayHaveAttributes {
-                        for (num, dictionary) in (child.element!.allAttributes.enumerated()) {
-                            let _ = num
+                        for (_, dictionary) in (childElement.allAttributes.enumerated()) {
                             analyticsEvents[dictionary.key] = dictionary.value.text
                         }
                     }
                 }
             }
         }
-        if analyticsEvents.isEmpty {
-            return [:]
-        } else {
-            print("\(analyticsEvents)")
-            return analyticsEvents
-        }
+        
+        let adjustedAnalyticsEvents = adjustVerboseDictionary(from: analyticsEvents)
+        return adjustedAnalyticsEvents
     }
     
     // MARK: - Bindings
@@ -68,6 +64,16 @@ class TractEvent: BaseTractElement {
     }
     
     // MARK: - Helpers
+    
+    static func adjustVerboseDictionary(from dictionary: [String: String]) -> [String: String] {
+        var copy = dictionary
+        if let copyKey = copy["key"], let copyValue = copy["value"] {
+            copy.removeValue(forKey: "key")
+            copy.removeValue(forKey: "value")
+            copy[copyKey] = copyValue
+        }
+        return copy
+    }
     
     func eventProperties() -> TractEventProperties {
         return self.properties as! TractEventProperties

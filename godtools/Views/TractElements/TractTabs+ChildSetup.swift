@@ -18,9 +18,8 @@ extension TractTabs {
             
             for node in item.children {
                 
-                let userInfo = TractEvent.attachAnalyticsEvents(data: node)
-                let adjustedDictionary = adjustDictionary(from: userInfo)
-                self.analyticsTabsDictionary = self.analyticsTabsDictionary.merging(adjustedDictionary) { (_, new) in new }
+                let userInfo = TractEvent.buildAnalyticsEvents(data: node)
+                self.analyticsTabsDictionary = self.analyticsTabsDictionary.merging(userInfo) { (_, new) in new }
                 
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {

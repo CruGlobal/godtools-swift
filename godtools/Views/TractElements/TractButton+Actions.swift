@@ -14,7 +14,6 @@ extension TractButton {
     func buttonTarget() {
         getParentCard()?.endCardEditing()
         let properties = buttonProperties()
-        print("properties.analyticsButtonUserInfo \(properties.analyticsButtonUserInfo)")
         
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
@@ -27,10 +26,8 @@ extension TractButton {
             }
         } else if properties.type == .url {
             let propertiesString = properties.url
-            let openInJFPApp = checkIfJesusFilmLink(propertiesString)
             let stringWithProtocol = prependProtocolToURLStringIfNecessary(propertiesString)
             if let url = URL(string: stringWithProtocol) {
-                
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
                 userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
                 sendNotificationForAction(userInfo: userInfo)

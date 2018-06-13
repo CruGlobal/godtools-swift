@@ -97,9 +97,7 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        
         properties.analyticsButtonUserInfo = self.analyticsUserInfo
-        debugPrint("self.analyticsButtonDictionary \(self.analyticsUserInfo)\n")
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

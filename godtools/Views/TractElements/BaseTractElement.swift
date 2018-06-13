@@ -193,8 +193,7 @@ class BaseTractElement: UIView {
         let contentElements = self.xmlManager.getContentElements(data)
         for child in contentElements.children {
             if child.element!.name.contains("analytics") {
-                let userInfo = TractEvent.attachAnalyticsEvents(data: child)
-                self.analyticsUserInfo = adjustDictionary(from: userInfo)
+                self.analyticsUserInfo = TractEvent.buildAnalyticsEvents(data: child)
             }
         }
         
@@ -247,8 +246,8 @@ class BaseTractElement: UIView {
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             
-            let userInfo = TractEvent.attachAnalyticsEvents(data: dictionary)
-            element.analyticsUserInfo = adjustDictionary(from: userInfo)
+            element.analyticsUserInfo = TractEvent.buildAnalyticsEvents(data: dictionary)
+            //element.analyticsUserInfo = adjustDictionary(from: userInfo)
         
             self.elements!.append(element)
             
@@ -350,18 +349,6 @@ class BaseTractElement: UIView {
     }
     
     func loadParallelElementState() { }
-    
-    // MARK: - Helpers
-    
-    func adjustDictionary(from verboseDictionary: [String: String]) -> [String: String] {
-        var copy = verboseDictionary
-        if let copyKey = copy["key"], let copyValue = copy["value"] {
-            copy.removeValue(forKey: "key")
-            copy.removeValue(forKey: "value")
-            copy[copyKey] = copyValue
-        }
-        return copy
-    }
     
     // MARK: - UI
     
