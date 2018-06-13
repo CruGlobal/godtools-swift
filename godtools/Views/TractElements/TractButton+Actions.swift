@@ -27,10 +27,8 @@ extension TractButton {
             }
         } else if properties.type == .url {
             let propertiesString = properties.url
-            let openInJFPApp = checkIfJesusFilmLink(propertiesString)
             let stringWithProtocol = prependProtocolToURLStringIfNecessary(propertiesString)
             if let url = URL(string: stringWithProtocol) {
-                
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
                 userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
                 sendNotificationForAction(userInfo: userInfo)
