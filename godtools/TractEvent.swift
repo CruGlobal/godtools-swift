@@ -29,25 +29,25 @@ class TractEvent: BaseTractElement {
         
         // MARK: - This parses out system info and action string !!!
         for node in data.children {
-            if xmlManager.parser.nodeIsEvent(node: node) {
-                guard let nodeElement = node.element else { continue }
-                nodeMayHaveAttributes = !nodeElement.allAttributes.isEmpty
-                
-                if nodeMayHaveAttributes {
-                    for (_, dictionary) in (nodeElement.allAttributes.enumerated()) {
-                        analyticsEvents[dictionary.key] = dictionary.value.text
-                    }
+            
+            if !xmlManager.parser.nodeIsEvent(node: node) { continue }
+            guard let nodeElement = node.element else { continue }
+            nodeMayHaveAttributes = !nodeElement.allAttributes.isEmpty
+            
+            if nodeMayHaveAttributes {
+                for (_, dictionary) in (nodeElement.allAttributes.enumerated()) {
+                    analyticsEvents[dictionary.key] = dictionary.value.text
                 }
+            }
+            
+            // MARK: - This parses out analytic key and value !!!
+            for child in node.children {
+                guard let childElement = child.element else { continue }
+                childrenMayHaveAttributes = !childElement.allAttributes.isEmpty
                 
-                // MARK: - This parses out analytic key and value !!!
-                for child in node.children {
-                    guard let childElement = child.element else { continue }
-                    childrenMayHaveAttributes = !childElement.allAttributes.isEmpty
-                    
-                    if childrenMayHaveAttributes {
-                        for (_, dictionary) in (childElement.allAttributes.enumerated()) {
-                            analyticsEvents[dictionary.key] = dictionary.value.text
-                        }
+                if childrenMayHaveAttributes {
+                    for (_, dictionary) in (childElement.allAttributes.enumerated()) {
+                        analyticsEvents[dictionary.key] = dictionary.value.text
                     }
                 }
             }
