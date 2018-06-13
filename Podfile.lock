@@ -64,7 +64,7 @@ DEPENDENCIES:
   - TheKeyOAuth2 (from `https://github.com/CruGlobal/TheKeyOAuth2.git`, tag `0.6.9`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - AdobeMobileSDK
     - Alamofire
     - BrightFutures
@@ -122,4 +122,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: bf5a5fee3edc2ee3e202a61ef15d70cce91170b9
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3
