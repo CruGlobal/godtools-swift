@@ -24,3 +24,8 @@ target 'godtools' do
   pod 'TheKeyOAuth2', { :git => 'https://github.com/CruGlobal/TheKeyOAuth2.git', :tag => '0.6.9' }
   
 end
+
+target 'godtoolsTests' do
+    pod 'SWXMLHash', '~> 4.1'
+
+end
