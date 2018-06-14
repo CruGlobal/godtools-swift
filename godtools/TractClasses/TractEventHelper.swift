@@ -12,12 +12,11 @@ import SWXMLHash
 class TractEventHelper {
     static func buildAnalyticsEvents(data: XMLIndexer) -> [String: String] {
         var analyticsEvents: [String: String] = [:]
-        let xmlManager = XMLManager()
         
         // MARK: - This parses out system info and action string !!!
         for node in data.children {
             
-            if !xmlManager.parser.nodeIsEvent(node: node) { continue }
+//            if !xmlManager.parser.nodeIsEvent(node: node) { continue }
             guard let nodeElement = node.element else { continue }
             let nodeHasAttributes = !nodeElement.allAttributes.isEmpty
             
@@ -53,4 +52,5 @@ class TractEventHelper {
         }
         return copy
     }
+    
 }
