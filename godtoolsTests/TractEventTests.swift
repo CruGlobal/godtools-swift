@@ -13,36 +13,51 @@ class TractEventTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        guard let testXMLPath = Bundle(for: self.classForCoder).path(forResource: "analytics-test", ofType: "xml") else { XCTFail(); return }
+    func testOneEventOneAttribute() {
+        guard let analyticsElement = fetchAnalyticsElementFromFile(filename: "analytics-test1", filetype: "xml") else { XCTFail(); return }
+        
+        let dict = TractEventHelper.buildAnalyticsEvents(data: XMLIndexer(analyticsElement))
+        
+        XCTAssertEqual("adobe", dict["system"])
+        XCTAssertEqual("foo", dict["action"])
+        XCTAssertEqual("visible", dict["trigger"])
+        XCTAssertEqual("5", dict["delay"])
+        XCTAssertEqual("baz", dict["bar"])
+    }
+    
+    func testTwoEventswWithSameAttribute() {
+        guard let analyticsElement = fetchAnalyticsElementFromFile(filename: "analytics-test2", filetype: "xml") else { XCTFail(); return }
+        
+        let dict = TractEventHelper.buildAnalyticsEvents(data: XMLIndexer(analyticsElement))
+        
+        //TODO: problem here is that if there are multiple events triggered together they aren't differentiated in the dictionary
+        
+        XCTAssertEqual("adobe", dict["system"])
+        XCTAssertEqual("foo", dict["action"])
+        XCTAssertEqual("visible", dict["trigger"])
+        XCTAssertEqual("5", dict["delay"])
+        XCTAssertEqual("baz", dict["bar"])
+    }
+    
+    private func fetchAnalyticsElementFromFile(filename: String, filetype: String) -> XMLElement? {
+        guard let testXMLPath = Bundle(for: self.classForCoder).path(forResource: filename, ofType: filetype) else { XCTFail(); return nil}
         
         do {
             let testXML = try String(contentsOfFile: testXMLPath, encoding: String.Encoding.utf8)
             
-            let parsedXML = SWXMLHash.parse(testXML)
-            
-            let dict = TractEventHelper.buildAnalyticsEvents(data: parsedXML)
-            
-            debugPrint(dict)
-            
+            // unwrap the analytics element the "root element".
+            guard let rootElement = SWXMLHash.parse(testXML).element else { XCTFail(); return nil}
+            guard let analyticsElement = rootElement.children.first as? XMLElement else { XCTFail(); return nil }
+            return analyticsElement
         } catch {
             XCTFail(error.localizedDescription)
+            return nil
         }
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
