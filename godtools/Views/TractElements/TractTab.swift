@@ -14,6 +14,10 @@ class TractTab: BaseTractElement {
     
     static let xMarginConstant: CGFloat = 0.0
     static let yMarginConstant: CGFloat = 8.0
+    
+    // MARK: - Object properties
+    
+    var analyticsTabDictionary: [String: String] = [:]
         
     // MARK: - Setup
     

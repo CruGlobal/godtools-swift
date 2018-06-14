@@ -59,6 +59,10 @@ class BaseTractElement: UIView {
         return 0.0
     }
     
+    // MARK: Analytics properties
+    
+    var analyticsUserInfo: [String: String] = [:]
+    
     // MARK: Main properties
     
     private weak var _mainView: TractPage?
@@ -187,6 +191,12 @@ class BaseTractElement: UIView {
         self.elementFrame.y = yPosition
         
         let contentElements = self.xmlManager.getContentElements(data)
+        for child in contentElements.children {
+            guard let childElement = child.element else { continue }
+            if childElement.name.contains("analytics") {
+                self.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: child)
+            }
+        }
         
         loadElementProperties(contentElements.properties)
         loadFrameProperties()
@@ -229,12 +239,16 @@ class BaseTractElement: UIView {
         var maxYPosition: CGFloat = 0.0
         var elementNumber: Int = 0
         
+        
         if self.elements == nil {
             self.elements = [BaseTractElement]()
         }
         
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
+            
+            element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+        
             self.elements!.append(element)
             
             if element.isKind(of: TractCallToAction.self) {
@@ -273,6 +287,8 @@ class BaseTractElement: UIView {
     func loadStyles() { }
     
     func loadFrameProperties() { }
+    
+    func attachAnalyticsData(data: XMLIndexer) -> [String: String] { return [:] }
     
     func buildFrame() {
         self.frame = getFrame()

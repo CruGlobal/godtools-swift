@@ -36,6 +36,7 @@ class XMLParseManager: NSObject {
     static let nodeEvent: String = "event"
     static let nodeEvents: String = "events"
     static let nodeAttribute: String = "attribute"
+    static let nodeAnalyticsAttribute: String = "analytics:attribute"
     
     func getNodeClass(_ data: XMLIndexer) -> BaseTractElement.Type {
         let xmlManager = XMLManager()
@@ -89,6 +90,8 @@ class XMLParseManager: NSObject {
         case XMLParseManager.nodeEvents:
             return TractEvent.self
         case XMLParseManager.nodeAttribute:
+            return TractEvent.self
+        case XMLParseManager.nodeAnalyticsAttribute:
             return TractEvent.self
         default:
             
@@ -185,7 +188,13 @@ class XMLParseManager: NSObject {
     }
     
     func nodeIsEvent(node: XMLIndexer) -> Bool {
-        return nodeIsOfKind(node: node, kind: XMLParseManager.nodeEvent)
+        guard let name = node.element?.name else { return false }
+        switch name {
+        case "analytics:attribute":
+            return true
+        default:
+            return nodeIsOfKind(node: node, kind: XMLParseManager.nodeEvent)
+        }
     }
     
     func getTextContentFromElement(_ node: XMLIndexer) -> XMLElement? {
