@@ -50,9 +50,4 @@ extension TractButton {
         
         return "http://\(original)"
     }
-    
-    private func checkIfJesusFilmLink(_ original: String) -> Bool {
-        return original.contains("jesusfilm")
-    }
-    
 }
