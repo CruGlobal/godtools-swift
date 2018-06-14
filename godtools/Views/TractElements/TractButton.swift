@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Crashlytics
 
 class TractButton: BaseTractElement {
     
@@ -19,7 +20,6 @@ class TractButton: BaseTractElement {
     // MARK: - Object properties
     
     var button: GTButton = GTButton()
-    var analyticsButtonDictionary: [String: String] = [:]
     
     // MARK: - Setup
     
@@ -56,29 +56,31 @@ class TractButton: BaseTractElement {
     }
     
     override func render() -> UIView {
-        if self.elements?.count == 1 && (self.elements?.first?.isKind(of: TractTextContent.self))! {
-            
-            guard let element = self.elements?.first as? TractTextContent else { return self }
-            let label = element.label
-            
-            self.button.setTitle(label.text, for: .normal)
-            self.button.titleLabel?.font = label.font
-            
-            let textColorProperty = buttonTextColor(localColor: element.textProperties().localTextColor)
-            
-            self.button.setTitleColor(textColorProperty, for: .normal)
-            self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
-            
-            self.button.titleLabel?.lineBreakMode = .byWordWrapping
-            self.button.titleLabel?.textAlignment = .center
-        } else {
-            for element in self.elements! {
+        guard let elements = self.elements else { return self }
+        
+        for element in elements {
+            if let textElement = element as? TractTextContent {
+                let label = textElement.label
+                
+                self.button.setTitle(label.text, for: .normal)
+                self.button.titleLabel?.font = label.font
+                
+                let textColorProperty = buttonTextColor(localColor: textElement.textProperties().localTextColor)
+                debugPrint(textColorProperty)
+                
+                self.button.setTitleColor(textColorProperty, for: .normal)
+                self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)
+                
+                self.button.titleLabel?.lineBreakMode = .byWordWrapping
+                self.button.titleLabel?.textAlignment = .center
+            } else {
                 self.addSubview(element.render())
-            } 
+            }
+            
         }
+        
         TractBindings.addBindings(self)
         return self
-        
     }
     
     func buttonTextColor(localColor: UIColor?) -> UIColor {
@@ -97,7 +99,6 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        properties.analyticsButtonUserInfo = self.analyticsUserInfo
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)
