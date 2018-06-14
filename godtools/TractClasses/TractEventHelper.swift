@@ -14,25 +14,25 @@ class TractEventHelper {
         var analyticsEvents: [String: String] = [:]
         
         // MARK: - This parses out system info and action string !!!
-        for node in data.children {
+        for event in data.children {
             
 //            if !xmlManager.parser.nodeIsEvent(node: node) { continue }
-            guard let nodeElement = node.element else { continue }
-            let nodeHasAttributes = !nodeElement.allAttributes.isEmpty
+            guard let eventElement = event.element else { continue }
+            let nodeHasAttributes = !eventElement.allAttributes.isEmpty
             
             if nodeHasAttributes {
-                for (_, dictionary) in (nodeElement.allAttributes.enumerated()) {
+                for (_, dictionary) in (eventElement.allAttributes.enumerated()) {
                     analyticsEvents[dictionary.key] = dictionary.value.text
                 }
             }
             
             // MARK: - This parses out analytic key and value !!!
-            for child in node.children {
-                guard let childElement = child.element else { continue }
-                let childrenHasAttributes = !childElement.allAttributes.isEmpty
+            for attribute in event.children {
+                guard let attributeElement = attribute.element else { continue }
+                let childrenHasAttributes = !attributeElement.allAttributes.isEmpty
                 
                 if childrenHasAttributes {
-                    for (_, dictionary) in (childElement.allAttributes.enumerated()) {
+                    for (_, dictionary) in (attributeElement.allAttributes.enumerated()) {
                         analyticsEvents[dictionary.key] = dictionary.value.text
                     }
                 }
