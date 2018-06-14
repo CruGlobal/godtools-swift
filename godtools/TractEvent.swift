@@ -24,17 +24,14 @@ class TractEvent: BaseTractElement {
         var analyticsEvents: [String: String] = [:]
         let xmlManager = XMLManager()
         
-        var nodeMayHaveAttributes = false
-        var childrenMayHaveAttributes = false
-        
         // MARK: - This parses out system info and action string !!!
         for node in data.children {
             
             if !xmlManager.parser.nodeIsEvent(node: node) { continue }
             guard let nodeElement = node.element else { continue }
-            nodeMayHaveAttributes = !nodeElement.allAttributes.isEmpty
+            let nodeHasAttributes = !nodeElement.allAttributes.isEmpty
             
-            if nodeMayHaveAttributes {
+            if nodeHasAttributes {
                 for (_, dictionary) in (nodeElement.allAttributes.enumerated()) {
                     analyticsEvents[dictionary.key] = dictionary.value.text
                 }
@@ -43,9 +40,9 @@ class TractEvent: BaseTractElement {
             // MARK: - This parses out analytic key and value !!!
             for child in node.children {
                 guard let childElement = child.element else { continue }
-                childrenMayHaveAttributes = !childElement.allAttributes.isEmpty
+                let childrenHasAttributes = !childElement.allAttributes.isEmpty
                 
-                if childrenMayHaveAttributes {
+                if childrenHasAttributes {
                     for (_, dictionary) in (childElement.allAttributes.enumerated()) {
                         analyticsEvents[dictionary.key] = dictionary.value.text
                     }
