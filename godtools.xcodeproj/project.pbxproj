@@ -159,7 +159,6 @@
 		4FC97EA920D2B1BD00084A33 /* TractEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EA820D2B1BD00084A33 /* TractEventTests.swift */; };
 		4FC97EAB20D2B27B00084A33 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EAA20D2B27B00084A33 /* Info.plist */; };
 		4FC97EAD20D2B2BB00084A33 /* analytics-test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EAC20D2B2BB00084A33 /* analytics-test.xml */; };
-		4FC97EAE20D2B3E900084A33 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
 		4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EB320D2B71400084A33 /* TractEventHelper.swift */; };
 		4FC97EB520D2B71400084A33 /* TractEventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EB320D2B71400084A33 /* TractEventHelper.swift */; };
 		4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */; };
@@ -1375,7 +1374,6 @@
 				684328ED1EB7CF66005E9131 /* Sources */,
 				684328EE1EB7CF66005E9131 /* Frameworks */,
 				684328EF1EB7CF66005E9131 /* Resources */,
-				EFA282A79BCB7AE9FDB5FF9D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1658,24 +1656,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EFA282A79BCB7AE9FDB5FF9D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1873,7 +1853,6 @@
 			files = (
 				4FC97EB520D2B71400084A33 /* TractEventHelper.swift in Sources */,
 				4FC97EA920D2B1BD00084A33 /* TractEventTests.swift in Sources */,
-				4FC97EAE20D2B3E900084A33 /* TractEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
