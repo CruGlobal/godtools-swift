@@ -18,7 +18,7 @@ extension TractTabs {
             
             for node in item.children {
                 
-                let userInfo = TractEvent.buildAnalyticsEvents(data: node)
+                let userInfo = TractEventHelper.buildAnalyticsEvents(data: node)
                 self.analyticsTabsDictionary = self.analyticsTabsDictionary.merging(userInfo) { (_, new) in new }
                 
                 if self.xmlManager.parser.nodeIsLabel(node: node) {

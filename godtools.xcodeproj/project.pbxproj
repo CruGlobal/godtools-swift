@@ -160,6 +160,8 @@
 		4FC97EAB20D2B27B00084A33 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EAA20D2B27B00084A33 /* Info.plist */; };
 		4FC97EAD20D2B2BB00084A33 /* analytics-test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EAC20D2B2BB00084A33 /* analytics-test.xml */; };
 		4FC97EAE20D2B3E900084A33 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
+		4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EB320D2B71400084A33 /* TractEventHelper.swift */; };
+		4FC97EB520D2B71400084A33 /* TractEventHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EB320D2B71400084A33 /* TractEventHelper.swift */; };
 		4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */; };
 		4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8021F042CAD00A70A0D /* FollowUp.swift */; };
 		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
@@ -443,6 +445,7 @@
 		4FC97EA820D2B1BD00084A33 /* TractEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventTests.swift; sourceTree = "<group>"; };
 		4FC97EAA20D2B27B00084A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FC97EAC20D2B2BB00084A33 /* analytics-test.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "analytics-test.xml"; sourceTree = "<group>"; };
+		4FC97EB320D2B71400084A33 /* TractEventHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TractEventHelper.swift; path = TractClasses/TractEventHelper.swift; sourceTree = "<group>"; };
 		4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpsManager.swift; path = Managers/FollowUps/FollowUpsManager.swift; sourceTree = "<group>"; };
 		4FD8F8021F042CAD00A70A0D /* FollowUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUp.swift; path = Models/FollowUp.swift; sourceTree = "<group>"; };
 		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
@@ -1167,6 +1170,7 @@
 				ECBE2E6A1EF1053000A13849 /* TractProperties.swift */,
 				ECC194B51EEAF15500A56332 /* ManifestProperties.swift */,
 				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
+				4FC97EB320D2B71400084A33 /* TractEventHelper.swift */,
 			);
 			name = TractClasses;
 			sourceTree = "<group>";
@@ -1695,6 +1699,7 @@
 				4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */,
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
+				4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */,
 				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4F40C8B11F0414D600CB3864 /* FollowUpResource.swift in Sources */,
@@ -1866,6 +1871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC97EB520D2B71400084A33 /* TractEventHelper.swift in Sources */,
 				4FC97EA920D2B1BD00084A33 /* TractEventTests.swift in Sources */,
 				4FC97EAE20D2B3E900084A33 /* TractEvent.swift in Sources */,
 			);
