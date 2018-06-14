@@ -7,9 +7,10 @@
 //
 
 import UIKit
-import SWXMLHash
 
 class TractEvent: BaseTractElement {
+    
+    // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
         return TractEventProperties.self
@@ -19,7 +20,6 @@ class TractEvent: BaseTractElement {
         super.setupView(properties: properties)
         TractBindings.addBindings(self)
     }
-    
     
     // MARK: - Bindings
     
