@@ -1,5 +1,5 @@
 <analytics:events xmlns:analytics="https://mobile-content-api.cru.org/xmlns/analytics">
     <analytics:event system="adobe" action="foo" trigger="visible" delay="5">
-        <attribute key="bar" value="baz"/>
+        <analytics:attribute key="bar" value="baz"/>
     </analytics:event>
 </analytics:events>

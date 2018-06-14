@@ -22,14 +22,17 @@ class TractEventTests: XCTestCase {
     }
     
     func testExample() {
-        guard let testXMLPath = Bundle(for: self.classForCoder).path(forResource: "analytics-test", ofType: "xml") else { XCTFail() }
+        guard let testXMLPath = Bundle(for: self.classForCoder).path(forResource: "analytics-test", ofType: "xml") else { XCTFail(); return }
         
         do {
-        let testXML = try String(contentsOfFile: testXMLPath, encoding: String.Encoding.utf8)
-
-        let parsedXML = SWXMLHash.parse(testXML)
-        
-        let dict = TractEvent.buildAnalyticsEvents(data: parsedXML)
+            let testXML = try String(contentsOfFile: testXMLPath, encoding: String.Encoding.utf8)
+            
+            let parsedXML = SWXMLHash.parse(testXML)
+            
+            let dict = TractEventHelper.buildAnalyticsEvents(data: parsedXML)
+            
+            debugPrint(dict)
+            
         } catch {
             XCTFail(error.localizedDescription)
         }
