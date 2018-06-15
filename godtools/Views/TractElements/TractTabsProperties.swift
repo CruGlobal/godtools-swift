@@ -16,6 +16,6 @@ class TractTabsProperties: TractProperties {
     
     // MARK: - Analytics Properties
     
-    var analyticsTabsUserInfo: [String: String] = [:]
+    var analyticsTabsUserInfo: [[String: String]] = [[:]]
 
 }

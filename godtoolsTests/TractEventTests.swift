@@ -24,11 +24,11 @@ class TractEventTests: XCTestCase {
         
         let dict = TractEventHelper.buildAnalyticsEvents(data: XMLIndexer(analyticsElement))
         
-        XCTAssertEqual("adobe", dict["system"])
-        XCTAssertEqual("foo", dict["action"])
-        XCTAssertEqual("visible", dict["trigger"])
-        XCTAssertEqual("5", dict["delay"])
-        XCTAssertEqual("baz", dict["bar"])
+        XCTAssertEqual("adobe", dict[0]["system"])
+        XCTAssertEqual("foo", dict[0]["action"])
+        XCTAssertEqual("visible", dict[0]["trigger"])
+        XCTAssertEqual("5", dict[0]["delay"])
+        XCTAssertEqual("baz", dict[0]["bar"])
     }
     
     func testTwoEventswWithSameAttribute() {
@@ -38,11 +38,20 @@ class TractEventTests: XCTestCase {
         
         //TODO: problem here is that if there are multiple events triggered together they aren't differentiated in the dictionary
         
-        XCTAssertEqual("adobe", dict["system"])
-        XCTAssertEqual("foo", dict["action"])
-        XCTAssertEqual("visible", dict["trigger"])
-        XCTAssertEqual("5", dict["delay"])
-        XCTAssertEqual("baz", dict["bar"])
+        XCTAssertEqual("adobe", dict[0]["system"])
+        XCTAssertEqual("foo", dict[0]["action"])
+        XCTAssertEqual("visible", dict[0]["trigger"])
+        XCTAssertEqual("5", dict[0]["delay"])
+        XCTAssertEqual("baz", dict[0]["bar"])
+        
+        XCTAssertEqual("adobe google", dict[1]["system"])
+        XCTAssertEqual("foo2", dict[1]["action"])
+        XCTAssertEqual("hidden", dict[1]["trigger"])
+        XCTAssertEqual("45", dict[1]["delay"])
+        XCTAssertEqual("quux", dict[1]["bar"])
+        XCTAssertEqual("5", dict[1]["cru.emaillist"])
+        
+        
     }
     
     private func fetchAnalyticsElementFromFile(filename: String, filetype: String) -> XMLElement? {

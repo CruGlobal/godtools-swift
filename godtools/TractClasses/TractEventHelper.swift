@@ -10,15 +10,16 @@ import Foundation
 import SWXMLHash
 
 class TractEventHelper {
-    static func buildAnalyticsEvents(data: XMLIndexer) -> [String: String] {
-        var analyticsEvents: [String: String] = [:]
+    static func buildAnalyticsEvents(data: XMLIndexer) -> [[String: String]] {
+        
+        var analyticsArray = [[String: String]]()
         
         // MARK: - This parses out system info and action string !!!
         for event in data.children {
-            
+            var analyticsEvents: [String: String] = [:]
 //            if !xmlManager.parser.nodeIsEvent(node: node) { continue }
             guard let eventElement = event.element else { continue }
-            let nodeHasAttributes = !eventElement.allAttributes.isEmpty
+            let nodeHasAttributes = (eventElement.allAttributes.count > 0)
             
             if nodeHasAttributes {
                 for (_, dictionary) in (eventElement.allAttributes.enumerated()) {
@@ -26,21 +27,24 @@ class TractEventHelper {
                 }
             }
             
-            // MARK: - This parses out analytic key and value !!!
+            // MARK: - This parses out attribute key and value !!!
             for attribute in event.children {
                 guard let attributeElement = attribute.element else { continue }
-                let childrenHasAttributes = !attributeElement.allAttributes.isEmpty
+                let childrenHasAttributes = (attributeElement.allAttributes.count > 0)
                 
                 if childrenHasAttributes {
-                    for (_, dictionary) in (attributeElement.allAttributes.enumerated()) {
-                        analyticsEvents[dictionary.key] = dictionary.value.text
+                    var attributeStrings = [String]()
+                    for attribute in attributeElement.allAttributes {
+                        attributeStrings.append(attribute.value.text)
                     }
+                    guard attributeStrings.count == 2 else { continue }
+                    analyticsEvents[attributeStrings[0]] = attributeStrings[1]
                 }
             }
+            analyticsArray.append(analyticsEvents)
         }
         
-        let adjustedAnalyticsEvents = adjustVerboseDictionary(from: analyticsEvents)
-        return adjustedAnalyticsEvents
+        return analyticsArray
     }
     
     private static func adjustVerboseDictionary(from dictionary: [String: String]) -> [String: String] {

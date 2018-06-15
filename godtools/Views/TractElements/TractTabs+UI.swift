@@ -13,7 +13,7 @@ extension TractTabs {
     
     func setupSegmentedControl() {
         let properties = tabsProperties()
-        properties.analyticsTabsUserInfo = self.analyticsTabsDictionary
+        properties.analyticsTabsUserInfo = self.analyticsTabsEvents
         
         let width = self.elementFrame.finalWidth()
         let height: CGFloat = 28.0
@@ -45,10 +45,16 @@ extension TractTabs {
         self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
         
         if self.segmentedControl.selectedSegmentIndex == 1 {
-            NotificationCenter.default.post(name: .actionTrackNotification,
-                                            object: nil,
-                                            userInfo: properties.analyticsTabsUserInfo)
+            for analyticEvent in properties.analyticsTabsUserInfo {
+                sendAnalyticsEvents(userInfo: analyticEvent)
+            }
         }
+    }
+    
+    func sendAnalyticsEvents(userInfo: [String: Any]) {
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
     }
     
 }

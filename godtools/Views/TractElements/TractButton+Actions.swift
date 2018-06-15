@@ -21,8 +21,9 @@ extension TractButton {
                 if sendMessageToElement(listener: event) == .failure {
                     break
                 }
-                
-                sendNotificationForAction(userInfo: properties.analyticsButtonUserInfo)
+                for analyticEvent in properties.analyticsButtonUserInfo {
+                    sendNotificationForAction(userInfo: analyticEvent)
+                }
             }
         } else if properties.type == .url {
             let propertiesString = properties.url
