@@ -247,7 +247,13 @@ class BaseTractElement: UIView {
         for dictionary in data {
             let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             
-            element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+            for child in dictionary.children {
+                guard let childElement = child.element else { continue }
+                if childElement.name.contains("analytics") {
+                    element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+                }
+            }
+            
         
             self.elements!.append(element)
             
