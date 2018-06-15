@@ -13,6 +13,7 @@ class TractEventHelper {
     static func buildAnalyticsEvents(data: XMLIndexer) -> [[String: String]] {
         
         var analyticsArray = [[String: String]]()
+        var tractAnalyticEvents = [TractAnalyticEvent]()
         
         // MARK: - This parses out system info and action string !!!
         for event in data.children {
@@ -42,6 +43,8 @@ class TractEventHelper {
                 }
             }
             guard analyticsEvents.count > 0 else { continue }
+            let tractEvent = TractAnalyticEvent(dictionary: analyticsEvents)
+            tractAnalyticEvents.append(tractEvent)
             analyticsArray.append(analyticsEvents)
         }
         

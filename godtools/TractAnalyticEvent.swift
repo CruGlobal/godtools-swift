@@ -70,10 +70,6 @@ class TractAnalyticEvent {
         eventDictionary[TractAnalyticEvent.kTrigger] = event.trigger
         eventDictionary[TractAnalyticEvent.kDelay] = event.delay
         
-//        for attribute in event.attributes {
-//            eventDictionary = eventDictionary.merging(attribute, uniquingKeysWith: { (_, last) in last })
-//        }
-        
         return eventDictionary
     }
     
