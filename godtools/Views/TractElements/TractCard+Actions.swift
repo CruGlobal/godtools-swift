@@ -240,26 +240,29 @@ extension TractCard {
     // MARK - Analytics helper
     
     func processCardForAnalytics(cardLetterName: String) {
-        let properties = cardProperties()
         
         let relay = AnalyticsRelay.shared
         relay.timer.invalidate()
         relay.isTimerRunning = false
         
+        // MARK - Get the analytics as a TractAnalyticEvent.
+        
         let analyticEvents = self.analyticsUserInfo
         for analyticEvent in analyticEvents {
+            
             if analyticEvent.delay != "" {
                 let delayInt = Int(analyticEvent.delay) ?? 10
+                
                 if !relay.isTimerRunning {
                     relay.timerCounter = delayInt
                     relay.runTimer()
                     // TODO - Pick things up here!!
-                    // Get message from timer if ended??
+                    // Get message from timer if it has ended or move timer to this class??
                 }
             }
         }
        /*
-        for a in aaa {
+        for a in events {
             print("\(a.action) \(a.delay) \(a.system) \(a.trigger)")
         }
         */
