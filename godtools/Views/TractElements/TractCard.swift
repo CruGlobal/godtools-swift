@@ -67,6 +67,8 @@ class TractCard: BaseTractElement {
         }
     }
     
+    var tractCardAnalyticEvents: [TractAnalyticEvent] = []
+    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {

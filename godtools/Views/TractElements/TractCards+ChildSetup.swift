@@ -57,6 +57,14 @@ extension TractCards {
             element.cardProperties().cardNumber = cardNumber
             let letterName = cardNumber.convertToLetter()
             element.cardProperties().cardLetterName = letterName
+            
+            for child in dictionary.children {
+                guard let childElement = child.element else { continue }
+                if childElement.name.contains("analytics") {
+                    element.tractCardAnalyticEvents = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+                }
+            }
+            
             self.elements?.append(element)
             
             relay.tractCardNextLetterNames.append(letterName)

@@ -22,7 +22,7 @@ class AnalyticsRelay {
     
     var viewListener: String = ""
     var timer = Timer()
-    var timerCounter = 6
+    var timerCounter = 0
     var isTimerRunning = false
     
     func runTimer() {
@@ -52,6 +52,8 @@ class AnalyticsRelay {
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
+            
+            TractCard.callMethodInCardActionClass()
             var userInfo: [String: Any] = [:]
             
             switch tractCardName {

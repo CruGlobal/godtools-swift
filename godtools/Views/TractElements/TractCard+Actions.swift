@@ -240,14 +240,30 @@ extension TractCard {
     // MARK - Analytics helper
     
     func processCardForAnalytics(cardLetterName: String) {
+        let properties = cardProperties()
+        
         let relay = AnalyticsRelay.shared
         relay.timer.invalidate()
         relay.isTimerRunning = false
         
-        if !relay.isTimerRunning {
-            relay.timerCounter = 6
-            relay.runTimer()
+        let analyticEvents = self.analyticsUserInfo
+        for analyticEvent in analyticEvents {
+            if analyticEvent.delay != "" {
+                let delayInt = Int(analyticEvent.delay) ?? 10
+                if !relay.isTimerRunning {
+                    relay.timerCounter = delayInt
+                    relay.runTimer()
+                    // TODO - Pick things up here!!
+                    // Get message from timer if ended??
+                }
+            }
         }
+       /*
+        for a in aaa {
+            print("\(a.action) \(a.delay) \(a.system) \(a.trigger)")
+        }
+        */
+        
         
         relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
         
@@ -260,6 +276,16 @@ extension TractCard {
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,
                                         userInfo: userInfo)
+    }
+    
+    func screenActionNotification(userInfo: [String: String]) {
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+    }
+    
+    static func callMethodInCardActionClass() {
+        
     }
     
 }
