@@ -22,7 +22,8 @@ extension TractButton {
                     break
                 }
                 for analyticEvent in properties.analyticsButtonUserInfo {
-                    sendNotificationForAction(userInfo: analyticEvent)
+                    let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
+                    sendNotificationForAction(userInfo: userInfo)
                 }
             }
         } else if properties.type == .url {

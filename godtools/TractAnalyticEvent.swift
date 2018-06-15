@@ -65,10 +65,26 @@ class TractAnalyticEvent {
         
         var eventDictionary = event.attributes
         
-        eventDictionary[TractAnalyticEvent.kAction] = event.action
-        eventDictionary[TractAnalyticEvent.kSystem] = event.system
-        eventDictionary[TractAnalyticEvent.kTrigger] = event.trigger
-        eventDictionary[TractAnalyticEvent.kDelay] = event.delay
+        if (event.action != "") {
+            eventDictionary[TractAnalyticEvent.kAction] = event.action
+        } else {
+            eventDictionary.removeValue(forKey: TractAnalyticEvent.kAction)
+        }
+        if (event.system != "") {
+            eventDictionary[TractAnalyticEvent.kSystem] = event.system
+        } else {
+            eventDictionary.removeValue(forKey: TractAnalyticEvent.kSystem)
+        }
+        if (event.trigger != "") {
+            eventDictionary[TractAnalyticEvent.kTrigger] = event.trigger
+        } else {
+            eventDictionary.removeValue(forKey: TractAnalyticEvent.kTrigger)
+        }
+        if (event.delay != "") {
+            eventDictionary[TractAnalyticEvent.kDelay] = event.delay
+        } else {
+            eventDictionary.removeValue(forKey: TractAnalyticEvent.kDelay)
+        }
         
         return eventDictionary
     }

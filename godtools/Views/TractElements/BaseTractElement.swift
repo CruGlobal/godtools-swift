@@ -61,7 +61,7 @@ class BaseTractElement: UIView {
     
     // MARK: Analytics properties
     
-    var analyticsUserInfo: [[String: String]] = [[:]]
+    var analyticsUserInfo: [TractAnalyticEvent] = []
     
     // MARK: Main properties
     

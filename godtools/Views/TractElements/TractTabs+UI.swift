@@ -46,7 +46,8 @@ extension TractTabs {
         
         if self.segmentedControl.selectedSegmentIndex == 1 {
             for analyticEvent in properties.analyticsTabsUserInfo {
-                sendAnalyticsEvents(userInfo: analyticEvent)
+                let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
+                sendAnalyticsEvents(userInfo: userInfo)
             }
         }
     }

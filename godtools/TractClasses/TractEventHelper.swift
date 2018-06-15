@@ -10,7 +10,7 @@ import Foundation
 import SWXMLHash
 
 class TractEventHelper {
-    static func buildAnalyticsEvents(data: XMLIndexer) -> [[String: String]] {
+    static func buildAnalyticsEvents(data: XMLIndexer) -> [TractAnalyticEvent] {
         
         var analyticsArray = [[String: String]]()
         var tractAnalyticEvents = [TractAnalyticEvent]()
@@ -48,7 +48,7 @@ class TractEventHelper {
             analyticsArray.append(analyticsEvents)
         }
         
-        return analyticsArray
+        return tractAnalyticEvents
     }
     
     private static func adjustVerboseDictionary(from dictionary: [String: String]) -> [String: String] {
