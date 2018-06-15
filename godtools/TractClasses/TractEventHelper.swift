@@ -27,7 +27,7 @@ class TractEventHelper {
                 }
             }
             
-            // MARK: - This parses out attribute key and value !!!
+            // MARK: - This parses out attribute keys and values !!!
             for attribute in event.children {
                 guard let attributeElement = attribute.element else { continue }
                 let childrenHasAttributes = (attributeElement.allAttributes.count > 0)
@@ -41,6 +41,7 @@ class TractEventHelper {
                     analyticsEvents[attributeStrings[0]] = attributeStrings[1]
                 }
             }
+            guard analyticsEvents.count > 0 else { continue }
             analyticsArray.append(analyticsEvents)
         }
         

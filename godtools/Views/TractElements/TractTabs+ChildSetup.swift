@@ -19,9 +19,9 @@ extension TractTabs {
             for node in item.children {
                 
                 let userInfo = TractEventHelper.buildAnalyticsEvents(data: node)
-                if userInfo.count > 0 {
+                //if userInfo.count > 0 {
                     self.analyticsTabsEvents.append(contentsOf: userInfo)
-                }
+                //}
                 
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
