@@ -26,7 +26,6 @@ class AnalyticsRelay {
     var isTimerRunning = false
     
     func runTimer(dictionary: [String: String]) {
-       // timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: dictionary, repeats: true)
         isTimerRunning = true
     }
@@ -40,7 +39,6 @@ class AnalyticsRelay {
             }
             timer.invalidate()
 
-            let tractCardName = screenNamePlusCardLetterName
         } else if isTimerRunning {
             timerCounter = self.timerCounter - 1
             isTimerRunning = true
@@ -56,37 +54,10 @@ class AnalyticsRelay {
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
+            
             NotificationCenter.default.post(name: .actionTrackNotification,
                                             object: nil,
                                             userInfo: dictionary)
-
-            
-            //var userInfo /*[String: Any]*/ = dictionary
-            /*
-            switch tractCardName {
-            case "kgp-us-5a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
-            case "satisfied-6a":
-                userInfo[AdobeAnalyticsConstants.Keys.presentingHolySpiritTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.satisfiedHolySpiritPresented
-            case "honorrestored-4d":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.honorRestoredPresented
-            case "thefour-5":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.theFourGospelPresented
-            case "kgp-5a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpGospelPresented
-            case "fourlaws-6a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsGospelPresented
-            default :
-                break
-            }
-            */
-
         }
     }
 
