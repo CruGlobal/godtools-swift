@@ -25,18 +25,22 @@ class AnalyticsRelay {
     var timerCounter = 0
     var isTimerRunning = false
     
-    func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+    func runTimer(dictionary: [String: String]) {
+       // timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: dictionary, repeats: true)
         isTimerRunning = true
     }
     
     @objc func updateTimer() {
         if timerCounter < 1 && isTimerRunning {
-            timer.invalidate()
             timerCounter = 0
             isTimerRunning = false
+            if let analyticsData = timer.userInfo as? [String: String] {
+                sendToAnalyticsIfRelevant(dictionary: analyticsData)
+            }
+            timer.invalidate()
+
             let tractCardName = screenNamePlusCardLetterName
-            sendToAnalyticsIfRelevant(tractCardName: tractCardName)
         } else if isTimerRunning {
             timerCounter = self.timerCounter - 1
             isTimerRunning = true
@@ -47,15 +51,18 @@ class AnalyticsRelay {
         }
     }
     
-    func sendToAnalyticsIfRelevant(tractCardName: String) {
+    func sendToAnalyticsIfRelevant(dictionary: [String: String]) {
         if !isTimerRunning {
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
+            NotificationCenter.default.post(name: .actionTrackNotification,
+                                            object: nil,
+                                            userInfo: dictionary)
+
             
-            TractCard.callMethodInCardActionClass()
-            var userInfo: [String: Any] = [:]
-            
+            //var userInfo /*[String: Any]*/ = dictionary
+            /*
             switch tractCardName {
             case "kgp-us-5a":
                 userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
@@ -78,9 +85,8 @@ class AnalyticsRelay {
             default :
                 break
             }
-            NotificationCenter.default.post(name: .actionTrackNotification,
-                                            object: nil,
-                                            userInfo: userInfo)
+            */
+
         }
     }
 

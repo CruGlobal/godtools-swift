@@ -66,7 +66,6 @@ class TractButton: BaseTractElement {
                 self.button.titleLabel?.font = label.font
                 
                 let textColorProperty = buttonTextColor(localColor: textElement.textProperties().localTextColor)
-                debugPrint(textColorProperty)
                 
                 self.button.setTitleColor(textColorProperty, for: .normal)
                 self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)

@@ -251,25 +251,20 @@ extension TractCard {
         for analyticEvent in analyticEvents {
             
             if analyticEvent.delay != "" {
-                let delayInt = Int(analyticEvent.delay) ?? 10
+                let delayInt = Int(analyticEvent.delay) ?? -1
                 
                 if !relay.isTimerRunning {
                     relay.timerCounter = delayInt
-                    relay.runTimer()
+                    let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
+                    relay.runTimer(dictionary: userInfo)
+                    self.analyticsUserInfo.remove(at: 0)
                     // TODO - Pick things up here!!
                     // Get message from timer if it has ended or move timer to this class??
                 }
             }
         }
-       /*
-        for a in events {
-            print("\(a.action) \(a.delay) \(a.system) \(a.trigger)")
-        }
-        */
-        
         
         relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
-        
         screenViewNotification(screenName: relay.screenName + cardLetterName)
     }
     
@@ -279,16 +274,6 @@ extension TractCard {
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,
                                         userInfo: userInfo)
-    }
-    
-    func screenActionNotification(userInfo: [String: String]) {
-        NotificationCenter.default.post(name: .actionTrackNotification,
-                                        object: nil,
-                                        userInfo: userInfo)
-    }
-    
-    static func callMethodInCardActionClass() {
-        
     }
     
 }
