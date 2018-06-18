@@ -24,6 +24,8 @@ class AnalyticsRelay {
     var timer = Timer()
     var timerCounter = 0
     var isTimerRunning = false
+    var task = DispatchWorkItem { }
+    
     
     func runTimer(dictionary: [String: String]) {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: dictionary, repeats: true)
@@ -46,6 +48,17 @@ class AnalyticsRelay {
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
+        }
+    }
+    
+    func createDelayedTask(_ delayDouble: Double, with dictionary: [String: String]) {
+        if delayDouble > 0 {
+            task = DispatchWorkItem {
+                self.sendToAnalyticsIfRelevant(dictionary: dictionary)
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: task)
+        } else {
+            task.cancel()
         }
     }
     
