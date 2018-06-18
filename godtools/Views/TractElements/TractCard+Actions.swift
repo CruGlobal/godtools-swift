@@ -248,7 +248,7 @@ extension TractCard {
         
         let analyticEvents = self.analyticsUserInfo
         for analyticEvent in analyticEvents {
-            
+            print("\(analyticEvent.action) \(analyticEvent.delay)")
             if analyticEvent.delay != "" {
                 let delayDouble = Double(analyticEvent.delay) ?? 0
                 relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))

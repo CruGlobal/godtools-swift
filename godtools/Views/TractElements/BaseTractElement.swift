@@ -294,8 +294,6 @@ class BaseTractElement: UIView {
     
     func loadFrameProperties() { }
     
-    func attachAnalyticsData(data: XMLIndexer) -> [String: String] { return [:] }
-    
     func buildFrame() {
         self.frame = getFrame()
     }

@@ -20,6 +20,13 @@ extension TractCards {
             let card = TractCardProperties()
             card.load(contentElements.properties)
             
+            for child in contentElements.children {
+                guard let childElement = child.element else { continue }
+                if childElement.name.contains("analytics") {
+                    self.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: child)
+                }
+            }
+            
             if card.hidden == true {
                 hiddenCards.append(dictionary)
             } else {
@@ -57,13 +64,6 @@ extension TractCards {
             element.cardProperties().cardNumber = cardNumber
             let letterName = cardNumber.convertToLetter()
             element.cardProperties().cardLetterName = letterName
-            
-            for child in dictionary.children {
-                guard let childElement = child.element else { continue }
-                if childElement.name.contains("analytics") {
-                    element.tractCardAnalyticEvents = TractEventHelper.buildAnalyticsEvents(data: dictionary)
-                }
-            }
             
             self.elements?.append(element)
             
