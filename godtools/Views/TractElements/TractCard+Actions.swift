@@ -240,15 +240,14 @@ extension TractCard {
     // MARK - Analytics helper
     
     func processCardForAnalytics(cardLetterName: String) {
-        
+        let properties = cardProperties()
         let relay = AnalyticsRelay.shared
-        relay.createDelayedTask(0, with: [:])
+        relay.task.cancel()
         
         // MARK - Get the analytics as a TractAnalyticEvent.
         
-        let analyticEvents = self.analyticsUserInfo
+        let analyticEvents = properties.analyticEventProperties
         for analyticEvent in analyticEvents {
-            print("\(analyticEvent.action) \(analyticEvent.delay)")
             if analyticEvent.delay != "" {
                 let delayDouble = Double(analyticEvent.delay) ?? 0
                 relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))

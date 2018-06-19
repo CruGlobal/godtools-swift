@@ -67,7 +67,9 @@ class TractCard: BaseTractElement {
         }
     }
     
-    var tractCardAnalyticEvents: [TractAnalyticEvent] = []
+    var tractCardAnalyticEvents: [TractAnalyticEvent]  {
+            return self.analyticsUserInfo
+    }
     
     // MARK: - Setup
     
