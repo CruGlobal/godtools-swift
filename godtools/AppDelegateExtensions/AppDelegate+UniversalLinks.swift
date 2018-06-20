@@ -32,7 +32,16 @@ extension AppDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         
-        processForDeepLinking(from: url)
+        if let scheme = url.scheme {
+            if scheme.contains("ppoauthapp") {
+                if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
+                    self.currentAuthorizationFlow = nil
+                    return true
+                }
+            }
+        } else  {
+            processForDeepLinking(from: url)
+        }
         
         return true
     }

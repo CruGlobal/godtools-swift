@@ -11,12 +11,14 @@ import Fabric
 import Crashlytics
 import PromiseKit
 import RealmSwift
+import AppAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var flowController: BaseFlowController?
+    var currentAuthorizationFlow: OIDAuthorizationFlowSession?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         resetStateIfUITesting()

@@ -3,6 +3,7 @@ PODS:
     - AdobeMobileSDK/iOS (= 4.15.0)
   - AdobeMobileSDK/iOS (4.15.0)
   - Alamofire (4.4.0)
+  - AppAuth (0.92.0)
   - BrightFutures (5.1.0):
     - Result (~> 3.0)
   - Crashlytics (3.8.4):
@@ -50,6 +51,7 @@ PODS:
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.15)
   - Alamofire (~> 4.4)
+  - AppAuth (~> 0.92)
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
@@ -67,6 +69,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AdobeMobileSDK
     - Alamofire
+    - AppAuth
     - BrightFutures
     - Crashlytics
     - CRUConfig
@@ -102,6 +105,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AdobeMobileSDK: 7fd5a52302bcbb2ad24c6fb6ef4d1f58e0d654e3
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
@@ -120,6 +124,6 @@ SPEC CHECKSUMS:
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
   TheKeyOAuth2: e6042036a849d950a9f3daa622788e21f952cac2
 
-PODFILE CHECKSUM: bf5a5fee3edc2ee3e202a61ef15d70cce91170b9
+PODFILE CHECKSUM: 415d1deb62961987aa868a888ad13f26c4f573f6
 
 COCOAPODS: 1.5.3
