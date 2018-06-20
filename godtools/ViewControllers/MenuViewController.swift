@@ -29,13 +29,14 @@ let kIssuer: String = "GodTools";
  For client configuration instructions, see the [README](https://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
  Set to nil to use dynamic registration with this example.
  */
-let kClientID: String? = "2880599195946831054"; //Testing Client_ID
-
+let kClientID: String? = "2880599195946831054"; //Testing Client_ID 2880599195946831054
+//Real Client_ID 5337397229970887848
 /**
  The OAuth redirect URI for the client @c kClientID.
  For client configuration instructions, see the [README](https://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
  */
-let kRedirectURI: String = "ppoauthapp://https://stage.godtoolsapp.com/auth";
+let kRedirectURI: String = "ppoauthapp://https://stage.godtoolsapp.com/auth"; // Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
+// Real RedirectURI //https://godtoolsapp.com/auth
 
 /**
  NSCoding key for the authState property.

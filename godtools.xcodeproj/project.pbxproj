@@ -98,6 +98,8 @@
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
 		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
 		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
+		1E911CA620DAD9410068E62A /* LoginBannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E911CA420DAD9410068E62A /* LoginBannerTableViewCell.swift */; };
+		1E911CA720DAD9410068E62A /* LoginBannerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E911CA520DAD9410068E62A /* LoginBannerTableViewCell.xib */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
 		1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */; };
 		1EC92E9920AF5F5300FAD93B /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EC92E9720AF5F5300FAD93B /* LoadingViewController.swift */; };
@@ -341,6 +343,8 @@
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
+		1E911CA420DAD9410068E62A /* LoginBannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBannerTableViewCell.swift; sourceTree = "<group>"; };
+		1E911CA520DAD9410068E62A /* LoginBannerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginBannerTableViewCell.xib; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		1E9973CA206951BD00AFEEE4 /* AnalyticsRelay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsRelay.swift; sourceTree = "<group>"; };
 		1EC92E9720AF5F5300FAD93B /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -808,6 +812,8 @@
 		0FB73E4E1EA9063E000BA60D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1E911CA420DAD9410068E62A /* LoginBannerTableViewCell.swift */,
+				1E911CA520DAD9410068E62A /* LoginBannerTableViewCell.xib */,
 				0FB73E4F1EA9063E000BA60D /* LanguageTableViewCell.swift */,
 				0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */,
 				0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */,
@@ -1499,6 +1505,7 @@
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				4F84959F1F06E6BE0015A6BB /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
+				1E911CA720DAD9410068E62A /* LoginBannerTableViewCell.xib in Resources */,
 				4F8495A21F06E6BE0015A6BB /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
@@ -1650,6 +1657,7 @@
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
+				1E911CA620DAD9410068E62A /* LoginBannerTableViewCell.swift in Sources */,
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
