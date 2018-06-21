@@ -18,13 +18,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Want more GodTools?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wed-zY-wtd">
-                    <rect key="frame" x="24" y="15" width="301" height="17"/>
+                    <rect key="frame" x="24" y="15" width="303" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click Here to receive updates and hear how GodTools has impacted others." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbj-c2-z1c">
-                    <rect key="frame" x="24" y="36" width="301" height="31.5"/>
+                    <rect key="frame" x="24" y="36" width="303" height="31.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -42,8 +42,8 @@
                         <constraint firstAttribute="height" constant="1" id="ohy-3k-w5d"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cornerDesign" translatesAutoresizingMaskIntoConstraints="NO" id="nkp-oR-1s9">
-                    <rect key="frame" x="333" y="25" width="73" height="66"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cornerDesign" translatesAutoresizingMaskIntoConstraints="NO" id="nkp-oR-1s9">
+                    <rect key="frame" x="335" y="25" width="73" height="66"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7X-6q-8IC">
                     <rect key="frame" x="366" y="12" width="22" height="22"/>
@@ -59,7 +59,7 @@
                 <constraint firstItem="joy-OY-qxX" firstAttribute="top" secondItem="5mV-Cg-KjY" secondAttribute="bottom" constant="-2" id="1wS-vr-M5b"/>
                 <constraint firstItem="fbj-c2-z1c" firstAttribute="top" secondItem="Wed-zY-wtd" secondAttribute="bottom" constant="4" id="38T-NY-2KV"/>
                 <constraint firstItem="nkp-oR-1s9" firstAttribute="leading" secondItem="fbj-c2-z1c" secondAttribute="trailing" constant="8" id="8uC-vf-s98"/>
-                <constraint firstItem="nkp-oR-1s9" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="9qB-OZ-W7k"/>
+                <constraint firstItem="nkp-oR-1s9" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" constant="2" id="9qB-OZ-W7k"/>
                 <constraint firstItem="joy-OY-qxX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="24" id="Bq9-0y-nye"/>
                 <constraint firstItem="5mV-Cg-KjY" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="Fgc-Ev-Kps"/>
                 <constraint firstItem="joy-OY-qxX" firstAttribute="width" secondItem="5mV-Cg-KjY" secondAttribute="width" id="HFg-NI-Twc"/>

@@ -67,6 +67,9 @@ class LoginBannerView: UIView {
     
     func xibSetup() {
         view = loadViewFromNib()
+        view.layer.shadowOpacity = 0.4
+        view.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        view.layer.shadowRadius = 3.0
 
         // use bounds not frame or it'll be offset
         view.frame = bounds
