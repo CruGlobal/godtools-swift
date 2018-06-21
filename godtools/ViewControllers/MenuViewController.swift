@@ -19,36 +19,40 @@ protocol MenuViewControllerDelegate {
 
 typealias PostRegistrationCallback = (_ configuration: OIDServiceConfiguration?, _ registrationResponse: OIDRegistrationResponse?) -> Void
 
-/**
- The OIDC issuer from which the configuration will be discovered.
- */
+/*
+---- The OIDC issuer from which the configuration will be discovered.----
 let kIssuer: String = "GodTools";
 
-/**
- The OAuth client ID.
- For client configuration instructions, see the [README](https://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
+ ----The OAuth client ID.----
+ For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
  Set to nil to use dynamic registration with this example.
- */
-let kClientID: String? = "2880599195946831054"; //Testing Client_ID 2880599195946831054
-//Real Client_ID 5337397229970887848
-/**
- The OAuth redirect URI for the client @c kClientID.
- For client configuration instructions, see the [README](https://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
- */
-let kRedirectURI: String = "ppoauthapp://https://stage.godtoolsapp.com/auth"; // Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
-// Real RedirectURI //https://godtoolsapp.com/auth
+ 
+let kClientID: String? = "2880599195946831054";
+  Testing Client_ID 2880599195946831054
+  Real Client_ID 5337397229970887848
 
-/**
- NSCoding key for the authState property.
- */
+----The OAuth redirect URI for the client @c kClientID.----
+ For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
+ 
+let kRedirectURI: String = "ppoauthapp://h ttps://stage.godtoolsapp.com/auth";
+  Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
+  Real RedirectURI //https://godtoolsapp.com/auth
+
+
+ ----NSCoding key for the authState property.----
 let kAppAuthExampleAuthStateKey: String = "authState";
+  */
 
 
 class MenuViewController: BaseViewController {
     
+    fileprivate let kIssuer: String = "GodTools"
+    fileprivate let kClientID: String? = "2880599195946831054"
+    fileprivate let kRedirectURI: String = "ppoauthapp://https://stage.godtoolsapp.com/auth"
+    fileprivate let kAppAuthExampleAuthStateKey: String = "authState"
+    
     @IBOutlet weak var tableView: UITableView!
-//    let general = ["language_settings", "about", "help", "contact_us"]
-    // when login becomes available, use general below:
+
     let general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
