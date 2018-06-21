@@ -27,6 +27,7 @@ class HomeViewController: BaseViewController {
     
     let toolsManager = ToolsManager.shared
     var refreshControl = UIRefreshControl()
+   // var headerView: LoginBannerView?
     
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var normalStateView: UIView!
@@ -48,6 +49,10 @@ class HomeViewController: BaseViewController {
         if onboardingShouldDisplay() {
             self.displayOnboarding()
         }
+        
+        let myHeader = LoginBannerView()
+        myHeader.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 75)
+        tableView.tableHeaderView = myHeader
     }
     
     override func viewWillAppear(_ animated: Bool) {

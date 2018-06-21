@@ -6,41 +6,91 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="LoginBannerTableViewCell" customModule="godtools" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="109" id="KGk-i7-Jjw" customClass="LoginBannerTableViewCell" customModule="godtools" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="366" height="109"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="366" height="108.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Want more GodTools?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YH4-7J-6lZ">
-                        <rect key="frame" x="16" y="0.0" width="141" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cornerDesign" translatesAutoresizingMaskIntoConstraints="NO" id="sPT-mI-nHq">
+                        <rect key="frame" x="268" y="41" width="98" height="67.5"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Want more GodTools?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YH4-7J-6lZ">
+                        <rect key="frame" x="16" y="20" width="231.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Click Here to receive updates and hear how GodTools has impacted others." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnv-12-xXV">
-                        <rect key="frame" x="16" y="18" width="247" height="41"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click Here to receive updates and hear how GodTools has impacted others." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnv-12-xXV">
+                        <rect key="frame" x="16" y="42.5" width="231.5" height="26.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPT-mI-nHq">
-                        <rect key="frame" x="237" y="0.0" width="83" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtS-6S-p1K">
+                        <rect key="frame" x="328" y="11" width="22" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="P5E-Xf-LHQ"/>
+                            <constraint firstAttribute="width" constant="22" id="svC-wm-gdR"/>
+                        </constraints>
+                        <state key="normal" image="roundX"/>
+                        <connections>
+                            <action selector="cancelButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BEx-vV-ebu"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeL-t2-Pdd">
+                        <rect key="frame" x="16" y="54" width="54" height="1"/>
+                        <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="rEU-22-FQj"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2l-8W-eDm">
+                        <rect key="frame" x="16" y="42.5" width="54" height="13.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <color key="textColor" red="0.29019607843137252" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="YH4-7J-6lZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="1r7-rC-FPJ"/>
+                    <constraint firstItem="xeL-t2-Pdd" firstAttribute="top" secondItem="b2l-8W-eDm" secondAttribute="bottom" constant="-2" id="5Ts-c9-6oT"/>
+                    <constraint firstItem="sPT-mI-nHq" firstAttribute="top" secondItem="dtS-6S-p1K" secondAttribute="bottom" constant="8" id="9Lh-H3-Qi7"/>
+                    <constraint firstItem="sPT-mI-nHq" firstAttribute="leading" secondItem="YH4-7J-6lZ" secondAttribute="trailing" constant="20" id="AK2-9d-c4s"/>
+                    <constraint firstAttribute="trailing" secondItem="sPT-mI-nHq" secondAttribute="trailing" id="Gfe-2f-4Av"/>
+                    <constraint firstAttribute="bottom" secondItem="sPT-mI-nHq" secondAttribute="bottom" id="J1C-Jf-4Mx"/>
+                    <constraint firstItem="dtS-6S-p1K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="OWs-YH-9pd"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="xnv-12-xXV" secondAttribute="bottom" constant="4" id="Rry-Iq-Osm"/>
+                    <constraint firstItem="YH4-7J-6lZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Tij-cN-yhV"/>
+                    <constraint firstItem="sPT-mI-nHq" firstAttribute="leading" secondItem="xnv-12-xXV" secondAttribute="trailing" constant="20" id="ZEr-7v-cOf"/>
+                    <constraint firstItem="xnv-12-xXV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="iL7-4b-YPg"/>
+                    <constraint firstItem="b2l-8W-eDm" firstAttribute="top" secondItem="xnv-12-xXV" secondAttribute="top" id="pUd-l8-1b6"/>
+                    <constraint firstItem="xeL-t2-Pdd" firstAttribute="leading" secondItem="b2l-8W-eDm" secondAttribute="leading" id="qTd-XL-E5e"/>
+                    <constraint firstItem="b2l-8W-eDm" firstAttribute="leading" secondItem="xnv-12-xXV" secondAttribute="leading" id="rf0-Dw-orb"/>
+                    <constraint firstItem="xeL-t2-Pdd" firstAttribute="width" secondItem="b2l-8W-eDm" secondAttribute="width" id="ts1-c2-1XF"/>
+                    <constraint firstItem="dtS-6S-p1K" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="u3S-wR-Pue"/>
+                    <constraint firstItem="xnv-12-xXV" firstAttribute="top" secondItem="YH4-7J-6lZ" secondAttribute="bottom" constant="8" id="u86-G1-KGW"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <point key="canvasLocation" x="34" y="53"/>
+            <connections>
+                <outlet property="actionLabel" destination="b2l-8W-eDm" id="eaT-7C-23G"/>
+                <outlet property="topicDescriptionLabel" destination="xnv-12-xXV" id="Yh7-sM-aQG"/>
+                <outlet property="topicLabel" destination="YH4-7J-6lZ" id="dnZ-EX-IrR"/>
+            </connections>
+            <point key="canvasLocation" x="57" y="54.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="cornerDesign" width="68" height="60"/>
+        <image name="roundX" width="22" height="22"/>
+    </resources>
 </document>
