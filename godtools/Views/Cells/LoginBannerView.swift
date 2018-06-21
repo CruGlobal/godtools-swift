@@ -12,9 +12,9 @@ class LoginBannerView: UIView {
     
     var view: UIView!
     
-//    @IBOutlet weak var topicLabel: UILabel!
-//    @IBOutlet weak var topicDescriptionLabel: UILabel!
-//    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var topicLabel: UILabel!
+    @IBOutlet weak var topicDescriptionLabel: UILabel!
+    @IBOutlet weak var actionLabel: UILabel!
 
     
     override init(frame: CGRect) {
@@ -29,11 +29,6 @@ class LoginBannerView: UIView {
     
     // MARK: - Lifecycle
     
-//    static func create() -> LoginBannerView? {
-//        let nib = UINib(nibName: "LoginBannerView", bundle: Bundle.main)
-//        return nib.instantiate(withOwner: self, options: nil).first as? LoginBannerView
-//    }
-    
     func loadViewFromNib() -> UIView {
         let bundle = Bundle(for: type(of:self))
         let nib = UINib(nibName: String(describing: LoginBannerView.self), bundle: bundle)
@@ -42,27 +37,24 @@ class LoginBannerView: UIView {
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
         return view
     }
-
-//    private func commonInit() {
-//        setupStyle()
-//    }
     
-//    func setupStyle() {
-//        topicLabel.text = "Want more GodTools?"
-//        topicDescriptionLabel.text = "Click Here to receive updates and hear how GodTools has impacted others."
-//        actionLabel.text = "Click Here"
-//        actionLabel.isUserInteractionEnabled = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(actionTapped))
-//        actionLabel.addGestureRecognizer(tap)
-//
-//    }
+    func setupStyle() {
+        topicLabel.text = "Want more GodTools?"
+        topicDescriptionLabel.text = "Click Here to receive updates and hear how GodTools has impacted others."
+        actionLabel.text = "Click Here"
+        actionLabel.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(actionTapped))
+        actionLabel.addGestureRecognizer(tap)
+
+    }
     
     @objc func actionTapped() {
+        print("Testing actionTapped click here!")
         
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        
+        print("Testing cancelTapped X button")
     }
     
     func xibSetup() {
@@ -76,6 +68,8 @@ class LoginBannerView: UIView {
         
         // Make the view stretch with containing view
         view.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        
+        setupStyle()
         
         // Adding custom subview on top of our view (over any custom drawing > see note below)
         addSubview(view)
