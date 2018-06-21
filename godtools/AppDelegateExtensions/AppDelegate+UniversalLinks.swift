@@ -31,7 +31,7 @@ extension AppDelegate {
     // MARK: - This is for use when coming from JesusFilm App (or other Apps) that have our URL scheme registered in their whitelist.
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        
+        print("\(url)")
 //        if let scheme = url.scheme {
 //            print("url.scheme \(scheme)")
            // if scheme.contains("ppoauthapp") {

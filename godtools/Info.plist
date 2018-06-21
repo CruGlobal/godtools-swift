@@ -35,7 +35,7 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>godtoolsapp.com</string>
+				<string>com.godtoolsapp</string>
 			</array>
 		</dict>
 	</array>

@@ -27,7 +27,7 @@ class HomeViewController: BaseViewController {
     
     let toolsManager = ToolsManager.shared
     var refreshControl = UIRefreshControl()
-   // var headerView: LoginBannerView?
+   
     
     @IBOutlet weak var emptyStateView: UIView!
     @IBOutlet weak var normalStateView: UIView!
@@ -50,9 +50,10 @@ class HomeViewController: BaseViewController {
             self.displayOnboarding()
         }
         
-        let myHeader = LoginBannerView()
-        myHeader.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 75)
-        tableView.tableHeaderView = myHeader
+        let validation = UserDefaults.standard.bool(forKey: GTConstants.kBannerHasDismissed)
+        if loginBannerShouldDisplay() {
+            self.displayLoginBannerUnlessDismissed(validated: validation)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -140,6 +141,32 @@ class HomeViewController: BaseViewController {
         let hasAlreadyShown = UserDefaults.standard.bool(forKey: GTConstants.kOnboardingScreensShownKey)
         
         return !hasAlreadyShown
+    }
+    
+    private func loginBannerShouldDisplay() -> Bool {
+        var shouldDisplayBanner = false
+        
+        // MARK - These are the current conditions that have to be met to display the login banner.
+        let hasTappedFindTools = UserDefaults.standard.bool(forKey: GTConstants.kHasTappedFindTools)
+        let hasAlreadyAccessedATract = UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
+        let bannerHasDiplayedOnce = UserDefaults.standard.bool(forKey: GTConstants.kHasDiplayedBannerOnce)
+        let languageIsEnglish = (Locale.current.languageCode == "en")
+        if hasTappedFindTools && hasAlreadyAccessedATract && !bannerHasDiplayedOnce && languageIsEnglish {
+            shouldDisplayBanner = true
+            UserDefaults.standard.set(true, forKey: GTConstants.kHasDiplayedBannerOnce)
+        }
+
+        return shouldDisplayBanner
+    }
+    
+    private func displayLoginBannerUnlessDismissed(validated: Bool) {
+        if !validated {
+            let loginBannerView = LoginBannerView()
+            loginBannerView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 75)
+            tableView.tableHeaderView = loginBannerView
+        } else {
+            tableView.tableHeaderView = UIView()
+        }
     }
     
     // MARK: - Analytics

@@ -80,6 +80,7 @@ class MasterHomeViewController: BaseViewController  {
         } else {
             remove(asChildViewController: homeViewController)
             add(asChildViewController: addToolsViewController)
+            UserDefaults.standard.set(true, forKey: GTConstants.kHasTappedFindTools)
         }
     }
     

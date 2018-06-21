@@ -18,6 +18,9 @@ struct GTConstants {
     static let kFirstLaunchKey = "org.cru.godtools.firstLaunchKey"
     static let kDownloadDeviceLocaleKey = "org.cru.godtools.downloadDeviceLocaleKey"
     static let kAlreadyAccessTract = "org.cru.godtools.defaults.tract.alreadyAccess"
+    static let kHasTappedFindTools = "org.cru.godtools.hasTappedFindTools"
+    static let kHasDiplayedBannerOnce = "org.cru.godtools.kHasDiplayedBannerOnce"
+    static let kBannerHasDismissed = "org.cru.godtools.kBannerHasDismissed"
     
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
 }

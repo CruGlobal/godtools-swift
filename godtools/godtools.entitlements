@@ -6,6 +6,7 @@
 	<array>
 		<string>applinks:knowgod.com</string>
 		<string>applinks:d14vilcp0lqeut.cloudfront.net</string>
+		<string>applinks:stage.godtoolsapp.com</string>
 	</array>
 </dict>
 </plist>
