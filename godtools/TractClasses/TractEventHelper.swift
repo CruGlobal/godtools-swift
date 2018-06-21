@@ -12,7 +12,6 @@ import SWXMLHash
 class TractEventHelper {
     static func buildAnalyticsEvents(data: XMLIndexer) -> [TractAnalyticEvent] {
         
-        var analyticsArray = [[String: String]]()
         var tractAnalyticEvents = [TractAnalyticEvent]()
         
         // MARK: - This parses out system info and action string !!!
@@ -34,24 +33,21 @@ class TractEventHelper {
                 let childrenHasAttributes = (attributeElement.allAttributes.count > 0)
                 
                 if childrenHasAttributes {
-                    var attributeStrings = [String]()
-                    for attribute in attributeElement.allAttributes {
-                        attributeStrings.append(attribute.value.text)
+                    for (_, dictionary) in (attributeElement.allAttributes.enumerated()) {
+                        analyticsEvents[dictionary.key] = dictionary.value.text
+                        analyticsEvents = assignKeyAndValue(from: analyticsEvents)
                     }
-                    guard attributeStrings.count == 2 else { continue }
-                    analyticsEvents[attributeStrings[0]] = attributeStrings[1]
                 }
             }
             guard analyticsEvents.count > 0 else { continue }
             let tractEvent = TractAnalyticEvent(dictionary: analyticsEvents)
             tractAnalyticEvents.append(tractEvent)
-            analyticsArray.append(analyticsEvents)
         }
         
         return tractAnalyticEvents
     }
     
-    private static func adjustVerboseDictionary(from dictionary: [String: String]) -> [String: String] {
+    private static func assignKeyAndValue(from dictionary: [String: String]) -> [String: String] {
         var copy = dictionary
         if let copyKey = copy["key"], let copyValue = copy["value"] {
             copy.removeValue(forKey: "key")

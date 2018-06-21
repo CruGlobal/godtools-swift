@@ -31,6 +31,8 @@ class TractButton: BaseTractElement {
         super.loadElementProperties(properties)
         
         let properties = buttonProperties()
+        properties.analyticsButtonUserInfo = self.analyticsUserInfo
+
         let pageProperties = page?.pageProperties()
         
         properties.backgroundColor = properties.buttonColor ?? pageProperties?.primaryColor ?? manifestProperties.primaryColor
@@ -98,7 +100,6 @@ class TractButton: BaseTractElement {
     
     func addTargetToButton() {
         let properties = buttonProperties()
-        properties.analyticsButtonUserInfo = self.analyticsUserInfo
         
         if properties.type == .event || properties.type == .url {
             self.button.addTarget(self, action: #selector(buttonTarget), for: .touchUpInside)

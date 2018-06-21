@@ -18,6 +18,6 @@ class TractCardsProperties: TractProperties {
     
     var cardsState = CardsState.preview
     
-    var tractCrdsAnalyticProps: [TractAnalyticEvent] = []
+    var tractCardsAnalyticProperties: [TractAnalyticEvent] = []
 
 }

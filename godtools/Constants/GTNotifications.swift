@@ -22,4 +22,6 @@ extension Notification.Name {
     
     static let screenViewNotification = Notification.Name("screenViewNotification")
     static let actionTrackNotification = Notification.Name("actionTrackNotification")
+    static let tractCardStateChangedNotification = Notification.Name("tractCardStateChanged")
+
 }

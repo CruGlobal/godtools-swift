@@ -14,16 +14,17 @@ extension TractButton {
     func buttonTarget() {
         getParentCard()?.endCardEditing()
         let properties = buttonProperties()
+
         
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
+            for analyticEvent in properties.analyticsButtonUserInfo {
+                let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
+                sendNotificationForAction(userInfo: userInfo)
+            }
             for event in events {
                 if sendMessageToElement(listener: event) == .failure {
                     break
-                }
-                for analyticEvent in properties.analyticsButtonUserInfo {
-                    let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
-                    sendNotificationForAction(userInfo: userInfo)
                 }
             }
         } else if properties.type == .url {

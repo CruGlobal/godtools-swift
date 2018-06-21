@@ -26,43 +26,36 @@ class AnalyticsRelay {
     var isTimerRunning = false
     var task = DispatchWorkItem { }
     
-    
-    func runTimer(dictionary: [String: String]) {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: dictionary, repeats: true)
-        isTimerRunning = true
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .moveToPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .moveToNextPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .tractCardStateChangedNotification,
+                                               object: nil)
     }
     
-    @objc func updateTimer() {
-        if timerCounter < 1 && isTimerRunning {
-            timerCounter = 0
-            isTimerRunning = false
-            if let analyticsData = timer.userInfo as? [String: String] {
-                sendToAnalyticsIfRelevant(dictionary: analyticsData)
-            }
-            timer.invalidate()
-
-        } else if isTimerRunning {
-            timerCounter = self.timerCounter - 1
-            isTimerRunning = true
-        } else {
-            timer.invalidate()
-            isTimerRunning = false
-            timerCounter = 0
-        }
+    @objc private func reset() {
+        task.cancel()
     }
+    
     
     func createDelayedTask(_ delayDouble: Double, with dictionary: [String: String]) {
         if delayDouble > 0 {
-            task = DispatchWorkItem {
-                self.sendToAnalyticsIfRelevant(dictionary: dictionary)
+            task = DispatchWorkItem { [weak self] in
+                self?.sendToAnalyticsIfRelevant(dictionary: dictionary)
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: task)
-        } else {
-            task.cancel()
         }
     }
     
-    func sendToAnalyticsIfRelevant(dictionary: [String: String]) {
+    private func sendToAnalyticsIfRelevant(dictionary: [String: String]) {
         if !isTimerRunning {
             timer.invalidate()
             isTimerRunning = false

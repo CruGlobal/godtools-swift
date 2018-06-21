@@ -35,6 +35,7 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
     func processSwipeDown() {
@@ -50,6 +51,7 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
     func processCardWithState() {
@@ -74,7 +76,8 @@ extension TractCard {
         if properties.cardState == .open {
             return
         }
-        
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
+
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
         processCardForAnalytics(cardLetterName: properties.cardLetterName)
@@ -116,6 +119,7 @@ extension TractCard {
         self.cardsParentView.hideCallToAction()
         hideCardAnimation()
         disableScrollview()
+
     }
     
     func hideAllCards() {
@@ -128,6 +132,7 @@ extension TractCard {
         hideTexts()
         self.cardsParentView.resetEnvironment()
         self.cardsParentView.hideCallToAction()
+
     }
     
     func resetCard() {
