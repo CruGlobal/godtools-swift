@@ -30,14 +30,9 @@ class TractEventHelper {
             // MARK: - This parses out attribute keys and values !!!
             for attribute in event.children {
                 guard let attributeElement = attribute.element else { continue }
-                let childrenHasAttributes = (attributeElement.allAttributes.count > 0)
+                guard let key = attributeElement.attribute(by: "key")?.text, let value = attributeElement.attribute(by: "value")?.text else { continue }
                 
-                if childrenHasAttributes {
-                    for (_, dictionary) in (attributeElement.allAttributes.enumerated()) {
-                        analyticsEvents[dictionary.key] = dictionary.value.text
-                        analyticsEvents = assignKeyAndValue(from: analyticsEvents)
-                    }
-                }
+                analyticsEvents[key] = value
             }
             guard analyticsEvents.count > 0 else { continue }
             let tractEvent = TractAnalyticEvent(dictionary: analyticsEvents)
@@ -46,15 +41,4 @@ class TractEventHelper {
         
         return tractAnalyticEvents
     }
-    
-    private static func assignKeyAndValue(from dictionary: [String: String]) -> [String: String] {
-        var copy = dictionary
-        if let copyKey = copy["key"], let copyValue = copy["value"] {
-            copy.removeValue(forKey: "key")
-            copy.removeValue(forKey: "value")
-            copy[copyKey] = copyValue
-        }
-        return copy
-    }
-    
 }
