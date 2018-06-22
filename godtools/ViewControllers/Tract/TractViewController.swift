@@ -237,15 +237,19 @@ class TractViewController: BaseViewController {
     func defineObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToPage),
-                                               name: NSNotification.Name.moveToPageNotification,
+                                               name: .moveToPageNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(moveToNextPage),
-                                               name: NSNotification.Name.moveToNextPageNotification,
+                                               name: .moveToNextPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(moveToPreviousPage),
+                                               name: .moveToPreviousPageNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(sendEmail),
-                                               name: NSNotification.Name.sendEmailFromTractForm,
+                                               name: .sendEmailFromTractForm,
                                                object: nil)
     }
     

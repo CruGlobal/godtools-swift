@@ -23,10 +23,9 @@ extension TractViewController {
     
     @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
-            moveToPreviousPage()
+            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
         } else if sender.direction == .left {
-            moveToNextPage()
+            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
         }
     }
-    
 }

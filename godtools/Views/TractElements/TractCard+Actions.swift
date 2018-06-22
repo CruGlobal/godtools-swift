@@ -35,6 +35,7 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
     func processSwipeDown() {
@@ -50,6 +51,7 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
     func processCardWithState() {
@@ -74,7 +76,8 @@ extension TractCard {
         if properties.cardState == .open {
             return
         }
-        
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
+
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
         processCardForAnalytics(cardLetterName: properties.cardLetterName)
@@ -116,6 +119,7 @@ extension TractCard {
         self.cardsParentView.hideCallToAction()
         hideCardAnimation()
         disableScrollview()
+
     }
     
     func hideAllCards() {
@@ -128,6 +132,7 @@ extension TractCard {
         hideTexts()
         self.cardsParentView.resetEnvironment()
         self.cardsParentView.hideCallToAction()
+
     }
     
     func resetCard() {
@@ -240,17 +245,21 @@ extension TractCard {
     // MARK - Analytics helper
     
     func processCardForAnalytics(cardLetterName: String) {
+        let properties = cardProperties()
         let relay = AnalyticsRelay.shared
-        relay.timer.invalidate()
-        relay.isTimerRunning = false
+        relay.task.cancel()
         
-        if !relay.isTimerRunning {
-            relay.timerCounter = 6
-            relay.runTimer()
+        // MARK - Get the analytics as a TractAnalyticEvent.
+        
+        let analyticEvents = properties.analyticEventProperties
+        for analyticEvent in analyticEvents {
+            if analyticEvent.delay != "" {
+                let delayDouble = Double(analyticEvent.delay) ?? 0
+                relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))
+            }
         }
         
         relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
-        
         screenViewNotification(screenName: relay.screenName + cardLetterName)
     }
     
