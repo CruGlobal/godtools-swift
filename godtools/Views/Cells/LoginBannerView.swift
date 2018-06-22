@@ -55,6 +55,10 @@ class LoginBannerView: UIView {
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         print("Testing cancelTapped X button")
+        UserDefaults.standard.set(true, forKey: GTConstants.kBannerHasBeenDismissed)
+        NotificationCenter.default.post(name: .loginBannerDismissedNotification,
+                                        object: nil,
+                                        userInfo: nil)
     }
     
     func xibSetup() {

@@ -20,7 +20,7 @@ struct GTConstants {
     static let kAlreadyAccessTract = "org.cru.godtools.defaults.tract.alreadyAccess"
     static let kHasTappedFindTools = "org.cru.godtools.hasTappedFindTools"
     static let kHasDiplayedBannerOnce = "org.cru.godtools.kHasDiplayedBannerOnce"
-    static let kBannerHasDismissed = "org.cru.godtools.kBannerHasDismissed"
+    static let kBannerHasBeenDismissed = "org.cru.godtools.kBannerHasBeenDismissed"
     
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
 }
