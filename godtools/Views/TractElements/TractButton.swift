@@ -31,6 +31,8 @@ class TractButton: BaseTractElement {
         super.loadElementProperties(properties)
         
         let properties = buttonProperties()
+        properties.analyticsButtonUserInfo = self.analyticsUserInfo
+
         let pageProperties = page?.pageProperties()
         
         properties.backgroundColor = properties.buttonColor ?? pageProperties?.primaryColor ?? manifestProperties.primaryColor
@@ -66,7 +68,6 @@ class TractButton: BaseTractElement {
                 self.button.titleLabel?.font = label.font
                 
                 let textColorProperty = buttonTextColor(localColor: textElement.textProperties().localTextColor)
-                debugPrint(textColorProperty)
                 
                 self.button.setTitleColor(textColorProperty, for: .normal)
                 self.button.setTitleColor(textColorProperty.withAlphaComponent(0.5), for: .highlighted)

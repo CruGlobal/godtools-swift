@@ -13,6 +13,7 @@ extension Notification.Name {
     static let dismissMenuNotification = Notification.Name("dismissMenuNotificationName")
     static let moveToPageNotification = Notification.Name("moveToPageNotification")
     static let moveToNextPageNotification = Notification.Name("moveToNextPageNotification")
+    static let moveToPreviousPageNotification = Notification.Name("moveToPreviousPageNotification")
     static let downloadProgressViewUpdateNotification = Notification.Name("downloadProgressViewUpdateNotification")
     static let downloadPrimaryTranslationCompleteNotification = Notification.Name("downloadPrimaryTranslationCompleteNotification")
     static let downloadBannerCompleteNotifciation = Notification.Name("downloadBannerCompleteNotifciation")
@@ -21,4 +22,6 @@ extension Notification.Name {
     
     static let screenViewNotification = Notification.Name("screenViewNotification")
     static let actionTrackNotification = Notification.Name("actionTrackNotification")
+    static let tractCardStateChangedNotification = Notification.Name("tractCardStateChanged")
+
 }

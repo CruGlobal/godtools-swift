@@ -83,6 +83,7 @@ extension TractManager {
         var xml: XMLIndexer?
         do {
             let content = try String(contentsOfFile: file!, encoding: String.Encoding.utf8)
+            print("\(content)")
             xml = SWXMLHash.parse(content)
         }
         catch {

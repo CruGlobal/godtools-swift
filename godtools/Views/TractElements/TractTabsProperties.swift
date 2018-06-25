@@ -13,5 +13,10 @@ class TractTabsProperties: TractProperties {
     // MARK: - View Properties
     
     var options = [String]()
+    
+    // MARK: - Analytics Properties
+    
+    var analyticsTabsUserInfo: [TractAnalyticEvent] = []
+  
 
 }

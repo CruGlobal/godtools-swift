@@ -17,5 +17,7 @@ class TractCardsProperties: TractProperties {
     // MARK: - View Properties
     
     var cardsState = CardsState.preview
+    
+    var tractCardsAnalyticProperties: [TractAnalyticEvent] = []
 
 }

@@ -240,6 +240,7 @@ class BaseViewController: UIViewController {
     func sendScreenViewNotification(screenName: String, siteSection: String, siteSubSection: String) {
         let relay = AnalyticsRelay.shared
         relay.screenName = screenName
+        
         let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsConstants.Keys.siteSection: siteSection, AdobeAnalyticsConstants.Keys.siteSubSection: siteSubSection]
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,

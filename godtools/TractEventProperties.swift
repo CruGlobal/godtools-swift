@@ -16,6 +16,7 @@ class TractEventProperties: TractProperties {
     var action: String = ""
     var key: String = ""
     var value: String = ""
+    var analyticsDictionary: [String: String] = [:]
     
     var attribute: [String: String] {
         get {
@@ -23,8 +24,8 @@ class TractEventProperties: TractProperties {
         }
     }
     
-    override func defineProperties() {
-        self.properties = []
+    override func customProperties() -> [String]? {
+        return ["event", "attribute", "analytics"]
     }
     
 }

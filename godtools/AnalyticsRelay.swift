@@ -22,63 +22,48 @@ class AnalyticsRelay {
     
     var viewListener: String = ""
     var timer = Timer()
-    var timerCounter = 6
+    var timerCounter = 0
     var isTimerRunning = false
+    var task = DispatchWorkItem { }
     
-    func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        isTimerRunning = true
+    init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .moveToPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .moveToNextPageNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .tractCardStateChangedNotification,
+                                               object: nil)
     }
     
-    @objc func updateTimer() {
-        if timerCounter < 1 && isTimerRunning {
-            timer.invalidate()
-            timerCounter = 0
-            isTimerRunning = false
-            let tractCardName = screenNamePlusCardLetterName
-            sendToAnalyticsIfRelevant(tractCardName: tractCardName)
-        } else if isTimerRunning {
-            timerCounter = self.timerCounter - 1
-            isTimerRunning = true
-        } else {
-            timer.invalidate()
-            isTimerRunning = false
-            timerCounter = 0
+    @objc private func reset() {
+        task.cancel()
+    }
+    
+    
+    func createDelayedTask(_ delayDouble: Double, with dictionary: [String: String]) {
+        if delayDouble > 0 {
+            task = DispatchWorkItem { [weak self] in
+                self?.sendToAnalyticsIfRelevant(dictionary: dictionary)
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: task)
         }
     }
     
-    func sendToAnalyticsIfRelevant(tractCardName: String) {
+    private func sendToAnalyticsIfRelevant(dictionary: [String: String]) {
         if !isTimerRunning {
             timer.invalidate()
             isTimerRunning = false
             timerCounter = 0
-            var userInfo: [String: Any] = [:]
             
-            switch tractCardName {
-            case "kgp-us-5a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpUSGospelPresented
-            case "satisfied-6a":
-                userInfo[AdobeAnalyticsConstants.Keys.presentingHolySpiritTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.satisfiedHolySpiritPresented
-            case "honorrestored-4d":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.honorRestoredPresented
-            case "thefour-5":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.theFourGospelPresented
-            case "kgp-5a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.kgpGospelPresented
-            case "fourlaws-6a":
-                userInfo[AdobeAnalyticsConstants.Keys.gospelPresentedTimedAction]  = 1
-                userInfo["action"] = AdobeAnalyticsConstants.Values.fourLawsGospelPresented
-            default :
-                break
-            }
             NotificationCenter.default.post(name: .actionTrackNotification,
                                             object: nil,
-                                            userInfo: userInfo)
+                                            userInfo: dictionary)
         }
     }
 
