@@ -21,5 +21,5 @@ target 'godtools' do
   pod 'GoogleAnalytics'
   pod 'GoogleConversionTracking'
   pod 'AdobeMobileSDK', '~> 4.15'
-  pod 'TheKeyOAuthSwift', '~> 0.1.0'
+  pod 'TheKeyOAuthSwift', '~> 0.2.0'
 end
