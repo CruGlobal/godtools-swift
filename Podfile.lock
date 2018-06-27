@@ -12,13 +12,14 @@ PODS:
   - Fabric (1.6.11)
   - GoogleAnalytics (3.17.0)
   - GoogleConversionTracking (3.4.0)
-  - GTMOAuth2 (1.1.6):
+  - GTMAppAuth (0.7.0):
+    - AppAuth (~> 0.92.0)
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.1.12):
-    - GTMSessionFetcher/Full (= 1.1.12)
-  - GTMSessionFetcher/Core (1.1.12)
-  - GTMSessionFetcher/Full (1.1.12):
-    - GTMSessionFetcher/Core (= 1.1.12)
+  - GTMSessionFetcher (1.1.15):
+    - GTMSessionFetcher/Full (= 1.1.15)
+  - GTMSessionFetcher/Core (1.1.15)
+  - GTMSessionFetcher/Full (1.1.15):
+    - GTMSessionFetcher/Core (= 1.1.15)
   - PromiseKit (4.1.7):
     - PromiseKit/Foundation (= 4.1.7)
     - PromiseKit/QuartzCore (= 4.1.7)
@@ -45,13 +46,12 @@ PODS:
   - SSZipArchive (1.8.1)
   - SwiftyJSON (3.1.4)
   - SWXMLHash (4.1.0)
-  - TheKeyOAuth2 (0.6.9):
-    - GTMOAuth2 (~> 1.1.1)
+  - TheKeyOAuthSwift (0.1.0):
+    - GTMAppAuth
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.15)
   - Alamofire (~> 4.4)
-  - AppAuth (~> 0.92)
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
@@ -63,7 +63,7 @@ DEPENDENCIES:
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 4.1)
-  - TheKeyOAuth2 (from `https://github.com/CruGlobal/TheKeyOAuth2.git`, tag `0.6.9`)
+  - TheKeyOAuthSwift (~> 0.1.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -76,7 +76,7 @@ SPEC REPOS:
     - Fabric
     - GoogleAnalytics
     - GoogleConversionTracking
-    - GTMOAuth2
+    - GTMAppAuth
     - GTMSessionFetcher
     - PromiseKit
     - Realm
@@ -85,22 +85,18 @@ SPEC REPOS:
     - SSZipArchive
     - SwiftyJSON
     - SWXMLHash
+  https://github.com/CruGlobal/cocoapods-specs.git:
+    - TheKeyOAuthSwift
 
 EXTERNAL SOURCES:
   Spine:
     :git: https://github.com/CruGlobal/Spine.git
     :tag: 0.3.1
-  TheKeyOAuth2:
-    :git: https://github.com/CruGlobal/TheKeyOAuth2.git
-    :tag: 0.6.9
 
 CHECKOUT OPTIONS:
   Spine:
     :git: https://github.com/CruGlobal/Spine.git
     :tag: 0.3.1
-  TheKeyOAuth2:
-    :git: https://github.com/CruGlobal/TheKeyOAuth2.git
-    :tag: 0.6.9
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 7fd5a52302bcbb2ad24c6fb6ef4d1f58e0d654e3
@@ -112,8 +108,8 @@ SPEC CHECKSUMS:
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
-  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
-  GTMSessionFetcher: ebaa1f79a5366922c1735f1566901f50beba23b7
+  GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
+  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
   PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
@@ -122,8 +118,8 @@ SPEC CHECKSUMS:
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
-  TheKeyOAuth2: e6042036a849d950a9f3daa622788e21f952cac2
+  TheKeyOAuthSwift: dcbaf18206a9504073f8c803e6f18ad8c6b0f7cb
 
-PODFILE CHECKSUM: 415d1deb62961987aa868a888ad13f26c4f573f6
+PODFILE CHECKSUM: 2fe2628cfc4b1a7b8a0e5f274ab9204ad2b438da
 
 COCOAPODS: 1.5.3

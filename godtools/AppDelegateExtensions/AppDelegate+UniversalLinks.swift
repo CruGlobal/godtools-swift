@@ -58,9 +58,17 @@ extension AppDelegate {
             return false
         }
         
-        processForDeepLinking(from: url)
-        
+        if let host = url.host, host.contains("knowgod") {
+            if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
+                self.currentAuthorizationFlow = nil
+                return true
+            }
+        } else {
+            
+            processForDeepLinking(from: url)
+        }
         return true
+        
     }
     
     private func processForDeepLinking(from url: URL) {
