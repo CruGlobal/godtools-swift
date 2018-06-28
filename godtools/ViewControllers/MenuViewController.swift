@@ -349,7 +349,7 @@ extension MenuViewController {
             debugPrint(client.grMasterPersonId)
         }
 
-        delegate.currentAuthorizationFlow = client.initiateAuthorization(requestingViewController: self,
-                                                                         currentDateTime: Date()) { (_) in }
+        delegate.currentAuthorizationFlow = client.initiateAuthorization(requestingViewController: self) { (_) in } 
+
     }
 }
