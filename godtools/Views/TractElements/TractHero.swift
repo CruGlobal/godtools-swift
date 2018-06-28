@@ -57,6 +57,13 @@ class TractHero: BaseTractElement {
         return self.properties as! TractHeroProperties
     }
     
+    override func loadElementProperties(_ properties: [String : Any]) {
+        super.loadElementProperties(properties)
+        
+        let properties = heroProperties()
+        properties.analyticsHeroEvents = self.analyticsUserInfo
+    }
+    
     func setupScrollView() {
         let contentHeight: CGFloat = self.height + TractHero.paddingBottom
         let contentWidth: CGFloat = self.elementFrame.width

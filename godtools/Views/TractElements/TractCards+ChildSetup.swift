@@ -86,6 +86,7 @@ extension TractCards {
         for dictionary in cards {
             let yPosition = self.initialCardPosition
             let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            
             self.elements?.append(element)
             elementNumber += 1
         }
