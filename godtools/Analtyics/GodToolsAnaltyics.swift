@@ -8,6 +8,7 @@
 
 import Foundation
 import AdobeMobileSDK
+import TheKeyOAuthSwift
 
 struct AdobeAnalyticsConstants {
     struct Keys {
@@ -31,6 +32,7 @@ struct AdobeAnalyticsConstants {
     
     struct Values {
         static let godTools = "GodTools"
+        static let isLoggedIn = "is logged in"
         static let notLoggedIn = "not logged in"
         static let share = "Share Icon Engaged"
         static let exitLink = "Exit Link Engaged"
@@ -105,7 +107,7 @@ class GodToolsAnaltyics {
         loadAdobeAnalyticsConfigurationFile()
         var properties: [String: String] = [:]
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = isUserLoggedIn()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
@@ -180,7 +182,7 @@ class GodToolsAnaltyics {
         properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
         properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = AdobeAnalyticsConstants.Values.notLoggedIn
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = isUserLoggedIn()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         previousScreenName = screenName
@@ -188,4 +190,14 @@ class GodToolsAnaltyics {
         ADBMobile.trackState(screenName, data: properties)
         debugPrint("\(properties.debugDescription)")
     }
+    
+    private func isUserLoggedIn() -> String {
+        let client = TheKeyOAuthClient.shared
+        if client.isAuthenticated() {
+            return AdobeAnalyticsConstants.Values.isLoggedIn
+        } else {
+            return AdobeAnalyticsConstants.Values.notLoggedIn
+        }
+    }
+    
 }

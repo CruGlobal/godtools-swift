@@ -58,7 +58,7 @@ extension AppDelegate {
             return false
         }
         
-        if let host = url.host, host.contains("knowgod") {
+        if let host = url.host, host.contains("godtoolsapp") {
             if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
                 self.currentAuthorizationFlow = nil
                 return true

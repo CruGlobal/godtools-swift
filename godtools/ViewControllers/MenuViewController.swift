@@ -45,13 +45,13 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 class MenuViewController: BaseViewController {
     
     fileprivate let kIssuer: String = "GodTools"
-    fileprivate let kClientID: String? = "2880599195946831054"
-    fileprivate let kRedirectURI: String = "https://knowgod.com/auth"
+    fileprivate let kClientID: String? = "5337397229970887848"
+    fileprivate let kRedirectURI: String = "https://godtoolsapp.com/auth"
     fileprivate let kAppAuthExampleAuthStateKey: String = "authState"
     
     @IBOutlet weak var tableView: UITableView!
 
-    let general = ["language_settings", "login", "about", "help", "contact_us"]
+    var general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -70,6 +70,12 @@ class MenuViewController: BaseViewController {
         super.viewDidLoad()
         self.setupStyle()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        general = ["language_settings", setLoginTitle(), "about", "help", "contact_us"]
+        tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -83,6 +89,16 @@ class MenuViewController: BaseViewController {
         self.registerCells()
     }
     
+    func setLoginTitle() -> String {
+        let client = TheKeyOAuthClient.shared
+        if client.isAuthenticated() {
+            print("You ARE logged in")
+            return "logout"
+        } else {
+            print("You are not logged in")
+            return "login"
+        }
+    }
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
@@ -335,7 +351,7 @@ extension MenuViewController {
         
         client.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
                          clientID: kClientID!,
-                         redirectURI: URL(string: "https://knowgod.com/auth")!,
+                         redirectURI: URL(string: kRedirectURI)!,
                          issuer: kIssuer)
         
         
