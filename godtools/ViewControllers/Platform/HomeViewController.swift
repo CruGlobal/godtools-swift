@@ -54,9 +54,12 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if loginBannerShouldDisplay() {
-            self.displayLoginBanner()
-        }
+        
+        // MARK - Product owner has requested to not display this quite yet.
+        
+//        if loginBannerShouldDisplay() {
+//            self.displayLoginBanner()
+//        }
         
         toolsManager.delegate = self
         reloadView()
@@ -88,7 +91,10 @@ class HomeViewController: BaseViewController {
         normalStateView.isHidden = !toolsManager.hasResources()
 
         tableView.reloadData()
-        updateHeaderView()
+        
+        // MARK - Product owner has requested to not display this quite yet.
+        
+        //updateHeaderView()
     }
     
     @objc private func loadLatestResources() {
@@ -131,7 +137,10 @@ class HomeViewController: BaseViewController {
         self.tableView.backgroundColor = .gtWhite
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0)
-        loginBannerView = createLoginBannerView()
+        
+        // MARK - Product owner has requested to not display this quite yet.
+        
+       // loginBannerView = createLoginBannerView()
     }
     
     fileprivate func displayOnboarding() {
