@@ -12,6 +12,7 @@ import Crashlytics
 import PromiseKit
 import RealmSwift
 import AppAuth
+import TheKeyOAuthSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,9 +20,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
+    let loginClient = TheKeyOAuthClient.shared
+    fileprivate let kIssuer: String = "GodTools"
+    fileprivate let kClientID: String? = "5337397229970887848"
+    fileprivate let kRedirectURI: String = "https://godtoolsapp.com/auth"
+    fileprivate let kAppAuthExampleAuthStateKey: String = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         resetStateIfUITesting()
+        
+        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
+                              clientID: kClientID!,
+                              redirectURI: URL(string: kRedirectURI)!)
+        
+        if loginClient.isAuthenticated() {
+            loginClient.fetchAttributes() { (attributes, _) in
+                debugPrint("fetched: \(attributes!)")
+            }
+        }
         
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()

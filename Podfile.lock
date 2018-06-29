@@ -46,8 +46,9 @@ PODS:
   - SSZipArchive (1.8.1)
   - SwiftyJSON (3.1.4)
   - SWXMLHash (4.1.0)
-  - TheKeyOAuthSwift (0.3.0):
+  - TheKeyOAuthSwift (0.5.0):
     - GTMAppAuth
+    - Result
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.15)
@@ -63,7 +64,7 @@ DEPENDENCIES:
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 4.1)
-  - TheKeyOAuthSwift (~> 0.3.0)
+  - TheKeyOAuthSwift (~> 0.5.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -118,8 +119,8 @@ SPEC CHECKSUMS:
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
-  TheKeyOAuthSwift: 73037cbe880ce0bf307a8afef72941feeb24106d
+  TheKeyOAuthSwift: b102ad107ba0719964a36a8fde0ce8f5a67ad202
 
-PODFILE CHECKSUM: c8bccb9edca61d948d6cccd4d5a6c760701aac42
+PODFILE CHECKSUM: a861d28ad15c42257d242b482f8ebd420c8b7b5a
 
 COCOAPODS: 1.5.3

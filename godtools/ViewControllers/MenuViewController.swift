@@ -9,6 +9,7 @@
 import UIKit
 import MessageUI
 import TheKeyOAuthSwift
+import GTMAppAuth
 
 protocol MenuViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
@@ -44,11 +45,6 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 
 class MenuViewController: BaseViewController {
     
-    fileprivate let kIssuer: String = "GodTools"
-    fileprivate let kClientID: String? = "5337397229970887848"
-    fileprivate let kRedirectURI: String = "https://godtoolsapp.com/auth"
-    fileprivate let kAppAuthExampleAuthStateKey: String = "authState"
-    
     @IBOutlet weak var tableView: UITableView!
 
     var general = ["language_settings", "login", "about", "help", "contact_us"]
@@ -59,6 +55,7 @@ class MenuViewController: BaseViewController {
     let headerHeight: CGFloat = 40.0
     
     var delegate: MenuViewControllerDelegate?
+    let loginClient =  TheKeyOAuthClient.shared
     
     override var screenTitle: String {
         get {
@@ -73,8 +70,7 @@ class MenuViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        general = ["language_settings", setLoginTitle(), "about", "help", "contact_us"]
-        tableView.reloadData()
+        adjustGeneralTitles()
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,6 +79,11 @@ class MenuViewController: BaseViewController {
     
     // MARK: UI
     
+    func adjustGeneralTitles() {
+        general = ["language_settings", setLoginTitle(), "about", "help", "contact_us"]
+        tableView.reloadData()
+    }
+    
     fileprivate func setupStyle() {
         self.view.backgroundColor = .clear
         self.tableView.backgroundColor = .gtGreyLight
@@ -90,12 +91,9 @@ class MenuViewController: BaseViewController {
     }
     
     func setLoginTitle() -> String {
-        let client = TheKeyOAuthClient.shared
-        if client.isAuthenticated() {
-            print("You ARE logged in")
+        if loginClient.isAuthenticated() {
             return "logout"
         } else {
-            print("You are not logged in")
             return "login"
         }
     }
@@ -132,6 +130,12 @@ class MenuViewController: BaseViewController {
     
     override func screenName() -> String {
         return "Menu"
+    }
+    
+    func presentLogoutconfirmation() {
+        let alert = UIAlertController(title: "You are about to logout", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
@@ -312,7 +316,13 @@ extension MenuViewController {
     }
     
     fileprivate func openLoginWindow() {
-        authWithAutoCodeExchange()
+        if loginClient.isAuthenticated() {
+            loginClient.logout()
+            adjustGeneralTitles()
+        } else {
+           authWithAutoCodeExchange()
+        }
+        
     }
     
 }
@@ -347,25 +357,15 @@ extension MenuViewController {
     func authWithAutoCodeExchange() {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let client = TheKeyOAuthClient.shared
-        
-        client.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
-                         clientID: kClientID!,
-                         redirectURI: URL(string: kRedirectURI)!,
-                         issuer: kIssuer)
-        
-        
-        if client.isAuthenticated() {
-            client.fetchAttributes() { (attributes, _) in
-                debugPrint("fetched: \(attributes!)")
-            }
-
-            debugPrint(client.guid)
-            debugPrint(client.email)
-            debugPrint(client.grMasterPersonId)
-        }
-
-        delegate.currentAuthorizationFlow = client.initiateAuthorization(requestingViewController: self) { (_) in } 
-
+        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self) { (_) in }
     }
+    
+}
+
+extension MenuViewController: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+         adjustGeneralTitles()
+    }
+    
+    
 }

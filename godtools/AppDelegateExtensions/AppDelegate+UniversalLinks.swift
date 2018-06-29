@@ -28,25 +28,6 @@ extension AppDelegate {
     // PATHCOMPONENT[3] = page number
     // PATHCOMPONENt[4] = query for possible languages and other parameters
     
-    // MARK: - This is for use when coming from JesusFilm App (or other Apps) that have our URL scheme registered in their whitelist.
-    
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        print("\(url)")
-//        if let scheme = url.scheme {
-//            print("url.scheme \(scheme)")
-           // if scheme.contains("ppoauthapp") {
-                if let authorizationFlow = self.currentAuthorizationFlow, authorizationFlow.resumeAuthorizationFlow(with: url) {
-                    self.currentAuthorizationFlow = nil
-                    return true
-                }
-           // }
-       // } else  {
-       //     processForDeepLinking(from: url)
-      //  }
-        
-        return true
-    }
-    
     // MARK: - This is for use when coming from Safari or Universal Links.
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
