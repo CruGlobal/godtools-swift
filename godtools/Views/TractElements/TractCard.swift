@@ -70,8 +70,40 @@ class TractCard: BaseTractElement {
     var tractCardAnalyticEvents: [TractAnalyticEvent]  {
             return self.analyticsUserInfo
     }
+    var cardHeroAnalyticEvents: [TractAnalyticEvent] = []
+    var uniqueDict: [String: String] = [:]
     
     // MARK: - Setup
+    
+    override func loadElementProperties(_ properties: [String : Any]) {
+        super.loadElementProperties(properties)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(receiveHeroActionEvent(notification:)),
+                                               name: .heroActionTrackNotification,
+                                               object: nil)
+    }
+    
+    @objc func receiveHeroActionEvent(notification: Notification) {
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+        
+        guard let events = userInfo as? [String: String] else {
+            return
+        }
+       // filterDuplicates(from: events)
+        let heroEvent = TractAnalyticEvent(dictionary: events)
+        cardHeroAnalyticEvents.append(heroEvent)
+        let properties = cardProperties()
+        properties.cardHeroAnalytics = cardHeroAnalyticEvents
+    }
+    
+    func filterDuplicates(from dictionary: [String: String]) {
+        for (key, value) in dictionary {
+            uniqueDict[key] = value
+        }
+    }
+    
     
     override func propertiesKind() -> TractProperties.Type {
         return TractCardProperties.self

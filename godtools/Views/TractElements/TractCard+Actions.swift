@@ -130,6 +130,7 @@ extension TractCard {
     
     func hideAllCards() {
         let properties = cardProperties()
+        let heroEvents = properties.cardHeroAnalytics
         NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
         if properties.cardState == .close || properties.cardState == .hidden {
             return
@@ -138,6 +139,7 @@ extension TractCard {
         hideTexts()
         self.cardsParentView.resetEnvironment()
         self.cardsParentView.hideCallToAction()
+        
 
     }
     
@@ -183,6 +185,8 @@ extension TractCard {
     
     func disableScrollview() {
         let properties = cardProperties()
+        let hprop = properties.cardHeroAnalytics
+        print("\n \(self.cardHeroAnalyticEvents)\(properties.cardNumber)-\(properties.cardLetterName) >>> \(hprop)\n\n")
         
         if properties.cardState != .open && properties.cardState != .enable {
             let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)

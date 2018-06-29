@@ -19,6 +19,12 @@ class TractHero: BaseTractElement {
     let scrollView = UIScrollView()
     let containerView = UIView()
     var heroHeight: CGFloat = 0.0
+    var heroAnalyticEvents: [TractAnalyticEvent] = [] {
+        didSet {
+            sendHeroAnalyticEvents(events: heroAnalyticEvents)
+            print("I have values this many >> \(heroAnalyticEvents.count)")
+        }
+    }
     
     override func propertiesKind() -> TractProperties.Type {
         return TractHeroProperties.self
@@ -62,6 +68,7 @@ class TractHero: BaseTractElement {
         
         let properties = heroProperties()
         properties.analyticsHeroEvents = self.analyticsUserInfo
+        heroAnalyticEvents = self.analyticsUserInfo
     }
     
     func setupScrollView() {
@@ -86,6 +93,13 @@ class TractHero: BaseTractElement {
             self.heroHeight = cardsElement.getMaxFreeHeight()
             self.elementFrame.height = self.heroHeight
             self.frame = self.elementFrame.getFrame()
+        }
+    }
+    
+    func sendHeroAnalyticEvents(events: [TractAnalyticEvent]) {
+        for event in events {
+            let userInfo = TractAnalyticEvent.convertToDictionary(from: event)
+            NotificationCenter.default.post(name: .heroActionTrackNotification, object: nil, userInfo: userInfo)
         }
     }
         

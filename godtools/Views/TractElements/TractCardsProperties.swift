@@ -19,5 +19,6 @@ class TractCardsProperties: TractProperties {
     var cardsState = CardsState.preview
     
     var tractCardsAnalyticProperties: [TractAnalyticEvent] = []
+    var cardsHeroAnalyticEvents: [TractAnalyticEvent] = []
 
 }

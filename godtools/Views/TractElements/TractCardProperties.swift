@@ -63,5 +63,6 @@ class TractCardProperties: TractProperties {
     var cardNumber = 0
     var cardLetterName = ""
     var analyticEventProperties: [TractAnalyticEvent] = []
+    var cardHeroAnalytics: [TractAnalyticEvent] = []
     
 }
