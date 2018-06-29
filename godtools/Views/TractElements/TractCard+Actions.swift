@@ -23,6 +23,8 @@ extension TractCard {
     
     func processSwipeUp() {
         let properties = cardProperties()
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
+
         if properties.cardState == .preview || properties.cardState == .close {
             showCardAndPreviousCards()
         } else if properties.cardState == .open {
@@ -35,12 +37,11 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
-        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
     func processSwipeDown() {
         let properties = cardProperties()
-        
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
         if properties.cardState == .open || properties.cardState == .enable {
             hideCard()
             
@@ -51,7 +52,7 @@ extension TractCard {
                 processCardForAnalytics(cardLetterName: adjustedLetterName)
             }
         }
-        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
+
     }
     
     func processCardWithState() {
@@ -76,7 +77,6 @@ extension TractCard {
         if properties.cardState == .open {
             return
         }
-        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
 
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
         showCard()
@@ -85,9 +85,14 @@ extension TractCard {
     
     func showCard() {
         let properties = cardProperties()
+
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
+       
         if properties.cardState == .open {
             return
         }
+        
+        processCardForAnalyticsTimedActions()
         
         if isHiddenKindCard() {
             setStateEnable()
@@ -104,6 +109,7 @@ extension TractCard {
     
     func hideCard() {
         let properties = cardProperties()
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
         
         if properties.cardState == .close || properties.cardState == .hidden {
             return
@@ -124,7 +130,7 @@ extension TractCard {
     
     func hideAllCards() {
         let properties = cardProperties()
-        
+        NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
         if properties.cardState == .close || properties.cardState == .hidden {
             return
         }
@@ -245,12 +251,14 @@ extension TractCard {
     // MARK - Analytics helper
     
     func processCardForAnalytics(cardLetterName: String) {
+        let relay = AnalyticsRelay.shared
+        relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
+        screenViewNotification(screenName: relay.screenName + cardLetterName)
+    }
+    
+    func processCardForAnalyticsTimedActions() {
         let properties = cardProperties()
         let relay = AnalyticsRelay.shared
-        relay.task.cancel()
-        
-        // MARK - Get the analytics as a TractAnalyticEvent.
-        
         let analyticEvents = properties.analyticEventProperties
         for analyticEvent in analyticEvents {
             if analyticEvent.delay != "" {
@@ -258,9 +266,6 @@ extension TractCard {
                 relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))
             }
         }
-        
-        relay.screenNamePlusCardLetterName = relay.screenName + cardLetterName
-        screenViewNotification(screenName: relay.screenName + cardLetterName)
     }
     
     func screenViewNotification(screenName: String) {
