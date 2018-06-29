@@ -12,7 +12,7 @@ extension TractLink {
     
     override func buttonTarget() {
         let properties = buttonProperties()
-        for analyticEvent in properties.analyticsButtonUserInfo {
+        if let analyticEvent = properties.analyticsButtonUserInfo.first {
             let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
             sendNotificationForAction(userInfo: userInfo)
         }

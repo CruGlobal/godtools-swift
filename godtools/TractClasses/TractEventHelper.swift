@@ -36,6 +36,9 @@ class TractEventHelper {
             }
             guard analyticsEvents.count > 0 else { continue }
             let tractEvent = TractAnalyticEvent(dictionary: analyticsEvents)
+            if tractEvent.action != "" {
+                tractAnalyticEvents.append(tractEvent)
+            }
             tractAnalyticEvents.append(tractEvent)
         }
         

@@ -185,8 +185,6 @@ extension TractCard {
     
     func disableScrollview() {
         let properties = cardProperties()
-        let hprop = properties.cardHeroAnalytics
-        print("\n \(self.cardHeroAnalyticEvents)\(properties.cardNumber)-\(properties.cardLetterName) >>> \(hprop)\n\n")
         
         if properties.cardState != .open && properties.cardState != .enable {
             let startPoint = CGPoint(x: 0, y: -self.scrollView.contentInset.top)
@@ -263,13 +261,12 @@ extension TractCard {
     func processCardForAnalyticsTimedActions() {
         let properties = cardProperties()
         let relay = AnalyticsRelay.shared
-        let analyticEvents = properties.analyticEventProperties
-        for analyticEvent in analyticEvents {
+        guard let analyticEvent = properties.analyticEventProperties.first else { return }
+        
             if analyticEvent.delay != "" {
                 let delayDouble = Double(analyticEvent.delay) ?? 0
                 relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))
             }
-        }
     }
     
     func screenViewNotification(screenName: String) {

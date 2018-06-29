@@ -43,13 +43,8 @@ extension TractTabs {
         }
         let properties = tabsProperties()
         self.elements![self.segmentedControl.selectedSegmentIndex].isHidden = false
-        
-        if self.segmentedControl.selectedSegmentIndex == 1 {
-            for analyticEvent in properties.analyticsTabsUserInfo {
-                let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
-                sendAnalyticsEvents(userInfo: userInfo)
-            }
-        }
+        let userInfo = TractAnalyticEvent.convertToDictionary(from: properties.analyticsTabsUserInfo[self.segmentedControl.selectedSegmentIndex])
+        sendAnalyticsEvents(userInfo: userInfo)
     }
     
     func sendAnalyticsEvents(userInfo: [String: Any]) {
