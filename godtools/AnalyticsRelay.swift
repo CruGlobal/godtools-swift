@@ -25,6 +25,7 @@ class AnalyticsRelay {
     var timerCounter = 0
     var isTimerRunning = false
     var task = DispatchWorkItem { }
+    var heroTask = DispatchWorkItem { }
     var heroAnalyticsDictionary: [String: [String: String]] = [:]
     
     init() {
@@ -41,13 +42,17 @@ class AnalyticsRelay {
                                                name: .tractCardStateChangedNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reset),
+                                               selector: #selector(resetHeroTask),
                                                name: .heroTimedActionNotification,
                                                object: nil)
     }
     
     @objc private func reset() {
         task.cancel()
+    }
+    
+    @objc private func resetHeroTask() {
+        heroTask.cancel()
     }
     
     
@@ -57,6 +62,15 @@ class AnalyticsRelay {
                 self?.sendToAnalyticsIfRelevant(dictionary: dictionary)
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: task)
+        }
+    }
+    
+    func createHeroTask(_ delayDouble: Double, with dictionary: [String: String]) {
+        if delayDouble > 0 {
+            heroTask = DispatchWorkItem { [weak self] in
+                self?.sendToAnalyticsIfRelevant(dictionary: dictionary)
+            }
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: heroTask)
         }
     }
     
@@ -70,7 +84,7 @@ class AnalyticsRelay {
                 let event = TractAnalyticEvent(dictionary: dictionary)
                 if event.delay != "" {
                     let delayDouble = Double(event.delay) ?? 0
-                    createDelayedTask(delayDouble, with: dictionary)
+                    createHeroTask(delayDouble, with: dictionary)
                 }
             }
         }
