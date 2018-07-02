@@ -47,7 +47,7 @@ class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
-    var general = ["language_settings", "login", "about", "help", "contact_us"]
+    var general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -56,6 +56,9 @@ class MenuViewController: BaseViewController {
     
     var delegate: MenuViewControllerDelegate?
     let loginClient =  TheKeyOAuthClient.shared
+    
+    let intWithCreateAccount = 6
+    let intWithoutCreateAccount = 5
     
     override var screenTitle: String {
         get {
@@ -80,7 +83,11 @@ class MenuViewController: BaseViewController {
     // MARK: UI
     
     func adjustGeneralTitles() {
-        general = ["language_settings", setLoginTitle(), "about", "help", "contact_us"]
+        if loginClient.isAuthenticated() {
+            general = ["language_settings", "logout", "about", "help", "contact_us"]
+        } else {
+            general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
+        }
         tableView.reloadData()
     }
     
@@ -90,13 +97,6 @@ class MenuViewController: BaseViewController {
         self.registerCells()
     }
     
-    func setLoginTitle() -> String {
-        if loginClient.isAuthenticated() {
-            return "logout"
-        } else {
-            return "login"
-        }
-    }
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
@@ -225,6 +225,34 @@ extension MenuViewController {
     
     // MARK- There may be additional work to complete for logging in and not just using a web view
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+        switch general.count {
+        case intWithCreateAccount:
+            selectionCreateAccountVisible(rowIndex: rowIndex)
+        case intWithoutCreateAccount:
+            selectionCreateAccountNotVisible(rowIndex: rowIndex)
+        default: break
+        }
+    }
+    
+    fileprivate func selectionCreateAccountVisible(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            delegate?.moveToUpdateLanguageSettings()
+        case 1:
+            openLoginWindow()
+        case 2:
+            openCreateAccountWindow()
+        case 3:
+            delegate?.moveToAbout()
+        case 4:
+            openHelp()
+        case 5:
+            contactUs()
+        default: break
+        }
+    }
+    
+    fileprivate func selectionCreateAccountNotVisible(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
@@ -322,7 +350,10 @@ extension MenuViewController {
         } else {
            authWithAutoCodeExchange()
         }
-        
+    }
+    
+    fileprivate func openCreateAccountWindow() {
+        authWithAutoCodeExchange(additionalParameters: ["action":"signup"])
     }
     
 }
@@ -354,10 +385,35 @@ extension MenuViewController: MenuTableViewCellDelegate {
 
 extension MenuViewController {
     
-    func authWithAutoCodeExchange() {
+    func authWithAutoCodeExchange(additionalParameters: [String: String]? = nil) {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self) { (_) in }
+    }
+    
+    func configureLoginClientForCreateAccount() {
+  /*
+        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas/login?&action=signup")!,
+                              clientID: AppDelegate.kClientID!,
+                              redirectURI: URL(string: AppDelegate.kRedirectURI)!)
+    
+        //https://thekey.me/cas/login?&action=signup
+        
+        let request = OIDAuthorizationRequest(configuration: configuration,
+                                              clientId: clientID,
+                                              clientSecret: clientSecret,
+                                              scopes: ["extended", "fullticket"],
+                                              redirectURL: redirectURI,
+                                              responseType: OIDResponseTypeCode,
+                                              additionalParameters: ["action":"signup"])
+ 
+        
+        if loginClient.isAuthenticated() {
+            loginClient.fetchAttributes() { (attributes, _) in
+                debugPrint("fetched: \(attributes!)")
+            }
+        }
+  */
     }
     
 }
