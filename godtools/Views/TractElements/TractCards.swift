@@ -50,14 +50,6 @@ class TractCards: BaseTractElement {
         return TractCardsProperties.self
     }
     
-    override func loadElementProperties(_ properties: [String : Any]) {
-        super.loadElementProperties(properties)
-        
-        let properties = cardsProperties()
-        
-       // properties.analyticsHeroEvents = self.analyticsUserInfo
-    }
-    
     override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
         self.elementFrame.y = yPosition
         

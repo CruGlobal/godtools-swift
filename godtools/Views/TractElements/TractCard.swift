@@ -70,8 +70,6 @@ class TractCard: BaseTractElement {
     var tractCardAnalyticEvents: [TractAnalyticEvent]  {
             return self.analyticsUserInfo
     }
-    var cardHeroAnalyticEvents: [TractAnalyticEvent] = []
-    var uniqueDict: [String: String] = [:]
     
     // MARK: - Setup
     
@@ -82,28 +80,6 @@ class TractCard: BaseTractElement {
                                                name: .heroActionTrackNotification,
                                                object: nil)
     }
-    
-    @objc func receiveHeroActionEvent(notification: Notification) {
-        guard let userInfo = notification.userInfo else {
-            return
-        }
-        
-        guard let events = userInfo as? [String: String] else {
-            return
-        }
-       // filterDuplicates(from: events)
-        let heroEvent = TractAnalyticEvent(dictionary: events)
-        cardHeroAnalyticEvents.append(heroEvent)
-        let properties = cardProperties()
-        properties.cardHeroAnalytics = cardHeroAnalyticEvents
-    }
-    
-    func filterDuplicates(from dictionary: [String: String]) {
-        for (key, value) in dictionary {
-            uniqueDict[key] = value
-        }
-    }
-    
     
     override func propertiesKind() -> TractProperties.Type {
         return TractCardProperties.self
@@ -199,6 +175,32 @@ class TractCard: BaseTractElement {
         }
     }
     
+    // MARK - This method compiles the HeroAnalytics data and associates it with the TractCard that is its closet child element.
+    // This was about the only solution since screens in the Tract are incremented by 1 and the XML is rendered 2 screens in advance.
+    
+    @objc func receiveHeroActionEvent(notification: Notification) {
+        guard let userInfo = notification.userInfo else {
+            return
+        }
+        
+        guard let events = userInfo as? [String: String] else {
+            return
+        }
+        
+        let relay = AnalyticsRelay.shared
+        
+        // Parse out the card number so it can be offset to when the Hero is on screen
+        let tractName = getTrackNamePrefix(screenName: relay.screenName)
+        guard let cardNumber = separateLetterAndNumber(screenName: relay.screenName) else { return }
+        let offsetCardNumber = setCardOffset(cardNumber: cardNumber)
+        
+        // Create a unique key that matches the screen name when only the Hero is shown
+        let heroKey = "\(tractName)-\(offsetCardNumber)"
+        
+        // Assign the value to the HeroAnalyticsDictionary stored in the AnalyticsRelay
+        relay.heroAnalyticsDictionary[heroKey] = events
+    }
+    
     // MARK: - Helpers
     
     func cardProperties() -> TractCardProperties {
@@ -218,6 +220,24 @@ class TractCard: BaseTractElement {
             TractConfigurations.didAccessToTract()
             openingAnimation()
         }
+    }
+    
+    // Analytics Helpers
+    
+    func getTrackNamePrefix(screenName: String) -> String {
+        let components = screenName.components(separatedBy: "-")
+        return components.first ?? ""
+    }
+    
+    func separateLetterAndNumber(screenName: String) -> Int? {
+        let components = screenName.components(separatedBy: "-")
+        guard let numberString = components.last, let number = Int(numberString) else { return nil }
+        
+        return number
+    }
+    
+    func setCardOffset(cardNumber: Int) -> Int {
+        return cardNumber + 2
     }
 
 }

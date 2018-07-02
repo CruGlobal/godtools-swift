@@ -141,6 +141,10 @@ class GodToolsAnaltyics {
         
         tracker?.send(screenViewInfo)
         
+        let relay = AnalyticsRelay.shared
+        NotificationCenter.default.post(name: .heroTimedActionNotification, object: nil, userInfo: nil)
+        relay.processScreenForHeroEvents(screenName: screenName)
+        
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.recordScreenViewInAdobe(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         }
@@ -186,6 +190,6 @@ class GodToolsAnaltyics {
         previousScreenName = screenName
         
         ADBMobile.trackState(screenName, data: properties)
-       // debugPrint("\(properties.debugDescription)")
+        debugPrint("\(properties.debugDescription)")
     }
 }

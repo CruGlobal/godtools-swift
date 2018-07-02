@@ -25,6 +25,7 @@ class AnalyticsRelay {
     var timerCounter = 0
     var isTimerRunning = false
     var task = DispatchWorkItem { }
+    var heroAnalyticsDictionary: [String: [String: String]] = [:]
     
     init() {
         NotificationCenter.default.addObserver(self,
@@ -39,6 +40,10 @@ class AnalyticsRelay {
                                                selector: #selector(reset),
                                                name: .tractCardStateChangedNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reset),
+                                               name: .heroTimedActionNotification,
+                                               object: nil)
     }
     
     @objc private func reset() {
@@ -52,6 +57,22 @@ class AnalyticsRelay {
                 self?.sendToAnalyticsIfRelevant(dictionary: dictionary)
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delayDouble, execute: task)
+        }
+    }
+    
+    func processScreenForHeroEvents(screenName: String) {
+        guard heroAnalyticsDictionary.keys.count > 0 else {
+            return
+        }
+        for name in heroAnalyticsDictionary.keys {
+            if screenName == name {
+                guard let dictionary = heroAnalyticsDictionary[name] else { return }
+                let event = TractAnalyticEvent(dictionary: dictionary)
+                if event.delay != "" {
+                    let delayDouble = Double(event.delay) ?? 0
+                    createDelayedTask(delayDouble, with: dictionary)
+                }
+            }
         }
     }
     

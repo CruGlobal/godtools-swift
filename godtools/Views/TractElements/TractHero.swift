@@ -22,7 +22,6 @@ class TractHero: BaseTractElement {
     var heroAnalyticEvents: [TractAnalyticEvent] = [] {
         didSet {
             sendHeroAnalyticEvents(events: heroAnalyticEvents)
-            print("I have values this many >> \(heroAnalyticEvents.count)")
         }
     }
     
@@ -66,8 +65,6 @@ class TractHero: BaseTractElement {
     override func loadElementProperties(_ properties: [String : Any]) {
         super.loadElementProperties(properties)
         
-        let properties = heroProperties()
-        properties.analyticsHeroEvents = self.analyticsUserInfo
         heroAnalyticEvents = self.analyticsUserInfo
     }
     

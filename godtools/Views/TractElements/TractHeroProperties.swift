@@ -10,6 +10,4 @@ import UIKit
 
 class TractHeroProperties: TractProperties {
     
-    var analyticsHeroEvents: [TractAnalyticEvent] = []
-
 }

@@ -130,7 +130,6 @@ extension TractCard {
     
     func hideAllCards() {
         let properties = cardProperties()
-        let heroEvents = properties.cardHeroAnalytics
         NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
         if properties.cardState == .close || properties.cardState == .hidden {
             return
