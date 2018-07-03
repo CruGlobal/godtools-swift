@@ -18,7 +18,7 @@ extension TractButton {
         
         if properties.type == .event {
             let events = properties.events.components(separatedBy: " ")
-            if let analyticEvent = properties.analyticsButtonUserInfo.first {
+            for analyticEvent in properties.analyticsButtonUserInfo {
                 let userInfo = TractAnalyticEvent.convertToDictionary(from: analyticEvent)
                 sendNotificationForAction(userInfo: userInfo)
             }

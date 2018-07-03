@@ -260,12 +260,12 @@ extension TractCard {
     func processCardForAnalyticsTimedActions() {
         let properties = cardProperties()
         let relay = AnalyticsRelay.shared
-        guard let analyticEvent = properties.analyticEventProperties.first else { return }
-        
+        for analyticEvent in properties.analyticEventProperties {
             if analyticEvent.delay != "" {
                 let delayDouble = Double(analyticEvent.delay) ?? 0
                 relay.createDelayedTask(delayDouble, with: TractAnalyticEvent.convertToDictionary(from: analyticEvent))
             }
+        }
     }
     
     func screenViewNotification(screenName: String) {

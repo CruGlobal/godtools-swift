@@ -39,7 +39,6 @@ class TractEventHelper {
             if tractEvent.action != "" {
                 tractAnalyticEvents.append(tractEvent)
             }
-            tractAnalyticEvents.append(tractEvent)
         }
         
         return tractAnalyticEvents
