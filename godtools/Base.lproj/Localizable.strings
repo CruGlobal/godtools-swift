@@ -22,6 +22,8 @@
 // Tool Detail
 "about" = "About";
 "login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
 "account_login" = "Account Login";
 "help" = "Help";
 "contact_us" = "Contact Us";
@@ -82,6 +84,8 @@ The app can be downloaded from godtoolsapp.com";
 // Alerts
 "error" = "Error";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 

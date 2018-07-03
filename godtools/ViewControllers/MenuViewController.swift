@@ -131,12 +131,6 @@ class MenuViewController: BaseViewController {
     override func screenName() -> String {
         return "Menu"
     }
-    
-    func presentLogoutconfirmation() {
-        let alert = UIAlertController(title: "You are about to logout", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 
 }
 
@@ -345,15 +339,14 @@ extension MenuViewController {
     
     fileprivate func openLoginWindow() {
         if loginClient.isAuthenticated() {
-            loginClient.logout()
-            adjustGeneralTitles()
+            presentLogoutConfirmation()
         } else {
-           authWithAutoCodeExchange()
+           initiateLogin()
         }
     }
     
     fileprivate func openCreateAccountWindow() {
-        authWithAutoCodeExchange(additionalParameters: ["action":"signup"])
+        initiateLogin(additionalParameters: ["action":"signup"])
     }
     
 }
@@ -385,35 +378,33 @@ extension MenuViewController: MenuTableViewCellDelegate {
 
 extension MenuViewController {
     
-    func authWithAutoCodeExchange(additionalParameters: [String: String]? = nil) {
+    func initiateLogin(additionalParameters: [String: String]? = nil) {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self) { (_) in }
+        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
+            // block unused
+        })
     }
     
-    func configureLoginClientForCreateAccount() {
-  /*
-        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas/login?&action=signup")!,
-                              clientID: AppDelegate.kClientID!,
-                              redirectURI: URL(string: AppDelegate.kRedirectURI)!)
-    
-        //https://thekey.me/cas/login?&action=signup
+    func presentLogoutConfirmation() {
+       
+        let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
         
-        let request = OIDAuthorizationRequest(configuration: configuration,
-                                              clientId: clientID,
-                                              clientSecret: clientSecret,
-                                              scopes: ["extended", "fullticket"],
-                                              redirectURL: redirectURI,
-                                              responseType: OIDResponseTypeCode,
-                                              additionalParameters: ["action":"signup"])
- 
+        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { (action) -> Void in
+
+            self.loginClient.logout()
+            self.adjustGeneralTitles()
+            self.tableView.reloadData()
+        })
         
-        if loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                debugPrint("fetched: \(attributes!)")
-            }
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) -> Void in
+            
         }
-  */
+        
+        dialogMessage.addAction(ok)
+        dialogMessage.addAction(cancel)
+        
+        self.present(dialogMessage, animated: true, completion: nil)
     }
     
 }
