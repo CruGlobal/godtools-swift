@@ -11,11 +11,11 @@ import MessageUI
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-protocol MenuViewControllerDelegate {
-    mutating func moveToUpdateLanguageSettings()
-    mutating func moveToAbout()
-    mutating func moveToLogin()
-    mutating func openWebView(url: URL, title: String, analyticsTitle: String)
+protocol MenuViewControllerDelegate: class {
+    func moveToUpdateLanguageSettings()
+    func moveToAbout()
+    func moveToLogin()
+    func openWebView(url: URL, title: String, analyticsTitle: String)
 }
 
 /*
@@ -394,7 +394,6 @@ extension MenuViewController {
 
             self.loginClient.logout()
             self.adjustGeneralTitles()
-            self.tableView.reloadData()
         })
         
         let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) -> Void in
@@ -413,6 +412,5 @@ extension MenuViewController: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
          adjustGeneralTitles()
     }
-    
     
 }
