@@ -47,10 +47,32 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
-        navigationController.navigationBar.tintColor = .gtWhite
-        navigationController.navigationBar.barTintColor = .clear
-        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
-        navigationController.navigationBar.isOpaque = true
+        let controllers = navigationController.viewControllers
+        var isGoingToTractViewController = false
+        if controllers.count > 1 {
+            if controllers[1].isKind(of: TractViewController.self) {
+                isGoingToTractViewController = true
+            }
+        }
+        
+        if color != .gtBlue {
+            navigationController.navigationBar.tintColor = .gtWhite
+            navigationController.navigationBar.barTintColor = .clear
+            navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
+            navigationController.navigationBar.isOpaque = true
+            
+        } else if isGoingToTractViewController{
+            navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController.navigationBar.shadowImage = UIImage()
+            navigationController.navigationBar.isTranslucent = true
+            navigationController.view.backgroundColor = .clear
+        } else {
+            navigationController.navigationBar.tintColor = .gtWhite
+            navigationController.navigationBar.barTintColor = .clear
+            navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
+            navigationController.navigationBar.isOpaque = true
+        }
+
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
     }
