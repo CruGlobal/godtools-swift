@@ -32,7 +32,7 @@ class TractHero: BaseTractElement {
     }
     
     override func render() -> UIView {
-        if let followingElement = getFollowingElement(), followingElement.isKind(of: TractCards.self) {
+        if let followingElement = getFollowingElement() as? TractCards {
             updateHeroHeight(cards: followingElement)
             setupScrollView()
             
@@ -72,7 +72,7 @@ class TractHero: BaseTractElement {
     }
     
     func updateHeroHeight(cards: TractCards) {
-        self.heroHeight = cards.getMaxFreeHeight()
+        self.heroHeight = cards.getMaxFreeHeight(hero: self)
         self.elementFrame.height = self.heroHeight
         self.frame = self.elementFrame.getFrame()
     }
