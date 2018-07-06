@@ -14,8 +14,8 @@ class ManifestProperties: TractProperties {
     var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
-    var navbarColor = GTAppDefaultStyle.navBarColor.getRGBAColor()
-    var navbarControlColor = GTAppDefaultStyle.navBarControlColor.getRGBAColor()
+    var navbarColor: UIColor?
+    var navbarControlColor: UIColor?
     var resources = [String: String]()
     
     override func defineProperties() {

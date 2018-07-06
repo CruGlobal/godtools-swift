@@ -133,7 +133,8 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationColors(backgroundColor: self.manifestProperties.navbarColor, controlColor: self.manifestProperties.navbarControlColor)
+        self.baseDelegate?.changeNavigationColors(backgroundColor: manifestProperties.navbarColor ?? manifestProperties.primaryColor,
+                                                  controlColor: manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor)
         
         let navigationBar = navigationController!.navigationBar
         TractPage.navbarHeight = navigationBar.frame.size.height
