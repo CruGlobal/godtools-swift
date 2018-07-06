@@ -47,7 +47,7 @@ class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
-    var general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
+    var general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -68,6 +68,8 @@ class MenuViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        adjustGeneralTitles()
+        loginClient.addStateChangeDelegate(delegate: self)
         self.setupStyle()
     }
     
@@ -410,7 +412,9 @@ extension MenuViewController {
 
 extension MenuViewController: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
-         adjustGeneralTitles()
+        DispatchQueue.main.async {
+            self.adjustGeneralTitles()
+        }
     }
     
 }
