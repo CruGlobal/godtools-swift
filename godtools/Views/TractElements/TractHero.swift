@@ -32,8 +32,7 @@ class TractHero: BaseTractElement {
     }
     
     override func render() -> UIView {
-        let followingElement = getFollowingElement()
-        if followingElement != nil && followingElement!.isKind(of: TractCards.self) {
+        if let followingElement = getFollowingElement(), followingElement.isKind(of: TractCards.self) {
             updateHeroHeight()
             setupScrollView()
             
