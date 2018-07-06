@@ -51,30 +51,11 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         navigationController.navigationBar.tintColor = .gtWhite
         navigationController.navigationBar.barTintColor = .clear
         navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: navColor), for: .default)
-        navigationController.navigationBar.isOpaque = true
+        navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
     }
   
-    // MARK - If app is about to go to a Tract and no nav bar colors were specified in XML, the existing .gtBlue would be passed along with alpha of 1 and this negatively affects some view container demensions for smaller devices. So, the navColor needs to be adjusted for this case.
-    
-    func inspectColorForController(navigationController: UINavigationController, color: UIColor) -> UIColor {
-        let controllers = navigationController.viewControllers
-        var navColor = color
-        
-        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-        _ = color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        debugPrint("COLOR RGBA inspected >> \(red) \(green) \(blue) \(alpha)")
-        
-        if controllers.count > 1 {
-            if controllers[1].isKind(of: TractViewController.self) {
-                navColor = (alpha < 1.0) ? color : color.withAlphaComponent(0.99)
-            }
-        }
-       return navColor
-    }
-    
     // Notifications
     
     func defineObservers() {
