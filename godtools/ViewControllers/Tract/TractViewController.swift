@@ -124,8 +124,9 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
+        guard let resource = resource else { return "" }
         let primaryLanguage = resolvePrimaryLanguage()
-        return resource!.localizedName(language: primaryLanguage)
+        return resource.localizedName(language: primaryLanguage)
     }
     
     fileprivate func setupStyle() {
@@ -133,10 +134,12 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func setupNavigationBarStyles() {
-        self.baseDelegate?.changeNavigationColors(backgroundColor: manifestProperties.navbarColor ?? manifestProperties.primaryColor,
-                                                  controlColor: manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor)
+        if let baseDelegate = baseDelegate {
+            baseDelegate.changeNavigationColors(backgroundColor: manifestProperties.navbarColor ?? manifestProperties.primaryColor,
+                                                controlColor: manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor)
+        }
         
-        let navigationBar = navigationController!.navigationBar
+        guard let navigationBar = navigationController?.navigationBar else { return }
         TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
