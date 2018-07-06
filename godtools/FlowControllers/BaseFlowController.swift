@@ -56,18 +56,22 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
     }
   
-    // MARK - If app is about to go to a Tract and no nav bar colors were specified in XML, the existing .gtBlue would be passed along and negatively affects some view container demensions for smaller devices. So, the navColor needs to be adjusted for this case.
+    // MARK - If app is about to go to a Tract and no nav bar colors were specified in XML, the existing .gtBlue would be passed along with alpha of 1 and this negatively affects some view container demensions for smaller devices. So, the navColor needs to be adjusted for this case.
     
     func inspectColorForController(navigationController: UINavigationController, color: UIColor) -> UIColor {
         let controllers = navigationController.viewControllers
-        var isGoingToTractView = false
-        var navColor: UIColor
+        var navColor = color
+        
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        _ = color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        debugPrint("COLOR RGBA inspected >> \(red) \(green) \(blue) \(alpha)")
+        
         if controllers.count > 1 {
             if controllers[1].isKind(of: TractViewController.self) {
-                isGoingToTractView = true
+                navColor = (alpha < 1.0) ? color : color.withAlphaComponent(0.99)
             }
         }
-        navColor = (isGoingToTractView && color == .gtBlue) ? UIColor(white: 0.2, alpha: 0.3) : color
        return navColor
     }
     
