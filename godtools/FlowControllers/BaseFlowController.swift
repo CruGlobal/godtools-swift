@@ -47,10 +47,9 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
-        let navColor = inspectColorForController(navigationController: navigationController, color: color)
         navigationController.navigationBar.tintColor = .gtWhite
         navigationController.navigationBar.barTintColor = .clear
-        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: navColor), for: .default)
+        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
         navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
