@@ -74,6 +74,8 @@ class TractHero: BaseTractElement {
     func updateHeroHeight(cards: TractCards) {
         self.heroHeight = cards.getMaxFreeHeight(hero: self)
         self.elementFrame.height = self.heroHeight
+        debugPrint(self.frame)
+        debugPrint(self.elementFrame.getFrame())
         self.frame = self.elementFrame.getFrame()
     }
 }
