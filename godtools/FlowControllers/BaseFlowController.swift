@@ -71,7 +71,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     func displayMenu() {
         let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
         menuViewController.delegate = self
-        menuViewController.view.frame = (self.currentViewController?.view.frame)!
+        guard let currentFrame = self.currentViewController?.view.frame else { return }
+        menuViewController.view.frame = currentFrame
         
         let navigationController = self.currentViewController?.navigationController
         let src = self.currentViewController
