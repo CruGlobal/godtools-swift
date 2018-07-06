@@ -46,7 +46,7 @@ PODS:
   - SSZipArchive (1.8.1)
   - SwiftyJSON (3.1.4)
   - SWXMLHash (4.1.0)
-  - TheKeyOAuthSwift (0.5.4):
+  - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
     - Result
 
@@ -64,7 +64,7 @@ DEPENDENCIES:
   - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
   - SWXMLHash (~> 4.1)
-  - TheKeyOAuthSwift (~> 0.5.4)
+  - TheKeyOAuthSwift (~> 0.5.5)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -119,8 +119,8 @@ SPEC CHECKSUMS:
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
-  TheKeyOAuthSwift: f771f369fda26ef7d72d5b5663e8527f72674310
+  TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
 
-PODFILE CHECKSUM: 85d355acec6ae38c980bf6a4dacf19f5872649cc
+PODFILE CHECKSUM: 4582d139ebfbeeb2cc68a40766c7b21e6613480e
 
 COCOAPODS: 1.5.3
