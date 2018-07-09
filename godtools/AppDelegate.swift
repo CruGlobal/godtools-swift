@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
     let loginClient = TheKeyOAuthClient.shared
-    fileprivate let kIssuer: String = "GodTools"
     fileprivate let kClientID: String? = "5337397229970887848"
     fileprivate let kRedirectURI: String = "https://godtoolsapp.com/auth"
     fileprivate let kAppAuthExampleAuthStateKey: String = "authState"

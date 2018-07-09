@@ -39,9 +39,9 @@ class LoginBannerView: UIView {
     }
     
     func setupStyle() {
-        topicLabel.text = "Want more GodTools?"
-        topicDescriptionLabel.text = "Click Here to receive updates and hear how GodTools has impacted others."
-        actionLabel.text = "Click Here"
+        topicLabel.text = "want_more_godtools?".localized
+        topicDescriptionLabel.text = "click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others.".localized
+        actionLabel.text = "click_here".localized
         actionLabel.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(actionTapped))
         actionLabel.addGestureRecognizer(tap)
@@ -49,16 +49,16 @@ class LoginBannerView: UIView {
     }
     
     @objc func actionTapped() {
-        print("Testing actionTapped click here!")
+        UserDefaults.standard.set(true, forKey: GTConstants.kBannerHasBeenDismissed)
+        NotificationCenter.default.post(name: .loginBannerDismissedNotification, object: nil)
+       // NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
+        NotificationCenter.default.post(name: .displayMenuNotification, object: nil, userInfo: ["isSentFromLoginBanner": true])
         
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        print("Testing cancelTapped X button")
         UserDefaults.standard.set(true, forKey: GTConstants.kBannerHasBeenDismissed)
-        NotificationCenter.default.post(name: .loginBannerDismissedNotification,
-                                        object: nil,
-                                        userInfo: nil)
+        NotificationCenter.default.post(name: .loginBannerDismissedNotification, object: nil)
     }
     
     func xibSetup() {

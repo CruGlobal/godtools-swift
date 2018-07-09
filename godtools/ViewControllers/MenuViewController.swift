@@ -19,9 +19,6 @@ protocol MenuViewControllerDelegate: class {
 }
 
 /*
----- The OIDC issuer from which the configuration will be discovered.----
-let kIssuer: String = "GodTools";
-
  ----The OAuth client ID.----
  For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
  Set to nil to use dynamic registration with this example.
@@ -36,7 +33,6 @@ let kClientID: String? = "2880599195946831054";
 let kRedirectURI: String = "ppoauthapp://h ttps://stage.godtoolsapp.com/auth";
   Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
   Real RedirectURI //https://godtoolsapp.com/auth
-
 
  ----NSCoding key for the authState property.----
 let kAppAuthExampleAuthStateKey: String = "authState";
@@ -57,6 +53,7 @@ class MenuViewController: BaseViewController {
     var delegate: MenuViewControllerDelegate?
     let loginClient =  TheKeyOAuthClient.shared
     
+    var isComingFromLoginBanner = false
     let intWithCreateAccount = 6
     let intWithoutCreateAccount = 5
     
@@ -76,6 +73,14 @@ class MenuViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         adjustGeneralTitles()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if isComingFromLoginBanner {
+            openLoginWindow()
+            isComingFromLoginBanner = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -219,7 +224,6 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController {
     
-    // MARK- There may be additional work to complete for logging in and not just using a web view
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch general.count {
         case intWithCreateAccount:
