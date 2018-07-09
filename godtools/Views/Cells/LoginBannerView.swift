@@ -51,9 +51,7 @@ class LoginBannerView: UIView {
     @objc func actionTapped() {
         UserDefaults.standard.set(true, forKey: GTConstants.kBannerHasBeenDismissed)
         NotificationCenter.default.post(name: .loginBannerDismissedNotification, object: nil)
-       // NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
         NotificationCenter.default.post(name: .displayMenuNotification, object: nil, userInfo: ["isSentFromLoginBanner": true])
-        
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
