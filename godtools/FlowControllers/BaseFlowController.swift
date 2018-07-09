@@ -71,6 +71,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     func displayMenu() {
         let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
         menuViewController.delegate = self
+        guard let currentFrame = self.currentViewController?.view.frame else { return }
+        menuViewController.view.frame = currentFrame
         
         let navigationController = self.currentViewController?.navigationController
         let src = self.currentViewController
@@ -78,13 +80,13 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         let srcViewWidth = src?.view.frame.size.width
         
         src?.view.superview?.insertSubview(dst.view, aboveSubview: (src!.view)!)
-        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth!), y: 64)
+        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth!), y: 0)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         src?.view.transform = CGAffineTransform(translationX: srcViewWidth!, y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 64) },
+                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
                         navigationController?.pushViewController(dst, animated: false) } )
     }
@@ -102,7 +104,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 64)
+                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 0)
                         dst?.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
                         _ = navigationController?.popViewController(animated: false) } )
