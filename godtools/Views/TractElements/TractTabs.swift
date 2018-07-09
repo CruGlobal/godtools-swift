@@ -20,6 +20,7 @@ class TractTabs: BaseTractElement {
     
     var segmentedControl = UISegmentedControl()
     var tabs = [[XMLIndexer]]()
+    var analyticsTabsEvents: [TractAnalyticEvent] = []
     
     override func propertiesKind() -> TractProperties.Type {
         return TractTabsProperties.self

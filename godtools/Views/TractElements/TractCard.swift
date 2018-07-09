@@ -67,6 +67,10 @@ class TractCard: BaseTractElement {
         }
     }
     
+    var tractCardAnalyticEvents: [TractAnalyticEvent]  {
+            return self.analyticsUserInfo
+    }
+    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {

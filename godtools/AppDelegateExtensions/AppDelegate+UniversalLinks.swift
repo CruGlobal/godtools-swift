@@ -70,7 +70,7 @@ extension AppDelegate {
         
         let parallelLanguages = parseLanguagesFrom(url, usingKey: AppDelegate.kParallelLanguageKey)
         for x in parallelLanguages {
-            debugPrint("\(x.code)")
+           // debugPrint("\(x.code)")
         }
         var parallelLanguage: Language?
         
