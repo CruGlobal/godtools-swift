@@ -49,12 +49,12 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
         navigationController.navigationBar.tintColor = .gtWhite
         navigationController.navigationBar.barTintColor = .clear
-        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
-        navigationController.navigationBar.isOpaque = true
+        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
+        navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
     }
-    
+  
     // Notifications
     
     func defineObservers() {
