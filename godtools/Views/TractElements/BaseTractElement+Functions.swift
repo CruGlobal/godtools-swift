@@ -21,28 +21,18 @@ extension BaseTractElement {
         if nodeClassType == TractModals.self || nodeClassType == TractEmails.self || nodeClassType == TractEmail.self {
             return nodeClassType.init(data: data, parent: self)
         } else if nodeClassType == TractImage.self {
-            var imageDictionary = [String: String]()
-            if let xttributes = data.element?.allAttributes {
-                for (_, dictionary) in (xttributes.enumerated()) {
-                    imageDictionary[dictionary.key] = dictionary.value.text
-                }
-                if let conditionalImage = imageDictionary["restrictTo"] {
-                    switch conditionalImage {
-                    case "web":
-                        print("mobile should say web -> \(conditionalImage)")
-                    default:
-                        print("should say other -> \(conditionalImage)")
-                    }
-                }
-
-                print("imageDictionary >> \(imageDictionary)\n")
+            let nodeHasWebImage = inspectNodeForWebImage(data: data)
+            if nodeHasWebImage {
+                let webElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+                webElement.elementFrame.height = 0
+                webElement.elementFrame.yMarginTop = 0
+                webElement.elementFrame.yMarginBottom = 0
+                webElement.isHidden = true
+                return webElement
+            } else  {
+                return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             }
-            
-
-             print("nodeClassType : yPosition >> \(nodeClassType) \(yPosition) \(data)")
-             return nodeClassType.init(data: data, startOnY: 25 /*yPosition*/, parent: self, elementNumber: elementNumber)
          } else {
-            print("nodeClassType : yPosition >> \(nodeClassType) \(yPosition))")
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
     }
@@ -150,6 +140,24 @@ extension BaseTractElement {
     
     func getParentCard() -> TractCard? {
         return BaseTractElement.getParentCardForElement(self)
+    }
+    
+    func inspectNodeForWebImage(data: XMLIndexer) -> Bool {
+        guard let xttributes = data.element?.allAttributes else { return false }
+        var imageDictionary = [String: String]()
+        
+        for (_, dictionary) in (xttributes.enumerated()) {
+            imageDictionary[dictionary.key] = dictionary.value.text
+        }
+        
+        guard let conditionalImage = imageDictionary["restrictTo"] else { return false }
+        
+        switch conditionalImage {
+        case "web":
+            return true
+        default:
+            return false
+        }
     }
     
     // MARK: - Form Functions
