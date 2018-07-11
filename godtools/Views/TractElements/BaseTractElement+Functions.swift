@@ -20,11 +20,28 @@ extension BaseTractElement {
         let nodeClassType = xmlManager.parser.getNodeClass(data)
         if nodeClassType == TractModals.self || nodeClassType == TractEmails.self || nodeClassType == TractEmail.self {
             return nodeClassType.init(data: data, parent: self)
-        } /*else if nodeClassType == TractImage.self {
-             let x = data.element?.allAttributes
+        } else if nodeClassType == TractImage.self {
+            var imageDictionary = [String: String]()
+            if let xttributes = data.element?.allAttributes {
+                for (_, dictionary) in (xttributes.enumerated()) {
+                    imageDictionary[dictionary.key] = dictionary.value.text
+                }
+                if let conditionalImage = imageDictionary["restrictTo"] {
+                    switch conditionalImage {
+                    case "web":
+                        print("mobile should say web -> \(conditionalImage)")
+                    default:
+                        print("should say other -> \(conditionalImage)")
+                    }
+                }
+
+                print("imageDictionary >> \(imageDictionary)\n")
+            }
+            
+
              print("nodeClassType : yPosition >> \(nodeClassType) \(yPosition) \(data)")
-             return nodeClassType.init(data: data, startOnY: 0, parent: self, elementNumber: elementNumber)
-         }*/ else {
+             return nodeClassType.init(data: data, startOnY: 25 /*yPosition*/, parent: self, elementNumber: elementNumber)
+         } else {
             print("nodeClassType : yPosition >> \(nodeClassType) \(yPosition))")
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
