@@ -34,6 +34,8 @@ class ToolDetailViewController: BaseViewController {
     
     fileprivate func displayData() {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        guard resource != nil else { return }
+        guard resource?.translations != nil else { return }
         
         self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
         
@@ -43,10 +45,21 @@ class ToolDetailViewController: BaseViewController {
         
         self.descriptionLabel.text = loadDescription()
         
-        self.languagesLabel.text = Array(resource!.translations)
-            .map({ "\($0.language!.localizedName())"})
-            .sorted(by: { $0 < $1 })
-            .joined(separator: ", ")
+        let resourceTranslations = Array(resource!.translations)
+        var translationStrings = [String]()
+        for translation in resourceTranslations {
+            guard translation.language != nil else {
+                continue
+            }
+            translationStrings.append((translation.language?.localizedName())!)
+        }
+        let labelText = translationStrings.sorted(by: { $0 < $1 }).joined(separator: ", ")
+        
+        self.languagesLabel.text = labelText
+        /*Array(resource!.translations)
+         .map({ "\($0.language!.localizedName())"})
+         .sorted(by: { $0 < $1 })
+         .joined(separator: ", ")*/
         
         self.displayButton()
         self.bannerImageView.image = BannerManager().loadFor(remoteId: resource!.aboutBannerRemoteId)

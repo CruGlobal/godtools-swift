@@ -56,8 +56,21 @@ class TranslationZipImporter: GTDataManager {
     }
 
     private func addTranslationsToQueue(_ translations: List<Translation>) {
-        let translations = Array(translations)
-        
+        var translations = Array(translations)
+        for aTranslation in translations {
+            guard aTranslation.language != nil else {
+                continue
+            }
+            translations.append(aTranslation)
+        }
+        var primaryTranslations = [Translation]()
+        for translationLanguage in translations {
+            guard translationLanguage.language?.isPrimary() != nil else {
+                continue
+            }
+            primaryTranslations.append(translationLanguage)
+        }
+        translations = primaryTranslations
         let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
         if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
             translationDownloadQueue.append(primaryTranslation!)
