@@ -24,15 +24,11 @@ extension BaseTractElement {
             let nodeHasWebImage = inspectNodeForWebImage(data: data)
             if nodeHasWebImage {
                 let webElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
-                webElement.elementFrame.height = 0
-                webElement.elementFrame.yMarginTop = 0
-                webElement.elementFrame.yMarginBottom = 0
-                webElement.isHidden = true
-                return webElement
-            } else  {
+                return filteredWebOnlyElement(element: webElement)
+            } else {
                 return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
             }
-         } else {
+        } else {
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
     }
@@ -144,20 +140,27 @@ extension BaseTractElement {
     
     func inspectNodeForWebImage(data: XMLIndexer) -> Bool {
         guard let xttributes = data.element?.allAttributes else { return false }
-        var imageDictionary = [String: String]()
         
+        var imageDictionary = [String: String]()
         for (_, dictionary) in (xttributes.enumerated()) {
             imageDictionary[dictionary.key] = dictionary.value.text
         }
         
-        guard let conditionalImage = imageDictionary["restrictTo"] else { return false }
-        
-        switch conditionalImage {
+        guard let imageRestriction = imageDictionary["restrictTo"] else { return false }
+        switch imageRestriction {
         case "web":
             return true
         default:
             return false
         }
+    }
+    
+    func filteredWebOnlyElement(element: BaseTractElement) -> BaseTractElement {
+        element.elementFrame.height = 0
+        element.elementFrame.yMarginTop = 0
+        element.elementFrame.yMarginBottom = 0
+        element.isHidden = true
+        return element
     }
     
     // MARK: - Form Functions
