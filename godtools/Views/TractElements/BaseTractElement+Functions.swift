@@ -21,12 +21,12 @@ extension BaseTractElement {
         if nodeClassType == TractModals.self || nodeClassType == TractEmails.self || nodeClassType == TractEmail.self {
             return nodeClassType.init(data: data, parent: self)
         } else if nodeClassType == TractImage.self {
-            let nodeHasWebImage = inspectNodeForWebImage(data: data)
-            if nodeHasWebImage {
-                let webElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
-                return filteredWebOnlyElement(element: webElement)
-            } else {
+            let imageIsForMobile = inspectImage(data: data)
+            if imageIsForMobile {
                 return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            } else {
+                let nonMobileElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+                return filteredNonMobileElement(element: nonMobileElement)
             }
         } else {
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
@@ -138,24 +138,24 @@ extension BaseTractElement {
         return BaseTractElement.getParentCardForElement(self)
     }
     
-    func inspectNodeForWebImage(data: XMLIndexer) -> Bool {
-        guard let xttributes = data.element?.allAttributes else { return false }
+    func inspectImage(data: XMLIndexer) -> Bool {
+        guard let imageAttributes = data.element?.allAttributes else { return true }
         
         var imageDictionary = [String: String]()
-        for (_, dictionary) in (xttributes.enumerated()) {
+        for (_, dictionary) in (imageAttributes.enumerated()) {
             imageDictionary[dictionary.key] = dictionary.value.text
         }
         
-        guard let imageRestriction = imageDictionary["restrictTo"] else { return false }
-        switch imageRestriction {
-        case "web":
+        guard let imageValue = imageDictionary["restrictTo"] else { return true }
+        
+        if imageValue.contains("mobile") {
             return true
-        default:
+        } else {
             return false
         }
     }
     
-    func filteredWebOnlyElement(element: BaseTractElement) -> BaseTractElement {
+    func filteredNonMobileElement(element: BaseTractElement) -> BaseTractElement {
         element.elementFrame.height = 0
         element.elementFrame.yMarginTop = 0
         element.elementFrame.yMarginBottom = 0
