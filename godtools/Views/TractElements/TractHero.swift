@@ -39,8 +39,12 @@ class TractHero: BaseTractElement {
         }
         
         setupScrollView()
-        
-        for element in self.elements! {
+        guard let elements = self.elements else {
+            let blankView = UIView()
+            blankView.isHidden = true
+            return blankView
+        }
+        for element in elements {
             self.containerView.addSubview(element.render())
         }
         
