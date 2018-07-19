@@ -31,6 +31,8 @@ class TractHero: BaseTractElement {
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
     
+    // MARK: The Hero size depends on how much text is needed to be displayed. This mainly affects how the scrollview is sized and whether or not there needs to be a CallToAction button at the bottom of the screen.
+    
     override func render() -> UIView {
         if let followingElement = getFollowingElement() as? TractCards {
             updateHeroHeight(cards: followingElement)
