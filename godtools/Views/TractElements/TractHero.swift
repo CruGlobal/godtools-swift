@@ -34,20 +34,25 @@ class TractHero: BaseTractElement {
     override func render() -> UIView {
         if let followingElement = getFollowingElement() as? TractCards {
             updateHeroHeight(cards: followingElement)
-            setupScrollView()
-            
-            for element in self.elements! {
-                self.containerView.addSubview(element.render())
-            }
-            
-            self.scrollView.addSubview(self.containerView)
-            self.addSubview(self.scrollView)
-            
-            TractBindings.addBindings(self)
-            return self
         } else {
-            return super.render()
+            updateHeroHeightWithNoCards()
         }
+        
+        setupScrollView()
+        guard let elements = self.elements else {
+            let blankView = UIView()
+            blankView.isHidden = true
+            return blankView
+        }
+        for element in elements {
+            self.containerView.addSubview(element.render())
+        }
+        
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.scrollView)
+        
+        TractBindings.addBindings(self)
+        return self
     }
     
     // MARK: - Helpers
@@ -76,4 +81,11 @@ class TractHero: BaseTractElement {
         self.elementFrame.height = self.heroHeight
         self.frame = self.elementFrame.getFrame()
     }
+    
+    func updateHeroHeightWithNoCards() {
+        self.heroHeight = BaseTractElement.screenHeight
+        self.elementFrame.height = self.heroHeight
+        self.frame = self.elementFrame.getFrame()
+    }
+    
 }
