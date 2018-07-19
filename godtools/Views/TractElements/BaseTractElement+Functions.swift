@@ -24,10 +24,9 @@ extension BaseTractElement {
             let imageIsForMobile = inspectImage(data: data)
             if imageIsForMobile {
                 return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
-            } else {
-                let nonMobileElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
-                return filteredNonMobileElement(element: nonMobileElement)
             }
+            let nonMobileElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            return filteredNonMobileElement(element: nonMobileElement)
         } else {
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
@@ -148,11 +147,7 @@ extension BaseTractElement {
         
         guard let imageValue = imageDictionary["restrictTo"] else { return true }
         
-        if imageValue.contains("mobile") {
-            return true
-        } else {
-            return false
-        }
+        return imageValue.contains("mobile")
     }
     
     func filteredNonMobileElement(element: BaseTractElement) -> BaseTractElement {
