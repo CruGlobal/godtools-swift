@@ -396,15 +396,13 @@ extension MenuViewController {
        
         let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
         
-        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { (action) -> Void in
+        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
 
-            self.loginClient.logout()
-            self.adjustGeneralTitles()
+            self?.loginClient.logout()
+            self?.adjustGeneralTitles()
         })
         
-        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (action) -> Void in
-            
-        }
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
         
         dialogMessage.addAction(ok)
         dialogMessage.addAction(cancel)

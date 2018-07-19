@@ -107,7 +107,7 @@ class GodToolsAnaltyics {
         loadAdobeAnalyticsConfigurationFile()
         var properties: [String: String] = [:]
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = isUserLoggedIn()
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = getLoggedInStatus()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         ADBMobile.collectLifecycleData(withAdditionalData: properties)
@@ -182,7 +182,7 @@ class GodToolsAnaltyics {
         properties[AdobeAnalyticsConstants.Keys.contentLanguage] = primaryLanguageCode
         properties[AdobeAnalyticsConstants.Keys.contentLanguageSecondary] = parallelLanguageCode
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = isUserLoggedIn()
+        properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = getLoggedInStatus()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         previousScreenName = screenName
@@ -191,7 +191,7 @@ class GodToolsAnaltyics {
        // debugPrint("\(properties.debugDescription)")
     }
     
-    private func isUserLoggedIn() -> String {
+    private func getLoggedInStatus() -> String {
         let client = TheKeyOAuthClient.shared
         if client.isAuthenticated() {
             return AdobeAnalyticsConstants.Values.isLoggedIn

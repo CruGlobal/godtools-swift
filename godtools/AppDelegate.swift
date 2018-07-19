@@ -21,20 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
     let loginClient = TheKeyOAuthClient.shared
-    fileprivate let kClientID: String? = "5337397229970887848"
-    fileprivate let kRedirectURI: String = "https://godtoolsapp.com/auth"
-    fileprivate let kAppAuthExampleAuthStateKey: String = "authState"
+    fileprivate let kClientID = "5337397229970887848"
+    fileprivate let kRedirectURI = "https://godtoolsapp.com/auth"
+    fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         resetStateIfUITesting()
         
         loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
-                              clientID: kClientID!,
+                              clientID: kClientID,
                               redirectURI: URL(string: kRedirectURI)!)
         
         if loginClient.isAuthenticated() {
             loginClient.fetchAttributes() { (attributes, _) in
-                debugPrint("fetched: \(attributes!)")
+                
             }
         }
         
