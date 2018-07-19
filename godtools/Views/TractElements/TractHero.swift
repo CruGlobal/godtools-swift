@@ -34,6 +34,10 @@ class TractHero: BaseTractElement {
     override func render() -> UIView {
         if let followingElement = getFollowingElement() as? TractCards {
             updateHeroHeight(cards: followingElement)
+        } else if let _ = getFollowingElement() as? TractCallToAction {
+            let callToActionHeight = TractCallToAction.minHeight
+            let callToActionPadding = TractCallToAction.paddingConstant
+            updateHeroHeightWithNoCards(extraPadding: callToActionHeight + callToActionPadding)
         } else {
             updateHeroHeightWithNoCards()
         }
@@ -82,8 +86,8 @@ class TractHero: BaseTractElement {
         self.frame = self.elementFrame.getFrame()
     }
     
-    func updateHeroHeightWithNoCards() {
-        self.heroHeight = BaseTractElement.screenHeight
+    func updateHeroHeightWithNoCards(extraPadding: CGFloat = 0) {
+        self.heroHeight = BaseTractElement.screenHeight - TractHero.paddingBottom - extraPadding
         self.elementFrame.height = self.heroHeight
         self.frame = self.elementFrame.getFrame()
     }
