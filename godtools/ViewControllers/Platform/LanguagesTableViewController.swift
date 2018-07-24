@@ -12,15 +12,35 @@ import RealmSwift
 protocol LanguagesTableViewControllerDelegate {
 }
 
+struct NamedLanguage {
+    let language : Language
+    let name : String
+}
+
 class LanguagesTableViewController: BaseViewController {
     
     static let languageCellIdentifier = "languageCell"
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     
     var delegate: LanguagesTableViewControllerDelegate?
     
     var languages = Languages()
+    var namedLanguages = [NamedLanguage]()
+    var filteredNamedLanguages = [NamedLanguage]()
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
+    
+    var isFiltering: Bool = false {
+        didSet {
+            changeDataSource()
+        }
+    }
+    
+    var searchTool: UISearchBar!
+    var searchBarIsOnScreen = false
+    var navHeight: CGFloat = 0.0
+    var blankView = UIView()
     
     var selectingForPrimary = true
     
@@ -43,12 +63,22 @@ class LanguagesTableViewController: BaseViewController {
         if !selectingForPrimary, languagesManager.loadParallelLanguageFromDisk() != nil {
             addClearButton()
         }
-
+        addSearchButton()
         super.viewDidLoad()
+        if let nvHt = self.navigationController?.navigationBar.frame.height {
+            let statusHeight = UIApplication.shared.statusBarFrame.height
+            navHeight = nvHt + statusHeight
+        }
         
         registerCells()
         loadLanguages()
         configureScreenTitleAux()
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setUpSearchBar()
     }
     
     // MARK: - Load data
@@ -56,6 +86,10 @@ class LanguagesTableViewController: BaseViewController {
     func loadLanguages() {
         languagesManager.selectingPrimaryLanguage = selectingForPrimary
         languages = languagesManager.loadFromDisk()
+        for language in languages {
+            let name = language.localizedName()
+            namedLanguages.append(NamedLanguage(language: language, name: name))
+        }
 
         if !selectingForPrimary {
             configureListForParallelChoice()
@@ -68,6 +102,33 @@ class LanguagesTableViewController: BaseViewController {
     override func clearButtonAction() {
         GTSettings.shared.parallelLanguageId = nil
         tableView.reloadData()
+    }
+    
+    override func searchButtonAction() {
+        if searchBarIsOnScreen {
+            UIView.animate(withDuration: 0.25) {
+                self.searchTool.frame = CGRect(x: self.screenWidth, y: self.navHeight, width: self.screenWidth, height: self.screenHeight/12)
+                self.blankView = UIView(frame: CGRect(x: self.screenWidth, y: 0, width: self.screenWidth, height: self.screenHeight/12))
+                self.tableView.tableHeaderView = UIView()
+                self.searchTool.resignFirstResponder()
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.blankView = UIView(frame: CGRect(x: 0, y: 0, width: self.screenWidth, height: self.screenHeight/12))
+                self.tableView.tableHeaderView = self.blankView
+                self.searchTool.frame = CGRect(x: 0, y: self.navHeight, width: self.screenWidth, height: self.screenHeight/12)
+            }
+        }
+        searchBarIsOnScreen = !searchBarIsOnScreen
+
+    }
+    
+    func setUpSearchBar() {
+        searchTool = UISearchBar(frame: CGRect(x: self.screenWidth, y: navHeight, width: screenWidth, height: screenHeight/12))
+        searchTool.delegate = self
+        searchTool.barTintColor = .gtBlue
+        searchTool.isTranslucent = true
+        view.addSubview(searchTool)
     }
 
     private func configureScreenTitleAux() {
@@ -105,6 +166,25 @@ class LanguagesTableViewController: BaseViewController {
     override func siteSubSection() -> String {
         return "language settings"
     }
+    
+    // MARK: - Private instance methods
+    
+    func filterContentForSearchText(_ searchText: String) {
+
+        filteredNamedLanguages = namedLanguages.filter { $0.name.lowercased().contains(searchText.lowercased())  }
+        tableView.reloadData()
+    }
+    
+    func searchBarIsEmpty() -> Bool {
+        return searchTool.text?.isEmpty ?? true
+    }
+    
+    func changeDataSource() {
+//        if searchBarIsEmpty() {
+//            isFiltering = false
+//        }
+    }
+
 }
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {
@@ -120,4 +200,27 @@ extension LanguagesTableViewController: LanguageTableViewCellDelegate {
         
         navigationController?.popViewController(animated: true)
     }
+}
+
+extension LanguagesTableViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            isFiltering = true
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText != "" {
+            isFiltering = true
+            filterContentForSearchText(searchText)
+        } else if searchBarIsEmpty() {
+            isFiltering = false
+            tableView.reloadData()
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        isFiltering = false
+        searchBar.resignFirstResponder()
+    }
+    
 }

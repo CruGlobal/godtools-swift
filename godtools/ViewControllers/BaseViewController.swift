@@ -73,7 +73,7 @@ class BaseViewController: UIViewController {
     func displayNavigationRightButtons() {
         // Set 26px of fixed space between the two UIBarButtonItems
         let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        fixedSpace.width = self.kNavigationItemSpace
+        fixedSpace.width = self.kNavigationItemSpace/5
         
         // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
         let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
@@ -133,6 +133,11 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
+    func addSearchButton() {
+        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "searchGT"), style: UIBarButtonItemStyle.done, target: self, action: #selector(searchButtonAction))
+        self.navigationRightButtons.append(button)
+    }
+    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: kNavigationItemWidth, height: kNavigationItemHeight)
         let button: UIButton = UIButton(frame: buttonFrame)
@@ -176,6 +181,10 @@ class BaseViewController: UIViewController {
     }
     
     func clearButtonAction() {
+        
+    }
+    
+    func searchButtonAction() {
         
     }
     
