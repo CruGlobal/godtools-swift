@@ -18,7 +18,7 @@ extension LanguagesTableViewController: UITableViewDataSource {
         if isFiltering {
             let namedLanguage = filteredNamedLanguages[indexPath.row]
             language = namedLanguage.language
-        } else  {
+        } else {
             language = languages[indexPath.row]
         }
         
