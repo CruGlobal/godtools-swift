@@ -151,8 +151,10 @@ class LanguagesTableViewController: BaseViewController {
     private func configureListForParallelChoice() {
         // remove primary language from list of options for parallel
         if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-            if let index = languages.index(of: primaryLanguage) {
-                languages.remove(objectAtIndex: index)
+            if !isFiltering {
+                if let index = languages.index(of: primaryLanguage) {
+                    languages.remove(objectAtIndex: index)
+                }
             }
         }
     }
@@ -180,9 +182,10 @@ class LanguagesTableViewController: BaseViewController {
     
     func filterContentForSearchText(_ searchText: String) {
         filteredNamedLanguages = namedLanguages.filter { $0.name.lowercased().contains(searchText.lowercased())  }
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            filteredNamedLanguages = filteredNamedLanguages.filter { !$0.name.lowercased().contains(primaryLanguage.localizedName().lowercased()) }
+        }
     }
-    
-
     
     func changeDataSource() {
 
@@ -230,6 +233,7 @@ extension LanguagesTableViewController: UISearchBarDelegate {
         }
     }
     
+    // Probably going to remove!!!
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         //tableView.reloadData()
 //        searchBar.resignFirstResponder()
