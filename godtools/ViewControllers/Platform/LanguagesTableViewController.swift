@@ -22,6 +22,11 @@ class LanguagesTableViewController: BaseViewController {
     static let languageCellIdentifier = "languageCell"
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    var searchBarHeight: CGFloat {
+        get {
+            return screenHeight/12
+        }
+    }
     
     var delegate: LanguagesTableViewControllerDelegate?
     
@@ -31,12 +36,8 @@ class LanguagesTableViewController: BaseViewController {
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
     
-    var isFiltering: Bool = false {
-        didSet {
-            changeDataSource()
-        }
-    }
-    
+    var isFiltering: Bool = false
+
     var searchTool: UISearchBar!
     var searchBarIsOnScreen = false
     var navHeight: CGFloat = 0.0
@@ -64,20 +65,18 @@ class LanguagesTableViewController: BaseViewController {
             addClearButton()
         }
         addSearchButton()
+        
         super.viewDidLoad()
-        if let nvHt = self.navigationController?.navigationBar.frame.height {
-            let statusHeight = UIApplication.shared.statusBarFrame.height
-            navHeight = nvHt + statusHeight
-        }
         
         registerCells()
         loadLanguages()
         configureScreenTitleAux()
-        
+        addTapToDismissKeyboard()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        setupSearchBarYValue()
         setUpSearchBar()
     }
     
@@ -113,33 +112,6 @@ class LanguagesTableViewController: BaseViewController {
         searchBarIsOnScreen = !searchBarIsOnScreen
     }
     
-    func setUpSearchBar() {
-        searchTool = UISearchBar(frame: CGRect(x: self.screenWidth, y: navHeight, width: screenWidth, height: screenHeight/12))
-        searchTool.delegate = self
-        searchTool.barTintColor = .gtBlue
-        searchTool.isTranslucent = true
-        searchTool.returnKeyType = .done
-        view.addSubview(searchTool)
-    }
-    
-    func animateSearchOnScreen() {
-        UIView.animate(withDuration: 0.3) {
-            self.blankView = UIView(frame: CGRect(x: 0, y: 0, width: self.screenWidth, height: self.screenHeight/12))
-            self.tableView.tableHeaderView = self.blankView
-            self.searchTool.frame = CGRect(x: 0, y: self.navHeight, width: self.screenWidth, height: self.screenHeight/12)
-            self.searchTool.becomeFirstResponder()
-        }
-    }
-    
-    func animateSearchOffScreen() {
-        UIView.animate(withDuration: 0.25) {
-            self.searchTool.frame = CGRect(x: self.screenWidth, y: self.navHeight, width: self.screenWidth, height: self.screenHeight/12)
-            self.blankView = UIView(frame: CGRect(x: self.screenWidth, y: 0, width: self.screenWidth, height: self.screenHeight/12))
-            self.tableView.tableHeaderView = UIView()
-            self.searchTool.resignFirstResponder()
-        }
-    }
-
     private func configureScreenTitleAux() {
         if selectingForPrimary {
             self.screenTitleAux = "primary_language"
@@ -186,10 +158,6 @@ class LanguagesTableViewController: BaseViewController {
             filteredNamedLanguages = filteredNamedLanguages.filter { !$0.name.lowercased().contains(primaryLanguage.localizedName().lowercased()) }
         }
     }
-    
-    func changeDataSource() {
-
-    }
 
 }
 
@@ -206,39 +174,4 @@ extension LanguagesTableViewController: LanguageTableViewCellDelegate {
         
         navigationController?.popViewController(animated: true)
     }
-}
-
-extension LanguagesTableViewController: UISearchBarDelegate {
-    
-    func searchBarIsEmpty() -> Bool {
-        return searchTool.text?.isEmpty ?? true
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-            searchBar.becomeFirstResponder()
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText != "" {
-            filterContentForSearchText(searchText)
-            isFiltering = true
-            tableView.reloadData()
-        } else {
-            isFiltering = false
-            tableView.reloadData()
-        }
-    }
-    
-    // Probably going to remove!!!
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        //tableView.reloadData()
-//        searchBar.resignFirstResponder()
-//        searchButtonAction()
-        
-    }
-    
 }
