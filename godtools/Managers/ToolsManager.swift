@@ -29,6 +29,11 @@ class ToolsManager: GTDataManager {
     }
     
     let viewsPath = "views"
+    var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    let kRowHeightRatio: CGFloat = 4.167
+    let kHeaderHeightRatio: CGFloat = 38.33
     
     var resources = DownloadedResources()
     
@@ -79,21 +84,24 @@ extension ToolsManager {
 extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 138.0
+       // return height/ratio
+        return screenHeight/kRowHeightRatio
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let resource = resources[indexPath.section]
-        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
-        if resource.localizedName(language: primaryLanguage).count > 25 {
-            return 133.0
-        }
+//        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+//        if resource.localizedName(language: primaryLanguage).count > 25 {
+//            return 133.0
+//        }
         
-        return 113.0
+        //return 113.0
+        return screenHeight/kRowHeightRatio
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 15.0
+        //return 15.0
+        return screenHeight/kHeaderHeightRatio
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -109,7 +117,7 @@ extension ToolsManager: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerViewFrame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.size.width, height: 15.0)
+        let headerViewFrame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.size.width, height: screenHeight/kHeaderHeightRatio) // 15.0 old value
         let headerView = UIView(frame: headerViewFrame)
         headerView.backgroundColor = .clear
         return headerView

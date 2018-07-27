@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,14 +34,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="306" height="60"/>
                                 <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="0OY-oC-ZOO"/>
+                                    <constraint firstAttribute="height" priority="250" constant="60" id="0OY-oC-ZOO"/>
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-nQ-kW7" userLabel="Banner View">
                                 <rect key="frame" x="0.0" y="0.0" width="306" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="dtP-Xy-5eP"/>
-                                </constraints>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="58" width="306" height="2"/>
@@ -79,7 +77,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="45.5" width="176.5" height="21"/>
+                                                <rect key="frame" x="47.5" y="45.5" width="178.5" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Byn-jY-nQf"/>
                                                 </constraints>
@@ -206,6 +204,7 @@
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="eS7-uf-73n"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="leading" secondItem="1f0-ik-Nxc" secondAttribute="trailing" id="fHF-8z-omA"/>
                     <constraint firstItem="eQf-9e-kQd" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" constant="15.5" id="i4t-Xo-IRt"/>
+                    <constraint firstItem="Om4-nQ-kW7" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.5" id="j5x-uy-bUl"/>
                     <constraint firstItem="S2s-WS-dBD" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" priority="750" id="kgX-TD-7Me"/>
                     <constraint firstItem="1lJ-vJ-aCT" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="mXg-ac-XBd"/>
                     <constraint firstItem="eQf-9e-kQd" firstAttribute="leading" secondItem="1lJ-vJ-aCT" secondAttribute="trailing" id="vMD-zZ-KqQ"/>
