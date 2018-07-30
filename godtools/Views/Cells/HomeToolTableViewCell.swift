@@ -18,10 +18,14 @@ class HomeToolTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var contentTopView: UIView!
-    @IBOutlet weak var contentBottomView: UIView!
+    
+   // @IBOutlet weak var contentTopView: UIView!
+  //  @IBOutlet weak var contentBottomView: UIView!
+    
     @IBOutlet weak var bannerImageView: UIImageView!
-    @IBOutlet weak var mainContentView: UIView!
+    
+   // @IBOutlet weak var mainContentView: UIView!
+    
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
     @IBOutlet weak var titleLabel: GTLabel!
@@ -32,6 +36,7 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var languageLabel: GTLabel!
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
+    
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
     @IBInspectable var defaultTitleLeadingConstraint: CGFloat = 47.0
     @IBInspectable var defaultNumberOfViewsLeadingConstraint: CGFloat = 47.0
@@ -50,8 +55,8 @@ class HomeToolTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         downloadButton.isHidden = false
         greyVerticalLine.isHidden = false
-        titleLeadingConstraint.constant = defaultTitleLeadingConstraint
-        numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
+       // titleLeadingConstraint.constant = defaultTitleLeadingConstraint
+       // numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
     }
     
     func configure(resource: DownloadedResource,
@@ -108,8 +113,8 @@ class HomeToolTableViewCell: UITableViewCell {
     private func setCellAsDisplayOnly() {
         downloadButton.isHidden = true
         greyVerticalLine.isHidden = true
-        titleLeadingConstraint.constant = leftConstraintValue
-        numberOfViewsLeadingConstraint.constant = leftConstraintValue
+        //titleLeadingConstraint.constant = leftConstraintValue
+        //numberOfViewsLeadingConstraint.constant = leftConstraintValue
     }
     
     private func loadDescription(resource: DownloadedResource) -> String {

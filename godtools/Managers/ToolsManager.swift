@@ -32,7 +32,7 @@ class ToolsManager: GTDataManager {
     var screenHeight: CGFloat {
         return UIScreen.main.bounds.height
     }
-    let kRowHeightRatio: CGFloat = 4.167
+    let kRowHeightRatio: CGFloat = 4.17
     let kHeaderHeightRatio: CGFloat = 38.33
     
     var resources = DownloadedResources()
