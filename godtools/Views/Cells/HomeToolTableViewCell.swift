@@ -19,12 +19,12 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var borderView: UIView!
     
-   // @IBOutlet weak var contentTopView: UIView!
-  //  @IBOutlet weak var contentBottomView: UIView!
+   @IBOutlet weak var contentTopView: UIView!
+   @IBOutlet weak var contentBottomView: UIView!
     
     @IBOutlet weak var bannerImageView: UIImageView!
     
-   // @IBOutlet weak var mainContentView: UIView!
+  @IBOutlet weak var mainContentView: UIView!
     
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
@@ -33,8 +33,11 @@ class HomeToolTableViewCell: UITableViewCell {
     // Now using this for description of Tract
     @IBOutlet weak var tractDescriptionLabel: GTLabel!
     
+    @IBOutlet weak var longSkinnyBumperConstraint: NSLayoutConstraint!
     @IBOutlet weak var languageLabel: GTLabel!
     @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
+    
+    
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
@@ -46,6 +49,17 @@ class HomeToolTableViewCell: UITableViewCell {
     private (set) var cellDelegate: HomeToolTableViewCellDelegate?
     private (set) var isAvailable = true
     
+    let kDefaultLeadingConstraintMultiplierMultiplier: CGFloat = 0.12533
+    let kDefaultLeftConstraintMultiplier: CGFloat = 0.02133
+    
+    var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
+    var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -55,8 +69,12 @@ class HomeToolTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         downloadButton.isHidden = false
         greyVerticalLine.isHidden = false
-       // titleLeadingConstraint.constant = defaultTitleLeadingConstraint
-       // numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
+        defaultTitleLeadingConstraint = screenWidth * kDefaultLeadingConstraintMultiplierMultiplier
+        defaultNumberOfViewsLeadingConstraint = screenWidth * kDefaultLeadingConstraintMultiplierMultiplier
+        //longSkinnyBumperConstraint.multiplier = 
+        titleLeadingConstraint.constant = defaultTitleLeadingConstraint
+        //titleLeadingConstraint.constant = longSkinnyBumperConstraint.multiplier
+        numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
     }
     
     func configure(resource: DownloadedResource,
@@ -113,8 +131,9 @@ class HomeToolTableViewCell: UITableViewCell {
     private func setCellAsDisplayOnly() {
         downloadButton.isHidden = true
         greyVerticalLine.isHidden = true
-        //titleLeadingConstraint.constant = leftConstraintValue
-        //numberOfViewsLeadingConstraint.constant = leftConstraintValue
+        leftConstraintValue = screenWidth * kDefaultLeftConstraintMultiplier
+        titleLeadingConstraint.constant = leftConstraintValue
+        numberOfViewsLeadingConstraint.constant = leftConstraintValue
     }
     
     private func loadDescription(resource: DownloadedResource) -> String {
