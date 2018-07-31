@@ -120,34 +120,39 @@ class GTLabel: UILabel {
             self.font = .gtSemiBold(size: 28.0)
             self.textColor = .gtBlue
         case "blueHeader1":
-            self.font = .gtSemiBold(size: 17.0)
+            // ADJUSTED !!
+            self.font = .gtSemiBold(size: 20.0)
             self.textColor = .gtBlue
         case "blackTitle":
             self.font = .gtLight(size: 28.0)
             self.textColor = .gtBlack
         case "blackText":
-            self.font = .gtRegular(size: 15.0)
+            // ADJUSTED !!
+            self.font = .gtRegular(size: 20.0)
             self.textColor = .gtBlack
         case "blackTextSemiBold":
             // ADJUSTED !!
-            self.font = .gtSemiBold(size: 25.0)
+            self.font = .gtSemiBold(size: 24.0)
             self.textColor = .gtBlack
         case "blackTextSmall":
-            self.font = .gtRegular(size: 13.0)
+            // ADJUSTED !!
+            self.font = .gtRegular(size: 17.0)
             self.textColor = .gtBlack
         case "blackTextSmaller":
             // ADJUSTED !!
-            self.font = .gtRegular(size: 22.0)
+            self.font = .gtRegular(size: 21.0)
             self.textColor = .gtBlack
         case "blackTextLegend":
               // ADJUSTED !!
             self.font = .gtRegular(size: 16.0)
             self.textColor = .gtBlack
         case "redText":
-            self.font = .gtRegular(size: 15.0)
+            // ADJUSTED !!
+            self.font = .gtRegular(size: 19.0)
             self.textColor = .gtRed
         case "greyHeader1":
-            self.font = .gtRegular(size: 17.0)
+            // ADJUSTED !!
+            self.font = .gtRegular(size: 22.0)
             self.textColor = .gtGrey
         case "greyTextSmall":
             self.font = .gtRegular(size: 12.0)

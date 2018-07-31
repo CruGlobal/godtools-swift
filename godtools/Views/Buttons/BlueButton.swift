@@ -15,6 +15,6 @@ class BlueButton: GTButton {
         self.cornerRadius = 5.0
         self.backgroundColor = UIColor.gtBlue
         self.color = UIColor.gtWhite
-        self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
+        self.titleLabel?.font = (AppDelegate.thisDevice == .phone) ? UIFont.gtRegular(size: 15.0) : UIFont.gtRegular(size: 20.0)
     }
 }

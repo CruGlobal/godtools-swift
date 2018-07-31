@@ -30,7 +30,7 @@ class TractTitle: BaseTractElement {
             properties.width = TractModal.contentWidth
             properties.textAlign = .center
         } else {
-            properties.font = .gtThin(size: 18.0)
+            properties.font = (AppDelegate.thisDevice == .phone) ? .gtThin(size: 18.0) : .gtThin(size: 23.0)
         }
         
         return properties

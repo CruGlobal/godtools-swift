@@ -162,8 +162,12 @@ class TractViewController: BaseViewController {
     fileprivate func configureLanguageSegmentedControl() {
         let primaryLabel = self.determinePrimaryLabel()
         let parallelLabel = self.determineParallelLabel()
+        let fontSize = determineSegmentFontSize(myTools: primaryLabel, findTools: parallelLabel)
+        let font = UIFont.systemFont(ofSize: fontSize)
         
         languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
+        languageSegmentedControl?.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        languageSegmentedControl?.sizeToFit()
         languageSegmentedControl!.selectedSegmentIndex = 0
         languageSegmentedControl!.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
     }

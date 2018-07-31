@@ -217,6 +217,16 @@ class BaseViewController: UIViewController {
     func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
         let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
         var fontSize: CGFloat = 15.0
+        if AppDelegate.thisDevice == .phone {
+            fontSize = sizeSegmentFontForPhone(count: count)
+        } else {
+            fontSize = sizeSegmentFontForiPad(count: count)
+        }
+        return fontSize
+    }
+    
+    func sizeSegmentFontForPhone(count: Int) -> CGFloat {
+        var fontSize: CGFloat = 15.0
         if count > 14 {
             switch count {
             case 15:
@@ -231,7 +241,25 @@ class BaseViewController: UIViewController {
                 fontSize = 12.0
             }
         }
-        
+        return fontSize
+    }
+    
+    func sizeSegmentFontForiPad(count: Int) -> CGFloat {
+        var fontSize: CGFloat = 20.0
+        if count > 14 {
+            switch count {
+            case 15:
+                fontSize = 19.0
+            case 16:
+                fontSize = 18.5
+            case 17:
+                fontSize = 18.0
+            case 18:
+                fontSize = 17.5
+            default:
+                fontSize = 17.0
+            }
+        }
         return fontSize
     }
 

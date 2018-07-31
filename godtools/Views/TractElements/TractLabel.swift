@@ -59,9 +59,9 @@ class TractLabel: BaseTractElement {
         properties.yMargin = BaseTractElement.yMargin
         
         if BaseTractElement.isFormElement(self) {
-            properties.font = .gtRegular(size: 16.0)
+            properties.font = (AppDelegate.thisDevice == .phone) ? .gtRegular(size: 16.0) : .gtRegular(size: 20.0)
         } else {
-            properties.font = .gtSemiBold(size: 18.0)
+            properties.font = (AppDelegate.thisDevice == .phone) ? .gtSemiBold(size: 18.0) : .gtSemiBold(size: 23.0)
             properties.textColor = properties.primaryColor
         }
         

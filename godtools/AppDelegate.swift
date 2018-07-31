@@ -17,6 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var flowController: BaseFlowController?
+    static var thisDevice: UIUserInterfaceIdiom {
+        return UIDevice.current.userInterfaceIdiom
+    }
+ 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         resetStateIfUITesting()

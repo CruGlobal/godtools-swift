@@ -67,7 +67,7 @@ class AddToolsViewController: BaseViewController {
         let emptyBaseView = UIView()
         
         messageLabel.numberOfLines = 3
-        messageLabel.font = UIFont.gtRegular(size: 16)
+        messageLabel.font = (AppDelegate.thisDevice == .phone) ? UIFont.gtRegular(size: 16) : UIFont.gtRegular(size: 20)
         messageLabel.textColor = UIColor.gtBlack
         messageLabel.layer.masksToBounds = true
         let screenSize = UIScreen.main.bounds

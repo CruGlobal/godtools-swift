@@ -57,7 +57,7 @@ class TractButtonProperties: TractProperties {
     var value: String?
     var cornerRadius: CGFloat = 5.0
     var backgroundColor = UIColor.gtBlue
-    var font = UIFont.gtRegular(size: 15.0)
+    var font = (AppDelegate.thisDevice == .phone) ? UIFont.gtRegular(size: 15.0) : UIFont.gtRegular(size: 21.0)
     var width: CGFloat = 300.0
     var height: CGFloat = 44.0
     var xMargin = BaseTractElement.xMargin
@@ -66,7 +66,7 @@ class TractButtonProperties: TractProperties {
     override func getTextProperties() -> TractTextContentProperties {
         let textProperties = TractTextContentProperties()
         
-        textProperties.font = .gtRegular(size: 18.0)
+        textProperties.font = (AppDelegate.thisDevice == .phone) ? .gtRegular(size: 18.0) : .gtRegular(size: 23.0)
         textProperties.width = self.width
         textProperties.textAlign = .center
         

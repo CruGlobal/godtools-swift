@@ -14,7 +14,7 @@ class TractLink: TractButton {
     
     override func textStyle() -> TractTextContentProperties {
         let properties = super.textStyle()
-        properties.font = .gtRegular(size: 16.0)
+        properties.font = (AppDelegate.thisDevice == .phone) ? .gtRegular(size: 16.0) : .gtRegular(size: 21.0)
         return properties
     }
     

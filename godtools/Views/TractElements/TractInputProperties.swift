@@ -65,7 +65,7 @@ class TractInputProperties: TractProperties {
     var borderWidth: CGFloat = 0.6
     var backgroundColor = UIColor.gtWhite
     var color = UIColor.gtBlack
-    var font = UIFont.gtRegular(size: 16.0)
+    var font = (AppDelegate.thisDevice == .phone) ? UIFont.gtRegular(size: 16.0) : UIFont.gtRegular(size: 21.0)
     var placeholder: String?
 
 }

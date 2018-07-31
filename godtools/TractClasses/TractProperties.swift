@@ -9,7 +9,9 @@
 import UIKit
 
 class TractProperties: XMLNode {
-    let defaultBodyFontSize: CGFloat = 18.0
+    var defaultBodyFontSize: CGFloat {
+        return (AppDelegate.thisDevice == .phone) ? 18.0 : 23.0
+    }
     
     var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
     var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()

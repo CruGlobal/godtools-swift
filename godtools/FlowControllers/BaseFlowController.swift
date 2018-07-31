@@ -51,8 +51,9 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         navigationController.navigationBar.barTintColor = .clear
         navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
         navigationController.navigationBar.isTranslucent = true
+        let size: CGFloat = (AppDelegate.thisDevice == .phone) ? 17.0 : 23.0
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
-                                                                  NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
+                                                                  NSFontAttributeName: UIFont.gtSemiBold(size: size)]
     }
   
     // Notifications

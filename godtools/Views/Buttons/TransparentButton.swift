@@ -17,7 +17,7 @@ class TransparentButton: GTButton {
         self.borderWidth = 1.0
         self.backgroundColor = .clear
         self.color = .gtWhite
-        self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
+        self.titleLabel?.font = (AppDelegate.thisDevice == .phone) ? UIFont.gtRegular(size: 15.0) : UIFont.gtRegular(size: 20.0)
     }
 
 }
