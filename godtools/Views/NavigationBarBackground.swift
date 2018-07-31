@@ -11,7 +11,7 @@ import CoreGraphics
 import UIKit
 
 class NavigationBarBackground {
-    static func createFrom(color: UIColor) -> UIImage {
+    static func createFrom(_ color: UIColor) -> UIImage {
         let color = color.cgColor
         
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)

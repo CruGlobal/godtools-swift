@@ -32,23 +32,27 @@ class TractHero: BaseTractElement {
     }
     
     override func render() -> UIView {
-        let followingElement = getFollowingElement()
-        if followingElement != nil && followingElement!.isKind(of: TractCards.self) {
-            updateHeroHeight()
-            setupScrollView()
-            
-            for element in self.elements! {
-                self.containerView.addSubview(element.render())
-            }
-            
-            self.scrollView.addSubview(self.containerView)
-            self.addSubview(self.scrollView)
-            
-            TractBindings.addBindings(self)
-            return self
+        if let followingElement = getFollowingElement() as? TractCards {
+            updateHeroHeight(cards: followingElement)
         } else {
-            return super.render()
+            updateHeroHeightWithNoCards()
         }
+        
+        setupScrollView()
+        guard let elements = self.elements else {
+            let blankView = UIView()
+            blankView.isHidden = true
+            return blankView
+        }
+        for element in elements {
+            self.containerView.addSubview(element.render())
+        }
+        
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.scrollView)
+        
+        TractBindings.addBindings(self)
+        return self
     }
     
     // MARK: - Helpers
@@ -72,14 +76,16 @@ class TractHero: BaseTractElement {
         self.containerView.backgroundColor = .clear
     }
     
-    func updateHeroHeight() {
-        let element = getFollowingElement()
-        if element != nil && element!.isKind(of: TractCards.self) {
-            let cardsElement = element as! TractCards
-            self.heroHeight = cardsElement.getMaxFreeHeight()
-            self.elementFrame.height = self.heroHeight
-            self.frame = self.elementFrame.getFrame()
-        }
+    func updateHeroHeight(cards: TractCards) {
+        self.heroHeight = cards.getMaxFreeHeight(hero: self)
+        self.elementFrame.height = self.heroHeight
+        self.frame = self.elementFrame.getFrame()
     }
-        
+    
+    func updateHeroHeightWithNoCards() {
+        self.heroHeight = BaseTractElement.screenHeight
+        self.elementFrame.height = self.heroHeight
+        self.frame = self.elementFrame.getFrame()
+    }
+    
 }

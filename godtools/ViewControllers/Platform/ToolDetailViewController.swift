@@ -34,22 +34,32 @@ class ToolDetailViewController: BaseViewController {
     
     fileprivate func displayData() {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        guard let resource = resource else { return }
         
-        self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource!.totalViews)
+        self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
         
-        self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource!.numberOfAvailableLanguages())
+        self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource.numberOfAvailableLanguages())
         
-        self.titleLabel.text = resource!.localizedName(language: primaryLanguage)
+        self.titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         self.descriptionLabel.text = loadDescription()
         
-        self.languagesLabel.text = Array(resource!.translations)
-            .map({ "\($0.language!.localizedName())"})
-            .sorted(by: { $0 < $1 })
-            .joined(separator: ", ")
+        let resourceTranslations = Array(resource.translations)
+        var translationStrings = [String]()
+        for translation in resourceTranslations {
+            guard translation.language != nil else {
+                continue
+            }
+            guard let languageLocalName = translation.language?.localizedName() else {
+                continue
+            }
+            translationStrings.append(languageLocalName)
+        }
+        let labelText = translationStrings.sorted(by: { $0 < $1 }).joined(separator: ", ")
         
+        self.languagesLabel.text = labelText
         self.displayButton()
-        self.bannerImageView.image = BannerManager().loadFor(remoteId: resource!.aboutBannerRemoteId)
+        self.bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
     }
     
     private func displayButton() {

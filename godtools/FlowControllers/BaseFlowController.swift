@@ -49,12 +49,12 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     func configureNavigationColor(navigationController: UINavigationController, color: UIColor) {
         navigationController.navigationBar.tintColor = .gtWhite
         navigationController.navigationBar.barTintColor = .clear
-        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color: color), for: .default)
-        navigationController.navigationBar.isOpaque = true
+        navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
+        navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
                                                                   NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
     }
-    
+  
     // Notifications
     
     func defineObservers() {
@@ -78,6 +78,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         }
         
         menuViewController.delegate = self
+        guard let currentFrame = self.currentViewController?.view.frame else { return }
+        menuViewController.view.frame = currentFrame
         
         let navigationController = self.currentViewController?.navigationController
         let src = self.currentViewController
@@ -85,13 +87,13 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         let srcViewWidth = src?.view.frame.size.width
         
         src?.view.superview?.insertSubview(dst.view, aboveSubview: (src!.view)!)
-        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth!), y: 64)
+        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth!), y: 0)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
                         src?.view.transform = CGAffineTransform(translationX: srcViewWidth!, y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 64) },
+                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
                         navigationController?.pushViewController(dst, animated: false) } )
     }
@@ -109,7 +111,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                        delay: 0.0,
                        options: UIViewAnimationOptions.curveEaseInOut,
                        animations: {
-                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 64)
+                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth!), y: 0)
                         dst?.view.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: { finished in
                         _ = navigationController?.popViewController(animated: false) } )
