@@ -155,7 +155,8 @@ class GTLabel: UILabel {
             self.font = .gtRegular(size: 22.0)
             self.textColor = .gtGrey
         case "greyTextSmall":
-            self.font = .gtRegular(size: 12.0)
+            // ADJUSTED !!
+            self.font = .gtRegular(size: 17.0)
             self.textColor = .gtGrey
         default:
             break

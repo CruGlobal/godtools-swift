@@ -148,10 +148,12 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="width" secondItem="KFJ-L0-hFD" secondAttribute="width" multiplier="1.1" id="Bwa-2D-arw"/>
                                             <constraint firstItem="Zf0-VZ-Gbm" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="leading" constant="53" id="Obc-JY-Yok"/>
+                                            <constraint firstItem="mo2-YN-vLH" firstAttribute="width" secondItem="KFJ-L0-hFD" secondAttribute="width" id="QNY-Ww-xte"/>
                                             <constraint firstAttribute="trailing" secondItem="Zf0-VZ-Gbm" secondAttribute="trailing" constant="8" id="VCM-Ua-hAm"/>
-                                            <constraint firstAttribute="width" constant="80" id="bo8-dz-tU8"/>
+                                            <constraint firstAttribute="width" constant="80" id="bo8-dz-tU8">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="120"/>
+                                            </constraint>
                                             <constraint firstItem="mo2-YN-vLH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="KFJ-L0-hFD" secondAttribute="top" constant="1" id="ce6-zU-Qtn">
                                                 <variation key="heightClass=regular-widthClass=regular" constant="2"/>
                                             </constraint>
@@ -202,14 +204,18 @@
                         <rect key="frame" x="8" y="0.5" width="9" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="9" id="cpH-5C-0xf"/>
+                            <constraint firstAttribute="width" constant="9" id="cpH-5C-0xf">
+                                <variation key="heightClass=regular-widthClass=regular" constant="18"/>
+                            </constraint>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQf-9e-kQd" userLabel="Right Padding Spacer View">
                         <rect key="frame" x="323" y="0.0" width="9" height="153"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="9" id="i42-EE-7Ek"/>
+                            <constraint firstAttribute="width" constant="9" id="i42-EE-7Ek">
+                                <variation key="heightClass=regular-widthClass=regular" constant="18"/>
+                            </constraint>
                         </constraints>
                     </view>
                 </subviews>
