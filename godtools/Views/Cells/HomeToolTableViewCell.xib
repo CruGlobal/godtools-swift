@@ -99,7 +99,7 @@
                                         <constraints>
                                             <constraint firstItem="mDc-DS-b34" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="2pf-Q8-c6C"/>
                                             <constraint firstItem="qZt-B6-a2j" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="675-xf-new">
-                                                <variation key="heightClass=regular-widthClass=regular" constant="86"/>
+                                                <variation key="heightClass=regular-widthClass=regular" constant="96"/>
                                             </constraint>
                                             <constraint firstAttribute="trailing" secondItem="WtK-SD-emW" secondAttribute="trailing" id="8oE-7B-P2s"/>
                                             <constraint firstItem="qZt-B6-a2j" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JrU-rG-bBE" secondAttribute="top" constant="4" id="AyB-au-YdO">
@@ -110,7 +110,7 @@
                                             <constraint firstItem="ZbI-hf-Sfh" firstAttribute="centerY" secondItem="JrU-rG-bBE" secondAttribute="centerY" id="Jxh-LP-Z2U"/>
                                             <constraint firstItem="mDc-DS-b34" firstAttribute="leading" secondItem="ZbI-hf-Sfh" secondAttribute="trailing" constant="8" id="ZHf-MV-fDs"/>
                                             <constraint firstItem="WtK-SD-emW" firstAttribute="leading" secondItem="JrU-rG-bBE" secondAttribute="leading" constant="47" id="ewo-hI-cIe">
-                                                <variation key="heightClass=regular-widthClass=regular" constant="86"/>
+                                                <variation key="heightClass=regular-widthClass=regular" constant="96"/>
                                             </constraint>
                                             <constraint firstAttribute="trailing" secondItem="qZt-B6-a2j" secondAttribute="trailing" constant="6" id="hp0-Pu-6rX"/>
                                             <constraint firstAttribute="bottom" secondItem="WtK-SD-emW" secondAttribute="bottom" constant="8" id="xAU-Ti-Qqk">

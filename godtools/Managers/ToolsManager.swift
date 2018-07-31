@@ -84,23 +84,14 @@ extension ToolsManager {
 extension ToolsManager: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       // return height/ratio
         return screenHeight/kRowHeightRatio
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        let resource = resources[indexPath.section]
-//        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
-//        if resource.localizedName(language: primaryLanguage).count > 25 {
-//            return 133.0
-//        }
-        
-        //return 113.0
         return screenHeight/kRowHeightRatio
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //return 15.0
         return screenHeight/kHeaderHeightRatio
     }
     
@@ -117,7 +108,7 @@ extension ToolsManager: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerViewFrame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.size.width, height: screenHeight/kHeaderHeightRatio) // 15.0 old value
+        let headerViewFrame = CGRect(x: 0.0, y: 0.0, width: tableView.bounds.size.width, height: screenHeight/kHeaderHeightRatio)
         let headerView = UIView(frame: headerViewFrame)
         headerView.backgroundColor = .clear
         return headerView
@@ -153,6 +144,7 @@ extension ToolsManager: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    
 }
 
 extension ToolsManager: HomeToolTableViewCellDelegate {

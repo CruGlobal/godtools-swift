@@ -19,12 +19,12 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var borderView: UIView!
     
-   @IBOutlet weak var contentTopView: UIView!
-   @IBOutlet weak var contentBottomView: UIView!
+    @IBOutlet weak var contentTopView: UIView!
+    @IBOutlet weak var contentBottomView: UIView!
     
     @IBOutlet weak var bannerImageView: UIImageView!
     
-  @IBOutlet weak var mainContentView: UIView!
+    @IBOutlet weak var mainContentView: UIView!
     
     @IBOutlet weak var downloadButton: UIButton!
     @IBOutlet weak var greyVerticalLine: UIImageView!
@@ -41,8 +41,11 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
     
     @IBInspectable var leftConstraintValue: CGFloat = 8.0
+    var leftiPadConstraintValue: CGFloat = 18.0
     @IBInspectable var defaultTitleLeadingConstraint: CGFloat = 47.0
+    var defaultiPadTitleLeadingConstraint: CGFloat = 96.0
     @IBInspectable var defaultNumberOfViewsLeadingConstraint: CGFloat = 47.0
+    var defaultiPadNumberOfViewsLeadingConstraint: CGFloat = 96.0
     @IBOutlet weak var downloadProgressView: GTProgressView!
     
     private (set) var resource: DownloadedResource?
@@ -60,21 +63,14 @@ class HomeToolTableViewCell: UITableViewCell {
         return UIScreen.main.bounds.height
     }
     
+    var deviceIsPhone: Bool  {
+        return UIDevice.current.userInterfaceIdiom == .phone
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
         registerProgressViewListener()
-    }
-    
-    override func prepareForReuse() {
-        downloadButton.isHidden = false
-        greyVerticalLine.isHidden = false
-        defaultTitleLeadingConstraint = screenWidth * kDefaultLeadingConstraintMultiplierMultiplier
-        defaultNumberOfViewsLeadingConstraint = screenWidth * kDefaultLeadingConstraintMultiplierMultiplier
-        //longSkinnyBumperConstraint.multiplier = 
-        titleLeadingConstraint.constant = defaultTitleLeadingConstraint
-        //titleLeadingConstraint.constant = longSkinnyBumperConstraint.multiplier
-        numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
     }
     
     func configure(resource: DownloadedResource,
@@ -129,11 +125,17 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     private func setCellAsDisplayOnly() {
-        downloadButton.isHidden = true
-        greyVerticalLine.isHidden = true
-        leftConstraintValue = screenWidth * kDefaultLeftConstraintMultiplier
-        titleLeadingConstraint.constant = leftConstraintValue
-        numberOfViewsLeadingConstraint.constant = leftConstraintValue
+        DispatchQueue.main.async {
+            self.downloadButton.isHidden = true
+            self.greyVerticalLine.isHidden = true
+            if self.deviceIsPhone {
+                self.titleLeadingConstraint.constant = self.leftConstraintValue
+                self.numberOfViewsLeadingConstraint.constant = self.leftConstraintValue
+            } else {
+                self.titleLeadingConstraint.constant = self.leftiPadConstraintValue
+                self.numberOfViewsLeadingConstraint.constant = self.leftiPadConstraintValue
+            }
+        }
     }
     
     private func loadDescription(resource: DownloadedResource) -> String {
@@ -258,4 +260,5 @@ class HomeToolTableViewCell: UITableViewCell {
                               completion: nil)
         }
     }
+    
 }
