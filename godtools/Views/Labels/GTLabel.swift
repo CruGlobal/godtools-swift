@@ -141,7 +141,7 @@ class GTLabel: UILabel {
             self.textColor = .gtBlack
         case "blackTextLegend":
               // ADJUSTED !!
-            self.font = .gtRegular(size: 18.0)
+            self.font = .gtRegular(size: 16.0)
             self.textColor = .gtBlack
         case "redText":
             self.font = .gtRegular(size: 15.0)
