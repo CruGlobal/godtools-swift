@@ -16,19 +16,23 @@ class EmailSignUpManager {
     static let emailCampaignId = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
     func userEmailHasBeenSignedUp(attributes: [String: String]?) -> Bool {
-        if let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] {
-            if let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") as? String {
-                // Don't need to resend
-                let userAttributes = processAttributes(dict: userAtts)
-                sendPostWithUserEmail(attributes: userAttributes)
-                print("else userAttributes ><><>", userAttributes)
-                return true
-            }
+        guard let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] else { return false }
+        guard let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") as? String else { return false }
+        if storedPersonId == masterPersonId {
+            return true
         }
         return false
     }
     
-     func processAttributes(dict: [String: String]) -> [String: String] {
+    func signUpUserForEmailRegistration(attributes: [String: String]?) {
+        if let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] {
+            UserDefaults.standard.set(masterPersonId, forKey: "grMasterPersonId")
+            let userAttributes = processAttributes(dict: userAtts)
+            sendPostWithUserEmail(attributes: userAttributes)
+        }
+    }
+    
+     private func processAttributes(dict: [String: String]) -> [String: String] {
         var userDict = [String: String]()
         if let lastName = dict["lastName"] {
             userDict["last_name"] = lastName
@@ -43,7 +47,7 @@ class EmailSignUpManager {
         return userDict
     }
     
-    func sendPostWithUserEmail(attributes: [String: String]) {
+    private func sendPostWithUserEmail(attributes: [String: String]) {
         Alamofire.request(EmailSignUpManager.emailSignupURL, method: .post, parameters: attributes).validate { (request, response, data) -> Request.ValidationResult in
             if response.statusCode / 100 != 2 {
                 return .failure(DataManagerError.StatusCodeError(response.statusCode))

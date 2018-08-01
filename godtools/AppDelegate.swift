@@ -34,25 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if loginClient.isAuthenticated() {
             loginClient.fetchAttributes() { (attributes, _) in
-                if let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] {
-                        if let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") as? String {
-                            // Don't need to resend
-                            let userAttributes = AppDelegate.processAttributes(dict: userAtts)
-                            AppDelegate.sendPostWithUserEmail(attributes: userAttributes)
-                            print("else userAttributes ><><>", userAttributes)
-                        } else  {
-                            UserDefaults.standard.set(masterPersonId, forKey: "grMasterPersonId")
-                            let userAttributes = AppDelegate.processAttributes(dict: userAtts)
-                            AppDelegate.sendPostWithUserEmail(attributes: userAttributes)
-                            print("else userAttributes ><><>", userAttributes)
-                        }
-                    }
-                
-                /*
-                ["lastName": "Doe", "ssoGuid": "49E1F2F9-55CC-6C10-58FF-B9B46CA79579", "email": "test@test.com", "firstName": "John", "grMasterPersonId": "6017a717-251c-434f-aa2f-e4279328fa59"]
-                */
-                debugPrint("User's Attributes >> ", attributes ?? "nothing")
-                
+                let signupManager = EmailSignUpManager()
+                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
+                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
+                }
             }
         }
         
@@ -94,40 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-    
-    }
-    
-   static func processAttributes(dict: [String: String]) -> [String: String] {
-        var userDict = [String: String]()
-        if let lastName = dict["lastName"] {
-            userDict["last_name"] = lastName
-        }
-        if let firstName = dict["firstName"] {
-            userDict["first_name"] = firstName
-        }
-        if let email = dict["email"] {
-            userDict["email_address"] = email
-            userDict["id"] = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
-        }
-        return userDict
-    }
-    
-   static func sendPostWithUserEmail(attributes: [String: String]) {
-        Alamofire.request("https://campaign-forms.cru.org/forms",
-                     method: HTTPMethod.post,
-                     parameters: attributes)
-            .validate({ (request, response, data) -> Request.ValidationResult in
-                if response.statusCode / 100 != 2 {
-                    return .failure(DataManagerError.StatusCodeError(response.statusCode))
-                }
-                print(response)
-                if let data = data {
-                    let dataString = String(data: data, encoding: .utf8)
-                    print(dataString ?? "no data sent to https://campaign-forms.cru.org/forms")
-                }
-                
-                return .success
-            })
     
     }
     

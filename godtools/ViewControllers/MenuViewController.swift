@@ -91,11 +91,20 @@ class MenuViewController: BaseViewController {
     
     func adjustGeneralTitles() {
         if loginClient.isAuthenticated() {
-            general = ["language_settings", "logout", "about", "help", "contact_us"]
+            loginClient.fetchAttributes() { (attributes, _) in
+                let signupManager = EmailSignUpManager()
+                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
+                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
+                }
+                DispatchQueue.main.async {
+                    self.general = ["language_settings", "logout", "about", "help", "contact_us"]
+                    self.tableView.reloadData()
+                }
+            }
         } else {
             general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
+            tableView.reloadData()
         }
-        tableView.reloadData()
     }
     
     fileprivate func setupStyle() {
@@ -345,9 +354,17 @@ extension MenuViewController {
     
     fileprivate func openLoginWindow() {
         if loginClient.isAuthenticated() {
-            presentLogoutConfirmation()
+            loginClient.fetchAttributes() { (attributes, _) in
+                let signupManager = EmailSignUpManager()
+                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
+                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
+                }
+                DispatchQueue.main.async {
+                    self.presentLogoutConfirmation()
+                }
+            }
         } else {
-           initiateLogin()
+            initiateLogin()
         }
     }
     
