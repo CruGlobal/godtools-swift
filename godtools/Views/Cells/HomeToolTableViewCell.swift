@@ -55,18 +55,6 @@ class HomeToolTableViewCell: UITableViewCell {
     let kDefaultLeadingConstraintMultiplierMultiplier: CGFloat = 0.12533
     let kDefaultLeftConstraintMultiplier: CGFloat = 0.02133
     
-    var screenWidth: CGFloat {
-        return UIScreen.main.bounds.width
-    }
-    
-    var screenHeight: CGFloat {
-        return UIScreen.main.bounds.height
-    }
-    
-    var deviceIsPhone: Bool  {
-        return UIDevice.current.userInterfaceIdiom == .phone
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
@@ -128,7 +116,7 @@ class HomeToolTableViewCell: UITableViewCell {
         DispatchQueue.main.async {
             self.downloadButton.isHidden = true
             self.greyVerticalLine.isHidden = true
-            if self.deviceIsPhone {
+            if AppDelegate.thisDevice == .phone {
                 self.titleLeadingConstraint.constant = self.leftConstraintValue
                 self.numberOfViewsLeadingConstraint.constant = self.leftConstraintValue
             } else {

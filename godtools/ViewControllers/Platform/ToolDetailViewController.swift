@@ -23,11 +23,22 @@ class ToolDetailViewController: BaseViewController {
     
     var resource: DownloadedResource?
     
+    @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.displayData()
         self.hideScreenTitle()
         registerForDownloadProgressNotifications()
+        setTopHeight()
+    }
+    
+    func setTopHeight() {
+        let barHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = UIApplication.shared.isStatusBarHidden ? CGFloat(0) : UIApplication.shared.statusBarFrame.height
+        let topBar = barHeight + statusBarHeight
+        self.topLayoutConstraint.constant = topBar
+        self.view.layoutIfNeeded()
     }
 
     // MARK: Present data

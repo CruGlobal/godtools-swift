@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +18,7 @@
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
                 <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
                 <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
+                <outlet property="topLayoutConstraint" destination="sC0-8o-lE9" id="qtC-OW-J53"/>
                 <outlet property="totalLanguagesLabel" destination="WhJ-0q-SQL" id="UEL-1m-0ma"/>
                 <outlet property="totalViewsLabel" destination="1jS-vF-2Ds" id="PiF-Pv-xwc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -27,26 +29,20 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="6sd-7g-yCc">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="178"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="178" id="B1E-bH-Ppf"/>
-                    </constraints>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="6sd-7g-yCc">
+                    <rect key="frame" x="0.0" y="64" width="375" height="178"/>
                 </imageView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-1c-gUh" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="176" width="375" height="2"/>
+                    <rect key="frame" x="0.0" y="240" width="375" height="2"/>
                 </progressView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-hz-acy">
-                    <rect key="frame" x="0.0" y="178" width="375" height="489"/>
+                    <rect key="frame" x="0.0" y="242" width="375" height="425"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="434"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="414"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="40" width="260" height="20.5"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="260" id="w7U-YD-9pa"/>
-                                    </constraints>
+                                    <rect key="frame" x="57" y="40" width="261" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -55,10 +51,9 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2,345,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jS-vF-2Ds" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="70.5" width="163" height="20"/>
+                                    <rect key="frame" x="57" y="70.5" width="261" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="9kQ-xd-mSb"/>
-                                        <constraint firstAttribute="width" constant="163" id="xpt-fz-7DA"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -68,10 +63,9 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-XL-FjG" customClass="GTButton" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="107.5" width="260" height="48"/>
+                                    <rect key="frame" x="57" y="107.5" width="261" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="48" id="ag2-Ps-Qdr"/>
-                                        <constraint firstAttribute="width" constant="260" id="hKN-dm-q5A"/>
                                     </constraints>
                                     <state key="normal" title="Download"/>
                                     <connections>
@@ -79,9 +73,8 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-CN-KBN" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="177.5" width="163" height="22"/>
+                                    <rect key="frame" x="57" y="177.5" width="261" height="22"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="163" id="4fQ-NZ-cd4"/>
                                         <constraint firstAttribute="height" constant="22" id="cbh-A5-jZD"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -93,10 +86,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consect etur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v52-LQ-1sy" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="213.5" width="260" height="81.5"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="260" id="UpF-c7-Bbd"/>
-                                    </constraints>
+                                    <rect key="frame" x="57" y="213.5" width="261" height="81.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -105,10 +95,9 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40 Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhJ-0q-SQL" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="315" width="163" height="21"/>
+                                    <rect key="frame" x="57" y="315" width="261" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="Srb-pd-OVd"/>
-                                        <constraint firstAttribute="width" constant="163" id="zjM-jq-Ke9"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -118,10 +107,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Afrikaans, Bengali, Czech, Danish, English, Farsi, Finnish, French" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mm5-hE-C3H" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="343" width="260" height="61"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="260" id="CnW-uM-qvf"/>
-                                    </constraints>
+                                    <rect key="frame" x="57" y="343" width="261" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -132,21 +118,35 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="4bj-XL-FjG" secondAttribute="trailing" constant="57" id="5BQ-Kd-zQd"/>
+                                <constraint firstItem="v52-LQ-1sy" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="8LL-SE-Ugm"/>
                                 <constraint firstItem="DxX-CN-KBN" firstAttribute="top" secondItem="4bj-XL-FjG" secondAttribute="bottom" constant="22" id="CuT-XS-TlO"/>
                                 <constraint firstItem="WhJ-0q-SQL" firstAttribute="top" secondItem="v52-LQ-1sy" secondAttribute="bottom" constant="20" id="G65-vz-ykk"/>
+                                <constraint firstAttribute="trailing" secondItem="v52-LQ-1sy" secondAttribute="trailing" constant="57" id="GiE-Gw-XeP"/>
                                 <constraint firstItem="4bj-XL-FjG" firstAttribute="top" secondItem="1jS-vF-2Ds" secondAttribute="bottom" constant="17" id="Go5-If-5eD"/>
                                 <constraint firstAttribute="bottom" secondItem="mm5-hE-C3H" secondAttribute="bottom" constant="30" id="HWF-pD-u9e"/>
-                                <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="IK4-4C-tnA"/>
-                                <constraint firstItem="v52-LQ-1sy" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="LdJ-in-ox4"/>
-                                <constraint firstItem="XdA-LP-5i3" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="TJQ-Z1-1qB"/>
-                                <constraint firstItem="DxX-CN-KBN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="VpZ-55-jrl"/>
+                                <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="IK4-4C-tnA"/>
+                                <constraint firstAttribute="trailing" secondItem="WhJ-0q-SQL" secondAttribute="trailing" constant="57" id="KTa-DR-fUG"/>
+                                <constraint firstItem="v52-LQ-1sy" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="LdJ-in-ox4"/>
+                                <constraint firstItem="WhJ-0q-SQL" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="SzZ-Ni-PXb"/>
+                                <constraint firstItem="XdA-LP-5i3" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="TJQ-Z1-1qB"/>
+                                <constraint firstItem="DxX-CN-KBN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="VpZ-55-jrl"/>
                                 <constraint firstItem="XdA-LP-5i3" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" constant="40" id="Wie-Jk-KFw"/>
-                                <constraint firstItem="WhJ-0q-SQL" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="Zpy-1I-Xlh"/>
-                                <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="auX-TM-COk"/>
+                                <constraint firstItem="mm5-hE-C3H" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="Wme-wZ-zGT"/>
+                                <constraint firstItem="WhJ-0q-SQL" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="Zpy-1I-Xlh"/>
+                                <constraint firstItem="4bj-XL-FjG" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="au6-ZF-J8a"/>
+                                <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="auX-TM-COk"/>
                                 <constraint firstItem="v52-LQ-1sy" firstAttribute="top" secondItem="DxX-CN-KBN" secondAttribute="bottom" constant="14" id="bW4-Zd-E90"/>
+                                <constraint firstItem="XdA-LP-5i3" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="bkv-Sk-Ijj"/>
+                                <constraint firstAttribute="trailing" secondItem="XdA-LP-5i3" secondAttribute="trailing" constant="57" id="co2-P5-QqB"/>
+                                <constraint firstItem="1jS-vF-2Ds" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="fql-sm-9hk"/>
+                                <constraint firstItem="DxX-CN-KBN" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="57" id="gpe-dU-GaT"/>
+                                <constraint firstAttribute="trailing" secondItem="DxX-CN-KBN" secondAttribute="trailing" constant="57" id="hy1-qd-IRS"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="top" secondItem="XdA-LP-5i3" secondAttribute="bottom" constant="10" id="jVr-dy-p0m"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="top" secondItem="WhJ-0q-SQL" secondAttribute="bottom" constant="7" id="lE0-E5-tMh"/>
-                                <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="ttv-LD-HWQ"/>
+                                <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="ttv-LD-HWQ"/>
+                                <constraint firstAttribute="trailing" secondItem="1jS-vF-2Ds" secondAttribute="trailing" constant="57" id="vvx-Oz-vM5"/>
+                                <constraint firstAttribute="trailing" secondItem="mm5-hE-C3H" secondAttribute="trailing" constant="57" id="xwy-zz-VE5"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -167,8 +167,9 @@
                 <constraint firstItem="tqu-1c-gUh" firstAttribute="bottom" secondItem="6sd-7g-yCc" secondAttribute="bottom" id="AtU-4W-zSK"/>
                 <constraint firstAttribute="trailing" secondItem="5dK-hz-acy" secondAttribute="trailing" id="OaM-Yl-dBL"/>
                 <constraint firstItem="5dK-hz-acy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UMr-cW-LTu"/>
-                <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dtL-DA-EOL"/>
+                <constraint firstItem="6sd-7g-yCc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.32" id="ebF-Gt-MRI"/>
                 <constraint firstItem="tqu-1c-gUh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hHM-Qs-2ib"/>
+                <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="sC0-8o-lE9"/>
                 <constraint firstItem="DYc-AD-3c6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="uUI-lA-BdC"/>
                 <constraint firstAttribute="bottom" secondItem="5dK-hz-acy" secondAttribute="bottom" id="xy0-gH-7FK"/>
             </constraints>
