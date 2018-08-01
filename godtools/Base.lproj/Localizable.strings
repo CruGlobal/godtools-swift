@@ -14,6 +14,9 @@
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
 "okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "General";
 "menu_share" = "Share";
@@ -21,6 +24,10 @@
 "language_settings" = "Language Settings";
 // Tool Detail
 "about" = "About";
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
 "help" = "Help";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
@@ -80,6 +87,8 @@ The app can be downloaded from godtoolsapp.com";
 // Alerts
 "error" = "Error";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 

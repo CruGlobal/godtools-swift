@@ -8,20 +8,42 @@
 
 import UIKit
 import MessageUI
+import TheKeyOAuthSwift
+import GTMAppAuth
 
-protocol MenuViewControllerDelegate {
-    mutating func moveToUpdateLanguageSettings()
-    mutating func moveToAbout()
-    mutating func moveToLogin()
-    mutating func openWebView(url: URL, title: String, analyticsTitle: String)
+protocol MenuViewControllerDelegate: class {
+    func moveToUpdateLanguageSettings()
+    func moveToAbout()
+    func moveToLogin()
+    func openWebView(url: URL, title: String, analyticsTitle: String)
 }
+
+/*
+ ----The OAuth client ID.----
+ For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
+ Set to nil to use dynamic registration with this example.
+ 
+let kClientID: String? = "2880599195946831054";
+  Testing Client_ID 2880599195946831054
+  Real Client_ID 5337397229970887848
+
+----The OAuth redirect URI for the client @c kClientID.----
+ For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
+ 
+let kRedirectURI: String = "ppoauthapp://h ttps://stage.godtoolsapp.com/auth";
+  Testing RedirectURI ppoauthapp://https://stage.godtoolsapp.com/auth
+  Real RedirectURI //https://godtoolsapp.com/auth
+
+ ----NSCoding key for the authState property.----
+let kAppAuthExampleAuthStateKey: String = "authState";
+  */
+
 
 class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    let general = ["language_settings", "about", "help", "contact_us"]
-    // when login becomes available, use general below:
-//    let general = ["language_settings", "login", "about", "help", "contact_us"]
+
+    var general = ["language_settings", "login", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -29,6 +51,11 @@ class MenuViewController: BaseViewController {
     let headerHeight: CGFloat = 40.0
     
     var delegate: MenuViewControllerDelegate?
+    let loginClient =  TheKeyOAuthClient.shared
+    
+    var isComingFromLoginBanner = false
+    let intWithCreateAccount = 6
+    let intWithoutCreateAccount = 5
     
     override var screenTitle: String {
         get {
@@ -38,7 +65,22 @@ class MenuViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        adjustGeneralTitles()
+        loginClient.addStateChangeDelegate(delegate: self)
         self.setupStyle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        adjustGeneralTitles()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if isComingFromLoginBanner {
+            openLoginWindow()
+            isComingFromLoginBanner = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,6 +88,15 @@ class MenuViewController: BaseViewController {
     }
     
     // MARK: UI
+    
+    func adjustGeneralTitles() {
+        if loginClient.isAuthenticated() {
+            general = ["language_settings", "logout", "about", "help", "contact_us"]
+        } else {
+            general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
+        }
+        tableView.reloadData()
+    }
     
     fileprivate func setupStyle() {
         self.view.backgroundColor = .clear
@@ -139,10 +190,10 @@ extension MenuViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.section {
         case 0:
             handleGeneralSectionCellSelection(rowIndex: indexPath.row)
-            break
         case 1:
             handleShareSectionCellSelection(rowIndex: indexPath.row)
         case 2:
@@ -173,47 +224,47 @@ extension MenuViewController: UITableViewDelegate {
 
 extension MenuViewController {
     
-    // use this function when login becomes available. rename it to: handleGeneralSectionCellSelection.
-    fileprivate func handleGeneralSectionCellSelectionFuture(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            delegate?.moveToUpdateLanguageSettings()
-            break
-        case 1:
-            delegate?.moveToLogin()
-            break
-        case 2:
-            delegate?.moveToAbout()
-            break
-        case 3:
-            openHelp()
-            break
-        case 4:
-            contactUs()
-            break
+    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+        switch general.count {
+        case intWithCreateAccount:
+            selectionCreateAccountVisible(rowIndex: rowIndex)
+        case intWithoutCreateAccount:
+            selectionCreateAccountNotVisible(rowIndex: rowIndex)
         default: break
-        }
-        if rowIndex == 0 {
         }
     }
     
-    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
+    fileprivate func selectionCreateAccountVisible(rowIndex: Int) {
         switch rowIndex {
         case 0:
             delegate?.moveToUpdateLanguageSettings()
-            break
         case 1:
-            delegate?.moveToAbout()
-            break
+            openLoginWindow()
         case 2:
-            openHelp()
-            break
+            openCreateAccountWindow()
         case 3:
+            delegate?.moveToAbout()
+        case 4:
+            openHelp()
+        case 5:
             contactUs()
-            break
         default: break
         }
-        if rowIndex == 0 {
+    }
+    
+    fileprivate func selectionCreateAccountNotVisible(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            delegate?.moveToUpdateLanguageSettings()
+        case 1:
+            openLoginWindow()
+        case 2:
+            delegate?.moveToAbout()
+        case 3:
+            openHelp()
+        case 4:
+            contactUs()
+        default: break
         }
     }
     
@@ -221,7 +272,6 @@ extension MenuViewController {
         switch rowIndex {
         case 0:
             shareGodToolsApp()
-            break
         case 1:
             shareAStoryWithUs()
         default: break
@@ -232,13 +282,10 @@ extension MenuViewController {
         switch rowIndex {
         case 0:
             openTermsOfUse()
-            break
         case 1:
             openPrivacyPolicy()
-            break
         case 2:
             openCopyrightInfo()
-            break
         default: break
         }
         
@@ -296,6 +343,18 @@ extension MenuViewController {
         self.delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
     }
     
+    fileprivate func openLoginWindow() {
+        if loginClient.isAuthenticated() {
+            presentLogoutConfirmation()
+        } else {
+           initiateLogin()
+        }
+    }
+    
+    fileprivate func openCreateAccountWindow() {
+        initiateLogin(additionalParameters: ["action":"signup"])
+    }
+    
 }
 
 extension MenuViewController: MFMailComposeViewControllerDelegate {
@@ -321,4 +380,43 @@ extension MenuViewController: MenuTableViewCellDelegate {
             sender.setSelected(true, animated: false)
         }
     }
+}
+
+extension MenuViewController {
+    
+    func initiateLogin(additionalParameters: [String: String]? = nil) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
+            // block unused
+        })
+    }
+    
+    func presentLogoutConfirmation() {
+       
+        let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
+
+            self?.loginClient.logout()
+            self?.adjustGeneralTitles()
+        })
+        
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
+        
+        dialogMessage.addAction(ok)
+        dialogMessage.addAction(cancel)
+        
+        self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+}
+
+extension MenuViewController: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+        DispatchQueue.main.async {
+            self.adjustGeneralTitles()
+        }
+    }
+    
 }

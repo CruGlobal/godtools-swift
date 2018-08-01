@@ -19,6 +19,7 @@ extension Notification.Name {
     static let downloadBannerCompleteNotifciation = Notification.Name("downloadBannerCompleteNotifciation")
     static let sendEmailFromTractForm = Notification.Name("sendEmailFromTractForm")
     static let reloadHomeListNotification = Notification.Name("reloadHomeListNotification")
+    static let loginBannerDismissedNotification = Notification.Name("loginBannerDismissedNotification")
     
     static let screenViewNotification = Notification.Name("screenViewNotification")
     static let actionTrackNotification = Notification.Name("actionTrackNotification")
