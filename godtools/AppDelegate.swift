@@ -34,16 +34,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if loginClient.isAuthenticated() {
             loginClient.fetchAttributes() { (attributes, _) in
-                if let userAtts = attributes {
-                    if let masterPersonId = userAtts["grMasterPersonId"] {
-                        if let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") {
-                            
+                if let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] {
+                        if let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") as? String {
+                            // Don't need to resend
+                            let userAttributes = AppDelegate.processAttributes(dict: userAtts)
+                            AppDelegate.sendPostWithUserEmail(attributes: userAttributes)
+                            print("else userAttributes ><><>", userAttributes)
                         } else  {
                             UserDefaults.standard.set(masterPersonId, forKey: "grMasterPersonId")
-                            let userAttributes = self.processAttributes(dict: userAtts)
+                            let userAttributes = AppDelegate.processAttributes(dict: userAtts)
+                            AppDelegate.sendPostWithUserEmail(attributes: userAttributes)
+                            print("else userAttributes ><><>", userAttributes)
                         }
                     }
-                }
+                
                 /*
                 ["lastName": "Doe", "ssoGuid": "49E1F2F9-55CC-6C10-58FF-B9B46CA79579", "email": "test@test.com", "firstName": "John", "grMasterPersonId": "6017a717-251c-434f-aa2f-e4279328fa59"]
                 */
@@ -93,8 +97,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     }
     
-    func processAttributes(dict: [String: String]) -> [String: Any] {
-        var userDict = [String: Any]()
+   static func processAttributes(dict: [String: String]) -> [String: String] {
+        var userDict = [String: String]()
         if let lastName = dict["lastName"] {
             userDict["last_name"] = lastName
         }
@@ -108,19 +112,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return userDict
     }
     
-   static func sendPostWithUserEmail(attributes: [String: Any]) {
-        Alamofire
-            .request("https://campaign-forms.cru.org/forms",
+   static func sendPostWithUserEmail(attributes: [String: String]) {
+        Alamofire.request("https://campaign-forms.cru.org/forms",
                      method: HTTPMethod.post,
                      parameters: attributes)
             .validate({ (request, response, data) -> Request.ValidationResult in
                 if response.statusCode / 100 != 2 {
                     return .failure(DataManagerError.StatusCodeError(response.statusCode))
                 }
+                print(response)
+                if let data = data {
+                    let dataString = String(data: data, encoding: .utf8)
+                    print(dataString ?? "no data sent to https://campaign-forms.cru.org/forms")
+                }
                 
                 return .success
             })
-            .responseData()
+    
     }
     
     // MARK: - Flow controllers setup
