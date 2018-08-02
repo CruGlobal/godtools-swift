@@ -133,11 +133,6 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
-    func addSearchButton() {
-        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "searchGT"), style: UIBarButtonItemStyle.done, target: self, action: #selector(searchButtonAction))
-        self.navigationRightButtons.append(button)
-    }
-    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: kNavigationItemWidth, height: kNavigationItemHeight)
         let button: UIButton = UIButton(frame: buttonFrame)
@@ -181,10 +176,6 @@ class BaseViewController: UIViewController {
     }
     
     func clearButtonAction() {
-        
-    }
-    
-    func searchButtonAction() {
         
     }
     

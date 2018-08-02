@@ -38,8 +38,7 @@ class LanguagesTableViewController: BaseViewController {
     
     var isFiltering: Bool = false
 
-    var searchTool: UISearchBar!
-    var searchBarIsOnScreen = false
+    var searchTool = UISearchBar()
     var navHeight: CGFloat = 0.0
     var blankView = UIView()
     
@@ -64,7 +63,6 @@ class LanguagesTableViewController: BaseViewController {
         if !selectingForPrimary, languagesManager.loadParallelLanguageFromDisk() != nil {
             addClearButton()
         }
-        addSearchButton()
         
         super.viewDidLoad()
         
@@ -101,15 +99,6 @@ class LanguagesTableViewController: BaseViewController {
     override func clearButtonAction() {
         GTSettings.shared.parallelLanguageId = nil
         tableView.reloadData()
-    }
-    
-    override func searchButtonAction() {
-        if !searchBarIsOnScreen {
-            animateSearchOnScreen()
-        } else {
-            animateSearchOffScreen()
-        }
-        searchBarIsOnScreen = !searchBarIsOnScreen
     }
     
     private func configureScreenTitleAux() {
