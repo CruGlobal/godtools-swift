@@ -31,24 +31,34 @@ class TractHero: BaseTractElement {
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
     }
     
+    // MARK: The Hero size depends on how much text is needed to be displayed. This mainly affects how the scrollview is sized and whether or not there needs to be a CallToAction button at the bottom of the screen.
+    
     override func render() -> UIView {
-        let followingElement = getFollowingElement()
-        if followingElement != nil && followingElement!.isKind(of: TractCards.self) {
-            updateHeroHeight()
-            setupScrollView()
-            
-            for element in self.elements! {
-                self.containerView.addSubview(element.render())
-            }
-            
-            self.scrollView.addSubview(self.containerView)
-            self.addSubview(self.scrollView)
-            
-            TractBindings.addBindings(self)
-            return self
+        if let followingElement = getFollowingElement() as? TractCards {
+            updateHeroHeight(cards: followingElement)
+        } else if let _ = getFollowingElement() as? TractCallToAction {
+            let callToActionHeight = TractCallToAction.minHeight
+            let callToActionPadding = TractCallToAction.paddingConstant
+            updateHeroHeightWithNoCards(extraPadding: callToActionHeight + callToActionPadding)
         } else {
-            return super.render()
+            updateHeroHeightWithNoCards()
         }
+        
+        setupScrollView()
+        guard let elements = self.elements else {
+            let blankView = UIView()
+            blankView.isHidden = true
+            return blankView
+        }
+        for element in elements {
+            self.containerView.addSubview(element.render())
+        }
+        
+        self.scrollView.addSubview(self.containerView)
+        self.addSubview(self.scrollView)
+        
+        TractBindings.addBindings(self)
+        return self
     }
     
     // MARK: - Helpers
@@ -72,14 +82,16 @@ class TractHero: BaseTractElement {
         self.containerView.backgroundColor = .clear
     }
     
-    func updateHeroHeight() {
-        let element = getFollowingElement()
-        if element != nil && element!.isKind(of: TractCards.self) {
-            let cardsElement = element as! TractCards
-            self.heroHeight = cardsElement.getMaxFreeHeight()
-            self.elementFrame.height = self.heroHeight
-            self.frame = self.elementFrame.getFrame()
-        }
+    func updateHeroHeight(cards: TractCards) {
+        self.heroHeight = cards.getMaxFreeHeight(hero: self)
+        self.elementFrame.height = self.heroHeight
+        self.frame = self.elementFrame.getFrame()
     }
-        
+    
+    func updateHeroHeightWithNoCards(extraPadding: CGFloat = 0) {
+        self.heroHeight = BaseTractElement.screenHeight - TractHero.paddingBottom - extraPadding
+        self.elementFrame.height = self.heroHeight
+        self.frame = self.elementFrame.getFrame()
+    }
+    
 }
