@@ -53,6 +53,65 @@ class DownloadedResourceManager: GTDataManager {
         }
     }
     
+    func loadFromRemoteTestDwnldRsrcs() /*-> Promise<DownloadedResources>*/ {
+        //showNetworkingIndicator()
+         let params = ["include": "translations,attachments"]
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                Alamofire.request(self.buildURL() ?? "",
+                                  method: HTTPMethod.get,
+                                  parameters: params,
+                                  encoding: URLEncoding.default,
+                                  headers: nil).response()  { (responseData) in
+                    guard let data = responseData.data else { return }
+                    
+                    do {
+                        let remoteResources = try self.serializer.deserializeData(data)
+                        if let resourcesToSave = remoteResources.data as? [DownloadedResourceJson] {
+                            DispatchQueue.main.async {
+                                self.saveToDisk(resourcesToSave)
+                            }
+                        }
+                        
+                    } catch let error {
+                        debugPrint(error.localizedDescription)
+                    }
+                }
+            }
+    }
+        
+
+        
+        
+        
+      /*
+         
+        Alamofire.request(buildURL() ?? "",
+         method: HTTPMethod.get,
+         parameters: params,
+         encoding: URLEncoding.default,
+         headers: nil)
+        let params = ["include": "translations,attachments"]
+        
+        _ = issueGETRequest(params)
+            .then { data -> Promise<DownloadedResources> in
+                do {
+                    let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
+                    
+                    self.saveToDisk(remoteResources)
+                    
+                } catch {
+                    return Promise(error: error)
+                }
+                return Promise(value:self.loadFromDisk())
+            }
+        */
+//            .always {
+//                // self.hideNetworkIndicator()
+//        }
+        
+   
+    
     func loadInitialContentFromDisk() {
         let resourcesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "resources", ofType: "json")!)
         let resourcesData = try! Data(contentsOf: resourcesPath)
@@ -78,6 +137,43 @@ class DownloadedResourceManager: GTDataManager {
             TranslationFileRemover().deleteUnusedPages()
         }
     }
+    
+    private func saveToDiskStep1(_ resources: [DownloadedResourceJson]) {
+        safelyWriteToRealm({
+            for remoteResource in resources {
+                let cachedResource = save(remoteResource: remoteResource)
+                saveToDiskStep2(remoteResource, downloadedResource: cachedResource)
+            }
+        })
+    }
+    
+    private func saveToDiskStep2(_ resource: DownloadedResourceJson, downloadedResource: DownloadedResource) {
+        for remoteAttachment in resource.attachments! {
+            let remoteAttachment = remoteAttachment as! AttachmentResource
+            let cachedAttachment = save(remoteAttachment: remoteAttachment)
+            cachedAttachment.resource = downloadedResource
+        }
+        if downloadedResource.bannerRemoteId != nil || downloadedResource.aboutBannerRemoteId != nil {
+            _ = BannerManager().downloadFor(downloadedResource)
+        }
+        
+        let remoteTranslations = resource.latestTranslations!
+    }
+    
+    private func saveToDiskStep3(_ remoteTranslations: LinkedResourceCollection, downloadedResourceJson: DownloadedResourceJson) {
+        for remoteTranslationGeneric in remoteTranslations {
+            let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+            let languageId = remoteTranslation.language?.id ?? "-1"
+            let resourceId = downloadedResourceJson.id ?? "-1"
+            let version = remoteTranslation.version!.int16Value
+            
+            if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                continue;
+            }
+            let cachedTranslation = save(remoteTranslation: remoteTranslation)
+        }
+    }
+            
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         safelyWriteToRealm({

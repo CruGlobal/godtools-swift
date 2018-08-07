@@ -118,6 +118,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
     }
+ 
+    /*
+    private func initalizeAppState() /*-> Promise<Any>*/ {
+        let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
+        let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
+        
+        let languagesManager = LanguagesManager()
+        
+        if isFirstLaunch {
+            FirstLaunchInitializer().initializeAppState()
+        }
+        
+        _ = languagesManager.loadFromRemoteTest()
+        //.then { (languages) -> Promise<DownloadedResources> in
+        _ = DownloadedResourceManager().loadFromRemoteTestDwnldRsrcs()
+        //    }
+        //.then { (resources) -> Promise<DownloadedResources> in
+        if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
+            self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
+        } else if isFirstLaunch {
+            languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
+            TranslationZipImporter().catchupMissedDownloads()
+        } else {
+            TranslationZipImporter().catchupMissedDownloads()
+        }
+        
+        //   return Promise(value: resources)
+        //            }
+        //            .catch(execute: { (error) in
+        //                if isFirstLaunch {
+        //                    self.flowController?.showDeviceLocaleDownloadFailedAlert()
+        //                }
+        //            })
+    }
+ */
+
+    private func setInitialAppState(isFirstLaunch: Bool) {
+        let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
+
+        let languagesManager = LanguagesManager()
+//        DispatchQueue.global(qos: .background).async {
+//            let _ = languagesManager.loadFromRemote()
+//            let _ = DownloadedResourceManager().loadFromRemote()
+//        }
+
+
+        if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
+            self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
+        } else if isFirstLaunch {
+            languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
+            TranslationZipImporter().catchupMissedDownloads()
+        } else {
+            TranslationZipImporter().catchupMissedDownloads()
+        }
+
+    }
+
+    private func checkForFirstTimersAndContinueSetUp() {
+        let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
+        
+        if isFirstLaunch {
+            FirstLaunchInitializer().initializeAppState()
+        }
+        
+        setInitialAppState(isFirstLaunch: isFirstLaunch)
+        
+    }
     
     private func resetStateIfUITesting() {
         if ProcessInfo.processInfo.arguments.contains("UI-Testing") {
