@@ -112,62 +112,24 @@ class LanguagesManager: GTDataManager {
         
         return issueGETRequest()
             .then { data -> Promise<Languages> in
-                do {
-                    let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
-                    
-                    self.saveToDisk(remoteLanguages)
-                } catch {
-                    return Promise(error: error)
-                }
-                return Promise(value:self.loadFromDisk())
-        }
-            .always {
-              //  self.hideNetworkIndicator()
-        }
-    }
-    
-    func loadFromRemoteTest() /*-> Promise<Languages>*/ {
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            Alamofire.request(self.buildURL() ?? "").response()  { (responseData) in
-                guard let data = responseData.data else { return }
                 
-                do {
-                    let remoteLanguages = try self.serializer.deserializeData(data)// as! [LanguageResource]
-                    if let languagesToSave = remoteLanguages.data as? [LanguageResource] {
-                        DispatchQueue.main.async {
-                            self.saveToDisk(languagesToSave)
+                var remoteLanguages: [LanguageResource]?
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    remoteLanguages = try? self.serializer.deserializeData(data).data as! [LanguageResource]
+                    DispatchQueue.main.async {
+                        if let remoteLanguages = remoteLanguages {
+                            self.saveToDisk(remoteLanguages)
                         }
                     }
-                    
-                } catch let error {
-                    debugPrint(error.localizedDescription)
                 }
-            }
-        }
-    }
-
-       
-        /*
-        _ = issueGETRequest()
-            .then { data -> Promise<Languages> in
-                do {
-                    let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
-                    print("Inside of LanguagesManager loadFromRemote about to save >> /n")
-                    
-                    self.saveToDisk(remoteLanguages)
-                    
-                } catch {
-                    return Promise(error: error)
-                }
+                
                 return Promise(value:self.loadFromDisk())
             }
-        */
-        
-//            .always {
-//                //  self.hideNetworkIndicator()
-//        }
-    
+            .always {
+                self.hideNetworkIndicator()
+        }
+    }
     
     func loadInitialContentFromDisk() {
         let languagesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "languages", ofType: "json")!)
