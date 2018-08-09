@@ -43,7 +43,10 @@ class MenuViewController: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
-    var general = ["language_settings", "login", "about", "help", "contact_us"]
+    var general = [String]()
+    let generalNonEnglishMenu = ["language_settings", "about", "help", "contact_us"]
+    let generalWithLogout = ["language_settings", "logout", "about", "help", "contact_us"]
+    let generalWithLogin = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
     let share = ["share_god_tools", "share_a_story_with_us"]
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
@@ -56,6 +59,7 @@ class MenuViewController: BaseViewController {
     var isComingFromLoginBanner = false
     let intWithCreateAccount = 6
     let intWithoutCreateAccount = 5
+    let intWithNonEnglishMenu = 4
     
     override var screenTitle: String {
         get {
@@ -89,11 +93,19 @@ class MenuViewController: BaseViewController {
     
     // MARK: UI
     
+    // MARK: - Currently the 'General' menu items will only have Login/Logout option if the device is in English. This may change over time, so if other languages are added, their language code can be added
+    
     func adjustGeneralTitles() {
-        if loginClient.isAuthenticated() {
-            general = ["language_settings", "logout", "about", "help", "contact_us"]
-        } else {
-            general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
+        let codeForLanguage = Locale.current.languageCode ?? "unknown"
+        switch codeForLanguage {
+        case "en":
+            if loginClient.isAuthenticated() {
+                general = generalWithLogout
+            } else {
+                general = generalWithLogin
+            }
+        default:
+            general = generalNonEnglishMenu
         }
         tableView.reloadData()
     }
@@ -226,6 +238,8 @@ extension MenuViewController {
     
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch general.count {
+        case intWithNonEnglishMenu:
+            selectionNonEnglishMenu(rowIndex: rowIndex)
         case intWithCreateAccount:
             selectionCreateAccountVisible(rowIndex: rowIndex)
         case intWithoutCreateAccount:
@@ -263,6 +277,20 @@ extension MenuViewController {
         case 3:
             openHelp()
         case 4:
+            contactUs()
+        default: break
+        }
+    }
+    
+    fileprivate func selectionNonEnglishMenu(rowIndex: Int) {
+        switch rowIndex {
+        case 0:
+            delegate?.moveToUpdateLanguageSettings()
+        case 1:
+            delegate?.moveToAbout()
+        case 2:
+            openHelp()
+        case 3:
             contactUs()
         default: break
         }
