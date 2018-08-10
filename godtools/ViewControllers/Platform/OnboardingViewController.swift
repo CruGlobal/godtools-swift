@@ -41,8 +41,8 @@ class OnboardingViewController: BaseViewController {
     private func setupButtonAndLabels() {
         languagesOkayButton.titleLabel?.font = UIFont.gtLight(size: 26.0)
         languagesOkayButton.borderColor = .clear
-        numberOfLanguagesLabel.text = "60+_languages".localized
-        addLanguagesLabel.text = "share_godtools_with_someone_in_their_native_language.".localized
+        numberOfLanguagesLabel.text = "language_onboard".localized
+        addLanguagesLabel.text = "share_god_tools_native_language".localized
         languagesOkayButton.setTitle("OK".localized, for: .normal)
     }
     
