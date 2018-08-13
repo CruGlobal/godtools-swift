@@ -32,9 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                               clientID: kClientID,
                               redirectURI: URL(string: kRedirectURI)!)
         
-        if loginClient.isAuthenticated() {
+        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
+        if !hasRegisteredEmail && loginClient.isAuthenticated() {
             loginClient.fetchAttributes() { (attributes, _) in
-                
+                let signupManager = EmailSignUpManager()
+                signupManager.signUpUserForEmailRegistration(attributes: attributes)
             }
         }
         
