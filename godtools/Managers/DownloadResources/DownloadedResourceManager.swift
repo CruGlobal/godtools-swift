@@ -198,9 +198,9 @@ class DownloadedResourceManager: GTDataManager {
         
         let existingTranslations = findEntities(Translation.self, matching: predicate)
         
-        let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
+        guard let latestTranslation = existingTranslations.max(by: {$0.version < $1.version}) else { return true }
         
-        return latestTranslation == nil || version > latestTranslation!.version
+        return version > latestTranslation.version
     }
     
     override func buildURL() -> URL? {
