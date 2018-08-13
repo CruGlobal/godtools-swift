@@ -68,8 +68,15 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                                                object: nil)
     }
     
-    func displayMenu() {
+    func displayMenu(notification: Notification? = nil) {
         let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
+        
+        if let menuNotification = notification {
+            if let userInfo = menuNotification.userInfo as? [String: Any] {
+                menuViewController.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
+            }
+        }
+        
         menuViewController.delegate = self
         guard let currentFrame = self.currentViewController?.view.frame else { return }
         menuViewController.view.frame = currentFrame
