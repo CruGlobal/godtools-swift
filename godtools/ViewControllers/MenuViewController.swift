@@ -425,12 +425,10 @@ extension MenuViewController: OIDAuthStateChangeDelegate {
     
     fileprivate func handleEmailRegistration() {
         let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
-        if !hasRegisteredEmail {
-            if loginClient.isAuthenticated() {
-                loginClient.fetchAttributes() { (attributes, _) in
-                    let signupManager = EmailSignUpManager()
-                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
-                }
+        if !hasRegisteredEmail && loginClient.isAuthenticated() {
+            loginClient.fetchAttributes() { (attributes, _) in
+                let signupManager = EmailSignUpManager()
+                signupManager.signUpUserForEmailRegistration(attributes: attributes)
             }
         }
     }
