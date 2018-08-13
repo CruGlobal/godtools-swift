@@ -32,15 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                               clientID: kClientID,
                               redirectURI: URL(string: kRedirectURI)!)
         
-        if loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
-                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
-                }
-            }
-        }
-        
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()
         

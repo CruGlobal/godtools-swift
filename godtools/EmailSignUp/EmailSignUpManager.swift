@@ -15,20 +15,11 @@ class EmailSignUpManager {
     static let emailSignupURL = URL(string: "https://campaign-forms.cru.org/forms")!
     static let emailCampaignId = "3fb6022c-5ef9-458c-928a-0380c4a0e57b"
     
-    func userEmailHasBeenSignedUp(attributes: [String: String]?) -> Bool {
-        guard let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] else { return false }
-        guard let storedPersonId = UserDefaults.standard.value(forKey: "grMasterPersonId") as? String else { return false }
-        if storedPersonId == masterPersonId {
-            return true
-        }
-        return false
-    }
-    
     func signUpUserForEmailRegistration(attributes: [String: String]?) {
-        if let userAtts = attributes, let masterPersonId = userAtts["grMasterPersonId"] {
-            UserDefaults.standard.set(masterPersonId, forKey: "grMasterPersonId")
+        if let userAtts = attributes {
             let userAttributes = processAttributes(dict: userAtts)
             sendPostWithUserEmail(attributes: userAttributes)
+            UserDefaults.standard.set(true, forKey: GTConstants.kUserEmailIsRegistered)
         }
     }
     

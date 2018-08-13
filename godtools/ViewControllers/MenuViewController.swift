@@ -91,16 +91,8 @@ class MenuViewController: BaseViewController {
     
     func adjustGeneralTitles() {
         if loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
-                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
-                }
-                DispatchQueue.main.async {
-                    self.general = ["language_settings", "logout", "about", "help", "contact_us"]
-                    self.tableView.reloadData()
-                }
-            }
+            self.general = ["language_settings", "logout", "about", "help", "contact_us"]
+            self.tableView.reloadData()
         } else {
             general = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
             tableView.reloadData()
@@ -354,14 +346,8 @@ extension MenuViewController {
     
     fileprivate func openLoginWindow() {
         if loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                if !signupManager.userEmailHasBeenSignedUp(attributes: attributes) {
-                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
-                }
-                DispatchQueue.main.async {
-                    self.presentLogoutConfirmation()
-                }
+            DispatchQueue.main.async {
+                self.presentLogoutConfirmation()
             }
         } else {
             initiateLogin()
@@ -431,8 +417,21 @@ extension MenuViewController {
 
 extension MenuViewController: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
+        handleEmailRegistration()
         DispatchQueue.main.async {
             self.adjustGeneralTitles()
+        }
+    }
+    
+    fileprivate func handleEmailRegistration() {
+        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
+        if !hasRegisteredEmail {
+            if loginClient.isAuthenticated() {
+                loginClient.fetchAttributes() { (attributes, _) in
+                    let signupManager = EmailSignUpManager()
+                    signupManager.signUpUserForEmailRegistration(attributes: attributes)
+                }
+            }
         }
     }
     
