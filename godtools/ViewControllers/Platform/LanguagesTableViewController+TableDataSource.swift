@@ -14,7 +14,14 @@ extension LanguagesTableViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let language = languages[indexPath.row]
+        var language: Language
+        if isFiltering {
+            let namedLanguage = filteredNamedLanguages[indexPath.row]
+            language = namedLanguage.language
+        } else {
+            language = languages[indexPath.row]
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: LanguagesTableViewController.languageCellIdentifier) as! LanguageTableViewCell
         
         cell.cellDelegate = self
@@ -24,7 +31,13 @@ extension LanguagesTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
+        var language: Language
+        if isFiltering {
+            let namedLanguage = filteredNamedLanguages[indexPath.row]
+            language = namedLanguage.language
+        } else  {
+            language = languages[indexPath.row]
+        }
         let selected = language.remoteId == languagesManager.selectedLanguageId()
         
         if selected {
@@ -38,6 +51,12 @@ extension LanguagesTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return languages.count
+        
+        if isFiltering {
+           return filteredNamedLanguages.count
+        } else  {
+            return languages.count
+        }
+        
     }
 }
