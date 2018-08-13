@@ -372,9 +372,11 @@ extension MenuViewController {
     
     fileprivate func openLoginWindow() {
         if loginClient.isAuthenticated() {
-            presentLogoutConfirmation()
+            DispatchQueue.main.async {
+                self.presentLogoutConfirmation()
+            }
         } else {
-           initiateLogin()
+            initiateLogin()
         }
     }
     
@@ -441,8 +443,19 @@ extension MenuViewController {
 
 extension MenuViewController: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
+        handleEmailRegistration()
         DispatchQueue.main.async {
             self.adjustGeneralTitles()
+        }
+    }
+    
+    fileprivate func handleEmailRegistration() {
+        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
+        if !hasRegisteredEmail && loginClient.isAuthenticated() {
+            loginClient.fetchAttributes() { (attributes, _) in
+                let signupManager = EmailSignUpManager()
+                signupManager.signUpUserForEmailRegistration(attributes: attributes)
+            }
         }
     }
     

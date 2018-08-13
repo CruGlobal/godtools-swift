@@ -23,4 +23,5 @@ struct GTConstants {
     static let kBannerHasBeenDismissed = "org.cru.godtools.kBannerHasBeenDismissed"
     
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
+    static let kUserEmailIsRegistered = "org.cru.godtools.userEmailIsRegistered"
 }
