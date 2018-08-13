@@ -12,15 +12,36 @@ import RealmSwift
 protocol LanguagesTableViewControllerDelegate {
 }
 
+struct NamedLanguage {
+    let language : Language
+    let name : String
+}
+
 class LanguagesTableViewController: BaseViewController {
     
     static let languageCellIdentifier = "languageCell"
+    let kSearchBarHeightRatio: CGFloat = 12.0
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    var searchBarHeight: CGFloat {
+        get {
+            return screenHeight/kSearchBarHeightRatio
+        }
+    }
     
     var delegate: LanguagesTableViewControllerDelegate?
     
     var languages = Languages()
+    var namedLanguages = [NamedLanguage]()
+    var filteredNamedLanguages = [NamedLanguage]()
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
+    
+    var isFiltering = false
+
+    var searchTool = UISearchBar()
+    var navHeight: CGFloat = 0.0
+    var blankView = UIView()
     
     var selectingForPrimary = true
     
@@ -43,12 +64,19 @@ class LanguagesTableViewController: BaseViewController {
         if !selectingForPrimary, languagesManager.loadParallelLanguageFromDisk() != nil {
             addClearButton()
         }
-
+        
         super.viewDidLoad()
         
         registerCells()
         loadLanguages()
         configureScreenTitleAux()
+        addTapToDismissKeyboard()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setupSearchBarYValue()
+        setUpSearchBar()
     }
     
     // MARK: - Load data
@@ -56,6 +84,10 @@ class LanguagesTableViewController: BaseViewController {
     func loadLanguages() {
         languagesManager.selectingPrimaryLanguage = selectingForPrimary
         languages = languagesManager.loadFromDisk()
+        for language in languages {
+            let name = language.localizedName()
+            namedLanguages.append(NamedLanguage(language: language, name: name))
+        }
 
         if !selectingForPrimary {
             configureListForParallelChoice()
@@ -69,7 +101,7 @@ class LanguagesTableViewController: BaseViewController {
         GTSettings.shared.parallelLanguageId = nil
         tableView.reloadData()
     }
-
+    
     private func configureScreenTitleAux() {
         if selectingForPrimary {
             self.screenTitleAux = "primary_language"
@@ -81,8 +113,10 @@ class LanguagesTableViewController: BaseViewController {
     private func configureListForParallelChoice() {
         // remove primary language from list of options for parallel
         if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-            if let index = languages.index(of: primaryLanguage) {
-                languages.remove(objectAtIndex: index)
+            if !isFiltering {
+                if let index = languages.index(of: primaryLanguage) {
+                    languages.remove(objectAtIndex: index)
+                }
             }
         }
     }
@@ -105,6 +139,16 @@ class LanguagesTableViewController: BaseViewController {
     override func siteSubSection() -> String {
         return "language settings"
     }
+    
+    // MARK: - Private instance methods
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredNamedLanguages = namedLanguages.filter { $0.name.lowercased().contains(searchText.lowercased())  }
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            filteredNamedLanguages = filteredNamedLanguages.filter { !$0.name.lowercased().contains(primaryLanguage.localizedName().lowercased()) }
+        }
+    }
+
 }
 
 extension LanguagesTableViewController: LanguageTableViewCellDelegate {
