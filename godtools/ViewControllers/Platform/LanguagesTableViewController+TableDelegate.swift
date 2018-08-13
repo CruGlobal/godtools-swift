@@ -11,17 +11,23 @@ import UIKit
 
 extension LanguagesTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let language = languages[indexPath.row]
+        var language: Language
+        if isFiltering {
+            let namedLanguage = filteredNamedLanguages[indexPath.row]
+            language = namedLanguage.language
+        } else  {
+            language = languages[indexPath.row]
+        }
         languagesManager.setSelectedLanguage(language)
         languagesManager.recordLanguageShouldDownload(language: language)
         zipImporter.download(language: language)
-        self.refreshCellState(tableView: tableView, indexPath: indexPath)
+        self.refreshCellState(tableView: tableView, indexPath: indexPath, language: language)
         baseDelegate?.goBack()
     }
     
-    private func refreshCellState(tableView: UITableView, indexPath: IndexPath) {
+    private func refreshCellState(tableView: UITableView, indexPath: IndexPath, language: Language) {
         let cell = tableView.cellForRow(at: indexPath) as! LanguageTableViewCell
-        cell.language = languages[indexPath.section]
+        cell.language = language
         tableView.reloadData()
     }
 }

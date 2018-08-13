@@ -97,6 +97,7 @@
 		1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
 		1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78090921125CDC003E5F95 /* EmailSignUpManager.swift */; };
+		1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */; };
 		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
 		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E911CA820DAF0050068E62A /* LoginBannerView.xib */; };
@@ -350,6 +351,7 @@
 		1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEvent.swift; sourceTree = "<group>"; };
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E78090921125CDC003E5F95 /* EmailSignUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpManager.swift; sourceTree = "<group>"; };
+		1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+SearchBarDelegate.swift"; sourceTree = "<group>"; };
 		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		1E911CA820DAF0050068E62A /* LoginBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginBannerView.xib; sourceTree = "<group>"; };
@@ -711,6 +713,7 @@
 				0FB73E691EA90669000BA60D /* LanguagesTableViewController.xib */,
 				4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */,
 				4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */,
+				1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */,
 			);
 			name = Languages;
 			sourceTree = "<group>";
@@ -1816,6 +1819,7 @@
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
 				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
+				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,
 				0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
