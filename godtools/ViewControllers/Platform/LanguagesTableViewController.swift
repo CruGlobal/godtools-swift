@@ -20,11 +20,12 @@ struct NamedLanguage {
 class LanguagesTableViewController: BaseViewController {
     
     static let languageCellIdentifier = "languageCell"
+    let kSearchBarHeightRatio: CGFloat = 12.0
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     var searchBarHeight: CGFloat {
         get {
-            return screenHeight/12
+            return screenHeight/kSearchBarHeightRatio
         }
     }
     
@@ -36,7 +37,7 @@ class LanguagesTableViewController: BaseViewController {
     let languagesManager = LanguagesManager()
     let zipImporter = TranslationZipImporter()
     
-    var isFiltering: Bool = false
+    var isFiltering = false
 
     var searchTool = UISearchBar()
     var navHeight: CGFloat = 0.0

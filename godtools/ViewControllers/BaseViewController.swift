@@ -23,6 +23,7 @@ class BaseViewController: UIViewController {
     
     let kNavigationItemHeight: CGFloat = 22.0
     let kNavigationItemWidth: CGFloat = 22.0
+    let kNavigationItemSpaceRatio: CGFloat = 5.0
     
     var navigationLeftButtons = [UIBarButtonItem]()
     var navigationRightButtons = [UIBarButtonItem]()
@@ -73,7 +74,7 @@ class BaseViewController: UIViewController {
     func displayNavigationRightButtons() {
         // Set 26px of fixed space between the two UIBarButtonItems
         let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
-        fixedSpace.width = self.kNavigationItemSpace/5
+        fixedSpace.width = self.kNavigationItemSpace/kNavigationItemSpaceRatio
         
         // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
         let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
