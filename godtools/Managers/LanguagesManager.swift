@@ -116,10 +116,12 @@ class LanguagesManager: GTDataManager {
                 var remoteLanguages: [LanguageResource]?
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    remoteLanguages = try? self.serializer.deserializeData(data).data as! [LanguageResource]
+                    if let remoteLngs = try? self.serializer.deserializeData(data).data as? [LanguageResource] {
+                        remoteLanguages = remoteLngs
+                    }
                     DispatchQueue.main.async {
-                        if let remoteLanguages = remoteLanguages {
-                            self.saveToDisk(remoteLanguages)
+                        if let remoteLanguagesForSaving = remoteLanguages {
+                            self.saveToDisk(remoteLanguagesForSaving)
                         }
                     }
                 }

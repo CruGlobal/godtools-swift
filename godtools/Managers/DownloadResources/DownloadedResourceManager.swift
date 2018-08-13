@@ -43,10 +43,12 @@ class DownloadedResourceManager: GTDataManager {
                 var remoteResources: [DownloadedResourceJson]?
                 
                 DispatchQueue.global(qos: .userInitiated).async {
-                    remoteResources = try? self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
+                    if let remoteRsrcs = try? self.serializer.deserializeData(data).data as? [DownloadedResourceJson] {
+                        remoteResources = remoteRsrcs
+                    }
                     DispatchQueue.main.async {
-                        if let remoteResources = remoteResources {
-                            self.saveToDisk(remoteResources)
+                        if let remoteResourcesForSaving = remoteResources {
+                            self.saveToDisk(remoteResourcesForSaving)
                         }
                     }
                 }
