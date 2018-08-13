@@ -51,6 +51,9 @@ class MenuViewController: BaseViewController {
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
     
+    // MARK: - This array could possible extend to more languages over time.
+    let languageLoginCodes = ["en"]
+    
     let headerHeight: CGFloat = 40.0
     
     var delegate: MenuViewControllerDelegate?
@@ -97,16 +100,12 @@ class MenuViewController: BaseViewController {
     
     func adjustGeneralTitles() {
         let codeForLanguage = Locale.current.languageCode ?? "unknown"
-        switch codeForLanguage {
-        case "en":
-            if loginClient.isAuthenticated() {
-                general = generalWithLogout
-            } else {
-                general = generalWithLogin
-            }
-        default:
+        if languageLoginCodes.contains(codeForLanguage) {
+            general = (loginClient.isAuthenticated()) ? generalWithLogout : generalWithLogin
+        } else {
             general = generalNonEnglishMenu
         }
+
         tableView.reloadData()
     }
     
