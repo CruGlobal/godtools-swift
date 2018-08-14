@@ -18,6 +18,7 @@
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
                 <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
                 <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
+                <outlet property="topLayoutConstraint" destination="gKt-fE-1PR" id="Z8V-gh-6nG"/>
                 <outlet property="totalLanguagesLabel" destination="WhJ-0q-SQL" id="UEL-1m-0ma"/>
                 <outlet property="totalViewsLabel" destination="1jS-vF-2Ds" id="PiF-Pv-xwc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -29,13 +30,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="178" image="cell_banner_placeholder" highlightedImage="cell_banner_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="6sd-7g-yCc">
-                    <rect key="frame" x="0.0" y="64" width="375" height="178"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="178"/>
                 </imageView>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tqu-1c-gUh" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="240" width="375" height="2"/>
+                    <rect key="frame" x="0.0" y="176" width="375" height="2"/>
                 </progressView>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dK-hz-acy">
-                    <rect key="frame" x="0.0" y="242" width="375" height="425"/>
+                    <rect key="frame" x="0.0" y="178" width="375" height="489"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="434"/>
@@ -166,7 +167,7 @@
                 <constraint firstAttribute="trailing" secondItem="5dK-hz-acy" secondAttribute="trailing" id="OaM-Yl-dBL"/>
                 <constraint firstItem="5dK-hz-acy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UMr-cW-LTu"/>
                 <constraint firstItem="6sd-7g-yCc" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.267" id="WNq-5O-0Vt"/>
-                <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="gKt-fE-1PR"/>
+                <constraint firstItem="6sd-7g-yCc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="gKt-fE-1PR"/>
                 <constraint firstItem="tqu-1c-gUh" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hHM-Qs-2ib"/>
                 <constraint firstItem="DYc-AD-3c6" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="uUI-lA-BdC"/>
                 <constraint firstAttribute="bottom" secondItem="5dK-hz-acy" secondAttribute="bottom" id="xy0-gH-7FK"/>
