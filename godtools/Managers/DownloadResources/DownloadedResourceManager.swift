@@ -39,13 +39,20 @@ class DownloadedResourceManager: GTDataManager {
         
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
-                do {
-                    let remoteResources = try self.serializer.deserializeData(data).data as! [DownloadedResourceJson]
-                    
-                    self.saveToDisk(remoteResources)
-                } catch {
-                    return Promise(error: error)
+                
+                var remoteResources: [DownloadedResourceJson]?
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let remoteRsrcs = try? self.serializer.deserializeData(data).data as? [DownloadedResourceJson] {
+                        remoteResources = remoteRsrcs
+                    }
+                    DispatchQueue.main.async {
+                        if let remoteResourcesForSaving = remoteResources {
+                            self.saveToDisk(remoteResourcesForSaving)
+                        }
+                    }
                 }
+                
                 return Promise(value:self.loadFromDisk())
             }
             .always {
@@ -78,14 +85,16 @@ class DownloadedResourceManager: GTDataManager {
             TranslationFileRemover().deleteUnusedPages()
         }
     }
+            
     
     private func saveToDisk(_ resources: [DownloadedResourceJson]) {
         safelyWriteToRealm({
             for remoteResource in resources {
                 let cachedResource = save(remoteResource: remoteResource)
+                guard let attachments = remoteResource.attachments else { continue }
                 
-                for remoteAttachment in (remoteResource.attachments!) {
-                    let remoteAttachment = remoteAttachment as! AttachmentResource
+                for remoteAttachment in attachments {
+                    guard let remoteAttachment = remoteAttachment as? AttachmentResource else { continue }
                     let cachedAttachment = save(remoteAttachment: remoteAttachment)
                     cachedAttachment.resource = cachedResource
                 }
@@ -94,14 +103,14 @@ class DownloadedResourceManager: GTDataManager {
                     _ = BannerManager().downloadFor(cachedResource)
                 }
                 
-                let remoteTranslations = remoteResource.latestTranslations!
+                guard let remoteTranslations = remoteResource.latestTranslations else { continue }
                 for remoteTranslationGeneric in remoteTranslations {
-                    let remoteTranslation = remoteTranslationGeneric as! TranslationResource
+                    guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
                     let languageId = remoteTranslation.language?.id ?? "-1"
                     let resourceId = remoteResource.id ?? "-1"
-                    let version = remoteTranslation.version!.int16Value
+                    guard let version = remoteTranslation.version?.int16Value else { continue }
                     
-                    if !translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) {
+                    if translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) == false {
                         continue;
                     }
                     let cachedTranslation = save(remoteTranslation: remoteTranslation)
@@ -109,8 +118,8 @@ class DownloadedResourceManager: GTDataManager {
                     cachedTranslation.downloadedResource = cachedResource
                     cachedResource.translations.append(cachedTranslation)
                     
-                    let cachedLanguage = findEntityByRemoteId(Language.self, remoteId: languageId)
-                    cachedLanguage?.translations.append(cachedTranslation)
+                    guard let cachedLanguage = findEntityByRemoteId(Language.self, remoteId: languageId) else { continue }
+                    cachedLanguage.translations.append(cachedTranslation)
                     cachedTranslation.language = cachedLanguage
                     
                     TranslationsManager().purgeTranslationsOlderThan(cachedTranslation)
@@ -191,9 +200,9 @@ class DownloadedResourceManager: GTDataManager {
         
         let existingTranslations = findEntities(Translation.self, matching: predicate)
         
-        let latestTranslation = existingTranslations.max(by: {$0.version < $1.version})
+        guard let latestTranslation = existingTranslations.max(by: {$0.version < $1.version}) else { return true }
         
-        return latestTranslation == nil || version > latestTranslation!.version
+        return version > latestTranslation.version
     }
     
     override func buildURL() -> URL? {
