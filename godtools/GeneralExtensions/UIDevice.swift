@@ -22,6 +22,28 @@ extension UIDevice {
     }
     
     func iPhoneX() -> Bool {
+        #if DEBUG
+            if UIDevice().userInterfaceIdiom == .phone {
+                switch UIScreen.main.nativeBounds.height {
+                case 1136:
+                    //This is a ("iPhone 5 or 5S or 5C")
+                    return false
+                case 1334:
+                    //This is a ("iPhone 6/6S/7/8")
+                    return false
+                case 1920, 2208:
+                    //This is a ("iPhone 6+/6S+/7+/8+")
+                    return false
+                case 2436:
+                    //This is a ("iPhone X")
+                    return true
+                default:
+                    //This is a ("unknown")
+                    return false
+                }
+            }
+        #endif
+
         return modelName == "iPhone10,3" || modelName == "iPhone10,6"
     }
     
