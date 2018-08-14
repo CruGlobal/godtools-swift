@@ -112,15 +112,22 @@ class LanguagesManager: GTDataManager {
         
         return issueGETRequest()
             .then { data -> Promise<Languages> in
-                do {
-                    let remoteLanguages = try self.serializer.deserializeData(data).data as! [LanguageResource]
-                    
-                    self.saveToDisk(remoteLanguages)
-                } catch {
-                    return Promise(error: error)
+                
+                var remoteLanguages: [LanguageResource]?
+                
+                DispatchQueue.global(qos: .userInitiated).async {
+                    if let remoteLngs = try? self.serializer.deserializeData(data).data as? [LanguageResource] {
+                        remoteLanguages = remoteLngs
+                    }
+                    DispatchQueue.main.async {
+                        if let remoteLanguagesForSaving = remoteLanguages {
+                            self.saveToDisk(remoteLanguagesForSaving)
+                        }
+                    }
                 }
+                
                 return Promise(value:self.loadFromDisk())
-        }
+            }
             .always {
                 self.hideNetworkIndicator()
         }
