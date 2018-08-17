@@ -58,7 +58,11 @@ class TractCallToAction: BaseTractElement {
         guard let previousElement = self.getPreviousElement() else { return }
         
         self.elementFrame.x = 0
-        self.elementFrame.y = (previousElement.isKind(of: TractHero.self)) ? BaseTractElement.screenHeight - TractCallToAction.minHeight : position
+        if (previousElement.isKind(of: TractHero.self)) {
+            self.elementFrame.y = (UIDevice.current.iPhoneX()) ? BaseTractElement.screenHeight - (TractCallToAction.minHeight * 2) : BaseTractElement.screenHeight - TractCallToAction.minHeight
+        } else {
+            self.elementFrame.y = position
+        }
         self.elementFrame.width = parentWidth()
         self.elementFrame.yMarginBottom = TractCallToAction.yMarginConstant
         self.elementFrame.xMargin = TractCallToAction.paddingConstant

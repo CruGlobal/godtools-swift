@@ -25,7 +25,7 @@ extension TractCards {
         if let element = getPreviousElement() as? TractHero {
             let initialYPosition = getMaxFreeHeight(hero: element)
             if initialYPosition < self.elementFrame.y {
-                self.elementFrame.y = initialYPosition + TractPage.navbarHeight
+                self.elementFrame.y = (UIDevice.current.iPhoneX()) ? initialYPosition - TractPage.navbarHeight : initialYPosition + TractPage.navbarHeight
             }
         }
     }

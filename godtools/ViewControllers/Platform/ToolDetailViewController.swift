@@ -19,6 +19,9 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var downloadProgressView: GTProgressView!
     @IBOutlet weak var bannerImageView: UIImageView!
     
+    @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
+    
+    
     let toolsManager = ToolsManager.shared
     
     var resource: DownloadedResource?
@@ -28,6 +31,15 @@ class ToolDetailViewController: BaseViewController {
         self.displayData()
         self.hideScreenTitle()
         registerForDownloadProgressNotifications()
+        setTopHeight()
+    }
+    
+    func setTopHeight() {
+        let barHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        let statusBarHeight = UIApplication.shared.isStatusBarHidden ? CGFloat(0) : UIApplication.shared.statusBarFrame.height
+        let topBar = barHeight + statusBarHeight
+        self.topLayoutConstraint.constant = topBar
+        self.view.layoutIfNeeded()
     }
 
     // MARK: Present data
