@@ -26,12 +26,11 @@ class FollowUpsManager: GTDataManager {
             return validationError()
         }
         
-        let resource = createFollowUpResource(params: params)
-        let localFollowUp = FollowUp(jsonAPIFollowUp: resource)
+        let localFollowUp = FollowUp(params: params)
         
         saveLocalCopy(localFollowUp)
         
-        return postFollowUp(resource: resource, cachedFollowUp: localFollowUp)
+        return postFollowUp(followUp: localFollowUp)
     }
     
     func syncCachedFollowUps() -> [Promise<Void>] {
@@ -45,9 +44,7 @@ class FollowUpsManager: GTDataManager {
         var promises = [Promise<Void>]()
         
         for followUp in cachedFollowUps {
-            let resource = createFollowUpResource(cachedFollowUp: followUp)
-            
-            promises.append(self.postFollowUp(resource: resource, cachedFollowUp: followUp))
+            promises.append(self.postFollowUp(followUp: followUp))
         }
         
         return promises
@@ -73,22 +70,22 @@ class FollowUpsManager: GTDataManager {
         return true
     }
     
-    private func postFollowUp(resource: FollowUpResource, cachedFollowUp: FollowUp) -> Promise<Void> {
+    private func postFollowUp(followUp: FollowUp) -> Promise<Void> {
         let jsonDictionary = ["data":
             ["type": "follow_up",
              "attributes": [
-                "name": resource.name ?? "",
-                "email": resource.email ?? "",
-                "language_id": Int(resource.language_id ?? "-1") ?? -1,
-                "destination_id": Int(resource.destination_id ?? "-1") ?? -1]]]
+                "name": followUp.name ?? "",
+                "email": followUp.email ?? "",
+                "language_id": Int(followUp.languageId ?? "-1") ?? -1,
+                "destination_id": Int(followUp.destinationId ?? "-1") ?? -1]]]
         
         return issuePOSTRequest(jsonDictionary)
             .then { data -> Promise<Void> in
-                self.removeLocalCopy(cachedFollowUp)
+                self.removeLocalCopy(followUp)
                 return Promise(value: ())
             }
             .catch(execute: { error in
-                self.incrementRetryCount(cachedFollowUp)
+                self.incrementRetryCount(followUp)
                 Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
             })
             .always {

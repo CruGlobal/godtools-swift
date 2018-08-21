@@ -18,12 +18,12 @@ class FollowUp: Object {
     dynamic var createdAtTime: NSDate?
     dynamic var retryCount: Int = 0
     
-    convenience init(jsonAPIFollowUp: FollowUpResource) {
+    convenience init(params: [String: String]) {
         self.init()
         
-        name = jsonAPIFollowUp.name
-        email = jsonAPIFollowUp.email
-        destinationId = jsonAPIFollowUp.destination_id
-        languageId = jsonAPIFollowUp.language_id
+        name = params["name"]
+        email = params["email"]
+        destinationId = params["destination_id"]
+        languageId = params["language_id"]
     }
 }
