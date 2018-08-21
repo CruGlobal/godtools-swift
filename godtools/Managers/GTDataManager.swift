@@ -9,7 +9,6 @@
 import Foundation
 import Alamofire
 import PromiseKit
-import Spine
 import RealmSwift
 import Crashlytics
 
@@ -22,7 +21,6 @@ class GTDataManager: NSObject {
     let resourcesPath: String
     let bannersPath: URL
     
-    let serializer = Serializer()
     let realm: Realm
     
     override init() {

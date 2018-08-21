@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Spine
 
-class ResourceViews: Resource {
+class ResourceViews {
     
     var resourceId: NSNumber?
     var quantity: NSNumber?
@@ -18,15 +17,5 @@ class ResourceViews: Resource {
         self.init()
         self.resourceId = resourceId
         self.quantity = quantity
-    }
-    
-    override class var resourceType: ResourceType {
-        return "view"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "resourceId" : Attribute().serializeAs("resource_id"),
-            "quantity" : Attribute()])
     }
 }

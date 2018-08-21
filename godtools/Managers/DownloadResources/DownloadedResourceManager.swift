@@ -138,13 +138,13 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteAttachment: AttachmentResource) -> Attachment {
-        let alreadySavedAttachment = findEntityByRemoteId(Attachment.self, remoteId: remoteAttachment.id!)
+        let alreadySavedAttachment = findEntityByRemoteId(Attachment.self, remoteId: remoteAttachment.id)
         
         var cachedAttachment: Attachment
         
         if alreadySavedAttachment == nil {
             cachedAttachment = Attachment()
-            cachedAttachment.remoteId = remoteAttachment.id!
+            cachedAttachment.remoteId = remoteAttachment.id
             realm.add(cachedAttachment)
         } else {
             cachedAttachment = alreadySavedAttachment!

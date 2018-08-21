@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import Spine
 
-class FollowUpResource: Resource {
+class FollowUpResource {
     var email: String?
     var name: String?
     var destination_id: String?
@@ -21,18 +20,5 @@ class FollowUpResource: Resource {
         self.name = name
         self.destination_id = destination
         self.language_id = language
-    }
-    
-    override class var resourceType: ResourceType {
-        return "follow_up"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "email" : Attribute(),
-            "name" : Attribute(),
-            "destination_id" : Attribute(),
-            "language_id" : Attribute()
-            ])
     }
 }

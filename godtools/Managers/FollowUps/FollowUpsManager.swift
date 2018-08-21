@@ -9,7 +9,7 @@
 import UIKit
 import PromiseKit
 import Crashlytics
-import Spine
+import SwiftyJSON
 
 enum FollowUpError: Error {
     case MissingParameter(String)
@@ -18,11 +18,6 @@ enum FollowUpError: Error {
 class FollowUpsManager: GTDataManager {
     
     let path = "follow_ups"
-    
-    override init() {
-        super.init()
-        serializer.registerResource(FollowUpResource.self)
-    }
     
     func createSubscriber(params: [String: String]) -> Promise<Void>? {
         showNetworkingIndicator()
@@ -79,10 +74,12 @@ class FollowUpsManager: GTDataManager {
     }
     
     private func postFollowUp(resource: FollowUpResource, cachedFollowUp: FollowUp) -> Promise<Void> {
-        let paramsData = try! self.serializer.serializeResources([resource])
-        let paramsJSON = try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
+        let json = JSON(resource)
         
-        return issuePOSTRequest(paramsJSON)
+        //TODO fix this closure
+        guard let jsonDictionary = json.dictionaryObject else { return Promise<Void>(value:()) }
+        
+        return issuePOSTRequest(jsonDictionary)
             .then { data -> Promise<Void> in
                 self.removeLocalCopy(cachedFollowUp)
                 return Promise(value: ())

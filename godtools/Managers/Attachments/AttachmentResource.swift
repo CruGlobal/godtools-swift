@@ -7,19 +7,9 @@
 //
 
 import Foundation
-import Spine
 
-class AttachmentResource: Resource {
+class AttachmentResource {
 
-    var sha256: String?
-    
-    override class var resourceType: ResourceType {
-        return "attachment"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "sha256" : Attribute(),
-        ])
-    }
+    var id = ""
+    var sha256 = ""
 }

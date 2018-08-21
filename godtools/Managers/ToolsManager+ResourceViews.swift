@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import PromiseKit
-import Spine
+import SwiftyJSON
 import Crashlytics
 
 extension ToolsManager {
@@ -51,13 +51,12 @@ extension ToolsManager {
             .responseString()
     }
     
-    private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any] {
+    private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any]? {
         let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId)!),
                                           quantity: quantity)
-        
-        
-        let paramsData = try! self.serializer.serializeResources([resourceViews])
-        return try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
+
+        let json = JSON(resourceViews);
+        return json.dictionaryObject
     }
     
     private func record(_ error: Error, resource: DownloadedResource) {
