@@ -94,7 +94,7 @@ class DownloadedResourceManager: GTDataManager {
                     guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
                     let languageId = remoteTranslation.language?.id ?? "-1"
                     let resourceId = remoteResource.id ?? "-1"
-                    guard let version = remoteTranslation.version?.int16Value else { continue }
+                    let version = remoteTranslation.version.int16Value
                     
                     if translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) == false {
                         continue;
@@ -115,25 +115,25 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteResource: DownloadedResourceJson) -> DownloadedResource {
-        let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
+        let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id)
         
         var cachedResource: DownloadedResource
         
         if alreadySavedResource == nil {
             cachedResource = DownloadedResource()
-            cachedResource.remoteId = remoteResource.id!
+            cachedResource.remoteId = remoteResource.id
             realm.add(cachedResource)
         } else {
             cachedResource = alreadySavedResource!
         }
         
-        cachedResource.code = remoteResource.abbreviation!
+        cachedResource.code = remoteResource.abbreviation
         cachedResource.descr = remoteResource.descr
-        cachedResource.name = remoteResource.name!
+        cachedResource.name = remoteResource.name
         cachedResource.copyrightDescription = remoteResource.copyrightDescription
         cachedResource.bannerRemoteId = remoteResource.bannerId
         cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId
-        cachedResource.totalViews = remoteResource.totalViews!.int32Value
+        cachedResource.totalViews = remoteResource.totalViews.int32Value
         
         return cachedResource
     }
@@ -157,20 +157,20 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteTranslation: TranslationResource) -> Translation {
-        let alreadySavedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id!)
+        let alreadySavedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id)
         
         var cachedTranslation: Translation
         
         if alreadySavedTranslation == nil {
             cachedTranslation = Translation()
-            cachedTranslation.remoteId = remoteTranslation.id!
+            cachedTranslation.remoteId = remoteTranslation.id
             realm.add(cachedTranslation)
         } else {
             cachedTranslation = alreadySavedTranslation!
         }
         
-        cachedTranslation.version = remoteTranslation.version!.int16Value
-        cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
+        cachedTranslation.version = remoteTranslation.version.int16Value
+        cachedTranslation.isPublished = remoteTranslation.isPublished.boolValue
         cachedTranslation.manifestFilename = remoteTranslation.manifestName
         cachedTranslation.localizedName = remoteTranslation.translatedName
         cachedTranslation.localizedDescription = remoteTranslation.translatedDescription

@@ -141,7 +141,7 @@ class LanguagesManager: GTDataManager {
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
             for remoteLanguage in languages {
-                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id2) {
+                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
                     cachedlanguage.code = remoteLanguage.code
                     cachedlanguage.direction = remoteLanguage.direction
                     cachedLanguages.append(cachedlanguage)
@@ -149,7 +149,7 @@ class LanguagesManager: GTDataManager {
                 }
                 
                 let newCachedLanguage = Language()
-                newCachedLanguage.remoteId = remoteLanguage.id2
+                newCachedLanguage.remoteId = remoteLanguage.id
                 newCachedLanguage.code = remoteLanguage.code
                 cachedLanguages.append(newCachedLanguage)
                 realm.add(newCachedLanguage)

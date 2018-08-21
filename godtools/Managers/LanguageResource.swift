@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import Spine
 import SwiftyJSON
 
-class LanguageResource: Resource {
+class LanguageResource {
     
-    var id2 = ""
+    var id = ""
     var code = ""
     var direction = ""
     
@@ -24,8 +23,8 @@ class LanguageResource: Resource {
         for language in json.arrayValue {
             let languageResource = LanguageResource();
             
-            if let id2 = language["id"].string {
-                languageResource.id2 = id2
+            if let id = language["id"].string {
+                languageResource.id = id
             }
             
             if let code = language["attributes"]["code"].string {
@@ -39,16 +38,5 @@ class LanguageResource: Resource {
         }
         
         return languages;
-    }
-    
-    override class var resourceType: ResourceType {
-        return "language"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "code" : Attribute(),
-            "direction" : Attribute()
-            ])
     }
 }

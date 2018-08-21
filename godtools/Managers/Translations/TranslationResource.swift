@@ -7,18 +7,17 @@
 //
 
 import Foundation
-import Spine
 import SwiftyJSON
 
-class TranslationResource: Resource {
+class TranslationResource {
     
-    var id2 = ""
-    var version: NSNumber?
-    var isPublished: NSNumber?
-    var manifestName: String?
-    var translatedName: String?
-    var translatedDescription: String?
-    var tagline: String?
+    var id = ""
+    var version = NSNumber(integerLiteral: 0)
+    var isPublished = NSNumber(integerLiteral: 0)
+    var manifestName = ""
+    var translatedName = ""
+    var translatedDescription = ""
+    var tagline = ""
     
     var language: LanguageResource?
     
@@ -30,8 +29,8 @@ class TranslationResource: Resource {
         for translation in json.arrayValue {
             let translationResource = TranslationResource();
             
-            if let id2 = translation["id"].string {
-                translationResource.id2 = id2
+            if let id = translation["id"].string {
+                translationResource.id = id
             }
             if let version = translation["version"].number {
                 translationResource.version = version
@@ -56,21 +55,5 @@ class TranslationResource: Resource {
         }
         
         return translations;
-    }
-    
-    override class var resourceType: ResourceType {
-        return "translation"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "version" : Attribute(),
-            "isPublished" : BooleanAttribute().serializeAs("is-published"),
-            "manifestName" : Attribute().serializeAs("manifest-name"),
-            "translatedName": Attribute().serializeAs("translated-name"),
-            "translatedDescription": Attribute().serializeAs("translated-description"),
-            "language" : ToOneRelationship(LanguageResource.self),
-            "tagline": Attribute().serializeAs("translated-tagline")
-        ])
     }
 }

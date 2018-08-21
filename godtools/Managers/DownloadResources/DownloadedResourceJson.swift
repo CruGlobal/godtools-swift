@@ -7,24 +7,23 @@
 //
 
 import Foundation
-import Spine
 import SwiftyJSON
 
-class DownloadedResourceJson: Resource {
+class DownloadedResourceJson {
     
-    var id2 = ""
-    var name: String?
-    var descr: String?
-    var abbreviation: String?
-    var copyrightDescription: String?
-    var bannerId: String?
-    var aboutBannerId: String?
-    var totalViews: NSNumber?
+    var id = ""
+    var name = ""
+    var descr = ""
+    var abbreviation = ""
+    var copyrightDescription = ""
+    var bannerId = ""
+    var aboutBannerId = ""
+    var totalViews = NSNumber(integerLiteral: 0)
     
-    var latestTranslations: LinkedResourceCollection?
-    var translations: LinkedResourceCollection?
-    var pages: LinkedResourceCollection?
-    var attachments: LinkedResourceCollection?
+    var latestTranslations: [TranslationResource]?
+    var translations: [TranslationResource]?
+    var pages: [Any]?
+    var attachments: [Any]?
     
     static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
         var resources = [DownloadedResourceJson]();
@@ -34,8 +33,8 @@ class DownloadedResourceJson: Resource {
         for resource in json.arrayValue {
             let downloadedResource = DownloadedResourceJson();
             
-            if let id2 = resource["id"].string {
-                downloadedResource.id2 = id2
+            if let id = resource["id"].string {
+                downloadedResource.id = id
             }
             if let name = resource["name"].string {
                 downloadedResource.name = name
@@ -63,23 +62,5 @@ class DownloadedResourceJson: Resource {
         }
         
         return resources;
-    }
-    
-    override class var resourceType: ResourceType {
-        return "resource"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "name" : Attribute(),
-            "descr": Attribute().serializeAs("description"),
-            "abbreviation" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self),
-            "copyrightDescription": Attribute().serializeAs("attr-copyright"),
-            "bannerId": Attribute().serializeAs("attr-banner"),
-            "aboutBannerId": Attribute().serializeAs("attr-banner-about"),
-            "totalViews": Attribute().serializeAs("total-views"),
-            "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
-            "attachments": ToManyRelationship(AttachmentResource.self)])
     }
 }
