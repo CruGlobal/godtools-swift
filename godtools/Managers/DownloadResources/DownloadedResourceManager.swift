@@ -16,14 +16,6 @@ import RealmSwift
 class DownloadedResourceManager: GTDataManager {    
     let path = "/resources"
     
-    override init() {
-        super.init()
-        serializer.registerResource(DownloadedResourceJson.self)
-        serializer.registerResource(TranslationResource.self)
-        serializer.registerResource(LanguageResource.self)
-        serializer.registerResource(AttachmentResource.self)
-    }
-    
     func loadFromDisk() -> DownloadedResources {
         return findAllEntities(DownloadedResource.self)
     }
@@ -39,17 +31,10 @@ class DownloadedResourceManager: GTDataManager {
         
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
-                
-                var remoteResources: [DownloadedResourceJson]?
-                
                 DispatchQueue.global(qos: .userInitiated).async {
-                    if let remoteRsrcs = try? self.serializer.deserializeData(data).data as? [DownloadedResourceJson] {
-                        remoteResources = remoteRsrcs
-                    }
+                    let remoteResources = DownloadedResourceJson.initializeFrom(data: data)
                     DispatchQueue.main.async {
-                        if let remoteResourcesForSaving = remoteResources {
-                            self.saveToDisk(remoteResourcesForSaving)
-                        }
+                        self.saveToDisk(remoteResources)
                     }
                 }
                 
@@ -61,9 +46,10 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func loadInitialContentFromDisk() {
-        let resourcesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "resources", ofType: "json")!)
-        let resourcesData = try! Data(contentsOf: resourcesPath)
-        let resourcesDeserialized = try! serializer.deserializeData(resourcesData).data as! [DownloadedResourceJson]
+        guard let path = Bundle.main.path(forResource: "resources", ofType: "json") else { return }
+        let resourcesPath = URL(fileURLWithPath: path)
+        guard let resourcesData = try? Data(contentsOf: resourcesPath) else { return }
+        let resourcesDeserialized = DownloadedResourceJson.initializeFrom(data: resourcesData)
         
         saveToDisk(resourcesDeserialized)
     }

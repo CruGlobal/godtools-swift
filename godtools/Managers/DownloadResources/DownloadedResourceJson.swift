@@ -8,9 +8,11 @@
 
 import Foundation
 import Spine
+import SwiftyJSON
 
 class DownloadedResourceJson: Resource {
     
+    var id2 = ""
     var name: String?
     var descr: String?
     var abbreviation: String?
@@ -23,6 +25,45 @@ class DownloadedResourceJson: Resource {
     var translations: LinkedResourceCollection?
     var pages: LinkedResourceCollection?
     var attachments: LinkedResourceCollection?
+    
+    static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
+        var resources = [DownloadedResourceJson]();
+        
+        let json = JSON(data: data)["data"]
+        
+        for resource in json.arrayValue {
+            let downloadedResource = DownloadedResourceJson();
+            
+            if let id2 = resource["id"].string {
+                downloadedResource.id2 = id2
+            }
+            if let name = resource["name"].string {
+                downloadedResource.name = name
+            }
+            if let descr = resource["descr"].string {
+                downloadedResource.descr = descr
+            }
+            if let abbreviation = resource["abbreviation"].string {
+                downloadedResource.abbreviation = abbreviation
+            }
+            if let copyrightDescription = resource["copyrightDescription"].string {
+                downloadedResource.copyrightDescription = copyrightDescription
+            }
+            if let bannerId = resource["bannerId"].string {
+                downloadedResource.bannerId = bannerId
+            }
+            if let aboutBannerId = resource["aboutBannerId"].string {
+                downloadedResource.aboutBannerId = aboutBannerId
+            }
+            if let totalViews = resource["totalViews"].number {
+                downloadedResource.totalViews = totalViews
+            }
+            
+            resources.append(downloadedResource);
+        }
+        
+        return resources;
+    }
     
     override class var resourceType: ResourceType {
         return "resource"

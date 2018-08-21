@@ -8,9 +8,11 @@
 
 import Foundation
 import Spine
+import SwiftyJSON
 
 class TranslationResource: Resource {
     
+    var id2 = ""
     var version: NSNumber?
     var isPublished: NSNumber?
     var manifestName: String?
@@ -20,9 +22,40 @@ class TranslationResource: Resource {
     
     var language: LanguageResource?
     
-    func initializeFrom(data: Data) {
-        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
-        debugPrint(json);
+    static func initializeFrom(data: Data) -> [TranslationResource] {
+        var translations = [TranslationResource]();
+        
+        let json = JSON(data: data)["data"]
+        
+        for translation in json.arrayValue {
+            let translationResource = TranslationResource();
+            
+            if let id2 = translation["id"].string {
+                translationResource.id2 = id2
+            }
+            if let version = translation["version"].number {
+                translationResource.version = version
+            }
+            if let isPublished = translation["isPublished"].number {
+                translationResource.isPublished = isPublished
+            }
+            if let manifestName = translation["manifestName"].string {
+                translationResource.manifestName = manifestName
+            }
+            if let translatedName = translation["translatedName"].string {
+                translationResource.translatedName = translatedName
+            }
+            if let translatedDescription = translation["translatedDescription"].string {
+                translationResource.translatedDescription = translatedDescription
+            }
+            if let tagline = translation["tagline"].string {
+                translationResource.tagline = tagline
+            }
+
+            translations.append(translationResource);
+        }
+        
+        return translations;
     }
     
     override class var resourceType: ResourceType {
