@@ -74,10 +74,13 @@ class FollowUpsManager: GTDataManager {
     }
     
     private func postFollowUp(resource: FollowUpResource, cachedFollowUp: FollowUp) -> Promise<Void> {
-        let json = JSON(resource)
-        
-        //TODO fix this closure
-        guard let jsonDictionary = json.dictionaryObject else { return Promise<Void>(value:()) }
+        let jsonDictionary = ["data":
+            ["type": "follow_up",
+             "attributes": [
+                "name": resource.name ?? "",
+                "email": resource.email ?? "",
+                "language_id": Int(resource.language_id ?? "-1") ?? -1,
+                "destination_id": Int(resource.destination_id ?? "-1") ?? -1]]]
         
         return issuePOSTRequest(jsonDictionary)
             .then { data -> Promise<Void> in
