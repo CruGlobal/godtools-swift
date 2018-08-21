@@ -123,8 +123,9 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadInitialContentFromDisk() {
-        let languagesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "languages", ofType: "json")!)
-        let languagesData = try! Data(contentsOf: languagesPath)
+        guard let path = Bundle.main.path(forResource: "languages", ofType: "json") else { return }
+        let languagesURL = URL(fileURLWithPath:path)
+        guard let languagesData = try? Data(contentsOf: languagesURL) else { return }
         let languagesDeserialized = LanguageResource.initializeFrom(data: languagesData)
         
         saveToDisk(languagesDeserialized)
