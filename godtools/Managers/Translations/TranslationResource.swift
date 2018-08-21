@@ -21,12 +21,11 @@ class TranslationResource {
     
     var language: LanguageResource?
     
-    static func initializeFrom(data: Data) -> [TranslationResource] {
+    static func initializeFrom(json: JSON, resourceID: String) -> [TranslationResource] {
         var translations = [TranslationResource]();
-        
-        let json = JSON(data: data)["data"]
-        
         for translation in json.arrayValue {
+            guard let rID = translation["relationships"]["resource"]["data"]["id"].string, rID == resourceID else { continue }
+            
             let translationResource = TranslationResource();
             
             if let id = translation["id"].string {
@@ -50,10 +49,9 @@ class TranslationResource {
             if let tagline = translation["tagline"].string {
                 translationResource.tagline = tagline
             }
-
+            
             translations.append(translationResource);
         }
-        
         return translations;
     }
 }
