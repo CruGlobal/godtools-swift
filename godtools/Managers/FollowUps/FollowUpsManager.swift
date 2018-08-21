@@ -100,20 +100,6 @@ class FollowUpsManager: GTDataManager {
         return Promise(error: error)
     }
     
-    private func createFollowUpResource(params: [String: String]) -> FollowUpResource {
-        return FollowUpResource(email: params["email"]!,
-                                name: params["name"]!,
-                                destination: params["destination_id"]!,
-                                language: params["language_id"]!)
-    }
-    
-    private func createFollowUpResource(cachedFollowUp: FollowUp) -> FollowUpResource {
-        return FollowUpResource(email: cachedFollowUp.email!,
-                                name: cachedFollowUp.name!,
-                                destination: cachedFollowUp.destinationId!,
-                                language: cachedFollowUp.languageId!)
-    }
-    
     private func saveLocalCopy(_ localFollowUp: FollowUp) {
         safelyWriteToRealm {
             localFollowUp.createdAtTime = NSDate()
