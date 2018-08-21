@@ -35,11 +35,6 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    override init() {
-        super.init()
-        serializer.registerResource(LanguageResource.self)
-    }
-    
     func loadDevicePreferredLanguageFromDisk() -> Language? {
         if let preferredLanguageCode = Locale.preferredLanguages.first {
             if let preferredLanguage = loadFromDisk(code: preferredLanguageCode) {
@@ -112,17 +107,11 @@ class LanguagesManager: GTDataManager {
         
         return issueGETRequest()
             .then { data -> Promise<Languages> in
-                
-                var remoteLanguages: [LanguageResource]?
-                
                 DispatchQueue.global(qos: .userInitiated).async {
-                    if let remoteLngs = try? self.serializer.deserializeData(data).data as? [LanguageResource] {
-                        remoteLanguages = remoteLngs
-                    }
+                    let remoteLanguages = LanguageResource.initializeFrom(data: data)
+                    
                     DispatchQueue.main.async {
-                        if let remoteLanguagesForSaving = remoteLanguages {
-                            self.saveToDisk(remoteLanguagesForSaving)
-                        }
+                        self.saveToDisk(remoteLanguages)
                     }
                 }
                 
@@ -136,7 +125,7 @@ class LanguagesManager: GTDataManager {
     func loadInitialContentFromDisk() {
         let languagesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "languages", ofType: "json")!)
         let languagesData = try! Data(contentsOf: languagesPath)
-        let languagesDeserialized = try! serializer.deserializeData(languagesData).data as! [LanguageResource]
+        let languagesDeserialized = LanguageResource.initializeFrom(data: languagesData)
         
         saveToDisk(languagesDeserialized)
     }
@@ -151,20 +140,16 @@ class LanguagesManager: GTDataManager {
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
             for remoteLanguage in languages {
-                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
-                    cachedlanguage.code = remoteLanguage.code!
-                    
-                    if let direction = remoteLanguage.direction {
-                        cachedlanguage.direction = direction
-                    }
-                    
+                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id2) {
+                    cachedlanguage.code = remoteLanguage.code
+                    cachedlanguage.direction = remoteLanguage.direction
                     cachedLanguages.append(cachedlanguage)
                     continue
                 }
                 
                 let newCachedLanguage = Language()
-                newCachedLanguage.remoteId = remoteLanguage.id!
-                newCachedLanguage.code = remoteLanguage.code!
+                newCachedLanguage.remoteId = remoteLanguage.id2
+                newCachedLanguage.code = remoteLanguage.code
                 cachedLanguages.append(newCachedLanguage)
                 realm.add(newCachedLanguage)
             }

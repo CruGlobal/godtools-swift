@@ -8,11 +8,38 @@
 
 import Foundation
 import Spine
+import SwiftyJSON
 
 class LanguageResource: Resource {
-
-    var code: String?
-    var direction: String?
+    
+    var id2 = ""
+    var code = ""
+    var direction = ""
+    
+    static func initializeFrom(data: Data) -> [LanguageResource] {
+        var languages = [LanguageResource]();
+        
+        let json = JSON(data: data)["data"]
+        
+        for language in json.arrayValue {
+            let languageResource = LanguageResource();
+            
+            if let id2 = language["id"].string {
+                languageResource.id2 = id2
+            }
+            
+            if let code = language["attributes"]["code"].string {
+                languageResource.code = code
+            }
+            
+            if let direction = language["attributes"]["direction"].string{
+                languageResource.direction = direction
+            }
+            languages.append(languageResource);
+        }
+        
+        return languages;
+    }
     
     override class var resourceType: ResourceType {
         return "language"

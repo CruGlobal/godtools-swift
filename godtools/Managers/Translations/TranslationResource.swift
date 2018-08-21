@@ -20,6 +20,11 @@ class TranslationResource: Resource {
     
     var language: LanguageResource?
     
+    func initializeFrom(data: Data) {
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else { return }
+        debugPrint(json);
+    }
+    
     override class var resourceType: ResourceType {
         return "translation"
     }
