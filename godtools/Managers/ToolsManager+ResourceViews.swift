@@ -52,11 +52,16 @@ extension ToolsManager {
     }
     
     private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any]? {
-        let resourceViews = ResourceViews(resourceId: NSNumber(value: Int(resource.remoteId)!),
-                                          quantity: quantity)
-
-        let json = JSON(resourceViews);
-        return json.dictionaryObject
+        guard let resourceIdAsInt = Int(resource.remoteId) else { return nil }
+        let dict = ["data":
+            ["type": "view",
+             "attributes": [
+                "resource_id": resourceIdAsInt,
+                "quantity": quantity]
+            ]
+        ]
+        
+        return dict
     }
     
     private func record(_ error: Error, resource: DownloadedResource) {
