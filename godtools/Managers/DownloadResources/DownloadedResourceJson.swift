@@ -21,8 +21,6 @@ class DownloadedResourceJson {
     var totalViews = NSNumber(integerLiteral: 0)
     
     var latestTranslations: [TranslationResource]?
-    var translations: [TranslationResource]?
-    var pages: [Any]?
     var attachments: [Any]?
     
     static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
@@ -38,29 +36,30 @@ class DownloadedResourceJson {
             if let id = resource["id"].string {
                 downloadedResource.id = id
             }
-            if let name = resource["name"].string {
+            if let name = resource["attributes"]["name"].string {
                 downloadedResource.name = name
             }
-            if let descr = resource["descr"].string {
+            if let descr = resource["attributes"]["description"].string {
                 downloadedResource.descr = descr
             }
-            if let abbreviation = resource["abbreviation"].string {
+            if let abbreviation = resource["attributes"]["abbreviation"].string {
                 downloadedResource.abbreviation = abbreviation
             }
-            if let copyrightDescription = resource["copyrightDescription"].string {
+            if let copyrightDescription = resource["attributes"]["copyrightDescription"].string {
                 downloadedResource.copyrightDescription = copyrightDescription
             }
-            if let bannerId = resource["bannerId"].string {
+            if let bannerId = resource["attributes"]["attr-banner"].string {
                 downloadedResource.bannerId = bannerId
             }
-            if let aboutBannerId = resource["aboutBannerId"].string {
+            if let aboutBannerId = resource["attributes"]["attr-banner-about"].string {
                 downloadedResource.aboutBannerId = aboutBannerId
             }
-            if let totalViews = resource["totalViews"].number {
+            if let totalViews = resource["attributes"]["total-views"].number {
                 downloadedResource.totalViews = totalViews
             }
             
             downloadedResource.latestTranslations = TranslationResource.initializeFrom(json: jsonIncluded, resourceID: downloadedResource.id)
+            downloadedResource.attachments = AttachmentResource.initializeFrom(json: jsonIncluded, resourceID: downloadedResource.id);
             resources.append(downloadedResource);
         }
         

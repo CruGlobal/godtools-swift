@@ -24,6 +24,7 @@ class TranslationResource {
     static func initializeFrom(json: JSON, resourceID: String) -> [TranslationResource] {
         var translations = [TranslationResource]();
         for translation in json.arrayValue {
+            guard let type = translation["type"].string, type == "translation" else { continue }
             guard let rID = translation["relationships"]["resource"]["data"]["id"].string, rID == resourceID else { continue }
             
             let translationResource = TranslationResource();
@@ -31,23 +32,27 @@ class TranslationResource {
             if let id = translation["id"].string {
                 translationResource.id = id
             }
-            if let version = translation["version"].number {
+            if let version = translation["attributes"]["version"].number {
                 translationResource.version = version
             }
-            if let isPublished = translation["isPublished"].number {
+            if let isPublished = translation["attributes"]["is-published"].number {
                 translationResource.isPublished = isPublished
             }
-            if let manifestName = translation["manifestName"].string {
+            if let manifestName = translation["attributes"]["manifest-name"].string {
                 translationResource.manifestName = manifestName
             }
-            if let translatedName = translation["translatedName"].string {
+            if let translatedName = translation["attributes"]["translated-name"].string {
                 translationResource.translatedName = translatedName
             }
-            if let translatedDescription = translation["translatedDescription"].string {
+            if let translatedDescription = translation["attributes"]["translated-description"].string {
                 translationResource.translatedDescription = translatedDescription
             }
-            if let tagline = translation["tagline"].string {
+            if let tagline = translation["attributes"]["translated-tagline"].string {
                 translationResource.tagline = tagline
+            }
+            if let languageId = translation["relationships"]["language"]["data"]["id"].string {
+                translationResource.language = LanguageResource()
+                translationResource.language?.id = languageId
             }
             
             translations.append(translationResource);

@@ -7,9 +7,30 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class AttachmentResource {
-
+    
     var id = ""
     var sha256 = ""
+    
+    static func initializeFrom(json: JSON, resourceID: String) -> [AttachmentResource] {
+        var attachments = [AttachmentResource]()
+        for attachment in json.arrayValue {
+            guard let type = attachment["type"].string, type == "attachment" else { continue }
+            guard let rID = attachment["relationships"]["resource"]["data"]["id"].string, rID == resourceID else { continue }
+            
+            let attachmentResource = AttachmentResource();
+            
+            if let id = attachment["id"].string {
+                attachmentResource.id = id
+            }
+            if let sha256 = attachment["attributes"]["sha256"].string {
+                attachmentResource.sha256 = sha256
+            }
+            
+            attachments.append(attachmentResource)
+        }
+        return attachments
+    }
 }
