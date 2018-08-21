@@ -28,9 +28,11 @@ class DownloadedResourceJson {
     static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
         var resources = [DownloadedResourceJson]();
         
-        let json = JSON(data: data)["data"]
+        let json = JSON(data: data)
+        let jsonData = json["data"]
+        let jsonIncluded = json["included"]
         
-        for resource in json.arrayValue {
+        for resource in jsonData.arrayValue {
             let downloadedResource = DownloadedResourceJson();
             
             if let id = resource["id"].string {
@@ -58,6 +60,7 @@ class DownloadedResourceJson {
                 downloadedResource.totalViews = totalViews
             }
             
+            downloadedResource.latestTranslations = TranslationResource.initializeFrom(json: jsonIncluded, resourceID: downloadedResource.id)
             resources.append(downloadedResource);
         }
         
