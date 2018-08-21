@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Alamofire
 import PromiseKit
-import Spine
 import RealmSwift
 
 class DownloadedResourceManager: GTDataManager {    
