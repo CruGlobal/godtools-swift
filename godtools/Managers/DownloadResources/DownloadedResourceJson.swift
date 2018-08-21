@@ -26,7 +26,8 @@ class DownloadedResourceJson {
     static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
         var resources = [DownloadedResourceJson]();
         
-        let json = JSON(data: data)
+        guard let json = try? JSON(data: data) else { return resources }
+        
         let jsonData = json["data"]
         let jsonIncluded = json["included"]
         

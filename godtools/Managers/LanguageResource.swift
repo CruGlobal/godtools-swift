@@ -18,7 +18,7 @@ class LanguageResource {
     static func initializeFrom(data: Data) -> [LanguageResource] {
         var languages = [LanguageResource]();
         
-        let json = JSON(data: data)["data"]
+        guard let json = try? JSON(data: data)["data"] else { return languages }
         
         for language in json.arrayValue {
             let languageResource = LanguageResource();
