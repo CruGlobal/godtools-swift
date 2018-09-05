@@ -217,7 +217,8 @@ class TractViewController: BaseViewController {
             shareURLString = shareURLString.appending("/").appending("\(currentPage)")
         }
         
-        return shareURLString.appending("?icid=gtshare")
+        // the space is intentional to separate any punctuation in the share message from the end of the URL
+        return shareURLString.appending("?icid=gtshare ")
     }
     
     // Notifications
