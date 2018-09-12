@@ -42,17 +42,8 @@ class TranslationsManager: GTDataManager {
         
         let recordsToDelete = findEntities(Translation.self, matching: predicate)
         
-        debugPrint("purging \(recordsToDelete.count)...")
-        debugPrint(recordsToDelete.flatMap({ (translation) -> String in
-            "\(translation.version)-\(translation.language!.code)-\(translation.downloadedResource!.code)"
-        }))
-        
-        if realm.isInWriteTransaction {
+        safelyWriteToRealm {
             realm.delete(recordsToDelete)
-        } else {
-            safelyWriteToRealm {
-                realm.delete(recordsToDelete)
-            }
         }
     }
     
