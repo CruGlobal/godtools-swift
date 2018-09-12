@@ -56,45 +56,38 @@ class TranslationZipImporter: GTDataManager {
     }
 
     private func addTranslationsToQueue(_ translations: List<Translation>) {
-        var translations = Array(translations)
-        for aTranslation in translations {
-            guard aTranslation.language != nil else {
-                continue
-            }
-            translations.append(aTranslation)
-        }
-        var primaryTranslations = [Translation]()
-        for translationLanguage in translations {
-            guard translationLanguage.language?.isPrimary() != nil else {
-                continue
-            }
-            primaryTranslations.append(translationLanguage)
-        }
-        translations = primaryTranslations
-        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
-        if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
-            translationDownloadQueue.append(primaryTranslation!)
-        }
+        let translations = Array(translations)
         
-        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
-        if (parallelTranslation != nil && parallelTranslation!.isDownloaded) {
-            translationDownloadQueue.append(parallelTranslation!)
-        }
+        let primaryTranslations = translations.filter( {
+            $0.hasValidRelationships() && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false
+        } )
+        
+        translationDownloadQueue.append(contentsOf: primaryTranslations)
+        
+        let parallelTranslations = translations.filter( {
+            $0.hasValidRelationships() && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false
+        } )
+        
+        translationDownloadQueue.append(contentsOf: parallelTranslations)
         
         for translation in translations {
-            if translationDownloadQueue.contains(translation) {
+            guard translation.hasValidRelationships() else {
                 continue
             }
             
-            if translation.isDownloaded {
+            guard translationDownloadQueue.contains(translation) == false else {
                 continue
             }
             
-            if !translation.downloadedResource!.shouldDownload {
+            guard translation.isDownloaded == false else {
                 continue
             }
             
-            if !translation.language!.shouldDownload {
+            guard let resource = translation.downloadedResource, resource.shouldDownload else {
+                continue
+            }
+            
+            guard let language = translation.language, language.shouldDownload else {
                 continue
             }
             
