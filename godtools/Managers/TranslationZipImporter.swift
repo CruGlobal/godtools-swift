@@ -100,10 +100,7 @@ class TranslationZipImporter: GTDataManager {
             safelyWriteToRealm {
                 translation.isDownloadInProgress = true
             }
-            
-            debugPrint("\(translation.version)-\(translation.language!.code)-\(translation.downloadedResource!.code) in added to queue.")
-            debugPrint("flag = \(translation.isDownloadInProgress)")
-            
+
             translationDownloadQueue.append(translation)
         }
     }
