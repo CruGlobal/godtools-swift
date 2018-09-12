@@ -59,7 +59,7 @@ class TranslationZipImporter: GTDataManager {
         let translations = Array(translations)
         
         let primaryTranslations = translations.filter( {
-            $0.isInvalidated == false && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false && $0.isDownloadInProgress == false
+            $0.shouldDownload() && $0.language != nil && $0.language!.isPrimary()
         } )
         
         translationDownloadQueue.append(contentsOf: primaryTranslations.map({ (translation) -> Translation in
@@ -70,7 +70,7 @@ class TranslationZipImporter: GTDataManager {
         }))
         
         let parallelTranslations = translations.filter( {
-            $0.isInvalidated == false && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false && $0.isDownloadInProgress == false
+            $0.shouldDownload() && $0.language != nil && $0.language!.isParallel()
         } )
         
         translationDownloadQueue.append(contentsOf: parallelTranslations.map({ (translation) -> Translation in
@@ -81,18 +81,14 @@ class TranslationZipImporter: GTDataManager {
         }))
         
         for translation in translations {
-            guard translation.isInvalidated == false else {
+            guard translation.shouldDownload() else {
                 continue
             }
             
             guard translationDownloadQueue.contains(translation) == false else {
                 continue
             }
-            
-            guard translation.isDownloaded == false else {
-                continue
-            }
-            
+                        
             guard let resource = translation.downloadedResource, resource.shouldDownload else {
                 continue
             }
