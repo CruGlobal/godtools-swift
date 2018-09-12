@@ -33,17 +33,25 @@ class TranslationsManager: GTDataManager {
             return
         }
         
-        let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@",
+        let predicate = NSPredicate(format: "language.remoteId = %@ AND downloadedResource.remoteId = %@ AND version < %d AND isDownloaded = %@ AND isDownloadInProgress = %@",
                                     language.remoteId,
                                     resource.remoteId,
                                     latest.version,
-                                    NSNumber(booleanLiteral: latest.isDownloaded))
+                                    NSNumber(booleanLiteral: latest.isDownloaded),
+                                    NSNumber(booleanLiteral: false))
+        
+        let recordsToDelete = findEntities(Translation.self, matching: predicate)
+        
+        debugPrint("purging \(recordsToDelete.count)...")
+        debugPrint(recordsToDelete.flatMap({ (translation) -> String in
+            "\(translation.version)-\(translation.language!.code)-\(translation.downloadedResource!.code)"
+        }))
         
         if realm.isInWriteTransaction {
-            realm.delete(findEntities(Translation.self, matching: predicate))
+            realm.delete(recordsToDelete)
         } else {
             safelyWriteToRealm {
-                realm.delete(findEntities(Translation.self, matching: predicate))
+                realm.delete(recordsToDelete)
             }
         }
     }
