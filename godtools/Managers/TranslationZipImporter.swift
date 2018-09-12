@@ -56,71 +56,67 @@ class TranslationZipImporter: GTDataManager {
     }
 
     private func addTranslationsToQueue(_ translations: List<Translation>) {
-        var translations = Array(translations)
-        for aTranslation in translations {
-            guard aTranslation.language != nil else {
-                continue
-            }
-            translations.append(aTranslation)
-        }
-        var primaryTranslations = [Translation]()
-        for translationLanguage in translations {
-            guard translationLanguage.language?.isPrimary() != nil else {
-                continue
-            }
-            primaryTranslations.append(translationLanguage)
-        }
-        translations = primaryTranslations
-        let primaryTranslation = translations.filter( {$0.language!.isPrimary()} ).first
-        if primaryTranslation != nil && !primaryTranslation!.isDownloaded {
-            translationDownloadQueue.append(primaryTranslation!)
-        }
+        let translations = Array(translations)
         
-        let parallelTranslation = translations.filter( {$0.language!.isParallel()} ).first
-        if (parallelTranslation != nil && parallelTranslation!.isDownloaded) {
-            translationDownloadQueue.append(parallelTranslation!)
-        }
+        let primaryTranslations = translations.filter( {
+            $0.shouldDownload() && $0.language != nil && $0.language!.isPrimary()
+        } )
+        
+        translationDownloadQueue.append(contentsOf: primaryTranslations.map({ (translation) -> Translation in
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
+            }
+            return translation
+        }))
+        
+        let parallelTranslations = translations.filter( {
+            $0.shouldDownload() && $0.language != nil && $0.language!.isParallel()
+        } )
+        
+        translationDownloadQueue.append(contentsOf: parallelTranslations.map({ (translation) -> Translation in
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
+            }
+            return translation
+        }))
         
         for translation in translations {
-            if translationDownloadQueue.contains(translation) {
+            guard translation.shouldDownload() else {
                 continue
             }
             
-            if translation.isDownloaded {
+            guard translationDownloadQueue.contains(translation) == false else {
+                continue
+            }
+                        
+            guard let resource = translation.downloadedResource, resource.shouldDownload else {
                 continue
             }
             
-            if !translation.downloadedResource!.shouldDownload {
+            guard let language = translation.language, language.shouldDownload else {
                 continue
             }
             
-            if !translation.language!.shouldDownload {
-                continue
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
             }
-            
+
             translationDownloadQueue.append(translation)
         }
     }
 
     private func processDownloadQueue() {
         isProcessingQueue = true
-        let localDownloadQueue = translationDownloadQueue
         
-        localDownloadQueue.forEach { translation in
-            guard let index = translationDownloadQueue.index(of: translation) else { return }
-            translationDownloadQueue.remove(at: index)
-
+        translationDownloadQueue.forEach { translation in
             _ = self.download(translation: translation).catch(execute: { error in
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId)"])
             })
         }
         
-        if translationDownloadQueue.count > 0 {
-            processDownloadQueue()
-        } else {
-            isProcessingQueue = false
-        }
+        translationDownloadQueue.removeAll()
+        isProcessingQueue = false
     }
     
     private func download(translation: Translation) -> Promise<Void> {
@@ -136,7 +132,12 @@ class TranslationZipImporter: GTDataManager {
             if language.isPrimary() || (!isAvailableInPrimary && language.code == "en") {
                 self.primaryDownloadComplete(translation: translation)
             }
+            
             return Promise(value: ())
+            }.always {
+                self.safelyWriteToRealm {
+                    translation.isDownloadInProgress = false
+                }
         }
     }
     

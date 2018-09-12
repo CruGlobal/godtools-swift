@@ -95,8 +95,12 @@ class GTDataManager: NSObject {
 
     func safelyWriteToRealm(_ writeBlock: () -> Void ) {
         do {
-            try realm.write {
+            if realm.isInWriteTransaction {
                 writeBlock()
+            } else {
+                try realm.write {
+                    writeBlock()
+                }
             }
         } catch {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error saving to realm!"])
