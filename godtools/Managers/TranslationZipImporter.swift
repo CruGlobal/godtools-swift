@@ -104,23 +104,16 @@ class TranslationZipImporter: GTDataManager {
 
     private func processDownloadQueue() {
         isProcessingQueue = true
-        let localDownloadQueue = translationDownloadQueue
         
-        localDownloadQueue.forEach { translation in
-            guard let index = translationDownloadQueue.index(of: translation) else { return }
-            translationDownloadQueue.remove(at: index)
-
+        translationDownloadQueue.forEach { translation in
             _ = self.download(translation: translation).catch(execute: { error in
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId)"])
             })
         }
         
-        if translationDownloadQueue.count > 0 {
-            processDownloadQueue()
-        } else {
-            isProcessingQueue = false
-        }
+        translationDownloadQueue.removeAll()
+        isProcessingQueue = false
     }
     
     private func download(translation: Translation) -> Promise<Void> {
