@@ -133,11 +133,11 @@ class TranslationZipImporter: GTDataManager {
                 self.primaryDownloadComplete(translation: translation)
             }
             
-            self.safelyWriteToRealm {
-                translation.isDownloadInProgress = false
-            }
-            
             return Promise(value: ())
+            }.always {
+                self.safelyWriteToRealm {
+                    translation.isDownloadInProgress = false
+                }
         }
     }
     
