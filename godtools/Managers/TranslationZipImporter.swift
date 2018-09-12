@@ -59,16 +59,26 @@ class TranslationZipImporter: GTDataManager {
         let translations = Array(translations)
         
         let primaryTranslations = translations.filter( {
-            $0.isInvalidated == false && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false
+            $0.isInvalidated == false && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false && $0.isDownloadInProgress == false
         } )
         
-        translationDownloadQueue.append(contentsOf: primaryTranslations)
+        translationDownloadQueue.append(contentsOf: primaryTranslations.map({ (translation) -> Translation in
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
+            }
+            return translation
+        }))
         
         let parallelTranslations = translations.filter( {
-            $0.isInvalidated == false && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false
+            $0.isInvalidated == false && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false && $0.isDownloadInProgress == false
         } )
         
-        translationDownloadQueue.append(contentsOf: parallelTranslations)
+        translationDownloadQueue.append(contentsOf: parallelTranslations.map({ (translation) -> Translation in
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
+            }
+            return translation
+        }))
         
         for translation in translations {
             guard translation.isInvalidated == false else {
@@ -90,6 +100,13 @@ class TranslationZipImporter: GTDataManager {
             guard let language = translation.language, language.shouldDownload else {
                 continue
             }
+            
+            safelyWriteToRealm {
+                translation.isDownloadInProgress = true
+            }
+            
+            debugPrint("\(translation.version)-\(translation.language!.code)-\(translation.downloadedResource!.code) in added to queue.")
+            debugPrint("flag = \(translation.isDownloadInProgress)")
             
             translationDownloadQueue.append(translation)
         }
@@ -122,6 +139,11 @@ class TranslationZipImporter: GTDataManager {
             if language.isPrimary() || (!isAvailableInPrimary && language.code == "en") {
                 self.primaryDownloadComplete(translation: translation)
             }
+            
+            self.safelyWriteToRealm {
+                translation.isDownloadInProgress = false
+            }
+            
             return Promise(value: ())
         }
     }
