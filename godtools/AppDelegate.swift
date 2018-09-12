@@ -109,9 +109,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }.then { (resources) -> Promise<DownloadedResources> in
                 if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
                     self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
-                } else if isFirstLaunch {
-                    languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
-                    TranslationZipImporter().catchupMissedDownloads()
                 } else {
                     TranslationZipImporter().catchupMissedDownloads()
                 }
