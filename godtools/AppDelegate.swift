@@ -101,7 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirstLaunchInitializer().initializeAppState()
         }
         
-        return languagesManager.loadFromRemote().then { (languages) -> Promise<DownloadedResources> in
+        return languagesManager.loadFromRemote().then { (_) -> Promise<DownloadedResources> in
+            if isFirstLaunch {
+                languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
+            }
             return DownloadedResourceManager().loadFromRemote()
             }.then { (resources) -> Promise<DownloadedResources> in
                 if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
