@@ -59,19 +59,19 @@ class TranslationZipImporter: GTDataManager {
         let translations = Array(translations)
         
         let primaryTranslations = translations.filter( {
-            $0.hasValidRelationships() && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false
+            $0.isInvalidated == false && $0.language != nil && $0.language!.isPrimary() && $0.isDownloaded == false
         } )
         
         translationDownloadQueue.append(contentsOf: primaryTranslations)
         
         let parallelTranslations = translations.filter( {
-            $0.hasValidRelationships() && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false
+            $0.isInvalidated == false && $0.language != nil && $0.language!.isParallel() && $0.isDownloaded == false
         } )
         
         translationDownloadQueue.append(contentsOf: parallelTranslations)
         
         for translation in translations {
-            guard translation.hasValidRelationships() else {
+            guard translation.isInvalidated == false else {
                 continue
             }
             
