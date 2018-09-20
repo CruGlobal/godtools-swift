@@ -28,6 +28,7 @@ struct AdobeAnalyticsConstants {
         static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
         static let newProfessingBelieverAction = "cru.newprofessingbelievers"
         static let emailSignUpAction = "cru.emailsignup"
+        static let parallelLanguageToggle = "cru.parallellanguagetoggle"
     }
     
     struct Values {
@@ -50,6 +51,7 @@ struct AdobeAnalyticsConstants {
         static let theFourNewProfessingBeliever = "TheFour New Professing Believer"
         static let kgpEmailSignUp = "KGP Email Sign Up"
         static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
+        static let parallelLanguageToggle = "Parallel Language Toggled"
     }
 }
 class GodToolsAnaltyics {
