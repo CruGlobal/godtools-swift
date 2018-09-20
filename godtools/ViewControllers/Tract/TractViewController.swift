@@ -171,11 +171,23 @@ class TractViewController: BaseViewController {
     @objc fileprivate func didSelectLanguage(segmentedControl: UISegmentedControl) {
         if segmentedControl.selectedSegmentIndex == 0 {
             usePrimaryLanguageResources()
+            sendLanguageToggleNotification(language: primaryLanguage)
         } else {
             useParallelLanguageResources()
+            sendLanguageToggleNotification(language: parallelLanguage)
         }
         
         loadPagesViews()
+    }
+    
+    private func sendLanguageToggleNotification(language: Language?) {
+        guard let language = language else { return }
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: ["action": AdobeAnalyticsConstants.Values.parallelLanguageToggle,
+                                                   AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
+                                                   AdobeAnalyticsConstants.Keys.contentLanguageSecondary: language.code,
+                                                   AdobeAnalyticsConstants.Keys.siteSection: resource?.code ?? ""])
     }
     
     // MARK: - Navigation buttons actions
