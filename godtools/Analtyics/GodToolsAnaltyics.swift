@@ -15,6 +15,8 @@ struct AdobeAnalyticsConstants {
         static let appName = "cru.appname"
         static let loggedInStatus = "cru.loggedinstatus"
         static let marketingCloudID = "cru.mcid"
+        static let ssoguid = "cru.ssoguid"
+        static let grMasterPersonID = "cru.grmpid"
         static let screenName = "cru.screenname"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
@@ -159,6 +161,14 @@ class GodToolsAnaltyics {
         contextData = userInfo
         contextData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         contextData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        
+        if TheKeyOAuthClient.shared.isAuthenticated(), let guid = TheKeyOAuthClient.shared.guid {
+            contextData[AdobeAnalyticsConstants.Keys.ssoguid] = guid
+        }
+        if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
+            contextData[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
+        }
+        
         contextData.removeValue(forKey: "action")
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
@@ -186,6 +196,13 @@ class GodToolsAnaltyics {
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = getLoggedInStatus()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        
+        if TheKeyOAuthClient.shared.isAuthenticated(), let guid = TheKeyOAuthClient.shared.guid {
+            properties[AdobeAnalyticsConstants.Keys.ssoguid] = guid
+        }
+        if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
+            properties[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
+        }
         
         previousScreenName = screenName
         
