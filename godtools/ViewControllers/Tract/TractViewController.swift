@@ -164,8 +164,8 @@ class TractViewController: BaseViewController {
         let parallelLabel = self.determineParallelLabel()
         
         languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
-        languageSegmentedControl!.selectedSegmentIndex = 0
-        languageSegmentedControl!.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
+        languageSegmentedControl?.selectedSegmentIndex = 0
+        languageSegmentedControl?.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
     }
     
     @objc fileprivate func didSelectLanguage(segmentedControl: UISegmentedControl) {
