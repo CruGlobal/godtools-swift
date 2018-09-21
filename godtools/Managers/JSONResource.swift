@@ -18,7 +18,7 @@ class JSONResource: NSObject {
         super.init()
     }
     
-    func attributeMappings() -> [String: String] {
+    class var attributeMappings: [String: String] {
         return [String: String]()
     }
 }
@@ -52,7 +52,7 @@ class JSONResourceFactory {
 
             resource.setValue(resourceId, forKey: "id")
             
-            let attributeMappings = resource.attributeMappings()
+            let attributeMappings = T.attributeMappings
             let jsonAttributes = jsonResource["attributes"]
             
             for attributeKey in attributeMappings.keys {

@@ -14,12 +14,14 @@ class LanguageResource: JSONResource {
         return "language"
     }
     
+    override class var attributeMappings: [String : String] {
+        return ["direction": "direction",
+                "code": "code"]
+    }
+    
     var id = ""
     var code = ""
     var direction = ""
     
-    override func attributeMappings() -> [String : String] {
-        return ["direction": "direction",
-                "code": "code"]
-    }
+
 }
