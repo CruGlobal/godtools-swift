@@ -14,7 +14,6 @@ import GTMAppAuth
 protocol MenuViewControllerDelegate: class {
     func moveToUpdateLanguageSettings()
     func moveToAbout()
-    func moveToLogin()
     func openWebView(url: URL, title: String, analyticsTitle: String)
 }
 

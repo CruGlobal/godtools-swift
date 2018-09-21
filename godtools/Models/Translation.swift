@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class Translation: Object {
+    dynamic var isDownloadInProgress = false
     dynamic var isDownloaded = false
     dynamic var isPublished = false
     dynamic var localizedDescription: String?
@@ -25,5 +26,11 @@ class Translation: Object {
     
     override static func primaryKey() -> String {
         return "remoteId"
+    }
+    
+    func shouldDownload() -> Bool {
+        return isInvalidated == false &&
+            isDownloaded == false &&
+            isDownloadInProgress == false
     }
 }
