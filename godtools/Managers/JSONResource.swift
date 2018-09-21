@@ -41,16 +41,11 @@ class JSONResourceFactory {
             setAttributes(on: resource, from: jsonResource)
             
             for (includedAttribute, includedType) in resource.includedObjectMappings() {
-                let j: JSON = json["included"]
-                let t = includedType
-                let p: JSONResource.Type = T.self
-                let r: String = jsonResource["id"].stringValue
-
-                let includedResources = JSONResourceFactory.initializeArrayFrom(json: j,
-                                                                                type: t,
-                                                                                parentType: p,
-                                                                                parentResourceId: r)
-
+                let includedResources = JSONResourceFactory.initializeArrayFrom(json: json["included"],
+                                                                                type: includedType,
+                                                                                parentType: T.self,
+                                                                                parentResourceId: jsonResource["id"].stringValue)
+                
                 resource.setValue(includedResources, forKey: includedAttribute)
             }
             
@@ -62,7 +57,7 @@ class JSONResourceFactory {
     
     private static func setAttributes(on resource: JSONResource, from json: JSON) {
         let resourceId = json["id"].stringValue
-
+        
         resource.setValue(resourceId, forKey: "id")
         
         let attributeMappings = resource.attributeMappings()
@@ -95,7 +90,7 @@ class JSONResourceFactory {
         
         for jsonResource in jsonArray {
             let resource = type.init()
-
+            
             // since we are deserializing included objects, we need to do some additional checks:
             // 1) ensure the included object is the correct type of object we're looking for AND
             // 2) ensure that the included object is related to parent resource by matching IDs
@@ -107,7 +102,7 @@ class JSONResourceFactory {
             if jsonResourceType != desiredType || relatedObjectParentId != parentResourceId {
                 continue
             }
-
+            
             setAttributes(on: resource, from: jsonResource)
             
             if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
