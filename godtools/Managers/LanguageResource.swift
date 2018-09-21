@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 
 class LanguageResource: JSONResource {
+    override class var type: String {
+        return "language"
+    }
     
     var id = ""
     var code = ""

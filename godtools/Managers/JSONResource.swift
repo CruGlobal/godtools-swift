@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 
 class JSONResource: NSObject {
+    class var type: String {
+        return "unknown"
+    }
     
     override required init() {
         super.init()
@@ -21,17 +24,33 @@ class JSONResource: NSObject {
 }
 
 class JSONResourceFactory {
-    static func initializeArrayFrom<T: JSONResource>(data: Data, type: T.Type) -> [T] {
+    
+    static func initializeArrayFrom<T: JSONResource, U: JSONResource>(data: Data, type: T.Type, includedTypes: [T.Type]? = nil, parentType: U.Type? = nil, parentResourceId: String? = nil) -> [T] {
+        guard let json = try? JSON(data: data)["data"] else { return [T]() }
+        return initializeArrayFrom(json: json, type: type, includedTypes: includedTypes, parentType: parentType, parentResourceId: parentResourceId)
+    }
+    
+    static func initializeArrayFrom<T: JSONResource, U: JSONResource>(json: JSON, type: T.Type, includedTypes: [T.Type]? = nil, parentType: U.Type? = nil, parentResourceId: String? = nil) -> [T] {
         var resources = [T]()
         
-        guard let json = try? JSON(data: data)["data"] else { return resources }
+        guard let jsonArray = json.array else { return resources }
         
-        for jsonResource in json.arrayValue {
-            let resource = T()
+        for jsonResource in jsonArray {
+            guard let resourceId = jsonResource["id"].string else { continue }
             
-            if let id = jsonResource["id"].string {
-                resource.setValue(id, forKey: "id")
+            // if there is a parent resource ID, that means we are deserializing included objects
+            // we need to do some additional checks:
+            // 1) ensure the included object is the correct type of object we're looking for AND
+            // 2) ensure that the included object is related to parent resource by matching IDs
+            if let parentResourceId = parentResourceId {
+                guard let jsonResourceType = jsonResource["type"].string,
+                    jsonResourceType == T.type,
+                    jsonResource["relationships"][U.type]["data"]["id"].string == parentResourceId else { continue }
             }
+            
+            let resource = T()
+
+            resource.setValue(resourceId, forKey: "id")
             
             let attributeMappings = resource.attributeMappings()
             let jsonAttributes = jsonResource["attributes"]
@@ -48,6 +67,12 @@ class JSONResourceFactory {
                 } else {
                     debugPrint("unknown type for \(attributeKey)")
                 }
+            }
+            
+            guard let includedTypes = includedTypes else { continue }
+            
+            for includedType in includedTypes {
+                let includedResources = JSONResourceFactory.initializeArrayFrom(json: json["included"], type: includedType, parentType: T.self, parentResourceId: resourceId)
             }
             
             resources.append(resource)
