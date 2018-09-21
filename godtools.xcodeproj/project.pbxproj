@@ -166,6 +166,7 @@
 		4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 4FC97EB820D2C37900084A33 /* analytics-test2.xml */; };
 		4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */; };
 		4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD8F8021F042CAD00A70A0D /* FollowUp.swift */; };
+		4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA96232155451C00D3BA15 /* JSONResource.swift */; };
 		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
 		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
@@ -451,6 +452,7 @@
 		4FC97EB820D2C37900084A33 /* analytics-test2.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "analytics-test2.xml"; sourceTree = "<group>"; };
 		4FD8F8001F04179100A70A0D /* FollowUpsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUpsManager.swift; path = Managers/FollowUps/FollowUpsManager.swift; sourceTree = "<group>"; };
 		4FD8F8021F042CAD00A70A0D /* FollowUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FollowUp.swift; path = Models/FollowUp.swift; sourceTree = "<group>"; };
+		4FDA96232155451C00D3BA15 /* JSONResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JSONResource.swift; path = Managers/JSONResource.swift; sourceTree = "<group>"; };
 		4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationBarBackground.swift; path = Views/NavigationBarBackground.swift; sourceTree = "<group>"; };
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
 		4FED858D1F461691003038BB /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -964,6 +966,7 @@
 				4F1C959B1EA7EA8A007B47DB /* Translations */,
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
+				4FDA96232155451C00D3BA15 /* JSONResource.swift */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
 				4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
@@ -1731,6 +1734,7 @@
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
 				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
+				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,

@@ -9,34 +9,14 @@
 import Foundation
 import SwiftyJSON
 
-class LanguageResource {
+class LanguageResource: JSONResource {
     
     var id = ""
     var code = ""
     var direction = ""
     
-    static func initializeFrom(data: Data) -> [LanguageResource] {
-        var languages = [LanguageResource]();
-        
-        guard let json = try? JSON(data: data)["data"] else { return languages }
-        
-        for language in json.arrayValue {
-            let languageResource = LanguageResource();
-            
-            if let id = language["id"].string {
-                languageResource.id = id
-            }
-            
-            if let code = language["attributes"]["code"].string {
-                languageResource.code = code
-            }
-            
-            if let direction = language["attributes"]["direction"].string{
-                languageResource.direction = direction
-            }
-            languages.append(languageResource);
-        }
-        
-        return languages;
+    override func attributeMappings() -> [String : String] {
+        return ["direction": "direction",
+                "code": "code"]
     }
 }

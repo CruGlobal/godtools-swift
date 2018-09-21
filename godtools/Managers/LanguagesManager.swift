@@ -107,7 +107,7 @@ class LanguagesManager: GTDataManager {
         return issueGETRequest()
             .then { data -> Promise<Languages> in
                 DispatchQueue.global(qos: .userInitiated).async {
-                    let remoteLanguages = LanguageResource.initializeFrom(data: data)
+                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)
                     
                     DispatchQueue.main.async {
                         self.saveToDisk(remoteLanguages)
@@ -125,7 +125,7 @@ class LanguagesManager: GTDataManager {
         guard let path = Bundle.main.path(forResource: "languages", ofType: "json") else { return }
         let languagesURL = URL(fileURLWithPath:path)
         guard let languagesData = try? Data(contentsOf: languagesURL) else { return }
-        let languagesDeserialized = LanguageResource.initializeFrom(data: languagesData)
+        let languagesDeserialized = JSONResourceFactory.initializeArrayFrom(data: languagesData, type: LanguageResource.self)
         
         saveToDisk(languagesDeserialized)
     }
