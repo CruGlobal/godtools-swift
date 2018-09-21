@@ -9,26 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class DownloadedResourceJson: JSONResource {
-    
-    override class var type: String {
-        return "resource"
-    }
-    
-    override class var attributeMappings: [String: String] {
-        return ["name":"name",
-                "description":"descr",
-                "abbreviation":"abbreviation",
-                "copyrightDescription":"copyrightDescription",
-                "attr-banner":"bannerId",
-                "attr-banner-about":"aboutBannerId",
-                "total-views":"totalViews"]
-    }
-    
-    override class var includedObjectMappings: [String: JSONResource.Type] {
-        return ["latestTranslations": TranslationResource.self,
-                "attachments": AttachmentResource.self]
-    }
+class DownloadedResourceJson: NSObject {
 
     var id = ""
     var name = ""
@@ -41,4 +22,32 @@ class DownloadedResourceJson: JSONResource {
     
     var latestTranslations: [TranslationResource]?
     var attachments: [AttachmentResource]?
+    
+    required override init() {
+        super.init()
+    }
+}
+
+extension DownloadedResourceJson: JSONResource {
+    func type() -> String {
+        return "resource"
+    }
+    
+    func attributeMappings() -> [String : String] {
+        return ["name":"name",
+                "description":"descr",
+                "abbreviation":"abbreviation",
+                "attr-banner":"bannerId",
+                "attr-banner-about":"aboutBannerId",
+                "total-views":"totalViews"]
+    }
+    
+    func includedObjectMappings() -> [String : JSONResource.Type] {
+        return ["latestTranslations": TranslationResource.self,
+                "attachments": AttachmentResource.self]
+    }
+    
+    override func setValue(_ value: Any?, forKey key: String) {
+        super.setValue(value, forKey: key)
+    }
 }

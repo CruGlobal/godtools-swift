@@ -9,25 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class TranslationResource: JSONResource {
-    
-    override class var type: String {
-        return "translation"
-    }
-    
-    override class var attributeMappings: [String: String] {
-        return ["name":"name",
-                "version":"version",
-                "is-published":"isPublished",
-                "manifest-name":"manifestName",
-                "translated-name":"translatedName",
-                "translated-description":"translatedDescription",
-                "translated-tagline":"tagline"]
-    }
-    
-    override class var includedObjectMappings: [String: JSONResource.Type] {
-        return ["language": LanguageResource.self]
-    }
+class TranslationResource: NSObject {
     
     var id = ""
     var version = NSNumber(integerLiteral: 0)
@@ -36,6 +18,36 @@ class TranslationResource: JSONResource {
     var translatedName = ""
     var translatedDescription = ""
     var tagline = ""
+    var languageId = ""
     
-    var language: LanguageResource?
+    required override init() {
+        super.init()
+    }
+}
+
+extension TranslationResource: JSONResource {
+    func type() -> String {
+        return "translation"
+    }
+    
+    func attributeMappings() -> [String: String] {
+        return ["version":"version",
+                "is-published":"isPublished",
+                "manifest-name":"manifestName",
+                "translated-name":"translatedName",
+                "translated-description":"translatedDescription",
+                "translated-tagline":"tagline"]
+    }
+    
+    func relatedAttributeMapping() -> [String : String] {
+        return ["language": "languageId"]
+    }
+    
+    func includedObjectMappings() -> [String: JSONResource.Type] {
+        return [String: JSONResource.Type]()
+    }
+    
+    override func setValue(_ value: Any?, forKey key: String) {
+        super.setValue(value, forKey: key)
+    }
 }

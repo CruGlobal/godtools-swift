@@ -9,19 +9,34 @@
 import Foundation
 import SwiftyJSON
 
-class LanguageResource: JSONResource {
-    override class var type: String {
-        return "language"
-    }
-    
-    override class var attributeMappings: [String : String] {
-        return ["direction": "direction",
-                "code": "code"]
-    }
+class LanguageResource: NSObject {
     
     var id = ""
     var code = ""
     var direction = ""
     
+    required override init() {
+        super.init()
+    }
 
+}
+
+extension LanguageResource: JSONResource {
+
+    func type() -> String {
+        return "language"
+    }
+    
+    func attributeMappings() -> [String : String] {
+        return ["direction": "direction",
+                "code": "code"]
+    }
+    
+    func includedObjectMappings() -> [String : JSONResource.Type] {
+        return [String: JSONResource.Type]()
+    }
+    
+    override func setValue(_ value: Any?, forKey key: String) {
+        super.setValue(value, forKey: key)
+    }
 }

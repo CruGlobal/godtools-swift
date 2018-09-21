@@ -9,22 +9,15 @@
 import Foundation
 import SwiftyJSON
 
-class JSONResource: NSObject {
-    override required init() {
-        super.init()
-    }
-
-    class var type: String {
-        return "unknown"
-    }
+@objc
+protocol JSONResource: NSObjectProtocol {
+    init()
+    func type() -> String
+    func attributeMappings() -> [String: String]
+    func includedObjectMappings() -> [String: JSONResource.Type]
+    func setValue(_ value: Any?, forKey key: String)
     
-    class var attributeMappings: [String: String] {
-        return [String: String]()
-    }
-    
-    class var includedObjectMappings: [String: JSONResource.Type] {
-        return [String: JSONResource.Type]()
-    }
+    @objc optional func relatedAttributeMapping() -> [String: String]
 }
 
 class JSONResourceFactory {
@@ -32,42 +25,23 @@ class JSONResourceFactory {
     static func initializeArrayFrom<T: JSONResource>(data: Data, type: T.Type) -> [T] {
         guard let json = try? JSON(data: data) else { return [T]() }
         
-        return initializeArrayFrom(json: json, type: type, parentType: nil, parentResourceId: nil)
+        return initializeArrayFrom(json: json, type: type)
     }
     
-    static func initializeArrayFrom<T: JSONResource, U: JSONResource>(json: JSON,
-                                                                      type: T.Type,
-                                                                      parentType: U.Type? = nil,
-                                                                      parentResourceId: String? = nil) -> [T] {
+    static func initializeArrayFrom<T: JSONResource>(json: JSON, type: T.Type) -> [T] {
         var resources = [T]()
         
         guard let jsonArray = (json.array != nil) ? json.arrayValue : ((json["data"].array != nil) ? json["data"].arrayValue : nil) else {
             return resources
         }
-
+        
         for jsonResource in jsonArray {
             guard let resourceId = jsonResource["id"].string else { continue }
-            let parentResourceType = U.type
+            let resource = T.init()
             
-            // if there is a parent resource ID, that means we are deserializing included objects
-            // we need to do some additional checks:
-            // 1) ensure the included object is the correct type of object we're looking for AND
-            // 2) ensure that the included object is related to parent resource by matching IDs
-            if let parentResourceId = parentResourceId {
-                guard let relatedObjectParentId = jsonResource["relationships"][parentResourceType]["data"]["id"].string else { continue }
-                guard let jsonResourceType = jsonResource["type"].string else { continue }
-                let desiredType = T.type
-                
-                if jsonResourceType != desiredType || relatedObjectParentId == parentResourceId {
-                        continue
-                }
-            }
-            
-            let resource = T()
-
             resource.setValue(resourceId, forKey: "id")
             
-            let attributeMappings = T.attributeMappings
+            let attributeMappings = resource.attributeMappings()
             let jsonAttributes = jsonResource["attributes"]
             
             for attributeKey in attributeMappings.keys {
@@ -84,24 +58,90 @@ class JSONResourceFactory {
                 }
             }
             
-            for (includedAttribute, includedType) in T.includedObjectMappings {
-                let includedResources = JSONResourceFactory.initializeArrayFrom(json: json["included"], type: includedType, parentType: T.self, parentResourceId: resourceId)
+            for (includedAttribute, includedType) in resource.includedObjectMappings() {
+                let j: JSON = json["included"]
+                let t = includedType
+                let p: JSONResource.Type = T.self
+                let r: String = resourceId
 
-                let mirror = Mirror(reflecting: resource)
-                
-                guard let includedField = mirror.children.filter({ (child) -> Bool in
-                    child.label != nil && child.label! == includedAttribute
-                }).first else { continue }
-                
-                debugPrint("\(includedField) type: \(includedField.value)")
-                if includedField.value is Array<Any> {
-                    resource.setValue(includedResources, forKey: includedAttribute)
-                } else if let includedResource = includedResources.first {
-                    resource.setValue(includedResource, forKey: includedAttribute)
+                let includedResources = JSONResourceFactory.initializeArrayFrom(json: j,
+                                                                                type: t,
+                                                                                parentType: p,
+                                                                                parentResourceId: r)
+
+                resource.setValue(includedResources, forKey: includedAttribute)
+            }
+            
+            resources.append(resource)
+            
+        }
+        return resources
+    }
+    
+    private static func initializeArrayFrom( json: JSON,
+                                             type: JSONResource.Type,
+                                             parentType: JSONResource.Type,
+                                             parentResourceId: String) -> [JSONResource] {
+        var resources = [JSONResource]()
+        
+        guard let jsonArray = (json.array != nil) ? json.arrayValue : ((json["data"].array != nil) ? json["data"].arrayValue : nil) else {
+            return resources
+        }
+        
+        for jsonResource in jsonArray {
+            guard let resourceId = jsonResource["id"].string else { continue }
+            let parentResourceType = parentType.init().type()
+            let resource = type.init()
+            
+            // if there is a parent resource ID, that means we are deserializing included objects
+            // we need to do some additional checks:
+            // 1) ensure the included object is the correct type of object we're looking for AND
+            // 2) ensure that the included object is related to parent resource by matching IDs
+            guard let relatedObjectParentId = jsonResource["relationships"][parentResourceType]["data"]["id"].string else { continue }
+            guard let jsonResourceType = jsonResource["type"].string else { continue }
+            let desiredType = resource.type()
+            
+            if jsonResourceType != desiredType || relatedObjectParentId != parentResourceId {
+                continue
+            }
+            
+            resource.setValue(resourceId, forKey: "id")
+            
+            let attributeMappings = resource.attributeMappings()
+            let jsonAttributes = jsonResource["attributes"]
+            
+            for attributeKey in attributeMappings.keys {
+                if jsonAttributes[attributeKey].rawValue is String,
+                    let attributeValue = jsonAttributes[attributeKey].string,
+                    let objectKey = attributeMappings[attributeKey] {
+                    resource.setValue(attributeValue, forKey: objectKey)
+                } else if jsonAttributes[attributeKey].rawValue is NSNumber,
+                    let attributeValue = jsonAttributes[attributeKey].number,
+                    let objectKey = attributeMappings[attributeKey] {
+                    resource.setValue(attributeValue, forKey: objectKey)
                 } else {
-                    debugPrint("unable to set included resource for \(includedAttribute)")
+                    debugPrint("unknown type for \(attributeKey)")
                 }
-
+            }
+            
+            if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
+                let relatedAttributeMappings = relatedAttributeMappingsFunction()
+                
+                let jsonRelationships = jsonResource["relationships"]
+                
+                for attributeKey in relatedAttributeMappings.keys {
+                    if jsonRelationships[attributeKey]["data"]["id"].rawValue is String,
+                        let attributeValue = jsonRelationships[attributeKey]["data"]["id"].string,
+                        let objectKey = relatedAttributeMappings[attributeKey] {
+                        resource.setValue(attributeValue, forKey: objectKey)
+                    } else if jsonRelationships[attributeKey]["data"]["id"].rawValue is NSNumber,
+                        let attributeValue = jsonRelationships[attributeKey]["data"]["id"].number,
+                        let objectKey = relatedAttributeMappings[attributeKey] {
+                        resource.setValue(attributeValue, forKey: objectKey)
+                    } else {
+                        debugPrint("unknown type for \(attributeKey)")
+                    }
+                }
             }
             
             resources.append(resource)

@@ -91,7 +91,7 @@ class DownloadedResourceManager: GTDataManager {
                 guard let remoteTranslations = remoteResource.latestTranslations else { continue }
                 for remoteTranslationGeneric in remoteTranslations {
                     guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
-                    let languageId = remoteTranslation.language?.id ?? "-1"
+                    let languageId = remoteTranslation.languageId
                     let resourceId = remoteResource.id ?? "-1"
                     let version = remoteTranslation.version.int16Value
                     
