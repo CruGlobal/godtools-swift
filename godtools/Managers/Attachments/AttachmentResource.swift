@@ -9,7 +9,15 @@
 import Foundation
 import SwiftyJSON
 
-class AttachmentResource {
+class AttachmentResource: JSONResource {
+    
+    override class var type: String {
+        return "attachment"
+    }
+    
+    override class var attributeMappings: [String: String] {
+        return ["sha256": "sha256"]
+    }
     
     var id = ""
     var sha256 = ""

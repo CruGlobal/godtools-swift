@@ -9,8 +9,27 @@
 import Foundation
 import SwiftyJSON
 
-class DownloadedResourceJson {
+class DownloadedResourceJson: JSONResource {
     
+    override class var type: String {
+        return "resource"
+    }
+    
+    override class var attributeMappings: [String: String] {
+        return ["name":"name",
+                "description":"descr",
+                "abbreviation":"abbreviation",
+                "copyrightDescription":"copyrightDescription",
+                "attr-banner":"bannerId",
+                "attr-banner-about":"aboutBannerId",
+                "total-views":"totalViews"]
+    }
+    
+    override class var includedObjectMappings: [String: JSONResource.Type] {
+        return ["latestTranslations": TranslationResource.self,
+                "attachments": AttachmentResource.self]
+    }
+
     var id = ""
     var name = ""
     var descr = ""
@@ -21,49 +40,5 @@ class DownloadedResourceJson {
     var totalViews = NSNumber(integerLiteral: 0)
     
     var latestTranslations: [TranslationResource]?
-    var attachments: [Any]?
-    
-    static func initializeFrom(data: Data) -> [DownloadedResourceJson] {
-        var resources = [DownloadedResourceJson]();
-        
-        guard let json = try? JSON(data: data) else { return resources }
-        
-        let jsonData = json["data"]
-        let jsonIncluded = json["included"]
-        
-        for resource in jsonData.arrayValue {
-            let downloadedResource = DownloadedResourceJson();
-            
-            if let id = resource["id"].string {
-                downloadedResource.id = id
-            }
-            if let name = resource["attributes"]["name"].string {
-                downloadedResource.name = name
-            }
-            if let descr = resource["attributes"]["description"].string {
-                downloadedResource.descr = descr
-            }
-            if let abbreviation = resource["attributes"]["abbreviation"].string {
-                downloadedResource.abbreviation = abbreviation
-            }
-            if let copyrightDescription = resource["attributes"]["copyrightDescription"].string {
-                downloadedResource.copyrightDescription = copyrightDescription
-            }
-            if let bannerId = resource["attributes"]["attr-banner"].string {
-                downloadedResource.bannerId = bannerId
-            }
-            if let aboutBannerId = resource["attributes"]["attr-banner-about"].string {
-                downloadedResource.aboutBannerId = aboutBannerId
-            }
-            if let totalViews = resource["attributes"]["total-views"].number {
-                downloadedResource.totalViews = totalViews
-            }
-            
-            downloadedResource.latestTranslations = TranslationResource.initializeFrom(json: jsonIncluded, resourceID: downloadedResource.id)
-            downloadedResource.attachments = AttachmentResource.initializeFrom(json: jsonIncluded, resourceID: downloadedResource.id);
-            resources.append(downloadedResource);
-        }
-        
-        return resources;
-    }
+    var attachments: [AttachmentResource]?
 }

@@ -31,7 +31,7 @@ class DownloadedResourceManager: GTDataManager {
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
                 DispatchQueue.global(qos: .userInitiated).async {
-                    let remoteResources = DownloadedResourceJson.initializeFrom(data: data)
+                    let remoteResources = JSONResourceFactory.initializeArrayFrom(data: data, type: DownloadedResourceJson.self)
                     DispatchQueue.main.async {
                         self.saveToDisk(remoteResources)
                     }
@@ -48,8 +48,8 @@ class DownloadedResourceManager: GTDataManager {
         guard let path = Bundle.main.path(forResource: "resources", ofType: "json") else { return }
         let resourcesPath = URL(fileURLWithPath: path)
         guard let resourcesData = try? Data(contentsOf: resourcesPath) else { return }
-        let resourcesDeserialized = DownloadedResourceJson.initializeFrom(data: resourcesData)
-        
+        let resourcesDeserialized = JSONResourceFactory.initializeArrayFrom(data: resourcesData, type: DownloadedResourceJson.self)
+
         saveToDisk(resourcesDeserialized)
     }
     
