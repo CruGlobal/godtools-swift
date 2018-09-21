@@ -114,16 +114,14 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteResource: DownloadedResourceJson) -> DownloadedResource {
-        let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id)
-        
         var cachedResource: DownloadedResource
         
-        if alreadySavedResource == nil {
+        if let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id) {
+            cachedResource = alreadySavedResource
+        } else {
             cachedResource = DownloadedResource()
             cachedResource.remoteId = remoteResource.id
             realm.add(cachedResource)
-        } else {
-            cachedResource = alreadySavedResource!
         }
         
         cachedResource.code = remoteResource.abbreviation
