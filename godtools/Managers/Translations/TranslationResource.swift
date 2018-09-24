@@ -28,14 +28,14 @@ extension TranslationResource {
     }
     
     func attributeMappings() -> [String: String] {
-        return ["is-published":"isPublished",
-                "manifest-name":"manifestName",
-                "translated-name":"translatedName",
-                "translated-description":"translatedDescription",
-                "translated-tagline":"tagline"]
+        return ["isPublished": "is-published",
+                "manifestName": "manifest-name",
+                "translatedName": "translated-name",
+                "translatedDescription": "translated-description",
+                "tagline": "translated-tagline"]
     }
     
     func relatedAttributeMapping() -> [String : String] {
-        return ["language": "languageId"]
+        return ["languageId": "language"]
     }
 }

@@ -31,10 +31,10 @@ extension DownloadedResourceJson {
     }
     
     func attributeMappings() -> [String : String] {
-        return ["description":"descr",
-                "attr-banner":"bannerId",
-                "attr-banner-about":"aboutBannerId",
-                "total-views":"totalViews"]
+        return ["descr": "description",
+                "bannerId": "attr-banner",
+                "aboutBannerId": "attr-banner-about",
+                "totalViews": "total-views"]
     }
     
     func includedObjectMappings() -> [String : JSONResource.Type] {

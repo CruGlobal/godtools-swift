@@ -38,9 +38,7 @@ import SwiftyJSON
      is when the object implementing this protocol needs to also deserialize included objects and store them on a property
      of the parent/owning object.
      
-     The format is: ["propertyName": "Swift type of class to that maps to the included object", ...]
-     NOTE: the key/value is lamely reverse of the other two optional functions!! :(
-     */
+     The format is: ["propertyName": "Swift type of class to that maps to the included object", ...] */
     @objc optional func includedObjectMappings() -> [String: JSONResource.Type]
 }
 
@@ -106,17 +104,15 @@ class JSONResourceFactory {
         
         let attributeMappings = attributesMappingFunction()
 
-        for attributeKey in attributeMappings.keys {
-            if jsonAttributes[attributeKey].rawValue is String,
-                let attributeValue = jsonAttributes[attributeKey].string,
-                let objectKey = attributeMappings[attributeKey] {
-                resource.setValue(attributeValue, forKey: objectKey)
-            } else if jsonAttributes[attributeKey].rawValue is NSNumber,
-                let attributeValue = jsonAttributes[attributeKey].number,
-                let objectKey = attributeMappings[attributeKey] {
-                resource.setValue(attributeValue, forKey: objectKey)
+        for (swiftPropertyName, jsonAttributeName) in attributeMappings {
+            if jsonAttributes[jsonAttributeName].rawValue is String,
+                let attributeValue = jsonAttributes[jsonAttributeName].string {
+                resource.setValue(attributeValue, forKey: swiftPropertyName)
+            } else if jsonAttributes[jsonAttributeName].rawValue is NSNumber,
+                let attributeValue = jsonAttributes[jsonAttributeName].number {
+                resource.setValue(attributeValue, forKey: swiftPropertyName)
             } else {
-                debugPrint("unknown type for \(attributeKey)")
+                debugPrint("unknown type for \(jsonAttributeName)")
             }
         }
     }
@@ -127,17 +123,13 @@ class JSONResourceFactory {
             
             let jsonRelationships = json["relationships"]
             
-            for attributeKey in relatedAttributeMappings.keys {
-                if jsonRelationships[attributeKey]["data"]["id"].rawValue is String,
-                    let attributeValue = jsonRelationships[attributeKey]["data"]["id"].string,
-                    let objectKey = relatedAttributeMappings[attributeKey] {
-                    resource.setValue(attributeValue, forKey: objectKey)
-                } else if jsonRelationships[attributeKey]["data"]["id"].rawValue is NSNumber,
-                    let attributeValue = jsonRelationships[attributeKey]["data"]["id"].number,
-                    let objectKey = relatedAttributeMappings[attributeKey] {
-                    resource.setValue(attributeValue, forKey: objectKey)
-                } else {
-                    debugPrint("unknown type for \(attributeKey)")
+            for (swiftPropertyName, jsonRelatedObjectType) in relatedAttributeMappings {
+                if jsonRelationships[jsonRelatedObjectType]["data"]["id"].rawValue is String,
+                    let relatedObjectId = jsonRelationships[jsonRelatedObjectType]["data"]["id"].string {
+                    resource.setValue(relatedObjectId, forKey: swiftPropertyName)
+                } else if jsonRelationships[jsonRelatedObjectType]["data"]["id"].rawValue is NSNumber,
+                    let relatedObjectId = jsonRelationships[jsonRelatedObjectType]["data"]["id"].number {
+                    resource.setValue(relatedObjectId, forKey: swiftPropertyName)
                 }
             }
         }
