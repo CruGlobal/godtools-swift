@@ -9,8 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-@objc
-protocol JSONResource: NSObjectProtocol {
+@objc protocol JSONResource {
     init()
     func type() -> String
     func attributeMappings() -> [String: String]
