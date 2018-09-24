@@ -31,8 +31,7 @@ extension TranslationResource: JSONResource {
     }
     
     func attributeMappings() -> [String: String] {
-        return ["version":"version",
-                "is-published":"isPublished",
+        return ["is-published":"isPublished",
                 "manifest-name":"manifestName",
                 "translated-name":"translatedName",
                 "translated-description":"translatedDescription",
@@ -41,10 +40,6 @@ extension TranslationResource: JSONResource {
     
     func relatedAttributeMapping() -> [String : String] {
         return ["language": "languageId"]
-    }
-    
-    func includedObjectMappings() -> [String: JSONResource.Type] {
-        return [String: JSONResource.Type]()
     }
     
     override func setValue(_ value: Any?, forKey key: String) {

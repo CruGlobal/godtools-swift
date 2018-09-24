@@ -34,9 +34,7 @@ extension DownloadedResourceJson: JSONResource {
     }
     
     func attributeMappings() -> [String : String] {
-        return ["name":"name",
-                "description":"descr",
-                "abbreviation":"abbreviation",
+        return ["description":"descr",
                 "attr-banner":"bannerId",
                 "attr-banner-about":"aboutBannerId",
                 "total-views":"totalViews"]

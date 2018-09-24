@@ -12,11 +12,13 @@ import SwiftyJSON
 @objc protocol JSONResource {
     init()
     func type() -> String
-    func attributeMappings() -> [String: String]
-    func includedObjectMappings() -> [String: JSONResource.Type]
+    
     func setValue(_ value: Any?, forKey key: String)
     
+    @objc optional func attributeMappings() -> [String: String]
     @objc optional func relatedAttributeMapping() -> [String: String]
+    @objc optional func includedObjectMappings() -> [String: JSONResource.Type]
+
 }
 
 class JSONResourceFactory {
@@ -40,7 +42,9 @@ class JSONResourceFactory {
             setAttributes(on: resource, from: jsonResource)
             setRelatedAttributes(on: resource, from: jsonResource)
             
-            for (includedAttribute, includedType) in resource.includedObjectMappings() {
+            guard let includedObjectMappingsFunction = resource.includedObjectMappings else { continue }
+            
+            for (includedAttribute, includedType) in includedObjectMappingsFunction() {
                 let includedResources = JSONResourceFactory.initializeIncludedResourcesFrom(json: json["included"],
                                                                                             type: includedType,
                                                                                             parentType: T.self,
@@ -60,9 +64,25 @@ class JSONResourceFactory {
         
         resource.setValue(resourceId, forKey: "id")
         
-        let attributeMappings = resource.attributeMappings()
         let jsonAttributes = json["attributes"]
         
+        for property in Mirror(reflecting: resource).children {
+            guard let propertyName = property.label else { continue }
+            if jsonAttributes[propertyName].rawValue is String,
+                let attributeValue = jsonAttributes[propertyName].string {
+                resource.setValue(attributeValue, forKey: propertyName)
+            } else if jsonAttributes[propertyName].rawValue is NSNumber,
+                let attributeValue = jsonAttributes[propertyName].number {
+                resource.setValue(attributeValue, forKey: propertyName)
+            }
+        }
+        
+        guard let attributesMappingFunction = resource.attributeMappings else {
+            return
+        }
+        
+        let attributeMappings = attributesMappingFunction()
+
         for attributeKey in attributeMappings.keys {
             if jsonAttributes[attributeKey].rawValue is String,
                 let attributeValue = jsonAttributes[attributeKey].string,

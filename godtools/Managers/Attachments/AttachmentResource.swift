@@ -20,16 +20,9 @@ class AttachmentResource: NSObject {
 }
 
 extension AttachmentResource: JSONResource {
-    func includedObjectMappings() -> [String : JSONResource.Type] {
-        return [String : JSONResource.Type]()
-    }
-    
+
     func type() -> String {
         return "attachment"
-    }
-    
-    func attributeMappings() -> [String: String] {
-        return ["sha256": "sha256"]
     }
  
     override func setValue(_ value: Any?, forKey key: String) {

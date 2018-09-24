@@ -26,16 +26,7 @@ extension LanguageResource: JSONResource {
     func type() -> String {
         return "language"
     }
-    
-    func attributeMappings() -> [String : String] {
-        return ["direction": "direction",
-                "code": "code"]
-    }
-    
-    func includedObjectMappings() -> [String : JSONResource.Type] {
-        return [String: JSONResource.Type]()
-    }
-    
+
     override func setValue(_ value: Any?, forKey key: String) {
         super.setValue(value, forKey: key)
     }
