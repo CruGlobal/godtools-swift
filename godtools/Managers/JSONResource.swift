@@ -23,7 +23,7 @@ import SwiftyJSON
     /* This function should be implemented to return a dictonary of any custom attribute mappings. The use case
        is when a JSON attribute's name doesn't exactly match the property name defined the the object implementing this protocol.
      
-       The format is: ["json-attribute-name": "propertyName", ...] */
+     The format is: ["propertyName": "json-attribute-name", ...] */
     @objc optional func attributeMappings() -> [String: String]
     
     /* This function should be implemented to return a dictonary of any "related" attribute mappings. The use case
@@ -31,7 +31,7 @@ import SwiftyJSON
      value is not defined in the JSON resource's attributes. The ID needs to be found in the "relationships" of the JSON
      resource
      
-     The format is: ["JSON API (string) type of related object": "propertyName", ...] */
+     The format is: ["propertyName": "JSON API (string) type of related object", ...] */
     @objc optional func relatedObjectIdMappings() -> [String: String]
 
     /* This function should be implemented to return a dictonary of any "included" resource mappings. The use case
