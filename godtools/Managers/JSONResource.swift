@@ -10,13 +10,37 @@ import Foundation
 import SwiftyJSON
 
 @objc protocol JSONResource {
+    /* This init is overrideen in GodToolsJSONResource (abstract/super class) and shouldn't need to be overridden in any child class. */
     init()
     
+    /* This function must be overridden by any object implementing this protocol. It must return a String that exactly matches the
+     JSON API (String) type of the resource. (as found in { data: { id: "123", type: "this-type-right-here", ... } ... } ) */
     func type() -> String
+    
+    /* This function is overrideen in GodToolsJSONResource (abstract/super class) and shouldn't need to be overridden in any child class. */
     func setValue(_ value: Any?, forKey key: String)
     
+    /* This function should be implemented to return a dictonary of any custom attribute mappings. The use case
+       is when a JSON attribute's name doesn't exactly match the property name defined the the object implementing this protocol.
+     
+       The format is: ["json-attribute-name": "propertyName", ...] */
     @objc optional func attributeMappings() -> [String: String]
+    
+    /* This function should be implemented to return a dictonary of any "related" attribute mappings. The use case
+     is when the object implementing this protocol needs to set the ID of an object related to the JSON resource, and that
+     value is not defined in the JSON resource's attributes. The ID needs to be found in the "relationships" of the JSON
+     resource
+     
+     The format is: ["JSON API (string) type of related object": "propertyName", ...] */
     @objc optional func relatedAttributeMapping() -> [String: String]
+
+    /* This function should be implemented to return a dictonary of any "included" resource mappings. The use case
+     is when the object implementing this protocol needs to also deserialize included objects and store them on a property
+     of the parent/owning object.
+     
+     The format is: ["propertyName": "Swift type of class to that maps to the included object", ...]
+     NOTE: the key/value is lamely reverse of the other two optional functions!! :(
+     */
     @objc optional func includedObjectMappings() -> [String: JSONResource.Type]
 }
 
