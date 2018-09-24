@@ -63,7 +63,10 @@ class JSONResourceFactory {
             setAttributes(on: resource, from: jsonResource)
             setRelatedAttributes(on: resource, from: jsonResource)
             
-            guard let includedObjectMappingsFunction = resource.includedObjectMappings else { continue }
+            guard let includedObjectMappingsFunction = resource.includedObjectMappings else {
+                resources.append(resource)
+                continue
+            }
             
             for (includedAttribute, includedType) in includedObjectMappingsFunction() {
                 let includedResources = JSONResourceFactory.initializeIncludedResourcesFrom(json: json["included"],
@@ -75,7 +78,6 @@ class JSONResourceFactory {
             }
             
             resources.append(resource)
-            
         }
         return resources
     }
