@@ -9,7 +9,7 @@
 import UIKit
 import PromiseKit
 import Crashlytics
-import Spine
+import SwiftyJSON
 
 enum FollowUpError: Error {
     case MissingParameter(String)
@@ -19,11 +19,6 @@ class FollowUpsManager: GTDataManager {
     
     let path = "follow_ups"
     
-    override init() {
-        super.init()
-        serializer.registerResource(FollowUpResource.self)
-    }
-    
     func createSubscriber(params: [String: String]) -> Promise<Void>? {
         showNetworkingIndicator()
         
@@ -31,12 +26,11 @@ class FollowUpsManager: GTDataManager {
             return validationError()
         }
         
-        let resource = createFollowUpResource(params: params)
-        let localFollowUp = FollowUp(jsonAPIFollowUp: resource)
+        let localFollowUp = FollowUp(params: params)
         
         saveLocalCopy(localFollowUp)
         
-        return postFollowUp(resource: resource, cachedFollowUp: localFollowUp)
+        return postFollowUp(followUp: localFollowUp)
     }
     
     func syncCachedFollowUps() -> [Promise<Void>] {
@@ -50,9 +44,7 @@ class FollowUpsManager: GTDataManager {
         var promises = [Promise<Void>]()
         
         for followUp in cachedFollowUps {
-            let resource = createFollowUpResource(cachedFollowUp: followUp)
-            
-            promises.append(self.postFollowUp(resource: resource, cachedFollowUp: followUp))
+            promises.append(self.postFollowUp(followUp: followUp))
         }
         
         return promises
@@ -78,17 +70,22 @@ class FollowUpsManager: GTDataManager {
         return true
     }
     
-    private func postFollowUp(resource: FollowUpResource, cachedFollowUp: FollowUp) -> Promise<Void> {
-        let paramsData = try! self.serializer.serializeResources([resource])
-        let paramsJSON = try! JSONSerialization.jsonObject(with: paramsData, options: []) as! [String: Any]
+    private func postFollowUp(followUp: FollowUp) -> Promise<Void> {
+        let jsonDictionary = ["data":
+            ["type": "follow_up",
+             "attributes": [
+                "name": followUp.name ?? "",
+                "email": followUp.email ?? "",
+                "language_id": Int(followUp.languageId ?? "-1") ?? -1,
+                "destination_id": Int(followUp.destinationId ?? "-1") ?? -1]]]
         
-        return issuePOSTRequest(paramsJSON)
+        return issuePOSTRequest(jsonDictionary)
             .then { data -> Promise<Void> in
-                self.removeLocalCopy(cachedFollowUp)
+                self.removeLocalCopy(followUp)
                 return Promise(value: ())
             }
             .catch(execute: { error in
-                self.incrementRetryCount(cachedFollowUp)
+                self.incrementRetryCount(followUp)
                 Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
             })
             .always {
@@ -101,20 +98,6 @@ class FollowUpsManager: GTDataManager {
         
         Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber, invalid params."])
         return Promise(error: error)
-    }
-    
-    private func createFollowUpResource(params: [String: String]) -> FollowUpResource {
-        return FollowUpResource(email: params["email"]!,
-                                name: params["name"]!,
-                                destination: params["destination_id"]!,
-                                language: params["language_id"]!)
-    }
-    
-    private func createFollowUpResource(cachedFollowUp: FollowUp) -> FollowUpResource {
-        return FollowUpResource(email: cachedFollowUp.email!,
-                                name: cachedFollowUp.name!,
-                                destination: cachedFollowUp.destinationId!,
-                                language: cachedFollowUp.languageId!)
     }
     
     private func saveLocalCopy(_ localFollowUp: FollowUp) {

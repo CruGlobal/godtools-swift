@@ -10,19 +10,10 @@ import Foundation
 import UIKit
 import Alamofire
 import PromiseKit
-import Spine
 import RealmSwift
 
 class DownloadedResourceManager: GTDataManager {    
     let path = "/resources"
-    
-    override init() {
-        super.init()
-        serializer.registerResource(DownloadedResourceJson.self)
-        serializer.registerResource(TranslationResource.self)
-        serializer.registerResource(LanguageResource.self)
-        serializer.registerResource(AttachmentResource.self)
-    }
     
     func loadFromDisk() -> DownloadedResources {
         return findAllEntities(DownloadedResource.self)
@@ -35,21 +26,14 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<DownloadedResources> {
         showNetworkingIndicator()
         
-        let params = ["include": "translations,attachments"]
+        let params = ["include": "latest-translations,attachments"]
         
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
-                
-                var remoteResources: [DownloadedResourceJson]?
-                
                 DispatchQueue.global(qos: .userInitiated).async {
-                    if let remoteRsrcs = try? self.serializer.deserializeData(data).data as? [DownloadedResourceJson] {
-                        remoteResources = remoteRsrcs
-                    }
+                    let remoteResources = JSONResourceFactory.initializeArrayFrom(data: data, type: DownloadedResourceJson.self)
                     DispatchQueue.main.async {
-                        if let remoteResourcesForSaving = remoteResources {
-                            self.saveToDisk(remoteResourcesForSaving)
-                        }
+                        self.saveToDisk(remoteResources)
                     }
                 }
                 
@@ -61,10 +45,11 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func loadInitialContentFromDisk() {
-        let resourcesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "resources", ofType: "json")!)
-        let resourcesData = try! Data(contentsOf: resourcesPath)
-        let resourcesDeserialized = try! serializer.deserializeData(resourcesData).data as! [DownloadedResourceJson]
-        
+        guard let path = Bundle.main.path(forResource: "resources", ofType: "json") else { return }
+        let resourcesPath = URL(fileURLWithPath: path)
+        guard let resourcesData = try? Data(contentsOf: resourcesPath) else { return }
+        let resourcesDeserialized = JSONResourceFactory.initializeArrayFrom(data: resourcesData, type: DownloadedResourceJson.self)
+
         saveToDisk(resourcesDeserialized)
     }
     
@@ -106,9 +91,9 @@ class DownloadedResourceManager: GTDataManager {
                 guard let remoteTranslations = remoteResource.latestTranslations else { continue }
                 for remoteTranslationGeneric in remoteTranslations {
                     guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
-                    let languageId = remoteTranslation.language?.id ?? "-1"
+                    let languageId = remoteTranslation.languageId
                     let resourceId = remoteResource.id ?? "-1"
-                    guard let version = remoteTranslation.version?.int16Value else { continue }
+                    let version = remoteTranslation.version.int16Value
                     
                     if translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) == false {
                         continue;
@@ -129,37 +114,35 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteResource: DownloadedResourceJson) -> DownloadedResource {
-        let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id!)
-        
         var cachedResource: DownloadedResource
         
-        if alreadySavedResource == nil {
-            cachedResource = DownloadedResource()
-            cachedResource.remoteId = remoteResource.id!
-            realm.add(cachedResource)
+        if let alreadySavedResource = findEntityByRemoteId(DownloadedResource.self, remoteId: remoteResource.id) {
+            cachedResource = alreadySavedResource
         } else {
-            cachedResource = alreadySavedResource!
+            cachedResource = DownloadedResource()
+            cachedResource.remoteId = remoteResource.id
+            realm.add(cachedResource)
         }
         
-        cachedResource.code = remoteResource.abbreviation!
+        cachedResource.code = remoteResource.abbreviation
         cachedResource.descr = remoteResource.descr
-        cachedResource.name = remoteResource.name!
+        cachedResource.name = remoteResource.name
         cachedResource.copyrightDescription = remoteResource.copyrightDescription
         cachedResource.bannerRemoteId = remoteResource.bannerId
         cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId
-        cachedResource.totalViews = remoteResource.totalViews!.int32Value
+        cachedResource.totalViews = remoteResource.totalViews.int32Value
         
         return cachedResource
     }
     
     private func save(remoteAttachment: AttachmentResource) -> Attachment {
-        let alreadySavedAttachment = findEntityByRemoteId(Attachment.self, remoteId: remoteAttachment.id!)
+        let alreadySavedAttachment = findEntityByRemoteId(Attachment.self, remoteId: remoteAttachment.id)
         
         var cachedAttachment: Attachment
         
         if alreadySavedAttachment == nil {
             cachedAttachment = Attachment()
-            cachedAttachment.remoteId = remoteAttachment.id!
+            cachedAttachment.remoteId = remoteAttachment.id
             realm.add(cachedAttachment)
         } else {
             cachedAttachment = alreadySavedAttachment!
@@ -171,20 +154,20 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     private func save(remoteTranslation: TranslationResource) -> Translation {
-        let alreadySavedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id!)
+        let alreadySavedTranslation = findEntityByRemoteId(Translation.self, remoteId: remoteTranslation.id)
         
         var cachedTranslation: Translation
         
         if alreadySavedTranslation == nil {
             cachedTranslation = Translation()
-            cachedTranslation.remoteId = remoteTranslation.id!
+            cachedTranslation.remoteId = remoteTranslation.id
             realm.add(cachedTranslation)
         } else {
             cachedTranslation = alreadySavedTranslation!
         }
         
-        cachedTranslation.version = remoteTranslation.version!.int16Value
-        cachedTranslation.isPublished = remoteTranslation.isPublished!.boolValue
+        cachedTranslation.version = remoteTranslation.version.int16Value
+        cachedTranslation.isPublished = remoteTranslation.isPublished.boolValue
         cachedTranslation.manifestFilename = remoteTranslation.manifestName
         cachedTranslation.localizedName = remoteTranslation.translatedName
         cachedTranslation.localizedDescription = remoteTranslation.translatedDescription

@@ -52,11 +52,11 @@ class FirstLaunchInitializer: GTDataManager {
         let translationsManager = TranslationsManager()
         
         let zipFileURL = fileURLForResource(code: resourceCode)
-        let translation = translationsManager.loadTranslation(resourceCode: resourceCode,
+        guard let translation = translationsManager.loadTranslation(resourceCode: resourceCode,
                                                               languageCode: "en",
-                                                              published: true)!
+                                                              published: true) else { return }
 
-        let zippedData = try! Data(contentsOf: zipFileURL)
+        guard let zippedData = try? Data(contentsOf: zipFileURL) else { return }
         zipImporter.handleZippedData(zipData: zippedData, translation: translation)
         
         safelyWriteToRealm {
@@ -68,19 +68,19 @@ class FirstLaunchInitializer: GTDataManager {
         let bannerManager = BannerManager()
         
         for code in resourceCodes {
-            let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: code)!
-            let homeBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.bannerRemoteId!)
-            let aboutBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.aboutBannerRemoteId!)
-
-            let homeBannerSHA = homeBanner!.sha!
-            let homeBannerURL = Bundle.main.url(forResource: homeBannerSHA, withExtension: "png")!
-            let homeBannerData = try! Data(contentsOf: homeBannerURL)
-            bannerManager.saveImageToDisk(homeBannerData, attachment: homeBanner!)
+            guard let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: code) else { continue }
+            if let homeBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.bannerRemoteId ?? "") {
+                let homeBannerSHA = homeBanner.sha
+                guard let homeBannerURL = Bundle.main.url(forResource: homeBannerSHA, withExtension: "png") else { continue }
+                guard let homeBannerData = try? Data(contentsOf: homeBannerURL) else { continue }
+                bannerManager.saveImageToDisk(homeBannerData, attachment: homeBanner)
+            }
             
-            let aboutBannerURL = Bundle.main.url(forResource: aboutBanner!.sha!, withExtension: "png")!
-            let aboutBannerData = try! Data(contentsOf: aboutBannerURL)
-            bannerManager.saveImageToDisk(aboutBannerData, attachment: aboutBanner!)
-
+            if let aboutBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.aboutBannerRemoteId ?? "") {
+                guard let aboutBannerURL = Bundle.main.url(forResource: aboutBanner.sha, withExtension: "png") else { continue }
+                guard let aboutBannerData = try? Data(contentsOf: aboutBannerURL) else { continue }
+                bannerManager.saveImageToDisk(aboutBannerData, attachment: aboutBanner)
+            }
         }
     }
     

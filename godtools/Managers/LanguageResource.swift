@@ -7,21 +7,19 @@
 //
 
 import Foundation
-import Spine
 
-class LanguageResource: Resource {
-
-    var code: String?
-    var direction: String?
+class LanguageResource: GodToolsJSONResource {
     
-    override class var resourceType: ResourceType {
+    var id = ""
+    var code = ""
+    var direction = ""
+}
+
+// Mark - JSONResource protocol functions
+
+extension LanguageResource {
+
+    override func type() -> String {
         return "language"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "code" : Attribute(),
-            "direction" : Attribute()
-            ])
     }
 }

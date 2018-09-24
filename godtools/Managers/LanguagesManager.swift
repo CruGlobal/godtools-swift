@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Alamofire
 import PromiseKit
-import Spine
 import RealmSwift
 
 class LanguagesManager: GTDataManager {
@@ -33,11 +32,6 @@ class LanguagesManager: GTDataManager {
             _defaultLanguage = newValue
             UserDefaults.standard.set(( _defaultLanguage?.code ?? "en"), forKey: "kPrimaryLanguageCode")
         }
-    }
-    
-    override init() {
-        super.init()
-        serializer.registerResource(LanguageResource.self)
     }
     
     func loadDevicePreferredLanguageFromDisk() -> Language? {
@@ -112,17 +106,11 @@ class LanguagesManager: GTDataManager {
         
         return issueGETRequest()
             .then { data -> Promise<Languages> in
-                
-                var remoteLanguages: [LanguageResource]?
-                
                 DispatchQueue.global(qos: .userInitiated).async {
-                    if let remoteLngs = try? self.serializer.deserializeData(data).data as? [LanguageResource] {
-                        remoteLanguages = remoteLngs
-                    }
+                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)
+                    
                     DispatchQueue.main.async {
-                        if let remoteLanguagesForSaving = remoteLanguages {
-                            self.saveToDisk(remoteLanguagesForSaving)
-                        }
+                        self.saveToDisk(remoteLanguages)
                     }
                 }
                 
@@ -134,9 +122,10 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadInitialContentFromDisk() {
-        let languagesPath = URL(fileURLWithPath:Bundle.main.path(forResource: "languages", ofType: "json")!)
-        let languagesData = try! Data(contentsOf: languagesPath)
-        let languagesDeserialized = try! serializer.deserializeData(languagesData).data as! [LanguageResource]
+        guard let path = Bundle.main.path(forResource: "languages", ofType: "json") else { return }
+        let languagesURL = URL(fileURLWithPath:path)
+        guard let languagesData = try? Data(contentsOf: languagesURL) else { return }
+        let languagesDeserialized = JSONResourceFactory.initializeArrayFrom(data: languagesData, type: LanguageResource.self)
         
         saveToDisk(languagesDeserialized)
     }
@@ -151,20 +140,16 @@ class LanguagesManager: GTDataManager {
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
             for remoteLanguage in languages {
-                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id!) {
-                    cachedlanguage.code = remoteLanguage.code!
-                    
-                    if let direction = remoteLanguage.direction {
-                        cachedlanguage.direction = direction
-                    }
-                    
+                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
+                    cachedlanguage.code = remoteLanguage.code
+                    cachedlanguage.direction = remoteLanguage.direction
                     cachedLanguages.append(cachedlanguage)
                     continue
                 }
                 
                 let newCachedLanguage = Language()
-                newCachedLanguage.remoteId = remoteLanguage.id!
-                newCachedLanguage.code = remoteLanguage.code!
+                newCachedLanguage.remoteId = remoteLanguage.id
+                newCachedLanguage.code = remoteLanguage.code
                 cachedLanguages.append(newCachedLanguage)
                 realm.add(newCachedLanguage)
             }

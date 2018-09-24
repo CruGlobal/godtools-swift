@@ -7,19 +7,18 @@
 //
 
 import Foundation
-import Spine
 
-class AttachmentResource: Resource {
+class AttachmentResource: GodToolsJSONResource {
 
-    var sha256: String?
-    
-    override class var resourceType: ResourceType {
+    var id = ""
+    var sha256 = ""
+}
+
+// Mark - JSONResource protocol functions
+
+extension AttachmentResource {
+
+    override func type() -> String {
         return "attachment"
-    }
-    
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "sha256" : Attribute(),
-        ])
     }
 }
