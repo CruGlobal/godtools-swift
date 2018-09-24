@@ -38,7 +38,8 @@ class JSONResourceFactory {
             let resource = type.init()
             
             setAttributes(on: resource, from: jsonResource)
-            
+            setRelatedAttributes(on: resource, from: jsonResource)
+
             for (includedAttribute, includedType) in resource.includedObjectMappings() {
                 let includedResources = JSONResourceFactory.initializeIncludedResourcesFrom(json: json["included"],
                                                                                 type: includedType,
@@ -77,6 +78,28 @@ class JSONResourceFactory {
         }
     }
     
+    private static func setRelatedAttributes(on resource: JSONResource, from json: JSON) {
+        if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
+            let relatedAttributeMappings = relatedAttributeMappingsFunction()
+            
+            let jsonRelationships = jsonResource["relationships"]
+            
+            for attributeKey in relatedAttributeMappings.keys {
+                if jsonRelationships[attributeKey]["data"]["id"].rawValue is String,
+                    let attributeValue = jsonRelationships[attributeKey]["data"]["id"].string,
+                    let objectKey = relatedAttributeMappings[attributeKey] {
+                    resource.setValue(attributeValue, forKey: objectKey)
+                } else if jsonRelationships[attributeKey]["data"]["id"].rawValue is NSNumber,
+                    let attributeValue = jsonRelationships[attributeKey]["data"]["id"].number,
+                    let objectKey = relatedAttributeMappings[attributeKey] {
+                    resource.setValue(attributeValue, forKey: objectKey)
+                } else {
+                    debugPrint("unknown type for \(attributeKey)")
+                }
+            }
+        }
+    }
+    
     private static func initializeIncludedResourcesFrom(json: JSON,
                                                         type: JSONResource.Type,
                                                         parentType: JSONResource.Type,
@@ -103,26 +126,7 @@ class JSONResourceFactory {
             }
             
             setAttributes(on: resource, from: jsonResource)
-            
-            if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
-                let relatedAttributeMappings = relatedAttributeMappingsFunction()
-                
-                let jsonRelationships = jsonResource["relationships"]
-                
-                for attributeKey in relatedAttributeMappings.keys {
-                    if jsonRelationships[attributeKey]["data"]["id"].rawValue is String,
-                        let attributeValue = jsonRelationships[attributeKey]["data"]["id"].string,
-                        let objectKey = relatedAttributeMappings[attributeKey] {
-                        resource.setValue(attributeValue, forKey: objectKey)
-                    } else if jsonRelationships[attributeKey]["data"]["id"].rawValue is NSNumber,
-                        let attributeValue = jsonRelationships[attributeKey]["data"]["id"].number,
-                        let objectKey = relatedAttributeMappings[attributeKey] {
-                        resource.setValue(attributeValue, forKey: objectKey)
-                    } else {
-                        debugPrint("unknown type for \(attributeKey)")
-                    }
-                }
-            }
+            setRelatedAttributes(on: resource, from: jsonResource)
             
             resources.append(resource)
         }
