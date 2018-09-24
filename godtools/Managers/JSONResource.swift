@@ -110,18 +110,19 @@ class JSONResourceFactory {
             return resources
         }
         
+        let desiredIncludedResourceType: String = type.init().type()
+        let parentResourceType: String = parentType.init().type()
+
         for jsonResource in jsonArray {
             let resource = type.init()
             
             // since we are deserializing included objects, we need to do some additional checks:
             // 1) ensure the included object is the correct type of object we're looking for AND
             // 2) ensure that the included object is related to parent resource by matching IDs
-            let parentResourceType = parentType.init().type()
-            guard let relatedObjectParentId = jsonResource["relationships"][parentResourceType]["data"]["id"].string else { continue }
-            guard let jsonResourceType = jsonResource["type"].string else { continue }
-            let desiredType = resource.type()
+            guard let includedObjectParentId = jsonResource["relationships"][parentResourceType]["data"]["id"].string else { continue }
+            guard let actualIncludedObjectType: String = jsonResource["type"].string else { continue }
             
-            if jsonResourceType != desiredType || relatedObjectParentId != parentResourceId {
+            if actualIncludedObjectType != desiredIncludedResourceType || includedObjectParentId != parentResourceId {
                 continue
             }
             
