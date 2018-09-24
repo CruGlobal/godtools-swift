@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class DownloadedResourceJson: NSObject {
+class DownloadedResourceJson: GodToolsJSONResource {
 
     var id = ""
     var name = ""
@@ -22,14 +22,12 @@ class DownloadedResourceJson: NSObject {
     
     var latestTranslations: [TranslationResource]?
     var attachments: [AttachmentResource]?
-    
-    required override init() {
-        super.init()
-    }
 }
 
-extension DownloadedResourceJson: JSONResource {
-    func type() -> String {
+// Mark - JSONResource protocol functions
+
+extension DownloadedResourceJson {
+    override func type() -> String {
         return "resource"
     }
     
@@ -43,9 +41,5 @@ extension DownloadedResourceJson: JSONResource {
     func includedObjectMappings() -> [String : JSONResource.Type] {
         return ["latestTranslations": TranslationResource.self,
                 "attachments": AttachmentResource.self]
-    }
-    
-    override func setValue(_ value: Any?, forKey key: String) {
-        super.setValue(value, forKey: key)
     }
 }

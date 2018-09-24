@@ -9,25 +9,18 @@
 import Foundation
 import SwiftyJSON
 
-class LanguageResource: NSObject {
+class LanguageResource: GodToolsJSONResource {
     
     var id = ""
     var code = ""
     var direction = ""
-    
-    required override init() {
-        super.init()
-    }
-
 }
 
-extension LanguageResource: JSONResource {
+// Mark - JSONResource protocol functions
 
-    func type() -> String {
+extension LanguageResource {
+
+    override func type() -> String {
         return "language"
-    }
-
-    override func setValue(_ value: Any?, forKey key: String) {
-        super.setValue(value, forKey: key)
     }
 }

@@ -9,23 +9,17 @@
 import Foundation
 import SwiftyJSON
 
-class AttachmentResource: NSObject {
+class AttachmentResource: GodToolsJSONResource {
 
     var id = ""
     var sha256 = ""
-    
-    required override init() {
-        super.init()
-    }
 }
 
-extension AttachmentResource: JSONResource {
+// Mark - JSONResource protocol functions
 
-    func type() -> String {
+extension AttachmentResource {
+
+    override func type() -> String {
         return "attachment"
-    }
- 
-    override func setValue(_ value: Any?, forKey key: String) {
-        super.setValue(value, forKey: key)
     }
 }

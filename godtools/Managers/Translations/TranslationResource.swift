@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-class TranslationResource: NSObject {
+class TranslationResource: GodToolsJSONResource {
     
     var id = ""
     var version = NSNumber(integerLiteral: 0)
@@ -19,14 +19,12 @@ class TranslationResource: NSObject {
     var translatedDescription = ""
     var tagline = ""
     var languageId = ""
-    
-    required override init() {
-        super.init()
-    }
 }
 
-extension TranslationResource: JSONResource {
-    func type() -> String {
+// Mark - JSONResource protocol functions
+
+extension TranslationResource {
+    override func type() -> String {
         return "translation"
     }
     
@@ -40,9 +38,5 @@ extension TranslationResource: JSONResource {
     
     func relatedAttributeMapping() -> [String : String] {
         return ["language": "languageId"]
-    }
-    
-    override func setValue(_ value: Any?, forKey key: String) {
-        super.setValue(value, forKey: key)
     }
 }
