@@ -40,7 +40,7 @@ class JSONResourceFactory {
             setAttributes(on: resource, from: jsonResource)
             
             for (includedAttribute, includedType) in resource.includedObjectMappings() {
-                let includedResources = JSONResourceFactory.initializeArrayFrom(json: json["included"],
+                let includedResources = JSONResourceFactory.initializeIncludedResourcesFrom(json: json["included"],
                                                                                 type: includedType,
                                                                                 parentType: T.self,
                                                                                 parentResourceId: jsonResource["id"].stringValue)
@@ -77,13 +77,13 @@ class JSONResourceFactory {
         }
     }
     
-    private static func initializeArrayFrom( json: JSON,
-                                             type: JSONResource.Type,
-                                             parentType: JSONResource.Type,
-                                             parentResourceId: String) -> [JSONResource] {
+    private static func initializeIncludedResourcesFrom(json: JSON,
+                                                        type: JSONResource.Type,
+                                                        parentType: JSONResource.Type,
+                                                        parentResourceId: String) -> [JSONResource] {
         var resources = [JSONResource]()
         
-        guard let jsonArray = (json.array != nil) ? json.arrayValue : ((json["data"].array != nil) ? json["data"].arrayValue : nil) else {
+        guard let jsonArray = json.array else {
             return resources
         }
         
