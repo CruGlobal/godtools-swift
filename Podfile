@@ -16,11 +16,10 @@ target 'godtools' do
   pod 'SWXMLHash', '~> 4.1'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Spine', :git => 'https://github.com/CruGlobal/Spine.git', :tag => '0.3.1'
   pod 'CRUConfig', '~> 1.2'
   pod 'GoogleAnalytics'
   pod 'GoogleConversionTracking'
   pod 'AdobeMobileSDK', '~> 4.15'
   pod 'TheKeyOAuthSwift', '~> 0.5.5'
-
+  pod 'SwiftyJSON', '~> 4.1.0'
 end

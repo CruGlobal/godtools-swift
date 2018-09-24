@@ -4,8 +4,6 @@ PODS:
   - AdobeMobileSDK/iOS (4.15.0)
   - Alamofire (4.4.0)
   - AppAuth (0.92.0)
-  - BrightFutures (5.1.0):
-    - Result (~> 3.0)
   - Crashlytics (3.8.4):
     - Fabric (~> 1.6.3)
   - CRUConfig (1.2.0)
@@ -40,11 +38,8 @@ PODS:
   - RealmSwift (2.10.2):
     - Realm (= 2.10.2)
   - Result (3.2.1)
-  - Spine (0.3.1):
-    - BrightFutures (~> 5.0)
-    - SwiftyJSON (~> 3.1.4)
   - SSZipArchive (1.8.1)
-  - SwiftyJSON (3.1.4)
+  - SwiftyJSON (4.1.0)
   - SWXMLHash (4.1.0)
   - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
@@ -61,8 +56,8 @@ DEPENDENCIES:
   - PromiseKit (~> 4.1)
   - PromiseKit/Alamofire (~> 4.1)
   - RealmSwift (~> 2.10)
-  - Spine (from `https://github.com/CruGlobal/Spine.git`, tag `0.3.1`)
   - SSZipArchive
+  - SwiftyJSON (~> 4.1.0)
   - SWXMLHash (~> 4.1)
   - TheKeyOAuthSwift (~> 0.5.5)
 
@@ -71,7 +66,6 @@ SPEC REPOS:
     - AdobeMobileSDK
     - Alamofire
     - AppAuth
-    - BrightFutures
     - Crashlytics
     - CRUConfig
     - Fabric
@@ -89,21 +83,10 @@ SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
     - TheKeyOAuthSwift
 
-EXTERNAL SOURCES:
-  Spine:
-    :git: https://github.com/CruGlobal/Spine.git
-    :tag: 0.3.1
-
-CHECKOUT OPTIONS:
-  Spine:
-    :git: https://github.com/CruGlobal/Spine.git
-    :tag: 0.3.1
-
 SPEC CHECKSUMS:
   AdobeMobileSDK: 7fd5a52302bcbb2ad24c6fb6ef4d1f58e0d654e3
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  BrightFutures: 62aafb1a63520eda91c9286bf4be33e58e043938
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
@@ -115,12 +98,11 @@ SPEC CHECKSUMS:
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
-  Spine: 86ff8436c21b023766a82388880864fa4ecc7431
   SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
 
-PODFILE CHECKSUM: 70b0eaad612f8217826a9616e87b13ecebad8bd1
+PODFILE CHECKSUM: 6fab53d52524fb5895cbbaa1d8b21404262ecc7a
 
 COCOAPODS: 1.5.3

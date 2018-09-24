@@ -7,38 +7,38 @@
 //
 
 import Foundation
-import Spine
 
-class DownloadedResourceJson: Resource {
+class DownloadedResourceJson: GodToolsJSONResource {
+
+    var id = ""
+    var name = ""
+    var descr = ""
+    var abbreviation = ""
+    var copyrightDescription = ""
+    var bannerId = ""
+    var aboutBannerId = ""
+    var totalViews = NSNumber(integerLiteral: 0)
     
-    var name: String?
-    var descr: String?
-    var abbreviation: String?
-    var copyrightDescription: String?
-    var bannerId: String?
-    var aboutBannerId: String?
-    var totalViews: NSNumber?
-    
-    var latestTranslations: LinkedResourceCollection?
-    var translations: LinkedResourceCollection?
-    var pages: LinkedResourceCollection?
-    var attachments: LinkedResourceCollection?
-    
-    override class var resourceType: ResourceType {
+    var latestTranslations: [TranslationResource]?
+    var attachments: [AttachmentResource]?
+}
+
+// Mark - JSONResource protocol functions
+
+extension DownloadedResourceJson {
+    override func type() -> String {
         return "resource"
     }
     
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "name" : Attribute(),
-            "descr": Attribute().serializeAs("description"),
-            "abbreviation" : Attribute(),
-            "translations" : ToManyRelationship(TranslationResource.self),
-            "copyrightDescription": Attribute().serializeAs("attr-copyright"),
-            "bannerId": Attribute().serializeAs("attr-banner"),
-            "aboutBannerId": Attribute().serializeAs("attr-banner-about"),
-            "totalViews": Attribute().serializeAs("total-views"),
-            "latestTranslations" : ToManyRelationship(TranslationResource.self).serializeAs("latest-translations"),
-            "attachments": ToManyRelationship(AttachmentResource.self)])
+    func attributeMappings() -> [String : String] {
+        return ["descr": "description",
+                "bannerId": "attr-banner",
+                "aboutBannerId": "attr-banner-about",
+                "totalViews": "total-views"]
+    }
+    
+    func includedObjectMappings() -> [String : JSONResource.Type] {
+        return ["latestTranslations": TranslationResource.self,
+                "attachments": AttachmentResource.self]
     }
 }

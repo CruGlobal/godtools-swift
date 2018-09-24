@@ -7,32 +7,35 @@
 //
 
 import Foundation
-import Spine
 
-class TranslationResource: Resource {
+class TranslationResource: GodToolsJSONResource {
     
-    var version: NSNumber?
-    var isPublished: NSNumber?
-    var manifestName: String?
-    var translatedName: String?
-    var translatedDescription: String?
-    var tagline: String?
-    
-    var language: LanguageResource?
-    
-    override class var resourceType: ResourceType {
+    var id = ""
+    var version = NSNumber(integerLiteral: 0)
+    var isPublished = NSNumber(integerLiteral: 0)
+    var manifestName = ""
+    var translatedName = ""
+    var translatedDescription = ""
+    var tagline = ""
+    var languageId = ""
+}
+
+// Mark - JSONResource protocol functions
+
+extension TranslationResource {
+    override func type() -> String {
         return "translation"
     }
     
-    override class var fields: [Field] {
-        return fieldsFromDictionary([
-            "version" : Attribute(),
-            "isPublished" : BooleanAttribute().serializeAs("is-published"),
-            "manifestName" : Attribute().serializeAs("manifest-name"),
-            "translatedName": Attribute().serializeAs("translated-name"),
-            "translatedDescription": Attribute().serializeAs("translated-description"),
-            "language" : ToOneRelationship(LanguageResource.self),
-            "tagline": Attribute().serializeAs("translated-tagline")
-        ])
+    func attributeMappings() -> [String: String] {
+        return ["isPublished": "is-published",
+                "manifestName": "manifest-name",
+                "translatedName": "translated-name",
+                "translatedDescription": "translated-description",
+                "tagline": "translated-tagline"]
+    }
+    
+    func relatedObjectIdMappings() -> [String : String] {
+        return ["languageId": "language"]
     }
 }

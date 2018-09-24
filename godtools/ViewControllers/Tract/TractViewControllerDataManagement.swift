@@ -49,8 +49,9 @@ extension TractViewController {
     }
     
     func loadResourcesForLanguage() {
-        let language = resolvePrimaryLanguage()
-        let content = self.tractsManager.loadResource(resource: self.resource!, language: language!)
+        guard let language = resolvePrimaryLanguage() else { return }
+        guard let resource = resource else { return }
+        let content = self.tractsManager.loadResource(resource: resource, language: language)
         self.xmlPagesForPrimaryLang = content.pages
         self.manifestProperties = content.manifestProperties
     }
@@ -65,7 +66,8 @@ extension TractViewController {
     func loadPagesIds() {
         var counter = 0
         for page in self.xmlPages {
-            for listener in page.pageListeners()! {
+            guard let pageListeners = page.pageListeners() else { continue }
+            for listener in pageListeners {
                 TractBindings.addPageBinding(listener, counter)
             }
             
