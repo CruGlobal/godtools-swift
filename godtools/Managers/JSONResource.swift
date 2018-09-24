@@ -30,7 +30,7 @@ class JSONResourceFactory {
     private static func initializeArrayFrom<T: JSONResource>(json: JSON, type: T.Type) -> [T] {
         var resources = [T]()
         
-        guard let jsonArray = (json.array != nil) ? json.arrayValue : ((json["data"].array != nil) ? json["data"].arrayValue : nil) else {
+        guard let jsonArray = json["data"].array else {
             return resources
         }
         
