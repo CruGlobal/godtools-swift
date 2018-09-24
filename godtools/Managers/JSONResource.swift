@@ -39,12 +39,12 @@ class JSONResourceFactory {
             
             setAttributes(on: resource, from: jsonResource)
             setRelatedAttributes(on: resource, from: jsonResource)
-
+            
             for (includedAttribute, includedType) in resource.includedObjectMappings() {
                 let includedResources = JSONResourceFactory.initializeIncludedResourcesFrom(json: json["included"],
-                                                                                type: includedType,
-                                                                                parentType: T.self,
-                                                                                parentResourceId: jsonResource["id"].stringValue)
+                                                                                            type: includedType,
+                                                                                            parentType: T.self,
+                                                                                            parentResourceId: jsonResource["id"].stringValue)
                 
                 resource.setValue(includedResources, forKey: includedAttribute)
             }
@@ -82,7 +82,7 @@ class JSONResourceFactory {
         if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
             let relatedAttributeMappings = relatedAttributeMappingsFunction()
             
-            let jsonRelationships = jsonResource["relationships"]
+            let jsonRelationships = json["relationships"]
             
             for attributeKey in relatedAttributeMappings.keys {
                 if jsonRelationships[attributeKey]["data"]["id"].rawValue is String,
