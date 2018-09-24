@@ -32,7 +32,7 @@ import SwiftyJSON
      resource
      
      The format is: ["JSON API (string) type of related object": "propertyName", ...] */
-    @objc optional func relatedAttributeMapping() -> [String: String]
+    @objc optional func relatedObjectIdMappings() -> [String: String]
 
     /* This function should be implemented to return a dictonary of any "included" resource mappings. The use case
      is when the object implementing this protocol needs to also deserialize included objects and store them on a property
@@ -118,7 +118,7 @@ class JSONResourceFactory {
     }
     
     private static func setRelatedAttributes(on resource: JSONResource, from json: JSON) {
-        if let relatedAttributeMappingsFunction = resource.relatedAttributeMapping {
+        if let relatedAttributeMappingsFunction = resource.relatedObjectIdMappings {
             let relatedAttributeMappings = relatedAttributeMappingsFunction()
             
             let jsonRelationships = json["relationships"]

@@ -35,7 +35,7 @@ extension TranslationResource {
                 "tagline": "translated-tagline"]
     }
     
-    func relatedAttributeMapping() -> [String : String] {
+    func relatedObjectIdMappings() -> [String : String] {
         return ["languageId": "language"]
     }
 }
