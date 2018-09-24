@@ -11,14 +11,13 @@ import SwiftyJSON
 
 @objc protocol JSONResource {
     init()
-    func type() -> String
     
+    func type() -> String
     func setValue(_ value: Any?, forKey key: String)
     
     @objc optional func attributeMappings() -> [String: String]
     @objc optional func relatedAttributeMapping() -> [String: String]
     @objc optional func includedObjectMappings() -> [String: JSONResource.Type]
-
 }
 
 class JSONResourceFactory {
