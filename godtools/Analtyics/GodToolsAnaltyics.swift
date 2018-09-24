@@ -15,6 +15,8 @@ struct AdobeAnalyticsConstants {
         static let appName = "cru.appname"
         static let loggedInStatus = "cru.loggedinstatus"
         static let marketingCloudID = "cru.mcid"
+        static let ssoguid = "cru.ssoguid"
+        static let grMasterPersonID = "cru.grmpid"
         static let screenName = "cru.screenname"
         static let siteSection = "cru.siteSection"
         static let siteSubSection = "cru.siteSubSection"
@@ -28,6 +30,7 @@ struct AdobeAnalyticsConstants {
         static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"
         static let newProfessingBelieverAction = "cru.newprofessingbelievers"
         static let emailSignUpAction = "cru.emailsignup"
+        static let parallelLanguageToggle = "cru.parallellanguagetoggle"
     }
     
     struct Values {
@@ -50,6 +53,7 @@ struct AdobeAnalyticsConstants {
         static let theFourNewProfessingBeliever = "TheFour New Professing Believer"
         static let kgpEmailSignUp = "KGP Email Sign Up"
         static let fourLawsEmailSignUp = "FourLaws Email Sign Up"
+        static let parallelLanguageToggle = "Parallel Language Toggled"
     }
 }
 class GodToolsAnaltyics {
@@ -157,6 +161,14 @@ class GodToolsAnaltyics {
         contextData = userInfo
         contextData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         contextData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        
+        if TheKeyOAuthClient.shared.isAuthenticated(), let guid = TheKeyOAuthClient.shared.guid {
+            contextData[AdobeAnalyticsConstants.Keys.ssoguid] = guid
+        }
+        if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
+            contextData[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
+        }
+        
         contextData.removeValue(forKey: "action")
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
@@ -184,6 +196,13 @@ class GodToolsAnaltyics {
         properties[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         properties[AdobeAnalyticsConstants.Keys.loggedInStatus] = getLoggedInStatus()
         properties[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+        
+        if TheKeyOAuthClient.shared.isAuthenticated(), let guid = TheKeyOAuthClient.shared.guid {
+            properties[AdobeAnalyticsConstants.Keys.ssoguid] = guid
+        }
+        if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
+            properties[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
+        }
         
         previousScreenName = screenName
         
