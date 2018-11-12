@@ -79,7 +79,6 @@ class DownloadedResourceManager: GTDataManager {
                 guard let attachments = remoteResource.attachments else { continue }
                 
                 for remoteAttachment in attachments {
-                    guard let remoteAttachment = remoteAttachment as? AttachmentResource else { continue }
                     let cachedAttachment = save(remoteAttachment: remoteAttachment)
                     cachedAttachment.resource = cachedResource
                 }
@@ -89,10 +88,9 @@ class DownloadedResourceManager: GTDataManager {
                 }
                 
                 guard let remoteTranslations = remoteResource.latestTranslations else { continue }
-                for remoteTranslationGeneric in remoteTranslations {
-                    guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
+                for remoteTranslation in remoteTranslations {
                     let languageId = remoteTranslation.languageId
-                    let resourceId = remoteResource.id ?? "-1"
+                    let resourceId = remoteResource.id
                     let version = remoteTranslation.version.int16Value
                     
                     if translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) == false {
