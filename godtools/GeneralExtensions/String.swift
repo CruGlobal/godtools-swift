@@ -37,7 +37,7 @@ extension String {
         var values = [CGFloat]()
         
         for component in components {
-            let result = String(component.characters.filter {
+            let result = String(component.filter {
                 String($0).rangeOfCharacter(from: CharacterSet(charactersIn: ".0123456789")) != nil
             })
 

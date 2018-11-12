@@ -1,60 +1,60 @@
 PODS:
-  - AdobeMobileSDK (4.15.0):
-    - AdobeMobileSDK/iOS (= 4.15.0)
-  - AdobeMobileSDK/iOS (4.15.0)
-  - Alamofire (4.4.0)
+  - AdobeMobileSDK (4.17.0):
+    - AdobeMobileSDK/iOS (= 4.17.0)
+  - AdobeMobileSDK/iOS (4.17.0)
+  - Alamofire (4.7.3)
   - AppAuth (0.92.0)
-  - Crashlytics (3.8.4):
-    - Fabric (~> 1.6.3)
+  - Crashlytics (3.11.1):
+    - Fabric (~> 1.8.1)
   - CRUConfig (1.2.0)
-  - Fabric (1.6.11)
+  - Fabric (1.8.2)
   - GoogleAnalytics (3.17.0)
   - GoogleConversionTracking (3.4.0)
   - GTMAppAuth (0.7.0):
     - AppAuth (~> 0.92.0)
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.1.15):
-    - GTMSessionFetcher/Full (= 1.1.15)
-  - GTMSessionFetcher/Core (1.1.15)
-  - GTMSessionFetcher/Full (1.1.15):
-    - GTMSessionFetcher/Core (= 1.1.15)
-  - PromiseKit (4.1.7):
-    - PromiseKit/Foundation (= 4.1.7)
-    - PromiseKit/QuartzCore (= 4.1.7)
-    - PromiseKit/UIKit (= 4.1.7)
-  - PromiseKit/Alamofire (4.1.7):
+  - GTMSessionFetcher (1.2.0):
+    - GTMSessionFetcher/Full (= 1.2.0)
+  - GTMSessionFetcher/Core (1.2.0)
+  - GTMSessionFetcher/Full (1.2.0):
+    - GTMSessionFetcher/Core (= 1.2.0)
+  - PromiseKit (4.5.2):
+    - PromiseKit/Foundation (= 4.5.2)
+    - PromiseKit/QuartzCore (= 4.5.2)
+    - PromiseKit/UIKit (= 4.5.2)
+  - PromiseKit/Alamofire (4.5.2):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (4.1.7)
-  - PromiseKit/Foundation (4.1.7):
+  - PromiseKit/CorePromise (4.5.2)
+  - PromiseKit/Foundation (4.5.2):
     - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.1.7):
+  - PromiseKit/QuartzCore (4.5.2):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.1.7):
+  - PromiseKit/UIKit (4.5.2):
     - PromiseKit/CorePromise
   - Realm (2.10.2):
     - Realm/Headers (= 2.10.2)
   - Realm/Headers (2.10.2)
   - RealmSwift (2.10.2):
     - Realm (= 2.10.2)
-  - Result (3.2.1)
-  - SSZipArchive (1.8.1)
+  - Result (4.0.0)
+  - SSZipArchive (2.1.4)
   - SwiftyJSON (4.1.0)
-  - SWXMLHash (4.1.0)
+  - SWXMLHash (4.7.4)
   - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
     - Result
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.15)
-  - Alamofire (~> 4.4)
+  - Alamofire (~> 4)
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
   - GoogleAnalytics
   - GoogleConversionTracking
-  - PromiseKit (~> 4.1)
-  - PromiseKit/Alamofire (~> 4.1)
+  - PromiseKit (~> 4)
+  - PromiseKit/Alamofire (~> 4)
   - RealmSwift (~> 2.10)
   - SSZipArchive
   - SwiftyJSON (~> 4.1.0)
@@ -84,25 +84,25 @@ SPEC REPOS:
     - TheKeyOAuthSwift
 
 SPEC CHECKSUMS:
-  AdobeMobileSDK: 7fd5a52302bcbb2ad24c6fb6ef4d1f58e0d654e3
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  AdobeMobileSDK: f107c4ec8efff247ac5ade8933f0beef8c93a71a
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
-  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
-  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
-  PromiseKit: 779f2e41faf62d854e7593026ddbcb0bb5c5002d
+  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  PromiseKit: 743e497a5f505a470d3bbbf4ce0663c1268af0a4
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
-  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
-  SSZipArchive: 04547dfa448be5ed7ecbaf7eaf8a6e9eb9b42997
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
-  SWXMLHash: 21340633daddd9aaf5c625ae92a26ca6dcdbfe1b
+  SWXMLHash: b35739a5cfd915c3b482977aa720d6708e260a90
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
 
-PODFILE CHECKSUM: 6fab53d52524fb5895cbbaa1d8b21404262ecc7a
+PODFILE CHECKSUM: 15b69389384a36e59a0a4c618a5b50c697a4a8c6
 
 COCOAPODS: 1.5.3

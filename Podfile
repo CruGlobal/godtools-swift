@@ -8,9 +8,9 @@ use_frameworks!
 
 target 'godtools' do
 
-  pod 'Alamofire', '~> 4.4'
-  pod 'PromiseKit', '~> 4.1'
-  pod 'PromiseKit/Alamofire', '~> 4.1'
+  pod 'Alamofire', '~> 4'
+  pod 'PromiseKit', '~> 4'
+  pod 'PromiseKit/Alamofire', '~> 4'
   pod 'RealmSwift', '~> 2.10'
   pod 'SSZipArchive'
   pod 'SWXMLHash', '~> 4.1'
