@@ -13,7 +13,7 @@ protocol HomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
-
+    mutating func moveToArticle(resource: DownloadedResource)
 }
 
 protocol FindToolsDelegate: class {
@@ -215,7 +215,13 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        self.delegate?.moveToTract(resource: cell.resource!)
+        if cell.resource!.toolType == "tract" {
+            self.delegate?.moveToTract(resource: cell.resource!)
+        }
+        // article
+        else {
+            self.delegate?.moveToArticle(resource: cell.resource!)
+        }
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {

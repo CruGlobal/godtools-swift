@@ -137,6 +137,9 @@
 		4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F5732931EA69CF00082035C /* godtools.xcdatamodeld */; };
 		4F5732971EA69CF00082035C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732961EA69CF00082035C /* Assets.xcassets */; };
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
+		4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BEE1A219B2E870048E35A /* ArticleManager.swift */; };
+		4F5BEE2A219B61FB0048E35A /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BEE28219B61FA0048E35A /* ArticleViewController.swift */; };
+		4F5BEE2B219B61FB0048E35A /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5BEE29219B61FA0048E35A /* ArticleViewController.xib */; };
 		4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */; };
 		4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
 		4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */; };
@@ -418,6 +421,9 @@
 		4F5732961EA69CF00082035C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F5732991EA69CF00082035C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4F57329B1EA69CF00082035C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F5BEE1A219B2E870048E35A /* ArticleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArticleManager.swift; path = Managers/ArticleManager.swift; sourceTree = "<group>"; };
+		4F5BEE28219B61FA0048E35A /* ArticleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArticleViewController.swift; path = godtools/ViewControllers/Article/ArticleViewController.swift; sourceTree = SOURCE_ROOT; };
+		4F5BEE29219B61FA0048E35A /* ArticleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArticleViewController.xib; path = godtools/ViewControllers/Article/ArticleViewController.xib; sourceTree = SOURCE_ROOT; };
 		4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = godtools.entitlements; sourceTree = "<group>"; };
 		4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "AppDelegate+UniversalLinks.swift"; path = "AppDelegateExtensions/AppDelegate+UniversalLinks.swift"; sourceTree = "<group>"; };
 		4F6FC0EC204854AB003A87DF /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -864,6 +870,7 @@
 			children = (
 				0FB1B1F71EB0E8AE0033DAB9 /* Menu */,
 				0FB73E651EA90669000BA60D /* Platform */,
+				4F5BEE25219B61910048E35A /* Article */,
 				4F5707DF1EAE8C8B00A540C2 /* Tract */,
 				0FB73E641EA90669000BA60D /* BaseViewController.swift */,
 				1EC92E9B20AF5F6100FAD93B /* Loading */,
@@ -967,6 +974,7 @@
 				4F1C959B1EA7EA8A007B47DB /* Translations */,
 				4F1C95981EA7E742007B47DB /* DownloadedResources */,
 				4F1C95811EA7B03B007B47DB /* Languages */,
+				4F5BEE1A219B2E870048E35A /* ArticleManager.swift */,
 				4FDA96232155451C00D3BA15 /* JSONResource.swift */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
 				4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */,
@@ -1093,6 +1101,16 @@
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 			);
 			path = godtools;
+			sourceTree = "<group>";
+		};
+		4F5BEE25219B61910048E35A /* Article */ = {
+			isa = PBXGroup;
+			children = (
+				4F5BEE28219B61FA0048E35A /* ArticleViewController.swift */,
+				4F5BEE29219B61FA0048E35A /* ArticleViewController.xib */,
+			);
+			name = Article;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */ = {
@@ -1514,6 +1532,7 @@
 				4F8495A01F06E6BE0015A6BB /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.png in Resources */,
 				4F123FB21F140F1000309DAD /* kgp.zip in Resources */,
 				4F8495A11F06E6BE0015A6BB /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
+				4F5BEE2B219B61FB0048E35A /* ArticleViewController.xib in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
@@ -1794,6 +1813,7 @@
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
 				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
+				4F5BEE2A219B61FB0048E35A /* ArticleViewController.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
 				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
@@ -1804,6 +1824,7 @@
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
 				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
+				4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,

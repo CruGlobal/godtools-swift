@@ -125,6 +125,7 @@ class DownloadedResourceManager: GTDataManager {
         cachedResource.code = remoteResource.abbreviation
         cachedResource.descr = remoteResource.descr
         cachedResource.name = remoteResource.name
+        cachedResource.toolType = remoteResource.toolType
         cachedResource.copyrightDescription = remoteResource.copyrightDescription
         cachedResource.bannerRemoteId = remoteResource.bannerId
         cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId
