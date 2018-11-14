@@ -27,7 +27,7 @@ class DownloadedResourceManager: GTDataManager {
         showNetworkingIndicator()
         
         let params = ["include": "latest-translations,attachments"]
-        
+
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
                 DispatchQueue.global(qos: .userInitiated).async {

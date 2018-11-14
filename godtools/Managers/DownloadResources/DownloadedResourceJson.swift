@@ -22,6 +22,7 @@ class DownloadedResourceJson: GodToolsJSONResource {
     
     var latestTranslations: [TranslationResource]?
     var attachments: [AttachmentResource]?
+    
 }
 
 // Mark - JSONResource protocol functions

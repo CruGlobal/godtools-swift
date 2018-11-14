@@ -67,20 +67,13 @@ extension TractManager {
             manifestProperties.resources[filename!] = resource
         }
         
-        let catcnt = manifest["categories"].children.count
-        
-        if catcnt > 0 {
-            
-            for child in manifest["categories"].children {
-//                let filename = child.element?.attribute(by: "filename")?.text
-//                let src = child.element?.attribute(by: "src")?.text
-//                let resource = documentsPath.appending("/Resources/").appending(src!)
-//                manifestProperties.resources[filename!] = resource
-            }
-            
-            
-        }
+        if resource.toolType == "article" {
 
+            for child in manifest["categories"].children {
+                
+            }
+
+        }
         
         return (pages, manifestProperties)
     }
