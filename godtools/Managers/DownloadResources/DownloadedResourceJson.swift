@@ -22,7 +22,8 @@ class DownloadedResourceJson: GodToolsJSONResource {
     
     var latestTranslations: [TranslationResource]?
     var attachments: [AttachmentResource]?
-    
+    var categories: [CategoryResource]?
+
 }
 
 // Mark - JSONResource protocol functions
@@ -37,7 +38,7 @@ extension DownloadedResourceJson {
                 "bannerId": "attr-banner",
                 "aboutBannerId": "attr-banner-about",
                 "totalViews": "total-views",
-                "toolType": "resource-type"
+                "toolType": "resource-type",
         ]
     }
     

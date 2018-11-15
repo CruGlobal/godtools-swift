@@ -23,7 +23,12 @@ class ArticleViewController: BaseViewController {
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = articleManager
+            tableView.dataSource = articleManager
+        }
+    }
     
     static func create() -> ArticleViewController {
         return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
@@ -31,7 +36,7 @@ class ArticleViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        bindings()
+        loadLanguages()
         getResourceData()
 
     }
@@ -47,12 +52,28 @@ class ArticleViewController: BaseViewController {
     
     // Mark Languages handlers
     
+    private func loadLanguages() {
+        guard let resource = resource else {
+            return
+        }
+        
+        let languagesManager = LanguagesManager()
+        
+        primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
+        
+        if resource.getTranslationForLanguage(primaryLanguage!) == nil {
+            primaryLanguage = languagesManager.loadFromDisk(code: "en")
+        }
+        
+        parallelLanguage = languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
+    }
+
     func loadResourcesForLanguage() {
         guard let language = resolvePrimaryLanguage() else { return }
         guard let resource = resource else { return }
+        
         let content = self.articleManager.loadResource(resource: resource, language: language)
         self.xmlPagesForPrimaryLang = content.pages
-//        self.manifestProperties = content.manifestProperties
     }
     
     func loadResourcesForParallelLanguage() {

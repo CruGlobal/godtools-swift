@@ -23,9 +23,10 @@ class DownloadedResource: Object {
     dynamic var shouldDownload = false
     dynamic var totalViews: Int32 = 0
     dynamic var myViews: Int32 = 0
+    
     let attachments = List<Attachment>()
     let translations = List<Translation>()
-    let attributes: [String:Any] = [:]  //IO
+    let categories =  List<Category>()
     
     override static func primaryKey() -> String {
         return "remoteId"

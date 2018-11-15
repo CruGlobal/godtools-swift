@@ -15,26 +15,30 @@ import SWXMLHash
 class ArticleManager: GTDataManager {
 
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLPage], manifestProperties: ManifestProperties) {
+    var resources = DownloadedResources()
+    
+    
+    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLPage], categories: [XMLCategory], manifestProperties: ManifestProperties) {
         
         assert(resource.toolType == "article")
         
         var pages = [XMLPage]()
+        var categories = [XMLCategory]()
         let manifestProperties = ManifestProperties()
         var xmlData: XMLIndexer?
         
         guard let translation = resource.getTranslationForLanguage(language) else {
-            return (pages, manifestProperties)
+            return (pages, categories, manifestProperties)
         }
         
         guard let manifestPath = translation.manifestFilename else {
-            return (pages, manifestProperties)
+            return (pages, categories, manifestProperties)
         }
             
         xmlData = loadXMLFile(manifestPath)
         
         guard let manifest = xmlData?["manifest"] else {
-            return (pages, manifestProperties)
+            return (pages, categories, manifestProperties)
         }
         
         let xmlManager = XMLManager()
@@ -42,14 +46,12 @@ class ArticleManager: GTDataManager {
         manifestProperties.load(manifestContent.properties)
         
         // load article pages
-        let totalPages = manifest["pages"].children.count
-        var currentPage = 1
+//        let totalPages = manifest["pages"].children.count
         for child in manifest["pages"].children {
-            if child.element?.name == "page" {
+            if child.element?.name == "article:aem-import" {
+                // TODO: add downloading json/html data to "Download"
                 let page = loadPage(child)
-                page.pagination = TractPagination(totalPages: totalPages, pageNumber: currentPage)
                 pages.append(page)
-                currentPage += 1
             }
         }
         
@@ -60,34 +62,39 @@ class ArticleManager: GTDataManager {
             manifestProperties.resources[filename!] = resource
         }
         
-        
-        
+
         // load article categories
-        let catcnt = manifest["categories"].children.count
-        
-        if catcnt > 0 {
-            
-            for child in manifest["categories"].children {
-                
-            }
-            
+        for child in manifest["categories"].children {
+            let category = loadCategory(child)
+            debugPrint("\(category.label() ?? "err")")
+            categories.append(category)
             
         }
         
         
-        return (pages, manifestProperties)
+        return (pages, categories, manifestProperties)
     }
     
     func loadPage(_ child: XMLIndexer) -> XMLPage{
-        let resource = child.element?.attribute(by: "src")?.text
-        let pageXML = loadXMLFile(resource!)
-        let page = XMLPage(withXML: pageXML!)
-        return page
+
+        // TODO: for now...
+        return XMLPage(withXML: child)
+        
+//        let resource = child.element?.attribute(by: "src")?.text
+//        let pageXML = loadXMLFile(resource!)
+//        let page = XMLPage(withXML: pageXML!)
+//        return page
     }
     
+    func loadCategory(_ child: XMLIndexer) -> XMLCategory {
+        return XMLCategory(withXML: child)
+    }
+    
+    
     func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
+
         let file = documentsPath.appending("/Resources/").appending(resourcePath)
-        
+
         var xml: XMLIndexer?
         do {
             let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
@@ -97,10 +104,40 @@ class ArticleManager: GTDataManager {
             Crashlytics().recordError(error,
                                       withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
         }
-        
+
         return xml
     }
 
     
+    
+    
+    
+    
+    func loadResourceList() {
+//        var predicate: NSPredicate
+        
+//        resources = findEntities(DownloadedResource.self, matching: predicate)
+    }
+
+    
+    
+    
+    
+}
+
+
+extension ArticleManager: UITableViewDataSource, UITableViewDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+
+    
+
     
 }

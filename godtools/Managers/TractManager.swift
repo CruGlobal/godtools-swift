@@ -67,13 +67,6 @@ extension TractManager {
             manifestProperties.resources[filename!] = resource
         }
         
-        if resource.toolType == "article" {
-
-            for child in manifest["categories"].children {
-                
-            }
-
-        }
         
         return (pages, manifestProperties)
     }

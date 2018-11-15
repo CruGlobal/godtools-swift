@@ -215,12 +215,14 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        if cell.resource!.toolType == "tract" {
+        switch cell.resource!.toolType {
+        case "tract":
             self.delegate?.moveToTract(resource: cell.resource!)
-        }
-        // article
-        else {
+        case "article":
             self.delegate?.moveToArticle(resource: cell.resource!)
+        default:
+            // TODO: should not crash if unrecognized tool type; for now - ignore (maybe a friendly alert message through another delegate function?)
+            debugPrint("Unrecognized tool type \(cell.resource!.toolType)")
         }
     }
     
