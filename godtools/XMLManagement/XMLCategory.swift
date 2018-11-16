@@ -23,5 +23,8 @@ class XMLCategory: NSObject {
         return content?["label"]["content:text"].element?.text
     }
 
+    func banner() -> String? {
+        return content?.value(ofAttribute: "banner")
+    }
 
 }

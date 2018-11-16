@@ -19,9 +19,15 @@ class ArticleViewController: BaseViewController {
     var xmlPages = [XMLPage]()
     var xmlPagesForPrimaryLang = [XMLPage]()
     var xmlPagesForParallelLang = [XMLPage]()
+    var xmlCatgegoriesForPrimaryLang = [XMLCategory]()
+    var xmlCategoriesForParalelLang = [XMLCategory]()
 
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
+
+    static func create() -> ArticleViewController {
+        return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
+    }
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
@@ -30,24 +36,44 @@ class ArticleViewController: BaseViewController {
         }
     }
     
-    static func create() -> ArticleViewController {
-        return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
+    fileprivate func registerCells() {
+        self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleManager.cellIdentifier)
     }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        registerCells()
         loadLanguages()
         getResourceData()
 
     }
 
+    func defineObservers() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadView),
+                                               name: .downloadPrimaryTranslationCompleteNotification,
+                                               object: nil)
+    }
 
+
+    @objc private func reloadView() {
+        tableView.reloadData()
+    }
+
+    
+    
+    
     
     func getResourceData() {
         loadResourcesForLanguage()
         loadResourcesForParallelLanguage()
         usePrimaryLanguageResources()
     }
+    
+    
+    
     
     
     // Mark Languages handlers
