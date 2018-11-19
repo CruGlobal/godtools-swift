@@ -1448,7 +1448,7 @@
 					};
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = XF4Z5H9FX4;
+						DevelopmentTeam = DQ48D9BF2V;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
@@ -2153,7 +2153,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 241;
-				DEVELOPMENT_TEAM = XF4Z5H9FX4;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2161,7 +2161,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AdobeMobileLibrary",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.touchmoon.godtools;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "22c4a00d-3827-44ed-aecd-1a8270f32264";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2181,7 +2181,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 241;
-				DEVELOPMENT_TEAM = XF4Z5H9FX4;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2189,7 +2189,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/AdobeMobileLibrary",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.touchmoon.godtools;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "232a9127-54a3-40fd-9dc7-1b7351e04230";
 				PROVISIONING_PROFILE_SPECIFIER = "";
