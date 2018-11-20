@@ -25,6 +25,12 @@ class ArticleViewController: BaseViewController {
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
 
+    override var screenTitle: String {
+        get {
+            return resource?.name ?? super.screenTitle
+        }
+    }
+    
     static func create() -> ArticleViewController {
         return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
     }
