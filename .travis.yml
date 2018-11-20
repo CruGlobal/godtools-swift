@@ -29,4 +29,4 @@ matrix:
     install:
     - bundler install
     script:
-    - fastlane ios release submit:true auto_release:false
+    - fastlane ios release auto_release:false
