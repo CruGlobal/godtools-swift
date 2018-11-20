@@ -46,7 +46,7 @@ class TractViewController: BaseViewController {
     static let standardStatusBarInitialYPosition: CGFloat = 0.0
     
     override var prefersStatusBarHidden: Bool {
-        return !UIDevice.current.iPhoneX()
+        return !UIDevice.current.iPhoneWithNotch()
     }
     
     override func viewDidLoad() {

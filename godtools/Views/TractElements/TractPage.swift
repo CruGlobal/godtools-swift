@@ -96,7 +96,7 @@ class TractPage: BaseTractElement {
         }
         
         //TODO: remove the .fill attribute and get the scale type assigned for the page
-        let scaleType: TractImageConfig.ImageScaleType = UIDevice.current.iPhoneX() ? .fill : elementProperties.backgroundImageScaleType
+        let scaleType: TractImageConfig.ImageScaleType = UIDevice.current.iPhoneWithNotch() ? .fill : elementProperties.backgroundImageScaleType
         let imageView = buildScaledImageView(parentView: backgroundView,
                                              image: image,
                                              aligns: elementProperties.backgroundImageAlign,
