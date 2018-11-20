@@ -46,7 +46,7 @@ class TractViewController: BaseViewController {
     static let standardStatusBarInitialYPosition: CGFloat = 0.0
     
     override var prefersStatusBarHidden: Bool {
-        return !UIDevice.current.iPhoneX()
+        return !UIDevice.current.iPhoneWithNotch()
     }
     
     override func viewDidLoad() {
@@ -150,7 +150,7 @@ class TractViewController: BaseViewController {
         
         let navigationBar = navController.navigationBar
         let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = UIDevice.current.iPhoneX() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.standardStatusBarInitialYPosition
+        let yOrigin: CGFloat = UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.standardStatusBarInitialYPosition
         let width = navigationBar.frame.size.width
         let height: CGFloat = TractViewController.navigationBarHeight
         
