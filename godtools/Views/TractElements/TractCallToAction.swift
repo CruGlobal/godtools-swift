@@ -59,7 +59,7 @@ class TractCallToAction: BaseTractElement {
         
         self.elementFrame.x = 0
         if (previousElement.isKind(of: TractHero.self)) {
-            self.elementFrame.y = (UIDevice.current.iPhoneX()) ? BaseTractElement.screenHeight - (TractCallToAction.minHeight * 2) : BaseTractElement.screenHeight - TractCallToAction.minHeight
+            self.elementFrame.y = (UIDevice.current.iPhoneWithNotch()) ? BaseTractElement.screenHeight - (TractCallToAction.minHeight * 2) : BaseTractElement.screenHeight - TractCallToAction.minHeight
         } else {
             self.elementFrame.y = position
         }
