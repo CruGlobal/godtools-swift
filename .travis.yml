@@ -1,31 +1,27 @@
-matrix:
+language: objective-c
+os: osx
+osx_image: xcode9.2
+xcode_project: godtools.xcworkspace
+
+jobs:
   include:
-  - language: objective-c
+  - "Build & Test GodTools"
     if: type = pull_request
-    xcode_project: godtools.xcworkspace
-    os: osx
-    osx_image: xcode9.2
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
     - bundler install
     script:
     - fastlane ios test
-  - language: objective-c
+  - "Create TestFlight Build"
     if: branch = master and type = push
-    xcode_project: godtools.xcworkspace
-    os: osx
-    osx_image: xcode9.2
     install:
     - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
     - chmod 600 ~/.netrc
     - bundler install
     script:
     - fastlane ios beta
-  - language: objective-c
+  - "Release Build"
     if: tag =~ ^v(\d+\.){1,}\d+
-    xcode_project: godtools.xcworkspace
-    os: osx
-    osx_image: xcode9.2
     install:
     - bundler install
     script:
