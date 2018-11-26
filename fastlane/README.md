@@ -25,25 +25,30 @@ Push a new release build to the App Store
 ```
 fastlane ios beta
 ```
-Push a new (beta) release build to Crashlytics
-### ios test
-```
-fastlane ios test
-```
-Run tests
+Push a new (beta) release build to TestFlight
 ### ios cru_download_localizations
 ```
 fastlane ios cru_download_localizations
 ```
 Download latest localization files from Onesky
-### ios cru_increment_build_number
+### ios cru_commit_localization_files
 ```
-fastlane ios cru_increment_build_number
+fastlane ios cru_commit_localization_files
+```
+Commit downloaded localization files to default branch and push to remote
+### ios cru_set_build_number
+```
+fastlane ios cru_set_build_number
 ```
 
 ### ios cru_build_app
 ```
 fastlane ios cru_build_app
+```
+
+### ios cru_build_adhoc
+```
+fastlane ios cru_build_adhoc
 ```
 
 ### ios cru_fetch_certs
@@ -56,11 +61,26 @@ fastlane ios cru_fetch_certs
 fastlane ios cru_update_commit
 ```
 
+### ios cru_bump_version_number
+```
+fastlane ios cru_bump_version_number
+```
+
 ### ios cru_notify_users
 ```
 fastlane ios cru_notify_users
 ```
 
+### ios cru_push_release_to_github
+```
+fastlane ios cru_push_release_to_github
+```
+
+### ios test
+```
+fastlane ios test
+```
+Run tests
 
 ----
 
