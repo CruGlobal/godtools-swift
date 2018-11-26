@@ -2,6 +2,11 @@ language: objective-c
 os: osx
 osx_image: xcode9.2
 xcode_project: godtools.xcworkspace
+branches:
+  only:
+    - develop
+    - master
+    - /^v(\d+\.){1,}\d+/
 
 before_install:
   - echo -e "machine github.com\n login $CI_USER_TOKEN" >> ~/.netrc
