@@ -26,3 +26,6 @@ jobs:
     - bundler install
     script:
     - fastlane ios release auto_release:false
+
+notifications:
+  email: false
