@@ -15,17 +15,17 @@ install: bundler install
 
 jobs:
   include:
-  - "Build & Test GodTools"
+  - name: "Build & Test GodTools"
     if: type = pull_request
 
     script: fastlane ios test
 
-  - "Create TestFlight Build"
+  - name: "Create TestFlight Build"
     if: branch = master and type = push
 
     script: fastlane ios beta
 
-  - "Release Build"
+  - name: "Release Build"
     if: tag =~ ^v(\d+\.){1,}\d+
 
     before_install: skip
