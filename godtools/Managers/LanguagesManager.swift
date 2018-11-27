@@ -150,6 +150,7 @@ class LanguagesManager: GTDataManager {
                 let newCachedLanguage = Language()
                 newCachedLanguage.remoteId = remoteLanguage.id
                 newCachedLanguage.code = remoteLanguage.code
+                newCachedLanguage.direction = remoteLanguage.direction  // IO: small bugfix
                 cachedLanguages.append(newCachedLanguage)
                 realm.add(newCachedLanguage)
             }

@@ -15,16 +15,16 @@ import SWXMLHash
 class ArticleManager: GTDataManager {
 
     
-    var categories: [XMLCategory]?
-    var pages: [XMLPage]?
+    var categories: [XMLArticleCategory]?
+    var pages: [XMLArticlePage]?
     var manifestProperties: ManifestProperties?
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLPage], categories: [XMLCategory], manifestProperties: ManifestProperties) {
+    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLArticlePage], categories: [XMLArticleCategory], manifestProperties: ManifestProperties) {
         
         assert(resource.toolType == "article")
         
-        pages = [XMLPage]()
-        categories = [XMLCategory]()
+        pages = [XMLArticlePage]()
+        categories = [XMLArticleCategory]()
         manifestProperties = ManifestProperties()
         var xmlData: XMLIndexer?
         
@@ -75,10 +75,10 @@ class ArticleManager: GTDataManager {
         return (pages!, categories!, manifestProperties!)
     }
     
-    func loadPage(_ child: XMLIndexer) -> XMLPage{
+    func loadPage(_ child: XMLIndexer) -> XMLArticlePage{
 
         // TODO: for now...
-        return XMLPage(withXML: child)
+        return XMLArticlePage(withXML: child)
 
 //        let resource = child.element?.attribute(by: "src")?.text
 //        let pageXML = loadXMLFile(resource!)
@@ -86,11 +86,11 @@ class ArticleManager: GTDataManager {
 //        return page
     }
 
-    func loadCategory(_ child: XMLIndexer) -> XMLCategory {
+    func loadCategory(_ child: XMLIndexer) -> XMLArticleCategory {
         
+        // load aem-tagshi
         
-        
-        return XMLCategory(withXML: child)
+        return XMLArticleCategory(withXML: child)
     }
 
 
@@ -112,7 +112,7 @@ class ArticleManager: GTDataManager {
     }
 
     
-    func getImage(forCategory: XMLCategory) -> UIImage? {
+    func getImage(forCategory: XMLArticleCategory) -> UIImage? {
         
         guard let imagePath = manifestProperties?.getResourceForFile(filename: forCategory.banner()!) else {
             return nil
@@ -128,7 +128,7 @@ class ArticleManager: GTDataManager {
 
         return image
     }
-    func getTitle(forCategory: XMLCategory) -> String? {
+    func getTitle(forCategory: XMLArticleCategory) -> String? {
         return forCategory.label()
     }
 }

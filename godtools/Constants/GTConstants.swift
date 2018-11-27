@@ -10,6 +10,8 @@ import Foundation
 
 struct GTConstants {
     
+    private init() {}
+    
     static let kDownloadProgressProgressKey = "org.cru.godtools.downloadProgressProgressKey"
     static let kDownloadProgressResourceIdKey = "org.cru.godtools.downloadProgressResourceIdKey"
     static let kDownloadBannerResourceIdKey = "org.cru.godtools.downloadBannerResourceIdKey"

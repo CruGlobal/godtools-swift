@@ -16,11 +16,11 @@ class ArticleViewController: BaseViewController {
     var primaryLanguage: Language?
     var parallelLanguage: Language?
     var selectedLanguage: Language?
-    var xmlPages = [XMLPage]()
-    var xmlPagesForPrimaryLang = [XMLPage]()
-    var xmlPagesForParallelLang = [XMLPage]()
-    var xmlCatgegoriesForPrimaryLang = [XMLCategory]()
-    var xmlCategoriesForParalelLang = [XMLCategory]()
+    var xmlPages = [XMLArticlePage]()
+    var xmlPagesForPrimaryLang = [XMLArticlePage]()
+    var xmlPagesForParallelLang = [XMLArticlePage]()
+    var xmlCatgegoriesForPrimaryLang = [XMLArticleCategory]()
+    var xmlCategoriesForParalelLang = [XMLArticleCategory]()
 
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?

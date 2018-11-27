@@ -45,7 +45,7 @@ class ToolsManager: GTDataManager {
         } else {
             predicate = NSPredicate(format: "shouldDownload = false")
         }
-        
+
         resources = findEntities(DownloadedResource.self, matching: predicate)
     }
 }

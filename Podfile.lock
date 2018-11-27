@@ -8,16 +8,17 @@ PODS:
     - Fabric (~> 1.8.1)
   - CRUConfig (1.2.0)
   - Fabric (1.8.2)
+  - Fuzi (2.1.0)
   - GoogleAnalytics (3.17.0)
   - GoogleConversionTracking (3.4.0)
   - GTMAppAuth (0.7.0):
     - AppAuth (~> 0.92.0)
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.2.0):
-    - GTMSessionFetcher/Full (= 1.2.0)
-  - GTMSessionFetcher/Core (1.2.0)
-  - GTMSessionFetcher/Full (1.2.0):
-    - GTMSessionFetcher/Core (= 1.2.0)
+  - GTMSessionFetcher (1.2.1):
+    - GTMSessionFetcher/Full (= 1.2.1)
+  - GTMSessionFetcher/Core (1.2.1)
+  - GTMSessionFetcher/Full (1.2.1):
+    - GTMSessionFetcher/Core (= 1.2.1)
   - PromiseKit (4.5.2):
     - PromiseKit/Foundation (= 4.5.2)
     - PromiseKit/QuartzCore (= 4.5.2)
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - Crashlytics
   - CRUConfig (~> 1.2)
   - Fabric
+  - Fuzi
   - GoogleAnalytics
   - GoogleConversionTracking
   - PromiseKit (~> 4)
@@ -69,6 +71,7 @@ SPEC REPOS:
     - Crashlytics
     - CRUConfig
     - Fabric
+    - Fuzi
     - GoogleAnalytics
     - GoogleConversionTracking
     - GTMAppAuth
@@ -90,10 +93,11 @@ SPEC CHECKSUMS:
   Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Fuzi: 8c57344debff6d3a0c76a9e0f549152defdaaa48
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
-  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   PromiseKit: 743e497a5f505a470d3bbbf4ce0663c1268af0a4
   Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
   RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
@@ -103,6 +107,6 @@ SPEC CHECKSUMS:
   SWXMLHash: b35739a5cfd915c3b482977aa720d6708e260a90
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
 
-PODFILE CHECKSUM: 15b69389384a36e59a0a4c618a5b50c697a4a8c6
+PODFILE CHECKSUM: 4b80d96126a376f8d4772b5f36a7ed5993ab6668
 
 COCOAPODS: 1.5.3
