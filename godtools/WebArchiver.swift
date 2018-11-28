@@ -20,6 +20,7 @@ public class WebArchiver {
         case unsupportedEncoding
         case invalidReferenceUrl(string: String)
         
+        // TODO: Localization
         var errorDescription: String? {
             switch self {
             case .unsupportedUrl: return "Unsupported URL"

@@ -7,8 +7,10 @@
 //
 
 
+import Alamofire
 import Crashlytics
 import Foundation
+import PromiseKit
 import SWXMLHash
 
 
@@ -48,6 +50,9 @@ class ArticleManager: GTDataManager {
         
         
         // load article pages
+        
+        let page = manifest["pages"]
+        
         for child in manifest["pages"].children {
             if child.element?.name == "article:aem-import" {
                 // TODO: add downloading json/html data to "Download"
@@ -74,6 +79,33 @@ class ArticleManager: GTDataManager {
         
         return (pages!, categories!, manifestProperties!)
     }
+    
+    func downloadManifest() {
+        assert(manifestProperties != nil)
+        
+        guard let mProp = manifestProperties else {
+            return
+        }
+        guard let pgs = pages else {
+            return
+        }
+        
+        for page in pgs {
+            
+            
+            
+        }
+        
+        
+    }
+    
+    func downloadJSON(page: XMLArticlePage)  {
+        
+        let url = page.aemSources()
+//        Alamofire.request().the
+
+    }
+    
     
     func loadPage(_ child: XMLIndexer) -> XMLArticlePage{
 
