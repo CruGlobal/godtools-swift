@@ -11,37 +11,49 @@ import Alamofire
 import Crashlytics
 import Foundation
 import PromiseKit
+import SwiftyJSON
 import SWXMLHash
 
 
 class ArticleManager: GTDataManager {
 
     
+    enum ArticleError: LocalizedError {
+        case requestMetadataFailed(resourceURLString: String, error: Error)
+        case corruptMetadataJSON
+        
+        
+        var errorDescription: String? {
+            switch self {
+            case .requestMetadataFailed(let string, _): return "Metadata downloading failed: " + string
+            case .corruptMetadataJSON: return "Invalid JSON metadata."
+            }
+        }
+    }
+
+    
     var categories: [XMLArticleCategory]?
-    var pages: [XMLArticlePage]?
+    var pages: XMLArticlePages?
     var manifestProperties: ManifestProperties?
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLArticlePage], categories: [XMLArticleCategory], manifestProperties: ManifestProperties) {
+    func loadResource(resource: DownloadedResource, language: Language) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
         
         assert(resource.toolType == "article")
         
-        pages = [XMLArticlePage]()
         categories = [XMLArticleCategory]()
         manifestProperties = ManifestProperties()
         var xmlData: XMLIndexer?
         
-        guard let translation = resource.getTranslationForLanguage(language) else {
-            return (pages!, categories!, manifestProperties!)
+        guard let translation = resource.getTranslationForLanguage(language),
+              let manifestPath = translation.manifestFilename
+        else {
+            return (pages, categories, manifestProperties)
         }
         
-        guard let manifestPath = translation.manifestFilename else {
-            return (pages!, categories!, manifestProperties!)
-        }
-            
         xmlData = loadXMLFile(manifestPath)
         
         guard let manifest = xmlData?["manifest"] else {
-            return (pages!, categories!, manifestProperties!)
+            return (pages, categories, manifestProperties)
         }
         
         let xmlManager = XMLManager()
@@ -51,15 +63,21 @@ class ArticleManager: GTDataManager {
         
         // load article pages
         
-        let page = manifest["pages"]
         
-        for child in manifest["pages"].children {
-            if child.element?.name == "article:aem-import" {
-                // TODO: add downloading json/html data to "Download"
-                let page = loadPage(child)
-                pages!.append(page)
-            }
+        pages = XMLArticlePages(withXML: manifest["pages"])
+        if pages == nil {
+            return (pages, categories, manifestProperties)
         }
+        
+        
+        
+//        for child in manifest["pages"].children {
+//            if child.element?.name == "article:aem-import" {
+//                // TODO: add downloading json/html data to "Download"
+//                let page = loadPage(child)
+//                pages!.append(page)
+//            }
+//        }
         
         // load article resources (for images)
         for child in manifest["resources"].children {
@@ -77,6 +95,8 @@ class ArticleManager: GTDataManager {
             
         }
         
+        downloadManifest()
+        
         return (pages!, categories!, manifestProperties!)
     }
     
@@ -86,31 +106,87 @@ class ArticleManager: GTDataManager {
         guard let mProp = manifestProperties else {
             return
         }
-        guard let pgs = pages else {
+        guard let pages = pages else {
             return
         }
         
-        for page in pgs {
+        for src in pages.aemSources() {
+            
+            guard let src = src, let url = URL(string: src)?.appendingPathComponent(".999.json") else {
+                continue
+            }
+            
+            firstly {
+                URLSession.shared.dataTask(.promise, with:url)
+            }.compactMap { data, _ in
+                    
+                return data
+            }
             
             
+//            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//                guard let dataResponse = data, error == nil else {
+//                    print(error?.localizedDescription ?? "Response Error")
+//                    return
+//                }
+//                do {
+////                    let manifestJSON = JSONResourceFactory.initializeArrayFrom(data: data, type: JSONResource)
+//                    let manifestJSON = try JSONSerialization.jsonObject(with: dataResponse, options: [])
+//                    print(manifestJSON) //Response result
+//
+////                    self.saveToDisk(manifestJSON)
+//
+//                } catch let parsingError {
+//                    print("Error", parsingError)
+//                }
+//            }
+//            task.resume()
             
+            
+            Alamofire.request(url).responseData().then { data in
+
+                guard let json = try? JSON(data: data) else { throw ArticleError.corruptMetadataJSON }
+
+                DispatchQueue.global(qos: .userInitiated).async {
+                    
+                    
+                    DispatchQueue.main.async {
+
+                        self.saveToDisk(json)
+
+                    }
+                }
+
+//                return Promise(value:self.loadFromDisk())
+            }.catch { (error) in
+                
+            }
         }
         
         
     }
     
-    func downloadJSON(page: XMLArticlePage)  {
+    private func saveToDisk(_ resource:JSON) {
+
+//        func saveToDisk(_ jsonManifest: JSONResource) {
         
-        let url = page.aemSources()
+        // save json manifest to disk
+        debugPrint(resource)
+    }
+    
+    func downloadJSON(page: XMLArticlePages)  {
+        
+        let base = page.aemSources()
 //        Alamofire.request().the
 
     }
     
     
-    func loadPage(_ child: XMLIndexer) -> XMLArticlePage{
+    func loadPage(_ child: XMLIndexer) -> XMLArticlePages{
 
+        
         // TODO: for now...
-        return XMLArticlePage(withXML: child)
+        return XMLArticlePages(withXML: child)
 
 //        let resource = child.element?.attribute(by: "src")?.text
 //        let pageXML = loadXMLFile(resource!)
@@ -163,6 +239,13 @@ class ArticleManager: GTDataManager {
     func getTitle(forCategory: XMLArticleCategory) -> String? {
         return forCategory.label()
     }
+    
+    private func buildURL(aemSource: String) -> URL? {
+        return Config.shared().baseUrl?
+            .appendingPathComponent(aemSource)
+    }
+    
+    
 }
 
 

@@ -11,7 +11,7 @@ import Foundation
 import SWXMLHash
 
 
-class XMLArticlePage: NSObject {
+class XMLArticlePages: NSObject {
 
     var content: XMLIndexer?
     

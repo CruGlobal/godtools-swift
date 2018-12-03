@@ -16,9 +16,9 @@ class ArticleViewController: BaseViewController {
     var primaryLanguage: Language?
     var parallelLanguage: Language?
     var selectedLanguage: Language?
-    var xmlPages = [XMLArticlePage]()
-    var xmlPagesForPrimaryLang = [XMLArticlePage]()
-    var xmlPagesForParallelLang = [XMLArticlePage]()
+    var xmlPages: XMLArticlePages?
+    var xmlPagesForPrimaryLang: XMLArticlePages?
+    var xmlPagesForParallelLang: XMLArticlePages?
     var xmlCatgegoriesForPrimaryLang = [XMLArticleCategory]()
     var xmlCategoriesForParalelLang = [XMLArticleCategory]()
 
