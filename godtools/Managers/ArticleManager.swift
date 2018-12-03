@@ -7,7 +7,6 @@
 //
 
 
-import Alamofire
 import Crashlytics
 import Foundation
 import PromiseKit
@@ -20,13 +19,16 @@ class ArticleManager: GTDataManager {
     
     enum ArticleError: LocalizedError {
         case requestMetadataFailed(resourceURLString: String, error: Error)
-        case corruptMetadataJSON
-        
+        case invalidMetadataJSON
+        case invalidURL
+//        case invalidResponse
         
         var errorDescription: String? {
             switch self {
             case .requestMetadataFailed(let string, _): return "Metadata downloading failed: " + string
-            case .corruptMetadataJSON: return "Invalid JSON metadata."
+            case .invalidMetadataJSON: return "Invalid JSON metadata."
+            case .invalidURL: return "Invalid URL"
+//            case .invalidResponse: "iInvalid response"
             }
         }
     }
@@ -69,16 +71,6 @@ class ArticleManager: GTDataManager {
             return (pages, categories, manifestProperties)
         }
         
-        
-        
-//        for child in manifest["pages"].children {
-//            if child.element?.name == "article:aem-import" {
-//                // TODO: add downloading json/html data to "Download"
-//                let page = loadPage(child)
-//                pages!.append(page)
-//            }
-//        }
-        
         // load article resources (for images)
         for child in manifest["resources"].children {
             let filename = child.element?.attribute(by: "filename")?.text
@@ -95,91 +87,64 @@ class ArticleManager: GTDataManager {
             
         }
         
-        downloadManifest()
+        downloadManifest(uuid: "TODO")
         
         return (pages!, categories!, manifestProperties!)
     }
     
-    func downloadManifest() {
+    func downloadManifest(uuid: String) {
         assert(manifestProperties != nil)
         
-        guard let mProp = manifestProperties else {
-            return
-        }
+//        guard let mProp = manifestProperties else {
+//            return
+//        }
         guard let pages = pages else {
             return
         }
         
         for src in pages.aemSources() {
             
-            guard let src = src, let url = URL(string: src)?.appendingPathComponent(".999.json") else {
+            guard let src = src, let url = URL(string: src) else {
                 continue
             }
             
             firstly {
-                URLSession.shared.dataTask(.promise, with:url)
-            }.compactMap { data, _ in
-                    
-                return data
-            }
-            
-            
-//            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-//                guard let dataResponse = data, error == nil else {
-//                    print(error?.localizedDescription ?? "Response Error")
-//                    return
-//                }
-//                do {
-////                    let manifestJSON = JSONResourceFactory.initializeArrayFrom(data: data, type: JSONResource)
-//                    let manifestJSON = try JSONSerialization.jsonObject(with: dataResponse, options: [])
-//                    print(manifestJSON) //Response result
-//
-////                    self.saveToDisk(manifestJSON)
-//
-//                } catch let parsingError {
-//                    print("Error", parsingError)
-//                }
-//            }
-//            task.resume()
-            
-            
-            Alamofire.request(url).responseData().then { data in
-
-                guard let json = try? JSON(data: data) else { throw ArticleError.corruptMetadataJSON }
-
-                DispatchQueue.global(qos: .userInitiated).async {
-                    
-                    
-                    DispatchQueue.main.async {
-
-                        self.saveToDisk(json)
-
-                    }
-                }
-
-//                return Promise(value:self.loadFromDisk())
+                self.download(baseURL: url, pathComponent: ".999.json")
+            }.then { jsonData in
+//                let json = JSON(jsonData)
+                self.saveToDisk(jsonData)
+            }.then { _ in
+                self.download(baseURL: url, pathComponent: "master.html")
+            }.then { data in
+                self.saveToDisk(data)
             }.catch { (error) in
-                
+                debugPrint("Error downloading url: \(src)")
             }
+            
+            
         }
+    }
+
+    func download(baseURL: URL?, pathComponent: String) -> Promise<Data> {
         
+        guard let url = baseURL?.appendingPathComponent(pathComponent) else { return Promise(error: ArticleError.invalidURL) }
+        let request = URLRequest(url: url)
+        let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
         
+        return dataTask.asDataAndResponse().then { (d, response) -> Promise<Data> in
+            
+//            let json = JSON(d)
+            return Promise(value: d)
+        }
     }
     
-    private func saveToDisk(_ resource:JSON) {
 
-//        func saveToDisk(_ jsonManifest: JSONResource) {
-        
-        // save json manifest to disk
-        debugPrint(resource)
+   
+    func saveToDisk(_ data:Data) -> Promise<Void> {
+        return Promise<Void>()
     }
-    
-    func downloadJSON(page: XMLArticlePages)  {
-        
-        let base = page.aemSources()
-//        Alamofire.request().the
 
-    }
+
     
     
     func loadPage(_ child: XMLIndexer) -> XMLArticlePages{
@@ -240,7 +205,7 @@ class ArticleManager: GTDataManager {
         return forCategory.label()
     }
     
-    private func buildURL(aemSource: String) -> URL? {
+    func buildURL(aemSource: String) -> URL? {
         return Config.shared().baseUrl?
             .appendingPathComponent(aemSource)
     }

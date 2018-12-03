@@ -47,7 +47,7 @@ PODS:
     - Result
 
 DEPENDENCIES:
-  - AdobeMobileSDK (~> 4.15)
+  - AdobeMobileSDK (~> 4)
   - Alamofire (~> 4)
   - Crashlytics
   - CRUConfig (~> 1.2)
@@ -107,6 +107,6 @@ SPEC CHECKSUMS:
   SWXMLHash: b35739a5cfd915c3b482977aa720d6708e260a90
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
 
-PODFILE CHECKSUM: fa43782765a7e1ef3bddbb23a983c9d934e6480f
+PODFILE CHECKSUM: 9e826cf484f926c981c9d1d4d58819448c00c591
 
 COCOAPODS: 1.5.3

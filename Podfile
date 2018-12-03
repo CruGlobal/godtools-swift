@@ -20,7 +20,7 @@ target 'godtools' do
   pod 'CRUConfig', '~> 1.2'
   pod 'GoogleAnalytics'
   pod 'GoogleConversionTracking'
-  pod 'AdobeMobileSDK', '~> 4.15'
+  pod 'AdobeMobileSDK', '~> 4'
   pod 'TheKeyOAuthSwift', '~> 0.5.5'
   pod 'SwiftyJSON', '~> 4.1.0'
 end
