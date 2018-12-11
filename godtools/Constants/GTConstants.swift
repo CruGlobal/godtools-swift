@@ -26,4 +26,6 @@ struct GTConstants {
     
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
     static let kUserEmailIsRegistered = "org.cru.godtools.userEmailIsRegistered"
+
+    static let kArticleSupportedTemplates: Set<String> = [  "/conf/cru/settings/wcm/templates/experience-fragment-cru-web-variation" ]
 }

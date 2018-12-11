@@ -33,17 +33,17 @@ class XMLArticleCategory: NSObject {
         return content?.value(ofAttribute: "banner")
     }
     
-    func tagIDs() -> [String?] {    // ["faith-topics:spiritual-growth/prayer", "faith-topics:spiritual-growth/bible", ...]
+    func aemTagIDs() -> Set<String> {    // ["faith-topics:spiritual-growth/prayer", "faith-topics:spiritual-growth/bible", ...]
 
         let articleElements = content?.filterChildren({ (elem, _) -> Bool in
             return elem.name == "article:aem-tag"
         })
         
-        let tags = articleElements?.children.map{ (elem) -> String? in
-            elem.element?.attribute(by: "id")?.text
+        let tags = articleElements?.children.map{ (elem) -> String in
+            elem.element?.attribute(by: "id")?.text ?? ""
         }
         
-        return tags ?? [String]()
+        return Set(tags!) ?? Set<String>()
     }
     
     

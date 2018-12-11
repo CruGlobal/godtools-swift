@@ -42,6 +42,14 @@ public class WebArchiver {
         var resourceErrors: [Error]
         var pendingTaskCount: Int
     }
+
+    static var workQueue: DispatchQueue? {
+        didSet {
+            workQueue = oldValue ?? DispatchQueue(label: "WebArchiverWorkQueue")
+        }
+    }
+    
+    static let wq = DispatchQueue(label: "WebArchiverWorkQueue")
     
     static func archive(url: URL, includeJavascript: Bool = true, completion: @escaping (ArchivingResult) -> ()) {
         
@@ -50,11 +58,9 @@ public class WebArchiver {
             return
         }
         
-        let workQueue = DispatchQueue(label: "WebArchiverWorkQueue")
-        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
-            workQueue.async {
+            WebArchiver.wq.async {
             
                 do {
                     let mainResource = try self.resourceFromResponse(url: url.absoluteString, data, response, error)
@@ -69,18 +75,20 @@ public class WebArchiver {
                         
                         let task = URLSession.shared.dataTask(with: resourceUrl) { (data, response, error) in
                             
-                            do {
-                                let resource = try self.resourceFromResponse(url: reference, data, response, error)
-                                state.archive.addSubresource(resource)
-                            } catch {
-                                state.resourceErrors.append(error)
-                            }
-                            state.pendingTaskCount = state.pendingTaskCount - 1
-                            
-                            if state.pendingTaskCount == 0  {
-                                let result = self.finish(with: state)
-                                DispatchQueue.main.async {
-                                    completion(result)
+                            WebArchiver.wq.async {
+                                do {
+                                    let resource = try self.resourceFromResponse(url: reference, data, response, error)
+                                    state.archive.addSubresource(resource)
+                                } catch {
+                                    state.resourceErrors.append(error)
+                                }
+                                state.pendingTaskCount = state.pendingTaskCount - 1
+                                
+                                if state.pendingTaskCount == 0  {
+                                    let result = self.finish(with: state)
+                                    DispatchQueue.main.async {
+                                        completion(result)
+                                    }
                                 }
                             }
                             
