@@ -33,13 +33,14 @@ class ArticleManager: GTDataManager {
         }
     }
 
-    
-    var categories: [XMLArticleCategory]?
     var aemTags = Set<String>()    // set of all aem-tags in this manifest
     var articlesDataForTag = Dictionary<String, Set<ArticleData>>()
+
+    var categories: [XMLArticleCategory]?
     var pages: XMLArticlePages?
     var manifestProperties: ManifestProperties?
     var articleManifestID: String?
+    var articleManifestFilename: String?
     
     func loadResource(resource: DownloadedResource, language: Language) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
         
@@ -58,6 +59,7 @@ class ArticleManager: GTDataManager {
         var components = manifestPath.components(separatedBy: ".")
         components.removeLast()
         articleManifestID = components.joined(separator: ".")
+        articleManifestFilename = translation.manifestFilename
         
         xmlData = loadXMLFile(manifestPath)
         
@@ -105,118 +107,108 @@ class ArticleManager: GTDataManager {
     func processManifest(uuid: String?) {
         assert(manifestProperties != nil)
         
-        guard let pages = pages else {
-            return
-        }
-        
-        // get all metadata from aem-sources
-        
-        var articleManifestMetadatas: [JSON] = [JSON]()
-
-        // array of promises
-        var promises = [Promise<Void>]()
-        
-        for src in pages.aemSources() {
-            
-            guard let src = src,
-                let url = URL(string: src) else {
-                continue
-            }
-
-            let promise = firstly {
-                
-                self.download(baseURL: url, pathComponent: ".999.json")
-            
-            }.then { jsonData -> JSON in
-                
-                // collect all (downloaded) metadata into one array
-                let json = JSON(jsonData)
-                articleManifestMetadatas.append(json)
-                
-                return json
-            }.then { json -> Void in
-                
-                // process each metadata
-                let metadata = ArticleManifestMetadata(json: json, url:url)
-                if let artData = metadata.processMetadata(tags:self.aemTags) {
-                    // merge this data with
-                    for (key, value) in artData {
-                        if self.articlesDataForTag[key] == nil {
-                            self.articlesDataForTag[key] = Set()
-                        }
-                        self.articlesDataForTag[key]?.formUnion(value)
-                        
-                    }
-                }
-            }
-        
-            promises.append(promise)
+        dnloadWholeManifestData(manifestFilename: articleManifestFilename).then {
+            debugPrint("Done. Should reload tableView here.")
         }
 
-        
-        when(fulfilled: promises).then { _ -> Promise<Void> in
-        
-            // create cache folder(s)
-            let baseFolder = URL(fileURLWithPath: self.documentsPath.appending("/WebCache/").appending(uuid!))
-            
-            try FileManager.default.createDirectory(at: baseFolder, withIntermediateDirectories: true, attributes: nil)
-            
-            for (key, value) in self.articlesDataForTag {
-                debugPrint("Key: \(key)")
-                
-                var foldCnt: Int = 0
-                let folder = baseFolder.appendingPathComponent(key)
-                for artData in value {
-                    
-                    WebArchiver.archive(url: artData.url!, completion: { [foldCnt] result -> Void in
-                        do {
-                            switch result {
-                            case .success(let plistData):
-                                let f = folder.appendingPathComponent(String(format: "%02d", foldCnt))
-                                try FileManager.default.createDirectory(at: f, withIntermediateDirectories: true, attributes: nil)
-                                
-                                let data = try JSONEncoder().encode(artData)
-                                // write properties and webcache
-                                debugPrint(f.absoluteString)
-                                try data.write(to: f.appendingPathComponent("properties"))
-                                try plistData.write(to: f.appendingPathComponent("page.webarchive"))
-                                
-                            case .failure(let error):
-                                throw ArticleError.downloadingWebPage(pageURLString: (artData.url?.absoluteString)!, error: error)
-                            }
-                        }
-                        catch {
-                            // TODO: handle...
-                        }
-                        
-                    })
-                    
-                    foldCnt += 1
-                }
-            }
-
-            
-            return Promise<Void>()
-        }.catch { (err) in
-            debugPrint("Error downloading url:")
-        }
+//        guard let pages = pages else {
+//            return
+//        }
+//
+//        // get all metadata from aem-sources
+//
+//        var articleManifestMetadatas: [JSON] = [JSON]()
+//
+//        // array of promises
+//        var promises = [Promise<Void>]()
+//
+//        for src in pages.aemSources() {
+//
+//            guard let src = src,
+//                let url = URL(string: src) else {
+//                continue
+//            }
+//
+//            let promise = firstly {
+//
+//                self.downloadMetadata(url: url)
+//
+//            }.then { jsonData -> JSON in
+//
+//                // collect all (downloaded) metadata into one array
+//                let json = JSON(jsonData)
+//                articleManifestMetadatas.append(json)
+//
+//                return json
+//            }.then { json -> Void in
+//
+//                // process each metadata
+//                let metadata = ArticleManifestMetadata(json: json, url:url)
+//                if let artData = metadata.processMetadata(tags:self.aemTags) {
+//                    // merge this data with
+//                    for (key, value) in artData {
+//                        if self.articlesDataForTag[key] == nil {
+//                            self.articlesDataForTag[key] = Set()
+//                        }
+//                        self.articlesDataForTag[key]?.formUnion(value)
+//
+//                    }
+//                }
+//            }
+//
+//            promises.append(promise)
+//        }
+//
+//
+//        when(fulfilled: promises).then { _ -> Promise<Void> in
+//
+//            // create cache folder(s)
+//            let baseFolder = URL(fileURLWithPath: self.documentsPath.appending("/WebCache/").appending(uuid!))
+//
+//            try FileManager.default.createDirectory(at: baseFolder, withIntermediateDirectories: true, attributes: nil)
+//
+//            for (key, value) in self.articlesDataForTag {
+//                debugPrint("Key: \(key)")
+//
+//                var foldCnt: Int = 0
+//                let folder = baseFolder.appendingPathComponent(key)
+//                for artData in value {
+//
+//                    WebArchiver.archive(url: artData.url!, completion: { [foldCnt] result -> Void in
+//                        do {
+//                            switch result {
+//                            case .success(let plistData):
+//                                let f = folder.appendingPathComponent(String(format: "%02d", foldCnt))
+//                                try FileManager.default.createDirectory(at: f, withIntermediateDirectories: true, attributes: nil)
+//
+//                                let data = try JSONEncoder().encode(artData)
+//                                // write properties and webcache
+//                                debugPrint(f.absoluteString)
+//                                try data.write(to: f.appendingPathComponent("properties"))
+//                                try plistData.write(to: f.appendingPathComponent("page.webarchive"))
+//
+//                            case .failure(let error):
+//                                throw ArticleError.downloadingWebPage(pageURLString: (artData.url?.absoluteString)!, error: error)
+//                            }
+//                        }
+//                        catch {
+//                            // TODO: handle with crashlytics...
+//                        }
+//
+//                    })
+//
+//                    foldCnt += 1
+//                }
+//            }
+//
+//
+//            return Promise<Void>()
+//        }.catch { (err) in
+//            debugPrint("Error downloading url:")
+//        }
         
     }
 
-    func download(baseURL: URL?, pathComponent: String) -> Promise<Data> {
-        
-        guard let url = baseURL?.appendingPathComponent(pathComponent) else { return Promise(error: ArticleError.invalidURL) }
-//        let fname = url.lastPathComponent + pathComponent
-        
-        let request = URLRequest(url: url)
-        let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
-
-        return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
-            
-//            let json = JSON(d)
-            return Promise(value: d)
-        }
-    }
     
     
    
@@ -233,38 +225,6 @@ class ArticleManager: GTDataManager {
         return Promise<Void>()
     }
 
-
-    func getWebArchive(url: URL) -> Promise<Data> {
-        
-        return Promise<Data> { fulfill, reject in
-            
-            WebArchiver.archive(url: url, completion: { result -> Void in
-                switch result {
-                case .success(let plistData):
-                    fulfill(plistData)
-                    
-                case .failure(let error):
-                    reject(error)
-                }
-                
-            })
-        }
-    }
-    
-    func saveWebArchive(folderUrl: URL, webArchData: Data, additionalProperties: ArticleData) -> Promise<Void> {
-        
-        return Promise<Void> { fulfill, reject in
-            try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
-            
-            let data = try? JSONEncoder().encode(additionalProperties)
-            // write properties and webcache
-            try? data!.write(to: folderUrl.appendingPathComponent("properties"))
-            try? webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
-
-            fulfill()
-        }
-        
-    }
     
     
     func loadPage(_ child: XMLIndexer) -> XMLArticlePages{
@@ -297,8 +257,7 @@ class ArticleManager: GTDataManager {
             xml = SWXMLHash.parse(content)
         }
         catch {
-            Crashlytics().recordError(error,
-                                      withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
+            Crashlytics().recordError(error,  withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
         }
 
         return xml
