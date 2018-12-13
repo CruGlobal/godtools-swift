@@ -97,7 +97,12 @@ class LanguagesManager: GTDataManager {
     
     func loadFromDisk() -> Languages {
         let languages = findAllEntities(Language.self)
-        return Languages(languages.sorted(by: { return $0.localizedName() < $1.localizedName() }))
+
+        let lSeq = languages.sorted(by: { return $0.localizedName() < $1.localizedName() })
+        let ls = Languages()
+        ls.append(objectsIn: lSeq)
+        return ls
+//        return Languages(languages.sorted(by: { return $0.localizedName() < $1.localizedName() }))
     }
     
     func loadFromRemote() -> Promise<Languages> {

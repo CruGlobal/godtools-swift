@@ -11,7 +11,7 @@ target 'godtools' do
   pod 'Alamofire', '~> 4'
   pod 'PromiseKit', '~> 4'
   pod 'PromiseKit/Alamofire', '~> 4'
-  pod 'RealmSwift', '~> 2.10'
+  pod 'RealmSwift'
   pod 'SSZipArchive'
   pod 'SWXMLHash', '~> 4.1'
   pod 'Fuzi'
@@ -29,10 +29,10 @@ end
 
 post_install do |installer|
     
-#    print "Setting the default SWIFT_VERSION to 4.2 fro every pod\n"
-#    installer.pods_project.build_configurations.each do |config|
-#       config.build_settings['SWIFT_VERSION'] = '3.0'
-#    end
+    print "Setting the default SWIFT_VERSION to 3.0 fro every pod\n"
+    installer.pods_project.build_configurations.each do |config|
+       config.build_settings['SWIFT_VERSION'] = '3.0'
+    end
 
     installer.pods_project.targets.each do |target|
         # pods that require new swift

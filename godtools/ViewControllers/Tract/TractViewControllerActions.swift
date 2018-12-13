@@ -37,8 +37,8 @@ extension TractViewController: MFMailComposeViewControllerDelegate {
     }
     
     func displayEmailErrorMessage() {
-        let alert = UIAlertController(title: "GodTools", message: "error_can_not_send_email".localized, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "ok".localized, style: UIAlertActionStyle.default, handler: nil))
+        let alert = UIAlertController(title: "GodTools", message: "error_can_not_send_email".localized, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "ok".localized, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

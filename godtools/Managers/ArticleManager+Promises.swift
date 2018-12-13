@@ -209,15 +209,31 @@ extension ArticleManager {
     // Save .webarchive & ArticleData
     func saveWebArchive(folderUrl: URL, webArchData: Data, additionalProperties: ArticleData) -> Promise<Void> {
         
+//        let p = firstly { () -> Promise<Void> in
+//            try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
+//
+//            do {
+//
+//                let data = try JSONEncoder().encode(additionalProperties)
+//                // write properties and webcache
+//                try data.write(to: folderUrl.appendingPathComponent("properties"))
+//                try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
+//
+//                debugPrint("Saved archives to: \(folderUrl.absoluteString)")
+//
+//            } catch {
+//                debugPrint("Error: \(error.localizedDescription)")
+//            }
+//            return Promise<Void>()
+//        }
+//
+//        return p
+//    }
+        
         return Promise<Void> { fulfill, reject in
             try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
-            
-            do {
-                // save web page archive
-                let pageLocal = folderUrl.appendingPathComponent("page.webarchive")
-                try webArchData.write(to: pageLocal)
 
-                // save article properties
+            do {
                 let data = try JSONEncoder().encode(additionalProperties)
                 try data.write(to: folderUrl.appendingPathComponent("properties"))
 #if DEBUG
@@ -229,9 +245,9 @@ extension ArticleManager {
                 debugPrint("Error: \(error.localizedDescription)")
                 reject(error)
             }
-            
+
         }
-        
+
     }
 
 }
