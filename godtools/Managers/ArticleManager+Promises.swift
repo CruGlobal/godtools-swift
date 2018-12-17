@@ -168,7 +168,7 @@ extension ArticleManager {
                 try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
 
                 debugPrint("Saved archives to: \(folderUrl.absoluteString)")
-                fulfill()
+                fulfill(())
 
             } catch {
                 debugPrint("Error: \(error.localizedDescription)")

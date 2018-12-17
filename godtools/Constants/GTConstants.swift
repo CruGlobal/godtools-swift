@@ -29,3 +29,10 @@ struct GTConstants {
 
     static let kArticleSupportedTemplates: Set<String> = [  "/conf/cru/settings/wcm/templates/experience-fragment-cru-web-variation" ]
 }
+
+enum Storyboard {
+    
+    static let main = "Main"
+    static let articles = "Articles"
+    
+}

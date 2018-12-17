@@ -11,7 +11,11 @@ import Foundation
 import SwiftyJSON
 
 
-struct ArticleData: Codable, Hashable {
+struct ArticleData: Codable, Hashable, Comparable {
+    
+    static func < (lhs: ArticleData, rhs: ArticleData) -> Bool {
+        return lhs.title! < rhs.title!
+    }
     
     var title: String?
     var uri: String?

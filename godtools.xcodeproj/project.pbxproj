@@ -124,6 +124,7 @@
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
 		4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F7C6E21A86791009B41B0 /* WebArchiver.swift */; };
 		4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F7C6F21A86791009B41B0 /* WebArchive.swift */; };
+		4F2FF1DE21C404C200BF7110 /* ArticleCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF1DD21C404C200BF7110 /* ArticleCategoriesViewController.swift */; };
 		4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */; };
 		4F388686208531C00022E0B2 /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */; };
 		4F388687208534C10022E0B2 /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
@@ -181,6 +182,8 @@
 		4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDFC8DE1EFB17CE00B8CC33 /* NavigationBarBackground.swift */; };
 		4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */; };
 		4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEE566E1EC4EAD20085249E /* GTProgressView.swift */; };
+		4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FEF264E21C41330007CF4A0 /* Articles.storyboard */; };
+		4FEF265121C41871007CF4A0 /* ArticleCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF265021C41871007CF4A0 /* ArticleCategoryTableViewCell.swift */; };
 		4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF812C1EE775F3002B77C8 /* Attachment.swift */; };
 		4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF812E1EE779AA002B77C8 /* ReferencedFile.swift */; };
 		4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FEF81301EE77B16002B77C8 /* DownloadedResource.swift */; };
@@ -418,6 +421,7 @@
 		4F2500611F0C1E8D00364FBC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4F2F7C6E21A86791009B41B0 /* WebArchiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchiver.swift; sourceTree = "<group>"; };
 		4F2F7C6F21A86791009B41B0 /* WebArchive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebArchive.swift; sourceTree = "<group>"; };
+		4F2FF1DD21C404C200BF7110 /* ArticleCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoriesViewController.swift; sourceTree = "<group>"; };
 		4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "godtools-Bridging-Header.h"; sourceTree = "<group>"; };
 		4F33042B1F0C1098009D92A0 /* GodToolsAnaltyics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GodToolsAnaltyics.swift; path = Analtyics/GodToolsAnaltyics.swift; sourceTree = "<group>"; };
 		4F462A301EB0DF3E00C03447 /* TractView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractView.swift; path = Views/TractView.swift; sourceTree = "<group>"; };
@@ -483,6 +487,8 @@
 		4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ToolsManager+ResourceViews.swift"; path = "Managers/ToolsManager+ResourceViews.swift"; sourceTree = "<group>"; };
 		4FED858D1F461691003038BB /* lv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = lv; path = lv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4FEE566E1EC4EAD20085249E /* GTProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTProgressView.swift; path = Views/GTProgressView.swift; sourceTree = "<group>"; };
+		4FEF264E21C41330007CF4A0 /* Articles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Articles.storyboard; sourceTree = "<group>"; };
+		4FEF265021C41871007CF4A0 /* ArticleCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		4FEF812C1EE775F3002B77C8 /* Attachment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Attachment.swift; path = Models/Attachment.swift; sourceTree = "<group>"; };
 		4FEF812E1EE779AA002B77C8 /* ReferencedFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReferencedFile.swift; path = Models/ReferencedFile.swift; sourceTree = "<group>"; };
 		4FEF81301EE77B16002B77C8 /* DownloadedResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadedResource.swift; path = Models/DownloadedResource.swift; sourceTree = "<group>"; };
@@ -1192,8 +1198,11 @@
 			children = (
 				4FD0659021A5D75700E69A98 /* ArticleViewController.swift */,
 				4FD0658F21A5D75700E69A98 /* ArticleViewController.xib */,
+				4F2FF1DD21C404C200BF7110 /* ArticleCategoriesViewController.swift */,
+				4FEF265021C41871007CF4A0 /* ArticleCategoryTableViewCell.swift */,
 				4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */,
 				4F9A9E9F219E22D900C61E9C /* ArticleTableViewCell.xib */,
+				4FEF264E21C41330007CF4A0 /* Articles.storyboard */,
 			);
 			path = Article;
 			sourceTree = "<group>";
@@ -1567,6 +1576,7 @@
 				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
 				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
+				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				4F8495A01F06E6BE0015A6BB /* 86c8e65bddaa4b889e572aa89714ee846f27294abc62b69d291b52ea1cc05144.png in Resources */,
@@ -1821,6 +1831,7 @@
 				4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
+				4FEF265121C41871007CF4A0 /* ArticleCategoryTableViewCell.swift in Sources */,
 				4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
@@ -1889,6 +1900,7 @@
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
 				ECB5A8C21EE5E326008E4AB7 /* WebViewController.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
+				4F2FF1DE21C404C200BF7110 /* ArticleCategoriesViewController.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,

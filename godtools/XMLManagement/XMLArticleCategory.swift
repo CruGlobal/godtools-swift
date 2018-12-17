@@ -15,11 +15,17 @@ class XMLArticleCategory: NSObject {
 
     var content: XMLIndexer?
 
+    var title: String? {
+        return self.label()
+    }
+    
     init(withXML content: XMLIndexer) {
         super.init()
         self.content = content
         
     }
+    
+    
     
     func label() -> String? {
         return content?["label"]["content:text"].element?.text

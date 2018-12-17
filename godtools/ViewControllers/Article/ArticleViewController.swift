@@ -6,7 +6,9 @@
 //  Copyright © 2018 Cru. All rights reserved.
 //
 
+
 import UIKit
+
 
 class ArticleViewController: BaseViewController {
 
@@ -37,13 +39,13 @@ class ArticleViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView! {
         didSet {
-            tableView.delegate = articleManager
-            tableView.dataSource = articleManager
+            tableView.delegate = self
+            tableView.dataSource = self
         }
     }
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleManager.cellIdentifier)
+        self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleTableViewCell.cellID)
     }
 
     
@@ -70,15 +72,11 @@ class ArticleViewController: BaseViewController {
 
     
     
-    
-    
     func getResourceData() {
         loadResourcesForLanguage()
         loadResourcesForParallelLanguage()
         usePrimaryLanguageResources()
     }
-    
-    
     
     
     
@@ -138,6 +136,67 @@ class ArticleViewController: BaseViewController {
         } else {
             return primaryLanguage
         }
+    }
+
+}
+
+
+
+extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
+{
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleTableViewCell.cellID) as! ArticleTableViewCell
+        
+        // refactor to ViewModel
+        let category = articleManager.categories![indexPath.row]
+        let image = articleManager.getImage(forCategory: category)
+        cell.imgView.image = image
+        cell.titleLabel.text = articleManager.getTitle(forCategory: category)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return articleManager.categories!.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = articleManager.categories![indexPath.row]
+        presentArticlesList(category: category)
+    }
+    
+    
+    
+    func presentArticlesList(category: XMLArticleCategory?) {
+        guard let category = category else {
+            return
+        }
+        
+        
+        // extract ArticleData for the category
+        let tags = category.aemTagIDs().map {
+            articleManager.articlesDataForTag[$0]
+        }
+        
+        var artData = [ArticleData]()
+        for tag in tags {
+            guard let tag = tag else {
+                // ignore nil articles -> relax possible xml/metadata errors
+                continue
+            }
+            for artD in tag {
+                artData.append(artD)
+            }
+        }
+        
+        artData.sort()
+        
+        let vc = ArticleCategoriesViewController.create()
+        vc.data = artData
+        vc.category = category
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
