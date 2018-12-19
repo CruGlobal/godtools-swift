@@ -34,7 +34,10 @@ class ArticleViewController: BaseViewController {
     }
     
     static func create() -> ArticleViewController {
-        return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
+        let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: "ArticleViewControllerID") as! ArticleViewController
+
+//        return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
     }
 
     @IBOutlet weak var tableView: UITableView! {
@@ -180,18 +183,19 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
             articleManager.articlesDataForTag[$0]
         }
         
-        var artData = [ArticleData]()
+//        var artData = [ArticleData]()
+        var artSetData = Set<ArticleData>()
         for tag in tags {
             guard let tag = tag else {
                 // ignore nil articles -> relax possible xml/metadata errors
                 continue
             }
             for artD in tag {
-                artData.append(artD)
+                artSetData.insert(artD)
             }
         }
         
-        artData.sort()
+        let artData = Array(artSetData).sorted()
         
         let vc = ArticleCategoriesViewController.create()
         vc.data = artData

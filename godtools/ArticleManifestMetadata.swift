@@ -51,7 +51,6 @@ class ArticleManifestMetadata: NSObject {
         
         func process(json: JSON, currentPath: String) {
             
-            
             let content = json["jcr:content"]
 
             if !content.isEmpty {
@@ -76,6 +75,10 @@ class ArticleManifestMetadata: NSObject {
                         artData[tag] = Set()
                     }
                     artData[tag]?.insert(data)
+#if DEBUG
+                    print("---------------- currentPath: \(data.uri ?? "nil")")
+#endif
+
                 }
             }
             
@@ -87,14 +90,11 @@ class ArticleManifestMetadata: NSObject {
                 process(json:subJson, currentPath: "\(currentPath)/\(key)")
             }
         }
-        
-        
-        
+
+
         process(json: json, currentPath: "")
-        
-        
-        
-        
+
+
         return artData;
     }
 

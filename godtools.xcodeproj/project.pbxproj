@@ -161,6 +161,7 @@
 		4F8495A31F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F84959B1F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png */; };
 		4F8495A41F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
+		4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */; };
 		4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */; };
@@ -465,6 +466,7 @@
 		4F84959B1F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png; path = InitialContent/a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png; sourceTree = "<group>"; };
 		4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; path = InitialContent/d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
+		4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XMLArticleCategory.swift; path = XMLManagement/XMLArticleCategory.swift; sourceTree = "<group>"; };
 		4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArticleTableViewCell.swift; path = godtools/ViewControllers/Article/ArticleTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1202,6 +1204,7 @@
 				4FEF265021C41871007CF4A0 /* ArticleCategoryTableViewCell.swift */,
 				4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */,
 				4F9A9E9F219E22D900C61E9C /* ArticleTableViewCell.xib */,
+				4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */,
 				4FEF264E21C41330007CF4A0 /* Articles.storyboard */,
 			);
 			path = Article;
@@ -1874,6 +1877,7 @@
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
+				4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */,
 				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,

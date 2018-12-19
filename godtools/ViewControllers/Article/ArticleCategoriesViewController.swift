@@ -18,29 +18,27 @@ class ArticleCategoriesViewController: BaseViewController {
         return storyboard.instantiateViewController(withIdentifier: "ArticleCategoriesViewControllerID") as! ArticleCategoriesViewController
     }
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.dataSource = self
+            tableView.delegate = self
+            // eliminate extra separators
+            tableView.tableFooterView = UIView()
+        }
+    }
     
     var data: [ArticleData]?
     var category: XMLArticleCategory?
 
-    
     override var screenTitle: String
     {
         return category?.title ?? super.screenTitle
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // eliminate extra separators
-        tableView.tableFooterView = UIView()
-        
-        tableView.dataSource = self
-        tableView.delegate = self
+        super.viewDidLoad()        
     }
     
-
-
 }
 
 
@@ -64,7 +62,22 @@ extension ArticleCategoriesViewController: UITableViewDataSource, UITableViewDel
         return (data?.count)!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let articleData = data?[indexPath.row]
+        presentWebArchive(articleData: articleData)
+    }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
+    
+    
+    func presentWebArchive(articleData: ArticleData?) {
+        let vc = ArticleWebViewController.create()
+        vc.data = articleData
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
+    
 }

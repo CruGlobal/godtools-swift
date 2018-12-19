@@ -96,7 +96,7 @@ extension ArticleManager {
             
             // replace slashes '/' in keys with '#'
             // faith-topics:jesus-christ/life-of-jesus -> faith-topics:jesus-christ#life-of-jesus
-            let folder = baseFolder.appendingPathComponent(key.replacingOccurrences(of: "/", with: "#"))
+            let folder = baseFolder.appendingPathComponent(key.replacingOccurrences(of: "/", with: "--"))
             
             for articleData in value {
                 
@@ -119,14 +119,32 @@ extension ArticleManager {
     // Download metadata from manifest aem-import src
     func downloadMetadata(url: URL?) -> Promise<Data> {
         
-        guard let url = url?.appendingPathComponent(".999.json") else { return Promise(error: ArticleError.invalidURL) }
+        guard let url = url else { return Promise(error: ArticleError.invalidURL) }
+
+        // remove all after fragment, '#' included
+        var pth = url.absoluteString
+        if let index = (pth.range(of: "#")?.lowerBound) {
+            pth = String(pth.prefix(upTo: index))
+        }
         
-        let request = URLRequest(url: url)
+        // remove last component if it contains .html
+        var ar = url.absoluteString.components(separatedBy: "/")
+        if ar.last?.contains(".html") == true {
+            ar.removeLast()
+        }
+        
+        let path = ar.joined(separator: "/") + ".999.json"
+        
+        let finalurl = URL(string: path)
+        
+        
+        let request = URLRequest(url: finalurl!)
         let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
         
         return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
-            
-            debugPrint("Downloaded JSON: \(url.absoluteString)")
+#if DEBUG
+            debugPrint("Downloaded JSON: \(finalurl!.absoluteString)")
+#endif
             return Promise(value: d)
         }
     }
