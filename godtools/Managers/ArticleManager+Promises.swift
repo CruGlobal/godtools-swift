@@ -13,7 +13,9 @@ import SwiftyJSON
 
 extension ArticleManager {
     
-
+    
+    
+    
     // Promise for downloading everything
     func dnloadWholeManifestData(manifestFilename: String?) -> Promise<Void> {
         
@@ -25,8 +27,22 @@ extension ArticleManager {
         let metadataPromises = getMetadataPromises(aemSources: pgs.aemSources())
         
         return when(fulfilled: metadataPromises).then { _ -> Promise<Void> in
+            
+#if DEBUG
+            // print out all
+            var set = Set<ArticleData>()
+            self.articlesDataForTag.values.forEach { (s) in
+                set.formUnion(s)
+            }
+            let ar = Array(set).sorted()
+            
+            ar.forEach { (a) in
+                print("******\n  aem-tag: \(a.aemtag ?? "nil")\n  title:   \(a.title ?? "nil")\n  uri:     \(a.uri ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
+            }
+            
+#endif
+            
             let webarchivePromises = self.getWebArchivePromises()
-
             return when(fulfilled: webarchivePromises).then { _ -> Void in
 
 
@@ -56,21 +72,24 @@ extension ArticleManager {
                     
                 }.then { jsonData -> Promise<Void> in
                     
-                    // process downloaded json
-                    let json = JSON(jsonData)
+                    // save json file with unique name
+                    let name = src.md5 + ".json"
+                    let jsonURL = URL(fileURLWithPath: self.articlesPath! + name)
+                    try jsonData.write(to: jsonURL)
+
                     
                     // process each metadata json to get ArticleData from it
+                    let json = JSON(jsonData)
                     let metadata = ArticleManifestMetadata(json: json, url:url)
-                    if let artData = metadata.processMetadata(tags:self.aemTags) {
-                        // merge this data with
-                        for (key, value) in artData {
-                            if self.articlesDataForTag[key] == nil {
-                                self.articlesDataForTag[key] = Set()
-                            }
-                            self.articlesDataForTag[key]?.formUnion(value)
-                            
+                    let artData = metadata.processMetadata(tags:self.aemTags)
+                    
+                    for (key, value) in artData {
+                        if self.articlesDataForTag[key] == nil {
+                            self.articlesDataForTag[key] = Set()
                         }
+                        self.articlesDataForTag[key]!.formUnion(value)
                     }
+                    
                     return Promise<Void>()
                 }
             
@@ -80,9 +99,11 @@ extension ArticleManager {
         return promises
     }
     
+    
+    
     func getWebArchivePromises() -> [Promise<Void>] {
         
-        let baseFolder = URL(fileURLWithPath: self.documentsPath.appending("/WebCache/").appending(self.articleManifestID!))
+        let baseFolder = URL(fileURLWithPath: self.articlesPath!)
         
         // composed articles promises
         var promises = [Promise<Void>]()
@@ -94,7 +115,7 @@ extension ArticleManager {
             
             var foldCnt: Int = 0
             
-            // replace slashes '/' in keys with '#'
+            // replace slashes '/' in keys with '--'
             // faith-topics:jesus-christ/life-of-jesus -> faith-topics:jesus-christ#life-of-jesus
             let folder = baseFolder.appendingPathComponent(key.replacingOccurrences(of: "/", with: "--"))
             
@@ -121,29 +142,13 @@ extension ArticleManager {
         
         guard let url = url else { return Promise(error: ArticleError.invalidURL) }
 
-        // remove all after fragment, '#' included
-        var pth = url.absoluteString
-        if let index = (pth.range(of: "#")?.lowerBound) {
-            pth = String(pth.prefix(upTo: index))
-        }
-        
-        // remove last component if it contains .html
-        var ar = url.absoluteString.components(separatedBy: "/")
-        if ar.last?.contains(".html") == true {
-            ar.removeLast()
-        }
-        
-        let path = ar.joined(separator: "/") + ".999.json"
-        
-        let finalurl = URL(string: path)
-        
-        
-        let request = URLRequest(url: finalurl!)
+        let finalURL = URL(string: url.cleanedPath + ".999.json")
+        let request = URLRequest(url: finalURL!)
         let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
         
         return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
 #if DEBUG
-            debugPrint("Downloaded JSON: \(finalurl!.absoluteString)")
+            debugPrint("Downloaded JSON: \(finalURL!.absoluteString)")
 #endif
             return Promise(value: d)
         }
@@ -197,4 +202,32 @@ extension ArticleManager {
         
     }
 
+}
+
+
+
+extension URL {
+    
+    // absoulute path is cleaned from parameters, fragments and eventual "<smtng>.html"
+    var cleanedPath: String {
+        
+        var pth = self.absoluteString
+        // remove parameters, '?' included
+        if let index = (pth.range(of: "?")?.lowerBound) {
+            pth = String(pth.prefix(upTo: index))
+        }
+        // remove all after fragment, '#' included
+        if let index = (pth.range(of: "#")?.lowerBound) {
+            pth = String(pth.prefix(upTo: index))
+        }
+
+        // remove last component if it contains .html
+        var ar = pth.components(separatedBy: "/")
+        if ar.last?.contains(".html") == true {
+            ar.removeLast()
+        }
+
+        pth = ar.joined(separator: "/")
+        return pth
+    }
 }

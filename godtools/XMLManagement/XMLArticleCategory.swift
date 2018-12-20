@@ -52,6 +52,5 @@ class XMLArticleCategory: NSObject {
         return Set(tags!) ?? Set<String>()
     }
     
-    
 }
 

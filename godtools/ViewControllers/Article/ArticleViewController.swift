@@ -152,8 +152,8 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: ArticleTableViewCell.cellID) as! ArticleTableViewCell
         
-        // refactor to ViewModel
-        let category = articleManager.categories![indexPath.row]
+        // TODO: refactor to ViewModel
+        let category = articleManager.categories[indexPath.row]
         let image = articleManager.getImage(forCategory: category)
         cell.imgView.image = image
         cell.titleLabel.text = articleManager.getTitle(forCategory: category)
@@ -162,11 +162,11 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articleManager.categories!.count
+        return articleManager.categories.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let category = articleManager.categories![indexPath.row]
+        let category = articleManager.categories[indexPath.row]
         presentArticlesList(category: category)
     }
     
@@ -200,6 +200,7 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
         let vc = ArticleCategoriesViewController.create()
         vc.data = artData
         vc.category = category
+        vc.articlesPath = articleManager.articlesPath
         self.navigationController?.pushViewController(vc, animated: true)
     }
 

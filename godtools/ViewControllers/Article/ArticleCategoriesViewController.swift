@@ -29,6 +29,7 @@ class ArticleCategoriesViewController: BaseViewController {
     
     var data: [ArticleData]?
     var category: XMLArticleCategory?
+    var articlesPath: String?
 
     override var screenTitle: String
     {
@@ -76,6 +77,8 @@ extension ArticleCategoriesViewController: UITableViewDataSource, UITableViewDel
     func presentWebArchive(articleData: ArticleData?) {
         let vc = ArticleWebViewController.create()
         vc.data = articleData
+        
+        l
         self.navigationController?.pushViewController(vc, animated: true)
 
     }

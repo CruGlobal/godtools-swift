@@ -11,17 +11,24 @@ import Foundation
 import SwiftyJSON
 
 
-struct ArticleData: Codable, Hashable, Comparable {
+
+
+struct ArticleData: Codable, Hashable, Comparable, Equatable {
     
     static func < (lhs: ArticleData, rhs: ArticleData) -> Bool {
         return lhs.title! < rhs.title!
     }
+    static func == (lhs: ArticleData, rhs: ArticleData) -> Bool {
+        return lhs.aemtag == rhs.aemtag && lhs.title == rhs.title && lhs.uri == rhs.uri && lhs.url == rhs.url
+    }
     
     var title: String?
+    var aemtag: String?
     var uri: String?
     var url: URL?
     
 }
+
 
 
 
@@ -43,11 +50,10 @@ class ArticleManifestMetadata: NSObject {
         super.init()
     }
 
-
-    // returns dictionary with "tag" key and an array of corresponding articles
-    func processMetadata(tags: Set<String?>) -> [String:Set<ArticleData>]? {
+    // returns dictionary with aemtag  key and the set of corresponding articles
+    func processMetadata(tags: Set<String?>) -> [String:Set<ArticleData>] {
         
-        var artData = [String:Set<ArticleData>]()
+        var result = [String:Set<ArticleData>]()
         
         func process(json: JSON, currentPath: String) {
             
@@ -59,7 +65,7 @@ class ArticleManifestMetadata: NSObject {
                     return // not our template -> return
                 }
 
-                // this is our guy
+                // this is our ArticleData
                 var data = ArticleData()
                 data.title = content["jcr:title"].string
                 data.uri = currentPath
@@ -71,12 +77,14 @@ class ArticleManifestMetadata: NSObject {
                     if !tags.contains(tag) {
                         continue
                     }
-                    if artData[tag] == nil {
-                        artData[tag] = Set()
+                    if result[tag] == nil {
+                        result[tag] = Set()
                     }
-                    artData[tag]?.insert(data)
+                    // back-reference it
+                    data.aemtag = tag
+                    result[tag]!.insert(data)
 #if DEBUG
-                    print("---------------- currentPath: \(data.uri ?? "nil")")
+                    print("---------------- currentPath: \(tag):  \(data.uri ?? "nil")")
 #endif
 
                 }
@@ -95,7 +103,7 @@ class ArticleManifestMetadata: NSObject {
         process(json: json, currentPath: "")
 
 
-        return artData;
+        return result;
     }
 
 }

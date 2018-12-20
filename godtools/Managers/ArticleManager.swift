@@ -17,6 +17,7 @@ import SWXMLHash
 class ArticleManager: GTDataManager {
 
     
+    
     enum ArticleError: LocalizedError {
         case requestMetadataFailed(resourceURLString: String, error: Error)
         case invalidMetadataJSON
@@ -33,13 +34,16 @@ class ArticleManager: GTDataManager {
         }
     }
 
+    
+    
     var aemTags = Set<String>()    // set of all aem-tags in this manifest
     var articlesDataForTag = Dictionary<String, Set<ArticleData>>()
 
-    var categories: [XMLArticleCategory]?
+    var categories: [XMLArticleCategory] = [XMLArticleCategory]()
     var pages: XMLArticlePages?
     var manifestProperties: ManifestProperties?
     var articleManifestID: String?
+    var articlesPath: String?
     var articleManifestFilename: String?
     
     func loadResource(resource: DownloadedResource, language: Language) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
@@ -60,6 +64,7 @@ class ArticleManager: GTDataManager {
         components.removeLast()
         articleManifestID = components.joined(separator: ".")
         articleManifestFilename = translation.manifestFilename
+        articlesPath = documentsPath.appending("/WebCache/").appending(articleManifestID!).appending("/")
         
         xmlData = loadXMLFile(manifestPath)
         
@@ -80,7 +85,6 @@ class ArticleManager: GTDataManager {
             return (pages, categories, manifestProperties)
         }
         
-        // load article resources (for images)
         for child in manifest["resources"].children {
             let filename = child.element?.attribute(by: "filename")?.text
             let src = child.element?.attribute(by: "src")?.text
@@ -90,16 +94,15 @@ class ArticleManager: GTDataManager {
         
         // load article categories
         for child in manifest["categories"].children {
-            let category = loadCategory(child)
+            let category = XMLArticleCategory(withXML: child)
             aemTags.formUnion(category.aemTagIDs())
             debugPrint("\(category.label() ?? "err")")
-            categories!.append(category)
-            
+            categories.append(category)
         }
         
         processManifest(uuid: articleManifestID)
         
-        return (pages!, categories!, manifestProperties!)
+        return (pages!, categories, manifestProperties!)
     }
     
 
@@ -114,42 +117,6 @@ class ArticleManager: GTDataManager {
 
     
     
-   
-    func saveToDisk(_ fName: String, _ data:Data) -> Promise<Void> {
-        
-        guard let fld = articleManifestID else {
-            return Promise(error: ArticleError.invalidURL)
-        }
-        
-        let art = documentsPath.appending("/Articles/").appending(fld).appending(fName)
-
-        
-        
-        return Promise<Void>()
-    }
-
-    
-    
-    func loadPage(_ child: XMLIndexer) -> XMLArticlePages{
-
-        
-        // TODO: for now...
-        return XMLArticlePages(withXML: child)
-
-//        let resource = child.element?.attribute(by: "src")?.text
-//        let pageXML = loadXMLFile(resource!)
-//        let page = XMLPage(withXML: pageXML!)
-//        return page
-    }
-
-    func loadCategory(_ child: XMLIndexer) -> XMLArticleCategory {
-        
-        // load aem-tagshi
-        
-        return XMLArticleCategory(withXML: child)
-    }
-
-
     func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
 
         let file = documentsPath.appending("/Resources/").appending(resourcePath)
@@ -191,56 +158,7 @@ class ArticleManager: GTDataManager {
             .appendingPathComponent(aemSource)
     }
     
-    
 }
 
 
 
-
-
-
-
-
-
-//extension ArticleManager: UITableViewDataSource, UITableViewDelegate {
-//
-//    static let cellIdentifier = "articleCellID"
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleManager.cellIdentifier) as! ArticleTableViewCell
-//
-//        let category = categories![indexPath.row]
-//        let image = getImage(forCategory: category)
-//        cell.imgView.image = image
-//        cell.titleLabel.text = getTitle(forCategory: category)
-//
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return categories!.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let category = categories![indexPath.row]
-//        presentArticlesList(category: category)
-//    }
-//
-//
-//
-//    func presentArticlesList(category: XMLArticleCategory?) {
-//        guard let category = category else {
-//            return
-//        }
-//
-//
-//        // extract ArticleData for the category
-//        let tags = category.aemTagIDs().map {
-//            articlesDataForTag[$0]
-//        }
-//
-//        let vc = ArticleCategoriesViewController.create()
-//
-//    }
-//}
