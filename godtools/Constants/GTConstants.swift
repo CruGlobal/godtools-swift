@@ -10,6 +10,7 @@ import Foundation
 
 struct GTConstants {
     
+    // prevent initialization
     private init() {}
     
     static let kDownloadProgressProgressKey = "org.cru.godtools.downloadProgressProgressKey"
@@ -37,3 +38,4 @@ enum Storyboard {
     static let articles = "Articles"
     
 }
+

@@ -23,6 +23,8 @@ class ArticleViewController: BaseViewController {
     var xmlPagesForParallelLang: XMLArticlePages?
     var xmlCatgegoriesForPrimaryLang = [XMLArticleCategory]()
     var xmlCategoriesForParalelLang = [XMLArticleCategory]()
+    
+    var refreshControl = UIRefreshControl()
 
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
@@ -51,33 +53,75 @@ class ArticleViewController: BaseViewController {
         self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleTableViewCell.cellID)
     }
 
+    deinit {
+        self.removeObservers()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        refreshControl.addTarget(self, action: #selector(downloadManifestData), for: .valueChanged)
+        defineObservers()
+
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        
         registerCells()
         loadLanguages()
-        getResourceData()
+        getResourceData(forceDownload: false)
 
     }
 
+
+    
     func defineObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reloadView),
-                                               name: .downloadPrimaryTranslationCompleteNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .downloadPrimaryTranslationCompleteNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(articleProcessingDone), name: .articleProcessingCompleted, object: nil)
+    }
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self)
     }
 
 
     @objc private func reloadView() {
+        assert(Thread.isMainThread, "Should process in main thread")
+        
         tableView.reloadData()
     }
 
     
+    @objc private func downloadManifestData() {
+        getResourceData(forceDownload: true)
+    }
     
-    func getResourceData() {
-        loadResourcesForLanguage()
-        loadResourcesForParallelLanguage()
+    @objc private func articleProcessingDone() {
+        assert(Thread.isMainThread, "Should process in main thread")
+
+        refreshControl.endRefreshing()
+        // reload data, but after a short delay to prevent ugly refresh
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.reloadView()
+
+        }
+    }
+    
+    
+    func getResourceData(forceDownload: Bool) {
+        
+        if forceDownload && !Reachability.isConnectedToNetwork() {
+            refreshControl.endRefreshing()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.showNoInternetAlert()
+            }
+            return
+            
+        }
+        loadResourcesForLanguage(forceDownload: forceDownload)
+        loadResourcesForParallelLanguage(forceDownload: forceDownload)
         usePrimaryLanguageResources()
     }
     
@@ -101,17 +145,17 @@ class ArticleViewController: BaseViewController {
         parallelLanguage = languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
     }
 
-    func loadResourcesForLanguage() {
+    func loadResourcesForLanguage(forceDownload: Bool) {
         guard let language = resolvePrimaryLanguage() else { return }
         guard let resource = resource else { return }
         
-        let content = self.articleManager.loadResource(resource: resource, language: language)
+        let content = self.articleManager.loadResource(resource: resource, language: language, forceDownload: forceDownload)
         self.xmlPagesForPrimaryLang = content.pages
     }
     
-    func loadResourcesForParallelLanguage() {
+    func loadResourcesForParallelLanguage(forceDownload: Bool) {
         if parallelLanguageIsAvailable() {
-            let content = self.articleManager.loadResource(resource: self.resource!, language: parallelLanguage!)
+            let content = self.articleManager.loadResource(resource: self.resource!, language: parallelLanguage!, forceDownload: forceDownload)
             self.xmlPagesForParallelLang = content.pages
         }
     }

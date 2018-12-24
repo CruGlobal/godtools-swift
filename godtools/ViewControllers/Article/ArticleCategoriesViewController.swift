@@ -30,6 +30,8 @@ class ArticleCategoriesViewController: BaseViewController {
     var data: [ArticleData]?
     var category: XMLArticleCategory?
     var articlesPath: String?
+    
+    var observingToken: NSObjectProtocol?
 
     override var screenTitle: String
     {
@@ -37,13 +39,26 @@ class ArticleCategoriesViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        
+        observingToken = NotificationCenter.default.addObserver(forName: .articleProcessingCompleted, object: nil, queue: OperationQueue.main) { (notification) in
+            
+            let articleID = notification.userInfo?["articleID"] as! String
+            if self.articlesPath!.contains(articleID) {
+                self.tableView.reloadData()
+            }
+
+            
+        }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+
+
 }
-
-
-
 
 //
 
@@ -78,7 +93,7 @@ extension ArticleCategoriesViewController: UITableViewDataSource, UITableViewDel
         let vc = ArticleWebViewController.create()
         vc.data = articleData
         
-        l
+
         self.navigationController?.pushViewController(vc, animated: true)
 
     }

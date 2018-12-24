@@ -44,9 +44,10 @@ class ArticleManager: GTDataManager {
     var manifestProperties: ManifestProperties?
     var articleManifestID: String?
     var articlesPath: String?
+    var articlesTempPath: String?
     var articleManifestFilename: String?
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
+    func loadResource(resource: DownloadedResource, language: Language, forceDownload: Bool = false) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
         
         assert(resource.toolType == "article")
         
@@ -65,6 +66,7 @@ class ArticleManager: GTDataManager {
         articleManifestID = components.joined(separator: ".")
         articleManifestFilename = translation.manifestFilename
         articlesPath = documentsPath.appending("/WebCache/").appending(articleManifestID!).appending("/")
+        articlesTempPath = NSTemporaryDirectory().appending("WebCache/").appending(articleManifestID!).appending("/")
         
         xmlData = loadXMLFile(manifestPath)
         
@@ -100,18 +102,50 @@ class ArticleManager: GTDataManager {
             categories.append(category)
         }
         
-        processManifest(uuid: articleManifestID)
+        processManifest(uuid: articleManifestID, forceDownload: forceDownload)
         
         return (pages!, categories, manifestProperties!)
     }
     
 
 
-    func processManifest(uuid: String?) {
+    func processManifest(uuid: String?, forceDownload: Bool) {
         assert(manifestProperties != nil)
         
-        dnloadWholeManifestData(manifestFilename: articleManifestFilename).then {
-            debugPrint("Done. Should reload tableView here.")
+        let from = articlesTempPath!
+        let to = articlesPath!
+        
+        
+        if forceDownload {
+            dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to, articleManifestID] _ -> Promise<Void> in
+                
+                do {
+                    if FileManager.default.fileExists(atPath: to) {
+                        try FileManager.default.removeItem(atPath: to)
+                    }
+                    
+                    try FileManager.default.copyItem(atPath: from, toPath: to)
+                    try FileManager.default.removeItem(atPath: from)
+                    
+                }
+                catch {
+                    debugPrint("Error copying \(error.localizedDescription)")
+                }
+                
+                dirSlashS(atPath: from)
+                dirSlashS(atPath: to)
+                
+                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
+                
+                debugPrint("Done. Should reload tableView here.")
+                return Promise<Void>()
+            }
+        }
+        else {
+            processManifestFromLocalData(manifestFilename: articleManifestFilename).then { [articleManifestID] _ -> Promise<Void> in
+                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
+                return Promise<Void>()
+            }
         }
     }
 
@@ -160,5 +194,45 @@ class ArticleManager: GTDataManager {
     
 }
 
+
+// output content of the directory and subfolders.
+// similar to dir /s, from the early days
+// does nothing in release
+
+func dirSlashS(atPath path: String) {
+#if DEBUG
+    if let enumerator = FileManager.default.enumerator(at: URL(fileURLWithPath: path).standardizedFileURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
+        for case let fileURL as URL in enumerator {
+            let p = fileURL.standardizedFileURL.absoluteString
+            debugPrint("\(p.deletePrefix(URL(fileURLWithPath: path).standardizedFileURL.absoluteString))")
+        }
+    }
+#endif
+}
+
+
+// dir <path>, "json"
+// returns non-optional array of URLs
+
+func dirWithFilter(atPath path: String, filter: String?) -> [URL]
+{
+    guard let directoryURL = URL(string: path) else {
+        return []
+    }
+    
+    var ar = Array<URL>()
+    do {
+        let contents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
+        ar.append(contentsOf: contents.filter { (url) -> Bool in
+            let last = FileManager.default.displayName(atPath: url.path)
+            return last.contains(filter!)
+        })
+
+    } catch {
+        debugPrint("Cannot list directory at: \(directoryURL.lastPathComponent) with filter: \(filter ?? "nil")")
+    }
+    
+    return ar
+}
 
 

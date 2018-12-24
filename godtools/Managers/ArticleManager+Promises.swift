@@ -16,6 +16,12 @@ extension ArticleManager {
     
     
     
+    func processManifestFromLocalData(manifestFilename:String?) -> Promise<Void> {
+        
+        return Promise<Void>()
+    }
+    
+    
     // Promise for downloading everything
     func dnloadWholeManifestData(manifestFilename: String?) -> Promise<Void> {
         
@@ -55,6 +61,10 @@ extension ArticleManager {
     
     func getMetadataPromises(aemSources: [String?]) -> [Promise<Void>] {
 
+        if !FileManager.default.fileExists(atPath: articlesTempPath!) {
+            try! FileManager.default.createDirectory(atPath: articlesTempPath!, withIntermediateDirectories: true, attributes: nil)
+        }
+        
         // composed download promises
         var promises = [Promise<Void>]()
         
@@ -72,10 +82,26 @@ extension ArticleManager {
                     
                 }.then { jsonData -> Promise<Void> in
                     
+                    #if DEBUG
+                    do {
+                        let fileUrls = try FileManager.default.contentsOfDirectory(at: URL(fileURLWithPath: self.articlesTempPath!), includingPropertiesForKeys: nil)
+                        print("Files: \(fileUrls)")
+                    } catch {
+                        print("Error while enumerating files \(error.localizedDescription)")
+                    }
+                    #endif
+                    
+                    
+                    
                     // save json file with unique name
                     let name = src.md5 + ".json"
-                    let jsonURL = URL(fileURLWithPath: self.articlesPath! + name)
-                    try jsonData.write(to: jsonURL)
+                    let jsonURL = URL(fileURLWithPath: self.articlesTempPath! + name)
+                    
+                    do {
+                        try jsonData.write(to: jsonURL)
+                    } catch {
+                        print("Error while writing JSON file: \(error.localizedDescription)")
+                    }
 
                     
                     // process each metadata json to get ArticleData from it
@@ -103,7 +129,7 @@ extension ArticleManager {
     
     func getWebArchivePromises() -> [Promise<Void>] {
         
-        let baseFolder = URL(fileURLWithPath: self.articlesPath!)
+        let baseFolder = URL(fileURLWithPath: self.articlesTempPath!)
         
         // composed articles promises
         var promises = [Promise<Void>]()

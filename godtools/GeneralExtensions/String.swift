@@ -18,6 +18,10 @@ extension String {
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
+    func localized(default dflt: String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: dflt, comment: "")
+    }
+    
     
     func removeBreaklines() -> String {
         let regex = try! NSRegularExpression(pattern: "\n", options: .caseInsensitive)
@@ -87,6 +91,12 @@ extension String {
             camelCase += 0 == $0 ? $1 : $1.capitalized
         }
         return camelCase
+    }
+    
+    
+    func deletePrefix(_ prefix: String) -> String {
+        guard self.hasPrefix(prefix) else { return self }
+        return String(self.dropFirst(prefix.count))
     }
     
     

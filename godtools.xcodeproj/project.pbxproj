@@ -143,6 +143,8 @@
 		4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F5732981EA69CF00082035C /* LaunchScreen.storyboard */; };
 		4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BEE1A219B2E870048E35A /* ArticleManager.swift */; };
 		4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F66E17C1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift */; };
+		4F75415121D1450F002300DD /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75415021D1450F002300DD /* Reachability.swift */; };
+		4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75415221D14655002300DD /* UIViewController+GodTools.swift */; };
 		4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75CC57219DD70C0042200E /* CategoryResource.swift */; };
 		4F75CC5A219DE16D0042200E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75CC59219DE16D0042200E /* Category.swift */; };
 		4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
@@ -449,6 +451,8 @@
 		4F6FC0EF204854E8003A87DF /* pa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pa; path = pa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4F6FC0F02048550E003A87DF /* ru-MD */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ru-MD"; path = "ru-MD.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4F6FC0F120485520003A87DF /* bn */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bn; path = bn.lproj/Localizable.strings; sourceTree = "<group>"; };
+		4F75415021D1450F002300DD /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		4F75415221D14655002300DD /* UIViewController+GodTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIViewController+GodTools.swift"; path = "GeneralExtensions/UIViewController+GodTools.swift"; sourceTree = "<group>"; };
 		4F75CC57219DD70C0042200E /* CategoryResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryResource.swift; path = Managers/CategoryResource.swift; sourceTree = "<group>"; };
 		4F75CC59219DE16D0042200E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Category.swift; path = Models/Category.swift; sourceTree = "<group>"; };
 		4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTAccessibilityConstants.swift; sourceTree = "<group>"; };
@@ -655,12 +659,14 @@
 		0F350D991EAE78310025C4BB /* GeneralExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				0F350D9A1EAE786A0025C4BB /* String.swift */,
 				1E9973C6206591FC00AFEEE4 /* Integer.swift */,
+				4F75415021D1450F002300DD /* Reachability.swift */,
+				0F350D9A1EAE786A0025C4BB /* String.swift */,
 				0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */,
 				ECA4B3431EE7119A00BAE23C /* UIColor.swift */,
 				EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */,
 				ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */,
+				4F75415221D14655002300DD /* UIViewController+GodTools.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -1750,6 +1756,7 @@
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
+				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
@@ -1810,6 +1817,7 @@
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
+				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
 				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
