@@ -27,8 +27,12 @@ class ArticleCategoriesViewController: BaseViewController {
         }
     }
     
-    var data: [ArticleData]?
-    var category: XMLArticleCategory?
+    fileprivate var data: [ArticleData]?
+    var category: XMLArticleCategory? {
+        didSet {
+            data = category?.data()
+        }
+    }
     var articlesPath: String?
     
     var observingToken: NSObjectProtocol?
@@ -81,19 +85,21 @@ extension ArticleCategoriesViewController: UITableViewDataSource, UITableViewDel
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let articleData = data?[indexPath.row]
         presentWebArchive(articleData: articleData)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
     
-    
     func presentWebArchive(articleData: ArticleData?) {
+        
         let vc = ArticleWebViewController.create()
         vc.data = articleData
-        
-
         self.navigationController?.pushViewController(vc, animated: true)
 
     }

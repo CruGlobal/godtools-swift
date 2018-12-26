@@ -96,7 +96,7 @@ class ArticleManager: GTDataManager {
         
         // load article categories
         for child in manifest["categories"].children {
-            let category = XMLArticleCategory(withXML: child)
+            let category = XMLArticleCategory(withXML: child, articleID: articleManifestID!)
             aemTags.formUnion(category.aemTagIDs())
             debugPrint("\(category.label() ?? "err")")
             categories.append(category)
@@ -115,16 +115,21 @@ class ArticleManager: GTDataManager {
         let from = articlesTempPath!
         let to = articlesPath!
         
-        
         if forceDownload {
             dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to, articleManifestID] _ -> Promise<Void> in
                 
                 do {
-                    if FileManager.default.fileExists(atPath: to) {
-                        try FileManager.default.removeItem(atPath: to)
+                    
+                    if !FileManager.default.fileExists(atPath: to) {
+                        // create the destination path (mainly because of .../WebArchive/... directory for the initial run (when it does not exist). It will create .../WebArchive/ArticleID,
+                        //  but the last one (ArticleID) will be deleted in the following step
+                        try! FileManager.default.createDirectory(atPath: to, withIntermediateDirectories: true, attributes: nil)
                     }
                     
+                    try? FileManager.default.removeItem(atPath: to)
+                    // copy all from tmp folder to the real one
                     try FileManager.default.copyItem(atPath: from, toPath: to)
+                    // finaly remove tmp folder
                     try FileManager.default.removeItem(atPath: from)
                     
                 }
@@ -132,12 +137,17 @@ class ArticleManager: GTDataManager {
                     debugPrint("Error copying \(error.localizedDescription)")
                 }
                 
-                dirSlashS(atPath: from)
-                dirSlashS(atPath: to)
+#if DEBUG
                 
+                debugPrint("\n\nFrom dir: \(from)")
+                dirSlashS(atPath: from)
+                debugPrint("\n\nTo dir: \(to)")
+                dirSlashS(atPath: to)
+
+                debugPrint("Done. Should reload tableView here.")
+#endif
                 NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
                 
-                debugPrint("Done. Should reload tableView here.")
                 return Promise<Void>()
             }
         }
@@ -220,7 +230,7 @@ func dirWithFilter(atPath path: String, filter: String?) -> [URL]
         return []
     }
     
-    var ar = Array<URL>()
+    var ar = [URL]()
     do {
         let contents = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles])
         ar.append(contentsOf: contents.filter { (url) -> Bool in

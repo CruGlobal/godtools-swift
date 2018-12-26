@@ -17,7 +17,16 @@ extension ArticleManager {
     
     
     func processManifestFromLocalData(manifestFilename:String?) -> Promise<Void> {
+
+        // it actually does not need to do anything
         
+//        let xmlData = loadXMLFile(manifestFilename!)
+//        let manifest = xmlData?["manifest"]
+//
+//        let pgs = XMLArticlePages(withXML: manifest!["pages"])
+//
+//        let ar = dirWithFilter(atPath: articlesPath!, filter: "json")
+
         return Promise<Void>()
     }
     
@@ -43,7 +52,7 @@ extension ArticleManager {
             let ar = Array(set).sorted()
             
             ar.forEach { (a) in
-                print("******\n  aem-tag: \(a.aemtag ?? "nil")\n  title:   \(a.title ?? "nil")\n  uri:     \(a.uri ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
+                print("******\n  aem-tag: \(a.aemtag ?? "nil")\n  title:   \(a.title ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
             }
             
 #endif
@@ -143,7 +152,7 @@ extension ArticleManager {
             
             // replace slashes '/' in keys with '--'
             // faith-topics:jesus-christ/life-of-jesus -> faith-topics:jesus-christ#life-of-jesus
-            let folder = baseFolder.appendingPathComponent(key.replacingOccurrences(of: "/", with: "--"))
+            let folder = baseFolder.appendingPathComponent(key.replacingOccurrences(of: "/", with: "---"))
             
             for articleData in value {
                 
@@ -210,13 +219,16 @@ extension ArticleManager {
             try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
             
             do {
-                
-                let data = try JSONEncoder().encode(additionalProperties)
-                // write properties and webcache
-                try data.write(to: folderUrl.appendingPathComponent("properties"))
-                try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
+                // save web page archive
+                let pageLocal = folderUrl.appendingPathComponent("page.webarchive")
+                try webArchData.write(to: pageLocal)
 
+                // save article properties
+                let data = try JSONEncoder().encode(additionalProperties)
+                try data.write(to: folderUrl.appendingPathComponent("properties"))
+#if DEBUG
                 debugPrint("Saved archives to: \(folderUrl.absoluteString)")
+#endif
                 fulfill(())
 
             } catch {

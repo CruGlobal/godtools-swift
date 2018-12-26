@@ -220,29 +220,8 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
         guard let category = category else {
             return
         }
-        
-        
-        // extract ArticleData for the category
-        let tags = category.aemTagIDs().map {
-            articleManager.articlesDataForTag[$0]
-        }
-        
-//        var artData = [ArticleData]()
-        var artSetData = Set<ArticleData>()
-        for tag in tags {
-            guard let tag = tag else {
-                // ignore nil articles -> relax possible xml/metadata errors
-                continue
-            }
-            for artD in tag {
-                artSetData.insert(artD)
-            }
-        }
-        
-        let artData = Array(artSetData).sorted()
-        
+                
         let vc = ArticleCategoriesViewController.create()
-        vc.data = artData
         vc.category = category
         vc.articlesPath = articleManager.articlesPath
         self.navigationController?.pushViewController(vc, animated: true)

@@ -54,6 +54,11 @@ class ArticleWebViewController: BaseViewController{
         webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
   
         webView.navigationDelegate = self
+        
+        if let url = data?.local {
+            webView.loadFileURL(url, allowingReadAccessTo: url)
+        }
+
 //
 //        var scriptContent = "var meta = document.createElement('meta');"
 //        scriptContent += "meta.name='viewport';"
@@ -66,28 +71,6 @@ class ArticleWebViewController: BaseViewController{
 //        let url = URL(string: data?.uri ?? "")
     }
     
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        let url = buildURL()
-        
-//        webView.loadFileURL(url, allowingReadAccessTo: url)
-        webView.load(URLRequest(url: URL(string: "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/can-you-explain-the-trinity--/godtools-variation.html")!))
-        
-
-
-    }
-    
-    func buildURL() -> URL {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        var url = URL(fileURLWithPath: documentsPath).appendingPathComponent("WebCache/63fda9c5e185bbf3698e2a9f5de93a6bbd7aa776bf82f93e76f24987abde92af/faith-topics:jesus-christ#death-of-jesus/01")
-        let url2 = URL(fileURLWithPath: documentsPath).appendingPathComponent("WebCache").appendingPathComponent("63fda9c5e185bbf3698e2a9f5de93a6bbd7aa776bf82f93e76f24987abde92af/faith-topics:jesus-christ#death-of-jesus")
-        let files = try? FileManager.default.contentsOfDirectory(at: url2, includingPropertiesForKeys: [], options: .skipsHiddenFiles)
-        url = url.appendingPathComponent("page.webarchive")
-        return url
-    }
-
 }
 
 

@@ -13,19 +13,26 @@ import SwiftyJSON
 
 
 
-struct ArticleData: Codable, Hashable, Comparable, Equatable {
+struct ArticleData: Codable, Hashable, Comparable {
     
     static func < (lhs: ArticleData, rhs: ArticleData) -> Bool {
         return lhs.title! < rhs.title!
     }
     static func == (lhs: ArticleData, rhs: ArticleData) -> Bool {
-        return lhs.aemtag == rhs.aemtag && lhs.title == rhs.title && lhs.uri == rhs.uri && lhs.url == rhs.url
+        let b = lhs.url?.path == rhs.url?.path
+        print("----\nEqual:\(b)   \nlhs:\(lhs.title ?? "")\nrhs:\(rhs.title ?? "")")
+        return lhs.url?.path == rhs.url?.path
+    }
+    
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.url)
     }
     
     var title: String?
     var aemtag: String?
-    var uri: String?
     var url: URL?
+    var local: URL?
     
 }
 
@@ -68,7 +75,7 @@ class ArticleManifestMetadata: NSObject {
                 // this is our ArticleData
                 var data = ArticleData()
                 data.title = content["jcr:title"].string
-                data.uri = currentPath
+//                data.uri = currentPath
                 data.url = self.url.appendingPathComponent(currentPath + ".html")
                 
                 // add to results, only if cq:tags are contained in manifest tags
@@ -84,7 +91,7 @@ class ArticleManifestMetadata: NSObject {
                     data.aemtag = tag
                     result[tag]!.insert(data)
 #if DEBUG
-                    print("---------------- currentPath: \(tag):  \(data.uri ?? "nil")")
+                    print("---------------- currentPath: \(tag):  \(currentPath)")
 #endif
 
                 }
