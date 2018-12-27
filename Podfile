@@ -29,7 +29,7 @@ end
 
 post_install do |installer|
     
-    print "Setting the default SWIFT_VERSION to 3.0 fro every pod\n"
+    print "Setting the default SWIFT_VERSION to 3.0 for every pod\n"
     installer.pods_project.build_configurations.each do |config|
        config.build_settings['SWIFT_VERSION'] = '3.0'
     end
