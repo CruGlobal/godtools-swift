@@ -12,10 +12,10 @@ import RealmSwift
 typealias Languages = List<Language>
 
 class Language: Object {
-    dynamic var code = ""
-    dynamic var remoteId = ""
-    dynamic var shouldDownload = false
-    dynamic var direction = ""
+    @objc dynamic var code = ""
+    @objc dynamic var remoteId = ""
+    @objc dynamic var shouldDownload = false
+    @objc dynamic var direction = ""
     
     let translations = List<Translation>()
     

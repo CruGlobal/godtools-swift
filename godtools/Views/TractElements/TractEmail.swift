@@ -23,7 +23,7 @@ class TractEmail: BaseTractElement {
     
     // MARK: - Bindings
     
-    override func elementListeners() -> [String]? {
+   override func elementListeners() -> [String]? {
         let properties = emailProperties()
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
     }

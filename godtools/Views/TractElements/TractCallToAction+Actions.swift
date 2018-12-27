@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension TractCallToAction {
+@objc extension TractCallToAction {
     
     func moveToNextView() {
         NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)

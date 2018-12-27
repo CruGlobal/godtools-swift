@@ -12,7 +12,7 @@ import MessageUI
 
 extension TractViewController: MFMailComposeViewControllerDelegate {
     
-    func sendEmail(notification: Notification) {
+    @objc func sendEmail(notification: Notification) {
         if MFMailComposeViewController.canSendMail() {
             guard let dictionary = notification.userInfo as? [String: Any] else {
                 return

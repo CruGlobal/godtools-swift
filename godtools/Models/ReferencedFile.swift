@@ -10,6 +10,6 @@ import Foundation
 import RealmSwift
 
 class ReferencedFile: Object {
-    dynamic var filename = ""
+    @objc dynamic var filename = ""
     let translations = List<Translation>()
 }
