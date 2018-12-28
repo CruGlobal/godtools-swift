@@ -66,11 +66,11 @@ class ArticleManifestMetadata: NSObject {
             
             let content = json["jcr:content"]
 
-            if !content.isEmpty {
+            if !content.isEmpty && GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
 
-                if !GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
-                    return // not our template -> return
-                }
+//                if !GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
+//                    return // not our template -> return
+//                }
 
                 // this is our ArticleData
                 var data = ArticleData()

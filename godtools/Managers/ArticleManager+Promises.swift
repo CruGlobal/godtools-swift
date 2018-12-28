@@ -113,8 +113,15 @@ extension ArticleManager {
                     }
 
                     
+//#if false
+//                    let filePath = Bundle.main.path(forResource: "7", ofType: "json")
+//                    let s = try? String(contentsOfFile: filePath!)
+//                    let json = JSON(parseJSON: s!)
+//#else
                     // process each metadata json to get ArticleData from it
                     let json = JSON(jsonData)
+//#endif
+                    
                     let metadata = ArticleManifestMetadata(json: json, url:url)
                     let artData = metadata.processMetadata(tags:self.aemTags)
                     
