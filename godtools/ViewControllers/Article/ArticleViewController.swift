@@ -16,13 +16,8 @@ class ArticleViewController: BaseViewController {
     var articleManager = ArticleManager()
     
     var primaryLanguage: Language?
-    var parallelLanguage: Language?
-    var selectedLanguage: Language?
     var xmlPages: XMLArticlePages?
     var xmlPagesForPrimaryLang: XMLArticlePages?
-    var xmlPagesForParallelLang: XMLArticlePages?
-    var xmlCatgegoriesForPrimaryLang = [XMLArticleCategory]()
-    var xmlCategoriesForParalelLang = [XMLArticleCategory]()
     
     var refreshControl = UIRefreshControl()
 
@@ -38,8 +33,6 @@ class ArticleViewController: BaseViewController {
     static func create() -> ArticleViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
         return storyboard.instantiateViewController(withIdentifier: "ArticleViewControllerID") as! ArticleViewController
-
-//        return ArticleViewController(nibName: String(describing: ArticleViewController.self), bundle: nil)
     }
 
     @IBOutlet weak var tableView: UITableView! {
@@ -70,14 +63,18 @@ class ArticleViewController: BaseViewController {
         }
         
         registerCells()
-        loadLanguages()
+        primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         getResourceData(forceDownload: false)
-
     }
 
 
     
     func defineObservers() {
+        
+        articleManager.downloadStatusChanged = { downloading in
+            print("\(downloading)")
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .downloadPrimaryTranslationCompleteNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(articleProcessingDone), name: .articleProcessingCompleted, object: nil)
     }
@@ -120,70 +117,11 @@ class ArticleViewController: BaseViewController {
             return
             
         }
-        loadResourcesForLanguage(forceDownload: forceDownload)
-        loadResourcesForParallelLanguage(forceDownload: forceDownload)
-        usePrimaryLanguageResources()
+        
+        let _ = self.articleManager.loadResource(resource: self.resource!, language: primaryLanguage!, forceDownload: forceDownload)
     }
     
-    
-    
-    // Mark Languages handlers
-    
-    private func loadLanguages() {
-        guard let resource = resource else {
-            return
-        }
-        
-        let languagesManager = LanguagesManager()
-        
-        primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
-        
-        if resource.getTranslationForLanguage(primaryLanguage!) == nil {
-            primaryLanguage = languagesManager.loadFromDisk(code: "en")
-        }
-        
-        parallelLanguage = languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
-    }
 
-    func loadResourcesForLanguage(forceDownload: Bool) {
-        guard let language = resolvePrimaryLanguage() else { return }
-        guard let resource = resource else { return }
-        
-        let content = self.articleManager.loadResource(resource: resource, language: language, forceDownload: forceDownload)
-        self.xmlPagesForPrimaryLang = content.pages
-    }
-    
-    func loadResourcesForParallelLanguage(forceDownload: Bool) {
-        if parallelLanguageIsAvailable() {
-            let content = self.articleManager.loadResource(resource: self.resource!, language: parallelLanguage!, forceDownload: forceDownload)
-            self.xmlPagesForParallelLang = content.pages
-        }
-    }
-
-    func usePrimaryLanguageResources() {
-        self.selectedLanguage = resolvePrimaryLanguage()
-        self.xmlPages = self.xmlPagesForPrimaryLang
-    }
-    
-    func useParallelLanguageResources() {
-        self.selectedLanguage = parallelLanguage
-        self.xmlPages = self.xmlPagesForParallelLang
-    }
-
-    func parallelLanguageIsAvailable() -> Bool {
-        if parallelLanguage == nil {
-            return false
-        }
-        return resource!.isDownloadedInLanguage(parallelLanguage)
-    }
-
-    func resolvePrimaryLanguage() -> Language? {
-        if arrivedByUniversalLink {
-            return universalLinkLanguage
-        } else {
-            return primaryLanguage
-        }
-    }
 
 }
 

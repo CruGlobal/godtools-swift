@@ -113,7 +113,6 @@ extension XMLArticleCategory {
         
         
         // remove duplicates
-        let set = Set(arData)
         return Array(Set(arData)).sorted()
     }
     

@@ -105,15 +105,8 @@ extension ArticleManager {
                         print("Error while writing JSON file: \(error.localizedDescription)")
                     }
 
-                    
-//#if false
-//                    let filePath = Bundle.main.path(forResource: "7", ofType: "json")
-//                    let s = try? String(contentsOfFile: filePath!)
-//                    let json = JSON(parseJSON: s!)
-//#else
                     // process each metadata json to get ArticleData from it
                     let json = JSON(jsonData)
-//#endif
                     
                     let metadata = ArticleManifestMetadata(json: json, url:url)
                     let artData = metadata.processMetadata(tags:self.aemTags)
@@ -177,7 +170,8 @@ extension ArticleManager {
         
         guard let url = url else { return Promise(error: ArticleError.invalidURL) }
 
-        let finalURL = URL(string: url.cleanedPath + ".999.json")
+        // cache the same result for one hour
+        let finalURL = URL(string: url.cleanedPath + ".999.json?_=\(Int64( (NSDate().timeIntervalSince1970 / 3600.0).rounded() ))")
         let request = URLRequest(url: finalURL!)
         let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
         

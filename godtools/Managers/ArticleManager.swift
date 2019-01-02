@@ -47,6 +47,17 @@ class ArticleManager: GTDataManager {
     var articlesTempPath: String?
     var articleManifestFilename: String?
     
+    
+    var downloadStatus = false {
+        didSet {
+            if let closure = downloadStatusChanged {
+                closure(downloadStatus)
+            }
+        }
+    }
+    var downloadStatusChanged: ((Bool) -> Void)?
+    
+    
     func loadResource(resource: DownloadedResource, language: Language, forceDownload: Bool = false) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
         
         assert(resource.toolType == "article")
@@ -66,6 +77,8 @@ class ArticleManager: GTDataManager {
         articleManifestID = components.joined(separator: ".")
         articleManifestFilename = translation.manifestFilename
         articlesPath = documentsPath.appending("/WebCache/").appending(articleManifestID!).appending("/")
+        let articlesExist = FileManager.default.fileExists(atPath: articlesPath!)
+        
         articlesTempPath = NSTemporaryDirectory().appending("WebCache/").appending(articleManifestID!).appending("/")
         
         xmlData = loadXMLFile(manifestPath)
@@ -102,20 +115,23 @@ class ArticleManager: GTDataManager {
             categories.append(category)
         }
         
-        processManifest(uuid: articleManifestID, forceDownload: forceDownload)
+        processManifest(uuid: articleManifestID, shouldDownload: forceDownload || !articlesExist)
         
         return (pages!, categories, manifestProperties!)
     }
     
 
 
-    func processManifest(uuid: String?, forceDownload: Bool) {
+    func processManifest(uuid: String?, shouldDownload: Bool) {
         assert(manifestProperties != nil)
         
         let from = articlesTempPath!
         let to = articlesPath!
         
-        if forceDownload {
+        if shouldDownload {
+
+            downloadStatus = true
+            
             dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to, articleManifestID] _ -> Promise<Void> in
                 
                 do {
@@ -149,6 +165,11 @@ class ArticleManager: GTDataManager {
                 NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
                 
                 return Promise<Void>()
+            
+            }
+            .always {
+                
+                self.downloadStatus = false
             }
         }
         else {
