@@ -67,8 +67,6 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
-.ruby-version
-
 #fastlane
 fastlane/report.xml
 fastlane/screenshots
