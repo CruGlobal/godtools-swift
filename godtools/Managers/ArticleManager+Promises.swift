@@ -19,13 +19,6 @@ extension ArticleManager {
     func processManifestFromLocalData(manifestFilename:String?) -> Promise<Void> {
 
         // it actually does not need to do anything
-        
-//        let xmlData = loadXMLFile(manifestFilename!)
-//        let manifest = xmlData?["manifest"]
-//
-//        let pgs = XMLArticlePages(withXML: manifest!["pages"])
-//
-//        let ar = dirWithFilter(atPath: articlesPath!, filter: "json")
 
         return Promise<Void>()
     }
@@ -52,7 +45,7 @@ extension ArticleManager {
             let ar = Array(set).sorted()
             
             ar.forEach { (a) in
-                print("******\n  aem-tag: \(a.aemtag ?? "nil")\n  title:   \(a.title ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
+                print("******\n  aem-tag: \("nil")\n  title:   \(a.title ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
             }
             
 #endif

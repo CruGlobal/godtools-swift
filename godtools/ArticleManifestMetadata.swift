@@ -30,10 +30,8 @@ struct ArticleData: Codable, Hashable, Comparable {
     }
     
     var title: String?
-    var aemtag: String?
     var url: URL?
     var local: URL?
-    
 }
 
 
@@ -68,14 +66,10 @@ class ArticleManifestMetadata: NSObject {
 
             if !content.isEmpty && GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
 
-//                if !GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
-//                    return // not our template -> return
-//                }
 
                 // this is our ArticleData
                 var data = ArticleData()
                 data.title = content["jcr:title"].string
-//                data.uri = currentPath
                 data.url = self.url.appendingPathComponent(currentPath + ".html")
                 
                 // add to results, only if cq:tags are contained in manifest tags
@@ -87,8 +81,7 @@ class ArticleManifestMetadata: NSObject {
                     if result[tag] == nil {
                         result[tag] = Set()
                     }
-                    // back-reference it
-                    data.aemtag = tag
+
                     result[tag]!.insert(data)
 #if DEBUG
                     print("---------------- currentPath: \(tag):  \(currentPath)")
