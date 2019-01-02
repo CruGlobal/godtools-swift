@@ -121,7 +121,10 @@ class GTButton: UIButton {
     
     fileprivate func increaseTitleWidth() {
         var labelFrame = self.titleLabel?.frame
-        labelFrame?.size.width = (labelFrame?.size.width)! + 30
+        
+        // Warning: Overlapping accesses to 'labelFrame', but modification requires exclusive access; consider copying to a local variable
+//        labelFrame?.size.width = (labelFrame?.size.width)! + 30
+        labelFrame?.size.width += 30
         self.titleLabel?.frame = labelFrame!
     }
 

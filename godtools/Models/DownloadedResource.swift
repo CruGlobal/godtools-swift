@@ -17,13 +17,16 @@ class DownloadedResource: Object {
     dynamic var code = ""
     dynamic var copyrightDescription: String?
     dynamic var name = ""
+    dynamic var toolType = ""
     dynamic var descr: String?
     dynamic var remoteId = ""
     dynamic var shouldDownload = false
     dynamic var totalViews: Int32 = 0
     dynamic var myViews: Int32 = 0
+    
     let attachments = List<Attachment>()
     let translations = List<Translation>()
+    let categories =  List<Category>()
     
     override static func primaryKey() -> String {
         return "remoteId"

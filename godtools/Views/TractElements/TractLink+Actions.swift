@@ -18,7 +18,7 @@ extension TractLink {
         }
         let events = properties.events.components(separatedBy: " ")
         for event in events {
-            sendMessageToElement(listener: event)
+            _ = sendMessageToElement(listener: event)
         }
     }
     

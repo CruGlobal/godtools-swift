@@ -17,10 +17,13 @@ class DownloadedResourceJson: GodToolsJSONResource {
     var copyrightDescription = ""
     var bannerId = ""
     var aboutBannerId = ""
+    var toolType = ""
     var totalViews = NSNumber(integerLiteral: 0)
     
     var latestTranslations: [TranslationResource]?
     var attachments: [AttachmentResource]?
+    var categories: [CategoryResource]?
+
 }
 
 // Mark - JSONResource protocol functions
@@ -34,7 +37,9 @@ extension DownloadedResourceJson {
         return ["descr": "description",
                 "bannerId": "attr-banner",
                 "aboutBannerId": "attr-banner-about",
-                "totalViews": "total-views"]
+                "totalViews": "total-views",
+                "toolType": "resource-type",
+        ]
     }
     
     func includedObjectMappings() -> [String : JSONResource.Type] {

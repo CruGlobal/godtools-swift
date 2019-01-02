@@ -41,4 +41,10 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         pushViewController(viewController: viewController)
     }
     
+    func moveToArticle(resource: DownloadedResource) {
+        let viewController = ArticleViewController.create()
+        viewController.resource = resource
+        pushViewController(viewController: viewController)
+    }
+    
 }

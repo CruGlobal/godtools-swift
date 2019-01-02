@@ -9,7 +9,6 @@
 import Foundation
 import PromiseKit
 import Crashlytics
-import Alamofire
 
 class BannerManager: GTDataManager {
     let path = "attachments"

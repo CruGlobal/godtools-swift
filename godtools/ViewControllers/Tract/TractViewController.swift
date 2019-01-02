@@ -230,7 +230,7 @@ class TractViewController: BaseViewController {
         }
         
         // the space is intentional to separate any punctuation in the share message from the end of the URL
-        return shareURLString.appending("?icid=gtshare ")
+        return shareURLString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
     }
     
     // Notifications

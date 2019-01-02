@@ -69,9 +69,7 @@ extension AppDelegate {
         let pageNumber = parsePageNumberFrom(url) ?? 0
         
         let parallelLanguages = parseLanguagesFrom(url, usingKey: AppDelegate.kParallelLanguageKey)
-        for x in parallelLanguages {
-           // debugPrint("\(x.code)")
-        }
+
         var parallelLanguage: Language?
         
         // The language options needs more than 1 value because it will contain the known language at the end of the array and that won't be usable for parallel languages

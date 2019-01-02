@@ -45,7 +45,7 @@ class ToolsManager: GTDataManager {
         } else {
             predicate = NSPredicate(format: "shouldDownload = false")
         }
-        
+
         resources = findEntities(DownloadedResource.self, matching: predicate)
     }
 }
@@ -99,12 +99,10 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! HomeToolTableViewCell
         
-        if self.delegate is AddToolsViewController {
-            delegate?.didSelectTableViewRow!(cell: cell)
-            return
+        if !(self.delegate is AddToolsViewController) {
+            recordViewed(cell.resource!)
         }
         
-        recordViewed(cell.resource!)
         delegate?.didSelectTableViewRow!(cell: cell)
     }
     

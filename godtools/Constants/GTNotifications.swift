@@ -25,4 +25,5 @@ extension Notification.Name {
     static let actionTrackNotification = Notification.Name("actionTrackNotification")
     static let tractCardStateChangedNotification = Notification.Name("tractCardStateChanged")
 
+    static let articleProcessingCompleted = Notification.Name("articleDownloadCompleted")
 }
