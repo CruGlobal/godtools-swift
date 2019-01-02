@@ -61,7 +61,7 @@ extension TractForm {
             let trimmedInputText = input.textField.text?.trimmingCharacters(in: .whitespaces)
             let fieldName = nameForInput(input, properties: inputProperties)
             
-            if inputProperties.required && trimmedInputText?.characters.count == 0 {
+            if inputProperties.required && trimmedInputText?.count == 0 {
                 validationErrors.append(String(format: "required_field_missing".localized,
                                                fieldName.localizedCapitalized))
             }

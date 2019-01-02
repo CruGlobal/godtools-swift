@@ -67,6 +67,7 @@ extension TractManager {
             manifestProperties.resources[filename!] = resource
         }
         
+        
         return (pages, manifestProperties)
     }
     

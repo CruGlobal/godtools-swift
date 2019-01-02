@@ -13,6 +13,7 @@ protocol MasterHomeViewControllerDelegate {
     mutating func moveToUpdateLanguageSettings()
     mutating func moveToToolDetail(resource: DownloadedResource)
     mutating func moveToTract(resource: DownloadedResource)
+    mutating func moveToArticle(resource: DownloadedResource)
 }
 
 class MasterHomeViewController: BaseViewController  {
@@ -202,6 +203,9 @@ extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewCont
     
     func moveToTract(resource: DownloadedResource) {
         delegate?.moveToTract(resource: resource)
+    }
+    func moveToArticle(resource: DownloadedResource) {
+        delegate?.moveToArticle(resource: resource)
     }
     
 }

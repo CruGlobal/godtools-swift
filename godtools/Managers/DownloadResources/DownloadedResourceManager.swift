@@ -6,9 +6,7 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
-import Alamofire
 import PromiseKit
 import RealmSwift
 
@@ -27,7 +25,7 @@ class DownloadedResourceManager: GTDataManager {
         showNetworkingIndicator()
         
         let params = ["include": "latest-translations,attachments"]
-        
+
         return issueGETRequest(params)
             .then { data -> Promise<DownloadedResources> in
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -79,7 +77,6 @@ class DownloadedResourceManager: GTDataManager {
                 guard let attachments = remoteResource.attachments else { continue }
                 
                 for remoteAttachment in attachments {
-                    guard let remoteAttachment = remoteAttachment as? AttachmentResource else { continue }
                     let cachedAttachment = save(remoteAttachment: remoteAttachment)
                     cachedAttachment.resource = cachedResource
                 }
@@ -89,10 +86,9 @@ class DownloadedResourceManager: GTDataManager {
                 }
                 
                 guard let remoteTranslations = remoteResource.latestTranslations else { continue }
-                for remoteTranslationGeneric in remoteTranslations {
-                    guard let remoteTranslation = remoteTranslationGeneric as? TranslationResource else { continue }
+                for remoteTranslation in remoteTranslations {
                     let languageId = remoteTranslation.languageId
-                    let resourceId = remoteResource.id ?? "-1"
+                    let resourceId = remoteResource.id
                     let version = remoteTranslation.version.int16Value
                     
                     if translationShouldBeSaved(languageId: languageId, resourceId: resourceId, version: version) == false {
@@ -127,6 +123,7 @@ class DownloadedResourceManager: GTDataManager {
         cachedResource.code = remoteResource.abbreviation
         cachedResource.descr = remoteResource.descr
         cachedResource.name = remoteResource.name
+        cachedResource.toolType = remoteResource.toolType
         cachedResource.copyrightDescription = remoteResource.copyrightDescription
         cachedResource.bannerRemoteId = remoteResource.bannerId
         cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId

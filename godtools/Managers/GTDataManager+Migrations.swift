@@ -12,7 +12,7 @@ import RealmSwift
 extension GTDataManager {
     static func config() -> Realm.Configuration  {
         return Realm.Configuration(
-            schemaVersion: 8,
+            schemaVersion: 9,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
@@ -61,6 +61,14 @@ extension GTDataManager {
                         // Nothing to do!
                         // Realm will automatically detect new properties and removed properties
                         // And will update the schema on disk automatically
+                    })
+                }
+                if oldSchemaVersion < 9 {
+                    migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
+
+                        new!["toolType"] = "tract"
+                        
+                        
                     })
                 }
 
