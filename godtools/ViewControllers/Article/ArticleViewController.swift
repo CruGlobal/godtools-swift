@@ -63,7 +63,8 @@ class ArticleViewController: BaseViewController {
         }
         
         registerCells()
-        primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
+        // should be fixed to "en" for now
+        primaryLanguage = LanguagesManager().loadFromDisk(code: "en")
         getResourceData(forceDownload: false)
     }
 
