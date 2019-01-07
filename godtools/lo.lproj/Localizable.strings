@@ -1,0 +1,103 @@
+"language_onboard" = "60+ ພາສາ";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "ທ່ານໄດ້ດາວໂຫຼດເຄື່ອງມືທີ່ມີທັງໝົດ";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "ເຄື່ອງມືຂອງຂ້ອຍ";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "ຫາເຄື່ອງມື";
+
+"unavailable" = "ບໍ່ພ້ອມໃຊ້ງານ";
+// Onboarding
+"add_new_tools" = "ເພີ່ມເຄື່ອງມືໃໝ່ໃສ່";
+"set_your_languages" = "ຕິດຕັ້ງພາສາຂອງທ່ານໃສ່";
+"okay" = "ຕົກລົງ";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "ທົ່ວໄປ";
+"menu_share" = "ແບ່ງປັນ";
+"menu_legal" = "ກົດໝາຍ";
+"language_settings" = "ການຕັ້ງຄ່າພາສາ";
+// Tool Detail
+"about" = "ກ່ຽວກັບ";
+"help" = "ຊ່ອຍເຫຼືອ";
+"contact_us" = "ຕິດຕໍ່ພວກເຮົາ";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "ແບ່ງປັນ GodTools";
+"share_a_story_with_us" = "ແບ່ງປັນເລື່ອງລາວກັບພວກເຮົາ";
+"terms_of_use" = "ເງື່ອນໄຂການໃຊ້ງານ";
+"privacy_policy" = "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ";
+"copyright_info" = "ຂໍ້ມູນລິຂະສິດ";
+"share_god_tools_share_sheet_text" = "ນີ້ຄືລິ້ງສຳຫຼັບດາວໂຫຼດ ແອັບ ທີ່ພວກເຮົາກຳລັງຊອກຫາ:
+http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "ເພີ່ມເຄື່ອງມືໃສ່";
+
+"total_views" = "%d ຮັບຊົມ";
+"total_languages" = "%d ພາສາ";
+
+// Language Settings
+"primary_language" = "ພາສາຫຼັກ";
+"select_primary_language" = "ເລືອກພາສາຫຼັກ";
+"parallel_language" = "ພາສາທີ່ໄປຄູ່ກັນ";
+"select_parallel_language" = "ຄັດເລືອກພາສາທີ່ໄປຄູ່ກັນ";
+"share_god_tools_native_language" = "ແບ່ງປັນ GodTools ກັບຄົນອື່ນໃນພາສາທ້ອງຖິ່ນຂອງເຂົາ.";
+"not_every_tool_is_available" = "ບໍ່ມີເຄື່ອງມືໃດໆໃຫ້ບໍລິການໃນທຸກໆພາສາ.";
+
+// Settings
+"settings" = "ການຕິດຕັ້ງ";
+
+// Alert Controllers
+"download_error" = "ການດາວໂຫຼດບໍ່ຖືກຕ້ອງ";
+"language_download_error" = "ບໍ່ສາມາດດາວໂຫຼດພາສາທີ່ໃຊ້ໄດ້ໃນຂະນະນີ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ ຫຼືລອງໃໝ່ພາຍຫຼັງ.";
+"tract_loading_error_message" = "ມີປັນຫາໃນການເປີດແຫຼ່ງຂໍ້ມູນນີ້. ການດາວໂຫຼດອີກຄັ້ງໜຶ່ງອາດຈະແກ້ປັນຫານີ້ໄດ້.\n\nທ່ານຕ້ອງການດາວໂຫຼດອີກຄັ້ງ ຫຼືບໍ່?";
+"no_internet_title" = "ບໍ່ມີການເຊື່ອມຕໍ່ອິນເຕີເນັດ";
+"no_internet" = "ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ອິນເຕີເນັດຂອງທ່ານແລະລອງໃໝ່ອີກຄັ້ງ.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "ບໍ່ສາມາດດາວໂຫຼດເຄື່ອງມືຫຼ້າສຸດທີ່ເປັນພາສາອັງກິດໄດ້. ມີເຄື່ອງມືພາສາອັງກິດໃຫ້ໃຊ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ ຫຼືລອງໃໝ່ພາຍຫຼັງ.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "ເຄື່ອງມືຫຼ້າສຸດທີ່ເປັນພາສາອັງກິດສາມາດດາວໂຫຼດໄດ້.\n\nທ່ານຕ້ອງການຕິດຕັ້ງພາສາຫຼັກເປັນພາສາອັງກິດ ແລະດາວໂຫຼດແຫຼ່ງຂໍ້ມູນເຫຼົ່ານີ້ ຫຼືບໍ່?";
+
+// Actions
+"yes" = "ແມ່ນ";
+"no" = "ບໍ່";
+
+// Tract - Sharing
+"tract_share_message" ="ນີ້ຄືລິ້ງສຳຫຼັບເວັບໄຊ້ຂອງ ແອັບ ນີ້
+ %@.
+
+ທ່ານສາມາດມາໂອ້ລັມກັບພວກເຮົາໄດ້!";
+
+// Buttons
+"download" = "ດາວໂຫຼດ";
+"dismiss" = "ຍົກເລີກ";
+"done" = "ສຳເລັດແລ້ວ";
+"remove" = "ນຳອອກໄປ";
+"clear" = "ລຶບລ້າງ";
+
+// Alerts
+"error" = "ຜິດພາດ";
+"ok" = "ຕົກລົງ";
+"OK" = "ຕົກລົງ";
+"cancel" = "ຍົກເລີກ";
+"error_can_not_send_email" = "ບໍ່ມີການກຳນົດຄ່າອີເມວເທິງອຸປະກອນຂອງທ່ານ.";
+"required_field_missing" = "\"%@\" ເປັນພາກສະຫນາມຂໍ້ມູນທີ່ຈຳເປັນ.";
+
+// About
+"general_about_1" = "GodTools ຊ່ວຍໃຫ້ທ່ານແບ່ງປັນຄວາມສັດທາຂອງທ່ານໄດ້ ແບບງ່າຍໆ ແລະ ຊັດເຈນ.";
+"general_about_2" = "ອຸປະກອນເຫຼົ່ານີ້ຊ່ວຍໃຫ້ທ່ານອະທິບາຍໄດ້ຢ່າງໝັ້ນໃຈເຖິງວິທີ ທີ່ຈະເລີ່ມຕົ້ນຄວາມສຳພັນກັບພຣະຜູ້ເປັນເຈົ້າຜ່ານພຣະເຢຊູຄິດ, ເຖິງແມ່ນວ່າທ່ານຈະບໍ່ເຄີຍແບ່ງປັນຄວາມເຊື່ອ ຂອງທ່ານມາກ່ອນ, ຫຼືແມ່ນແຕ່ ຜູ້ຟັງບໍ່ໄດ້ໃຊ້ພາສາດຽວກັບທ່ານ.";
+"general_about_3" = "ເລືອກເຄື່ອງມືຕ່າງໆ ໄດ້ຕາມຄວາມຕ້ອງການຂອງທ່ານ ຫຼື ຜູ້ຟັງຂອງທ່ານ. ເຄື່ອງມືເຮົາບໍ່ໄດ້ມີຄົບທຸກພາສາ.";
+"general_about_4" = "ລິ້ງເພື່ອຄົ້ນຫາຂໍ້ມູນຕ່າງໆ ຢູ່ໜ້າສຸດທ້າຍຂອງແຕ່ລະເຄື່ອງມື.";
+"general_about_5" = "ໂປດເຊື່ອມຕໍ່ອິນເຕີເນັດເພື່ອດາວໂຫຼດເຄື່ອງມື ແລະ/ຫຼື ພາສາໃໝ່. ຫຼັງຈາກດາວໂຫຼດແລ້ວ, ທ່ານສາມາດໃຊ້ເຄື່ອງມືເຫຼົ່ານີ້ ຂະນະອັອບລາຍໄດ້.";
+"general_about_6" = "ຫາກມີຄຳຖາມ ຂໍ້ສະເໜີແນະນຳ ຫຼືຕ້ອງການຄວາມຊ່ວຍເຫຼືອ ໂປດຕິດເຮົາຕໍ່ທີ່ support@godtoolsapp.com";
+"general_about_7" = "ຄົ້ນຫາເຄື່ອງມືແບບອອນລາຍໄດຈາກ knowgod.com. ແລ້ວດາວໂຫຼດໄວ້ໃນເວັບໄຊ້ ຂອງທ່ານ!";
+"general_about_8" = "ເຂົ້າໄປທີ່ godtoolsapp.com ເພື່ອຊອກຫາຂໍ້ມູນເພີ່ມເຕີມ.";
+"general_about_9" = "ໃນການທີ່ທ່ານຈະເຜີຍແພ່ ຄວາມເຊື່ອ ຫຼື ສັດທາ ທີ່ທ່ານມີຕໍ່ພຣະຜູ້ເປັນເຈົ້າ, ໃຫ້ທ່ານຈື່ໄວ້ສະເໝີວ່າ ພຣະອົງເປັນຜູ້ປ່ຽນແປງຈິດໃຈ. ສະນັ້ນ ຂໍໃຫ້ເປີດໃຈຟັງຢ່າງເຂົ້າໃຈ.";
+"general_about_10" = "“ຈົ່ງໃຫ້ວາຈາຂອງເຈົ້າທັງຫຼາຍປະກອບດ້ວຍເມດຕາຄຸນຢູ່ສະເໝີ ປະສົມດ້ວຍເກືອ ເພື່ອເຈົ້າທັງຫຼາຍຈະໄດ້ຮູ້ວິທີຕອບທີ່ຖືກໃຈແກ່ທຸກຄົນ.” ໂກໂລຊາຍ 4:6";

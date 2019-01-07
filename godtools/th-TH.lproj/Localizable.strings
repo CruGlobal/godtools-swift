@@ -14,6 +14,9 @@
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";
 "set_your_languages" = "ตั้งค่าภาษา";
 "okay" = "โอเค";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "ทั่วไป";
 "menu_share" = "แชร์";
@@ -52,6 +55,8 @@
 "download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
 "language_download_error" = "ไม่สามารถดาวน์โหลดภาษาที่มีได้ตอนนี้ โปรดตรวจสอบการเชื่อมต่อหรือลองอีกครั้งภายหลัง";
 "tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้\n\nต้องการดาวน์โหลดอีกครั้งหรือไม่";
+"no_internet_title" = "ไม่มีการเชื่อมต่ออินเทอร์เน็ต";
+"no_internet" = "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต แล้วลองอีกครั้ง";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "ไม่สามารถดาวน์โหลดเครื่องมือภาษาไทยได้ตอนนี้ มีเครื่องมือภาษาอังกฤษให้บริการ โปรดตรวจสอบการเชื่อมต่อหรือลองใหม่ภายหลัง";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "ข้อผิดพลาด";
 "ok" = "โอเค";
+"OK" = "ตกลง";
+"cancel" = "ยกเลิก";
 "error_can_not_send_email" = "ไม่มีอีเมลที่กำหนดค่าในอุปกรณ์ของคุณ";
 "required_field_missing" = "\"%@\" เป็นช่องบังคับ";
 

@@ -1,3 +1,8 @@
+"language_onboard" = "70+ Languages";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "আমার সরঞ্জামগুলি";
 
@@ -9,6 +14,9 @@
 "add_new_tools" = "নতুন সরঞ্জাম যোগ করুন";
 "set_your_languages" = "আপনার ভাষা সেট করুন";
 "okay" = "ঠিক আছে";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "সাধারণ";
 "menu_share" = "ভাগ করুন";
@@ -72,6 +80,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "ভুল";
 "ok" = "থক আছে";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "আপনার ডিভাইসে কোনও কনফিগার করা ইমেল নেই.";
 "required_field_missing" = "\"%@\" একটি প্রয়োজনীয় ক্ষেত্র";
 

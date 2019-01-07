@@ -1,0 +1,101 @@
+"language_onboard" = "60+ Dillər";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Siz bütün mövcud alətləri yükləmisiniz.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Mənim alətlərim";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Alət tap";
+
+"unavailable" = "Mövcud deyil";
+// Onboarding
+"add_new_tools" = "Yeni alətlər əlavə edin";
+"set_your_languages" = "Dillərinizi təyin edin";
+"okay" = "Yaxşı";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "Ümumi";
+"menu_share" = "Paylaş";
+"menu_legal" = "Hüquqi";
+"language_settings" = "Dil parametrləri";
+// Tool Detail
+"about" = "Haqqında";
+"help" = "Kömək";
+"contact_us" = "Bizimlə əlaqə";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "GodTools-u paylaş";
+"share_a_story_with_us" = "Bizimlə hekayənizi paylaşın";
+"terms_of_use" = "İstifadə şərtləri";
+"privacy_policy" = "Məxfilik siyasəti";
+"copyright_info" = "Müəllif hüquqi haqqında məlumat";
+"share_god_tools_share_sheet_text" = "Buradan siz GodTools app-ı yükləyə bilərsiniz: 
+http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Alətlər əlavə edin";
+
+"total_views" = "%d baxış";
+"total_languages" = "%d dil";
+
+// Language Settings
+"primary_language" = "Əsas dil";
+"select_primary_language" = "Əsas dil seç";
+"parallel_language" = "Paralel dil";
+"select_parallel_language" = "Paralel dil seç";
+"share_god_tools_native_language" = "GodTools-u insanlarla onların ana dillərində paylaşın";
+"not_every_tool_is_available" = "Hər alət bütün dillərdə mövcud deyil";
+
+// Settings
+"settings" = "Parametrlər";
+
+// Alert Controllers
+"download_error" = "Yükləmə xətası";
+"language_download_error" = "Mövcud dillər hal-hazırda yüklənə bilmir. İnternet bağlantınızı yoxlayıb təkrar cəhd edin.";
+"tract_loading_error_message" = "Bu resursu açmaqda problem yarandı. Onu təkrar yükləmək çox vaxt problemi həll edir.\n\nOnu təkrar yükləmək istərdiniz?";
+"no_internet_title" = "İnterner bağlantısı yoxdur";
+"no_internet" = "Zəhmət olmasa internet bağlantınızı yoxlayıb yenidən cəhd edin.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Ən yeni ingilis dilli alətlər hal-hazırda yüklənə bilmir. İngilis dilli alətlər mövcuddur. İnternet bağlantınızı yoxlayıb təkrar cəhd edin.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Ən yeni ingilis dilli alətlər yüklənə bilir. \n\nƏsas dilinizi ingilis dili təyin edib bu resursları yükləmək istərdiniz?";
+
+// Actions
+"yes" = "Bəli";
+"no" = "Xeyr";
+
+// Tract - Sharing
+"tract_share_message" ="Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!";
+
+// Buttons
+"download" = "Yüklə";
+"dismiss" = "Burax";
+"done" = "Tamamdır";
+"remove" = "Sil";
+"clear" = "Təmizlə";
+
+// Alerts
+"error" = "Xəta";
+"ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Ləğv et";
+"error_can_not_send_email" = "Cihazınızda quraşdırılmış e-poçt yoxdur.";
+"required_field_missing" = "\"%@\" tələb olunan sahədir.";
+
+// About
+"general_about_1" = "GodTools sizə inancınızı asan və aydın yolla paylaşmağa kömək edir.";
+"general_about_2" = "Bu alətlər sizə İsa Məsih vasitəsilə Allahla münasibət qurmaq qaydalarını başqalarına əmin şəkildə izah etməyə kömək edir. Baxmayaraq ki, siz daha öncə inancınızı heç vaxt paylaşmamısınız və ya onlar fərqli dildə danışır.";
+"general_about_3" = "Özünüzün və auditoriyanın istəyindən asılı olaraq müxtəlif alətlərdən seçin. Bütün alətlər hər dildə mövcud deyil.";
+"general_about_4" = "Digər resurslara linklər hər alətin sonuna daxil edilib.";
+"general_about_5" = "Hər yeni alət və/ya dili yükləmək üçün onlayn bağlantı lazımdır. Yükləndikdək sonra offlayn rejimdə istifadə oluna bilər.";
+"general_about_6" = "Suallar? Təkliflər? Sorğular? support@godtoolsapp.com ünvanında bizimlə əlaqə saxlayın";
+"general_about_7" = "Bu alətlərin onlayn versiyası knowgod.com səhifəsindən əldə edilə bilər. Öz saytınıza keçirin!";
+"general_about_8" = "Daha ətraflı məlumat üçün godtoolsapp.com səhifəsini ziyarət edin.";
+"general_about_9" = "İnancınızı paylaşmaq təşəbbüsü götürdükdə yadda saxlayın ki, Allah ürəkləri dəyişəndir. Hər kəsi sevin və anlamaq üçün dinləyin.";
+"general_about_10" = "\"Qoyun söhbətiniz hər zaman zərif, duzlu olsun ki, hamıya nə cavab verəcəyinizi biləsiniz.\"
+Colossians 4.6";

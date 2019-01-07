@@ -14,6 +14,9 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
 "okay" = "确定";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "通用";
 "menu_share" = "分享";

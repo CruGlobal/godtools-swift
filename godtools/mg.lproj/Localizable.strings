@@ -1,3 +1,8 @@
+"language_onboard" = "70+ Languages";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Ireo Fitaovana";
 
@@ -9,6 +14,9 @@
 "add_new_tools" = "Hanampy Fitaovana vaovao";
 "set_your_languages" = "Safidio ny Teninao";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Ankapobeny";
 "menu_share" = "Mizara";
@@ -70,6 +78,8 @@
 // Alerts
 "error" = "Error";
 "ok" = "OK";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 

@@ -1,0 +1,134 @@
+"language_onboard" = "70+ भाषा";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "तुम्ही सर्व उपलब्ध साधने डाउनलोड केली आहेत.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "माझे साधने";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "साधने शोधा";
+
+"unavailable" = "अनुपलब्ध";
+// Onboarding
+"add_new_tools" = "टीपा
+आॅनबोर्डिंग
+नवीन साधने जोडा";
+"set_your_languages" = "आपली भाषा सेट करा";
+"okay" = "ठीक आहे
+";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "टिप्पणे
+मेनू
+सामान्य";
+"menu_share" = "सांगा
+";
+"menu_legal" = "कायदेशीर";
+"language_settings" = "भाषेच्या मांडण्या";
+// Tool Detail
+"about" = "विषयी
+";
+"help" = "मदत करा";
+"contact_us" = "आमच्याशी संपर्क करा";
+"preview_mode_translators_only" = "प्रीव्ह्यू मोड (फक्त भाषांतरकारांसाठी)";
+"share_god_tools" = "देवाची साधने अर्थात गाॅड्स टूलविषयी सांगा";
+"share_a_story_with_us" = "आम्हाला गोष्ट सांगा";
+"terms_of_use" = "उपयोग करण्याच्या अटी
+";
+"privacy_policy" = "गोपनीयता धोरण";
+"copyright_info" = "काॅपी राईट माहिती";
+"share_god_tools_share_sheet_text" = "येथे आपण गाॅड्स टूल अॅप डाऊनलोड करू शकता: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "टीपा
+साधने जोडा
+साधने जोडा
+";
+
+"total_views" = "
+%d मते";
+"total_languages" = "
+%d  भाषा";
+
+// Language Settings
+"primary_language" = "टीपा
+भाषेच्या मांडण्या
+मूळ भाषा";
+"select_primary_language" = "एका मूळ भाषेची निवड करा";
+"parallel_language" = "समांतर भाषा";
+"select_parallel_language" = "समांतर भाषेची निवड करा";
+"share_god_tools_native_language" = "कोणाला तरी त्यांच्या स्वदेशी भाषेत देवाची साधने याविषयी सांगा";
+"not_every_tool_is_available" = "प्रत्येक साधन प्रत्येक भाषेत उपलब्ध नसते";
+
+// Settings
+"settings" = "टीपा
+मांडणी
+मांडणी";
+
+// Alert Controllers
+"download_error" = "टीपा
+नियंत्रकांस सावध करा
+डाऊनलोडच्या चुका";
+"language_download_error" = "या वेळी उपलब्ध भाषा डाऊनलोड करता आल्या नाहीत. कृपा करून आपली कनेक्टिविटी तपासून पाहा अथवा नंतर प्रयत्न करा.";
+"tract_loading_error_message" = "हे साहित्य अर्थात रिसोर्स शोधण्यात समस्या होती. ते पुन्हा डाऊनलोड केल्यास बरेचदा ही समस्या दूर होते.\nआपण ते पुन्हा डाऊनलोड करू इच्छिता काय?\n";
+"no_internet_title" = "इंटरनेट कनेक्शन नाही";
+"no_internet" = "कृपया इंटरनेट कनेक्शन तपासून परत प्रयास करा";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "टीपा
+पहिल्यांदा “इंग्रजी” शब्द साधनांचे वर्णन करणारे विशेषण आहे आणि त्या जागे साधनांचे वर्णन करणारे विशेषण म्हणून ह्या भाषांतराच्या भाषेचे स्थानिक नाव टाकावे. दुसर्यांदा “इंग्रजी” भाषेचा शब्द देखील नाम आहे, परंतु ह्या भाषांतराच्या भाषेत भाषांतर केलेले “इंग्रजी” राहावे.
+या वेळी अद्यतन इंग्रजी साधने डाऊनलोड करता आली नाहीत. इंग्रजी साधने उपलब्ध आहेत. कृपा करून आपली कनेक्टिविटी तपासून पाहा अथवा नंतर प्रयत्न करा.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "टीपा\nपहिल्यांदा “इंग्रजी” शब्द साधनांचे वर्णन करणारे विशेषण आहे आणि त्या जागे साधनांचे वर्णन करणारे विशेषण म्हणून ह्या भाषांतराच्या भाषेचे स्थानिक नाव टाकावे. दुसर्यांदा “इंग्रजी” भाषेचा शब्द देखील नाम आहे, परंतु ह्या भाषांतराच्या भाषेत भाषांतर केलेले “इंग्रजी” राहावे.\n\nअगदी अलीकडील इंग्रजी साधने डाऊनलोड करता येऊ शकतात.\n\nआपण आपली मूळ भाषा इंग्रजीसोबत सेट कराल काय आणि हे रिसोर्सेस म्हणजे डाऊनलोड कराल काय? ";
+
+// Actions
+"yes" = "टीपा
+कृती
+होय ";
+"no" = "नाही";
+
+// Tract - Sharing
+"tract_share_message" ="टीपा 
+माहितीपत्रक - सांगणे
+हे लिंक आपणास पानाच्या वेब आवृत्तीकडे घेऊन जाईल ज्याचे आपण आज यापूर्वी सोबत अवलोकन केले आहे.  %@.आपण आणखी बोलू या!";
+
+// Buttons
+"download" = "टीपा
+बटने
+डाऊनलोड
+";
+"dismiss" = "बंद करा";
+"done" = "झाले ";
+"remove" = "काढून टाका
+";
+"clear" = "मिटवून टाका ";
+
+// Alerts
+"error" = "टीपा
+सावध
+चुका ";
+"ok" = "ठीक आहे
+";
+"OK" = "ओके";
+"cancel" = "रद्द करा";
+"error_can_not_send_email" = "आपल्या डिवाईसवर काॅन्फिगर्ड ईमेल नाही. ";
+"required_field_missing" = "\"%@\" जरूरी फिल्ड म्हणजे क्षेत्र आहे.";
+
+// About
+"general_about_1" = "टीपा
+विषयी
+गाॅड टूल्स म्हणजे देवाची साधने आपणास सोप्या व स्पष्ट पद्धतीने आपल्या विश्वासाविषयी सांगण्यात मदत करतात.";
+"general_about_2" = "पण आपल्या विश्वासाविषयी पूर्वी कधी सांगितले नसतांनाही अथवा ते वेगळी भाषा बोलत असतांनाही, ही साधने आत्मविश्वासाने एखाद्याला हे समजाविण्यात मदत करतात की ते कशाप्रकारे येशू ख्रिस्ताद्वारे देवासोबत आपल्या नात्याची सुरूवात करू शकतात.
+";
+"general_about_3" = "आपल्या पसंतीच्या आधारे व आपल्या श्रोत्यांनुसार वेगवेगळ्या साधनांतून निवड करा. प्रत्येक भाषेत सर्वच साधने उपलब्ध नाहीत.";
+"general_about_4" = "प्रत्येक साधनाच्या शेवटी इतर रिसोर्सेस अथवा माहितीसाठी लिंक्सचा समावेश करण्यात आला आहे.";
+"general_about_5" = "प्रत्येक नवीन साधन आणि/अथवा डाऊलोड करण्यासाठी आॅनलाईन कनेक्शनची गरज आहे. डाऊनलोड केल्यानंतर त्यांना आॅफलाईन उपयोग करता येते.";
+"general_about_6" = "प्रश्न? प्रस्ताव? विनंती? आमच्याशी येथे संपर्क साधा support@godtoolsapp.com";
+"general_about_7" = "ह्या साधनांची आॅनलाईन आवृत्ती येथे आढळून येईल ादवूहवकण्बवउ ती आपल्या साईटवर एम्बेड करा!";
+"general_about_8" = "अधिक माहितीसाठी godtoolsapp.com ला भेट द्या.";
+"general_about_9" = "आपल्या विश्वासाविषयी सांगण्यासाठी पहिले पाऊल घेत असतांना, आपण हे लक्षात ठेवा की अंतःकरणे बदलणारा देव आहे.  समजण्यासाठी प्रत्येक व्यक्तीचे ऐकण्याद्वारे प्रत्येक व्यक्तीवर उत्तमप्रकारे प्रीती करा.";
+"general_about_10" = "“तुमचे बोलणे सर्वदा कृपायुक्त, मिठाने रूचकर केल्यासारखे असावे, म्हणजे प्रत्येकाला कसकसे उत्तर द्यावयाचे हे तुम्ही समजावे” कलस्सैकरांस पत्र 4:6";

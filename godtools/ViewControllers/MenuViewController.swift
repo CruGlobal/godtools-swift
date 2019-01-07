@@ -355,7 +355,7 @@ extension MenuViewController {
     }
     
     fileprivate func openTermsOfUse() {
-        let url = URL(string: "http://www.godtoolsapp.com/user-agreement/")
+        let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
         self.delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
     }
     
