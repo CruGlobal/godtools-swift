@@ -56,9 +56,6 @@
 "download_error" = "Shkarkuar gabim";
 "language_download_error" = "Gjuhët e disponueshme nuk mund të shkarkohen në këtë kohë.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 "tract_loading_error_message" = "Kishte probleme ndërsa po hapej materiali.\nShkarkoje përsëri ,kjo shpesh e zgjidh problemin.\n\nDo doje të provoje ta shkarkoje përsëri?";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Mjetet e fundit nuk mund të shkarkohen  për momentin.Por janë të disponueshme në Anglisht.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 

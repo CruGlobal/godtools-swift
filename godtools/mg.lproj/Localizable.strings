@@ -55,9 +55,6 @@
 "download_error" = "Download Error";
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
 "tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\nWould you like to download it again?";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
 

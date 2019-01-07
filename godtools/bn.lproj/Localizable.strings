@@ -56,9 +56,6 @@ http://godtoolsapp.com";
 "download_error" = "ডাউনলোড এরর";
 "language_download_error" = "এই সময়ে উপলব্ধ ভাষার ডাউনলোড করা উপলব্ধ নয়. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
 "tract_loading_error_message" = "এই পুজি খোলার দরুন একটা সমস্যা হয়েছে. পুনরয় ডাউনলোড করলে বেশিরভাগ সমসস্যা সমাধান করে থাকে.\n\nকি আপনি এটি পুনুরায় ডাউনলোড করতে চান?";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "এই মুহুর্তে সর্বশেষ ইংরেজি সরঞ্জামগুলি ডাউনলোড করা যায়নি. ইংরেজি সরঞ্জাম উপলব্ধ. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
 
