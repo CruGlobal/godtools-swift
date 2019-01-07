@@ -14,6 +14,9 @@
 "add_new_tools" = "Dodaj Nowe Narzędzia";
 "set_your_languages" = "Ustaw języki";
 "okay" = "Okej";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Ogólne";
 "menu_share" = "Udostępnij";
@@ -53,6 +56,8 @@ http://godtoolsapp.com";
 "download_error" = "Błąd pobrania";
 "language_download_error" = "Nie można obecnie pobrać dostępnych języków. Sprawdź połączenie lub spróbuj ponownie później.";
 "tract_loading_error_message" = "Podczas otwierania tego zasobu wystąpił problem. Ponowne jego pobranie zazwyczaj rozwiązuje problem.\n\nCzy pobrać ponownie?";
+"no_internet_title" = "Brak połączenia internetowego";
+"no_internet" = "Sprawdź swoje połączenie internetowe i spróbuj ponownie.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Nie można obecnie pobrać najnowszych narzędzi w języku angielskim. Narzędzia w języku angielskim są dostępne. Sprawdź połączenie lub spróbuj ponownie później.";
@@ -77,6 +82,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "Błąd";
 "ok" = "OK";
+"OK" = "Ok";
+"cancel" = "Anuluj";
 "error_can_not_send_email" = "Na Twoim urządzeniu nie ma skonfigurowanego adresu e-mail.";
 "required_field_missing" = "\"%@\" jest polem wymaganym.";
 

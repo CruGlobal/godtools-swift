@@ -14,6 +14,9 @@
 "add_new_tools" = "Ajouter de Nouveaux Outils";
 "set_your_languages" = "Définissez vos langues";
 "okay" = "Ok";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Général";
 "menu_share" = "Partager";
@@ -53,6 +56,8 @@ http://godtoolsapp.com";
 "download_error" = "Erreur de téléchargement";
 "language_download_error" = "Les langues disponibles n'ont pas pu être téléchargées. Veillez vérifier votre connexion et réessayez plus tard.";
 "tract_loading_error_message" = "Un problème est survenu lors de l'ouverture de cet outil. La télécharger à nouveau résout souvent ce problème.\n\nVoulez-vous le télécharger à nouveau ?";
+"no_internet_title" = "Aucune connexion Internet";
+"no_internet" = "Veuillez vérifier votre connexion Internet et réessayer.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Les derniers outils français actuellement ne peuvent pas se télécharger. Les outils anglais sont disponibles pour l'instant. Veillez vérifier votre connexion et réessayez plus tard. ";
@@ -77,6 +82,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "Erreur";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Annuler";
 "error_can_not_send_email" = "Il n'y a aucun e-mail configuré sur cet appareil.";
 "required_field_missing" = "\"%@\" est un champ obligatoire.";
 

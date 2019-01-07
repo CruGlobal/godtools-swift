@@ -14,6 +14,9 @@
 "add_new_tools" = "Pievienot jaunus rīkus";
 "set_your_languages" = "Iestatīt jūsu valodas";
 "okay" = "Labi";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Vispārīgi";
 "menu_share" = "Dalīties";
@@ -52,6 +55,8 @@
 "download_error" = "Lejupielādes kļūda";
 "language_download_error" = "Šoreiz pieejamās valodas nav iespējams lejupielādēt. Lūdzu, pārbaudiet pieslēgumu vai mēģiniet vēlreiz.";
 "tract_loading_error_message" = "Resursa atvēršanas kļūda. Atkārtota lejupielāde bieži palīdz atrisināt šo problēmu. \n\nVai vēlaties lejupielādēt atkārtoti?";
+"no_internet_title" = "Nav savienojuma ar internetu";
+"no_internet" = "Lūdzu, pārbaudiet savienojumu ar internetu un mēģiniet vēlreiz.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Jaunākos latviešu valodas rīkus nav iespējams lejupielādēt. Ir pieejami rīki angļu valodā. Lūdzu, pārbaudiet pieslēgumu vai mēģiniet vēlāk.";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "Kļūda";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Atcelt";
 "error_can_not_send_email" = "Jūsu ierīcē nav iestatīts e-pasts.";
 "required_field_missing" = "\"%@\" ir obligāts lauks.";
 

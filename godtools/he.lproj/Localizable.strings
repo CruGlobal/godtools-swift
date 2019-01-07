@@ -1,0 +1,102 @@
+"language_onboard" = "60+ שפות";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "הורדתם את כל הכלים הזמינים.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "הכלים שלי";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "חפש כלים";
+
+"unavailable" = "לא זמין";
+// Onboarding
+"add_new_tools" = "הוסיפו כלים חדשים";
+"set_your_languages" = "הגדירו את השפה שלכם";
+"okay" = "בסדר";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "כללי";
+"menu_share" = "שתף";
+"menu_legal" = "חוקיות";
+"language_settings" = "הגדרות שפה";
+// Tool Detail
+"about" = "אודות";
+"help" = "עזרה";
+"contact_us" = "צרו איתנו קשר";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "שתפו את GodTools";
+"share_a_story_with_us" = "שתפו איתנו סיפור";
+"terms_of_use" = "תנאי שימוש";
+"privacy_policy" = "מדיניות פרטיות";
+"copyright_info" = "מידע זכויות יוצרים";
+"share_god_tools_share_sheet_text" = "אתם יכולים להוריד את אפליקציית GodTools כאן:
+ http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "הוסף כלים";
+
+"total_views" = "%d צפיות";
+"total_languages" = "%d שפות";
+
+// Language Settings
+"primary_language" = "שפה ראשית";
+"select_primary_language" = "בחרו שפה ראשית";
+"parallel_language" = "שפה מקבילה";
+"select_parallel_language" = "בחרו שפה מקבילה";
+"share_god_tools_native_language" = "שתפו את GodTools עם מישהו בשפת האם שלהם.";
+"not_every_tool_is_available" = "לא כל כלי זמין בכל שפה";
+
+// Settings
+"settings" = "הגדרות";
+
+// Alert Controllers
+"download_error" = "שגיאה בהורדה";
+"language_download_error" = "לא ניתן להוריד את השפות הזמינות בזמן זה. יש לבדוק את החיבור או לנסות מאוחר יותר.";
+"tract_loading_error_message" = "הייתה בעיה בפתיחת משאב זה. הורדתו שוב לעתים קרובות פותרת את הבעיה.\n\nהאם ברצונכם להוריד אותו שוב?";
+"no_internet_title" = "אין חיבור לאינטרנט";
+"no_internet" = "אנא בדקו את חיבור האינטרנט שלם ונסו שוב.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "לא ניתן להוריד את הכלים האחרונים באנגלית כרגע. כלים באנגלית זמינים. בדקו את הקישוריות שלכם או נסו שוב מאוחר יותר.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "ניתן להוריד את הכלים העדכניים ביותר באנגלית.\n\nהאם ברצונך להגדיר את השפה הראשית שלך לאנגלית ולהוריד את המשאבים האלה?";
+
+// Actions
+"yes" = "כן";
+"no" = "לא";
+
+// Tract - Sharing
+"tract_share_message" ="קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר!";
+
+// Buttons
+"download" = "הורד";
+"dismiss" = "שחרר";
+"done" = "סיים";
+"remove" = "הסר";
+"clear" = "נקה";
+
+// Alerts
+"error" = "שגיאה";
+"ok" = "בסדר";
+"OK" = "בסדר";
+"cancel" = "בטל";
+"error_can_not_send_email" = "אין דוא\"ל מוגדר במכשירך";
+"required_field_missing" = "\"%@\" הינו שדה חובה.";
+
+// About
+"general_about_1" = "GodTools עוזר לך לשתף את האמונה שלך בדרך קלה ופשוטה.";
+"general_about_2" = "כלים אלה מסייעים לך להסביר בביטחון למישהו איך הם יכולים להתחיל מערכת יחסים עם אלוהים דרך ישוע המשיח, גם אם מעולם לא שיתפת את האמונה שלך או שהם מדברים בשפה אחרת.";
+"general_about_3" = "בחרו ממגוון כלים בהתאם להעדפות ולקהל שלכם. לא כל הכלים זמינים בכל השפות.";
+"general_about_4" = "קישורים למשאבים אחרים כלולים בסופו של כל כלי.";
+"general_about_5" = "דרוש חיבור מקוון בכדי להוריד כל כלי חדש ו/או שפה. לאחר ההורדה, ניתן להשתמש בהם ללא חיבור.";
+"general_about_6" = "שאלות? הצעות? בקשות? צור קשר בכתובת
+support@godtoolsapp.com";
+"general_about_7" = "ניתן למצוא גרסה מקוונת של כלים אלה בכתובת knowgod.com. הטמע אותו באתר שלך!";
+"general_about_8" = "בקרו באתר godtoolsapp.com בשביל עוד מידע.";
+"general_about_9" = "כאשר אתה לוקח את היוזמה לחלוק את האמונה שלך, זכור כי אלוהים הוא אשר משנה את הלב. אהוב כל אדם טוב על ידי הקשבה להבנה.";
+"general_about_10" = "\"יהיו נא דבריכם מלווים תמיד בחן ומתבלים במלח, באפן שתדעו איך להשיב לכל שואל.\"
+קולוסים 4:6";

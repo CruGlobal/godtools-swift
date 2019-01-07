@@ -14,6 +14,9 @@
 "add_new_tools" = "Ongeza Vifaa Vipya";
 "set_your_languages" = "Weka Lugha Zako";
 "okay" = "Sawa";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Kuu";
 "menu_share" = "Shirikisha";
@@ -53,6 +56,8 @@ http://godtoolsapp.com";
 "download_error" = "Makosa ya Upakuzi";
 "language_download_error" = "Lugha zilizopo hazikuweza kupakuliwa kwa wakati huu.  Tafadhali angalia uunganisho wako au ujaribu tena baadaye.";
 "tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo.\n\nJe, ungependa kupakua rasilimali hii tena?";
+"no_internet_title" = "Hakuna muunganisho wa mtandao.";
+"no_internet" = "Tafadhali angalia muunganisho wako wa mtandao na ujaribu tena.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Vifaa vya hivi karibuni ve Kiingereza havingeweza kupakuliwa kwa wakati huu. Vifaa vya Kiingereza vinapatikana. Tafadhali angalia uunganisho wako ama ujaribu tena baadaye.";
@@ -77,6 +82,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "Kosa";
 "ok" = "Sawa";
+"OK" = "Sawasawa";
+"cancel" = "Futa";
 "error_can_not_send_email" = "Hakuna barua pepe iliyowekwa kwenye kifaa chako.";
 "required_field_missing" = " \"%@\" ni sharti ambalo lazima litimizwe.";
 

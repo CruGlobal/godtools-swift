@@ -14,6 +14,9 @@
 "add_new_tools" = "Добавете нови средства";
 "set_your_languages" = "Настройте Вашите езици";
 "okay" = "ОК";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Общи условия";
 "menu_share" = "Споделете";
@@ -52,6 +55,8 @@
 "download_error" = "Грешка в изтеглянето";
 "language_download_error" = "Неуспешно изтегляне на наличните езици. Моля, проверете Вашата връзка или опитайте отново по-късно.";
 "tract_loading_error_message" = "Имаше проблем с отварянето на този източник. Повторното му изтегляне често разрешава този проблем.\n\nИскате ли да го изтеглите отново?";
+"no_internet_title" = "Няма връзка с интернет";
+"no_internet" = "Моля, проверете връзката с интернет и опитайте отново.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Неуспешно изтегляне на най-новите инструменти на английски език. Налични са инструменти на английски език. Моля, проверете Вашата връзка или опитайте отново по-късно.";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "Грешка";
 "ok" = "ОК";
+"OK" = "OK";
+"cancel" = "Отмяна";
 "error_can_not_send_email" = "Няма конфигуриран имейл на Вашето устройство.";
 "required_field_missing" = "\"%@\" е задължително поле.";
 

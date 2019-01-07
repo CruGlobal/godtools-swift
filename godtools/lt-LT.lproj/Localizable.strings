@@ -1,0 +1,99 @@
+"language_onboard" = "60+ kalbų";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Mano įrankiai";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Rasti įrankius";
+
+"unavailable" = "Nėra";
+// Onboarding
+"add_new_tools" = "Pridėti naujus įrankius";
+"set_your_languages" = "Nustatyti savo kalbas";
+"okay" = "Gerai";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "Bendra";
+"menu_share" = "Dalytis";
+"menu_legal" = "Teisė";
+"language_settings" = "Kalbos nustatymai";
+// Tool Detail
+"about" = "Apie";
+"help" = "Pagalba";
+"contact_us" = "Susisiekite su mumis";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "Dalytis „GodTools“";
+"share_a_story_with_us" = "Dalytis istorija su mumis";
+"terms_of_use" = "Naudojimosi sąlygos";
+"privacy_policy" = "Privatumo politika";
+"copyright_info" = "Autoriaus teisių informacija";
+"share_god_tools_share_sheet_text" = "Čia galite parsisiųsti „GodTools“ programėlę: http://godtoolsapp.com";
+
+// Add Tools
+"add_tools" = "Pridėti įrankius";
+
+"total_views" = "%d peržiūros";
+"total_languages" = "%d kalbos";
+
+// Language Settings
+"primary_language" = "Pagrindinė kalba";
+"select_primary_language" = "Pasirinkite pagrindinę kalbą";
+"parallel_language" = "Paralelinė kalba";
+"select_parallel_language" = "Pasirinkite paralelinę kalbą";
+"share_god_tools_native_language" = "Pasidalykite „GodTools“ su kitais jų gimtąja kalba";
+"not_every_tool_is_available" = "Ne kiekvienas įrankis pateikiamas kiekviena kalba";
+
+// Settings
+"settings" = "Nustatymai";
+
+// Alert Controllers
+"download_error" = "Parsisiuntimo klaida";
+"language_download_error" = "Šiuo metu siūlomų kalbų nepavyko parsisiųsti. Patikrinkite savo ryšį arba pabandykite dar kartą vėliau.";
+"tract_loading_error_message" = "Atidarant šį išteklių, iškilo problema. Problema dažniausiai pašalinama parsisiuntus jį iš naujo.\n\nAr norėtumėte parsisiųsti jį dar kartą?";
+"no_internet_title" = "Nėra interneto ryšio";
+"no_internet" = "Patikrinkite savo interneto ryšį ir bandykite dar kartą.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Šiuo metu nepavyko parsisiųsti naujausių lietuviškų įrankių. Siūlomi įrankiai anglų kalba. Patikrinkite savo ryšį arba pabandykite dar kartą vėliau.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Galima parsisiųsti naujausius lietuviškus įrankius.\n\nAr norėtumėte nustatyti lietuvių savo pagrindine kalba ir parsisiųsti šiuos išteklius.";
+
+// Actions
+"yes" = "Taip";
+"no" = "Ne";
+
+// Tract - Sharing
+"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį kartu paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. Pakalbėkime daugiau!";
+
+// Buttons
+"download" = "Parsisiųsti";
+"dismiss" = "Atmesti";
+"done" = "Atlikta";
+"remove" = "Pašalinti";
+"clear" = "Išvalyti";
+
+// Alerts
+"error" = "Klaida";
+"ok" = "Gerai";
+"OK" = "GERAI";
+"cancel" = "Atšaukti";
+"error_can_not_send_email" = "Jūsų įrenginyje nėra konfigūruoto el. pašto.";
+"required_field_missing" = "„%@“ yra reikalingas laukelis.";
+
+// About
+"general_about_1" = "„GodTools“ padeda jums dalytis tikėjimu lengvu ir aiškiu būdu.";
+"general_about_2" = "Įrankiai padės jums konfidencialiai paaiškinti kitam asmeniui, kaip jis gali užmegzti ryšį su Dievu per Jėzų Kristų net jei niekada anksčiau nesidalijote tikėjimu arba kalbate kita kalba.";
+"general_about_3" = "Pasirinkite iš įvairių įrankių pagal tai, kas labiau patinka ir pagal savo auditoriją. Ne visi įrankiai pateikiami kiekviena kalba.";
+"general_about_4" = "Kiekvieno įrankio gale pateikiamos nuorodos į kitus išteklius.";
+"general_about_5" = "Norint parsisiųsti kiekvieną naują įrankį ir (arba) kalbą, reikalingas interneto ryšys. Parsisiuntus, juos galima naudoti neprisijungus.";
+"general_about_6" = "Klausimai? Pasiūlymai? Prašymai? Susisiekite su mumis adresu support@godtoolsapp.com";
+"general_about_7" = "Internetinė šių įrankių versija pateikiama knowgod.com. Įterpkite ją savo svetainėje!";
+"general_about_8" = "Jei norite daugiau informacijos, apsilankykite godtoolsapp.com.";
+"general_about_9" = "Imdamiesi iniciatyvos pasidalyti savo tikėjimu, nepamirškite, kad tai Dievas keičia širdį. Suteikite kiekvienam asmeniui meilės išklausydami ir suprasdami.";
+"general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";

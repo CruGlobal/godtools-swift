@@ -1,0 +1,100 @@
+"language_onboard" = "60+ மொழிகளை";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "என் உபகரணங்கள்";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "உபகரணங்களை தேடு";
+
+"unavailable" = "தொகுப்பில் இல்லை";
+// Onboarding
+"add_new_tools" = "புதிய உபகரணங்களை சேர்க்கவும்";
+"set_your_languages" = "உங்கள் மொழிகளை அமைக்கவும்";
+"okay" = "சரி";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "பொதுவான";
+"menu_share" = "பகிர்";
+"menu_legal" = "சட்டம் சம்பந்தப்பட்ட";
+"language_settings" = "மொழி அமைப்புகள்";
+// Tool Detail
+"about" = "பற்றி";
+"help" = "உதவி";
+"contact_us" = "எங்களை தொடர்புகொள்ள";
+"preview_mode_translators_only" = "முற்காட்சி முகடு (மொழிபெயர்ப்பார்களுக்கு மட்டும்)";
+"share_god_tools" = "காட்டூல்ஸ் பகிர்";
+"share_a_story_with_us" = "ஒரு நிகழ்வை பகிர்ந்துகொள்ளுங்கள்";
+"terms_of_use" = "உபயோக விதிமுறைகள்";
+"privacy_policy" = "இரகசியகாப்பு கொள்கை";
+"copyright_info" = "பதிப்புரிமை தகவல்";
+"share_god_tools_share_sheet_text" = "இங்கே நீங்கள் காட்-டூல்ஸ் செயலியை பதிவிறக்கம் செய்திடலாம்   http://godtoolsapp.com                            ";
+
+// Add Tools
+"add_tools" = "Add Tools";
+
+"total_views" = "%d views";
+"total_languages" = "%d languages";
+
+// Language Settings
+"primary_language" = "பிரதான மொழி";
+"select_primary_language" = "பிரதான மொழியை தேர்வு செய்யுங்கள்";
+"parallel_language" = "இணை மொழி";
+"select_parallel_language" = "இணை மொழியை தெரிந்தெடுங்கள்";
+"share_god_tools_native_language" = "காட்டூல்ஸ்-யை இன்னொருவருடன் அவரது தாய்மொழியில் பகிர்ந்திடுங்கள் ";
+"not_every_tool_is_available" = "எல்லா உபகரணங்களும் எல்லா மொழியிலும்  இல்லை";
+
+// Settings
+"settings" = "அமைப்புகள்";
+
+// Alert Controllers
+"download_error" = "பதிவிறக்க பிழை";
+"language_download_error" = "கிடைக்கபெறு மொழிகளை இப்பொழுது பதிவிறக்கம் செய்யமுடியாது. உங்களுடைய தொடர்பினை சரிபார்க்கவும் அல்லது பின்னர் முயற்சிக்கவும்";
+"tract_loading_error_message" = "இந்த மூலகோப்பை திறப்பதில் பிரச்சனை உள்ளது.  மறுபடியும் பதிவிறக்கம் செய்வது பிரச்சனைக்கு தீர்வை கொண்டுவரும்.    இதை மறுபடியும் பதிவிறக்கம் செய்ய விரும்புகிறீரா?";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "சமீபத்திய தமிழ் உபகரணங்களை இப்போது பதிவிறக்கம் செய்யமுடியாது.  ஆங்கில உபகரணங்கள் உள்ளன.  உங்களுடைய தொடர்பினை சரிபாருங்கள் அல்லது பின்னர் முயற்சியுங்கள்";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "சமீபத்திய ஆங்கில உபகரணங்களை  இப்போது பதிவிறக்கம் செய்யலாம்\n\nஉங்களுடைய பிரதான மொழியாக  தமிழை அமைத்து இந்த ஆதாரங்களை பதிவிறக்கம் செய்யவேண்டும்";
+
+// Actions
+"yes" = "ஆம்";
+"no" = "இல்லை";
+
+// Tract - Sharing
+"tract_share_message" ="இந்த இணைப்பானது இன்றைக்கு நாம்  கவனித்த பக்கத்தின் வலைதள பதிவுக்கு உங்களை கொண்டுசெல்லும்%@.  இதனைக் குறித்து  கூடுதலாய் கவனிப்போம்";
+
+// Buttons
+"download" = "பதிவிறக்கம் செய்க";
+"dismiss" = "ரத்து செய்க";
+"done" = "முடிந்தது";
+"remove" = "அகற்று";
+"clear" = "தெளிவாக்கு";
+
+// Alerts
+"error" = "Error";
+"ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Cancel";
+"error_can_not_send_email" = "உங்களுடைய சாதனத்திலே கட்டமைக்கப்பட்ட மின்னஞ்சல் இல்லை";
+"required_field_missing" = "\"%@\" is a required field.";
+
+// About
+"general_about_1" = "காட்டூல்ஸ் உங்களுடைய நம்பிக்கையை  எளிய் முறையில் தெளிவாக பகிர்ந்துகொள்ள உதவுகிறது";
+"general_about_2" = "இதற்கு முன்பாக உங்கள் நம்பிக்கையை வேறு ஒருவருடன், குறிப்பாய் வேறு மொழி பேசும் ஒருவருடன் பகிர்ந்திடவே இல்லை என்றாலும், இந்த உபகரணத்தை பயன்படுத்தி ஒருவர் இ யேசு கிறிஸ்துவின் மூலமாக  தேவனோடு உறவை எப்படி   
+ ஏற்படுத்திடலாம்   என்பதை தைரியமாக விளக்கலாம்";
+"general_about_3" = "உங்களுடைய விருப்பதேர்வு மற்றும் உங்களுடைய நேயர்களை மனதில்கொண்டு பல்வேறு உபகரணங்களிலிருந்து ஒன்றை தெரிந்தெடுங்கள்";
+"general_about_4" = "மற்ற ஆதாரங்களின் இணைப்புகள் ஒவ்வொரு உபகரணத்தின் முடிவிலும் சேர்க்கப்பட்டுள்ளது";
+"general_about_5" = "ஒவ்வொரு புதிய உபகரணம் மற்றும்/அல்லது மொழியினை பதிவிறக்கம் செய்ய இணைய இணைப்பு அவசியம்.  பதிவிறக்கம் செய்தவுடன், அவைகளை இணைய இணைப்பின்றி பயன்படுத்திடலாம்";
+"general_about_6" = "கேள்விகள்? ஆலோசனைகள்? வேண்டுகோள்கள்? support@godtoolsapp.com தொடர்புகொள்ளுங்கள்";
+"general_about_7" = "இந்த உபகரணங்களின் இணைய பதிவினை knowgod.com இணையதளத்தில் கண்டுபிடிக்கலாம்.  அதனை உங்களுடைய சொந்த வலைதளத்தில் கிடத்துக";
+"general_about_8" = "கூடுதலான தகவலுக்கு godtoolsapp.com வருகை தாருங்கள்";
+"general_about_9" = "உங்களுடைய நம்பிக்கையை பகிர்ந்துகொள்ள முயற்சி எடுக்கின்ற இந்த வேளையிலே, இருதயங்களை மாற்றக்கூடியவர் கர்த்தர் ஒருவரே என்பதை நினைவில்கொள்ளுங்கள்.  ஒருவரை புரிந்துகொள்ளும்படிக்கு  அவருடைய காரியத்தை நன்றாக கேட்டு உங்கள் அன்பை வெளிப்படுத்துங்கள்.";
+"general_about_10" = "\"அவனவனுக்கு இன்னின்னபடி உத்தரவு சொல்லவேண்டுமென்று நீங்கள் அறியும்படிக்கு, உங்கள் வசனம் எப்பொழுதும் கிருபை பொருந்தினதாயும் உப்பால் சாரமேறினதாயுமிருப்பதாக\"  கொலோசெயர் 4:6";

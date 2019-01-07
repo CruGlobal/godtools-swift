@@ -14,6 +14,9 @@
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
 "okay" = "ठीक";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "सामान्य";
 "menu_share" = "शेयर करें";
@@ -52,6 +55,8 @@
 "download_error" = "डाउनलोड त्रुटि";
 "language_download_error" = "इस समय उपलब्ध भाषाएं डाउनलोड नहीं हो सकीं। कृपया अपना कनेक्शन जांचे या बाद में पुनः प्रयास करें।";
 "tract_loading_error_message" = "इस संसाधन को खोलने में एक समस्या आई। इसे दुबारा डाउनलोड करना अक्सर समस्या का समाधान कर देता है।\n\nक्या आप इसे दुबारा डाउनलोड करना चाहते हैं?";
+"no_internet_title" = "कोई इंटरनेट कनेक्शन नहीं";
+"no_internet" = "कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "नवीनतम अंग्रेजी के टूल्स अभी डाउनलोड नहीं किए जा सके। अंग्रेजी के टूल्स उपलब्ध हैं। अपना कनेक्शन जांचें या बाद में दुबारा प्रयास करें।";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "त्रुटि";
 "ok" = "ठीक";
+"OK" = "ठीक है";
+"cancel" = "रद्द करें";
 "error_can_not_send_email" = "आपके डिवाइस पर कोई भी ईमेल कनफिगर नहीं है।";
 "required_field_missing" = "\"%@\" एक आवश्यक फील्ड है।";
 

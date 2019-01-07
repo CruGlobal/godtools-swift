@@ -14,6 +14,9 @@
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "一般";
 "menu_share" = "シェア";
@@ -52,6 +55,8 @@
 "download_error" = "ダウンロードエラー";
 "language_download_error" = "利用可能な言語を現在ダウンロードできません。インターネット接続を確認するか、または後ほど再度お試しください。";
 "tract_loading_error_message" = "このリソースを開く際に問題が発生しました。もう一度ダウンロードすると高い確率で問題が解決する場合があります。\n\nもう一度ダウンロードしますか？";
+"no_internet_title" = "インターネット接続がありません";
+"no_internet" = "インターネット接続を確認してからもう一度お試しください。";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "最新の英語ツールを現在ダウンロードできません。英語ツールは利用可能です。インターネット接続を確認するか、または後ほど再度お試しください。";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "エラー";
 "ok" = "OK";
+"OK" = "OK";
+"cancel" = "キャンセル";
 "error_can_not_send_email" = "お使いの端末にメールが設定されていません。";
 "required_field_missing" = "「%@」は必須記入欄です。";
 

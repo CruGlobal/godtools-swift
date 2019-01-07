@@ -14,6 +14,9 @@
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
 "set_your_languages" = "Ορίστε τις γλώσσες σας";
 "okay" = "Εντάξει";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Γενικά";
 "menu_share" = "Κοινοποίηση";
@@ -52,6 +55,8 @@
 "download_error" = "Σφάλμα Λήψης";
 "language_download_error" = "Δεν ήταν δυνατή η λήψη των διαθέσιμων γλωσσών αυτήν τη στιγμή. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
 "tract_loading_error_message" = "Παρουσιάστηκε πρόβλημα κατά το άνοιγμα αυτού του πόρου. Η λήψη του ξανά συχνά επιλύει αυτό το πρόβλημα.\n\nΘα θέλατε να τον κατεβάσετε ξανά;";
+"no_internet_title" = "Χωρίς σύνδεση στο διαδίκτυο";
+"no_internet" = "Ελέγξτε τη σύνδεσή σας στο διαδίκτυο και ξαναδοκιμάστε.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Δεν ήταν δυνατή η λήψη των πιο πρόσφατων εργαλείων Ελληνικών αυτήν τη στιγμή. Εργαλεία Ελληνικών είναι διαθέσιμα. Ελέγξτε τη σύνδεσή σας ή ξαναδοκιμάστε αργότερα.";
@@ -76,6 +81,8 @@
 // Alerts
 "error" = "Σφάλμα";
 "ok" = "Ok";
+"OK" = "Εντάξει";
+"cancel" = "Ακύρωση";
 "error_can_not_send_email" = "Δεν υπάρχει διαμορφωμένο email στη συσκευή σας.";
 "required_field_missing" = "\"%@\" είναι απαιτούμενο πεδίο.";
 
