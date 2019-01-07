@@ -54,6 +54,8 @@ http://godtoolsapp.com
 "download_error" = "Kesalahan Unduhan";
 "language_download_error" = "Bahasa yang tersedia tidak dapat diunduh saat ini. Silakan periksa jaringan koneksi atau coba lagi nanti.";
 "tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
+"no_internet_title" = "Tidak ada koneksi internet";
+"no_internet" = "Silakan periksa koneksi internet dan coba lagi.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Alat Bahasa Inggris tidak dapat diunduh saat ini.
@@ -79,6 +81,8 @@ Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti
 // Alerts
 "error" = "Kesalahan";
 "ok" = "Oke";
+"OK" = "OKE";
+"cancel" = "Batal";
 "error_can_not_send_email" = "Tidak ada email yang dikonfigurasi dalam perangkat Anda.";
 "required_field_missing" = "\"%@\" wajib diisi.";
 

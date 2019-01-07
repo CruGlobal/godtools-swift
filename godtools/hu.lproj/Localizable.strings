@@ -53,6 +53,8 @@ http://godtoolsapp.com";
 "download_error" = "Letöltés hibája";
 "language_download_error" = "Az elérhető nyelvek letöltése ezúttal sikertelen volt. Ellenőrizd a kapcsolatot, vagy próbálkozz később.";
 "tract_loading_error_message" = "A forrás megnyitásánál hiba történt.\nAz ismételt letöltés gyakran megoldja a problémát.\n\nKívánod letölteni újra?";
+"no_internet_title" = "Nincs internetkapcsolat";
+"no_internet" = "Ellenőrizze az internetkapcsolatot, majd próbálja újra";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "A legújabb magyar nyelvű eszközök most nem tölthetők le. Angol nyelvű eszközök rendelkezésre állnak. Ellenőrizd a kapcsolatot, vagy próbálkozz később.";
@@ -77,6 +79,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "Hiba";
 "ok" = "OK";
+"OK" = "OK";
+"cancel" = "Mégse";
 "error_can_not_send_email" = "Az eszközödön nincs e-mail konfigurálva";
 "required_field_missing" = "A \"%@\" kötelező mező.";
 

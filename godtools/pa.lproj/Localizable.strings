@@ -47,7 +47,6 @@
 "download_error" = "ਡਾਊਨਲੋਡ ਗਲਤੀ";
 "language_download_error" = "ਇਸ ਸਮੇਂ ਉਪਲਬਧ ਭਾਸ਼ਾਵਾਂ ਨੂੰ ਡਾਉਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸੱਕਦਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
 "tract_loading_error_message" = "ਇਸ ਸਾਮ੍ਰਗੀ ਨੂੰ ਖੋਲ੍ਹਣ ਵਿੱਚ ਇੱਕ ਸਮੱਸਿਆ ਪੈਦਾ ਹੋਈ ਹੈ। ਇਸ ਸਮੱਸਿਆ ਦਾ ਹੱਲ ਅਕਸਰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨ ਦੇ ਨਾਲ ਹੋ ਜਾਂਦਾ ਹੈ।\n\nਕੀ ਤੁਸੀਂ ਇਸਨੂੰ ਦੁਬਾਰਾ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੋਗੇ?";
-
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਉਪਲਬਧ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਆਪਣੀ ਕੁਨੈਕਟਵਿਟੀ ਦੀ ਜਾਂਚ ਕਰੋ ਜਾਂ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।";
 

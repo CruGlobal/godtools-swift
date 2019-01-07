@@ -52,6 +52,8 @@
 "download_error" = "下载错误";
 "language_download_error" = "目前无法下载可用的语言。请检查您的网络连接或稍后重试。";
 "tract_loading_error_message" = "打开此资源时出现问题。请尝试重新下载。\n\n您想重新下载吗？";
+"no_internet_title" = "没有网络连接";
+"no_internet" = "请检查你的互联网连接，然后重试。";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "最新的中文版本目前无法下载。有英文版本可以下载。请检查您的网络连接或者稍后重试。";
@@ -76,6 +78,8 @@
 // Alerts
 "error" = "错误";
 "ok" = "确定";
+"OK" = "确定";
+"cancel" = "取消";
 "error_can_not_send_email" = "您没有在此设备上设置电子邮件。";
 "required_field_missing" = "\"%@\" 是必填项";
 

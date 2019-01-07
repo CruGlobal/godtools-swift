@@ -52,6 +52,8 @@
 "download_error" = "Downloadfout";
 "language_download_error" = "De beschikbare talen kunnen op dit moment niet worden gedownload. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
 "tract_loading_error_message" = "Er was een probleem bij het openen van deze bron. Met het opnieuw downloaden kun je dit probleem vaak oplossen.\n\n Wil je het nogmaals downloaden?";
+"no_internet_title" = "Geen internetverbinding";
+"no_internet" = "Controleer je internetverbinding en probeer het opnieuw.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "De nieuwste Nederlandse tools kunnen op dit moment niet worden gedownload. Nederlandse gereedschappen zijn beschikbaar. Controleer alstublieft je connectiviteit of probeer het later opnieuw.";
@@ -76,6 +78,8 @@
 // Alerts
 "error" = "Fout";
 "ok" = "Oke";
+"OK" = "OK";
+"cancel" = "Annuleren";
 "error_can_not_send_email" = "Er is geen geconfigureerd e-mailadres op je apparaat.";
 "required_field_missing" = "\"%@\" Is een verplicht veld.";
 

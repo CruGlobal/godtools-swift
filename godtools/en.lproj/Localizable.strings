@@ -1,4 +1,4 @@
-"language_onboard" = "60+ Languages";
+"language_onboard" = "70+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "You have downloaded all available tools.";
@@ -14,6 +14,9 @@
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
 "okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "General";
 "menu_share" = "Share";
@@ -54,6 +57,8 @@ An online version can be found at https://knowgod.com/";
 "download_error" = "Download Error";
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
 "tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "The latest English tools could not be downloaded at this time. English tools are available. Please check your connectivity or retry later.";
@@ -80,6 +85,8 @@ The app can be downloaded from godtoolsapp.com";
 // Alerts
 "error" = "Error";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "There is no configured email on your device.";
 "required_field_missing" = "\"%@\" is a required field.";
 

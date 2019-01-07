@@ -1,3 +1,8 @@
+"language_onboard" = "Več kot 70 jezikov";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Prenesli ste vsa razpoložljiva orodja.";
+
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Moja orodja";
 
@@ -47,6 +52,8 @@
 "download_error" = "Napaka pri nalaganju";
 "language_download_error" = "Trenutno ni mogoče naložiti razpoložjivih jezikov. Preveri svojo povezavo ali poskusi ponovno kasneje.";
 "tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\nAli ga želiš naložiti še enkrat?";
+"no_internet_title" = "Brez internetne povezave";
+"no_internet" = "Preverite internetno povezavo in poskusite znova.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Trenutno ni mogoče naložiti najsodobnejših slovenskih orodij. Na voljo so angleška orodja. 
@@ -72,6 +79,8 @@ Preveri svojo povezavo ali poskusi ponovno kasneje.";
 // Alerts
 "error" = "Napaka";
 "ok" = "V redu";
+"OK" = "V redu";
+"cancel" = "Prekliči";
 "error_can_not_send_email" = "Na napravi nimaš sinhorniziranega računa za elektronsko pošto.";
 "required_field_missing" = "\"%@\" je obvesno polje.";
 

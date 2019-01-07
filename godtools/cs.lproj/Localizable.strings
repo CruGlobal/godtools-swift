@@ -52,6 +52,8 @@
 "download_error" = "Chyba při stahování";
 "language_download_error" = "Dostupné jazykové verze nemohly být teď staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
 "tract_loading_error_message" = "Při otevírání tohoto zdroje nastala chyba. Častým řešením tohoto problému je jeho opětovné stažení.\n\nChcete ho stáhnout znovu?";
+"no_internet_title" = "Nemáte připojení k internetu";
+"no_internet" = "Prosím, ověřte své připojení k internetu a zkuste to znovu.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Nejnovější české nástroje teď nemohly být staženy. Zkontrolujte své připojení k internetu a zkuste to později znovu.";
@@ -76,6 +78,8 @@
 // Alerts
 "error" = "Chyba";
 "ok" = "OK";
+"OK" = "OK";
+"cancel" = "Zrušit";
 "error_can_not_send_email" = "Na svém přístroji nemáte nakonfigurován e-mail.";
 "required_field_missing" = "\"%@\" je povinné pole.";
 

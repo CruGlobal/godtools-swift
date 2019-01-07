@@ -52,6 +52,8 @@
 "download_error" = "Lỗi Tải về";
 "language_download_error" = "Không thể tải về các ngôn ngữ sẵn có vào lúc này. Xin vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.";
 "tract_loading_error_message" = "Đã xảy ra lỗi khi mở nguồn này. Tải nó về lần nữa sẽ giải quyết được vấn đề này.\n\nBạn có muốn tải nó về lần nữa không?";
+"no_internet_title" = "Không có kết nối internet";
+"no_internet" = "Vui lòng kiểm tra kết nối internet của bạn và thử lại.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Không thể tải về các công cụ tiếng Việt mới nhất vào lúc này. Các công cụ tiếng Anh luôn sẵn có. Xin hãy kiểm tra kết nối của bạn hoặc thử lại sau.";
@@ -76,6 +78,8 @@
 // Alerts
 "error" = "Lỗi";
 "ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Hủy";
 "error_can_not_send_email" = "Không có email được cấu hình nào trên thiết bị của bạn.";
 "required_field_missing" = "\"%@\" là một trường bắt buộc.";
 

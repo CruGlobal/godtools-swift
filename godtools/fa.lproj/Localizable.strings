@@ -53,6 +53,8 @@ http://godtoolsapp.com";
 "download_error" = "خطای دانلود";
 "language_download_error" = "زبان‌های در دسترس را می‌توان هم اکنون دانلود کرد. لطفاً اتصال خود را بررسی و دوباره امتحان کنید.";
 "tract_loading_error_message" = "در هنگام باز کردن این منبع اشکالی به وجود آمد. معمولاً دانلود دوباره این مشکل را حل می‌کند.\n\nآیا مایلید دوباره آن را دانلود کنید؟";
+"no_internet_title" = "اتصال اینترنتی وجود ندارد";
+"no_internet" = "لطفا اتصال اینترنتی خود را بررسی و دوباره امتحان کنید.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "در حال حاضر امکان دانلود جدیدترین ابزار انگلیسی وجود ندارد. ابزار انگلیسی در دسترس هستند. لطفاً اتصال خود را بررسی یا بعداً دوباره امتحان کنید.";
@@ -77,6 +79,8 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "خطا";
 "ok" = "تأیید";
+"OK" = "تایید";
+"cancel" = "لغو";
 "error_can_not_send_email" = "هیچ ایمیلی روی دستگاه شما پیکربندی نشده است.";
 "required_field_missing" = "کادر «%@» باید تکمیل شود.";
 
