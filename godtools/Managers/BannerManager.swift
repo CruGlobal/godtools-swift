@@ -26,9 +26,9 @@ class BannerManager: GTDataManager {
         let homeBannerAttachment = loadAttachment(remoteId: resource.bannerRemoteId)
         
         if homeBannerAttachment != nil && bannerHasChanged(attachment: homeBannerAttachment!) {
-            _ = issueDownloadRequest(attachment: homeBannerAttachment!).then(execute: { (image) -> Void in
+            _ = issueDownloadRequest(attachment: homeBannerAttachment!).then { (image) -> Void in
                 self.postCompletedNotification(resource: resource)
-            })
+            }
         }
 
         let aboutBannerAttachment = loadAttachment(remoteId: resource.aboutBannerRemoteId)
@@ -65,6 +65,7 @@ class BannerManager: GTDataManager {
             .appendingPathExtension(defaultExtension)
             .path
         
+        print("banner path: \(path), remoteID: \(remoteId)")
         return UIImage(contentsOfFile: path)
     }
     
@@ -78,9 +79,12 @@ class BannerManager: GTDataManager {
     }
     
     private func postCompletedNotification(resource: DownloadedResource) {
+#if DEBUG
+        print("posting notification downloadBannerCompleteNotifciation remoteId: \(resource.remoteId)")
+#endif
         NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.remoteId])
+                                        userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.bannerRemoteId ?? ""])
     }
     
     private func bannerHasChanged(attachment: Attachment) -> Bool {

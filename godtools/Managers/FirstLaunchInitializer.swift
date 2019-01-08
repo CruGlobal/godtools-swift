@@ -13,7 +13,7 @@ import Crashlytics
 class FirstLaunchInitializer: GTDataManager {
     
     let languagesManager = LanguagesManager()
-    let resourceCodes = ["kgp","satisfied","fourlaws"]
+    let resourceCodes = ["teachmetoshare", "kgp","satisfied","fourlaws"]
     
     func initializeAppState() {
         initializeInitialLanguages()
@@ -67,6 +67,7 @@ class FirstLaunchInitializer: GTDataManager {
     private func saveInitialBanners() {
         let bannerManager = BannerManager()
         
+        // "id" : "475", d82d31a50fbdc0933a0a9ef4c67a3854bf70ae2e1b27738aa13fc228169552d7
         for code in resourceCodes {
             guard let resource = findEntity(DownloadedResource.self, byAttribute: "code", withValue: code) else { continue }
             if let homeBanner = findEntity(Attachment.self, byAttribute: "remoteId", withValue: resource.bannerRemoteId ?? "") {

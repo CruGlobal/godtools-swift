@@ -221,6 +221,9 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         
+#if DEBUG
+        print("refreshBannerImage resourceId: \(resourceId)")
+#endif
         guard let bannerImage = BannerManager().loadFor(remoteId: resourceId) else {
             return
         }
