@@ -14,9 +14,6 @@
 "add_new_tools" = "Pridėti naujus įrankius";
 "set_your_languages" = "Nustatyti savo kalbas";
 "okay" = "Gerai";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
 // Menu
 "menu_general" = "Bendra";
 "menu_share" = "Dalytis";
@@ -26,7 +23,6 @@
 "about" = "Apie";
 "help" = "Pagalba";
 "contact_us" = "Susisiekite su mumis";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Dalytis „GodTools“";
 "share_a_story_with_us" = "Dalytis istorija su mumis";
 "terms_of_use" = "Naudojimosi sąlygos";

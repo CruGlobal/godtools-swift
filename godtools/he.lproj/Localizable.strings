@@ -14,9 +14,6 @@
 "add_new_tools" = "הוסיפו כלים חדשים";
 "set_your_languages" = "הגדירו את השפה שלכם";
 "okay" = "בסדר";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
 // Menu
 "menu_general" = "כללי";
 "menu_share" = "שתף";
@@ -26,7 +23,6 @@
 "about" = "אודות";
 "help" = "עזרה";
 "contact_us" = "צרו איתנו קשר";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "שתפו את GodTools";
 "share_a_story_with_us" = "שתפו איתנו סיפור";
 "terms_of_use" = "תנאי שימוש";
