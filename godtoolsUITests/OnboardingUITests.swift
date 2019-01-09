@@ -27,6 +27,6 @@ class OnboardingUITests: XCTestCase {
 
         let homeTableView = app.tables[GTAccessibilityConstants.Home.homeTableView]
         XCTAssert(homeTableView.exists)
-        XCTAssert(homeTableView.cells.count == 3)
+        XCTAssert(homeTableView.cells.count == 4)
     }
 }
