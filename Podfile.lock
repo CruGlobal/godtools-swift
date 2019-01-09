@@ -45,6 +45,7 @@ PODS:
   - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
     - Result
+  - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4)
@@ -62,6 +63,7 @@ DEPENDENCIES:
   - SwiftyJSON (~> 4.1.0)
   - SWXMLHash (~> 4.1)
   - TheKeyOAuthSwift (~> 0.5.5)
+  - TTTAttributedLabel
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -83,6 +85,7 @@ SPEC REPOS:
     - SSZipArchive
     - SwiftyJSON
     - SWXMLHash
+    - TTTAttributedLabel
   https://github.com/CruGlobal/cocoapods-specs.git:
     - TheKeyOAuthSwift
 
@@ -106,7 +109,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
   SWXMLHash: b35739a5cfd915c3b482977aa720d6708e260a90
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 9e826cf484f926c981c9d1d4d58819448c00c591
+PODFILE CHECKSUM: e687e2d57e0e64d0e3d35c61ac46038232b76460
 
 COCOAPODS: 1.5.3
