@@ -6,13 +6,21 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
+
+import TTTAttributedLabel
 import UIKit
+
 
 class ToolDetailViewController: BaseViewController {
     
     @IBOutlet weak var titleLabel: GTLabel!
     @IBOutlet weak var totalViewsLabel: GTLabel!
-    @IBOutlet weak var descriptionLabel: GTLabel!
+    @IBOutlet weak var descriptionLabel: GTLabel! {
+        didSet {
+            descriptionLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+            descriptionLabel.delegate = self
+        }
+    }
     @IBOutlet weak var totalLanguagesLabel: GTLabel!
     @IBOutlet weak var languagesLabel: GTLabel!
     @IBOutlet weak var mainButton: GTButton!
@@ -160,3 +168,20 @@ class ToolDetailViewController: BaseViewController {
     }
     
 }
+
+
+extension ToolDetailViewController: TTTAttributedLabelDelegate {
+    
+    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+        
+        guard let url = url else { return }
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
+    
+}
+

@@ -6,10 +6,13 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
+
 import UIKit
+import TTTAttributedLabel
+
 
 @IBDesignable
-class GTLabel: UILabel {
+class GTLabel: TTTAttributedLabel {
     
     @IBInspectable var gtStyle: String = "" {
         didSet {
@@ -74,6 +77,9 @@ class GTLabel: UILabel {
             default:
                 break
             }
+            
+            self.linkAttributes = [kCTFontNameAttribute: self.font.fontName, kCTFontSizeAttribute: self.font.pointSize, kCTForegroundColorAttributeName: UIColor.blue]
+            self.activeLinkAttributes = [kCTForegroundColorAttributeName: UIColor.gray]
         }
     }
     

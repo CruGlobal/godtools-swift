@@ -64,9 +64,10 @@ class TractButton: BaseTractElement {
             if let textElement = element as? TractTextContent {
                 let label = textElement.label
                 
-                self.button.setTitle(label.text, for: .normal)
-                self.button.titleLabel?.font = label.font
-                
+                if let text = label.text as? String {
+                    self.button.setTitle(text, for: .normal)
+                    self.button.titleLabel?.font = label.font
+                }
                 let textColorProperty = buttonTextColor(localColor: textElement.textProperties().localTextColor)
                 
                 self.button.setTitleColor(textColorProperty, for: .normal)
