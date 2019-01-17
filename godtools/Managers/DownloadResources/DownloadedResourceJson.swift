@@ -10,19 +10,19 @@ import Foundation
 
 class DownloadedResourceJson: GodToolsJSONResource {
 
-    var id = ""
-    var name = ""
-    var descr = ""
-    var abbreviation = ""
-    var copyrightDescription = ""
-    var bannerId = ""
-    var aboutBannerId = ""
-    var toolType = ""
-    var totalViews = NSNumber(integerLiteral: 0)
+    @objc var id = ""
+    @objc var name = ""
+    @objc var descr = ""
+    @objc var abbreviation = ""
+    @objc var copyrightDescription = ""
+    @objc var bannerId = ""
+    @objc var aboutBannerId = ""
+    @objc var toolType = ""
+    @objc var totalViews = NSNumber(integerLiteral: 0)
     
-    var latestTranslations: [TranslationResource]?
-    var attachments: [AttachmentResource]?
-    var categories: [CategoryResource]?
+    @objc var latestTranslations: [TranslationResource]?
+    @objc var attachments: [AttachmentResource]?
+    @objc var categories: [CategoryResource]?
 
 }
 
