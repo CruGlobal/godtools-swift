@@ -31,15 +31,26 @@ post_install do |installer|
     
     print "Setting the default SWIFT_VERSION to 3.0 for every pod\n"
     installer.pods_project.build_configurations.each do |config|
-       config.build_settings['SWIFT_VERSION'] = '3.0'
+        config.build_settings['SWIFT_VERSION'] = '3.0'
     end
-
+    
     installer.pods_project.targets.each do |target|
         # pods that require new swift
         if ['Fuzi','TTTAttributedLabel'].include? target.name
             target.build_configurations.each do |config|
                 config.build_settings['SWIFT_VERSION'] = '4.2'
             end
+            else
+            target.build_configurations.each do |config|
+                config.build_settings.delete('SWIFT_VERSION')
+            end
         end
     end
 end
+
+
+
+
+
+
+
