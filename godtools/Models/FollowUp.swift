@@ -10,13 +10,13 @@ import Foundation
 import RealmSwift
 
 class FollowUp: Object {
-    dynamic var name: String?
-    dynamic var email: String?
-    dynamic var destinationId: String?
-    dynamic var languageId: String?
-    dynamic var responseStatusCode: String?
-    dynamic var createdAtTime: NSDate?
-    dynamic var retryCount: Int = 0
+    @objc dynamic var name: String?
+    @objc dynamic var email: String?
+    @objc dynamic var destinationId: String?
+    @objc dynamic var languageId: String?
+    @objc dynamic var responseStatusCode: String?
+    @objc dynamic var createdAtTime: NSDate?
+    @objc dynamic var retryCount: Int = 0
     
     convenience init(params: [String: String]) {
         self.init()

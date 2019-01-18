@@ -25,9 +25,9 @@ extension TractTabs {
         }
         
         let originalAttributes = segmentedControl.titleTextAttributes(for: .normal)
-        if let originalFont = originalAttributes?[NSFontAttributeName] as? UIFont {
+        if let originalFont = originalAttributes?[NSAttributedString.Key.font] as? UIFont {
             let font = originalFont.transformToAppropriateFontByLanguage(self.tractConfigurations!.language!, textScale: 1.0)
-            self.segmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+            self.segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         }
         
         self.segmentedControl.selectedSegmentIndex = 0
@@ -37,7 +37,7 @@ extension TractTabs {
         self.addSubview(self.segmentedControl)
     }
     
-    func newOptionSelected() {
+    @objc func newOptionSelected() {
         for element in self.elements! {
             element.isHidden = true
         }

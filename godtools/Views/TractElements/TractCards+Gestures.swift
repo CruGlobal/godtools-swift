@@ -36,7 +36,7 @@ extension TractCards {
         self.addSubview(self.tapView)
     }
     
-    func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
             self.lastCardOpened?.processSwipeUp()
         } else if sender.direction == .down {
@@ -44,7 +44,7 @@ extension TractCards {
         }
     }
     
-    func handlePressGesture(sender: UITapGestureRecognizer) {
+    @objc func handlePressGesture(sender: UITapGestureRecognizer) {
         self.lastCardOpened?.processSwipeUp()
     }
     

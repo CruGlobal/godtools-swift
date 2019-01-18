@@ -28,7 +28,7 @@ extension TractLabel {
         }
     }
     
-    func handleGesture(sender: UITapGestureRecognizer) {
+    @objc func handleGesture(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             let cardView = self.parent as! TractCard
             cardView.processCardWithState()

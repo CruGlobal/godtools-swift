@@ -10,9 +10,9 @@ import Foundation
 import RealmSwift
 
 class Attachment: Object {
-    dynamic var remoteId = ""
-    dynamic var sha: String? = nil
-    dynamic var isBanner = false
-    dynamic var resource: DownloadedResource?
+    @objc dynamic var remoteId = ""
+    @objc dynamic var sha: String? = nil
+    @objc dynamic var isBanner = false
+    @objc dynamic var resource: DownloadedResource?
     let translations = List<Translation>()
 }

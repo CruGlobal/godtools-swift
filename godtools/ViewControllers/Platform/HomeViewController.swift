@@ -63,7 +63,7 @@ class HomeViewController: BaseViewController {
         
         toolsManager.delegate = self
         reloadView()
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
     // Notifications
@@ -136,7 +136,7 @@ class HomeViewController: BaseViewController {
     fileprivate func setupStyle() {
         self.tableView.backgroundColor = .gtWhite
         self.tableView.separatorStyle = .none
-        self.tableView.contentInset = UIEdgeInsetsMake(64.0, 0.0, 0.0, 0.0)
+        self.tableView.contentInset = UIEdgeInsets(top: 64.0, left: 0.0, bottom: 0.0, right: 0.0)
         
         // MARK - Product owner has requested to not display this quite yet.
         

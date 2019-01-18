@@ -13,7 +13,7 @@ import PromiseKit
 
 extension TractViewController {
     
-    func moveToPage(notification: Notification) {
+    @objc func moveToPage(notification: Notification) {
         guard let dictionary = notification.userInfo as? [String: String] else {
             return
         }
@@ -28,7 +28,7 @@ extension TractViewController {
         _ = moveViews()
     }
     
-    func moveToNextPage() {
+    @objc func moveToNextPage() {
         if self.currentPage >= totalPages() - 1 {
             return
         }
@@ -44,7 +44,7 @@ extension TractViewController {
         }
     }
     
-    func moveToPreviousPage() {
+    @objc func moveToPreviousPage() {
         if self.currentPage == 0 {
             return
         }
@@ -60,7 +60,7 @@ extension TractViewController {
         }
     }
     
-    func removeViewsBeforeCurrentView() {
+    @objc func removeViewsBeforeCurrentView() {
         if self.currentPage == 0 {
             return
         }

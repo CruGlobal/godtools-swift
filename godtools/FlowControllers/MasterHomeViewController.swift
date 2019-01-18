@@ -63,7 +63,7 @@ class MasterHomeViewController: BaseViewController  {
         let font = UIFont.systemFont(ofSize: fontSize)
 
         segmentedControl = UISegmentedControl(items: [myTools, findTools])
-        segmentedControl.setTitleTextAttributes([NSFontAttributeName: font], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         segmentedControl.sizeToFit()
     }
     
@@ -100,7 +100,7 @@ class MasterHomeViewController: BaseViewController  {
     
     // MARK: - Actions
     
-    func selectionDidChange(_ sender: UISegmentedControl) {
+    @objc func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
     }
     
@@ -117,7 +117,7 @@ class MasterHomeViewController: BaseViewController  {
     
     private func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
-        addChildViewController(viewController)
+        addChild(viewController)
         
         // Add Child View as Subview
         view.addSubview(viewController.view)
@@ -127,18 +127,18 @@ class MasterHomeViewController: BaseViewController  {
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Notify Child View Controller
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
     
     private func remove(asChildViewController viewController: UIViewController) {
         // Notify Child View Controller
-        viewController.willMove(toParentViewController: nil)
+        viewController.willMove(toParent: nil)
         
         // Remove Child View From Superview
         viewController.view.removeFromSuperview()
         
         // Notify Child View Controller
-        viewController.removeFromParentViewController()
+        viewController.removeFromParent()
     }
     
     // Notifications

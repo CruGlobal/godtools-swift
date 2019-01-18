@@ -51,8 +51,8 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         navigationController.navigationBar.barTintColor = .clear
         navigationController.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(color), for: .default)
         navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.gtWhite,
-                                                                  NSFontAttributeName: UIFont.gtSemiBold(size: 17.0)]
+        navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
+                                                                  NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)]
     }
   
     // Notifications
@@ -68,7 +68,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                                                object: nil)
     }
     
-    func displayMenu(notification: Notification? = nil) {
+    @objc func displayMenu(notification: Notification? = nil) {
         let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
         
         if let menuNotification = notification {
@@ -91,7 +91,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
                         dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
@@ -99,7 +99,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
                         navigationController.pushViewController(dst, animated: false) } )
     }
     
-    func dismissMenu() {
+    @objc func dismissMenu() {
         let navigationController = self.currentViewController?.navigationController
         guard let menuViewController = navigationController?.topViewController as? MenuViewController else { return }
         let src = menuViewController
@@ -110,7 +110,7 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
                         dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },

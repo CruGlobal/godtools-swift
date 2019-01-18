@@ -25,7 +25,7 @@ extension TractModal {
         self.alpha = CGFloat(0.0)
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: { self.alpha = CGFloat(1.0) },
                        completion: nil )
     }
@@ -37,7 +37,7 @@ extension TractModal {
         
         UIView.animate(withDuration: 0.75,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: { self.alpha = CGFloat(0.0) },
                        completion: { (completed: Bool) in
                         self.removeFromSuperview() } )

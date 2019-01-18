@@ -73,11 +73,11 @@ class BaseViewController: UIViewController {
     
     func displayNavigationRightButtons() {
         // Set 26px of fixed space between the two UIBarButtonItems
-        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         fixedSpace.width = self.kNavigationItemSpace/kNavigationItemSpaceRatio
         
         // Set -7px of fixed space before the two UIBarButtonItems so that they are aligned to the edge
-        let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.fixedSpace, target: nil, action: nil)
+        let negativeSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.fixedSpace, target: nil, action: nil)
         negativeSpace.width = self.kNavigationItemInitialSpace
         
         var rightButtons = [UIBarButtonItem]()
@@ -100,7 +100,7 @@ class BaseViewController: UIViewController {
     }
     
     func addEmptyLeftButton() {
-        let button = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.done, target: nil, action: nil)
+        let button = UIBarButtonItem(title: "", style: UIBarButtonItem.Style.done, target: nil, action: nil)
         self.navigationLeftButtons.append(button)
     }
     
@@ -115,30 +115,30 @@ class BaseViewController: UIViewController {
     }
     
     func addHomeButton() {
-        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "home"), style: UIBarButtonItemStyle.done, target: self, action: #selector(homeButtonAction))
+        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "home"), style: UIBarButtonItem.Style.done, target: self, action: #selector(homeButtonAction))
         self.navigationLeftButtons.append(button)
     }
     
     func addShareButton() {
-        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItemStyle.done, target: self, action: #selector(shareButtonAction))
+        let button = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItem.Style.done, target: self, action: #selector(shareButtonAction))
         self.navigationRightButtons.append(button)
     }
     
     func addDoneButton() {
-        let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
+        let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(doneButtonAction))
         self.navigationRightButtons.append(button)
     }
     
     func addClearButton() {
-        let button = UIBarButtonItem(title: "clear".localized, style: UIBarButtonItemStyle.done, target: self, action: #selector(clearButtonAction))
+        let button = UIBarButtonItem(title: "clear".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(clearButtonAction))
         self.navigationRightButtons.append(button)
     }
     
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: kNavigationItemWidth, height: kNavigationItemHeight)
         let button: UIButton = UIButton(frame: buttonFrame)
-        button.setBackgroundImage(UIImage(named: imageName), for: UIControlState.normal)
-        button.addTarget(self, action: action, for: UIControlEvents.touchUpInside)
+        button.setBackgroundImage(UIImage(named: imageName), for: UIControl.State.normal)
+        button.addTarget(self, action: action, for: UIControl.Event.touchUpInside)
         
         return UIBarButtonItem(customView: button)
     }
@@ -158,25 +158,25 @@ class BaseViewController: UIViewController {
     }
     // MARK: - Navigation Buttons Actions
     
-    func navigationBurgerButtonAction() {
+    @objc func navigationBurgerButtonAction() {
         NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
     }
     
-    func navigationLanguageButtonAction() {
+    @objc func navigationLanguageButtonAction() {
     }
     
-    func homeButtonAction() {
+    @objc func homeButtonAction() {
         baseDelegate?.goHome()
     }
     
-    func shareButtonAction() {
+    @objc func shareButtonAction() {
     }
     
-    func doneButtonAction() {
+    @objc func doneButtonAction() {
         NotificationCenter.default.post(name: .dismissMenuNotification, object: nil)
     }
     
-    func clearButtonAction() {
+    @objc func clearButtonAction() {
         
     }
     

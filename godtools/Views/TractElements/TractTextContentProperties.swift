@@ -12,14 +12,14 @@ class TractTextContentProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var i18nId: String = ""
-    var textAlign: NSTextAlignment = .left
-    var localTextColor: UIColor?
-    var textScale: CGFloat = 1.0
-    var bold: Bool = false
-    var italic: Bool = false
-    var underline: Bool = false
-    var value: String = ""
+    @objc var i18nId: String = ""
+    @objc var textAlign: NSTextAlignment = .left
+    @objc var localTextColor: UIColor?
+    @objc var textScale: CGFloat = 1.0
+    @objc var bold: Bool = false
+    @objc var italic: Bool = false
+    @objc var underline: Bool = false
+    @objc var value: String = ""
     
     override func defineProperties() {
         self.properties = ["i18nId", "value"]

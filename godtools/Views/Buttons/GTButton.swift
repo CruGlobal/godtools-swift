@@ -38,16 +38,16 @@ class GTButton: UIButton {
     
     @IBInspectable var color: UIColor {
         get {
-            return self.titleColor(for: UIControlState.normal)!
+            return self.titleColor(for: UIControl.State.normal)!
         }
         set {
-            self.setTitleColor(newValue, for: UIControlState.normal)
+            self.setTitleColor(newValue, for: UIControl.State.normal)
         }
     }
     
     @IBInspectable var translationKey: String = "" {
         didSet {
-            let state = self.isEnabled ? UIControlState.normal : UIControlState.disabled
+            let state = self.isEnabled ? UIControl.State.normal : UIControl.State.disabled
             
             self.setTitle(translationKey.localized, for: state)
         }
@@ -111,8 +111,8 @@ class GTButton: UIButton {
     fileprivate func designAsToolDetailButton() {
         self.cornerRadius = 5.0
         self.titleLabel?.font = UIFont.gtRegular(size: 15.0)
-        self.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 10.0)
-        self.titleEdgeInsets = UIEdgeInsetsMake(0.0, 10.0, 0.0, 0.0)
+        self.imageEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 10.0)
+        self.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: 0.0)
         
         self.isEnabled = true
         
