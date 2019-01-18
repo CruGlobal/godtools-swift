@@ -15,7 +15,7 @@ class ToolDetailViewController: BaseViewController {
     
     @IBOutlet weak var titleLabel: GTLabel!
     @IBOutlet weak var totalViewsLabel: GTLabel!
-    @IBOutlet weak var descriptionLabel: GTLabel! {
+    @IBOutlet weak var descriptionLabel: GTAttributedLabel! {
         didSet {
             descriptionLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
             descriptionLabel.delegate = self
