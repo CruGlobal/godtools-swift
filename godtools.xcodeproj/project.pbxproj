@@ -164,6 +164,7 @@
 		4F8495A41F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */; };
+		4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */; };
 		4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */; };
@@ -470,6 +471,7 @@
 		4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; path = InitialContent/d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
+		4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTAttributedLabel.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XMLArticleCategory.swift; path = XMLManagement/XMLArticleCategory.swift; sourceTree = "<group>"; };
 		4F9A9E9E219E22D900C61E9C /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArticleTableViewCell.swift; path = godtools/ViewControllers/Article/ArticleTableViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -897,6 +899,7 @@
 			isa = PBXGroup;
 			children = (
 				0FB73E541EA9063E000BA60D /* GTLabel.swift */,
+				4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */,
 			);
 			name = Labels;
 			path = Views/Labels;
@@ -1824,6 +1827,7 @@
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
+				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,

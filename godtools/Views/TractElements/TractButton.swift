@@ -64,7 +64,7 @@ class TractButton: BaseTractElement {
             if let textElement = element as? TractTextContent {
                 let label = textElement.label
                 
-                if let text = label.text as? String {
+                if let text = label.text {
                     self.button.setTitle(text, for: .normal)
                     self.button.titleLabel?.font = label.font
                 }

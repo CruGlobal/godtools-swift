@@ -1,18 +1,18 @@
 //
-//  GTLabel.swift
+//  GTAttributtedLabel.swift
 //  godtools
 //
-//  Created by Devserker on 4/19/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Igor Ostriz on 18/01/2019.
+//  Copyright © 2019 Cru. All rights reserved.
 //
 
 
 import UIKit
+import TTTAttributedLabel
 
 
-@IBDesignable
-class GTLabel: UILabel {
-    
+class GTAttributedLabel: TTTAttributedLabel {
+
     @IBInspectable var gtStyle: String = "" {
         didSet {
             switch self.gtStyle {
@@ -76,6 +76,9 @@ class GTLabel: UILabel {
             default:
                 break
             }
+            
+            self.linkAttributes = [kCTFontNameAttribute: self.font.fontName, kCTFontSizeAttribute: self.font.pointSize, kCTForegroundColorAttributeName: UIColor.blue]
+            self.activeLinkAttributes = [kCTForegroundColorAttributeName: UIColor.gray]
         }
     }
     
