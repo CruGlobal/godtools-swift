@@ -25,9 +25,8 @@ class RecurringTimer {
     private lazy var timer: DispatchSourceTimer = {
         let t = DispatchSource.makeTimerSource()
     
-        t.scheduleRepeating(deadline: .now() + self.timeInterval, interval: self.timeInterval)
-// TODO:       Swift 4
-//        t.schedule(deadline: .now() + self.timeInterval, repeating: self.timeInterval)
+//        t.scheduleRepeating(deadline: .now() + self.timeInterval, interval: self.timeInterval)
+        t.schedule(deadline: .now() + self.timeInterval, repeating: self.timeInterval)
         t.setEventHandler(handler: { [weak self] in
             self?.eventHandler?()
         })

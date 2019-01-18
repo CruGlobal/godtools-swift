@@ -15,13 +15,13 @@ class TractPageProperties: TractProperties {
     // primaryColor
     // primaryTextColor
     // textColor
-    var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
-    var backgroundImage: String = ""
+    @objc var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
+    @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
-    var cardTextColor: UIColor?
-    var cardBackgroundColor: UIColor?
-    var listeners: String = ""
+    @objc var cardTextColor: UIColor?
+    @objc var cardBackgroundColor: UIColor?
+    @objc var listeners: String = ""
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "cardTextColor", "cardBackgroundColor", "listeners"]

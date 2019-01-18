@@ -12,7 +12,7 @@ class TractHeaderProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var backgroundColor: UIColor?
+    @objc var backgroundColor: UIColor?
     
     override func defineProperties() {
         self.properties = ["backgroundColor"]

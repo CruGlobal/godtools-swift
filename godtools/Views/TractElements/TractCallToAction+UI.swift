@@ -32,9 +32,9 @@ extension TractCallToAction {
         let controlColor = callToActionProperties().controlColor;
         let pagePrimaryColor = page?.pageProperties().primaryColor;
         
-        button.setImage(image, for: UIControlState.normal)
+        button.setImage(image, for: UIControl.State.normal)
         button.tintColor = controlColor != nil ? controlColor : pagePrimaryColor
-        button.addTarget(self, action: #selector(moveToNextView), for: UIControlEvents.touchUpInside)
+        button.addTarget(self, action: #selector(moveToNextView), for: UIControl.Event.touchUpInside)
         
         return button
     }

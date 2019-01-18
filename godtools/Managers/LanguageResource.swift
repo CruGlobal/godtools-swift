@@ -10,9 +10,9 @@ import Foundation
 
 class LanguageResource: GodToolsJSONResource {
     
-    var id = ""
-    var code = ""
-    var direction = ""
+    @objc var id = ""
+    @objc var code = ""
+    @objc var direction = ""
 }
 
 // Mark - JSONResource protocol functions

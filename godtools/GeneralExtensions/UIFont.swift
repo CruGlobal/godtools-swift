@@ -19,26 +19,26 @@ extension UIFont {
     }
     
     static func gtRegular(size: CGFloat) -> UIFont {
-        return UIFont.buildGTFont(size: size, weight: UIFontWeightRegular)
+        return UIFont.buildGTFont(size: size, weight: UIFont.Weight.regular.rawValue)
     }
     
     static func gtLight(size: CGFloat) -> UIFont {
-        return UIFont.buildGTFont(size: size, weight: UIFontWeightLight)
+        return UIFont.buildGTFont(size: size, weight: UIFont.Weight.light.rawValue)
     }
     
     static func gtThin(size: CGFloat) -> UIFont {
-        return UIFont.buildGTFont(size: size, weight: UIFontWeightThin)
+        return UIFont.buildGTFont(size: size, weight: UIFont.Weight.thin.rawValue)
     }
     
     static func gtSemiBold(size: CGFloat) -> UIFont {
-        return UIFont.buildGTFont(size: size, weight: UIFontWeightSemibold)
+        return UIFont.buildGTFont(size: size, weight: UIFont.Weight.semibold.rawValue)
     }
     
     static func buildGTFont(size: CGFloat, weight: CGFloat) -> UIFont {
         if shouldTransformLanguage() {
             return UIFont.buildCustomGTFontWithSize(size, weight: weight)
         } else {
-            return UIFont.systemFont(ofSize: size, weight: weight)
+            return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
         }
     }
     
@@ -46,14 +46,14 @@ extension UIFont {
         let language = LanguagesManager.defaultLanguage
         
         if language?.code == "am" {
-            if weight == UIFontWeightSemibold || weight == UIFontWeightBold {
+            if (weight == UIFont.Weight.semibold.rawValue) || (weight == UIFont.Weight.bold.rawValue) {
                 return UIFont(name: "NotoSansEthiopic-Bold", size: size)!
             } else {
                 return UIFont(name: "NotoSansEthiopic", size: size)!
             }
         }
         
-        return UIFont.systemFont(ofSize: size, weight: weight)
+        return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
     }
     
     static func shouldTransformLanguage() -> Bool {
@@ -111,7 +111,7 @@ extension UIFont {
     }
     
     func setBoldItalic()-> UIFont {
-        let fontDescriptorVar = fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(arrayLiteral: .traitBold, .traitItalic))
+        let fontDescriptorVar = fontDescriptor.withSymbolicTraits(UIFontDescriptor.SymbolicTraits(arrayLiteral: .traitBold, .traitItalic))
         return UIFont(descriptor: fontDescriptorVar!, size: 0)
     }
 }

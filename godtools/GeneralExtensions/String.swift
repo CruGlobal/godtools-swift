@@ -49,7 +49,7 @@ extension String {
 
             
             let value = String.godtoolsRGBANumberFormatter!.number(from: result)
-            values.append(CGFloat(value!))
+            values.append(CGFloat(truncating: value!))
         }
         
         return UIColor(red: values[0]/255.0, green: values[1]/255.0, blue: values[2]/255.0, alpha: values[3])
@@ -112,7 +112,7 @@ extension String {
         for i in 0..<digestLen {
             hash += String(format: "%02x", result[i])
         }
-        result.deallocate(capacity: digestLen)
+        result.deallocate()
         
         return hash
     }

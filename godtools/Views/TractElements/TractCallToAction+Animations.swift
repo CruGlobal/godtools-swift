@@ -27,7 +27,7 @@ extension TractCallToAction {
         let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height - bottomConstant()
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: translationY) },
                        completion: nil )
@@ -37,7 +37,7 @@ extension TractCallToAction {
         self.currentAnimation = .none
         UIView.animate(withDuration: 0.30,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
                        completion: nil )

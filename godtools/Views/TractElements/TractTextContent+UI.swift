@@ -68,7 +68,7 @@ extension TractTextContent {
         }
         
         if properties.underline {
-            let underlineAttribute = [NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue]
+            let underlineAttribute = [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue]
             let underlineAttributedString = NSAttributedString(string: properties.value, attributes: underlineAttribute)
             self.label.attributedText = underlineAttributedString
         }
