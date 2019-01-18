@@ -10,12 +10,12 @@
 import UIKit
 
 
-class ArticleCategoriesViewController: BaseViewController {
+class ArticleCategoryViewController: BaseViewController {
 
     
-    static func create() -> ArticleCategoriesViewController {
+    static func create() -> ArticleCategoryViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "ArticleCategoriesViewControllerID") as! ArticleCategoriesViewController
+        return storyboard.instantiateViewController(withIdentifier: "ArticleCategoryViewControllerID") as! ArticleCategoryViewController
     }
     
     @IBOutlet weak var tableView: UITableView! {
@@ -37,10 +37,19 @@ class ArticleCategoriesViewController: BaseViewController {
     
     var observingToken: NSObjectProtocol?
 
+    
     override var screenTitle: String
     {
         return category?.title ?? super.screenTitle
     }
+
+    override func screenName() -> String {
+        return "Category : \(screenTitle)"
+    }
+    override func siteSubSection() -> String {
+        return "articles-list"
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +75,7 @@ class ArticleCategoriesViewController: BaseViewController {
 
 //
 
-extension ArticleCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
+extension ArticleCategoryViewController: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

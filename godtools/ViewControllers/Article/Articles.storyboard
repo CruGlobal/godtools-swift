@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Article View Controller-->
+        <!--Article Tool View Controller-->
         <scene sceneID="xqa-Ys-Daf">
             <objects>
-                <viewController storyboardIdentifier="ArticleViewControllerID" id="cdF-fH-E1j" customClass="ArticleViewController" customModule="godtools" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleToolViewControllerID" id="cdF-fH-E1j" customClass="ArticleToolViewController" customModule="godtools" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Fw-7x-aK0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleViewControllerCellID" id="t0F-XJ-XaR">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleViewControllerCellID" id="t0F-XJ-XaR">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t0F-XJ-XaR" id="3ya-VK-vbu">
@@ -50,10 +50,10 @@
             </objects>
             <point key="canvasLocation" x="-1007.2" y="141.67916041979012"/>
         </scene>
-        <!--Article Categories View Controller-->
+        <!--Article Category View Controller-->
         <scene sceneID="XB6-qs-z8I">
             <objects>
-                <viewController storyboardIdentifier="ArticleCategoriesViewControllerID" id="Ha3-IN-pGL" customClass="ArticleCategoriesViewController" customModule="godtools" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArticleCategoryViewControllerID" id="Ha3-IN-pGL" customClass="ArticleCategoryViewController" customModule="godtools" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Oe-2G-dEY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -63,7 +63,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleCellID" rowHeight="70" id="wdC-Pg-NEg" customClass="ArticleCategoryTableViewCell" customModule="godtools" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleCellID" rowHeight="70" id="wdC-Pg-NEg" customClass="ArticleCategoryTableViewCell" customModule="godtools" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wdC-Pg-NEg" id="gyd-s8-cRF">
