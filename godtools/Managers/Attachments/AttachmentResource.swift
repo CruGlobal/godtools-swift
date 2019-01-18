@@ -10,8 +10,8 @@ import Foundation
 
 class AttachmentResource: GodToolsJSONResource {
 
-    var id = ""
-    var sha256 = ""
+    @objc var id = ""
+    @objc var sha256 = ""
 }
 
 // Mark - JSONResource protocol functions
