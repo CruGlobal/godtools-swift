@@ -115,7 +115,7 @@ class LanguagesTableViewController: BaseViewController {
         if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
             if !isFiltering {
                 if let index = languages.index(of: primaryLanguage) {
-                    languages.remove(objectAtIndex: index)
+                    languages.remove(at: index)
                 }
             }
         }

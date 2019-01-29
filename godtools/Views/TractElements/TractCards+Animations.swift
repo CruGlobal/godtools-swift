@@ -20,7 +20,7 @@ extension TractCards {
         self.isOnInitialPosition = false
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
@@ -30,7 +30,7 @@ extension TractCards {
         self.isOnInitialPosition = true
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )

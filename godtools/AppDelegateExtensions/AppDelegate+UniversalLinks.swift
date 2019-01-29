@@ -153,7 +153,7 @@ extension AppDelegate {
         languageOptions = parseForSubtagsAndDialects(languageStrings: languageOptions)
 
         tryLanguages.remove(at: 0)
-        tryLanguages = languageOptions.flatMap { languagesManager.loadFromDisk(code: $0) }
+        tryLanguages = languageOptions.compactMap { languagesManager.loadFromDisk(code: $0) }
         tryLanguages.append(knownLanguage)
         
         return tryLanguages

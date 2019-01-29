@@ -12,8 +12,8 @@ import Foundation
 import RealmSwift
 
 class Category: Object {
-    dynamic var remoteId = ""
-    dynamic var title = ""
+    @objc dynamic var remoteId = ""
+    @objc dynamic var title = ""
 //TODO
     
     override static func primaryKey() -> String {

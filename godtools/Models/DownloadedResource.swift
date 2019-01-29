@@ -12,17 +12,17 @@ import RealmSwift
 typealias DownloadedResources = List<DownloadedResource>
 
 class DownloadedResource: Object {
-    dynamic var bannerRemoteId: String?
-    dynamic var aboutBannerRemoteId: String?
-    dynamic var code = ""
-    dynamic var copyrightDescription: String?
-    dynamic var name = ""
-    dynamic var toolType = ""
-    dynamic var descr: String?
-    dynamic var remoteId = ""
-    dynamic var shouldDownload = false
-    dynamic var totalViews: Int32 = 0
-    dynamic var myViews: Int32 = 0
+    @objc dynamic var bannerRemoteId: String?
+    @objc dynamic var aboutBannerRemoteId: String?
+    @objc dynamic var code = ""
+    @objc dynamic var copyrightDescription: String?
+    @objc dynamic var name = ""
+    @objc dynamic var toolType = ""
+    @objc dynamic var descr: String?
+    @objc dynamic var remoteId = ""
+    @objc dynamic var shouldDownload = false
+    @objc dynamic var totalViews: Int32 = 0
+    @objc dynamic var myViews: Int32 = 0
     
     let attachments = List<Attachment>()
     let translations = List<Translation>()

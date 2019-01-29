@@ -10,14 +10,14 @@ import Foundation
 
 class TranslationResource: GodToolsJSONResource {
     
-    var id = ""
-    var version = NSNumber(integerLiteral: 0)
-    var isPublished = NSNumber(integerLiteral: 0)
-    var manifestName = ""
-    var translatedName = ""
-    var translatedDescription = ""
-    var tagline = ""
-    var languageId = ""
+    @objc var id = ""
+    @objc var version = NSNumber(integerLiteral: 0)
+    @objc var isPublished = NSNumber(integerLiteral: 0)
+    @objc var manifestName = ""
+    @objc var translatedName = ""
+    @objc var translatedDescription = ""
+    @objc var tagline = ""
+    @objc var languageId = ""
 }
 
 // Mark - JSONResource protocol functions

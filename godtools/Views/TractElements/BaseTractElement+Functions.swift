@@ -99,11 +99,11 @@ extension BaseTractElement {
         return imageView
     }
     
-    func elementListeners() -> [String]? {
+    @objc func elementListeners() -> [String]? {
         return nil
     }
     
-    func elementDismissListeners() -> [String]? {
+    @objc func elementDismissListeners() -> [String]? {
         return nil
     }
     
@@ -129,9 +129,9 @@ extension BaseTractElement {
         return GTGlobalTractBindings.listen(listener: listener, element: self)        
     }
     
-    func receiveMessage() { }
+    @objc func receiveMessage() { }
     
-    func receiveDismissMessage() { }
+    @objc func receiveDismissMessage() { }
     
     func getParentCard() -> TractCard? {
         return BaseTractElement.getParentCardForElement(self)
@@ -166,11 +166,11 @@ extension BaseTractElement {
         }
     }
     
-    func formName() -> String {
+    @objc func formName() -> String {
         return ""
     }
     
-    func formValue() -> String {
+    @objc func formValue() -> String {
         return ""
     }
 }

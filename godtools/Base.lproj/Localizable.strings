@@ -57,7 +57,7 @@ An online version can be found at https://knowgod.com/";
 // Settings
 "settings" = "Settings";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Download Error";
 "language_download_error" = "The available languages could not be downloaded at this time. Please check your connectivity or retry later.";
 "tract_loading_error_message" = "There was a problem opening this resource. Downloading it again often solves this problem. \n\n Would you like to download it again?";
@@ -69,6 +69,8 @@ An online version can be found at https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
 
 // Actions
 "yes" = "Yes";

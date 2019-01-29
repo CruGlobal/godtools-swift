@@ -10,9 +10,9 @@ import Foundation
 import CRUConfig
 
 class Config: CRUEmptyConfig {
-    var baseUrl: URL? = nil
-    var apiKey: String = ""
-    var googleAnalyticsApiKey: String = ""
-    var googleAdwordsConversionId: String = ""
-    var googleAdwordsLabel: String = ""
+    @objc var baseUrl: URL? = nil
+    @objc var apiKey: String = ""
+    @objc var googleAnalyticsApiKey: String = ""
+    @objc var googleAdwordsConversionId: String = ""
+    @objc var googleAdwordsLabel: String = ""
 }

@@ -71,7 +71,7 @@ extension TractCard {
         self.currentAnimation = .show
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
@@ -82,7 +82,7 @@ extension TractCard {
         let properties = cardProperties()
         UIView.animate(withDuration: 0.45,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: { (completed) in
@@ -101,7 +101,7 @@ extension TractCard {
         self.currentAnimation = .none
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.transform = CGAffineTransform(translationX: 0, y: self.animationYPos) },
                        completion: nil )
@@ -110,7 +110,7 @@ extension TractCard {
     func moveViewForPresentingKeyboardAnimation() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.containerView.transform = CGAffineTransform(translationX: 0, y: TractCard.keyboardYTransformation) },
                        completion: nil )
@@ -119,7 +119,7 @@ extension TractCard {
     func moveViewForDismissingKeyboardAnimation() {
         UIView.animate(withDuration: 0.35,
                        delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
+                       options: UIView.AnimationOptions.curveEaseInOut,
                        animations: {
                         self.containerView.transform = CGAffineTransform(translationX: 0, y: 0) },
                        completion: nil )

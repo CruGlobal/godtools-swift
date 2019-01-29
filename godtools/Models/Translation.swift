@@ -10,17 +10,18 @@ import Foundation
 import RealmSwift
 
 class Translation: Object {
-    dynamic var isDownloadInProgress = false
-    dynamic var isDownloaded = false
-    dynamic var isPublished = false
-    dynamic var localizedDescription: String?
-    dynamic var localizedName: String?
-    dynamic var manifestFilename: String?
-    dynamic var remoteId = ""
-    dynamic var version: Int16 = 0
-    dynamic var language: Language?
-    dynamic var downloadedResource: DownloadedResource?
-    dynamic var tagline: String?
+    @objc dynamic var isDownloadInProgress = false
+    @objc dynamic var isDownloaded = false
+    @objc dynamic var isPublished = false
+    @objc dynamic var localizedDescription: String?
+    @objc dynamic var localizedName: String?
+    @objc dynamic var manifestFilename: String?
+    @objc dynamic var remoteId = ""
+    @objc dynamic var version: Int16 = 0
+    @objc dynamic var language: Language?
+    @objc dynamic var downloadedResource: DownloadedResource?
+    @objc dynamic var tagline: String?
+    
     let referencedFiles = LinkingObjects(fromType: ReferencedFile.self, property: "translations")
     let attachments = LinkingObjects(fromType: Attachment.self, property: "translations")
     

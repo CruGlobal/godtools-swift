@@ -1,13 +1,13 @@
 PODS:
-  - AdobeMobileSDK (4.17.0):
-    - AdobeMobileSDK/iOS (= 4.17.0)
-  - AdobeMobileSDK/iOS (4.17.0)
-  - Alamofire (4.7.3)
+  - AdobeMobileSDK (4.17.1):
+    - AdobeMobileSDK/iOS (= 4.17.1)
+  - AdobeMobileSDK/iOS (4.17.1)
+  - Alamofire (4.8.0)
   - AppAuth (0.92.0)
-  - Crashlytics (3.11.1):
-    - Fabric (~> 1.8.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
   - CRUConfig (1.2.0)
-  - Fabric (1.8.2)
+  - Fabric (1.9.0)
   - Fuzi (2.1.0)
   - GoogleAnalytics (3.17.0)
   - GoogleConversionTracking (3.4.0)
@@ -33,35 +33,37 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.5.2):
     - PromiseKit/CorePromise
-  - Realm (2.10.2):
-    - Realm/Headers (= 2.10.2)
-  - Realm/Headers (2.10.2)
-  - RealmSwift (2.10.2):
-    - Realm (= 2.10.2)
+  - Realm (3.12.0):
+    - Realm/Headers (= 3.12.0)
+  - Realm/Headers (3.12.0)
+  - RealmSwift (3.12.0):
+    - Realm (= 3.12.0)
   - Result (4.0.0)
   - SSZipArchive (2.1.4)
   - SwiftyJSON (4.1.0)
-  - SWXMLHash (4.7.4)
+  - SWXMLHash (4.7.6)
   - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
     - Result
+  - TTTAttributedLabel (2.0.0)
 
 DEPENDENCIES:
-  - AdobeMobileSDK (~> 4)
+  - AdobeMobileSDK
   - Alamofire (~> 4)
   - Crashlytics
-  - CRUConfig (~> 1.2)
+  - CRUConfig
   - Fabric
   - Fuzi
   - GoogleAnalytics
   - GoogleConversionTracking
   - PromiseKit (~> 4)
   - PromiseKit/Alamofire (~> 4)
-  - RealmSwift (~> 2.10)
+  - RealmSwift
   - SSZipArchive
-  - SwiftyJSON (~> 4.1.0)
-  - SWXMLHash (~> 4.1)
-  - TheKeyOAuthSwift (~> 0.5.5)
+  - SwiftyJSON
+  - SWXMLHash
+  - TheKeyOAuthSwift
+  - TTTAttributedLabel
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -83,30 +85,32 @@ SPEC REPOS:
     - SSZipArchive
     - SwiftyJSON
     - SWXMLHash
+    - TTTAttributedLabel
   https://github.com/CruGlobal/cocoapods-specs.git:
     - TheKeyOAuthSwift
 
 SPEC CHECKSUMS:
-  AdobeMobileSDK: f107c4ec8efff247ac5ade8933f0beef8c93a71a
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AdobeMobileSDK: 38a87e30cbc8e18858257f37011c1fde9a0853b7
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
-  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
-  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Fuzi: 8c57344debff6d3a0c76a9e0f549152defdaaa48
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   PromiseKit: 743e497a5f505a470d3bbbf4ce0663c1268af0a4
-  Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
-  RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
+  Realm: cdaef23c4ddb36ab1ddffed23f5a7f3332fc5585
+  RealmSwift: 5576324033f0aa5ef1e0a839a3da2281dff47a7f
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
-  SWXMLHash: b35739a5cfd915c3b482977aa720d6708e260a90
+  SWXMLHash: f6e0933ce74f2626669dc544851bc9fc1941670d
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
+  TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 9e826cf484f926c981c9d1d4d58819448c00c591
+PODFILE CHECKSUM: 74f1db03bb1a29281933cad4a7e9e618f8296e11
 
 COCOAPODS: 1.5.3

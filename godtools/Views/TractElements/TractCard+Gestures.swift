@@ -21,7 +21,7 @@ extension TractCard {
         self.addGestureRecognizer(swipeDown)
     }
     
-    func handleGesture(sender: UISwipeGestureRecognizer) {
+    @objc func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
             processSwipeUp()
         } else if sender.direction == .down {

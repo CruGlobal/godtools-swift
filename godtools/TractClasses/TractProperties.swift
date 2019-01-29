@@ -11,9 +11,9 @@ import UIKit
 class TractProperties: XMLNode {
     let defaultBodyFontSize: CGFloat = 18.0
     
-    var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
-    var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
-    var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
+    @objc var primaryColor = GTAppDefaultStyle.primaryColor.getRGBAColor()
+    @objc var primaryTextColor = GTAppDefaultStyle.primaryTextColorString.getRGBAColor()
+    @objc var textColor = GTAppDefaultStyle.textColorString.getRGBAColor()
     
     required override init() {
         super.init()

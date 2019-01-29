@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension TractButton {
+@objc extension TractButton {
 
     func buttonTarget() {
         getParentCard()?.endCardEditing()
