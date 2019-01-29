@@ -49,7 +49,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "Paramètres";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Erreur de téléchargement";
 "language_download_error" = "Les langues disponibles n'ont pas pu être téléchargées. Veillez vérifier votre connexion et réessayez plus tard.";
 "tract_loading_error_message" = "Un problème est survenu lors de l'ouverture de cet outil. La télécharger à nouveau résout souvent ce problème.\n\nVoulez-vous le télécharger à nouveau ?";
@@ -61,7 +61,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Les derniers outils français peuvent se télécharger.\n\nVoulez-vous mettre français comme votre langue principale et télécharger ces outils?";
-
 // Actions
 "yes" = "Oui";
 "no" = "Non";

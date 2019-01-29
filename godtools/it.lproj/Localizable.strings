@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Impostazioni";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Errore di download";
 "language_download_error" = "Non è attualmente possibile scaricare le lingue disponibili. Verifica di essere collegato a Internet e riprova.";
 "tract_loading_error_message" = "Si è verificato un problema in fase di apertura della risorsa. Il problema è normalmente risolvibile effettuando nuovamente il download. \n\nPuoi effettuare di nuovo il download?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "I nuovi strumenti in italiano sono ora disponibili per il download. \n\nVuoi impostare l'italiano come lingua principale e scaricare queste risorse?";
-
 // Actions
 "yes" = "Sì";
 "no" = "No";

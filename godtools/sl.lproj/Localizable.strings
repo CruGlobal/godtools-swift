@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Nastavitve";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Napaka pri nalaganju";
 "language_download_error" = "Trenutno ni mogoče naložiti razpoložjivih jezikov. Preveri svojo povezavo ali poskusi ponovno kasneje.";
 "tract_loading_error_message" = "Prišlo je do napake pri odpiranju tega gradiva. Ponovno nalaganje pogosto reši ta problem. \n\nAli ga želiš naložiti še enkrat?";
@@ -61,7 +61,6 @@ Preveri svojo povezavo ali poskusi ponovno kasneje.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\nAli želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
-
 // Actions
 "yes" = "Ja";
 "no" = "Ne";

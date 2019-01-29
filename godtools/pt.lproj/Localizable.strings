@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Definições";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Erro ao transferir";
 "language_download_error" = "Neste momento, não é possível transferir os idiomas disponíveis. Verifica a ligação à Internet ou tenta novamente mais tarde.";
 "tract_loading_error_message" = "Ocorreu um problema ao abrir este recurso. Voltar a transferir costuma resolver este problema. \n\n Gostarias de voltar a transferi-lo?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "É possível transferir as ferramentas em português mais recentes. \n\n Gostaria de definir o seu idioma principal como Português e transferir esses recursos?";
-
 // Actions
 "yes" = "Sim";
 "no" = "Não";
