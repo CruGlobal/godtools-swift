@@ -11,7 +11,7 @@ import UIKit
 import WebKit
 
 
-class ArticleWebViewController: BaseViewController{
+class ArticleWebViewController: BaseViewController {
 
     static func create() -> ArticleWebViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
@@ -26,7 +26,13 @@ class ArticleWebViewController: BaseViewController{
     override var screenTitle: String {
         return data?.title ?? super.screenTitle
     }
-    
+    override func screenName() -> String {
+        return "Article : \(screenTitle)"
+    }
+    override func siteSubSection() -> String {
+        return "article"
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

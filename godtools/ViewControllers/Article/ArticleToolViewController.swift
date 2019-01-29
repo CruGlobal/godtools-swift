@@ -1,5 +1,5 @@
 //
-//  ArticleViewController.swift
+//  ArticleToolViewController.swift
 //  godtools
 //
 //  Created by Igor Ostriz on 13/11/2018.
@@ -10,7 +10,7 @@
 import UIKit
 
 
-class ArticleViewController: BaseViewController {
+class ArticleToolViewController: BaseViewController {
 
     var resource: DownloadedResource?
     var articleManager = ArticleManager()
@@ -30,9 +30,13 @@ class ArticleViewController: BaseViewController {
         }
     }
     
-    static func create() -> ArticleViewController {
+    override func screenName() -> String {
+        return "Categories"
+    }
+    
+    static func create() -> ArticleToolViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "ArticleViewControllerID") as! ArticleViewController
+        return storyboard.instantiateViewController(withIdentifier: "ArticleToolViewControllerID") as! ArticleToolViewController
     }
 
     @IBOutlet weak var tableView: UITableView! {
@@ -128,7 +132,7 @@ class ArticleViewController: BaseViewController {
 
 
 
-extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
+extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate
 {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -160,7 +164,7 @@ extension ArticleViewController: UITableViewDataSource, UITableViewDelegate
             return
         }
                 
-        let vc = ArticleCategoriesViewController.create()
+        let vc = ArticleCategoryViewController.create()
         vc.category = category
         vc.articlesPath = articleManager.articlesPath
         self.navigationController?.pushViewController(vc, animated: true)
