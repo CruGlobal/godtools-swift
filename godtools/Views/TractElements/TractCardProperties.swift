@@ -16,14 +16,14 @@ class TractCardProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var backgroundColor: UIColor = .gtWhite
-    var backgroundImage: String = ""
+    @objc var backgroundColor: UIColor = .gtWhite
+    @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
     // textColor
-    var hidden = false
-    var listeners: String = ""
-    var dismissListeners: String = ""
+    @objc var hidden = false
+    @objc var listeners: String = ""
+    @objc var dismissListeners: String = ""
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "hidden", "listeners", "dismissListeners"]

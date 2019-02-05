@@ -12,8 +12,8 @@ class TractModalProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var listeners: String = ""
-    var dismissListeners: String = ""
+    @objc var listeners: String = ""
+    @objc var dismissListeners: String = ""
     
     override func defineProperties() {
         self.properties = ["listeners", "dismissListeners"]
