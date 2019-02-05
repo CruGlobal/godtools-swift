@@ -35,7 +35,6 @@ class XMLManager: NSObject {
     }
     
     func loadAttributesIntoObject(object: XMLNode, properties: [String: Any]) {
-        
         for property in properties {
             assignValueFromAttribute(object: object, attribute: property.key, value: property.value as! String)
         }
