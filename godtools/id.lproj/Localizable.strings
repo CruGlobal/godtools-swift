@@ -50,7 +50,7 @@ http://godtoolsapp.com
 // Settings
 "settings" = "Pengaturan";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Kesalahan Unduhan";
 "language_download_error" = "Bahasa yang tersedia tidak dapat diunduh saat ini. Silakan periksa jaringan koneksi atau coba lagi nanti.";
 "tract_loading_error_message" = "Terjadi masalah saat membuka sumber daya. Undah kembali untuk menyelesaikan masalah ini.\n\nAnda ingin mengunduh kembali?";
@@ -63,7 +63,6 @@ Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh.\n\nApakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
-
 // Actions
 "yes" = "Iya";
 "no" = "Tidak";

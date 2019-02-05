@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Параметри";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Не завантажено";
 "language_download_error" = "Доступні мови наразі не вдається завантажити. Перевірте з'єднання з Інтернетом або повторіть спробу пізніше.";
 "tract_loading_error_message" = "Сталася помилка під час завантаження. Спобуйте завантажити знову.\n\nЗавантажити зараз?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\nБажаєте встановити англійську мову і завантажити ресурси на цій мові?";
-
 // Actions
 "yes" = "Так";
 "no" = "Ні";

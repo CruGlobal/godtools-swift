@@ -49,7 +49,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "إعدادات";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "خلل في التحميل";
 "language_download_error" = "لا يمكن تحميل اللغات المتوفرة في هذا الوقت. الرّجاء تفقد اتصالك أو أعد المحاولة لاحقاً.";
 "tract_loading_error_message" = "كان هناك مشكل في فتح هذ المصدر. تحميله مجدداً يحل المشكل عادة.\n\nهل ترغب في تحميله مجدداً؟";
@@ -61,7 +61,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "يمكن تحميل أدوات اللغة الإنجليزية الحديثة.\n\nهل ترغب في جعل الإنجليزية هي اللغة الرئيسية و تحميل هذه المصادر؟";
-
 // Actions
 "yes" = "نعم";
 "no" = "لا";

@@ -48,7 +48,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "ການຕິດຕັ້ງ";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "ການດາວໂຫຼດບໍ່ຖືກຕ້ອງ";
 "language_download_error" = "ບໍ່ສາມາດດາວໂຫຼດພາສາທີ່ໃຊ້ໄດ້ໃນຂະນະນີ້. ກະລຸນາກວດສອບການເຊື່ອມຕໍ່ຂອງທ່ານ ຫຼືລອງໃໝ່ພາຍຫຼັງ.";
 "tract_loading_error_message" = "ມີປັນຫາໃນການເປີດແຫຼ່ງຂໍ້ມູນນີ້. ການດາວໂຫຼດອີກຄັ້ງໜຶ່ງອາດຈະແກ້ປັນຫານີ້ໄດ້.\n\nທ່ານຕ້ອງການດາວໂຫຼດອີກຄັ້ງ ຫຼືບໍ່?";
@@ -60,7 +60,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "ເຄື່ອງມືຫຼ້າສຸດທີ່ເປັນພາສາອັງກິດສາມາດດາວໂຫຼດໄດ້.\n\nທ່ານຕ້ອງການຕິດຕັ້ງພາສາຫຼັກເປັນພາສາອັງກິດ ແລະດາວໂຫຼດແຫຼ່ງຂໍ້ມູນເຫຼົ່ານີ້ ຫຼືບໍ່?";
-
 // Actions
 "yes" = "ແມ່ນ";
 "no" = "ບໍ່";

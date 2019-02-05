@@ -47,7 +47,7 @@
 // Settings
 "settings" = "Nustatymai";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Parsisiuntimo klaida";
 "language_download_error" = "Šiuo metu siūlomų kalbų nepavyko parsisiųsti. Patikrinkite savo ryšį arba pabandykite dar kartą vėliau.";
 "tract_loading_error_message" = "Atidarant šį išteklių, iškilo problema. Problema dažniausiai pašalinama parsisiuntus jį iš naujo.\n\nAr norėtumėte parsisiųsti jį dar kartą?";
@@ -59,7 +59,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Galima parsisiųsti naujausius lietuviškus įrankius.\n\nAr norėtumėte nustatyti lietuvių savo pagrindine kalba ir parsisiųsti šiuos išteklius.";
-
 // Actions
 "yes" = "Taip";
 "no" = "Ne";
