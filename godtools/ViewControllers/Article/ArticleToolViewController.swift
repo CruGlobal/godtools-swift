@@ -11,7 +11,7 @@ import UIKit
 
 
 class ArticleToolViewController: BaseViewController {
-
+    
     var resource: DownloadedResource?
     var articleManager = ArticleManager()
     
@@ -20,10 +20,10 @@ class ArticleToolViewController: BaseViewController {
     var xmlPagesForPrimaryLang: XMLArticlePages?
     
     var refreshControl = UIRefreshControl()
-
+    
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
-
+    
     override var screenTitle: String {
         get {
             return resource?.name ?? super.screenTitle
@@ -38,7 +38,7 @@ class ArticleToolViewController: BaseViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
         return storyboard.instantiateViewController(withIdentifier: "ArticleToolViewControllerID") as! ArticleToolViewController
     }
-
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -49,17 +49,17 @@ class ArticleToolViewController: BaseViewController {
     fileprivate func registerCells() {
         self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleTableViewCell.cellID)
     }
-
+    
     deinit {
         self.removeObservers()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         refreshControl.addTarget(self, action: #selector(downloadManifestData), for: .valueChanged)
         defineObservers()
-
+        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
         } else {
@@ -71,29 +71,22 @@ class ArticleToolViewController: BaseViewController {
         primaryLanguage = LanguagesManager().loadFromDisk(code: "en")
         getResourceData(forceDownload: false)
     }
-
-
     
     func defineObservers() {
-        
-        articleManager.downloadStatusChanged = { downloading in
-            print("\(downloading)")
-        }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadView), name: .downloadPrimaryTranslationCompleteNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(articleProcessingDone), name: .articleProcessingCompleted, object: nil)
     }
     func removeObservers() {
         NotificationCenter.default.removeObserver(self)
     }
-
-
+    
+    
     @objc private func reloadView() {
         assert(Thread.isMainThread, "Should process in main thread")
         
         tableView.reloadData()
     }
-
+    
     
     @objc private func downloadManifestData() {
         getResourceData(forceDownload: true)
@@ -101,12 +94,12 @@ class ArticleToolViewController: BaseViewController {
     
     @objc private func articleProcessingDone() {
         assert(Thread.isMainThread, "Should process in main thread")
-
+        
         refreshControl.endRefreshing()
         // reload data, but after a short delay to prevent ugly refresh
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.reloadView()
-
+            
         }
     }
     
@@ -126,8 +119,8 @@ class ArticleToolViewController: BaseViewController {
         let _ = self.articleManager.loadResource(resource: self.resource!, language: primaryLanguage!, forceDownload: forceDownload)
     }
     
-
-
+    
+    
 }
 
 
@@ -163,11 +156,13 @@ extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate
         guard let category = category else {
             return
         }
-                
+        
+        // TODO: put arguments in create()
         let vc = ArticleCategoryViewController.create()
+        vc.articleManager = articleManager
         vc.category = category
         vc.articlesPath = articleManager.articlesPath
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
+    
 }

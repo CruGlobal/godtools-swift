@@ -18,6 +18,17 @@ class ArticleCategoryViewController: BaseViewController {
         return storyboard.instantiateViewController(withIdentifier: "ArticleCategoryViewControllerID") as! ArticleCategoryViewController
     }
     
+    @IBOutlet weak var spinnerView: UIView! {
+        didSet {
+            spinnerView.backgroundColor = UIColor.gtDimmedTranslucent
+            spinnerView.alpha = 0.0
+        }
+    }
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView! {
+        didSet {
+            activityIndicatorView.color = UIColor.black
+        }
+    }
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.dataSource = self
@@ -28,15 +39,20 @@ class ArticleCategoryViewController: BaseViewController {
     }
     
     fileprivate var data: [ArticleData]?
-    var category: XMLArticleCategory? {
+    weak var category: XMLArticleCategory? {
         didSet {
             data = category?.data()
         }
     }
     var articlesPath: String?
+    weak var articleManager: ArticleManager?
     
     var observingToken: NSObjectProtocol?
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(observingToken)
+    }
+    
     
     override var screenTitle: String
     {
@@ -58,11 +74,25 @@ class ArticleCategoryViewController: BaseViewController {
             
             let articleID = notification.userInfo?["articleID"] as! String
             if self.articlesPath!.contains(articleID) {
-                self.tableView.reloadData()
+                
+                // give it a little slack (0.5 sec) to avoid flickering
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    
+                    if let c = self.articleManager?.categories.first(where: { (category) -> Bool in
+                        return category.id() == self.category?.id()
+                    }) {
+                        self.category = c
+                        self.reloadData()
+                    }
+                    
+                }
             }
-
-            
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        spinnerView(on: articleManager?.isDownloading ?? false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +100,28 @@ class ArticleCategoryViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+
+    private func reloadData() {
+        // hide spinner
+        self.tableView.reloadData()
+        spinnerView(on: false)
+    }
+
+    func spinnerView(on: Bool) {
+        if on == true {
+            spinnerView.alpha = 0.0
+            view.bringSubviewToFront(spinnerView)
+            activityIndicatorView.startAnimating()
+        }
+        UIView.animate(withDuration: 0.35, animations: {
+            self.spinnerView.alpha = on ? 1.0 : 0.0
+        }) { (finished) in
+            if finished == true && on == false {
+                self.view.sendSubviewToBack(self.spinnerView)
+                self.activityIndicatorView.stopAnimating()
+            }
+        }
+    }
 
 }
 
