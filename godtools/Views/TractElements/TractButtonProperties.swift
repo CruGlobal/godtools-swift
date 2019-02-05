@@ -17,9 +17,9 @@ class TractButtonProperties: TractProperties {
     // MARK: - XML Properties
     
     var type: ButtonType = .url
-    var events: String = ""
-    var url: String = ""
-    var buttonColor: UIColor?
+    @objc var events: String = ""
+    @objc var url: String = ""
+    @objc var buttonColor: UIColor?
     var analyticsButtonUserInfo: [TractAnalyticEvent] = []
     
     override func defineProperties() {
@@ -53,15 +53,15 @@ class TractButtonProperties: TractProperties {
     
     // MARK: - View Properties
     
-    var i18nId: String?
-    var value: String?
-    var cornerRadius: CGFloat = 5.0
-    var backgroundColor = UIColor.gtBlue
-    var font = UIFont.gtRegular(size: 15.0)
-    var width: CGFloat = 300.0
-    var height: CGFloat = 44.0
-    var xMargin = BaseTractElement.xMargin
-    var yMargin = BaseTractElement.yMargin
+    @objc var i18nId: String?
+    @objc var value: String?
+    @objc var cornerRadius: CGFloat = 5.0
+    @objc var backgroundColor = UIColor.gtBlue
+    @objc var font = UIFont.gtRegular(size: 15.0)
+    @objc var width: CGFloat = 300.0
+    @objc var height: CGFloat = 44.0
+    @objc var xMargin = BaseTractElement.xMargin
+    @objc var yMargin = BaseTractElement.yMargin
     
     override func getTextProperties() -> TractTextContentProperties {
         let textProperties = TractTextContentProperties()
