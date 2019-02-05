@@ -33,8 +33,6 @@ class ArticleManager: GTDataManager {
             }
         }
     }
-
-    
     
     var aemTags = Set<String>()    // set of all aem-tags in this manifest
     var articlesDataForTag = Dictionary<String, Set<ArticleData>>()
@@ -48,14 +46,13 @@ class ArticleManager: GTDataManager {
     var articleManifestFilename: String?
     
     
-    var downloadStatus = false {
-        didSet {
-            if let closure = downloadStatusChanged {
-                closure(downloadStatus)
+    private(set) public var isDownloading = false {
+        didSet(oldDownloadingStatus) {
+            if oldDownloadingStatus == true && isDownloading == false {
+                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
             }
         }
     }
-    var downloadStatusChanged: ((Bool) -> Void)?
     
     
     func loadResource(resource: DownloadedResource, language: Language, forceDownload: Bool = false) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
@@ -130,9 +127,9 @@ class ArticleManager: GTDataManager {
         
         if shouldDownload {
 
-            downloadStatus = true
+            isDownloading = true
             
-            dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to, articleManifestID] _ -> Promise<Void> in
+            dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to] _ -> Promise<Void> in
                 
                 do {
                     
@@ -162,14 +159,11 @@ class ArticleManager: GTDataManager {
 
                 debugPrint("Done. Should reload tableView here.")
 #endif
-                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
-                
                 return Promise<Void>()
-            
             }
             .always {
                 
-                self.downloadStatus = false
+                self.isDownloading = false
             }
         }
         else {
