@@ -49,7 +49,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "Ustawienia";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Błąd pobrania";
 "language_download_error" = "Nie można obecnie pobrać dostępnych języków. Sprawdź połączenie lub spróbuj ponownie później.";
 "tract_loading_error_message" = "Podczas otwierania tego zasobu wystąpił problem. Ponowne jego pobranie zazwyczaj rozwiązuje problem.\n\nCzy pobrać ponownie?";
@@ -61,7 +61,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Można obecnie pobrać najnowsze narzędzia w języku angielskim.\n\nCzy chciałbyś ustawić język angielski jako język główny aby pobrać te zasoby?";
-
 // Actions
 "yes" = "Tak";
 "no" = "Nie";

@@ -44,7 +44,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "সেটিংস";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "ডাউনলোড এরর";
 "language_download_error" = "এই সময়ে উপলব্ধ ভাষার ডাউনলোড করা উপলব্ধ নয়. দয়া করে আপনার সংযোগ পরীক্ষা করুন বা পরে আবার চেষ্টা করুন.";
 "tract_loading_error_message" = "এই পুজি খোলার দরুন একটা সমস্যা হয়েছে. পুনরয় ডাউনলোড করলে বেশিরভাগ সমসস্যা সমাধান করে থাকে.\n\nকি আপনি এটি পুনুরায় ডাউনলোড করতে চান?";
@@ -53,7 +53,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "সর্বশেষ ইংরেজি সরঞ্জাম ডাউনলোড করা যাবে.\n\nআপনি কি আপনার প্রাথমিক ভাষা ইংরেজিতে সেট করতে এবং এই সম্পদগুলি ডাউনলোড করতে চান?";
-
 // Actions
 "yes" = "হ্যা";
 "no" = "না";

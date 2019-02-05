@@ -48,7 +48,7 @@
 // Settings
 "settings" = "设置";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "下载错误";
 "language_download_error" = "目前无法下载可用的语言。请检查您的网络连接或稍后重试。";
 "tract_loading_error_message" = "打开此资源时出现问题。请尝试重新下载。\n\n您想重新下载吗？";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "有最新的中文版本可以下载。\n\n您要将主要语言设置为中文并下载这些资源吗？";
-
 // Actions
 "yes" = "是";
 "no" = "否";

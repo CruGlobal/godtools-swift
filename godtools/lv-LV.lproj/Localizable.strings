@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Iestatījumi";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Lejupielādes kļūda";
 "language_download_error" = "Šoreiz pieejamās valodas nav iespējams lejupielādēt. Lūdzu, pārbaudiet pieslēgumu vai mēģiniet vēlreiz.";
 "tract_loading_error_message" = "Resursa atvēršanas kļūda. Atkārtota lejupielāde bieži palīdz atrisināt šo problēmu. \n\nVai vēlaties lejupielādēt atkārtoti?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ir iespējams lejupielādēt jaunākos rīkus angļu valodā. \n\nVai vēlaties iestatīt latviešu valodu par pirmo valodu un lejupielādēt šos resursus?";
-
 // Actions
 "yes" = "Jā";
 "no" = "Nē";

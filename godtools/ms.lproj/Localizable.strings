@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Tetapan";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Ralat Muat Turun";
 "language_download_error" = "Bahasa yang tersedia tidak dapat dimuat turun buat masa ini. Sila semak ketersambungan anda atau cuba semula kemudian.";
 "tract_loading_error_message" = "Terdapat masalah membuka sumber ini.\nMuat turunnya sekali lagi sering menyelesaikan masalah ini.\n\nAdakah anda ingin memuat turunnya sekali lagi?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun.\n\nAdakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
-
 // Actions
 "yes" = "Ya";
 "no" = "Tidak";

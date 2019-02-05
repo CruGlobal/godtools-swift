@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Setări";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Eroare de descărcare";
 "language_download_error" = "Limbile disponibile nu au putut fi descărcate în acest moment. Verifică conexiunea sau încearcă mai târziu.";
 "tract_loading_error_message" = "A apărut o problemă la descărcarea resursei. Descărcarea din nou rezolvă deseori problema. \n\n Vrei să o descarci din nou?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ultimele instrumente în limba engleză pot fi descărcate. Dorești să setezi engleza ca limbă principală și să descarci aceste resurse?";
-
 // Actions
 "yes" = "Da";
 "no" = "Nu";

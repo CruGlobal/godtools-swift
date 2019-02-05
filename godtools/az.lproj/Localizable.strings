@@ -48,7 +48,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "Parametrlər";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Yükləmə xətası";
 "language_download_error" = "Mövcud dillər hal-hazırda yüklənə bilmir. İnternet bağlantınızı yoxlayıb təkrar cəhd edin.";
 "tract_loading_error_message" = "Bu resursu açmaqda problem yarandı. Onu təkrar yükləmək çox vaxt problemi həll edir.\n\nOnu təkrar yükləmək istərdiniz?";
@@ -60,7 +60,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ən yeni ingilis dilli alətlər yüklənə bilir. \n\nƏsas dilinizi ingilis dili təyin edib bu resursları yükləmək istərdiniz?";
-
 // Actions
 "yes" = "Bəli";
 "no" = "Xeyr";
