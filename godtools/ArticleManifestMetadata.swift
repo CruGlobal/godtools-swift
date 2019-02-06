@@ -36,8 +36,6 @@ struct ArticleData: Codable, Hashable, Comparable {
 
 
 
-
-
 class ArticleManifestMetadata: NSObject {
 
     var json: JSON

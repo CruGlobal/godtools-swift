@@ -58,42 +58,34 @@ class ArticleWebViewController: BaseViewController {
         webView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         webView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-  
-        webView.navigationDelegate = self
         
         if let url = data?.local {
             webView.loadFileURL(url, allowingReadAccessTo: url)
         }
 
-//
+//  If you need to add viewport width this is the first way...
 //        var scriptContent = "var meta = document.createElement('meta');"
 //        scriptContent += "meta.name='viewport';"
 //        scriptContent += "meta.content='width=device-width';"
 //        scriptContent += "document.getElementsByTagName('head')[0].appendChild(meta);"
 //
 //        webView.evaluateJavaScript(scriptContent, completionHandler: nil)
-        // load web page
-        // file:///var/mobile/Containers/Data/Application/533F8448-22C3-484D-9935-F96AB1BF770A/Documents/WebCache/63fda9c5e185bbf3698e2a9f5de93a6bbd7aa776bf82f93e76f24987abde92af/faith-topics:jesus-christ%23death-of-jesus/01/page.webarchive
-//        let url = URL(string: data?.uri ?? "")
     }
     
 }
 
+// This is the second way...
+// Don't forget to add...
+//         webView.navigationDelegate = self
+// ... in viewDidLoad
 
-extension ArticleWebViewController: WKNavigationDelegate {
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        print("web content did finish")
-
-    }
-    
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        print("web did commit")
-
+//extension ArticleWebViewController: WKNavigationDelegate {
+//
+//    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
 //        var scriptContent = "var meta = document.createElement('meta');"
 //        scriptContent += "meta.name='viewport';"
 //        scriptContent += "meta.content='width=device-width';"
 //        scriptContent += "document.getElementsByTagName('head')[0].appendChild(meta);"
 //        webView.evaluateJavaScript(scriptContent, completionHandler: nil)
-    }
-}
+//    }
+//}
