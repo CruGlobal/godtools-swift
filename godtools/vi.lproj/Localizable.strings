@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Các thiết lập";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Lỗi Tải về";
 "language_download_error" = "Không thể tải về các ngôn ngữ sẵn có vào lúc này. Xin vui lòng kiểm tra kết nối của bạn hoặc thử lại sau.";
 "tract_loading_error_message" = "Đã xảy ra lỗi khi mở nguồn này. Tải nó về lần nữa sẽ giải quyết được vấn đề này.\n\nBạn có muốn tải nó về lần nữa không?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất.\n\nBạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
-
 // Actions
 "yes" = "Có";
 "no" = "Không";

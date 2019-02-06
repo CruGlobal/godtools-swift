@@ -16,10 +16,10 @@ class TractInputProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var name: String?
+    @objc var name: String?
     var type: InputType = .text
-    var value: String?
-    var required: Bool = false
+    @objc var value: String?
+    @objc var required: Bool = false
     
     override func defineProperties() {
         self.properties = ["name", "value", "required"]
@@ -57,15 +57,15 @@ class TractInputProperties: TractProperties {
     
     // MARK: - View Properties
     
-    var width: CGFloat = 300.0
-    var height: CGFloat = 44.0
-    var xMargin = BaseTractElement.xMargin
-    var yMargin = BaseTractElement.yMargin
-    var cornerRadius: CGFloat = 5.0
-    var borderWidth: CGFloat = 0.6
-    var backgroundColor = UIColor.gtWhite
-    var color = UIColor.gtBlack
-    var font = UIFont.gtRegular(size: 16.0)
-    var placeholder: String?
+    @objc var width: CGFloat = 300.0
+    @objc var height: CGFloat = 44.0
+    @objc var xMargin = BaseTractElement.xMargin
+    @objc var yMargin = BaseTractElement.yMargin
+    @objc var cornerRadius: CGFloat = 5.0
+    @objc var borderWidth: CGFloat = 0.6
+    @objc var backgroundColor = UIColor.gtWhite
+    @objc var color = UIColor.gtBlack
+    @objc var font = UIFont.gtRegular(size: 16.0)
+    @objc var placeholder: String?
 
 }

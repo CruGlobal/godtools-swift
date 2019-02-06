@@ -48,7 +48,7 @@
 // Settings
 "settings" = "सेटिंग्स";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "डाउनलोड त्रुटि";
 "language_download_error" = "इस समय उपलब्ध भाषाएं डाउनलोड नहीं हो सकीं। कृपया अपना कनेक्शन जांचे या बाद में पुनः प्रयास करें।";
 "tract_loading_error_message" = "इस संसाधन को खोलने में एक समस्या आई। इसे दुबारा डाउनलोड करना अक्सर समस्या का समाधान कर देता है।\n\nक्या आप इसे दुबारा डाउनलोड करना चाहते हैं?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं।\n\nक्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
-
 // Actions
 "yes" = "हां";
 "no" = "नहीं";

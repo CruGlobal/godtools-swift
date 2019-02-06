@@ -48,7 +48,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "Instellings";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Aflaai fout";
 "language_download_error" = "Die beskikbare tale kon nie hierdie keer afgelaai word nie. Kontroleer asseblief jou verbinding of probeer weer later.";
 "tract_loading_error_message" = "Daar was ’n probleem om hierdie hulpbron oop te maak. Om dit weer af te laai los dikwels dié probleem op.\n\nWil jy dit weer aflaai?";
@@ -60,7 +60,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Die nuutste Engelse hulpmiddels kan afgelaai word.\n\nWil jy graag jou primêre taal na Engels instel en hierdie hulpbronne aflaai?";
-
 // Actions
 "yes" = "Ja";
 "no" = "Nee";

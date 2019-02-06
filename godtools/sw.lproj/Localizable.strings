@@ -49,7 +49,7 @@ http://godtoolsapp.com";
 // Settings
 "settings" = "Mipangilio";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Makosa ya Upakuzi";
 "language_download_error" = "Lugha zilizopo hazikuweza kupakuliwa kwa wakati huu.  Tafadhali angalia uunganisho wako au ujaribu tena baadaye.";
 "tract_loading_error_message" = "Kulikuwa na tatizo kupakua rasilimali hii. Kuipakua tena kwa mara nyingi husuluhisha hili tatizo.\n\nJe, ungependa kupakua rasilimali hii tena?";
@@ -61,7 +61,6 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa.\n\nJe, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?\n";
-
 // Actions
 "yes" = "Ndio";
 "no" = "La";

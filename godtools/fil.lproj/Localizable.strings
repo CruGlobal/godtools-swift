@@ -48,7 +48,7 @@
 // Settings
 "settings" = "Mga Setting";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Error sa Pag-download";
 "language_download_error" = "Hindi ma-download sa ngayon ang mga available na wika. Pakitingnan ang iyong koneksyon o subukan muli sa ibang pagkakataon.";
 "tract_loading_error_message" = "Nagkaroon ng problema sa pagbukas ng mapagkukunang ito. Ang pag-download nito muli ay kadalasang naaayos ang problemang ito. \n\nGusto mo bang i-download ito muli?";
@@ -60,7 +60,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mada-download ang pinakabagong mga Ingles na tool.\n\nGusto mo bang i-set ang iyong pangunahing wika sa Ingles at i-download ang mga mapagkukunang ito?";
-
 // Actions
 "yes" = "Oo";
 "no" = "Hindi";

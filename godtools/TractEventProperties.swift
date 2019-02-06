@@ -12,11 +12,11 @@ class TractEventProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    var system: String = ""
-    var action: String = ""
-    var key: String = ""
-    var value: String = ""
-    var analyticsDictionary: [String: String] = [:]
+    @objc var system: String = ""
+    @objc var action: String = ""
+    @objc var key: String = ""
+    @objc var value: String = ""
+    @objc var analyticsDictionary: [String: String] = [:]
     
     var attribute: [String: String] {
         get {

@@ -46,7 +46,7 @@
 // Settings
 "settings" = "Kushtet";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Shkarkuar gabim";
 "language_download_error" = "Gjuhët e disponueshme nuk mund të shkarkohen në këtë kohë.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 "tract_loading_error_message" = "Kishte probleme ndërsa po hapej materiali.\nShkarkoje përsëri ,kjo shpesh e zgjidh problemin.\n\nDo doje të provoje ta shkarkoje përsëri?";
@@ -55,7 +55,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mjetet e fundit Anglisht mund të shkarkohen.\n\nDo të doje të zgjidhje si gjuhën tënde kryesore Anglisht dhe t`i shkarkoje këto burime?";
-
 // Actions
 "yes" = "Po";
 "no" = "Jo";
