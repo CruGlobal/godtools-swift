@@ -236,6 +236,7 @@ extension ArticleManager {
             do {
                 let data = try JSONEncoder().encode(additionalProperties)
                 try data.write(to: folderUrl.appendingPathComponent("properties"))
+                try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
 #if DEBUG
                 debugPrint("Saved archives to: \(folderUrl.absoluteString)")
 #endif
