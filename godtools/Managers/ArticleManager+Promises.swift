@@ -14,12 +14,9 @@ import SwiftyJSON
 extension ArticleManager {
     
     
-    
-    
     func processManifestFromLocalData(manifestFilename:String?) -> Promise<Void> {
 
         // it actually does not need to do anything
-
         return Promise<Void>()
     }
     
@@ -47,7 +44,6 @@ extension ArticleManager {
             ar.forEach { (a) in
                 print("******\n  aem-tag: \("nil")\n  title:   \(a.title ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
             }
-            
 #endif
             
             let webarchivePromises = self.getWebArchivePromises()
@@ -92,7 +88,6 @@ extension ArticleManager {
                         print("Error while enumerating files \(error.localizedDescription)")
                     }
                     #endif
-                    
                     
                     
                     // save json file with unique name
@@ -164,7 +159,6 @@ extension ArticleManager {
     }
     
     
-    
     // Download metadata from manifest aem-import src
     func downloadMetadata(url: URL?) -> Promise<Data> {
         
@@ -183,8 +177,6 @@ extension ArticleManager {
         }
     }
 
-    
-    
 
     // Downloading (as complete archive) web page
     func getWebArchive(url: URL) -> Promise<Data> {
@@ -201,34 +193,13 @@ extension ArticleManager {
                     debugPrint("Failed downloading webarchive: \(url.absoluteString)")
                     reject(error)
                 }
-                
             })
         }
     }
     
+    
     // Save .webarchive & ArticleData
     func saveWebArchive(folderUrl: URL, webArchData: Data, additionalProperties: ArticleData) -> Promise<Void> {
-        
-//        let p = firstly { () -> Promise<Void> in
-//            try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
-//
-//            do {
-//
-//                let data = try JSONEncoder().encode(additionalProperties)
-//                // write properties and webcache
-//                try data.write(to: folderUrl.appendingPathComponent("properties"))
-//                try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
-//
-//                debugPrint("Saved archives to: \(folderUrl.absoluteString)")
-//
-//            } catch {
-//                debugPrint("Error: \(error.localizedDescription)")
-//            }
-//            return Promise<Void>()
-//        }
-//
-//        return p
-//    }
         
         return Promise<Void> { fulfill, reject in
             try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
@@ -248,11 +219,8 @@ extension ArticleManager {
             }
 
         }
-
     }
-
 }
-
 
 
 extension URL {
