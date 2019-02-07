@@ -58,6 +58,12 @@ class TractViewController: BaseViewController {
         setupSwipeGestures()
         defineObservers()
         UIApplication.shared.isIdleTimerDisabled = true
+        
+        if parallelLanguageIsAvailable() && determinePrimaryLabel() != determineParallelLabel() {
+            configureLanguageSegmentedControl()
+            self.navigationItem.titleView = languageSegmentedControl
+        }
+
     }
     
     deinit {
@@ -100,13 +106,6 @@ class TractViewController: BaseViewController {
         }
         
         self.addShareButton()
-    }
-
-    override func displayScreenTitle() {
-        if parallelLanguageIsAvailable() && determinePrimaryLabel() != determineParallelLabel() {
-            configureLanguageSegmentedControl()
-            self.navigationItem.titleView = languageSegmentedControl
-        }
     }
     
     fileprivate func setupContainerView() {
