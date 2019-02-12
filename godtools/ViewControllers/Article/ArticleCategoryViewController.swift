@@ -50,7 +50,7 @@ class ArticleCategoryViewController: BaseViewController {
     var observingToken: NSObjectProtocol?
     
     deinit {
-        NotificationCenter.default.removeObserver(observingToken)
+        NotificationCenter.default.removeObserver(observingToken as Any)
     }
     
     

@@ -51,7 +51,7 @@ class ArticleWebViewController: BaseViewController {
 
         // cannot use storyboard for WKWebView prior to iOS 11
         webView = WKWebView(frame: view.bounds, configuration: webConfig)
-//        webView = WKWebView(frame: view.bounds)
+        webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
         
         webView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
@@ -72,6 +72,38 @@ class ArticleWebViewController: BaseViewController {
 //        webView.evaluateJavaScript(scriptContent, completionHandler: nil)
     }
     
+    
+    override func configureNavigationButtons() {
+        if data?.canonical != nil {
+            self.addShareButton()
+        }
+    }
+    
+    override func shareButtonAction() {
+        let shareMessage = buildShareURLString(data?.canonical)
+        
+        let activityController = UIActivityViewController(activityItems: [shareMessage as Any], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+        
+        let userInfo: [String: Any] = ["action": AdobeAnalyticsConstants.Values.share,
+                                       AdobeAnalyticsConstants.Keys.shareAction: 1,
+                                       GTConstants.kAnalyticsScreenNameKey: screenName()]
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+        self.sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: siteSubSection())
+    }
+    
+    private func buildShareURLString(_ urlString: String?) -> String? {
+        var us = urlString
+        while us?.last! == "/" {
+            us?.removeLast()
+        }
+        if us == nil || us?.count == 0 {
+            us = "https://everystudent.com"
+        }
+        return us?.appending("?icid=gtshare")
+    }
 }
 
 // This is the second way...
