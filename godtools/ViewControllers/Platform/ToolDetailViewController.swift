@@ -136,14 +136,19 @@ class ToolDetailViewController: BaseViewController {
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
-        if resource!.shouldDownload {
-            DownloadedResourceManager().delete(self.resource!)
-            downloadProgressView.setProgress(0.0, animated: false)
-        } else {
-            DownloadedResourceManager().download(self.resource!)
+        
+        self.baseDelegate?.goHome()
+
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+            if self.resource!.shouldDownload {
+                DownloadedResourceManager().delete(self.resource!)
+                self.downloadProgressView.setProgress(0.0, animated: false)
+                NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
+            } else {
+                DownloadedResourceManager().download(self.resource!)
+            }
         }
-        displayButton()
-        returnToHome()
+        self.displayButton()
     }
     
     private func returnToHome() {
