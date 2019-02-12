@@ -1505,7 +1505,7 @@
 					4F5732881EA69CF00082035C = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = DQ48D9BF2V;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
 								enabled = 1;
@@ -2267,7 +2267,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2280,11 +2280,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 357;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
+=======
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 289;
+				DEVELOPMENT_TEAM = "";
+>>>>>>> Share Article tool
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2292,7 +2298,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
