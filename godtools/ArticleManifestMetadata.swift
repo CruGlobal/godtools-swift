@@ -32,6 +32,7 @@ struct ArticleData: Codable, Hashable, Comparable {
     var title: String?
     var url: URL?
     var local: URL?
+    var canonical: String?
 }
 
 
@@ -69,6 +70,8 @@ class ArticleManifestMetadata: NSObject {
                 var data = ArticleData()
                 data.title = content["jcr:title"].string
                 data.url = self.url.appendingPathComponent(currentPath + ".html")
+                data.canonical = content["xfCanonical"].string
+                
                 
                 // add to results, only if cq:tags are contained in manifest tags
                 let tagsAll = content["cq:tags"].arrayValue.map { $0.stringValue }

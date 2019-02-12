@@ -79,7 +79,7 @@ An online version can be found at https://knowgod.com/";
 // Tract - Sharing
 "tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!
 
-The app can be downloaded from godtoolsapp.com";
+The app can be downloaded from https://godtoolsapp.com";
 
 // Buttons
 "download" = "Download";
