@@ -65,13 +65,11 @@ class ArticleManifestMetadata: NSObject {
 
             if !content.isEmpty && GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
 
-
                 // this is our ArticleData
                 var data = ArticleData()
                 data.title = content["jcr:title"].string
                 data.url = self.url.appendingPathComponent(currentPath + ".html")
                 data.canonical = content["xfCanonical"].string
-                
                 
                 // add to results, only if cq:tags are contained in manifest tags
                 let tagsAll = content["cq:tags"].arrayValue.map { $0.stringValue }
@@ -82,12 +80,10 @@ class ArticleManifestMetadata: NSObject {
                     if result[tag] == nil {
                         result[tag] = Set()
                     }
-
                     result[tag]!.insert(data)
 #if DEBUG
                     print("---------------- currentPath: \(tag):  \(currentPath)")
 #endif
-
                 }
             }
             
