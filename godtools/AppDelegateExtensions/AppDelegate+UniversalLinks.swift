@@ -30,7 +30,7 @@ extension AppDelegate {
     
     // MARK: - This is for use when coming from Safari or Universal Links.
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
@@ -48,9 +48,11 @@ extension AppDelegate {
             
             processForDeepLinking(from: url)
         }
-        return true
         
+        return true
     }
+    
+
     
     private func processForDeepLinking(from url: URL) {
         displayLoadingScreen()
