@@ -1,4 +1,11 @@
-"language_onboard" = "Lugha Sitini na zaidi";
+"login" = "Ingia";
+"logout" = "Toka";
+"create_account" = "Unda Akaunti";
+"account_login" = "Kuingia kwenye Akaunti";
+"the_tool_you_requested_is_loading" = "Kifaa ulichoagiza kinapakia";
+"loading" = "Inapakia...";
+
+"language_onboard" = "Lugha zaidi ya sabini na tano";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Umepakua zana zote zilizopo.";
@@ -24,13 +31,14 @@
 "help" = "Msaada";
 "contact_us" = "Wasiliana Nasi";
 "preview_mode_translators_only" = "Angalia Hali (Watafsiri Pekee)";
-"share_god_tools" = "Shirikisha GodTools";
+"share_god_tools" = "Shirikisha wenzako kwa programu ya GodTools";
 "share_a_story_with_us" = "Tushirikishe Kwenye Hadithi Yako";
 "terms_of_use" = "Masharti ya Matumizi";
 "privacy_policy" = "Sera ya Faragha";
 "copyright_info" = "Maelezo ya Hakimiliki";
-"share_god_tools_share_sheet_text" = "Hapa unaweza kupakua programu ya GodTools:
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Pakua programu ya GodTools: http://godtoolsapp.com
+
+Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Ongeza Vifaa";
@@ -43,7 +51,7 @@ http://godtoolsapp.com";
 "select_primary_language" = "Chagua Lugha ya Msingi";
 "parallel_language" = "Lugha Sambamba";
 "select_parallel_language" = "Chagua Lugha Sambamba";
-"share_god_tools_native_language" = "Shirikisha programu ya GodTools na mtu mwingine ukitumia lugha yao ya asili.";
+"share_god_tools_native_language" = "Shirikisha GodTools na mtu mwingine ukitumia lugha yao asili";
 "not_every_tool_is_available" = "Si kila chombo kinapatikana kwa kila lugha";
 
 // Settings
@@ -66,7 +74,9 @@ http://godtoolsapp.com";
 "no" = "La";
 
 // Tract - Sharing
-"tract_share_message" ="Kiungo hiki kitakuingiza kwenye toleo la wavuti la ukurasa tulikuwa tukiangalia kwa pamoja leo: %@. Hebu tuzungumze zaidi!";
+"tract_share_message" ="Kiungo hiki kitakupeleka kwenye toleo la wavuti la ukurasa tuliokuwa tukiangalia kwa pamoja leo: %@. Hebu tuzungumze zaidi!
+
+Programu inaweza kupakuliwa kwenye https://godtoolsapp.com";
 
 // Buttons
 "download" = "Pakua";

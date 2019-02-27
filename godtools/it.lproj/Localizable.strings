@@ -1,4 +1,11 @@
-"language_onboard" = "Oltre 60 lingue";
+"login" = "Accedi";
+"logout" = "Esci";
+"create_account" = "Crea account";
+"account_login" = "Accesso all'account";
+"the_tool_you_requested_is_loading" = "Caricamento dello strumento richiesto in corso...";
+"loading" = "Caricamento...";
+
+"language_onboard" = "Oltre 75 lingue";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Hai scaricato tutti gli strumenti disponibili.";
@@ -24,12 +31,15 @@
 "help" = "Assistenza";
 "contact_us" = "Contattaci";
 "preview_mode_translators_only" = "Modalità anteprima (solo per traduttori)";
-"share_god_tools" = "Condividi GodTools";
+"share_god_tools" = "Condividi l'app GodTools";
 "share_a_story_with_us" = "Condividi con noi una storia";
 "terms_of_use" = "Condizioni d'utilizzo";
 "privacy_policy" = "Informativa sulla privacy";
 "copyright_info" = "Informazioni sul copyright";
-"share_god_tools_share_sheet_text" = "Qui puoi scaricare l'app GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Scarica l'app GodTools: 
+http://godtoolsapp.com
+
+La versione online è disponibile all'indirizzo https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Aggiungi strumenti";
@@ -65,7 +75,9 @@
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="Questo link ti porterà alla versione web dell'ultima pagina che abbiamo visto insieme oggi: %@. Parliamo ancora un po'!";
+"tract_share_message" ="Questo link ti porterà alla versione web dell'ultima pagina che abbiamo visto insieme oggi: %@. Parliamo ancora un po'!
+
+È possibile scaricare l'app da https://godtoolsapp.com";
 
 // Buttons
 "download" = "Download";

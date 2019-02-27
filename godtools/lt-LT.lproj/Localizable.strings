@@ -1,4 +1,11 @@
-"language_onboard" = "60+ kalbų";
+"login" = "Prisijungti";
+"logout" = "Atsijungti";
+"create_account" = "Sukurti paskyrą";
+"account_login" = "Prisijungimas prie paskyros";
+"the_tool_you_requested_is_loading" = "Jūsų prašomas įrankis įkeliamas...";
+"loading" = "Įkeliama...";
+
+"language_onboard" = "75+ kalbos";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
@@ -23,12 +30,14 @@
 "about" = "Apie";
 "help" = "Pagalba";
 "contact_us" = "Susisiekite su mumis";
-"share_god_tools" = "Dalytis „GodTools“";
+"share_god_tools" = "Dalytis „GodTools“ programėle";
 "share_a_story_with_us" = "Dalytis istorija su mumis";
 "terms_of_use" = "Naudojimosi sąlygos";
 "privacy_policy" = "Privatumo politika";
 "copyright_info" = "Autoriaus teisių informacija";
-"share_god_tools_share_sheet_text" = "Čia galite parsisiųsti „GodTools“ programėlę: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Atsisiųsti „GodTools“ programėlę: http://godtoolsapp.com
+
+Internetinę versiją galima rasti adresu https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Pridėti įrankius";
@@ -64,7 +73,9 @@
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį kartu paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. Pakalbėkime daugiau!";
+"tract_share_message" ="Ši nuoroda nukreips jus į puslapio, kurį šiandien paskutinį kartą peržiūrėjome kartu, žiniatinklio versiją: %@. Pakalbėkime daugiau!
+
+Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 
 // Buttons
 "download" = "Parsisiųsti";

@@ -1,4 +1,11 @@
-"language_onboard" = "60+ שפות";
+"login" = "כניסה";
+"logout" = "יציאה";
+"create_account" = "יצירת חשבון";
+"account_login" = "כניסת חשבון";
+"the_tool_you_requested_is_loading" = "הכלי שביקשת נטען...";
+"loading" = "טוען...";
+
+"language_onboard" = "75+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "הורדתם את כל הכלים הזמינים.";
@@ -23,13 +30,15 @@
 "about" = "אודות";
 "help" = "עזרה";
 "contact_us" = "צרו איתנו קשר";
-"share_god_tools" = "שתפו את GodTools";
+"share_god_tools" = "שתפו את אפליקציית GodTools";
 "share_a_story_with_us" = "שתפו איתנו סיפור";
 "terms_of_use" = "תנאי שימוש";
 "privacy_policy" = "מדיניות פרטיות";
 "copyright_info" = "מידע זכויות יוצרים";
-"share_god_tools_share_sheet_text" = "אתם יכולים להוריד את אפליקציית GodTools כאן:
- http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "הורידו את אפליקציית GodTools כאן:
+ http://godtoolsapp.com
+
+ניתן למצוא כאן https://knowgod.com/ גרסה מקוונת";
 
 // Add Tools
 "add_tools" = "הוסף כלים";
@@ -65,7 +74,9 @@
 "no" = "לא";
 
 // Tract - Sharing
-"tract_share_message" ="קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר!";
+"tract_share_message" ="קישור זה יעביר אתכם לגרסת הדפדפן של של הדף האחרון שהסתכלנו עליו ביחד: %@. בואו נדבר יותר! 
+
+ניתן להוריד אפליקציה זו דרך https://godtoolsapp.com";
 
 // Buttons
 "download" = "הורד";

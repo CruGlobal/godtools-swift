@@ -1,4 +1,11 @@
-"language_onboard" = "60+ Valodas";
+"login" = "Pierakstīties";
+"logout" = "Izrakstīties";
+"create_account" = "Reģistrēt kontu";
+"account_login" = "Pieteikšanās kontā";
+"the_tool_you_requested_is_loading" = "Jūsu pieprasītais rīks tiek ielādēts...";
+"loading" = "Ielādē...";
+
+"language_onboard" = "75+ Valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";
@@ -24,12 +31,14 @@
 "help" = "Palīdzība";
 "contact_us" = "Sazinieties ar mums";
 "preview_mode_translators_only" = "Priekšskata režīms (tikai tulkiem)";
-"share_god_tools" = "Dalīties ar GodTools";
+"share_god_tools" = "Dalīties ar lietotni GodTools";
 "share_a_story_with_us" = "Pastāstiet mums savu stāstu";
 "terms_of_use" = "Lietošanas noteikumi";
 "privacy_policy" = "Konfidencialitātes politika";
 "copyright_info" = "Informācija par autortiesībām";
-"share_god_tools_share_sheet_text" = "Lietotni GodTools varat lejupielādēt šeit: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Lejupielādē GodTools lietotni: http://godtoolsapp.com
+
+Tiešsaistes versija ir pieejama: https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Pievienot rīkus";
@@ -65,7 +74,9 @@
 "no" = "Nē";
 
 // Tract - Sharing
-"tract_share_message" ="Šī ir saite uz lapas, ko šodien kopā apskatījām, web-versiju: %@. Apspriedīsim sīkāk!";
+"tract_share_message" ="Šī saite atvērs lapas, kuru mēs šodien apskatījām kopā, tīmekļa versiju: %@. Turpināsim sarunu!
+
+Lietotni ir iespējams lejupielādēt šeit: https://godtoolsapp.com";
 
 // Buttons
 "download" = "Lejupielādēt";

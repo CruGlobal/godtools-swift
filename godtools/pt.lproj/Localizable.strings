@@ -1,4 +1,11 @@
-"language_onboard" = "Mais de 60 idiomas";
+"login" = "Iniciar sessão";
+"logout" = "Sair";
+"create_account" = "Criar conta";
+"account_login" = "Iniciar sessão na conta";
+"the_tool_you_requested_is_loading" = "A ferramenta que solicitou está carregando...";
+"loading" = "Carregando...";
+
+"language_onboard" = "Mais de 75 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Transferiu todas as ferramentas disponíveis.";
@@ -24,12 +31,14 @@
 "help" = "Ajuda";
 "contact_us" = "Contactar-nos";
 "preview_mode_translators_only" = "Modo de pré-visualização (apenas para tradutores)";
-"share_god_tools" = "Partilhar GodTools";
+"share_god_tools" = "Partilhar o aplicativo GodTools";
 "share_a_story_with_us" = "Partilhar uma história connosco";
 "terms_of_use" = "Termos de Utilização";
 "privacy_policy" = "Política de Privacidade";
 "copyright_info" = "Informações de Direitos de Autor";
-"share_god_tools_share_sheet_text" = "Aqui podes transferir a aplicação GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Baixe o aplicativo GodTools: http://godtoolsapp.com
+
+Pode encontrar uma versão online em https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Adicionar ferramentas";
@@ -42,7 +51,7 @@
 "select_primary_language" = "Seleciona um idioma principal";
 "parallel_language" = "Idioma paralelo";
 "select_parallel_language" = "Seleciona um idioma paralelo";
-"share_god_tools_native_language" = "Partilha a aplicação GodTools com uma pessoa no seu idioma nativo";
+"share_god_tools_native_language" = "Partilhe o aplicativo GodTools com uma pessoa no seu idioma nativo";
 "not_every_tool_is_available" = "Nem todas as ferramentas estão disponíveis em todos os idiomas";
 
 // Settings
@@ -65,7 +74,9 @@
 "no" = "Não";
 
 // Tract - Sharing
-"tract_share_message" ="Esta ligação irá direcionar-te para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!";
+"tract_share_message" ="Esta ligação irá direcioná-lo para a versão Web da última página que estávamos a ver juntos hoje: %@. Vamos falar mais!
+
+Pode baixar o aplicativo em https://godtoolsapp.com";
 
 // Buttons
 "download" = "Transferir";

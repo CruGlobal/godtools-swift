@@ -1,4 +1,11 @@
-"language_onboard" = "60+ Bahasa";
+"login" = "Masuk";
+"logout" = "Keluar";
+"create_account" = "Buat Akun";
+"account_login" = "Akun Masuk";
+"the_tool_you_requested_is_loading" = "Alat yang Anda minta sedang dimuat....";
+"loading" = "Memuat...";
+
+"language_onboard" = "75+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Anda sudah mengunduh semua tool yang tersedia.";
@@ -24,14 +31,14 @@
 "help" = "Bantuan";
 "contact_us" = "Hubungi Kami";
 "preview_mode_translators_only" = "Mode Pratinjau (Hanya Penerjemah)";
-"share_god_tools" = "Berbagi GodTools";
+"share_god_tools" = "Berbagi Aplikasi GodTools";
 "share_a_story_with_us" = "Berbagi Cerita Dengan Kami";
 "terms_of_use" = "Syarat Penggunaan";
 "privacy_policy" = "Kebijakan Privasi";
 "copyright_info" = "Info Hak cipta";
-"share_god_tools_share_sheet_text" = "Di sini Anda bisa mengunduh aplikasi GodTools:
-http://godtoolsapp.com
-";
+"share_god_tools_share_sheet_text" = "Unduh apliaksi GodTools: http://godtoolsapp.com
+
+Versi online dapat ditemukan di https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Tambah Alat";
@@ -68,7 +75,9 @@ Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. Mari kita bicarakan lebih lanjut!";
+"tract_share_message" ="Tautan ini akan membawa Anda ke halaman versi web terakhir yang dilihat hari ini: %@. Mari kita bicarakan lebih lanjut!
+
+Aplikasi dapat diunduh dari https://godtoolsapp.com";
 
 // Buttons
 "download" = "Unduh";

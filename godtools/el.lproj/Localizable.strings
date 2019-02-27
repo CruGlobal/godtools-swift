@@ -1,4 +1,11 @@
-"language_onboard" = "60+ Γλώσσες";
+"login" = "Σύνδεση";
+"logout" = "Αποσύνδεση";
+"create_account" = "Δημιουργία Λογαριασμού";
+"account_login" = "Σύνδεση στον Λογαριασμό";
+"the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
+"loading" = "Φόρτωση...";
+
+"language_onboard" = "75+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
@@ -24,12 +31,14 @@
 "help" = "Βοήθεια";
 "contact_us" = "Επικοινωνήστε μαζί μας";
 "preview_mode_translators_only" = "Λειτουργία Προεπισκόπησης (Μόνο Μεταφραστές)";
-"share_god_tools" = "Κοινοποίηση Θεϊκών Εργαλείων";
+"share_god_tools" = "Κοινοποίηση Εφαρμογής Θεϊκών Εργαλείων";
 "share_a_story_with_us" = "Μοιραστείτε μια ιστορία μαζί μας";
 "terms_of_use" = "Όροι χρήσης";
 "privacy_policy" = "Πολιτική Απορρήτου";
 "copyright_info" = "Στοιχεία πνευματικών δικαιωμάτων";
-"share_god_tools_share_sheet_text" = "Εδώ μπορείτε να κατεβάσετε την εφαρμογή Θεϊκών Εργαλείων: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Kατεβάστε την εφαρμογή Θεϊκών Εργαλείων: http://godtoolsapp.com
+
+Μπορείτε να βρείτε online έκδοση στη διεύθυνση https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Προσθέστε Εργαλεία";
@@ -65,7 +74,9 @@
 "no" = "Όχι";
 
 // Tract - Sharing
-"tract_share_message" ="Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. Ας μιλήσουμε περισσότερο!";
+"tract_share_message" ="Αυτός ο σύνδεσμος θα σας μεταφέρει στην δικτυακή έκδοση της σελίδας που κοιτούσαμε τελευταία μαζί: %@. Ας μιλήσουμε περισσότερο!
+
+Μπορείτε να κατεβάσετε την εφαρμογή από τη διεύθυνση https://godtoolsapp.com";
 
 // Buttons
 "download" = "Λήψη";
