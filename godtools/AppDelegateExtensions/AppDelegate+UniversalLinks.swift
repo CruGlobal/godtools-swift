@@ -55,7 +55,6 @@ extension AppDelegate {
 
     
     private func processForDeepLinking(from url: URL) {
-        displayLoadingScreen()
         
         let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
@@ -65,9 +64,10 @@ extension AppDelegate {
         
         guard let language = getLanguageFor(resource: resource, languageOptions: languageOptions) else {
             return
-            
         }
         
+        displayLoadingScreen()
+
         let pageNumber = parsePageNumberFrom(url) ?? 0
         
         let parallelLanguages = parseLanguagesFrom(url, usingKey: AppDelegate.kParallelLanguageKey)
@@ -136,7 +136,12 @@ extension AppDelegate {
     private func parseLanguagesFrom(_ url: URL, usingKey: String) -> [Language] {
         let languagesManager = LanguagesManager()
         var tryLanguages: [Language] = []
+        
+        if url.pathComponents.count < 2 {
+            return tryLanguages
+        }
         let knownLanguageString = url.pathComponents[1]
+        
         guard let knownLanguage = returnAlternateLanguage(from: knownLanguageString) else { return tryLanguages }
         tryLanguages.append(knownLanguage)
         var linkDictionary: [String: Any] = [:]
