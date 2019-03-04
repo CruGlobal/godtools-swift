@@ -1,10 +1,4 @@
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
 "the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
-"loading" = "Loading...";
-
 "language_onboard" = "૬૦થી વધારે ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -21,9 +15,6 @@
 "add_new_tools" = "નવા સાધનો/ટુલ્સ ઉમેરો";
 "set_your_languages" = "તમારી ભાષા સ્થાપિત કરો";
 "okay" = "બરાબર";
-"want_more_godtools?" = "Want more GodTools?";
-"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
-"click_here" = "Click Here";
 // Menu
 "menu_general" = "સામાન્ય";
 "menu_share" = "વહેંચો";
@@ -33,7 +24,6 @@
 "about" = "વિશે/આશરે";
 "help" = "મદદ";
 "contact_us" = "સંપર્ક સાંધો";
-"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "'ગોડ ટુલ્સ' વહેંચો";
 "share_a_story_with_us" = "તમારી વાત અમને કહો";
 "terms_of_use" = "વાપરવા માટેની શરતો";
@@ -63,9 +53,6 @@ http://godtoolsapp.com";
 "download_error" = "ડાઉનલોડમાં ભૂલ થઈ";
 "language_download_error" = "પ્રાપ્ય ભાષાઓ આ સમયે ડાઉનલોડ થઈ શકશે નહિ. તમારા જોડાણની ખાતરી કરો અથવા થોડા સમય પછી ફરીથી પ્રયત્ન કરો.";
 "tract_loading_error_message" = "આ સામગ્રી ખોલવામાં સમસ્યા આવી રહી છે. \nતેને ફરી ડાઉનલોડ કરવાથી આ સમસ્યા મોટેભાગે હલ થઈ જાય છે.";
-"no_internet_title" = "No internet connection";
-"no_internet" = "Please check your internet connection and try again.";
-
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "અદ્યતન અંગ્રેજી સાધનો/ટુલ્સ આ સમયે ડાઉનલોડ થઈ શકશે નહિ. અંગ્રેજી સાધનો/ટુલ્સ પ્રાપ્ય છે. તમારા જોડાણની ખાતરી કરો અથવા થોડા સમય પછી  ફરીથી પ્રયત્ન કરો.";
 
@@ -88,8 +75,6 @@ http://godtoolsapp.com";
 // Alerts
 "error" = "ભૂલ";
 "ok" = "બરાબર";
-"OK" = "OK";
-"cancel" = "Cancel";
 "error_can_not_send_email" = "તમારા સાધન સાથે કોઈ ઈ-મેલ અંકિત નથી.";
 "required_field_missing" = "%@ આ ખાનું  ફરજીયાત છે.";
 
