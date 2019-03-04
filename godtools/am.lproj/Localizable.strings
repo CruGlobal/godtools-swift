@@ -1,7 +1,114 @@
+<<<<<<< HEAD
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
+=======
+"login" = "Meld aan";
+"logout" = "Teken uit";
+"create_account" = "Skep rekening";
+"account_login" = "Rekening aanmelding";
+"the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
+"loading" = "Besig om te laai...";
+
+"language_onboard" = "75+ Tale";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
+
+>>>>>>> Localized strings
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "የኔ መሳሪያዎች";
+"my_tools" = "My hulpmiddels";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "መሳሪያዎችን ፈልግ";
+"find_tools" = "Vind hulpmiddels";
 
+"unavailable" = "Nie beskikbaar";
+// Onboarding
+"add_new_tools" = "Voeg nuwe hulpmiddels by";
+"set_your_languages" = "Stel jou Tale in";
+"okay" = "Oukei";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
+// Menu
+"menu_general" = "Algemeen";
+"menu_share" = "Deel";
+"menu_legal" = "Wetlik";
+"language_settings" = "Taalinstellings";
+// Tool Detail
+"about" = "Aangaande";
+"help" = "Hulp";
+"contact_us" = "Kontak ons";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
+"share_god_tools" = "Deel die GodTools-toep";
+"share_a_story_with_us" = "Deel 'n storie met ons";
+"terms_of_use" = "Gebruiksvoorwaardes";
+"privacy_policy" = "Privaatheidsbeleid";
+"copyright_info" = "Kopiereg inligting";
+"share_god_tools_share_sheet_text" = "Laai die GodTools-toep af:
+http://godtoolsapp.com
+'n Aanlynweergawe kan gevind word by
+https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Voeg hulpmiddels by";
+
+"total_views" = "%d besigtiginge";
+"total_languages" = "%d tale";
+
+// Language Settings
+"primary_language" = "Primêre taal";
+"select_primary_language" = "Kies ’n primêre taal";
+"parallel_language" = "Parallelle taal";
+"select_parallel_language" = "Kies 'n parallelle taal";
+"share_god_tools_native_language" = "Deel GodTools met iemand in hulle moedertaal";
+"not_every_tool_is_available" = "Nie elke hulpmiddel is in elke taal beskikbaar nie";
+
+// Settings
+"settings" = "Instellings";
+
+// Alert & Info Controllers
+"download_error" = "Aflaai fout";
+"language_download_error" = "Die beskikbare tale kon nie hierdie keer afgelaai word nie. Kontroleer asseblief jou verbinding of probeer weer later.";
+"tract_loading_error_message" = "Daar was ’n probleem om hierdie hulpbron oop te maak. Om dit weer af te laai los dikwels dié probleem op.\n\nWil jy dit weer aflaai?";
+"no_internet_title" = "Geen internetverbinding";
+"no_internet" = "Kontroleer asseblief u internetverbinding en probeer weer.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "Die nuutste Engelse hulpmiddels kon nie hierdie keer afgelaai word nie. Engelse hulpmiddels is beskikbaar. Kontroleer asseblief jou verbinding of probeer weer later.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "Die nuutste Engelse hulpmiddels kan afgelaai word.\n\nWil jy graag jou primêre taal na Engels instel en hierdie hulpbronne aflaai?";
+// Actions
+"yes" = "Ja";
+"no" = "Nee";
+
+// Tract - Sharing
+"tract_share_message" ="Hierdie skakel sal jou na die webweergawe neem van die bladsy waarna ons vandag saam gekyk het: %@ Kom ons gesels nog!
+Hierdie toep kan afgelaai word vanaf 
+https://godtoolsapp.com";
+
+// Buttons
+"download" = "Laai af";
+"dismiss" = "Laat gaan";
+"done" = "Gedoen";
+"remove" = "Verwyder";
+"clear" = "Maak skoon";
+
+// Alerts
+"error" = "Fout";
+"ok" = "Oukei";
+"OK" = "Ok";
+"cancel" = "Kanselleer";
+"error_can_not_send_email" = "Daar is geen gekonfigureerde e-pos op jou toestel nie.";
+"required_field_missing" = "%@ is ’n benodigde veld.";
+
+// About
+"general_about_1" = "GodTools help jou om jou geloof op 'n maklike en duidelike manier te deel.";
+"general_about_2" = "Hierdie hulpmiddele help jou om met selfvertroue aan iemand te verduidelik hoe hulle 'n verhouding met God kan hê deur Jesus Christus, selfs as jy nog nooit voorheen jou geloof gedeel het nie of hulle dalk 'n ander taal praat.";
+"general_about_3" = "Kies van 'n verskeidenheid hulpmiddele gebaseer op jou voorkeur en jou gehoor. Nie alle hulpmiddele is in elke taal bekikbaar nie.";
+"general_about_4" = "Skakels na ander hulpbronne is ingesluit aan die einde van elke hulpmiddel.";
+"general_about_5" = "Jy moet aanlyn verbind wees om elke nuwe hulpmiddel en/of taal af te laai. As hulle klaar afgelaai is, kan hulle van lyn af gebruik word.";
+"general_about_6" = "Vrae? Aanbevelings? Versoeke? Kontak ons by support@godtoolsapp.com";
+"general_about_7" = "'n Aanlyn weergawe van hierdie hulpmiddels kan by knowgod.com gevind word. Maak dit deel van jou eie webwerf!";
+"general_about_8" = "Besoek godtoolsapp.com vir meer inligting.";
+"general_about_9" = "Terwyl jy die inisiatief neem om jou geloof te deel, onthou God is die een wat die hart verander. Wees lief vir elke persoon deur goed te luister vir begrip.";
+"general_about_10" = "\"Wat julle sê, moet altyd vriendelik wees en van goeie smaak getuig; en julle moet weet hoe julle elkeen behoort te antwoord.\" Kolossense 4:6";

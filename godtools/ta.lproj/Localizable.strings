@@ -1,4 +1,14 @@
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 "language_onboard" = "60+ மொழிகளை";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "என் உபகரணங்கள்";
@@ -11,6 +21,9 @@
 "add_new_tools" = "புதிய உபகரணங்களை சேர்க்கவும்";
 "set_your_languages" = "உங்கள் மொழிகளை அமைக்கவும்";
 "okay" = "சரி";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "பொதுவான";
 "menu_share" = "பகிர்";
@@ -28,6 +41,12 @@
 "copyright_info" = "பதிப்புரிமை தகவல்";
 "share_god_tools_share_sheet_text" = "இங்கே நீங்கள் காட்-டூல்ஸ் செயலியை பதிவிறக்கம் செய்திடலாம்   http://godtoolsapp.com                            ";
 
+// Add Tools
+"add_tools" = "Add Tools";
+
+"total_views" = "%d views";
+"total_languages" = "%d languages";
+
 // Language Settings
 "primary_language" = "பிரதான மொழி";
 "select_primary_language" = "பிரதான மொழியை தேர்வு செய்யுங்கள்";
@@ -43,6 +62,9 @@
 "download_error" = "பதிவிறக்க பிழை";
 "language_download_error" = "கிடைக்கபெறு மொழிகளை இப்பொழுது பதிவிறக்கம் செய்யமுடியாது. உங்களுடைய தொடர்பினை சரிபார்க்கவும் அல்லது பின்னர் முயற்சிக்கவும்";
 "tract_loading_error_message" = "இந்த மூலகோப்பை திறப்பதில் பிரச்சனை உள்ளது.  மறுபடியும் பதிவிறக்கம் செய்வது பிரச்சனைக்கு தீர்வை கொண்டுவரும்.    இதை மறுபடியும் பதிவிறக்கம் செய்ய விரும்புகிறீரா?";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
+
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "சமீபத்திய தமிழ் உபகரணங்களை இப்போது பதிவிறக்கம் செய்யமுடியாது.  ஆங்கில உபகரணங்கள் உள்ளன.  உங்களுடைய தொடர்பினை சரிபாருங்கள் அல்லது பின்னர் முயற்சியுங்கள்";
 
@@ -62,7 +84,14 @@
 "remove" = "அகற்று";
 "clear" = "தெளிவாக்கு";
 
+// Alerts
+"error" = "Error";
+"ok" = "Ok";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "உங்களுடைய சாதனத்திலே கட்டமைக்கப்பட்ட மின்னஞ்சல் இல்லை";
+"required_field_missing" = "\"%@\" is a required field.";
+
 // About
 "general_about_1" = "காட்டூல்ஸ் உங்களுடைய நம்பிக்கையை  எளிய் முறையில் தெளிவாக பகிர்ந்துகொள்ள உதவுகிறது";
 "general_about_2" = "இதற்கு முன்பாக உங்கள் நம்பிக்கையை வேறு ஒருவருடன், குறிப்பாய் வேறு மொழி பேசும் ஒருவருடன் பகிர்ந்திடவே இல்லை என்றாலும், இந்த உபகரணத்தை பயன்படுத்தி ஒருவர் இ யேசு கிறிஸ்துவின் மூலமாக  தேவனோடு உறவை எப்படி   

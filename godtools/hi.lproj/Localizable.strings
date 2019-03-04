@@ -21,6 +21,9 @@
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
 "okay" = "ठीक";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "सामान्य";
 "menu_share" = "शेयर करें";
