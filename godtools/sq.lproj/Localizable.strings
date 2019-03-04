@@ -1,7 +1,14 @@
-"language_onboard" = "80+ Gjuhë";
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
+"the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
+"loading" = "Loading...";
+
+"language_onboard" = "60+ Gjuhë";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "Ju keni shkarkuar të gjitha mjetet në dispozicion.";
+"no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Burimet e mia";
@@ -10,17 +17,18 @@
 "find_tools" = "Gjej Burimet​";
 
 "unavailable" = "I padisponueshëm";
-
 // Onboarding
 "add_new_tools" = "Shto mjete të reja";
 "set_your_languages" = "Cakto gjuhën";
 "okay" = "Në rregull";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "E përgjithshme";
 "menu_share" = "Ndaj";
 "menu_legal" = "Ligjore";
 "language_settings" = "Kushtet e gjuhës";
-
 // Tool Detail
 "about" = "Rreth";
 "help" = "Ndihmë";
@@ -55,12 +63,14 @@
 "download_error" = "Shkarkuar gabim";
 "language_download_error" = "Gjuhët e disponueshme nuk mund të shkarkohen në këtë kohë.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 "tract_loading_error_message" = "Kishte probleme ndërsa po hapej materiali.\nShkarkoje përsëri ,kjo shpesh e zgjidh problemin.\n\nDo doje të provoje ta shkarkoje përsëri?";
+"no_internet_title" = "No internet connection";
+"no_internet" = "Please check your internet connection and try again.";
+
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
 "device_locale_download_error" = "Mjetet e fundit nuk mund të shkarkohen  për momentin.Por janë të disponueshme në Anglisht.Ju lutem kontrolloni  lidhjen me internetin ose provoni më vonë.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mjetet e fundit Anglisht mund të shkarkohen.\n\nDo të doje të zgjidhje si gjuhën tënde kryesore Anglisht dhe t`i shkarkoje këto burime?";
-"the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
 // Actions
 "yes" = "Po";
 "no" = "Jo";
@@ -78,6 +88,8 @@
 // Alerts
 "error" = "Gabim";
 "ok" = "Në rregull";
+"OK" = "OK";
+"cancel" = "Cancel";
 "error_can_not_send_email" = "Nuk ka imel të konfiguruar në pajisjen tënde.";
 "required_field_missing" = "\"%@\" është e detyrueshme";
 
