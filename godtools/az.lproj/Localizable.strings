@@ -1,3 +1,10 @@
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 "language_onboard" = "60+ Dillər";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -14,6 +21,9 @@
 "add_new_tools" = "Yeni alətlər əlavə edin";
 "set_your_languages" = "Dillərinizi təyin edin";
 "okay" = "Yaxşı";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Ümumi";
 "menu_share" = "Paylaş";
@@ -23,6 +33,7 @@
 "about" = "Haqqında";
 "help" = "Kömək";
 "contact_us" = "Bizimlə əlaqə";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "GodTools-u paylaş";
 "share_a_story_with_us" = "Bizimlə hekayənizi paylaşın";
 "terms_of_use" = "İstifadə şərtləri";

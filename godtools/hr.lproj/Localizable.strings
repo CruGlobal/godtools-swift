@@ -1,5 +1,11 @@
+"login" = "Prijava";
+"logout" = "Odjava";
+"create_account" = "Napravite račun";
+"account_login" = "Prijava u račun";
 "the_tool_you_requested_is_loading" = "Alat koji ste tražili se učitava...";
-"language_onboard" = "Više od 60 jezika";
+"loading" = "Učitaavnje...";
+
+"language_onboard" = "Više od 75 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Preuzeli ste sve raspoložive alate.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Dodajte novi alat";
 "set_your_languages" = "Odredite svoje jezike";
 "okay" = "U redu";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Općenito";
 "menu_share" = "Podijeli";
@@ -25,12 +34,13 @@
 "help" = "Pomoć";
 "contact_us" = "Kontaktirajte nas";
 "preview_mode_translators_only" = "Način pretpregleda (samo prevoditelji)";
-"share_god_tools" = "Podijeli GodTools";
+"share_god_tools" = "Podijelite aplikaciju GodTools";
 "share_a_story_with_us" = "Podijelite svoju priču s nama";
 "terms_of_use" = "Uvjeti upotrebe";
 "privacy_policy" = "Pravila privatnosti";
 "copyright_info" = "Informacije o autorskim pravima";
-"share_god_tools_share_sheet_text" = "Aplikaciju GodTools možete preuzeti na adresi: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Preuzmite aplikaciju GodTools na adresi: http://godtoolsapp.com
+Online verziju možete pronaći na adresi: https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Dodajte alate";
@@ -66,7 +76,9 @@
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Ova poveznica vodi do web verzije stranice koju smo zadnju danas gledali zajedno: %@. Razgovarajom više o tome!";
+"tract_share_message" ="Ova poveznica vodi do web verzije stranice koju smo zadnju danas gledali zajedno: %@. Razgovarajmo više o tome!
+
+Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 
 // Buttons
 "download" = "Preuzmi";

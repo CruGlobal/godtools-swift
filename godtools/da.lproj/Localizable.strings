@@ -1,5 +1,11 @@
+"login" = "Log på";
+"logout" = "Log af";
+"create_account" = "Opret konto";
+"account_login" = "Kontologon";
 "the_tool_you_requested_is_loading" = "Det værktøj, du anmodede om, indlæses...";
-"language_onboard" = "Over 60 sprog";
+"loading" = "Indlæser";
+
+"language_onboard" = "Over 75 sprog";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har hentet alle tilgængelige værktøjer.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Tilføj nye værktøjer";
 "set_your_languages" = "Angiv dine sprog";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Generelt";
 "menu_share" = "Del";
@@ -25,12 +34,14 @@
 "help" = "Hjælp";
 "contact_us" = "Kontakt os";
 "preview_mode_translators_only" = "Eksempeltilstand (kun for oversættere)";
-"share_god_tools" = "Del GodTools";
+"share_god_tools" = "Del GodTools-appen";
 "share_a_story_with_us" = "Del en historie med os";
 "terms_of_use" = "Vilkår for brug";
 "privacy_policy" = "Fortrolighedspolitik";
 "copyright_info" = "Copyright-oplysninger";
-"share_god_tools_share_sheet_text" = "Her kan du hente GodTools-appen: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Download GodTools-appen: http://godtoolsapp.com
+
+Du kan finde en onlineversion på https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Tilføj værktøjer";
@@ -66,7 +77,9 @@
 "no" = "Nej";
 
 // Tract - Sharing
-"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. Lad os tale noget mere sammen!";
+"tract_share_message" ="Med dette link kommer du til webversionen af den side, som vi så på sammen i dag: %@. Lad os tale noget mere sammen!
+
+Appen kan downloades fra https://godtoolsapp.com";
 
 // Buttons
 "download" = "Hent";

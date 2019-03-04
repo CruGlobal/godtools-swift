@@ -1,5 +1,11 @@
+"login" = "Увійти";
+"logout" = "Вийти";
+"create_account" = "Створити обліковий запис";
+"account_login" = "Увійти до облікового запису";
 "the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
-"language_onboard" = "Понад 60 мов";
+"loading" = "Завантажується...";
+
+"language_onboard" = "Понад 75 мов";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ви завантажили всі доступні інструменти.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Додати інструмент";
 "set_your_languages" = "Встановіть мови";
 "okay" = "Добре";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Основне";
 "menu_share" = "Переслати";
@@ -25,12 +34,14 @@
 "help" = "Довідка";
 "contact_us" = "Контакт";
 "preview_mode_translators_only" = "Режим перегляду (тільки перекладачі)";
-"share_god_tools" = "Поширити GodTools";
+"share_god_tools" = "Поширити програму GodTools";
 "share_a_story_with_us" = "Розкажіть нам історію";
 "terms_of_use" = "Умови користування";
 "privacy_policy" = "Політика конфіденційності";
 "copyright_info" = "Авторське право";
-"share_god_tools_share_sheet_text" = "Тут ви можете завантажити програму GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Завантажте програму GodTools: http://godtoolsapp.com
+
+Також користуйтеся онлайн: https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Додати інструменти";
@@ -66,7 +77,9 @@
 "no" = "Ні";
 
 // Tract - Sharing
-"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. Поспілкуємось!";
+"tract_share_message" ="Відкрийте це посилання, щоб перейти до онлайн версії сторінки, що ми з вами переглядали сьогодні: %@. Поспілкуємось!
+
+Програму можна завантажити тут: https://godtoolsapp.com";
 
 // Buttons
 "download" = "Завантажити";

@@ -1,5 +1,11 @@
+"login" = "Пријава";
+"logout" = "Одјава";
+"create_account" = "Креирајте налог";
+"account_login" = "Пријава у налог";
 "the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
-"language_onboard" = "Више од 60 језика";
+"loading" = "Учитавање...";
+
+"language_onboard" = "Више од 75 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Преузели сте све доступне алатке.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Додај нове алатке";
 "set_your_languages" = "Подесите своје језике";
 "okay" = "У реду";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Опште";
 "menu_share" = "Подели";
@@ -30,7 +39,7 @@
 "terms_of_use" = "Услови коришћења";
 "privacy_policy" = "Политика приватности";
 "copyright_info" = "Информације о ауторском праву";
-"share_god_tools_share_sheet_text" = "Овде можете преузети апликацију GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Преузмите апликацију GodTools: http://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Додај алатке";
@@ -66,7 +75,9 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. Хајде да разговарамо више!";
+"tract_share_message" ="Ова веза ће вас одвести на веб верзију странице коју смо последњи пут гледали заједно данас: %@. Хајде да разговарамо више!
+
+Апликација се може преузети са https://godtoolsapp.com";
 
 // Buttons
 "download" = "Преузми";

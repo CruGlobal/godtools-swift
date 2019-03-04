@@ -1,5 +1,11 @@
+"login" = "Bejelentkezés";
+"logout" = "Kijelentkezés";
+"create_account" = "Fiók létrehozása";
+"account_login" = "Bejelentkezés a fiókba";
 "the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
-"language_onboard" = "60+ nyelv";
+"loading" = "Betöltés...";
+
+"language_onboard" = "75+ nyelv";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Az összes elérhető eszközt letöltötted.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Új eszközök hozzáadása";
 "set_your_languages" = "A nyelvek beállítása";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Általános";
 "menu_share" = "Megosztás";
@@ -25,13 +34,14 @@
 "help" = "Súgó";
 "contact_us" = "Kapcsolatfelvétel";
 "preview_mode_translators_only" = "Előnézet mód (csak fordítóknak)";
-"share_god_tools" = "GodTools megosztása";
+"share_god_tools" = "GodTools alkalmazás megosztása";
 "share_a_story_with_us" = "Ossz meg velünk egy történetet";
 "terms_of_use" = "Használati feltételek";
 "privacy_policy" = "Adatvédelmi irányelvek";
 "copyright_info" = "Jogvédelem";
-"share_god_tools_share_sheet_text" = "Itt töltheted le a GodTools alkalmazást:
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Töltsd le a GodTools alkalmazást: http://godtoolsapp.com
+
+A https://knowgod.com/ címen egy online verzió található";
 
 // Add Tools
 "add_tools" = "Eszközök hozzáadása";
@@ -67,7 +77,9 @@ http://godtoolsapp.com";
 "no" = "Nem";
 
 // Tract - Sharing
-"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. Beszélgessünk még!";
+"tract_share_message" ="A hivatkozás elvezet az oldal webes verziójára, amelyet ma együtt néztünk: %@. Beszélgessünk még!
+
+Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 
 // Buttons
 "download" = "Letöltés";

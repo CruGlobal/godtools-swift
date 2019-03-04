@@ -1,4 +1,10 @@
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
 "the_tool_you_requested_is_loading" = "ເຄື່ອງມືທີ່ທ່ານຂໍກຳລັງໂຫຼດ...";
+"loading" = "Loading...";
+
 "language_onboard" = "60+ ພາສາ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -15,6 +21,9 @@
 "add_new_tools" = "ເພີ່ມເຄື່ອງມືໃໝ່ໃສ່";
 "set_your_languages" = "ຕິດຕັ້ງພາສາຂອງທ່ານໃສ່";
 "okay" = "ຕົກລົງ";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "ທົ່ວໄປ";
 "menu_share" = "ແບ່ງປັນ";
@@ -24,6 +33,7 @@
 "about" = "ກ່ຽວກັບ";
 "help" = "ຊ່ອຍເຫຼືອ";
 "contact_us" = "ຕິດຕໍ່ພວກເຮົາ";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "ແບ່ງປັນ GodTools";
 "share_a_story_with_us" = "ແບ່ງປັນເລື່ອງລາວກັບພວກເຮົາ";
 "terms_of_use" = "ເງື່ອນໄຂການໃຊ້ງານ";
