@@ -1,5 +1,11 @@
+"login" = "Войти";
+"logout" = "Выйти";
+"create_account" = "Создать учетную запись";
+"account_login" = "Имя пользователя";
 "the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
-"language_onboard" = "Более 60 языков";
+"loading" = "Загрузка...";
+
+"language_onboard" = "Более 75 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Все доступные инструменты загружены.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
 "okay" = "Хорошо";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Общие настройки";
 "menu_share" = "Поделиться";
@@ -25,12 +34,14 @@
 "help" = "Справка";
 "contact_us" = "Связаться с нами";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
-"share_god_tools" = "Поделиться GodTools";
+"share_god_tools" = "Поделиться приложением GodTools";
 "share_a_story_with_us" = "Поделиться с нами историей";
 "terms_of_use" = "Условия использования";
 "privacy_policy" = "Политика конфиденциальности";
 "copyright_info" = "Информация об авторском праве";
-"share_god_tools_share_sheet_text" = "Вы можете загрузить приложение GodTools здесь: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Загрузите приложение GodTools: http://godtoolsapp.com
+
+Онлайн-версию можно найти по ссылке https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Добавить инструменты";
@@ -66,7 +77,9 @@
 "no" = "Нет";
 
 // Tract - Sharing
-"tract_share_message" ="Ссылка переведет вас на веб-страницу, которую мы просматривали сегодня вместе: %@. Пообщаемся еще!";
+"tract_share_message" ="Ссылка переведет вас на веб-страницу, которую мы просматривали сегодня вместе: %@. Приглашаем вас к общению!
+
+Приложение можно загрузить по ссылке https://godtoolsapp.com";
 
 // Buttons
 "download" = "Загрузить";

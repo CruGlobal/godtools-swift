@@ -1,5 +1,11 @@
+"login" = "ورود";
+"logout" = "خروج";
+"create_account" = "ایجاد حساب";
+"account_login" = "ورود به حساب";
 "the_tool_you_requested_is_loading" = "ابزاری که درخواست کردید در حال بارگیری است...";
-"language_onboard" = "60+ زبان";
+"loading" = "در حال بارگیری...";
+
+"language_onboard" = "75+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "همه ابزارهای موجود را دانلود کرده‌اید.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "افزودن ابزار جدید";
 "set_your_languages" = "زبان خود را تنظیم کنید";
 "okay" = "تأیید";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "عمومی";
 "menu_share" = "اشتراک‌گذاری";
@@ -25,13 +34,15 @@
 "help" = "راهنمایی";
 "contact_us" = "تماس با ما";
 "preview_mode_translators_only" = "حالت پیش‌نمایش (فقط مترجمان)";
-"share_god_tools" = "اشتراک‌گذاری GodTools";
+"share_god_tools" = "اشتراک‌گذاری برنامه GodTools";
 "share_a_story_with_us" = "یک داستان با ما به اشتراک بگذارید";
 "terms_of_use" = "شرایط استفاده";
 "privacy_policy" = "خط‌مشی حریم خصوصی";
 "copyright_info" = "اطلاعات حق نسخه‌برداری";
-"share_god_tools_share_sheet_text" = "می‌توانید برنامه GodTools را از اینجا دانلود کنید:
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = " برنامه GodTools را از اینجا دانلود کنید:
+http://godtoolsapp.com
+
+می‌توانید نسخه آنلاین را در https://knowgod.com/ بیابید";
 
 // Add Tools
 "add_tools" = "افزدون ابزار";
@@ -44,7 +55,7 @@ http://godtoolsapp.com";
 "select_primary_language" = "زبان اصلی را انتخاب کنید";
 "parallel_language" = "زبان موازی";
 "select_parallel_language" = "یک زبان موازی انتخاب کنید";
-"share_god_tools_native_language" = "برنامه GodTools را با دیگران به زبان اصلی آن‌ها به اشتراک بگذارید";
+"share_god_tools_native_language" = "GodTools را با دیگران به زبان اصلی آن‌ها به اشتراک بگذارید";
 "not_every_tool_is_available" = "تمام ابزار به تمام زبان‌ها در دسترس قرار ندارند";
 
 // Settings
@@ -67,7 +78,9 @@ http://godtoolsapp.com";
 "no" = "خیر";
 
 // Tract - Sharing
-"tract_share_message" ="این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!";
+"tract_share_message" ="این پیوند شما را به نسخه اینترنتی صفحه‌ای می‌برد که امروز آخرین بار آن را مشاهده می‌کردیم: %@. بیایید بیشتر صحبت کنیم!
+
+می‌توان برنامه را از https://godtoolsapp.com دانلود کنید";
 
 // Buttons
 "download" = "دانلود";

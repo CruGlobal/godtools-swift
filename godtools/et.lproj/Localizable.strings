@@ -1,5 +1,11 @@
+"login" = "Logi sisse";
+"logout" = "Logi välja";
+"create_account" = "Lisa konto";
+"account_login" = "Kontole sisselogimine";
 "the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
-"language_onboard" = "60+ keelt";
+"loading" = "Laadimine...";
+
+"language_onboard" = "75+ keelt";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Sa oled alla laadinud kõik olemasolevad tööriistad.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Lisa uusi tööriistu";
 "set_your_languages" = "Seadista oma keeled";
 "okay" = "Nõus";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Üldised";
 "menu_share" = "Jagamine";
@@ -25,12 +34,14 @@
 "help" = "Abi";
 "contact_us" = "Kontakt";
 "preview_mode_translators_only" = "Eelvaaterežiim (ainult tõlkijatele)";
-"share_god_tools" = "Jaga Jumala Tööriistu";
+"share_god_tools" = "Jaga \"Jumala tööriistade\" rakendust";
 "share_a_story_with_us" = "Jaga meiega oma lugu";
 "terms_of_use" = "Kasutustingimused";
 "privacy_policy" = "Andmekaitsepõhimõtted";
 "copyright_info" = "Autoriõiguslik teave";
-"share_god_tools_share_sheet_text" = "Jumala Tööristade rakenduse saad alla laadida lehelt http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Laadi \"Jumala tööriistade\" rakendus alla lehelt godtoolsapp.com
+
+Veebiversioon on saadaval lehel knowgod.com";
 
 // Add Tools
 "add_tools" = "Lisa tööriistu";
@@ -43,7 +54,7 @@
 "select_primary_language" = "Vali põhikeel";
 "parallel_language" = "Teine keel";
 "select_parallel_language" = "Vali teine keel";
-"share_god_tools_native_language" = "Jaga Jumala Tööriistu kellegagi tema emakeeles";
+"share_god_tools_native_language" = "Jaga \"Jumala tööriistu\" kellegagi tema emakeeles";
 "not_every_tool_is_available" = "Kõik tööriistad ei ole kõigis keeltes saadaval";
 
 // Settings
@@ -66,7 +77,9 @@
 "no" = "Ei";
 
 // Tract - Sharing
-"tract_share_message" ="Link %@ viib sind viimati koos vaadatud lehe veebiversioonile. Räägime jälle!";
+"tract_share_message" ="Link %@ viib sind täna viimati koos vaadatud lehe veebiversioonile. Räägime jälle!
+
+Rakenduse saab alla laadida lehelt godtoolsapp.com";
 
 // Buttons
 "download" = "Laadi alla";

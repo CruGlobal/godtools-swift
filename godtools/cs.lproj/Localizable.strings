@@ -1,5 +1,11 @@
+"login" = "Přihlášení";
+"logout" = "Odhlášení";
+"create_account" = "Vytvořit účet";
+"account_login" = "Přihlášení účtu";
 "the_tool_you_requested_is_loading" = "Požadovaný nástroj se načítá...";
-"language_onboard" = "60+ jazyků";
+"loading" = "Načítání...";
+
+"language_onboard" = "75+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Máte staženy všechny dostupné nástroje.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Přidat nové nástroje";
 "set_your_languages" = "Nastavení jazyků";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Obecné";
 "menu_share" = "Sdílet";
@@ -25,12 +34,13 @@
 "help" = "Nápověda";
 "contact_us" = "Kontaktujte nás";
 "preview_mode_translators_only" = "Režim náhledu (pouze překladatelé)";
-"share_god_tools" = "Sdílet GodTools";
+"share_god_tools" = "Sdílet aplikaci GodTools";
 "share_a_story_with_us" = "Napište nám příběh";
 "terms_of_use" = "Pravidla užívání";
 "privacy_policy" = "Ochrana soukromí";
 "copyright_info" = "Informace o autorských právech";
-"share_god_tools_share_sheet_text" = "Zde si můžete stáhnout aplikaci GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Stáhněte si aplikaci GodTools: http://godtoolsapp.com
+On-line verzi naleznete na https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Přidat nástroje";
@@ -66,7 +76,9 @@
 "no" = "Ne";
 
 // Tract - Sharing
-"tract_share_message" ="Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ Pojďme si o tom ještě povykládat!";
+"tract_share_message" ="Tento odkaz vás přivede na webovou verzi stránky, na kterou jsme se dnes již spolu dívali: %@ Pojďme si o tom ještě povykládat!
+
+Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 
 // Buttons
 "download" = "Stáhnout";

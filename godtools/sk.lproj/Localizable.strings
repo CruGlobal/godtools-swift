@@ -1,5 +1,11 @@
+"login" = "Prihlásiť sa";
+"logout" = "Odhlásiť sa";
+"create_account" = "Vytvoriť účet";
+"account_login" = "Prihlásenie do účtu";
 "the_tool_you_requested_is_loading" = "Nástroj, o ktorý ste požiadali, sa načítava…";
-"language_onboard" = "Vyše 60 jazykov";
+"loading" = "Načítava sa...";
+
+"language_onboard" = "Vyše 75 jazykov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Stiahli ste si všetky dostupné nástroje.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Pridať nové nástroje";
 "set_your_languages" = "Nastavte si jazyky";
 "okay" = "OK";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Všeobecné";
 "menu_share" = "Zdieľanie";
@@ -25,12 +34,14 @@
 "help" = "Pomoc";
 "contact_us" = "Kontaktujte nás";
 "preview_mode_translators_only" = "Režim ukážky (iba prekladatelia)";
-"share_god_tools" = "Zdieľanie aplikácie GodTools";
+"share_god_tools" = "Zdieľať aplikáciu GodTools";
 "share_a_story_with_us" = "Podeľte sa s nami o príbeh";
 "terms_of_use" = "Zmluvné podmienky";
 "privacy_policy" = "Pravidlá ochrany súkromia";
 "copyright_info" = "Informácie o autorských právach";
-"share_god_tools_share_sheet_text" = "Aplikáciu GodTools si môžete stiahnuť tu: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Stiahnite si aplikáciu GodTools: http://godtoolsapp.com
+
+Online verzia je k dispozícii na https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Pridať nástroje";
@@ -43,7 +54,7 @@
 "select_primary_language" = "Vyberte si hlavný jazyk";
 "parallel_language" = "Vedľajší jazyk";
 "select_parallel_language" = "Vyberte si vedľajší jazyk";
-"share_god_tools_native_language" = "Podeľte sa o aplikáciu GodTools s niekým v jeho rodnom jazyku";
+"share_god_tools_native_language" = "Podeľte sa s niekým o aplikáciu GodTools v jeho rodnom jazyku";
 "not_every_tool_is_available" = "Nie všetky nástroje sú dostupné vo všetkých jazykoch";
 
 // Settings
@@ -66,7 +77,9 @@
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" ="Tento odkaz vás nasmeruje na webovú verziu stránky, na ktorú sme sa naposledy spolu pozerali dnes: %@. Pohovorme si viac!";
+"tract_share_message" ="Tento odkaz vás nasmeruje na webovú verziu stránky, na ktorú sme sa naposledy dnes pozerali spolu: %@. Pohovorme si viac!
+
+Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 
 // Buttons
 "download" = "Stiahnuť";

@@ -1,5 +1,11 @@
+"login" = "Log masuk";
+"logout" = "Log keluar";
+"create_account" = "Cipta Akaun";
+"account_login" = "Log Masuk Akaun";
 "the_tool_you_requested_is_loading" = "Alat yang anda minta sedang dimuatkan...";
-"language_onboard" = "60+ Bahasa";
+"loading" = "Memuat...";
+
+"language_onboard" = "75+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Anda telah memuat turun semua alat yang tersedia.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Tambah Alat Baharu";
 "set_your_languages" = "Tetapkan Bahasa Anda";
 "okay" = "Okey";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Umum";
 "menu_share" = "Kongsi";
@@ -25,12 +34,14 @@
 "help" = "Bantuan";
 "contact_us" = "Hubungi Kami";
 "preview_mode_translators_only" = "Mod Pratonton (Penterjemah Sahaja)";
-"share_god_tools" = "Kongsikan GodTools";
+"share_god_tools" = "Kongsi Aplikasi GodTools";
 "share_a_story_with_us" = "Kongsikan sebuah Kisah Bersama Kami";
 "terms_of_use" = "Terma Penggunaan";
 "privacy_policy" = "Dasar Privasi";
 "copyright_info" = "Maklumat Hak Cipta";
-"share_god_tools_share_sheet_text" = "Di sini anda boleh memuat turun aplikasi GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Muat turun aplikasi GodTools: http://godtoolsapp.com
+
+Versi dalam talian boleh ditemui di https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Tambah Alat";
@@ -66,7 +77,9 @@
 "no" = "Tidak";
 
 // Tract - Sharing
-"tract_share_message" ="Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!";
+"tract_share_message" ="Pautan ini akan membawa anda ke halaman versi web yang kali terakhir kita lihat bersama hari ini: %@. Ayuh bercakap lebih banyak!
+
+Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 
 // Buttons
 "download" = "Muat Turun";

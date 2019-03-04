@@ -1,5 +1,11 @@
+"login" = "登录";
+"logout" = "退出";
+"create_account" = "创建账户";
+"account_login" = "账户登录";
 "the_tool_you_requested_is_loading" = "正在加载您申请的工具...";
-"language_onboard" = "60多种语言";
+"loading" = "正在加载...";
+
+"language_onboard" = "超过75种语言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "您已下载所有可用工具。";
@@ -15,6 +21,9 @@
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
 "okay" = "确定";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "通用";
 "menu_share" = "分享";
@@ -25,12 +34,14 @@
 "help" = "帮助";
 "contact_us" = "请联系我们";
 "preview_mode_translators_only" = "预览模式（仅限译员）";
-"share_god_tools" = "分享GodTools";
+"share_god_tools" = "分享GodTools应用";
 "share_a_story_with_us" = "和我们分享你的故事";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私政策";
 "copyright_info" = "版权信息";
-"share_god_tools_share_sheet_text" = "您可以在这里下载GodTools：http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "下载GodTools应用：http://godtoolsapp.com
+
+在线版地址：https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "添加工具";
@@ -66,7 +77,9 @@
 "no" = "否";
 
 // Tract - Sharing
-"tract_share_message" ="点击这个链接，您会看到我们今天谈论内容的网页版：%@。更多谈论！";
+"tract_share_message" ="点击这个链接，您会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
+
+应用下载地址： https://godtoolsapp.com";
 
 // Buttons
 "download" = "下载";

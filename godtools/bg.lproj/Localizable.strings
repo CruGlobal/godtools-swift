@@ -1,5 +1,11 @@
+"login" = "Вписване";
+"logout" = "Изход";
+"create_account" = "Създаване на акаунт";
+"account_login" = "Вписване в акаунт";
 "the_tool_you_requested_is_loading" = "Изискваният от Вас инструмент се зарежда";
-"language_onboard" = "60+ Езика";
+"loading" = "Зареждане...";
+
+"language_onboard" = "75+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Вие изтеглихте всички налични инструменти.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Добавете нови средства";
 "set_your_languages" = "Настройте Вашите езици";
 "okay" = "ОК";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Общи условия";
 "menu_share" = "Споделете";
@@ -25,12 +34,14 @@
 "help" = "Помощ";
 "contact_us" = "Свържете се с нас";
 "preview_mode_translators_only" = "Режим на предварителен изглед (Само преводачи)";
-"share_god_tools" = "Споделете GodTools";
+"share_god_tools" = "Споделете приложението GodTools";
 "share_a_story_with_us" = "Споделете една история с нас";
 "terms_of_use" = "Условия за употреба";
 "privacy_policy" = "Политика за поверителност";
 "copyright_info" = "Информация за авторско право";
-"share_god_tools_share_sheet_text" = "Тук можете да изтеглите приложението GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Изтеглете приложението GodTools: http://godtoolsapp.com
+
+Онлайн версия може да бъде намерена на https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Добавете инструменти";
@@ -66,7 +77,9 @@
 "no" = "Не";
 
 // Tract - Sharing
-"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. Да поговорим още!";
+"tract_share_message" ="Този линк ще Ви насочи към уеб версията на страницата, която гледахме заедно днес: %@. Да поговорим още!
+
+Приложението може да бъде изтеглено от https://godtoolsapp.com";
 
 // Buttons
 "download" = "Изтегляне";

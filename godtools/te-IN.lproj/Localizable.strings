@@ -1,5 +1,11 @@
+"login" = "లాగిన్";
+"logout" = "లాగౌట్";
+"create_account" = "ఖాతాను సృష్టించు";
+"account_login" = "ఖాతా లాగిన్";
 "the_tool_you_requested_is_loading" = "మీ అభ్యర్థించిన పరికరము లోడ్ అవుతున్నది…";
-"language_onboard" = "60+ భాషలు";
+"loading" = "లోడ్‌చేస్తున్నా...";
+
+"language_onboard" = "75+ భాషలు";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "అందుబాటులో ఉన్న అన్నిసాధనాలను మీరు డౌన్‌లోడ్ చేశారు.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
 "okay" = "సరే";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "సాధారణం";
 "menu_share" = "షేర్ చెయ్యండి";
@@ -25,12 +34,14 @@
 "help" = "సహాయం";
 "contact_us" = "సంప్రదించండి";
 "preview_mode_translators_only" = "ప్రివ్యూ మోడ్ (అనువాదకులకు మాత్రమే)";
-"share_god_tools" = "GodTools షేర్ చెయ్యండి";
+"share_god_tools" = "GodTools ఆప్ షేర్ చెయ్యండి";
 "share_a_story_with_us" = "మాతో మీ అనుభవాలను పంచుకోండి";
 "terms_of_use" = "ఉపయోగించు షరతులు ";
 "privacy_policy" = "ప్రైవసీ పాలసీ";
 "copyright_info" = "కాపిరైట్ సమాచారం";
-"share_god_tools_share_sheet_text" = "GodTools యాప్ ను ఇక్కడ డౌన్లోడ్ చేసుకోవచ్చు: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "GodTools ఆప్‌ను డౌన్లోడ్ చేసుకోండి: http://godtoolsapp.com
+
+ఆన్‌లైన్ వర్షన్  https://knowgod.com/ వద్ద కనుగొనవచ్చు";
 
 // Add Tools
 "add_tools" = "టూల్స్ జోడించండి";
@@ -43,7 +54,7 @@
 "select_primary_language" = "ప్రాథమిక భాషను ఎంచుకోండి";
 "parallel_language" = "సమాంతర భాషలు ";
 "select_parallel_language" = "సమాంతర భాషను ఎంచుకోండి";
-"share_god_tools_native_language" = "GodTools ను వారి సొంత భాషలో ఇతరులతో పంచండి";
+"share_god_tools_native_language" = "GodTools ను ఎవరితోనైనా వారి సొంత భాషలో పంచండి";
 "not_every_tool_is_available" = "ప్రతి టూల్ ప్రతి భాషలో అందుబాటులో ఉండదు";
 
 // Settings
@@ -66,7 +77,9 @@
 "no" = "కాదు";
 
 // Tract - Sharing
-"tract_share_message" ="ఈ లింక్ మిమ్మును ఈ రోజు మనం చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. మరింత మాట్లాడదాము! ";
+"tract_share_message" ="ఈ లింక్ మిమ్మల్ని ఈ రోజు మనం కలిసి చూసిన పేజీ యొక్క వెబ్ వెర్షన్ లోకి తీసుకువెళ్తుంది: %@. మరింత మాట్లాడదాము! 
+
+ఆప్ https://godtoolsapp.com నుంచి డౌన్‌లోడ్ చేసుకోబడవచ్చు";
 
 // Buttons
 "download" = "డౌన్లోడ్";

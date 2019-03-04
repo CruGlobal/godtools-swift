@@ -1,5 +1,11 @@
+"login" = "Conectare";
+"logout" = "Deconectare";
+"create_account" = "Creați cont";
+"account_login" = "Conectare la cont";
 "the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
-"language_onboard" = "Peste 60 de limbi";
+"loading" = "Se încarcă...";
+
+"language_onboard" = "Peste 75 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ai descărcat toate instrumentele disponibile.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Adaugă instrumente noi";
 "set_your_languages" = "Setează limba";
 "okay" = "Ok";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "General";
 "menu_share" = "Distribuie";
@@ -25,12 +34,14 @@
 "help" = "Ajutor";
 "contact_us" = "Contactează-ne";
 "preview_mode_translators_only" = "Mod previzualizare (doar traducători)";
-"share_god_tools" = "Distribuie GodTools";
+"share_god_tools" = "Distribuie aplicația GodTools";
 "share_a_story_with_us" = "Împărtășește o poveste cu noi";
 "terms_of_use" = "Condiții de utilizare";
 "privacy_policy" = "Politica de confidențialitate";
 "copyright_info" = "Informații copyright";
-"share_god_tools_share_sheet_text" = "De aici poți descărca aplicația GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Descarcă aplicația GodTools: http://godtoolsapp.com
+
+Găsești versiunea online aici https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Adaugă instrumente";
@@ -66,7 +77,9 @@
 "no" = "Nu";
 
 // Tract - Sharing
-"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. Să discutăm mai multe!";
+"tract_share_message" ="Link-ul te va conduce la versiunea web a paginii pe care am vizionat-o împreună azi: %@. Să discutăm mai multe!
+
+Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 
 // Buttons
 "download" = "Descarcă";

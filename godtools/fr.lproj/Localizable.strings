@@ -1,5 +1,11 @@
+"login" = "Connexion";
+"logout" = "Déconnexion";
+"create_account" = "Créer un compte";
+"account_login" = "Connexion au compte";
 "the_tool_you_requested_is_loading" = "L'outil demandé est en cours de chargement...";
-"language_onboard" = "Plus de 60 langues";
+"loading" = "Chargement...";
+
+"language_onboard" = "Plus de 75 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Vous avez téléchargé tous les outils disponibles.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Ajouter de Nouveaux Outils";
 "set_your_languages" = "Définissez vos langues";
 "okay" = "Ok";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Général";
 "menu_share" = "Partager";
@@ -25,13 +34,14 @@
 "help" = "Aide";
 "contact_us" = "Nous contacter";
 "preview_mode_translators_only" = "Mode aperçu (traducteurs uniquement)";
-"share_god_tools" = "Partager GodTools";
+"share_god_tools" = "Partager l'application GodTools";
 "share_a_story_with_us" = "Partager une histoire avec nous";
 "terms_of_use" = "Conditions d'utilisation";
 "privacy_policy" = "Politique de confidentialité";
 "copyright_info" = "Copyright Détails";
-"share_god_tools_share_sheet_text" = "Vous pouvez télécharger l'application GodTools ici :
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools : http://godtoolsapp.com 
+
+Une version en ligne est disponible sur https://knowgod.com";
 
 // Add Tools
 "add_tools" = "Ajouter des outils";
@@ -67,7 +77,9 @@ http://godtoolsapp.com";
 "no" = "Non";
 
 // Tract - Sharing
-"tract_share_message" ="Ce lien vous redirigera sur la version web de la page que vous consultions en dernier hier : %@. Parlons-en !";
+"tract_share_message" ="Ce lien vous redirigera sur la version web de la dernière page consultée aujourd'hui : %@. Parlons-en !
+
+L'application est téléchargeable depuis https://godtoolsapp.com";
 
 // Buttons
 "download" = "Télécharger";
