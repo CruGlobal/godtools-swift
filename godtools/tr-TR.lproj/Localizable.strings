@@ -1,4 +1,11 @@
-"language_onboard" = "60'ı Aşkın Dil";
+"login" = "Oturum Aç";
+"logout" = "Oturumu Kapat";
+"create_account" = "Hesap Oluştur";
+"account_login" = "Hesapta Oturum Açma";
+"the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
+"loading" = "Yükleniyor";
+
+"language_onboard" = "75'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
@@ -27,12 +34,14 @@
 "help" = "Yardım";
 "contact_us" = "Bize Ulaşın";
 "preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
-"share_god_tools" = "GodTools'u Paylaş";
+"share_god_tools" = "GodTools Uygulamasını Paylaş";
 "share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";
 "terms_of_use" = "Kullanım Koşulları";
 "privacy_policy" = "Gizlilik Politikası";
 "copyright_info" = "Telif Hakkı Bilgisi";
-"share_god_tools_share_sheet_text" = "Buradan GodTools uygulamasını indirebilirsiniz: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "GodTools uygulamasını indirin: http://godtoolsapp.com
+
+Çevrim içi bir sürüm https://knowgod.com/ adresinde bulunabilir";
 
 // Add Tools
 "add_tools" = "Araçlar Ekle";
@@ -51,7 +60,7 @@
 // Settings
 "settings" = "Ayarlar";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "İndirme Hatası";
 "language_download_error" = "Mevcut diller bu kez indirilemedi. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
 "tract_loading_error_message" = "Bu kaynağın açılmasında bir sorun oluştu. Kaynağı tekrar indirmek genelde bu sorunu çözer.\n\nKaynağı tekrar indirmek ister misiniz?";
@@ -63,13 +72,14 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
-
 // Actions
 "yes" = "Evet";
 "no" = "Hayır";
 
 // Tract - Sharing
-"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın ağ sürümüne götürecek: %@. Daha çok konuşalım!";
+"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. Daha çok konuşalım!
+
+Uygulama http://godtoolsapp.com adresinden indirilebilir";
 
 // Buttons
 "download" = "İndir";

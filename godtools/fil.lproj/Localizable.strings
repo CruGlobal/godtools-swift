@@ -1,5 +1,11 @@
+"login" = "Mag-log in";
+"logout" = "Mag-log out";
+"create_account" = "Gumawa ng Account";
+"account_login" = "Pag-log in ng Account";
 "the_tool_you_requested_is_loading" = "Naglo-load ang hiniling mong tool…";
-"language_onboard" = "60+ na Wika";
+"loading" = "Nilo-load...";
+
+"language_onboard" = "75+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Magdagdag ng Mga Bagong Tool";
 "set_your_languages" = "I-set ang Iyong Mga Wika";
 "okay" = "Okay";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Pangkalahatan";
 "menu_share" = "Pagbabahagi";
@@ -25,12 +34,14 @@
 "help" = "Tulong";
 "contact_us" = "Kontakin Kami";
 "preview_mode_translators_only" = "Preview Mode (Mga Tagapagsalin-wika Lang)";
-"share_god_tools" = "Ibahagi ang GodTools";
+"share_god_tools" = "Ibahagi ang GodTools App";
 "share_a_story_with_us" = "Magbahagi ng Kuwento Sa Amin";
 "terms_of_use" = "Mga Tuntunin ng Paggamit";
 "privacy_policy" = "Patakaran sa Pagkapribado";
 "copyright_info" = "Impormasyon sa Copyright";
-"share_god_tools_share_sheet_text" = "Mada-download mo rito ang GodTools app: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "I-download ang GodTools app: http://godtoolsapp.com
+
+Makikita ang online na bersyon sa https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Magdagdag ng Mga Tool";
@@ -66,7 +77,9 @@
 "no" = "Hindi";
 
 // Tract - Sharing
-"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. Mag-usap pa tayo!";
+"tract_share_message" ="Dadalhin ka ng link na ito sa web na bersyon ng page na huli nating tiningnan ngayong araw: %@. Mag-usap pa tayo!
+
+Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 
 // Buttons
 "download" = "I-download";

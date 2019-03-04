@@ -1,4 +1,11 @@
-"language_onboard" = "Over 60 språk";
+"login" = "Logg på";
+"logout" = "Logg av";
+"create_account" = "Opprett konto";
+"account_login" = "Logg på konto";
+"the_tool_you_requested_is_loading" = "Verktøyet du forespurte lastes inn …";
+"loading" = "Laster inn …";
+
+"language_onboard" = "Over 75 språk";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har lastet ned alle tilgjengelige verktøy.";
@@ -27,12 +34,14 @@
 "help" = "Hjelp";
 "contact_us" = "Kontakt oss";
 "preview_mode_translators_only" = "Forhåndsvisning (kun oversettere)";
-"share_god_tools" = "Del GodTools";
+"share_god_tools" = "Del GodTools-appen";
 "share_a_story_with_us" = "Del en historie med oss";
 "terms_of_use" = "Betingelser for bruk";
 "privacy_policy" = "Personvern";
 "copyright_info" = "Opphavsrettslig informasjon";
-"share_god_tools_share_sheet_text" = "Du kan laste ned GodTools-appen her: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Last ned GodTools-appen: http://godtoolsapp.com
+
+Du finner en nettversjon på https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Legg til verktøy";
@@ -51,7 +60,7 @@
 // Settings
 "settings" = "Innstillinger";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "Nedlastingsfeil";
 "language_download_error" = "De tilgjengelige språkene kunne ikke lastes ned nå. Sjekk tilkoblingen din eller prøv igjen senere.";
 "tract_loading_error_message" = "Et problem oppstod med åpning av ressursen. En ny nedlasting løser ofte problemet. \n\n Vil du last den ned igjen?";
@@ -63,13 +72,14 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "De nyeste engelske verktøyene kan lastes ned. \n\n Vil du angi engelsk som hovedspråk og laste ned disse ressursene?";
-
 // Actions
 "yes" = "Ja";
 "no" = "Nei";
 
 // Tract - Sharing
-"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. La oss snakke mer!";
+"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. La oss snakke mer!
+
+Appen kan lastes ned på https://godtoolsapp.com";
 
 // Buttons
 "download" = "Last ned";

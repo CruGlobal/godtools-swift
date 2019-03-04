@@ -1,5 +1,11 @@
+"login" = "Đăng nhập";
+"logout" = "Đăng xuất";
+"create_account" = "Tạo Tài khoản";
+"account_login" = "Đăng nhập Tài khoản";
 "the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
-"language_onboard" = "Hơn 60 Ngôn ngữ";
+"loading" = "Đang tải...";
+
+"language_onboard" = "Hơn 75 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Bạn đã tải về tất cả các công cụ sẵn có.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
 "okay" = "Ok";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Nói chung";
 "menu_share" = "Chia sẻ";
@@ -25,12 +34,14 @@
 "help" = "Trợ giúp";
 "contact_us" = "Liên hệ chúng tôi";
 "preview_mode_translators_only" = "Chế độ Xem trước (chỉ dành cho phiên dịch viên)";
-"share_god_tools" = "Chia sẻ GodTools";
+"share_god_tools" = "Chia sẻ Ứng dụng GodTools";
 "share_a_story_with_us" = "Chia sẻ một Câu chuyện với Chúng tôi";
 "terms_of_use" = "Điều khoản Sử dụng";
 "privacy_policy" = "Chính sách Quyền riêng tư";
 "copyright_info" = "Thông tin Bản quyền";
-"share_god_tools_share_sheet_text" = "Tại đây bạn có thể tải về ứng dụng GodTools. http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Tải về ứng dụng GodTools. http://godtoolsapp.com
+
+Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Thêm Công cụ";
@@ -66,7 +77,9 @@
 "no" = "Không";
 
 // Tract - Sharing
-"tract_share_message" ="Đường dẫn này sẽ đưa bạn đến phiên bản web của trang chúng tôi đã xem lần cuối cùng nhau ngày hôm nay: %@. Hãy cùng nói chuyện nhiều hơn!";
+"tract_share_message" ="Đường dẫn này sẽ đưa bạn đến phiên bản web của trang chúng tôi đã xem lần cuối cùng nhau ngày hôm nay: %@. Hãy cùng nói chuyện nhiều hơn!
+
+Ứng dụng có thể được tải về từ https://godtoolsapp.com";
 
 // Buttons
 "download" = "Tải về";

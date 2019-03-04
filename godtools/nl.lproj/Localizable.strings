@@ -1,5 +1,11 @@
+"login" = "Inloggen";
+"logout" = "Uitloggen";
+"create_account" = "Account aanmaken";
+"account_login" = "Inloggen op account";
 "the_tool_you_requested_is_loading" = "Het hulpmiddel dat je hebt opgevraagd wordt geladen...";
-"language_onboard" = "60+ talen";
+"loading" = "Bezig met laden…";
+
+"language_onboard" = "75+ talen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Je hebt alle beschikbare tools gedownload.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Voeg nieuwe hulpmiddelen toe";
 "set_your_languages" = "Stel je talen in";
 "okay" = "Oke";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Algemeen";
 "menu_share" = "Delen";
@@ -25,12 +34,14 @@
 "help" = "Hulp";
 "contact_us" = "Contacteer Ons";
 "preview_mode_translators_only" = "Voorbeeldmodus (Alleen Vertalers)";
-"share_god_tools" = "Deel GodTools";
+"share_god_tools" = "Deel de GodTools-app";
 "share_a_story_with_us" = "Deel een verhaal met ons";
 "terms_of_use" = "Gebruiksvoorwaarden";
 "privacy_policy" = "Privacybeleid";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Hier kunt u GodTools app downloaden: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Download de GodTools-app: http://godtoolsapp.com
+
+Een onlineversie is te vinden op https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Tools Toevoegen";
@@ -66,7 +77,9 @@
 "no" = "Nee";
 
 // Tract - Sharing
-"tract_share_message" ="Deze link brengt je naar de webversie van de pagina die we vandaag vandaag samen bekeken: %@. Laten we verder praten!";
+"tract_share_message" ="Deze link brengt je naar de webversie van de laatste pagina die we vandaag samen hebben bekeken: %@. Laten we verder praten!
+
+De app is te downloaden vanaf https://godtoolsapp.com";
 
 // Buttons
 "download" = "Download";

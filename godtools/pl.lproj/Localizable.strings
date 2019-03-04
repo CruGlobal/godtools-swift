@@ -1,5 +1,11 @@
+"login" = "Zaloguj";
+"logout" = "Wyloguj";
+"create_account" = "Utwórz konto";
+"account_login" = "Zaloguj się na konto";
 "the_tool_you_requested_is_loading" = "Trwa wczytywanie żądanego narzędzia...";
-"language_onboard" = "60+ języków";
+"loading" = "Ładowanie...";
+
+"language_onboard" = "75+ języków";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Pobrałeś(aś) już wszystkie dostępne materiały.";
@@ -15,6 +21,9 @@
 "add_new_tools" = "Dodaj Nowe Narzędzia";
 "set_your_languages" = "Ustaw języki";
 "okay" = "Okej";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "Ogólne";
 "menu_share" = "Udostępnij";
@@ -25,13 +34,15 @@
 "help" = "Pomoc";
 "contact_us" = "Kontakt";
 "preview_mode_translators_only" = "Tryb podglądu (tylko dla tłumaczy)";
-"share_god_tools" = "Udostępnij GodTools";
+"share_god_tools" = "Udostępnij Aplikację GodTools";
 "share_a_story_with_us" = "Podziel się z nami swoją historią";
 "terms_of_use" = "Warunki użytkowania";
 "privacy_policy" = "Polityka prywatności";
 "copyright_info" = "Informacja o prawach autorskich";
-"share_god_tools_share_sheet_text" = "GodTools można pobrać tutaj:
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Pobierz aplikację GodTools:
+http://godtoolsapp.com
+
+Wersję online można znaleźć na https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Dodaj Narzędzia";
@@ -67,7 +78,9 @@ http://godtoolsapp.com";
 "no" = "Nie";
 
 // Tract - Sharing
-"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. Bądźmy w kontakcie!";
+"tract_share_message" ="Ten link kieruje do webowej wersji strony, którą razem ostatnio omawialiśmy:%@. Bądźmy w kontakcie!
+
+Możesz pobrać tę aplikację z https://godtoolsapp.com";
 
 // Buttons
 "download" = "Pobierz";

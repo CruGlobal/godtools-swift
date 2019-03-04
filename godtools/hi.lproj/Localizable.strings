@@ -1,5 +1,11 @@
+"login" = "लॉग-इन";
+"logout" = "लॉग-आउट";
+"create_account" = "खाता बनाएं";
+"account_login" = "खाते में लॉग-इन";
 "the_tool_you_requested_is_loading" = "अनुरोधित टूल लोड हो रहा है ...";
-"language_onboard" = "60+ भाषाएँ";
+"loading" = "लोड हो रहा है...";
+
+"language_onboard" = "75+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "आपने सभी उपलब्ध टूल्स डाउनलोड कर लिए हैं।";
@@ -15,6 +21,9 @@
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
 "okay" = "ठीक";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "सामान्य";
 "menu_share" = "शेयर करें";
@@ -25,12 +34,14 @@
 "help" = "मदद";
 "contact_us" = "हमसे संपर्क करें";
 "preview_mode_translators_only" = "प्रीव्यू मोड (केवल अनुवादक)";
-"share_god_tools" = "GodTools शेयर करें";
+"share_god_tools" = "GodTools ऐप शेयर करें";
 "share_a_story_with_us" = "हमसे कोई कहानी शेयर करें";
 "terms_of_use" = "प्रयोग की शर्तें";
 "privacy_policy" = "निजता नीति";
 "copyright_info" = "कॉपीराइट सूचना";
-"share_god_tools_share_sheet_text" = "यहां आप GodTools ऐप डाउनलोड कर सकते हैं: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "यहां आप GodTools ऐप डाउनलोड कर सकते हैं: http://godtoolsapp.com
+
+ऑनलाइन संस्करण यहां देखा जा सकता है: https://knowgod.com";
 
 // Add Tools
 "add_tools" = "टूल्स जोड़ें";
@@ -66,7 +77,9 @@
 "no" = "नहीं";
 
 // Tract - Sharing
-"tract_share_message" ="यह लिंक आपको उस पेज पर ले जाएगा जहां हम इस पहले काम कर रहे थे: %@. चलिए और बात करते हैं!";
+"tract_share_message" ="यह लिंक आपको उस पेज पर ले जाएगा जिसे हम पहले देख रहे थे: %@. चलिए और बात करते हैं!
+
+ऐप यहां से डाउनलोड कीजिए: https://godtoolsapp.com";
 
 // Buttons
 "download" = "डाउनलोड";

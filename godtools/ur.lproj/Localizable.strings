@@ -1,5 +1,11 @@
+"login" = "لاگ اِن کریں";
+"logout" = "لاگ آؤٹ کریں";
+"create_account" = "اکاؤنٹ بنائیں";
+"account_login" = "اکاؤنٹ لاگ اِن";
 "the_tool_you_requested_is_loading" = "جس ازار کی آپ نے درخواست کی ہے وہ لوڈ ہو رہاہے۔";
-"language_onboard" = "60+ زبانیں";
+"loading" = "لوڈ ہو رہا ہے۔۔۔";
+
+"language_onboard" = "75+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "آپ نے تمام دستیاب ٹُولز ڈاونلوڈ کر لیے ہیں۔";
@@ -15,6 +21,9 @@
 "add_new_tools" = "نئے ٹُولز ایڈ کریں";
 "set_your_languages" = "زبانیں منتخب کریں";
 "okay" = "اوکے";
+"want_more_godtools?" = "Want more GodTools?";
+"click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
+"click_here" = "Click Here";
 // Menu
 "menu_general" = "جنرل";
 "menu_share" = "شیئر کریں";
@@ -24,12 +33,17 @@
 "about" = "ہمارے متعلق";
 "help" = "مدد";
 "contact_us" = "ہم سے رابطہ کریں";
+"preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "گاڈ ٹُولز ایپ شیئر کریں";
 "share_a_story_with_us" = "ہمارے ساتھ اسٹوری شیئر کریں";
 "terms_of_use" = "استعمال کرنے کی شرائط";
 "privacy_policy" = "رازداری کی پالیسی";
 "copyright_info" = "کاپی رائٹ";
-"share_god_tools_share_sheet_text" = "یہاں آپ خداکے اوزار ایپ ڈاؤن لوڈ کر سکتے ہیں: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "گاڈ ٹُولز ایپ ڈاؤن لوڈ کریں: 
+http://godtoolsapp.com
+
+ایک آن لائن ورژن اس لِنک پر ملاحظہ فرمائیں 
+https://knowgod.com";
 
 // Add Tools
 "add_tools" = "ٹُولز ایڈ کریں";
@@ -42,7 +56,7 @@
 "select_primary_language" = "ایک اولین زبان منتخب کریں";
 "parallel_language" = "متوازی زبان";
 "select_parallel_language" = "متوازی زبان کا انتخاب کریں";
-"share_god_tools_native_language" = "گاڈ ٹُولز دوسروں کے ساتھ ان کی مقامی زبان میں شیئر کریں۔";
+"share_god_tools_native_language" = "گاڈ ٹُولز دوسروں کے ساتھ ان کی مقامی زبان میں شیئر کریں";
 "not_every_tool_is_available" = "ہر زبان میں ہر ٹُول دستیاب نہیں ہے۔";
 
 // Settings
@@ -65,7 +79,10 @@
 "no" = "نہیں";
 
 // Tract - Sharing
-"tract_share_message" ="یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@. آئیے کچھ اور چیزوں پر بات کریں۔";
+"tract_share_message" ="یہ لنک آپ کو اس پیج کے ویب ورژن میں لےجائے گا جس کو آج ہم سب مل کر دیکھ رہے تھے: %@۔ آئیے کچھ اور چیزوں پر بات کریں!
+
+ایپ یہاں سے ڈاؤنلوڈ کی جا سکتی ہے
+https://godtoolsapp.com";
 
 // Buttons
 "download" = "ڈاؤن لوڈ کریں";

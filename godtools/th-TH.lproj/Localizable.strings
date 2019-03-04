@@ -1,4 +1,11 @@
-"language_onboard" = "กว่า 60 ภาษา";
+"login" = "เข้าสู่ระบบ";
+"logout" = "ออกจากระบบ";
+"create_account" = "ลงทะเบียน";
+"account_login" = "เข้าสู่บัญชี";
+"the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
+"loading" = "กำลังโหลด...";
+
+"language_onboard" = "กว่า 75 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
@@ -27,12 +34,14 @@
 "help" = "ช่วยเหลือ";
 "contact_us" = "ติดต่อเรา";
 "preview_mode_translators_only" = "โหมดพรีวิว (นักแปลเท่านั้น)";
-"share_god_tools" = "แชร์ GodTools";
+"share_god_tools" = "แชร์แอป GodTools";
 "share_a_story_with_us" = "แชร์เรื่องราวกับเรา";
 "terms_of_use" = "เงื่อนไขการใช้งาน";
 "privacy_policy" = "นโยบายความเป็นส่วนตัว";
 "copyright_info" = "ข้อมูลลิขสิทธิ์";
-"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก http://godtoolsapp.com
+
+สามารถดูเวอร์ชั่นออนไลน์ได้ที่ https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "เพิ่มเครื่องมือ";
@@ -51,7 +60,7 @@
 // Settings
 "settings" = "การตั้งค่า";
 
-// Alert Controllers
+// Alert & Info Controllers
 "download_error" = "ข้อผิดพลาดในการดาวน์โหลด";
 "language_download_error" = "ไม่สามารถดาวน์โหลดภาษาที่มีได้ตอนนี้ โปรดตรวจสอบการเชื่อมต่อหรือลองอีกครั้งภายหลัง";
 "tract_loading_error_message" = "เกิดปัญหาในการเปิดทรัพยากรนี้ การดาวน์โหลดอีกครั้งอาจช่วยแก้ปัญหาได้\n\nต้องการดาวน์โหลดอีกครั้งหรือไม่";
@@ -63,13 +72,14 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้\n\nต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
-
 // Actions
 "yes" = "ใช่";
 "no" = "ไม่";
 
 // Tract - Sharing
-"tract_share_message" ="ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!";
+"tract_share_message" ="ลิงก์นี้จะนำคุณไปยังหน้าเพจที่เราดูด้วยกันวันนี้: %@. มาคุยกันอีก!
+
+สามารถดาวน์โหลดแอปได้ที่ https://godtoolsapp.com";
 
 // Buttons
 "download" = "ดาวน์โหลด";
