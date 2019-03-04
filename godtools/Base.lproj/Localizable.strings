@@ -1,4 +1,4 @@
-"language_onboard" = "60+ Languages";
+"language_onboard" = "75+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "You have downloaded all available tools.";
@@ -36,7 +36,7 @@
 "terms_of_use" = "Terms of Use";
 "privacy_policy" = "Privacy Policy";
 "copyright_info" = "Copyright Info";
-"share_god_tools_share_sheet_text" = "Download the GodTools app: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Download the GodTools app: https://godtoolsapp.com
 
 An online version can be found at https://knowgod.com/";
 
