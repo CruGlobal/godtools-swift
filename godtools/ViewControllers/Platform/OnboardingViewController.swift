@@ -81,4 +81,8 @@ class OnboardingViewController: BaseViewController {
         addLanguagesLabel.accessibilityIdentifier = GTAccessibilityConstants.Onboarding.addLanguagesLabel
     }
     
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 }

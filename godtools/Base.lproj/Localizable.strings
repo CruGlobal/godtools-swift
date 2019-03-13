@@ -1,4 +1,4 @@
-"language_onboard" = "75+ Languages";
+"language_onboard" = "80+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "You have downloaded all available tools.";
