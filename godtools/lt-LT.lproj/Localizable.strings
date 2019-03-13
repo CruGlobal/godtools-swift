@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Jūsų prašomas įrankis įkeliamas...";
 "loading" = "Įkeliama...";
 
-"language_onboard" = "75+ kalbos";
+"language_onboard" = "80+ kalbos";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";

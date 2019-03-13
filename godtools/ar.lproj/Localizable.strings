@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "جاري تحميل الأداة التي طلبتها...";
 "loading" = "جارٍ التحميل...";
 
-"language_onboard" = "أكثر من 75 لغة";
+"language_onboard" = "أكثر من 80 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "لقد حملت كل الأدوات المتوفرة.";

@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Das von Ihnen angeforderte Tool wird geladen ...";
 "loading" = "Wird geladen...";
 
-"language_onboard" = "Über 75 Sprachen";
+"language_onboard" = "Über 80 Sprachen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Es wurden bereits alle verfügbaren Tools heruntergeladen.";

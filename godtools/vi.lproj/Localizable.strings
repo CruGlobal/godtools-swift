@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
 "loading" = "Đang tải...";
 
-"language_onboard" = "Hơn 75 Ngôn ngữ";
+"language_onboard" = "Hơn 80 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Bạn đã tải về tất cả các công cụ sẵn có.";

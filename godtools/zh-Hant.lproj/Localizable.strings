@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "工具正在載入中⋯⋯";
 "loading" = "正在載入⋯⋯";
 
-"language_onboard" = "超過 75 種語言";
+"language_onboard" = "超過 80 種語言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "您已經下載所有可用工具了。";

@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
 "loading" = "Yükleniyor";
 
-"language_onboard" = "75'i Aşkın Dil";
+"language_onboard" = "80'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";

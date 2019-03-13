@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Jūsu pieprasītais rīks tiek ielādēts...";
 "loading" = "Ielādē...";
 
-"language_onboard" = "75+ Valodas";
+"language_onboard" = "80+ Valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";

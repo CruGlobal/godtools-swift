@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
 "loading" = "กำลังโหลด...";
 
-"language_onboard" = "กว่า 75 ภาษา";
+"language_onboard" = "กว่า 80 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";

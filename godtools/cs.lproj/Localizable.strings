@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Požadovaný nástroj se načítá...";
 "loading" = "Načítání...";
 
-"language_onboard" = "75+ jazyků";
+"language_onboard" = "80+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Máte staženy všechny dostupné nástroje.";

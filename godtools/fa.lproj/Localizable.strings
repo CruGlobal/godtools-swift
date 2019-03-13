@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "ابزاری که درخواست کردید در حال بارگیری است...";
 "loading" = "در حال بارگیری...";
 
-"language_onboard" = "75+ زبان";
+"language_onboard" = "80+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "همه ابزارهای موجود را دانلود کرده‌اید.";

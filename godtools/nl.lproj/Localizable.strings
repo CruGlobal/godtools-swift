@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Het hulpmiddel dat je hebt opgevraagd wordt geladen...";
 "loading" = "Bezig met laden…";
 
-"language_onboard" = "75+ talen";
+"language_onboard" = "80+ talen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Je hebt alle beschikbare tools gedownload.";

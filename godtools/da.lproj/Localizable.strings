@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Det værktøj, du anmodede om, indlæses...";
 "loading" = "Indlæser";
 
-"language_onboard" = "Over 75 sprog";
+"language_onboard" = "Over 80 sprog";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har hentet alle tilgængelige værktøjer.";

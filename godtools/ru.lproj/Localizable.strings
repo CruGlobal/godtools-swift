@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
 "loading" = "Загрузка...";
 
-"language_onboard" = "Более 75 языков";
+"language_onboard" = "Более 80 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Все доступные инструменты загружены.";

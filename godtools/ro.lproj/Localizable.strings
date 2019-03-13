@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
 "loading" = "Se încarcă...";
 
-"language_onboard" = "Peste 75 de limbi";
+"language_onboard" = "Peste 80 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ai descărcat toate instrumentele disponibile.";

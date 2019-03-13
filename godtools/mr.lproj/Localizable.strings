@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "आपण विनंती केलेले साधन लोड होत आहे";
 "loading" = "लोड करीत आहे..";
 
-"language_onboard" = "75+ भाषा";
+"language_onboard" = "80+ भाषा";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "तुम्ही सर्व उपलब्ध साधने डाउनलोड केली आहेत.";

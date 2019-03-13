@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "Naglo-load ang hiniling mong tool…";
 "loading" = "Nilo-load...";
 
-"language_onboard" = "75+ na Wika";
+"language_onboard" = "80+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
