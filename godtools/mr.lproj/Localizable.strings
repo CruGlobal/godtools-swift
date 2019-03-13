@@ -1,3 +1,10 @@
+"login" = "लाॅगिन";
+"logout" = "लाॅग-आऊट";
+"create_account" = "नवीन अकाउंट तयार करा";
+"account_login" = "अकाउंटमध्ये लॉगिन";
+"the_tool_you_requested_is_loading" = "आपण विनंती केलेले साधन लोड होत आहे";
+"loading" = "लोड करीत आहे..";
+
 "language_onboard" = "80+ भाषा";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "साधने शोधा";
 
 "unavailable" = "अनुपलब्ध";
-
 // Onboarding
 "add_new_tools" = "टीपा
 आॅनबोर्डिंग
@@ -29,13 +35,6 @@
 ";
 "menu_legal" = "कायदेशीर";
 "language_settings" = "भाषेच्या मांडण्या";
-
-// Login
-"login" = "लाॅगिन";
-"logout" = "लाॅग-आऊट";
-"create_account" = "नवीन अकाउंट तयार करा";
-"account_login" = "अकाउंटमध्ये लॉगिन";
-
 // Tool Detail
 "about" = "विषयी
 ";
@@ -94,9 +93,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "टीपा\nपहिल्यांदा “इंग्रजी” शब्द साधनांचे वर्णन करणारे विशेषण आहे आणि त्या जागे साधनांचे वर्णन करणारे विशेषण म्हणून ह्या भाषांतराच्या भाषेचे स्थानिक नाव टाकावे. दुसर्यांदा “इंग्रजी” भाषेचा शब्द देखील नाम आहे, परंतु ह्या भाषांतराच्या भाषेत भाषांतर केलेले “इंग्रजी” राहावे.\n\nअगदी अलीकडील इंग्रजी साधने डाऊनलोड करता येऊ शकतात.\n\nआपण आपली मूळ भाषा इंग्रजीसोबत सेट कराल काय आणि हे रिसोर्सेस म्हणजे डाऊनलोड कराल काय? ";
-"the_tool_you_requested_is_loading" = "आपण विनंती केलेले साधन लोड होत आहे";
-"loading" = "लोड करीत आहे..";
-
 // Actions
 "yes" = "टीपा
 कृती

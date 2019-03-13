@@ -1,3 +1,10 @@
+"login" = "Đăng nhập";
+"logout" = "Đăng xuất";
+"create_account" = "Tạo Tài khoản";
+"account_login" = "Đăng nhập Tài khoản";
+"the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
+"loading" = "Đang tải...";
+
 "language_onboard" = "Hơn 80 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Tìm Công cụ";
 
 "unavailable" = "Không sẵn có";
-
 // Onboarding
 "add_new_tools" = "Thêm các Công cụ Mới";
 "set_your_languages" = "Thiết lập Ngôn ngữ của bạn";
@@ -23,13 +29,6 @@
 "menu_share" = "Chia sẻ";
 "menu_legal" = "Hợp pháp";
 "language_settings" = "Các thiết lập ngôn ngữ";
-
-// Login
-"login" = "Đăng nhập";
-"logout" = "Đăng xuất";
-"create_account" = "Tạo Tài khoản";
-"account_login" = "Đăng nhập Tài khoản";
-
 // Tool Detail
 "about" = "Giới thiệu về";
 "help" = "Trợ giúp";
@@ -73,9 +72,6 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Có thể tải về các công cụ tiếng Việt mới nhất.\n\nBạn có muốn thiết lập ngôn ngữ chính của mình thành tiếng Anh và tải về các nguồn tài liệu này?";
-"the_tool_you_requested_is_loading" = "Công cụ bạn yêu cầu đang tải...";
-"loading" = "Đang tải...";
-
 // Actions
 "yes" = "Có";
 "no" = "Không";
