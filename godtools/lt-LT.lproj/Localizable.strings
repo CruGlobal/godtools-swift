@@ -1,3 +1,10 @@
+"login" = "Prisijungti";
+"logout" = "Atsijungti";
+"create_account" = "Sukurti paskyrą";
+"account_login" = "Prisijungimas prie paskyros";
+"the_tool_you_requested_is_loading" = "Jūsų prašomas įrankis įkeliamas...";
+"loading" = "Įkeliama...";
+
 "language_onboard" = "80+ kalbos";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Rasti įrankius";
 
 "unavailable" = "Nėra";
-
 // Onboarding
 "add_new_tools" = "Pridėti naujus įrankius";
 "set_your_languages" = "Nustatyti savo kalbas";
@@ -23,13 +29,6 @@
 "menu_share" = "Dalytis";
 "menu_legal" = "Teisė";
 "language_settings" = "Kalbos nustatymai";
-
-// Login
-"login" = "Prisijungti";
-"logout" = "Atsijungti";
-"create_account" = "Sukurti paskyrą";
-"account_login" = "Prisijungimas prie paskyros";
-
 // Tool Detail
 "about" = "Apie";
 "help" = "Pagalba";
@@ -73,9 +72,6 @@ Internetinę versiją galima rasti adresu https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Galima parsisiųsti naujausius lietuviškus įrankius.\n\nAr norėtumėte nustatyti lietuvių savo pagrindine kalba ir parsisiųsti šiuos išteklius.";
-"the_tool_you_requested_is_loading" = "Jūsų prašomas įrankis įkeliamas...";
-"loading" = "Įkeliama...";
-
 // Actions
 "yes" = "Taip";
 "no" = "Ne";
