@@ -1,3 +1,10 @@
+"login" = "Вписване";
+"logout" = "Изход";
+"create_account" = "Създаване на акаунт";
+"account_login" = "Вписване в акаунт";
+"the_tool_you_requested_is_loading" = "Изискваният от Вас инструмент се зарежда";
+"loading" = "Зареждане...";
+
 "language_onboard" = "80+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Намиране на инструменти";
 
 "unavailable" = "Не е наличен";
-
 // Onboarding
 "add_new_tools" = "Добавете нови средства";
 "set_your_languages" = "Настройте Вашите езици";
@@ -23,13 +29,6 @@
 "menu_share" = "Споделете";
 "menu_legal" = "Правни условия";
 "language_settings" = "Езикови настройки";
-
-// Login
-"login" = "Вписване";
-"logout" = "Изход";
-"create_account" = "Създаване на акаунт";
-"account_login" = "Вписване в акаунт";
-
 // Tool Detail
 "about" = "Относно";
 "help" = "Помощ";
@@ -73,9 +72,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Най-новите инструменти на английски език могат да бъдат изтеглени.\nИскате ли да изберете английския за Ваш главен език и да изтеглите тези ресурси?\n";
-"the_tool_you_requested_is_loading" = "Изискваният от Вас инструмент се зарежда";
-"loading" = "Зареждане...";
-
 // Actions
 "yes" = "Да";
 "no" = "Не";

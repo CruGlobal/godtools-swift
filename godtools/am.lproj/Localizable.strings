@@ -8,7 +8,7 @@
 "the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
 "loading" = "Besig om te laai...";
 
-"language_onboard" = "75+ Tale";
+"language_onboard" = "80+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
