@@ -1,3 +1,10 @@
+"login" = "تسجيل الدخول";
+"logout" = "تسجيل الخروج";
+"create_account" = "إنشاء حساب";
+"account_login" = "دخول الحساب";
+"the_tool_you_requested_is_loading" = "جاري تحميل الأداة التي طلبتها...";
+"loading" = "جارٍ التحميل...";
+
 "language_onboard" = "أكثر من 80 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "إيجاد أدوات";
 
 "unavailable" = "غير متوفر";
-
 // Onboarding
 "add_new_tools" = "إضافة مزيد من الأدوات";
 "set_your_languages" = "حدد لغاتك";
@@ -23,13 +29,6 @@
 "menu_share" = "شارك";
 "menu_legal" = "قانوني";
 "language_settings" = "إعدادات اللغة";
-
-// Login
-"login" = "تسجيل الدخول";
-"logout" = "تسجيل الخروج";
-"create_account" = "إنشاء حساب";
-"account_login" = "دخول الحساب";
-
 // Tool Detail
 "about" = "حول";
 "help" = "مساعدة";
@@ -74,9 +73,6 @@ http://godtoolsapp.com
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "يمكن تحميل أدوات اللغة الإنجليزية الحديثة.\n\nهل ترغب في جعل الإنجليزية هي اللغة الرئيسية و تحميل هذه المصادر؟";
-"the_tool_you_requested_is_loading" = "جاري تحميل الأداة التي طلبتها...";
-"loading" = "جارٍ التحميل...";
-
 // Actions
 "yes" = "نعم";
 "no" = "لا";
