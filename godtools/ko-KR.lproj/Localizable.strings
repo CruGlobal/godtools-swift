@@ -5,7 +5,7 @@
 "the_tool_you_requested_is_loading" = "귀하가 요청한 툴을 로딩 중입니다...";
 "loading" = "불러오는 중...";
 
-"language_onboard" = "75개 이상의 언어";
+"language_onboard" = "80개 이상의 언어";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "모든 이용 가능한 도구를 다운로드했습니다.";

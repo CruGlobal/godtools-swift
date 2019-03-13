@@ -1,3 +1,10 @@
+"login" = "Conectare";
+"logout" = "Deconectare";
+"create_account" = "Creați cont";
+"account_login" = "Conectare la cont";
+"the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
+"loading" = "Se încarcă...";
+
 "language_onboard" = "Peste 80 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Găsește instrumente";
 
 "unavailable" = "Indisponibil";
-
 // Onboarding
 "add_new_tools" = "Adaugă instrumente noi";
 "set_your_languages" = "Setează limba";
@@ -23,13 +29,6 @@
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
-
-// Login
-"login" = "Conectare";
-"logout" = "Deconectare";
-"create_account" = "Creați cont";
-"account_login" = "Conectare la cont";
-
 // Tool Detail
 "about" = "Despre noi";
 "help" = "Ajutor";
@@ -73,9 +72,6 @@ Găsești versiunea online aici https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ultimele instrumente în limba engleză pot fi descărcate. Dorești să setezi engleza ca limbă principală și să descarci aceste resurse?";
-"the_tool_you_requested_is_loading" = "Instrumentul solicitat se încarcă...";
-"loading" = "Se încarcă...";
-
 // Actions
 "yes" = "Da";
 "no" = "Nu";

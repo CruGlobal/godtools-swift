@@ -1,3 +1,10 @@
+"login" = "כניסה";
+"logout" = "יציאה";
+"create_account" = "יצירת חשבון";
+"account_login" = "כניסת חשבון";
+"the_tool_you_requested_is_loading" = "הכלי שביקשת נטען...";
+"loading" = "טוען...";
+
 "language_onboard" = "80+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "חפש כלים";
 
 "unavailable" = "לא זמין";
-
 // Onboarding
 "add_new_tools" = "הוסיפו כלים חדשים";
 "set_your_languages" = "הגדירו את השפה שלכם";
@@ -23,13 +29,6 @@
 "menu_share" = "שתף";
 "menu_legal" = "חוקיות";
 "language_settings" = "הגדרות שפה";
-
-// Login
-"login" = "כניסה";
-"logout" = "יציאה";
-"create_account" = "יצירת חשבון";
-"account_login" = "כניסת חשבון";
-
 // Tool Detail
 "about" = "אודות";
 "help" = "עזרה";
@@ -74,9 +73,6 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "ניתן להוריד את הכלים העדכניים ביותר באנגלית.\n\nהאם ברצונך להגדיר את השפה הראשית שלך לאנגלית ולהוריד את המשאבים האלה?";
-"the_tool_you_requested_is_loading" = "הכלי שביקשת נטען...";
-"loading" = "טוען...";
-
 // Actions
 "yes" = "כן";
 "no" = "לא";

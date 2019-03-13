@@ -1,3 +1,10 @@
+"login" = "Meld aan";
+"logout" = "Teken uit";
+"create_account" = "Skep rekening";
+"account_login" = "Rekening aanmelding";
+"the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
+"loading" = "Besig om te laai...";
+
 "language_onboard" = "80+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Vind hulpmiddels";
 
 "unavailable" = "Nie beskikbaar";
-
 // Onboarding
 "add_new_tools" = "Voeg nuwe hulpmiddels by";
 "set_your_languages" = "Stel jou Tale in";
@@ -23,13 +29,6 @@
 "menu_share" = "Deel";
 "menu_legal" = "Wetlik";
 "language_settings" = "Taalinstellings";
-
-// Login
-"login" = "Meld aan";
-"logout" = "Teken uit";
-"create_account" = "Skep rekening";
-"account_login" = "Rekening aanmelding";
-
 // Tool Detail
 "about" = "Aangaande";
 "help" = "Hulp";
@@ -74,9 +73,6 @@ https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Die nuutste Engelse hulpmiddels kan afgelaai word.\n\nWil jy graag jou primêre taal na Engels instel en hierdie hulpbronne aflaai?";
-"the_tool_you_requested_is_loading" = "Die hulpmiddel wat jy aangevra het is besig om te laai...";
-"loading" = "Besig om te laai...";
-
 // Actions
 "yes" = "Ja";
 "no" = "Nee";

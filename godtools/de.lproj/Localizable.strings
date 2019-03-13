@@ -1,3 +1,10 @@
+"login" = "Anmelden";
+"logout" = "Abmelden";
+"create_account" = "Konto erstellen";
+"account_login" = "Kontoanmeldung";
+"the_tool_you_requested_is_loading" = "Das von Ihnen angeforderte Tool wird geladen ...";
+"loading" = "Wird geladen...";
+
 "language_onboard" = "Über 80 Sprachen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Tools finden";
 
 "unavailable" = "Nicht verfügbar";
-
 // Onboarding
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";
@@ -23,13 +29,6 @@
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
-
-// Login
-"login" = "Anmelden";
-"logout" = "Abmelden";
-"create_account" = "Konto erstellen";
-"account_login" = "Kontoanmeldung";
-
 // Tool Detail
 "about" = "Über";
 "help" = "Hilfe";
@@ -73,9 +72,6 @@ Eine Online-Version findest du unter https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Es können neue deutsche Tools heruntergeladen werden.\n\nMöchtest du deine Hauptsprache auf Deutsch setzen und diese Tools herunterladen?";
-"the_tool_you_requested_is_loading" = "Das von Ihnen angeforderte Tool wird geladen ...";
-"loading" = "Wird geladen...";
-
 // Actions
 "yes" = "Ja";
 "no" = "Nein";

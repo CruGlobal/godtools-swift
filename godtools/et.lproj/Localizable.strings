@@ -1,3 +1,10 @@
+"login" = "Logi sisse";
+"logout" = "Logi välja";
+"create_account" = "Lisa konto";
+"account_login" = "Kontole sisselogimine";
+"the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
+"loading" = "Laadimine...";
+
 "language_onboard" = "80+ keelt";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -10,7 +17,6 @@
 "find_tools" = "Leia tööriistu";
 
 "unavailable" = "Ei ole saadaval";
-
 // Onboarding
 "add_new_tools" = "Lisa uusi tööriistu";
 "set_your_languages" = "Seadista oma keeled";
@@ -23,13 +29,6 @@
 "menu_share" = "Jagamine";
 "menu_legal" = "Juriidiline teave";
 "language_settings" = "Keeleseaded";
-
-// Login
-"login" = "Logi sisse";
-"logout" = "Logi välja";
-"create_account" = "Lisa konto";
-"account_login" = "Kontole sisselogimine";
-
 // Tool Detail
 "about" = "Teave";
 "help" = "Abi";
@@ -73,9 +72,6 @@ Veebiversioon on saadaval lehel knowgod.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Nüüd on võimalik alla laadida uusimaid eestikeelseid tööriistu.\n\nKas tahad seada põhikeeleks eesti keele ja need tööriistad alla laadida?";
-"the_tool_you_requested_is_loading" = "Soovitud tööriista laadimine ...";
-"loading" = "Laadimine...";
-
 // Actions
 "yes" = "Jah";
 "no" = "Ei";
