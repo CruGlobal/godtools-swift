@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 "the_tool_you_requested_is_loading" = "የጠየቁት መተግበርያ በሂደት ላይ ነዉ...";
-=======
 "login" = "Meld aan";
 "logout" = "Teken uit";
 "create_account" = "Skep rekening";
@@ -13,7 +11,6 @@
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
 
->>>>>>> Localized strings
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "My hulpmiddels";
 
