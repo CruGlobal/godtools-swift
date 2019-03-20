@@ -158,7 +158,7 @@ extension BaseFlowController: MenuViewControllerDelegate {
     }
     
     func openWebView(url: URL, title: String, analyticsTitle: String) {
-        let viewController = WebViewController(nibName: String(describing:WebViewController.self), bundle: nil)
+        let viewController = WKWebViewController.create()
         viewController.websiteUrl = url
         viewController.pageTitle = title
         viewController.pageTitleForAnalytics = analyticsTitle
