@@ -1,11 +1,4 @@
-"login" = "登录";
-"logout" = "退出";
-"create_account" = "创建账户";
-"account_login" = "账户登录";
-"the_tool_you_requested_is_loading" = "正在加载您申请的工具...";
-"loading" = "正在加载...";
-
-"language_onboard" = "超过80种语言";
+"language_onboard" = "超过 80 种语言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "您已下载所有可用工具。";
@@ -17,6 +10,7 @@
 "find_tools" = "查找工具";
 
 "unavailable" = "不可用";
+
 // Onboarding
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
@@ -29,6 +23,13 @@
 "menu_share" = "分享";
 "menu_legal" = "法律";
 "language_settings" = "语言设置";
+
+// Login
+"login" = "登录";
+"logout" = "退出";
+"create_account" = "创建账户";
+"account_login" = "账户登录";
+
 // Tool Detail
 "about" = "关于";
 "help" = "帮助";
@@ -72,6 +73,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "有最新的中文版本可以下载。\n\n您要将主要语言设置为中文并下载这些资源吗？";
+"the_tool_you_requested_is_loading" = "正在加载您申请的工具...";
+"loading" = "正在加载...";
+
 // Actions
 "yes" = "是";
 "no" = "否";

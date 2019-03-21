@@ -1,10 +1,3 @@
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
-
 "language_onboard" = "80+ Dillər";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Alət tap";
 
 "unavailable" = "Mövcud deyil";
+
 // Onboarding
 "add_new_tools" = "Yeni alətlər əlavə edin";
 "set_your_languages" = "Dillərinizi təyin edin";
@@ -29,6 +23,7 @@
 "menu_share" = "Paylaş";
 "menu_legal" = "Hüquqi";
 "language_settings" = "Dil parametrləri";
+
 // Tool Detail
 "about" = "Haqqında";
 "help" = "Kömək";

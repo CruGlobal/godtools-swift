@@ -1,11 +1,4 @@
-"login" = "Ingia";
-"logout" = "Toka";
-"create_account" = "Unda Akaunti";
-"account_login" = "Kuingia kwenye Akaunti";
-"the_tool_you_requested_is_loading" = "Kifaa ulichoagiza kinapakia";
-"loading" = "Inapakia...";
-
-"language_onboard" = "Lugha zaidi ya sabini na tano";
+"language_onboard" = "Zaidi ya lugha thelathini";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Umepakua zana zote zilizopo.";
@@ -17,6 +10,7 @@
 "find_tools" = "Pata Zana";
 
 "unavailable" = "Hazipatikani";
+
 // Onboarding
 "add_new_tools" = "Ongeza Vifaa Vipya";
 "set_your_languages" = "Weka Lugha Zako";
@@ -29,6 +23,13 @@
 "menu_share" = "Shirikisha";
 "menu_legal" = "Kisheria";
 "language_settings" = "Mipangilio ya Lugha";
+
+// Login
+"login" = "Ingia";
+"logout" = "Toka";
+"create_account" = "Unda Akaunti";
+"account_login" = "Kuingia kwenye Akaunti";
+
 // Tool Detail
 "about" = "Kuhusu";
 "help" = "Msaada";
@@ -72,6 +73,9 @@ Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Vifaa vya hivi karibuni vya Kiingereza vinaweza kupakuliwa.\n\nJe, ungependa kuweka lugha yako ya msingi iwe Kiingereza na upakue rasilimali hizi?\n";
+"the_tool_you_requested_is_loading" = "Kifaa ulichoagiza kinapakia";
+"loading" = "Inapakia...";
+
 // Actions
 "yes" = "Ndio";
 "no" = "La";

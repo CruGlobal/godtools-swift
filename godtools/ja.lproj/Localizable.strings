@@ -1,11 +1,4 @@
-"login" = "ログイン";
-"logout" = "ログアウト";
-"create_account" = "アカウント作成";
-"account_login" = "アカウントログイン";
-"the_tool_you_requested_is_loading" = "リクエストしたツールを読み込み中…";
-"loading" = "読み込み中...";
-
-"language_onboard" = "80種類以上の言語";
+"language_onboard" = "80 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "利用可能なツールをすべてダウンロードしました。";
@@ -17,6 +10,7 @@
 "find_tools" = "ツールを探す";
 
 "unavailable" = "利用不可";
+
 // Onboarding
 "add_new_tools" = "新しいツールを追加";
 "set_your_languages" = "言語を設定";
@@ -29,6 +23,13 @@
 "menu_share" = "シェア";
 "menu_legal" = "法定事項";
 "language_settings" = "言語設定";
+
+// Login
+"login" = "ログイン";
+"logout" = "ログアウト";
+"create_account" = "アカウント作成";
+"account_login" = "アカウントログイン";
+
 // Tool Detail
 "about" = "情報";
 "help" = "ヘルプ";
@@ -72,6 +73,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "最新の英語ツールをダウンロードできます。\n\n第1言語を英語に設定してこれらのリソースをダウンロードしますか？";
+"the_tool_you_requested_is_loading" = "リクエストしたツールを読み込み中…";
+"loading" = "読み込み中...";
+
 // Actions
 "yes" = "はい";
 "no" = "いいえ";

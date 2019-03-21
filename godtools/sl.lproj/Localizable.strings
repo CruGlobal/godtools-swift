@@ -1,10 +1,3 @@
-"login" = "Prijava";
-"logout" = "Odjava";
-"create_account" = "Ustvari račun";
-"account_login" = "Prijava v račun";
-"the_tool_you_requested_is_loading" = "Zahtevano orodje se nalaga...";
-"loading" = "Nalaganje ...";
-
 "language_onboard" = "Več kot 80 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Dodaj orodje";
 
 "unavailable" = "Ni na voljo";
+
 // Onboarding
 "add_new_tools" = "Dodaj nova orodja";
 "set_your_languages" = "Izberi jezike";
@@ -29,6 +23,13 @@
 "menu_share" = "Deli";
 "menu_legal" = "Zakonito";
 "language_settings" = "Jezikovne nastavitve";
+
+// Login
+"login" = "Prijava";
+"logout" = "Odjava";
+"create_account" = "Ustvari račun";
+"account_login" = "Prijava v račun";
+
 // Tool Detail
 "about" = "O aplikaciji";
 "help" = "Pomoč";
@@ -73,6 +74,9 @@ Preveri svojo povezavo ali poskusi ponovno kasneje.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Naložiš lahko najsodobnejša slovenska orodja. \n\nAli želiš nastaviti slovenščino za svoj osnovni jezik in prenesti ta gradiva?";
+"the_tool_you_requested_is_loading" = "Zahtevano orodje se nalaga...";
+"loading" = "Nalaganje ...";
+
 // Actions
 "yes" = "Ja";
 "no" = "Ne";

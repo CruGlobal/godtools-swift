@@ -1,10 +1,3 @@
-"login" = "Пријава";
-"logout" = "Одјава";
-"create_account" = "Креирајте налог";
-"account_login" = "Пријава у налог";
-"the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
-"loading" = "Учитавање...";
-
 "language_onboard" = "Више од 80 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Пронађи алатке";
 
 "unavailable" = "Недоступно";
+
 // Onboarding
 "add_new_tools" = "Додај нове алатке";
 "set_your_languages" = "Подесите своје језике";
@@ -29,6 +23,13 @@
 "menu_share" = "Подели";
 "menu_legal" = "Правно";
 "language_settings" = "Подешавање језика";
+
+// Login
+"login" = "Пријава";
+"logout" = "Одјава";
+"create_account" = "Креирајте налог";
+"account_login" = "Пријава у налог";
+
 // Tool Detail
 "about" = "О";
 "help" = "Помоћ";
@@ -70,6 +71,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Најновији алати на енглеском се могу преузети. \n\n Желите ли да поставите свој примарни језик на енглески и да преузмете ове ресурсе?";
+"the_tool_you_requested_is_loading" = "Алатка коју сте тражили се учитава…";
+"loading" = "Учитавање...";
+
 // Actions
 "yes" = "Да";
 "no" = "Не";

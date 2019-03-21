@@ -1,14 +1,4 @@
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
-
 "language_onboard" = "80+ மொழிகளை";
-
-/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "என் உபகரணங்கள்";
@@ -17,6 +7,7 @@
 "find_tools" = "உபகரணங்களை தேடு";
 
 "unavailable" = "தொகுப்பில் இல்லை";
+
 // Onboarding
 "add_new_tools" = "புதிய உபகரணங்களை சேர்க்கவும்";
 "set_your_languages" = "உங்கள் மொழிகளை அமைக்கவும்";
@@ -29,6 +20,7 @@
 "menu_share" = "பகிர்";
 "menu_legal" = "சட்டம் சம்பந்தப்பட்ட";
 "language_settings" = "மொழி அமைப்புகள்";
+
 // Tool Detail
 "about" = "பற்றி";
 "help" = "உதவி";

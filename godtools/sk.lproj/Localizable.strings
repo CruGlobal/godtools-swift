@@ -1,10 +1,3 @@
-"login" = "Prihlásiť sa";
-"logout" = "Odhlásiť sa";
-"create_account" = "Vytvoriť účet";
-"account_login" = "Prihlásenie do účtu";
-"the_tool_you_requested_is_loading" = "Nástroj, o ktorý ste požiadali, sa načítava…";
-"loading" = "Načítava sa...";
-
 "language_onboard" = "Vyše 80 jazykov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Nájsť nástroje";
 
 "unavailable" = "Nedostupné";
+
 // Onboarding
 "add_new_tools" = "Pridať nové nástroje";
 "set_your_languages" = "Nastavte si jazyky";
@@ -29,6 +23,13 @@
 "menu_share" = "Zdieľanie";
 "menu_legal" = "Právne informácie";
 "language_settings" = "Nastavenia jazyka";
+
+// Login
+"login" = "Prihlásiť sa";
+"logout" = "Odhlásiť sa";
+"create_account" = "Vytvoriť účet";
+"account_login" = "Prihlásenie do účtu";
+
 // Tool Detail
 "about" = "Informácie";
 "help" = "Pomoc";
@@ -72,6 +73,9 @@ Online verzia je k dispozícii na https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Je možné stiahnuť najnovšie slovenské nástroje.\n\nChcete nastaviť svoj hlavný jazyk na slovenčinu a stiahnuť si tieto zdroje?";
+"the_tool_you_requested_is_loading" = "Nástroj, o ktorý ste požiadali, sa načítava…";
+"loading" = "Načítava sa...";
+
 // Actions
 "yes" = "Áno";
 "no" = "Nie";

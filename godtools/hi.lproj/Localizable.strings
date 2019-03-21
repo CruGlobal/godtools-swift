@@ -1,10 +1,3 @@
-"login" = "लॉग-इन";
-"logout" = "लॉग-आउट";
-"create_account" = "खाता बनाएं";
-"account_login" = "खाते में लॉग-इन";
-"the_tool_you_requested_is_loading" = "अनुरोधित टूल लोड हो रहा है ...";
-"loading" = "लोड हो रहा है...";
-
 "language_onboard" = "80+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "टूल्स खोजें";
 
 "unavailable" = "अनुपलब्ध";
+
 // Onboarding
 "add_new_tools" = "नए टूल जोड़ें";
 "set_your_languages" = "अपनी भाषा निर्धारित करें";
@@ -29,6 +23,13 @@
 "menu_share" = "शेयर करें";
 "menu_legal" = "कानूनी";
 "language_settings" = "भाषा सेटिंग्स";
+
+// Login
+"login" = "लॉग-इन";
+"logout" = "लॉग-आउट";
+"create_account" = "खाता बनाएं";
+"account_login" = "खाते में लॉग-इन";
+
 // Tool Detail
 "about" = "परिचय";
 "help" = "मदद";
@@ -72,6 +73,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "नवीनतम अंग्रेजी के टूल्स डाउनलोड किए जा सकते हैं।\n\nक्या आप अपनी प्राथमिक भाषा अंग्रेजी निर्धारित कर इन संसाधनों को डाउनलोड करना चाहते हैं?";
+"the_tool_you_requested_is_loading" = "अनुरोधित टूल लोड हो रहा है ...";
+"loading" = "लोड हो रहा है...";
+
 // Actions
 "yes" = "हां";
 "no" = "नहीं";

@@ -1,11 +1,4 @@
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
-"loading" = "Loading...";
-
-"language_onboard" = "75+ Languages";
+"language_onboard" = "80+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "You have downloaded all available tools.";
@@ -17,6 +10,7 @@
 "find_tools" = "Find Tools";
 
 "unavailable" = "Unavailable";
+
 // Onboarding
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
@@ -24,11 +18,19 @@
 "want_more_godtools?" = "Want more GodTools?";
 "click_here_to_receive_updates_and_hear_how_godtools_has_impacted_others." = "Click Here to receive updates and hear how GodTools has impacted others.";
 "click_here" = "Click Here";
+
 // Menu
 "menu_general" = "General";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
+
+// Login
+"login" = "Login";
+"logout" = "Logout";
+"create_account" = "Create Account";
+"account_login" = "Account Login";
+
 // Tool Detail
 "about" = "About";
 "help" = "Help";
@@ -72,6 +74,9 @@ An online version can be found at https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "The latest English tools can be downloaded. \n\n Would you like to set your primary language to English and download these resources?";
+"the_tool_you_requested_is_loading" = "The tool you requested is loading...";
+"loading" = "Loading...";
+
 // Actions
 "yes" = "Yes";
 "no" = "No";

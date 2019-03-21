@@ -17,6 +17,7 @@
 "find_tools" = "Hikaroka Fitaovana";
 
 "unavailable" = "Tsy vonona";
+
 // Onboarding
 "add_new_tools" = "Hanampy Fitaovana vaovao";
 "set_your_languages" = "Safidio ny Teninao";
@@ -29,6 +30,7 @@
 "menu_share" = "Mizara";
 "menu_legal" = "Ara-dalàna";
 "language_settings" = "Fanovana fiteny";
+
 // Tool Detail
 "about" = "About";
 "help" = "Fanampiana";

@@ -1,10 +1,3 @@
-"login" = "Log masuk";
-"logout" = "Log keluar";
-"create_account" = "Cipta Akaun";
-"account_login" = "Log Masuk Akaun";
-"the_tool_you_requested_is_loading" = "Alat yang anda minta sedang dimuatkan...";
-"loading" = "Memuat...";
-
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Cari Alat";
 
 "unavailable" = "Tidak tersedia";
+
 // Onboarding
 "add_new_tools" = "Tambah Alat Baharu";
 "set_your_languages" = "Tetapkan Bahasa Anda";
@@ -29,6 +23,13 @@
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
+
+// Login
+"login" = "Log masuk";
+"logout" = "Log keluar";
+"create_account" = "Cipta Akaun";
+"account_login" = "Log Masuk Akaun";
+
 // Tool Detail
 "about" = "Perihal";
 "help" = "Bantuan";
@@ -72,6 +73,9 @@ Versi dalam talian boleh ditemui di https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Alat bahasa Melayu terkini boleh dimuat turun.\n\nAdakah anda mahu menetapkan bahasa utama anda ke bahasa Inggeris dan memuat turun sumber-sumber ini?";
+"the_tool_you_requested_is_loading" = "Alat yang anda minta sedang dimuatkan...";
+"loading" = "Memuat...";
+
 // Actions
 "yes" = "Ya";
 "no" = "Tidak";

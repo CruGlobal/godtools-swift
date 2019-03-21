@@ -1,10 +1,3 @@
-"login" = "లాగిన్";
-"logout" = "లాగౌట్";
-"create_account" = "ఖాతాను సృష్టించు";
-"account_login" = "ఖాతా లాగిన్";
-"the_tool_you_requested_is_loading" = "మీ అభ్యర్థించిన పరికరము లోడ్ అవుతున్నది…";
-"loading" = "లోడ్‌చేస్తున్నా...";
-
 "language_onboard" = "80+ భాషలు";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "సాధనాలను కనుగొనండి";
 
 "unavailable" = "అందుబాటులో లేదు";
+
 // Onboarding
 "add_new_tools" = "క్రొత్త పరికరాలను జోడించండి";
 "set_your_languages" = "క్రొత్త భాషలను నియమించండి ";
@@ -29,6 +23,13 @@
 "menu_share" = "షేర్ చెయ్యండి";
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
+
+// Login
+"login" = "లాగిన్";
+"logout" = "లాగౌట్";
+"create_account" = "ఖాతాను సృష్టించు";
+"account_login" = "ఖాతా లాగిన్";
+
 // Tool Detail
 "about" = "గూర్చి";
 "help" = "సహాయం";
@@ -72,6 +73,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "అధునాతన తెలుగు టూల్స్ డౌన్లోడ్ చేసుకోవచ్చు.\nమీ ప్రాథమిక భాషను తెలుగుగా సెట్ చేసి ఈ నిధులను డౌన్లోడ్ చెయ్యాలనుకుంటున్నారా? ";
+"the_tool_you_requested_is_loading" = "మీ అభ్యర్థించిన పరికరము లోడ్ అవుతున్నది…";
+"loading" = "లోడ్‌చేస్తున్నా...";
+
 // Actions
 "yes" = "అవును";
 "no" = "కాదు";

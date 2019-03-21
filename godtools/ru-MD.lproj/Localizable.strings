@@ -1,14 +1,7 @@
-"login" = "Login";
-"logout" = "Logout";
-"create_account" = "Create Account";
-"account_login" = "Account Login";
-"the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
-"loading" = "Loading...";
-
-"language_onboard" = "80+ Languages";
+"language_onboard" = "Более 80 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
-"no_more_tools" = "You have downloaded all available tools.";
+"no_more_tools" = "Все доступные инструменты загружены.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Мои инструменты";
@@ -17,6 +10,7 @@
 "find_tools" = "Другие";
 
 "unavailable" = "Недоступно";
+
 // Onboarding
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
@@ -29,6 +23,7 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
+
 // Tool Detail
 "about" = "О приложении";
 "help" = "Справка";
@@ -70,6 +65,7 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке. \n\nХотите сделать основным языком русский и загрузить эти материалы?";
+"the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
 // Actions
 "yes" = "Да";
 "no" = "Нет";

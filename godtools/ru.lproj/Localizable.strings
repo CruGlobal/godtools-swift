@@ -1,10 +1,3 @@
-"login" = "Войти";
-"logout" = "Выйти";
-"create_account" = "Создать учетную запись";
-"account_login" = "Имя пользователя";
-"the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
-"loading" = "Загрузка...";
-
 "language_onboard" = "Более 80 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -17,6 +10,7 @@
 "find_tools" = "Другие";
 
 "unavailable" = "Недоступно";
+
 // Onboarding
 "add_new_tools" = "Добавить новые инструменты";
 "set_your_languages" = "Настройте языки";
@@ -29,6 +23,13 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
+
+// Login
+"login" = "Войти";
+"logout" = "Выйти";
+"create_account" = "Создать учетную запись";
+"account_login" = "Имя пользователя";
+
 // Tool Detail
 "about" = "О приложении";
 "help" = "Справка";
@@ -72,6 +73,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Доступны для загрузки последние инструменты на русском языке. \n\nХотите сделать основным языком русский и загрузить эти материалы?";
+"the_tool_you_requested_is_loading" = "Загрузка требуемого инструмента...";
+"loading" = "Загрузка...";
+
 // Actions
 "yes" = "Да";
 "no" = "Нет";
