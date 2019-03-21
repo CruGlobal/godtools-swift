@@ -1,11 +1,4 @@
-"login" = "Oturum Aç";
-"logout" = "Oturumu Kapat";
-"create_account" = "Hesap Oluştur";
-"account_login" = "Hesapta Oturum Açma";
-"the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
-"loading" = "Yükleniyor";
-
-"language_onboard" = "75'i Aşkın Dil";
+"language_onboard" = "80'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
@@ -17,6 +10,7 @@
 "find_tools" = "Araçlar Bul";
 
 "unavailable" = "Mevcut Değil";
+
 // Onboarding
 "add_new_tools" = "Yeni Araçlar Ekle";
 "set_your_languages" = "Dillerinizi Ayarlayın";
@@ -26,6 +20,13 @@
 "menu_share" = "Paylaş";
 "menu_legal" = "Yasal";
 "language_settings" = "Dil Ayarları";
+
+// Login
+"login" = "Oturum Aç";
+"logout" = "Oturumu Kapat";
+"create_account" = "Hesap Oluştur";
+"account_login" = "Hesapta Oturum Açma";
+
 // Tool Detail
 "about" = "Hakkında";
 "help" = "Yardım";
@@ -69,6 +70,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
+"the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
+"loading" = "Yükleniyor";
+
 // Actions
 "yes" = "Evet";
 "no" = "Hayır";

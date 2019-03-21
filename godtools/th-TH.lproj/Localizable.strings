@@ -1,11 +1,4 @@
-"login" = "เข้าสู่ระบบ";
-"logout" = "ออกจากระบบ";
-"create_account" = "ลงทะเบียน";
-"account_login" = "เข้าสู่บัญชี";
-"the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
-"loading" = "กำลังโหลด...";
-
-"language_onboard" = "กว่า 75 ภาษา";
+"language_onboard" = "กว่า 80 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
@@ -17,6 +10,7 @@
 "find_tools" = "ค้นหาเครื่องมือ";
 
 "unavailable" = "ใช้ไม่ได้";
+
 // Onboarding
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";
 "set_your_languages" = "ตั้งค่าภาษา";
@@ -26,6 +20,13 @@
 "menu_share" = "แชร์";
 "menu_legal" = "กฎหมาย";
 "language_settings" = "การตั้งค่าภาษา";
+
+// Login
+"login" = "เข้าสู่ระบบ";
+"logout" = "ออกจากระบบ";
+"create_account" = "ลงทะเบียน";
+"account_login" = "เข้าสู่บัญชี";
+
 // Tool Detail
 "about" = "เกี่ยวกับ";
 "help" = "ช่วยเหลือ";
@@ -69,6 +70,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "คุณสามารถดาวน์โหลดเครื่องมือภาษาไทยล่าสุดได้\n\nต้องการตั้งค่าภาษาหลักเป็นภาษาไทยแล้วดาวน์โหลดเครื่องมือเหล่านี้ไหม";
+"the_tool_you_requested_is_loading" = "กำลังโหลดเครื่องมือที่คุณร้องขอ…";
+"loading" = "กำลังโหลด...";
+
 // Actions
 "yes" = "ใช่";
 "no" = "ไม่";

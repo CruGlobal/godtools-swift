@@ -1,11 +1,4 @@
-"login" = "Pierakstīties";
-"logout" = "Izrakstīties";
-"create_account" = "Reģistrēt kontu";
-"account_login" = "Pieteikšanās kontā";
-"the_tool_you_requested_is_loading" = "Jūsu pieprasītais rīks tiek ielādēts...";
-"loading" = "Ielādē...";
-
-"language_onboard" = "75+ Valodas";
+"language_onboard" = "80+ Valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";
@@ -17,6 +10,7 @@
 "find_tools" = "Atrast rīkus";
 
 "unavailable" = "Nav pieejams";
+
 // Onboarding
 "add_new_tools" = "Pievienot jaunus rīkus";
 "set_your_languages" = "Iestatīt jūsu valodas";
@@ -26,6 +20,13 @@
 "menu_share" = "Dalīties";
 "menu_legal" = "Jurisprudence";
 "language_settings" = "Valodas iestatījumi";
+
+// Login
+"login" = "Pierakstīties";
+"logout" = "Izrakstīties";
+"create_account" = "Reģistrēt kontu";
+"account_login" = "Pieteikšanās kontā";
+
 // Tool Detail
 "about" = "Par";
 "help" = "Palīdzība";
@@ -69,6 +70,9 @@ Tiešsaistes versija ir pieejama: https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ir iespējams lejupielādēt jaunākos rīkus angļu valodā. \n\nVai vēlaties iestatīt latviešu valodu par pirmo valodu un lejupielādēt šos resursus?";
+"the_tool_you_requested_is_loading" = "Jūsu pieprasītais rīks tiek ielādēts...";
+"loading" = "Ielādē...";
+
 // Actions
 "yes" = "Jā";
 "no" = "Nē";

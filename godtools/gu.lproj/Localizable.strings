@@ -1,5 +1,4 @@
-"the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
-"language_onboard" = "૬૦થી વધારે ભાષાઓ";
+"language_onboard" = "80 થી વધારે ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "પ્રાપ્ય બધાં જ સાધનો/ટુલ્સ તમે ડાઉનલોડ કરી લીધાં છે.";
@@ -11,6 +10,7 @@
 "find_tools" = "સાધનો/ટુલ્સ શોધો";
 
 "unavailable" = "અપ્રાપ્ય";
+
 // Onboarding
 "add_new_tools" = "નવા સાધનો/ટુલ્સ ઉમેરો";
 "set_your_languages" = "તમારી ભાષા સ્થાપિત કરો";
@@ -20,6 +20,7 @@
 "menu_share" = "વહેંચો";
 "menu_legal" = "કાનૂની";
 "language_settings" = "ભાષા સુયોજન";
+
 // Tool Detail
 "about" = "વિશે/આશરે";
 "help" = "મદદ";
@@ -58,6 +59,7 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "અદ્યતન અંગ્રેજી સાધનો/ટુલ્સ ડાઉનલોડ થઈ શકશે.\n\nશું તમારી પ્રાથમિક ભાષા તરીકે અંગ્રેજી સ્થાપિત કરી અને આ સામગ્રી ડાઉનલોડ કરવા માંગો છો?";
+"the_tool_you_requested_is_loading" = "જે સાધન/ટુલ તમે માંગો છો તે લોડ થઈ રહ્યું છે...";
 // Actions
 "yes" = "હા";
 "no" = "ના";

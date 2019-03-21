@@ -1,11 +1,4 @@
-"login" = "ਲਾਗਿਨ";
-"logout" = "ਲਾੱਗ ਆਊਟ";
-"create_account" = "ਖਾਤਾ ਬਣਾਉ";
-"account_login" = "ਖਾਤਾ ਲੌਗਇਨ ਕਰੋ";
-"the_tool_you_requested_is_loading" = "ਬੇਨਤੀ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਟੂਲ ਲੋ਼ਡ ਹੋ ਰਿਹਾ ਹੈ";
-"loading" = "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ ...";
-
-"language_onboard" = "75+ ਭਾਸ਼ਾਵਾਂ";
+"language_onboard" = "80+ ਭਾਸ਼ਾਵਾਂ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "ਤੁਸੀਂ ਸਾਰੇ ਉਪਲਬਧ ਟੂਲਸ ਡਾਉਨਲੋਡ ਕੀਤੇ ਹਨ।";
@@ -17,6 +10,7 @@
 "find_tools" = "ਟੂਲ ਲੱਭੋ";
 
 "unavailable" = "ਅਣਉਪਲਬਧ";
+
 // Onboarding
 "add_new_tools" = "ਨਵੇਂ ਟੂਲ ਨੂੰ ਜੋੜੋ";
 "set_your_languages" = "ਆਪਣੀ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰੋ";
@@ -26,6 +20,13 @@
 "menu_share" = "ਦੱਸੋ";
 "menu_legal" = "ਕਾਨੂੰਨੀ";
 "language_settings" = "ਭਾਸ਼ਾ ਦੀ ਚੋਂਣ ਕਰੋ";
+
+// Login
+"login" = "ਲਾਗਿਨ";
+"logout" = "ਲਾੱਗ ਆਊਟ";
+"create_account" = "ਖਾਤਾ ਬਣਾਉ";
+"account_login" = "ਖਾਤਾ ਲੌਗਇਨ ਕਰੋ";
+
 // Tool Detail
 "about" = "ਇਸਦੇ ਬਾਰੇ";
 "help" = "ਮਦਦ";
@@ -67,6 +68,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "ਤਾਜ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਟੂਲ ਇਸ ਸਮੇਂ ਡਾਊਨਲੋਡ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ। \n\nਕੀ ਤੁਸੀਂ ਆਪਣੀ ਮੁਢਲੀ ਭਾਸ਼ਾ ਅੰਗ੍ਰੇਜ਼ੀ ਵਿਚ ਸੈਟ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਅਤੇ ਇਨ੍ਹਾਂ ਸਾਮਗ੍ਰਿਆਂ ਨੂੰ ਡਾਊਨਲੋਡ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?";
+"the_tool_you_requested_is_loading" = "ਬੇਨਤੀ ਕੀਤੇ ਜਾਣ ਵਾਲਾ ਟੂਲ ਲੋ਼ਡ ਹੋ ਰਿਹਾ ਹੈ";
+"loading" = "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ ...";
+
 // Actions
 "yes" = "ਹਾਂ";
 "no" = "ਨਹੀਂ";

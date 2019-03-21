@@ -1,11 +1,4 @@
-"login" = "Bejelentkezés";
-"logout" = "Kijelentkezés";
-"create_account" = "Fiók létrehozása";
-"account_login" = "Bejelentkezés a fiókba";
-"the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
-"loading" = "Betöltés...";
-
-"language_onboard" = "75+ nyelv";
+"language_onboard" = "80+ nyelv";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Az összes elérhető eszközt letöltötted.";
@@ -17,6 +10,7 @@
 "find_tools" = "Eszközök keresése";
 
 "unavailable" = "Nem elérhető";
+
 // Onboarding
 "add_new_tools" = "Új eszközök hozzáadása";
 "set_your_languages" = "A nyelvek beállítása";
@@ -26,6 +20,13 @@
 "menu_share" = "Megosztás";
 "menu_legal" = "Jogi információk";
 "language_settings" = "Nyelvbeállítások";
+
+// Login
+"login" = "Bejelentkezés";
+"logout" = "Kijelentkezés";
+"create_account" = "Fiók létrehozása";
+"account_login" = "Bejelentkezés a fiókba";
+
 // Tool Detail
 "about" = "Névjegy";
 "help" = "Súgó";
@@ -69,6 +70,9 @@ A https://knowgod.com/ címen egy online verzió található";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "A legújabb angol nyelvű eszközök letölthetők.\n\nKívánod az elsődleges nyelvedet angolra állítani, és letölteni ezeket a forrásokat?";
+"the_tool_you_requested_is_loading" = "A kért eszköz betöltése folyamatban...";
+"loading" = "Betöltés...";
+
 // Actions
 "yes" = "Igen";
 "no" = "Nem";

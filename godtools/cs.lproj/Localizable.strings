@@ -1,11 +1,4 @@
-"login" = "Přihlášení";
-"logout" = "Odhlášení";
-"create_account" = "Vytvořit účet";
-"account_login" = "Přihlášení účtu";
-"the_tool_you_requested_is_loading" = "Požadovaný nástroj se načítá...";
-"loading" = "Načítání...";
-
-"language_onboard" = "75+ jazyků";
+"language_onboard" = "80+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Máte staženy všechny dostupné nástroje.";
@@ -17,6 +10,7 @@
 "find_tools" = "Najít nástroje";
 
 "unavailable" = "Nedostupný";
+
 // Onboarding
 "add_new_tools" = "Přidat nové nástroje";
 "set_your_languages" = "Nastavení jazyků";
@@ -26,6 +20,13 @@
 "menu_share" = "Sdílet";
 "menu_legal" = "Pravidla užívání a ochrany soukromí";
 "language_settings" = "Jazyková nastavení";
+
+// Login
+"login" = "Přihlášení";
+"logout" = "Odhlášení";
+"create_account" = "Vytvořit účet";
+"account_login" = "Přihlášení účtu";
+
 // Tool Detail
 "about" = "O aplikaci";
 "help" = "Nápověda";
@@ -68,6 +69,9 @@ On-line verzi naleznete na https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Nejnovější české nástroje jsou připraveny ke stažení.\n\nChcete si nastavit češtinu jako primární jazyk a stáhnout tyto zdroje?";
+"the_tool_you_requested_is_loading" = "Požadovaný nástroj se načítá...";
+"loading" = "Načítání...";
+
 // Actions
 "yes" = "Ano";
 "no" = "Ne";

@@ -1,4 +1,4 @@
-"language_onboard" = "60+ Dillər";
+"language_onboard" = "80+ Dillər";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Siz bütün mövcud alətləri yükləmisiniz.";
@@ -10,6 +10,7 @@
 "find_tools" = "Alət tap";
 
 "unavailable" = "Mövcud deyil";
+
 // Onboarding
 "add_new_tools" = "Yeni alətlər əlavə edin";
 "set_your_languages" = "Dillərinizi təyin edin";
@@ -19,6 +20,7 @@
 "menu_share" = "Paylaş";
 "menu_legal" = "Hüquqi";
 "language_settings" = "Dil parametrləri";
+
 // Tool Detail
 "about" = "Haqqında";
 "help" = "Kömək";

@@ -1,5 +1,7 @@
-"the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
-"language_onboard" = "60+ Gjuhë";
+"language_onboard" = "80+ Gjuhë";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Ju keni shkarkuar të gjitha mjetet në dispozicion.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Burimet e mia";
@@ -8,6 +10,7 @@
 "find_tools" = "Gjej Burimet​";
 
 "unavailable" = "I padisponueshëm";
+
 // Onboarding
 "add_new_tools" = "Shto mjete të reja";
 "set_your_languages" = "Cakto gjuhën";
@@ -17,6 +20,7 @@
 "menu_share" = "Ndaj";
 "menu_legal" = "Ligjore";
 "language_settings" = "Kushtet e gjuhës";
+
 // Tool Detail
 "about" = "Rreth";
 "help" = "Ndihmë";
@@ -56,6 +60,7 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mjetet e fundit Anglisht mund të shkarkohen.\n\nDo të doje të zgjidhje si gjuhën tënde kryesore Anglisht dhe t`i shkarkoje këto burime?";
+"the_tool_you_requested_is_loading" = "Mjeti që po kërkoni është  duke u ngarkuar";
 // Actions
 "yes" = "Po";
 "no" = "Jo";

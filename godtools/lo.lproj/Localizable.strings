@@ -1,5 +1,4 @@
-"the_tool_you_requested_is_loading" = "ເຄື່ອງມືທີ່ທ່ານຂໍກຳລັງໂຫຼດ...";
-"language_onboard" = "60+ ພາສາ";
+"language_onboard" = "80+ ພາສາ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "ທ່ານໄດ້ດາວໂຫຼດເຄື່ອງມືທີ່ມີທັງໝົດ";
@@ -11,6 +10,7 @@
 "find_tools" = "ຫາເຄື່ອງມື";
 
 "unavailable" = "ບໍ່ພ້ອມໃຊ້ງານ";
+
 // Onboarding
 "add_new_tools" = "ເພີ່ມເຄື່ອງມືໃໝ່ໃສ່";
 "set_your_languages" = "ຕິດຕັ້ງພາສາຂອງທ່ານໃສ່";
@@ -20,6 +20,7 @@
 "menu_share" = "ແບ່ງປັນ";
 "menu_legal" = "ກົດໝາຍ";
 "language_settings" = "ການຕັ້ງຄ່າພາສາ";
+
 // Tool Detail
 "about" = "ກ່ຽວກັບ";
 "help" = "ຊ່ອຍເຫຼືອ";
@@ -61,6 +62,7 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "ເຄື່ອງມືຫຼ້າສຸດທີ່ເປັນພາສາອັງກິດສາມາດດາວໂຫຼດໄດ້.\n\nທ່ານຕ້ອງການຕິດຕັ້ງພາສາຫຼັກເປັນພາສາອັງກິດ ແລະດາວໂຫຼດແຫຼ່ງຂໍ້ມູນເຫຼົ່ານີ້ ຫຼືບໍ່?";
+"the_tool_you_requested_is_loading" = "ເຄື່ອງມືທີ່ທ່ານຂໍກຳລັງໂຫຼດ...";
 // Actions
 "yes" = "ແມ່ນ";
 "no" = "ບໍ່";

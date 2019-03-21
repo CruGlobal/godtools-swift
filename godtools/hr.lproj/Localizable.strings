@@ -1,11 +1,4 @@
-"login" = "Prijava";
-"logout" = "Odjava";
-"create_account" = "Napravite račun";
-"account_login" = "Prijava u račun";
-"the_tool_you_requested_is_loading" = "Alat koji ste tražili se učitava...";
-"loading" = "Učitaavnje...";
-
-"language_onboard" = "Više od 75 jezika";
+"language_onboard" = "Više od 80 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Preuzeli ste sve raspoložive alate.";
@@ -17,6 +10,7 @@
 "find_tools" = "Pronađi alate";
 
 "unavailable" = "Nedostupno";
+
 // Onboarding
 "add_new_tools" = "Dodajte novi alat";
 "set_your_languages" = "Odredite svoje jezike";
@@ -26,6 +20,13 @@
 "menu_share" = "Podijeli";
 "menu_legal" = "Pravno";
 "language_settings" = "Postavke jezika";
+
+// Login
+"login" = "Prijava";
+"logout" = "Odjava";
+"create_account" = "Napravite račun";
+"account_login" = "Prijava u račun";
+
 // Tool Detail
 "about" = "O nama";
 "help" = "Pomoć";
@@ -68,6 +69,9 @@ Online verziju možete pronaći na adresi: https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Moguće je preuzeti najnovije alate za engleski jezik. \n\n Želite li engleski jezik postaviti kao primarni jezik i preuzeti te sadržaje?";
+"the_tool_you_requested_is_loading" = "Alat koji ste tražili se učitava...";
+"loading" = "Učitaavnje...";
+
 // Actions
 "yes" = "Da";
 "no" = "Ne";

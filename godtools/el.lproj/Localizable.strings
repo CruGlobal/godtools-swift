@@ -1,11 +1,4 @@
-"login" = "Σύνδεση";
-"logout" = "Αποσύνδεση";
-"create_account" = "Δημιουργία Λογαριασμού";
-"account_login" = "Σύνδεση στον Λογαριασμό";
-"the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
-"loading" = "Φόρτωση...";
-
-"language_onboard" = "75+ Γλώσσες";
+"language_onboard" = "80+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
@@ -17,6 +10,7 @@
 "find_tools" = "Βρείτε Εργαλεία";
 
 "unavailable" = "Μη διαθέσιμο";
+
 // Onboarding
 "add_new_tools" = "Προσθήκη Νέων Εργαλείων";
 "set_your_languages" = "Ορίστε τις γλώσσες σας";
@@ -26,6 +20,13 @@
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
+
+// Login
+"login" = "Σύνδεση";
+"logout" = "Αποσύνδεση";
+"create_account" = "Δημιουργία Λογαριασμού";
+"account_login" = "Σύνδεση στον Λογαριασμό";
+
 // Tool Detail
 "about" = "Σχετικά";
 "help" = "Βοήθεια";
@@ -69,6 +70,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Μπορείτε να κατεβάσετε τα πιο πρόσφατα εργαλεία Ελληνικών.\n\nΘέλετε να ορίσετε ως κύρια γλώσσα σας τα Ελληνικά και να κατεβάσετε αυτά τα μέσα;";
+"the_tool_you_requested_is_loading" = "Το εργαλείο που ζητήσατε φορτώνει...";
+"loading" = "Φόρτωση...";
+
 // Actions
 "yes" = "Ναι";
 "no" = "Όχι";

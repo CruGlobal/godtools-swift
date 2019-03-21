@@ -1,11 +1,4 @@
-"login" = "Mag-log in";
-"logout" = "Mag-log out";
-"create_account" = "Gumawa ng Account";
-"account_login" = "Pag-log in ng Account";
-"the_tool_you_requested_is_loading" = "Naglo-load ang hiniling mong tool…";
-"loading" = "Nilo-load...";
-
-"language_onboard" = "75+ na Wika";
+"language_onboard" = "80+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
@@ -17,6 +10,7 @@
 "find_tools" = "Makahanap ng Mga Tool";
 
 "unavailable" = "Hindi available";
+
 // Onboarding
 "add_new_tools" = "Magdagdag ng Mga Bagong Tool";
 "set_your_languages" = "I-set ang Iyong Mga Wika";
@@ -26,6 +20,13 @@
 "menu_share" = "Pagbabahagi";
 "menu_legal" = "Ayon sa Batas";
 "language_settings" = "Mga Setting ng Wika";
+
+// Login
+"login" = "Mag-log in";
+"logout" = "Mag-log out";
+"create_account" = "Gumawa ng Account";
+"account_login" = "Pag-log in ng Account";
+
 // Tool Detail
 "about" = "Tungkol dito";
 "help" = "Tulong";
@@ -69,6 +70,9 @@ Makikita ang online na bersyon sa https://knowgod.com/";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mada-download ang pinakabagong mga Ingles na tool.\n\nGusto mo bang i-set ang iyong pangunahing wika sa Ingles at i-download ang mga mapagkukunang ito?";
+"the_tool_you_requested_is_loading" = "Naglo-load ang hiniling mong tool…";
+"loading" = "Nilo-load...";
+
 // Actions
 "yes" = "Oo";
 "no" = "Hindi";

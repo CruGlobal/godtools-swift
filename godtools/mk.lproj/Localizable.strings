@@ -1,4 +1,4 @@
-"language_onboard" = "60+ јазиците";
+"language_onboard" = "80+ јазиците";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Мои алатки";
@@ -15,6 +15,7 @@
 "menu_share" = "Сподели";
 "menu_legal" = "Правно";
 "language_settings" = "Јазични поставки";
+
 // Tool Detail
 "about" = "За";
 "help" = "Помош";

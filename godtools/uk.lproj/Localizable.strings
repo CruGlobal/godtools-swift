@@ -1,11 +1,4 @@
-"login" = "Увійти";
-"logout" = "Вийти";
-"create_account" = "Створити обліковий запис";
-"account_login" = "Увійти до облікового запису";
-"the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
-"loading" = "Завантажується...";
-
-"language_onboard" = "Понад 75 мов";
+"language_onboard" = "Понад 80 мов";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ви завантажили всі доступні інструменти.";
@@ -17,6 +10,7 @@
 "find_tools" = "Шукати інструменти";
 
 "unavailable" = "Недоступно";
+
 // Onboarding
 "add_new_tools" = "Додати інструмент";
 "set_your_languages" = "Встановіть мови";
@@ -26,6 +20,13 @@
 "menu_share" = "Переслати";
 "menu_legal" = "Юридичні відомості";
 "language_settings" = "Налаштування мови";
+
+// Login
+"login" = "Увійти";
+"logout" = "Вийти";
+"create_account" = "Створити обліковий запис";
+"account_login" = "Увійти до облікового запису";
+
 // Tool Detail
 "about" = "Про програму";
 "help" = "Довідка";
@@ -69,6 +70,9 @@
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Останню версію на українській мові наразі не вдається завантажити. \n\nБажаєте встановити англійську мову і завантажити ресурси на цій мові?";
+"the_tool_you_requested_is_loading" = "Ваш інструмент завантажується...";
+"loading" = "Завантажується...";
+
 // Actions
 "yes" = "Так";
 "no" = "Ні";

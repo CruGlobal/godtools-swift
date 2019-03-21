@@ -1,11 +1,4 @@
-"login" = "Masuk";
-"logout" = "Keluar";
-"create_account" = "Buat Akun";
-"account_login" = "Akun Masuk";
-"the_tool_you_requested_is_loading" = "Alat yang Anda minta sedang dimuat....";
-"loading" = "Memuat...";
-
-"language_onboard" = "75+ Bahasa";
+"language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Anda sudah mengunduh semua tool yang tersedia.";
@@ -17,6 +10,7 @@
 "find_tools" = "Cari Alat";
 
 "unavailable" = "Tidak tersedia";
+
 // Onboarding
 "add_new_tools" = "Tambah Alat Baru";
 "set_your_languages" = "Tetapkan Bahasa Anda";
@@ -26,6 +20,13 @@
 "menu_share" = "Berbagi";
 "menu_legal" = "Legal";
 "language_settings" = "Pengaturan Bahasa";
+
+// Login
+"login" = "Masuk";
+"logout" = "Keluar";
+"create_account" = "Buat Akun";
+"account_login" = "Akun Masuk";
+
 // Tool Detail
 "about" = "Tentang";
 "help" = "Bantuan";
@@ -70,6 +71,9 @@ Alat Bahasa Inggris tersedia. Silahkan periksa konektivitas atau coba lagi nanti
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Alat Bahasa Inggris terbaru dapat diunduh.\n\nApakah Anda mau menetapkan bahasa utama ke Bahasa Inggris dan mengunduh sumber daya ini?";
+"the_tool_you_requested_is_loading" = "Alat yang Anda minta sedang dimuat....";
+"loading" = "Memuat...";
+
 // Actions
 "yes" = "Iya";
 "no" = "Tidak";
