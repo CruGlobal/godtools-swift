@@ -70,7 +70,7 @@ class TractPage: BaseTractElement {
         return self.properties as! TractPageProperties
     }
     
-    final func setupBackgroundPage() {
+     final func setupBackgroundPage() {
 
         let elementProperties = pageProperties()
         let parent = addBackgroundColorSubview(backgroundColor: manifestProperties.backgroundColor, parentView: self)
