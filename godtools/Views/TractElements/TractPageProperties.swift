@@ -15,7 +15,7 @@ class TractPageProperties: TractProperties {
     // primaryColor
     // primaryTextColor
     // textColor
-    @objc var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
+    @objc var backgroundColor = GTAppDefaultStyle.backgroundPageColorString.getRGBAColor()
     @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
