@@ -10,7 +10,7 @@ import UIKit
 
 class ManifestProperties: TractProperties {
     
-    @objc var backgroundColor = GTAppDefaultStyle.backgroundColorString.getRGBAColor()
+    @objc var backgroundColor = GTAppDefaultStyle.backgroundManifestColorString.getRGBAColor()
     @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
