@@ -74,9 +74,9 @@ class TractPage: BaseTractElement {
 
         let elementProperties = pageProperties()
         let parent = addBackgroundColorSubview(backgroundColor: manifestProperties.backgroundColor, parentView: self)
-        addBackgroundColorSubview(backgroundColor: elementProperties.backgroundColor, parentView: parent)
-
         addBackgroundImageSubview(imageFilename: manifestProperties.backgroundImage, scaleType: manifestProperties.backgroundImageScaleType, aligns: manifestProperties.backgroundImageAlign, parentView: parent)
+
+        addBackgroundColorSubview(backgroundColor: UIColor.clear, parentView: parent)
         addBackgroundImageSubview(imageFilename: elementProperties.backgroundImage, scaleType: elementProperties.backgroundImageScaleType, aligns: elementProperties.backgroundImageAlign, parentView: parent)
     }
 
