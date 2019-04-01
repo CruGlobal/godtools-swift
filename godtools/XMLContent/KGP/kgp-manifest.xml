@@ -4,6 +4,7 @@
           background-image="resource/bg-texture.png"
           background-image-align="repeat"
           navbar-color="rgba(0, 0, 0, 0)"
+          background-color="rgba(50, 50, 50, 1)"
           navbar-control-color="rgba(59, 164, 219, 1)"
           primary-color="rgba(59, 164, 219, 1)"
           primary-text-color="rgba(59, 164, 219, 1)"
