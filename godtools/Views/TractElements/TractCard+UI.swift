@@ -92,7 +92,24 @@ extension TractCard {
     
     func cardBackgroundColor() -> UIColor {
         let elementProperties = cardProperties()
-        return elementProperties.backgroundColor
+        
+        if let bgc = elementProperties.backgroundColor {
+            return bgc
+        }
+        
+        // Ugly! Pressuming composition
+        if let pageElementProperty = self.parent?.parent?.parent?.properties as? TractPageProperties {
+            if let bgc = pageElementProperty.cardBackgroundColor {
+                return bgc
+            }
+        }
+                
+        let manifestProps = manifestProperties
+        if let bgc = manifestProps.cardBackgroundColor {
+            return bgc
+        }
+        
+        return manifestProps.backgroundColor
     }
     
 }

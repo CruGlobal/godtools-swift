@@ -17,6 +17,7 @@ class ManifestProperties: TractProperties {
     @objc var navbarColor: UIColor?
     @objc var navbarControlColor: UIColor?
     @objc var resources = [String: String]()
+    @objc var cardBackgroundColor: UIColor?
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "navbarColor",
@@ -24,7 +25,8 @@ class ManifestProperties: TractProperties {
     }
     
     override func customProperties() -> [String]? {
-        return ["backgroundImageAlign", "backgroundImageScaleType"]
+        // TODO: proper namespace handling. 'tract:' in theory may be 'page:' or something else. currently all properties that have namespace in manifest are ignored, which is not correct.
+        return ["backgroundImageAlign", "backgroundImageScaleType", "tract:cardBackgroundColor"]
     }
     
     override func performCustomProperty(propertyName: String, value: String) {
@@ -35,6 +37,8 @@ class ManifestProperties: TractProperties {
             setupImageScaleType(kind: value)
         case "resources":
             setupImageScaleType(kind: value)
+        case "tract:cardBackgroundColor":
+            cardBackgroundColor = value.getRGBAColor()
         default: break
         }
     }
