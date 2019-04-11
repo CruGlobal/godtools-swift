@@ -33,7 +33,6 @@ extension TractManager {
                 return (pages, manifestProperties)
             }
             
-            
             guard let manifestPath = translation.manifestFilename else {
                 return (pages, manifestProperties)
             }

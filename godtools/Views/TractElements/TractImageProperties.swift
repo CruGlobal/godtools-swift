@@ -13,9 +13,11 @@ class TractImageProperties: TractProperties {
     // MARK: - XML Properties
     
     @objc var resource: String?
+    @objc var events: String?
     
     override func defineProperties() {
-        self.properties = ["resource"]
+        self.properties = ["resource", "events"]
     }
+
 
 }

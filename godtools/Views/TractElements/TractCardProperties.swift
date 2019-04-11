@@ -16,7 +16,7 @@ class TractCardProperties: TractProperties {
     
     // MARK: - XML Properties
     
-    @objc var backgroundColor: UIColor = .gtWhite
+    @objc var backgroundColor: UIColor? // may be nil, in which case background color must be fetched from parent
     @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fillX
