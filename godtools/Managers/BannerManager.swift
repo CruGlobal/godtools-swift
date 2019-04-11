@@ -65,7 +65,6 @@ class BannerManager: GTDataManager {
             .appendingPathExtension(defaultExtension)
             .path
         
-        print("banner path: \(path), remoteID: \(remoteId)")
         return UIImage(contentsOfFile: path)
     }
     

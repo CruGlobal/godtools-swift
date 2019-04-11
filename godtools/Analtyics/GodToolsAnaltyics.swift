@@ -77,7 +77,8 @@ class GodToolsAnaltyics {
         sharedInstance = GodToolsAnaltyics()
         
         #if DEBUG
-            gai.logger.logLevel = .verbose
+        // comment it out for now, it clutters debug window
+//            gai.logger.logLevel = .verbose
             gai.dryRun = true
         #endif
     }

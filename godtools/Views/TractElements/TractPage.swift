@@ -71,43 +71,43 @@ class TractPage: BaseTractElement {
     }
     
     final func setupBackgroundPage() {
+
+        let elementProperties = pageProperties()
+        let parent = addBackgroundColorSubview(backgroundColor: manifestProperties.backgroundColor, parentView: self)
+        addBackgroundImageSubview(imageFilename: manifestProperties.backgroundImage, scaleType: manifestProperties.backgroundImageScaleType, aligns: manifestProperties.backgroundImageAlign, parentView: parent)
+
+        addBackgroundColorSubview(backgroundColor: elementProperties.backgroundColor, parentView: parent)
+        addBackgroundImageSubview(imageFilename: elementProperties.backgroundImage, scaleType: elementProperties.backgroundImageScaleType, aligns: elementProperties.backgroundImageAlign, parentView: parent)
+    }
+
+    @discardableResult final func addBackgroundColorSubview(backgroundColor: UIColor, parentView: UIView) -> UIView {
         let width = BaseTractElement.screenWidth
         let height = BaseTractElement.screenHeight
         let frame = CGRect(x: 0.0, y: 0.0, width: width, height: height)
-        let elementProperties = pageProperties()
+
+        let view = UIView(frame: frame)
+        view.backgroundColor = backgroundColor
+        view.clipsToBounds = true
+        parentView.addSubview(view)
         
-        let backgroundView = UIView(frame: frame)
-        backgroundView.backgroundColor = elementProperties.backgroundColor
-        backgroundView.clipsToBounds = true
-        self.addSubview(backgroundView)
-        
-        if elementProperties.backgroundImage == "" {
-            return
-        }
-        
-        let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
-        
-        guard let data = NSData(contentsOfFile: imagePath) else {
-            return
-        }
-        
-        guard let image = UIImage(data: data as Data) else {
-            return
-        }
-        
-        //TODO: remove the .fill attribute and get the scale type assigned for the page
-        let scaleType: TractImageConfig.ImageScaleType = UIDevice.current.iPhoneWithNotch() ? .fill : elementProperties.backgroundImageScaleType
-        let imageView = buildScaledImageView(parentView: backgroundView,
-                                             image: image,
-                                             aligns: elementProperties.backgroundImageAlign,
-                                             scaleType: scaleType)
-        backgroundView.addSubview(imageView)
+        return view
     }
-    
-    deinit {
-        #if DEBUG
-            print("deinit for TractPage")
-        #endif
+
+    final func addBackgroundImageSubview(imageFilename: String, scaleType: TractImageConfig.ImageScaleType, aligns: [TractImageConfig.ImageAlign], parentView: UIView) {
+        if imageFilename == "" {
+            return
+        }
+        let imagePath = self.manifestProperties.getResourceForFile(filename: imageFilename)
+        guard let data = NSData(contentsOfFile: imagePath),
+            let image = UIImage(data: data as Data) else {
+                return
+        }
+
+        let scaleType = scaleType
+        let imageView = buildScaledImageView(parentView: parentView, image: image, aligns: aligns, scaleType: scaleType)
+
+        parentView.addSubview(imageView)
     }
+
     
 }

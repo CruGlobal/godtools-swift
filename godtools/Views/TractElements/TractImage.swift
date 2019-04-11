@@ -27,7 +27,7 @@ class TractImage: BaseTractElement {
     }
     
     override func setupView(properties: [String: Any]) {
-        self.imageView = UIImageView(image: loadImage(properties: properties))
+        imageView = UIImageView(image: loadImage(properties: properties))
         let viewWidth = self.elementFrame.finalWidth()
         var width = self.imageView.frame.size.width
         var height = self.imageView.frame.size.height
@@ -49,8 +49,11 @@ class TractImage: BaseTractElement {
             }
         }
         
-        self.imageView.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
-        self.addSubview(self.imageView)
+        imageView.frame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
+        imageView.isUserInteractionEnabled = true
+        
+        addTargetToImage()
+        addSubview(self.imageView)
         self.height = height
         updateFrameHeight()
     }
@@ -84,5 +87,30 @@ class TractImage: BaseTractElement {
         
         return image
     }
+    
+    func addTargetToImage() {
+        let properties = imageProperties()
+        
+        if properties.events != nil {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(tapOnImage))
+            self.imageView.addGestureRecognizer(tap)
+        }
+    }
 
+    override func render() -> UIView {
+        return super.render()
+    }
+    
+    @objc func tapOnImage() {
+        getParentCard()?.endCardEditing()
+        
+        guard let properties = self.properties as? TractImageProperties else { return }
+
+        if let events = properties.events?.components(separatedBy: " ") {
+            for event in events {
+                _ = sendMessageToElement(listener: event) == .failure
+            }
+        }
+
+    }
 }

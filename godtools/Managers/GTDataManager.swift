@@ -36,11 +36,6 @@ class GTDataManager: NSObject {
     
     func issueGETRequest() -> Promise<Data> {
 
-        #if DEBUG
-            let urlString = buildURL()?.absoluteString ?? ""
-            print("issueGETRequest: \(urlString)");
-        #endif
-
         return Alamofire
             .request(buildURL() ?? "")
             .responseData()
@@ -69,11 +64,6 @@ class GTDataManager: NSObject {
     
     func issueGETRequest(_ params: Parameters) -> Promise<Data> {
         
-        #if DEBUG
-            let urlString = buildURL()?.absoluteString ?? ""
-            print("issueGETRequest: \(urlString): \(params)");
-        #endif
-
         return Alamofire.request(buildURL() ?? "",
                                  method: HTTPMethod.get,
                                  parameters: params,
