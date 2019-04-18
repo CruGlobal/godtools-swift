@@ -2281,14 +2281,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 <<<<<<< HEAD
+<<<<<<< HEAD
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 375;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 =======
+=======
+>>>>>>> rebased
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 289;
 				DEVELOPMENT_TEAM = "";
->>>>>>> Share Article tool
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
