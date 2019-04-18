@@ -12,27 +12,23 @@ import SWXMLHash
 extension TractTabs {
     
     func getTabsLabels(data: XMLIndexer) {
-        var position = 0
+
         for item in data.children {
-            self.tabs.append([XMLIndexer]())
+            self.tabs.append(item)
             
+            // get content of <tab>
             for node in item.children {
-                
-                let userInfo = TractEventHelper.buildAnalyticsEvents(data: node)
-                //if userInfo.count > 0 {
-                    self.analyticsTabsEvents.append(contentsOf: userInfo)
-                //}
                 
                 if self.xmlManager.parser.nodeIsLabel(node: node) {
                     if let textNode = self.xmlManager.parser.getTextContentFromElement(node) {
                         self.tabsProperties().options.append(textNode.text)
                     }
-                } else {
-                    self.tabs[position].append(node)
                 }
+
+                guard let firstChild = node.children.first else { continue }
+                let userInfo = TractEventHelper.buildAnalyticsEvents(data: firstChild)
+                self.analyticsTabsEvents.append(contentsOf: userInfo)
             }
-            
-            position += 1
         }
     }
     
@@ -41,9 +37,10 @@ extension TractTabs {
         var maxHeight: CGFloat = currentYPosition
         var elements = [BaseTractElement]()
         var firstElement = true
+        var elementIndex: Int = 0
         
         for tabData in self.tabs {
-            let element = TractTab(children: tabData, startOnY: currentYPosition, parent: self)
+            let element = TractTab(data: tabData, startOnY: currentYPosition, parent: self, elementNumber: elementIndex)
             
             if firstElement {
                 element.isHidden = false
@@ -56,10 +53,11 @@ extension TractTabs {
                 maxHeight = element.height
             }
             elements.append(element)
+            
+            elementIndex += 1
         }
         
         self.height = maxHeight
         self.elements = elements
     }
-    
 }
