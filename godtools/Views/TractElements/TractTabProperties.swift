@@ -10,4 +10,9 @@ import UIKit
 
 class TractTabProperties: TractProperties {
 
+    @objc var listeners: String = ""
+
+    override func defineProperties() {
+        self.properties = ["listeners"]
+    }
 }

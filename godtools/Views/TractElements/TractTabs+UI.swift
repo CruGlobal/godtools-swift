@@ -58,4 +58,8 @@ extension TractTabs {
                                         userInfo: userInfo)
     }
     
+    func selectTab(_ withIdex: Int) {
+        segmentedControl.selectedSegmentIndex = withIdex
+        newOptionSelected()
+    }
 }
