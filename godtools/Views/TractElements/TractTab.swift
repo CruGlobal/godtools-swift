@@ -18,6 +18,7 @@ class TractTab: BaseTractElement {
     // MARK: - Object properties
     
     var analyticsTabDictionary: [String: String] = [:]
+    private(set) var tabIndex: Int!
         
     // MARK: - Setup
     
@@ -31,6 +32,16 @@ class TractTab: BaseTractElement {
         self.elementFrame.yMarginBottom = TractTab.yMarginConstant
     }
     
+    override func elementListeners() -> [String]? {
+        let properties = tabProperties()
+        return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
+    }
+
+    override func receiveMessage() {
+        guard let tabs = self.parent as? TractTabs else { return }
+        tabs.selectTab(self.elementNumber)
+    }
+
     // MARK: - Helpers
     
     func tabProperties() -> TractTabProperties {
