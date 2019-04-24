@@ -33,7 +33,7 @@ class DownloadedResource: Object {
     }
     
     func numberOfAvailableLanguages() -> Int {
-        return (translations.filter( {$0.isPublished} ) as [Translation]).count
+        return Set(translations.filter( {$0.isPublished} ) as [Translation]).count
     }
     
     func isAvailableInLanguage(_ language: Language?) -> Bool {

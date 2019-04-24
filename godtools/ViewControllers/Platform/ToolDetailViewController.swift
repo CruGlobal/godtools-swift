@@ -64,7 +64,7 @@ class ToolDetailViewController: BaseViewController {
         
         self.descriptionLabel.text = loadDescription()
         
-        let resourceTranslations = Array(resource.translations)
+        let resourceTranslations = Array(Set(resource.translations))
         var translationStrings = [String]()
         for translation in resourceTranslations {
             guard translation.language != nil else {
