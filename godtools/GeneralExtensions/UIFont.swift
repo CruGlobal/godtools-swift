@@ -79,7 +79,14 @@ extension UIFont {
                 fontName = "NotoSansEthiopic"
             }
         }
-        
+        if language.code == "my" {
+            if self.fontName.lowercased().contains("bold") {
+                fontName = "NotoSansMyanmar-Bold"
+            } else {
+                fontName = "NotoSansMyanmar"
+            }
+        }
+
         fontSize = fontSize * textScale
         
         return UIFont(name: fontName, size: fontSize)!

@@ -164,6 +164,10 @@
 		4F8495A41F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */; };
+		4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */; };
+		4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */; };
+		4F9493B822773E86009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */; };
+		4F9493B922773E8A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */; };
 		4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */; };
@@ -469,6 +473,8 @@
 		4F84959C1F06E6BE0015A6BB /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; path = InitialContent/d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
+		4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Regular.ttf"; sourceTree = "<group>"; };
+		4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
 		4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTAttributedLabel.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XMLArticleCategory.swift; path = XMLManagement/XMLArticleCategory.swift; sourceTree = "<group>"; };
@@ -1283,9 +1289,11 @@
 		EC98C0CC1F1EB0E800A68FF5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EC98C0D31F1EB2C300A68FF5 /* AbyssinicaSIL-R.ttf */,
 				EC98C0CD1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf */,
 				EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */,
-				EC98C0D31F1EB2C300A68FF5 /* AbyssinicaSIL-R.ttf */,
+				4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */,
+				4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1604,6 +1612,7 @@
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4F8495A31F06E6BE0015A6BB /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
+				4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
 				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
 				4F25D8C721E50CAE00CC844E /* teachmetoshare.zip in Resources */,
 				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
@@ -1631,6 +1640,7 @@
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				4F84959F1F06E6BE0015A6BB /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
+				4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */,
 				4F8495A21F06E6BE0015A6BB /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
 				1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */,
@@ -1657,8 +1667,10 @@
 			files = (
 				EC98C0D01F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				EC98C0D21F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
+				4F9493B922773E8A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */,
 				4FC97EAD20D2B2BB00084A33 /* analytics-test1.xml in Resources */,
 				4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */,
+				4F9493B822773E86009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1702,7 +1714,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AdobeMobileSDK/AdobeMobileSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
@@ -1741,7 +1753,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
