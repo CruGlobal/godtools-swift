@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SWXMLHash
 
 class TractTab: BaseTractElement {
     
@@ -37,6 +38,28 @@ class TractTab: BaseTractElement {
         return properties.listeners == "" ? nil : properties.listeners.components(separatedBy: ",")
     }
 
+    override func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
+        
+        self.elementFrame.y = yPosition
+        
+        let contentElements = self.xmlManager.getContentElements(data)
+        for child in contentElements.children {
+            guard let childElement = child.element else { continue }
+            if childElement.name.contains("analytics") {
+                self.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: child)
+            }
+        }
+        
+        loadElementProperties(contentElements.properties)
+        loadFrameProperties()
+        buildFrame()
+        setupParallelElement()
+        buildChildrenForData(contentElements.children)
+        setupView(properties: contentElements.properties)
+
+    }
+    
+    
     override func receiveMessage() {
         guard let tabs = self.parent as? TractTabs else { return }
         tabs.selectTab(self.elementNumber)

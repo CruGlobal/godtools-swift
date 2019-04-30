@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,7 +42,10 @@
                                 </constraints>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sTw-7d-Fpn" customClass="GTProgressView" customModule="godtools" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="58" width="306" height="2"/>
+                                <rect key="frame" x="0.0" y="57" width="306" height="3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="Kmc-vi-8r8"/>
+                                </constraints>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JR1-oY-z8k">
                                 <rect key="frame" x="0.0" y="60" width="306" height="75.5"/>
@@ -52,7 +54,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="226" height="74.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbI-hf-Sfh">
-                                                <rect key="frame" x="8.5" y="26" width="22" height="22"/>
+                                                <rect key="frame" x="8" y="26.5" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="22" id="c9v-49-oHY"/>
                                                     <constraint firstAttribute="width" constant="22" id="sFy-kx-pvA"/>
@@ -63,14 +65,14 @@
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="vertical_line_grey" translatesAutoresizingMaskIntoConstraints="NO" id="mDc-DS-b34">
-                                                <rect key="frame" x="38.5" y="23" width="1" height="30"/>
+                                                <rect key="frame" x="38" y="22.5" width="1" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="dub-88-ZYE"/>
                                                     <constraint firstAttribute="width" constant="1" id="xU3-3l-cyK"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZt-B6-a2j" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="4" width="172.5" height="37.5"/>
+                                                <rect key="frame" x="47" y="4" width="173" height="38"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -79,7 +81,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="45,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WtK-SD-emW" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                                <rect key="frame" x="47.5" y="45.5" width="178.5" height="21"/>
+                                                <rect key="frame" x="47" y="46" width="179" height="20.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Byn-jY-nQf"/>
                                                 </constraints>
