@@ -16,6 +16,7 @@ class Language: Object {
     @objc dynamic var remoteId = ""
     @objc dynamic var shouldDownload = false
     @objc dynamic var direction = ""
+//    @objc dynamic var isPublished = true
     
     let translations = List<Translation>()
     
