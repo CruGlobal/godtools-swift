@@ -13,7 +13,7 @@ import Crashlytics
 class FirstLaunchInitializer: GTDataManager {
     
     let languagesManager = LanguagesManager()
-    let resourceCodes = ["teachmetoshare", "kgp","satisfied","fourlaws"]
+    let resourceCodes = [String]() //["teachmetoshare", "kgp","satisfied","fourlaws"]
     
     func initializeAppState() {
         initializeInitialLanguages()
