@@ -109,9 +109,6 @@
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
-		4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
-		4F123FB21F140F1000309DAD /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
-		4F123FB31F140F1000309DAD /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
 		4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95821EA7B05D007B47DB /* LanguageResource.swift */; };
@@ -122,7 +119,6 @@
 		4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE51F9A47440002B962 /* ADBMobileConfig.json */; };
 		4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F1F2CE71F9A47D60002B962 /* ADBMobileConfig_debug.json */; };
 		4F2500621F0C1E8D00364FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F2500611F0C1E8D00364FBC /* AdSupport.framework */; };
-		4F25D8C721E50CAE00CC844E /* teachmetoshare.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F25D8C621E50CAE00CC844E /* teachmetoshare.zip */; };
 		4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F7C6E21A86791009B41B0 /* WebArchiver.swift */; };
 		4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2F7C6F21A86791009B41B0 /* WebArchive.swift */; };
 		4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2FF1DD21C404C200BF7110 /* ArticleCategoryViewController.swift */; };
@@ -153,8 +149,6 @@
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
-		4F8495541F069CEF0015A6BB /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* resources.json */; };
-		4F8495561F069D130015A6BB /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */; };
 		4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */; };
@@ -170,13 +164,6 @@
 		4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA9C3AB2242BAB200DAE207 /* WKWebViewController.swift */; };
 		4FAF20781F02933900C43AFC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
 		4FB90B232280944600C6B872 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B222280944600C6B872 /* readme.txt */; };
-		4FB90B252280B07900C6B872 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B242280B07900C6B872 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png */; };
-		4FB90B2C2280B53500C6B872 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B262280B53400C6B872 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png */; };
-		4FB90B2D2280B53500C6B872 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B272280B53400C6B872 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */; };
-		4FB90B2E2280B53500C6B872 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B282280B53400C6B872 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png */; };
-		4FB90B2F2280B53500C6B872 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B292280B53400C6B872 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png */; };
-		4FB90B302280B53500C6B872 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B2A2280B53400C6B872 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png */; };
-		4FB90B312280B53500C6B872 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B2B2280B53400C6B872 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png */; };
 		4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED01ED5D56300D6BFFF /* BannerManager.swift */; };
 		4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC74ED71ED5E2BD00D6BFFF /* AttachmentResource.swift */; };
 		4FC97EA920D2B1BD00084A33 /* TractEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC97EA820D2B1BD00084A33 /* TractEventTests.swift */; };
@@ -202,6 +189,19 @@
 		4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF3E6E621C1573200CA3B5C /* ArticleManager+Promises.swift */; };
 		4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */; };
 		4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */; };
+		4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAE1F140F1000309DAD /* fourlaws.zip */; };
+		4FF7FF552284D062005C8BE1 /* kgp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FAF1F140F1000309DAD /* kgp.zip */; };
+		4FF7FF562284D062005C8BE1 /* satisfied.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F123FB01F140F1000309DAD /* satisfied.zip */; };
+		4FF7FF572284D062005C8BE1 /* teachmetoshare.zip in Resources */ = {isa = PBXBuildFile; fileRef = 4F25D8C621E50CAE00CC844E /* teachmetoshare.zip */; };
+		4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B292280B53400C6B872 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png */; };
+		4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B2B2280B53400C6B872 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png */; };
+		4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B282280B53400C6B872 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png */; };
+		4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B2A2280B53400C6B872 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png */; };
+		4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B262280B53400C6B872 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png */; };
+		4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B272280B53400C6B872 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png */; };
+		4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FB90B242280B07900C6B872 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png */; };
+		4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* resources.json */; };
+		4FF7FF602284D062005C8BE1 /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
 		4FFC3B5421ADC3F400FD5116 /* XMLArticlePages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFC3B5321ADC3F400FD5116 /* XMLArticlePages.swift */; };
 		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC00B0051F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift */; };
@@ -1613,55 +1613,55 @@
 			files = (
 				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
+				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
-				4F123FB11F140F1000309DAD /* fourlaws.zip in Resources */,
-				4F25D8C721E50CAE00CC844E /* teachmetoshare.zip in Resources */,
 				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
-				4F123FB21F140F1000309DAD /* kgp.zip in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
-				4FB90B2E2280B53500C6B872 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
-				4FB90B2F2280B53500C6B872 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
+				4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */,
 				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
-				4FB90B302280B53500C6B872 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
+				4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
+				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
-				4FB90B252280B07900C6B872 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
-				4F8495561F069D130015A6BB /* languages.json in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
+				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */,
-				4FB90B2C2280B53500C6B872 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
+				4FF7FF552284D062005C8BE1 /* kgp.zip in Resources */,
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
+				4FF7FF572284D062005C8BE1 /* teachmetoshare.zip in Resources */,
+				4FF7FF562284D062005C8BE1 /* satisfied.zip in Resources */,
 				1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
-				4FB90B312280B53500C6B872 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
+				4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4F9A9EA1219E22D900C61E9C /* ArticleTableViewCell.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
-				4F123FB31F140F1000309DAD /* satisfied.zip in Resources */,
-				4F8495541F069CEF0015A6BB /* resources.json in Resources */,
+				4FF7FF602284D062005C8BE1 /* languages.json in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
-				4FB90B2D2280B53500C6B872 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
+				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
+				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
+				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
