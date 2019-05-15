@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import PromiseKit
 import RealmSwift
-import Crashlytics
 
 
 /* Languages sample
@@ -170,9 +169,8 @@ class LanguagesManager: GTDataManager {
         return issueGETRequest()
             .then { data -> Promise<Languages> in
                 DispatchQueue.global(qos: .userInitiated).async {
-//                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)
-                    
-                    // additional processing to skip languages that have no translations in 
+
+                    // ... skip languages that have no translations
                     let decoder = JSONDecoder()
                     
                     var remotes = [LanguageResource]()
