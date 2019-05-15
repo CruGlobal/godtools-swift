@@ -10,6 +10,60 @@ import UIKit
 import Alamofire
 import PromiseKit
 import RealmSwift
+import Crashlytics
+
+
+/* Languages sample
+  "data": [
+        {
+            "id": "12",
+            "type": "language",
+            "attributes": {
+                "code": "ar",
+                "name": "Arabic",
+                "direction": "rtl"
+            },
+            "relationships": {
+                "translations": {
+                    "data": [
+                        {
+                            "id": "113",
+                            "type": "translation"
+                        }
+                    ]
+                },
+                "custom-pages": {
+                    "data": []
+                }
+            }
+        },
+ ...
+ */
+
+struct LangResource: Decodable {
+    var data: [LangResourceItem]?
+}
+struct LangResourceItem: Decodable {
+    var id: String?
+    var type: String?
+    var attributes: LangResourceAttributes?
+    var relationships: LangResourceRelationships?
+}
+struct LangResourceAttributes: Decodable {
+    var code: String?
+    var name: String?
+    var direction: String?
+}
+struct LangResourceRelationships: Decodable {
+    var translations: LangResourceTranslations?
+}
+struct LangResourceTranslations: Decodable {
+    var data: [ [String: String] ]?
+}
+
+
+
+
 
 class LanguagesManager: GTDataManager {
     
@@ -20,7 +74,7 @@ class LanguagesManager: GTDataManager {
     static var _defaultLanguage: Language?
     static var defaultLanguage: Language? {
         get {
-            if _defaultLanguage == nil {
+            if _defaultLanguage == nil || _defaultLanguage?.isInvalidated == true {
                 let languagesManager = LanguagesManager()
                 _defaultLanguage = languagesManager.loadPrimaryLanguageFromDisk()
             }
@@ -96,12 +150,13 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk() -> Languages {
-        let languagesUnfiltered = findAllEntities(Language.self)
-
-        let languages = languagesUnfiltered.filter { (lang) -> Bool in
-            return lang.translations.contains(where: { $0.isPublished })
-        }
         
+        let languages = findAllEntities(Language.self)
+
+//        let languages = languagesUnfiltered.filter { (lang) -> Bool in
+//            return lang.translations.contains(where: { $0.isPublished })
+//        }
+//
         let lSeq = languages.sorted(by: { return $0.localizedName() < $1.localizedName() })
         let ls = Languages()
         ls.append(objectsIn: lSeq)
@@ -117,7 +172,7 @@ class LanguagesManager: GTDataManager {
                 DispatchQueue.global(qos: .userInitiated).async {
 //                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)
                     
-                    // additional processing
+                    // additional processing to skip languages that have no translations in 
                     let decoder = JSONDecoder()
                     
                     var remotes = [LanguageResource]()
@@ -127,9 +182,15 @@ class LanguagesManager: GTDataManager {
                             // skip langs without translations
                             if (item.relationships?.translations?.data?.count)! > 0 {
                                 let lang = LanguageResource()
-                                lang.id = item.id!
-                                lang.code = item.attributes?.code! ?? ""
-                                lang.direction = item.attributes?.direction! ?? ""
+                
+                                guard   let id = item.id,
+                                        let code = item.attributes?.code,
+                                        let direction = item.attributes?.direction!
+                                else { continue }
+                                
+                                lang.id = id
+                                lang.code = code
+                                lang.direction = direction
                                 remotes.append(lang)
                             }
                         }
@@ -163,43 +224,19 @@ class LanguagesManager: GTDataManager {
     }
     
     private func saveToDisk(_ languages: [LanguageResource]) {
-//        safelyWriteToRealm {
-//            for remoteLanguage in languages {
-//                if let oldLanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
-//                    realm.delete(oldLanguage)
-//                }
-//
-//                let newLanguage = Language()
-//                newLanguage.remoteId = remoteLanguage.id
-//                newLanguage.code = remoteLanguage.code
-//                newLanguage.direction = remoteLanguage.direction  // IO: small bugfix
-//                realm.add(newLanguage)
-//            }
-//        }
 
-//        val remoteLanguages = getLanguagesFromApi()
-//        val existingLanguages = getLanguagesFromDb()
-//        for (language in remoteLanguages) {
-//            updateOrAddToRealm(language)
-//            existingLanguages.remove(language)
-//        }
-//
-//        for (language in existingLanguages) {
-//            deleteFromRealm(language)
-//        }
-        
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
             for remoteLanguage in languages {
             
-                // update language
+                // update language if it exists
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
                     cachedlanguage.code = remoteLanguage.code
                     cachedlanguage.direction = remoteLanguage.direction
                     cachedLanguages.append(cachedlanguage)
                     realm.add(cachedlanguage, update: true)
                 }
-                // add language
+                // add language if it doesn't
                 else {
                     let newCachedLanguage = Language()
                     newCachedLanguage.remoteId = remoteLanguage.id
@@ -207,10 +244,8 @@ class LanguagesManager: GTDataManager {
                     newCachedLanguage.direction = remoteLanguage.direction  // IO: small bugfix
                     cachedLanguages.append(newCachedLanguage)
                     realm.add(newCachedLanguage)
-
                 }
             }
-            
             purgeDeletedLanguages(foundLanguages: cachedLanguages)
         }
     }
