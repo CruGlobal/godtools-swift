@@ -12,7 +12,7 @@ class LanguageResource: GodToolsJSONResource {
     
     @objc var id = ""
     @objc var code = ""
-    @objc var direction = ""
+    @objc var direction = ""    
 }
 
 // Mark - JSONResource protocol functions

@@ -11,8 +11,6 @@ import UIKit
 
 extension LanguagesTableViewController: UITableViewDataSource {
     
-    
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var language: Language
         if isFiltering {
