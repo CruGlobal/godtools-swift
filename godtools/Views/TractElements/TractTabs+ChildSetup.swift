@@ -30,9 +30,10 @@ extension TractTabs {
                 self.analyticsTabsEvents.append(contentsOf: userInfo)
             }
             
-            // find and remove "label", it is obsolete in view hierarchy
-            remove(inNode: tab, text: "label")
-            self.tabs.append(tab)
+            // find and remove "label", it is obsolete in view hierarchy. do it with "copy at hand" (parse string again) to keep original xml intact for reload
+            let t = SWXMLHash.parse(tab.description).children.first!    // SWXMLHash has default root object we need to skip
+            remove(inNode: t, text: "label")
+            self.tabs.append(t)
         }
     }
     
@@ -51,8 +52,8 @@ extension TractTabs {
         var elementIndex: Int = 0
         
         for tabData in self.tabs {
-            let element = TractTab(data: tabData, startOnY: currentYPosition, parent: self, elementNumber: elementIndex)
             
+            let element = TractTab(data: tabData, startOnY: currentYPosition, parent: self, elementNumber: elementIndex)
             element.isHidden = elementIndex != 0
             
             if element.height > maxHeight {

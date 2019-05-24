@@ -152,9 +152,10 @@ class HomeViewController: BaseViewController {
     }
 
     private func onboardingShouldDisplay() -> Bool {
-        let hasAlreadyShown = UserDefaults.standard.bool(forKey: GTConstants.kOnboardingScreensShownKey)
-        
-        return !hasAlreadyShown
+        return false
+        // temp removed by request
+//        let hasAlreadyShown = UserDefaults.standard.bool(forKey: GTConstants.kOnboardingScreensShownKey)
+//        return !hasAlreadyShown
     }
     
     private func loginBannerShouldDisplay() -> Bool {
