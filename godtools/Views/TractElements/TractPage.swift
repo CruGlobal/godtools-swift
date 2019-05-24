@@ -10,8 +10,6 @@ import Foundation
 import UIKit
 import SWXMLHash
 
-//  NOTES ABOUT THE COMPONENT
-//  * This component must always be initialized with: init(data: XMLIndexer, withMaxHeight height: CGFloat)
 
 class TractPage: BaseTractElement {
     
@@ -23,6 +21,18 @@ class TractPage: BaseTractElement {
     static var statusbarHeight: CGFloat {
         return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXStatusBarHeight : CGFloat(0)
     }
+    
+    //  * The only designated initializer for this class should be this one
+    override init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
+        super.init(startWithData: data, withMaxHeight: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+    }
+    
+    override init(data: XMLIndexer, startOnY yPosition: CGFloat) { fatalError("init(coder:) has not been implemented") }
+    required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+    required init(data: XMLIndexer, parent: BaseTractElement) { fatalError("init(data:parent:) has not been implemented") }
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
+    override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) { fatalError("init(children:yPosition:parent:) has not been implemented") }
+    
     
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self
