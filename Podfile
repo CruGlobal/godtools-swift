@@ -17,7 +17,7 @@ target 'godtools' do
     pod 'CRUConfig', '~> 1.2'
     pod 'RealmSwift', '~> 3.12'
     pod 'SSZipArchive'
-    pod 'SWXMLHash', '~> 4.8.0'
+    pod 'SWXMLHash', '~> 4'
     pod 'Fuzi', '~> 2.1'
     pod 'Fabric', '~> 1.9'
     pod 'Crashlytics', '~> 3.12.0'
