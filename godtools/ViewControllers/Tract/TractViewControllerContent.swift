@@ -70,7 +70,7 @@ extension TractViewController {
     }
     
     func reloadPagesViews() -> Promise<Bool> {
-        return Promise<Bool> { fulfill, reject in
+        return Promise<Bool> { seal in
             let range = getRangeOfViews()
             let lastPosition = self.totalPages() - 1
             let width = self.containerView.frame.size.width
@@ -92,16 +92,16 @@ extension TractViewController {
                 }
             }
             
-            fulfill(true)
+            seal.fulfill(true)
         }
     }
     
     func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
-        return Promise<Bool> { fulfill, reject in
+        return Promise<Bool> { seal in
             
             if self.pagesViews[position] == nil {
                 guard let firstView = self.containerView.subviews.first else {
-                    fulfill(false)
+                    seal.fulfill(false)
                     return
                 }
                 
@@ -114,18 +114,18 @@ extension TractViewController {
                 }
             }
             
-            fulfill(true)
+            seal.fulfill(true)
         }
     }
     
     func removePageViewAtPosition(position: Int) -> Promise<Bool> {
-        return Promise<Bool> { fulfill, reject in
+        return Promise<Bool> { seal in
             let pageView = self.pagesViews[position]
             if pageView != nil {
                 pageView!.removeFromSuperview()
                 self.pagesViews[position] = nil
             }
-            fulfill(true)
+            seal.fulfill(true)
         }
     }
     

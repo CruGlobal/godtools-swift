@@ -28,7 +28,7 @@ class GTGlobalTractBindings: NSObject {
             
             let params = form.getFormData()
             
-            _ = manager.createSubscriber(params: params)?.then(execute: { (_) -> Void in
+            _ = manager.createSubscriber(params: params)?.done { (_) -> Void in
                 
                 guard let resource = form.tractConfigurations?.resource else { return }
                 let code = resource.code
@@ -46,7 +46,7 @@ class GTGlobalTractBindings: NSObject {
                 NotificationCenter.default.post(name: .actionTrackNotification,
                                                 object: nil,
                                                 userInfo: userInfo)
-            })
+            }
             
         default: break
 

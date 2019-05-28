@@ -81,13 +81,13 @@ extension AppDelegate {
             
             // Need to handle this way so all resources are in place before presenting tract.
             _ = ensureResourceIsAvailable(resource: resource, language: parallelLang)
-            .then { (success) -> Void in
+            .done { (success) -> Void in
                 
                 if success {
                     // Parallel language has succeeded
                     
                     _ = self.ensureResourceIsAvailable(resource: resource, language: language)
-                    .then { (success) -> Void in
+                    .done { (success) -> Void in
                         if success {
                             // Primary language has succeeded
                             // Go to that Tract with a parallel language
@@ -99,7 +99,7 @@ extension AppDelegate {
         }
         
         if parallelLanguage == nil {
-            _ = ensureResourceIsAvailable(resource: resource, language: language).then { (success) -> Void in
+            _ = ensureResourceIsAvailable(resource: resource, language: language).done { (success) -> Void in
                 if success {
                     self.shouldGoToUniversalLinkedResource(resource, language: language, pageNumber: pageNumber, parallelLanguageCode: parallelLanguage?.code)
                 } else if #available(iOS 10.0, *) {
@@ -189,17 +189,17 @@ extension AppDelegate {
     
     private func ensureResourceIsAvailable(resource: DownloadedResource, language: Language) -> Promise<Bool> {
         guard let translation = resource.getTranslationForLanguage(language) else {
-            return Promise(value: false)
+            return .value(false)
         }
         
         if translation.isDownloaded {
-            return Promise(value: true)
+            return .value(true)
         }
         
         let importer = TranslationZipImporter()
         
         return importer.downloadSpecificTranslation(translation).then { (obj) -> Promise<Bool> in
-            return Promise(value: true)
+            return .value(true)
         }
     }
     

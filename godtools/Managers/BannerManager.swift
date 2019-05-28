@@ -26,9 +26,13 @@ class BannerManager: GTDataManager {
         let homeBannerAttachment = loadAttachment(remoteId: resource.bannerRemoteId)
         
         if homeBannerAttachment != nil && bannerHasChanged(attachment: homeBannerAttachment!) {
-            _ = issueDownloadRequest(attachment: homeBannerAttachment!).then { (image) -> Void in
+            _ = issueDownloadRequest(attachment: homeBannerAttachment!).done { (image) -> Void in
                 self.postCompletedNotification(resource: resource)
             }
+            .catch { error in
+                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error downloading banner."])
+            }
+
         }
 
         let aboutBannerAttachment = loadAttachment(remoteId: resource.aboutBannerRemoteId)
@@ -39,13 +43,12 @@ class BannerManager: GTDataManager {
     }
     
     private func issueDownloadRequest(attachment: Attachment) -> Promise<UIImage?> {
-        return issueGETRequest(bannerId: attachment.remoteId).then { image -> Promise<UIImage?> in
-            self.saveImageToDisk(image, attachment: attachment)
-            
-            return Promise<UIImage?>(value: UIImage(data: image))
-            }.catch(execute: { error in
-                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error downloading banner."])
-            })
+        
+        return
+            issueGETRequest(bannerId: attachment.remoteId).then { image -> Promise<UIImage?> in
+                self.saveImageToDisk(image, attachment: attachment)
+                return .value(UIImage(data: image))
+                }
     }
     
     func loadFor(remoteId: String?) -> UIImage? {
@@ -74,7 +77,9 @@ class BannerManager: GTDataManager {
             .appendingPathComponent(bannerId)
             .appendingPathComponent("download")
         
-        return Alamofire.request(url!).responseData()
+        return Alamofire.request(url!).responseData().then { rv -> Promise<Data> in
+            .value(rv.data)
+        }
     }
     
     private func postCompletedNotification(resource: DownloadedResource) {
