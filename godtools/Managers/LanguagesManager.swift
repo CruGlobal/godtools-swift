@@ -141,9 +141,9 @@ class LanguagesManager: GTDataManager {
                     }
                 }
                 
-                return Promise(value:self.loadFromDisk())
+                return .value(self.loadFromDisk())
             }
-            .always {
+            .ensure {
                 self.hideNetworkIndicator()
         }
     }

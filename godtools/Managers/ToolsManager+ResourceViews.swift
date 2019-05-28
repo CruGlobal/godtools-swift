@@ -29,15 +29,15 @@ extension ToolsManager {
                 continue
             }
             recordViewOnRemote(resource, quantity: NSNumber(value: resource.myViews))
-                .then(execute: { (_) -> Promise<Void> in
+                .then { (_) -> Promise<Void> in
                     self.safelyWriteToRealm {
                         resource.myViews = 0
                     }
-                    return Promise(value: ())
-                })
-                .catch(execute: { (error) in
+                    return .value(())
+                }
+                .catch { (error) in
                     self.record(error, resource: resource)
-                })
+                }
         }
     }
     
@@ -48,7 +48,11 @@ extension ToolsManager {
                           encoding: URLEncoding.default,
                           headers: nil)
             .validate()
-            .responseString()
+            .responseString().then { rv -> Promise<String> {
+               return .value(rv.string)
+            }
+                
+        }
     }
     
     private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any]? {

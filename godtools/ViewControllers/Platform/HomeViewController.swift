@@ -102,9 +102,9 @@ class HomeViewController: BaseViewController {
             return DownloadedResourceManager().loadFromRemote()
                 .then { (resources) -> Promise<Void> in
                     TranslationZipImporter().catchupMissedDownloads()
-                    return Promise(value: ())
+                    return .value(())
             }
-            }.always {
+            }.ensure {
                 self.refreshControl.endRefreshing()
                 self.reloadView()
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false

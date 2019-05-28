@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.startFlowController()
         
         self.initalizeAppState()
-            .always {
+            .ensure {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
@@ -92,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: App state initialization/refresh
     
-    private func initalizeAppState() -> Promise<Any> {
+    private func initalizeAppState() -> Promise<DownloadedResources> {
         let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
         let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
         
@@ -102,24 +102,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirstLaunchInitializer().initializeAppState()
         }
         
-        return languagesManager.loadFromRemote().then { (_) -> Promise<DownloadedResources> in
+        let p = firstly {
+            languagesManager.loadFromRemote()
+        }.then {  (_) -> Promise<DownloadedResources> in
             if isFirstLaunch {
                 languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
             }
             return DownloadedResourceManager().loadFromRemote()
-            }.then { (resources) -> Promise<DownloadedResources> in
-                if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
-                    self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
-                } else {
-                    TranslationZipImporter().catchupMissedDownloads()
-                }
-                
-                return Promise(value: resources)
-            }.catch(execute: { (error) in
-                if isFirstLaunch {
-                    self.flowController?.showDeviceLocaleDownloadFailedAlert()
-                }
-            })
+        }.then { (resources) -> Promise<DownloadedResources> in
+            if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
+                self.flowController?.showDeviceLocaleDownloadedAndSwitchPrompt()
+            } else {
+                TranslationZipImporter().catchupMissedDownloads()
+            }
+            return .value(resources)
+        }
+        p.catch { (error) in
+            if isFirstLaunch {
+                self.flowController?.showDeviceLocaleDownloadFailedAlert()
+            }
+        }
+        
+        return p
     }
     
     private func resetStateIfUITesting() {
