@@ -23,7 +23,7 @@ class OnboardingUITests: XCTestCase {
     
     func testAddLanguagesButtonPress() {
         let app = XCUIApplication()
-        app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].tap()
+//        app.buttons[GTAccessibilityConstants.Onboarding.languagesOkayButton].tap()
 
         let homeTableView = app.tables[GTAccessibilityConstants.Home.homeTableView]
         XCTAssert(homeTableView.exists)
