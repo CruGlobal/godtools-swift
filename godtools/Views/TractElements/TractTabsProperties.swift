@@ -19,4 +19,7 @@ class TractTabsProperties: TractProperties {
     var analyticsTabsUserInfo: [TractAnalyticEvent] = []
   
 
+    override var debugDescription: String {
+        return super.debugDescription + "\nTractTabProperties:\(options)"
+    }
 }
