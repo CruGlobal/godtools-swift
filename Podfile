@@ -18,14 +18,14 @@ target 'godtools' do
     pod 'RealmSwift', '~> 3.12'
     pod 'SSZipArchive'
     pod 'SWXMLHash', '~> 4'
-    pod 'Fuzi'
+    pod 'Fuzi', '~> 2.1'
     pod 'Fabric', '~> 1.9'
     pod 'Crashlytics', '~> 3.12.0'
     pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'AdobeMobileSDK', '~> 4.17.1'
     pod 'TheKeyOAuthSwift'
-    pod 'SwiftyJSON'
+    pod 'SwiftyJSON', '~> 4.1.0'
     pod 'TTTAttributedLabel'
     
 end
