@@ -35,21 +35,21 @@ post_install do |installer|
         config.build_settings['SWIFT_VERSION'] = '4.2'
     end
     
-    installer.pods_project.targets.each do |target|
-        # pods that require old swift
-        if ['Alamofire','PromiseKit', 'PromiseKit/Alamofire'].include? target.name
-            print "#{target}'s SWIFT_VERSION = 3\n"
-            target.build_configurations.each do |config|
-                config.build_settings['SWIFT_VERSION'] = '3.0'
-            end
-            else
-            print "#{target}'s SWIFT_VERSION = Undefined (Xcode will automatically resolve to 4.2)\n"
-            target.build_configurations.each do |config|
-                config.build_settings.delete('SWIFT_VERSION')
-            end
-        end
+    # installer.pods_project.targets.each do |target|
+    #     # pods that require old swift
+    #     if ['Alamofire','PromiseKit', 'PromiseKit/Alamofire'].include? target.name
+    #         print "#{target}'s SWIFT_VERSION = 3\n"
+    #         target.build_configurations.each do |config|
+    #             config.build_settings['SWIFT_VERSION'] = '3.0'
+    #         end
+    #         else
+    #         print "#{target}'s SWIFT_VERSION = Undefined (Xcode will automatically resolve to 4.2)\n"
+    #         target.build_configurations.each do |config|
+    #             config.build_settings.delete('SWIFT_VERSION')
+    #         end
+    #     end
         
-    end
+    # end
 end
 
 #  target 'godtools' do
