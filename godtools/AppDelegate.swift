@@ -52,9 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.startFlowController()
         
-        self.initalizeAppState()
-            .ensure {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.initalizeAppState().ensure {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
         
         return true

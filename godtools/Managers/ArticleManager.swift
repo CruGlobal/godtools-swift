@@ -16,8 +16,6 @@ import SWXMLHash
 
 class ArticleManager: GTDataManager {
 
-    
-    
     enum ArticleError: LocalizedError {
         case requestMetadataFailed(resourceURLString: String, error: Error)
         case invalidMetadataJSON
@@ -129,7 +127,7 @@ class ArticleManager: GTDataManager {
 
             isDownloading = true
             
-            dnloadWholeManifestData(manifestFilename: articleManifestFilename).then { [from, to] _ -> Promise<Void> in
+            dnloadWholeManifestData(manifestFilename: articleManifestFilename).done { [from, to] _ -> Void in
                 
                 do {
                     
@@ -159,17 +157,21 @@ class ArticleManager: GTDataManager {
 
                 debugPrint("Done. Should reload tableView here.")
 #endif
-                return Promise<Void>()
             }
-            .always {
+            .ensure { () -> Void in
                 
                 self.isDownloading = false
             }
+            .catch { error in
+                    
+            }
         }
         else {
-            processManifestFromLocalData(manifestFilename: articleManifestFilename).then { [articleManifestID] _ -> Promise<Void> in
+            processManifestFromLocalData(manifestFilename: articleManifestFilename).done { [articleManifestID] _ -> Void in
                 NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
-                return Promise<Void>()
+            }
+            .catch { error in
+                    
             }
         }
     }
