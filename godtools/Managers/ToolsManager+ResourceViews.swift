@@ -25,19 +25,19 @@ extension ToolsManager {
     
     func syncCachedRecordViews() {
         for resource in findAllEntities(DownloadedResource.self) {
+    
             if resource.myViews == 0 {
                 continue
             }
             recordViewOnRemote(resource, quantity: NSNumber(value: resource.myViews))
-                .then { (_) -> Promise<Void> in
-                    self.safelyWriteToRealm {
-                        resource.myViews = 0
-                    }
-                    return .value(())
+            .done { _ in
+                self.safelyWriteToRealm {
+                    resource.myViews = 0
                 }
-                .catch { (error) in
-                    self.record(error, resource: resource)
-                }
+            }
+            .catch { error in
+                self.record(error, resource: resource)
+            }
         }
     }
     
@@ -48,11 +48,10 @@ extension ToolsManager {
                           encoding: URLEncoding.default,
                           headers: nil)
             .validate()
-            .responseString().then { rv -> Promise<String> {
+            .responseString().then { rv -> Promise<String> in
                return .value(rv.string)
             }
                 
-        }
     }
     
     private func buildParameters(resource: DownloadedResource, quantity: NSNumber) -> [String: Any]? {
