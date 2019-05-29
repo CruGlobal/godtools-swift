@@ -115,6 +115,7 @@ class LanguagesManager: GTDataManager {
         return issueGETRequest()
             .then { data -> Promise<Languages> in
                 DispatchQueue.global(qos: .userInitiated).async {
+                    // TODO: this should be using the jsonapi parser framework -DF
 //                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)
                     
                     // additional processing
