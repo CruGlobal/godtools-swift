@@ -198,7 +198,7 @@ class LanguagesManager: GTDataManager {
                     cachedlanguage.code = remoteLanguage.code
                     cachedlanguage.direction = remoteLanguage.direction
                     cachedLanguages.append(cachedlanguage)
-                    realm.add(cachedlanguage, update: true)
+                    realm.add(cachedlanguage, update: .all)
                 }
                 // add language
                 else {

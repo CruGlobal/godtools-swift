@@ -8,13 +8,12 @@ use_frameworks!
 
 target 'godtools' do
     
-    pod 'Alamofire'
-    pod 'PromiseKit/CorePromise'
-    pod 'PromiseKit/Foundation'
-    pod 'PromiseKit/Alamofire'
+    pod 'Alamofire', '~> 4.8'
+    pod 'PromiseKit', '~> 6.8'
+    pod 'PromiseKit/Alamofire', '~> 6.8'
     
     pod 'CRUConfig', '~> 1.2'
-    pod 'RealmSwift', '3.16.0'
+    pod 'RealmSwift', '~> 3.16'
     pod 'SSZipArchive'
     pod 'SWXMLHash'
     pod 'Fuzi'
@@ -29,27 +28,26 @@ target 'godtools' do
     
 end
 
-# post_install do |installer|
-#        print "Setting the default SWIFT_VERSION to 4.2 for every pod\n"
-#        installer.pods_project.build_configurations.each do |config|
-#            config.build_settings['SWIFT_VERSION'] = '4.2'
-#        end
-
-#     installer.pods_project.targets.each do |target|
-#         # pods that require old swift
-#         if ['Alamofire','PromiseKit', 'PromiseKit/Alamofire'].include? target.name
-#             print "#{target}'s SWIFT_VERSION = 3\n"
-#             target.build_configurations.each do |config|
-#                 config.build_settings['SWIFT_VERSION'] = '3.0'
-#             end
-#             else
-#             print "#{target}'s SWIFT_VERSION = Undefined (Xcode will automatically resolve to 4.2)\n"
-#             target.build_configurations.each do |config|
-#                 config.build_settings.delete('SWIFT_VERSION')
-#             end
-#         end
-
-#     end
-# end
-
+post_install do |installer|
+    print "Setting the default SWIFT_VERSION to 5.0 for every pod\n"
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings['SWIFT_VERSION'] = '5'
+    end
+    
+    #     installer.pods_project.targets.each do |target|
+    #         # pods that require old swift
+    #         if ['Alamofire','PromiseKit', 'PromiseKit/Alamofire'].include? target.name
+    #             print "#{target}'s SWIFT_VERSION = 3\n"
+    #             target.build_configurations.each do |config|
+    #                 config.build_settings['SWIFT_VERSION'] = '3.0'
+    #             end
+    #             else
+    #             print "#{target}'s SWIFT_VERSION = Undefined (Xcode will automatically resolve to 4.2)\n"
+    #             target.build_configurations.each do |config|
+    #                 config.build_settings.delete('SWIFT_VERSION')
+    #             end
+    #         end
+    
+    #     end
+end
 

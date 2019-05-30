@@ -117,20 +117,11 @@ extension TractViewController {
         }
     }
     
-    fileprivate func movePageView(_ pageView: UIView) -> Promise<Bool> {
+    fileprivate func movePageView(_ pageView: UIView) -> Guarantee<Bool> {
         
-        //return PromiseKit.wrap { start }
-        //return Promise { start(completionHandler: $0.resolve) }
-        return PromiseKit.wrap { UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations:
-            {
-                pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        }, completion: $0)
-        }
-        
-        // TODO: removed dependancy on UIView PromiseKit extension
-        //        return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-        //            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        //        })
+        return UIView.animate(.promise, duration: 0.35, delay: 0.0, options: [.curveEaseInOut], animations: {
+            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        })
     }
     
     fileprivate func moveViewsExceptCurrentViews(pageViews: [UIView]) {
