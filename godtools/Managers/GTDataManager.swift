@@ -38,7 +38,9 @@ class GTDataManager: NSObject {
 
         return Alamofire
             .request(buildURL() ?? "")
-            .responseData()
+            .responseData().then { rv -> Promise<Data> in
+                .value(rv.data)
+            }
     }
         
     func issuePOSTRequest(_ params: Parameters) -> Promise<Data> {
@@ -59,7 +61,9 @@ class GTDataManager: NSObject {
                 
                 return .success
             })
-            .responseData()
+            .responseData().then { rv -> Promise<Data> in
+                .value(rv.data)
+            }
     }
     
     func issueGETRequest(_ params: Parameters) -> Promise<Data> {
@@ -69,7 +73,9 @@ class GTDataManager: NSObject {
                                  parameters: params,
                                  encoding: URLEncoding.default,
                                  headers: nil)
-            .responseData()
+            .responseData().then { rv -> Promise<Data> in
+                .value(rv.data)
+            }
     }
     
     func findEntity<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> T? {

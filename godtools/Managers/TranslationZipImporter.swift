@@ -109,10 +109,10 @@ class TranslationZipImporter: GTDataManager {
         isProcessingQueue = true
         
         translationDownloadQueue.forEach { translation in
-            _ = self.download(translation: translation).catch(execute: { error in
+            _ = self.download(translation: translation).catch { error in
                 Crashlytics().recordError(error,
                                           withAdditionalUserInfo: ["customMessage": "Error downloading translation zip w/ id: \(translation.remoteId)"])
-            })
+            }
         }
         
         translationDownloadQueue.removeAll()
@@ -124,7 +124,7 @@ class TranslationZipImporter: GTDataManager {
             self.handleZippedData(zipData: zipFileData, translation: translation)
             
             guard let language = translation.language else {
-                return Promise(value: ())
+                return .value(())
             }
             
             let isAvailableInPrimary = self.isTranslationAvailableInPrimaryLanguage(translation: translation)
@@ -133,8 +133,8 @@ class TranslationZipImporter: GTDataManager {
                 self.primaryDownloadComplete(translation: translation)
             }
             
-            return Promise(value: ())
-            }.always {
+            return .value(())
+            }.ensure {
                 self.safelyWriteToRealm {
                     translation.isDownloadInProgress = false
                 }
@@ -189,7 +189,9 @@ class TranslationZipImporter: GTDataManager {
                                                 userInfo: [GTConstants.kDownloadProgressProgressKey: progress,
                                                            GTConstants.kDownloadProgressResourceIdKey: resource.remoteId])
             }
-            .responseData()
+            .responseData().then { rv -> Promise<Data> in
+                .value(rv.data)
+        }
     }
     
     private func writeDataFileToDisk(data: Data, to path: URL) throws {

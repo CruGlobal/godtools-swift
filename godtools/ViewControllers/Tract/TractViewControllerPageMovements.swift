@@ -38,9 +38,9 @@ extension TractViewController {
                 if success {
                     _ = self.reloadPagesViews()
                     self.sendPageToAnalytics()
-                    return Promise(value: true)
+                    return .value(true)
                 }
-                return Promise(value: false)
+                return .value(false)
         }
     }
     
@@ -54,9 +54,9 @@ extension TractViewController {
                 if success == true {
                     _ = self.reloadPagesViews()
                     self.sendPageToAnalytics()
-                    return Promise(value: true)
+                    return .value(true)
                 }
-                return Promise(value: false)
+                return .value(false)
         }
     }
     
@@ -92,48 +92,41 @@ extension TractViewController {
     fileprivate func moveForewards() -> Promise<Bool> {
         self.currentPage += 1
         guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
-            return Promise(value: false)
+            return .value(false)
         }
         
-        return movePageView(currentPageView).then { _ in
+        return movePageView(currentPageView).then { _ -> Promise<Bool> in
             self.moveViewsExceptCurrentViews(pageViews: [currentPageView])
-            return Promise(value: true)
+            return .value(true)
         }
     }
     
     fileprivate func moveBackwards() -> Promise<Bool> {
         self.currentPage -= 1
         guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
-            return Promise(value: false)
+            return .value(false)
         }
         guard let nextPageView = self.view.viewWithTag(self.currentPage + 1 + self.viewTagOrigin) else {
-            return Promise(value: false)
+            return .value(false)
         }
         
         currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        return movePageView(nextPageView).then { _ in
+        return movePageView(nextPageView).then { _ -> Promise<Bool> in
             self.moveViewsExceptCurrentViews(pageViews: [currentPageView, nextPageView])
-            return Promise(value: true)
+            return .value(true)
         }
     }
     
-    fileprivate func movePageView(_ pageView: UIView) -> Promise<Bool> {
+    fileprivate func movePageView(_ pageView: UIView) -> Guarantee<Bool> {
         
-        return PromiseKit.wrap { UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations:
-            {
-                pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-            }, completion: $0)
-        }
-
-        // TODO: removed dependancy on UIView PromiseKit extension
-//        return UIView.promise(animateWithDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-//            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-//        })
+        return UIView.animate(.promise, duration: 0.35, delay: 0.0, options: [.curveEaseInOut], animations: {
+            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        })
     }
     
     fileprivate func moveViewsExceptCurrentViews(pageViews: [UIView]) {
         for view in self.pagesViews {
-            if view == nil || pageViews.index(of: view!) != nil {
+            if view == nil || pageViews.firstIndex(of: view!) != nil {
                 continue
             }
             

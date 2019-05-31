@@ -228,7 +228,7 @@ class BaseTractElement: UIView {
     }
     
     func getElementPosition() -> Int? {
-        guard let index = self.parent?.elements?.index(of: self) else {
+        guard let index = self.parent?.elements?.firstIndex(of: self) else {
             return nil
         }
         return index

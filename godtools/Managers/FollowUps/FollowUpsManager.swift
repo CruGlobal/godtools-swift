@@ -38,7 +38,7 @@ class FollowUpsManager: GTDataManager {
         let cachedFollowUps = findEntities(FollowUp.self, matching: predicate)
         
         if cachedFollowUps.count == 0 {
-            return [Promise(value: ())]
+            return [.value(())]
         }
         
         var promises = [Promise<Void>]()
@@ -79,18 +79,22 @@ class FollowUpsManager: GTDataManager {
                 "language_id": Int(followUp.languageId ?? "-1") ?? -1,
                 "destination_id": Int(followUp.destinationId ?? "-1") ?? -1]]]
         
-        return issuePOSTRequest(jsonDictionary)
-            .then { data -> Promise<Void> in
-                self.removeLocalCopy(followUp)
-                return Promise(value: ())
-            }
-            .catch(execute: { error in
-                self.incrementRetryCount(followUp)
-                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
-            })
-            .always {
-                self.hideNetworkIndicator()
+        let p = firstly {
+            issuePOSTRequest(jsonDictionary)
+        }.then { data -> Promise<Void> in
+            self.removeLocalCopy(followUp)
+            return .value(())
         }
+        
+        p.catch { error in
+            self.incrementRetryCount(followUp)
+            Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
+        }
+        .finally {
+            self.hideNetworkIndicator()
+        }
+        return p
+        
     }
     
     private func validationError() -> Promise<Void> {

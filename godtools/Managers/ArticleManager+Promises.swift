@@ -47,12 +47,13 @@ extension ArticleManager {
 #endif
             
             let webarchivePromises = self.getWebArchivePromises()
-            return when(fulfilled: webarchivePromises).then { _ -> Void in
+            return when(fulfilled: webarchivePromises).then { rv -> Promise<Void> in
+                
+                .value(())
+                
+                }
+                .ensure { }
 
-
-            }.catch(execute: { (err) in
-
-            })
         }
     }
     
@@ -167,31 +168,41 @@ extension ArticleManager {
         // cache the same result for one hour
         let finalURL = URL(string: url.cleanedPath + ".999.json?_=\(Int64( (NSDate().timeIntervalSince1970 / 3600.0).rounded() ))")
         let request = URLRequest(url: finalURL!)
-        let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
-        
-        return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
-#if DEBUG
-            debugPrint("Downloaded JSON: \(finalURL!.absoluteString)")
-#endif
-            return Promise(value: d)
+        return URLSession.shared.dataTask(.promise, with: request).then { (arg) -> Promise<Data> in
+            return .value(arg.data)
         }
+        
+//        // cache the same result for one hour
+//        let finalURL = URL(string: url.cleanedPath + ".999.json?_=\(Int64( (NSDate().timeIntervalSince1970 / 3600.0).rounded() ))")
+//        let request = URLRequest(url: finalURL!)
+//        let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
+//
+//        return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
+//#if DEBUG
+//            debugPrint("Downloaded JSON: \(finalURL!.absoluteString)")
+//#endif
+//            return .value(d)
+//        }
+        
+        
+        
     }
 
 
     // Downloading (as complete archive) web page
     func getWebArchive(url: URL) -> Promise<Data> {
         
-        return Promise<Data> { fulfill, reject in
+        return Promise<Data> { seal in
             
             WebArchiver.archive(url: url, completion: { result -> Void in
                 switch result {
                 case .success(let plistData):
                     debugPrint("Downloaded webarchive: \(url.absoluteString)")
-                    fulfill(plistData)
+                    seal.fulfill(plistData)
                     
                 case .failure(let error):
                     debugPrint("Failed downloading webarchive: \(url.absoluteString)")
-                    reject(error)
+                    seal.reject(error)
                 }
             })
         }
@@ -201,7 +212,7 @@ extension ArticleManager {
     // Save .webarchive & ArticleData
     func saveWebArchive(folderUrl: URL, webArchData: Data, additionalProperties: ArticleData) -> Promise<Void> {
         
-        return Promise<Void> { fulfill, reject in
+        return Promise<Void> { seal in
             try? FileManager.default.createDirectory(at: folderUrl, withIntermediateDirectories: true, attributes: nil)
 
             do {
@@ -211,11 +222,11 @@ extension ArticleManager {
 #if DEBUG
                 debugPrint("Saved archives to: \(folderUrl.absoluteString)")
 #endif
-                fulfill(())
+                seal.fulfill(())
 
             } catch {
                 debugPrint("Error: \(error.localizedDescription)")
-                reject(error)
+                seal.reject(error)
             }
 
         }
