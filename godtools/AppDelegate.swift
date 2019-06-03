@@ -116,6 +116,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return .value(resources)
         }
+        _ = p.done { _ in
+            self.refreshContent()
+        }
         p.catch { (error) in
             if isFirstLaunch {
                 self.flowController?.showDeviceLocaleDownloadFailedAlert()
@@ -123,6 +126,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return p
+    }
+    
+    private func refreshContent() {
+        _ = firstly {
+            LanguagesManager().loadFromRemote()
+        }.then { (_) -> Promise<DownloadedResources> in
+            DownloadedResourceManager().loadFromRemote()
+        }.done { _ in
+            TranslationZipImporter().catchupMissedDownloads()
+        }
     }
     
     private func resetStateIfUITesting() {
