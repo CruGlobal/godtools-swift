@@ -52,9 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.startFlowController()
         
-        _ = self.initalizeAppState().ensure {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
+        self.initalizeAppState()
         
         return true
     }
@@ -90,8 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: App state initialization/refresh
-    
-    private func initalizeAppState() -> Promise<DownloadedResources> {
+    private func initalizeAppState() {
         let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
         let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
         
@@ -102,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let p = firstly {
-            languagesManager.loadFromRemote()
+            LanguagesManager().loadFromRemote()
         }.then {  (_) -> Promise<DownloadedResources> in
             if isFirstLaunch {
                 languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
@@ -116,25 +113,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             return .value(resources)
         }
-        _ = p.done { _ in
-            self.refreshContent()
-        }
+
         p.catch { (error) in
             if isFirstLaunch {
                 self.flowController?.showDeviceLocaleDownloadFailedAlert()
             }
-        }
-        
-        return p
-    }
-    
-    private func refreshContent() {
-        _ = firstly {
-            LanguagesManager().loadFromRemote()
-        }.then { (_) -> Promise<DownloadedResources> in
-            DownloadedResourceManager().loadFromRemote()
-        }.done { _ in
-            TranslationZipImporter().catchupMissedDownloads()
         }
     }
     
