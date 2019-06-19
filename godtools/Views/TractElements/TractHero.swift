@@ -83,7 +83,10 @@ class TractHero: BaseTractElement {
     }
     
     func updateHeroHeight(cards: TractCards) {
-        self.heroHeight = cards.getMaxFreeHeight(hero: self)
+        var height = cards.getMaxFreeHeight(hero: self)
+        height -= (UIDevice.current.iPhoneWithNotch()) ? TractPage.navbarHeight + 28 /* correction factor */ : 0.0
+        
+        self.heroHeight = height
         self.elementFrame.height = self.heroHeight
         self.frame = self.elementFrame.getFrame()
     }

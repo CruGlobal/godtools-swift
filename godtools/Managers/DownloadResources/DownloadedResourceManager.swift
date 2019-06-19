@@ -24,23 +24,27 @@ class DownloadedResourceManager: GTDataManager {
     func loadFromRemote() -> Promise<DownloadedResources> {
         showNetworkingIndicator()
         
-        let params = ["include": "latest-translations,attachments"]
+        let params:[String: Any] = ["include": "latest-translations,attachments"]
 
+        let q = DispatchQueue.global(qos: .userInitiated)
+        
         return issueGETRequest(params)
-            .then { data -> Promise<DownloadedResources> in
-                DispatchQueue.global(qos: .userInitiated).async {
-                    let remoteResources = JSONResourceFactory.initializeArrayFrom(data: data, type: DownloadedResourceJson.self)
-                    DispatchQueue.main.async {
-                        self.saveToDisk(remoteResources)
-                    }
-                }
-                
+            .then(on:q) { data -> Promise<[DownloadedResourceJson]> in
+                let remoteResources = JSONResourceFactory.initializeArrayFrom(data: data, type: DownloadedResourceJson.self)
+                return .value(remoteResources)
+            }
+            .then { remoteResources -> Promise<[DownloadedResourceJson]> in
+                self.saveToDisk(remoteResources)
+                return .value(remoteResources)
+            }
+            .then { (_) -> Promise<DownloadedResources> in
                 return .value(self.loadFromDisk())
             }
             .ensure {
                 self.hideNetworkIndicator()
-        }
+            }
     }
+
     
     func loadInitialContentFromDisk() {
         guard let path = Bundle.main.path(forResource: "resources", ofType: "json") else { return }
