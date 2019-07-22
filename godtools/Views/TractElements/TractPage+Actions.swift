@@ -30,11 +30,16 @@ extension TractPage {
         }
     }
     
-    func showCallToAction() {
+    func showCallToAction(animated: Bool = true) {
         for element in self.pageContainer!.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
-                callToAction.showCallToActionAnimation()
+                if animated {
+                    callToAction.showCallToActionAnimation()
+                }
+                else {
+                    callToAction.showCallToActionWithoutAnimation()
+                }
                 break
             }
         }

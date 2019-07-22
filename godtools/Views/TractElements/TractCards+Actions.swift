@@ -71,9 +71,9 @@ extension TractCards {
         }
     }
     
-    func showCallToAction() {
+    func showCallToAction(animated: Bool = true) {
         let pageView = self.page
-        pageView?.showCallToAction()
+        pageView?.showCallToAction(animated: animated)
     }
     
     func hideCallToAction() {
