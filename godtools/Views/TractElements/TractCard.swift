@@ -150,10 +150,17 @@ class TractCard: BaseTractElement {
             self.cardsParentView.lastCardOpened = self
             showCardWithoutAnimation()
             showTexts()
+            showCallToAction()
         case .hide:
             hideCardWithoutAnimation()
         default:
             break
+        }
+    }
+    
+    private func showCallToAction() {
+        if cardsParentView.lastCard == self {
+            cardsParentView.showCallToAction(animated: false)
         }
     }
     
