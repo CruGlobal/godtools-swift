@@ -18,7 +18,7 @@ class TractCallToAction: BaseTractElement {
     // MARK: Positions constants
     
     static let yMarginConstant: CGFloat = 8.0
-    static let paddingConstant: CGFloat = 16.0
+    static let paddingConstant: CGFloat = 10.0
     static let minHeight: CGFloat = 80.0
     
     // MARK: - Positions and Sizes
