@@ -129,7 +129,7 @@ class TranslationZipImporter: GTDataManager {
             
             let isAvailableInPrimary = self.isTranslationAvailableInPrimaryLanguage(translation: translation)
             
-            if language.isPrimary() || (!isAvailableInPrimary && language.code == "en") {
+            if language.isPrimary() || language.isParallel() || (!isAvailableInPrimary && language.code == "en") {
                 self.primaryDownloadComplete(translation: translation)
             }
             
@@ -168,6 +168,7 @@ class TranslationZipImporter: GTDataManager {
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
         let translationId = translation.remoteId
         let isAvailableInPrimary = isTranslationAvailableInPrimaryLanguage(translation: translation)
+        let isAvailableInParallel = isTranslationAvailableInParallelLanguage(translation: translation)
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
@@ -177,10 +178,10 @@ class TranslationZipImporter: GTDataManager {
                 guard let resource = translation.downloadedResource else {
                     return
                 }
-                if isAvailableInPrimary && !language.isPrimary() {
+                if !language.isPrimary() && !language.isParallel() {
                     return
                 }
-                if !isAvailableInPrimary && language.code != "en" {
+                if !isAvailableInPrimary && !isAvailableInParallel && language.code != "en" {
                     return
                 }
                 
@@ -292,4 +293,8 @@ class TranslationZipImporter: GTDataManager {
         return isAvailableInPrimary
     }
     
+    private func isTranslationAvailableInParallelLanguage(translation: Translation) -> Bool {
+        let parallelLanguage = LanguagesManager().loadParallelLanguageFromDisk()
+        return translation.downloadedResource?.isAvailableInLanguage(parallelLanguage) ?? false
+    }
 }
