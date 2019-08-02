@@ -13,6 +13,7 @@ class TractHero: BaseTractElement {
     
     static let marginBottom: CGFloat = 8.0
     static let paddingBottom: CGFloat = 24.0
+    static let horizontalMargin: CGFloat = 32.0
     
     // MARK: - Setup
     
@@ -25,7 +26,8 @@ class TractHero: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        let width: CGFloat = 300
+        let width: CGFloat = parentWidth() - (2 * TractHero.horizontalMargin)
+        
         self.elementFrame.x = (parentWidth() - width) / CGFloat(2)
         self.elementFrame.width = width
         self.elementFrame.yMarginTop = BaseTractElement.yMargin
