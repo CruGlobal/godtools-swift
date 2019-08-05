@@ -32,16 +32,13 @@ class DownloadedResource: Object {
         return "remoteId"
     }
     
-    func isDownloaded() -> Bool {
+    func isReady() -> Bool {
         let languagesManager = LanguagesManager()
         let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
         
         // Verify primary and parallel translations are available and have been dowloaded
-        // If primary and parallel translations are available and have been downloaded, return true
-        // If primary translation is available and has been downloaded, and parallel not set, return true
-        // If primary translation is available and has been downloaded, and parallel not available, return true
-        if (!isAvailableInLanguage(primaryLanguage) || (isAvailableInLanguage(primaryLanguage) && isDownloadedInLanguage(primaryLanguage))) && (parallelLanguage == nil || !isAvailableInLanguage(parallelLanguage) || (isAvailableInLanguage(parallelLanguage) && isDownloadedInLanguage(parallelLanguage))) {
+        if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: primaryLanguage) {
             return true
         }
         // If the primary and parallel translations are not available and either the device preferrred language or English is available return true
@@ -52,6 +49,35 @@ class DownloadedResource: Object {
         }
         
         // If we get here, the primary and/or the parrallel language translations are available but not downloaded, so return false
+        return false
+    }
+    
+    /// Returns true if the primary language translation is not available or is available and the download has completed
+    private func isPrimaryTranslationReady(language: Language?) -> Bool {
+        if !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) {
+            return true
+        }
+    
+        return false
+    }
+    
+    /// Returns true if the parallel language translation is not set or not available or is available and the download has completed
+    private func isParallelTranslationReady(language: Language?) -> Bool {
+        if language == nil || !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) {
+            return true
+        }
+
+        return false
+    }
+    
+    private func isDefaultTranslationReady(primaryLanguage: Language?, parallelLanguage: Language?) -> Bool {
+        let languagesManager = LanguagesManager()
+        if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
+            let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
+            let englishLanguage = languagesManager.loadFromDisk(code: "en")
+            return isDownloadedInLanguage(preferredLanguage) || isDownloadedInLanguage(englishLanguage)
+        }
+        
         return false
     }
     
