@@ -41,7 +41,7 @@ class DownloadedResource: Object {
         // If primary and parallel translations are available and have been downloaded, return true
         // If primary translation is available and has been downloaded, and parallel not set, return true
         // If primary translation is available and has been downloaded, and parallel not available, return true
-        if (isAvailableInLanguage(primaryLanguage) && isDownloadedInLanguage(primaryLanguage)) && (parallelLanguage == nil || !isAvailableInLanguage(parallelLanguage) || (isAvailableInLanguage(parallelLanguage) && isDownloadedInLanguage(parallelLanguage))) {
+        if (!isAvailableInLanguage(primaryLanguage) || (isAvailableInLanguage(primaryLanguage) && isDownloadedInLanguage(primaryLanguage))) && (parallelLanguage == nil || !isAvailableInLanguage(parallelLanguage) || (isAvailableInLanguage(parallelLanguage) && isDownloadedInLanguage(parallelLanguage))) {
             return true
         }
         // If the primary and parallel translations are not available and either the device preferrred language or English is available return true
