@@ -70,17 +70,6 @@ class DownloadedResource: Object {
         return false
     }
     
-    private func isDefaultTranslationReady(primaryLanguage: Language?, parallelLanguage: Language?) -> Bool {
-        let languagesManager = LanguagesManager()
-        if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
-            let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
-            let englishLanguage = languagesManager.loadFromDisk(code: "en")
-            return isDownloadedInLanguage(preferredLanguage) || isDownloadedInLanguage(englishLanguage)
-        }
-        
-        return false
-    }
-    
     func numberOfAvailableLanguages() -> Int {
         return Set(translations.filter( {$0.isPublished} ) as [Translation]).count
     }
