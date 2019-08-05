@@ -37,17 +37,17 @@ class DownloadedResource: Object {
         let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
         
-        // Verify primary and parallel translations are available and have been dowloaded
-        if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: primaryLanguage) {
-            return true
-        }
         // If the primary and parallel translations are not available and either the device preferrred language or English is available return true
-        else if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
+        if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
             let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
             let englishLanguage = languagesManager.loadFromDisk(code: "en")
             return isDownloadedInLanguage(preferredLanguage) || isDownloadedInLanguage(englishLanguage)
         }
-        
+        // Verify primary and parallel translations are available and have been dowloaded
+        else if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: primaryLanguage) {
+            return true
+        }
+
         // If we get here, the primary and/or the parrallel language translations are available but not downloaded, so return false
         return false
     }
