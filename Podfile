@@ -26,6 +26,11 @@ target 'godtools' do
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
     
+    target 'godtoolsTests' do
+        inherit! :search_paths
+        # Pods for testing
+    end
+
 end
 
 post_install do |installer|
