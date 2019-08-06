@@ -15,14 +15,6 @@ let invalidLanguageCode = "xyz"
 
 class LanguageTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     // Validate that correct lanuage name string is retrieved from Localizable.strings
     func testFromTranslation() {
         let lang = Language()
