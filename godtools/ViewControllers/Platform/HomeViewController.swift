@@ -218,7 +218,7 @@ extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         
         // prevent opening tool before download is complete
-        guard let resource = cell.resource, resource.isDownloaded() else {
+        guard let resource = cell.resource, resource.isReady() else {
             showDownloadInProgressAlert()
             return
         }
