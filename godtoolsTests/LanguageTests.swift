@@ -15,7 +15,7 @@ let invalidLanguageCode = "xyz"
 
 class LanguageTests: XCTestCase {
 
-    // Validate that correct lanuage name string is retrieved from Localizable.strings
+    // Validate that correct language name string is retrieved from Localizable.strings
     func testFromTranslation() {
         let lang = Language()
         lang.code = testLanguageCode
@@ -26,7 +26,7 @@ class LanguageTests: XCTestCase {
         XCTAssertEqual(testResult, testName)
     }
     
-    // Validate correct lanague name string is retrieved from Locale, when code is not in Localizable.strings
+    // Validate correct language name string is retrieved from Locale, when code is not in Localizable.strings
     func testFromLocale() {
         let lang = Language()
         lang.code = testLanguageCode
@@ -37,10 +37,9 @@ class LanguageTests: XCTestCase {
         XCTAssertEqual(testResult, testName)
     }
 
-    // Validate defailt lanague name string is retrieved from Language, when code is not found in Locale or Localizable.strings
+    // Validate default language name string is retrieved from Language, when code is not found in Locale or Localizable.strings
     func testDefaultFromLanguage() {
         let lang = Language()
-        lang.code = testLanguageCode
         lang.code = testLanguageName
 
         let testLocale = Locale(identifier: invalidLanguageCode)
@@ -50,7 +49,7 @@ class LanguageTests: XCTestCase {
         XCTAssertEqual(testResult, testLanguageName)
     }
     
-    // Validate lanague name code string is returned, when translation not found
+    // Validate language name code string is returned, when translation not found
     func testInvalidCode() {
         let lang = Language()
         lang.code = invalidLanguageCode
