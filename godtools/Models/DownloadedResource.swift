@@ -39,12 +39,10 @@ class DownloadedResource: Object {
         
         // If the primary and parallel translations are not available and either the device preferrred language or English is available return true
         if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
-            let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
-            let englishLanguage = languagesManager.loadFromDisk(code: "en")
-            return isDownloadedInLanguage(preferredLanguage) || isDownloadedInLanguage(englishLanguage)
+            return isDefaultLanguageReady()
         }
         // Verify primary and parallel translations are available and have been dowloaded
-        else if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: primaryLanguage) {
+        else if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: parallelLanguage) {
             return true
         }
 
@@ -54,20 +52,27 @@ class DownloadedResource: Object {
     
     /// Returns true if the primary language translation is not available or is available and the download has completed
     private func isPrimaryTranslationReady(language: Language?) -> Bool {
-        if !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) {
-            return true
-        }
-    
-        return false
+        return !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language))
     }
     
     /// Returns true if the parallel language translation is not set or not available or is available and the download has completed
     private func isParallelTranslationReady(language: Language?) -> Bool {
-        if language == nil || !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) {
-            return true
+        return language == nil || !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) 
+    }
+    
+    // Returns whether the device default language translation is available and downloaded.
+    // If default langauge is not available, returns whether the English translation is downloaded.
+    private func isDefaultLanguageReady() -> Bool {
+        let languagesManager = LanguagesManager()
+        let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
+        let englishLanguage = languagesManager.loadFromDisk(code: "en")
+        
+        if isAvailableInLanguage(preferredLanguage) {
+            return isDownloadedInLanguage(preferredLanguage)
         }
-
-        return false
+        else {
+            return isDownloadedInLanguage(englishLanguage)
+        }
     }
     
     func numberOfAvailableLanguages() -> Int {
