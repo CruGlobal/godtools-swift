@@ -1,3 +1,12 @@
+"downloadprogress" = "อยู่ระหว่างการดาวน์โหลด";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "เปิดเครื่องมือ";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "ก่อนหน้า";
+
+"card_status2" = "ถัดไป";
 "language_onboard" = "กว่า 80 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "เงื่อนไขการใช้งาน";
 "privacy_policy" = "นโยบายความเป็นส่วนตัว";
 "copyright_info" = "ข้อมูลลิขสิทธิ์";
-"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "ดาวน์โหลดแอป GodTools ได้จาก https://godtoolsapp.com
 
 สามารถดูเวอร์ชั่นออนไลน์ได้ที่ https://knowgod.com/";
 

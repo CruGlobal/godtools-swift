@@ -1,4 +1,13 @@
-"language_onboard" = "Више од 80 језика";
+"downloadprogress" = "Преузимање је у току";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Отворени алат";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Претходно";
+
+"card_status2" = "Следеће";
+"language_onboard" = "Перко 80 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Преузели сте све доступне алатке.";
@@ -37,7 +46,7 @@
 "terms_of_use" = "Услови коришћења";
 "privacy_policy" = "Политика приватности";
 "copyright_info" = "Информације о ауторском праву";
-"share_god_tools_share_sheet_text" = "Преузмите апликацију GodTools: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "Преузмите апликацију GodTools: https://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Додај алатке";

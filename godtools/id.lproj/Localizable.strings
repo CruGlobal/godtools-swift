@@ -1,3 +1,12 @@
+"downloadprogress" = "Undulant sedang berlangsung";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Sebelumnya";
+
+"card_status2" = "Berikutnya";
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Syarat Penggunaan";
 "privacy_policy" = "Kebijakan Privasi";
 "copyright_info" = "Info Hak cipta";
-"share_god_tools_share_sheet_text" = "Unduh apliaksi GodTools: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Unduh apliaksi GodTools: https://godtoolsapp.com
 
 Versi online dapat ditemukan di https://knowgod.com/";
 

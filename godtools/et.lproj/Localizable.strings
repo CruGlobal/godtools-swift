@@ -1,3 +1,12 @@
+"downloadprogress" = "Toimub allalaadimine";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ava tööriist";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Tagasi";
+
+"card_status2" = "Edasi";
 "language_onboard" = "80+ keelt";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,9 +46,9 @@
 "terms_of_use" = "Kasutustingimused";
 "privacy_policy" = "Andmekaitsepõhimõtted";
 "copyright_info" = "Autoriõiguslik teave";
-"share_god_tools_share_sheet_text" = "Laadi \"Jumala tööriistade\" rakendus alla lehelt godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Laadi \"Jumala tööriistade\" rakendus alla lehelt https://godtoolsapp.com
 
-Veebiversioon on saadaval lehel knowgod.com";
+Veebiversioon on saadaval lehel https://knowgod.com";
 
 // Add Tools
 "add_tools" = "Lisa tööriistu";

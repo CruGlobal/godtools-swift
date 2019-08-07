@@ -1,3 +1,12 @@
+"downloadprogress" = "ਡਾਊਨਲੋਡ ਜਾਰੀ ਹੈ";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ਟੂਲ ਨੂੰ ਖੋਲੋ";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "ਪਿਛਲੇ";
+
+"card_status2" = "ਅਗਲਾ";
 "language_onboard" = "80+ ਭਾਸ਼ਾਵਾਂ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "ਵਰਤੋ ਦੀਆਂ ਸ਼ਰਤਾਂ";
 "privacy_policy" = "ਗੋਪਨੀਯ ਨੀਤੀ";
 "copyright_info" = "ਕਾਪੀਰਾਈਟ ਸੂਚਨਾ";
-"share_god_tools_share_sheet_text" = "ਗੋਡਟੂਲ ਐਪ ਨੂੰ ਡਾਉਨਲੋਡ ਕਰੋ: http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "ਗੋਡਟੂਲ ਐਪ ਨੂੰ ਡਾਉਨਲੋਡ ਕਰੋ: https://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "ਟੂਲ ਨੂੰ ਜੋੜੋ";

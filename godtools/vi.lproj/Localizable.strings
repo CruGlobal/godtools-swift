@@ -1,3 +1,12 @@
+"downloadprogress" = "Đang tải về";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Mở Công cụ";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Trước đó";
+
+"card_status2" = "Tiếp theo";
 "language_onboard" = "Hơn 80 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

@@ -1,3 +1,12 @@
+"downloadprogress" = "ההורדה בתהליך";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "פתח כלי";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "קודם";
+
+"card_status2" = "הבא";
 "language_onboard" = "80+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -36,8 +45,7 @@
 "terms_of_use" = "תנאי שימוש";
 "privacy_policy" = "מדיניות פרטיות";
 "copyright_info" = "מידע זכויות יוצרים";
-"share_god_tools_share_sheet_text" = "הורידו את אפליקציית GodTools כאן:
- http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "הורידו את אפליקציית GodTools כאן: https://godtoolsapp.com
 
 ניתן למצוא כאן https://knowgod.com/ גרסה מקוונת";
 

@@ -1,3 +1,12 @@
+"downloadprogress" = "دانلود در حال انجام است";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "باز کردن ابزار";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "قبلی";
+
+"card_status2" = "بعدی";
 "language_onboard" = "80+ زبان";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -38,7 +47,7 @@
 "privacy_policy" = "خط‌مشی حریم خصوصی";
 "copyright_info" = "اطلاعات حق نسخه‌برداری";
 "share_god_tools_share_sheet_text" = " برنامه GodTools را از اینجا دانلود کنید:
-http://godtoolsapp.com
+https://godtoolsapp.com
 
 می‌توانید نسخه آنلاین را در https://knowgod.com/ بیابید";
 

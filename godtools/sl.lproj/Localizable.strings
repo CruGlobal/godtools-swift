@@ -1,3 +1,12 @@
+"downloadprogress" = "Poteka prenos";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Odpri orodje";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Nazaj";
+
+"card_status2" = "Naprej";
 "language_onboard" = "Več kot 80 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Pogoji uporabe";
 "privacy_policy" = "Pravilnik o zasebnosti";
 "copyright_info" = "Založniške pravice";
-"share_god_tools_share_sheet_text" = "Prenesi aplikacijo GodTools tukaj: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Prenesite aplikacijo GodTools tukaj: https://godtoolsapp.com
 
 Spletna različica je na voljo na https://knowgod.com/";
 

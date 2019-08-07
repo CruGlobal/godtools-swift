@@ -1,3 +1,12 @@
+"downloadprogress" = "ダウンロードが進行中です";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ツールを開く";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "前";
+
+"card_status2" = "次";
 "language_onboard" = "80 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "利用規約";
 "privacy_policy" = "プライバシーポリシー";
 "copyright_info" = "著作権情報";
-"share_god_tools_share_sheet_text" = "GodToolsをダウンロード: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "GodToolsをダウンロード: https://godtoolsapp.com
 
 オンライン版はこちらです: https://knowgod.com/";
 

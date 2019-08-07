@@ -1,3 +1,12 @@
+"downloadprogress" = "Λήψη σε εξέλιξη";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Προηγ";
+
+"card_status2" = "Επόμενο";
 "language_onboard" = "80+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,9 +46,9 @@
 "terms_of_use" = "Όροι χρήσης";
 "privacy_policy" = "Πολιτική Απορρήτου";
 "copyright_info" = "Στοιχεία πνευματικών δικαιωμάτων";
-"share_god_tools_share_sheet_text" = "Kατεβάστε την εφαρμογή Θεϊκών Εργαλείων: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Kατεβάστε την εφαρμογή Θεϊκών Εργαλείων: https://godtoolsapp.com
 
-Μπορείτε να βρείτε online έκδοση στη διεύθυνση https://knowgod.com/";
+Βρείτε την online έκδοση στο https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "Προσθέστε Εργαλεία";

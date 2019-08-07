@@ -1,3 +1,12 @@
+"downloadprogress" = "ڈاؤنلوڈ جاری ہے";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ٹُول کھولیں";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "پچھلی اسکرین";
+
+"card_status2" = "اگلی اسکرین";
 "language_onboard" = "80+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,10 +46,11 @@
 "privacy_policy" = "رازداری کی پالیسی";
 "copyright_info" = "کاپی رائٹ";
 "share_god_tools_share_sheet_text" = "گاڈ ٹُولز ایپ ڈاؤن لوڈ کریں: 
-http://godtoolsapp.com
+https://godtoolsapp.com
 
 ایک آن لائن ورژن اس لِنک پر ملاحظہ فرمائیں 
-https://knowgod.com";
+https://knowgod.com
+";
 
 // Add Tools
 "add_tools" = "ٹُولز ایڈ کریں";
