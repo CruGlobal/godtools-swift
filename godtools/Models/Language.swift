@@ -20,6 +20,11 @@ class Language: Object {
 //    @objc dynamic var isPublished = true
     
     let translations = List<Translation>()
+    let languageNamePrefix = "language_name_"
+    
+    var key: String {
+        return languageNamePrefix + code
+    }
     
     override static func primaryKey() -> String {
         return "remoteId"
@@ -35,10 +40,11 @@ class Language: Object {
     
     func localizedName(locale: Locale = NSLocale.current, table: String? = nil) -> String {
         
+        
         // Load localized string using language code as key
-        let nameInLocalization = Bundle.main.localizedString(forKey: code, value: nil, table: table)
+        let nameInLocalization = Bundle.main.localizedString(forKey: key, value: nil, table: table)
         // localizedString returns key if localized string not found. If returned string == code, then localized string not was not found
-        if nameInLocalization != code {
+        if nameInLocalization != key {
             return nameInLocalization
         }
         

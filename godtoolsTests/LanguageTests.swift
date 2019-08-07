@@ -20,7 +20,7 @@ class LanguageTests: XCTestCase {
         let lang = Language()
         lang.code = testLanguageCode
         
-        let testName = testLanguageCode.localized
+        let testName = lang.key.localized
         let testResult = lang.localizedName(locale: NSLocale.current, table: "Localizable")
         
         XCTAssertEqual(testResult, testName)

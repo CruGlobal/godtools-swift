@@ -117,4 +117,4 @@ The app can be downloaded from https://godtoolsapp.com";
 "Download in progress" = "Download in progress";
 
 // Language Name Strings
-"fa" = "Persian (Farsi)";
+"language_name_fa" = "Persian (Farsi)";
