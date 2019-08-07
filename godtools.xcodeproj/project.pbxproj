@@ -2257,7 +2257,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 402;
+				CURRENT_PROJECT_VERSION = 407;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2281,7 +2281,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 402;
+				CURRENT_PROJECT_VERSION = 407;
 				DEVELOPMENT_TEAM = DQ48D9BF2V;
 				INFOPLIST_FILE = godtools/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
