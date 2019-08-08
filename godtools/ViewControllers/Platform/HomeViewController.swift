@@ -50,6 +50,8 @@ class HomeViewController: BaseViewController {
         if onboardingShouldDisplay() {
             self.displayOnboarding()
         }
+        let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
+        tableView.addGestureRecognizer(pressGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,6 +68,18 @@ class HomeViewController: BaseViewController {
         tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        tableView.isEditing = false
+        super.viewWillDisappear(animated)
+    }
+    
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        
+        guard gestureReconizer.state == UIGestureRecognizer.State.began else { return }
+
+        tableView.isEditing = !tableView.isEditing
+    }
+
     // Notifications
     
     func defineObservers() {
