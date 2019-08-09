@@ -26,7 +26,9 @@ jobs:
   - name: "Create TestFlight Build"
     if: branch = master and type = push
 
-    script: fastlane ios beta
+    script: 
+    - fastlane ios beta
+    - fastlane ios refresh_dsyms
 
   - name: "Release Build"
     if: tag =~ ^v(\d+\.){1,}\d+
