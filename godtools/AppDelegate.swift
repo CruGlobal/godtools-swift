@@ -13,7 +13,7 @@ import PromiseKit
 import RealmSwift
 import AppAuth
 import TheKeyOAuthSwift
-
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()
         

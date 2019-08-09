@@ -94,6 +94,7 @@
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1737DFD922F9D4D700223CB0 /* LanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1737DFD822F9D4D700223CB0 /* LanguageTests.swift */; };
+		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
@@ -372,6 +373,7 @@
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultStyle.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		1737DFD822F9D4D700223CB0 /* LanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTests.swift; sourceTree = "<group>"; };
+		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEvent.swift; sourceTree = "<group>"; };
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+SearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -1170,6 +1172,7 @@
 				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
 				1EE2ADFC20618A0800D8F120 /* config.plist */,
 				4F57329B1EA69CF00082035C /* Info.plist */,
+				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
 				68C0A3811ED4C63200CC97A3 /* config.sample.plist */,
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				68EE51D71EBBA1E400596250 /* release_notes */,
@@ -1633,6 +1636,7 @@
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
+				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */,
 				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
@@ -1749,7 +1753,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AdobeMobileSDK/AdobeMobileSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
@@ -1757,6 +1761,7 @@
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -1766,6 +1771,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1776,6 +1782,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -1785,10 +1792,11 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

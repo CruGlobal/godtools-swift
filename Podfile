@@ -17,14 +17,15 @@ target 'godtools' do
     pod 'SSZipArchive'
     pod 'SWXMLHash'
     pod 'Fuzi'
-    pod 'Fabric', '~> 1.9'
-    pod 'Crashlytics', '~> 3.12.0'
+    pod 'Fabric'
+    pod 'Crashlytics'
     pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'AdobeMobileSDK', '~> 4.17.1'
     pod 'TheKeyOAuthSwift'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
+    pod 'Firebase/Analytics'
     
     target 'godtoolsTests' do
         inherit! :search_paths
