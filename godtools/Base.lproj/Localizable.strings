@@ -113,6 +113,9 @@ The app can be downloaded from https://godtoolsapp.com";
 "general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
 
+// Downloads
+"Download in progress" = "Download in progress";
+
 // Navigation
 "PREV" = "PREV";
 "NEXT" = "NEXT";

@@ -216,6 +216,13 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
+        
+        // prevent opening tool before download is complete
+        guard let resource = cell.resource, resource.isReady() else {
+            showDownloadInProgressAlert()
+            return
+        }
+
         switch cell.resource!.toolType {
         case "tract":
             self.delegate?.moveToTract(resource: cell.resource!)
@@ -229,5 +236,17 @@ extension HomeViewController: ToolsManagerDelegate {
     
     func infoButtonWasPressed(resource: DownloadedResource) {
         self.delegate?.moveToToolDetail(resource: resource)
+    }
+    
+    func showDownloadInProgressAlert() {
+        let alert = UIAlertController(title: "",
+                                      message: "Download in progress".localized,
+                                      preferredStyle: .alert)
+        
+        
+        let okAction = UIAlertAction(title: "OK".localized, style: .cancel)
+        
+        alert.addAction(okAction)
+        present(alert, animated: true)
     }
 }
