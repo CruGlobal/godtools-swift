@@ -115,3 +115,10 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Downloads
 "Download in progress" = "Download in progress";
+
+// Navigation
+"PREV" = "PREV";
+"NEXT" = "NEXT";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";

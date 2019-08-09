@@ -130,6 +130,7 @@ class LanguagesManager: GTDataManager {
                                 let lang = LanguageResource()
                                 lang.id = item.id!
                                 lang.code = item.attributes?.code! ?? ""
+                                lang.name = item.attributes?.name
                                 lang.direction = item.attributes?.direction! ?? ""
                                 remotes.append(lang)
                             }
@@ -197,6 +198,7 @@ class LanguagesManager: GTDataManager {
                 if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
                     cachedlanguage.code = remoteLanguage.code
                     cachedlanguage.direction = remoteLanguage.direction
+                    cachedlanguage.name = remoteLanguage.name
                     cachedLanguages.append(cachedlanguage)
                     realm.add(cachedlanguage, update: .all)
                 }
@@ -206,6 +208,7 @@ class LanguagesManager: GTDataManager {
                     newCachedLanguage.remoteId = remoteLanguage.id
                     newCachedLanguage.code = remoteLanguage.code
                     newCachedLanguage.direction = remoteLanguage.direction  // IO: small bugfix
+                    newCachedLanguage.name = remoteLanguage.name
                     cachedLanguages.append(newCachedLanguage)
                     realm.add(newCachedLanguage)
 
