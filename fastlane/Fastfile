@@ -19,4 +19,28 @@ platform :ios do
         devices: ENV["CRU_TEST_DEVICES"].split(',')
     )
   end
+
+	lane :refresh_dsyms do
+
+		target = ENV["CRU_TARGET"]
+
+		version_number = get_version_number(
+			target: target
+		)
+
+		build_number = get_build_number
+
+		 # Download dSYM files from iTC
+		download_dsyms(
+			version: version_number, 
+			build_number: build_number, 
+			username: ENV['CRU_FASTLANE_USERNAME'],
+			app_identifier: ENV["CRU_APP_IDENTIFIER"])                 
+		
+		# Upload them to Crashlytics
+		upload_symbols_to_crashlytics
+	
+		 # Delete the local dSYM files
+		clean_build_artifacts
+	end
 end
