@@ -79,6 +79,13 @@ extension GTDataManager {
                     })
                 }
 
+                if oldSchemaVersion < 10 {
+                    migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
+                        // Nothing to do!
+                        // Realm will automatically detect new properties and removed properties
+                        // And will update the schema on disk automatically
+                    })
+                }
         })
     }
 }
