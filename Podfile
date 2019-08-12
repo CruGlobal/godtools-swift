@@ -26,6 +26,7 @@ target 'godtools' do
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
     pod 'Firebase/Analytics'
+    pod 'FacebookCore'
     
     target 'godtoolsTests' do
         inherit! :search_paths
