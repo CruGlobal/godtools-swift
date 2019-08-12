@@ -91,9 +91,12 @@ class GTDataManager: NSObject {
         return findEntity(entityClass, byAttribute: "remoteId", withValue: remoteId)
     }
     
-    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate) -> List<T> {
+    func findEntities<T: Object>(_ entityClass: T.Type, matching: NSPredicate, sortedByKeyPath: String? = nil) -> List<T> {
         let objects = realm.objects(entityClass)
-        let filteredObjects = objects.filter(matching)
+        var filteredObjects = objects.filter(matching)
+        if let sortedBy = sortedByKeyPath {
+            filteredObjects = filteredObjects.sorted(byKeyPath: sortedBy)
+        }
         return asList(filteredObjects)
     }
     

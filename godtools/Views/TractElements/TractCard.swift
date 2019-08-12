@@ -100,12 +100,13 @@ class TractCard: BaseTractElement {
         self.addSubview(self.shadowView)
         self.addSubview(self.backgroundView)
         self.addSubview(self.scrollView)
-        
+
         hideTexts()
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
-        
+        setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: cardsParentView.cardsData?.count ?? 0)
+
         TractBindings.addBindings(self)
         return self
     }

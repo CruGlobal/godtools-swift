@@ -9,6 +9,7 @@
 import Foundation
 import AdobeMobileSDK
 import TheKeyOAuthSwift
+import FirebaseAnalytics
 
 struct AdobeAnalyticsConstants {
     struct Keys {
@@ -152,6 +153,10 @@ class GodToolsAnaltyics {
             self.recordScreenViewInAdobe(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         }
 
+        // Record screen view for Firebase Analytics
+        DispatchQueue.main.async {
+            Analytics.setScreenName(screenName, screenClass: nil)
+        }
     }
     
     @objc private func recordActionForADBMobile(notification: Notification) {

@@ -34,6 +34,10 @@ class ArticleToolViewController: BaseViewController {
         return "Categories"
     }
     
+    override func siteSection() -> String {
+        return "article"
+    }
+
     static func create() -> ArticleToolViewController {
         let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
         return storyboard.instantiateViewController(withIdentifier: "ArticleToolViewControllerID") as! ArticleToolViewController

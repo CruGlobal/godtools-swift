@@ -23,6 +23,7 @@ class DownloadedResource: Object {
     @objc dynamic var shouldDownload = false
     @objc dynamic var totalViews: Int32 = 0
     @objc dynamic var myViews: Int32 = 0
+    @objc dynamic var sortOrder: Int32 = -1
     
     let attachments = List<Attachment>()
     let translations = List<Translation>()

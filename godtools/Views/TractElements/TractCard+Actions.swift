@@ -271,4 +271,11 @@ extension TractCard {
                                         userInfo: userInfo)
     }
     
+    @IBAction func prevButtonTapped(_ sender: UIButton) {
+        processSwipeDown()
+    }
+
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+        processSwipeUp()
+    }
 }

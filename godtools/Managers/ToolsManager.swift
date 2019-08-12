@@ -40,13 +40,16 @@ class ToolsManager: GTDataManager {
     
     func loadResourceList() {
         var predicate: NSPredicate
+        var sortedByKeyPath: String?
+        
         if self.delegate is HomeViewController {
             predicate = NSPredicate(format: "shouldDownload = true")
+            sortedByKeyPath = "sortOrder"
         } else {
             predicate = NSPredicate(format: "shouldDownload = false")
         }
 
-        resources = findEntities(DownloadedResource.self, matching: predicate)
+        resources = findEntities(DownloadedResource.self, matching: predicate, sortedByKeyPath: sortedByKeyPath)
     }
 }
 
@@ -142,6 +145,32 @@ extension ToolsManager: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        safelyWriteToRealm {
+            let movedResource = resources[sourceIndexPath.section]
+            resources.remove(at: sourceIndexPath.section)
+            resources.insert(movedResource, at: destinationIndexPath.section)
+            
+            var index: Int32 = 0
+            for resource in resources {
+                resource.sortOrder = index
+                index += 1
+            }
+            
+            DispatchQueue.main.async {
+                tableView.reloadData()
+            }
+        }
     }
 }
 
