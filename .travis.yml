@@ -27,7 +27,7 @@ jobs:
     if: branch = master and type = push
 
     script: 
-    - fastlane ios beta
+    - travis_wait fastlane ios beta
     - fastlane ios refresh_dsyms
 
   - name: "Release Build"
