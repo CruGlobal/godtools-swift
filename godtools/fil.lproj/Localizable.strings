@@ -1,3 +1,12 @@
+"downloadprogress" = "Kasalukuyang dina-download";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buksan ang Tool";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Nauna";
+
+"card_status2" = "Susunod";
 "language_onboard" = "80+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Mga Tuntunin ng Paggamit";
 "privacy_policy" = "Patakaran sa Pagkapribado";
 "copyright_info" = "Impormasyon sa Copyright";
-"share_god_tools_share_sheet_text" = "I-download ang GodTools app: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "I-download ang GodTools app: https://godtoolsapp.com
 
 Makikita ang online na bersyon sa https://knowgod.com/";
 
@@ -66,7 +75,7 @@ Makikita ang online na bersyon sa https://knowgod.com/";
 "no_internet" = "Pakitignan ang iyong koneksyon sa internet at subukan muli.";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "Hindi ma-download sa ngayon ang pinakabagong mga Ingles na tool. Available ang mga Ingles na tool. Pakitingnan ang iyong koneksyon o subukan muli sa ibang pagkakataon.";
+"device_locale_download_error" = "Hindi ma-download sa ngayon ang pinakabagong mga Tagalog na tool. Available ang mga Ingles na tool. Pakitingnan ang iyong koneksyon o subukan muli sa ibang pagkakataon.";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Mada-download ang pinakabagong mga Ingles na tool.\n\nGusto mo bang i-set ang iyong pangunahing wika sa Ingles at i-download ang mga mapagkukunang ito?";
