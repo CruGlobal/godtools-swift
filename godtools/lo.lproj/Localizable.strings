@@ -1,3 +1,12 @@
+"downloadprogress" = "ກຳລັງດາວໂຫລດຢູ່";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ເປີດເຄື່ອງມື";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "ກ່ອນ";
+
+"card_status2" = "ຖັດໄປ";
 "language_onboard" = "80+ ພາສາ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -21,6 +30,12 @@
 "menu_legal" = "ກົດໝາຍ";
 "language_settings" = "ການຕັ້ງຄ່າພາສາ";
 
+// Login
+"login" = "ເຂົ້າສູ່ລະບົບ";
+"logout" = "ອອກຈາກລະບົບ";
+"create_account" = "ສ້າງບັນຊີ";
+"account_login" = "ການເຂົ້າສູ່ລະບົບບັນຊີ";
+
 // Tool Detail
 "about" = "ກ່ຽວກັບ";
 "help" = "ຊ່ອຍເຫຼືອ";
@@ -30,8 +45,9 @@
 "terms_of_use" = "ເງື່ອນໄຂການໃຊ້ງານ";
 "privacy_policy" = "ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວ";
 "copyright_info" = "ຂໍ້ມູນລິຂະສິດ";
-"share_god_tools_share_sheet_text" = "ນີ້ຄືລິ້ງສຳຫຼັບດາວໂຫຼດ ແອັບ ທີ່ພວກເຮົາກຳລັງຊອກຫາ:
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "ດາວໂຫຼດແອັບ GodTools: http://godtoolsapp.com
+
+ສາມາດຊອກຫາເວີຊັນອອນໄລນ໌ໄດ້ທີ່ https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "ເພີ່ມເຄື່ອງມືໃສ່";
@@ -44,7 +60,7 @@ http://godtoolsapp.com";
 "select_primary_language" = "ເລືອກພາສາຫຼັກ";
 "parallel_language" = "ພາສາທີ່ໄປຄູ່ກັນ";
 "select_parallel_language" = "ຄັດເລືອກພາສາທີ່ໄປຄູ່ກັນ";
-"share_god_tools_native_language" = "ແບ່ງປັນ GodTools ກັບຄົນອື່ນໃນພາສາທ້ອງຖິ່ນຂອງເຂົາ.";
+"share_god_tools_native_language" = "ແບ່ງປັນ GodTools ກັບຄົນອື່ນໃນພາສາທ້ອງຖິ່ນຂອງເຂົາ";
 "not_every_tool_is_available" = "ບໍ່ມີເຄື່ອງມືໃດໆໃຫ້ບໍລິການໃນທຸກໆພາສາ.";
 
 // Settings
@@ -63,15 +79,16 @@ http://godtoolsapp.com";
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "ເຄື່ອງມືຫຼ້າສຸດທີ່ເປັນພາສາອັງກິດສາມາດດາວໂຫຼດໄດ້.\n\nທ່ານຕ້ອງການຕິດຕັ້ງພາສາຫຼັກເປັນພາສາອັງກິດ ແລະດາວໂຫຼດແຫຼ່ງຂໍ້ມູນເຫຼົ່ານີ້ ຫຼືບໍ່?";
 "the_tool_you_requested_is_loading" = "ເຄື່ອງມືທີ່ທ່ານຂໍກຳລັງໂຫຼດ...";
+"loading" = "ກຳລັງໂຫຼດ...";
+
 // Actions
 "yes" = "ແມ່ນ";
 "no" = "ບໍ່";
 
 // Tract - Sharing
-"tract_share_message" ="ນີ້ຄືລິ້ງສຳຫຼັບເວັບໄຊ້ຂອງ ແອັບ ນີ້
- %@.
+"tract_share_message" ="ລິ້ງນີ້ຈະນໍາທ່ານໄປໜ້າເວັບໃນເວີຊັນທີ່ພວກເຮົາເບິ່ງນໍາກັນຄັ້ງຫຼ້າສຸດໃນມື້ນີ້: %@. ມາລົມກັນຕື່ມ!
 
-ທ່ານສາມາດມາໂອ້ລັມກັບພວກເຮົາໄດ້!";
+ທ່ານສາມາດດາວໂຫຼດແອັບຈາກ https://godtoolsapp.com";
 
 // Buttons
 "download" = "ດາວໂຫຼດ";

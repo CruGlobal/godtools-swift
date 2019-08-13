@@ -1,4 +1,13 @@
-"language_onboard" = "80+ भाषा";
+"downloadprogress" = "डाउनलोड चालू आहे";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "साधन उघडा";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "याआधीचे";
+
+"card_status2" = "यापुढील";
+"language_onboard" = "८० पेक्षा जास्त भाषा";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "तुम्ही सर्व उपलब्ध साधने डाउनलोड केली आहेत.";
@@ -45,7 +54,7 @@
 ";
 "privacy_policy" = "गोपनीयता धोरण";
 "copyright_info" = "काॅपी राईट माहिती";
-"share_god_tools_share_sheet_text" = "गाॅडटूल्स ऍप डाऊनलोड करा: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "गाॅडटूल्स ऍप डाऊनलोड करा: https://godtoolsapp.com
 
 याची ऑनलाइन आवृत्ती येथे पाहा: https://knowgod.com";
 

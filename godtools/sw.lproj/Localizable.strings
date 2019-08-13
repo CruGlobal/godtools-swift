@@ -1,4 +1,13 @@
-"language_onboard" = "Zaidi ya lugha thelathini";
+"downloadprogress" = "Kupakua kunaendelea";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Kifaa Wazi";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Iliyopita";
+
+"card_status2" = "Ijayo";
+"language_onboard" = "Zaidi ya lugha themanini";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Umepakua zana zote zilizopo.";
@@ -37,7 +46,7 @@
 "terms_of_use" = "Masharti ya Matumizi";
 "privacy_policy" = "Sera ya Faragha";
 "copyright_info" = "Maelezo ya Hakimiliki";
-"share_god_tools_share_sheet_text" = "Pakua programu ya GodTools: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Pakua programu ya GodTools: https://godtoolsapp.com
 
 Toleo la mtandao linaweza kupatikana kwenye https://knowgod.com/";
 

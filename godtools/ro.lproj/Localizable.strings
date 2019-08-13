@@ -1,4 +1,13 @@
-"language_onboard" = "Peste 80 de limbi";
+"downloadprogress" = "Descărcare în curs";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Deschide instrumentul";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Anterior";
+
+"card_status2" = "Următor";
+"language_onboard" = "Peste 75 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ai descărcat toate instrumentele disponibile.";
@@ -37,7 +46,7 @@
 "terms_of_use" = "Condiții de utilizare";
 "privacy_policy" = "Politica de confidențialitate";
 "copyright_info" = "Informații copyright";
-"share_god_tools_share_sheet_text" = "Descarcă aplicația GodTools: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Descarcă aplicația GodTools: https://godtoolsapp.com
 
 Găsești versiunea online aici https://knowgod.com/";
 

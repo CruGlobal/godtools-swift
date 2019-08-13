@@ -1,3 +1,12 @@
+"downloadprogress" = "Besig om af te laai";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Maak hulpmiddel oop";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Vorige";
+
+"card_status2" = "Volgende";
 "language_onboard" = "80+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

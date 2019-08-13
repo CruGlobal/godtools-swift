@@ -1,3 +1,12 @@
+"downloadprogress" = "İndirme sürüyor";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Aracı Aç";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Önce.";
+
+"card_status2" = "Sonraki";
 "language_onboard" = "80'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Kullanım Koşulları";
 "privacy_policy" = "Gizlilik Politikası";
 "copyright_info" = "Telif Hakkı Bilgisi";
-"share_god_tools_share_sheet_text" = "GodTools uygulamasını indirin: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "GodTools uygulamasını indirin: https://godtoolsapp.com
 
 Çevrim içi bir sürüm https://knowgod.com/ adresinde bulunabilir";
 

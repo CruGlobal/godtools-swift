@@ -1,3 +1,12 @@
+"downloadprogress" = "正在下載中";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "開啟工具";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "前一頁";
+
+"card_status2" = "下一頁";
 "language_onboard" = "超過 80 種語言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "使用條款";
 "privacy_policy" = "隱私政策";
 "copyright_info" = "著作權資訊";
-"share_god_tools_share_sheet_text" = "下載GodTools應用程式：http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "下載GodTools應用程式：https://godtoolsapp.com
 
 您可在此找到網路版：https://knowgod.com/";
 

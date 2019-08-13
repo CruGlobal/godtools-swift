@@ -1,4 +1,13 @@
-"language_onboard" = "80+ Dillər";
+"downloadprogress" = "Yüklənmə davam edir";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Aləti aç";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Əvvəlki";
+
+"card_status2" = "Sonrakı";
+"language_onboard" = "80-dən çox dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Siz bütün mövcud alətləri yükləmisiniz.";
@@ -21,17 +30,23 @@
 "menu_legal" = "Hüquqi";
 "language_settings" = "Dil parametrləri";
 
+// Login
+"login" = "Daxil ol";
+"logout" = "Çıx";
+"create_account" = "Hesab yarat";
+"account_login" = "Hesaba daxil ol";
+
 // Tool Detail
 "about" = "Haqqında";
 "help" = "Kömək";
 "contact_us" = "Bizimlə əlaqə";
-"share_god_tools" = "GodTools-u paylaş";
+"share_god_tools" = "GodTools tətbiqini paylaş";
 "share_a_story_with_us" = "Bizimlə hekayənizi paylaşın";
 "terms_of_use" = "İstifadə şərtləri";
 "privacy_policy" = "Məxfilik siyasəti";
 "copyright_info" = "Müəllif hüquqi haqqında məlumat";
-"share_god_tools_share_sheet_text" = "Buradan siz GodTools app-ı yükləyə bilərsiniz: 
-http://godtoolsapp.com";
+"share_god_tools_share_sheet_text" = "GodTools tətbiqini yükləyəyin: 
+https://godtoolsapp.com";
 
 // Add Tools
 "add_tools" = "Alətlər əlavə edin";
@@ -62,12 +77,18 @@ http://godtoolsapp.com";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
 "device_locale_download_success" = "Ən yeni ingilis dilli alətlər yüklənə bilir. \n\nƏsas dilinizi ingilis dili təyin edib bu resursları yükləmək istərdiniz?";
+"the_tool_you_requested_is_loading" = "Sorğuladığınız alət yüklənir...";
+"loading" = "Yüklənir...";
+
 // Actions
 "yes" = "Bəli";
 "no" = "Xeyr";
 
 // Tract - Sharing
-"tract_share_message" ="Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!";
+"tract_share_message" ="Bu link sizi dünən birlikdə baxdığımız səhifənin veb versiyasına aparacaq: %@ Gəlin daha çox danışaq!
+
+Tətbiqi buradan yükləyə bilərsiniz: 
+https://godtoolsapp.com";
 
 // Buttons
 "download" = "Yüklə";

@@ -1,4 +1,13 @@
-"language_onboard" = "80+ kalbos";
+"downloadprogress" = "Atsisiunčiama";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Atidaryti įrankį";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Ankst";
+
+"card_status2" = "Kitas";
+"language_onboard" = "80+ kalbų";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
@@ -36,7 +45,7 @@
 "terms_of_use" = "Naudojimosi sąlygos";
 "privacy_policy" = "Privatumo politika";
 "copyright_info" = "Autoriaus teisių informacija";
-"share_god_tools_share_sheet_text" = "Atsisiųsti „GodTools“ programėlę: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Atsisiųsti „GodTools“ programėlę: https://godtoolsapp.com
 
 Internetinę versiją galima rasti adresu https://knowgod.com/";
 

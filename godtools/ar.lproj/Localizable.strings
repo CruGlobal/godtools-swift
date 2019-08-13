@@ -1,3 +1,12 @@
+"downloadprogress" = "التنزيل قيد التقدم";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "فتح أداة";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "السابق";
+
+"card_status2" = "التالي";
 "language_onboard" = "أكثر من 80 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -38,7 +47,7 @@
 "privacy_policy" = "سياسة الخصوصية";
 "copyright_info" = "معلومات حق النشر والتأليف";
 "share_god_tools_share_sheet_text" = "حمل تطبيق GodTools:
-http://godtoolsapp.com
+https://godtoolsapp.com
 
 يمكن العثور على إصدار الإنترنت على https://knowgod.com/";
 

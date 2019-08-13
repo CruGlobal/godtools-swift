@@ -1,3 +1,12 @@
+"downloadprogress" = "Probíhá stahování";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otevřít nástroj";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Předch";
+
+"card_status2" = "Další";
 "language_onboard" = "80+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Pravidla užívání";
 "privacy_policy" = "Ochrana soukromí";
 "copyright_info" = "Informace o autorských právech";
-"share_god_tools_share_sheet_text" = "Stáhněte si aplikaci GodTools: http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Stáhněte si aplikaci GodTools: https://godtoolsapp.com
 On-line verzi naleznete na https://knowgod.com/";
 
 // Add Tools

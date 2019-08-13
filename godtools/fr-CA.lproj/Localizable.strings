@@ -1,3 +1,12 @@
+"downloadprogress" = "Téléchargement en cours";
+
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ouvrir l'outil";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "Préc";
+
+"card_status2" = "Suiv";
 "language_onboard" = "Plus de 80 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -37,7 +46,7 @@
 "terms_of_use" = "Conditions d'utilisation";
 "privacy_policy" = "Politique de confidentialité";
 "copyright_info" = "Renseignements de droits d'auteur";
-"share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools ici : http://godtoolsapp.com
+"share_god_tools_share_sheet_text" = "Téléchargez l'application GodTools ici : https://godtoolsapp.com
 
 Retrouvez également la version en ligne à l'adresse : https://knowgod.com/";
 
