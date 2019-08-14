@@ -2307,7 +2307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "org.cru.godtools Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

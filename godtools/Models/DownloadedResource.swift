@@ -11,6 +11,8 @@ import RealmSwift
 
 typealias DownloadedResources = List<DownloadedResource>
 
+let TractURL = "TractURL"
+
 class DownloadedResource: Object {
     @objc dynamic var bannerRemoteId: String?
     @objc dynamic var aboutBannerRemoteId: String?
@@ -127,5 +129,18 @@ class DownloadedResource: Object {
         }
         
         return name
+    }
+
+    var quickActionUserInfo: [String: NSSecureCoding] {
+        let languagesManager = LanguagesManager()
+        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()?.code ?? "en"
+        let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()?.code
+        
+        var url = "GodTools://knowgod.com/" + primaryLanguage + "/" + code + "/0"
+        if let parallelLanguage = parallelLanguage {
+            url += "?parallelLanguage=" + parallelLanguage
+        }
+        
+        return [ TractURL: url as NSSecureCoding ]
     }
 }
