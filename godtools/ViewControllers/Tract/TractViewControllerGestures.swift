@@ -22,8 +22,6 @@ extension TractViewController {
     }
     
     @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
-        let isRightToLeft = selectedLanguage?.isRightToLeft() ?? false
-        
         if sender.direction == .right && !isRightToLeft {
             NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
         } else if sender.direction == .left && !isRightToLeft {

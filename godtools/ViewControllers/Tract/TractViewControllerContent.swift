@@ -44,7 +44,6 @@ extension TractViewController {
     }
     
     func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
-        let isRightToLeft = selectedLanguage?.isRightToLeft() ?? false
         let multiplier: CGFloat = isRightToLeft ? -1 : 1
         let xPosition = (width * CGFloat(pageNumber)) * multiplier
         let frame = CGRect(x: xPosition,
