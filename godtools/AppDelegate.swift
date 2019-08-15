@@ -57,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.initalizeAppState()
         
+        LanguagesManager().setupLanguageDirection()
+
         return true
     }
     

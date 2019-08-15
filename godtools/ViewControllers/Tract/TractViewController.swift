@@ -177,6 +177,7 @@ class TractViewController: BaseViewController {
         }
         
         loadPagesViews()
+        view.setNeedsLayout()
     }
     
     private func sendLanguageToggleNotification(language: Language?) {

@@ -38,6 +38,9 @@ class TractTextContent: BaseTractElement {
         if properties.width == 0 {
             properties.width = parentWidth()
         }
+        if let parent = parent as? TractCallToAction, isRightToLeft {
+            elementFrame.xMargin = parent.buttonSizeConstant
+        }
         
         self.elementFrame.width = properties.width
     }
