@@ -22,10 +22,17 @@ extension TractViewController {
     }
     
     @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right {
+        let isRightToLeft = selectedLanguage?.isRightToLeft() ?? false
+        
+        if sender.direction == .right && !isRightToLeft {
             NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
-        } else if sender.direction == .left {
+        } else if sender.direction == .left && !isRightToLeft {
             NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
+        }
+        else if sender.direction == .right && isRightToLeft {
+            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
+        } else if sender.direction == .left && isRightToLeft {
+            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
         }
     }
 }

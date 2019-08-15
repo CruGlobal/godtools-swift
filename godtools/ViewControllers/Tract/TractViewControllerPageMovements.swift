@@ -129,8 +129,9 @@ extension TractViewController {
             if view == nil || pageViews.firstIndex(of: view!) != nil {
                 continue
             }
-            
-            view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+            let isRightToLeft = selectedLanguage?.isRightToLeft() ?? false
+            let translationX = !isRightToLeft ? currentMovement : -currentMovement
+            view?.transform = CGAffineTransform(translationX: translationX, y: 0.0)
         }
         self.notifyCurrentViewDidAppearOnTract()
     }

@@ -29,7 +29,9 @@ class TractViewController: BaseViewController {
     var textColor: UIColor?
     var currentPage = 0
     var currentMovement: CGFloat {
-        return CGFloat(currentPage) *  -self.view.frame.width
+        let isRightToLeft = selectedLanguage?.isRightToLeft() ?? false
+        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        return CGFloat(currentPage) * -self.view.frame.width * multiplier
     }
     var containerView = UIView()
     var pagesViews = [TractView?]()
