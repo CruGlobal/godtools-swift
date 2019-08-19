@@ -20,7 +20,7 @@ extension TractCallToAction {
         
         let button = createButton(with: buttonFrame)
         
-        if isRightToLeft {
+        if isPrimaryRightToLeft {
             button.transform = CGAffineTransform(rotationAngle: .pi)
         }
         self.addSubview(button)

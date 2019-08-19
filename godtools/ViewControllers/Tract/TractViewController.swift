@@ -29,7 +29,7 @@ class TractViewController: BaseViewController {
     var textColor: UIColor?
     var currentPage = 0
     var isRightToLeft: Bool {
-        return selectedLanguage?.isRightToLeft() ?? false
+        return primaryLanguage?.isRightToLeft() ?? false
     }
     var currentMovement: CGFloat {
         let multiplier: CGFloat = isRightToLeft ? -1 : 1
