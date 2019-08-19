@@ -1,27 +1,32 @@
 # Uncomment the lines below you want to change by removing the # in the beginning
 
  devices([
+   "iPhone X",
+   "iPhone 7",
    "iPhone 6 Plus",
    "iPhone 6",
-   "iPhone 5",
-   "iPhone 4s",
-   "iPad Retina",
-   "iPad Pro"
+   "iPhone 5s",
+   "iPad (5th generation)",
+   "iPad Pro (12.9-inch)"
  ])
 
+# languages([
+#   "de-DE",
+#   "en-US",
+#   "es-ES",
+#   "pt-BR",
+#   "fr-FR",
+#   "ru",
+#   "zh-Hant",
+#   "zh-Hans",
+#   "tr",
+#   "ja",
+#   "ko",
+#   "id"
+# ])
+
 languages([
-  "de-DE",
-  "en-US",
-  "es-ES",
-  "pt-BR",
-  "fr-FR",
-  "ru",
-  "zh-Hant",
-  "zh-Hans",
-  "tr",
-  "ja",
-  "ko",
-  "id"
+  "en-US"
 ])
 
 
