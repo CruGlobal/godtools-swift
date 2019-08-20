@@ -124,23 +124,4 @@ class godtoolsUIRecording: XCTestCase {
         snapshot("09TeachMeToShare")
 
     }
-    
-//    func testSomething() {
-//
-//        let app = XCUIApplication()
-//        let godtoolsNavigationBar = app.navigationBars["GodTools"]
-//        godtoolsNavigationBar/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//        app.tables/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"THE FOUR")/*[[".cells.containing(.staticText, identifier:\"Uses four symbols to simply explain the message of the Bible.\")",".cells.containing(.staticText, identifier:\"THE FOUR\")"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.buttons["download green"].tap()
-//        godtoolsNavigationBar/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-//        XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
-//
-//
-//        let element = XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
-//        element.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).swipeLeft()
-//
-//        let element2 = element.children(matching: .other).element(boundBy: 1).children(matching: .other).element.children(matching: .other).element(boundBy: 1)
-//        element2.swipeLeft()
-//        element2.swipeLeft()
-//
-//    }
 }
