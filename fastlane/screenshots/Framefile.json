@@ -1,0 +1,130 @@
+{
+  "default": {
+    "keyword": {
+      "fonts": [
+        {
+          "font": "./fonts/HelveticaNeueMedium.ttf",
+          "supported": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "nl-NL", "sv-SE", "pt-BR"]
+        }
+      ]
+    },
+    "title": {
+      "fonts": [
+        {
+          "font": "./fonts/HelveticaNeueMedium.ttf",
+          "supported": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "nl-NL", "sv-SE", "pt-BR"]
+        }
+      ]
+    },
+    "background": "./background.jpg",
+    "padding": 50,
+    "frame": "WHITE",
+ 	"show_complete_frame": true,
+    "stack_title" : false,
+    "font_scale_factor": 0.2,
+    "color": "#3BA4DB"
+    },
+
+  "data": [
+    {
+      "filter": "MyTools",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff",
+        "text": "MyTools"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "ParallelLanguages",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "KnowingGod",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "KnowGodPersonally",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "FourSpiritualLaws",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "Satisfied",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "TheFour",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "HonorRestored",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    },
+    {
+      "filter": "TeachMeToShare",
+      "keyword": {
+        "color": "#ffffff",
+        "text": ""
+      },
+      "title": {
+        "color": "#ffffff"
+      },
+      "frame": "WHITE"
+    }
+  ]
+}

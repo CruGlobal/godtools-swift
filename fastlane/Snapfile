@@ -1,13 +1,17 @@
 # Uncomment the lines below you want to change by removing the # in the beginning
 
+#  devices([
+#    "iPhone X",
+#    "iPhone 7",
+#    "iPhone 6 Plus",
+#    "iPhone 6",
+#    "iPhone 5s",
+#    "iPad (5th generation)",
+#    "iPad Pro (12.9-inch)"
+#  ])
+
  devices([
-   "iPhone X",
-   "iPhone 7",
-   "iPhone 6 Plus",
-   "iPhone 6",
-   "iPhone 5s",
-   "iPad (5th generation)",
-   "iPad Pro (12.9-inch)"
+   "iPhone X"
  ])
 
 # languages([
