@@ -1,0 +1,9 @@
+GodTools Screen shots with Fastlane
+
+In Terminal, from the project root directory, run: "fastlane snapshot"
+This will capture the screen shots for all specified devices and languages specified in: godtools-swift/fastlane/Snapfile
+
+When that has completed, in Terminal, go to godtools-swift/fastlane/screenshots, run "fastlane frameit"
+This will add frames and captions to the screen shots. Framed screen shots will have 'framed' added to the name. 
+Only those images that have title.strings file in the godtools-swift/fastlane/screenshots/<language i.e. en-US> directory will have frames added.
+To localize screenshot captions, copy the title.strings file from en_US and add to the language directory and replace strings with localized strings.

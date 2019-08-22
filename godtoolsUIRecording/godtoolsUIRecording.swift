@@ -118,6 +118,7 @@ class godtoolsUIRecording: XCTestCase {
 
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
         cell.otherElements["Progress"].tap()
+        sleep(5)
         let element = XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
         element.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).swipeLeft()
         
