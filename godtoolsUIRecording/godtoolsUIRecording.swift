@@ -44,7 +44,7 @@ class godtoolsUIRecording: XCTestCase {
         
         let app = XCUIApplication()
         _ = app.navigationBars["GodTools"].buttons["language logo white"].waitForExistence(timeout: 10)
-        snapshot("01MyTools")
+        sleep(10)
         
         app.navigationBars["GodTools"].buttons["language logo white"].tap()
         app.buttons["select_parallel_language"].tap()
@@ -53,6 +53,8 @@ class godtoolsUIRecording: XCTestCase {
         
         app.navigationBars.buttons.element(boundBy: 0).tap()
         app.navigationBars.buttons.element(boundBy: 0).tap()
+        sleep(10)
+        snapshot("01MyTools")
 
         let toolsTable = app.tables["home_table_view"]
         var cell = toolsTable.cells.element(matching: .cell, identifier: "Knowing God Personally")
