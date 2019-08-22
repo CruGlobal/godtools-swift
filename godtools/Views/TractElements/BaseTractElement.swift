@@ -83,6 +83,15 @@ class BaseTractElement: UIView {
         }
     }
     
+    var isRightToLeft: Bool {
+        return tractConfigurations?.language?.isRightToLeft() ?? false
+    }
+    
+    var isPrimaryRightToLeft: Bool {
+        return LanguagesManager().loadPrimaryLanguageFromDisk()?.isRightToLeft() ?? false
+    }
+
+    
     weak var parent: BaseTractElement?
     var elements:[BaseTractElement]?
     var parallelElement: BaseTractElement?

@@ -44,7 +44,8 @@ extension TractViewController {
     }
     
     func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
-        let xPosition = (width * CGFloat(pageNumber))
+        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        let xPosition = (width * CGFloat(pageNumber)) * multiplier
         let frame = CGRect(x: xPosition,
                            y: 0.0,
                            width: width,

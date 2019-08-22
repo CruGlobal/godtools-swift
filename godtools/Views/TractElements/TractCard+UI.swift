@@ -114,13 +114,15 @@ extension TractCard {
     
     func setupNavigation(pageNumber: Int, pageCount: Int) {
         
-        let prevButton =  UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 44))
-        prevButton.setTitle(NSLocalizedString("PREV", comment: "Previous card label"), for: .normal)
+        let language = tractConfigurations?.language?.code
+        
+        let prevButton =  UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 44))
+        prevButton.setTitle("PREV".localized(for: language), for: .normal)
         prevButton.setTitleColor(.gray, for: .normal)
         prevButton.titleLabel?.textAlignment = .right
         prevButton.addTarget(self, action: #selector(prevButtonTapped(_:)), for: .touchUpInside)
-        let nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 44))
-        let nextButtonTitle = pageNumber == pageCount ? "" : NSLocalizedString("NEXT", comment: "Next card label")
+        let nextButton = UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 44))
+        let nextButtonTitle = pageNumber == pageCount ? "" : "NEXT".localized(for: language)
         nextButton.setTitle(nextButtonTitle, for: .normal)
         nextButton.setTitleColor(.gray, for: .normal)
         nextButton.titleLabel?.textAlignment = .left
@@ -130,10 +132,11 @@ extension TractCard {
         pageCountLabel.textAlignment = .center
         pageCountLabel.textColor = .gray
 
-        let stackViewWidth: CGFloat = 180
+        let stackViewWidth: CGFloat = 210
         let stackViewX = frame.size.width/2 - stackViewWidth/2
-        let stackViewFrame = CGRect(x: stackViewX, y: frame.size.height-40.0, width: 180, height: 44.0)
+        let stackViewFrame = CGRect(x: stackViewX, y: frame.size.height-40.0, width: stackViewWidth, height: 44.0)
         let stackView = UIStackView(arrangedSubviews: [prevButton, pageCountLabel, nextButton])
+        stackView.semanticContentAttribute = isRightToLeft ? .forceRightToLeft : .forceLeftToRight 
         stackView.frame = stackViewFrame
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually

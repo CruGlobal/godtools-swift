@@ -20,6 +20,7 @@ extension LanguagesTableViewController: UITableViewDelegate {
         }
         languagesManager.setSelectedLanguage(language)
         languagesManager.recordLanguageShouldDownload(language: language)
+        navigationController?.handleLanguageSwitch()
         zipImporter.download(language: language)
         self.refreshCellState(tableView: tableView, indexPath: indexPath, language: language)
         baseDelegate?.goBack()

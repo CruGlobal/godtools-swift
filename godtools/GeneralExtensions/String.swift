@@ -23,6 +23,17 @@ extension String {
     }
     
     
+    /// returns the translation for self using the given language
+    func localized(for language: String?) -> String? {
+        // if the language is not given, or corresponding translation bundle not found, use default localization
+        guard let language = language,
+            let path = Bundle.main.path(forResource: language, ofType: "lproj"),
+            let bundle = Bundle(path: path) else {
+                return localized
+        }
+        return bundle.localizedString(forKey: self, value: nil, table: nil)
+    }
+    
     func removeBreaklines() -> String {
         let regex = try! NSRegularExpression(pattern: "\n", options: .caseInsensitive)
         let range = NSMakeRange(0, self.count)
