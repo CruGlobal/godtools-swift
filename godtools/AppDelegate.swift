@@ -14,6 +14,11 @@ import RealmSwift
 import AppAuth
 import TheKeyOAuthSwift
 import Firebase
+import FBSDKCoreKit
+
+enum ShortcutItemType: String {
+    case tool = "ToolAction"
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
         GodToolsAnaltyics.setup()
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         #if DEBUG
             print(NSHomeDirectory())
@@ -55,12 +61,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.initalizeAppState()
         
+        LanguagesManager().setupLanguageDirection()
+
         return true
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        
+        application.shortcutItems = shortCutItems()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -73,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        AppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -125,6 +133,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func resetStateIfUITesting() {
         if ProcessInfo.processInfo.arguments.contains("UI-Testing") {
             UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        }
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+
+        return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    
+    func shortCutItems() -> [UIApplicationShortcutItem] {
+        let toolsManager = ToolsManager.shared
+        let languagesManager = LanguagesManager()
+        
+        var shortcuts: [UIApplicationShortcutItem] = []
+        
+        for resource in toolsManager.resources {
+            let localizedTitle = resource.localizedName(language: languagesManager.loadPrimaryLanguageFromDisk())
+            let shortcutItem = UIApplicationShortcutItem(type: ShortcutItemType.tool.rawValue,
+                                                         localizedTitle: localizedTitle,
+                                                         localizedSubtitle: nil,
+                                                         icon: nil,
+                                                         userInfo: resource.quickActionUserInfo)
+            shortcuts.append(shortcutItem)
+        }
+        
+        return shortcuts
+    }
+    
+    /// Called when the user selects a Home screen quick action
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+        
+        if shortcutItem.type == ShortcutItemType.tool.rawValue, let urlString = shortcutItem.userInfo?[TractURL] as? String, let url = URL(string: urlString)  {
+            processForDeepLinking(from: url, shouldDisplayLoadingScreen: false)
         }
     }
 }

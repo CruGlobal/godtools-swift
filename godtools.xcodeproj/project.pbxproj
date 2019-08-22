@@ -95,6 +95,7 @@
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
 		1737DFD922F9D4D700223CB0 /* LanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1737DFD822F9D4D700223CB0 /* LanguageTests.swift */; };
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
+		1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */; };
 		1E06EB6DA916BEF9C627866F /* Pods_godtools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61FF360D11F854476B6E206 /* Pods_godtools.framework */; };
 		1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */; };
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
@@ -374,6 +375,7 @@
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
 		1737DFD822F9D4D700223CB0 /* LanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTests.swift; sourceTree = "<group>"; };
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+GodTools.swift"; sourceTree = "<group>"; };
 		1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEvent.swift; sourceTree = "<group>"; };
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+SearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */,
 				ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */,
 				4F75415221D14655002300DD /* UIViewController+GodTools.swift */,
+				1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -1758,6 +1761,8 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/CRUConfig/CRUConfig.framework",
+				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
+				"${BUILT_PRODUCTS_DIR}/FacebookCore/FacebookCore.framework",
 				"${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMAppAuth/GTMAppAuth.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -1779,6 +1784,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CRUConfig.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuzi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMAppAuth.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -1925,6 +1932,7 @@
 				4FEF265121C41871007CF4A0 /* ArticleCategoryTableViewCell.swift in Sources */,
 				4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
+				1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
@@ -2303,7 +2311,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				PROVISIONING_PROFILE_SPECIFIER = "org.cru.godtools Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -47,7 +47,13 @@ class TractNumber: BaseTractElement {
     }
     
     override func loadFrameProperties() {
-        self.elementFrame.x = TractNumber.marginConstant
+        if let parent = parent as? TractHeader, isRightToLeft {
+            elementFrame.x = parent.width - TractNumber.widthConstant
+        }
+        else {
+            self.elementFrame.x = TractNumber.marginConstant
+
+        }
         self.elementFrame.width = TractNumber.widthConstant
         self.elementFrame.height = self.height
     }

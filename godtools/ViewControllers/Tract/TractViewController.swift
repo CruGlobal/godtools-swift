@@ -28,8 +28,12 @@ class TractViewController: BaseViewController {
     var primaryTextColor: UIColor?
     var textColor: UIColor?
     var currentPage = 0
+    var isRightToLeft: Bool {
+        return primaryLanguage?.isRightToLeft() ?? false
+    }
     var currentMovement: CGFloat {
-        return CGFloat(currentPage) *  -self.view.frame.width
+        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        return CGFloat(currentPage) * -self.view.frame.width * multiplier
     }
     var containerView = UIView()
     var pagesViews = [TractView?]()
@@ -177,6 +181,7 @@ class TractViewController: BaseViewController {
         }
         
         loadPagesViews()
+        view.setNeedsLayout()
     }
     
     private func sendLanguageToggleNotification(language: Language?) {

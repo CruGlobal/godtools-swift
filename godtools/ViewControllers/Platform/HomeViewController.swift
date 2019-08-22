@@ -51,6 +51,7 @@ class HomeViewController: BaseViewController {
             self.displayOnboarding()
         }
         let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
+        pressGesture.minimumPressDuration = 0.75
         tableView.addGestureRecognizer(pressGesture)
     }
     

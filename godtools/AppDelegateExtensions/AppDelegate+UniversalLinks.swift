@@ -54,7 +54,7 @@ extension AppDelegate {
     
 
     
-    private func processForDeepLinking(from url: URL) {
+    func processForDeepLinking(from url: URL, shouldDisplayLoadingScreen: Bool = true) {
         
         let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
@@ -66,7 +66,9 @@ extension AppDelegate {
             return
         }
         
-        displayLoadingScreen()
+        if shouldDisplayLoadingScreen {
+            displayLoadingScreen()
+        }
 
         let pageNumber = parsePageNumberFrom(url) ?? 0
         
