@@ -126,6 +126,7 @@ extension TractCard {
         nextButton.setTitle(nextButtonTitle, for: .normal)
         nextButton.setTitleColor(.gray, for: .normal)
         nextButton.titleLabel?.textAlignment = .left
+        nextButton.isEnabled = !(pageNumber == pageCount)
         nextButton.addTarget(self, action: #selector(nextButtonTapped(_:)), for: .touchUpInside)
         let pageCountLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 44))
         pageCountLabel.text = "\(pageNumber) / \(pageCount)"

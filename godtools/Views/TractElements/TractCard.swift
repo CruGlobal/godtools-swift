@@ -105,8 +105,10 @@ class TractCard: BaseTractElement {
         setupTransparentView()
         setupBackground()
         loadParallelElementState()
-        setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: cardsParentView.cardsData?.count ?? 0)
-
+        let pageCount = cardsParentView.splitCardsByKind().normal.count
+        if cardProperties().cardState != .hidden {
+            setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: pageCount)
+        }
         TractBindings.addBindings(self)
         return self
     }
