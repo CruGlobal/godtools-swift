@@ -93,6 +93,8 @@
 		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
+		17141EFC230DC9640088BD7E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
+		17141EFD230DDE150088BD7E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
 		17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17339884230736DB00A715B4 /* SnapshotHelper.swift */; };
 		17339886230738A200A715B4 /* godtoolsUIRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1733987C230736A400A715B4 /* godtoolsUIRecording.swift */; };
 		1737DFD922F9D4D700223CB0 /* LanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1737DFD822F9D4D700223CB0 /* LanguageTests.swift */; };
@@ -1669,6 +1671,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17141EFD230DDE150088BD7E /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1870,6 +1873,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17141EFC230DC9640088BD7E /* String.swift in Sources */,
 				17339886230738A200A715B4 /* godtoolsUIRecording.swift in Sources */,
 				17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */,
 			);

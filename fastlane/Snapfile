@@ -30,7 +30,9 @@
 # ])
 
 languages([
-  "en-US"
+  "en-US",
+  "fr-FR",
+  "es-ES",
 ])
 
 

@@ -21,6 +21,16 @@ class godtoolsUIRecording: XCTestCase {
         setupSnapshot(app)
         app.launch()
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        addUIInterruptionMonitor(withDescription: "System Dialog") {
+            (alert) -> Bool in
+            let button = alert.buttons.element(boundBy: 1)
+            if button.exists {
+                button.tap()
+            }
+            return true
+        }
+
     }
 
     override func tearDown() {
@@ -33,69 +43,79 @@ class godtoolsUIRecording: XCTestCase {
                 
         
         let app = XCUIApplication()
-        app.navigationBars["GodTools"].buttons["language logo white"].waitForExistence(timeout: 10)
+        _ = app.navigationBars["GodTools"].buttons["language logo white"].waitForExistence(timeout: 10)
         snapshot("01MyTools")
         
         app.navigationBars["GodTools"].buttons["language logo white"].tap()
-        app.buttons["Select a Parallel Language"].tap()
-        app.navigationBars["Parallel Language"].buttons["Back"].waitForExistence(timeout: 5)
+        app.buttons["select_parallel_language"].tap()
+        _ = app.navigationBars["parallel_language"].buttons["Back"].waitForExistence(timeout: 5)
         snapshot("02ParallelLanguages")
         
-        app.navigationBars["Parallel Language"].buttons["Back"].tap()
-        app.navigationBars["Language Settings"].buttons["Back"].tap()
-        XCUIApplication()/*@START_MENU_TOKEN@*/.tables["home_table_view"].cells.containing(.staticText, identifier:"Knowing God Personally")/*[[".otherElements[\"home_my_tools_view\"].tables[\"home_table_view\"]",".cells.containing(.staticText, identifier:\"Uses hand drawn images to illustrate God's invitation to know Him personally.\")",".cells.containing(.staticText, identifier:\"Knowing God Personally\")",".tables[\"home_table_view\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication()/*@START_MENU_TOKEN@*/.tables["home_table_view"].cells.containing(.staticText, identifier:"Knowing God Personally")/*[[".otherElements[\"home_my_tools_view\"].tables[\"home_table_view\"]",".cells.containing(.staticText, identifier:\"Uses hand drawn images to illustrate God's invitation to know Him personally.\")",".cells.containing(.staticText, identifier:\"Knowing God Personally\")",".tables[\"home_table_view\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.otherElements["Progress"].tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        let toolsTable = app.tables["home_table_view"]
+        var cell = toolsTable.cells.element(matching: .cell, identifier: "Knowing God Personally")
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("03KnowingGod")
         
         app.navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        if !XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Know God Personally").otherElements["Progress"].waitForExistence(timeout: 5)
+        cell = toolsTable.cells.element(matching: .cell, identifier: "Know God Personally")
+        if !cell.otherElements["Progress"].waitForExistence(timeout: 5)
         {
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            app.tables/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"Know God Personally")/*[[".cells.containing(.staticText, identifier:\"Explains how to begin a personal relationship with God.\")",".cells.containing(.staticText, identifier:\"Know God Personally\")"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.buttons["download green"].tap()
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            let button = app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "find_tools")
+            button.tap()
+            app.tables.cells.element(matching: .cell, identifier: "Know God Personally").buttons["download green"].tap()
+            app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "my_tools").tap()
             sleep(5)
         }
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Know God Personally").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Know God Personally").otherElements["Progress"].tap()
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("04KnowGodPersonally")
 
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
 
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Four Spiritual Laws").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Four Spiritual Laws").otherElements["Progress"].tap()
+        cell = toolsTable.cells.element(matching: .cell, identifier: "Four Spiritual Laws")
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("05FourSpiritualLaws")
 
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        if !XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Satisfied?").otherElements["Progress"].waitForExistence(timeout: 5)
+        cell = toolsTable.cells.element(matching: .cell, identifier: "Satisfied?")
+        if !cell.otherElements["Progress"].waitForExistence(timeout: 5)
         {
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            app.tables/*@START_MENU_TOKEN@*/.cells.containing(.staticText, identifier:"Know God Personally")/*[[".cells.containing(.staticText, identifier:\"Explains how to begin a personal relationship with God.\")",".cells.containing(.staticText, identifier:\"Know God Personally\")"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.buttons["download green"].tap()
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            let button = app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "find_tools")
+            button.tap()
+            app.tables.cells.element(matching: .cell, identifier: "Satisfied?").buttons["download green"].tap()
+            app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "my_tools").tap()
             sleep(5)
         }
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Satisfied?").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Satisfied?").otherElements["Progress"].tap()
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("06Satisfied")
 
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        if !XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"THE FOUR").otherElements["Progress"].waitForExistence(timeout: 5)
+        cell = toolsTable.cells.element(matching: .cell, identifier: "The FOUR")
+        if !cell.otherElements["Progress"].waitForExistence(timeout: 5)
         {
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            app.tables.cells.containing(.staticText, identifier:"THE FOUR").buttons["download green"].tap()
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            let button = app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "find_tools")
+            button.tap()
+            app.tables.cells.element(matching: .cell, identifier: "The FOUR").buttons["download green"].tap()
+            app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "my_tools").tap()
             sleep(10)
         }
 
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"THE FOUR").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"THE FOUR").otherElements["Progress"].tap()
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         let element = XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
         element.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).swipeLeft()
         
@@ -106,22 +126,30 @@ class godtoolsUIRecording: XCTestCase {
         
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        if !XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Honor Restored").otherElements["Progress"].waitForExistence(timeout: 5)
+        cell = toolsTable.cells.element(matching: .cell, identifier: "Honor Restored")
+        if !cell.otherElements["Progress"].waitForExistence(timeout: 5)
         {
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["Find Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"Find Tools\"]",".buttons[\"Find Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-            app.tables.cells.containing(.staticText, identifier:"Honor Restored").buttons["download green"].tap()
-            app.navigationBars["GodTools"]/*@START_MENU_TOKEN@*/.buttons["My Tools"]/*[[".segmentedControls[\"GodTools\"].buttons[\"My Tools\"]",".buttons[\"My Tools\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+            let button = app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "find_tools")
+            button.tap()
+            app.tables.cells.element(matching: .cell, identifier: "Honor Restored").buttons["download green"].tap()
+            app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "my_tools").tap()
             sleep(10)
         }
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Honor Restored").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Honor Restored").otherElements["Progress"].tap()
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         snapshot("08HonorRestored")
         
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Teach Me to Share").otherElements["Progress"].waitForExistence(timeout: 5)
-        XCUIApplication().tables["home_table_view"].cells.containing(.staticText, identifier:"Teach Me to Share").otherElements["Progress"].tap()
+        cell = toolsTable.cells.element(matching: .cell, identifier: "Teach Me to Share")
+        _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        cell.otherElements["Progress"].tap()
         snapshot("09TeachMeToShare")
 
+    }
+    
+    func localized(_ key: String) -> String {
+        let uiTestBundle = Bundle(for: godtoolsUIRecording.self)
+        return NSLocalizedString(key, bundle: uiTestBundle, comment: "")
     }
 }

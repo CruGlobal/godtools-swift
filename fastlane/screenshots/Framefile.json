@@ -3,7 +3,7 @@
     "keyword": {
       "fonts": [
         {
-          "font": "./fonts/HelveticaNeueMedium.ttf",
+          "font": "./fonts/SF-Pro-Text-Regular.otf",
           "supported": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "nl-NL", "sv-SE", "pt-BR"]
         }
       ]
@@ -11,7 +11,7 @@
     "title": {
       "fonts": [
         {
-          "font": "./fonts/HelveticaNeueMedium.ttf",
+          "font": "./fonts/SF-Pro-Text-Regular.otf",
           "supported": ["de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "nl-NL", "sv-SE", "pt-BR"]
         }
       ]

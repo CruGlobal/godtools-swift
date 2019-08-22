@@ -70,6 +70,7 @@ class HomeToolTableViewCell: UITableViewCell {
                         parallelLanguage: parallelLanguage)
         
         downloadProgressView.setProgress(0.0, animated: false)
+        downloadProgressView.accessibilityIdentifier = "Progress"
         
         isAvailable = isAvailableInPrimaryLanguage
         
@@ -78,6 +79,8 @@ class HomeToolTableViewCell: UITableViewCell {
         }
         
         bannerImageView.image = banner ?? #imageLiteral(resourceName: "cell_banner_placeholder")
+
+        accessibilityIdentifier = resource.name
     }
     
     private func configureLabels(resource: DownloadedResource,
