@@ -106,8 +106,7 @@ class godtoolsUIRecording: XCTestCase {
 
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
-        cell = toolsTable.cells.element(matching: .cell, identifier: "The FOUR")
-        if !cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        if !app.tables.cells.element(matching: .cell, identifier: "The FOUR").otherElements["Progress"].waitForExistence(timeout: 5)
         {
             let button = app.navigationBars["GodTools"].buttons.element(matching: .button, identifier: "find_tools")
             button.tap()
@@ -116,7 +115,10 @@ class godtoolsUIRecording: XCTestCase {
             sleep(10)
         }
 
+        _ = toolsTable.cells.element(matching: .cell, identifier: "The FOUR").waitForExistence(timeout: 5)
+        cell = toolsTable.cells.element(matching: .cell, identifier: "The FOUR")
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
+        scrollToCell(with: "The FOUR")
         cell.otherElements["Progress"].tap()
         sleep(5)
         let element = XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
@@ -154,5 +156,17 @@ class godtoolsUIRecording: XCTestCase {
     func localized(_ key: String) -> String {
         let uiTestBundle = Bundle(for: godtoolsUIRecording.self)
         return NSLocalizedString(key, bundle: uiTestBundle, comment: "")
+    }
+    
+    func scrollToCell(with identifer: String) {
+        let toolsTable =  XCUIApplication().tables["home_table_view"]
+
+        guard XCUIApplication().tables.cells.element(matching: .cell, identifier: identifer).exists else { return }
+        
+        let cell = XCUIApplication().tables.cells.element(matching: .cell, identifier: identifer)
+        while  !cell.isHittable {
+           toolsTable.swipeUp()
+        }
+
     }
 }
