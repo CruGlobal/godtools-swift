@@ -25,7 +25,8 @@ class TractCard: BaseTractElement {
     static let contentBottomPadding: CGFloat = 8.0
     static let transparentViewHeight: CGFloat = 60.0
     static let keyboardYTransformation: CGFloat = -80.0
-    
+    let footerViewHeight: CGFloat = 44.0
+
     // MARK: - Positions and Sizes
     
     var yDownPosition: CGFloat = 0.0
