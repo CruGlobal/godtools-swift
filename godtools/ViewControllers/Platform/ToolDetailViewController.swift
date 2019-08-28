@@ -26,6 +26,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var mainButton: GTButton!
     @IBOutlet weak var downloadProgressView: GTProgressView!
     @IBOutlet weak var bannerImageView: UIImageView!
+    @IBOutlet weak var aboutLabel: GTLabel!
     
     @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
     
@@ -56,12 +57,19 @@ class ToolDetailViewController: BaseViewController {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         guard let resource = resource else { return }
         
-        self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+        // if tool is available in primary language, attempt to retrieve string based on that lanague else default to device language
+        let localizedTotalViews = resource.isAvailableInLanguage(primaryLanguage) ? "total_views".localized(for: primaryLanguage?.code) ?? "total_views".localized : "total_views".localized
+        self.totalViewsLabel.text = String.localizedStringWithFormat(localizedTotalViews, resource.totalViews)
         
-        self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource.numberOfAvailableLanguages())
+        let localizedTotalLanguages =  resource.isAvailableInLanguage(primaryLanguage) ? "total_languages".localized(for: primaryLanguage?.code) ?? "total_languages".localized : "total_languages".localized
+        self.totalLanguagesLabel.text = String.localizedStringWithFormat(localizedTotalLanguages.localized, resource.numberOfAvailableLanguages())
         
+        let localizedAbout = resource.isAvailableInLanguage(primaryLanguage) ? "about".localized(for: primaryLanguage?.code) ?? "about".localized : "about".localized
+        self.aboutLabel.text = String.localizedStringWithFormat(localizedAbout, resource.totalViews)
+
         self.titleLabel.text = resource.localizedName(language: primaryLanguage)
         
+        descriptionLabel.textAlignment = primaryLanguage?.isRightToLeft() ?? false ? .right : .natural
         self.descriptionLabel.text = loadDescription()
         
         let resourceTranslations = Array(Set(resource.translations))
