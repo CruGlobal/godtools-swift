@@ -44,16 +44,17 @@ class godtoolsUIRecording: XCTestCase {
         
         let app = XCUIApplication()
         _ = app.navigationBars["GodTools"].buttons["language logo white"].waitForExistence(timeout: 10)
-        sleep(10)
         
         app.navigationBars["GodTools"].buttons["language logo white"].tap()
         app.buttons["select_parallel_language"].tap()
         _ = app.navigationBars["parallel_language"].buttons["Back"].waitForExistence(timeout: 5)
         snapshot("02ParallelLanguages")
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        sleep(180) // allow translations to download before continuing
         
-        app.navigationBars.buttons.element(boundBy: 0).tap()
-        app.navigationBars.buttons.element(boundBy: 0).tap()
-        sleep(10)
         snapshot("01MyTools")
 
         let toolsTable = app.tables["home_table_view"]

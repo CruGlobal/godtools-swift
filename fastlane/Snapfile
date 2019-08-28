@@ -1,11 +1,8 @@
 # Uncomment the lines below you want to change by removing the # in the beginning
 
  devices([
-   "iPhone X",
-   "iPhone 7",
-   "iPhone 6 Plus",
-   "iPhone 6",
-   "iPhone 5s"
+   "iPhone Xs Max",
+   "iPhone 7 Plus",
 #    "iPad (5th generation)",
 #    "iPad Pro (12.9-inch)"
  ])
@@ -41,4 +38,4 @@ stop_after_first_error true
 
 erase_simulator true
 
-number_of_retries 3
+number_of_retries 0
