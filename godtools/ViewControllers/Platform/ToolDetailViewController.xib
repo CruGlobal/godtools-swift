@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="aboutLabel" destination="DxX-CN-KBN" id="9HP-26-LTo"/>
                 <outlet property="bannerImageView" destination="6sd-7g-yCc" id="8eK-eS-AVc"/>
                 <outlet property="descriptionLabel" destination="v52-LQ-1sy" id="L4K-Dk-cZZ"/>
                 <outlet property="downloadProgressView" destination="tqu-1c-gUh" id="Dyk-YF-IIa"/>
@@ -41,7 +42,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="434"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="40" width="260" height="20.5"/>
+                                    <rect key="frame" x="57.5" y="40" width="260" height="20.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="w7U-YD-9pa"/>
                                     </constraints>
@@ -53,10 +54,10 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2,345,678 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1jS-vF-2Ds" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="70.5" width="163" height="20"/>
+                                    <rect key="frame" x="57.5" y="70.5" width="260" height="20"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="9kQ-xd-mSb"/>
-                                        <constraint firstAttribute="width" constant="163" id="xpt-fz-7DA"/>
+                                        <constraint firstAttribute="width" constant="260" id="xpt-fz-7DA"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -77,9 +78,9 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-CN-KBN" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="177.5" width="163" height="22"/>
+                                    <rect key="frame" x="57.5" y="177.5" width="260" height="22"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="163" id="4fQ-NZ-cd4"/>
+                                        <constraint firstAttribute="width" constant="260" id="4fQ-NZ-cd4"/>
                                         <constraint firstAttribute="height" constant="22" id="cbh-A5-jZD"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -91,7 +92,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consect etur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v52-LQ-1sy" customClass="GTAttributedLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="213.5" width="260" height="81.5"/>
+                                    <rect key="frame" x="57.5" y="213.5" width="260" height="81.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="UpF-c7-Bbd"/>
                                     </constraints>
@@ -106,7 +107,7 @@
                                     <rect key="frame" x="55" y="315" width="163" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="Srb-pd-OVd"/>
-                                        <constraint firstAttribute="width" constant="163" id="zjM-jq-Ke9"/>
+                                        <constraint firstAttribute="width" constant="260" id="zjM-jq-Ke9"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -135,16 +136,16 @@
                                 <constraint firstItem="4bj-XL-FjG" firstAttribute="top" secondItem="1jS-vF-2Ds" secondAttribute="bottom" constant="17" id="Go5-If-5eD"/>
                                 <constraint firstAttribute="bottom" secondItem="mm5-hE-C3H" secondAttribute="bottom" constant="30" id="HWF-pD-u9e"/>
                                 <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="IK4-4C-tnA"/>
-                                <constraint firstItem="v52-LQ-1sy" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="LdJ-in-ox4"/>
-                                <constraint firstItem="XdA-LP-5i3" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="TJQ-Z1-1qB"/>
-                                <constraint firstItem="DxX-CN-KBN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="VpZ-55-jrl"/>
+                                <constraint firstItem="v52-LQ-1sy" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="LdJ-in-ox4"/>
+                                <constraint firstItem="XdA-LP-5i3" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="TJQ-Z1-1qB"/>
+                                <constraint firstItem="DxX-CN-KBN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="VpZ-55-jrl"/>
                                 <constraint firstItem="XdA-LP-5i3" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" constant="40" id="Wie-Jk-KFw"/>
-                                <constraint firstItem="WhJ-0q-SQL" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="Zpy-1I-Xlh"/>
-                                <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-51" id="auX-TM-COk"/>
+                                <constraint firstItem="WhJ-0q-SQL" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="Zpy-1I-Xlh"/>
+                                <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="auX-TM-COk"/>
                                 <constraint firstItem="v52-LQ-1sy" firstAttribute="top" secondItem="DxX-CN-KBN" secondAttribute="bottom" constant="14" id="bW4-Zd-E90"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="top" secondItem="XdA-LP-5i3" secondAttribute="bottom" constant="10" id="jVr-dy-p0m"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="top" secondItem="WhJ-0q-SQL" secondAttribute="bottom" constant="7" id="lE0-E5-tMh"/>
-                                <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="ttv-LD-HWQ"/>
+                                <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="ttv-LD-HWQ"/>
                             </constraints>
                         </view>
                     </subviews>
