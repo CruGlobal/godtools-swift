@@ -60,8 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.startFlowController()
         
         self.initalizeAppState()
-        
-        LanguagesManager().setupLanguageDirection()
 
         return true
     }

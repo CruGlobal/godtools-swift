@@ -248,7 +248,6 @@ class LanguagesManager: GTDataManager {
             if language.remoteId == GTSettings.shared.parallelLanguageId {
                 GTSettings.shared.parallelLanguageId = nil
             }
-            setupLanguageDirection()
         } else {
             GTSettings.shared.parallelLanguageId = language.remoteId
             UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
@@ -281,10 +280,5 @@ class LanguagesManager: GTDataManager {
     override func buildURL() -> URL? {
         return Config.shared().baseUrl?
                               .appendingPathComponent(self.path)
-    }
-
-    func setupLanguageDirection() {
-        let primaryLanguage = loadPrimaryLanguageFromDisk()
-        UIView.appearance().semanticContentAttribute = primaryLanguage?.isRightToLeft() ?? false ? .forceRightToLeft : .forceLeftToRight
     }
 }

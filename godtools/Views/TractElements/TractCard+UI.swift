@@ -60,7 +60,7 @@ extension TractCard {
     func setupScrollView() {
         let width = self.elementFrame.finalWidth() - (TractCard.shadowPaddingConstant * CGFloat(2))
         let xPosition = (self.elementFrame.finalWidth() - width) / CGFloat(2)
-        let height = self.bounds.size.height - 1.0
+        let height = self.bounds.size.height - 1.0 - footerViewHeight
         let scrollViewFrame = CGRect(x: xPosition, y: 0.0, width: width, height: height)
         
         self.scrollView.contentSize = CGSize(width: width, height: self.internalHeight)
@@ -111,7 +111,7 @@ extension TractCard {
         
         return manifestProps.backgroundColor
     }
-    
+        
     func setupNavigation(pageNumber: Int, pageCount: Int) {
         
         let language = tractConfigurations?.language?.code
@@ -135,7 +135,7 @@ extension TractCard {
 
         let stackViewWidth: CGFloat = 210
         let stackViewX = frame.size.width/2 - stackViewWidth/2
-        let stackViewFrame = CGRect(x: stackViewX, y: frame.size.height-40.0, width: stackViewWidth, height: 44.0)
+        let stackViewFrame = CGRect(x: stackViewX, y: frame.size.height-40.0, width: stackViewWidth, height: footerViewHeight)
         let stackView = UIStackView(arrangedSubviews: [prevButton, pageCountLabel, nextButton])
         stackView.semanticContentAttribute = isRightToLeft ? .forceRightToLeft : .forceLeftToRight 
         stackView.frame = stackViewFrame

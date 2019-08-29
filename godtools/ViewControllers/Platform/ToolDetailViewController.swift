@@ -26,6 +26,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var mainButton: GTButton!
     @IBOutlet weak var downloadProgressView: GTProgressView!
     @IBOutlet weak var bannerImageView: UIImageView!
+    @IBOutlet weak var aboutLabel: GTLabel!
     
     @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
     
@@ -56,21 +57,30 @@ class ToolDetailViewController: BaseViewController {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         guard let resource = resource else { return }
         
-        self.totalViewsLabel.text = String.localizedStringWithFormat("total_views".localized, resource.totalViews)
+        // if tool is available in primary language, attempt to retrieve string based on that lanague else default to device language
+        let localizedTotalViews = resource.isAvailableInLanguage(primaryLanguage) ? "total_views".localized(for: primaryLanguage?.code) ?? "total_views".localized : "total_views".localized
+        self.totalViewsLabel.text = String.localizedStringWithFormat(localizedTotalViews, resource.totalViews)
         
-        self.totalLanguagesLabel.text = String.localizedStringWithFormat("total_languages".localized, resource.numberOfAvailableLanguages())
+        let localizedTotalLanguages =  resource.isAvailableInLanguage(primaryLanguage) ? "total_languages".localized(for: primaryLanguage?.code) ?? "total_languages".localized : "total_languages".localized
+        self.totalLanguagesLabel.text = String.localizedStringWithFormat(localizedTotalLanguages.localized, resource.numberOfAvailableLanguages())
         
+        let localizedAbout = resource.isAvailableInLanguage(primaryLanguage) ? "about".localized(for: primaryLanguage?.code) ?? "about".localized : "about".localized
+        self.aboutLabel.text = String.localizedStringWithFormat(localizedAbout, resource.totalViews)
+
         self.titleLabel.text = resource.localizedName(language: primaryLanguage)
         
         self.descriptionLabel.text = loadDescription()
         
         let resourceTranslations = Array(Set(resource.translations))
         var translationStrings = [String]()
+        
+        let languageCode = primaryLanguage?.code ?? "en"
+        let locale = resource.isAvailableInLanguage(primaryLanguage) ? Locale(identifier:  languageCode) : Locale.current
         for translation in resourceTranslations {
             guard translation.language != nil else {
                 continue
             }
-            guard let languageLocalName = translation.language?.localizedName() else {
+            guard let languageLocalName = translation.language?.localizedName(locale: locale) else {
                 continue
             }
             translationStrings.append(languageLocalName)
@@ -80,6 +90,14 @@ class ToolDetailViewController: BaseViewController {
         self.languagesLabel.text = labelText
         self.displayButton()
         self.bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
+        
+        let textAlignment: NSTextAlignment = (resource.isAvailableInLanguage(primaryLanguage) && primaryLanguage?.isRightToLeft() ?? false) ? .right : .natural
+        descriptionLabel.textAlignment = textAlignment
+        titleLabel.textAlignment = textAlignment
+        totalViewsLabel.textAlignment = textAlignment
+        aboutLabel.textAlignment = textAlignment
+        totalLanguagesLabel.textAlignment = textAlignment
+        languagesLabel.textAlignment = textAlignment
     }
     
     private func displayButton() {
