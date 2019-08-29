@@ -53,14 +53,14 @@ class godtoolsUIRecording: XCTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()
         app.navigationBars.buttons.element(boundBy: 0).tap()
 
-        sleep(180) // allow translations to download before continuing
+        sleep(20) // allow translations to download before continuing
         
         snapshot("01MyTools")
 
         let toolsTable = app.tables["home_table_view"]
         var cell = toolsTable.cells.element(matching: .cell, identifier: "Knowing God Personally")
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("03KnowingGod")
         
@@ -76,7 +76,7 @@ class godtoolsUIRecording: XCTestCase {
             sleep(5)
         }
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("04KnowGodPersonally")
 
@@ -85,7 +85,7 @@ class godtoolsUIRecording: XCTestCase {
 
         cell = toolsTable.cells.element(matching: .cell, identifier: "Four Spiritual Laws")
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("05FourSpiritualLaws")
 
@@ -101,7 +101,7 @@ class godtoolsUIRecording: XCTestCase {
             sleep(5)
         }
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         app.otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element(boundBy: 0).buttons["right arrow blue"].tap()
         snapshot("06Satisfied")
 
@@ -120,7 +120,7 @@ class godtoolsUIRecording: XCTestCase {
         cell = toolsTable.cells.element(matching: .cell, identifier: "The FOUR")
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
         scrollToCell(with: "The FOUR")
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         sleep(5)
         let element = XCUIApplication().otherElements.containing(.navigationBar, identifier:"GodTools").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
         element.children(matching: .other).element(boundBy: 0).children(matching: .other).element.children(matching: .other).element(boundBy: 1).swipeLeft()
@@ -142,14 +142,14 @@ class godtoolsUIRecording: XCTestCase {
             sleep(10)
         }
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         snapshot("08HonorRestored")
         
         XCUIApplication().navigationBars["GodTools"].buttons["home"].tap()
         sleep(5)
         cell = toolsTable.cells.element(matching: .cell, identifier: "Teach Me to Share")
         _ = cell.otherElements["Progress"].waitForExistence(timeout: 5)
-        cell.otherElements["Progress"].tap()
+        tapAndHandleDownloadAlert(element: cell.otherElements["Progress"])
         snapshot("09TeachMeToShare")
 
     }
@@ -168,6 +168,29 @@ class godtoolsUIRecording: XCTestCase {
         while  !cell.isHittable {
            toolsTable.swipeUp()
         }
-
+    }
+    
+    func tapAndHandleDownloadAlert(element: XCUIElement, waitTime: UInt32 = 20, timeout: TimeInterval = 60) {
+        let time = Date()
+        
+        element.tap()
+        
+        if !XCUIApplication().alerts.element.waitForExistence(timeout: 5) {
+            return // there's no alert to dismiss
+        }
+        
+        // Continue checking for alert until tool is downloaded
+        while XCUIApplication().alerts.element.waitForExistence(timeout: 5) {
+            if XCUIApplication().alerts.element.buttons.element(matching: .button, identifier: "download_in_progress_ok").waitForExistence(timeout: 5) {
+                XCUIApplication().alerts.element.buttons.element(matching: .button, identifier: "download_in_progress_ok").tap()
+                
+                if time.timeIntervalSinceNow < -timeout {
+                    XCTFail("Timedout waiting for download to complete")
+                }
+                
+                sleep(waitTime) // allow download to complete before continuing
+                element.tap()
+            }
+        }
     }
 }

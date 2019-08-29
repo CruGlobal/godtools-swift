@@ -38,4 +38,4 @@ stop_after_first_error true
 
 erase_simulator true
 
-number_of_retries 0
+number_of_retries 1

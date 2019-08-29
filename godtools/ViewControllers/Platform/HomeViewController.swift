@@ -257,8 +257,10 @@ extension HomeViewController: ToolsManagerDelegate {
                                       message: "Download in progress".localized,
                                       preferredStyle: .alert)
         
-        
+        alert.accessibilityLabel = "download_in_progress"
+
         let okAction = UIAlertAction(title: "OK".localized, style: .cancel)
+        okAction.accessibilityLabel = "download_in_progress_ok"
         
         alert.addAction(okAction)
         present(alert, animated: true)
