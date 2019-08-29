@@ -69,16 +69,18 @@ class ToolDetailViewController: BaseViewController {
 
         self.titleLabel.text = resource.localizedName(language: primaryLanguage)
         
-        descriptionLabel.textAlignment = primaryLanguage?.isRightToLeft() ?? false ? .right : .natural
         self.descriptionLabel.text = loadDescription()
         
         let resourceTranslations = Array(Set(resource.translations))
         var translationStrings = [String]()
+        
+        let languageCode = primaryLanguage?.code ?? "en"
+        let locale = resource.isAvailableInLanguage(primaryLanguage) ? Locale(identifier:  languageCode) : Locale.current
         for translation in resourceTranslations {
             guard translation.language != nil else {
                 continue
             }
-            guard let languageLocalName = translation.language?.localizedName() else {
+            guard let languageLocalName = translation.language?.localizedName(locale: locale) else {
                 continue
             }
             translationStrings.append(languageLocalName)
@@ -88,6 +90,14 @@ class ToolDetailViewController: BaseViewController {
         self.languagesLabel.text = labelText
         self.displayButton()
         self.bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
+        
+        let textAlignment: NSTextAlignment = (resource.isAvailableInLanguage(primaryLanguage) && primaryLanguage?.isRightToLeft() ?? false) ? .right : .natural
+        descriptionLabel.textAlignment = textAlignment
+        titleLabel.textAlignment = textAlignment
+        totalViewsLabel.textAlignment = textAlignment
+        aboutLabel.textAlignment = textAlignment
+        totalLanguagesLabel.textAlignment = textAlignment
+        languagesLabel.textAlignment = textAlignment
     }
     
     private func displayButton() {
