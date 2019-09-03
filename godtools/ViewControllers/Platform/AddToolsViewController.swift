@@ -116,7 +116,12 @@ extension AddToolsViewController: ToolsManagerDelegate {
         refreshView()
     }
     
-    func primaryTranslationDownloadCompleted(at index: Int) {
+    func translationDownloadCompleted(at index: Int, isPrimary: Bool) {
+        // Tool should only be removed if the primary language is being downloaded
+        guard isPrimary else {
+            return
+        }
+        
         ToolsManager.shared.resources.remove(at: index)
         DispatchQueue.main.async {
             self.tableView.deleteSections(IndexSet(integer: index), with: .fade)
