@@ -117,8 +117,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "Download in progress" = "Download in progress";
 
 // Navigation
-"PREV" = "PREV";
-"NEXT" = "NEXT";
+"card_status1" = "PREV";
+"card_status2" = "NEXT";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
