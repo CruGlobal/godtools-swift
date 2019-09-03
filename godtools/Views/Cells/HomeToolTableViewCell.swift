@@ -40,6 +40,7 @@ class HomeToolTableViewCell: UITableViewCell {
     private (set) var resource: DownloadedResource?
     private (set) var cellDelegate: HomeToolTableViewCellDelegate?
     private (set) var isAvailable = true
+    private var isHomeView = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,9 +59,11 @@ class HomeToolTableViewCell: UITableViewCell {
                    primaryLanguage: Language?,
                    parallelLanguage: Language?,
                    banner: UIImage?,
-                   delegate: HomeToolTableViewCellDelegate) {
+                   delegate: HomeToolTableViewCellDelegate,
+                   isHomeView: Bool = false) {
         self.resource = resource
         self.cellDelegate = delegate
+        self.isHomeView = isHomeView
         
         let isAvailableInPrimaryLanguage = resource.isDownloadedInLanguage(primaryLanguage)
         
@@ -195,6 +198,9 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
+        // progress view should only be updated if cell is displayed in 'My Tools' view
+        guard isHomeView else { return }
+        
         guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
             return
         }
