@@ -26,7 +26,7 @@ class TractCallToAction: BaseTractElement {
     let buttonSizeConstant: CGFloat = 44.0      // was 22.0 - enlarged as recommended by HIG
     let buttonSizeXMargin: CGFloat = 0.0        // was 8.0
     var buttonXPosition: CGFloat {
-        return !isRightToLeft ? self.elementFrame.finalWidth() - self.buttonSizeConstant - self.buttonSizeXMargin : buttonSizeXMargin
+        return !isPrimaryRightToLeft ? self.elementFrame.finalWidth() - self.buttonSizeConstant - self.buttonSizeXMargin : buttonSizeXMargin
     }
     
     override var height: CGFloat {
