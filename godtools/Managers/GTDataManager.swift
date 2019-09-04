@@ -83,7 +83,7 @@ class GTDataManager: NSObject {
     }
     
     func findEntity<T: Object>(_ entityClass: T.Type, byAttribute attribute: String, withValue value: Any) -> T? {
-        let predicate = NSPredicate(format: attribute.appending(" = %@"), value as! CVarArg)
+        let predicate = NSPredicate(format: attribute.appending(" = [c] %@"), value as! CVarArg)
         return findEntity(entityClass, matching: predicate)
     }
     

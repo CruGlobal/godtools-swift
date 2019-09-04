@@ -130,7 +130,7 @@ class TranslationZipImporter: GTDataManager {
             let isAvailableInPrimary = self.isTranslationAvailableInPrimaryLanguage(translation: translation)
             
             if language.isPrimary() || language.isParallel() || (!isAvailableInPrimary && language.code == "en") {
-                self.primaryDownloadComplete(translation: translation)
+                self.primaryDownloadComplete(translation: translation, isPrimary: language.isPrimary() || (!isAvailableInPrimary && language.code == "en"))
             }
             
             return .value(())
@@ -266,10 +266,10 @@ class TranslationZipImporter: GTDataManager {
                               .appendingPathComponent(translationId)
     }
     
-    private func primaryDownloadComplete(translation: Translation) {
+    private func primaryDownloadComplete(translation: Translation, isPrimary: Bool) {
         NotificationCenter.default.post(name: .downloadPrimaryTranslationCompleteNotification,
                                         object: nil,
-                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId])
+                                        userInfo: [GTConstants.kDownloadProgressResourceIdKey: translation.downloadedResource!.remoteId, "isPrimary": isPrimary])
     }
     
     private func createResourcesDirectoryIfNecessary() {

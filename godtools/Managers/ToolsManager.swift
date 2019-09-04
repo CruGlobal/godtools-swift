@@ -15,7 +15,7 @@ import RealmSwift
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
     func infoButtonWasPressed(resource: DownloadedResource)
     @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
-    @objc optional func primaryTranslationDownloadCompleted(at index: Int)
+    @objc optional func translationDownloadCompleted(at index: Int, isPrimary: Bool)
 }
 
 class ToolsManager: GTDataManager {
@@ -74,8 +74,10 @@ extension ToolsManager {
         guard let index = resources.index(of: resource) else {
             return
         }
-        
-        delegate!.primaryTranslationDownloadCompleted?(at: index)
+
+        let isPrimary = notifcation.userInfo?["isPrimary"] as? Bool ?? false
+
+        delegate!.translationDownloadCompleted?(at: index, isPrimary: isPrimary)
     }
 }
 
@@ -134,7 +136,8 @@ extension ToolsManager: UITableViewDataSource {
                        primaryLanguage: languagesManager.loadPrimaryLanguageFromDisk(),
                        parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
                        banner: BannerManager().loadFor(remoteId: resource.bannerRemoteId),
-                       delegate: self)
+                       delegate: self,
+                       isHomeView: self.delegate is HomeViewController)
                 
         return cell
     }
