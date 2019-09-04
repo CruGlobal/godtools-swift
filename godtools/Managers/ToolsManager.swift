@@ -15,7 +15,7 @@ import RealmSwift
     @objc optional func didSelectTableViewRow(cell: HomeToolTableViewCell)
     func infoButtonWasPressed(resource: DownloadedResource)
     @objc optional func downloadButtonWasPressed(resource: DownloadedResource)
-    @objc optional func translationDownloadCompleted(at index: Int, isPrimary: Bool)
+    @objc optional func translationDownloadCompleted(at index: Int)
 }
 
 class ToolsManager: GTDataManager {
@@ -75,9 +75,7 @@ extension ToolsManager {
             return
         }
 
-        let isPrimary = notifcation.userInfo?["isPrimary"] as? Bool ?? false
-
-        delegate!.translationDownloadCompleted?(at: index, isPrimary: isPrimary)
+        delegate!.translationDownloadCompleted?(at: index)
     }
 }
 
