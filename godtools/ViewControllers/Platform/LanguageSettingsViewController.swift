@@ -46,6 +46,7 @@ class LanguageSettingsViewController: BaseViewController {
             self.languagesManager.loadFromDisk(id: parallelLanguageId!)?.localizedName() : "select_parallel_language".localized
         
         parallelLanguageButton.setTitle(title, for: .normal)
+        parallelLanguageButton.accessibilityIdentifier = "select_parallel_language"
     }
 
     // MARK: - Actions

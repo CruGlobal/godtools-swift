@@ -64,12 +64,12 @@ Carthage/Build
 
 fastlane/report.xml
 fastlane/Preview.html
-fastlane/screenshots
 fastlane/test_output
 
 #fastlane
 fastlane/report.xml
-fastlane/screenshots
+fastlane/screenshots/*/*.png
+fastlane/screenshots/*.html
 fastlane/test_output
 output
 derivedData

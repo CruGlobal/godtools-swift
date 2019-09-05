@@ -1,27 +1,29 @@
 # Uncomment the lines below you want to change by removing the # in the beginning
 
+scheme("godtoolsUIRecording")
+
  devices([
-   "iPhone 6 Plus",
-   "iPhone 6",
-   "iPhone 5",
-   "iPhone 4s",
-   "iPad Retina",
-   "iPad Pro"
+   "iPhone Xs Max",
+   "iPhone 7 Plus",
+#    "iPad (5th generation)",
+#    "iPad Pro (12.9-inch)"
  ])
 
 languages([
-  "de-DE",
   "en-US",
+  "de-DE",
   "es-ES",
-  "pt-BR",
+  "el",
   "fr-FR",
+  "id",
+  "it",
+  "ms",
+  "pt-BR",
   "ru",
+  "th",
+  "vi",
   "zh-Hant",
-  "zh-Hans",
-  "tr",
-  "ja",
-  "ko",
-  "id"
+  "zh-Hans"
 ])
 
 
@@ -38,4 +40,4 @@ stop_after_first_error true
 
 erase_simulator true
 
-number_of_retries 3
+number_of_retries 1
