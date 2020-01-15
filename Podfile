@@ -1,10 +1,14 @@
+
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://github.com/CruGlobal/cocoapods-specs.git'
 
+# Uncomment this line to define a global platform for your project
 platform :ios, '9.0'
 
-inhibit_all_warnings!
 use_frameworks!
+
+# Specs finder:
+# https://github.com/CocoaPods/Specs/find/master
 
 target 'godtools' do
     
@@ -13,7 +17,7 @@ target 'godtools' do
     pod 'PromiseKit/Alamofire', '~> 6.8'
     
     pod 'CRUConfig', '~> 1.2'
-    pod 'RealmSwift', '~> 3.16'
+    pod 'RealmSwift', '4.3.0'
     pod 'SSZipArchive'
     pod 'SWXMLHash'
     pod 'Fuzi'
@@ -22,39 +26,18 @@ target 'godtools' do
     pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'AdobeMobileSDK', '~> 4.17.1'
-    pod 'TheKeyOAuthSwift'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
     pod 'Firebase/Analytics'
     pod 'FacebookCore'
     
+    # TheKeyOAuthSwift requires dependency GTMAppAuth and pulls the latest version of GTMAppAuth.  Must force GTMAppAuth to version 0.7.0 because the latest version of GTMAppAuth pulls a version of AppAuth that is deprececated in TheKeyOAuthSwift causing errors in TheKeyOAuthSwift.
+    pod 'TheKeyOAuthSwift'
+    pod 'GTMAppAuth', '0.7.0'
+    
     target 'godtoolsTests' do
         inherit! :search_paths
         # Pods for testing
     end
-
-end
-
-post_install do |installer|
-    print "Setting the default SWIFT_VERSION to 5.0 for every pod\n"
-    installer.pods_project.build_configurations.each do |config|
-        config.build_settings['SWIFT_VERSION'] = '5'
-    end
-    
-    #     installer.pods_project.targets.each do |target|
-    #         # pods that require old swift
-    #         if ['Alamofire','PromiseKit', 'PromiseKit/Alamofire'].include? target.name
-    #             print "#{target}'s SWIFT_VERSION = 3\n"
-    #             target.build_configurations.each do |config|
-    #                 config.build_settings['SWIFT_VERSION'] = '3.0'
-    #             end
-    #             else
-    #             print "#{target}'s SWIFT_VERSION = Undefined (Xcode will automatically resolve to 4.2)\n"
-    #             target.build_configurations.each do |config|
-    #                 config.build_settings.delete('SWIFT_VERSION')
-    #             end
-    #         end
-    
-    #     end
 end
 
