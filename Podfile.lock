@@ -2,104 +2,123 @@ PODS:
   - AdobeMobileSDK (4.17.1):
     - AdobeMobileSDK/iOS (= 4.17.1)
   - AdobeMobileSDK/iOS (4.17.1)
-  - Alamofire (4.8.2)
-  - AppAuth (0.95.1)
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
+  - Alamofire (4.9.1)
+  - AppAuth (0.92.0)
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
   - CRUConfig (1.2.0)
-  - Fabric (1.9.0)
-  - FacebookCore (0.8.0):
+  - Fabric (1.10.2)
+  - FacebookCore (0.9.0):
     - FBSDKCoreKit (~> 5.0)
-  - FBSDKCoreKit (5.3.0):
-    - FBSDKCoreKit/Basics (= 5.3.0)
-    - FBSDKCoreKit/Core (= 5.3.0)
-  - FBSDKCoreKit/Basics (5.3.0)
-  - FBSDKCoreKit/Core (5.3.0):
+  - FBSDKCoreKit (5.14.0):
+    - FBSDKCoreKit/Basics (= 5.14.0)
+    - FBSDKCoreKit/Core (= 5.14.0)
+  - FBSDKCoreKit/Basics (5.14.0)
+  - FBSDKCoreKit/Core (5.14.0):
     - FBSDKCoreKit/Basics
-  - Firebase/Analytics (6.5.0):
+  - Firebase/Analytics (6.15.0):
     - Firebase/Core
-  - Firebase/Core (6.5.0):
+  - Firebase/Core (6.15.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.0.4)
-  - Firebase/CoreOnly (6.5.0):
-    - FirebaseCore (= 6.1.0)
-  - FirebaseAnalytics (6.0.4):
-    - FirebaseCore (~> 6.1)
-    - FirebaseInstanceID (~> 4.2)
-    - GoogleAppMeasurement (= 6.0.4)
+    - FirebaseAnalytics (= 6.2.1)
+  - Firebase/CoreOnly (6.15.0):
+    - FirebaseCore (= 6.6.0)
+  - FirebaseAnalytics (6.2.1):
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstanceID (~> 4.3)
+    - GoogleAppMeasurement (= 6.2.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3)
-  - FirebaseCore (6.1.0):
-    - GoogleUtilities/Environment (~> 6.0)
-    - GoogleUtilities/Logger (~> 6.0)
-  - FirebaseInstanceID (4.2.2):
-    - FirebaseCore (~> 6.0)
-    - GoogleUtilities/Environment (~> 6.0)
-    - GoogleUtilities/UserDefaults (~> 6.0)
-  - Fuzi (3.1.0)
+    - nanopb (= 0.3.9011)
+  - FirebaseCore (6.6.0):
+    - FirebaseCoreDiagnostics (~> 1.2)
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+  - FirebaseCoreDiagnostics (1.2.0):
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleDataTransportCCTSupport (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseInstallations (1.0.0):
+    - FirebaseCore (~> 6.6)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (4.3.0):
+    - FirebaseCore (~> 6.6)
+    - FirebaseInstallations (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/UserDefaults (~> 6.5)
+  - Fuzi (3.1.1)
   - GoogleAnalytics (3.17.0)
-  - GoogleAppMeasurement (6.0.4):
+  - GoogleAppMeasurement (6.2.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (~> 0.3)
+    - nanopb (= 0.3.9011)
   - GoogleConversionTracking (3.4.0)
-  - GoogleUtilities/AppDelegateSwizzler (6.2.3):
+  - GoogleDataTransport (3.3.0)
+  - GoogleDataTransportCCTSupport (1.3.0):
+    - GoogleDataTransport (~> 3.3)
+    - nanopb (~> 0.3.901)
+  - GoogleUtilities/AppDelegateSwizzler (6.5.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.2.3)
-  - GoogleUtilities/Logger (6.2.3):
+  - GoogleUtilities/Environment (6.5.0)
+  - GoogleUtilities/Logger (6.5.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.2.3):
+  - GoogleUtilities/MethodSwizzler (6.5.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.2.3):
+  - GoogleUtilities/Network (6.5.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.2.3)"
-  - GoogleUtilities/Reachability (6.2.3):
+  - "GoogleUtilities/NSData+zlib (6.5.0)"
+  - GoogleUtilities/Reachability (6.5.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.2.3):
+  - GoogleUtilities/UserDefaults (6.5.0):
     - GoogleUtilities/Logger
-  - GTMAppAuth (0.7.1):
-    - AppAuth (~> 0.95)
+  - GTMAppAuth (0.7.0):
+    - AppAuth (~> 0.92.0)
     - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.2.2):
-    - GTMSessionFetcher/Full (= 1.2.2)
-  - GTMSessionFetcher/Core (1.2.2)
-  - GTMSessionFetcher/Full (1.2.2):
-    - GTMSessionFetcher/Core (= 1.2.2)
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
-  - PromiseKit (6.8.4):
-    - PromiseKit/CorePromise (= 6.8.4)
-    - PromiseKit/Foundation (= 6.8.4)
-    - PromiseKit/UIKit (= 6.8.4)
-  - PromiseKit/Alamofire (6.8.4):
+  - GTMSessionFetcher (1.3.1):
+    - GTMSessionFetcher/Full (= 1.3.1)
+  - GTMSessionFetcher/Core (1.3.1)
+  - GTMSessionFetcher/Full (1.3.1):
+    - GTMSessionFetcher/Core (= 1.3.1)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/Alamofire (6.13.1):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.8.4)
-  - PromiseKit/Foundation (6.8.4):
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.8.4):
+  - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - Realm (3.16.0):
-    - Realm/Headers (= 3.16.0)
-  - Realm/Headers (3.16.0)
-  - RealmSwift (3.16.0):
-    - Realm (= 3.16.0)
+  - PromisesObjC (1.2.8)
+  - Realm (4.3.0):
+    - Realm/Headers (= 4.3.0)
+  - Realm/Headers (4.3.0)
+  - RealmSwift (4.3.0):
+    - Realm (= 4.3.0)
   - Result (5.0.0)
   - SSZipArchive (2.2.2)
   - SwiftyJSON (5.0.0)
-  - SWXMLHash (4.9.0)
+  - SWXMLHash (5.0.1)
   - TheKeyOAuthSwift (0.5.5):
     - GTMAppAuth
     - Result
@@ -116,9 +135,10 @@ DEPENDENCIES:
   - Fuzi
   - GoogleAnalytics (~> 3.17.0)
   - GoogleConversionTracking (~> 3.4.0)
+  - GTMAppAuth (= 0.7.0)
   - PromiseKit (~> 6.8)
   - PromiseKit/Alamofire (~> 6.8)
-  - RealmSwift (~> 3.16)
+  - RealmSwift (= 4.3.0)
   - SSZipArchive
   - SwiftyJSON
   - SWXMLHash
@@ -126,7 +146,9 @@ DEPENDENCIES:
   - TTTAttributedLabel
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CruGlobal/cocoapods-specs.git:
+    - TheKeyOAuthSwift
+  trunk:
     - AdobeMobileSDK
     - Alamofire
     - AppAuth
@@ -138,16 +160,22 @@ SPEC REPOS:
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
+    - FirebaseInstallations
     - FirebaseInstanceID
     - Fuzi
     - GoogleAnalytics
     - GoogleAppMeasurement
     - GoogleConversionTracking
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
     - nanopb
     - PromiseKit
+    - PromisesObjC
     - Realm
     - RealmSwift
     - Result
@@ -155,40 +183,44 @@ SPEC REPOS:
     - SwiftyJSON
     - SWXMLHash
     - TTTAttributedLabel
-  https://github.com/CruGlobal/cocoapods-specs.git:
-    - TheKeyOAuthSwift
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 38a87e30cbc8e18858257f37011c1fde9a0853b7
-  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  AppAuth: cd34aac431e5c77c46ec7f03935377faa8c5808b
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
-  FacebookCore: 563bb4cbcd7dd86cf89f3729252140bf256aacaa
-  FBSDKCoreKit: 39748deefe37a005f983722e433be2ddcdd83ae7
-  Firebase: dedc9e48ea3f3649ad5f6b982f8a0c73508a14b5
-  FirebaseAnalytics: 3fb375bc9d13779add4039716f868d233a473fad
-  FirebaseCore: aecf02fb2274ec361b9bebeac112f5daa18273bd
-  FirebaseInstanceID: 662b8108a09fe9ed01aafdedba100fde8536b0f6
-  Fuzi: 92082746c28d36ae0943079e03008f4d4c8b49b0
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
+  FBSDKCoreKit: a72c8d2c42aa4c4d5eaa5f160be9580750f70d2e
+  Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
+  FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
+  FirebaseCore: 4aeb81ff53dcd9a3634ca725dc1fb8c2a4622046
+  FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
+  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseInstallations: ae1dbf899b1f071b1f93dff78f748380bb6616d0
+  FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
+  Fuzi: bcc5694488dd6e672e126cbf3c5471d7a79506d1
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleAppMeasurement: 183bd916af7f80deb67c01888368f1108d641832
+  GoogleAppMeasurement: a08a43b8677b95ed51fcef880e36737334d804fd
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
-  GoogleUtilities: d2b0e277a95962e09bb27f5cd42f5f0b6a506c7d
-  GTMAppAuth: c5e41aaf039ac1ccc41543e6ea2ef7abd255ad41
-  GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
-  PromiseKit: 51794a832647e7b819336dc2279039ce9f1cc49b
-  Realm: 5ca1b8c472dfc532cd0ba0bfe2ce49f97130158f
-  RealmSwift: 2ee401dbcc188706261921326146f5a539d4d4a7
+  GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
+  GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
+  GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
+  GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
+  GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  Realm: 9357c3589555793e1860a7104a7412bca4a48d99
+  RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  SWXMLHash: 87b0006848a548b7f9485b40bc71721b3ae39add
+  SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 2398f096c656900632cc1733a42c257a56d2bb35
+PODFILE CHECKSUM: 726e36be61bc8b0b64a66e24d446df865dd9ece3
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
