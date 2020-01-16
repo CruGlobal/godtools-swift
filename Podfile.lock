@@ -97,17 +97,17 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - PromiseKit (6.12.0):
-    - PromiseKit/CorePromise (= 6.12.0)
-    - PromiseKit/Foundation (= 6.12.0)
-    - PromiseKit/UIKit (= 6.12.0)
-  - PromiseKit/Alamofire (6.12.0):
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/Alamofire (6.13.1):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
-  - PromiseKit/CorePromise (6.12.0)
-  - PromiseKit/Foundation (6.12.0):
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.12.0):
+  - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
   - PromisesObjC (1.2.8)
   - Realm (4.3.0):
@@ -146,7 +146,9 @@ DEPENDENCIES:
   - TTTAttributedLabel
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/CruGlobal/cocoapods-specs.git:
+    - TheKeyOAuthSwift
+  trunk:
     - AdobeMobileSDK
     - Alamofire
     - AppAuth
@@ -181,8 +183,6 @@ SPEC REPOS:
     - SwiftyJSON
     - SWXMLHash
     - TTTAttributedLabel
-  https://github.com/CruGlobal/cocoapods-specs.git:
-    - TheKeyOAuthSwift
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 38a87e30cbc8e18858257f37011c1fde9a0853b7
@@ -210,7 +210,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 8d724be29ab8f2f6d35b2bf929d76340c9d1f1b1
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Realm: 9357c3589555793e1860a7104a7412bca4a48d99
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
@@ -221,6 +221,6 @@ SPEC CHECKSUMS:
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
 
-PODFILE CHECKSUM: 79e8dc496a7810206ef90c974ea5fa2369c21c33
+PODFILE CHECKSUM: 726e36be61bc8b0b64a66e24d446df865dd9ece3
 
 COCOAPODS: 1.8.4
