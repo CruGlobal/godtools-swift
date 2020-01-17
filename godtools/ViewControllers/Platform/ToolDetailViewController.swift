@@ -10,6 +10,9 @@
 import TTTAttributedLabel
 import UIKit
 
+protocol ToolDetailViewControllerDelegate: class {
+    func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource)
+}
 
 class ToolDetailViewController: BaseViewController {
     
@@ -39,6 +42,8 @@ class ToolDetailViewController: BaseViewController {
     let toolsManager = ToolsManager.shared
     
     var resource: DownloadedResource?
+    
+    weak var delegate: ToolDetailViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,7 +182,11 @@ class ToolDetailViewController: BaseViewController {
     }
     
     @objc func handleOpenTool(button: UIButton) {
-        print("open tool button pressed")
+        guard let resource = resource else {
+            assertionFailure("Resource should not be nil.")
+            return
+        }
+        delegate?.openToolTapped(toolDetail: self, resource: resource)
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
