@@ -13,6 +13,8 @@ import UIKit
 
 class ToolDetailViewController: BaseViewController {
     
+    private var didLayoutSubviews: Bool = false
+    
     @IBOutlet weak var titleLabel: GTLabel!
     @IBOutlet weak var totalViewsLabel: GTLabel!
     @IBOutlet weak var descriptionLabel: GTAttributedLabel! {
@@ -23,12 +25,15 @@ class ToolDetailViewController: BaseViewController {
     }
     @IBOutlet weak var totalLanguagesLabel: GTLabel!
     @IBOutlet weak var languagesLabel: GTLabel!
+    @IBOutlet weak var openToolButton: GTButton!
     @IBOutlet weak var mainButton: GTButton!
     @IBOutlet weak var downloadProgressView: GTProgressView!
     @IBOutlet weak var bannerImageView: UIImageView!
     @IBOutlet weak var aboutLabel: GTLabel!
     
     @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mainButtonTopToTotalViewsLabel: NSLayoutConstraint!
+    @IBOutlet weak var mainButtonTopToOpenToolButton: NSLayoutConstraint!
     
     
     let toolsManager = ToolsManager.shared
@@ -37,10 +42,24 @@ class ToolDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        openToolButton.designAsOpenToolButton()
+        openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
         self.displayData()
         self.hideScreenTitle()
         registerForDownloadProgressNotifications()
         setTopHeight()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            if !showsOpenToolButton {
+                mainButtonTopToTotalViewsLabel.isActive = true
+                mainButtonTopToOpenToolButton.isActive = false
+                openToolButton.isHidden = true
+            }
+        }
     }
     
     func setTopHeight() {
@@ -100,6 +119,10 @@ class ToolDetailViewController: BaseViewController {
         languagesLabel.textAlignment = textAlignment
     }
     
+    private var showsOpenToolButton: Bool {
+        return resource?.shouldDownload ?? false
+    }
+    
     private func displayButton() {
         if resource!.numberOfAvailableLanguages() == 0 {
             mainButton.designAsUnavailableButton()
@@ -151,6 +174,10 @@ class ToolDetailViewController: BaseViewController {
                 self.returnToHome()
             }
         }
+    }
+    
+    @objc func handleOpenTool(button: UIButton) {
+        print("open tool button pressed")
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {

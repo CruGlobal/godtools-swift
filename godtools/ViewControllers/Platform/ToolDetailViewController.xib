@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +15,9 @@
                 <outlet property="downloadProgressView" destination="tqu-1c-gUh" id="Dyk-YF-IIa"/>
                 <outlet property="languagesLabel" destination="mm5-hE-C3H" id="lRa-Ld-dFw"/>
                 <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
+                <outlet property="mainButtonTopToOpenToolButton" destination="BRf-ip-8FY" id="i0W-JS-JJe"/>
+                <outlet property="mainButtonTopToTotalViewsLabel" destination="vbO-2X-fTp" id="HfA-wS-aQL"/>
+                <outlet property="openToolButton" destination="XLw-q0-IHN" id="Ewv-v5-wfW"/>
                 <outlet property="titleLabel" destination="XdA-LP-5i3" id="m1t-yw-ZGb"/>
                 <outlet property="topLayoutConstraint" destination="gKt-fE-1PR" id="Z8V-gh-6nG"/>
                 <outlet property="totalLanguagesLabel" destination="WhJ-0q-SQL" id="UEL-1m-0ma"/>
@@ -39,7 +40,7 @@
                     <rect key="frame" x="0.0" y="178" width="375" height="489"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="434"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="494"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
                                     <rect key="frame" x="57.5" y="40" width="260" height="20.5"/>
@@ -66,8 +67,16 @@
                                         <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
                                     </userDefinedRuntimeAttributes>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLw-q0-IHN" userLabel="openToolButton" customClass="GTButton" customModule="godtools" customModuleProvider="target">
+                                    <rect key="frame" x="57.5" y="107.5" width="260" height="48"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="260" id="8qE-hV-Epn"/>
+                                        <constraint firstAttribute="height" constant="48" id="WLO-VK-P0O"/>
+                                    </constraints>
+                                    <state key="normal" title="Open Tool"/>
+                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4bj-XL-FjG" customClass="GTButton" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="107.5" width="260" height="48"/>
+                                    <rect key="frame" x="57.5" y="167.5" width="260" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="48" id="ag2-Ps-Qdr"/>
                                         <constraint firstAttribute="width" constant="260" id="hKN-dm-q5A"/>
@@ -78,7 +87,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DxX-CN-KBN" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="57.5" y="177.5" width="260" height="22"/>
+                                    <rect key="frame" x="57.5" y="237.5" width="260" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="4fQ-NZ-cd4"/>
                                         <constraint firstAttribute="height" constant="22" id="cbh-A5-jZD"/>
@@ -92,7 +101,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consect etur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v52-LQ-1sy" customClass="GTAttributedLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="57.5" y="213.5" width="260" height="81.5"/>
+                                    <rect key="frame" x="57.5" y="273.5" width="260" height="81.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="UpF-c7-Bbd"/>
                                     </constraints>
@@ -104,7 +113,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="40 Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhJ-0q-SQL" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="315" width="163" height="21"/>
+                                    <rect key="frame" x="57.5" y="375" width="260" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="Srb-pd-OVd"/>
                                         <constraint firstAttribute="width" constant="260" id="zjM-jq-Ke9"/>
@@ -117,7 +126,7 @@
                                     </userDefinedRuntimeAttributes>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Afrikaans, Bengali, Czech, Danish, English, Farsi, Finnish, French" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mm5-hE-C3H" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="55" y="343" width="260" height="61"/>
+                                    <rect key="frame" x="57.5" y="403" width="260" height="61"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="260" id="CnW-uM-qvf"/>
                                     </constraints>
@@ -131,22 +140,30 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="4bj-XL-FjG" firstAttribute="top" secondItem="XLw-q0-IHN" secondAttribute="bottom" constant="12" id="BRf-ip-8FY"/>
                                 <constraint firstItem="DxX-CN-KBN" firstAttribute="top" secondItem="4bj-XL-FjG" secondAttribute="bottom" constant="22" id="CuT-XS-TlO"/>
                                 <constraint firstItem="WhJ-0q-SQL" firstAttribute="top" secondItem="v52-LQ-1sy" secondAttribute="bottom" constant="20" id="G65-vz-ykk"/>
-                                <constraint firstItem="4bj-XL-FjG" firstAttribute="top" secondItem="1jS-vF-2Ds" secondAttribute="bottom" constant="17" id="Go5-If-5eD"/>
                                 <constraint firstAttribute="bottom" secondItem="mm5-hE-C3H" secondAttribute="bottom" constant="30" id="HWF-pD-u9e"/>
-                                <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" constant="-2.5" id="IK4-4C-tnA"/>
+                                <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="IK4-4C-tnA"/>
                                 <constraint firstItem="v52-LQ-1sy" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="LdJ-in-ox4"/>
+                                <constraint firstItem="XLw-q0-IHN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="QFs-Vc-R0O"/>
                                 <constraint firstItem="XdA-LP-5i3" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="TJQ-Z1-1qB"/>
                                 <constraint firstItem="DxX-CN-KBN" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="VpZ-55-jrl"/>
                                 <constraint firstItem="XdA-LP-5i3" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" constant="40" id="Wie-Jk-KFw"/>
+                                <constraint firstItem="XLw-q0-IHN" firstAttribute="top" secondItem="1jS-vF-2Ds" secondAttribute="bottom" constant="17" id="X3W-Jo-G1T"/>
                                 <constraint firstItem="WhJ-0q-SQL" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="Zpy-1I-Xlh"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="auX-TM-COk"/>
                                 <constraint firstItem="v52-LQ-1sy" firstAttribute="top" secondItem="DxX-CN-KBN" secondAttribute="bottom" constant="14" id="bW4-Zd-E90"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="top" secondItem="XdA-LP-5i3" secondAttribute="bottom" constant="10" id="jVr-dy-p0m"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="top" secondItem="WhJ-0q-SQL" secondAttribute="bottom" constant="7" id="lE0-E5-tMh"/>
                                 <constraint firstItem="mm5-hE-C3H" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="ttv-LD-HWQ"/>
+                                <constraint firstItem="4bj-XL-FjG" firstAttribute="top" secondItem="1jS-vF-2Ds" secondAttribute="bottom" constant="17" id="vbO-2X-fTp"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="vbO-2X-fTp"/>
+                                </mask>
+                            </variation>
                         </view>
                     </subviews>
                     <constraints>
