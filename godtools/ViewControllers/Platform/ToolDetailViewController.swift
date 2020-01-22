@@ -22,10 +22,6 @@ class ToolDetailViewController: BaseViewController {
     }
         
     private var detailsSegments: [GTSegment] = Array()
-    private var aboutDescription: String = ""
-    private var languageDescription: String = ""
-    private var languageTextAlignment: NSTextAlignment = .left
-    private var maxToolDetailTextHeight: CGFloat = 0
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak var titleLabel: GTLabel!
@@ -33,9 +29,10 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak private var openToolButton: GTButton!
     @IBOutlet weak var mainButton: GTButton!
     @IBOutlet weak private var detailsControl: GTSegmentedControl!
-    @IBOutlet weak private var detailsCollectionView: UICollectionView!
-    @IBOutlet weak private var detailsTextView: UITextView!
-    @IBOutlet weak private var detailsLabel: UILabel!
+    @IBOutlet weak private var detailsView: UIView!
+    @IBOutlet weak private var detailsLabelsView: UIView!
+    @IBOutlet weak private var aboutDetailsLabel: TTTAttributedLabel!
+    @IBOutlet weak private var languageDetailsLabel: TTTAttributedLabel!
     @IBOutlet weak private var detailsShadow: UIView!
     @IBOutlet weak var downloadProgressView: GTProgressView!
     @IBOutlet weak var bannerImageView: UIImageView!
@@ -43,8 +40,10 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var mainButtonTopToTotalViewsLabel: NSLayoutConstraint!
     @IBOutlet weak var mainButtonTopToOpenToolButton: NSLayoutConstraint!
-    @IBOutlet weak private var detailsCollectionHeight: NSLayoutConstraint!
-    
+    @IBOutlet weak private var detailsLabelsViewWidth: NSLayoutConstraint!
+    @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
+    @IBOutlet weak private var aboutDetailsLabelLeading: NSLayoutConstraint!
+    @IBOutlet weak private var languageDetailsLabelLeading: NSLayoutConstraint!
     
     let toolsManager = ToolsManager.shared
     
@@ -56,13 +55,7 @@ class ToolDetailViewController: BaseViewController {
         super.viewDidLoad()
         
         openToolButton.designAsOpenToolButton()
-            
-        detailsCollectionView.register(
-            UINib(nibName: ToolDetailCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: ToolDetailCell.reuseIdentifier
-        )
-        detailsTextView.isHidden = true
-        
+                    
         detailsShadow.layer.shadowOffset = CGSize(width: 0, height: 1)
         detailsShadow.layer.shadowColor = UIColor.black.cgColor
         detailsShadow.layer.shadowRadius = 5
@@ -74,8 +67,6 @@ class ToolDetailViewController: BaseViewController {
         setTopHeight()
         
         openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
-        detailsCollectionView.delegate = self
-        detailsCollectionView.dataSource = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,27 +78,6 @@ class ToolDetailViewController: BaseViewController {
                 mainButtonTopToOpenToolButton.isActive = false
                 openToolButton.isHidden = true
             }
-                        
-            let detailDescriptions: [String] = [aboutDescription, languageDescription]
-            for description in detailDescriptions {
-                detailsTextView.text = description
-                let width: CGFloat = detailsCollectionView.bounds.size.width
-                let detailsTextSize: CGSize = detailsTextView.sizeThatFits(CGSize(width: width, height: 0))
-                if detailsTextSize.height > maxToolDetailTextHeight {
-                    maxToolDetailTextHeight = detailsTextSize.height + 44
-                }
-                
-                print(" detailsTextSize.height: \(detailsTextSize.height)")
-                
-                detailsLabel.numberOfLines = 0
-                detailsLabel.text = description
-                detailsLabel.layoutIfNeeded()
-                let height: CGFloat = (description as NSString).size(withAttributes: [NSAttributedString.Key.font: detailsLabel.font]).height
-                print(" detailsLabel.height: \(height)")
-            }
-            detailsCollectionHeight.constant = maxToolDetailTextHeight
-            view.layoutIfNeeded()
-            detailsCollectionView.reloadData()
         }
     }
     
@@ -152,14 +122,15 @@ class ToolDetailViewController: BaseViewController {
         self.bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
         
         let textAlignment: NSTextAlignment = (resource.isAvailableInLanguage(primaryLanguage) && primaryLanguage?.isRightToLeft() ?? false) ? .right : .natural
-        
-        languageTextAlignment = textAlignment
-        
+                
         titleLabel.textAlignment = textAlignment
         totalViewsLabel.textAlignment = textAlignment
         
-        aboutDescription = loadDescription()
-        languageDescription = translationStrings.sorted(by: { $0 < $1 }).joined(separator: ", ")
+        setupDetailsLabels(
+            aboutDetails: loadDescription(),
+            languageDetails: translationStrings.sorted(by: { $0 < $1 }).joined(separator: ", "),
+            textAlignment: textAlignment
+        )
         
         let aboutSegment = GTSegment(
             id: SegmentedControlId.about.rawValue,
@@ -177,6 +148,33 @@ class ToolDetailViewController: BaseViewController {
     
     private var showsOpenToolButton: Bool {
         return resource?.shouldDownload ?? false
+    }
+    
+    private func setupDetailsLabels(aboutDetails: String, languageDetails: String, textAlignment: NSTextAlignment) {
+        
+        let detailsLabels: [TTTAttributedLabel] = [aboutDetailsLabel, languageDetailsLabel]
+        
+        for detailLabel in detailsLabels {
+            detailLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
+            detailLabel.delegate = self
+        }
+        
+        aboutDetailsLabel.text = aboutDetails
+        languageDetailsLabel.text = languageDetails
+        
+        var maxDetailLabelHeight: CGFloat = 0
+        
+        for detailLabel in detailsLabels {
+            detailLabel.textAlignment = textAlignment
+            detailLabel.setLineSpacing(lineSpacing: 3)
+            detailLabel.layoutIfNeeded()
+            if detailLabel.frame.size.height > maxDetailLabelHeight {
+                maxDetailLabelHeight = detailLabel.frame.size.height
+            }
+        }
+        
+        detailsLabelsViewHeight.constant = maxDetailLabelHeight
+        detailsView.layoutIfNeeded()
     }
     
     private func displayButton() {
@@ -279,7 +277,6 @@ class ToolDetailViewController: BaseViewController {
     
 }
 
-
 extension ToolDetailViewController: TTTAttributedLabelDelegate {
     
     func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
@@ -292,7 +289,6 @@ extension ToolDetailViewController: TTTAttributedLabelDelegate {
             UIApplication.shared.openURL(url)
         }
     }
-    
 }
 
 // MARK: - GTSegmentedControlDelegate
@@ -301,70 +297,20 @@ extension ToolDetailViewController: GTSegmentedControlDelegate {
     
     func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegment, at index: Int) {
         
-        detailsCollectionView.scrollToItem(at: IndexPath(item: index, section: 0), at: .left, animated: true)
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
-
-extension ToolDetailViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == detailsCollectionView {
-            return detailsSegments.count
-        }
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if collectionView == detailsCollectionView {
-                        
-            let cell: ToolDetailCell = detailsCollectionView.dequeueReusableCell(withReuseIdentifier: ToolDetailCell.reuseIdentifier, for: indexPath) as! ToolDetailCell
-            let segment: GTSegment = detailsSegments[indexPath.item]
-            
-            if let segmentId = SegmentedControlId(rawValue: segment.id) {
-                switch segmentId {
-                case .about:
-                    cell.configure(details: aboutDescription, textAlignment: languageTextAlignment)
-                case .language:
-                    cell.configure(details: languageDescription, textAlignment: languageTextAlignment)
-                }
+        if let segmentId = SegmentedControlId(rawValue: segment.id) {
+                    
+            switch segmentId {
+            case .about:
+                aboutDetailsLabelLeading.constant = 0
+                languageDetailsLabelLeading.constant = view.bounds.size.width
+            case .language:
+                aboutDetailsLabelLeading.constant = view.bounds.size.width * -1
+                languageDetailsLabelLeading.constant = 0
             }
-                        
-            cell.backgroundColor = .clear
             
-            return cell
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.detailsView.layoutIfNeeded()
+            }, completion: nil)
         }
-        
-        return UICollectionViewCell()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == detailsCollectionView {
-            return CGSize(
-                width: detailsCollectionView.bounds.size.width,
-                height: maxToolDetailTextHeight
-            )
-        }
-        return CGSize(width: 50, height: 50)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == detailsCollectionView {
-            return 0
-        }
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == detailsCollectionView {
-            return 0
-        }
-        return 0
     }
 }
