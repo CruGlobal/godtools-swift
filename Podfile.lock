@@ -10,11 +10,11 @@ PODS:
   - Fabric (1.10.2)
   - FacebookCore (0.9.0):
     - FBSDKCoreKit (~> 5.0)
-  - FBSDKCoreKit (5.14.0):
-    - FBSDKCoreKit/Basics (= 5.14.0)
-    - FBSDKCoreKit/Core (= 5.14.0)
-  - FBSDKCoreKit/Basics (5.14.0)
-  - FBSDKCoreKit/Core (5.14.0):
+  - FBSDKCoreKit (5.15.0):
+    - FBSDKCoreKit/Basics (= 5.15.0)
+    - FBSDKCoreKit/Core (= 5.15.0)
+  - FBSDKCoreKit/Basics (5.15.0)
+  - FBSDKCoreKit/Core (5.15.0):
     - FBSDKCoreKit/Basics
   - Firebase/Analytics (6.15.0):
     - Firebase/Core
@@ -123,6 +123,7 @@ PODS:
     - GTMAppAuth
     - Result
   - TTTAttributedLabel (2.0.0)
+  - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
   - AdobeMobileSDK (~> 4.17.1)
@@ -144,6 +145,7 @@ DEPENDENCIES:
   - SWXMLHash
   - TheKeyOAuthSwift
   - TTTAttributedLabel
+  - YoutubePlayer-in-WKWebView (~> 0.3.0)
 
 SPEC REPOS:
   https://github.com/CruGlobal/cocoapods-specs.git:
@@ -183,6 +185,7 @@ SPEC REPOS:
     - SwiftyJSON
     - SWXMLHash
     - TTTAttributedLabel
+    - YoutubePlayer-in-WKWebView
 
 SPEC CHECKSUMS:
   AdobeMobileSDK: 38a87e30cbc8e18858257f37011c1fde9a0853b7
@@ -192,7 +195,7 @@ SPEC CHECKSUMS:
   CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
-  FBSDKCoreKit: a72c8d2c42aa4c4d5eaa5f160be9580750f70d2e
+  FBSDKCoreKit: 083ba8c8e37939c0b4c84250654c9be0aef0c2f8
   Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
   FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
   FirebaseCore: 4aeb81ff53dcd9a3634ca725dc1fb8c2a4622046
@@ -220,7 +223,8 @@ SPEC CHECKSUMS:
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
+  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 726e36be61bc8b0b64a66e24d446df865dd9ece3
+PODFILE CHECKSUM: 20e42803c937e82f2575c00f0135a543937c4876
 
 COCOAPODS: 1.8.4

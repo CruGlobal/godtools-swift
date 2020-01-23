@@ -7,8 +7,9 @@
 //
 
 
-import TTTAttributedLabel
 import UIKit
+import TTTAttributedLabel
+import YoutubePlayer_in_WKWebView
 
 protocol ToolDetailViewControllerDelegate: class {
     func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource)
@@ -24,6 +25,11 @@ class ToolDetailViewController: BaseViewController {
     private var detailsSegments: [GTSegment] = Array()
     private var didLayoutSubviews: Bool = false
     
+    @IBOutlet weak private var topView: UIView!
+    @IBOutlet weak private var bottomView: UIView!
+    @IBOutlet weak private var youTubePlayerView: WKYTPlayerView!
+    @IBOutlet weak private var youTubeLoadingView: UIView!
+    @IBOutlet weak private var youTubeActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var titleLabel: GTLabel!
     @IBOutlet weak var totalViewsLabel: GTLabel!
     @IBOutlet weak private var openToolButton: GTButton!
@@ -51,11 +57,20 @@ class ToolDetailViewController: BaseViewController {
     
     weak var delegate: ToolDetailViewControllerDelegate?
     
+    deinit {
+        youTubePlayerView.stopVideo()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         openToolButton.designAsOpenToolButton()
                     
+        topView.backgroundColor = view.backgroundColor
+        bottomView.backgroundColor = detailsView.backgroundColor
+        
+        youTubePlayerView.isHidden = true
+        
         detailsShadow.layer.shadowOffset = CGSize(width: 0, height: 1)
         detailsShadow.layer.shadowColor = UIColor.black.cgColor
         detailsShadow.layer.shadowRadius = 5
@@ -81,6 +96,19 @@ class ToolDetailViewController: BaseViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        youTubePlayerView.getPlayerState { [weak self] (state: WKYTPlayerState, error: Error?) in
+            if state == .playing {
+                self?.youTubePlayerView.pauseVideo()
+            }
+        }
+    }
+    
     func setTopHeight() {
         let barHeight = self.navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = UIApplication.shared.isStatusBarHidden ? CGFloat(0) : UIApplication.shared.statusBarFrame.height
@@ -94,6 +122,21 @@ class ToolDetailViewController: BaseViewController {
     fileprivate func displayData() {
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
         guard let resource = resource else { return }
+        
+        let aboutVideoYouTubePlayerId: String = resource.aboutOverviewVideoYouTube ?? ""
+        if aboutVideoYouTubePlayerId.isEmpty {
+            youTubePlayerView.isHidden = true
+            youTubeLoadingView.isHidden = true
+            bannerImageView.isHidden = false
+        }
+        else {
+            youTubePlayerView.isHidden = false
+            youTubeLoadingView.isHidden = false
+            bannerImageView.isHidden = true
+            youTubeActivityIndicator.startAnimating()
+            youTubePlayerView.delegate = self
+            youTubePlayerView.load(withVideoId: aboutVideoYouTubePlayerId, playerVars: ["playsinline": 1])
+        }
         
         // if tool is available in primary language, attempt to retrieve string based on that lanague else default to device language
         let localizedTotalViews = resource.isAvailableInLanguage(primaryLanguage) ? "total_views".localized(for: primaryLanguage?.code) ?? "total_views".localized : "total_views".localized
@@ -312,5 +355,35 @@ extension ToolDetailViewController: GTSegmentedControlDelegate {
                 self?.detailsView.layoutIfNeeded()
             }, completion: nil)
         }
+    }
+}
+
+extension ToolDetailViewController: WKYTPlayerViewDelegate {
+    
+    func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
+        
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+            self?.youTubeLoadingView.alpha = 0
+        }) { [weak self] (finished: Bool) in
+            self?.youTubeLoadingView.isHidden = true
+            self?.youTubeLoadingView.alpha = 1
+            self?.youTubeActivityIndicator.stopAnimating()
+        }
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
+        
+        print("\n playerView didChangeTo state")
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
+        
+        print("\n playerView didChangeTo quality")
+    }
+    
+    func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
+        
+        print("\n playerView receivedError error")
+        print("  error: \(error)")
     }
 }
