@@ -72,8 +72,8 @@ extension BaseTractElement {
             }
         }
         
-        var xPosition: CGFloat = 0.0
-        var yPosition: CGFloat = 0.0
+        var xPosition: CGFloat = (viewWidth - imageWidth) / CGFloat(2.0)
+        var yPosition: CGFloat = (viewHeight - imageHeight) / CGFloat(2.0)
         
         if aligns.contains(.top) {
             yPosition = 0.0
@@ -85,11 +85,6 @@ extension BaseTractElement {
             xPosition = viewWidth - imageWidth
         } else if aligns.contains(.start) {
             xPosition = 0.0
-        }
-        
-        if aligns.contains(.center) {
-            xPosition = (viewWidth - imageWidth) / CGFloat(2.0)
-            yPosition = (viewHeight - imageHeight) / CGFloat(2.0)
         }
         
         imageView.frame = CGRect(x: xPosition,
