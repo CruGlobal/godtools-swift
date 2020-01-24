@@ -19,6 +19,7 @@ class DownloadedResourceJson: GodToolsJSONResource {
     @objc var aboutBannerId = ""
     @objc var toolType = ""
     @objc var totalViews = NSNumber(integerLiteral: 0)
+    @objc var aboutOverviewVideoYouTube: String = ""
     
     @objc var latestTranslations: [TranslationResource]?
     @objc var attachments: [AttachmentResource]?
@@ -39,6 +40,7 @@ extension DownloadedResourceJson {
                 "aboutBannerId": "attr-banner-about",
                 "totalViews": "total-views",
                 "toolType": "resource-type",
+                "aboutOverviewVideoYouTube": "attr-about-overview-video-youtube"
         ]
     }
     

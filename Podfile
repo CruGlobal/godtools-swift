@@ -30,6 +30,7 @@ target 'godtools' do
     pod 'TTTAttributedLabel'
     pod 'Firebase/Analytics'
     pod 'FacebookCore'
+    pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
     
     # TheKeyOAuthSwift requires dependency GTMAppAuth and pulls the latest version of GTMAppAuth.  Must force GTMAppAuth to version 0.7.0 because the latest version of GTMAppAuth pulls a version of AppAuth that is deprececated in TheKeyOAuthSwift causing errors in TheKeyOAuthSwift.
     pod 'TheKeyOAuthSwift'

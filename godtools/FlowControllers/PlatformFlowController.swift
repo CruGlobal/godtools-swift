@@ -32,6 +32,7 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
     func moveToToolDetail(resource: DownloadedResource) {
         let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
         viewController.resource = resource
+        viewController.delegate = self
         self.pushViewController(viewController: viewController)
     }
     
@@ -47,4 +48,11 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
         pushViewController(viewController: viewController)
     }
     
+}
+
+extension PlatformFlowController: ToolDetailViewControllerDelegate {
+    
+    func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource) {
+        moveToTract(resource: resource)
+    }
 }

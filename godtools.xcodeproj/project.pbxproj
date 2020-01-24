@@ -115,6 +115,13 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		4559F3FF23D89C5200DA7658 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */; };
+		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
+		45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359723D248EA00295D1C /* GTSegmentedControl.swift */; };
+		45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */; };
+		45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */; };
+		45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F335A123D24C1C00295D1C /* GTSegmentCell.xib */; };
+		45F335A723D24D3D00295D1C /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F335A623D24D3D00295D1C /* NibBased.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -405,6 +412,13 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
+		45F3359723D248EA00295D1C /* GTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
+		45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
+		45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
+		45F335A123D24C1C00295D1C /* GTSegmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentCell.xib; sourceTree = "<group>"; };
+		45F335A623D24D3D00295D1C /* NibBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -717,6 +731,7 @@
 				ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */,
 				4F75415221D14655002300DD /* UIViewController+GodTools.swift */,
 				1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */,
+				4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -1026,6 +1041,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45F335A523D24D3100295D1C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				45F335A623D24D3D00295D1C /* NibBased.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1058,6 +1081,11 @@
 				0FB73E511EA9063E000BA60D /* Labels */,
 				0F08530F1ECB56DA00DDC86D /* Text */,
 				4FEE566E1EC4EAD20085249E /* GTProgressView.swift */,
+				4599A66523D7457600EB0EE7 /* GTSegment.swift */,
+				45F3359723D248EA00295D1C /* GTSegmentedControl.swift */,
+				45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */,
+				45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */,
+				45F335A123D24C1C00295D1C /* GTSegmentCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1197,6 +1225,7 @@
 				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
+				45F335A523D24D3100295D1C /* Protocols */,
 				EC98C0CC1F1EB0E800A68FF5 /* Resources */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
@@ -1711,6 +1740,7 @@
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
+				45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
@@ -1737,6 +1767,7 @@
 				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
+				45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
@@ -1840,6 +1871,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1864,6 +1896,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1907,6 +1940,7 @@
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
+				4559F3FF23D89C5200DA7658 /* UILabel+Extension.swift in Sources */,
 				4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
@@ -1978,6 +2012,8 @@
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
+				4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */,
+				45F335A723D24D3D00295D1C /* NibBased.swift in Sources */,
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
@@ -2027,6 +2063,7 @@
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
+				45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */,
@@ -2061,6 +2098,7 @@
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
