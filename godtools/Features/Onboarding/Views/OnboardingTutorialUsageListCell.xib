@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-Cc-Hhx" userLabel="usageTableView">
-                        <rect key="frame" x="0.0" y="70" width="375" height="630"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="680"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </tableView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Jc1-Cc-Hhx" secondAttribute="trailing" id="8ap-KC-l8q"/>
-                    <constraint firstItem="Jc1-Cc-Hhx" firstAttribute="top" secondItem="pzk-Nk-tQX" secondAttribute="top" constant="70" id="OA4-a6-BeT"/>
+                    <constraint firstItem="Jc1-Cc-Hhx" firstAttribute="top" secondItem="pzk-Nk-tQX" secondAttribute="top" constant="20" id="OA4-a6-BeT"/>
                     <constraint firstAttribute="bottom" secondItem="Jc1-Cc-Hhx" secondAttribute="bottom" id="aPB-B4-aXT"/>
                     <constraint firstItem="Jc1-Cc-Hhx" firstAttribute="leading" secondItem="pzk-Nk-tQX" secondAttribute="leading" id="qPX-IS-bip"/>
                 </constraints>

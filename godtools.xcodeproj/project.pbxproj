@@ -133,6 +133,7 @@
 		457A30B623DF673A007C1522 /* OnboardingTutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B523DF673A007C1522 /* OnboardingTutorialFlow.swift */; };
 		457A30B823DF6864007C1522 /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B723DF6864007C1522 /* FlowDelegate.swift */; };
 		457A30BA23DF68AB007C1522 /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B923DF68AB007C1522 /* FlowStep.swift */; };
+		457A30BC23DF6FF9007C1522 /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30BB23DF6FF9007C1522 /* UIViewController+NavItem.swift */; };
 		45C9100B23DB4617009D6AE8 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9100A23DB4617009D6AE8 /* OnboardingWelcomeView.swift */; };
 		45C9100D23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9100C23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift */; };
 		45C9100F23DB4633009D6AE8 /* OnboardingWelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C9100E23DB4633009D6AE8 /* OnboardingWelcomeView.xib */; };
@@ -452,6 +453,7 @@
 		457A30B523DF673A007C1522 /* OnboardingTutorialFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFlow.swift; sourceTree = "<group>"; };
 		457A30B723DF6864007C1522 /* FlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
 		457A30B923DF68AB007C1522 /* FlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
+		457A30BB23DF6FF9007C1522 /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45C9100A23DB4617009D6AE8 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
 		45C9100C23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
 		45C9100E23DB4633009D6AE8 /* OnboardingWelcomeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingWelcomeView.xib; sourceTree = "<group>"; };
@@ -1107,6 +1109,7 @@
 			isa = PBXGroup;
 			children = (
 				457A30A123DF3630007C1522 /* UIKit+Extensions.swift */,
+				457A30BB23DF6FF9007C1522 /* UIViewController+NavItem.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2080,6 +2083,7 @@
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
 				45501EAA23DB9A45000299A1 /* ObservableValue.swift in Sources */,
+				457A30BC23DF6FF9007C1522 /* UIViewController+NavItem.swift in Sources */,
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				45C9101123DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift in Sources */,

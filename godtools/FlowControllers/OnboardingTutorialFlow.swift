@@ -30,7 +30,7 @@ class OnboardingTutorialFlow: NSObject {
         navigationController.navigationBar.barTintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.setNavigationBarHidden(false, animated: false)
         
         let viewModel = OnboardingWelcomeViewModel(flowDelegate: self)
         let view = OnboardingWelcomeView(viewModel: viewModel)

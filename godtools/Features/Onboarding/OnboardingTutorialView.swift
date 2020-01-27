@@ -14,6 +14,7 @@ class OnboardingTutorialView: UIViewController {
     private let pageAnimationOptions: UIView.AnimationOptions = .transitionCrossDissolve
     private let pageAnimationDuration: TimeInterval = 0.2
     
+    private var skipButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var tutorialCollectionView: UICollectionView!
@@ -39,6 +40,8 @@ class OnboardingTutorialView: UIViewController {
                 
         setupLayout()
         setupBinding()
+        
+        skipButton = addSkipButtonItem(target: self, action: #selector(handleSkip(barButtonItem:)))
         
         pageControl.addTarget(self, action: #selector(handlePageControlChanged), for: .valueChanged)
         

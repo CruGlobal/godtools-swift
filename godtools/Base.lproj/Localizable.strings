@@ -11,6 +11,9 @@
 
 "unavailable" = "Unavailable";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Skip";
+
 // Onboarding
 "add_new_tools" = "Add New Tools";
 "set_your_languages" = "Set Your Languages";
