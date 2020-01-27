@@ -115,6 +115,35 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		45501EAA23DB9A45000299A1 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45501EA923DB9A45000299A1 /* ObservableValue.swift */; };
+		457A309923DF2D60007C1522 /* MainOnboardingTutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A309823DF2D60007C1522 /* MainOnboardingTutorialCell.swift */; };
+		457A309B23DF2D6A007C1522 /* MainOnboardingTutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 457A309A23DF2D6A007C1522 /* MainOnboardingTutorialCell.xib */; };
+		457A309D23DF2F62007C1522 /* MainOboardingTutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A309C23DF2F62007C1522 /* MainOboardingTutorialCellViewModel.swift */; };
+		457A309F23DF2F8A007C1522 /* MainOnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A309E23DF2F8A007C1522 /* MainOnboardingTutorialItem.swift */; };
+		457A30A223DF3630007C1522 /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30A123DF3630007C1522 /* UIKit+Extensions.swift */; };
+		457A30A423DF3ADF007C1522 /* OnboardingTutorialUsageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30A323DF3ADF007C1522 /* OnboardingTutorialUsageItem.swift */; };
+		457A30A623DF3C8A007C1522 /* OnboardingTutorialUsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30A523DF3C8A007C1522 /* OnboardingTutorialUsageListCell.swift */; };
+		457A30A823DF3CA3007C1522 /* OnboardingTutorialUsageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 457A30A723DF3CA3007C1522 /* OnboardingTutorialUsageListCell.xib */; };
+		457A30AA23DF3DC0007C1522 /* OnboardingTutorialUsageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30A923DF3DBF007C1522 /* OnboardingTutorialUsageCell.swift */; };
+		457A30AC23DF3E32007C1522 /* OnboardingTutorialUsageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 457A30AB23DF3E31007C1522 /* OnboardingTutorialUsageCell.xib */; };
+		457A30AE23DF4012007C1522 /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30AD23DF4012007C1522 /* OnboardingTutorialItem.swift */; };
+		457A30B023DF46BD007C1522 /* OnboardingTutorialUsageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30AF23DF46BD007C1522 /* OnboardingTutorialUsageCellViewModel.swift */; };
+		457A30B223DF478F007C1522 /* OnboardingTutorialUsageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B123DF478F007C1522 /* OnboardingTutorialUsageListItem.swift */; };
+		457A30B423DF49F9007C1522 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B323DF49F9007C1522 /* OnboardingTutorialUsageListCellViewModel.swift */; };
+		457A30B623DF673A007C1522 /* OnboardingTutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B523DF673A007C1522 /* OnboardingTutorialFlow.swift */; };
+		457A30B823DF6864007C1522 /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B723DF6864007C1522 /* FlowDelegate.swift */; };
+		457A30BA23DF68AB007C1522 /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457A30B923DF68AB007C1522 /* FlowStep.swift */; };
+		45C9100B23DB4617009D6AE8 /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9100A23DB4617009D6AE8 /* OnboardingWelcomeView.swift */; };
+		45C9100D23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9100C23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift */; };
+		45C9100F23DB4633009D6AE8 /* OnboardingWelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C9100E23DB4633009D6AE8 /* OnboardingWelcomeView.xib */; };
+		45C9101123DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9101023DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift */; };
+		45C9101E23DB827A009D6AE8 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9101D23DB827A009D6AE8 /* OnboardingTutorialView.swift */; };
+		45C9102023DB8284009D6AE8 /* OnboardingTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C9101F23DB8284009D6AE8 /* OnboardingTutorialView.xib */; };
+		45C9102223DB828E009D6AE8 /* OnboardingTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9102123DB828E009D6AE8 /* OnboardingTutorialViewModel.swift */; };
+		45C9102423DB829C009D6AE8 /* OnboardingTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9102323DB829C009D6AE8 /* OnboardingTutorialViewModelType.swift */; };
+		45C9102723DB8F22009D6AE8 /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9102623DB8F22009D6AE8 /* OnboardPrimaryButton.swift */; };
+		45C9102C23DB969D009D6AE8 /* OnboardingTutorialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9102B23DB969D009D6AE8 /* OnboardingTutorialProvider.swift */; };
+		45C9102E23DB96A9009D6AE8 /* OnboardingTutorialProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C9102D23DB96A9009D6AE8 /* OnboardingTutorialProviderType.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -405,6 +434,35 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		45501EA923DB9A45000299A1 /* ObservableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		457A309823DF2D60007C1522 /* MainOnboardingTutorialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialCell.swift; sourceTree = "<group>"; };
+		457A309A23DF2D6A007C1522 /* MainOnboardingTutorialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainOnboardingTutorialCell.xib; sourceTree = "<group>"; };
+		457A309C23DF2F62007C1522 /* MainOboardingTutorialCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOboardingTutorialCellViewModel.swift; sourceTree = "<group>"; };
+		457A309E23DF2F8A007C1522 /* MainOnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialItem.swift; sourceTree = "<group>"; };
+		457A30A123DF3630007C1522 /* UIKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
+		457A30A323DF3ADF007C1522 /* OnboardingTutorialUsageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageItem.swift; sourceTree = "<group>"; };
+		457A30A523DF3C8A007C1522 /* OnboardingTutorialUsageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCell.swift; sourceTree = "<group>"; };
+		457A30A723DF3CA3007C1522 /* OnboardingTutorialUsageListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialUsageListCell.xib; sourceTree = "<group>"; };
+		457A30A923DF3DBF007C1522 /* OnboardingTutorialUsageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCell.swift; sourceTree = "<group>"; };
+		457A30AB23DF3E31007C1522 /* OnboardingTutorialUsageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialUsageCell.xib; sourceTree = "<group>"; };
+		457A30AD23DF4012007C1522 /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
+		457A30AF23DF46BD007C1522 /* OnboardingTutorialUsageCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCellViewModel.swift; sourceTree = "<group>"; };
+		457A30B123DF478F007C1522 /* OnboardingTutorialUsageListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListItem.swift; sourceTree = "<group>"; };
+		457A30B323DF49F9007C1522 /* OnboardingTutorialUsageListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCellViewModel.swift; sourceTree = "<group>"; };
+		457A30B523DF673A007C1522 /* OnboardingTutorialFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFlow.swift; sourceTree = "<group>"; };
+		457A30B723DF6864007C1522 /* FlowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
+		457A30B923DF68AB007C1522 /* FlowStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
+		45C9100A23DB4617009D6AE8 /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		45C9100C23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
+		45C9100E23DB4633009D6AE8 /* OnboardingWelcomeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingWelcomeView.xib; sourceTree = "<group>"; };
+		45C9101023DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModelType.swift; sourceTree = "<group>"; };
+		45C9101D23DB827A009D6AE8 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
+		45C9101F23DB8284009D6AE8 /* OnboardingTutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialView.xib; sourceTree = "<group>"; };
+		45C9102123DB828E009D6AE8 /* OnboardingTutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModel.swift; sourceTree = "<group>"; };
+		45C9102323DB829C009D6AE8 /* OnboardingTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModelType.swift; sourceTree = "<group>"; };
+		45C9102623DB8F22009D6AE8 /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
+		45C9102B23DB969D009D6AE8 /* OnboardingTutorialProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProvider.swift; sourceTree = "<group>"; };
+		45C9102D23DB96A9009D6AE8 /* OnboardingTutorialProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProviderType.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -943,11 +1001,14 @@
 		0FB73E5E1EA90669000BA60D /* FlowControllers */ = {
 			isa = PBXGroup;
 			children = (
+				457A30B723DF6864007C1522 /* FlowDelegate.swift */,
+				457A30B923DF68AB007C1522 /* FlowStep.swift */,
 				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
 				4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */,
-				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
 				1E7A11872072892900AE047D /* MasterHomeViewController.swift */,
 				1E7A11882072892900AE047D /* MasterHomeViewController.xib */,
+				457A30B523DF673A007C1522 /* OnboardingTutorialFlow.swift */,
+				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -1024,6 +1085,86 @@
 				0B35785ED952890E2E07F786 /* Pods_godtools_Tests_godtoolsTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		457A309723DF2D0B007C1522 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				457A309823DF2D60007C1522 /* MainOnboardingTutorialCell.swift */,
+				457A309A23DF2D6A007C1522 /* MainOnboardingTutorialCell.xib */,
+				457A309C23DF2F62007C1522 /* MainOboardingTutorialCellViewModel.swift */,
+				457A30A923DF3DBF007C1522 /* OnboardingTutorialUsageCell.swift */,
+				457A30AB23DF3E31007C1522 /* OnboardingTutorialUsageCell.xib */,
+				457A30AF23DF46BD007C1522 /* OnboardingTutorialUsageCellViewModel.swift */,
+				457A30A523DF3C8A007C1522 /* OnboardingTutorialUsageListCell.swift */,
+				457A30A723DF3CA3007C1522 /* OnboardingTutorialUsageListCell.xib */,
+				457A30B323DF49F9007C1522 /* OnboardingTutorialUsageListCellViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		457A30A023DF3627007C1522 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				457A30A123DF3630007C1522 /* UIKit+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		45C9100823DB45F0009D6AE8 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				45C9100923DB460B009D6AE8 /* Onboarding */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		45C9100923DB460B009D6AE8 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				45C9101D23DB827A009D6AE8 /* OnboardingTutorialView.swift */,
+				45C9101F23DB8284009D6AE8 /* OnboardingTutorialView.xib */,
+				45C9102123DB828E009D6AE8 /* OnboardingTutorialViewModel.swift */,
+				45C9102323DB829C009D6AE8 /* OnboardingTutorialViewModelType.swift */,
+				45C9100A23DB4617009D6AE8 /* OnboardingWelcomeView.swift */,
+				45C9100E23DB4633009D6AE8 /* OnboardingWelcomeView.xib */,
+				45C9100C23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift */,
+				45C9101023DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift */,
+				45C9102A23DB968B009D6AE8 /* Models */,
+				457A309723DF2D0B007C1522 /* Views */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		45C9101523DB6B55009D6AE8 /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				457A30A023DF3627007C1522 /* Extensions */,
+				45C9102523DB8E90009D6AE8 /* Views */,
+				45501EA923DB9A45000299A1 /* ObservableValue.swift */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
+		45C9102523DB8E90009D6AE8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45C9102623DB8F22009D6AE8 /* OnboardPrimaryButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		45C9102A23DB968B009D6AE8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				457A309E23DF2F8A007C1522 /* MainOnboardingTutorialItem.swift */,
+				457A30AD23DF4012007C1522 /* OnboardingTutorialItem.swift */,
+				45C9102B23DB969D009D6AE8 /* OnboardingTutorialProvider.swift */,
+				45C9102D23DB96A9009D6AE8 /* OnboardingTutorialProviderType.swift */,
+				457A30A323DF3ADF007C1522 /* OnboardingTutorialUsageItem.swift */,
+				457A30B123DF478F007C1522 /* OnboardingTutorialUsageListItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
@@ -1192,12 +1333,14 @@
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
-				EC55A61D1EE0AC2B000235CA /* TractClasses */,
+				45C9100823DB45F0009D6AE8 /* Features */,
 				0FB73E5E1EA90669000BA60D /* FlowControllers */,
 				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				EC98C0CC1F1EB0E800A68FF5 /* Resources */,
+				45C9101523DB6B55009D6AE8 /* Share */,
+				EC55A61D1EE0AC2B000235CA /* TractClasses */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
 				ECB2E2981EE9FAC300346FBE /* XMLManagement */,
@@ -1700,6 +1843,8 @@
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
+				457A309B23DF2D6A007C1522 /* MainOnboardingTutorialCell.xib in Resources */,
+				457A30A823DF3CA3007C1522 /* OnboardingTutorialUsageListCell.xib in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
@@ -1708,6 +1853,7 @@
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
+				45C9102023DB8284009D6AE8 /* OnboardingTutorialView.xib in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
@@ -1732,6 +1878,7 @@
 				4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4F9A9EA1219E22D900C61E9C /* ArticleTableViewCell.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
+				457A30AC23DF3E32007C1522 /* OnboardingTutorialUsageCell.xib in Resources */,
 				4FF7FF602284D062005C8BE1 /* languages.json in Resources */,
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
@@ -1741,6 +1888,7 @@
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
+				45C9100F23DB4633009D6AE8 /* OnboardingWelcomeView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1899,22 +2047,28 @@
 			files = (
 				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
+				45C9102E23DB96A9009D6AE8 /* OnboardingTutorialProviderType.swift in Sources */,
 				4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */,
+				457A30B023DF46BD007C1522 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
+				45C9100B23DB4617009D6AE8 /* OnboardingWelcomeView.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
 				4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */,
 				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
+				457A309F23DF2F8A007C1522 /* MainOnboardingTutorialItem.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
 				4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
+				457A30A223DF3630007C1522 /* UIKit+Extensions.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4FD0659221A5D75700E69A98 /* ArticleToolViewController.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
+				457A30B623DF673A007C1522 /* OnboardingTutorialFlow.swift in Sources */,
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
@@ -1925,9 +2079,12 @@
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
+				45501EAA23DB9A45000299A1 /* ObservableValue.swift in Sources */,
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
+				45C9101123DB4BA7009D6AE8 /* OnboardingWelcomeViewModelType.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				457A30B223DF478F007C1522 /* OnboardingTutorialUsageListItem.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
 				EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */,
@@ -1961,12 +2118,14 @@
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
+				457A30BA23DF68AB007C1522 /* FlowStep.swift in Sources */,
 				1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */,
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */,
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
+				457A30A423DF3ADF007C1522 /* OnboardingTutorialUsageItem.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
 				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
@@ -1977,12 +2136,15 @@
 				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
+				45C9100D23DB4623009D6AE8 /* OnboardingWelcomeViewModel.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
+				457A30A623DF3C8A007C1522 /* OnboardingTutorialUsageListCell.swift in Sources */,
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
 				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
+				45C9102723DB8F22009D6AE8 /* OnboardPrimaryButton.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
 				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
@@ -2003,10 +2165,12 @@
 				4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */,
+				45C9102423DB829C009D6AE8 /* OnboardingTutorialViewModelType.swift in Sources */,
 				4FEF265121C41871007CF4A0 /* ArticleCategoryTableViewCell.swift in Sources */,
 				4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
 				1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */,
+				457A30B423DF49F9007C1522 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
@@ -2023,6 +2187,7 @@
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
+				45C9101E23DB827A009D6AE8 /* OnboardingTutorialView.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
@@ -2035,12 +2200,15 @@
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				EC8245C11EEEEF090023A203 /* TractTitleProperties.swift in Sources */,
+				45C9102C23DB969D009D6AE8 /* OnboardingTutorialProvider.swift in Sources */,
 				EC8245C71EEEF0660023A203 /* TractCallToActionProperties.swift in Sources */,
 				4FA2A537215938700018762C /* GodToolsJSONResource.swift in Sources */,
+				457A309923DF2D60007C1522 /* MainOnboardingTutorialCell.swift in Sources */,
 				4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */,
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
+				457A30AE23DF4012007C1522 /* OnboardingTutorialItem.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
@@ -2058,6 +2226,7 @@
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
 				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
+				45C9102223DB828E009D6AE8 /* OnboardingTutorialViewModel.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
@@ -2077,6 +2246,7 @@
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
+				457A30AA23DF3DC0007C1522 /* OnboardingTutorialUsageCell.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */,
 				0F9E32351EDCC78A0081DBB9 /* TractButtonProperties.swift in Sources */,
@@ -2084,12 +2254,14 @@
 				1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */,
 				4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */,
 				EC8245CF1EEEF1B90023A203 /* TractTabProperties.swift in Sources */,
+				457A30B823DF6864007C1522 /* FlowDelegate.swift in Sources */,
 				ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */,
 				0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
 				4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */,
 				0F9E32411EDD170C0081DBB9 /* TractCallToAction+Actions.swift in Sources */,
 				ECBE2E6B1EF1053000A13849 /* TractProperties.swift in Sources */,
+				457A309D23DF2F62007C1522 /* MainOboardingTutorialCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -122,3 +122,25 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
+
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
+"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
+"onboardingWelcome.beginButton" = "Begin";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "Run two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 80 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
+"onboardingTutorial.continueButton.title" = "Continue";
+"onboardingTutorial.showMoreButton.title" = "Show Me More";
+"onboardingTutorial.getStartedButton.title" = "Get Started";
+
