@@ -10,6 +10,9 @@ import UIKit
 
 enum OnboardingTutorialFlowStep: FlowStep {
     case beginTappedFromOnboardingWelcome
+    case skipTappedFromOnboardingTutorial
+    case showMoreTappedFromOnboardingTutorial
+    case getStartedTappedFromOnboardingTutorial
 }
 
 class OnboardingTutorialFlow: NSObject {
@@ -56,6 +59,18 @@ extension OnboardingTutorialFlow: FlowDelegate {
             )
             let view = OnboardingTutorialView(viewModel: viewModel)
             navigationController.setViewControllers([view], animated: true)
+            
+        case .skipTappedFromOnboardingTutorial:
+            print("skip tapped")
+            break
+            
+        case .showMoreTappedFromOnboardingTutorial:
+            print("show more tapped")
+            break
+            
+        case .getStartedTappedFromOnboardingTutorial:
+            print("get started tapped")
+            break
         }
     }
 }

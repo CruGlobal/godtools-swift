@@ -23,16 +23,6 @@ extension UIViewController {
         navigationItem.leftBarButtonItems = nil
         navigationItem.setHidesBackButton(true, animated: false)
     }
-    
-    func addSkipButtonItem(target: Any?, action: Selector?) -> UIBarButtonItem {
-        return addBarButtonItem(
-            to: .right,
-            title: NSLocalizedString("navigationBar.navigationItem.skip", comment: ""),
-            color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
-            target: target,
-            action: action
-        )
-    }
         
     func addBarButtonItem(to barPosition: ButtonItemPosition, title: String?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
@@ -43,9 +33,9 @@ extension UIViewController {
         
         switch barPosition {
         case .left:
-            addLeft(barButtonItem: item)
+            addLeftBarButtonItem(item: item)
         case .right:
-            addRight(barButtonItem: item)
+            addRightBarButtonItem(item: item)
         }
         
         return item
@@ -60,31 +50,81 @@ extension UIViewController {
         
         switch barPosition {
         case .left:
-            addLeft(barButtonItem: item)
+            addLeftBarButtonItem(item: item)
         case .right:
-            addRight(barButtonItem: item)
+            addRightBarButtonItem(item: item)
         }
         
         return item
     }
     
-    private func addLeft(barButtonItem: UIBarButtonItem) {
-        if var leftItems = navigationItem.leftBarButtonItems {
-            leftItems.append(barButtonItem)
-            navigationItem.leftBarButtonItems = leftItems
-        }
-        else {
-            navigationItem.leftBarButtonItem = barButtonItem
+    func addBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition) {
+        switch barPosition {
+        case .left:
+            addLeftBarButtonItem(item: item)
+        case .right:
+            addRightBarButtonItem(item: item)
         }
     }
     
-    private func addRight(barButtonItem: UIBarButtonItem) {
-        if var rightItems = navigationItem.rightBarButtonItems {
-            rightItems.append(barButtonItem)
-            navigationItem.rightBarButtonItems = rightItems
+    func removeBarButtonItem(item: UIBarButtonItem, barPosition: ButtonItemPosition) {
+        switch barPosition {
+        case .left:
+            removeLeftBarButtonItem(item: item)
+        case .right:
+            removeRightBarButtonItem(item: item)
+        }
+    }
+    
+    private func addLeftBarButtonItem(item: UIBarButtonItem) {
+        if var leftItems = navigationItem.leftBarButtonItems {
+            if !leftItems.contains(item) {
+                leftItems.append(item)
+                navigationItem.leftBarButtonItems = leftItems
+            }
         }
         else {
-            navigationItem.rightBarButtonItem = barButtonItem
+            navigationItem.leftBarButtonItem = item
+        }
+    }
+    
+    private func removeLeftBarButtonItem(item: UIBarButtonItem) {
+        if var leftItems = navigationItem.leftBarButtonItems {
+            if leftItems.contains(item) {
+                if let index = leftItems.firstIndex(of: item) {
+                    leftItems.remove(at: index)
+                    navigationItem.leftBarButtonItems = leftItems
+                }
+            }
+        }
+        else {
+            navigationItem.leftBarButtonItem = nil
+        }
+    }
+    
+    private func addRightBarButtonItem(item: UIBarButtonItem) {
+        if var rightItems = navigationItem.rightBarButtonItems {
+            if !rightItems.contains(item) {
+                rightItems.append(item)
+                navigationItem.rightBarButtonItems = rightItems
+            }
+        }
+        else {
+            navigationItem.rightBarButtonItem = item
+        }
+    }
+    
+    private func removeRightBarButtonItem(item: UIBarButtonItem) {
+        if var rightItems = navigationItem.rightBarButtonItems {
+            if rightItems.contains(item) {
+                if let index = rightItems.firstIndex(of: item) {
+                    rightItems.remove(at: index)
+                    navigationItem.rightBarButtonItems = rightItems
+                }
+            }
+        }
+        else {
+            navigationItem.rightBarButtonItem = nil
         }
     }
 }

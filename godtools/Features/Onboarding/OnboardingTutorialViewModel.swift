@@ -18,7 +18,14 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     
     let tutorialItems: ObservableValue<[OnboardingTutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
-    let continueTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("onboardingTutorial.continueButton.title", comment: ""))
+    let skipButtonTitle: String = NSLocalizedString("navigationBar.navigationItem.skip", comment: "")
+    let continueButtonTitle: String = NSLocalizedString("onboardingTutorial.continueButton.title", comment: "")
+    let showMoreButtonTitle: String = NSLocalizedString("onboardingTutorial.showMoreButton.title", comment: "")
+    let getStartedButtonTitle: String = NSLocalizedString("onboardingTutorial.getStartedButton.title", comment: "")
+    let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let hidesContinueButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let hidesShowMoreButton: ObservableValue<Bool> = ObservableValue(value: true)
+    let hidesGetStartedButton: ObservableValue<Bool> = ObservableValue(value: true)
         
     required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType) {
         
@@ -42,11 +49,26 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
         self.page = page
         
+        let isLastPage: Bool = page == tutorialItems.value.count - 1
+                
+        if isLastPage {
+            hidesSkipButton.accept(value: true)
+            hidesContinueButton.accept(value: true)
+            hidesShowMoreButton.accept(value: false)
+            hidesGetStartedButton.accept(value: false)
+        }
+        else {
+            hidesSkipButton.accept(value: false)
+            hidesContinueButton.accept(value: false)
+            hidesShowMoreButton.accept(value: true)
+            hidesGetStartedButton.accept(value: true)
+        }
+        
         currentTutorialItemIndex.accept(value: page)
     }
     
     func skipTapped() {
-        print("skip tapped")
+        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.skipTappedFromOnboardingTutorial)
     }
     
     func pageTapped(page: Int) {
@@ -54,7 +76,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     }
     
     func continueTapped() {
-        
+                
         let nextPage: Int = page + 1
         let reachedEnd: Bool = nextPage >= tutorialItems.value.count
         
@@ -62,7 +84,15 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             setPage(page: nextPage)
         }
         else {
-            print("reached end")
+            flowDelegate?.navigate(step: OnboardingTutorialFlowStep.getStartedTappedFromOnboardingTutorial)
         }
+    }
+    
+    func showMoreTapped() {
+        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.showMoreTappedFromOnboardingTutorial)
+    }
+    
+    func getStartedTapped() {
+        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.getStartedTappedFromOnboardingTutorial)
     }
 }

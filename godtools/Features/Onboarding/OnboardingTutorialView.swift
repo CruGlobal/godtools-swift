@@ -19,6 +19,8 @@ class OnboardingTutorialView: UIViewController {
     
     @IBOutlet weak private var tutorialCollectionView: UICollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
+    @IBOutlet weak private var showMoreButton: OnboardPrimaryButton!
+    @IBOutlet weak private var getStartedButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
     
     required init(viewModel: OnboardingTutorialViewModelType) {
@@ -41,11 +43,11 @@ class OnboardingTutorialView: UIViewController {
         setupLayout()
         setupBinding()
         
-        skipButton = addSkipButtonItem(target: self, action: #selector(handleSkip(barButtonItem:)))
-        
         pageControl.addTarget(self, action: #selector(handlePageControlChanged), for: .valueChanged)
         
         continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
+        showMoreButton.addTarget(self, action: #selector(handleShowMore(button:)), for: .touchUpInside)
+        getStartedButton.addTarget(self, action: #selector(handleGetStarted(button:)), for: .touchUpInside)
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,7 +76,7 @@ class OnboardingTutorialView: UIViewController {
                         )
                     }
                 }
-                
+                                
                 self?.pageControl.currentPage = index
             }
         }
@@ -95,8 +97,46 @@ class OnboardingTutorialView: UIViewController {
     
     private func setupBinding() {
         
-        viewModel.continueTitle.addObserver(self) { [weak self] (title: String) in
-            self?.continueButton.setTitle(title, for: .normal)
+        continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
+        showMoreButton.setTitle(viewModel.showMoreButtonTitle, for: .normal)
+        getStartedButton.setTitle(viewModel.getStartedButtonTitle, for: .normal)
+        
+        viewModel.hidesSkipButton.addObserver(self) { [weak self] (hidden: Bool) in
+            
+            let skipButtonPosition: ButtonItemPosition = .right
+            
+            if let view = self {
+                if view.skipButton == nil && !hidden {
+                    view.skipButton = view.addBarButtonItem(
+                        to: skipButtonPosition,
+                        title: view.viewModel.skipButtonTitle,
+                        color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
+                        target: self,
+                        action: #selector(view.handleSkip(barButtonItem:))
+                    )
+                }
+                else if let skipButton = view.skipButton {
+                    hidden ? view.removeBarButtonItem(item: skipButton, barPosition: skipButtonPosition) : view.addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
+                }
+            }
+        }
+        
+        viewModel.hidesContinueButton.addObserver(self) { [weak self] (hidden: Bool) in
+            if let view = self {
+                view.setButtonHidden(button: view.continueButton, hidden: hidden, animated: true)
+            }
+        }
+        
+        viewModel.hidesShowMoreButton.addObserver(self) { [weak self] (hidden: Bool) in
+            if let view = self {
+                view.setButtonHidden(button: view.showMoreButton, hidden: hidden, animated: true)
+            }
+        }
+        
+        viewModel.hidesGetStartedButton.addObserver(self) { [weak self] (hidden: Bool) in
+            if let view = self {
+                view.setButtonHidden(button: view.getStartedButton, hidden: hidden, animated: true)
+            }
         }
     }
     
@@ -110,6 +150,25 @@ class OnboardingTutorialView: UIViewController {
     
     @objc func handleContinue(button: UIButton) {
         viewModel.continueTapped()
+    }
+    
+    @objc func handleShowMore(button: UIButton) {
+        viewModel.showMoreTapped()
+    }
+    
+    @objc func handleGetStarted(button: UIButton) {
+        viewModel.getStartedTapped()
+    }
+    
+    private func setButtonHidden(button: UIButton, hidden: Bool, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                button.alpha = hidden ? 0 : 1
+            }, completion: nil)
+        }
+        else {
+            button.alpha = hidden ? 0 : 1
+        }
     }
 }
 
