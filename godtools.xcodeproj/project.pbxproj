@@ -120,32 +120,33 @@
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
 		45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */; };
-		45D3C8D023DF942100ECF70E /* OnboardingWelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8B323DF942100ECF70E /* OnboardingWelcomeView.xib */; };
-		45D3C8D123DF942100ECF70E /* OnboardingTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8B423DF942100ECF70E /* OnboardingTutorialView.xib */; };
-		45D3C8D223DF942100ECF70E /* OnboardingTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B523DF942100ECF70E /* OnboardingTutorialViewModel.swift */; };
-		45D3C8D323DF942100ECF70E /* MainOnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B723DF942100ECF70E /* MainOnboardingTutorialItem.swift */; };
-		45D3C8D423DF942100ECF70E /* OnboardingTutorialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B823DF942100ECF70E /* OnboardingTutorialProvider.swift */; };
-		45D3C8D523DF942100ECF70E /* OnboardingTutorialUsageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B923DF942100ECF70E /* OnboardingTutorialUsageListItem.swift */; };
-		45D3C8D623DF942100ECF70E /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BA23DF942100ECF70E /* OnboardingTutorialItem.swift */; };
-		45D3C8D723DF942100ECF70E /* OnboardingTutorialProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BB23DF942100ECF70E /* OnboardingTutorialProviderType.swift */; };
-		45D3C8D823DF942100ECF70E /* OnboardingTutorialUsageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BC23DF942100ECF70E /* OnboardingTutorialUsageItem.swift */; };
-		45D3C8D923DF942100ECF70E /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BD23DF942100ECF70E /* OnboardingWelcomeView.swift */; };
-		45D3C8DA23DF942100ECF70E /* OnboardingWelcomeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BE23DF942100ECF70E /* OnboardingWelcomeViewModelType.swift */; };
-		45D3C8DB23DF942100ECF70E /* OnboardingTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8BF23DF942100ECF70E /* OnboardingTutorialViewModelType.swift */; };
-		45D3C8DC23DF942100ECF70E /* OnboardingTutorialUsageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8C123DF942100ECF70E /* OnboardingTutorialUsageCell.xib */; };
-		45D3C8DD23DF942100ECF70E /* OnboardingTutorialUsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C223DF942100ECF70E /* OnboardingTutorialUsageListCell.swift */; };
-		45D3C8DE23DF942100ECF70E /* MainOboardingTutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C323DF942100ECF70E /* MainOboardingTutorialCellViewModel.swift */; };
-		45D3C8DF23DF942100ECF70E /* OnboardingTutorialUsageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C423DF942100ECF70E /* OnboardingTutorialUsageCellViewModel.swift */; };
-		45D3C8E023DF942100ECF70E /* MainOnboardingTutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C523DF942100ECF70E /* MainOnboardingTutorialCell.swift */; };
-		45D3C8E123DF942100ECF70E /* MainOnboardingTutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8C623DF942100ECF70E /* MainOnboardingTutorialCell.xib */; };
-		45D3C8E223DF942100ECF70E /* OnboardingTutorialUsageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8C723DF942100ECF70E /* OnboardingTutorialUsageListCell.xib */; };
-		45D3C8E323DF942100ECF70E /* OnboardingTutorialUsageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C823DF942100ECF70E /* OnboardingTutorialUsageCell.swift */; };
-		45D3C8E423DF942100ECF70E /* OnboardingTutorialUsageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8C923DF942100ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */; };
-		45D3C8E523DF942100ECF70E /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8CA23DF942100ECF70E /* OnboardingWelcomeViewModel.swift */; };
-		45D3C8E623DF942100ECF70E /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8CB23DF942100ECF70E /* OnboardingTutorialView.swift */; };
 		45D3C8EA23DF948700ECF70E /* OnboardingTutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */; };
 		45D3C8EB23DF948700ECF70E /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E823DF948700ECF70E /* FlowDelegate.swift */; };
 		45D3C8EC23DF948700ECF70E /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E923DF948700ECF70E /* FlowStep.swift */; };
+		45D3C8EE23DF987800ECF70E /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */; };
+		45D3C90923DF98D500ECF70E /* OnboardingWelcomeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8F023DF98D400ECF70E /* OnboardingWelcomeView.xib */; };
+		45D3C90A23DF98D500ECF70E /* OnboardingTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8F123DF98D400ECF70E /* OnboardingTutorialView.xib */; };
+		45D3C90B23DF98D500ECF70E /* OnboardingTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F223DF98D400ECF70E /* OnboardingTutorialViewModel.swift */; };
+		45D3C90C23DF98D500ECF70E /* MainOnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F423DF98D400ECF70E /* MainOnboardingTutorialItem.swift */; };
+		45D3C90D23DF98D500ECF70E /* OnboardingTutorialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F523DF98D400ECF70E /* OnboardingTutorialProvider.swift */; };
+		45D3C90E23DF98D500ECF70E /* OnboardingTutorialUsageListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F623DF98D400ECF70E /* OnboardingTutorialUsageListItem.swift */; };
+		45D3C90F23DF98D500ECF70E /* OnboardingTutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F723DF98D400ECF70E /* OnboardingTutorialItem.swift */; };
+		45D3C91023DF98D500ECF70E /* OnboardingTutorialProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F823DF98D400ECF70E /* OnboardingTutorialProviderType.swift */; };
+		45D3C91123DF98D500ECF70E /* OnboardingTutorialUsageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8F923DF98D400ECF70E /* OnboardingTutorialUsageItem.swift */; };
+		45D3C91223DF98D500ECF70E /* OnboardingWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8FA23DF98D400ECF70E /* OnboardingWelcomeView.swift */; };
+		45D3C91323DF98D500ECF70E /* OnboardingWelcomeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8FB23DF98D400ECF70E /* OnboardingWelcomeViewModelType.swift */; };
+		45D3C91423DF98D500ECF70E /* OnboardingTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8FC23DF98D400ECF70E /* OnboardingTutorialViewModelType.swift */; };
+		45D3C91523DF98D500ECF70E /* OnboardingTutorialUsageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C8FE23DF98D400ECF70E /* OnboardingTutorialUsageCell.xib */; };
+		45D3C91623DF98D500ECF70E /* OnboardingTutorialUsageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8FF23DF98D400ECF70E /* OnboardingTutorialUsageListCell.swift */; };
+		45D3C91723DF98D500ECF70E /* MainOboardingTutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90023DF98D400ECF70E /* MainOboardingTutorialCellViewModel.swift */; };
+		45D3C91823DF98D500ECF70E /* OnboardingTutorialUsageCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90123DF98D400ECF70E /* OnboardingTutorialUsageCellViewModel.swift */; };
+		45D3C91923DF98D500ECF70E /* MainOnboardingTutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90223DF98D400ECF70E /* MainOnboardingTutorialCell.swift */; };
+		45D3C91A23DF98D500ECF70E /* MainOnboardingTutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C90323DF98D400ECF70E /* MainOnboardingTutorialCell.xib */; };
+		45D3C91B23DF98D500ECF70E /* OnboardingTutorialUsageListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C90423DF98D400ECF70E /* OnboardingTutorialUsageListCell.xib */; };
+		45D3C91C23DF98D500ECF70E /* OnboardingTutorialUsageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90523DF98D400ECF70E /* OnboardingTutorialUsageCell.swift */; };
+		45D3C91D23DF98D500ECF70E /* OnboardingTutorialUsageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */; };
+		45D3C91E23DF98D500ECF70E /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90723DF98D400ECF70E /* OnboardingWelcomeViewModel.swift */; };
+		45D3C91F23DF98D500ECF70E /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90823DF98D400ECF70E /* OnboardingTutorialView.swift */; };
 		45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359723D248EA00295D1C /* GTSegmentedControl.swift */; };
 		45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */; };
 		45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */; };
@@ -446,32 +447,33 @@
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
-		45D3C8B323DF942100ECF70E /* OnboardingWelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingWelcomeView.xib; sourceTree = "<group>"; };
-		45D3C8B423DF942100ECF70E /* OnboardingTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialView.xib; sourceTree = "<group>"; };
-		45D3C8B523DF942100ECF70E /* OnboardingTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModel.swift; sourceTree = "<group>"; };
-		45D3C8B723DF942100ECF70E /* MainOnboardingTutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialItem.swift; sourceTree = "<group>"; };
-		45D3C8B823DF942100ECF70E /* OnboardingTutorialProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProvider.swift; sourceTree = "<group>"; };
-		45D3C8B923DF942100ECF70E /* OnboardingTutorialUsageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListItem.swift; sourceTree = "<group>"; };
-		45D3C8BA23DF942100ECF70E /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
-		45D3C8BB23DF942100ECF70E /* OnboardingTutorialProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProviderType.swift; sourceTree = "<group>"; };
-		45D3C8BC23DF942100ECF70E /* OnboardingTutorialUsageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageItem.swift; sourceTree = "<group>"; };
-		45D3C8BD23DF942100ECF70E /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
-		45D3C8BE23DF942100ECF70E /* OnboardingWelcomeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModelType.swift; sourceTree = "<group>"; };
-		45D3C8BF23DF942100ECF70E /* OnboardingTutorialViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModelType.swift; sourceTree = "<group>"; };
-		45D3C8C123DF942100ECF70E /* OnboardingTutorialUsageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialUsageCell.xib; sourceTree = "<group>"; };
-		45D3C8C223DF942100ECF70E /* OnboardingTutorialUsageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCell.swift; sourceTree = "<group>"; };
-		45D3C8C323DF942100ECF70E /* MainOboardingTutorialCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOboardingTutorialCellViewModel.swift; sourceTree = "<group>"; };
-		45D3C8C423DF942100ECF70E /* OnboardingTutorialUsageCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCellViewModel.swift; sourceTree = "<group>"; };
-		45D3C8C523DF942100ECF70E /* MainOnboardingTutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialCell.swift; sourceTree = "<group>"; };
-		45D3C8C623DF942100ECF70E /* MainOnboardingTutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainOnboardingTutorialCell.xib; sourceTree = "<group>"; };
-		45D3C8C723DF942100ECF70E /* OnboardingTutorialUsageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialUsageListCell.xib; sourceTree = "<group>"; };
-		45D3C8C823DF942100ECF70E /* OnboardingTutorialUsageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCell.swift; sourceTree = "<group>"; };
-		45D3C8C923DF942100ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCellViewModel.swift; sourceTree = "<group>"; };
-		45D3C8CA23DF942100ECF70E /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
-		45D3C8CB23DF942100ECF70E /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
 		45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFlow.swift; sourceTree = "<group>"; };
 		45D3C8E823DF948700ECF70E /* FlowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
 		45D3C8E923DF948700ECF70E /* FlowStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
+		45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
+		45D3C8F023DF98D400ECF70E /* OnboardingWelcomeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingWelcomeView.xib; sourceTree = "<group>"; };
+		45D3C8F123DF98D400ECF70E /* OnboardingTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialView.xib; sourceTree = "<group>"; };
+		45D3C8F223DF98D400ECF70E /* OnboardingTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModel.swift; sourceTree = "<group>"; };
+		45D3C8F423DF98D400ECF70E /* MainOnboardingTutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialItem.swift; sourceTree = "<group>"; };
+		45D3C8F523DF98D400ECF70E /* OnboardingTutorialProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProvider.swift; sourceTree = "<group>"; };
+		45D3C8F623DF98D400ECF70E /* OnboardingTutorialUsageListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListItem.swift; sourceTree = "<group>"; };
+		45D3C8F723DF98D400ECF70E /* OnboardingTutorialItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialItem.swift; sourceTree = "<group>"; };
+		45D3C8F823DF98D400ECF70E /* OnboardingTutorialProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialProviderType.swift; sourceTree = "<group>"; };
+		45D3C8F923DF98D400ECF70E /* OnboardingTutorialUsageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageItem.swift; sourceTree = "<group>"; };
+		45D3C8FA23DF98D400ECF70E /* OnboardingWelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeView.swift; sourceTree = "<group>"; };
+		45D3C8FB23DF98D400ECF70E /* OnboardingWelcomeViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModelType.swift; sourceTree = "<group>"; };
+		45D3C8FC23DF98D400ECF70E /* OnboardingTutorialViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewModelType.swift; sourceTree = "<group>"; };
+		45D3C8FE23DF98D400ECF70E /* OnboardingTutorialUsageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialUsageCell.xib; sourceTree = "<group>"; };
+		45D3C8FF23DF98D400ECF70E /* OnboardingTutorialUsageListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCell.swift; sourceTree = "<group>"; };
+		45D3C90023DF98D400ECF70E /* MainOboardingTutorialCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOboardingTutorialCellViewModel.swift; sourceTree = "<group>"; };
+		45D3C90123DF98D400ECF70E /* OnboardingTutorialUsageCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCellViewModel.swift; sourceTree = "<group>"; };
+		45D3C90223DF98D400ECF70E /* MainOnboardingTutorialCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainOnboardingTutorialCell.swift; sourceTree = "<group>"; };
+		45D3C90323DF98D400ECF70E /* MainOnboardingTutorialCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainOnboardingTutorialCell.xib; sourceTree = "<group>"; };
+		45D3C90423DF98D400ECF70E /* OnboardingTutorialUsageListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingTutorialUsageListCell.xib; sourceTree = "<group>"; };
+		45D3C90523DF98D400ECF70E /* OnboardingTutorialUsageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageCell.swift; sourceTree = "<group>"; };
+		45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCellViewModel.swift; sourceTree = "<group>"; };
+		45D3C90723DF98D400ECF70E /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
+		45D3C90823DF98D400ECF70E /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
 		45F3359723D248EA00295D1C /* GTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
 		45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
@@ -1023,6 +1025,7 @@
 				1E7A11882072892900AE047D /* MasterHomeViewController.xib */,
 				45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */,
 				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
+				45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -1131,53 +1134,53 @@
 		45D3C8B123DF942100ECF70E /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				45D3C8B223DF942100ECF70E /* Onboarding */,
+				45D3C8EF23DF98D400ECF70E /* OnboardingTutorial */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		45D3C8B223DF942100ECF70E /* Onboarding */ = {
+		45D3C8EF23DF98D400ECF70E /* OnboardingTutorial */ = {
 			isa = PBXGroup;
 			children = (
-				45D3C8CB23DF942100ECF70E /* OnboardingTutorialView.swift */,
-				45D3C8B423DF942100ECF70E /* OnboardingTutorialView.xib */,
-				45D3C8B523DF942100ECF70E /* OnboardingTutorialViewModel.swift */,
-				45D3C8BF23DF942100ECF70E /* OnboardingTutorialViewModelType.swift */,
-				45D3C8BD23DF942100ECF70E /* OnboardingWelcomeView.swift */,
-				45D3C8B323DF942100ECF70E /* OnboardingWelcomeView.xib */,
-				45D3C8CA23DF942100ECF70E /* OnboardingWelcomeViewModel.swift */,
-				45D3C8BE23DF942100ECF70E /* OnboardingWelcomeViewModelType.swift */,
-				45D3C8B623DF942100ECF70E /* Models */,
-				45D3C8C023DF942100ECF70E /* Views */,
+				45D3C8FA23DF98D400ECF70E /* OnboardingWelcomeView.swift */,
+				45D3C8F023DF98D400ECF70E /* OnboardingWelcomeView.xib */,
+				45D3C90723DF98D400ECF70E /* OnboardingWelcomeViewModel.swift */,
+				45D3C8FB23DF98D400ECF70E /* OnboardingWelcomeViewModelType.swift */,
+				45D3C90823DF98D400ECF70E /* OnboardingTutorialView.swift */,
+				45D3C8F123DF98D400ECF70E /* OnboardingTutorialView.xib */,
+				45D3C8F223DF98D400ECF70E /* OnboardingTutorialViewModel.swift */,
+				45D3C8FC23DF98D400ECF70E /* OnboardingTutorialViewModelType.swift */,
+				45D3C8F323DF98D400ECF70E /* Models */,
+				45D3C8FD23DF98D400ECF70E /* Views */,
 			);
-			path = Onboarding;
+			path = OnboardingTutorial;
 			sourceTree = "<group>";
 		};
-		45D3C8B623DF942100ECF70E /* Models */ = {
+		45D3C8F323DF98D400ECF70E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45D3C8B723DF942100ECF70E /* MainOnboardingTutorialItem.swift */,
-				45D3C8BA23DF942100ECF70E /* OnboardingTutorialItem.swift */,
-				45D3C8B823DF942100ECF70E /* OnboardingTutorialProvider.swift */,
-				45D3C8BB23DF942100ECF70E /* OnboardingTutorialProviderType.swift */,
-				45D3C8BC23DF942100ECF70E /* OnboardingTutorialUsageItem.swift */,
-				45D3C8B923DF942100ECF70E /* OnboardingTutorialUsageListItem.swift */,
+				45D3C8F423DF98D400ECF70E /* MainOnboardingTutorialItem.swift */,
+				45D3C8F723DF98D400ECF70E /* OnboardingTutorialItem.swift */,
+				45D3C8F523DF98D400ECF70E /* OnboardingTutorialProvider.swift */,
+				45D3C8F823DF98D400ECF70E /* OnboardingTutorialProviderType.swift */,
+				45D3C8F623DF98D400ECF70E /* OnboardingTutorialUsageListItem.swift */,
+				45D3C8F923DF98D400ECF70E /* OnboardingTutorialUsageItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		45D3C8C023DF942100ECF70E /* Views */ = {
+		45D3C8FD23DF98D400ECF70E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				45D3C8C523DF942100ECF70E /* MainOnboardingTutorialCell.swift */,
-				45D3C8C623DF942100ECF70E /* MainOnboardingTutorialCell.xib */,
-				45D3C8C323DF942100ECF70E /* MainOboardingTutorialCellViewModel.swift */,
-				45D3C8C823DF942100ECF70E /* OnboardingTutorialUsageCell.swift */,
-				45D3C8C123DF942100ECF70E /* OnboardingTutorialUsageCell.xib */,
-				45D3C8C423DF942100ECF70E /* OnboardingTutorialUsageCellViewModel.swift */,
-				45D3C8C223DF942100ECF70E /* OnboardingTutorialUsageListCell.swift */,
-				45D3C8C723DF942100ECF70E /* OnboardingTutorialUsageListCell.xib */,
-				45D3C8C923DF942100ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */,
+				45D3C90223DF98D400ECF70E /* MainOnboardingTutorialCell.swift */,
+				45D3C90323DF98D400ECF70E /* MainOnboardingTutorialCell.xib */,
+				45D3C90023DF98D400ECF70E /* MainOboardingTutorialCellViewModel.swift */,
+				45D3C90523DF98D400ECF70E /* OnboardingTutorialUsageCell.swift */,
+				45D3C8FE23DF98D400ECF70E /* OnboardingTutorialUsageCell.xib */,
+				45D3C90123DF98D400ECF70E /* OnboardingTutorialUsageCellViewModel.swift */,
+				45D3C8FF23DF98D400ECF70E /* OnboardingTutorialUsageListCell.swift */,
+				45D3C90423DF98D400ECF70E /* OnboardingTutorialUsageListCell.xib */,
+				45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1861,7 +1864,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				45D3C8DC23DF942100ECF70E /* OnboardingTutorialUsageCell.xib in Resources */,
 				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
@@ -1877,19 +1879,19 @@
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */,
+				45D3C90A23DF98D500ECF70E /* OnboardingTutorialView.xib in Resources */,
 				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
-				45D3C8E123DF942100ECF70E /* MainOnboardingTutorialCell.xib in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
-				45D3C8D123DF942100ECF70E /* OnboardingTutorialView.xib in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
+				45D3C91B23DF98D500ECF70E /* OnboardingTutorialUsageListCell.xib in Resources */,
+				45D3C91523DF98D500ECF70E /* OnboardingTutorialUsageCell.xib in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
-				45D3C8E223DF942100ECF70E /* OnboardingTutorialUsageListCell.xib in Resources */,
 				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
@@ -1916,7 +1918,8 @@
 				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
 				45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
-				45D3C8D023DF942100ECF70E /* OnboardingWelcomeView.xib in Resources */,
+				45D3C91A23DF98D500ECF70E /* MainOnboardingTutorialCell.xib in Resources */,
+				45D3C90923DF98D500ECF70E /* OnboardingWelcomeView.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
@@ -2085,6 +2088,7 @@
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
 				4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */,
+				45D3C91D23DF98D500ECF70E /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
@@ -2095,17 +2099,16 @@
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4FD0659221A5D75700E69A98 /* ArticleToolViewController.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
+				45D3C91123DF98D500ECF70E /* OnboardingTutorialUsageItem.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
-				45D3C8D923DF942100ECF70E /* OnboardingWelcomeView.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
-				45D3C8DF23DF942100ECF70E /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
@@ -2113,6 +2116,7 @@
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				45D3C91623DF98D500ECF70E /* OnboardingTutorialUsageListCell.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
 				EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */,
@@ -2134,7 +2138,6 @@
 				0F9E32451EDD1A4C0081DBB9 /* TractLink+Actions.swift in Sources */,
 				EC8245C91EEEF0DD0023A203 /* TractImageProperties.swift in Sources */,
 				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
-				45D3C8D623DF942100ECF70E /* OnboardingTutorialItem.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
 				45D3C8EA23DF948700ECF70E /* OnboardingTutorialFlow.swift in Sources */,
@@ -2170,7 +2173,7 @@
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
-				45D3C8DD23DF942100ECF70E /* OnboardingTutorialUsageListCell.swift in Sources */,
+				45D3C91023DF98D500ECF70E /* OnboardingTutorialProviderType.swift in Sources */,
 				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
@@ -2203,8 +2206,6 @@
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
-				45D3C8DA23DF942100ECF70E /* OnboardingWelcomeViewModelType.swift in Sources */,
-				45D3C8E423DF942100ECF70E /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
 				45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */,
@@ -2214,65 +2215,66 @@
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
-				45D3C8E023DF942100ECF70E /* MainOnboardingTutorialCell.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
-				45D3C8E623DF942100ECF70E /* OnboardingTutorialView.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
-				45D3C8D823DF942100ECF70E /* OnboardingTutorialUsageItem.swift in Sources */,
-				45D3C8DE23DF942100ECF70E /* MainOboardingTutorialCellViewModel.swift in Sources */,
-				45D3C8D323DF942100ECF70E /* MainOnboardingTutorialItem.swift in Sources */,
+				45D3C91923DF98D500ECF70E /* MainOnboardingTutorialCell.swift in Sources */,
 				45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
-				45D3C8D523DF942100ECF70E /* OnboardingTutorialUsageListItem.swift in Sources */,
+				45D3C91E23DF98D500ECF70E /* OnboardingWelcomeViewModel.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */,
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
+				45D3C91823DF98D500ECF70E /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				EC8245B91EEEEBCC0023A203 /* TractModalsProperties.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				EC8245C11EEEEF090023A203 /* TractTitleProperties.swift in Sources */,
 				EC8245C71EEEF0660023A203 /* TractCallToActionProperties.swift in Sources */,
-				45D3C8D423DF942100ECF70E /* OnboardingTutorialProvider.swift in Sources */,
 				4FA2A537215938700018762C /* GodToolsJSONResource.swift in Sources */,
 				4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */,
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
+				45D3C91F23DF98D500ECF70E /* OnboardingTutorialView.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
-				45D3C8E523DF942100ECF70E /* OnboardingWelcomeViewModel.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
+				45D3C91323DF98D500ECF70E /* OnboardingWelcomeViewModelType.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
 				4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */,
 				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
 				45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
-				45D3C8D223DF942100ECF70E /* OnboardingTutorialViewModel.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
+				45D3C91423DF98D500ECF70E /* OnboardingTutorialViewModelType.swift in Sources */,
 				45D3C8EC23DF948700ECF70E /* FlowStep.swift in Sources */,
+				45D3C91C23DF98D500ECF70E /* OnboardingTutorialUsageCell.swift in Sources */,
 				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
 				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,
+				45D3C90C23DF98D500ECF70E /* MainOnboardingTutorialItem.swift in Sources */,
 				0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
 				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
+				45D3C91223DF98D500ECF70E /* OnboardingWelcomeView.swift in Sources */,
 				4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				45D3C90B23DF98D500ECF70E /* OnboardingTutorialViewModel.swift in Sources */,
 				45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
-				45D3C8D723DF942100ECF70E /* OnboardingTutorialProviderType.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
-				45D3C8DB23DF942100ECF70E /* OnboardingTutorialViewModelType.swift in Sources */,
+				45D3C8EE23DF987800ECF70E /* TutorialFlow.swift in Sources */,
+				45D3C91723DF98D500ECF70E /* MainOboardingTutorialCellViewModel.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
@@ -2281,8 +2283,10 @@
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
+				45D3C90D23DF98D500ECF70E /* OnboardingTutorialProvider.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
+				45D3C90E23DF98D500ECF70E /* OnboardingTutorialUsageListItem.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
@@ -2297,7 +2301,7 @@
 				0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
 				4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */,
-				45D3C8E323DF942100ECF70E /* OnboardingTutorialUsageCell.swift in Sources */,
+				45D3C90F23DF98D500ECF70E /* OnboardingTutorialItem.swift in Sources */,
 				0F9E32411EDD170C0081DBB9 /* TractCallToAction+Actions.swift in Sources */,
 				ECBE2E6B1EF1053000A13849 /* TractProperties.swift in Sources */,
 			);
