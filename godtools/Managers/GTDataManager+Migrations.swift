@@ -12,7 +12,7 @@ import RealmSwift
 extension GTDataManager {
     static func config() -> Realm.Configuration  {
         return Realm.Configuration(
-            schemaVersion: 10,
+            schemaVersion: 11,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
