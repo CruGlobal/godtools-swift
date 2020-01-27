@@ -18,6 +18,8 @@ protocol MasterHomeViewControllerDelegate {
 
 class MasterHomeViewController: BaseViewController  {
     
+    private let tutorialFlow: TutorialFlow = TutorialFlow()
+    
     var segmentedControl = UISegmentedControl()
     
     let toolsManager = ToolsManager.shared
@@ -53,6 +55,11 @@ class MasterHomeViewController: BaseViewController  {
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
         setupView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.present(tutorialFlow.navigationController, animated: true, completion: nil)
     }
     
     func addMyToolsFindToolsControl() {

@@ -11,8 +11,6 @@ import UIKit
 class OnboardingTutorialView: UIViewController {
     
     private let viewModel: OnboardingTutorialViewModelType
-    private let pageAnimationOptions: UIView.AnimationOptions = .transitionCrossDissolve
-    private let pageAnimationDuration: TimeInterval = 0.2
     
     private var skipButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false

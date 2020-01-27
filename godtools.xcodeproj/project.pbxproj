@@ -147,6 +147,16 @@
 		45D3C91D23DF98D500ECF70E /* OnboardingTutorialUsageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */; };
 		45D3C91E23DF98D500ECF70E /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90723DF98D400ECF70E /* OnboardingWelcomeViewModel.swift */; };
 		45D3C91F23DF98D500ECF70E /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C90823DF98D400ECF70E /* OnboardingTutorialView.swift */; };
+		45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92123DF998300ECF70E /* TutorialView.swift */; };
+		45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92323DF998C00ECF70E /* TutorialViewModel.swift */; };
+		45D3C92623DF999600ECF70E /* TutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92523DF999600ECF70E /* TutorialViewModelType.swift */; };
+		45D3C92823DF999D00ECF70E /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C92723DF999D00ECF70E /* TutorialView.xib */; };
+		45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92A23DF9AC200ECF70E /* TutorialItem.swift */; };
+		45D3C92D23DF9C1000ECF70E /* TutorialItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92C23DF9C1000ECF70E /* TutorialItemProvider.swift */; };
+		45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C92E23DF9C1800ECF70E /* TutorialItemProviderType.swift */; };
+		45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93123DF9D8800ECF70E /* TutorialCell.swift */; };
+		45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */; };
+		45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */; };
 		45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359723D248EA00295D1C /* GTSegmentedControl.swift */; };
 		45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */; };
 		45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */; };
@@ -474,6 +484,16 @@
 		45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCellViewModel.swift; sourceTree = "<group>"; };
 		45D3C90723DF98D400ECF70E /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
 		45D3C90823DF98D400ECF70E /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
+		45D3C92123DF998300ECF70E /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		45D3C92323DF998C00ECF70E /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		45D3C92523DF999600ECF70E /* TutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModelType.swift; sourceTree = "<group>"; };
+		45D3C92723DF999D00ECF70E /* TutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
+		45D3C92A23DF9AC200ECF70E /* TutorialItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItem.swift; sourceTree = "<group>"; };
+		45D3C92C23DF9C1000ECF70E /* TutorialItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemProvider.swift; sourceTree = "<group>"; };
+		45D3C92E23DF9C1800ECF70E /* TutorialItemProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialItemProviderType.swift; sourceTree = "<group>"; };
+		45D3C93123DF9D8800ECF70E /* TutorialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
+		45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
+		45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
 		45F3359723D248EA00295D1C /* GTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
 		45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
@@ -1135,6 +1155,7 @@
 			isa = PBXGroup;
 			children = (
 				45D3C8EF23DF98D400ECF70E /* OnboardingTutorial */,
+				45D3C92023DF996800ECF70E /* Tutorial */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1181,6 +1202,39 @@
 				45D3C8FF23DF98D400ECF70E /* OnboardingTutorialUsageListCell.swift */,
 				45D3C90423DF98D400ECF70E /* OnboardingTutorialUsageListCell.xib */,
 				45D3C90623DF98D400ECF70E /* OnboardingTutorialUsageListCellViewModel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		45D3C92023DF996800ECF70E /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				45D3C92123DF998300ECF70E /* TutorialView.swift */,
+				45D3C92723DF999D00ECF70E /* TutorialView.xib */,
+				45D3C92323DF998C00ECF70E /* TutorialViewModel.swift */,
+				45D3C92523DF999600ECF70E /* TutorialViewModelType.swift */,
+				45D3C92923DF9AB800ECF70E /* Models */,
+				45D3C93023DF9D6900ECF70E /* Views */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		45D3C92923DF9AB800ECF70E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45D3C92A23DF9AC200ECF70E /* TutorialItem.swift */,
+				45D3C92C23DF9C1000ECF70E /* TutorialItemProvider.swift */,
+				45D3C92E23DF9C1800ECF70E /* TutorialItemProviderType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		45D3C93023DF9D6900ECF70E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45D3C93123DF9D8800ECF70E /* TutorialCell.swift */,
+				45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */,
+				45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1904,6 +1958,7 @@
 				4FF7FF572284D062005C8BE1 /* teachmetoshare.zip in Resources */,
 				4FF7FF562284D062005C8BE1 /* satisfied.zip in Resources */,
 				1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */,
+				45D3C92823DF999D00ECF70E /* TutorialView.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
@@ -1920,6 +1975,7 @@
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				45D3C91A23DF98D500ECF70E /* MainOnboardingTutorialCell.xib in Resources */,
 				45D3C90923DF98D500ECF70E /* OnboardingWelcomeView.xib in Resources */,
+				45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
@@ -2109,6 +2165,7 @@
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
+				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
@@ -2138,9 +2195,11 @@
 				0F9E32451EDD1A4C0081DBB9 /* TractLink+Actions.swift in Sources */,
 				EC8245C91EEEF0DD0023A203 /* TractImageProperties.swift in Sources */,
 				EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */,
+				45D3C92623DF999600ECF70E /* TutorialViewModelType.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
 				45D3C8EA23DF948700ECF70E /* OnboardingTutorialFlow.swift in Sources */,
+				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
@@ -2155,6 +2214,7 @@
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */,
+				45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */,
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
@@ -2201,10 +2261,12 @@
 				4F9A9EA0219E22D900C61E9C /* ArticleTableViewCell.swift in Sources */,
 				0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */,
 				1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */,
+				45D3C92D23DF9C1000ECF70E /* TutorialItemProvider.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
+				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
@@ -2275,6 +2337,7 @@
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
 				45D3C8EE23DF987800ECF70E /* TutorialFlow.swift in Sources */,
 				45D3C91723DF98D500ECF70E /* MainOboardingTutorialCellViewModel.swift in Sources */,
+				45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
@@ -2297,6 +2360,7 @@
 				1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */,
 				4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */,
 				EC8245CF1EEEF1B90023A203 /* TractTabProperties.swift in Sources */,
+				45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */,
 				ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */,
 				0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,

@@ -9,9 +9,7 @@
 import Foundation
 
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
-    
-    private let onboardingTutorialProvider: OnboardingTutorialProviderType
-    
+        
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -30,7 +28,6 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType) {
         
         self.flowDelegate = flowDelegate
-        self.onboardingTutorialProvider = onboardingTutorialProvider
         
         var tutorialItemsArray: [OnboardingTutorialItem] = Array()
         tutorialItemsArray.append(contentsOf: onboardingTutorialProvider.aboutTheAppItems)
