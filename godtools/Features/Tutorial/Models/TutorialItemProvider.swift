@@ -17,25 +17,25 @@ struct TutorialItemProvider: TutorialItemProviderType {
         tutorialItems = [
             
             TutorialItem(
-                title: "",
-                message: "",
+                title: NSLocalizedString("tutorial.tutorialItem.0.title", comment: ""),
+                message: NSLocalizedString("tutorial.tutorialItem.0.message", comment: ""),
                 imageName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItem(
-                title: "",
-                message: "",
+                title: NSLocalizedString("tutorial.tutorialItem.1.title", comment: ""),
+                message: NSLocalizedString("tutorial.tutorialItem.1.message", comment: ""),
                 imageName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItem(
-                title: "",
-                message: "",
+                title: NSLocalizedString("tutorial.tutorialItem.2.title", comment: ""),
+                message: NSLocalizedString("tutorial.tutorialItem.2.message", comment: ""),
                 imageName: nil,
                 youTubeVideoId: nil
             ),
             TutorialItem(
-                title: "",
+                title: NSLocalizedString("tutorial.tutorialItem.3.title", comment: ""),
                 message: "",
                 imageName: nil,
                 youTubeVideoId: nil

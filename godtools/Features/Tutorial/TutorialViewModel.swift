@@ -17,6 +17,7 @@ class TutorialViewModel: TutorialViewModelType {
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("tutorial.continueButton.title", comment: ""))
+    let moreInfoTitle: String = NSLocalizedString("tutorial.moreInfoLabel.text", comment: "")
     
     required init(flowDelegate: FlowDelegate, tutorialItemsProvider: TutorialItemProviderType) {
         

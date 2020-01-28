@@ -149,4 +149,12 @@ The app can be downloaded from https://godtoolsapp.com";
 "onboardingTutorial.getStartedButton.title" = "Get Started";
 
 // Tutorial
+"tutorial.tutorialItem.0.title" = "Watch";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video";
+"tutorial.tutorialItem.1.title" = "Prepare";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. This tool is a good place to start.";
+"tutorial.tutorialItem.2.title" = "Try";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
+"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
+"tutorial.moreInfoLabel.text" = "More info";
 "tutorial.continueButton.title" = "Continue";
