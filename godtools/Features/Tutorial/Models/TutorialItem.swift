@@ -14,4 +14,5 @@ struct TutorialItem {
     let message: String
     let imageName: String?
     let youTubeVideoId: String?
+    let customViewId: String?
 }

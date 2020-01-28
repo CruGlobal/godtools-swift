@@ -86,6 +86,9 @@ class TutorialView: UIViewController {
     
     private func setupBinding() {
         
+        viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
+            self?.continueButton.setTitle(title, for: .normal)
+        }
     }
     
     @objc func handlePageControlChanged() {
@@ -120,6 +123,12 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
         cell.configure(viewModel: TutorialCellViewModel(item: tutorialItem))
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let tutorialCell = cell as? TutorialCell {
+            tutorialCell.stopVideo()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

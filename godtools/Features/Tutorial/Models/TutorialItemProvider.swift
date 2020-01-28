@@ -20,25 +20,29 @@ struct TutorialItemProvider: TutorialItemProviderType {
                 title: NSLocalizedString("tutorial.tutorialItem.0.title", comment: ""),
                 message: NSLocalizedString("tutorial.tutorialItem.0.message", comment: ""),
                 imageName: nil,
-                youTubeVideoId: nil
+                youTubeVideoId: "cbP2N1BQdYc",
+                customViewId: nil
             ),
             TutorialItem(
                 title: NSLocalizedString("tutorial.tutorialItem.1.title", comment: ""),
                 message: NSLocalizedString("tutorial.tutorialItem.1.message", comment: ""),
                 imageName: nil,
-                youTubeVideoId: nil
+                youTubeVideoId: nil,
+                customViewId: "tutorial_tools"
             ),
             TutorialItem(
                 title: NSLocalizedString("tutorial.tutorialItem.2.title", comment: ""),
                 message: NSLocalizedString("tutorial.tutorialItem.2.message", comment: ""),
-                imageName: nil,
-                youTubeVideoId: nil
+                imageName: "tutorial_people",
+                youTubeVideoId: nil,
+                customViewId: nil
             ),
             TutorialItem(
                 title: NSLocalizedString("tutorial.tutorialItem.3.title", comment: ""),
                 message: "",
-                imageName: nil,
-                youTubeVideoId: nil
+                imageName: "tutorial_menu_item",
+                youTubeVideoId: nil,
+                customViewId: nil
             )
         ]
     }

@@ -23,45 +23,81 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tutorial" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceR-NP-FuR" userLabel="titleLabel">
-                        <rect key="frame" x="30" y="86" width="315" height="38.5"/>
+                        <rect key="frame" x="30" y="70" width="315" height="38.5"/>
                         <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="32"/>
                         <color key="textColor" red="0.23137254900000001" green="0.64313725489999995" blue="0.85882352939999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d9W-Si-owO" userLabel="messageLabel">
-                        <rect key="frame" x="30" y="140.5" width="315" height="122"/>
+                        <rect key="frame" x="30" y="124.5" width="315" height="122"/>
                         <string key="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-C2-grI" userLabel="mainImageView">
-                        <rect key="frame" x="75" y="302.5" width="225" height="133"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWt-qo-sKw" userLabel="customViewContainer">
+                        <rect key="frame" x="34" y="266.5" width="307.5" height="277"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nml-uV-GCv" userLabel="youTubeVideoPlayer" customClass="WKYTPlayerView">
+                        <rect key="frame" x="37.5" y="266.5" width="300" height="169"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="ieW-C2-grI" secondAttribute="height" multiplier="222:131" id="JmD-yg-Qa8"/>
+                            <constraint firstAttribute="width" secondItem="nml-uV-GCv" secondAttribute="height" multiplier="16:9" id="FTs-aB-6HI"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOH-p9-IJ4" userLabel="youTubeVideoPlayerLoadingView">
+                        <rect key="frame" x="37.5" y="266.5" width="300" height="169"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hcn-Dj-jfP" userLabel="youTubeVideoPlayerActivityIndicator">
+                                <rect key="frame" x="140" y="75" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-C2-grI" userLabel="mainImageView">
+                        <rect key="frame" x="34" y="266.5" width="307.5" height="277"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ieW-C2-grI" secondAttribute="height" multiplier="100:90" id="i9r-nk-3je"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="ieW-C2-grI" firstAttribute="width" secondItem="Xaa-g2-qhB" secondAttribute="width" multiplier="0.6" id="16m-EW-tGB"/>
-                    <constraint firstItem="ieW-C2-grI" firstAttribute="centerX" secondItem="Xaa-g2-qhB" secondAttribute="centerX" id="6rx-EC-J4N"/>
+                    <constraint firstItem="kWt-qo-sKw" firstAttribute="trailing" secondItem="ieW-C2-grI" secondAttribute="trailing" id="3Vk-Cz-jrx"/>
+                    <constraint firstItem="oOH-p9-IJ4" firstAttribute="top" secondItem="nml-uV-GCv" secondAttribute="top" id="7og-8d-7EP"/>
+                    <constraint firstItem="ieW-C2-grI" firstAttribute="width" secondItem="Xaa-g2-qhB" secondAttribute="width" multiplier="0.82" id="96v-W9-elq"/>
+                    <constraint firstItem="kWt-qo-sKw" firstAttribute="bottom" secondItem="ieW-C2-grI" secondAttribute="bottom" id="9Bl-Fs-KVq"/>
+                    <constraint firstItem="ieW-C2-grI" firstAttribute="centerX" secondItem="Xaa-g2-qhB" secondAttribute="centerX" id="9Jq-sh-pfX"/>
                     <constraint firstAttribute="trailing" secondItem="d9W-Si-owO" secondAttribute="trailing" constant="30" id="EFv-E5-15Z"/>
                     <constraint firstItem="d9W-Si-owO" firstAttribute="leading" secondItem="Xaa-g2-qhB" secondAttribute="leading" constant="30" id="EqV-6P-sQp"/>
-                    <constraint firstItem="ieW-C2-grI" firstAttribute="width" secondItem="ieW-C2-grI" secondAttribute="height" multiplier="222:131" id="RST-9f-RsZ"/>
-                    <constraint firstItem="ieW-C2-grI" firstAttribute="top" secondItem="d9W-Si-owO" secondAttribute="bottom" constant="40" id="TUW-Fa-QWA"/>
-                    <constraint firstItem="ceR-NP-FuR" firstAttribute="top" secondItem="Xaa-g2-qhB" secondAttribute="top" constant="86" id="dHU-Z3-MmL"/>
+                    <constraint firstItem="kWt-qo-sKw" firstAttribute="leading" secondItem="ieW-C2-grI" secondAttribute="leading" id="OFH-gs-6V5"/>
+                    <constraint firstItem="nml-uV-GCv" firstAttribute="centerX" secondItem="Xaa-g2-qhB" secondAttribute="centerX" id="OSr-Vf-sK4"/>
+                    <constraint firstItem="ieW-C2-grI" firstAttribute="top" secondItem="d9W-Si-owO" secondAttribute="bottom" constant="20" id="TUW-Fa-QWA"/>
+                    <constraint firstItem="oOH-p9-IJ4" firstAttribute="trailing" secondItem="nml-uV-GCv" secondAttribute="trailing" id="ctF-9X-aBb"/>
+                    <constraint firstItem="ceR-NP-FuR" firstAttribute="top" secondItem="Xaa-g2-qhB" secondAttribute="top" constant="70" id="dHU-Z3-MmL"/>
                     <constraint firstAttribute="trailing" secondItem="ceR-NP-FuR" secondAttribute="trailing" constant="30" id="fU0-JS-deG"/>
+                    <constraint firstItem="nml-uV-GCv" firstAttribute="width" secondItem="Xaa-g2-qhB" secondAttribute="width" multiplier="0.8" id="lBC-KE-eXM"/>
+                    <constraint firstItem="oOH-p9-IJ4" firstAttribute="leading" secondItem="nml-uV-GCv" secondAttribute="leading" id="rS8-bO-X6u"/>
                     <constraint firstItem="d9W-Si-owO" firstAttribute="top" secondItem="ceR-NP-FuR" secondAttribute="bottom" constant="16" id="wAA-s4-wsF"/>
+                    <constraint firstItem="kWt-qo-sKw" firstAttribute="top" secondItem="ieW-C2-grI" secondAttribute="top" id="xnd-eR-h4W"/>
                     <constraint firstItem="ceR-NP-FuR" firstAttribute="leading" secondItem="Xaa-g2-qhB" secondAttribute="leading" constant="30" id="xzb-aB-uKa"/>
+                    <constraint firstItem="oOH-p9-IJ4" firstAttribute="bottom" secondItem="nml-uV-GCv" secondAttribute="bottom" id="y9j-AX-VRI"/>
+                    <constraint firstItem="nml-uV-GCv" firstAttribute="top" secondItem="ieW-C2-grI" secondAttribute="top" id="yZg-EF-c9N"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <size key="customSize" width="343" height="220"/>
             <connections>
+                <outlet property="customViewContainer" destination="kWt-qo-sKw" id="GC9-b2-Nih"/>
                 <outlet property="mainImageView" destination="ieW-C2-grI" id="J5h-vb-cm8"/>
                 <outlet property="messageLabel" destination="d9W-Si-owO" id="OpJ-iM-Uvl"/>
                 <outlet property="titleLabel" destination="ceR-NP-FuR" id="qlh-NC-RJz"/>
+                <outlet property="youTubeVideoPlayer" destination="nml-uV-GCv" id="AJy-RQ-Ftt"/>
+                <outlet property="youTubeVideoPlayerActivityIndicator" destination="hcn-Dj-jfP" id="Ash-zs-9a7"/>
+                <outlet property="youTubeVideoPlayerLoadingView" destination="oOH-p9-IJ4" id="sE5-pW-dOg"/>
             </connections>
             <point key="canvasLocation" x="153" y="66"/>
         </collectionViewCell>

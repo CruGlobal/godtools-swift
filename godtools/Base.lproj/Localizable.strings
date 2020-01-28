@@ -156,5 +156,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "tutorial.tutorialItem.2.title" = "Try";
 "tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
 "tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
-"tutorial.moreInfoLabel.text" = "More info";
 "tutorial.continueButton.title" = "Continue";
+
+// TutorialToolsView
+"tutorialToolsView.moreInfoLabel.text" = "More info";
