@@ -142,6 +142,11 @@
 		45668E8123E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E6A23E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift */; };
 		45668E8223E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E6B23E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift */; };
 		45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E6C23E0E1CC002728E7 /* OnboardingTutorialView.swift */; };
+		45668E8E23E0E462002728E7 /* OpenTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E8B23E0E462002728E7 /* OpenTutorialView.xib */; };
+		45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8C23E0E462002728E7 /* OpenTutorialView.swift */; };
+		45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */; };
+		45668E9223E0E4FE002728E7 /* ButtonWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */; };
+		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
 		45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AB23DF942100ECF70E /* ObservableValue.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
@@ -483,6 +488,11 @@
 		45668E6A23E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialUsageListCellViewModel.swift; sourceTree = "<group>"; };
 		45668E6B23E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingWelcomeViewModel.swift; sourceTree = "<group>"; };
 		45668E6C23E0E1CC002728E7 /* OnboardingTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialView.swift; sourceTree = "<group>"; };
+		45668E8B23E0E462002728E7 /* OpenTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenTutorialView.xib; sourceTree = "<group>"; };
+		45668E8C23E0E462002728E7 /* OpenTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialView.swift; sourceTree = "<group>"; };
+		45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModel.swift; sourceTree = "<group>"; };
+		45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithIcon.swift; sourceTree = "<group>"; };
+		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		45D3C8AB23DF942100ECF70E /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
@@ -1178,6 +1188,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		45668E8A23E0E462002728E7 /* OpenTutorialView */ = {
+			isa = PBXGroup;
+			children = (
+				45668E8C23E0E462002728E7 /* OpenTutorialView.swift */,
+				45668E8B23E0E462002728E7 /* OpenTutorialView.xib */,
+				45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */,
+				45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */,
+			);
+			path = OpenTutorialView;
+			sourceTree = "<group>";
+		};
 		45D3C8AA23DF942100ECF70E /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -1201,7 +1222,9 @@
 		45D3C8AF23DF942100ECF70E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */,
 				45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */,
+				45668E8A23E0E462002728E7 /* OpenTutorialView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1991,6 +2014,7 @@
 				45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
+				45668E8E23E0E462002728E7 /* OpenTutorialView.xib in Resources */,
 				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2222,6 +2246,7 @@
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
+				45668E9223E0E4FE002728E7 /* ButtonWithIcon.swift in Sources */,
 				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
@@ -2230,6 +2255,7 @@
 				1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */,
 				45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */,
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
+				45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
 				4FD8F8011F04179100A70A0D /* FollowUpsManager.swift in Sources */,
 				45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */,
@@ -2284,6 +2310,7 @@
 				1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */,
 				45D3C92D23DF9C1000ECF70E /* TutorialItemProvider.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
+				45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */,
 				45668E8123E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
@@ -2333,6 +2360,7 @@
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
 				4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */,
 				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
+				45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */,
 				45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,

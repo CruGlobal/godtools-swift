@@ -161,3 +161,7 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // TutorialToolsView
 "tutorialToolsView.moreInfoLabel.text" = "More info";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
+"openTutorial.openTutorialButton.title" = "Open Tutorial";
