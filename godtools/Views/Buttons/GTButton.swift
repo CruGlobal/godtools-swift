@@ -85,6 +85,15 @@ class GTButton: UIButton {
         self.layoutSubviews()
     }
     
+    func designAsOpenToolButton() {
+        
+        backgroundColor = UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1)
+        layer.cornerRadius = 6
+        titleLabel?.font = UIFont.gtRegular(size: 15.0)
+        setTitleColor(.white, for: .normal)
+        translationKey = "openTool"
+    }
+    
     func designAsDeleteButton() {
         self.designAsToolDetailButton()
         

@@ -93,6 +93,10 @@
 		0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E741EA906A7000BA60D /* GTConstants.swift */; };
 		0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */; };
 		0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 0FF3DA581ED623570053D0E0 /* kgp-6.xml */; };
+		17141EFC230DC9640088BD7E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
+		17141EFD230DDE150088BD7E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4FAF207A1F02933900C43AFC /* Localizable.strings */; };
+		17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17339884230736DB00A715B4 /* SnapshotHelper.swift */; };
+		17339886230738A200A715B4 /* godtoolsUIRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1733987C230736A400A715B4 /* godtoolsUIRecording.swift */; };
 		1737DFD922F9D4D700223CB0 /* LanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1737DFD822F9D4D700223CB0 /* LanguageTests.swift */; };
 		1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */; };
 		1750C7D62305DA900080612F /* UINavigationController+GodTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */; };
@@ -111,6 +115,13 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		4559F3FF23D89C5200DA7658 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */; };
+		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
+		45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359723D248EA00295D1C /* GTSegmentedControl.swift */; };
+		45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */; };
+		45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */; };
+		45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F335A123D24C1C00295D1C /* GTSegmentCell.xib */; };
+		45F335A723D24D3D00295D1C /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F335A623D24D3D00295D1C /* NibBased.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -147,7 +158,6 @@
 		4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75415221D14655002300DD /* UIViewController+GodTools.swift */; };
 		4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75CC57219DD70C0042200E /* CategoryResource.swift */; };
 		4F75CC5A219DE16D0042200E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F75CC59219DE16D0042200E /* Category.swift */; };
-		4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12296620852B8E008842CC /* OnboardingUITests.swift */; };
 		4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F7CEDFC20852F3C00FE7BDE /* GTAccessibilityConstants.swift */; };
 		4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048001EB38B4F00943DFF /* TranslationsManager.swift */; };
 		4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
@@ -268,6 +278,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1733987F230736A400A715B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4F5732881EA69CF00082035C;
+			remoteInfo = godtools;
+		};
 		4F12297120852BE3008842CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4F5732811EA69CF00082035C /* Project object */;
@@ -373,6 +390,10 @@
 		0FB73E741EA906A7000BA60D /* GTConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTConstants.swift; sourceTree = "<group>"; };
 		0FF3D8CE1ED5E27200A19BCC /* GTAppDefaultStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTAppDefaultStyle.swift; sourceTree = "<group>"; };
 		0FF3DA581ED623570053D0E0 /* kgp-6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-6.xml"; sourceTree = "<group>"; };
+		1733987A230736A400A715B4 /* godtoolsUIRecording.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUIRecording.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1733987C230736A400A715B4 /* godtoolsUIRecording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUIRecording.swift; sourceTree = "<group>"; };
+		1733987E230736A400A715B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17339884230736DB00A715B4 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		1737DFD822F9D4D700223CB0 /* LanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTests.swift; sourceTree = "<group>"; };
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+GodTools.swift"; sourceTree = "<group>"; };
@@ -391,8 +412,14 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
+		45F3359723D248EA00295D1C /* GTSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
+		45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
+		45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
+		45F335A123D24C1C00295D1C /* GTSegmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentCell.xib; sourceTree = "<group>"; };
+		45F335A623D24D3D00295D1C /* NibBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		4F12296620852B8E008842CC /* OnboardingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingUITests.swift; sourceTree = "<group>"; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4F123FAE1F140F1000309DAD /* fourlaws.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; name = fourlaws.zip; path = InitialContent/fourlaws.zip; sourceTree = "<group>"; };
@@ -615,6 +642,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17339877230736A400A715B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F12296920852BE3008842CC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -697,6 +731,7 @@
 				ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */,
 				4F75415221D14655002300DD /* UIViewController+GodTools.swift */,
 				1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */,
+				4559F3FE23D89C5200DA7658 /* UILabel+Extension.swift */,
 			);
 			name = GeneralExtensions;
 			sourceTree = "<group>";
@@ -968,6 +1003,16 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		1733987B230736A400A715B4 /* godtoolsUIRecording */ = {
+			isa = PBXGroup;
+			children = (
+				17339884230736DB00A715B4 /* SnapshotHelper.swift */,
+				1733987C230736A400A715B4 /* godtoolsUIRecording.swift */,
+				1733987E230736A400A715B4 /* Info.plist */,
+			);
+			path = godtoolsUIRecording;
+			sourceTree = "<group>";
+		};
 		1E78090821125CA8003E5F95 /* EmailSignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -996,10 +1041,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45F335A523D24D3100295D1C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				45F335A623D24D3D00295D1C /* NibBased.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4F12296620852B8E008842CC /* OnboardingUITests.swift */,
 				4F12297020852BE3008842CC /* Info.plist */,
 			);
 			path = godtoolsUITests;
@@ -1029,6 +1081,11 @@
 				0FB73E511EA9063E000BA60D /* Labels */,
 				0F08530F1ECB56DA00DDC86D /* Text */,
 				4FEE566E1EC4EAD20085249E /* GTProgressView.swift */,
+				4599A66523D7457600EB0EE7 /* GTSegment.swift */,
+				45F3359723D248EA00295D1C /* GTSegmentedControl.swift */,
+				45F3359D23D24B1300295D1C /* GTSegmentedControl.xib */,
+				45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */,
+				45F335A123D24C1C00295D1C /* GTSegmentCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1136,6 +1193,7 @@
 				684328EB1EB7C7F4005E9131 /* fastlane */,
 				4FC97EA720D2B17B00084A33 /* godtoolsTests */,
 				4F12296D20852BE3008842CC /* godtoolsUITests */,
+				1733987B230736A400A715B4 /* godtoolsUIRecording */,
 				4F57328A1EA69CF00082035C /* Products */,
 				0D9B3E5467200B09BA255F79 /* Pods */,
 				20ECC28E617DF10976739E6B /* Frameworks */,
@@ -1149,6 +1207,7 @@
 				4F5732891EA69CF00082035C /* godtools.app */,
 				684328F11EB7CF66005E9131 /* godtoolsTests.xctest */,
 				4F12296C20852BE3008842CC /* godtoolsUITests.xctest */,
+				1733987A230736A400A715B4 /* godtoolsUIRecording.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1166,6 +1225,7 @@
 				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
+				45F335A523D24D3100295D1C /* Protocols */,
 				EC98C0CC1F1EB0E800A68FF5 /* Resources */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
@@ -1443,6 +1503,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17339879230736A400A715B4 /* godtoolsUIRecording */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17339881230736A400A715B4 /* Build configuration list for PBXNativeTarget "godtoolsUIRecording" */;
+			buildPhases = (
+				17339876230736A400A715B4 /* Sources */,
+				17339877230736A400A715B4 /* Frameworks */,
+				17339878230736A400A715B4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17339880230736A400A715B4 /* PBXTargetDependency */,
+			);
+			name = godtoolsUIRecording;
+			productName = godtoolsUIRecording;
+			productReference = 1733987A230736A400A715B4 /* godtoolsUIRecording.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		4F12296B20852BE3008842CC /* godtoolsUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */;
@@ -1506,10 +1584,15 @@
 		4F5732811EA69CF00082035C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Cru;
 				TargetAttributes = {
+					17339879230736A400A715B4 = {
+						CreatedOnToolsVersion = 10.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 4F5732881EA69CF00082035C;
+					};
 					4F12296B20852BE3008842CC = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = DQ48D9BF2V;
@@ -1610,11 +1693,20 @@
 				4F5732881EA69CF00082035C /* godtools */,
 				684328F01EB7CF66005E9131 /* godtoolsTests */,
 				4F12296B20852BE3008842CC /* godtoolsUITests */,
+				17339879230736A400A715B4 /* godtoolsUIRecording */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17339878230736A400A715B4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17141EFD230DDE150088BD7E /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F12296A20852BE3008842CC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1648,6 +1740,7 @@
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
+				45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */,
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
@@ -1674,6 +1767,7 @@
 				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
 				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
+				45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
@@ -1768,6 +1862,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -1776,6 +1871,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1791,6 +1887,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -1799,6 +1896,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1809,11 +1907,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17339876230736A400A715B4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17141EFC230DC9640088BD7E /* String.swift in Sources */,
+				17339886230738A200A715B4 /* godtoolsUIRecording.swift in Sources */,
+				17339885230736DB00A715B4 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4F12296820852BE3008842CC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F7CEDFB20852E3100FE7BDE /* OnboardingUITests.swift in Sources */,
 				4F388686208531C00022E0B2 /* GTAccessibilityConstants.swift in Sources */,
 				4F388687208534C10022E0B2 /* GTConstants.swift in Sources */,
 			);
@@ -1833,6 +1940,7 @@
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
+				4559F3FF23D89C5200DA7658 /* UILabel+Extension.swift in Sources */,
 				4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
@@ -1904,6 +2012,8 @@
 				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
+				4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */,
+				45F335A723D24D3D00295D1C /* NibBased.swift in Sources */,
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				0F85C7951ECCAAA000023723 /* TractCards+Actions.swift in Sources */,
 				0F13B5F71EC4C85000C55B2A /* TractImage.swift in Sources */,
@@ -1953,6 +2063,7 @@
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
+				45F3359823D248EA00295D1C /* GTSegmentedControl.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */,
@@ -1987,6 +2098,7 @@
 				0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */,
 				4F5BEE1B219B2E870048E35A /* ArticleManager.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
+				45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
@@ -2030,6 +2142,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		17339880230736A400A715B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4F5732881EA69CF00082035C /* godtools */;
+			targetProxy = 1733987F230736A400A715B4 /* PBXContainerItemProxy */;
+		};
 		4F12297220852BE3008842CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4F5732881EA69CF00082035C /* godtools */;
@@ -2120,6 +2237,51 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		17339882230736A400A715B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Debug;
+		};
+		17339883230736A400A715B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Release;
+		};
 		4F12297420852BE3008842CC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2384,6 +2546,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17339881230736A400A715B4 /* Build configuration list for PBXNativeTarget "godtoolsUIRecording" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17339882230736A400A715B4 /* Debug */,
+				17339883230736A400A715B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

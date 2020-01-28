@@ -132,6 +132,7 @@ class DownloadedResourceManager: GTDataManager {
         cachedResource.bannerRemoteId = remoteResource.bannerId
         cachedResource.aboutBannerRemoteId = remoteResource.aboutBannerId
         cachedResource.totalViews = remoteResource.totalViews.int32Value
+        cachedResource.aboutOverviewVideoYouTube = remoteResource.aboutOverviewVideoYouTube
         
         return cachedResource
     }

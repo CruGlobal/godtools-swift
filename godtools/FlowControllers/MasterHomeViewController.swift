@@ -61,8 +61,13 @@ class MasterHomeViewController: BaseViewController  {
         let findTools = determineFindToolsSegment()
         let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
         let font = UIFont.systemFont(ofSize: fontSize)
+        
+        let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
+        myToolsTitle.accessibilityLabel = "my_tools"
+        let findToolsTitle: NSString = NSString(string: determineFindToolsSegment())
+        findToolsTitle.accessibilityLabel = "find_tools"
 
-        segmentedControl = UISegmentedControl(items: [myTools, findTools])
+        segmentedControl = UISegmentedControl(items: [myToolsTitle, findToolsTitle])
         segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         segmentedControl.sizeToFit()
     }
