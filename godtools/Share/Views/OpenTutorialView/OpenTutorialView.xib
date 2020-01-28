@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OpenTutorialView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="closeButton" destination="VYs-4g-Qqe" id="4z5-e4-84R"/>
                 <outlet property="openTutorialButton" destination="mht-yY-799" id="YYy-bU-YHg"/>
                 <outlet property="showTutorialLabel" destination="bFs-QE-Xxy" id="HiD-Ny-BgQ"/>
             </connections>
@@ -18,24 +19,16 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mht-yY-799" userLabel="openTutorialButton" customClass="ButtonWithIcon" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="152.5" y="51" width="109" height="44"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mht-yY-799" userLabel="openTutorialButton">
+                    <rect key="frame" x="97" y="51" width="220" height="44"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="width" constant="220" id="F8n-cz-Uaa"/>
                         <constraint firstAttribute="height" constant="44" id="N5V-ch-uei"/>
                     </constraints>
                     <state key="normal" title="Open Tutorial" image="open_tutorial_arrow">
                         <color key="titleColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconRight" value="YES"/>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconLeft" value="NO"/>
-                        <userDefinedRuntimeAttribute type="number" keyPath="iconPadding">
-                            <real key="value" value="5"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconTitlePadding" value="YES"/>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconEdgePadding" value="NO"/>
-                    </userDefinedRuntimeAttributes>
                 </button>
                 <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYs-4g-Qqe" userLabel="closeButton">
                     <rect key="frame" x="370" y="0.0" width="44" height="44"/>
@@ -52,7 +45,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.85882352941176465" green="0.95294117647058818" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mht-yY-799" firstAttribute="top" secondItem="bFs-QE-Xxy" secondAttribute="bottom" id="3nF-iu-qsx"/>
                 <constraint firstItem="mht-yY-799" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JUb-zU-NZN"/>

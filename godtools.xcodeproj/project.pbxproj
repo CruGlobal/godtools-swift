@@ -145,7 +145,6 @@
 		45668E8E23E0E462002728E7 /* OpenTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E8B23E0E462002728E7 /* OpenTutorialView.xib */; };
 		45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8C23E0E462002728E7 /* OpenTutorialView.swift */; };
 		45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */; };
-		45668E9223E0E4FE002728E7 /* ButtonWithIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */; };
 		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
 		45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AB23DF942100ECF70E /* ObservableValue.swift */; };
@@ -491,7 +490,6 @@
 		45668E8B23E0E462002728E7 /* OpenTutorialView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenTutorialView.xib; sourceTree = "<group>"; };
 		45668E8C23E0E462002728E7 /* OpenTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialView.swift; sourceTree = "<group>"; };
 		45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModel.swift; sourceTree = "<group>"; };
-		45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonWithIcon.swift; sourceTree = "<group>"; };
 		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		45D3C8AB23DF942100ECF70E /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
@@ -1222,7 +1220,6 @@
 		45D3C8AF23DF942100ECF70E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				45668E9123E0E4FE002728E7 /* ButtonWithIcon.swift */,
 				45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */,
 				45668E8A23E0E462002728E7 /* OpenTutorialView */,
 			);
@@ -2246,7 +2243,6 @@
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
-				45668E9223E0E4FE002728E7 /* ButtonWithIcon.swift in Sources */,
 				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,

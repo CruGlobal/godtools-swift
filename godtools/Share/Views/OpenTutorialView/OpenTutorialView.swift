@@ -10,16 +10,30 @@ import UIKit
 
 class OpenTutorialView: UIView, NibBased {
     
+    private var viewModel: OpenTutorialViewModelType?
+    
     @IBOutlet weak private var showTutorialLabel: UILabel!
     @IBOutlet weak private var openTutorialButton: UIButton!
+    @IBOutlet weak private var closeButton: UIButton!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         loadNib()
+        openTutorialButton.addTarget(self, action: #selector(handleOpenTutorial(button:)), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(handleClose(button:)), for: .touchUpInside)
     }
     
     func configure(viewModel: OpenTutorialViewModelType) {
+        self.viewModel = viewModel
         showTutorialLabel.text = viewModel.showTutorialTitle
         openTutorialButton.setTitle(viewModel.openTutorialTitle, for: .normal)
+    }
+    
+    @objc func handleClose(button: UIButton) {
+        viewModel?.closeTapped()
+    }
+    
+    @objc func handleOpenTutorial(button: UIButton) {
+        viewModel?.openTutorialTapped()
     }
 }

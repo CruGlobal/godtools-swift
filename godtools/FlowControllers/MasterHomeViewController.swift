@@ -46,9 +46,15 @@ class MasterHomeViewController: BaseViewController  {
         
         return viewController
     }()
+    
+    @IBOutlet weak private var openTutorialView: OpenTutorialView!
+    @IBOutlet weak private var containmentView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        openTutorialView.configure(viewModel: OpenTutorialViewModel())
+        
         self.defineObservers()
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
@@ -129,10 +135,10 @@ class MasterHomeViewController: BaseViewController  {
         addChild(viewController)
         
         // Add Child View as Subview
-        view.addSubview(viewController.view)
+        containmentView.addSubview(viewController.view)
         
         // Configure Child View
-        viewController.view.frame = view.bounds
+        viewController.view.frame = containmentView.bounds
         viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Notify Child View Controller
