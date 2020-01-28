@@ -17,9 +17,7 @@ protocol MasterHomeViewControllerDelegate {
 }
 
 class MasterHomeViewController: BaseViewController  {
-    
-    private let tutorialFlow: TutorialFlow = TutorialFlow()
-    
+        
     var segmentedControl = UISegmentedControl()
     
     let toolsManager = ToolsManager.shared
@@ -59,7 +57,6 @@ class MasterHomeViewController: BaseViewController  {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.present(tutorialFlow.navigationController, animated: true, completion: nil)
     }
     
     func addMyToolsFindToolsControl() {
