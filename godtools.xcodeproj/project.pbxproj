@@ -118,6 +118,7 @@
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
+		45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
 		45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AB23DF942100ECF70E /* ObservableValue.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
@@ -458,6 +459,7 @@
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
+		45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavBackItem.swift"; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		45D3C8AB23DF942100ECF70E /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
@@ -1144,6 +1146,7 @@
 			isa = PBXGroup;
 			children = (
 				45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */,
+				45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */,
 				45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */,
 			);
 			path = Extensions;
@@ -2169,6 +2172,7 @@
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
+				45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,

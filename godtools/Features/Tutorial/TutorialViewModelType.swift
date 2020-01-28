@@ -14,6 +14,7 @@ protocol TutorialViewModelType {
     var currentTutorialItemIndex: ObservableValue<Int> { get }
     var continueButtonTitle: ObservableValue<String> { get }
     
+    func closeTapped()
     func pageTapped(page: Int)
     func continueTapped()
 }

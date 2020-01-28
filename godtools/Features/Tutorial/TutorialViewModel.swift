@@ -16,7 +16,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
-    let continueButtonTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("tutorial.continueButton.title", comment: ""))
+    let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
     required init(flowDelegate: FlowDelegate, tutorialItemsProvider: TutorialItemProviderType) {
         
@@ -36,6 +36,18 @@ class TutorialViewModel: TutorialViewModelType {
         self.page = page
         
         currentTutorialItemIndex.accept(value: page)
+        
+        let isLastPage: Bool = page == tutorialItems.value.count - 1
+        if isLastPage {
+            continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.startUsingGodTools", comment: ""))
+        }
+        else {
+            continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
+        }
+    }
+    
+    func closeTapped() {
+        print("close tapped")
     }
     
     func pageTapped(page: Int) {

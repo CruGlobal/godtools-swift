@@ -12,6 +12,7 @@ class TutorialView: UIViewController {
     
     private let viewModel: TutorialViewModelType
     
+    private var closeButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var tutorialCollectionView: UICollectionView!
@@ -37,6 +38,16 @@ class TutorialView: UIViewController {
                 
         setupLayout()
         setupBinding()
+        
+        addDefaultNavBackItem()
+        
+        closeButton = addBarButtonItem(
+            to: .right,
+            image: UIImage(named: "nav_item_close"),
+            color: nil,
+            target: self,
+            action: #selector(handleClose(barButtonItem:))
+        )
         
         pageControl.addTarget(self, action: #selector(handlePageControlChanged), for: .valueChanged)
         
@@ -89,6 +100,10 @@ class TutorialView: UIViewController {
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.continueButton.setTitle(title, for: .normal)
         }
+    }
+    
+    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+        viewModel.closeTapped()
     }
     
     @objc func handlePageControlChanged() {
