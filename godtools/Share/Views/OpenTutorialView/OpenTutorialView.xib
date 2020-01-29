@@ -31,12 +31,12 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VYs-4g-Qqe" userLabel="closeButton">
-                    <rect key="frame" x="370" y="0.0" width="44" height="44"/>
+                    <rect key="frame" x="365" y="0.0" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="66t-Cu-Rxv"/>
                         <constraint firstAttribute="width" constant="44" id="Kda-xU-gYA"/>
                     </constraints>
-                    <state key="normal" title="Button" image="nav_item_close"/>
+                    <state key="normal" image="nav_item_close"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show Tutorial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFs-QE-Xxy" userLabel="showTutorialLabel">
                     <rect key="frame" x="155" y="30" width="104" height="21"/>
@@ -49,7 +49,7 @@
             <constraints>
                 <constraint firstItem="mht-yY-799" firstAttribute="top" secondItem="bFs-QE-Xxy" secondAttribute="bottom" id="3nF-iu-qsx"/>
                 <constraint firstItem="mht-yY-799" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JUb-zU-NZN"/>
-                <constraint firstAttribute="trailing" secondItem="VYs-4g-Qqe" secondAttribute="trailing" id="MLU-Rs-eKJ"/>
+                <constraint firstAttribute="trailing" secondItem="VYs-4g-Qqe" secondAttribute="trailing" constant="5" id="MLU-Rs-eKJ"/>
                 <constraint firstItem="VYs-4g-Qqe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VQ4-PD-Ltn"/>
                 <constraint firstItem="bFs-QE-Xxy" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uYS-qH-9mT"/>
                 <constraint firstItem="bFs-QE-Xxy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="wGF-k2-thX"/>

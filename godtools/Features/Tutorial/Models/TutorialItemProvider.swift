@@ -40,9 +40,9 @@ struct TutorialItemProvider: TutorialItemProviderType {
             TutorialItem(
                 title: NSLocalizedString("tutorial.tutorialItem.3.title", comment: ""),
                 message: "",
-                imageName: "tutorial_menu_item",
+                imageName: nil,
                 youTubeVideoId: nil,
-                customViewId: nil
+                customViewId: "tutorial_in_menu"
             )
         ]
     }

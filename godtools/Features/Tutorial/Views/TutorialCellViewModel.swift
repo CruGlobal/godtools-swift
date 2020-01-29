@@ -12,6 +12,7 @@ class TutorialCellViewModel {
     
     enum CustomViewId: String {
         case tutorialTools = "tutorial_tools"
+        case tutorialInMenu = "tutorial_in_menu"
     }
     
     let title: String
@@ -37,6 +38,11 @@ class TutorialCellViewModel {
                 let tutorialTools: TutorialToolsView = TutorialToolsView()
                 tutorialTools.configure(viewModel: TutorialToolsViewModel())
                 customView = TutorialToolsView()
+                
+            case .tutorialInMenu:
+                let tutorialInMenu: TutorialInMenuView = TutorialInMenuView()
+                tutorialInMenu.configure(viewModel: TutorialInMenuViewModel())
+                customView = tutorialInMenu
             }
         }
         else {

@@ -36,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kWt-qo-sKw" userLabel="customViewContainer">
-                        <rect key="frame" x="34" y="266.5" width="307.5" height="277"/>
+                        <rect key="frame" x="0.0" y="266.5" width="375" height="433.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nml-uV-GCv" userLabel="youTubeVideoPlayer" customClass="WKYTPlayerView">
@@ -66,14 +66,12 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="kWt-qo-sKw" firstAttribute="trailing" secondItem="ieW-C2-grI" secondAttribute="trailing" id="3Vk-Cz-jrx"/>
                     <constraint firstItem="oOH-p9-IJ4" firstAttribute="top" secondItem="nml-uV-GCv" secondAttribute="top" id="7og-8d-7EP"/>
                     <constraint firstItem="ieW-C2-grI" firstAttribute="width" secondItem="Xaa-g2-qhB" secondAttribute="width" multiplier="0.82" id="96v-W9-elq"/>
-                    <constraint firstItem="kWt-qo-sKw" firstAttribute="bottom" secondItem="ieW-C2-grI" secondAttribute="bottom" id="9Bl-Fs-KVq"/>
                     <constraint firstItem="ieW-C2-grI" firstAttribute="centerX" secondItem="Xaa-g2-qhB" secondAttribute="centerX" id="9Jq-sh-pfX"/>
                     <constraint firstAttribute="trailing" secondItem="d9W-Si-owO" secondAttribute="trailing" constant="30" id="EFv-E5-15Z"/>
                     <constraint firstItem="d9W-Si-owO" firstAttribute="leading" secondItem="Xaa-g2-qhB" secondAttribute="leading" constant="30" id="EqV-6P-sQp"/>
-                    <constraint firstItem="kWt-qo-sKw" firstAttribute="leading" secondItem="ieW-C2-grI" secondAttribute="leading" id="OFH-gs-6V5"/>
+                    <constraint firstAttribute="trailing" secondItem="kWt-qo-sKw" secondAttribute="trailing" id="G7l-EZ-CPo"/>
                     <constraint firstItem="nml-uV-GCv" firstAttribute="centerX" secondItem="Xaa-g2-qhB" secondAttribute="centerX" id="OSr-Vf-sK4"/>
                     <constraint firstItem="ieW-C2-grI" firstAttribute="top" secondItem="d9W-Si-owO" secondAttribute="bottom" constant="20" id="TUW-Fa-QWA"/>
                     <constraint firstItem="oOH-p9-IJ4" firstAttribute="trailing" secondItem="nml-uV-GCv" secondAttribute="trailing" id="ctF-9X-aBb"/>
@@ -82,10 +80,12 @@
                     <constraint firstItem="nml-uV-GCv" firstAttribute="width" secondItem="Xaa-g2-qhB" secondAttribute="width" multiplier="0.8" id="lBC-KE-eXM"/>
                     <constraint firstItem="oOH-p9-IJ4" firstAttribute="leading" secondItem="nml-uV-GCv" secondAttribute="leading" id="rS8-bO-X6u"/>
                     <constraint firstItem="d9W-Si-owO" firstAttribute="top" secondItem="ceR-NP-FuR" secondAttribute="bottom" constant="16" id="wAA-s4-wsF"/>
+                    <constraint firstItem="kWt-qo-sKw" firstAttribute="leading" secondItem="Xaa-g2-qhB" secondAttribute="leading" id="wrL-KH-RD1"/>
                     <constraint firstItem="kWt-qo-sKw" firstAttribute="top" secondItem="ieW-C2-grI" secondAttribute="top" id="xnd-eR-h4W"/>
                     <constraint firstItem="ceR-NP-FuR" firstAttribute="leading" secondItem="Xaa-g2-qhB" secondAttribute="leading" constant="30" id="xzb-aB-uKa"/>
                     <constraint firstItem="oOH-p9-IJ4" firstAttribute="bottom" secondItem="nml-uV-GCv" secondAttribute="bottom" id="y9j-AX-VRI"/>
                     <constraint firstItem="nml-uV-GCv" firstAttribute="top" secondItem="ieW-C2-grI" secondAttribute="top" id="yZg-EF-c9N"/>
+                    <constraint firstAttribute="bottom" secondItem="kWt-qo-sKw" secondAttribute="bottom" id="zj9-fy-Duv"/>
                 </constraints>
             </collectionViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

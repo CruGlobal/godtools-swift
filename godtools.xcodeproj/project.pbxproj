@@ -122,6 +122,9 @@
 		4556AEB323E1D831002C15E8 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB223E1D831002C15E8 /* UserDefaults+Extension.swift */; };
 		4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */; };
 		4556AEB823E1DC0A002C15E8 /* LanguagePreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */; };
+		4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */; };
+		4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */; };
+		4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -474,6 +477,9 @@
 		4556AEB223E1D831002C15E8 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguagePreferences.swift; sourceTree = "<group>"; };
 		4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePreferencesType.swift; sourceTree = "<group>"; };
+		4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialInMenuView.xib; sourceTree = "<group>"; };
+		4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuViewModel.swift; sourceTree = "<group>"; };
+		4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuView.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -1303,6 +1309,9 @@
 				45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */,
 				45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */,
 				45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */,
+				4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */,
+				4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */,
+				4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1989,6 +1998,7 @@
 			files = (
 				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
+				4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */,
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
@@ -2322,6 +2332,7 @@
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */,
 				4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */,
+				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
@@ -2417,6 +2428,7 @@
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */,
 				45668E7123E0E1CC002728E7 /* OnboardingTutorialProvider.swift in Sources */,
+				4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,

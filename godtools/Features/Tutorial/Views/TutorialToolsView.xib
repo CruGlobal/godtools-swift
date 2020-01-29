@@ -21,19 +21,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial_tool" translatesAutoresizingMaskIntoConstraints="NO" id="Nvf-2v-m5G" userLabel="toolImageView">
-                    <rect key="frame" x="0.0" y="20" width="400" height="174"/>
+                    <rect key="frame" x="20" y="20" width="360" height="157"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Nvf-2v-m5G" secondAttribute="height" multiplier="326:142" id="ptS-IB-FqO"/>
                     </constraints>
                 </imageView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial_more_info_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="yf7-Z2-3lu" userLabel="moreInfoImageView">
-                    <rect key="frame" x="282" y="152" width="80" height="103"/>
+                    <rect key="frame" x="276" y="142.5" width="72" height="93"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="yf7-Z2-3lu" secondAttribute="height" multiplier="72:93" id="2j0-Fj-ghc"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Wy-ez-pq0" userLabel="moreInfoLabel">
-                    <rect key="frame" x="247" y="239" width="73" height="21"/>
+                    <rect key="frame" x="238" y="219.5" width="73" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -44,9 +44,9 @@
                 <constraint firstItem="Nvf-2v-m5G" firstAttribute="top" secondItem="PnN-cB-KCP" secondAttribute="top" constant="20" symbolic="YES" id="0fl-iM-e6Q"/>
                 <constraint firstItem="yf7-Z2-3lu" firstAttribute="width" secondItem="Nvf-2v-m5G" secondAttribute="width" multiplier="0.2" id="Ect-JP-emH"/>
                 <constraint firstItem="0Wy-ez-pq0" firstAttribute="top" secondItem="yf7-Z2-3lu" secondAttribute="bottom" constant="-16" id="Mbv-Xd-QZU"/>
-                <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerX" secondItem="Nvf-2v-m5G" secondAttribute="centerX" multiplier="1.61" id="SqM-eG-5Zg"/>
-                <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerY" secondItem="Nvf-2v-m5G" secondAttribute="centerY" multiplier="1.9" id="UZ4-Gt-fJE"/>
-                <constraint firstItem="Nvf-2v-m5G" firstAttribute="width" secondItem="PnN-cB-KCP" secondAttribute="width" id="VGI-Fl-28X"/>
+                <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerX" secondItem="Nvf-2v-m5G" secondAttribute="centerX" multiplier="1.56" id="SqM-eG-5Zg"/>
+                <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerY" secondItem="Nvf-2v-m5G" secondAttribute="centerY" multiplier="1.92" id="UZ4-Gt-fJE"/>
+                <constraint firstItem="Nvf-2v-m5G" firstAttribute="width" secondItem="PnN-cB-KCP" secondAttribute="width" multiplier="0.9" id="VGI-Fl-28X"/>
                 <constraint firstItem="Nvf-2v-m5G" firstAttribute="centerX" secondItem="PnN-cB-KCP" secondAttribute="centerX" id="Vl1-ig-pqw"/>
                 <constraint firstItem="0Wy-ez-pq0" firstAttribute="centerX" secondItem="yf7-Z2-3lu" secondAttribute="centerX" multiplier="0.88" id="qjN-B7-UdN"/>
             </constraints>
