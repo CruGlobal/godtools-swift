@@ -31,12 +31,12 @@ class OnboardingTutorialView: UIViewController {
     }
     
     deinit {
-        print("x deinit: \(type(of: self))\n")
+        print("x deinit: \(type(of: self))")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view didload: \(type(of: self))\n")
+        print("view didload: \(type(of: self))")
                 
         setupLayout()
         setupBinding()

@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MasterHomeViewController" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="containmentView" destination="PwM-U8-2xL" id="kjd-gt-Yie"/>
+                <outlet property="openTutorialHeight" destination="6V6-6E-zWl" id="5DI-6L-KOw"/>
+                <outlet property="openTutorialTop" destination="hig-dg-rD7" id="CCj-vF-yB6"/>
                 <outlet property="openTutorialView" destination="Php-Ny-ByC" id="p2i-pG-U33"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

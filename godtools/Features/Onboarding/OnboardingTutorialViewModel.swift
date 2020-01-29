@@ -65,7 +65,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     }
     
     func skipTapped() {
-        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.skipTappedFromOnboardingTutorial)
+        flowDelegate?.navigate(step: .skipTappedFromOnboardingTutorial)
     }
     
     func pageTapped(page: Int) {
@@ -81,15 +81,15 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             setPage(page: nextPage)
         }
         else {
-            flowDelegate?.navigate(step: OnboardingTutorialFlowStep.getStartedTappedFromOnboardingTutorial)
+            flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         }
     }
     
     func showMoreTapped() {
-        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.showMoreTappedFromOnboardingTutorial)
+        flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
     }
     
     func getStartedTapped() {
-        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.getStartedTappedFromOnboardingTutorial)
+        flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
     }
 }

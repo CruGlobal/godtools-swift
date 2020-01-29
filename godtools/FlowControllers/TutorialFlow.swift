@@ -8,21 +8,22 @@
 
 import UIKit
 
-enum TutorialFlowStep: FlowStep {
-
-}
-
-class TutorialFlow: NSObject {
+class TutorialFlow: NSObject, Flow {
     
+    private weak var flowDelegate: FlowDelegate?
+    
+    let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
     deinit {
-        print("x deinit: \(type(of: self))\n")
+        print("x deinit: \(type(of: self))")
     }
     
-    override init() {
-        print("init: \(type(of: self))\n")
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+        print("init: \(type(of: self))")
         
+        self.flowDelegate = flowDelegate
+        self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
         
         super.init()
@@ -32,8 +33,12 @@ class TutorialFlow: NSObject {
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let viewModel = TutorialViewModel(flowDelegate: self, tutorialItemsProvider: TutorialItemProvider())
+        let viewModel = TutorialViewModel(
+            flowDelegate: self,
+            tutorialItemsProvider: TutorialItemProvider()
+        )
         let view = TutorialView(viewModel: viewModel)
+        
         navigationController.setViewControllers([view], animated: false)
     }
 }
@@ -42,12 +47,16 @@ extension TutorialFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
         
-        guard let tutorialFlowStep = step as? TutorialFlowStep else {
-            return
-        }
-        
-        switch tutorialFlowStep {
+        switch step {
+           
+        case .closeTappedFromTutorial:
+            flowDelegate?.navigate(step: .closeTappedFromTutorial)
             
+        case .startUsingGodToolsTappedFromTutorial:
+            flowDelegate?.navigate(step: .closeTappedFromTutorial)
+            
+        default:
+            break
         }
     }
 }

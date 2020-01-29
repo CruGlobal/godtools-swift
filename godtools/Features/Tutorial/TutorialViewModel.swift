@@ -47,7 +47,7 @@ class TutorialViewModel: TutorialViewModelType {
     }
     
     func closeTapped() {
-        print("close tapped")
+        flowDelegate?.navigate(step: .closeTappedFromTutorial)
     }
     
     func pageTapped(page: Int) {
@@ -63,8 +63,7 @@ class TutorialViewModel: TutorialViewModelType {
             setPage(page: nextPage)
         }
         else {
-            // TODO: Navigate?
-            //flowDelegate?.navigate(step: )
+            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
         }
     }
 }

@@ -105,8 +105,6 @@
 		1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */; };
 		1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */; };
 		1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E78090921125CDC003E5F95 /* EmailSignUpManager.swift */; };
-		1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A11872072892900AE047D /* MasterHomeViewController.swift */; };
-		1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E7A11882072892900AE047D /* MasterHomeViewController.xib */; };
 		1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E911CA820DAF0050068E62A /* LoginBannerView.xib */; };
 		1E911CAB20DAF03C0068E62A /* LoginBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E911CAA20DAF03C0068E62A /* LoginBannerView.swift */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
@@ -115,6 +113,15 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */; };
+		4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */; };
+		4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */; };
+		4556AEAD23E1D2CE002C15E8 /* TutorialServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEAC23E1D2CE002C15E8 /* TutorialServicesType.swift */; };
+		4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */; };
+		4556AEB123E1D3D5002C15E8 /* Flow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB023E1D3D5002C15E8 /* Flow.swift */; };
+		4556AEB323E1D831002C15E8 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB223E1D831002C15E8 /* UserDefaults+Extension.swift */; };
+		4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */; };
+		4556AEB823E1DC0A002C15E8 /* LanguagePreferencesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -151,7 +158,7 @@
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
 		45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */; };
-		45D3C8EA23DF948700ECF70E /* OnboardingTutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */; };
+		45D3C8EA23DF948700ECF70E /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E723DF948700ECF70E /* OnboardingFlow.swift */; };
 		45D3C8EB23DF948700ECF70E /* FlowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E823DF948700ECF70E /* FlowDelegate.swift */; };
 		45D3C8EC23DF948700ECF70E /* FlowStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8E923DF948700ECF70E /* FlowStep.swift */; };
 		45D3C8EE23DF987800ECF70E /* TutorialFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */; };
@@ -449,8 +456,6 @@
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+SearchBarDelegate.swift"; sourceTree = "<group>"; };
 		1E78090921125CDC003E5F95 /* EmailSignUpManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpManager.swift; sourceTree = "<group>"; };
-		1E7A11872072892900AE047D /* MasterHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
-		1E7A11882072892900AE047D /* MasterHomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		1E911CA820DAF0050068E62A /* LoginBannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginBannerView.xib; sourceTree = "<group>"; };
 		1E911CAA20DAF03C0068E62A /* LoginBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBannerView.swift; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
@@ -460,6 +465,15 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
+		4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
+		4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialServices.swift; sourceTree = "<group>"; };
+		4556AEAC23E1D2CE002C15E8 /* TutorialServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialServicesType.swift; sourceTree = "<group>"; };
+		4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
+		4556AEB023E1D3D5002C15E8 /* Flow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flow.swift; sourceTree = "<group>"; };
+		4556AEB223E1D831002C15E8 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguagePreferences.swift; sourceTree = "<group>"; };
+		4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePreferencesType.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -496,7 +510,7 @@
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
-		45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialFlow.swift; sourceTree = "<group>"; };
+		45D3C8E723DF948700ECF70E /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		45D3C8E823DF948700ECF70E /* FlowDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowDelegate.swift; sourceTree = "<group>"; };
 		45D3C8E923DF948700ECF70E /* FlowStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStep.swift; sourceTree = "<group>"; };
 		45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialFlow.swift; sourceTree = "<group>"; };
@@ -1053,13 +1067,12 @@
 		0FB73E5E1EA90669000BA60D /* FlowControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4556AEB023E1D3D5002C15E8 /* Flow.swift */,
 				45D3C8E823DF948700ECF70E /* FlowDelegate.swift */,
 				45D3C8E923DF948700ECF70E /* FlowStep.swift */,
 				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
 				4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */,
-				1E7A11872072892900AE047D /* MasterHomeViewController.swift */,
-				1E7A11882072892900AE047D /* MasterHomeViewController.xib */,
-				45D3C8E723DF948700ECF70E /* OnboardingTutorialFlow.swift */,
+				45D3C8E723DF948700ECF70E /* OnboardingFlow.swift */,
 				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
 				45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */,
 			);
@@ -1069,12 +1082,14 @@
 		0FB73E631EA90669000BA60D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				0FB73E641EA90669000BA60D /* BaseViewController.swift */,
+				4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */,
+				4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */,
+				4FD0658E21A5D75700E69A98 /* Article */,
+				1EC92E9B20AF5F6100FAD93B /* Loading */,
 				0FB1B1F71EB0E8AE0033DAB9 /* Menu */,
 				0FB73E651EA90669000BA60D /* Platform */,
-				4FD0658E21A5D75700E69A98 /* Article */,
 				4F5707DF1EAE8C8B00A540C2 /* Tract */,
-				0FB73E641EA90669000BA60D /* BaseViewController.swift */,
-				1EC92E9B20AF5F6100FAD93B /* Loading */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1140,6 +1155,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4556AEA923E1D1E7002C15E8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */,
+				4556AEAC23E1D2CE002C15E8 /* TutorialServicesType.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4556AEB423E1D97E002C15E8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */,
+				4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		45668E5323E0E1CC002728E7 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1202,6 +1235,7 @@
 			children = (
 				45D3C8AB23DF942100ECF70E /* ObservableValue.swift */,
 				45D3C8AC23DF942100ECF70E /* Extensions */,
+				4556AEB423E1D97E002C15E8 /* Services */,
 				45D3C8AF23DF942100ECF70E /* Views */,
 			);
 			path = Share;
@@ -1213,6 +1247,7 @@
 				45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */,
 				45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */,
 				45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */,
+				4556AEB223E1D831002C15E8 /* UserDefaults+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1243,6 +1278,7 @@
 				45D3C92323DF998C00ECF70E /* TutorialViewModel.swift */,
 				45D3C92523DF999600ECF70E /* TutorialViewModelType.swift */,
 				45D3C92923DF9AB800ECF70E /* Models */,
+				4556AEA923E1D1E7002C15E8 /* Services */,
 				45D3C93023DF9D6900ECF70E /* Views */,
 			);
 			path = Tutorial;
@@ -1447,6 +1483,7 @@
 			children = (
 				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
+				4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
@@ -1955,7 +1992,6 @@
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
-				1E7A118A2072892900AE047D /* MasterHomeViewController.xib in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
@@ -1997,6 +2033,7 @@
 				45668E7E23E0E1CC002728E7 /* MainOnboardingTutorialCell.xib in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
+				4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */,
 				4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				4F9A9EA1219E22D900C61E9C /* ArticleTableViewCell.xib in Resources */,
 				0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */,
@@ -2235,7 +2272,7 @@
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
-				45D3C8EA23DF948700ECF70E /* OnboardingTutorialFlow.swift in Sources */,
+				45D3C8EA23DF948700ECF70E /* OnboardingFlow.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
@@ -2246,10 +2283,12 @@
 				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
+				4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */,
+				4556AEAD23E1D2CE002C15E8 /* TutorialServicesType.swift in Sources */,
 				0F13B5FF1EC4C8E300C55B2A /* TractForm.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
-				1E7A11892072892900AE047D /* MasterHomeViewController.swift in Sources */,
 				45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */,
+				4556AEB323E1D831002C15E8 /* UserDefaults+Extension.swift in Sources */,
 				ECF9DADC1FB0D89D00CF6816 /* UIDevice.swift in Sources */,
 				45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */,
 				4F462A391EB0E28900C03447 /* TractHero.swift in Sources */,
@@ -2314,11 +2353,14 @@
 				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
+				4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
 				45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
+				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,
 				ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */,
+				4556AEB123E1D3D5002C15E8 /* Flow.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
@@ -2339,6 +2381,7 @@
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
 				EC8245B91EEEEBCC0023A203 /* TractModalsProperties.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
+				4556AEB823E1DC0A002C15E8 /* LanguagePreferencesType.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				EC8245C11EEEEF090023A203 /* TractTitleProperties.swift in Sources */,
 				EC8245C71EEEF0660023A203 /* TractCallToActionProperties.swift in Sources */,
@@ -2393,6 +2436,7 @@
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
+				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
 				ECBE2E621EF04EFB00A13849 /* TractTabs+ChildSetup.swift in Sources */,
 				0F9E32351EDCC78A0081DBB9 /* TractButtonProperties.swift in Sources */,

@@ -8,4 +8,18 @@
 
 import Foundation
 
-protocol FlowStep {}
+enum FlowStep {
+    
+    // onboarding
+    case beginTappedFromOnboardingWelcome
+    case skipTappedFromOnboardingTutorial
+    case showMoreTappedFromOnboardingTutorial
+    case getStartedTappedFromOnboardingTutorial
+    
+    // home
+    case openTutorialTapped
+    
+    // tutorial
+    case closeTappedFromTutorial
+    case startUsingGodToolsTappedFromTutorial
+}

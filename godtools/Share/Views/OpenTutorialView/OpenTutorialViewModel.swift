@@ -10,17 +10,21 @@ import Foundation
 
 class OpenTutorialViewModel: OpenTutorialViewModelType {
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let showTutorialTitle: String
     let openTutorialTitle: String
     
-    required init() {
+    required init(flowDelegate: FlowDelegate) {
+        
+        self.flowDelegate = flowDelegate
         
         showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
         openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
     }
     
     func openTutorialTapped() {
-        print("open tutorial")
+        flowDelegate?.navigate(step: .openTutorialTapped)
     }
     
     func closeTapped() {

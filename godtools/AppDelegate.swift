@@ -22,7 +22,7 @@ enum ShortcutItemType: String {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+        
     var window: UIWindow?
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func startFlowController() {
         self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = PlatformFlowController(window: self.window!)
+        self.flowController = PlatformFlowController(window: self.window!, appDiContainer: AppDiContainer())
         self.window?.makeKeyAndVisible()
     }
     

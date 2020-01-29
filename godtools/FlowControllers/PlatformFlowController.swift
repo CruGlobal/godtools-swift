@@ -10,9 +10,10 @@ import UIKit
 
 class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, AddToolsViewControllerDelegate, MasterHomeViewControllerDelegate {
     
+    private var tutorialFlow: TutorialFlow?
+    
     override func initialViewController() -> UIViewController {
-        let viewController = MasterHomeViewController(nibName: "MasterHomeViewController", bundle: nil)
-        viewController.delegate = self
+        let viewController = MasterHomeViewController(flowDelegate: self, delegate: self, tutorialServices: appDiContainer.tutorialServices)
         return viewController
     }
     
@@ -54,5 +55,30 @@ extension PlatformFlowController: ToolDetailViewControllerDelegate {
     
     func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource) {
         moveToTract(resource: resource)
+    }
+}
+
+extension PlatformFlowController: FlowDelegate {
+    
+    func navigate(step: FlowStep) {
+    
+        switch step {
+        
+        case .openTutorialTapped:
+            let tutorialFlow = TutorialFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer
+            )
+            navigationController?.present(tutorialFlow.navigationController, animated: true, completion: nil)
+            self.tutorialFlow = tutorialFlow
+            
+        case .closeTappedFromTutorial:
+            navigationController?.dismiss(animated: true, completion: { [weak self] in
+                self?.tutorialFlow = nil
+            })
+            
+        default:
+            break
+        }
     }
 }

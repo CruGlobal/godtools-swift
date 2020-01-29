@@ -9,20 +9,24 @@
 import UIKit
 import PromiseKit
 
-protocol MasterHomeViewControllerDelegate {
-    mutating func moveToUpdateLanguageSettings()
-    mutating func moveToToolDetail(resource: DownloadedResource)
-    mutating func moveToTract(resource: DownloadedResource)
-    mutating func moveToArticle(resource: DownloadedResource)
+protocol MasterHomeViewControllerDelegate: class {
+    func moveToUpdateLanguageSettings()
+    func moveToToolDetail(resource: DownloadedResource)
+    func moveToTract(resource: DownloadedResource)
+    func moveToArticle(resource: DownloadedResource)
 }
 
 class MasterHomeViewController: BaseViewController  {
         
-    var segmentedControl = UISegmentedControl()
+    private var segmentedControl = UISegmentedControl()
     
-    let toolsManager = ToolsManager.shared
+    private let tutorialServices: TutorialServicesType
+    private let toolsManager = ToolsManager.shared
     
-    var delegate: MasterHomeViewControllerDelegate?
+    private var didLayoutSubviews: Bool = false
+    
+    private weak var flowDelegate: FlowDelegate?
+    private weak var delegate: MasterHomeViewControllerDelegate?
     
     private lazy var homeViewController: HomeViewController = {
         
@@ -49,16 +53,42 @@ class MasterHomeViewController: BaseViewController  {
     
     @IBOutlet weak private var openTutorialView: OpenTutorialView!
     @IBOutlet weak private var containmentView: UIView!
+    
+    @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
+    @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
+    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, tutorialServices: TutorialServicesType) {
+        self.flowDelegate = flowDelegate
+        self.delegate = delegate
+        self.tutorialServices = tutorialServices
+        super.init(nibName: "MasterHomeViewController", bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        openTutorialView.configure(viewModel: OpenTutorialViewModel())
+        openTutorialView.configure(viewModel: OpenTutorialViewModel(flowDelegate: self))
         
         self.defineObservers()
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
         setupView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            setOpenTutorialHidden(!tutorialServices.openTutorialCalloutIsAvailable, animated: false)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -111,6 +141,20 @@ class MasterHomeViewController: BaseViewController  {
         segmentedControl.selectedSegmentIndex = 0
         
         self.navigationItem.titleView = segmentedControl
+    }
+    
+    private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
+        
+        openTutorialTop.constant = hidden ? (openTutorialHeight.constant * -1) : 0
+        
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.view.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            view.layoutIfNeeded()
+        }
     }
     
     // MARK: - Actions
@@ -240,4 +284,10 @@ extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewCont
         // Tools Manager Delegate required
     }
     
+}
+
+extension MasterHomeViewController: FlowDelegate {
+    func navigate(step: FlowStep) {
+        flowDelegate?.navigate(step: step)
+    }
 }

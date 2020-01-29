@@ -1,5 +1,5 @@
 //
-//  OnboardingTutorialFlow.swift
+//  OnboardingFlow.swift
 //  godtools
 //
 //  Created by Levi Eggert on 1/27/20.
@@ -8,24 +8,19 @@
 
 import UIKit
 
-enum OnboardingTutorialFlowStep: FlowStep {
-    case beginTappedFromOnboardingWelcome
-    case skipTappedFromOnboardingTutorial
-    case showMoreTappedFromOnboardingTutorial
-    case getStartedTappedFromOnboardingTutorial
-}
-
-class OnboardingTutorialFlow: NSObject {
+class OnboardingFlow: NSObject, Flow {
     
+    let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
     deinit {
-        print("x deinit: \(type(of: self))\n")
+        print("x deinit: \(type(of: self))")
     }
     
-    override init() {
-        print("init: \(type(of: self))\n")
+    required init(appDiContainer: AppDiContainer) {
+        print("init: \(type(of: self))")
         
+        self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
         
         super.init()
@@ -41,15 +36,11 @@ class OnboardingTutorialFlow: NSObject {
     }
 }
 
-extension OnboardingTutorialFlow: FlowDelegate {
+extension OnboardingFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
         
-        guard let onboardingTutorialFlowStep = step as? OnboardingTutorialFlowStep else {
-            return
-        }
-        
-        switch onboardingTutorialFlowStep {
+        switch step {
             
         case .beginTappedFromOnboardingWelcome:
            
@@ -70,6 +61,9 @@ extension OnboardingTutorialFlow: FlowDelegate {
             
         case .getStartedTappedFromOnboardingTutorial:
             print("get started tapped")
+            break
+            
+        default:
             break
         }
     }

@@ -31,6 +31,6 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     
     func beginTapped() {
         print("begin tapped")
-        flowDelegate?.navigate(step: OnboardingTutorialFlowStep.beginTappedFromOnboardingWelcome)
+        flowDelegate?.navigate(step: .beginTappedFromOnboardingWelcome)
     }
 }

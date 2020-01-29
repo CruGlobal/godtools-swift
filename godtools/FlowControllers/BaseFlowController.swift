@@ -10,9 +10,15 @@ import UIKit
 
 class BaseFlowController: NSObject, UINavigationControllerDelegate {
     
-    var currentViewController: UIViewController?
+    let appDiContainer: AppDiContainer
     
-    init(window: UIWindow) {
+    var currentViewController: UIViewController?
+    var navigationController: UINavigationController? {
+        return currentViewController?.navigationController
+    }
+    
+    init(window: UIWindow, appDiContainer: AppDiContainer) {
+        self.appDiContainer = appDiContainer
         super.init()
         self.currentViewController = self.initialViewController()
         let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
