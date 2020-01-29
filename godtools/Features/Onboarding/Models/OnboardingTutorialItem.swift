@@ -8,4 +8,6 @@
 
 import Foundation
 
-protocol OnboardingTutorialItem { }
+protocol OnboardingTutorialItem {
+    var backgroundImageName: String? { get }
+}

@@ -9,5 +9,7 @@
 import Foundation
 
 struct OnboardingTutorialUsageListItem: OnboardingTutorialItem {
+    
+    let backgroundImageName: String?
     let usageItems: [OnboardingTutorialUsageItem]
 }

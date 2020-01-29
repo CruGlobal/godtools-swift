@@ -137,6 +137,9 @@
 		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
 		4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDA23E2221E002C15E8 /* FontLibrary.swift */; };
 		4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDD23E22241002C15E8 /* ObservableValue.swift */; };
+		4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */; };
+		4556AEE223E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */; };
+		4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -495,6 +498,9 @@
 		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
 		4556AEDA23E2221E002C15E8 /* FontLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLibrary.swift; sourceTree = "<group>"; };
 		4556AEDD23E22241002C15E8 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCell.swift; sourceTree = "<group>"; };
+		4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialBackgroundCell.xib; sourceTree = "<group>"; };
+		4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCellViewModel.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -1265,6 +1271,9 @@
 				45668E6623E0E1CC002728E7 /* MainOnboardingTutorialCell.swift */,
 				45668E6723E0E1CC002728E7 /* MainOnboardingTutorialCell.xib */,
 				45668E6423E0E1CC002728E7 /* MainOboardingTutorialCellViewModel.swift */,
+				4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */,
+				4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */,
+				4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */,
 				45668E6923E0E1CC002728E7 /* OnboardingTutorialUsageCell.swift */,
 				45668E6223E0E1CC002728E7 /* OnboardingTutorialUsageCell.xib */,
 				45668E6523E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift */,
@@ -2058,6 +2067,7 @@
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
 				4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
+				4556AEE223E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				45668E6D23E0E1CC002728E7 /* OnboardingWelcomeView.xib in Resources */,
 				45668E7923E0E1CC002728E7 /* OnboardingTutorialUsageCell.xib in Resources */,
@@ -2277,6 +2287,7 @@
 				4FD0659221A5D75700E69A98 /* ArticleToolViewController.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
+				4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
 				45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */,
@@ -2284,6 +2295,7 @@
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
+				4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,

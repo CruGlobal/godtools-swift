@@ -16,6 +16,7 @@ class OnboardingTutorialView: UIViewController {
     private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var footerView: UIView!
+    @IBOutlet weak private var backgroundCollectionView: UICollectionView!
     @IBOutlet weak private var tutorialCollectionView: UICollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var showMoreButton: OnboardPrimaryButton!
@@ -60,6 +61,8 @@ class OnboardingTutorialView: UIViewController {
             didLayoutSubviews = true
             
             // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
+            backgroundCollectionView.delegate = self
+            backgroundCollectionView.dataSource = self
             tutorialCollectionView.delegate = self
             tutorialCollectionView.dataSource = self
             
@@ -69,24 +72,19 @@ class OnboardingTutorialView: UIViewController {
             }
             
             viewModel.currentTutorialItemIndex.addObserver(self) { [weak self] (index: Int) in
-                
-                if let tutorialCollectionView = self?.tutorialCollectionView {
-                    let numberOfItems: Int = tutorialCollectionView.numberOfItems(inSection: 0)
-                    if numberOfItems > 0 {
-                        tutorialCollectionView.scrollToItem(
-                            at: IndexPath(item: index, section: 0),
-                            at: .centeredHorizontally,
-                            animated: true
-                        )
-                    }
-                }
-                                
+                self?.scrollToTutorialItem(item: index, animated: true)
                 self?.pageControl.currentPage = index
             }
         }
     }
     
     private func setupLayout() {
+        
+        backgroundCollectionView.register(
+            UINib(nibName: OnboardingTutorialBackgroundCell.nibName, bundle: nil),
+            forCellWithReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier
+        )
+        backgroundCollectionView.isScrollEnabled = false
         
         tutorialCollectionView.register(
             UINib(nibName: MainOnboardingTutorialCell.nibName, bundle: nil),
@@ -183,6 +181,16 @@ class OnboardingTutorialView: UIViewController {
         }
     }
     
+    private func scrollToTutorialItem(item: Int, animated: Bool) {
+        let numberOfTutorialItems: Int = tutorialCollectionView.numberOfItems(inSection: 0)
+        if numberOfTutorialItems > 0 {
+            let indexPath: IndexPath = IndexPath(item: item, section: 0)
+            let scrollPosition: UICollectionView.ScrollPosition = .centeredHorizontally
+            backgroundCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
+            tutorialCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
+        }
+    }
+    
     @objc func handleSkip(barButtonItem: UIBarButtonItem) {
         viewModel.skipTapped()
     }
@@ -209,50 +217,84 @@ class OnboardingTutorialView: UIViewController {
 extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
+            return 1
+        }
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.tutorialItems.value.count
+        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
+            return viewModel.tutorialItems.value.count
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                    
-        let tutorialItem: OnboardingTutorialItem = viewModel.tutorialItems.value[indexPath.item]
-        
-        if let mainTutorialItem = tutorialItem as? MainOnboardingTutorialItem {
+          
+        if collectionView == backgroundCollectionView {
             
-            let cell = tutorialCollectionView.dequeueReusableCell(
-                withReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier,
-                for: indexPath) as! MainOnboardingTutorialCell
-                        
-            cell.configure(viewModel: MainOnboardingTutorialCellViewModel(item: mainTutorialItem))
+            let cell: OnboardingTutorialBackgroundCell = backgroundCollectionView.dequeueReusableCell(
+                withReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier,
+                for: indexPath) as! OnboardingTutorialBackgroundCell
+            
+            let tutorialItem: OnboardingTutorialItem = viewModel.tutorialItems.value[indexPath.item]
+            let viewModel = OnboardingTutorialBackgroundCellViewModel(item: tutorialItem)
+            cell.configure(viewModel: viewModel)
             
             return cell
         }
-        else if let usageListItem = tutorialItem as? OnboardingTutorialUsageListItem {
+        else if collectionView == tutorialCollectionView {
             
-            let cell = tutorialCollectionView.dequeueReusableCell(
-                           withReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier,
-                           for: indexPath) as! OnboardingTutorialUsageListCell
-                       
-            cell.configure(viewModel: OnboardingTutorialUsageListCellViewModel(usageListItem: usageListItem))
+            let tutorialItem: OnboardingTutorialItem = viewModel.tutorialItems.value[indexPath.item]
             
-            return cell
+            if let mainTutorialItem = tutorialItem as? MainOnboardingTutorialItem {
+                
+                let cell = tutorialCollectionView.dequeueReusableCell(
+                    withReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier,
+                    for: indexPath) as! MainOnboardingTutorialCell
+                    
+                let viewModel = MainOnboardingTutorialCellViewModel(item: mainTutorialItem)
+                cell.configure(viewModel: viewModel)
+                
+                return cell
+            }
+            else if let usageListItem = tutorialItem as? OnboardingTutorialUsageListItem {
+                
+                let cell = tutorialCollectionView.dequeueReusableCell(
+                               withReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier,
+                               for: indexPath) as! OnboardingTutorialUsageListCell
+                           
+                cell.configure(viewModel: OnboardingTutorialUsageListCellViewModel(usageListItem: usageListItem))
+                
+                return cell
+            }
         }
         
         return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return tutorialCollectionView.bounds.size
+        if collectionView == backgroundCollectionView {
+            return backgroundCollectionView.bounds.size
+        }
+        else if collectionView == tutorialCollectionView {
+            return tutorialCollectionView.bounds.size
+        }
+        return CGSize(width: 50, height: 50)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
+            return 0
+        }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
+            return 0
+        }
         return 0
     }
 }

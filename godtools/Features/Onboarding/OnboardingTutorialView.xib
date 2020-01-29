@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingTutorialView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundCollectionView" destination="fWO-E3-LWG" id="GB9-Xn-tTt"/>
                 <outlet property="continueButton" destination="jW2-bF-HU2" id="XMJ-WL-CWq"/>
                 <outlet property="continueButtonTop" destination="1eu-uq-USw" id="ZNb-i8-e50"/>
                 <outlet property="footerAreaHeight" destination="TP2-6J-f57" id="Ky0-xL-n2u"/>
@@ -35,6 +36,26 @@
                         <constraint firstAttribute="width" constant="3" id="pKR-hN-7yX"/>
                     </constraints>
                 </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fWO-E3-LWG" userLabel="backgroundCollectionView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fWw-N2-FJR">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sy8-Oe-Rck" userLabel="tutorialCollectionView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="702"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7eL-Je-TRG">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbi-tY-u8T" userLabel="footerView">
                     <rect key="frame" x="0.0" y="746" width="414" height="116"/>
                     <subviews>
@@ -72,16 +93,6 @@
                         <constraint firstItem="jW2-bF-HU2" firstAttribute="leading" secondItem="gbi-tY-u8T" secondAttribute="leading" constant="50" id="zeL-WJ-hHd"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sy8-Oe-Rck" userLabel="tutorialCollectionView">
-                    <rect key="frame" x="0.0" y="44" width="414" height="702"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7eL-Je-TRG">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="j0K-Ic-YXA" userLabel="pageControl">
                     <rect key="frame" x="30" y="815" width="354" height="37"/>
                     <color key="pageIndicatorTintColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -94,20 +105,24 @@
                 <constraint firstItem="gbi-tY-u8T" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="66L-5B-JRf"/>
                 <constraint firstItem="sy8-Oe-Rck" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="FVt-8P-FSa"/>
                 <constraint firstItem="j0K-Ic-YXA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="FeR-9z-2Y0"/>
+                <constraint firstAttribute="bottom" secondItem="fWO-E3-LWG" secondAttribute="bottom" id="ILf-Yo-pqA"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="cjD-ic-OwZ" secondAttribute="bottom" id="JFi-FJ-zxw"/>
                 <constraint firstItem="cjD-ic-OwZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="M89-c7-9Xn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sy8-Oe-Rck" secondAttribute="trailing" id="MWF-e1-1jp"/>
+                <constraint firstItem="fWO-E3-LWG" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="OAg-wb-x6h"/>
+                <constraint firstItem="fWO-E3-LWG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="T9a-Vb-LfE"/>
                 <constraint firstItem="G1h-Ms-VKr" firstAttribute="trailing" secondItem="cjD-ic-OwZ" secondAttribute="trailing" constant="-8" id="Ulb-Zy-rWP"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="j0K-Ic-YXA" secondAttribute="trailing" constant="30" id="Voj-wI-MCW"/>
                 <constraint firstItem="gbi-tY-u8T" firstAttribute="top" secondItem="sy8-Oe-Rck" secondAttribute="bottom" id="hqN-Qv-yxZ"/>
                 <constraint firstItem="gbi-tY-u8T" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="iEn-wt-pUa"/>
                 <constraint firstItem="cjD-ic-OwZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sG9-3W-bgJ"/>
+                <constraint firstItem="fWO-E3-LWG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="saR-4h-fl3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gbi-tY-u8T" secondAttribute="bottom" id="uea-bf-B3y"/>
                 <constraint firstItem="auS-Hg-i5C" firstAttribute="leading" secondItem="cjD-ic-OwZ" secondAttribute="leading" constant="8" id="w2I-GK-p7h"/>
                 <constraint firstItem="sy8-Oe-Rck" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="wBY-sf-xm3"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="141" y="131"/>
+            <point key="canvasLocation" x="140.57971014492756" y="130.58035714285714"/>
         </view>
     </objects>
 </document>
