@@ -8,6 +8,28 @@
 
 import UIKit
 
+extension UIButton {
+    
+    func centerTitleAndSetImageRightOfTitleWithSpacing(spacing: CGFloat) {
+        
+        if let titleLabel = titleLabel, let image = image(for: .normal) {
+            
+            let imageWidth: CGFloat = image.size.width
+            
+            titleLabel.sizeToFit()
+            
+            contentHorizontalAlignment = .left
+            
+            let buttonWidth: CGFloat = frame.size.width
+            let titleWidth: CGFloat = titleLabel.frame.size.width
+            let titleLeft: CGFloat = (buttonWidth / 2 - titleWidth / 2) - imageWidth
+            
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft, bottom: 0, right: 0)
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: titleLeft + titleWidth + spacing, bottom: 0, right: 0)
+        }
+    }
+}
+
 extension UILabel {
     
     func getAttributedString() -> NSMutableAttributedString {

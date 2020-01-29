@@ -31,7 +31,7 @@
                         <constraint firstAttribute="width" constant="220" id="F8n-cz-Uaa"/>
                         <constraint firstAttribute="height" constant="44" id="N5V-ch-uei"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
                     <state key="normal" title="Open Tutorial" image="open_tutorial_arrow">
                         <color key="titleColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
                     </state>

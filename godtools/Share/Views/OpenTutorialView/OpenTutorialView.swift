@@ -23,6 +23,11 @@ class OpenTutorialView: UIView, NibBased {
         closeButton.addTarget(self, action: #selector(handleClose(button:)), for: .touchUpInside)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        openTutorialButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 16)
+    }
+    
     func configure(viewModel: OpenTutorialViewModelType) {
         self.viewModel = viewModel
         showTutorialLabel.text = viewModel.showTutorialTitle
