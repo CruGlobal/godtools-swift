@@ -33,6 +33,13 @@ struct TutorialServices: TutorialServicesType {
         return false
     }
     
+    func enableOpenTutorialCallout() {
+        UserDefaults.saveData(
+            data: nil,
+            key: TutorialServices.keyOpenTutorialCalloutDisabled
+        )
+    }
+    
     func disableOpenTutorialCallout() {
         UserDefaults.saveData(
             data: true,
