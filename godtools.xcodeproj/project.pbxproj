@@ -127,6 +127,16 @@
 		4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */; };
 		4556AEC523E1F63E002C15E8 /* OnboardingTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEC423E1F63E002C15E8 /* OnboardingTutorialServices.swift */; };
 		4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEC623E1F64F002C15E8 /* OnboardingTutorialServicesType.swift */; };
+		4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */; };
+		4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */; };
+		4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */; };
+		4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */; };
+		4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */; };
+		4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */; };
+		4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */; };
+		4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */; };
+		4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDA23E2221E002C15E8 /* FontLibrary.swift */; };
+		4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDD23E22241002C15E8 /* ObservableValue.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -159,7 +169,6 @@
 		45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */; };
 		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
-		45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AB23DF942100ECF70E /* ObservableValue.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
 		45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */; };
@@ -224,10 +233,6 @@
 		4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8226F71EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift */; };
 		4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F855F091EC3907300B42146 /* TranslationZipImporter.swift */; };
 		4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */; };
-		4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */; };
-		4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */; };
-		4F9493B822773E86009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */; };
-		4F9493B922773E8A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */; };
 		4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */; };
 		4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */; };
 		4F9A9E9D219E0AC400C61E9C /* XMLArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */; };
@@ -306,10 +311,6 @@
 		EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8245D31EEFA3430023A203 /* XMLParseManager.swift */; };
 		EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */ = {isa = PBXBuildFile; fileRef = EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */; };
 		EC8A6B9B1EE200CF003B4C02 /* TractPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */; };
-		EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CD1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf */; };
-		EC98C0D01F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CD1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf */; };
-		EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */; };
-		EC98C0D21F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */; };
 		EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */; };
 		ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECA4B3431EE7119A00BAE23C /* UIColor.swift */; };
 		ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAA2C151EF9B4770067ED78 /* TractResource.swift */; };
@@ -484,6 +485,16 @@
 		4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuView.swift; sourceTree = "<group>"; };
 		4556AEC423E1F63E002C15E8 /* OnboardingTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialServices.swift; sourceTree = "<group>"; };
 		4556AEC623E1F64F002C15E8 /* OnboardingTutorialServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialServicesType.swift; sourceTree = "<group>"; };
+		4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
+		4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Light.otf"; sourceTree = "<group>"; };
+		4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
+		4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Regular.ttf"; sourceTree = "<group>"; };
+		4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
+		4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
+		4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
+		4556AEDA23E2221E002C15E8 /* FontLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLibrary.swift; sourceTree = "<group>"; };
+		4556AEDD23E22241002C15E8 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -516,7 +527,6 @@
 		45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModel.swift; sourceTree = "<group>"; };
 		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
-		45D3C8AB23DF942100ECF70E /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
@@ -621,8 +631,6 @@
 		4F8495551F069D130015A6BB /* languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = languages.json; path = InitialContent/languages.json; sourceTree = "<group>"; };
 		4F855F091EC3907300B42146 /* TranslationZipImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranslationZipImporter.swift; path = Managers/TranslationZipImporter.swift; sourceTree = "<group>"; };
 		4F8CF8C221C95A0500752244 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
-		4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Regular.ttf"; sourceTree = "<group>"; };
-		4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansMyanmar-Bold.ttf"; sourceTree = "<group>"; };
 		4F94C68E21F2319100DA641B /* GTAttributedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTAttributedLabel.swift; sourceTree = "<group>"; };
 		4F9910B21EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+TableDelegate.swift"; sourceTree = "<group>"; };
 		4F9A9E9C219E0AC400C61E9C /* XMLArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XMLArticleCategory.swift; path = XMLManagement/XMLArticleCategory.swift; sourceTree = "<group>"; };
@@ -719,9 +727,6 @@
 		EC8245D31EEFA3430023A203 /* XMLParseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = XMLParseManager.swift; path = XMLManagement/XMLParseManager.swift; sourceTree = "<group>"; };
 		EC8A6B981EE1CD7A003B4C02 /* kgp-7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "kgp-7.xml"; sourceTree = "<group>"; };
 		EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractPagination.swift; path = TractClasses/TractPagination.swift; sourceTree = "<group>"; };
-		EC98C0CD1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Bold.ttf"; sourceTree = "<group>"; };
-		EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansEthiopic-Regular.ttf"; sourceTree = "<group>"; };
-		EC98C0D31F1EB2C300A68FF5 /* AbyssinicaSIL-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbyssinicaSIL-R.ttf"; sourceTree = "<group>"; };
 		EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIFont.swift; path = GeneralExtensions/UIFont.swift; sourceTree = "<group>"; };
 		ECA4B3431EE7119A00BAE23C /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIColor.swift; path = GeneralExtensions/UIColor.swift; sourceTree = "<group>"; };
 		ECAA2C151EF9B4770067ED78 /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractResource.swift; path = TractClasses/TractResource.swift; sourceTree = "<group>"; };
@@ -1192,6 +1197,37 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		4556AEC823E22185002C15E8 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4556AEC923E22185002C15E8 /* Fonts */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		4556AEC923E22185002C15E8 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4556AED023E221FE002C15E8 /* AbyssinicaSIL-R.ttf */,
+				4556AED423E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf */,
+				4556AED323E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf */,
+				4556AED223E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf */,
+				4556AED123E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf */,
+				4556AECA23E22185002C15E8 /* SF-Pro-Display-Light.otf */,
+				4556AECB23E22185002C15E8 /* SF-Pro-Text-Light.otf */,
+				4556AECC23E22185002C15E8 /* SF-Pro-Text-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4556AEDC23E22241002C15E8 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				4556AEDD23E22241002C15E8 /* ObservableValue.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		45668E5323E0E1CC002728E7 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1253,8 +1289,9 @@
 		45D3C8AA23DF942100ECF70E /* Share */ = {
 			isa = PBXGroup;
 			children = (
-				45D3C8AB23DF942100ECF70E /* ObservableValue.swift */,
+				4556AEDA23E2221E002C15E8 /* FontLibrary.swift */,
 				45D3C8AC23DF942100ECF70E /* Extensions */,
+				4556AEDC23E22241002C15E8 /* Objects */,
 				4556AEB423E1D97E002C15E8 /* Services */,
 				45D3C8AF23DF942100ECF70E /* Views */,
 			);
@@ -1504,11 +1541,22 @@
 		4F57328B1EA69CF00082035C /* godtools */ = {
 			isa = PBXGroup;
 			children = (
-				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
+				4F5732961EA69CF00082035C /* Assets.xcassets */,
+				4556AEC823E22185002C15E8 /* Assets */,
+				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
+				1EE2ADFC20618A0800D8F120 /* config.plist */,
+				4F57329B1EA69CF00082035C /* Info.plist */,
+				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
+				68C0A3811ED4C63200CC97A3 /* config.sample.plist */,
+				68EE51D71EBBA1E400596250 /* release_notes */,
+				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
+				4FAF207A1F02933900C43AFC /* Localizable.strings */,
+				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
+				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */,
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
-				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
+				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
 				EC55A61D1EE0AC2B000235CA /* TractClasses */,
@@ -1518,23 +1566,12 @@
 				4F1C953B1EA6B85C007B47DB /* Managers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				45F335A523D24D3100295D1C /* Protocols */,
-				EC98C0CC1F1EB0E800A68FF5 /* Resources */,
 				45D3C8AA23DF942100ECF70E /* Share */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
 				ECB2E2981EE9FAC300346FBE /* XMLManagement */,
 				0F0352B31EC0CD03006CD4E5 /* XMLContent */,
-				4F5732961EA69CF00082035C /* Assets.xcassets */,
-				4F5732981EA69CF00082035C /* LaunchScreen.storyboard */,
-				1EE2ADFC20618A0800D8F120 /* config.plist */,
-				4F57329B1EA69CF00082035C /* Info.plist */,
-				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
-				68C0A3811ED4C63200CC97A3 /* config.sample.plist */,
-				68EE51D71EBBA1E400596250 /* release_notes */,
-				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
 				4F84954C1F069C8B0015A6BB /* InitialContent */,
-				4FAF207A1F02933900C43AFC /* Localizable.strings */,
-				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 			);
 			path = godtools;
 			sourceTree = "<group>";
@@ -1652,18 +1689,6 @@
 				EC8245D31EEFA3430023A203 /* XMLParseManager.swift */,
 			);
 			name = Parse;
-			sourceTree = "<group>";
-		};
-		EC98C0CC1F1EB0E800A68FF5 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				EC98C0D31F1EB2C300A68FF5 /* AbyssinicaSIL-R.ttf */,
-				EC98C0CD1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf */,
-				EC98C0CE1F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf */,
-				4F9493B522773E7A009D44CA /* NotoSansMyanmar-Bold.ttf */,
-				4F9493B422773E7A009D44CA /* NotoSansMyanmar-Regular.ttf */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 		ECB2E2981EE9FAC300346FBE /* XMLManagement */ = {
@@ -2015,11 +2040,11 @@
 				4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */,
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
-				4F9493B722773E7A009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
-				EC98C0CF1F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
+				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
+				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
 				0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */,
 				45668E6E23E0E1CC002728E7 /* OnboardingTutorialView.xib in Resources */,
@@ -2031,6 +2056,7 @@
 				4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
 				0F0352C71EC2273B006CD4E5 /* kgp-3.xml in Resources */,
+				4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
 				0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */,
 				45668E6D23E0E1CC002728E7 /* OnboardingWelcomeView.xib in Resources */,
@@ -2040,12 +2066,11 @@
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
-				EC98C0D11F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
 				4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
+				4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				45668E7F23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.xib in Resources */,
-				4F9493B622773E7A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */,
 				4FF7FF552284D062005C8BE1 /* kgp.zip in Resources */,
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
 				4FF7FF572284D062005C8BE1 /* teachmetoshare.zip in Resources */,
@@ -2054,6 +2079,7 @@
 				45D3C92823DF999D00ECF70E /* TutorialView.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
+				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45668E7E23E0E1CC002728E7 /* MainOnboardingTutorialCell.xib in Resources */,
 				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
@@ -2066,11 +2092,14 @@
 				0F7D50251EA933B000F5957E /* HomeViewController.xib in Resources */,
 				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
+				4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */,
 				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
 				45F3359E23D24B1300295D1C /* GTSegmentedControl.xib in Resources */,
 				4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */,
 				45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */,
 				4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */,
+				4556AED823E221FE002C15E8 /* NotoSansEthiopic-Regular.ttf in Resources */,
+				4556AED523E221FE002C15E8 /* AbyssinicaSIL-R.ttf in Resources */,
 				ECB5A8BF1EE5CA1F008E4AB7 /* AboutViewController.xib in Resources */,
 				45668E8E23E0E462002728E7 /* OpenTutorialView.xib in Resources */,
 				4FF7FF5D2284D062005C8BE1 /* d84e2ee6bc7b949ac74213678a72487e511313579eeb6ace9f03364f31e41f19.png in Resources */,
@@ -2081,12 +2110,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC98C0D01F1EB11100A68FF5 /* NotoSansEthiopic-Bold.ttf in Resources */,
-				EC98C0D21F1EB11100A68FF5 /* NotoSansEthiopic-Regular.ttf in Resources */,
-				4F9493B922773E8A009D44CA /* NotoSansMyanmar-Regular.ttf in Resources */,
 				4FC97EAD20D2B2BB00084A33 /* analytics-test1.xml in Resources */,
 				4FC97EB920D2C37900084A33 /* analytics-test2.xml in Resources */,
-				4F9493B822773E86009D44CA /* NotoSansMyanmar-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2351,6 +2376,7 @@
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
+				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
 				0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */,
 				1EC92E9920AF5F5300FAD93B /* LoadingViewController.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
@@ -2381,7 +2407,6 @@
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
-				45D3C8CC23DF942100ECF70E /* ObservableValue.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
 				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,
@@ -2420,6 +2445,7 @@
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
+				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,

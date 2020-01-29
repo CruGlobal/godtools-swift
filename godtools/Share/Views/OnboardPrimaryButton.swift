@@ -26,6 +26,9 @@ class OnboardPrimaryButton: UIButton {
     
     private func initialize() {
         invalidateLayout()
+        if let font = FontLibrary.sfProTextRegular.font(size: 17) {
+            titleLabel?.font = font
+        }
     }
     
     override func setTitle(_ title: String?, for state: UIControl.State) {
