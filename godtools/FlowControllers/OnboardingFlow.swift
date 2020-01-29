@@ -26,8 +26,8 @@ class OnboardingFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
-        navigationController.navigationBar.barTintColor = UIColor.white
-        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.setNavigationBarHidden(false, animated: false)
         

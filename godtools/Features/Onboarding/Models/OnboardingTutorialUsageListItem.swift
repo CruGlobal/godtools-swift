@@ -11,5 +11,6 @@ import Foundation
 struct OnboardingTutorialUsageListItem: OnboardingTutorialItem {
     
     let backgroundImageName: String?
+    let backgroundCustomViewId: String?
     let usageItems: [OnboardingTutorialUsageItem]
 }

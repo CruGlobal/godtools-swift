@@ -18,18 +18,21 @@ struct OnboardingTutorialProvider: OnboardingTutorialProviderType {
         aboutTheAppItems = [
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_0",
+                backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_cups",
                 title: NSLocalizedString("onboardingTutorial.aboutAppItem.0.title", comment: ""),
                 message: NSLocalizedString("onboardingTutorial.aboutAppItem.0.message", comment: "")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_1",
+                backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_knife",
                 title: NSLocalizedString("onboardingTutorial.aboutAppItem.1.title", comment: ""),
                 message: NSLocalizedString("onboardingTutorial.aboutAppItem.1.message", comment: "")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_2",
+                backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_rocket",
                 title: NSLocalizedString("onboardingTutorial.aboutAppItem.2.title", comment: ""),
                 message: NSLocalizedString("onboardingTutorial.aboutAppItem.2.message", comment: "")
@@ -38,6 +41,7 @@ struct OnboardingTutorialProvider: OnboardingTutorialProviderType {
         
         appUsageListItem = OnboardingTutorialUsageListItem(
             backgroundImageName: nil,
+            backgroundCustomViewId: "onboarding_tutorial_gradient_background",
             usageItems: [
             OnboardingTutorialUsageItem(
                 message: NSLocalizedString("onboardingTutorial.appUsageItem.0.message", comment: "")

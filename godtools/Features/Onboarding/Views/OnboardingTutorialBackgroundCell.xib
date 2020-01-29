@@ -17,19 +17,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVM-LJ-UO4" userLabel="backgroundViewContainer">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zb9-tL-tNK" userLabel="backgroundImageView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="KVM-LJ-UO4" firstAttribute="leading" secondItem="LJd-Fk-D6U" secondAttribute="leading" id="92g-ii-aij"/>
                     <constraint firstItem="zb9-tL-tNK" firstAttribute="leading" secondItem="LJd-Fk-D6U" secondAttribute="leading" id="9PP-5Y-Qg5"/>
+                    <constraint firstAttribute="trailing" secondItem="KVM-LJ-UO4" secondAttribute="trailing" id="HIY-A1-bMD"/>
                     <constraint firstAttribute="bottom" secondItem="zb9-tL-tNK" secondAttribute="bottom" id="Mfh-4p-GVG"/>
                     <constraint firstItem="zb9-tL-tNK" firstAttribute="top" secondItem="LJd-Fk-D6U" secondAttribute="top" id="jK4-Ne-Wdy"/>
                     <constraint firstAttribute="trailing" secondItem="zb9-tL-tNK" secondAttribute="trailing" id="rYh-DS-0xh"/>
+                    <constraint firstAttribute="bottom" secondItem="KVM-LJ-UO4" secondAttribute="bottom" id="xOd-2R-mP8"/>
+                    <constraint firstItem="KVM-LJ-UO4" firstAttribute="top" secondItem="LJd-Fk-D6U" secondAttribute="top" id="xQ9-vm-bYS"/>
                 </constraints>
             </collectionViewCellContentView>
             <connections>
                 <outlet property="backgroundImageView" destination="zb9-tL-tNK" id="ELj-6y-Euy"/>
+                <outlet property="backgroundViewContainer" destination="KVM-LJ-UO4" id="Txl-Ki-jnh"/>
             </connections>
             <point key="canvasLocation" x="132" y="13"/>
         </collectionViewCell>

@@ -19,9 +19,10 @@
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-Cc-Hhx" userLabel="usageTableView">
                         <rect key="frame" x="0.0" y="20" width="375" height="680"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tableView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Jc1-Cc-Hhx" secondAttribute="trailing" id="8ap-KC-l8q"/>
                     <constraint firstItem="Jc1-Cc-Hhx" firstAttribute="top" secondItem="pzk-Nk-tQX" secondAttribute="top" constant="20" id="OA4-a6-BeT"/>
@@ -29,6 +30,7 @@
                     <constraint firstItem="Jc1-Cc-Hhx" firstAttribute="leading" secondItem="pzk-Nk-tQX" secondAttribute="leading" id="qPX-IS-bip"/>
                 </constraints>
             </collectionViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="usageTableView" destination="Jc1-Cc-Hhx" id="Qyf-9A-NwR"/>
             </connections>

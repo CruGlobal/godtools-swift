@@ -140,6 +140,8 @@
 		4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */; };
 		4556AEE223E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */; };
 		4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */; };
+		4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */; };
+		4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -501,6 +503,8 @@
 		4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCell.swift; sourceTree = "<group>"; };
 		4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingTutorialBackgroundCell.xib; sourceTree = "<group>"; };
 		4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCellViewModel.swift; sourceTree = "<group>"; };
+		4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialGradientBackgroundView.swift; sourceTree = "<group>"; };
+		4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundItem.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -1256,6 +1260,7 @@
 			isa = PBXGroup;
 			children = (
 				45668E5823E0E1CC002728E7 /* MainOnboardingTutorialItem.swift */,
+				4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */,
 				45668E5B23E0E1CC002728E7 /* OnboardingTutorialItem.swift */,
 				45668E5923E0E1CC002728E7 /* OnboardingTutorialProvider.swift */,
 				45668E5C23E0E1CC002728E7 /* OnboardingTutorialProviderType.swift */,
@@ -1274,6 +1279,7 @@
 				4556AEDF23E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift */,
 				4556AEE123E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib */,
 				4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */,
+				4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */,
 				45668E6923E0E1CC002728E7 /* OnboardingTutorialUsageCell.swift */,
 				45668E6223E0E1CC002728E7 /* OnboardingTutorialUsageCell.xib */,
 				45668E6523E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift */,
@@ -2392,6 +2398,7 @@
 				0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */,
 				1EC92E9920AF5F5300FAD93B /* LoadingViewController.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
+				4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */,
 				4F75CC5A219DE16D0042200E /* Category.swift in Sources */,
@@ -2500,6 +2507,7 @@
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
+				4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
