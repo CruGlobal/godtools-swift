@@ -10,10 +10,12 @@ import Foundation
 
 class AppDiContainer {
         
+    let onboardingTutorialServices: OnboardingTutorialServices
     let tutorialServices: TutorialServicesType
     
     required init() {
         
+        onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
     }
 }

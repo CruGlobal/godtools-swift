@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol Flow: NSObject, FlowDelegate {
+protocol Flow: FlowDelegate {
     
     var appDiContainer: AppDiContainer { get }
     var navigationController: UINavigationController { get }

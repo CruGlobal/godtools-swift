@@ -87,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
+        flowController?.applicationDidBecomeActive(application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

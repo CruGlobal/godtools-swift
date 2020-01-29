@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TutorialFlow: NSObject, Flow {
+class TutorialFlow: Flow {
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -25,9 +25,7 @@ class TutorialFlow: NSObject, Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
-        
-        super.init()
-        
+                
         navigationController.navigationBar.barTintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()

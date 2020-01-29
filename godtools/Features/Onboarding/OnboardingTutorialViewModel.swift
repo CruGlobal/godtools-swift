@@ -21,9 +21,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let showMoreButtonTitle: String = NSLocalizedString("onboardingTutorial.showMoreButton.title", comment: "")
     let getStartedButtonTitle: String = NSLocalizedString("onboardingTutorial.getStartedButton.title", comment: "")
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
-    let hidesContinueButton: ObservableValue<Bool> = ObservableValue(value: false)
-    let hidesShowMoreButton: ObservableValue<Bool> = ObservableValue(value: true)
-    let hidesGetStartedButton: ObservableValue<Bool> = ObservableValue(value: true)
+    let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
     required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType) {
         
@@ -35,10 +33,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
         tutorialItems.accept(value: tutorialItemsArray)
                 
-        setPage(page: 0)
+        setPage(page: 0, animated: false)
     }
     
-    private func setPage(page: Int) {
+    private func setPage(page: Int, animated: Bool) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
             return
@@ -50,15 +48,11 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
                 
         if isLastPage {
             hidesSkipButton.accept(value: true)
-            hidesContinueButton.accept(value: true)
-            hidesShowMoreButton.accept(value: false)
-            hidesGetStartedButton.accept(value: false)
+            tutorialButtonLayout.accept(value: OnboardingTutorialButtonLayout(state: .showMoreAndGetStarted, animated: animated))
         }
         else {
             hidesSkipButton.accept(value: false)
-            hidesContinueButton.accept(value: false)
-            hidesShowMoreButton.accept(value: true)
-            hidesGetStartedButton.accept(value: true)
+            tutorialButtonLayout.accept(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: animated))
         }
         
         currentTutorialItemIndex.accept(value: page)
@@ -69,7 +63,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     }
     
     func pageTapped(page: Int) {
-        setPage(page: page)
+        setPage(page: page, animated: true)
     }
     
     func continueTapped() {
@@ -78,7 +72,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         let reachedEnd: Bool = nextPage >= tutorialItems.value.count
         
         if !reachedEnd {
-            setPage(page: nextPage)
+            setPage(page: nextPage, animated: true)
         }
         else {
             flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)

@@ -8,6 +8,16 @@
 
 import UIKit
 
+enum OnboardingTutorialButtonState {
+    case continueButton
+    case showMoreAndGetStarted
+}
+
+struct OnboardingTutorialButtonLayout {
+    let state: OnboardingTutorialButtonState
+    let animated: Bool
+}
+
 protocol OnboardingTutorialViewModelType {
     
     var tutorialItems: ObservableValue<[OnboardingTutorialItem]> { get }
@@ -17,9 +27,7 @@ protocol OnboardingTutorialViewModelType {
     var showMoreButtonTitle: String { get }
     var getStartedButtonTitle: String { get }
     var hidesSkipButton: ObservableValue<Bool> { get }
-    var hidesContinueButton: ObservableValue<Bool> { get }
-    var hidesGetStartedButton: ObservableValue<Bool> { get }
-    var hidesShowMoreButton: ObservableValue<Bool> { get }
+    var tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> { get }
     
     func skipTapped()
     func pageTapped(page: Int)

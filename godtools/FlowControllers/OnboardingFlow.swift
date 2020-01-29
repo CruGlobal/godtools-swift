@@ -8,7 +8,9 @@
 
 import UIKit
 
-class OnboardingFlow: NSObject, Flow {
+class OnboardingFlow: Flow {
+    
+    private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
@@ -17,14 +19,13 @@ class OnboardingFlow: NSObject, Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    required init(appDiContainer: AppDiContainer) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         print("init: \(type(of: self))")
         
+        self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
-        
-        super.init()
-        
+                
         navigationController.navigationBar.barTintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
         navigationController.navigationBar.shadowImage = UIImage()
@@ -52,17 +53,14 @@ extension OnboardingFlow: FlowDelegate {
             navigationController.setViewControllers([view], animated: true)
             
         case .skipTappedFromOnboardingTutorial:
-            print("skip tapped")
-            break
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
             
         case .showMoreTappedFromOnboardingTutorial:
             print("show more tapped")
-            break
             
         case .getStartedTappedFromOnboardingTutorial:
-            print("get started tapped")
-            break
-            
+            flowDelegate?.navigate(step: .dismissOnboardingTutorial)
+        
         default:
             break
         }

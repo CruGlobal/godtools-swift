@@ -15,11 +15,17 @@ class OnboardingTutorialView: UIViewController {
     private var skipButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     
+    @IBOutlet weak private var footerView: UIView!
     @IBOutlet weak private var tutorialCollectionView: UICollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var showMoreButton: OnboardPrimaryButton!
     @IBOutlet weak private var getStartedButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
+    
+    @IBOutlet weak private var continueButtonTop: NSLayoutConstraint!
+    @IBOutlet weak private var showMoreButtonTop: NSLayoutConstraint!
+    @IBOutlet weak private var getStartedButtonTop: NSLayoutConstraint!
+    @IBOutlet weak private var footerAreaHeight: NSLayoutConstraint!
     
     required init(viewModel: OnboardingTutorialViewModelType) {
         self.viewModel = viewModel
@@ -119,21 +125,60 @@ class OnboardingTutorialView: UIViewController {
             }
         }
         
-        viewModel.hidesContinueButton.addObserver(self) { [weak self] (hidden: Bool) in
-            if let view = self {
-                view.setButtonHidden(button: view.continueButton, hidden: hidden, animated: true)
-            }
-        }
-        
-        viewModel.hidesShowMoreButton.addObserver(self) { [weak self] (hidden: Bool) in
-            if let view = self {
-                view.setButtonHidden(button: view.showMoreButton, hidden: hidden, animated: true)
-            }
-        }
-        
-        viewModel.hidesGetStartedButton.addObserver(self) { [weak self] (hidden: Bool) in
-            if let view = self {
-                view.setButtonHidden(button: view.getStartedButton, hidden: hidden, animated: true)
+        viewModel.tutorialButtonLayout.addObserver(self) { [weak self] (layout: OnboardingTutorialButtonLayout) in
+            
+            if let controller = self {
+            
+                let layoutView: UIView = controller.footerView
+                let hidden: CGFloat = controller.footerAreaHeight.constant
+                let visible: CGFloat = 0
+                
+                switch layout.state {
+                    
+                case .continueButton:
+                    controller.showMoreButtonTop.constant = hidden
+                    controller.getStartedButtonTop.constant = hidden
+                    if layout.animated {
+                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                            layoutView.layoutIfNeeded()
+                        }, completion: nil)
+                    }
+                    else {
+                        layoutView.layoutIfNeeded()
+                    }
+                    
+                    controller.continueButtonTop.constant = visible
+                    if layout.animated {
+                        UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                            layoutView.layoutIfNeeded()
+                        }, completion: nil)
+                    }
+                    else {
+                        layoutView.layoutIfNeeded()
+                    }
+                                        
+                case .showMoreAndGetStarted:
+                    controller.continueButtonTop.constant = hidden
+                    if layout.animated {
+                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                            layoutView.layoutIfNeeded()
+                        }, completion: nil)
+                    }
+                    else {
+                        layoutView.layoutIfNeeded()
+                    }
+                    
+                    controller.showMoreButtonTop.constant = visible
+                    controller.getStartedButtonTop.constant = visible
+                    if layout.animated {
+                        UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                            layoutView.layoutIfNeeded()
+                        }, completion: nil)
+                    }
+                    else {
+                        layoutView.layoutIfNeeded()
+                    }
+                }
             }
         }
     }
@@ -156,17 +201,6 @@ class OnboardingTutorialView: UIViewController {
     
     @objc func handleGetStarted(button: UIButton) {
         viewModel.getStartedTapped()
-    }
-    
-    private func setButtonHidden(button: UIButton, hidden: Bool, animated: Bool) {
-        if animated {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                button.alpha = hidden ? 0 : 1
-            }, completion: nil)
-        }
-        else {
-            button.alpha = hidden ? 0 : 1
-        }
     }
 }
 

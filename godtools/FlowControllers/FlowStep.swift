@@ -10,6 +10,10 @@ import Foundation
 
 enum FlowStep {
     
+    // app
+    case showOnboardingTutorial(animated: Bool)
+    case dismissOnboardingTutorial
+    
     // onboarding
     case beginTappedFromOnboardingWelcome
     case skipTappedFromOnboardingTutorial
