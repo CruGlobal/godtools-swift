@@ -57,9 +57,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         _ = FollowUpsManager().syncCachedFollowUps()
         
-        self.startFlowController()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = UIColor.white
+        flowController = PlatformFlowController(
+            appDiContainer: AppDiContainer()
+        )
+        window.rootViewController = flowController?.navigationController
+        window.makeKeyAndVisible()
+        self.window = window
         
-        self.initalizeAppState()
+        initalizeAppState()
 
         return true
     }
@@ -84,14 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
     
-    }
-    
-    // MARK: - Flow controllers setup
-    
-    func startFlowController() {
-        self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = PlatformFlowController(window: self.window!, appDiContainer: AppDiContainer())
-        self.window?.makeKeyAndVisible()
     }
     
     // MARK: App state initialization/refresh

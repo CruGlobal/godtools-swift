@@ -17,14 +17,16 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
         return currentViewController?.navigationController
     }
     
-    init(window: UIWindow, appDiContainer: AppDiContainer) {
+    init(appDiContainer: AppDiContainer) {
+        
         self.appDiContainer = appDiContainer
+        
         super.init()
-        self.currentViewController = self.initialViewController()
-        let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
-        self.configureNavigation(navigationController: navigationController)
-        window.rootViewController = navigationController
-        self.defineObservers()
+        
+        currentViewController = initialViewController()
+        let navigationController = UINavigationController.init(rootViewController: currentViewController!)
+        configureNavigation(navigationController: navigationController)
+        defineObservers()
     }
     
     func initialViewController() -> UIViewController {

@@ -13,7 +13,11 @@ class PlatformFlowController: BaseFlowController, HomeViewControllerDelegate, Ad
     private var tutorialFlow: TutorialFlow?
     
     override func initialViewController() -> UIViewController {
-        let viewController = MasterHomeViewController(flowDelegate: self, delegate: self, tutorialServices: appDiContainer.tutorialServices)
+        let viewController = MasterHomeViewController(
+            flowDelegate: self,
+            delegate: self,
+            tutorialServices: appDiContainer.tutorialServices
+        )
         return viewController
     }
     

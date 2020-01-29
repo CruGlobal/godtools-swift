@@ -125,6 +125,8 @@
 		4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */; };
 		4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */; };
 		4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */; };
+		4556AEC523E1F63E002C15E8 /* OnboardingTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEC423E1F63E002C15E8 /* OnboardingTutorialServices.swift */; };
+		4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEC623E1F64F002C15E8 /* OnboardingTutorialServicesType.swift */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -480,6 +482,8 @@
 		4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialInMenuView.xib; sourceTree = "<group>"; };
 		4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuViewModel.swift; sourceTree = "<group>"; };
 		4556AEBF23E1EBD4002C15E8 /* TutorialInMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuView.swift; sourceTree = "<group>"; };
+		4556AEC423E1F63E002C15E8 /* OnboardingTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialServices.swift; sourceTree = "<group>"; };
+		4556AEC623E1F64F002C15E8 /* OnboardingTutorialServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialServicesType.swift; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -1179,6 +1183,15 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		4556AEC323E1F632002C15E8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				4556AEC423E1F63E002C15E8 /* OnboardingTutorialServices.swift */,
+				4556AEC623E1F64F002C15E8 /* OnboardingTutorialServicesType.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		45668E5323E0E1CC002728E7 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1191,6 +1204,7 @@
 				45668E6B23E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift */,
 				45668E5F23E0E1CC002728E7 /* OnboardingWelcomeViewModelType.swift */,
 				45668E5723E0E1CC002728E7 /* Models */,
+				4556AEC323E1F632002C15E8 /* Services */,
 				45668E6123E0E1CC002728E7 /* Views */,
 			);
 			path = Onboarding;
@@ -1493,6 +1507,7 @@
 				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */,
+				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
@@ -1515,7 +1530,6 @@
 				4F57329B1EA69CF00082035C /* Info.plist */,
 				1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */,
 				68C0A3811ED4C63200CC97A3 /* config.sample.plist */,
-				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
 				68EE51D71EBBA1E400596250 /* release_notes */,
 				4F5732931EA69CF00082035C /* godtools.xcdatamodeld */,
 				4F84954C1F069C8B0015A6BB /* InitialContent */,
@@ -2306,6 +2320,7 @@
 				45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */,
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
+				4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
 				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
@@ -2410,6 +2425,7 @@
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
 				4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */,
 				EC8245C51EEEF0020023A203 /* TractLabelProperties.swift in Sources */,
+				4556AEC523E1F63E002C15E8 /* OnboardingTutorialServices.swift in Sources */,
 				45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */,
 				45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
