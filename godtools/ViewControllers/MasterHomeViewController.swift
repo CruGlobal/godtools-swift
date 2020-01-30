@@ -93,7 +93,7 @@ class MasterHomeViewController: BaseViewController  {
     
     private func setupLayout() {
         openTutorialView.configure(
-            viewModel: OpenTutorialViewModel(flowDelegate: self),
+            viewModel: OpenTutorialViewModel(flowDelegate: self, tutorialServices: tutorialServices),
             delegate: self
         )
     }

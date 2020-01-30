@@ -47,7 +47,9 @@ extension OnboardingFlow: FlowDelegate {
            
             let viewModel = OnboardingTutorialViewModel(
                 flowDelegate: self,
-                onboardingTutorialProvider: OnboardingTutorialProvider()
+                onboardingTutorialProvider: OnboardingTutorialProvider(),
+                onboardingTutorialServices: appDiContainer.onboardingTutorialServices,
+                tutorialServices: appDiContainer.tutorialServices
             )
             let view = OnboardingTutorialView(viewModel: viewModel)
             navigationController.setViewControllers([view], animated: true)
@@ -56,7 +58,7 @@ extension OnboardingFlow: FlowDelegate {
             flowDelegate?.navigate(step: .dismissOnboardingTutorial)
             
         case .showMoreTappedFromOnboardingTutorial:
-            print("show more tapped")
+            flowDelegate?.navigate(step: step)
             
         case .getStartedTappedFromOnboardingTutorial:
             flowDelegate?.navigate(step: .dismissOnboardingTutorial)

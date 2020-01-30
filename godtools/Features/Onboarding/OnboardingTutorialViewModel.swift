@@ -10,6 +10,9 @@ import Foundation
 
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
+    private let onboardingTutorialServices: OnboardingTutorialServicesType
+    private let tutorialServices: TutorialServicesType
+    
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -23,9 +26,11 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType) {
+    required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
         
         self.flowDelegate = flowDelegate
+        self.onboardingTutorialServices = onboardingTutorialServices
+        self.tutorialServices = tutorialServices
         
         var tutorialItemsArray: [OnboardingTutorialItem] = Array()
         tutorialItemsArray.append(contentsOf: onboardingTutorialProvider.aboutTheAppItems)
@@ -80,6 +85,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     }
     
     func showMoreTapped() {
+        tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
     }
     

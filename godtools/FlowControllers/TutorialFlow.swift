@@ -19,12 +19,12 @@ class TutorialFlow: Flow {
         print("x deinit: \(type(of: self))")
     }
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController?) {
         print("init: \(type(of: self))")
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = UINavigationController(nibName: nil, bundle: nil)
+        self.navigationController = sharedNavigationController ?? UINavigationController(nibName: nil, bundle: nil)
                 
         navigationController.navigationBar.barTintColor = UIColor.white
         navigationController.navigationBar.isTranslucent = false
@@ -37,7 +37,8 @@ class TutorialFlow: Flow {
         )
         let view = TutorialView(viewModel: viewModel)
         
-        navigationController.setViewControllers([view], animated: false)
+        let animated: Bool = sharedNavigationController != nil
+        navigationController.setViewControllers([view], animated: animated)
     }
 }
 
@@ -48,10 +49,10 @@ extension TutorialFlow: FlowDelegate {
         switch step {
            
         case .closeTappedFromTutorial:
-            flowDelegate?.navigate(step: .closeTappedFromTutorial)
+            flowDelegate?.navigate(step: .dismissTutorial)
             
         case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .closeTappedFromTutorial)
+            flowDelegate?.navigate(step: .dismissTutorial)
             
         default:
             break

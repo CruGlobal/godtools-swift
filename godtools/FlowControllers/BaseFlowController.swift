@@ -40,7 +40,7 @@ class BaseFlowController: NSObject, FlowDelegate {
             navigate(step: .showOnboardingTutorial(animated: false))
         }
         else {
-            navigate(step: .showMasterView(animated: true))
+            navigate(step: .showMasterView(animated: true, shouldCreateNewInstance: true))
         }
     }
     
@@ -48,23 +48,31 @@ class BaseFlowController: NSObject, FlowDelegate {
 
         switch step {
         
-        case .showMasterView(let animated):
+        case .showMasterView(let animated, let shouldCreateNewInstance):
+            
             navigationController.setNavigationBarHidden(false, animated: false)
+            
             configureNavigation(navigationController: navigationController)
-            let masterView = MasterHomeViewController(
-                flowDelegate: self,
-                delegate: self,
-                tutorialServices: appDiContainer.tutorialServices
-            )
             
-            navigationController.setViewControllers([masterView], animated: false)
-            currentViewController = masterView
+            let currentMasterView: MasterHomeViewController? = navigationController.viewControllers.first as? MasterHomeViewController
             
-            if animated {
-                masterView.view.alpha = 0
-                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                    masterView.view.alpha = 1
-                }, completion: nil)
+            if shouldCreateNewInstance || currentMasterView == nil {
+                
+                let masterView = MasterHomeViewController(
+                    flowDelegate: self,
+                    delegate: self,
+                    tutorialServices: appDiContainer.tutorialServices
+                )
+                
+                navigationController.setViewControllers([masterView], animated: false)
+                currentViewController = masterView
+                
+                if animated {
+                    masterView.view.alpha = 0
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                        masterView.view.alpha = 1
+                    }, completion: nil)
+                }
             }
             
         case .showOnboardingTutorial(let animated):
@@ -79,23 +87,36 @@ class BaseFlowController: NSObject, FlowDelegate {
             self.onboardingFlow = onboardingFlow
             
         case .dismissOnboardingTutorial:
-            navigate(step: .showMasterView(animated: false))
-            navigationController.dismiss(animated: true) { [weak self] in
-                self?.onboardingFlow = nil
-            }
             
+            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+            navigationController.dismiss(animated: true, completion: nil)
+            onboardingFlow = nil
+                            
+        case .showMoreTappedFromOnboardingTutorial:
+            
+            let tutorialFlow = TutorialFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: onboardingFlow?.navigationController
+            )
+            
+            self.tutorialFlow = tutorialFlow
+            onboardingFlow = nil
+                            
         case .openTutorialTapped:
             let tutorialFlow = TutorialFlow(
                 flowDelegate: self,
-                appDiContainer: appDiContainer
+                appDiContainer: appDiContainer,
+                sharedNavigationController: nil
             )
             navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
             self.tutorialFlow = tutorialFlow
+    
+        case .dismissTutorial:
             
-        case .closeTappedFromTutorial:
-            navigationController.dismiss(animated: true, completion: { [weak self] in
-                self?.tutorialFlow = nil
-            })
+            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+            navigationController.dismiss(animated: true, completion: nil)
+            tutorialFlow = nil
             
         default:
             break

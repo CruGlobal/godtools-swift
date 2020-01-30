@@ -11,9 +11,10 @@ import Foundation
 enum FlowStep {
     
     // app
-    case showMasterView(animated: Bool)
+    case showMasterView(animated: Bool, shouldCreateNewInstance: Bool)
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
+    case dismissTutorial
     
     // onboarding
     case beginTappedFromOnboardingWelcome

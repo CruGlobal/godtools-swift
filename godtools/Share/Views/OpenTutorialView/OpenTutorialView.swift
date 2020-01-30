@@ -42,6 +42,7 @@ class OpenTutorialView: UIView, NibBased {
     }
     
     @objc func handleClose(button: UIButton) {
+        viewModel?.closeTapped()
         delegate?.openTutorialViewCloseTapped(openTutorial: self)
     }
     
