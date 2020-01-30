@@ -29,6 +29,7 @@ class BaseFlowController: NSObject, FlowDelegate {
         
         defineObservers()
         
+        navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([LaunchView()], animated: false)
     }
@@ -39,7 +40,7 @@ class BaseFlowController: NSObject, FlowDelegate {
             navigate(step: .showOnboardingTutorial(animated: false))
         }
         else {
-            navigate(step: .showMasterView)
+            navigate(step: .showMasterView(animated: true))
         }
     }
     
@@ -47,7 +48,7 @@ class BaseFlowController: NSObject, FlowDelegate {
 
         switch step {
         
-        case .showMasterView:
+        case .showMasterView(let animated):
             navigationController.setNavigationBarHidden(false, animated: false)
             configureNavigation(navigationController: navigationController)
             let masterView = MasterHomeViewController(
@@ -55,8 +56,16 @@ class BaseFlowController: NSObject, FlowDelegate {
                 delegate: self,
                 tutorialServices: appDiContainer.tutorialServices
             )
+            
             navigationController.setViewControllers([masterView], animated: false)
             currentViewController = masterView
+            
+            if animated {
+                masterView.view.alpha = 0
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                    masterView.view.alpha = 1
+                }, completion: nil)
+            }
             
         case .showOnboardingTutorial(let animated):
             
@@ -70,7 +79,7 @@ class BaseFlowController: NSObject, FlowDelegate {
             self.onboardingFlow = onboardingFlow
             
         case .dismissOnboardingTutorial:
-            navigate(step: .showMasterView)
+            navigate(step: .showMasterView(animated: false))
             navigationController.dismiss(animated: true) { [weak self] in
                 self?.onboardingFlow = nil
             }

@@ -10,7 +10,7 @@ import Foundation
 
 class AppDiContainer {
         
-    let onboardingTutorialServices: OnboardingTutorialServices
+    let onboardingTutorialServices: OnboardingTutorialServicesType
     let tutorialServices: TutorialServicesType
     
     required init() {
