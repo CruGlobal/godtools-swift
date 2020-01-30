@@ -26,8 +26,4 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
     func openTutorialTapped() {
         flowDelegate?.navigate(step: .openTutorialTapped)
     }
-    
-    func closeTapped() {
-        print("close tutorial")
-    }
 }

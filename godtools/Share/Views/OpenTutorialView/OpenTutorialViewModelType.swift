@@ -14,5 +14,4 @@ protocol OpenTutorialViewModelType {
     var openTutorialTitle: String { get }
     
     func openTutorialTapped()
-    func closeTapped()
 }

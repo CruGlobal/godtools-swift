@@ -75,7 +75,7 @@ class MasterHomeViewController: BaseViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        openTutorialView.configure(viewModel: OpenTutorialViewModel(flowDelegate: self))
+        setupLayout()
         
         self.defineObservers()
         toolsManager.delegate = self
@@ -89,6 +89,13 @@ class MasterHomeViewController: BaseViewController  {
             didLayoutSubviews = true
             setOpenTutorialHidden(!tutorialServices.openTutorialCalloutIsAvailable, animated: false)
         }
+    }
+    
+    private func setupLayout() {
+        openTutorialView.configure(
+            viewModel: OpenTutorialViewModel(flowDelegate: self),
+            delegate: self
+        )
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -144,9 +151,7 @@ class MasterHomeViewController: BaseViewController  {
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
-        
         openTutorialTop.constant = hidden ? (openTutorialHeight.constant * -1) : 0
-        
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
                 self?.view.layoutIfNeeded()
@@ -239,6 +244,12 @@ class MasterHomeViewController: BaseViewController  {
 
 }
 
+extension MasterHomeViewController: OpenTutorialViewDelegate {
+    func openTutorialViewCloseTapped(openTutorial: OpenTutorialView) {
+        setOpenTutorialHidden(true, animated: true)
+    }
+}
+
 extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {
     
     func moveToLanguagesList(primaryLanguage: Bool) {
@@ -285,6 +296,8 @@ extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewCont
     }
     
 }
+
+// MARK: - FlowDelegate
 
 extension MasterHomeViewController: FlowDelegate {
     func navigate(step: FlowStep) {
