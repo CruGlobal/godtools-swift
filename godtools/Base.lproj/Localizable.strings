@@ -129,7 +129,7 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // OnboardingWelcome
 "onboardingWelcome.titleLabel.welcome" = "Welcome";
-"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
+"onboardingWelcome.titleLabel.tagline" = "Helping You Share\nYour Faith";
 "onboardingWelcome.beginButton" = "Begin";
 
 // OnboardingTutorial

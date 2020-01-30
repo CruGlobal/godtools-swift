@@ -33,9 +33,16 @@ class OnboardingWelcomeView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
+        setupLayout()
         setupBinding()
         
         beginButton.addTarget(self, action: #selector(handleBegin(button:)), for: .touchUpInside)
+    }
+    
+    private func setupLayout() {
+        titleLabel.textAlignment = .center
+        titleLabel.numberOfLines = 0
+        titleLabel.lineBreakMode = .byWordWrapping
     }
     
     private func setupBinding() {
