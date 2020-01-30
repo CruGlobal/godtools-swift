@@ -22,9 +22,7 @@ class MasterHomeViewController: BaseViewController  {
     
     private let tutorialServices: TutorialServicesType
     private let toolsManager = ToolsManager.shared
-    
-    private var didLayoutSubviews: Bool = false
-    
+        
     private weak var flowDelegate: FlowDelegate?
     private weak var delegate: MasterHomeViewControllerDelegate?
     
@@ -75,27 +73,24 @@ class MasterHomeViewController: BaseViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupLayout()
+        setupBinding()
         
         self.defineObservers()
         toolsManager.delegate = self
         navigationController?.navigationBar.barStyle = .black
         setupView()
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            setOpenTutorialHidden(!tutorialServices.openTutorialCalloutIsAvailable, animated: false)
-        }
-    }
-    
-    private func setupLayout() {
-        openTutorialView.configure(
-            viewModel: OpenTutorialViewModel(flowDelegate: self, tutorialServices: tutorialServices),
-            delegate: self
+
+    private func setupBinding() {
+        
+        let openTutorialViewModel = OpenTutorialViewModel(
+            flowDelegate: self,
+            tutorialServices: tutorialServices
         )
+        openTutorialView.configure(viewModel: openTutorialViewModel)
+        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
+            self?.setOpenTutorialHidden(tuple.hidden, animated: tuple.animated)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -242,12 +237,6 @@ class MasterHomeViewController: BaseViewController  {
         segmentedControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
 
-}
-
-extension MasterHomeViewController: OpenTutorialViewDelegate {
-    func openTutorialViewCloseTapped(openTutorial: OpenTutorialView) {
-        setOpenTutorialHidden(true, animated: true)
-    }
 }
 
 extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {

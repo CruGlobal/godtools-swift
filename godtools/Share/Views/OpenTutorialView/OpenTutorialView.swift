@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol OpenTutorialViewDelegate: class {
-    func openTutorialViewCloseTapped(openTutorial: OpenTutorialView)
-}
-
 class OpenTutorialView: UIView, NibBased {
     
     private var viewModel: OpenTutorialViewModelType?
-    
-    private weak var delegate: OpenTutorialViewDelegate?
     
     @IBOutlet weak private var showTutorialLabel: UILabel!
     @IBOutlet weak private var openTutorialButton: UIButton!
@@ -34,16 +28,14 @@ class OpenTutorialView: UIView, NibBased {
         openTutorialButton.centerTitleAndSetImageRightOfTitleWithSpacing(spacing: 16)
     }
     
-    func configure(viewModel: OpenTutorialViewModelType, delegate: OpenTutorialViewDelegate) {
+    func configure(viewModel: OpenTutorialViewModelType) {
         self.viewModel = viewModel
-        self.delegate = delegate
         showTutorialLabel.text = viewModel.showTutorialTitle
         openTutorialButton.setTitle(viewModel.openTutorialTitle, for: .normal)
     }
     
     @objc func handleClose(button: UIButton) {
         viewModel?.closeTapped()
-        delegate?.openTutorialViewCloseTapped(openTutorial: self)
     }
     
     @objc func handleOpenTutorial(button: UIButton) {

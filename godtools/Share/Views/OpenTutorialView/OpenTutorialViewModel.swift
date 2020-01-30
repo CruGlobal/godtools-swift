@@ -16,6 +16,7 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
     
     let showTutorialTitle: String
     let openTutorialTitle: String
+    let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
     
     required init(flowDelegate: FlowDelegate, tutorialServices: TutorialServicesType) {
         
@@ -24,13 +25,17 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
         
         showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
         openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
+        hidesOpenTutorial = ObservableValue(value: (hidden: !tutorialServices.openTutorialCalloutIsAvailable, animated: false))
     }
     
     func openTutorialTapped() {
+        tutorialServices.disableOpenTutorialCallout()
+        hidesOpenTutorial.accept(value: (hidden: true, animated: true))
         flowDelegate?.navigate(step: .openTutorialTapped)
     }
     
     func closeTapped() {
         tutorialServices.disableOpenTutorialCallout()
+        hidesOpenTutorial.accept(value: (hidden: true, animated: true))
     }
 }
