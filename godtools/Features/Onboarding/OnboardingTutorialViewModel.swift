@@ -39,6 +39,8 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         tutorialItems.accept(value: tutorialItemsArray)
                 
         setPage(page: 0, animated: false)
+        
+        onboardingTutorialServices.disableOnboardingTutorial()
     }
     
     private func setPage(page: Int, animated: Bool) {
