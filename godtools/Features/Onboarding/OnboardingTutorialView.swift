@@ -128,7 +128,9 @@ class OnboardingTutorialView: UIViewController {
             if let controller = self {
             
                 let layoutView: UIView = controller.footerView
-                let hidden: CGFloat = controller.footerAreaHeight.constant
+                let animationDuration: TimeInterval = 0.28
+                let safeAreaHeight: CGFloat = 50
+                let hidden: CGFloat = controller.footerAreaHeight.constant + safeAreaHeight
                 let visible: CGFloat = 0
                 
                 switch layout.state {
@@ -137,17 +139,23 @@ class OnboardingTutorialView: UIViewController {
                     controller.showMoreButtonTop.constant = hidden
                     controller.getStartedButtonTop.constant = hidden
                     if layout.animated {
-                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
                             layoutView.layoutIfNeeded()
-                        }, completion: nil)
+                        }, completion: { (finished: Bool) in
+                            controller.showMoreButton.alpha = 0
+                            controller.getStartedButton.alpha = 0
+                        })
                     }
                     else {
+                        controller.showMoreButton.alpha = 0
+                        controller.getStartedButton.alpha = 0
                         layoutView.layoutIfNeeded()
                     }
                     
                     controller.continueButtonTop.constant = visible
+                    controller.continueButton.alpha = 1
                     if layout.animated {
-                        UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                        UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
                             layoutView.layoutIfNeeded()
                         }, completion: nil)
                     }
@@ -156,20 +164,26 @@ class OnboardingTutorialView: UIViewController {
                     }
                                         
                 case .showMoreAndGetStarted:
+                    
                     controller.continueButtonTop.constant = hidden
                     if layout.animated {
-                        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
                             layoutView.layoutIfNeeded()
-                        }, completion: nil)
+                        }, completion: { (finished: Bool) in
+                            controller.continueButton.alpha = 0
+                        })
                     }
                     else {
+                        controller.continueButton.alpha = 0
                         layoutView.layoutIfNeeded()
                     }
                     
                     controller.showMoreButtonTop.constant = visible
+                    controller.showMoreButton.alpha = 1
                     controller.getStartedButtonTop.constant = visible
+                    controller.getStartedButton.alpha = 1
                     if layout.animated {
-                        UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                        UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
                             layoutView.layoutIfNeeded()
                         }, completion: nil)
                     }
