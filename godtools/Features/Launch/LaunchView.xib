@@ -19,15 +19,17 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="t3D-vk-YIp" userLabel="backgroundImageView">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="80" width="414" height="736"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="t3D-vk-YIp" secondAttribute="height" multiplier="375:667" id="9RW-Gr-2IQ"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="t3D-vk-YIp" secondAttribute="trailing" id="CFT-xy-oUt"/>
-                <constraint firstAttribute="bottom" secondItem="t3D-vk-YIp" secondAttribute="bottom" id="GyP-Sv-aLA"/>
-                <constraint firstItem="t3D-vk-YIp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PC1-CD-zVt"/>
-                <constraint firstItem="t3D-vk-YIp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tev-9x-rdb"/>
+                <constraint firstItem="t3D-vk-YIp" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="8gn-be-2Kx"/>
+                <constraint firstItem="t3D-vk-YIp" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="v7u-2g-8xo"/>
+                <constraint firstItem="t3D-vk-YIp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xcl-K5-Ptk"/>
             </constraints>
             <point key="canvasLocation" x="141" y="154"/>
         </view>
