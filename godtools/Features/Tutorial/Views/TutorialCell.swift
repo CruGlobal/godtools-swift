@@ -25,6 +25,11 @@ class TutorialCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         stopVideo()
+        mainImageView.image = nil
+        for subview in customViewContainer.subviews {
+            subview.removeFromSuperview()
+        }
+        youTubeVideoPlayerLoadingView.alpha = 1
     }
     
     func configure(viewModel: TutorialCellViewModel) {

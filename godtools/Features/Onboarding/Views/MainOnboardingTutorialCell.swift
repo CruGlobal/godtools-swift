@@ -17,6 +17,11 @@ class MainOnboardingTutorialCell: UICollectionViewCell {
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        mainImageView.image = nil
+    }
+    
     func configure(viewModel: MainOnboardingTutorialCellViewModel) {
         mainImageView.image = viewModel.mainImage
         titleLabel.text = viewModel.title

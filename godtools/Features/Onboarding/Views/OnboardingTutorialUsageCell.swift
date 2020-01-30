@@ -15,6 +15,11 @@ class OnboardingTutorialUsageCell: UITableViewCell {
     
     @IBOutlet weak private var messageLabel: UILabel!
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        messageLabel.text = nil
+    }
+    
     func configure(viewModel: OnboardingTutorialUsageCellViewModel) {
         messageLabel.text = viewModel.message
         messageLabel.setLineSpacing(lineSpacing: 2)
