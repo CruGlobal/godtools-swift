@@ -147,12 +147,22 @@ class MasterHomeViewController: BaseViewController  {
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
         openTutorialTop.constant = hidden ? (openTutorialHeight.constant * -1) : 0
+        
         if animated {
+            if !hidden {
+                openTutorialView.isHidden = false
+            }
+            
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
                 self?.view.layoutIfNeeded()
-            }, completion: nil)
+                }, completion: { [weak self] (finished: Bool) in
+                    if hidden {
+                        self?.openTutorialView.isHidden = true
+                    }
+            })
         }
         else {
+            openTutorialView.isHidden = hidden
             view.layoutIfNeeded()
         }
     }
