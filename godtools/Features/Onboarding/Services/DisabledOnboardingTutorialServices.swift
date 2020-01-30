@@ -10,15 +10,21 @@ import Foundation
 
 struct DisabledOnboardingTutorialServices: OnboardingTutorialServicesType {
     
+    private let disabled: Bool
+    
+    init(disabled: Bool) {
+        self.disabled = disabled
+    }
+    
     var tutorialIsAvailable: Bool {
-        return false
+        return !disabled
     }
     
     func enableOnboardingTutorial() {
-        // Required for protocol.  Nothing needed here.
+
     }
     
     func disableOnboardingTutorial() {
-        // Required for protocol.  Nothing needed here.
+
     }
 }
