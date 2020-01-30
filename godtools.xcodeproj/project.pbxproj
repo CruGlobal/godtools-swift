@@ -84,7 +84,6 @@
 		0FB73E591EA9063E000BA60D /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */; };
 		0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E541EA9063E000BA60D /* GTLabel.swift */; };
 		0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */; };
-		0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E601EA90669000BA60D /* PlatformFlowController.swift */; };
 		0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E641EA90669000BA60D /* BaseViewController.swift */; };
 		0FB73E6E1EA90669000BA60D /* LanguageSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E661EA90669000BA60D /* LanguageSettingsViewController.swift */; };
 		0FB73E6F1EA90669000BA60D /* LanguageSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */; };
@@ -142,6 +141,8 @@
 		4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */; };
 		4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */; };
 		4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */; };
+		455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D8FBB23E329FC008D92DA /* LaunchView.swift */; };
+		455D8FBE23E329FC008D92DA /* LaunchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455D8FBC23E329FC008D92DA /* LaunchView.xib */; };
 		45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */; };
 		45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */; };
 		45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */; };
@@ -447,7 +448,6 @@
 		0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageTableViewCell.xib; sourceTree = "<group>"; };
 		0FB73E541EA9063E000BA60D /* GTLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTLabel.swift; sourceTree = "<group>"; };
 		0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseFlowController.swift; sourceTree = "<group>"; };
-		0FB73E601EA90669000BA60D /* PlatformFlowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlatformFlowController.swift; sourceTree = "<group>"; };
 		0FB73E641EA90669000BA60D /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		0FB73E661EA90669000BA60D /* LanguageSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewController.swift; sourceTree = "<group>"; };
 		0FB73E671EA90669000BA60D /* LanguageSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LanguageSettingsViewController.xib; sourceTree = "<group>"; };
@@ -505,6 +505,8 @@
 		4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCellViewModel.swift; sourceTree = "<group>"; };
 		4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialGradientBackgroundView.swift; sourceTree = "<group>"; };
 		4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundItem.swift; sourceTree = "<group>"; };
+		455D8FBB23E329FC008D92DA /* LaunchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		455D8FBC23E329FC008D92DA /* LaunchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchView.xib; sourceTree = "<group>"; };
 		45668E4B23E0CA9B002728E7 /* TutorialToolsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsView.swift; sourceTree = "<group>"; };
 		45668E4D23E0CAA6002728E7 /* TutorialToolsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialToolsView.xib; sourceTree = "<group>"; };
 		45668E4F23E0D0DA002728E7 /* TutorialToolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialToolsViewModel.swift; sourceTree = "<group>"; };
@@ -1098,7 +1100,6 @@
 				0FB73E5F1EA90669000BA60D /* BaseFlowController.swift */,
 				4F1F09C71F0A82C800757879 /* BaseFlowController+Alerts.swift */,
 				45D3C8E723DF948700ECF70E /* OnboardingFlow.swift */,
-				0FB73E601EA90669000BA60D /* PlatformFlowController.swift */,
 				45D3C8ED23DF987800ECF70E /* TutorialFlow.swift */,
 			);
 			path = FlowControllers;
@@ -1238,6 +1239,15 @@
 			path = Objects;
 			sourceTree = "<group>";
 		};
+		455D8FBA23E329FC008D92DA /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				455D8FBB23E329FC008D92DA /* LaunchView.swift */,
+				455D8FBC23E329FC008D92DA /* LaunchView.xib */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
 		45668E5323E0E1CC002728E7 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1336,6 +1346,7 @@
 		45D3C8B123DF942100ECF70E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				455D8FBA23E329FC008D92DA /* Launch */,
 				45668E5323E0E1CC002728E7 /* Onboarding */,
 				45D3C92023DF996800ECF70E /* Tutorial */,
 			);
@@ -2067,6 +2078,7 @@
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */,
 				1EE2ADFD20618A0900D8F120 /* config.plist in Resources */,
+				455D8FBE23E329FC008D92DA /* LaunchView.xib in Resources */,
 				0F93A93C1EAA70150049C110 /* AddToolsViewController.xib in Resources */,
 				4FF7FF542284D062005C8BE1 /* fourlaws.zip in Resources */,
 				0FF3DA591ED623570053D0E0 /* kgp-6.xml in Resources */,
@@ -2307,6 +2319,7 @@
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
+				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
@@ -2506,7 +2519,6 @@
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
-				0FB73E6B1EA90669000BA60D /* PlatformFlowController.swift in Sources */,
 				4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,

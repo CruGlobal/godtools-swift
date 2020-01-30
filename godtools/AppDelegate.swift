@@ -59,9 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        flowController = PlatformFlowController(
-            appDiContainer: AppDiContainer()
-        )
+        flowController = BaseFlowController(appDiContainer: AppDiContainer())
         window.rootViewController = flowController?.navigationController
         window.makeKeyAndVisible()
         self.window = window
