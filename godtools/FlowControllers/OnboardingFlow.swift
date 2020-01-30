@@ -26,6 +26,7 @@ class OnboardingFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController(nibName: nil, bundle: nil)
                 
+        navigationController.modalPresentationStyle = .fullScreen
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.isTranslucent = true
         navigationController.navigationBar.shadowImage = UIImage()
