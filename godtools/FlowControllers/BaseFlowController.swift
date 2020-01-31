@@ -174,21 +174,22 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     @objc func displayMenu(notification: Notification? = nil) {
-        let menuViewController = MenuView(nibName: String(describing:MenuView.self), bundle: nil)
+        
+        let menuView = MenuView(viewModel: MenuViewModel())
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {
-                menuViewController.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
+                menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
-        menuViewController.delegate = self
+        menuView.delegate = self
         
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
         guard let currentFrame = currentViewController?.view.frame else { return }
-        menuViewController.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
+        menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
         
         guard let src = currentViewController else { return }
-        let dst = menuViewController
+        let dst = menuView
         let srcViewWidth = src.view.frame.size.width
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)

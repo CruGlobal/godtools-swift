@@ -40,6 +40,8 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 
 class MenuView: BaseViewController {
     
+    private let viewModel: MenuViewModelType
+    
     @IBOutlet weak var tableView: UITableView!
 
     var general = [String]()
@@ -62,6 +64,15 @@ class MenuView: BaseViewController {
     let intWithCreateAccount = 6
     let intWithoutCreateAccount = 5
     let intWithNonEnglishMenu = 4
+    
+    required init(viewModel: MenuViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: "MenuView", bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override var screenTitle: String {
         get {
