@@ -20,11 +20,4 @@ extension UserDefaults {
         let standardUserDefaults: UserDefaults = UserDefaults.standard
         return standardUserDefaults.object(forKey: key)
     }
-    
-    static func deleteData() {
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            let standardUserDefaults: UserDefaults = UserDefaults.standard
-            standardUserDefaults.removePersistentDomain(forName: bundleIdentifier)
-        }
-    }
 }
