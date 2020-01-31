@@ -27,8 +27,6 @@
 		0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2837991EC65A140049CCE5 /* TractTabs.swift */; };
 		0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F28379B1EC65A330049CCE5 /* TractTab.swift */; };
 		0F350D9B1EAE786A0025C4BB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9A1EAE786A0025C4BB /* String.swift */; };
-		0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */; };
-		0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */; };
 		0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */; };
 		0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */; };
 		0F6982741EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */; };
@@ -198,6 +196,8 @@
 		45F335A023D24C0E00295D1C /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */; };
 		45F335A223D24C1C00295D1C /* GTSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F335A123D24C1C00295D1C /* GTSegmentCell.xib */; };
 		45F335A723D24D3D00295D1C /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F335A623D24D3D00295D1C /* NibBased.swift */; };
+		45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CA323E4C3C20053CB5B /* MenuView.xib */; };
+		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -392,8 +392,6 @@
 		0F2837991EC65A140049CCE5 /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTabs.swift; path = Views/TractElements/TractTabs.swift; sourceTree = "<group>"; };
 		0F28379B1EC65A330049CCE5 /* TractTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTab.swift; path = Views/TractElements/TractTab.swift; sourceTree = "<group>"; };
 		0F350D9A1EAE786A0025C4BB /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = GeneralExtensions/String.swift; sourceTree = "<group>"; };
-		0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		0F350DA01EAEB54A0025C4BB /* GTNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTNotifications.swift; sourceTree = "<group>"; };
 		0F6982711EB7D9E800CAA284 /* BaseTractElement+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+Functions.swift"; path = "Views/TractElements/BaseTractElement+Functions.swift"; sourceTree = "<group>"; };
 		0F6982731EB7DA4500CAA284 /* BaseTractElement+StaticFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "BaseTractElement+StaticFunctions.swift"; path = "Views/TractElements/BaseTractElement+StaticFunctions.swift"; sourceTree = "<group>"; };
@@ -563,6 +561,8 @@
 		45F3359F23D24C0E00295D1C /* GTSegmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
 		45F335A123D24C1C00295D1C /* GTSegmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GTSegmentCell.xib; sourceTree = "<group>"; };
 		45F335A623D24D3D00295D1C /* NibBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
+		45F66CA323E4C3C20053CB5B /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
+		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1038,15 +1038,6 @@
 			name = Switch;
 			sourceTree = "<group>";
 		};
-		0FB1B1F71EB0E8AE0033DAB9 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				0F350D9C1EAEAEE30025C4BB /* MenuViewController.swift */,
-				0F350D9D1EAEAEE30025C4BB /* MenuViewController.xib */,
-			);
-			name = Menu;
-			sourceTree = "<group>";
-		};
 		0FB1B1F81EB13C6D0033DAB9 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -1115,7 +1106,6 @@
 				4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */,
 				4FD0658E21A5D75700E69A98 /* Article */,
 				1EC92E9B20AF5F6100FAD93B /* Loading */,
-				0FB1B1F71EB0E8AE0033DAB9 /* Menu */,
 				0FB73E651EA90669000BA60D /* Platform */,
 				4F5707DF1EAE8C8B00A540C2 /* Tract */,
 			);
@@ -1350,6 +1340,7 @@
 			isa = PBXGroup;
 			children = (
 				455D8FBA23E329FC008D92DA /* Launch */,
+				45F66CA223E4C3620053CB5B /* Menu */,
 				45668E5323E0E1CC002728E7 /* Onboarding */,
 				45D3C92023DF996800ECF70E /* Tutorial */,
 			);
@@ -1402,6 +1393,15 @@
 				45F335A623D24D3D00295D1C /* NibBased.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		45F66CA223E4C3620053CB5B /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				45F66CA423E4C3C20053CB5B /* MenuView.swift */,
+				45F66CA323E4C3C20053CB5B /* MenuView.xib */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
@@ -2101,6 +2101,7 @@
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */,
 				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
+				45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */,
 				45668E7F23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.xib in Resources */,
 				4FF7FF552284D062005C8BE1 /* kgp.zip in Resources */,
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
@@ -2112,7 +2113,6 @@
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
 				45668E7E23E0E1CC002728E7 /* MainOnboardingTutorialCell.xib in Resources */,
-				0F350D9F1EAEAEE30025C4BB /* MenuViewController.xib in Resources */,
 				0F93A9381EAA6FF80049C110 /* ToolDetailViewController.xib in Resources */,
 				4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */,
 				4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
@@ -2403,7 +2403,6 @@
 				0F85C7931ECCAA4400023723 /* TractPage+Actions.swift in Sources */,
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
-				0F350D9E1EAEAEE30025C4BB /* MenuViewController.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */,
 				4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */,
@@ -2480,6 +2479,7 @@
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
+				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,

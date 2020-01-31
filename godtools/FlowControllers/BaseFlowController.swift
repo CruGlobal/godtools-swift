@@ -174,7 +174,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     @objc func displayMenu(notification: Notification? = nil) {
-        let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
+        let menuViewController = MenuView(nibName: String(describing:MenuView.self), bundle: nil)
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {
@@ -204,7 +204,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     @objc func dismissMenu() {
-        guard let menuViewController = navigationController.topViewController as? MenuViewController else { return }
+        guard let menuViewController = navigationController.topViewController as? MenuView else { return }
         let src = menuViewController
         guard let dst = currentViewController else { return }
         let dstViewWidth = dst.view.frame.size.width

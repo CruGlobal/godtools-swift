@@ -1,5 +1,5 @@
 //
-//  MenuViewController.swift
+//  MenuView.swift
 //  godtools
 //
 //  Created by Devserker on 4/24/17.
@@ -38,7 +38,7 @@ let kAppAuthExampleAuthStateKey: String = "authState";
   */
 
 
-class MenuViewController: BaseViewController {
+class MenuView: BaseViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -140,7 +140,7 @@ class MenuViewController: BaseViewController {
     }
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuViewController.menuCellIdentifier)
+        self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuView.menuCellIdentifier)
     }
     
     // MARK: - Analytics
@@ -151,14 +151,14 @@ class MenuViewController: BaseViewController {
 
 }
 
-extension MenuViewController: UITableViewDataSource {
+extension MenuView: UITableViewDataSource {
     
     static let menuCellIdentifier = "cellIdentifier"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let values = self.getSectionData(indexPath.section)
         let value = values[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: MenuViewController.menuCellIdentifier) as! MenuTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: MenuView.menuCellIdentifier) as! MenuTableViewCell
         cell.value = value
         
         if value == "notifications" || value == "preview_mode_translators_only" {
@@ -183,7 +183,7 @@ extension MenuViewController: UITableViewDataSource {
     
 }
 
-extension MenuViewController: UITableViewDelegate {
+extension MenuView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: headerHeight)
@@ -232,7 +232,7 @@ extension MenuViewController: UITableViewDelegate {
 
 //MARK: cell selection methods
 
-extension MenuViewController {
+extension MenuView {
     
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch general.count {
@@ -385,7 +385,7 @@ extension MenuViewController {
     
 }
 
-extension MenuViewController: MFMailComposeViewControllerDelegate {
+extension MenuView: MFMailComposeViewControllerDelegate {
     
     func sendEmail(recipient: String, subject: String) {
         let composeVC = MFMailComposeViewController()
@@ -401,7 +401,7 @@ extension MenuViewController: MFMailComposeViewControllerDelegate {
     
 }
 
-extension MenuViewController: MenuTableViewCellDelegate {
+extension MenuView: MenuTableViewCellDelegate {
     func menuNextButtonWasPressed(sender: MenuTableViewCell) {
         if let indexPath = tableView.indexPath(for: sender) {
             tableView(tableView, didSelectRowAt: indexPath)
@@ -410,7 +410,7 @@ extension MenuViewController: MenuTableViewCellDelegate {
     }
 }
 
-extension MenuViewController {
+extension MenuView {
     
     func initiateLogin(additionalParameters: [String: String]? = nil) {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -440,7 +440,7 @@ extension MenuViewController {
     
 }
 
-extension MenuViewController: OIDAuthStateChangeDelegate {
+extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         handleEmailRegistration()
         DispatchQueue.main.async {
