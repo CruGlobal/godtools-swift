@@ -187,14 +187,6 @@ extension MenuView: UITableViewDataSource {
         
         cell.value = value
         
-        if value == "notifications" || value == "preview_mode_translators_only" {
-            cell.isSwitchCell = true
-        } else {
-            cell.isSwitchCell = false
-        }
-        
-        cell.delegate = self
-        
         return cell
     }
 }
@@ -444,17 +436,6 @@ extension MenuView: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true, completion: nil)
     }
     
-}
-
-// MARK: - MenuTableViewCellDelegate
-
-extension MenuView: MenuTableViewCellDelegate {
-    func menuNextButtonWasPressed(sender: MenuCell) {
-        if let indexPath = tableView.indexPath(for: sender) {
-            tableView(tableView, didSelectRowAt: indexPath)
-            sender.setSelected(true, animated: false)
-        }
-    }
 }
 
 // MARK: - OIDAuthStateChangeDelegate
