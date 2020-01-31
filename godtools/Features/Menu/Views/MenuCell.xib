@@ -29,7 +29,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell_right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="UMe-96-ahp" userLabel="rightArrowImageView">
-                                <rect key="frame" x="321" y="17" width="8" height="16"/>
+                                <rect key="frame" x="319" y="17" width="8" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="Qr1-oY-WBF"/>
                                     <constraint firstAttribute="width" constant="8" id="pyg-R7-cjN"/>
@@ -50,7 +50,7 @@
                             <constraint firstAttribute="bottom" secondItem="UTe-Y0-2DH" secondAttribute="bottom" id="Ftd-rG-Aee"/>
                             <constraint firstAttribute="trailing" secondItem="UTe-Y0-2DH" secondAttribute="trailing" constant="8" id="Jar-35-OZx"/>
                             <constraint firstItem="Xuc-eU-CvJ" firstAttribute="centerY" secondItem="7CF-kP-N1X" secondAttribute="centerY" id="XEJ-Hh-65t"/>
-                            <constraint firstAttribute="trailing" secondItem="UMe-96-ahp" secondAttribute="trailing" constant="30" id="Z42-VT-Lyb"/>
+                            <constraint firstAttribute="trailing" secondItem="UMe-96-ahp" secondAttribute="trailing" constant="32" id="Z42-VT-Lyb"/>
                             <constraint firstAttribute="trailing" secondItem="Xuc-eU-CvJ" secondAttribute="trailing" constant="20" id="dHB-Kj-GK7"/>
                             <constraint firstItem="UTe-Y0-2DH" firstAttribute="leading" secondItem="7CF-kP-N1X" secondAttribute="leading" constant="24" id="nqo-Nn-NI4"/>
                             <constraint firstAttribute="height" priority="750" constant="49" id="zH5-1x-FWX"/>
