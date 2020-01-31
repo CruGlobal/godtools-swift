@@ -41,6 +41,9 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 class MenuView: BaseViewController {
     
     private let viewModel: MenuViewModelType
+    private let loginClient =  TheKeyOAuthClient.shared
+    private let languageLoginCodes = ["en"]
+    private let headerHeight: CGFloat = 40.0
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -52,13 +55,8 @@ class MenuView: BaseViewController {
     let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
     let header = ["menu_general", "menu_share", "menu_legal"]
     
-    // MARK: - This array could possible extend to more languages over time.
-    let languageLoginCodes = ["en"]
+    weak var delegate: MenuViewControllerDelegate?
     
-    let headerHeight: CGFloat = 40.0
-    
-    var delegate: MenuViewControllerDelegate?
-    let loginClient =  TheKeyOAuthClient.shared
     
     var isComingFromLoginBanner = false
     let intWithCreateAccount = 6
@@ -182,8 +180,8 @@ extension MenuView: UITableViewDataSource {
         let values = getSectionData(indexPath.section)
         let value = values[indexPath.row]
         
-        print("\ncell for row: \(indexPath.row)")
-        print(" value: \(value)")
+        //print("\ncell for row: \(indexPath.row)")
+        //print(" value: \(value)")
         
         cell.value = value
         
