@@ -48,7 +48,7 @@ class TutorialCell: UICollectionViewCell {
         if !viewModel.hidesYouTubeVideoPlayer {
             youTubeVideoPlayerActivityIndicator.startAnimating()
             youTubeVideoPlayer.delegate = self
-            youTubeVideoPlayer.load(withVideoId: viewModel.youTubeVideoId, playerVars: ["playsinline": 1])
+            youTubeVideoPlayer.load(withVideoId: viewModel.youTubeVideoId, playerVars: ["playsinline": 0])
         }
         
         if !viewModel.hidesCustomView {

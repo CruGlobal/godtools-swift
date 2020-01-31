@@ -20,7 +20,7 @@ struct TutorialItemProvider: TutorialItemProviderType {
                 title: NSLocalizedString("tutorial.tutorialItem.0.title", comment: ""),
                 message: NSLocalizedString("tutorial.tutorialItem.0.message", comment: ""),
                 imageName: nil,
-                youTubeVideoId: "cbP2N1BQdYc",
+                youTubeVideoId: "Us2psJs8izU",
                 customViewId: nil
             ),
             TutorialItem(
