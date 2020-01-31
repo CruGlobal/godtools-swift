@@ -16,6 +16,7 @@ class MenuCell: UITableViewCell {
     var value = ""
         
     @IBOutlet weak private var settingLabel: GTLabel!
+    @IBOutlet weak private var rightArrowImageView: UIImageView!
     @IBOutlet weak private var separatorLine: UIView!
     
     override func layoutSubviews() {
