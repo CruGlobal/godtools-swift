@@ -12,6 +12,7 @@ class TutorialView: UIViewController {
     
     private let viewModel: TutorialViewModelType
     
+    private var backButton: UIBarButtonItem?
     private var closeButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     
@@ -38,8 +39,6 @@ class TutorialView: UIViewController {
                 
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
         
         closeButton = addBarButtonItem(
             to: .right,
@@ -97,9 +96,33 @@ class TutorialView: UIViewController {
     
     private func setupBinding() {
         
+        viewModel.hidesBackButton.addObserver(self) { [weak self] (hidden: Bool) in
+            
+            let backButtonPosition: ButtonItemPosition = .left
+            
+            if let view = self {
+                if view.backButton == nil && !hidden {
+                    view.backButton = view.addBarButtonItem(
+                        to: backButtonPosition,
+                        image: UIImage(named: "nav_item_back"),
+                        color: nil,
+                        target: self,
+                        action: #selector(view.handleBack(barButtonItem:))
+                    )
+                }
+                else if let backButton = view.backButton {
+                    hidden ? view.removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : view.addBarButtonItem(item: backButton, barPosition: backButtonPosition)
+                }
+            }
+        }
+        
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.continueButton.setTitle(title, for: .normal)
         }
+    }
+    
+    @objc func handleBack(barButtonItem: UIBarButtonItem) {
+        viewModel.backTapped()
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {

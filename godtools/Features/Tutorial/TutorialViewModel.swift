@@ -14,6 +14,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
+    let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
@@ -35,6 +36,8 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
+        hidesBackButton.accept(value: page == 0)
+        
         currentTutorialItemIndex.accept(value: page)
         
         let isLastPage: Bool = page == tutorialItems.value.count - 1
@@ -44,6 +47,11 @@ class TutorialViewModel: TutorialViewModelType {
         else {
             continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
         }
+    }
+    
+    func backTapped() {
+        let prevPage: Int = page - 1
+        setPage(page: prevPage)
     }
     
     func closeTapped() {
