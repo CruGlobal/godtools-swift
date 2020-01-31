@@ -84,7 +84,7 @@ class MenuView: BaseViewController {
         super.viewDidLoad()
         adjustGeneralTitles()
         loginClient.addStateChangeDelegate(delegate: self)
-        self.setupStyle()
+        setupStyle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,16 +120,16 @@ class MenuView: BaseViewController {
     }
     
     fileprivate func setupStyle() {
-        self.view.backgroundColor = .clear
-        self.tableView.backgroundColor = .gtGreyLight
-        self.registerCells()
+        view.backgroundColor = .clear
+        tableView.backgroundColor = .gtGreyLight
+        tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuView.menuCellIdentifier)
     }
     
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
-        self.addEmptyLeftButton()
-        self.addDoneButton()
+        addEmptyLeftButton()
+        addDoneButton()
     }
     
     // MARK: - Helpers
@@ -141,17 +141,13 @@ class MenuView: BaseViewController {
     fileprivate func getSectionData(_ section: Int) -> Array<String> {
         var values = [String]()
         if section == 0 {
-            values = self.general
+            values = general
         } else if section == 1 {
-            values = self.share
+            values = share
         } else {
-            values = self.legal
+            values = legal
         }
         return values
-    }
-    
-    fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuView.menuCellIdentifier)
     }
     
     // MARK: - Analytics
@@ -167,7 +163,7 @@ extension MenuView: UITableViewDataSource {
     static let menuCellIdentifier = "cellIdentifier"
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let values = self.getSectionData(indexPath.section)
+        let values = getSectionData(indexPath.section)
         let value = values[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: MenuView.menuCellIdentifier) as! MenuTableViewCell
         cell.value = value
@@ -184,11 +180,11 @@ extension MenuView: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.header.count
+        return header.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let values = self.getSectionData(section)
+        let values = getSectionData(section)
         return values.count
     }
     
@@ -204,7 +200,7 @@ extension MenuView: UITableViewDelegate {
         let labelFrame = CGRect(x: 20.0, y: 12.0, width: 100.0, height: 16.0)
         let titleLabel:GTLabel = GTLabel(frame: labelFrame)
         titleLabel.gtStyle = "blackTextSmall"
-        titleLabel.text = self.getSection(section).localized.capitalized
+        titleLabel.text = getSection(section).localized.capitalized
         headerView.addSubview(titleLabel)
         
         return headerView
@@ -330,7 +326,7 @@ extension MenuView {
     
     fileprivate func openHelp() {
         let url = URL(string: "http://www.godtoolsapp.com/faq")
-        self.delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
+        delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
     }
     
     fileprivate func contactUs() {
@@ -338,7 +334,7 @@ extension MenuView {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/#contact")
-            self.delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
+            delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
         }
     }
     
@@ -351,8 +347,8 @@ extension MenuView {
         NotificationCenter.default.post(name: .actionTrackNotification,
                                         object: nil,
                                         userInfo: userInfo)
-        self.sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
-        self.present(activityViewController, animated: true, completion: nil)
+        sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
+        present(activityViewController, animated: true, completion: nil)
     }
     
     fileprivate func shareAStoryWithUs() {
@@ -360,30 +356,30 @@ extension MenuView {
             sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
         } else {
             let url = URL(string: "http://www.godtoolsapp.com/#contact")
-            self.delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
+            delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
         }
-        self.sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
+        sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
     }
     
     fileprivate func openTermsOfUse() {
         let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
-        self.delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
+        delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
     }
     
     fileprivate func openPrivacyPolicy() {
         let url = URL(string: "https://www.cru.org/about/privacy.html")
-        self.delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
+        delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
     }
     
     fileprivate func openCopyrightInfo() {
         let url = URL(string: "http://www.godtoolsapp.com/copyright")
-        self.delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
+        delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
     }
     
     fileprivate func openLoginWindow() {
         if loginClient.isAuthenticated() {
-            DispatchQueue.main.async {
-                self.presentLogoutConfirmation()
+            DispatchQueue.main.async { [weak self] in
+                self?.presentLogoutConfirmation()
             }
         } else {
             initiateLogin()
@@ -403,7 +399,7 @@ extension MenuView: MFMailComposeViewControllerDelegate {
         composeVC.mailComposeDelegate = self
         composeVC.setToRecipients([ recipient ])
         composeVC.setSubject(subject)
-        self.present(composeVC, animated: true, completion: nil)
+        present(composeVC, animated: true, completion: nil)
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -446,7 +442,7 @@ extension MenuView {
         dialogMessage.addAction(ok)
         dialogMessage.addAction(cancel)
         
-        self.present(dialogMessage, animated: true, completion: nil)
+        present(dialogMessage, animated: true, completion: nil)
     }
     
 }
@@ -454,8 +450,8 @@ extension MenuView {
 extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         handleEmailRegistration()
-        DispatchQueue.main.async {
-            self.adjustGeneralTitles()
+        DispatchQueue.main.async { [weak self] in
+            self?.adjustGeneralTitles()
         }
     }
     
