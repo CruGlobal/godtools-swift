@@ -52,13 +52,16 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oOH-p9-IJ4" userLabel="youTubeVideoPlayerLoadingView">
                         <rect key="frame" x="37.5" y="330.5" width="300" height="169"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hcn-Dj-jfP" userLabel="youTubeVideoPlayerActivityIndicator">
-                                <rect key="frame" x="140" y="75" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hcn-Dj-jfP" userLabel="youTubeVideoPlayerActivityIndicator">
+                                <rect key="frame" x="140" y="74.5" width="20" height="20"/>
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hcn-Dj-jfP" firstAttribute="centerX" secondItem="oOH-p9-IJ4" secondAttribute="centerX" id="c3N-ty-AX6"/>
+                            <constraint firstItem="hcn-Dj-jfP" firstAttribute="centerY" secondItem="oOH-p9-IJ4" secondAttribute="centerY" id="t0P-bH-swc"/>
+                        </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-C2-grI" userLabel="mainImageView">
                         <rect key="frame" x="34" y="330.5" width="307.5" height="277"/>
