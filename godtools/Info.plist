@@ -65,8 +65,10 @@
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>GodTools</string>
-		<string>JFilmTest</string>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -82,6 +84,9 @@
 		<string>NotoSansEthiopic-Regular.ttf</string>
 		<string>NotoSansEthiopic-Bold.ttf</string>
 		<string>AbyssinicaSIL-R.ttf</string>
+		<string>SF-Pro-Display-Light.otf</string>
+		<string>SF-Pro-Text-Light.otf</string>
+		<string>SF-Pro-Text-Regular.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -99,16 +104,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-    <key>FacebookAppID</key>
-    <string>2236701616451487</string>
-    <key>FacebookDisplayName</key>
-    <string>GodTools</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-share-api</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-    </array>
+	<key>FacebookAppID</key>
+	<string>2236701616451487</string>
+	<key>FacebookDisplayName</key>
+	<string>GodTools</string>
 </dict>
 </plist>

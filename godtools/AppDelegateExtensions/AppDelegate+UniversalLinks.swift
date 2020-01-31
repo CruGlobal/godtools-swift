@@ -117,10 +117,7 @@ extension AppDelegate {
     private func shouldGoToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, pageNumber: Int, parallelLanguageCode: String? = nil) {
         dismissLoadingScreen()
 
-            guard let platformFlowController = self.flowController as? PlatformFlowController else {
-                return
-            }
-            platformFlowController.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
+            flowController?.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
     }
     
     private func getLanguageFor(resource: DownloadedResource, languageOptions: [Language]) -> Language? {
