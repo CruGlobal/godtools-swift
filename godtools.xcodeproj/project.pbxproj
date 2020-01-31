@@ -70,8 +70,6 @@
 		0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E324F1EDE78940081DBB9 /* TractViewControllerPageMovements.swift */; };
 		0F9E32521EDE794F0081DBB9 /* TractViewControllerDataManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32511EDE794F0081DBB9 /* TractViewControllerDataManagement.swift */; };
 		0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */; };
-		0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */; };
-		0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */; };
 		0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */; };
 		0FB1B1FB1EB13C930033DAB9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1B1F91EB13C930033DAB9 /* OnboardingViewController.swift */; };
 		0FB1B1FC1EB13C930033DAB9 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB1B1FA1EB13C930033DAB9 /* OnboardingViewController.xib */; };
@@ -200,6 +198,8 @@
 		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
 		45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */; };
 		45F66CAA23E4C5230053CB5B /* MenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA923E4C5230053CB5B /* MenuViewModelType.swift */; };
+		45F66CB223E4C82F0053CB5B /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CB023E4C82E0053CB5B /* MenuCell.xib */; };
+		45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CB123E4C82F0053CB5B /* MenuCell.swift */; };
 		4F0CCC1F1EE73E9D00AE4E45 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4F0CCC1E1EE73E9D00AE4E45 /* Podfile */; };
 		4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17A5AA21B1923F00240C22 /* ArticleManifestMetadata.swift */; };
 		4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1C95701EA70582007B47DB /* LanguagesManager.swift */; };
@@ -437,8 +437,6 @@
 		0F9E324F1EDE78940081DBB9 /* TractViewControllerPageMovements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerPageMovements.swift; path = Tract/TractViewControllerPageMovements.swift; sourceTree = "<group>"; };
 		0F9E32511EDE794F0081DBB9 /* TractViewControllerDataManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewControllerDataManagement.swift; path = Tract/TractViewControllerDataManagement.swift; sourceTree = "<group>"; };
 		0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
-		0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
-		0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuTableViewCell.xib; sourceTree = "<group>"; };
 		0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTSwitch.swift; path = Views/Switch/GTSwitch.swift; sourceTree = "<group>"; };
 		0FB1B1F91EB13C930033DAB9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		0FB1B1FA1EB13C930033DAB9 /* OnboardingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
@@ -567,6 +565,8 @@
 		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		45F66CA923E4C5230053CB5B /* MenuViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModelType.swift; sourceTree = "<group>"; };
+		45F66CB023E4C82E0053CB5B /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		45F66CB123E4C82F0053CB5B /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		4F0CCC1E1EE73E9D00AE4E45 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4F12296C20852BE3008842CC /* godtoolsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F12297020852BE3008842CC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1071,8 +1071,6 @@
 				0FB73E501EA9063E000BA60D /* LanguageTableViewCell.xib */,
 				0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */,
 				0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */,
-				0FB0E7BF1EAFFC4000583BF3 /* MenuTableViewCell.swift */,
-				0FB0E7C01EAFFC4000583BF3 /* MenuTableViewCell.xib */,
 			);
 			name = Cells;
 			path = Views/Cells;
@@ -1406,8 +1404,18 @@
 				45F66CA323E4C3C20053CB5B /* MenuView.xib */,
 				45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */,
 				45F66CA923E4C5230053CB5B /* MenuViewModelType.swift */,
+				45F66CAB23E4C7D90053CB5B /* Views */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		45F66CAB23E4C7D90053CB5B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45F66CB123E4C82F0053CB5B /* MenuCell.swift */,
+				45F66CB023E4C82E0053CB5B /* MenuCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4F12296D20852BE3008842CC /* godtoolsUITests */ = {
@@ -2106,7 +2114,6 @@
 				4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
 				4556AED623E221FE002C15E8 /* NotoSansMyanmar-Regular.ttf in Resources */,
-				0FB0E7C21EAFFC4000583BF3 /* MenuTableViewCell.xib in Resources */,
 				45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */,
 				45668E7F23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.xib in Resources */,
 				4FF7FF552284D062005C8BE1 /* kgp.zip in Resources */,
@@ -2115,6 +2122,7 @@
 				4FF7FF562284D062005C8BE1 /* satisfied.zip in Resources */,
 				1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */,
 				45D3C92823DF999D00ECF70E /* TutorialView.xib in Resources */,
+				45F66CB223E4C82F0053CB5B /* MenuCell.xib in Resources */,
 				4F5732971EA69CF00082035C /* Assets.xcassets in Resources */,
 				0F0352BC1EC0CD03006CD4E5 /* kgp-manifest.xml in Resources */,
 				4556AECE23E22185002C15E8 /* SF-Pro-Text-Light.otf in Resources */,
@@ -2397,7 +2405,6 @@
 				0F9E324E1EDE78590081DBB9 /* TractViewControllerContent.swift in Sources */,
 				EC61B9D71EFDDC6B00615840 /* TractForm+Actions.swift in Sources */,
 				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,
-				0FB0E7C11EAFFC4000583BF3 /* MenuTableViewCell.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
 				4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */,
@@ -2500,6 +2507,7 @@
 				45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
+				45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */,
 				45D3C8EC23DF948700ECF70E /* FlowStep.swift in Sources */,
 				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
 				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,

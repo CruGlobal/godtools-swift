@@ -82,9 +82,11 @@ class MenuView: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupLayout()
+        
         adjustGeneralTitles()
         loginClient.addStateChangeDelegate(delegate: self)
-        setupStyle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,10 +121,15 @@ class MenuView: BaseViewController {
         tableView.reloadData()
     }
     
-    fileprivate func setupStyle() {
+    private func setupLayout() {
+        
         view.backgroundColor = .clear
+        
         tableView.backgroundColor = .gtGreyLight
-        tableView.register(UINib(nibName: "MenuTableViewCell", bundle: nil), forCellReuseIdentifier: MenuView.menuCellIdentifier)
+        tableView.register(
+            UINib(nibName: MenuCell.nibName, bundle: nil),
+            forCellReuseIdentifier: MenuCell.reuseIdentifier
+        )
     }
     
     // MARK: - Navigation Buttons
@@ -159,13 +166,16 @@ class MenuView: BaseViewController {
 }
 
 extension MenuView: UITableViewDataSource {
-    
-    static let menuCellIdentifier = "cellIdentifier"
-    
+        
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: MenuCell = tableView.dequeueReusableCell(
+            withIdentifier: MenuCell.reuseIdentifier,
+            for: indexPath) as! MenuCell
+        
         let values = getSectionData(indexPath.section)
         let value = values[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: MenuView.menuCellIdentifier) as! MenuTableViewCell
+        
         cell.value = value
         
         if value == "notifications" || value == "preview_mode_translators_only" {
@@ -409,7 +419,7 @@ extension MenuView: MFMailComposeViewControllerDelegate {
 }
 
 extension MenuView: MenuTableViewCellDelegate {
-    func menuNextButtonWasPressed(sender: MenuTableViewCell) {
+    func menuNextButtonWasPressed(sender: MenuCell) {
         if let indexPath = tableView.indexPath(for: sender) {
             tableView(tableView, didSelectRowAt: indexPath)
             sender.setSelected(true, animated: false)

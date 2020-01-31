@@ -9,19 +9,23 @@
 import UIKit
 
 protocol MenuTableViewCellDelegate {
-    func menuNextButtonWasPressed(sender: MenuTableViewCell)
+    func menuNextButtonWasPressed(sender: MenuCell)
 }
 
-class MenuTableViewCell: UITableViewCell {
+class MenuCell: UITableViewCell {
+    
+    static let nibName: String = "MenuCell"
+    static let reuseIdentifier: String = "MenuCellReuseIdentifier"
     
     var value = ""
     var isSwitchCell = false
     
     var delegate: MenuTableViewCellDelegate?
     
-    @IBOutlet weak var settingLabel: GTLabel!
-    @IBOutlet weak var settingSwitch: GTSwitch!
-    @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak private var settingLabel: GTLabel!
+    @IBOutlet weak private var settingSwitch: GTSwitch!
+    @IBOutlet weak private var nextButton: UIButton!
+    @IBOutlet weak private var separatorLine: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,15 +40,14 @@ class MenuTableViewCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        self.settingLabel.text = self.value.localized
-        if self.isSwitchCell {
-            self.nextButton.isHidden = true
-            self.settingSwitch.isHidden = false
+        settingLabel.text = value.localized
+        if isSwitchCell {
+            nextButton.isHidden = true
+            settingSwitch.isHidden = false
         }
         else {
-            self.nextButton.isHidden = false
-            self.settingSwitch.isHidden = true
+            nextButton.isHidden = false
+            settingSwitch.isHidden = true
         }
     }
-    
 }
