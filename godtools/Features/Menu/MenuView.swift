@@ -101,13 +101,7 @@ class MenuView: BaseViewController {
             isComingFromLoginBanner = false
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    // MARK: UI
-    
+        
     // MARK: - Currently the 'General' menu items will only have Login/Logout option if the device is in English. This may change over time, so if other languages are added, their language code can be added
     
     func adjustGeneralTitles() {
@@ -126,6 +120,7 @@ class MenuView: BaseViewController {
         view.backgroundColor = .clear
         
         tableView.backgroundColor = .gtGreyLight
+        tableView.separatorStyle = .none
         tableView.register(
             UINib(nibName: MenuCell.nibName, bundle: nil),
             forCellReuseIdentifier: MenuCell.reuseIdentifier
@@ -165,8 +160,19 @@ class MenuView: BaseViewController {
 
 }
 
+// MARK: - UITableViewDataSource
+
 extension MenuView: UITableViewDataSource {
         
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return header.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let values = getSectionData(section)
+        return values.count
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell: MenuCell = tableView.dequeueReusableCell(
@@ -175,6 +181,9 @@ extension MenuView: UITableViewDataSource {
         
         let values = getSectionData(indexPath.section)
         let value = values[indexPath.row]
+        
+        print("\ncell for row: \(indexPath.row)")
+        print(" value: \(value)")
         
         cell.value = value
         
@@ -188,17 +197,9 @@ extension MenuView: UITableViewDataSource {
         
         return cell
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return header.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let values = getSectionData(section)
-        return values.count
-    }
-    
 }
+
+// MARK: - UITableViewDelegate
 
 extension MenuView: UITableViewDelegate {
     
@@ -247,9 +248,35 @@ extension MenuView: UITableViewDelegate {
     
 }
 
-//MARK: cell selection methods
+// MARK: -
 
 extension MenuView {
+    
+    func initiateLogin(additionalParameters: [String: String]? = nil) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
+            // block unused
+        })
+    }
+    
+    func presentLogoutConfirmation() {
+       
+        let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
+
+            self?.loginClient.logout()
+            self?.adjustGeneralTitles()
+        })
+        
+        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
+        
+        dialogMessage.addAction(ok)
+        dialogMessage.addAction(cancel)
+        
+        present(dialogMessage, animated: true, completion: nil)
+    }
     
     fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
         switch general.count {
@@ -399,8 +426,9 @@ extension MenuView {
     fileprivate func openCreateAccountWindow() {
         initiateLogin(additionalParameters: ["action":"signup"])
     }
-    
 }
+
+// MARK: - MFMailComposeViewControllerDelegate
 
 extension MenuView: MFMailComposeViewControllerDelegate {
     
@@ -418,6 +446,8 @@ extension MenuView: MFMailComposeViewControllerDelegate {
     
 }
 
+// MARK: - MenuTableViewCellDelegate
+
 extension MenuView: MenuTableViewCellDelegate {
     func menuNextButtonWasPressed(sender: MenuCell) {
         if let indexPath = tableView.indexPath(for: sender) {
@@ -427,35 +457,7 @@ extension MenuView: MenuTableViewCellDelegate {
     }
 }
 
-extension MenuView {
-    
-    func initiateLogin(additionalParameters: [String: String]? = nil) {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
-            // block unused
-        })
-    }
-    
-    func presentLogoutConfirmation() {
-       
-        let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
-
-            self?.loginClient.logout()
-            self?.adjustGeneralTitles()
-        })
-        
-        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
-        
-        dialogMessage.addAction(ok)
-        dialogMessage.addAction(cancel)
-        
-        present(dialogMessage, animated: true, completion: nil)
-    }
-    
-}
+// MARK: - OIDAuthStateChangeDelegate
 
 extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
