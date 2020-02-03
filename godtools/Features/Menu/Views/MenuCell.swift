@@ -12,14 +12,39 @@ class MenuCell: UITableViewCell {
     
     static let nibName: String = "MenuCell"
     static let reuseIdentifier: String = "MenuCellReuseIdentifier"
-    
-    var value = ""
-        
-    @IBOutlet weak private var settingLabel: GTLabel!
+      
+    @IBOutlet weak private var selectedView: UIView!
+    @IBOutlet weak private var titleLabel: GTLabel!
     @IBOutlet weak private var rightArrowImageView: UIImageView!
     @IBOutlet weak private var separatorLine: UIView!
     
-    override func layoutSubviews() {
-        settingLabel.text = value.localized
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectedView.alpha = 0
+        titleLabel.text = nil
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        selectedView.alpha = 0
+        titleLabel.text = nil
+    }
+    
+    func configure(viewModel: MenuCellViewModel) {
+        titleLabel.text = viewModel.title
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        if selected {
+            playSelectedAnimation()
+        }
+    }
+    
+    func playSelectedAnimation() {
+        selectedView.alpha = 1
+        UIView.animate(withDuration: 0.6, delay: 0.1, options: .curveEaseOut, animations: { [weak self] in
+            self?.selectedView.alpha = 0
+        }) { (finished: Bool) in
+        }
     }
 }
