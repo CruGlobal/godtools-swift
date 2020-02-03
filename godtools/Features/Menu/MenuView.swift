@@ -42,6 +42,7 @@ class MenuView: BaseViewController {
     
     private let viewModel: MenuViewModelType
     private let headerHeight: CGFloat = 40.0
+    private let rowHeight: CGFloat = 50
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -79,6 +80,7 @@ class MenuView: BaseViewController {
         
         tableView.backgroundColor = .gtGreyLight
         tableView.separatorStyle = .none
+        tableView.rowHeight = rowHeight
         tableView.register(
             UINib(nibName: MenuCell.nibName, bundle: nil),
             forCellReuseIdentifier: MenuCell.reuseIdentifier
@@ -178,15 +180,12 @@ extension MenuView: UITableViewDelegate {
         switch menuItem.id {
             
         case .languageSettings:
-            print("languageSettings tapped")
             delegate?.moveToUpdateLanguageSettings()
         
         case .about:
-            print("about tapped")
             delegate?.moveToAbout()
         
         case .help:
-            print("help tapped")
             let url = URL(string: "http://www.godtoolsapp.com/faq")
             delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
         
@@ -199,17 +198,14 @@ extension MenuView: UITableViewDelegate {
             }
         
         case .logout:
-            print("logout tapped")
             DispatchQueue.main.async { [weak self] in
                 self?.presentLogoutConfirmation()
             }
             
         case .login:
-            print("login tapped")
             initiateLogin()
         
         case .createAccount:
-            print("createAccount tapped")
             initiateLogin(additionalParameters: ["action":"signup"])
         
         case .shareGodTools:
@@ -234,24 +230,17 @@ extension MenuView: UITableViewDelegate {
             sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
         
         case .termsOfUse:
-            print("termsOfUse tapped")
             let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
             delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
         
         case .privacyPolicy:
-            print("privacyPolicy tapped")
             let url = URL(string: "https://www.cru.org/about/privacy.html")
             delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
         
         case .copyrightInfo:
-            print("copyrightInfo tapped")
             let url = URL(string: "http://www.godtoolsapp.com/copyright")
             delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
         }
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
