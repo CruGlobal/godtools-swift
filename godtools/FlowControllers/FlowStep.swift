@@ -28,4 +28,7 @@ enum FlowStep {
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
+    
+    // menu
+    case tutorialTappedFromMenu
 }

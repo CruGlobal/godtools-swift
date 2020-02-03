@@ -13,6 +13,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     private var onboardingFlow: OnboardingFlow?
     private var tutorialFlow: TutorialFlow?
+    private var menuFlow: MenuFlow?
     
     private var navigationStarted: Bool = false
     
@@ -176,7 +177,15 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     @objc func displayMenu(notification: Notification? = nil) {
         
+        let menuFlow: MenuFlow = MenuFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        self.menuFlow = menuFlow
+        
         let viewModel = MenuViewModel(
+            flowDelegate: menuFlow,
             loginClient: TheKeyOAuthClient.shared,
             menuDataProvider: MenuDataProvider(),
             deviceLanguage: DeviceLanguagePreferences()
@@ -188,6 +197,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
+        
         menuView.delegate = self
         
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
@@ -195,19 +205,16 @@ class BaseFlowController: NSObject, FlowDelegate {
         menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
         
         guard let src = currentViewController else { return }
-        let dst = menuView
         let srcViewWidth = src.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
-        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { [weak self] finished in
-                        self?.navigationController.pushViewController(dst, animated: false) } )
+        src.view.superview?.insertSubview(menuView.view, aboveSubview: src.view)
+        menuView.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+            src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
+            menuView.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        },completion: { [weak self] finished in
+            self?.navigationController.pushViewController(menuView, animated: false)
+        })
     }
     
     @objc func dismissMenu() {
@@ -218,14 +225,14 @@ class BaseFlowController: NSObject, FlowDelegate {
         
         src.view.superview?.insertSubview(dst.view, aboveSubview: (src.view))
         dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { [weak self] finished in
-                        _ = self?.navigationController.popViewController(animated: false) } )
+        
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
+            src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
+            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, completion: { [weak self] finished in
+            self?.menuFlow = nil
+            _ = self?.navigationController.popViewController(animated: false)
+        })
     }
     
 }
