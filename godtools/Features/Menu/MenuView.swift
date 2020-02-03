@@ -41,27 +41,13 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 class MenuView: BaseViewController {
     
     private let viewModel: MenuViewModelType
-    private let loginClient =  TheKeyOAuthClient.shared
-    private let languageLoginCodes = ["en"]
     private let headerHeight: CGFloat = 40.0
     
     @IBOutlet weak var tableView: UITableView!
-
-    var general = [String]()
-    let generalNonEnglishMenu = ["language_settings", "about", "help", "contact_us"]
-    let generalWithLogout = ["language_settings", "logout", "about", "help", "contact_us"]
-    let generalWithLogin = ["language_settings", "login", "create_account", "about", "help", "contact_us"]
-    let share = ["share_god_tools", "share_a_story_with_us"]
-    let legal = ["terms_of_use", "privacy_policy", "copyright_info"]
-    let header = ["menu_general", "menu_share", "menu_legal"]
     
     weak var delegate: MenuViewControllerDelegate?
     
-    
     var isComingFromLoginBanner = false
-    let intWithCreateAccount = 6
-    let intWithoutCreateAccount = 5
-    let intWithNonEnglishMenu = 4
     
     required init(viewModel: MenuViewModelType) {
         self.viewModel = viewModel
@@ -82,35 +68,9 @@ class MenuView: BaseViewController {
         super.viewDidLoad()
         
         setupLayout()
+        setupBinding()
         
-        adjustGeneralTitles()
-        loginClient.addStateChangeDelegate(delegate: self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        adjustGeneralTitles()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if isComingFromLoginBanner {
-            openLoginWindow()
-            isComingFromLoginBanner = false
-        }
-    }
-        
-    // MARK: - Currently the 'General' menu items will only have Login/Logout option if the device is in English. This may change over time, so if other languages are added, their language code can be added
-    
-    func adjustGeneralTitles() {
-        let codeForLanguage = Locale.current.languageCode ?? "unknown"
-        if languageLoginCodes.contains(codeForLanguage) {
-            general = (loginClient.isAuthenticated()) ? generalWithLogout : generalWithLogin
-        } else {
-            general = generalNonEnglishMenu
-        }
-
-        tableView.reloadData()
+        viewModel.loginClient.addStateChangeDelegate(delegate: self)
     }
     
     private func setupLayout() {
@@ -125,29 +85,31 @@ class MenuView: BaseViewController {
         )
     }
     
+    private func setupBinding() {
+        
+        viewModel.menuDataSource.addObserver(self) { [weak self] (menuDataSource: MenuDataSource) in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.reloadMenuDataSource()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if isComingFromLoginBanner {
+            openLoginWindow()
+            isComingFromLoginBanner = false
+        }
+    }
+    
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
         addEmptyLeftButton()
         addDoneButton()
-    }
-    
-    // MARK: - Helpers
-    
-    fileprivate func getSection(_ section: Int) -> String {
-        return header[section]
-    }
-    
-    fileprivate func getSectionData(_ section: Int) -> Array<String> {
-        var values = [String]()
-        if section == 0 {
-            values = general
-        } else if section == 1 {
-            values = share
-        } else {
-            values = legal
-        }
-        return values
     }
     
     // MARK: - Analytics
@@ -163,12 +125,15 @@ class MenuView: BaseViewController {
 extension MenuView: UITableViewDataSource {
         
     func numberOfSections(in tableView: UITableView) -> Int {
-        return header.count
+        return viewModel.menuDataSource.value.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let values = getSectionData(section)
-        return values.count
+        
+        let menuDataSource: MenuDataSource = viewModel.menuDataSource.value
+        let menuSection: MenuSection = menuDataSource.sections[section]
+        
+        return menuDataSource.items[menuSection.id]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -176,14 +141,11 @@ extension MenuView: UITableViewDataSource {
         let cell: MenuCell = tableView.dequeueReusableCell(
             withIdentifier: MenuCell.reuseIdentifier,
             for: indexPath) as! MenuCell
-        
-        let values = getSectionData(indexPath.section)
-        let value = values[indexPath.row]
-        
-        //print("\ncell for row: \(indexPath.row)")
-        //print(" value: \(value)")
-        
-        cell.value = value
+                
+        cell.selectionStyle = .none
+                
+        let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
+        cell.configure(viewModel: MenuCellViewModel(menuItem: menuItem))
         
         return cell
     }
@@ -194,6 +156,8 @@ extension MenuView: UITableViewDataSource {
 extension MenuView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let section: MenuSection = viewModel.menuDataSource.value.sections[section]
         let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: headerHeight)
         let headerView:UIView = UIView(frame: headerFrame)
         headerView.backgroundColor = .gtGreyLight
@@ -201,22 +165,88 @@ extension MenuView: UITableViewDelegate {
         let labelFrame = CGRect(x: 20.0, y: 12.0, width: 100.0, height: 16.0)
         let titleLabel:GTLabel = GTLabel(frame: labelFrame)
         titleLabel.gtStyle = "blackTextSmall"
-        titleLabel.text = getSection(section).localized.capitalized
+        titleLabel.text = section.title.capitalized
         headerView.addSubview(titleLabel)
         
         return headerView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        switch indexPath.section {
-        case 0:
-            handleGeneralSectionCellSelection(rowIndex: indexPath.row)
-        case 1:
-            handleShareSectionCellSelection(rowIndex: indexPath.row)
-        case 2:
-            handleLegalSectionCellSelection(rowIndex: indexPath.row)
-        default: break
+        
+        let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
+        
+        switch menuItem.id {
+            
+        case .languageSettings:
+            print("languageSettings tapped")
+            delegate?.moveToUpdateLanguageSettings()
+        
+        case .about:
+            print("about tapped")
+            delegate?.moveToAbout()
+        
+        case .help:
+            print("help tapped")
+            let url = URL(string: "http://www.godtoolsapp.com/faq")
+            delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
+        
+        case .contactUs:
+            if MFMailComposeViewController.canSendMail() {
+                sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
+            } else {
+                let url = URL(string: "http://www.godtoolsapp.com/#contact")
+                delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
+            }
+        
+        case .logout:
+            print("logout tapped")
+            DispatchQueue.main.async { [weak self] in
+                self?.presentLogoutConfirmation()
+            }
+            
+        case .login:
+            print("login tapped")
+            initiateLogin()
+        
+        case .createAccount:
+            print("createAccount tapped")
+            initiateLogin(additionalParameters: ["action":"signup"])
+        
+        case .shareGodTools:
+            let textToShare = [ "share_god_tools_share_sheet_text".localized ]
+            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+            
+            var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.shareAction: 1]
+            userInfo["action"] = AdobeAnalyticsConstants.Values.share
+            NotificationCenter.default.post(name: .actionTrackNotification,
+                                            object: nil,
+                                            userInfo: userInfo)
+            sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
+            present(activityViewController, animated: true, completion: nil)
+        
+        case .shareAStoryWithUs:
+            if MFMailComposeViewController.canSendMail() {
+                sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
+            } else {
+                let url = URL(string: "http://www.godtoolsapp.com/#contact")
+                delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
+            }
+            sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
+        
+        case .termsOfUse:
+            print("termsOfUse tapped")
+            let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
+            delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
+        
+        case .privacyPolicy:
+            print("privacyPolicy tapped")
+            let url = URL(string: "https://www.cru.org/about/privacy.html")
+            delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
+        
+        case .copyrightInfo:
+            print("copyrightInfo tapped")
+            let url = URL(string: "http://www.godtoolsapp.com/copyright")
+            delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
         }
     }
     
@@ -242,22 +272,22 @@ extension MenuView: UITableViewDelegate {
 
 extension MenuView {
     
-    func initiateLogin(additionalParameters: [String: String]? = nil) {
+    fileprivate func initiateLogin(additionalParameters: [String: String]? = nil) {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        delegate.currentAuthorizationFlow = loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
+        delegate.currentAuthorizationFlow = viewModel.loginClient.initiateAuthorization(requestingViewController: self, additionalParameters: additionalParameters, callback: { (_) in
             // block unused
         })
     }
     
-    func presentLogoutConfirmation() {
+    fileprivate func presentLogoutConfirmation() {
        
         let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
 
-            self?.loginClient.logout()
-            self?.adjustGeneralTitles()
+            self?.viewModel.loginClient.logout()
+            self?.viewModel.reloadMenuDataSource()
         })
         
         let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
@@ -268,153 +298,14 @@ extension MenuView {
         present(dialogMessage, animated: true, completion: nil)
     }
     
-    fileprivate func handleGeneralSectionCellSelection(rowIndex: Int) {
-        switch general.count {
-        case intWithNonEnglishMenu:
-            selectionNonEnglishMenu(rowIndex: rowIndex)
-        case intWithCreateAccount:
-            selectionCreateAccountVisible(rowIndex: rowIndex)
-        case intWithoutCreateAccount:
-            selectionCreateAccountNotVisible(rowIndex: rowIndex)
-        default: break
-        }
-    }
-    
-    fileprivate func selectionCreateAccountVisible(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            delegate?.moveToUpdateLanguageSettings()
-        case 1:
-            openLoginWindow()
-        case 2:
-            openCreateAccountWindow()
-        case 3:
-            delegate?.moveToAbout()
-        case 4:
-            openHelp()
-        case 5:
-            contactUs()
-        default: break
-        }
-    }
-    
-    fileprivate func selectionCreateAccountNotVisible(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            delegate?.moveToUpdateLanguageSettings()
-        case 1:
-            openLoginWindow()
-        case 2:
-            delegate?.moveToAbout()
-        case 3:
-            openHelp()
-        case 4:
-            contactUs()
-        default: break
-        }
-    }
-    
-    fileprivate func selectionNonEnglishMenu(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            delegate?.moveToUpdateLanguageSettings()
-        case 1:
-            delegate?.moveToAbout()
-        case 2:
-            openHelp()
-        case 3:
-            contactUs()
-        default: break
-        }
-    }
-    
-    fileprivate func handleShareSectionCellSelection(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            shareGodToolsApp()
-        case 1:
-            shareAStoryWithUs()
-        default: break
-        }
-    }
-    
-    fileprivate func handleLegalSectionCellSelection(rowIndex: Int) {
-        switch rowIndex {
-        case 0:
-            openTermsOfUse()
-        case 1:
-            openPrivacyPolicy()
-        case 2:
-            openCopyrightInfo()
-        default: break
-        }
-        
-    }
-    
-    fileprivate func openHelp() {
-        let url = URL(string: "http://www.godtoolsapp.com/faq")
-        delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
-    }
-    
-    fileprivate func contactUs() {
-        if MFMailComposeViewController.canSendMail() {
-            sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
-        } else {
-            let url = URL(string: "http://www.godtoolsapp.com/#contact")
-            delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
-        }
-    }
-    
-    fileprivate func shareGodToolsApp() {
-        let textToShare = [ "share_god_tools_share_sheet_text".localized ]
-        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-        
-        var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.shareAction: 1]
-        userInfo["action"] = AdobeAnalyticsConstants.Values.share
-        NotificationCenter.default.post(name: .actionTrackNotification,
-                                        object: nil,
-                                        userInfo: userInfo)
-        sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
-        present(activityViewController, animated: true, completion: nil)
-    }
-    
-    fileprivate func shareAStoryWithUs() {
-        if MFMailComposeViewController.canSendMail() {
-            sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
-        } else {
-            let url = URL(string: "http://www.godtoolsapp.com/#contact")
-            delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
-        }
-        sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
-    }
-    
-    fileprivate func openTermsOfUse() {
-        let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
-        delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
-    }
-    
-    fileprivate func openPrivacyPolicy() {
-        let url = URL(string: "https://www.cru.org/about/privacy.html")
-        delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
-    }
-    
-    fileprivate func openCopyrightInfo() {
-        let url = URL(string: "http://www.godtoolsapp.com/copyright")
-        delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
-    }
-    
     fileprivate func openLoginWindow() {
-        if loginClient.isAuthenticated() {
-            DispatchQueue.main.async { [weak self] in
-                self?.presentLogoutConfirmation()
+        if viewModel.loginClient.isAuthenticated() {
+            DispatchQueue.main.async {
+                self.presentLogoutConfirmation()
             }
         } else {
             initiateLogin()
         }
-    }
-    
-    fileprivate func openCreateAccountWindow() {
-        initiateLogin(additionalParameters: ["action":"signup"])
     }
 }
 
@@ -442,18 +333,17 @@ extension MenuView: OIDAuthStateChangeDelegate {
     func didChange(_ state: OIDAuthState) {
         handleEmailRegistration()
         DispatchQueue.main.async { [weak self] in
-            self?.adjustGeneralTitles()
+            self?.viewModel.reloadMenuDataSource()
         }
     }
     
     fileprivate func handleEmailRegistration() {
         let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
-        if !hasRegisteredEmail && loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
+        if !hasRegisteredEmail && viewModel.loginClient.isAuthenticated() {
+            viewModel.loginClient.fetchAttributes() { (attributes, _) in
                 let signupManager = EmailSignUpManager()
                 signupManager.signUpUserForEmailRegistration(attributes: attributes)
             }
         }
     }
-    
 }

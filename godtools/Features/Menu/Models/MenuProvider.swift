@@ -18,8 +18,8 @@ struct MenuProvider: MenuProviderType {
         
         let sections = [
             MenuSection.create(id: .general(id: generalMenuSectionId)),
-            MenuSection.create(id: .legal),
-            MenuSection.create(id: .share)
+            MenuSection.create(id: .share),
+            MenuSection.create(id: .legal)
         ]
         
         var itemsDictionary: [MenuSectionId: [MenuItem]] = Dictionary()

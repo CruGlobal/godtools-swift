@@ -17,3 +17,13 @@ struct MenuDataSource {
         return MenuDataSource(sections: [], items: [: ])
     }
 }
+
+extension MenuDataSource {
+    
+    func getMenuItem(at indexPath: IndexPath) -> MenuItem {
+        
+        let menuSection: MenuSection = sections[indexPath.section]
+        let menuItems: [MenuItem] = items[menuSection.id] ?? []
+        return menuItems[indexPath.row]
+    }
+}

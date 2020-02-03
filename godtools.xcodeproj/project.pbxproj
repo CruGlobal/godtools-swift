@@ -171,7 +171,16 @@
 		45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8C23E0E462002728E7 /* OpenTutorialView.swift */; };
 		45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */; };
 		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
+		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
+		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
+		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
+		457719AE23E867310049D236 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719AD23E867310049D236 /* MenuProvider.swift */; };
+		457719B223E869AF0049D236 /* GeneralMenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */; };
+		457719B423E86ED40049D236 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B323E86ED40049D236 /* MenuSection.swift */; };
+		457719B823E8768A0049D236 /* MenuProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B723E8768A0049D236 /* MenuProviderType.swift */; };
+		457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719BB23E8788F0049D236 /* MenuDataSource.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
+		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
 		45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */; };
@@ -538,7 +547,16 @@
 		45668E8C23E0E462002728E7 /* OpenTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialView.swift; sourceTree = "<group>"; };
 		45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModel.swift; sourceTree = "<group>"; };
 		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
+		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
+		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
+		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		457719AD23E867310049D236 /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
+		457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralMenuSectionId.swift; sourceTree = "<group>"; };
+		457719B323E86ED40049D236 /* MenuSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
+		457719B723E8768A0049D236 /* MenuProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProviderType.swift; sourceTree = "<group>"; };
+		457719BB23E8788F0049D236 /* MenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
+		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
@@ -1306,6 +1324,21 @@
 			path = OpenTutorialView;
 			sourceTree = "<group>";
 		};
+		457719A423E862C70049D236 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */,
+				457719BB23E8788F0049D236 /* MenuDataSource.swift */,
+				457719A923E8668A0049D236 /* MenuItem.swift */,
+				457719A523E862D20049D236 /* MenuItemId.swift */,
+				457719AD23E867310049D236 /* MenuProvider.swift */,
+				457719B723E8768A0049D236 /* MenuProviderType.swift */,
+				457719B323E86ED40049D236 /* MenuSection.swift */,
+				457719A723E863A50049D236 /* MenuSectionId.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		45D3C8AA23DF942100ECF70E /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -1404,6 +1437,7 @@
 				45F66CA323E4C3C20053CB5B /* MenuView.xib */,
 				45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */,
 				45F66CA923E4C5230053CB5B /* MenuViewModelType.swift */,
+				457719A423E862C70049D236 /* Models */,
 				45F66CAB23E4C7D90053CB5B /* Views */,
 			);
 			path = Menu;
@@ -1414,6 +1448,7 @@
 			children = (
 				45F66CB123E4C82F0053CB5B /* MenuCell.swift */,
 				45F66CB023E4C82E0053CB5B /* MenuCell.xib */,
+				45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2371,6 +2406,7 @@
 				45D3C92623DF999600ECF70E /* TutorialViewModelType.swift in Sources */,
 				0FB73E6A1EA90669000BA60D /* BaseFlowController.swift in Sources */,
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
+				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
 				45D3C8EA23DF948700ECF70E /* OnboardingFlow.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
@@ -2381,6 +2417,7 @@
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				EC8245B11EEEE96A0023A203 /* TractElementFrame.swift in Sources */,
 				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
+				45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */,
 				0F9E32431EDD182F0081DBB9 /* TractButton+Actions.swift in Sources */,
 				EC3140C31EE76F1D009347D3 /* TractEmail+Actions.swift in Sources */,
 				4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */,
@@ -2449,7 +2486,10 @@
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */,
 				45668E8123E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
+				457719AA23E8668A0049D236 /* MenuItem.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
+				457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */,
+				457719B423E86ED40049D236 /* MenuSection.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
@@ -2461,12 +2501,14 @@
 				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,
 				ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */,
+				457719B823E8768A0049D236 /* MenuProviderType.swift in Sources */,
 				4556AEB123E1D3D5002C15E8 /* Flow.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
+				457719AE23E867310049D236 /* MenuProvider.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
@@ -2513,6 +2555,7 @@
 				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,
 				0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
+				457719B223E869AF0049D236 /* GeneralMenuSectionId.swift in Sources */,
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
 				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,
@@ -2533,6 +2576,7 @@
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
 				4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */,
+				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TheKeyOAuthSwift
 
 class BaseFlowController: NSObject, FlowDelegate {
     
@@ -175,7 +176,11 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     @objc func displayMenu(notification: Notification? = nil) {
         
-        let menuView = MenuView(viewModel: MenuViewModel())
+        let viewModel = MenuViewModel(
+            loginClient: TheKeyOAuthClient.shared,
+            menuProvider: MenuProvider()
+        )
+        let menuView = MenuView(viewModel: viewModel)
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {

@@ -7,7 +7,12 @@
 //
 
 import Foundation
+import TheKeyOAuthSwift
 
 protocol MenuViewModelType {
     
+    var loginClient: TheKeyOAuthClient { get }
+    var menuDataSource: ObservableValue<MenuDataSource> { get }
+    
+    func reloadMenuDataSource()
 }
