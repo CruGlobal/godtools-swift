@@ -184,13 +184,7 @@ class BaseFlowController: NSObject, FlowDelegate {
         )
         self.menuFlow = menuFlow
         
-        let viewModel = MenuViewModel(
-            flowDelegate: menuFlow,
-            loginClient: TheKeyOAuthClient.shared,
-            menuDataProvider: MenuDataProvider(),
-            deviceLanguage: DeviceLanguagePreferences()
-        )
-        let menuView = MenuView(viewModel: viewModel)
+        let menuView: MenuView = menuFlow.menuView
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {
@@ -218,16 +212,15 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     @objc func dismissMenu() {
-        guard let menuViewController = navigationController.topViewController as? MenuView else { return }
-        let src = menuViewController
+        guard let menuView = navigationController.topViewController as? MenuView else { return }
         guard let dst = currentViewController else { return }
         let dstViewWidth = dst.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: (src.view))
+        menuView.view.superview?.insertSubview(dst.view, aboveSubview: (menuView.view))
         dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
         
         UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-            src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
+            menuView.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
             dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
         }, completion: { [weak self] finished in
             self?.menuFlow = nil

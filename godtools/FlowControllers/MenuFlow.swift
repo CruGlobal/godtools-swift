@@ -10,18 +10,30 @@ import Foundation
 
 class MenuFlow: Flow {
     
+    private(set) var menuView: MenuView!
     private var tutorialFlow: TutorialFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
+    var view: UIViewController {
+        return menuView
+    }
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
+        
+        let viewModel = MenuViewModel(
+            flowDelegate: self,
+            loginClient: appDiContainer.loginClient,
+            menuDataProvider: MenuDataProvider(),
+            deviceLanguage: DeviceLanguagePreferences()
+        )
+        menuView = MenuView(viewModel: viewModel)
     }
 }
 
