@@ -27,6 +27,7 @@
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
+"menu.tutorial" = "Tutorial";
 
 // Login
 "login" = "Login";

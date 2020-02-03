@@ -14,8 +14,11 @@ struct DeviceLanguagePreferences: LanguagePreferencesType {
         
     }
     
+    var languageCode: String? {
+        return NSLocale.current.languageCode
+    }
+    
     var isEnglish: Bool {
-        let languageCode: String? = NSLocale.current.languageCode
         return languageCode == "en" || languageCode == "en_US"
     }
 }

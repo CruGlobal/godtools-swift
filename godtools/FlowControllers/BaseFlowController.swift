@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import TheKeyOAuthSwift
 
 class BaseFlowController: NSObject, FlowDelegate {
     
     private var onboardingFlow: OnboardingFlow?
     private var tutorialFlow: TutorialFlow?
+    private var menuFlow: MenuFlow?
     
     private var navigationStarted: Bool = false
     
@@ -174,51 +176,56 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     @objc func displayMenu(notification: Notification? = nil) {
-        let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
+        
+        let menuFlow: MenuFlow = MenuFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        self.menuFlow = menuFlow
+        
+        let menuView: MenuView = menuFlow.menuView
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {
-                menuViewController.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
+                menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
-        menuViewController.delegate = self
+        
+        menuView.delegate = self
         
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
         guard let currentFrame = currentViewController?.view.frame else { return }
-        menuViewController.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
+        menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
         
         guard let src = currentViewController else { return }
-        let dst = menuViewController
         let srcViewWidth = src.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
-        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { [weak self] finished in
-                        self?.navigationController.pushViewController(dst, animated: false) } )
+        src.view.superview?.insertSubview(menuView.view, aboveSubview: src.view)
+        menuView.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+            src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
+            menuView.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        },completion: { [weak self] finished in
+            self?.navigationController.pushViewController(menuView, animated: false)
+        })
     }
     
     @objc func dismissMenu() {
-        guard let menuViewController = navigationController.topViewController as? MenuViewController else { return }
-        let src = menuViewController
+        guard let menuView = navigationController.topViewController as? MenuView else { return }
         guard let dst = currentViewController else { return }
         let dstViewWidth = dst.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: (src.view))
+        menuView.view.superview?.insertSubview(dst.view, aboveSubview: (menuView.view))
         dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { [weak self] finished in
-                        _ = self?.navigationController.popViewController(animated: false) } )
+        
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
+            menuView.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
+            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, completion: { [weak self] finished in
+            self?.menuFlow = nil
+            _ = self?.navigationController.popViewController(animated: false)
+        })
     }
     
 }

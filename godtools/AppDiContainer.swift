@@ -7,14 +7,17 @@
 //
 
 import Foundation
+import TheKeyOAuthSwift
 
 class AppDiContainer {
         
+    let loginClient: TheKeyOAuthClient
     let onboardingTutorialServices: OnboardingTutorialServicesType
     let tutorialServices: TutorialServicesType
     
     required init() {
         
+        loginClient = TheKeyOAuthClient.shared
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
     }
