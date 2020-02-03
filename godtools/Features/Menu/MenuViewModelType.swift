@@ -15,4 +15,5 @@ protocol MenuViewModelType {
     var menuDataSource: ObservableValue<MenuDataSource> { get }
     
     func reloadMenuDataSource()
+    func tutorialTapped()
 }

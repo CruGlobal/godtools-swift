@@ -178,7 +178,8 @@ class BaseFlowController: NSObject, FlowDelegate {
         
         let viewModel = MenuViewModel(
             loginClient: TheKeyOAuthClient.shared,
-            menuProvider: MenuProvider()
+            menuDataProvider: MenuDataProvider(),
+            deviceLanguage: DeviceLanguagePreferences()
         )
         let menuView = MenuView(viewModel: viewModel)
         

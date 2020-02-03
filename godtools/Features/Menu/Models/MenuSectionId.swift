@@ -10,7 +10,7 @@ import Foundation
 
 enum MenuSectionId: Hashable {
     
-    case general(id: GeneralMenuSectionId)
+    case general
     case share
     case legal
 }

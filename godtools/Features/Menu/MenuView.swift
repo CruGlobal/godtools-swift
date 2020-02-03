@@ -240,6 +240,9 @@ extension MenuView: UITableViewDelegate {
         case .copyrightInfo:
             let url = URL(string: "http://www.godtoolsapp.com/copyright")
             delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
+            
+        case .tutorial:
+            viewModel.tutorialTapped()
         }
     }
     

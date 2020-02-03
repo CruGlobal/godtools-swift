@@ -12,16 +12,18 @@ import GTMAppAuth
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
-    private let menuProvider: MenuProviderType
-    private let supportedLanguageCodes: [String] = ["en"]
+    private let menuDataProvider: MenuDataProviderType
+    private let deviceLanguage: DeviceLanguagePreferences
+    private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     
     let loginClient: TheKeyOAuthClient
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(loginClient: TheKeyOAuthClient, menuProvider: MenuProviderType) {
+    required init(loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguagePreferences) {
         
         self.loginClient = loginClient
-        self.menuProvider = menuProvider
+        self.menuDataProvider = menuDataProvider
+        self.deviceLanguage = deviceLanguage
         
         super.init()
                 
@@ -30,16 +32,104 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func reloadMenuDataSource() {
         
-        let currentLanguageCode: String = Locale.current.languageCode ?? "unknown"
-        let generalMenuSectionId: GeneralMenuSectionId
+        let accountCreationIsSupported: Bool = supportedLanguageCodesForAccountCreation.contains(deviceLanguage.languageCode ?? "unknown_code")
         
-        if supportedLanguageCodes.contains(currentLanguageCode) {
-            generalMenuSectionId = loginClient.isAuthenticated() ? .authorized : .unauthorized
-        }
-        else {
-            generalMenuSectionId = .nonSupportedLanguage
+        menuDataSource.accept(value:
+            createMenuDataSource(
+                isAuthorized: loginClient.isAuthenticated(),
+                accountCreationIsSupported: accountCreationIsSupported,
+                deviceIsEnglish: deviceLanguage.isEnglish
+            )
+        )
+    }
+    
+    private func createMenuDataSource(isAuthorized: Bool, accountCreationIsSupported: Bool, deviceIsEnglish: Bool) -> MenuDataSource {
+        
+        let sections: [MenuSection] = [
+            menuDataProvider.getMenuSection(id: .general),
+            menuDataProvider.getMenuSection(id: .share),
+            menuDataProvider.getMenuSection(id: .legal)
+        ]
+        
+        var itemsDictionary: [MenuSectionId: [MenuItem]] = Dictionary()
+        
+        for section in sections {
+
+            var items: [MenuItem] = Array()
+            
+            switch section.id {
+                
+            case .general:
+                
+                if accountCreationIsSupported {
+                    
+                    if isAuthorized {
+                        items = [
+                            menuDataProvider.getMenuItem(id: .languageSettings),
+                            menuDataProvider.getMenuItem(id: .tutorial),
+                            menuDataProvider.getMenuItem(id: .logout),
+                            menuDataProvider.getMenuItem(id: .about),
+                            menuDataProvider.getMenuItem(id: .help),
+                            menuDataProvider.getMenuItem(id: .contactUs)
+                        ]
+                    }
+                    else if !isAuthorized {
+                        items = [
+                            menuDataProvider.getMenuItem(id: .languageSettings),
+                            menuDataProvider.getMenuItem(id: .tutorial),
+                            menuDataProvider.getMenuItem(id: .login),
+                            menuDataProvider.getMenuItem(id: .createAccount),
+                            menuDataProvider.getMenuItem(id: .about),
+                            menuDataProvider.getMenuItem(id: .help),
+                            menuDataProvider.getMenuItem(id: .contactUs)
+                        ]
+                    }
+                }
+                else if !accountCreationIsSupported {
+                    
+                    items = [
+                        menuDataProvider.getMenuItem(id: .languageSettings),
+                        menuDataProvider.getMenuItem(id: .tutorial),
+                        menuDataProvider.getMenuItem(id: .about),
+                        menuDataProvider.getMenuItem(id: .help),
+                        menuDataProvider.getMenuItem(id: .contactUs)
+                    ]
+                }
+                
+            case .share:
+                items = [
+                    menuDataProvider.getMenuItem(id: .shareGodTools),
+                    menuDataProvider.getMenuItem(id: .shareAStoryWithUs)
+                ]
+            
+            case .legal:
+                items = [
+                    menuDataProvider.getMenuItem(id: .termsOfUse),
+                    menuDataProvider.getMenuItem(id: .privacyPolicy),
+                    menuDataProvider.getMenuItem(id: .copyrightInfo)
+                ]
+            }
+            
+            items = items.filter {
+                if !deviceIsEnglish {
+                    return $0.id != .tutorial
+                }
+                else {
+                    return true
+                }
+            }
+            
+            itemsDictionary[section.id] = items
         }
         
-        menuDataSource.accept(value: menuProvider.getMenuDataSource(generalMenuSectionId: generalMenuSectionId))
+        return MenuDataSource(
+            sections: sections,
+            items: itemsDictionary
+        )
+    }
+    
+    func tutorialTapped() {
+        
+        print("tutorial tapped")
     }
 }

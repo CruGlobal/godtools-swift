@@ -174,11 +174,10 @@
 		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
 		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
 		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
-		457719AE23E867310049D236 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719AD23E867310049D236 /* MenuProvider.swift */; };
-		457719B223E869AF0049D236 /* GeneralMenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */; };
 		457719B423E86ED40049D236 /* MenuSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B323E86ED40049D236 /* MenuSection.swift */; };
-		457719B823E8768A0049D236 /* MenuProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719B723E8768A0049D236 /* MenuProviderType.swift */; };
 		457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719BB23E8788F0049D236 /* MenuDataSource.swift */; };
+		457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C123E8BAE50049D236 /* MenuDataProvider.swift */; };
+		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
 		4599A66623D7457600EB0EE7 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4599A66523D7457600EB0EE7 /* GTSegment.swift */; };
 		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
@@ -550,11 +549,10 @@
 		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
 		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
 		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
-		457719AD23E867310049D236 /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
-		457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralMenuSectionId.swift; sourceTree = "<group>"; };
 		457719B323E86ED40049D236 /* MenuSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuSection.swift; sourceTree = "<group>"; };
-		457719B723E8768A0049D236 /* MenuProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProviderType.swift; sourceTree = "<group>"; };
 		457719BB23E8788F0049D236 /* MenuDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDataSource.swift; sourceTree = "<group>"; };
+		457719C123E8BAE50049D236 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
+		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
 		4599A66523D7457600EB0EE7 /* GTSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
@@ -1327,12 +1325,11 @@
 		457719A423E862C70049D236 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				457719B123E869AF0049D236 /* GeneralMenuSectionId.swift */,
 				457719BB23E8788F0049D236 /* MenuDataSource.swift */,
 				457719A923E8668A0049D236 /* MenuItem.swift */,
 				457719A523E862D20049D236 /* MenuItemId.swift */,
-				457719AD23E867310049D236 /* MenuProvider.swift */,
-				457719B723E8768A0049D236 /* MenuProviderType.swift */,
+				457719C123E8BAE50049D236 /* MenuDataProvider.swift */,
+				457719C223E8BAE50049D236 /* MenuDataProviderType.swift */,
 				457719B323E86ED40049D236 /* MenuSection.swift */,
 				457719A723E863A50049D236 /* MenuSectionId.swift */,
 			);
@@ -2340,6 +2337,7 @@
 				45668E7023E0E1CC002728E7 /* MainOnboardingTutorialItem.swift in Sources */,
 				45D3C8EB23DF948700ECF70E /* FlowDelegate.swift in Sources */,
 				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
+				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
 				4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */,
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
@@ -2499,16 +2497,15 @@
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
 				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
+				457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */,
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,
 				ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */,
-				457719B823E8768A0049D236 /* MenuProviderType.swift in Sources */,
 				4556AEB123E1D3D5002C15E8 /* Flow.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
-				457719AE23E867310049D236 /* MenuProvider.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
@@ -2555,7 +2552,6 @@
 				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,
 				0F7741E01EBB8BF300888D20 /* TractCards+Animations.swift in Sources */,
 				4F5732951EA69CF00082035C /* godtools.xcdatamodeld in Sources */,
-				457719B223E869AF0049D236 /* GeneralMenuSectionId.swift in Sources */,
 				ECBE2E5B1EF049E400A13849 /* TractLabel+UI.swift in Sources */,
 				ECBE2E481EF03CD500A13849 /* TractCards+ChildSetup.swift in Sources */,
 				0F6982721EB7D9E800CAA284 /* BaseTractElement+Functions.swift in Sources */,

@@ -10,5 +10,6 @@ import Foundation
 
 protocol LanguagePreferencesType {
     
+    var languageCode: String? { get }
     var isEnglish: Bool { get }
 }
