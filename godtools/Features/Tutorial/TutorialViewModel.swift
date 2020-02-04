@@ -17,6 +17,7 @@ class TutorialViewModel: TutorialViewModelType {
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
+    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
     required init(flowDelegate: FlowDelegate, tutorialItemsProvider: TutorialItemProviderType) {
@@ -28,7 +29,7 @@ class TutorialViewModel: TutorialViewModelType {
         setPage(page: 0)
     }
     
-    private func setPage(page: Int) {
+    private func setPage(page: Int, shouldSetCurrentTutorialItemIndex: Bool = true) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
             return
@@ -36,9 +37,13 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        hidesBackButton.accept(value: page == 0)
+        if shouldSetCurrentTutorialItemIndex {
+            currentTutorialItemIndex.accept(value: page)
+        }
         
-        currentTutorialItemIndex.accept(value: page)
+        currentPage.accept(value: page)
+        
+        hidesBackButton.accept(value: page == 0)
         
         let isLastPage: Bool = page == tutorialItems.value.count - 1
         if isLastPage {
@@ -60,6 +65,10 @@ class TutorialViewModel: TutorialViewModelType {
     
     func pageTapped(page: Int) {
         setPage(page: page)
+    }
+    
+    func didScrollToPage(page: Int) {
+        setPage(page: page, shouldSetCurrentTutorialItemIndex: false)
     }
     
     func continueTapped() {

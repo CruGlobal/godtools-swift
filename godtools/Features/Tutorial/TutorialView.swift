@@ -79,8 +79,6 @@ class TutorialView: UIViewController {
                         )
                     }
                 }
-                                
-                self?.pageControl.currentPage = index
             }
         }
     }
@@ -116,6 +114,10 @@ class TutorialView: UIViewController {
             }
         }
         
+        viewModel.currentPage.addObserver(self) { [weak self] (page: Int) in
+            self?.pageControl.currentPage = page
+        }
+        
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.continueButton.setTitle(title, for: .normal)
         }
@@ -133,7 +135,7 @@ class TutorialView: UIViewController {
         
         if let visibleCell = tutorialCollectionView.visibleCells.first {
             if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
-                pageControl.currentPage = indexPath.item
+                viewModel.didScrollToPage(page: indexPath.item)
             }
         }
     }
