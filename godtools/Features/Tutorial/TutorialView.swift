@@ -91,7 +91,7 @@ class TutorialView: UIViewController {
             UINib(nibName: TutorialCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        tutorialCollectionView.isScrollEnabled = false
+        enableSwipeInteractionWithTutorial(enable: true)
     }
     
     private func setupBinding() {
@@ -118,6 +118,23 @@ class TutorialView: UIViewController {
         
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.continueButton.setTitle(title, for: .normal)
+        }
+    }
+    
+    private func enableSwipeInteractionWithTutorial(enable: Bool) {
+        
+        tutorialCollectionView.isScrollEnabled = enable
+        tutorialCollectionView.isPagingEnabled = enable
+    }
+    
+    private func updatePageControlPageWithCurrentTutorialCollectionViewItem() {
+        
+        tutorialCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = tutorialCollectionView.visibleCells.first {
+            if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
+                pageControl.currentPage = indexPath.item
+            }
         }
     }
     
@@ -179,5 +196,30 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension TutorialView: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == tutorialCollectionView {
+            if !decelerate {
+                updatePageControlPageWithCurrentTutorialCollectionViewItem()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
     }
 }
