@@ -25,7 +25,7 @@ target 'godtools' do
     pod 'Crashlytics'
     pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
-    pod 'AdobeMobileSDK', '~> 4.17.1'
+    pod 'AdobeMobileSDK', '~> 4.19'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
     pod 'Firebase/Analytics'
