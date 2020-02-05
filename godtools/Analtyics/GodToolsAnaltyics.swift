@@ -58,6 +58,9 @@ struct AdobeAnalyticsConstants {
     }
 }
 class GodToolsAnaltyics {
+    
+    private let loggingEnabled: Bool = true
+    
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
     var previousScreenName = ""
@@ -193,10 +196,15 @@ class GodToolsAnaltyics {
         }
             
         mutableData.removeValue(forKey: "action")
+                
+        if loggingEnabled {
+            print("\nTracking Adobe Analytics Action")
+            print("  actionName: \(actionName)")
+            print("  data: \(mutableData)\n")
+        }
         
         adobeAnalyticsBackgroundQueue.async {
             ADBMobile.trackAction(actionName, data: mutableData)
-            debugPrint("Tracking analytics for action: \(actionName) \(mutableData.debugDescription)")
         }
     }
     
@@ -221,9 +229,12 @@ class GodToolsAnaltyics {
         if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
             properties[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
         }
-        
-        print("\n TRACK SCREEN")
-        print("  properties: \(properties)")
+                
+        if loggingEnabled {
+            print("\nTracking Adobe Analytics Screen View")
+            print("  screenName: \(screenName)")
+            print("  data: \(properties)\n")
+        }
         
         previousScreenName = screenName
         
