@@ -39,6 +39,11 @@ class OnboardingWelcomeView: UIViewController {
         beginButton.addTarget(self, action: #selector(handleBegin(button:)), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.pageViewed()
+    }
+    
     private func setupLayout() {
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0

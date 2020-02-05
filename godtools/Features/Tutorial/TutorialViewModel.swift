@@ -10,6 +10,8 @@ import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
     
+    private let analytics: GodToolsAnaltyics
+    
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -18,9 +20,10 @@ class TutorialViewModel: TutorialViewModelType {
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, tutorialItemsProvider: TutorialItemProviderType) {
         
         self.flowDelegate = flowDelegate
+        self.analytics = analytics
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
@@ -44,6 +47,12 @@ class TutorialViewModel: TutorialViewModelType {
         else {
             continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
         }
+        
+        analytics.recordScreenView(
+            screenName: "tutorial-\(page + 1)",
+            siteSection: "tutorial",
+            siteSubSection: ""
+        )
     }
     
     func closeTapped() {

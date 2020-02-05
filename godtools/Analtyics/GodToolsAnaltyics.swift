@@ -64,27 +64,24 @@ class GodToolsAnaltyics {
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
                                                       qos: .background)
     
-    private static var sharedInstance: GodToolsAnaltyics?
+    static let shared: GodToolsAnaltyics = GodToolsAnaltyics()
     
-    static func setup() {
-        let trackingID = Config().googleAnalyticsApiKey
+    private init() {
         
+        let trackingID = Config().googleAnalyticsApiKey
+                
         guard let gai = GAI.sharedInstance() else {
             return
         }
         
         gai.tracker(withTrackingId: trackingID)
-        
-        sharedInstance = GodToolsAnaltyics()
-        
+                        
         #if DEBUG
         // comment it out for now, it clutters debug window
 //            gai.logger.logLevel = .verbose
             gai.dryRun = true
         #endif
-    }
-    
-    init() {
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
@@ -131,6 +128,7 @@ class GodToolsAnaltyics {
     }
     
     @objc private func recordScreenView(notification: Notification) {
+        
         guard let userInfo = notification.userInfo else {
             return
         }
@@ -140,7 +138,16 @@ class GodToolsAnaltyics {
         }
         let siteSection = userInfo[AdobeAnalyticsConstants.Keys.siteSection] as? String ?? ""
         let siteSubSection = userInfo[AdobeAnalyticsConstants.Keys.siteSubSection] as? String ?? ""
-
+        
+        recordScreenView(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection
+        )
+    }
+    
+    func recordScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+        
         tracker?.set(kGAIScreenName, value: screenName)
 
         guard let screenViewInfo = GAIDictionaryBuilder.createScreenView().build() as? [AnyHashable : Any] else {
@@ -160,32 +167,37 @@ class GodToolsAnaltyics {
     }
     
     @objc private func recordActionForADBMobile(notification: Notification) {
-        var contextData: [String: Any] = [:]
-        guard let userInfo = notification.userInfo as? [String: Any] else { return }
-        guard let action = userInfo["action"] as? String else { return }
-
-        contextData = userInfo
-        contextData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
-        contextData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
+                
+        guard let userInfo = notification.userInfo as? [String: Any] else {
+            return
+        }
+        guard let actionName = userInfo["action"] as? String else {
+            return
+        }
+        
+        recordActionForADBMobile(actionName: actionName, data: userInfo)
+    }
+    
+    func recordActionForADBMobile(actionName: String, data: [String: Any]) {
+        
+        var mutableData: [String: Any] = data
+        
+        mutableData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
+        mutableData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
         
         if TheKeyOAuthClient.shared.isAuthenticated(), let guid = TheKeyOAuthClient.shared.guid {
-            contextData[AdobeAnalyticsConstants.Keys.ssoguid] = guid
+            mutableData[AdobeAnalyticsConstants.Keys.ssoguid] = guid
         }
         if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
-            contextData[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
+            mutableData[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
         }
+            
+        mutableData.removeValue(forKey: "action")
         
-        contextData.removeValue(forKey: "action")
-        
-        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
-            self.trackActionInAdobe(actionName: action, data: contextData)
-            debugPrint("Tracking analytics for action: \(action) \(contextData.debugDescription)")
+        adobeAnalyticsBackgroundQueue.async {
+            ADBMobile.trackAction(actionName, data: mutableData)
+            debugPrint("Tracking analytics for action: \(actionName) \(mutableData.debugDescription)")
         }
-    }
-
-    
-    private func trackActionInAdobe(actionName: String, data: [String: Any]) {
-        ADBMobile.trackAction(actionName, data: data)
     }
     
     private func recordScreenViewInAdobe(screenName: String, siteSection: String, siteSubSection: String) {
@@ -209,6 +221,9 @@ class GodToolsAnaltyics {
         if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
             properties[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
         }
+        
+        print("\n TRACK SCREEN")
+        print("  properties: \(properties)")
         
         previousScreenName = screenName
         
