@@ -66,7 +66,7 @@ class OnboardingWelcomeView: UIViewController {
     }
     
     private func animateWelcomeToTagline() {
-        UIView.animate(withDuration: 0.25, delay: 0.75, options: .curveEaseOut, animations: { [weak self] in
+        UIView.animate(withDuration: 0.25, delay: 2, options: .curveEaseOut, animations: { [weak self] in
             self?.titleLabel.alpha = 0
         }) { [weak self] (finished: Bool) in
             UIView.animate(withDuration: 0.15, delay: 0.25, options: .curveEaseOut, animations: { [weak self] in
