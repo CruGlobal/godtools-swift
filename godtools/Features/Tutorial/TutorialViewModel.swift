@@ -12,6 +12,7 @@ class TutorialViewModel: TutorialViewModelType {
     
     private let analytics: GodToolsAnaltyics
     
+    private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -90,6 +91,22 @@ class TutorialViewModel: TutorialViewModelType {
         }
         else {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+        }
+    }
+    
+    func tutorialVideoPlayTapped() {
+        
+        let tutorialItem: TutorialItem = tutorialItems.value[page]
+        
+        guard let youTubeVideoId = tutorialItem.youTubeVideoId else {
+            return
+        }
+        
+        let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(youTubeVideoId)
+        
+        if !youTubeVideoTracked {
+            trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
+            analytics.recordActionForADBMobile(actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }

@@ -14,11 +14,13 @@ class AppDiContainer {
     let loginClient: TheKeyOAuthClient
     let onboardingTutorialServices: OnboardingTutorialServicesType
     let tutorialServices: TutorialServicesType
+    let analytics: GodToolsAnaltyics
     
     required init() {
         
         loginClient = TheKeyOAuthClient.shared
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
+        analytics = GodToolsAnaltyics.shared
     }
 }

@@ -63,7 +63,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 let masterView = MasterHomeViewController(
                     flowDelegate: self,
                     delegate: self,
-                    tutorialServices: appDiContainer.tutorialServices
+                    appDiContainer: appDiContainer
                 )
                 
                 navigationController.setViewControllers([masterView], animated: false)

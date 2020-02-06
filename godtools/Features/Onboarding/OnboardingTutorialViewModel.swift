@@ -97,9 +97,13 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     func showMoreTapped() {
         tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
+        
+        analytics.recordActionForADBMobile(actionName: "Show Me More", data: ["cru.onboarding_more": 1])
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
+        
+        analytics.recordActionForADBMobile(actionName: "Get Started", data: ["cru.onboarding_start": 1])
     }
 }

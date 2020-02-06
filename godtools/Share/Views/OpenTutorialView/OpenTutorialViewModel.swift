@@ -11,6 +11,7 @@ import Foundation
 class OpenTutorialViewModel: OpenTutorialViewModelType {
     
     private let tutorialServices: TutorialServicesType
+    private let analytics: GodToolsAnaltyics
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -18,10 +19,11 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
     let openTutorialTitle: String
     let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
     
-    required init(flowDelegate: FlowDelegate, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, tutorialServices: TutorialServicesType, analytics: GodToolsAnaltyics) {
         
         self.flowDelegate = flowDelegate
         self.tutorialServices = tutorialServices
+        self.analytics = analytics
         
         showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
         openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
@@ -37,5 +39,7 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
     func closeTapped() {
         tutorialServices.disableOpenTutorialCallout()
         hidesOpenTutorial.accept(value: (hidden: true, animated: true))
+        
+        analytics.recordActionForADBMobile(actionName: "Close Tutorial Notification", data: ["cru.tutorial_notification_close": 1])
     }
 }

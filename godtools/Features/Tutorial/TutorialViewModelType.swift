@@ -21,4 +21,5 @@ protocol TutorialViewModelType {
     func didScrollToPage(page: Int)
     func backTapped()
     func continueTapped()
+    func tutorialVideoPlayTapped()
 }

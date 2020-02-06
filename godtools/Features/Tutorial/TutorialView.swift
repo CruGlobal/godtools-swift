@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YoutubePlayer_in_WKWebView
 
 class TutorialView: UIViewController {
     
@@ -177,7 +178,7 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
         
         let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
         
-        cell.configure(viewModel: TutorialCellViewModel(item: tutorialItem))
+        cell.configure(viewModel: TutorialCellViewModel(item: tutorialItem), delegate: self)
         
         return cell
     }
@@ -222,6 +223,16 @@ extension TutorialView: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if scrollView == tutorialCollectionView {
             updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
+    }
+}
+
+// MARK: - TutorialCellDelegate
+
+extension TutorialView: TutorialCellDelegate {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState) {
+        if state == .playing {
+            viewModel.tutorialVideoPlayTapped()
         }
     }
 }
