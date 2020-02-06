@@ -7,42 +7,149 @@
 //
 
 import UIKit
+import TheKeyOAuthSwift
 
-class BaseFlowController: NSObject, UINavigationControllerDelegate {
+class BaseFlowController: NSObject, FlowDelegate {
+    
+    private var onboardingFlow: OnboardingFlow?
+    private var tutorialFlow: TutorialFlow?
+    private var menuFlow: MenuFlow?
+    
+    private var navigationStarted: Bool = false
+    
+    let appDiContainer: AppDiContainer
+    let navigationController: UINavigationController
     
     var currentViewController: UIViewController?
     
-    init(window: UIWindow) {
+    init(appDiContainer: AppDiContainer) {
+        
+        self.appDiContainer = appDiContainer
+        self.navigationController = UINavigationController()
+        
         super.init()
-        self.currentViewController = self.initialViewController()
-        let navigationController = UINavigationController.init(rootViewController: self.currentViewController!)
-        self.configureNavigation(navigationController: navigationController)
-        window.rootViewController = navigationController
-        self.defineObservers()
+        
+        defineObservers()
+        
+        navigationController.view.backgroundColor = .white
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.setViewControllers([LaunchView()], animated: false)
     }
     
-    func initialViewController() -> UIViewController {
-        preconditionFailure("This method must be overridden")
+    private func setupInitialNavigation() {
+        
+        if appDiContainer.onboardingTutorialServices.tutorialIsAvailable {
+            navigate(step: .showOnboardingTutorial(animated: false))
+        }
+        else {
+            navigate(step: .showMasterView(animated: true, shouldCreateNewInstance: true))
+        }
+    }
+    
+    func navigate(step: FlowStep) {
+
+        switch step {
+        
+        case .showMasterView(let animated, let shouldCreateNewInstance):
+            
+            navigationController.setNavigationBarHidden(false, animated: false)
+            
+            configureNavigation(navigationController: navigationController)
+            
+            let currentMasterView: MasterHomeViewController? = navigationController.viewControllers.first as? MasterHomeViewController
+            
+            if shouldCreateNewInstance || currentMasterView == nil {
+                
+                let masterView = MasterHomeViewController(
+                    flowDelegate: self,
+                    delegate: self,
+                    tutorialServices: appDiContainer.tutorialServices
+                )
+                
+                navigationController.setViewControllers([masterView], animated: false)
+                currentViewController = masterView
+                
+                if animated {
+                    masterView.view.alpha = 0
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                        masterView.view.alpha = 1
+                    }, completion: nil)
+                }
+            }
+            
+        case .showOnboardingTutorial(let animated):
+            
+            let onboardingFlow = OnboardingFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer
+            )
+            
+            navigationController.present(onboardingFlow.navigationController, animated: animated, completion: nil)
+            
+            self.onboardingFlow = onboardingFlow
+            
+        case .dismissOnboardingTutorial:
+            
+            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+            navigationController.dismiss(animated: true, completion: nil)
+            onboardingFlow = nil
+                            
+        case .showMoreTappedFromOnboardingTutorial:
+            
+            let tutorialFlow = TutorialFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: onboardingFlow?.navigationController
+            )
+            
+            self.tutorialFlow = tutorialFlow
+            onboardingFlow = nil
+                            
+        case .openTutorialTapped:
+            let tutorialFlow = TutorialFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: nil
+            )
+            navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
+            self.tutorialFlow = tutorialFlow
+    
+        case .dismissTutorial:
+            
+            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+            navigationController.dismiss(animated: true, completion: nil)
+            tutorialFlow = nil
+            
+        default:
+            break
+        }
+    }
+    
+    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
+        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        viewController.resource = resource
+        viewController.currentPage = page
+        viewController.universalLinkLanguage = language
+        viewController.arrivedByUniversalLink = true
+        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
+        
+        pushViewController(viewController: viewController)
     }
     
     func pushViewController(viewController: UIViewController) {
         if viewController.isKind(of: BaseViewController.self) {
             (viewController as! BaseViewController).baseDelegate = self
         }
-        self.currentViewController?.navigationController?.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(viewController, animated: true)
     }
-    
-    // MARK: - Navigation Controller Delegate
-    
+        
     // MARK: - Helpers
     
     func configureNavigation(navigationController: UINavigationController) {
         configureNavigationColor(navigationController: navigationController, color: .gtBlue)
-        navigationController.delegate = self
     }
     
     func resetNavigationControllerColorToDefault() {
-        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
         configureNavigationColor(navigationController: navigationController, color: .gtBlue)
     }
     
@@ -69,53 +176,56 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
     }
     
     @objc func displayMenu(notification: Notification? = nil) {
-        let menuViewController = MenuViewController(nibName: String(describing:MenuViewController.self), bundle: nil)
+        
+        let menuFlow: MenuFlow = MenuFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController
+        )
+        self.menuFlow = menuFlow
+        
+        let menuView: MenuView = menuFlow.menuView
         
         if let menuNotification = notification {
             if let userInfo = menuNotification.userInfo as? [String: Any] {
-                menuViewController.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
+                menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
-        menuViewController.delegate = self
         
-        guard let navigationController = self.currentViewController?.navigationController else { return }
+        menuView.delegate = self
+        
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
-        guard let currentFrame = self.currentViewController?.view.frame else { return }
-        menuViewController.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
+        guard let currentFrame = currentViewController?.view.frame else { return }
+        menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
         
-        guard let src = self.currentViewController else { return }
-        let dst = menuViewController
+        guard let src = currentViewController else { return }
         let srcViewWidth = src.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: src.view)
-        dst.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { finished in
-                        navigationController.pushViewController(dst, animated: false) } )
+        src.view.superview?.insertSubview(menuView.view, aboveSubview: src.view)
+        menuView.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+            src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
+            menuView.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        },completion: { [weak self] finished in
+            self?.navigationController.pushViewController(menuView, animated: false)
+        })
     }
     
     @objc func dismissMenu() {
-        let navigationController = self.currentViewController?.navigationController
-        guard let menuViewController = navigationController?.topViewController as? MenuViewController else { return }
-        let src = menuViewController
-        guard let dst = self.currentViewController else { return }
+        guard let menuView = navigationController.topViewController as? MenuView else { return }
+        guard let dst = currentViewController else { return }
         let dstViewWidth = dst.view.frame.size.width
         
-        src.view.superview?.insertSubview(dst.view, aboveSubview: (src.view))
+        menuView.view.superview?.insertSubview(dst.view, aboveSubview: (menuView.view))
         dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        src.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
-                        dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { finished in
-                        _ = navigationController?.popViewController(animated: false) } )
+        
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
+            menuView.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
+            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, completion: { [weak self] finished in
+            self?.menuFlow = nil
+            _ = self?.navigationController.popViewController(animated: false)
+        })
     }
     
 }
@@ -123,23 +233,20 @@ class BaseFlowController: NSObject, UINavigationControllerDelegate {
 extension BaseFlowController: BaseViewControllerDelegate {
     
     func goHome() {
-        _ = self.currentViewController?.navigationController?.popToRootViewController(animated: true)
+        _ = navigationController.popToRootViewController(animated: true)
         resetNavigationControllerColorToDefault()
     }
     
     func goBack() {
-        _ = self.currentViewController?.navigationController?.popViewController(animated: true)
+        _ = navigationController.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
     }
     
     func changeNavigationBarColor(_ color: UIColor) {
-        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
         configureNavigationColor(navigationController: navigationController, color: color)
     }
     
     func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
-        let navigationController: UINavigationController = (self.currentViewController?.navigationController)!
-        
         configureNavigationColor(navigationController: navigationController, color: backgroundColor)
         navigationController.navigationBar.tintColor = controlColor
     }
@@ -177,4 +284,41 @@ extension BaseFlowController: LanguageSettingsViewControllerDelegate {
 
 extension BaseFlowController: LanguagesTableViewControllerDelegate {
     
+}
+
+extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControllerDelegate {
+    
+    func moveToToolDetail(resource: DownloadedResource) {
+        let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
+        viewController.resource = resource
+        viewController.delegate = self
+        self.pushViewController(viewController: viewController)
+    }
+    
+    func moveToTract(resource: DownloadedResource) {
+        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        viewController.resource = resource
+        pushViewController(viewController: viewController)
+    }
+    
+    func moveToArticle(resource: DownloadedResource) {
+        let viewController = ArticleToolViewController.create()
+        viewController.resource = resource
+        pushViewController(viewController: viewController)
+    }
+}
+
+extension BaseFlowController: ToolDetailViewControllerDelegate {
+    func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource) {
+        moveToTract(resource: resource)
+    }
+}
+
+extension BaseFlowController: UIApplicationDelegate {
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if !navigationStarted {
+            navigationStarted = true
+            setupInitialNavigation()
+        }
+    }
 }

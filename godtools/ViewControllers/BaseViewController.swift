@@ -34,8 +34,14 @@ class BaseViewController: UIViewController {
         }
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view didload: \(type(of: self))")
+        
         self.displayNavigationButtons()
         
         self.addAccessibilityIdentifiers()

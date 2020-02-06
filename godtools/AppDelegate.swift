@@ -22,7 +22,7 @@ enum ShortcutItemType: String {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+        
     var window: UIWindow?
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
@@ -57,9 +57,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         _ = FollowUpsManager().syncCachedFollowUps()
         
-        self.startFlowController()
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = UIColor.white
+        flowController = BaseFlowController(appDiContainer: AppDiContainer())
+        window.rootViewController = flowController?.navigationController
+        window.makeKeyAndVisible()
+        self.window = window
         
-        self.initalizeAppState()
+        initalizeAppState()
 
         return true
     }
@@ -80,18 +85,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
+        flowController?.applicationDidBecomeActive(application)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
     
-    }
-    
-    // MARK: - Flow controllers setup
-    
-    func startFlowController() {
-        self.window = UIWindow(frame : UIScreen.main.bounds)
-        self.flowController = PlatformFlowController(window: self.window!)
-        self.window?.makeKeyAndVisible()
     }
     
     // MARK: App state initialization/refresh
