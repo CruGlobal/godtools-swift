@@ -108,6 +108,7 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */; };
 		4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */; };
 		4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */; };
 		4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */; };
@@ -484,6 +485,7 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTutorialServices.swift; sourceTree = "<group>"; };
 		4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialServices.swift; sourceTree = "<group>"; };
@@ -1197,6 +1199,7 @@
 		4556AEA923E1D1E7002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */,
 				4556AEAA23E1D2BD002C15E8 /* TutorialServices.swift */,
 				4556AEAC23E1D2CE002C15E8 /* TutorialServicesType.swift */,
 			);
@@ -2500,6 +2503,7 @@
 				4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
+				454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */,
 				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
 				457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */,
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,

@@ -12,6 +12,7 @@ class TutorialView: UIViewController {
     
     private let viewModel: TutorialViewModelType
     
+    private var backButton: UIBarButtonItem?
     private var closeButton: UIBarButtonItem?
     private var didLayoutSubviews: Bool = false
     
@@ -38,8 +39,6 @@ class TutorialView: UIViewController {
                 
         setupLayout()
         setupBinding()
-        
-        addDefaultNavBackItem()
         
         closeButton = addBarButtonItem(
             to: .right,
@@ -80,8 +79,6 @@ class TutorialView: UIViewController {
                         )
                     }
                 }
-                                
-                self?.pageControl.currentPage = index
             }
         }
     }
@@ -92,14 +89,59 @@ class TutorialView: UIViewController {
             UINib(nibName: TutorialCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        tutorialCollectionView.isScrollEnabled = false
+        enableSwipeInteractionWithTutorial(enable: true)
     }
     
     private func setupBinding() {
         
+        viewModel.hidesBackButton.addObserver(self) { [weak self] (hidden: Bool) in
+            
+            let backButtonPosition: ButtonItemPosition = .left
+            
+            if let view = self {
+                if view.backButton == nil && !hidden {
+                    view.backButton = view.addBarButtonItem(
+                        to: backButtonPosition,
+                        image: UIImage(named: "nav_item_back"),
+                        color: nil,
+                        target: self,
+                        action: #selector(view.handleBack(barButtonItem:))
+                    )
+                }
+                else if let backButton = view.backButton {
+                    hidden ? view.removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : view.addBarButtonItem(item: backButton, barPosition: backButtonPosition)
+                }
+            }
+        }
+        
+        viewModel.currentPage.addObserver(self) { [weak self] (page: Int) in
+            self?.pageControl.currentPage = page
+        }
+        
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.continueButton.setTitle(title, for: .normal)
         }
+    }
+    
+    private func enableSwipeInteractionWithTutorial(enable: Bool) {
+        
+        tutorialCollectionView.isScrollEnabled = enable
+        tutorialCollectionView.isPagingEnabled = enable
+    }
+    
+    private func updatePageControlPageWithCurrentTutorialCollectionViewItem() {
+        
+        tutorialCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = tutorialCollectionView.visibleCells.first {
+            if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToPage(page: indexPath.item)
+            }
+        }
+    }
+    
+    @objc func handleBack(barButtonItem: UIBarButtonItem) {
+        viewModel.backTapped()
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {
@@ -156,5 +198,30 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension TutorialView: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == tutorialCollectionView {
+            if !decelerate {
+                updatePageControlPageWithCurrentTutorialCollectionViewItem()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
     }
 }

@@ -16,8 +16,10 @@ class TutorialViewModel: TutorialViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
+    let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
+    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
     required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, tutorialItemsProvider: TutorialItemProviderType) {
@@ -30,7 +32,7 @@ class TutorialViewModel: TutorialViewModelType {
         setPage(page: 0)
     }
     
-    private func setPage(page: Int) {
+    private func setPage(page: Int, shouldSetCurrentTutorialItemIndex: Bool = true) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
             return
@@ -38,7 +40,13 @@ class TutorialViewModel: TutorialViewModelType {
         
         self.page = page
         
-        currentTutorialItemIndex.accept(value: page)
+        if shouldSetCurrentTutorialItemIndex {
+            currentTutorialItemIndex.accept(value: page)
+        }
+        
+        currentPage.accept(value: page)
+        
+        hidesBackButton.accept(value: page == 0)
         
         let isLastPage: Bool = page == tutorialItems.value.count - 1
         if isLastPage {
@@ -55,12 +63,21 @@ class TutorialViewModel: TutorialViewModelType {
         )
     }
     
+    func backTapped() {
+        let prevPage: Int = page - 1
+        setPage(page: prevPage)
+    }
+    
     func closeTapped() {
         flowDelegate?.navigate(step: .closeTappedFromTutorial)
     }
     
     func pageTapped(page: Int) {
         setPage(page: page)
+    }
+    
+    func didScrollToPage(page: Int) {
+        setPage(page: page, shouldSetCurrentTutorialItemIndex: false)
     }
     
     func continueTapped() {
