@@ -59,7 +59,7 @@ struct AdobeAnalyticsConstants {
 }
 class GodToolsAnaltyics {
     
-    private let loggingEnabled: Bool = true
+    private let loggingEnabled: Bool = false
     
     let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
     
