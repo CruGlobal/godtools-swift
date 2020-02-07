@@ -10,6 +10,11 @@ import UIKit
 
 enum FontLibrary: String {
     
+    case abyssinicaSIL = "AbyssinicaSIL"
+    case notoSansEthiopicBold = "NotoSansEthiopic-Bold"
+    case notoSansEthiopic = "NotoSansEthiopic"
+    case notoSansMyanmarBold = "NotoSansMyanmar-Bold"
+    case notoSansMyanmar = "NotoSansMyanmar"
     case sfProDisplayLight = "SFProDisplay-Light"
     case sfProTextLight = "SFProText-Light"
     case sfProTextRegular = "SFProText-Regular"
