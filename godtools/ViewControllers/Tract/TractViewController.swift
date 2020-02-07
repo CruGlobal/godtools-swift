@@ -37,7 +37,7 @@ class TractViewController: BaseViewController {
     }
     var containerView = UIView()
     var pagesViews = [TractView?]()
-    var languageSegmentedControl: UISegmentedControl?
+    private var languageSegmentedControl: UISegmentedControl?
     
     var arrivedByUniversalLink = false
     var universalLinkLanguage: Language?
@@ -163,11 +163,23 @@ class TractViewController: BaseViewController {
     // MARK: - Segmented Control
     
     fileprivate func configureLanguageSegmentedControl() {
+       
         let primaryLabel = self.determinePrimaryLabel()
         let parallelLabel = self.determineParallelLabel()
         
         languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
         languageSegmentedControl?.selectedSegmentIndex = 0
+        let font = UIFont.systemFont(ofSize: 14)
+        if #available(iOS 13.0, *) {
+            languageSegmentedControl?.selectedSegmentTintColor = .white
+            languageSegmentedControl?.layer.borderColor = UIColor.white.cgColor
+            languageSegmentedControl?.layer.borderWidth = 1
+            languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
+            languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.black], for: .selected)
+        } else {
+            // Fallback on earlier versions
+        }
+        
         languageSegmentedControl?.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
     }
     
