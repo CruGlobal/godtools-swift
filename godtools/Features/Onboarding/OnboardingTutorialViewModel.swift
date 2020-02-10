@@ -45,6 +45,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         onboardingTutorialServices.disableOnboardingTutorial()
     }
     
+    private var analyticsScreenName: String {
+        return "onboarding-\(page + 2)"
+    }
+    
     private func setPage(page: Int, animated: Bool) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
@@ -67,7 +71,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         currentTutorialItemIndex.accept(value: page)
         
         analytics.recordScreenView(
-            screenName: "onboarding-\(page + 2)",
+            screenName: analyticsScreenName,
             siteSection: "onboarding",
             siteSubSection: ""
         )
@@ -98,12 +102,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(actionName: "Show Me More", data: ["cru.onboarding_more": 1])
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Show Me More", data: ["cru.onboarding_more": 1])
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(actionName: "Get Started", data: ["cru.onboarding_start": 1])
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Get Started", data: ["cru.onboarding_start": 1])
     }
 }

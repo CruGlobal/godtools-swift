@@ -106,7 +106,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         if !youTubeVideoTracked {
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.recordActionForADBMobile(actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
+            analytics.recordActionForADBMobile(screenName: "tutorial-1", actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }

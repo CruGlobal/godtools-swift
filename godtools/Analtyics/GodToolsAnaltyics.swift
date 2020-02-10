@@ -178,12 +178,16 @@ class GodToolsAnaltyics {
             return
         }
         
-        recordActionForADBMobile(actionName: actionName, data: userInfo)
+        recordActionForADBMobile(screenName: nil, actionName: actionName, data: userInfo)
     }
     
-    func recordActionForADBMobile(actionName: String, data: [String: Any]) {
+    func recordActionForADBMobile(screenName: String?, actionName: String, data: [String: Any]) {
         
         var mutableData: [String: Any] = data
+        
+        if let screenName = screenName {
+            mutableData[AdobeAnalyticsConstants.Keys.screenName] = screenName
+        }
         
         mutableData[AdobeAnalyticsConstants.Keys.appName] = AdobeAnalyticsConstants.Values.godTools
         mutableData[AdobeAnalyticsConstants.Keys.marketingCloudID] = ADBMobile.visitorMarketingCloudID()
