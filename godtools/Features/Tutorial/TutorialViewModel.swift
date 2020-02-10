@@ -33,6 +33,10 @@ class TutorialViewModel: TutorialViewModelType {
         setPage(page: 0)
     }
     
+    private var analyticsScreenName: String {
+        return "tutorial-\(page + 1)"
+    }
+    
     private func setPage(page: Int, shouldSetCurrentTutorialItemIndex: Bool = true) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
@@ -58,7 +62,7 @@ class TutorialViewModel: TutorialViewModelType {
         }
         
         analytics.recordScreenView(
-            screenName: "tutorial-\(page + 1)",
+            screenName: analyticsScreenName,
             siteSection: "tutorial",
             siteSubSection: ""
         )
@@ -106,7 +110,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         if !youTubeVideoTracked {
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.recordActionForADBMobile(screenName: "tutorial-1", actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
+            analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }
