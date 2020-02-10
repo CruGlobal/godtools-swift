@@ -20,16 +20,23 @@ enum FontLibrary: String {
     case sfProTextRegular = "SFProText-Regular"
     
     func font(size: CGFloat) -> UIFont? {
+        
         if let font = UIFont(name: rawValue, size: size) {
             return font
         }
+        
         print("WARNING: Failed to load font with name: \(rawValue)")
+        
+        FontLibrary.logAvailableFonts()
+        
+        return nil
+    }
+    
+    static func logAvailableFonts() {
         print("Available font names:")
         for family in UIFont.familyNames.sorted() {
             let names = UIFont.fontNames(forFamilyName: family)
             print(" Family: \(family) Font names: \(names)")
         }
-        
-        return nil
     }
 }

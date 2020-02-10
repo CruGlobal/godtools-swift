@@ -169,7 +169,7 @@ class TractViewController: BaseViewController {
         
         languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
         languageSegmentedControl?.selectedSegmentIndex = 0
-        let font = UIFont.systemFont(ofSize: 14)
+        let font = UIFont.defaultFont(size: 14, weight: nil)
         if #available(iOS 13.0, *) {
             languageSegmentedControl?.selectedSegmentTintColor = .white
             languageSegmentedControl?.layer.borderColor = UIColor.white.cgColor

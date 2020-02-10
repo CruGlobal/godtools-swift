@@ -102,7 +102,7 @@ class MasterHomeViewController: BaseViewController  {
         let myTools = determineMyToolsSegment()
         let findTools = determineFindToolsSegment()
         let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
-        let font = UIFont.systemFont(ofSize: fontSize)
+        let font = UIFont.defaultFont(size: fontSize, weight: nil)
         
         let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
         myToolsTitle.accessibilityLabel = "my_tools"

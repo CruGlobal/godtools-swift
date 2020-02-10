@@ -18,6 +18,15 @@ extension UIFont {
         return fontDescriptor.symbolicTraits.contains(.traitItalic)
     }
     
+    static func defaultFont(size: CGFloat, weight: CGFloat?) -> UIFont {
+        
+        if let weight = weight {
+            return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+        }
+    
+        return UIFont.systemFont(ofSize: size)
+    }
+    
     static func gtRegular(size: CGFloat) -> UIFont {
         return UIFont.buildGTFont(size: size, weight: UIFont.Weight.regular.rawValue)
     }
@@ -38,7 +47,7 @@ extension UIFont {
         if shouldTransformLanguage() {
             return UIFont.buildCustomGTFontWithSize(size, weight: weight)
         } else {
-            return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+            return UIFont.defaultFont(size: size, weight: weight)
         }
     }
     
@@ -55,7 +64,7 @@ extension UIFont {
             }
         }
         
-        return customFont ?? UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+        return customFont ?? UIFont.defaultFont(size: size, weight: weight)
     }
     
     static func shouldTransformLanguage() -> Bool {
@@ -90,7 +99,7 @@ extension UIFont {
             }
         }
         
-        return customFont ?? UIFont.systemFont(ofSize: fontSize)
+        return customFont ?? UIFont.defaultFont(size: fontSize, weight: nil)
     }
     
     
