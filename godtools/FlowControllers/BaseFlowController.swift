@@ -317,7 +317,7 @@ extension BaseFlowController: ToolDetailViewControllerDelegate {
         case .tract:
             moveToTract(resource: resource)
         case .unknown:
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tractType for resource.", acceptActionTitle: "OK", handler: nil)
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
             let view = AlertMessageView(viewModel: viewModel)
             navigationController.present(view.controller, animated: true, completion: nil)
         }
