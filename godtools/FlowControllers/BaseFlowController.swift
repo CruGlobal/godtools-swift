@@ -310,7 +310,17 @@ extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControll
 
 extension BaseFlowController: ToolDetailViewControllerDelegate {
     func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource) {
-        moveToTract(resource: resource)
+        
+        switch resource.toolTypeEnum {
+        case .article:
+            moveToArticle(resource: resource)
+        case .tract:
+            moveToTract(resource: resource)
+        case .unknown:
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tractType for resource.", acceptActionTitle: "OK", handler: nil)
+            let view = AlertMessageView(viewModel: viewModel)
+            navigationController.present(view.controller, animated: true, completion: nil)
+        }
     }
 }
 
