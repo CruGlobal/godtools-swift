@@ -19,6 +19,7 @@ class ArticleWebViewController: BaseViewController {
     }
 
     
+    var resource: DownloadedResource?
     var data: ArticleData?
     var webView: WKWebView!
     
@@ -33,6 +34,9 @@ class ArticleWebViewController: BaseViewController {
         return "article"
     }
 
+    override func siteSection() -> String {
+        return resource?.code ?? "article"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

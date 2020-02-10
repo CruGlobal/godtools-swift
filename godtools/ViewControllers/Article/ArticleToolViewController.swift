@@ -9,7 +9,6 @@
 
 import UIKit
 
-
 class ArticleToolViewController: BaseViewController {
     
     var resource: DownloadedResource?
@@ -35,7 +34,7 @@ class ArticleToolViewController: BaseViewController {
     }
     
     override func siteSection() -> String {
-        return "article"
+        return resource?.code ?? "article"
     }
 
     static func create() -> ArticleToolViewController {
@@ -166,6 +165,7 @@ extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate
         vc.articleManager = articleManager
         vc.category = category
         vc.articlesPath = articleManager.articlesPath
+        vc.resource = resource
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
