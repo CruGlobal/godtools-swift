@@ -73,12 +73,55 @@ class MasterHomeViewController: BaseViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLayout()
         setupBinding()
         
         defineObservers()
+        
         toolsManager.delegate = self
+        
+        segmentedControl.addTarget(
+            self,
+            action: #selector(selectionDidChange(_:)), for: .valueChanged
+        )
+        segmentedControl.selectedSegmentIndex = 0
+        
+        updateView()
+    }
+    
+    private func setupLayout() {
+        
         navigationController?.navigationBar.barStyle = .black
-        setupView()
+        
+        navigationItem.titleView = segmentedControl
+        
+        // segemnted control
+        let myTools = determineMyToolsSegment()
+        let findTools = determineFindToolsSegment()
+        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
+        let font = UIFont.defaultFont(size: fontSize, weight: nil)
+        
+        let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
+        myToolsTitle.accessibilityLabel = "my_tools"
+        let findToolsTitle: NSString = NSString(string: determineFindToolsSegment())
+        findToolsTitle.accessibilityLabel = "find_tools"
+
+        segmentedControl.removeAllSegments()
+        segmentedControl.insertSegment(withTitle: String(myToolsTitle), at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: String(findToolsTitle), at: 1, animated: false)
+        
+        if #available(iOS 13.0, *) {
+            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
+            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
+            segmentedControl.layer.borderColor = UIColor.white.cgColor
+            segmentedControl.layer.borderWidth = 1
+        }
+        else {
+            // Fallback on earlier versions
+            segmentedControl.setTitleTextAttributes([.font: font], for: .normal)
+        }
+        
+        segmentedControl.sizeToFit()
     }
 
     private func setupBinding() {
@@ -97,40 +140,7 @@ class MasterHomeViewController: BaseViewController  {
         super.viewDidAppear(animated)
     }
     
-    func addMyToolsFindToolsControl() {
-        
-        let myTools = determineMyToolsSegment()
-        let findTools = determineFindToolsSegment()
-        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
-        let font = UIFont.defaultFont(size: fontSize, weight: nil)
-        
-        let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
-        myToolsTitle.accessibilityLabel = "my_tools"
-        let findToolsTitle: NSString = NSString(string: determineFindToolsSegment())
-        findToolsTitle.accessibilityLabel = "find_tools"
-
-        segmentedControl = UISegmentedControl(items: [myToolsTitle, findToolsTitle])
-        
-        if #available(iOS 13.0, *) {
-            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
-            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
-            segmentedControl.layer.borderColor = UIColor.white.cgColor
-            segmentedControl.layer.borderWidth = 1
-        }
-        else {
-            // Fallback on earlier versions
-            segmentedControl.setTitleTextAttributes([.font: font], for: .normal)
-        }
-        
-        segmentedControl.sizeToFit()
-    }
-    
     // MARK: - View Methods
-    
-    private func setupView() {
-        setupSegmentedControl()
-        updateView()
-    }
     
     func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
@@ -141,19 +151,6 @@ class MasterHomeViewController: BaseViewController  {
             add(asChildViewController: addToolsViewController)
             UserDefaults.standard.set(true, forKey: GTConstants.kHasTappedFindTools)
         }
-    }
-    
-    private func setupSegmentedControl() {
-        // Configure Segmented Control
-        
-        segmentedControl.removeAllSegments()
-        addMyToolsFindToolsControl()
-        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
-        
-        // Select First Segment
-        segmentedControl.selectedSegmentIndex = 0
-        
-        navigationItem.titleView = segmentedControl
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
