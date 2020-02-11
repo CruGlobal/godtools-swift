@@ -145,3 +145,16 @@ class DownloadedResource: Object {
         return [ TractURL: url as NSSecureCoding ]
     }
 }
+
+extension DownloadedResource {
+    
+    enum ToolType: String {
+        case article = "article"
+        case tract = "tract"
+        case unknown = "unknown"
+    }
+    
+    var toolTypeEnum: ToolType {
+        return ToolType(rawValue: toolType) ?? .unknown
+    }
+}
