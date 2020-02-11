@@ -18,6 +18,15 @@ extension UIFont {
         return fontDescriptor.symbolicTraits.contains(.traitItalic)
     }
     
+    static func defaultFont(size: CGFloat, weight: CGFloat?) -> UIFont {
+        
+        if let weight = weight {
+            return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+        }
+    
+        return UIFont.systemFont(ofSize: size)
+    }
+    
     static func gtRegular(size: CGFloat) -> UIFont {
         return UIFont.buildGTFont(size: size, weight: UIFont.Weight.regular.rawValue)
     }
@@ -38,22 +47,24 @@ extension UIFont {
         if shouldTransformLanguage() {
             return UIFont.buildCustomGTFontWithSize(size, weight: weight)
         } else {
-            return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+            return UIFont.defaultFont(size: size, weight: weight)
         }
     }
     
     static func buildCustomGTFontWithSize(_ size: CGFloat, weight: CGFloat) -> UIFont {
+        
         let language = LanguagesManager.defaultLanguage
+        var customFont: UIFont?
         
         if language?.code == "am" {
             if (weight == UIFont.Weight.semibold.rawValue) || (weight == UIFont.Weight.bold.rawValue) {
-                return UIFont(name: "NotoSansEthiopic-Bold", size: size)!
+                customFont = FontLibrary.notoSansEthiopicBold.font(size: size)
             } else {
-                return UIFont(name: "NotoSansEthiopic", size: size)!
+                customFont = FontLibrary.notoSansEthiopic.font(size: size)
             }
         }
         
-        return UIFont.systemFont(ofSize: size, weight: UIFont.Weight(rawValue: weight))
+        return customFont ?? UIFont.defaultFont(size: size, weight: weight)
     }
     
     static func shouldTransformLanguage() -> Bool {
@@ -69,27 +80,26 @@ extension UIFont {
     }
     
     func transformToAppropriateFontByLanguage(_ language: Language, textScale: CGFloat = 1.0) -> UIFont {
-        var fontSize = self.pointSize
-        var fontName = self.fontName
+        
+        let fontSize = pointSize * textScale
+        var customFont: UIFont?
         
         if language.code == "am" {
             if self.fontName.lowercased().contains("bold") {
-                fontName = "NotoSansEthiopic-Bold"
+                customFont = FontLibrary.notoSansEthiopicBold.font(size: fontSize)
             } else {
-                fontName = "NotoSansEthiopic"
+                customFont = FontLibrary.notoSansEthiopic.font(size: fontSize)
             }
         }
         if language.code == "my" {
             if self.fontName.lowercased().contains("bold") {
-                fontName = "NotoSansMyanmar-Bold"
+                customFont = FontLibrary.notoSansMyanmarBold.font(size: fontSize)
             } else {
-                fontName = "NotoSansMyanmar"
+                customFont = FontLibrary.notoSansMyanmar.font(size: fontSize)
             }
         }
-
-        fontSize = fontSize * textScale
         
-        return UIFont(name: fontName, size: fontSize)!
+        return customFont ?? UIFont.defaultFont(size: fontSize, weight: nil)
     }
     
     

@@ -33,7 +33,7 @@ class MasterHomeViewController: BaseViewController  {
         viewController.findDelegate = self
         
         // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
+        add(asChildViewController: viewController)
         
         return viewController
     }()
@@ -44,7 +44,7 @@ class MasterHomeViewController: BaseViewController  {
         viewController.delegate = self
         
         // Add View Controller as Child View Controller
-        self.add(asChildViewController: viewController)
+        add(asChildViewController: viewController)
         
         return viewController
     }()
@@ -73,12 +73,55 @@ class MasterHomeViewController: BaseViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLayout()
         setupBinding()
         
-        self.defineObservers()
+        defineObservers()
+        
         toolsManager.delegate = self
+        
+        segmentedControl.addTarget(
+            self,
+            action: #selector(selectionDidChange(_:)), for: .valueChanged
+        )
+        segmentedControl.selectedSegmentIndex = 0
+        
+        updateView()
+    }
+    
+    private func setupLayout() {
+        
         navigationController?.navigationBar.barStyle = .black
-        setupView()
+        
+        navigationItem.titleView = segmentedControl
+        
+        // segemnted control
+        let myTools = determineMyToolsSegment()
+        let findTools = determineFindToolsSegment()
+        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
+        let font = UIFont.defaultFont(size: fontSize, weight: nil)
+        
+        let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
+        myToolsTitle.accessibilityLabel = "my_tools"
+        let findToolsTitle: NSString = NSString(string: determineFindToolsSegment())
+        findToolsTitle.accessibilityLabel = "find_tools"
+
+        segmentedControl.removeAllSegments()
+        segmentedControl.insertSegment(withTitle: String(myToolsTitle), at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: String(findToolsTitle), at: 1, animated: false)
+        
+        if #available(iOS 13.0, *) {
+            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
+            segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
+            segmentedControl.layer.borderColor = UIColor.white.cgColor
+            segmentedControl.layer.borderWidth = 1
+        }
+        else {
+            // Fallback on earlier versions
+            segmentedControl.setTitleTextAttributes([.font: font], for: .normal)
+        }
+        
+        segmentedControl.sizeToFit()
     }
 
     private func setupBinding() {
@@ -97,29 +140,7 @@ class MasterHomeViewController: BaseViewController  {
         super.viewDidAppear(animated)
     }
     
-    func addMyToolsFindToolsControl() {
-        
-        let myTools = determineMyToolsSegment()
-        let findTools = determineFindToolsSegment()
-        let fontSize = determineSegmentFontSize(myTools: myTools, findTools: findTools)
-        let font = UIFont.systemFont(ofSize: fontSize)
-        
-        let myToolsTitle: NSString = NSString(string: determineMyToolsSegment())
-        myToolsTitle.accessibilityLabel = "my_tools"
-        let findToolsTitle: NSString = NSString(string: determineFindToolsSegment())
-        findToolsTitle.accessibilityLabel = "find_tools"
-
-        segmentedControl = UISegmentedControl(items: [myToolsTitle, findToolsTitle])
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-        segmentedControl.sizeToFit()
-    }
-    
     // MARK: - View Methods
-    
-    private func setupView() {
-        setupSegmentedControl()
-        updateView()
-    }
     
     func updateView() {
         if segmentedControl.selectedSegmentIndex == 0 {
@@ -130,19 +151,6 @@ class MasterHomeViewController: BaseViewController  {
             add(asChildViewController: addToolsViewController)
             UserDefaults.standard.set(true, forKey: GTConstants.kHasTappedFindTools)
         }
-    }
-    
-    private func setupSegmentedControl() {
-        // Configure Segmented Control
-        
-        segmentedControl.removeAllSegments()
-        addMyToolsFindToolsControl()
-        segmentedControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
-        
-        // Select First Segment
-        segmentedControl.selectedSegmentIndex = 0
-        
-        self.navigationItem.titleView = segmentedControl
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
@@ -174,12 +182,12 @@ class MasterHomeViewController: BaseViewController  {
     }
     
     override func homeButtonAction() {
-        self.baseDelegate?.goHome()
-        self.navigationController?.popToRootViewController(animated: true)
+        baseDelegate?.goHome()
+        navigationController?.popToRootViewController(animated: true)
     }
     
     override func navigationLanguageButtonAction() {
-        self.delegate?.moveToUpdateLanguageSettings()
+        delegate?.moveToUpdateLanguageSettings()
     }
 
     // MARK: - Helper Methods
@@ -231,8 +239,8 @@ class MasterHomeViewController: BaseViewController  {
     // MARK: - Navigation Buttons
     
     override func configureNavigationButtons() {
-        self.addNavigationBurgerButton()
-        self.addNavigationLanguageButton()
+        addNavigationBurgerButton()
+        addNavigationLanguageButton()
     }
     
     // MARK: - Analytics
@@ -255,8 +263,8 @@ extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {
         let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
         viewController.delegate = self
         viewController.selectingForPrimary = primaryLanguage
-        // self.pushViewController(viewController: viewController)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        // pushViewController(viewController: viewController)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
