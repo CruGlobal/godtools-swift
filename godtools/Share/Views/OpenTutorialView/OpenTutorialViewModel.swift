@@ -40,6 +40,6 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
         tutorialServices.disableOpenTutorialCallout()
         hidesOpenTutorial.accept(value: (hidden: true, animated: true))
         
-        analytics.recordActionForADBMobile(screenName: "home", actionName: "Close Tutorial Notification", data: ["cru.tutorial_notification_close": 1])
+        analytics.recordActionForADBMobile(screenName: "home", actionName: "Tutorial Home Tutorial Dismiss", data: ["cru.tutorial_home_tutorial_dismiss": 1])
     }
 }
