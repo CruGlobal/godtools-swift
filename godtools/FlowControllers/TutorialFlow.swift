@@ -34,6 +34,7 @@ class TutorialFlow: Flow {
         
         let viewModel = TutorialViewModel(
             flowDelegate: self,
+            analytics: GodToolsAnaltyics.shared,
             tutorialItemsProvider: TutorialItemProvider()
         )
         let view = TutorialView(viewModel: viewModel)

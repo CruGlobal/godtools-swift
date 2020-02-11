@@ -20,7 +20,7 @@ class MasterHomeViewController: BaseViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
-    private let tutorialServices: TutorialServicesType
+    private let appDiContainer: AppDiContainer
     private let toolsManager = ToolsManager.shared
         
     private weak var flowDelegate: FlowDelegate?
@@ -55,10 +55,10 @@ class MasterHomeViewController: BaseViewController  {
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
-    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, appDiContainer: AppDiContainer) {
         self.flowDelegate = flowDelegate
         self.delegate = delegate
-        self.tutorialServices = tutorialServices
+        self.appDiContainer = appDiContainer
         super.init(nibName: "MasterHomeViewController", bundle: nil)
     }
     
@@ -85,7 +85,8 @@ class MasterHomeViewController: BaseViewController  {
         
         let openTutorialViewModel = OpenTutorialViewModel(
             flowDelegate: self,
-            tutorialServices: tutorialServices
+            tutorialServices: appDiContainer.tutorialServices,
+            analytics: appDiContainer.analytics
         )
         openTutorialView.configure(viewModel: openTutorialViewModel)
         openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in

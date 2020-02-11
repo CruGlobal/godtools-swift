@@ -14,6 +14,7 @@ protocol OnboardingWelcomeViewModelType {
     var title: ObservableValue<String> { get }
     var beginTitle: ObservableValue<String> { get }
     
+    func pageViewed()
     func changeTitleToTagline()
     func beginTapped()
 }

@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
-        GodToolsAnaltyics.setup()
+        _ = GodToolsAnaltyics.shared
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         #if DEBUG
