@@ -46,7 +46,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         AppsFlyerTracker.shared().trackAppLaunch()
     }
     
-    func trackEvent(eventName: String, data: [AnyHashable: Any]?) {
+    func trackEvent(eventName: String, data: [AnyHashable : Any]?) {
         AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
     }
 }

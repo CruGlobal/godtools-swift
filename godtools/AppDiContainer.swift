@@ -26,5 +26,6 @@ class AppDiContainer {
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
         analytics = GodToolsAnaltyics.shared
+        analytics.appsFlyer = appsFlyer
     }
 }

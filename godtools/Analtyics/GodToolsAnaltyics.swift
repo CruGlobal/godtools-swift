@@ -66,6 +66,7 @@ class GodToolsAnaltyics {
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
                                                       qos: .background)
+    var appsFlyer: AppsFlyerType?
     
     static let shared: GodToolsAnaltyics = GodToolsAnaltyics()
     
@@ -152,6 +153,8 @@ class GodToolsAnaltyics {
     func recordScreenView(screenName: String, siteSection: String, siteSubSection: String) {
         
         tracker?.set(kGAIScreenName, value: screenName)
+        
+        appsFlyer?.trackEvent(eventName: screenName, data: nil)
 
         guard let screenViewInfo = GAIDictionaryBuilder.createScreenView().build() as? [AnyHashable : Any] else {
             return

@@ -11,6 +11,7 @@ import Foundation
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
     private let analytics: GodToolsAnaltyics
+    private let appsFlyer: AppsFlyerType
     private let onboardingTutorialServices: OnboardingTutorialServicesType
     private let tutorialServices: TutorialServicesType
     
@@ -27,10 +28,11 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
+        self.appsFlyer = appsFlyer
         self.onboardingTutorialServices = onboardingTutorialServices
         self.tutorialServices = tutorialServices
         
@@ -75,6 +77,8 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             siteSection: "onboarding",
             siteSubSection: ""
         )
+        
+        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
     }
     
     func skipTapped() {
