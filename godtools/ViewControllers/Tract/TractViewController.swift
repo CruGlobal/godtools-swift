@@ -129,9 +129,8 @@ class TractViewController: BaseViewController {
     fileprivate func setupNavigationBarStyles() {
         
         let navBarColor: UIColor = manifestProperties.navbarColor ?? manifestProperties.primaryColor
-        let navBarTintColor: UIColor = manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor
-        
-        navigationController?.navigationBar.tintColor = .gtWhite
+        let navBarControlColor: UIColor = manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor
+                    
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
         navigationController?.navigationBar.isTranslucent = true
@@ -140,31 +139,41 @@ class TractViewController: BaseViewController {
             NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
         ]
         
-        navigationController?.navigationBar.tintColor = navBarTintColor
+        navigationController?.navigationBar.tintColor = navBarControlColor
 
         guard let navigationBar = navigationController?.navigationBar else { return }
         TractPage.navbarHeight = navigationBar.frame.size.height
         
-        if parallelLanguageIsAvailable() && determinePrimaryLabel() != determineParallelLabel() {
+        let primaryLabel: String = determinePrimaryLabel()
+        let parallelLabel: String = determineParallelLabel()
+        
+        if parallelLanguageIsAvailable() && primaryLabel != parallelLabel {
             
-            let primaryLabel = self.determinePrimaryLabel()
-            let parallelLabel = self.determineParallelLabel()
+            let shouldSelectFirstSegment: Bool = languageSegmentedControl == nil
             
             if languageSegmentedControl == nil {
-                languageSegmentedControl = UISegmentedControl(items: [primaryLabel, parallelLabel])
+                languageSegmentedControl = UISegmentedControl()
+            }
+            
+            languageSegmentedControl?.removeAllSegments()
+            languageSegmentedControl?.insertSegment(withTitle: primaryLabel, at: 0, animated: false)
+            languageSegmentedControl?.insertSegment(withTitle: parallelLabel, at: 1, animated: false)
+            
+            if shouldSelectFirstSegment {
                 languageSegmentedControl?.selectedSegmentIndex = 0
             }
             
             let font = UIFont.defaultFont(size: 14, weight: nil)
             if #available(iOS 13.0, *) {
-                languageSegmentedControl?.selectedSegmentTintColor = .white
-                languageSegmentedControl?.layer.borderColor = UIColor.white.cgColor
+                languageSegmentedControl?.selectedSegmentTintColor = navBarControlColor
+                languageSegmentedControl?.layer.borderColor = navBarControlColor.cgColor
                 languageSegmentedControl?.layer.borderWidth = 1
-                languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.white], for: .normal)
-                languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: UIColor.black], for: .selected)
             } else {
                 // Fallback on earlier versions
             }
+            
+            languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: navBarControlColor], for: .normal)
+            languageSegmentedControl?.setTitleTextAttributes([.font: font, .foregroundColor: navBarColor.withAlphaComponent(1)], for: .selected)
             
             languageSegmentedControl?.addTarget(self, action: #selector(didSelectLanguage), for: .valueChanged)
             
