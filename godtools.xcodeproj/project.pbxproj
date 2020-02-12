@@ -108,6 +108,10 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
+		4530901723F44DFE00E4F243 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
+		4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901823F4503D00E4F243 /* AppsFlyer.swift */; };
+		4530901B23F4521C00E4F243 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901A23F4521C00E4F243 /* AppConfig.swift */; };
+		4530901D23F4573F00E4F243 /* ConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901C23F4573F00E4F243 /* ConfigType.swift */; };
 		454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */; };
 		4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */; };
 		4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */; };
@@ -301,7 +305,6 @@
 		4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* resources.json */; };
 		4FF7FF602284D062005C8BE1 /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
 		4FFC3B5421ADC3F400FD5116 /* XMLArticlePages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFC3B5321ADC3F400FD5116 /* XMLArticlePages.swift */; };
-		68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
 		EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC00B0051F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift */; };
 		EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15BE5E1EEB5447006B2E1A /* TractHeaderProperties.swift */; };
@@ -488,6 +491,9 @@
 		1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractAnalyticEvent.swift; sourceTree = "<group>"; };
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		4530901823F4503D00E4F243 /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
+		4530901A23F4521C00E4F243 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		4530901C23F4573F00E4F243 /* ConfigType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigType.swift; sourceTree = "<group>"; };
 		454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTutorialServices.swift; sourceTree = "<group>"; };
 		4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
@@ -1215,6 +1221,7 @@
 		4556AEB423E1D97E002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4530901823F4503D00E4F243 /* AppsFlyer.swift */,
 				4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */,
 				4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */,
 			);
@@ -1651,9 +1658,11 @@
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
+				4530901A23F4521C00E4F243 /* AppConfig.swift */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */,
 				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
+				4530901C23F4573F00E4F243 /* ConfigType.swift */,
 				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
@@ -2399,6 +2408,7 @@
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				455D8FC023E32CF4008D92DA /* DisabledOnboardingTutorialServices.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
+				4530901B23F4521C00E4F243 /* AppConfig.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
@@ -2479,7 +2489,6 @@
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
-				68C0A3861ED4C6B100CC97A3 /* Config.swift in Sources */,
 				4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */,
 				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
@@ -2600,6 +2609,9 @@
 				4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
+				4530901D23F4573F00E4F243 /* ConfigType.swift in Sources */,
+				4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */,
+				4530901723F44DFE00E4F243 /* Config.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
