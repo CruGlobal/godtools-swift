@@ -115,6 +115,7 @@ class MasterHomeViewController: BaseViewController  {
             segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
             segmentedControl.layer.borderColor = UIColor.white.cgColor
             segmentedControl.layer.borderWidth = 1
+            segmentedControl.selectedSegmentTintColor = .white
         }
         else {
             // Fallback on earlier versions
