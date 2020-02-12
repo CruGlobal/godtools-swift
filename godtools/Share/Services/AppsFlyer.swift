@@ -13,6 +13,7 @@ protocol AppsFlyerType {
     
     func configure()
     func trackAppLaunch()
+    func trackEvent(eventName: String, data: [AnyHashable: Any]?)
 }
 
 class AppsFlyer: NSObject, AppsFlyerType {
@@ -43,6 +44,10 @@ class AppsFlyer: NSObject, AppsFlyerType {
     
     func trackAppLaunch() {
         AppsFlyerTracker.shared().trackAppLaunch()
+    }
+    
+    func trackEvent(eventName: String, data: [AnyHashable: Any]?) {
+        AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
     }
 }
 
