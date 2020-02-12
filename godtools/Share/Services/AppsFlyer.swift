@@ -43,11 +43,23 @@ class AppsFlyer: NSObject, AppsFlyerType {
     }
     
     func trackAppLaunch() {
+        
+        assertFailureIfNotConfigured()
+        
         AppsFlyerTracker.shared().trackAppLaunch()
     }
     
     func trackEvent(eventName: String, data: [AnyHashable : Any]?) {
+        
+        assertFailureIfNotConfigured()
+        
         AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
+    }
+    
+    private func assertFailureIfNotConfigured() {
+        if !isConfigured {
+            assertionFailure("AppsFlyer has not been configured.  Call configure() on application didFinishLaunching.")
+        }
     }
 }
 
