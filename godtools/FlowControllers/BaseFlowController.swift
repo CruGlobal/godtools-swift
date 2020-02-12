@@ -241,15 +241,6 @@ extension BaseFlowController: BaseViewControllerDelegate {
         _ = navigationController.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
     }
-    
-    func changeNavigationBarColor(_ color: UIColor) {
-        configureNavigationColor(navigationController: navigationController, color: color)
-    }
-    
-    func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
-        configureNavigationColor(navigationController: navigationController, color: backgroundColor)
-        navigationController.navigationBar.tintColor = controlColor
-    }
 }
 
 extension BaseFlowController: MenuViewControllerDelegate {
