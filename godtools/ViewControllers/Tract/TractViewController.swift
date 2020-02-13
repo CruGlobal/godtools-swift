@@ -135,7 +135,7 @@ class TractViewController: BaseViewController {
         navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
+            NSAttributedString.Key.foregroundColor: navBarControlColor,
             NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
         ]
         
