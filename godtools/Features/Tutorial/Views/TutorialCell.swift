@@ -9,10 +9,16 @@
 import UIKit
 import YoutubePlayer_in_WKWebView
 
+protocol TutorialCellDelegate: class {
+    func tutorialCellVideoPlayer(cell: TutorialCell, didChangeTo state: WKYTPlayerState)
+}
+
 class TutorialCell: UICollectionViewCell {
     
     static let nibName: String = "TutorialCell"
     static let reuseIdentifier: String = "TutorialCellReuseIdentifier"
+    
+    private weak var delegate: TutorialCellDelegate?
     
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -30,9 +36,14 @@ class TutorialCell: UICollectionViewCell {
             subview.removeFromSuperview()
         }
         youTubeVideoPlayerLoadingView.alpha = 1
+        
+        delegate = nil
     }
     
-    func configure(viewModel: TutorialCellViewModel) {
+    func configure(viewModel: TutorialCellViewModel, delegate: TutorialCellDelegate?) {
+        
+        self.delegate = delegate
+        
         titleLabel.text = viewModel.title
         messageLabel.text = viewModel.message
         messageLabel.setLineSpacing(lineSpacing: 2)
@@ -76,7 +87,7 @@ extension TutorialCell: WKYTPlayerViewDelegate {
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
-
+        delegate?.tutorialCellVideoPlayer(cell: self, didChangeTo: state)
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {

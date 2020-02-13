@@ -10,6 +10,10 @@ import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
     
+    private let analytics: GodToolsAnaltyics
+    private let appsFlyer: AppsFlyerType
+    
+    private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var page: Int = 0
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,13 +24,19 @@ class TutorialViewModel: TutorialViewModelType {
     let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, tutorialItemsProvider: TutorialItemProviderType) {
         
         self.flowDelegate = flowDelegate
+        self.analytics = analytics
+        self.appsFlyer = appsFlyer
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
         setPage(page: 0)
+    }
+    
+    private var analyticsScreenName: String {
+        return "tutorial-\(page + 1)"
     }
     
     private func setPage(page: Int, shouldSetCurrentTutorialItemIndex: Bool = true) {
@@ -52,6 +62,14 @@ class TutorialViewModel: TutorialViewModelType {
         else {
             continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
         }
+        
+        analytics.recordScreenView(
+            screenName: analyticsScreenName,
+            siteSection: "tutorial",
+            siteSubSection: ""
+        )
+        
+        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
     }
     
     func backTapped() {
@@ -81,6 +99,22 @@ class TutorialViewModel: TutorialViewModelType {
         }
         else {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+        }
+    }
+    
+    func tutorialVideoPlayTapped() {
+        
+        let tutorialItem: TutorialItem = tutorialItems.value[page]
+        
+        guard let youTubeVideoId = tutorialItem.youTubeVideoId else {
+            return
+        }
+        
+        let youTubeVideoTracked: Bool = trackedAnalyticsForYouTubeVideoIds.contains(youTubeVideoId)
+        
+        if !youTubeVideoTracked {
+            trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
+            analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }

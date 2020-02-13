@@ -45,6 +45,7 @@ class ArticleCategoryViewController: BaseViewController {
         }
     }
     var articlesPath: String?
+    var resource: DownloadedResource?
     weak var articleManager: ArticleManager?
     
     var observingToken: NSObjectProtocol?
@@ -66,6 +67,9 @@ class ArticleCategoryViewController: BaseViewController {
         return "articles-list"
     }
     
+    override func siteSection() -> String {
+        return resource?.code ?? "article"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +164,7 @@ extension ArticleCategoryViewController: UITableViewDataSource, UITableViewDeleg
     func presentWebArchive(articleData: ArticleData?) {
         
         let vc = ArticleWebViewController.create()
+        vc.resource = resource
         vc.data = articleData
         self.navigationController?.pushViewController(vc, animated: true)
 

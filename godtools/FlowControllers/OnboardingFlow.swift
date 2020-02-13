@@ -32,7 +32,11 @@ class OnboardingFlow: Flow {
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.setNavigationBarHidden(false, animated: false)
         
-        let viewModel = OnboardingWelcomeViewModel(flowDelegate: self)
+        let viewModel = OnboardingWelcomeViewModel(
+            flowDelegate: self,
+            analytics: GodToolsAnaltyics.shared,
+            appsFlyer: appDiContainer.appsFlyer
+        )
         let view = OnboardingWelcomeView(viewModel: viewModel)
         navigationController.setViewControllers([view], animated: false)
     }
@@ -48,6 +52,8 @@ extension OnboardingFlow: FlowDelegate {
            
             let viewModel = OnboardingTutorialViewModel(
                 flowDelegate: self,
+                analytics: GodToolsAnaltyics.shared,
+                appsFlyer: appDiContainer.appsFlyer,
                 onboardingTutorialProvider: OnboardingTutorialProvider(),
                 onboardingTutorialServices: appDiContainer.onboardingTutorialServices,
                 tutorialServices: appDiContainer.tutorialServices

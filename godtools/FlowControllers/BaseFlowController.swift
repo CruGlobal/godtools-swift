@@ -63,7 +63,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 let masterView = MasterHomeViewController(
                     flowDelegate: self,
                     delegate: self,
-                    tutorialServices: appDiContainer.tutorialServices
+                    appDiContainer: appDiContainer
                 )
                 
                 navigationController.setViewControllers([masterView], animated: false)
@@ -240,15 +240,6 @@ extension BaseFlowController: BaseViewControllerDelegate {
     func goBack() {
         _ = navigationController.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
-    }
-    
-    func changeNavigationBarColor(_ color: UIColor) {
-        configureNavigationColor(navigationController: navigationController, color: color)
-    }
-    
-    func changeNavigationColors(backgroundColor: UIColor, controlColor: UIColor) {
-        configureNavigationColor(navigationController: navigationController, color: backgroundColor)
-        navigationController.navigationBar.tintColor = controlColor
     }
 }
 

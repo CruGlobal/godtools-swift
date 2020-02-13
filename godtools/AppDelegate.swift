@@ -23,6 +23,8 @@ enum ShortcutItemType: String {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
         
+    private let appDiContainer: AppDiContainer = AppDiContainer()
+    
     var window: UIWindow?
     var flowController: BaseFlowController?
     var currentAuthorizationFlow: OIDAuthorizationFlowSession?
@@ -48,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
-        GodToolsAnaltyics.setup()
+        _ = GodToolsAnaltyics.shared
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         #if DEBUG
@@ -57,9 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         _ = FollowUpsManager().syncCachedFollowUps()
         
+        appDiContainer.appsFlyer.configure()
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        flowController = BaseFlowController(appDiContainer: AppDiContainer())
+        flowController = BaseFlowController(appDiContainer: appDiContainer)
         window.rootViewController = flowController?.navigationController
         window.makeKeyAndVisible()
         self.window = window
@@ -86,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
         flowController?.applicationDidBecomeActive(application)
+        appDiContainer.appsFlyer.trackAppLaunch()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

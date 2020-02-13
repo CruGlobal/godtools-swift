@@ -10,6 +10,8 @@ import Foundation
 
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
+    private let analytics: GodToolsAnaltyics
+    private let appsFlyer: AppsFlyerType
     private let onboardingTutorialServices: OnboardingTutorialServicesType
     private let tutorialServices: TutorialServicesType
     
@@ -19,6 +21,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     
     let tutorialItems: ObservableValue<[OnboardingTutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
+    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let skipButtonTitle: String = NSLocalizedString("navigationBar.navigationItem.skip", comment: "")
     let continueButtonTitle: String = NSLocalizedString("onboardingTutorial.continueButton.title", comment: "")
     let showMoreButtonTitle: String = NSLocalizedString("onboardingTutorial.showMoreButton.title", comment: "")
@@ -26,9 +29,11 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
         
         self.flowDelegate = flowDelegate
+        self.analytics = analytics
+        self.appsFlyer = appsFlyer
         self.onboardingTutorialServices = onboardingTutorialServices
         self.tutorialServices = tutorialServices
         
@@ -43,13 +48,23 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         onboardingTutorialServices.disableOnboardingTutorial()
     }
     
-    private func setPage(page: Int, animated: Bool) {
+    private var analyticsScreenName: String {
+        return "onboarding-\(page + 2)"
+    }
+    
+    private func setPage(page: Int, animated: Bool, shouldSetCurrentTutorialItemIndex: Bool = true) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
             return
         }
         
         self.page = page
+        
+        if shouldSetCurrentTutorialItemIndex {
+            currentTutorialItemIndex.accept(value: page)
+        }
+        
+        currentPage.accept(value: page)
         
         let isLastPage: Bool = page == tutorialItems.value.count - 1
                 
@@ -62,7 +77,13 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             tutorialButtonLayout.accept(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: animated))
         }
         
-        currentTutorialItemIndex.accept(value: page)
+        analytics.recordScreenView(
+            screenName: analyticsScreenName,
+            siteSection: "onboarding",
+            siteSubSection: ""
+        )
+        
+        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
     }
     
     func skipTapped() {
@@ -71,6 +92,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     
     func pageTapped(page: Int) {
         setPage(page: page, animated: true)
+    }
+    
+    func didScrollToPage(page: Int) {
+        setPage(page: page, animated: true, shouldSetCurrentTutorialItemIndex: false)
     }
     
     func continueTapped() {
@@ -89,9 +114,13 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     func showMoreTapped() {
         tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
+        
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Show Me More", data: ["cru.onboarding_more": 1])
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
+        
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Get Started", data: ["cru.onboarding_start": 1])
     }
 }

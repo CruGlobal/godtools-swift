@@ -16,6 +16,7 @@ target 'godtools' do
     pod 'PromiseKit', '~> 6.8'
     pod 'PromiseKit/Alamofire', '~> 6.8'
     
+    pod 'AppsFlyerFramework', '5.1.0'
     pod 'CRUConfig', '~> 1.2'
     pod 'RealmSwift', '4.3.0'
     pod 'SSZipArchive'
@@ -25,7 +26,7 @@ target 'godtools' do
     pod 'Crashlytics'
     pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
-    pod 'AdobeMobileSDK', '~> 4.17.1'
+    pod 'AdobeMobileSDK', '~> 4.19'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
     pod 'Firebase/Analytics'

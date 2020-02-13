@@ -20,7 +20,7 @@ class MasterHomeViewController: BaseViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
-    private let tutorialServices: TutorialServicesType
+    private let appDiContainer: AppDiContainer
     private let toolsManager = ToolsManager.shared
         
     private weak var flowDelegate: FlowDelegate?
@@ -55,10 +55,10 @@ class MasterHomeViewController: BaseViewController  {
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
-    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, appDiContainer: AppDiContainer) {
         self.flowDelegate = flowDelegate
         self.delegate = delegate
-        self.tutorialServices = tutorialServices
+        self.appDiContainer = appDiContainer
         super.init(nibName: "MasterHomeViewController", bundle: nil)
     }
     
@@ -115,6 +115,8 @@ class MasterHomeViewController: BaseViewController  {
             segmentedControl.setTitleTextAttributes([.font: font, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
             segmentedControl.layer.borderColor = UIColor.white.cgColor
             segmentedControl.layer.borderWidth = 1
+            segmentedControl.selectedSegmentTintColor = .white
+            segmentedControl.backgroundColor = .clear
         }
         else {
             // Fallback on earlier versions
@@ -128,7 +130,8 @@ class MasterHomeViewController: BaseViewController  {
         
         let openTutorialViewModel = OpenTutorialViewModel(
             flowDelegate: self,
-            tutorialServices: tutorialServices
+            tutorialServices: appDiContainer.tutorialServices,
+            analytics: appDiContainer.analytics
         )
         openTutorialView.configure(viewModel: openTutorialViewModel)
         openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
