@@ -11,6 +11,7 @@ import Foundation
 class TutorialViewModel: TutorialViewModelType {
     
     private let analytics: GodToolsAnaltyics
+    private let appsFlyer: AppsFlyerType
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var page: Int = 0
@@ -23,10 +24,11 @@ class TutorialViewModel: TutorialViewModelType {
     let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, tutorialItemsProvider: TutorialItemProviderType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
+        self.appsFlyer = appsFlyer
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
@@ -66,6 +68,8 @@ class TutorialViewModel: TutorialViewModelType {
             siteSection: "tutorial",
             siteSubSection: ""
         )
+        
+        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
     }
     
     func backTapped() {

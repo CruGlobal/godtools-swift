@@ -16,6 +16,7 @@ target 'godtools' do
     pod 'PromiseKit', '~> 6.8'
     pod 'PromiseKit/Alamofire', '~> 6.8'
     
+    pod 'AppsFlyerFramework', '5.1.0'
     pod 'CRUConfig', '~> 1.2'
     pod 'RealmSwift', '4.3.0'
     pod 'SSZipArchive'

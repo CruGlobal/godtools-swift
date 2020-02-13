@@ -11,6 +11,8 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
         
+    let config: ConfigType
+    let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
     let onboardingTutorialServices: OnboardingTutorialServicesType
     let tutorialServices: TutorialServicesType
@@ -18,9 +20,12 @@ class AppDiContainer {
     
     required init() {
         
+        config = AppConfig()
+        appsFlyer = AppsFlyer(config: config)
         loginClient = TheKeyOAuthClient.shared
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
         analytics = GodToolsAnaltyics.shared
+        analytics.appsFlyer = appsFlyer
     }
 }
