@@ -11,6 +11,7 @@ import Foundation
 enum MenuSectionId: Hashable {
     
     case general
+    case account
     case share
     case legal
 }

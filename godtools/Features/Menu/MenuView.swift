@@ -207,6 +207,9 @@ extension MenuView: UITableViewDelegate {
         
         case .createAccount:
             initiateLogin(additionalParameters: ["action":"signup"])
+            
+        case .myAccount:
+            viewModel.myAccountTapped()
         
         case .shareGodTools:
             let textToShare = [ "share_god_tools_share_sheet_text".localized ]
