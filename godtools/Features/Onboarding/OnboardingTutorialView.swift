@@ -73,7 +73,6 @@ class OnboardingTutorialView: UIViewController {
             
             viewModel.currentTutorialItemIndex.addObserver(self) { [weak self] (index: Int) in
                 self?.scrollToTutorialItem(item: index, animated: true)
-                self?.pageControl.currentPage = index
             }
         }
     }
@@ -94,7 +93,7 @@ class OnboardingTutorialView: UIViewController {
             UINib(nibName: OnboardingTutorialUsageListCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier
         )
-        tutorialCollectionView.isScrollEnabled = false
+        enableSwipeInteractionWithTutorial(enable: true)
     }
     
     private func setupBinding() {
@@ -102,6 +101,10 @@ class OnboardingTutorialView: UIViewController {
         continueButton.setTitle(viewModel.continueButtonTitle, for: .normal)
         showMoreButton.setTitle(viewModel.showMoreButtonTitle, for: .normal)
         getStartedButton.setTitle(viewModel.getStartedButtonTitle, for: .normal)
+        
+        viewModel.currentPage.addObserver(self) { [weak self] (page: Int) in
+            self?.pageControl.currentPage = page
+        }
         
         viewModel.hidesSkipButton.addObserver(self) { [weak self] (hidden: Bool) in
             
@@ -224,6 +227,23 @@ class OnboardingTutorialView: UIViewController {
     @objc func handleGetStarted(button: UIButton) {
         viewModel.getStartedTapped()
     }
+    
+    private func enableSwipeInteractionWithTutorial(enable: Bool) {
+        
+        tutorialCollectionView.isScrollEnabled = enable
+        tutorialCollectionView.isPagingEnabled = enable
+    }
+    
+    private func updatePageControlPageWithCurrentTutorialCollectionViewItem() {
+        
+        tutorialCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = tutorialCollectionView.visibleCells.first {
+            if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToPage(page: indexPath.item)
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
@@ -310,5 +330,30 @@ extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollecti
             return 0
         }
         return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension OnboardingTutorialView: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == tutorialCollectionView {
+            if !decelerate {
+                updatePageControlPageWithCurrentTutorialCollectionViewItem()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+        }
     }
 }

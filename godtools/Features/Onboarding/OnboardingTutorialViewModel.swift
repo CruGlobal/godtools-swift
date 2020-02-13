@@ -20,6 +20,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     
     let tutorialItems: ObservableValue<[OnboardingTutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
+    let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let skipButtonTitle: String = NSLocalizedString("navigationBar.navigationItem.skip", comment: "")
     let continueButtonTitle: String = NSLocalizedString("onboardingTutorial.continueButton.title", comment: "")
     let showMoreButtonTitle: String = NSLocalizedString("onboardingTutorial.showMoreButton.title", comment: "")
@@ -49,13 +50,19 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         return "onboarding-\(page + 2)"
     }
     
-    private func setPage(page: Int, animated: Bool) {
+    private func setPage(page: Int, animated: Bool, shouldSetCurrentTutorialItemIndex: Bool = true) {
         
         guard page >= 0 && page < tutorialItems.value.count else {
             return
         }
         
         self.page = page
+        
+        if shouldSetCurrentTutorialItemIndex {
+            currentTutorialItemIndex.accept(value: page)
+        }
+        
+        currentPage.accept(value: page)
         
         let isLastPage: Bool = page == tutorialItems.value.count - 1
                 
@@ -67,8 +74,6 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             hidesSkipButton.accept(value: false)
             tutorialButtonLayout.accept(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: animated))
         }
-        
-        currentTutorialItemIndex.accept(value: page)
         
         analytics.recordScreenView(
             screenName: analyticsScreenName,
@@ -83,6 +88,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     
     func pageTapped(page: Int) {
         setPage(page: page, animated: true)
+    }
+    
+    func didScrollToPage(page: Int) {
+        setPage(page: page, animated: true, shouldSetCurrentTutorialItemIndex: false)
     }
     
     func continueTapped() {

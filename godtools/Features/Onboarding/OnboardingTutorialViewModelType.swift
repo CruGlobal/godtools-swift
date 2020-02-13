@@ -22,6 +22,7 @@ protocol OnboardingTutorialViewModelType {
     
     var tutorialItems: ObservableValue<[OnboardingTutorialItem]> { get }
     var currentTutorialItemIndex: ObservableValue<Int> { get }
+    var currentPage: ObservableValue<Int> { get }
     var skipButtonTitle: String { get }
     var continueButtonTitle: String { get }
     var showMoreButtonTitle: String { get }
@@ -31,6 +32,7 @@ protocol OnboardingTutorialViewModelType {
     
     func skipTapped()
     func pageTapped(page: Int)
+    func didScrollToPage(page: Int)
     func continueTapped()
     func showMoreTapped()
     func getStartedTapped()
