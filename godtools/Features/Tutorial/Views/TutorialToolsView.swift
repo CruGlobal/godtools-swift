@@ -12,7 +12,6 @@ class TutorialToolsView: UIView, NibBased {
     
     @IBOutlet weak private var toolImageView: UIImageView!
     @IBOutlet weak private var moreInfoImageView: UIImageView!
-    @IBOutlet weak private var moreInfoLabel: UILabel!
     
     required init() {
         super.init(frame: UIScreen.main.bounds)
@@ -25,6 +24,6 @@ class TutorialToolsView: UIView, NibBased {
     }
     
     func configure(viewModel: TutorialToolsViewModel) {
-        moreInfoLabel.text = viewModel.moreInfoTitle
+
     }
 }

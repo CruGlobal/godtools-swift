@@ -7,16 +7,10 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Light.otf">
-            <string>SFProText-Light</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TutorialToolsView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="moreInfoImageView" destination="yf7-Z2-3lu" id="xBQ-0Z-anl"/>
-                <outlet property="moreInfoLabel" destination="0Wy-ez-pq0" id="eA4-OP-shV"/>
                 <outlet property="toolImageView" destination="Nvf-2v-m5G" id="7RP-vJ-eOh"/>
             </connections>
         </placeholder>
@@ -37,23 +31,15 @@
                         <constraint firstAttribute="width" secondItem="yf7-Z2-3lu" secondAttribute="height" multiplier="72:93" id="2j0-Fj-ghc"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More Info" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Wy-ez-pq0" userLabel="moreInfoLabel">
-                    <rect key="frame" x="230.5" y="219.5" width="88" height="24"/>
-                    <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="20"/>
-                    <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="Nvf-2v-m5G" firstAttribute="top" secondItem="PnN-cB-KCP" secondAttribute="top" constant="20" symbolic="YES" id="0fl-iM-e6Q"/>
                 <constraint firstItem="yf7-Z2-3lu" firstAttribute="width" secondItem="Nvf-2v-m5G" secondAttribute="width" multiplier="0.2" id="Ect-JP-emH"/>
-                <constraint firstItem="0Wy-ez-pq0" firstAttribute="top" secondItem="yf7-Z2-3lu" secondAttribute="bottom" constant="-16" id="Mbv-Xd-QZU"/>
                 <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerX" secondItem="Nvf-2v-m5G" secondAttribute="centerX" multiplier="1.56" id="SqM-eG-5Zg"/>
                 <constraint firstItem="yf7-Z2-3lu" firstAttribute="centerY" secondItem="Nvf-2v-m5G" secondAttribute="centerY" multiplier="1.92" id="UZ4-Gt-fJE"/>
                 <constraint firstItem="Nvf-2v-m5G" firstAttribute="width" secondItem="PnN-cB-KCP" secondAttribute="width" multiplier="0.9" id="VGI-Fl-28X"/>
                 <constraint firstItem="Nvf-2v-m5G" firstAttribute="centerX" secondItem="PnN-cB-KCP" secondAttribute="centerX" id="Vl1-ig-pqw"/>
-                <constraint firstItem="0Wy-ez-pq0" firstAttribute="centerX" secondItem="yf7-Z2-3lu" secondAttribute="centerX" multiplier="0.88" id="qjN-B7-UdN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="fmh-LH-WFS"/>
