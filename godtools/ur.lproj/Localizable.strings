@@ -1,10 +1,11 @@
+"language_name_fa" = "فارسی";
 "downloadprogress" = "ڈاؤنلوڈ جاری ہے";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "ٹُول کھولیں";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "پچھلی اسکرین";
+"card_status1" = "پچھلا";
 
 "card_status2" = "اگلی اسکرین";
 "language_onboard" = "80+ زبانیں";

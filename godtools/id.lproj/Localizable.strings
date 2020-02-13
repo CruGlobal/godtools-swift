@@ -1,10 +1,11 @@
+"language_name_fa" = "Persia (Farsi)";
 "downloadprogress" = "Undulant sedang berlangsung";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Buka Alat";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Sebelumnya";
+"card_status1" = "Sebel.";
 
 "card_status2" = "Berikutnya";
 "language_onboard" = "80+ Bahasa";

@@ -1,3 +1,10 @@
+"language_name_fa" = "перс (фарси хэл)";
+"downloadprogress" = "Татан авалт үргэлжилж байна";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "өмнөх";
+
+"card_status2" = "Дараах";
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
 "my_tools" = "Миний багаж";
 

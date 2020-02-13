@@ -1,10 +1,11 @@
+"language_name_fa" = "Persană (Farsi)";
 "downloadprogress" = "Descărcare în curs";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Deschide instrumentul";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Anterior";
+"card_status1" = "Ant.";
 
 "card_status2" = "Următor";
 "language_onboard" = "Peste 75 de limbi";
