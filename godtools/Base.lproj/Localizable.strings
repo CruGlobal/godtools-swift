@@ -96,7 +96,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
-"openTool" = "Open Tool";
+"toolinfo_opentool" = "Open Tool";
 
 // Alerts
 "error" = "Error";
