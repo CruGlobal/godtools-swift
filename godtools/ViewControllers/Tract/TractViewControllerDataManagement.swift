@@ -32,7 +32,7 @@ extension TractViewController {
     }
     
     func determineParallelLabel() -> String {
-        return parallelLanguage!.localizedName()
+        return parallelLanguage?.localizedName() ?? ""
     }
     
     func getLanguageTextAlignment() -> NSTextAlignment {
