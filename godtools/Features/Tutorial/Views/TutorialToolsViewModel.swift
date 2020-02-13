@@ -9,9 +9,7 @@
 import Foundation
 
 class TutorialToolsViewModel {
-    
-    let moreInfoTitle: String = NSLocalizedString("tutorialToolsView.moreInfoLabel.text", comment: "")
-    
+        
     required init() {
         
     }
