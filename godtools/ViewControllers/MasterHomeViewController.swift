@@ -116,6 +116,7 @@ class MasterHomeViewController: BaseViewController  {
             segmentedControl.layer.borderColor = UIColor.white.cgColor
             segmentedControl.layer.borderWidth = 1
             segmentedControl.selectedSegmentTintColor = .white
+            segmentedControl.backgroundColor = .clear
         }
         else {
             // Fallback on earlier versions

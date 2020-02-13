@@ -165,6 +165,7 @@ class TractViewController: BaseViewController {
                 languageSegmentedControl?.selectedSegmentTintColor = navBarControlColor
                 languageSegmentedControl?.layer.borderColor = navBarControlColor.cgColor
                 languageSegmentedControl?.layer.borderWidth = 1
+                languageSegmentedControl?.backgroundColor = .clear
             } else {
                 // Fallback on earlier versions
             }
