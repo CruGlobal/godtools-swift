@@ -141,9 +141,6 @@ class TractViewController: BaseViewController {
         
         navigationController?.navigationBar.tintColor = navBarControlColor
 
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        TractPage.navbarHeight = navigationBar.frame.size.height
-        
         let primaryLabel: String = determinePrimaryLabel()
         let parallelLabel: String = determineParallelLabel()
         
@@ -179,6 +176,9 @@ class TractViewController: BaseViewController {
             
             navigationItem.titleView = languageSegmentedControl
         }
+        
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
     @objc fileprivate func setupNavigationBarFrame() {
