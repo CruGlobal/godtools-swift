@@ -91,7 +91,7 @@ class GTButton: UIButton {
         layer.cornerRadius = 6
         titleLabel?.font = UIFont.gtRegular(size: 15.0)
         setTitleColor(.white, for: .normal)
-        translationKey = "openTool"
+        translationKey = "toolinfo_opentool"
     }
     
     func designAsDeleteButton() {
