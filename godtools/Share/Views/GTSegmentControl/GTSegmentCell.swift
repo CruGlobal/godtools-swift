@@ -15,6 +15,11 @@ class GTSegmentCell: UICollectionViewCell {
     
     @IBOutlet weak private var titleLabel: UILabel!
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        titleLabel.frame = bounds
+    }
+    
     var title: String? {
         get {
             return titleLabel.text
