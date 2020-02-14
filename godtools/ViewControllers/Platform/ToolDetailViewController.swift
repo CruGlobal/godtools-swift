@@ -76,8 +76,8 @@ class ToolDetailViewController: BaseViewController {
         detailsShadow.layer.shadowRadius = 5
         detailsShadow.layer.shadowOpacity = 0.3
         
-        self.displayData()
-        self.hideScreenTitle()
+        displayData()
+        hideScreenTitle()
         registerForDownloadProgressNotifications()
         setTopHeight()
         
@@ -110,11 +110,11 @@ class ToolDetailViewController: BaseViewController {
     }
     
     func setTopHeight() {
-        let barHeight = self.navigationController?.navigationBar.frame.height ?? 0
+        let barHeight = navigationController?.navigationBar.frame.height ?? 0
         let statusBarHeight = UIApplication.shared.isStatusBarHidden ? CGFloat(0) : UIApplication.shared.statusBarFrame.height
         let topBar = barHeight + statusBarHeight
-        self.topLayoutConstraint.constant = topBar
-        self.view.layoutIfNeeded()
+        topLayoutConstraint.constant = topBar
+        view.layoutIfNeeded()
     }
 
     // MARK: Present data
@@ -140,11 +140,11 @@ class ToolDetailViewController: BaseViewController {
         
         // if tool is available in primary language, attempt to retrieve string based on that lanague else default to device language
         let localizedTotalViews = resource.isAvailableInLanguage(primaryLanguage) ? "total_views".localized(for: primaryLanguage?.code) ?? "total_views".localized : "total_views".localized
-        self.totalViewsLabel.text = String.localizedStringWithFormat(localizedTotalViews, resource.totalViews)
+        totalViewsLabel.text = String.localizedStringWithFormat(localizedTotalViews, resource.totalViews)
         
         let localizedTotalLanguages =  resource.isAvailableInLanguage(primaryLanguage) ? "total_languages".localized(for: primaryLanguage?.code) ?? "total_languages".localized : "total_languages".localized
         
-        self.titleLabel.text = resource.localizedName(language: primaryLanguage)
+        titleLabel.text = resource.localizedName(language: primaryLanguage)
                 
         let resourceTranslations = Array(Set(resource.translations))
         var translationStrings = [String]()
@@ -161,8 +161,8 @@ class ToolDetailViewController: BaseViewController {
             translationStrings.append(languageLocalName)
         }
         
-        self.displayButton()
-        self.bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
+        displayButton()
+        bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
         
         let textAlignment: NSTextAlignment = (resource.isAvailableInLanguage(primaryLanguage) && primaryLanguage?.isRightToLeft() ?? false) ? .right : .natural
                 
@@ -264,11 +264,12 @@ class ToolDetailViewController: BaseViewController {
             return
         }
         
-        OperationQueue.main.addOperation {
-            self.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
+        OperationQueue.main.addOperation { [weak self] in
+            
+            self?.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
             
             if progress.fractionCompleted == 1.0 {
-                self.returnToHome()
+                self?.returnToHome()
             }
         }
     }
@@ -283,24 +284,28 @@ class ToolDetailViewController: BaseViewController {
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         
-        self.baseDelegate?.goHome()
+        baseDelegate?.goHome()
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
-            if self.resource!.shouldDownload {
-                DownloadedResourceManager().delete(self.resource!)
-                self.downloadProgressView.setProgress(0.0, animated: false)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) { [weak self] in
+            guard let resource = self?.resource else {
+                return
+            }
+            
+            if resource.shouldDownload {
+                DownloadedResourceManager().delete(resource)
+                self?.downloadProgressView.setProgress(0.0, animated: false)
                 NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
             } else {
-                DownloadedResourceManager().download(self.resource!)
+                DownloadedResourceManager().download(resource)
             }
         }
-        self.displayButton()
+        displayButton()
     }
     
     private func returnToHome() {
         let time = DispatchTime.now() + 0.55
-        DispatchQueue.main.asyncAfter(deadline: time) {
-            self.baseDelegate?.goHome()
+        DispatchQueue.main.asyncAfter(deadline: time) { [weak self] in
+            self?.baseDelegate?.goHome()
         }
     }
     
