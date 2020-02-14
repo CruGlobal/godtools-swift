@@ -16,7 +16,11 @@ class GTSegmentedControl: UIView, NibBased {
     
     private static let selectedTitleColor: UIColor = UIColor(red: 0.353, green: 0.353, blue: 0.353, alpha: 1)
     private static let deselectedTitleColor: UIColor = UIColor(red: 0.745, green: 0.745, blue: 0.745, alpha: 1)
-    private static let underlineWidthPercentageOfSegmentWidth: CGFloat = 0.56
+    
+    private let underlineWidthPercentageOfSegmentWidth: CGFloat = 0.56
+    private let underlineHeight: CGFloat = 3
+    
+    private var currentBounds: CGRect = .zero
     
     private(set) var segments: [GTSegment] = Array()
     
@@ -24,15 +28,12 @@ class GTSegmentedControl: UIView, NibBased {
     
     @IBOutlet weak private var segmentsCollectionView: UICollectionView!
     @IBOutlet weak private var underline: UIView!
-    
-    @IBOutlet weak private var underlineLeading: NSLayoutConstraint!
-    @IBOutlet weak private var underlineWidth: NSLayoutConstraint!
-    
+        
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         loadNib()
-        
+                
         underline.backgroundColor = UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1)
         
         segmentsCollectionView.register(
@@ -46,8 +47,30 @@ class GTSegmentedControl: UIView, NibBased {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        underlineWidth.constant = underlineWidthValue
-        repositionUnderlineToSelectedSegment(animated: false)
+
+        let boundsChanged: Bool = currentBounds.size.width != bounds.size.width || currentBounds.size.height != bounds.size.height
+        if boundsChanged {
+            
+            currentBounds = bounds
+            
+            segmentsCollectionView.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: bounds.size.width,
+                height: bounds.size.height - underlineHeight
+            )
+            
+            underline.frame = CGRect(
+                x: 0,
+                y: bounds.size.height - underlineHeight,
+                width: segmentWidth * underlineWidthPercentageOfSegmentWidth,
+                height: underlineHeight
+            )
+            
+            segmentsCollectionView.reloadData()
+            
+            repositionUnderlineToSelectedSegment(animated: false)
+        }
     }
     
     func configure(segments: [GTSegment], delegate: GTSegmentedControlDelegate?) {
@@ -61,11 +84,7 @@ class GTSegmentedControl: UIView, NibBased {
     }
     
     private var segmentHeight: CGFloat {
-        return bounds.size.height
-    }
-    
-    private var underlineWidthValue: CGFloat {
-        return segmentWidth * GTSegmentedControl.underlineWidthPercentageOfSegmentWidth
+        return segmentsCollectionView.frame.size.height
     }
     
     private var selectedSegment: Int = 0 {
@@ -79,15 +98,24 @@ class GTSegmentedControl: UIView, NibBased {
         let isInBounds: Bool = selectedSegment >= 0 && selectedSegment < segments.count
         
         if isInBounds {
-            guard let cellFrame = segmentsCollectionView.layoutAttributesForItem(at: IndexPath(item: selectedSegment, section: 0))?.frame else {
-                return
-            }
-                            
-            underlineLeading.constant = (cellFrame.origin.x + (cellFrame.size.width / 2)) - (underlineWidthValue / 2)
             
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.layoutIfNeeded()
-            }, completion: nil)
+            let segmentOriginX: CGFloat = CGFloat(selectedSegment) * segmentWidth
+            
+            let newFramePosition: CGRect = CGRect(
+                x: (segmentOriginX + (segmentWidth / 2)) - (underline.frame.size.width / 2),
+                y: underline.frame.origin.y,
+                width: underline.frame.size.width,
+                height: underline.frame.size.height
+            )
+                        
+            if animated {
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                    self?.underline.frame = newFramePosition
+                }, completion: nil)
+            }
+            else {
+                underline.frame = newFramePosition
+            }
         }
     }
 }
@@ -127,8 +155,10 @@ extension GTSegmentedControl: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-                    
-        return CGSize(width: segmentWidth, height: segmentHeight)
+        return CGSize(
+            width: segmentWidth,
+            height: segmentHeight
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
