@@ -1,3 +1,10 @@
+"language_name_fa" = "પર્સિયન (ફારસી)";
+"downloadprogress" = "ડાઉનલોડ ચાલુ છે";
+
+/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
+"card_status1" = "અગાઉના";
+
+"card_status2" = "આગળ";
 "language_onboard" = "80 થી વધારે ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

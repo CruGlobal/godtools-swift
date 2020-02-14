@@ -1,10 +1,11 @@
+"language_name_fa" = "Perski (Farsi)";
 "downloadprogress" = "Pobieranie w toku";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Otwórz narzędzie";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Poprzedni";
+"card_status1" = "Poprz.";
 
 "card_status2" = "Następny";
 "language_onboard" = "80+ języków";

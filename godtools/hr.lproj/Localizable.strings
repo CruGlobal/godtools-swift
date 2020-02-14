@@ -1,10 +1,11 @@
+"language_name_fa" = "Perzijski (farsi)";
 "downloadprogress" = "Preuzimanje u tijeku";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Otvorite alat";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Prethodni";
+"card_status1" = "Pret.";
 
 "card_status2" = "Sljedeći";
 "language_onboard" = "Više od 80 jezika";

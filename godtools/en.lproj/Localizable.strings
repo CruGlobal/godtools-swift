@@ -1,3 +1,4 @@
+"language_name_fa" = "Persian (Farsi)";
 "downloadprogress" = "Download in progress";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
@@ -42,7 +43,7 @@
 
 // Tool Detail
 "about" = "About";
-"help" = "Help";
+"help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Share the GodTools App";

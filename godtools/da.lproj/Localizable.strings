@@ -1,10 +1,11 @@
+"language_name_fa" = "Persisk (Farsi)";
 "downloadprogress" = "Download i gang";
 
 /* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
 "toolinfo_opentool" = "Åbn værktøj";
 
 /* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Forrige";
+"card_status1" = "Forr.";
 
 "card_status2" = "Næste";
 "language_onboard" = "Over 80 sprog";
