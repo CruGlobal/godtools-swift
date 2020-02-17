@@ -17,19 +17,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="240" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AB0-eV-6Pw" userLabel="titleLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AB0-eV-6Pw" userLabel="titleLabel">
                         <rect key="frame" x="0.0" y="0.0" width="240" height="80"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="AB0-eV-6Pw" firstAttribute="leading" secondItem="KJr-8J-xVS" secondAttribute="leading" id="1mE-dV-qbJ"/>
-                    <constraint firstAttribute="trailing" secondItem="AB0-eV-6Pw" secondAttribute="trailing" id="72V-jt-QLi"/>
-                    <constraint firstAttribute="bottom" secondItem="AB0-eV-6Pw" secondAttribute="bottom" id="glc-sS-JfG"/>
-                    <constraint firstItem="AB0-eV-6Pw" firstAttribute="top" secondItem="KJr-8J-xVS" secondAttribute="top" id="llH-e9-pMV"/>
-                </constraints>
             </collectionViewCellContentView>
             <connections>
                 <outlet property="titleLabel" destination="AB0-eV-6Pw" id="rpo-Zo-WvQ"/>

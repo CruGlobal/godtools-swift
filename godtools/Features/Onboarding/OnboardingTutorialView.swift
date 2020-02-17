@@ -203,7 +203,6 @@ class OnboardingTutorialView: UIViewController {
         if numberOfTutorialItems > 0 {
             let indexPath: IndexPath = IndexPath(item: item, section: 0)
             let scrollPosition: UICollectionView.ScrollPosition = .centeredHorizontally
-            backgroundCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
             tutorialCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
         }
     }
@@ -336,6 +335,12 @@ extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollecti
 // MARK: - UIScrollViewDelegate
 
 extension OnboardingTutorialView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tutorialCollectionView {
+            backgroundCollectionView.setContentOffset(tutorialCollectionView.contentOffset, animated: false)
+        }
+    }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == tutorialCollectionView {
