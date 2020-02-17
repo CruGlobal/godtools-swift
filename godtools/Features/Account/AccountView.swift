@@ -41,19 +41,16 @@ class AccountView: UIViewController {
     
     private func setupLayout() {
         
+        itemsControl.layer.shadowColor = UIColor.black.cgColor
+        itemsControl.layer.shadowOffset = CGSize(width: 0, height: 1)
+        itemsControl.layer.shadowRadius = 5
+        itemsControl.layer.shadowOpacity = 0.3
     }
     
     private func setupBinding() {
         
         title = viewModel.navTitle
         
-        //itemsControl.configure(segments: viewModel.items, delegate: nil)
-        itemsControl.configure(
-            segments: [
-                GTSegment(id: "", title: "Activity"),
-                GTSegment(id: "", title: "Longer Title Goes Here")
-            ],
-            delegate: nil
-        )
+        itemsControl.configure(segments: viewModel.items, delegate: nil)
     }
 }

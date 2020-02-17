@@ -14,17 +14,31 @@ protocol GTSegmentedControlDelegate: class {
 
 class GTSegmentedControl: UIView, NibBased {
     
-    private static let selectedTitleColor: UIColor = UIColor(red: 0.353, green: 0.353, blue: 0.353, alpha: 1)
-    private static let deselectedTitleColor: UIColor = UIColor(red: 0.745, green: 0.745, blue: 0.745, alpha: 1)
-    
+    struct LayoutConfig {
+        var selectedTitleColor: UIColor
+        var deselectedTitleColor: UIColor
+        var fontSize: CGFloat
+        var segmentSpacing: CGFloat
+        var underlineWidthPercentageOfSegmentWidth: CGFloat
+        var underlineHeight: CGFloat
+        
+        static var defaultLayout: LayoutConfig {
+            return LayoutConfig(
+                selectedTitleColor: UIColor(red: 0.353, green: 0.353, blue: 0.353, alpha: 1),
+                deselectedTitleColor: UIColor(red: 0.745, green: 0.745, blue: 0.745, alpha: 1),
+                fontSize: 19,
+                segmentSpacing: 30,
+                underlineWidthPercentageOfSegmentWidth: 1.2,
+                underlineHeight: 3
+            )
+        }
+    }
+        
     private let cellReuseIdentifier: String = "cellReuseIdentifier"
-    private let underlineWidthPercentageOfSegmentWidth: CGFloat = 0.56
-    private let underlineHeight: CGFloat = 3
     
     private var segments: [GTSegmentType] = Array()
     private var segmentLayoutRects: [CGRect] = Array()
-    private var totalSegmentWidth: CGFloat = 0
-    private var shouldCenterSegmentsCollectionView: Bool = false
+    private var layout: LayoutConfig = LayoutConfig.defaultLayout
     private var currentBounds: CGRect = .zero
     
     private weak var delegate: GTSegmentedControlDelegate?
@@ -53,21 +67,38 @@ class GTSegmentedControl: UIView, NibBased {
         }
     }
     
-    func configure(segments: [GTSegmentType], delegate: GTSegmentedControlDelegate?) {
+    func configure(segments: [GTSegmentType], delegate: GTSegmentedControlDelegate?, layout: GTSegmentedControl.LayoutConfig = LayoutConfig.defaultLayout) {
         
         self.segments = segments
         self.delegate = delegate
+        self.layout = layout
+        
+        var prevLayoutRect: CGRect?
+        for segment in segments {
+            
+            let label: UILabel = createNewSegmentLabel(title: segment.title)
+            let layoutRect: CGRect
+            
+            if let prevLayoutRect = prevLayoutRect {
+                layoutRect = CGRect(
+                    x: prevLayoutRect.origin.x + prevLayoutRect.size.width + layout.segmentSpacing,
+                    y: 0,
+                    width: label.frame.size.width,
+                    height: label.frame.size.height
+                )
+            }
+            else {
+                layoutRect = CGRect(x: 0, y: 0, width: label.frame.size.width, height: label.frame.size.height)
+            }
+            
+            segmentLayoutRects.append(layoutRect)
+            prevLayoutRect = layoutRect
+        }
         
         invalidateLayout()
     }
     
     private func invalidateLayout() {
-        
-        for segment in segments {
-            //let label: UILabel = createNewSegmentLabel(title: segment.title)
-            //totalSegmentWidth = totalSegmentWidth + label.frame.size.width
-            //segmentLabels.append(label)
-        }
         
         var segmentsCollectionX: CGFloat
         var segmentsCollectionWidth: CGFloat
@@ -75,10 +106,12 @@ class GTSegmentedControl: UIView, NibBased {
         if shouldCenterSegmentsCollectionView {
             segmentsCollectionX = (bounds.size.width / 2) - (totalSegmentWidth / 2)
             segmentsCollectionWidth = totalSegmentWidth
+            segmentsCollectionView.isScrollEnabled = false
         }
         else {
             segmentsCollectionX = 0
             segmentsCollectionWidth = bounds.size.width
+            segmentsCollectionView.isScrollEnabled = true
         }
         
         segmentsCollectionView.frame = CGRect(
@@ -87,24 +120,25 @@ class GTSegmentedControl: UIView, NibBased {
             width: segmentsCollectionWidth,
             height: segmentHeight
         )
-        
-        segmentsCollectionView.drawBorder(color: .green)
-        
-        /*
-        underline.frame = CGRect(
-            x: 0,
-            y: bounds.size.height - underlineHeight,
-            width: segmentWidth * underlineWidthPercentageOfSegmentWidth,
-            height: underlineHeight
-        )*/
-        
+                
         repositionUnderlineToSelectedSegment(animated: false)
         
         segmentsCollectionView.reloadData()
     }
     
+    private var totalSegmentWidth: CGFloat {
+        if let lastLayoutRect = segmentLayoutRects.last {
+            return lastLayoutRect.origin.x + lastLayoutRect.size.width
+        }
+        return 0
+    }
+    
+    private var shouldCenterSegmentsCollectionView: Bool {
+        return totalSegmentWidth < bounds.size.width
+    }
+
     private var segmentHeight: CGFloat {
-        return bounds.size.height - underlineHeight
+        return bounds.size.height - layout.underlineHeight
     }
     
     private var selectedSegment: Int = 0 {
@@ -115,19 +149,24 @@ class GTSegmentedControl: UIView, NibBased {
     
     private func repositionUnderlineToSelectedSegment(animated: Bool) {
         
-        /*
         let isInBounds: Bool = selectedSegment >= 0 && selectedSegment < segments.count
         
         if isInBounds {
             
-            let segmentOriginX: CGFloat = CGFloat(selectedSegment) * segmentWidth
+            let segmentLayoutRect: CGRect = segmentLayoutRects[selectedSegment]
+            let underlineWidth: CGFloat = segmentLayoutRect.size.width * layout.underlineWidthPercentageOfSegmentWidth
             
             let newFramePosition: CGRect = CGRect(
-                x: (segmentOriginX + (segmentWidth / 2)) - (underline.frame.size.width / 2),
-                y: underline.frame.origin.y,
-                width: underline.frame.size.width,
-                height: underline.frame.size.height
+                x: (segmentLayoutRect.origin.x + (segmentLayoutRect.size.width / 2)) - (underlineWidth / 2),
+                y: bounds.size.height - layout.underlineHeight,
+                width: underlineWidth,
+                height: layout.underlineHeight
             )
+            
+            let underlineView: UIView = underline
+            underlineView.removeFromSuperview()
+            segmentsCollectionView.addSubview(underlineView)
+            segmentsCollectionView.clipsToBounds = false
                         
             if animated {
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
@@ -137,21 +176,20 @@ class GTSegmentedControl: UIView, NibBased {
             else {
                 underline.frame = newFramePosition
             }
-        }*/
+        }
     }
     
     private func createNewSegmentLabel(title: String) -> UILabel {
         
         let label: UILabel = UILabel()
-        label.font = FontLibrary.sfProTextRegular.font(size: 17)
+        label.font = FontLibrary.sfProTextRegular.font(size: layout.fontSize)
         label.text = title
-        label.textColor = GTSegmentedControl.deselectedTitleColor
+        label.textColor = layout.deselectedTitleColor
         label.textAlignment = .center
         label.sizeToFit()
         var labelFrame: CGRect = label.frame
         labelFrame.size.height = segmentHeight
         label.frame = labelFrame
-        label.drawBorder()
         
         return label
     }
@@ -194,10 +232,8 @@ extension GTSegmentedControl: UICollectionViewDelegateFlowLayout, UICollectionVi
         segmentView.addSubview(segmentLabel)
         
         segmentLabel.frame = CGRect(x: 0, y: 0, width: segmentLabel.frame.size.width, height: segmentHeight)
-        
-        //cell.title = segment.title
-        //cell.titleColor = indexPath.item == selectedSegment ? GTSegmentedControl.selectedTitleColor : GTSegmentedControl.deselectedTitleColor
-        
+        segmentLabel.textColor = indexPath.item == selectedSegment ? layout.selectedTitleColor : layout.deselectedTitleColor
+                
         return cell
     }
     
@@ -217,6 +253,6 @@ extension GTSegmentedControl: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return layout.segmentSpacing
     }
 }

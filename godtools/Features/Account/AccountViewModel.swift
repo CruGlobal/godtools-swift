@@ -16,6 +16,6 @@ class AccountViewModel: AccountViewModelType {
     required init() {
         
         navTitle = NSLocalizedString("account.navTitle", comment: "")
-        items = [AccountItem(id: "activity", title: "Activity", itemViewNibName: "")]
+        items = [AccountItem(itemId: .activity, title: "Activity", itemViewNibName: "")]
     }
 }

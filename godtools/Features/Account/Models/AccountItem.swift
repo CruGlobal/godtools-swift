@@ -9,7 +9,13 @@
 import Foundation
 
 struct AccountItem: GTSegmentType {
-    let id: String
+    let itemId: AccountItemId
     let title: String
     let itemViewNibName: String
+}
+
+extension AccountItem {
+    var id: String {
+        return itemId.rawValue
+    }
 }

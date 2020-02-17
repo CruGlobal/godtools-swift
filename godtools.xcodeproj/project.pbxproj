@@ -142,8 +142,6 @@
 		4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */; };
 		4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */; };
 		4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */; };
-		455BF70B23F6F643004A4854 /* GTSegmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70623F6F643004A4854 /* GTSegmentCell.swift */; };
-		455BF70C23F6F643004A4854 /* GTSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70723F6F643004A4854 /* GTSegmentCell.xib */; };
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
@@ -192,9 +190,9 @@
 		4575C24623FAF6F100D3265B /* AccountActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C24523FAF6F100D3265B /* AccountActivityView.xib */; };
 		4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */; };
 		4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */; };
-		4575C24C23FAF77700D3265B /* AccountItemsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */; };
 		4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24F23FAF7C200D3265B /* AccountItem.swift */; };
 		4575C25223FB060700D3265B /* GTSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25123FB060700D3265B /* GTSegmentType.swift */; };
+		4575C25423FB332000D3265B /* AccountItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25323FB332000D3265B /* AccountItemId.swift */; };
 		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
 		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
 		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
@@ -535,8 +533,6 @@
 		4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCellViewModel.swift; sourceTree = "<group>"; };
 		4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialGradientBackgroundView.swift; sourceTree = "<group>"; };
 		4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundItem.swift; sourceTree = "<group>"; };
-		455BF70623F6F643004A4854 /* GTSegmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentCell.swift; sourceTree = "<group>"; };
-		455BF70723F6F643004A4854 /* GTSegmentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentCell.xib; sourceTree = "<group>"; };
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
@@ -585,9 +581,9 @@
 		4575C24523FAF6F100D3265B /* AccountActivityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountActivityView.xib; sourceTree = "<group>"; };
 		4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityViewModel.swift; sourceTree = "<group>"; };
 		4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityViewModelType.swift; sourceTree = "<group>"; };
-		4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemsProvider.swift; sourceTree = "<group>"; };
 		4575C24F23FAF7C200D3265B /* AccountItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItem.swift; sourceTree = "<group>"; };
 		4575C25123FB060700D3265B /* GTSegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentType.swift; sourceTree = "<group>"; };
+		4575C25323FB332000D3265B /* AccountItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemId.swift; sourceTree = "<group>"; };
 		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
 		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
 		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -1296,8 +1292,6 @@
 			children = (
 				455BF70823F6F643004A4854 /* GTSegment.swift */,
 				4575C25123FB060700D3265B /* GTSegmentType.swift */,
-				455BF70623F6F643004A4854 /* GTSegmentCell.swift */,
-				455BF70723F6F643004A4854 /* GTSegmentCell.xib */,
 				455BF70923F6F643004A4854 /* GTSegmentedControl.swift */,
 				455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */,
 			);
@@ -1414,7 +1408,7 @@
 			isa = PBXGroup;
 			children = (
 				4575C24F23FAF7C200D3265B /* AccountItem.swift */,
-				4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */,
+				4575C25323FB332000D3265B /* AccountItemId.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2208,7 +2202,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F1F2CE61F9A47440002B962 /* ADBMobileConfig.json in Resources */,
-				455BF70C23F6F643004A4854 /* GTSegmentCell.xib in Resources */,
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */,
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
@@ -2512,6 +2505,7 @@
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
+				4575C25423FB332000D3265B /* AccountItemId.swift in Sources */,
 				4F8048051EB3A2FB00943DFF /* GTSettings.swift in Sources */,
 				0F9E32361EDCC78A0081DBB9 /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
@@ -2535,7 +2529,6 @@
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */,
-				4575C24C23FAF77700D3265B /* AccountItemsProvider.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
@@ -2619,7 +2612,6 @@
 				45668E7D23E0E1CC002728E7 /* MainOnboardingTutorialCell.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
-				455BF70B23F6F643004A4854 /* GTSegmentCell.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
