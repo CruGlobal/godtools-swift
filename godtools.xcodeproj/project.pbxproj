@@ -184,6 +184,17 @@
 		45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8C23E0E462002728E7 /* OpenTutorialView.swift */; };
 		45668E9023E0E462002728E7 /* OpenTutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */; };
 		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
+		4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C23923FAEBE300D3265B /* AccountView.swift */; };
+		4575C23C23FAEBEC00D3265B /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C23B23FAEBEC00D3265B /* AccountView.xib */; };
+		4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C23D23FAEBF600D3265B /* AccountViewModel.swift */; };
+		4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C23F23FAEBFF00D3265B /* AccountViewModelType.swift */; };
+		4575C24423FAF6DE00D3265B /* AccountActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24323FAF6DE00D3265B /* AccountActivityView.swift */; };
+		4575C24623FAF6F100D3265B /* AccountActivityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C24523FAF6F100D3265B /* AccountActivityView.xib */; };
+		4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */; };
+		4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */; };
+		4575C24C23FAF77700D3265B /* AccountItemsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */; };
+		4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24F23FAF7C200D3265B /* AccountItem.swift */; };
+		4575C25223FB060700D3265B /* GTSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25123FB060700D3265B /* GTSegmentType.swift */; };
 		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
 		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
 		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
@@ -566,6 +577,17 @@
 		45668E8C23E0E462002728E7 /* OpenTutorialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialView.swift; sourceTree = "<group>"; };
 		45668E8D23E0E462002728E7 /* OpenTutorialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModel.swift; sourceTree = "<group>"; };
 		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
+		4575C23923FAEBE300D3265B /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		4575C23B23FAEBEC00D3265B /* AccountView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountView.xib; sourceTree = "<group>"; };
+		4575C23D23FAEBF600D3265B /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
+		4575C23F23FAEBFF00D3265B /* AccountViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModelType.swift; sourceTree = "<group>"; };
+		4575C24323FAF6DE00D3265B /* AccountActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityView.swift; sourceTree = "<group>"; };
+		4575C24523FAF6F100D3265B /* AccountActivityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountActivityView.xib; sourceTree = "<group>"; };
+		4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityViewModel.swift; sourceTree = "<group>"; };
+		4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountActivityViewModelType.swift; sourceTree = "<group>"; };
+		4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemsProvider.swift; sourceTree = "<group>"; };
+		4575C24F23FAF7C200D3265B /* AccountItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItem.swift; sourceTree = "<group>"; };
+		4575C25123FB060700D3265B /* GTSegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentType.swift; sourceTree = "<group>"; };
 		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
 		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
 		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -1273,6 +1295,7 @@
 			isa = PBXGroup;
 			children = (
 				455BF70823F6F643004A4854 /* GTSegment.swift */,
+				4575C25123FB060700D3265B /* GTSegmentType.swift */,
 				455BF70623F6F643004A4854 /* GTSegmentCell.swift */,
 				455BF70723F6F643004A4854 /* GTSegmentCell.xib */,
 				455BF70923F6F643004A4854 /* GTSegmentedControl.swift */,
@@ -1363,6 +1386,39 @@
 			path = OpenTutorialView;
 			sourceTree = "<group>";
 		};
+		4575C23823FAEBCE00D3265B /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				4575C23923FAEBE300D3265B /* AccountView.swift */,
+				4575C23B23FAEBEC00D3265B /* AccountView.xib */,
+				4575C23D23FAEBF600D3265B /* AccountViewModel.swift */,
+				4575C23F23FAEBFF00D3265B /* AccountViewModelType.swift */,
+				4575C24223FAF23D00D3265B /* Models */,
+				4575C24123FAF23D00D3265B /* Views */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		4575C24123FAF23D00D3265B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4575C24323FAF6DE00D3265B /* AccountActivityView.swift */,
+				4575C24523FAF6F100D3265B /* AccountActivityView.xib */,
+				4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */,
+				4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4575C24223FAF23D00D3265B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4575C24F23FAF7C200D3265B /* AccountItem.swift */,
+				4575C24B23FAF77700D3265B /* AccountItemsProvider.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		457719A423E862C70049D236 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1414,6 +1470,7 @@
 		45D3C8B123DF942100ECF70E /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				4575C23823FAEBCE00D3265B /* Account */,
 				455D8FBA23E329FC008D92DA /* Launch */,
 				45F66CA223E4C3620053CB5B /* Menu */,
 				45668E5323E0E1CC002728E7 /* Onboarding */,
@@ -2155,6 +2212,7 @@
 				0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */,
 				4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */,
 				4FF7FF5B2284D062005C8BE1 /* 2626c83091f11eb08c2bded5d4a237fa986fe3a318d1fb14933906021a7493a7.png in Resources */,
+				4575C24623FAF6F100D3265B /* AccountActivityView.xib in Resources */,
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
@@ -2183,6 +2241,7 @@
 				0FB73E711EA90669000BA60D /* LanguagesTableViewController.xib in Resources */,
 				0F13B6051EC5003600C55B2A /* kgp-5.xml in Resources */,
 				4FF7FF5A2284D062005C8BE1 /* 95ad213fe1106f7a12d0f0f7c1f82e53200021d7759bb543eb36cde626e37658.png in Resources */,
+				4575C23C23FAEBEC00D3265B /* AccountView.xib in Resources */,
 				0F0352BA1EC0CD03006CD4E5 /* kgp-1.xml in Resources */,
 				4F1F2CE81F9A47D60002B962 /* ADBMobileConfig_debug.json in Resources */,
 				0F13B6031EC4F5A500C55B2A /* kgp-4.xml in Resources */,
@@ -2448,6 +2507,7 @@
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
 				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
+				4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */,
 				45D3C8EA23DF948700ECF70E /* OnboardingFlow.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,
@@ -2475,7 +2535,9 @@
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */,
+				4575C24C23FAF77700D3265B /* AccountItemsProvider.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
+				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
 				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
@@ -2537,6 +2599,7 @@
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
+				4575C25223FB060700D3265B /* GTSegmentType.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
 				454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */,
 				4556AEB623E1D98B002C15E8 /* DeviceLanguagePreferences.swift in Sources */,
@@ -2555,6 +2618,7 @@
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				45668E7D23E0E1CC002728E7 /* MainOnboardingTutorialCell.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
+				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
 				455BF70B23F6F643004A4854 /* GTSegmentCell.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
@@ -2574,12 +2638,14 @@
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
+				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
+				4575C24423FAF6DE00D3265B /* AccountActivityView.swift in Sources */,
 				4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */,
 				EC8245C31EEEEF6E0023A203 /* TractParagraphProperties.swift in Sources */,
 				4F8CF8C321C95A0500752244 /* ArticleWebViewController.swift in Sources */,
@@ -2610,6 +2676,7 @@
 				45D3C8EE23DF987800ECF70E /* TutorialFlow.swift in Sources */,
 				45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
+				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
@@ -2626,6 +2693,7 @@
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */,
+				4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */,
 				4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,

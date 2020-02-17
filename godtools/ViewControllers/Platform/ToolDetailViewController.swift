@@ -343,7 +343,7 @@ extension ToolDetailViewController: TTTAttributedLabelDelegate {
 
 extension ToolDetailViewController: GTSegmentedControlDelegate {
     
-    func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegment, at index: Int) {
+    func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegmentType, at index: Int) {
         
         if let segmentId = SegmentedControlId(rawValue: segment.id) {
                     
