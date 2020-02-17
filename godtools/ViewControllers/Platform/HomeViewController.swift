@@ -69,24 +69,6 @@ class HomeViewController: BaseViewController {
         tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // TODO: Remove to end of line
-        let modal = UINavigationController()
-        modal.navigationBar.isTranslucent = false
-        modal.navigationBar.tintColor = .white
-        modal.modalPresentationStyle = .fullScreen
-        
-        let viewModel = AccountViewModel()
-        let view = AccountView(viewModel: viewModel)
-        
-        modal.setViewControllers([view], animated: false)
-        
-        present(modal, animated: true, completion: nil)
-        // Remove to here
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         tableView.isEditing = false
         super.viewWillDisappear(animated)
