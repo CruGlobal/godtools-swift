@@ -10,6 +10,7 @@ import Foundation
 
 protocol AccountViewModelType {
     
+    var globalActivityServices: GlobalActivityServicesType { get }
     var navTitle: String { get }
     var items: [AccountItem] { get }
 }

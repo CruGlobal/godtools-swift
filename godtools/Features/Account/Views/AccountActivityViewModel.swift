@@ -10,7 +10,17 @@ import Foundation
 
 class AccountActivityViewModel: AccountActivityViewModelType {
     
-    required init() {
+    let globalActivityAnalytics: ObservableValue<[GlobalAnalytics]> = ObservableValue(value: [])
+    
+    required init(globalActivityServices: GlobalActivityServicesType) {
         
+        globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<[GlobalAnalytics], Error>) in
+            switch result {
+            case .success(let globalAnalytics):
+                self?.globalActivityAnalytics.accept(value: globalAnalytics)
+            case .failure(let error):
+                break
+            }
+        }
     }
 }

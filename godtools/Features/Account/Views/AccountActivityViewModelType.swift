@@ -10,4 +10,5 @@ import Foundation
 
 protocol AccountActivityViewModelType {
     
+    var globalActivityAnalytics: ObservableValue<[GlobalAnalytics]> { get }
 }

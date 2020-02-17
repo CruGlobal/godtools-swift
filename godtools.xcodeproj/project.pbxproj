@@ -193,6 +193,12 @@
 		4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C24F23FAF7C200D3265B /* AccountItem.swift */; };
 		4575C25223FB060700D3265B /* GTSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25123FB060700D3265B /* GTSegmentType.swift */; };
 		4575C25423FB332000D3265B /* AccountItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25323FB332000D3265B /* AccountItemId.swift */; };
+		4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25523FB3F8900D3265B /* AccountItemCell.swift */; };
+		4575C25823FB3F9300D3265B /* AccountItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C25723FB3F9300D3265B /* AccountItemCell.xib */; };
+		4575C25A23FB41EE00D3265B /* AccountItemCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C25923FB41EE00D3265B /* AccountItemCellViewModel.swift */; };
+		4575C26223FB45E600D3265B /* GlobalActivityServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */; };
+		4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26123FB45E600D3265B /* GlobalActivityServices.swift */; };
+		4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26423FB45F200D3265B /* GlobalAnalytics.swift */; };
 		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
 		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
 		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
@@ -584,6 +590,12 @@
 		4575C24F23FAF7C200D3265B /* AccountItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItem.swift; sourceTree = "<group>"; };
 		4575C25123FB060700D3265B /* GTSegmentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GTSegmentType.swift; sourceTree = "<group>"; };
 		4575C25323FB332000D3265B /* AccountItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemId.swift; sourceTree = "<group>"; };
+		4575C25523FB3F8900D3265B /* AccountItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemCell.swift; sourceTree = "<group>"; };
+		4575C25723FB3F9300D3265B /* AccountItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountItemCell.xib; sourceTree = "<group>"; };
+		4575C25923FB41EE00D3265B /* AccountItemCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemCellViewModel.swift; sourceTree = "<group>"; };
+		4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityServicesType.swift; sourceTree = "<group>"; };
+		4575C26123FB45E600D3265B /* GlobalActivityServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityServices.swift; sourceTree = "<group>"; };
+		4575C26423FB45F200D3265B /* GlobalAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalytics.swift; sourceTree = "<group>"; };
 		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
 		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
 		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -1239,6 +1251,7 @@
 		4556AEB423E1D97E002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4575C25F23FB45E600D3265B /* GlobalActivityServices */,
 				4530901823F4503D00E4F243 /* AppsFlyer.swift */,
 				4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */,
 				4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */,
@@ -1400,6 +1413,9 @@
 				4575C24523FAF6F100D3265B /* AccountActivityView.xib */,
 				4575C24723FAF70B00D3265B /* AccountActivityViewModel.swift */,
 				4575C24923FAF71600D3265B /* AccountActivityViewModelType.swift */,
+				4575C25523FB3F8900D3265B /* AccountItemCell.swift */,
+				4575C25723FB3F9300D3265B /* AccountItemCell.xib */,
+				4575C25923FB41EE00D3265B /* AccountItemCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1411,6 +1427,16 @@
 				4575C25323FB332000D3265B /* AccountItemId.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4575C25F23FB45E600D3265B /* GlobalActivityServices */ = {
+			isa = PBXGroup;
+			children = (
+				4575C26123FB45E600D3265B /* GlobalActivityServices.swift */,
+				4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */,
+				4575C26423FB45F200D3265B /* GlobalAnalytics.swift */,
+			);
+			path = GlobalActivityServices;
 			sourceTree = "<group>";
 		};
 		457719A423E862C70049D236 /* Models */ = {
@@ -2209,6 +2235,7 @@
 				4FAF20781F02933900C43AFC /* Localizable.strings in Resources */,
 				4F57329A1EA69CF00082035C /* LaunchScreen.storyboard in Resources */,
 				4FEF264F21C41330007CF4A0 /* Articles.storyboard in Resources */,
+				4575C25823FB3F9300D3265B /* AccountItemCell.xib in Resources */,
 				0F0352BB1EC0CD03006CD4E5 /* kgp-2.xml in Resources */,
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
@@ -2433,6 +2460,7 @@
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
 				4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */,
 				EC8245BF1EEEEED10023A203 /* TractNumberProperties.swift in Sources */,
+				4575C26223FB45E600D3265B /* GlobalActivityServicesType.swift in Sources */,
 				EC3140C11EE76E6C009347D3 /* TractEmail.swift in Sources */,
 				4FC97EB420D2B71400084A33 /* TractEventHelper.swift in Sources */,
 				457719C623E8C3BA0049D236 /* MenuFlow.swift in Sources */,
@@ -2465,6 +2493,7 @@
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
 				0F7741E31EBB8CE600888D20 /* TractLabel+Gestures.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
+				4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */,
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				455D8FC023E32CF4008D92DA /* DisabledOnboardingTutorialServices.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
@@ -2477,6 +2506,7 @@
 				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
+				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
 				45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */,
 				1E911CAB20DAF03C0068E62A /* LoginBannerView.swift in Sources */,
 				4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */,
@@ -2610,6 +2640,7 @@
 				4F17A5AB21B1923F00240C22 /* ArticleManifestMetadata.swift in Sources */,
 				EC3140BF1EE76DD7009347D3 /* TractEmails.swift in Sources */,
 				45668E7D23E0E1CC002728E7 /* MainOnboardingTutorialCell.swift in Sources */,
+				4575C25A23FB41EE00D3265B /* AccountItemCellViewModel.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
@@ -2631,6 +2662,7 @@
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
+				4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
