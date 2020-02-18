@@ -57,9 +57,13 @@ extension MenuFlow: FlowDelegate {
             self.tutorialFlow = nil
             
         case .myAccountTappedFromMenu:
-            print("Navigate to My Account")
-            // TODO: Navigate to My Account will be implemented in GT-635.
-            break
+            
+            let viewModel = AccountViewModel(
+                globalActivityServices: appDiContainer.globalActivityServices
+            )
+            let view = AccountView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
             
         default:
             break
