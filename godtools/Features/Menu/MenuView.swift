@@ -167,7 +167,7 @@ extension MenuView: UITableViewDelegate {
         let labelFrame = CGRect(x: 20.0, y: 12.0, width: 100.0, height: 16.0)
         let titleLabel:GTLabel = GTLabel(frame: labelFrame)
         titleLabel.gtStyle = "blackTextSmall"
-        titleLabel.text = section.title.capitalized
+        titleLabel.text = section.title.uppercased()
         headerView.addSubview(titleLabel)
         
         return headerView
@@ -207,6 +207,9 @@ extension MenuView: UITableViewDelegate {
         
         case .createAccount:
             initiateLogin(additionalParameters: ["action":"signup"])
+            
+        case .myAccount:
+            viewModel.myAccountTapped()
         
         case .shareGodTools:
             let textToShare = [ "share_god_tools_share_sheet_text".localized ]

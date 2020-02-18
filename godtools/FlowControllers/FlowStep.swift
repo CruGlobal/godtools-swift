@@ -31,4 +31,5 @@ enum FlowStep {
     
     // menu
     case tutorialTappedFromMenu
+    case myAccountTappedFromMenu
 }

@@ -56,6 +56,11 @@ extension MenuFlow: FlowDelegate {
             navigationController.dismiss(animated: true, completion: nil)
             self.tutorialFlow = nil
             
+        case .myAccountTappedFromMenu:
+            print("Navigate to My Account")
+            // TODO: Navigate to My Account will be implemented in GT-635.
+            break
+            
         default:
             break
         }

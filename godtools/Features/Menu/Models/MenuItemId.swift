@@ -17,6 +17,7 @@ enum MenuItemId {
     case logout
     case login
     case createAccount
+    case myAccount
     case shareGodTools
     case shareAStoryWithUs
     case termsOfUse

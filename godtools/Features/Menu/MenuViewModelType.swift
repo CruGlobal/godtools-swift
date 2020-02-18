@@ -16,4 +16,5 @@ protocol MenuViewModelType {
     
     func reloadMenuDataSource()
     func tutorialTapped()
+    func myAccountTapped()
 }
