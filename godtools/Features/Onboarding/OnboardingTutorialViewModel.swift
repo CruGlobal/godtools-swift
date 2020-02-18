@@ -115,12 +115,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Show Me More", data: ["cru.onboarding_more": 1])
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "On-Boarding More", data: ["cru.onboarding_more": 1])
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Get Started", data: ["cru.onboarding_start": 1])
+        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "On-Boarding Start", data: ["cru.onboarding_start": 1])
     }
 }
