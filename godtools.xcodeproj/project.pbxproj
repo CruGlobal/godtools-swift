@@ -199,6 +199,20 @@
 		4575C26223FB45E600D3265B /* GlobalActivityServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */; };
 		4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26123FB45E600D3265B /* GlobalActivityServices.swift */; };
 		4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26423FB45F200D3265B /* GlobalAnalytics.swift */; };
+		4575C27223FC37F100D3265B /* SessionDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27023FC37F100D3265B /* SessionDataOperation.swift */; };
+		4575C27323FC37F100D3265B /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27123FC37F100D3265B /* RequestBuilder.swift */; };
+		4575C27523FC3BAC00D3265B /* SessionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27423FC3BAC00D3265B /* SessionBuilder.swift */; };
+		4575C27723FC660A00D3265B /* SessionDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27623FC660A00D3265B /* SessionDataResponse.swift */; };
+		4575C27923FC6B1D00D3265B /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27823FC6B1D00D3265B /* JsonServices.swift */; };
+		4575C27B23FC6B2D00D3265B /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */; };
+		4575C27D23FC6CA600D3265B /* GlobalAnalyticsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */; };
+		4575C27F23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */; };
+		4575C28123FC6EEA00D3265B /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28023FC6EEA00D3265B /* RequestMethod.swift */; };
+		4575C28323FC711400D3265B /* SessionDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28223FC711400D3265B /* SessionDataServices.swift */; };
+		4575C28523FC775700D3265B /* GlobalActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28423FC775700D3265B /* GlobalActivityCell.swift */; };
+		4575C28723FC777000D3265B /* GlobalActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C28623FC777000D3265B /* GlobalActivityCell.xib */; };
+		4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28823FC77C500D3265B /* GlobalActivityCellViewModel.swift */; };
+		4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28C23FC8E8500D3265B /* GlobalActivityAttribute.swift */; };
 		457719A623E862D20049D236 /* MenuItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A523E862D20049D236 /* MenuItemId.swift */; };
 		457719A823E863A50049D236 /* MenuSectionId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A723E863A50049D236 /* MenuSectionId.swift */; };
 		457719AA23E8668A0049D236 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719A923E8668A0049D236 /* MenuItem.swift */; };
@@ -596,6 +610,20 @@
 		4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityServicesType.swift; sourceTree = "<group>"; };
 		4575C26123FB45E600D3265B /* GlobalActivityServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalActivityServices.swift; sourceTree = "<group>"; };
 		4575C26423FB45F200D3265B /* GlobalAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalytics.swift; sourceTree = "<group>"; };
+		4575C27023FC37F100D3265B /* SessionDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDataOperation.swift; sourceTree = "<group>"; };
+		4575C27123FC37F100D3265B /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
+		4575C27423FC3BAC00D3265B /* SessionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionBuilder.swift; sourceTree = "<group>"; };
+		4575C27623FC660A00D3265B /* SessionDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDataResponse.swift; sourceTree = "<group>"; };
+		4575C27823FC6B1D00D3265B /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
+		4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServicesType.swift; sourceTree = "<group>"; };
+		4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsData.swift; sourceTree = "<group>"; };
+		4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsDataAttributes.swift; sourceTree = "<group>"; };
+		4575C28023FC6EEA00D3265B /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
+		4575C28223FC711400D3265B /* SessionDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDataServices.swift; sourceTree = "<group>"; };
+		4575C28423FC775700D3265B /* GlobalActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityCell.swift; sourceTree = "<group>"; };
+		4575C28623FC777000D3265B /* GlobalActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GlobalActivityCell.xib; sourceTree = "<group>"; };
+		4575C28823FC77C500D3265B /* GlobalActivityCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityCellViewModel.swift; sourceTree = "<group>"; };
+		4575C28C23FC8E8500D3265B /* GlobalActivityAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAttribute.swift; sourceTree = "<group>"; };
 		457719A523E862D20049D236 /* MenuItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemId.swift; sourceTree = "<group>"; };
 		457719A723E863A50049D236 /* MenuSectionId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSectionId.swift; sourceTree = "<group>"; };
 		457719A923E8668A0049D236 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
@@ -1251,10 +1279,13 @@
 		4556AEB423E1D97E002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				4575C25F23FB45E600D3265B /* GlobalActivityServices */,
 				4530901823F4503D00E4F243 /* AppsFlyer.swift */,
 				4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */,
+				4575C27823FC6B1D00D3265B /* JsonServices.swift */,
+				4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */,
 				4556AEB723E1DC0A002C15E8 /* LanguagePreferencesType.swift */,
+				4575C25F23FB45E600D3265B /* GlobalActivityServices */,
+				4575C26F23FC37F100D3265B /* URLSessionServices */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1416,6 +1447,9 @@
 				4575C25523FB3F8900D3265B /* AccountItemCell.swift */,
 				4575C25723FB3F9300D3265B /* AccountItemCell.xib */,
 				4575C25923FB41EE00D3265B /* AccountItemCellViewModel.swift */,
+				4575C28423FC775700D3265B /* GlobalActivityCell.swift */,
+				4575C28623FC777000D3265B /* GlobalActivityCell.xib */,
+				4575C28823FC77C500D3265B /* GlobalActivityCellViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1425,6 +1459,7 @@
 			children = (
 				4575C24F23FAF7C200D3265B /* AccountItem.swift */,
 				4575C25323FB332000D3265B /* AccountItemId.swift */,
+				4575C28C23FC8E8500D3265B /* GlobalActivityAttribute.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1435,8 +1470,23 @@
 				4575C26123FB45E600D3265B /* GlobalActivityServices.swift */,
 				4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */,
 				4575C26423FB45F200D3265B /* GlobalAnalytics.swift */,
+				4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */,
+				4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */,
 			);
 			path = GlobalActivityServices;
+			sourceTree = "<group>";
+		};
+		4575C26F23FC37F100D3265B /* URLSessionServices */ = {
+			isa = PBXGroup;
+			children = (
+				4575C27123FC37F100D3265B /* RequestBuilder.swift */,
+				4575C28023FC6EEA00D3265B /* RequestMethod.swift */,
+				4575C27423FC3BAC00D3265B /* SessionBuilder.swift */,
+				4575C27023FC37F100D3265B /* SessionDataOperation.swift */,
+				4575C27623FC660A00D3265B /* SessionDataResponse.swift */,
+				4575C28223FC711400D3265B /* SessionDataServices.swift */,
+			);
+			path = URLSessionServices;
 			sourceTree = "<group>";
 		};
 		457719A423E862C70049D236 /* Models */ = {
@@ -2272,6 +2322,7 @@
 				1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */,
 				4FF7FF572284D062005C8BE1 /* teachmetoshare.zip in Resources */,
 				4FF7FF562284D062005C8BE1 /* satisfied.zip in Resources */,
+				4575C28723FC777000D3265B /* GlobalActivityCell.xib in Resources */,
 				1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */,
 				45D3C92823DF999D00ECF70E /* TutorialView.xib in Resources */,
 				45F66CB223E4C82F0053CB5B /* MenuCell.xib in Resources */,
@@ -2456,6 +2507,7 @@
 				45668E7023E0E1CC002728E7 /* MainOnboardingTutorialItem.swift in Sources */,
 				45D3C8EB23DF948700ECF70E /* FlowDelegate.swift in Sources */,
 				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
+				4575C28323FC711400D3265B /* SessionDataServices.swift in Sources */,
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
 				4F1F09C81F0A82C800757879 /* BaseFlowController+Alerts.swift in Sources */,
@@ -2499,6 +2551,7 @@
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
 				4530901B23F4521C00E4F243 /* AppConfig.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
+				4575C28123FC6EEA00D3265B /* RequestMethod.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
@@ -2519,6 +2572,7 @@
 				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				0F9E323F1EDCEDEE0081DBB9 /* TractModal+Actions.swift in Sources */,
 				ECC194B61EEAF15500A56332 /* ManifestProperties.swift in Sources */,
+				4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */,
 				4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				0F9E32451EDD1A4C0081DBB9 /* TractLink+Actions.swift in Sources */,
@@ -2569,6 +2623,7 @@
 				EC61B9D71EFDDC6B00615840 /* TractForm+Actions.swift in Sources */,
 				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
+				4575C28523FC775700D3265B /* GlobalActivityCell.swift in Sources */,
 				EC8245B71EEEEB810023A203 /* TractTabsProperties.swift in Sources */,
 				45F335A723D24D3D00295D1C /* NibBased.swift in Sources */,
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
@@ -2613,15 +2668,18 @@
 				45668E8123E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				457719AA23E8668A0049D236 /* MenuItem.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
+				4575C27F23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift in Sources */,
 				457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */,
 				457719B423E86ED40049D236 /* MenuSection.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
+				4575C27923FC6B1D00D3265B /* JsonServices.swift in Sources */,
 				ECB5A8BE1EE5CA1F008E4AB7 /* AboutViewController.swift in Sources */,
 				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
 				0F93A93B1EAA70150049C110 /* AddToolsViewController.swift in Sources */,
 				4556AEAB23E1D2BD002C15E8 /* TutorialServices.swift in Sources */,
 				EC8245BD1EEEEE880023A203 /* TractHeadingProperties.swift in Sources */,
+				4575C27323FC37F100D3265B /* RequestBuilder.swift in Sources */,
 				4575C25223FB060700D3265B /* GTSegmentType.swift in Sources */,
 				0F28379A1EC65A140049CCE5 /* TractTabs.swift in Sources */,
 				454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */,
@@ -2660,11 +2718,13 @@
 				4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */,
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
+				4575C27523FC3BAC00D3265B /* SessionBuilder.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
 				4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
+				4575C27D23FC6CA600D3265B /* GlobalAnalyticsData.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
@@ -2680,6 +2740,7 @@
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
 				45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */,
+				4575C27223FC37F100D3265B /* SessionDataOperation.swift in Sources */,
 				45D3C8EC23DF948700ECF70E /* FlowStep.swift in Sources */,
 				ECBE2E691EF05E8500A13849 /* TractImageConfig.swift in Sources */,
 				1E31A5692108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift in Sources */,
@@ -2704,10 +2765,12 @@
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
+				4575C27723FC660A00D3265B /* SessionDataResponse.swift in Sources */,
 				4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4530901D23F4573F00E4F243 /* ConfigType.swift in Sources */,
+				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */,
 				4530901723F44DFE00E4F243 /* Config.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
@@ -2715,6 +2778,7 @@
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
+				4575C27B23FC6B2D00D3265B /* JsonServicesType.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
 				455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */,
 				4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */,

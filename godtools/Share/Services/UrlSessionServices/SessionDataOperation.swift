@@ -1,0 +1,113 @@
+//
+//  SessionDataOperation.swift
+//  godtools
+//
+//  Created by Levi Eggert on 2/18/20.
+//  Copyright © 2020 Cru. All rights reserved.
+//
+
+import Foundation
+
+class SessionDataOperation: Operation {
+    
+    enum ObserverKey: String {
+        case isExecuting = "isExecuting"
+        case isFinshed = "isFinished"
+    }
+    
+    enum State {
+        case executing
+        case finished
+        case notStarted
+    }
+    
+    private let session: URLSession
+    private let urlRequest: URLRequest
+    
+    private var task: URLSessionDataTask?
+    
+    var completion: ((_ response: SessionDataResponse) -> Void)?
+    
+    required init(session: URLSession, urlRequest: URLRequest) {
+        self.session = session
+        self.urlRequest = urlRequest
+        super.init()
+    }
+    
+    override func start() {
+        
+        if !isCancelled {
+            
+            task = session.dataTask(with: urlRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
+                
+                self?.handleOperationFinished(data: data, urlResponse: urlResponse, error: error)
+            }
+            
+            task?.resume()
+            state = .executing
+        }
+        else {
+            
+            let cancelledError: Error = NSError(
+                domain: "SessionDataOperation",
+                code: NSURLErrorCancelled,
+                userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
+            )
+            
+            handleOperationFinished(data: nil, urlResponse: nil, error: cancelledError)
+        }
+    }
+    
+    override func cancel() {
+        super.cancel()
+        task?.cancel()
+    }
+    
+    private func handleOperationFinished(data: Data?, urlResponse: URLResponse?, error: Error?) {
+        
+        state = .finished
+        
+        guard let completion = completion else {
+            return
+        }
+        
+        completion(SessionDataResponse(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error))
+    }
+    
+    // MARK: - State
+    
+    override var isAsynchronous: Bool {
+        return true
+    }
+    
+    override var isExecuting: Bool {
+        return state == .executing
+    }
+    
+    override var isFinished: Bool {
+        return state == .finished
+    }
+    
+    private var state: State = .notStarted {
+        willSet (value) {
+            switch value {
+            case .executing:
+                willChangeValue(forKey: ObserverKey.isExecuting.rawValue)
+            case .finished:
+                willChangeValue(forKey: ObserverKey.isFinshed.rawValue)
+            case .notStarted:
+                break
+            }
+        }
+        didSet {
+            switch state {
+            case .executing:
+                didChangeValue(forKey: ObserverKey.isExecuting.rawValue)
+            case .finished:
+                didChangeValue(forKey: ObserverKey.isFinshed.rawValue)
+            case .notStarted:
+                break
+            }
+        }
+    }
+}

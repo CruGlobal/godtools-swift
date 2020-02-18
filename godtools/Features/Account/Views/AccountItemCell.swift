@@ -13,14 +13,26 @@ class AccountItemCell: UICollectionViewCell {
     static let nibName: String = "AccountItemCell"
     static let reuseIdentifier: String = "AccountItemCellReuseIdentifier"
     
-    func configure(viewModel: AccountItemCellViewModel) {
-        
-        for subview in contentView.subviews {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        clearItemParentView()
+    }
+    
+    private var itemParentView: UIView {
+        return contentView
+    }
+    
+    private func clearItemParentView() {
+        for subview in itemParentView.subviews {
             subview.removeFromSuperview()
         }
-        
+    }
+    
+    func configure(viewModel: AccountItemCellViewModel) {
+            
+        clearItemParentView()
         contentView.addSubview(viewModel.itemView)
-        viewModel.itemView.frame = contentView.bounds
+        viewModel.itemView.frame = itemParentView.bounds
         viewModel.itemView.constrainEdgesToSuperview()
     }
 }

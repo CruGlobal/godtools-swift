@@ -12,8 +12,14 @@ class AccountItemCellViewModel {
     
     let itemView: UIView
     
-    required init(item: AccountItem) {
+    required init(item: AccountItem, globalActivityServices: GlobalActivityServicesType) {
         
-        itemView = AccountActivityView()
+        switch item.itemId {
+        case .activity:
+            let viewModel = AccountActivityViewModel(
+                globalActivityServices: globalActivityServices
+            )
+            itemView = AccountActivityView(viewModel: viewModel)
+        }
     }
 }

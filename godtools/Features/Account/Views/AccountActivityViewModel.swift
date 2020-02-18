@@ -10,15 +10,22 @@ import Foundation
 
 class AccountActivityViewModel: AccountActivityViewModelType {
     
-    let globalActivityAnalytics: ObservableValue<[GlobalAnalytics]> = ObservableValue(value: [])
+    let globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> = ObservableValue(value: [])
     
     required init(globalActivityServices: GlobalActivityServicesType) {
-        
-        globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<[GlobalAnalytics], Error>) in
+                
+        _ = globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<GlobalAnalytics?, Error>) in
             switch result {
             case .success(let globalAnalytics):
-                self?.globalActivityAnalytics.accept(value: globalAnalytics)
-            case .failure(let error):
+                if let globalAnalytics = globalAnalytics {
+                    self?.globalActivityAttributes.accept(value: [
+                        GlobalActivityAttribute(activityType: .users, count: globalAnalytics.data.attributes.users),
+                        GlobalActivityAttribute(activityType: .gospelPresentation, count: globalAnalytics.data.attributes.gospelPresentations),
+                        GlobalActivityAttribute(activityType: .launches, count: globalAnalytics.data.attributes.launches),
+                        GlobalActivityAttribute(activityType: .countries, count: globalAnalytics.data.attributes.countries)
+                    ])
+                }
+            case .failure( _):
                 break
             }
         }

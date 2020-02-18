@@ -11,7 +11,6 @@ import Foundation
 struct AccountItem: GTSegmentType {
     let itemId: AccountItemId
     let title: String
-    let itemViewNibName: String
 }
 
 extension AccountItem {

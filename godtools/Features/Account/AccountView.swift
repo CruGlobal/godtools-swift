@@ -82,10 +82,12 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
             withReuseIdentifier: AccountItemCell.reuseIdentifier,
             for: indexPath) as! AccountItemCell
         
-        let accountItem = viewModel.items[indexPath.row]
-        let viewModel = AccountItemCellViewModel(item: accountItem)
+        cell.configure(viewModel: AccountItemCellViewModel(
+            item: viewModel.items[indexPath.row],
+            globalActivityServices: viewModel.globalActivityServices
+        ))
         
-        cell.configure(viewModel: viewModel)
+        cell.backgroundColor = .systemPink
         
         return cell
     }

@@ -10,10 +10,30 @@ import Foundation
 
 struct GlobalActivityServices: GlobalActivityServicesType {
     
-    func getGlobalAnalytics(complete: ((_ result: Result<[GlobalAnalytics], Error>) -> Void)) -> OperationQueue? {
+    private let session: URLSession
+    private let requestBuilder: RequestBuilder = RequestBuilder()
+    private let baseUrl: String = "https://mobile-content-api-stage.cru.org"
+    
+    init() {
         
-        complete(.success([]))
+        self.session = SessionBuilder().buildIgnoringCacheSession()
+    }
         
-        return nil
+    var globalAnalyticsOperation: SessionDataOperation {
+        
+        let urlRequest: URLRequest = requestBuilder.buildRequest(
+            session: session,
+            urlString: baseUrl + "/analytics/global",
+            method: .get,
+            headers: nil,
+            httpBody: nil
+        )
+        
+        return SessionDataOperation(session: session, urlRequest: urlRequest)
+    }
+
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalAnalytics?, Error>) -> Void)) -> OperationQueue? {
+        
+        return getSessionDataObject(operation: globalAnalyticsOperation, complete: complete)
     }
 }

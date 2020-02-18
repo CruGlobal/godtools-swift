@@ -19,6 +19,6 @@ class AccountViewModel: AccountViewModelType {
         self.globalActivityServices = globalActivityServices
         
         navTitle = NSLocalizedString("account.navTitle", comment: "")
-        items = [AccountItem(itemId: .activity, title: "Activity", itemViewNibName: "")]
+        items = [AccountItem(itemId: .activity, title: "Activity")]
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GlobalActivityServicesType {
+protocol GlobalActivityServicesType: SessionDataServices {
     
-    func getGlobalAnalytics(complete: ((_ result: Result<[GlobalAnalytics], Error>) -> Void)) -> OperationQueue?
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalAnalytics?, Error>) -> Void)) -> OperationQueue?
 }
