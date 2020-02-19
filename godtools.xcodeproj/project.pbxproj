@@ -236,6 +236,7 @@
 		45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93123DF9D8800ECF70E /* TutorialCell.swift */; };
 		45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */; };
 		45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */; };
+		45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */; };
 		45E998DA23FD800B0088DD0C /* GlobalActivityHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D923FD800B0088DD0C /* GlobalActivityHeaderView.xib */; };
@@ -654,6 +655,7 @@
 		45D3C93123DF9D8800ECF70E /* TutorialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
 		45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
 		45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
+		45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBasedTimer.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityHeaderView.swift; sourceTree = "<group>"; };
 		45E998D923FD800B0088DD0C /* GlobalActivityHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GlobalActivityHeaderView.xib; sourceTree = "<group>"; };
@@ -1345,6 +1347,7 @@
 		4556AEDC23E22241002C15E8 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */,
 				4556AEDD23E22241002C15E8 /* ObservableValue.swift */,
 			);
 			path = Objects;
@@ -2620,6 +2623,7 @@
 				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				EC15BE5F1EEB5447006B2E1A /* TractHeaderProperties.swift in Sources */,
 				4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */,
+				45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */,
 				45D3C8EA23DF948700ECF70E /* OnboardingFlow.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,

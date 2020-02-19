@@ -41,7 +41,7 @@ class GlobalActivityCellViewModel {
         }
         
         if isLoading {
-            title = NSLocalizedString("accountActivity.globalAnalytics.loading.prefix", comment: "") + " " + localizedTitle
+            title = NSLocalizedString("accountActivity.globalAnalytics.loading.prefix", comment: "") + "\n" + localizedTitle
         }
         else {
             title = localizedTitle
