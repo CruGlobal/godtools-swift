@@ -12,11 +12,12 @@ struct GlobalActivityServices: GlobalActivityServicesType {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let baseUrl: String = "https://mobile-content-api-stage.cru.org"
+    private let baseUrl: String
     
-    init() {
+    init(config: ConfigType) {
         
-        self.session = SessionBuilder().buildIgnoringCacheSession()
+        session = SessionBuilder().buildIgnoringCacheSession()
+        baseUrl = config.mobileContentApiBaseUrl
     }
         
     var globalAnalyticsOperation: SessionDataOperation {

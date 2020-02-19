@@ -108,10 +108,7 @@
 		1EC92E9A20AF5F5300FAD93B /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1EC92E9820AF5F5300FAD93B /* LoadingViewController.xib */; };
 		1ED47BA320D412E000470D2A /* TractAnalyticEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */; };
 		1EE2ADFD20618A0900D8F120 /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE2ADFC20618A0800D8F120 /* config.plist */; };
-		4530901723F44DFE00E4F243 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C0A3851ED4C6B100CC97A3 /* Config.swift */; };
 		4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901823F4503D00E4F243 /* AppsFlyer.swift */; };
-		4530901B23F4521C00E4F243 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901A23F4521C00E4F243 /* AppConfig.swift */; };
-		4530901D23F4573F00E4F243 /* ConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901C23F4573F00E4F243 /* ConfigType.swift */; };
 		454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */; };
 		4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */; };
 		4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */; };
@@ -243,6 +240,10 @@
 		45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */; };
 		45E998DA23FD800B0088DD0C /* GlobalActivityHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D923FD800B0088DD0C /* GlobalActivityHeaderView.xib */; };
 		45E998DC23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998DB23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift */; };
+		45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998E023FD9E860088DD0C /* ConfigType.swift */; };
+		45E998E423FD9E870088DD0C /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998E123FD9E870088DD0C /* Config.swift */; };
+		45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998E223FD9E870088DD0C /* AppConfig.swift */; };
+		45E998E723FD9F110088DD0C /* AppBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998E623FD9F110088DD0C /* AppBuild.swift */; };
 		45F335A723D24D3D00295D1C /* NibBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F335A623D24D3D00295D1C /* NibBased.swift */; };
 		45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CA323E4C3C20053CB5B /* MenuView.xib */; };
 		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
@@ -511,6 +512,7 @@
 		1737DFD822F9D4D700223CB0 /* LanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTests.swift; sourceTree = "<group>"; };
 		1737DFDE22FDB48000223CB0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1750C7D52305DA900080612F /* UINavigationController+GodTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+GodTools.swift"; sourceTree = "<group>"; };
+		1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.production.xcconfig"; sourceTree = "<group>"; };
 		1E1A3B0E20A0DE6200EE60B6 /* TractEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEvent.swift; sourceTree = "<group>"; };
 		1E1A3B1020A0DEFB00EE60B6 /* TractEventProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractEventProperties.swift; sourceTree = "<group>"; };
 		1E31A5682108D59F005D4202 /* LanguagesTableViewController+SearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguagesTableViewController+SearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -525,8 +527,6 @@
 		1EE2ADFC20618A0800D8F120 /* config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
 		4530901823F4503D00E4F243 /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
-		4530901A23F4521C00E4F243 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
-		4530901C23F4573F00E4F243 /* ConfigType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigType.swift; sourceTree = "<group>"; };
 		454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTutorialServices.swift; sourceTree = "<group>"; };
 		4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
@@ -658,6 +658,10 @@
 		45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityHeaderView.swift; sourceTree = "<group>"; };
 		45E998D923FD800B0088DD0C /* GlobalActivityHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GlobalActivityHeaderView.xib; sourceTree = "<group>"; };
 		45E998DB23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityHeaderViewModel.swift; sourceTree = "<group>"; };
+		45E998E023FD9E860088DD0C /* ConfigType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigType.swift; sourceTree = "<group>"; };
+		45E998E123FD9E870088DD0C /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		45E998E223FD9E870088DD0C /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		45E998E623FD9F110088DD0C /* AppBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBuild.swift; sourceTree = "<group>"; };
 		45F335A623D24D3D00295D1C /* NibBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibBased.swift; sourceTree = "<group>"; };
 		45F66CA323E4C3C20053CB5B /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
 		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -807,12 +811,13 @@
 		684328EB1EB7C7F4005E9131 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		684328F11EB7CF66005E9131 /* godtoolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C0A3811ED4C63200CC97A3 /* config.sample.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = config.sample.plist; sourceTree = "<group>"; };
-		68C0A3851ED4C6B100CC97A3 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		68EE51D71EBBA1E400596250 /* release_notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes; sourceTree = SOURCE_ROOT; };
+		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D61FF360D11F854476B6E206 /* Pods_godtools.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtools.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.production.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.production.xcconfig"; sourceTree = "<group>"; };
 		EC00B0051F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCard+UITextFieldDelegate.swift"; path = "Views/TractElements/TractCard+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
 		EC15BE5E1EEB5447006B2E1A /* TractHeaderProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractHeaderProperties.swift; path = Views/TractElements/TractHeaderProperties.swift; sourceTree = "<group>"; };
 		EC15BE601EEB54C5006B2E1A /* TractCardsProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractCardsProperties.swift; path = Views/TractElements/TractCardsProperties.swift; sourceTree = "<group>"; };
@@ -880,6 +885,7 @@
 		ECD345001F142C3000906471 /* ko-KR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ko-KR"; path = "ko-KR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		ECED9F531F0EA06E0006EA5E /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TractCards+Gestures.swift"; path = "Views/TractElements/TractCards+Gestures.swift"; sourceTree = "<group>"; };
 		ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIDevice.swift; path = GeneralExtensions/UIDevice.swift; sourceTree = "<group>"; };
+		F1BE3B21D598FF586906D91D /* Pods-godtoolsTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtoolsTests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtoolsTests/Pods-godtoolsTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -924,6 +930,10 @@
 				3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */,
 				E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */,
 				03E8B4DDD09BF23FD11A5E8B /* Pods-godtoolsTests.release.xcconfig */,
+				A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */,
+				EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */,
+				F1BE3B21D598FF586906D91D /* Pods-godtoolsTests.staging.xcconfig */,
+				1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1601,6 +1611,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		45E998DF23FD9E640088DD0C /* AppConfig */ = {
+			isa = PBXGroup;
+			children = (
+				45E998E623FD9F110088DD0C /* AppBuild.swift */,
+				45E998E223FD9E870088DD0C /* AppConfig.swift */,
+				45E998E123FD9E870088DD0C /* Config.swift */,
+				45E998E023FD9E860088DD0C /* ConfigType.swift */,
+			);
+			path = AppConfig;
+			sourceTree = "<group>";
+		};
 		45F335A523D24D3100295D1C /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -1805,11 +1826,9 @@
 				4FAF207A1F02933900C43AFC /* Localizable.strings */,
 				4F3304291F0C0BE2009D92A0 /* godtools-Bridging-Header.h */,
 				4F66E17A1F1943F9004BBEF1 /* godtools.entitlements */,
-				4530901A23F4521C00E4F243 /* AppConfig.swift */,
 				4F57328C1EA69CF00082035C /* AppDelegate.swift */,
 				4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */,
-				68C0A3851ED4C6B100CC97A3 /* Config.swift */,
-				4530901C23F4573F00E4F243 /* ConfigType.swift */,
+				45E998DF23FD9E640088DD0C /* AppConfig */,
 				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
@@ -2521,6 +2540,7 @@
 				45668E7023E0E1CC002728E7 /* MainOnboardingTutorialItem.swift in Sources */,
 				45D3C8EB23DF948700ECF70E /* FlowDelegate.swift in Sources */,
 				ECAA2C161EF9B4770067ED78 /* TractResource.swift in Sources */,
+				45E998E723FD9F110088DD0C /* AppBuild.swift in Sources */,
 				4575C28323FC711400D3265B /* SessionDataServices.swift in Sources */,
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */,
@@ -2555,6 +2575,7 @@
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
+				45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
@@ -2564,7 +2585,6 @@
 				ECBE2E4C1EF040AF00A13849 /* TractTabs+UI.swift in Sources */,
 				455D8FC023E32CF4008D92DA /* DisabledOnboardingTutorialServices.swift in Sources */,
 				4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */,
-				4530901B23F4521C00E4F243 /* AppConfig.swift in Sources */,
 				0FB73E581EA9063E000BA60D /* LanguageTableViewCell.swift in Sources */,
 				4575C28123FC6EEA00D3265B /* RequestMethod.swift in Sources */,
 				0F9E32371EDCC78A0081DBB9 /* TractModalProperties.swift in Sources */,
@@ -2628,6 +2648,7 @@
 				0F7741DC1EBB8AFC00888D20 /* TractHeader+Animations.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				45E998DC23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift in Sources */,
+				45E998E423FD9E870088DD0C /* Config.swift in Sources */,
 				4556AEC723E1F64F002C15E8 /* OnboardingTutorialServicesType.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
@@ -2718,6 +2739,7 @@
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
+				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
@@ -2785,10 +2807,8 @@
 				4F462A311EB0DF3E00C03447 /* TractView.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
-				4530901D23F4573F00E4F243 /* ConfigType.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */,
-				4530901723F44DFE00E4F243 /* Config.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
@@ -2927,30 +2947,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		17339882230736A400A715B4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = godtools;
-			};
-			name = Debug;
-		};
 		17339883230736A400A715B4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2974,63 +2970,7 @@
 			};
 			name = Release;
 		};
-		4F12297420852BE3008842CC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = godtools;
-			};
-			name = Debug;
-		};
-		4F12297520852BE3008842CC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = godtoolsUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = godtools;
-			};
-			name = Release;
-		};
-		4F57329C1EA69CF00082035C /* Debug */ = {
+		45E998E823FDB5340088DD0C /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3090,7 +3030,293 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
 			};
-			name = Debug;
+			name = Staging;
+		};
+		45E998E923FDB5340088DD0C /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 536;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtools/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 5.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Staging;
+		};
+		45E998EA23FDB5340088DD0C /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1BE3B21D598FF586906D91D /* Pods-godtoolsTests.staging.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtoolsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
+			};
+			name = Staging;
+		};
+		45E998EB23FDB5340088DD0C /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Staging;
+		};
+		45E998EC23FDB5340088DD0C /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Staging;
+		};
+		45E998ED23FDB53D0088DD0C /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Production;
+		};
+		45E998EE23FDB53D0088DD0C /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBE523140714C16DAAB6B473 /* Pods-godtools.production.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 536;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtools/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MARKETING_VERSION = 5.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Production;
+		};
+		45E998EF23FDB53D0088DD0C /* Production */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1767C18E62BAF2E86AA37734 /* Pods-godtoolsTests.production.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				INFOPLIST_FILE = godtoolsTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
+			};
+			name = Production;
+		};
+		45E998F023FDB53D0088DD0C /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Production;
+		};
+		45E998F123FDB53D0088DD0C /* Production */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUIRecording/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUIRecording;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Production;
+		};
+		4F12297520852BE3008842CC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = DQ48D9BF2V;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = godtoolsUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e0c2ae71-3b0f-47a9-b24e-4f8d04a90fb6";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = godtools;
+			};
+			name = Release;
 		};
 		4F57329D1EA69CF00082035C /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3147,31 +3373,6 @@
 			};
 			name = Release;
 		};
-		4F57329F1EA69CF00082035C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = godtools/godtools.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 536;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				INFOPLIST_FILE = godtools/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 5.3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtools;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
-				SWIFT_OBJC_BRIDGING_HEADER = "godtools/godtools-Bridging-Header.h";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
 		4F5732A01EA69CF00082035C /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */;
@@ -3196,27 +3397,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
-		};
-		684328F91EB7CF66005E9131 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0F338026DD564DE8D5B7CE2 /* Pods-godtoolsTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = DQ48D9BF2V;
-				INFOPLIST_FILE = godtoolsTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.cru.godtoolsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.cru.godtools";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/godtools.app/godtools";
-			};
-			name = Debug;
 		};
 		684328FA1EB7CF66005E9131 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3243,7 +3423,8 @@
 		17339881230736A400A715B4 /* Build configuration list for PBXNativeTarget "godtoolsUIRecording" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				17339882230736A400A715B4 /* Debug */,
+				45E998EC23FDB5340088DD0C /* Staging */,
+				45E998F123FDB53D0088DD0C /* Production */,
 				17339883230736A400A715B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3252,7 +3433,8 @@
 		4F12297320852BE3008842CC /* Build configuration list for PBXNativeTarget "godtoolsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F12297420852BE3008842CC /* Debug */,
+				45E998EB23FDB5340088DD0C /* Staging */,
+				45E998F023FDB53D0088DD0C /* Production */,
 				4F12297520852BE3008842CC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3261,7 +3443,8 @@
 		4F5732841EA69CF00082035C /* Build configuration list for PBXProject "godtools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F57329C1EA69CF00082035C /* Debug */,
+				45E998E823FDB5340088DD0C /* Staging */,
+				45E998ED23FDB53D0088DD0C /* Production */,
 				4F57329D1EA69CF00082035C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3270,7 +3453,8 @@
 		4F57329E1EA69CF00082035C /* Build configuration list for PBXNativeTarget "godtools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4F57329F1EA69CF00082035C /* Debug */,
+				45E998E923FDB5340088DD0C /* Staging */,
+				45E998EE23FDB53D0088DD0C /* Production */,
 				4F5732A01EA69CF00082035C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3279,7 +3463,8 @@
 		684328F81EB7CF66005E9131 /* Build configuration list for PBXNativeTarget "godtoolsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				684328F91EB7CF66005E9131 /* Debug */,
+				45E998EA23FDB5340088DD0C /* Staging */,
+				45E998EF23FDB53D0088DD0C /* Production */,
 				684328FA1EB7CF66005E9131 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
