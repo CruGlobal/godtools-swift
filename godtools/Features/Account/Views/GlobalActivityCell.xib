@@ -25,8 +25,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-v3-RXH" userLabel="countLabel">
-                        <rect key="frame" x="0.0" y="131" width="300" height="30"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0000" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AOp-v3-RXH" userLabel="countLabel">
+                        <rect key="frame" x="20" y="131" width="260" height="30"/>
                         <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="25"/>
                         <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -42,8 +42,8 @@
                 <constraints>
                     <constraint firstItem="AOp-v3-RXH" firstAttribute="centerY" secondItem="2hB-BP-MYI" secondAttribute="centerY" constant="-4" id="FRN-M4-8mZ"/>
                     <constraint firstItem="oTM-hI-mWS" firstAttribute="leading" secondItem="2hB-BP-MYI" secondAttribute="leading" id="KUy-gQ-sph"/>
-                    <constraint firstItem="AOp-v3-RXH" firstAttribute="leading" secondItem="2hB-BP-MYI" secondAttribute="leading" id="OPj-KW-C5u"/>
-                    <constraint firstAttribute="trailing" secondItem="AOp-v3-RXH" secondAttribute="trailing" id="VtP-bB-TBy"/>
+                    <constraint firstItem="AOp-v3-RXH" firstAttribute="leading" secondItem="2hB-BP-MYI" secondAttribute="leading" constant="20" id="OPj-KW-C5u"/>
+                    <constraint firstAttribute="trailing" secondItem="AOp-v3-RXH" secondAttribute="trailing" constant="20" id="VtP-bB-TBy"/>
                     <constraint firstAttribute="trailing" secondItem="oTM-hI-mWS" secondAttribute="trailing" id="l98-2W-HpN"/>
                     <constraint firstItem="oTM-hI-mWS" firstAttribute="top" secondItem="AOp-v3-RXH" secondAttribute="bottom" constant="12" id="oWW-0d-EwR"/>
                 </constraints>
