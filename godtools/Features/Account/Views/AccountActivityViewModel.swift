@@ -14,6 +14,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     
     let globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> = ObservableValue(value: [])
     let isLoadingGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
+    let didFailToGetGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
     
     required init(globalActivityServices: GlobalActivityServicesType) {
         
@@ -22,12 +23,14 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         
         getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<GlobalAnalytics?, Error>) in
             self?.isLoadingGlobalActivity.accept(value: false)
+            self?.didFailToGetGlobalActivity.accept(value: true)
+            
             switch result {
             case .success(let globalAnalytics):
                 if let globalAnalytics = globalAnalytics {
                     self?.globalActivityAttributes.accept(value: self?.createGlobalActivityAttributes(attributes: globalAnalytics.data.attributes) ?? [])
                 }
-            case .failure( _):
+            case .failure(let error):
                 break
             }
         }

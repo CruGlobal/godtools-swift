@@ -71,6 +71,10 @@ class AccountActivityView: UIView, NibBased {
         viewModel.isLoadingGlobalActivity.addObserver(self) { [weak self] (isLoading: Bool) in
             self?.activityCollectionView.reloadData()
         }
+        
+        viewModel.didFailToGetGlobalActivity.addObserver(self) { [weak self] (didFail: Bool) in
+            self?.activityCollectionView.reloadData()
+        }
     }
 }
 
@@ -95,7 +99,8 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
         let globalActivityAttributes = viewModel.globalActivityAttributes.value[indexPath.row]
         let cellViewModel = GlobalActivityCellViewModel(
             globalActivityAttribute: globalActivityAttributes,
-            isLoading: viewModel.isLoadingGlobalActivity.value
+            isLoading: viewModel.isLoadingGlobalActivity.value,
+            errorOccurred: viewModel.didFailToGetGlobalActivity.value
         )
         
         cell.configure(viewModel: cellViewModel)

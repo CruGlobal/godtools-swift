@@ -14,10 +14,13 @@ class GlobalActivityCellViewModel {
     let title: String
     let isLoading: Bool
     
-    required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool) {
+    required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool, errorOccurred: Bool) {
         
         if isLoading {
             count = ""
+        }
+        else if errorOccurred {
+            count = "-"
         }
         else {
             let numberFormatter = NumberFormatter()
