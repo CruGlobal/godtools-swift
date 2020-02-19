@@ -22,7 +22,12 @@ class AccountViewModel: AccountViewModelType {
         self.globalActivityServices = globalActivityServices
         
         navTitle = NSLocalizedString("account.navTitle", comment: "")
-        items = [AccountItem(itemId: .activity, title: "Activity")]
+        items = [
+            AccountItem(
+                itemId: .activity,
+                title: NSLocalizedString("account.activity.title", comment: "")
+            )
+        ]
         
         isLoadingProfile.accept(value: true)
         loginClient.fetchAttributes { [weak self] (attributes: [String: String]?, error: Error?) in

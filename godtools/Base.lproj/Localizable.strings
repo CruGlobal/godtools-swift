@@ -168,6 +168,7 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Account
 "account.navTitle" = "My Profile";
+"account.activity.title" = "Activity";
 
 // Account Activity
 "accountActivity.globalAnalytics.header.title" = "Global Activity";
