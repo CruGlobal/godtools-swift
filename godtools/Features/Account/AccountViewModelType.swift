@@ -12,5 +12,7 @@ protocol AccountViewModelType {
     
     var globalActivityServices: GlobalActivityServicesType { get }
     var navTitle: String { get }
+    var profileName: ObservableValue<(name: String, animated: Bool)> { get }
+    var isLoadingProfile: ObservableValue<Bool> { get }
     var items: [AccountItem] { get }
 }

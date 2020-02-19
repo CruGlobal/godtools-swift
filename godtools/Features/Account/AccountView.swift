@@ -15,6 +15,7 @@ class AccountView: UIViewController {
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var joinedLabel: UILabel!
+    @IBOutlet weak private var loadingProfileView: UIActivityIndicatorView!
     @IBOutlet weak private var itemsControl: GTSegmentedControl!
     @IBOutlet weak private var itemsCollectionView: UICollectionView!
     
@@ -44,6 +45,8 @@ class AccountView: UIViewController {
     
     private func setupLayout() {
         
+        nameLabel.text = ""
+        
         itemsControl.layer.shadowColor = UIColor.black.cgColor
         itemsControl.layer.shadowOffset = CGSize(width: 0, height: 1)
         itemsControl.layer.shadowRadius = 5
@@ -58,6 +61,21 @@ class AccountView: UIViewController {
     private func setupBinding() {
         
         title = viewModel.navTitle
+        
+        viewModel.profileName.addObserver(self) { [weak self] (nameTuple: (name: String, animated: Bool)) in
+            self?.nameLabel.text = nameTuple.name
+            self?.nameLabel.alpha = 1
+            if nameTuple.animated {
+                self?.nameLabel.alpha = 0
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                    self?.nameLabel.alpha = 1
+                }, completion: nil)
+            }
+        }
+        
+        viewModel.isLoadingProfile.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingProfileView.startAnimating() : self?.loadingProfileView.stopAnimating()
+        }
         
         itemsControl.configure(
             segments: viewModel.items,

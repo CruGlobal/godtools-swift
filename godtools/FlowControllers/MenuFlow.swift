@@ -59,6 +59,7 @@ extension MenuFlow: FlowDelegate {
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(
+                loginClient: appDiContainer.loginClient,
                 globalActivityServices: appDiContainer.globalActivityServices
             )
             let view = AccountView(viewModel: viewModel)
