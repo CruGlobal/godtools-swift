@@ -12,20 +12,31 @@ class GlobalActivityCellViewModel {
     
     let count: String
     let title: String
+    let isLoading: Bool
     
-    required init(globalActivityAttribute: GlobalActivityAttribute) {
+    required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool) {
         
-        count = String(globalActivityAttribute.count)
+        count = isLoading ? "" : String(globalActivityAttribute.count)
         
+        let localizedTitle: String
         switch globalActivityAttribute.activityType {
         case .users:
-            title = NSLocalizedString("accountActivity.globalAnalytics.users.title", comment: "")
+            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.users.title", comment: "")
         case .countries:
-            title = NSLocalizedString("accountActivity.globalAnalytics.countries.title", comment: "")
+            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.countries.title", comment: "")
         case .launches:
-            title = NSLocalizedString("accountActivity.globalAnalytics.launches.title", comment: "")
+            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.launches.title", comment: "")
         case .gospelPresentation:
-            title = NSLocalizedString("accountActivity.globalAnalytics.gospelPresentation.title", comment: "")
+            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.gospelPresentation.title", comment: "")
         }
+        
+        if isLoading {
+            title = NSLocalizedString("accountActivity.globalAnalytics.loading.prefix", comment: "") + " " + localizedTitle
+        }
+        else {
+            title = localizedTitle
+        }
+        
+        self.isLoading = isLoading
     }
 }

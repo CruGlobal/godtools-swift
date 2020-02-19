@@ -11,4 +11,5 @@ import Foundation
 protocol AccountActivityViewModelType {
     
     var globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> { get }
+    var isLoadingGlobalActivity: ObservableValue<Bool> { get }
 }
