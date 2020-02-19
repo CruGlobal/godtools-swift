@@ -16,7 +16,14 @@ class GlobalActivityCellViewModel {
     
     required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool) {
         
-        count = isLoading ? "" : String(globalActivityAttribute.count)
+        if isLoading {
+            count = ""
+        }
+        else {
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            count = numberFormatter.string(from: NSNumber(value: globalActivityAttribute.count)) ?? String(globalActivityAttribute.count)
+        }
         
         let localizedTitle: String
         switch globalActivityAttribute.activityType {
