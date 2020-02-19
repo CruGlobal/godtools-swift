@@ -35,8 +35,10 @@ class GlobalActivityCell: UICollectionViewCell {
     }
     
     func configure(viewModel: GlobalActivityCellViewModel) {
+        
         countLabel.text = viewModel.count
         titleLabel.text = viewModel.title
+        
         viewModel.isLoading ? loadingView.startAnimating() : loadingView.stopAnimating()
         
         if !viewModel.count.isEmpty {

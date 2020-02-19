@@ -23,7 +23,6 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         
         getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<GlobalAnalytics?, Error>) in
             self?.isLoadingGlobalActivity.accept(value: false)
-            self?.didFailToGetGlobalActivity.accept(value: true)
             
             switch result {
             case .success(let globalAnalytics):
@@ -31,7 +30,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
                     self?.globalActivityAttributes.accept(value: self?.createGlobalActivityAttributes(attributes: globalAnalytics.data.attributes) ?? [])
                 }
             case .failure(let error):
-                break
+                self?.didFailToGetGlobalActivity.accept(value: true)
             }
         }
     }
