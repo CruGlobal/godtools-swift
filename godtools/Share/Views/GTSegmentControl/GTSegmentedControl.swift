@@ -17,8 +17,9 @@ class GTSegmentedControl: UIView, NibBased {
     struct LayoutConfig {
         var selectedTitleColor: UIColor
         var deselectedTitleColor: UIColor
-        var fontSize: CGFloat
-        var segmentSpacing: CGFloat
+        var segmentFont: UIFont?
+        var spacingBetweenSegments: CGFloat
+        var segmentLabelBottomSpacingToUnderline: CGFloat
         var underlineWidthPercentageOfSegmentWidth: CGFloat
         var underlineHeight: CGFloat
         
@@ -26,8 +27,9 @@ class GTSegmentedControl: UIView, NibBased {
             return LayoutConfig(
                 selectedTitleColor: UIColor(red: 0.353, green: 0.353, blue: 0.353, alpha: 1),
                 deselectedTitleColor: UIColor(red: 0.745, green: 0.745, blue: 0.745, alpha: 1),
-                fontSize: 19,
-                segmentSpacing: 30,
+                segmentFont: FontLibrary.sfProTextSemibold.font(size: 17),
+                spacingBetweenSegments: 30,
+                segmentLabelBottomSpacingToUnderline: 4,
                 underlineWidthPercentageOfSegmentWidth: 1.2,
                 underlineHeight: 3
             )
@@ -81,7 +83,7 @@ class GTSegmentedControl: UIView, NibBased {
             
             if let prevLayoutRect = prevLayoutRect {
                 layoutRect = CGRect(
-                    x: prevLayoutRect.origin.x + prevLayoutRect.size.width + layout.segmentSpacing,
+                    x: prevLayoutRect.origin.x + prevLayoutRect.size.width + layout.spacingBetweenSegments,
                     y: 0,
                     width: label.frame.size.width,
                     height: label.frame.size.height
@@ -182,14 +184,11 @@ class GTSegmentedControl: UIView, NibBased {
     private func createNewSegmentLabel(title: String) -> UILabel {
         
         let label: UILabel = UILabel()
-        label.font = FontLibrary.sfProTextRegular.font(size: layout.fontSize)
+        label.font = layout.segmentFont
         label.text = title
         label.textColor = layout.deselectedTitleColor
         label.textAlignment = .center
         label.sizeToFit()
-        var labelFrame: CGRect = label.frame
-        labelFrame.size.height = segmentHeight
-        label.frame = labelFrame
         
         return label
     }
@@ -231,9 +230,15 @@ extension GTSegmentedControl: UICollectionViewDelegateFlowLayout, UICollectionVi
         
         segmentView.addSubview(segmentLabel)
         
-        segmentLabel.frame = CGRect(x: 0, y: 0, width: segmentLabel.frame.size.width, height: segmentHeight)
+        segmentLabel.frame = CGRect(
+            x: 0,
+            y: segmentHeight - segmentLabel.frame.size.height - layout.segmentLabelBottomSpacingToUnderline,
+            width: segmentLabel.frame.size.width,
+            height: segmentLabel.frame.size.height
+        )
+        
         segmentLabel.textColor = indexPath.item == selectedSegment ? layout.selectedTitleColor : layout.deselectedTitleColor
-                
+                        
         return cell
     }
     
@@ -253,6 +258,6 @@ extension GTSegmentedControl: UICollectionViewDelegateFlowLayout, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return layout.segmentSpacing
+        return layout.spacingBetweenSegments
     }
 }

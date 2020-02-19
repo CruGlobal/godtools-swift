@@ -91,6 +91,7 @@
 		<string>SF-Pro-Display-Light.otf</string>
 		<string>SF-Pro-Text-Light.otf</string>
 		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

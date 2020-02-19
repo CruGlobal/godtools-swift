@@ -187,7 +187,7 @@ class ToolDetailViewController: BaseViewController {
         
         detailsSegments = [aboutSegment, languageSement]
         var detailsControlLayout = GTSegmentedControl.LayoutConfig.defaultLayout
-        detailsControlLayout.segmentSpacing = 54
+        detailsControlLayout.spacingBetweenSegments = 54
         detailsControl.configure(segments: detailsSegments, delegate: self, layout: detailsControlLayout)
     }
     
