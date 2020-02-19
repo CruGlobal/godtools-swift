@@ -14,4 +14,8 @@ class GlobalActivityHeaderView: UICollectionReusableView {
     static let reuseIdentifier: String = "GlobalActivityHeaderViewReuseIdentifier"
     
     @IBOutlet weak private var titleLabel: UILabel!
+    
+    func configure(viewModel: GlobalActivityHeaderViewModel) {
+        titleLabel.text = viewModel.headerTitle
+    }
 }

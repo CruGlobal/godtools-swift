@@ -52,7 +52,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="147"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="John Smith" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heM-pu-rNx" userLabel="nameLabel">
-                            <rect key="frame" x="30" y="53.5" width="354" height="30"/>
+                            <rect key="frame" x="30" y="56.5" width="354" height="30"/>
                             <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="25"/>
                             <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -66,8 +66,8 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="heM-pu-rNx" firstAttribute="centerY" secondItem="KOR-bH-3TB" secondAttribute="centerY" constant="-5" id="1e0-6d-3pb"/>
-                        <constraint firstItem="mmH-57-tlJ" firstAttribute="top" secondItem="heM-pu-rNx" secondAttribute="bottom" constant="9" id="C5f-eQ-tjX"/>
+                        <constraint firstItem="heM-pu-rNx" firstAttribute="centerY" secondItem="KOR-bH-3TB" secondAttribute="centerY" constant="-2" id="1e0-6d-3pb"/>
+                        <constraint firstItem="mmH-57-tlJ" firstAttribute="top" secondItem="heM-pu-rNx" secondAttribute="bottom" constant="6" id="C5f-eQ-tjX"/>
                         <constraint firstAttribute="trailing" secondItem="mmH-57-tlJ" secondAttribute="trailing" constant="30" id="Ofq-pn-9xc"/>
                         <constraint firstAttribute="trailing" secondItem="heM-pu-rNx" secondAttribute="trailing" constant="30" id="Qd5-OO-XNG"/>
                         <constraint firstItem="mmH-57-tlJ" firstAttribute="leading" secondItem="KOR-bH-3TB" secondAttribute="leading" constant="30" id="nxF-kM-JhL"/>

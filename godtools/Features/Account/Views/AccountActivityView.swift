@@ -126,6 +126,8 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
                 for: indexPath
             ) as! GlobalActivityHeaderView
             
+            headerView.configure(viewModel: GlobalActivityHeaderViewModel())
+            
             return headerView
         }
         
