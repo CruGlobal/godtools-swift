@@ -11,6 +11,7 @@ import UIKit
 class AccountActivityView: UIView, NibBased {
     
     private let viewModel: AccountActivityViewModel
+    private let activityCollectionHeaderHeight: CGFloat = 76
     private let activityCollectionHorizontalEdgeInset: CGFloat = 34
     private let activityCollectionCellSpacing: CGFloat = 20
     
@@ -43,12 +44,18 @@ class AccountActivityView: UIView, NibBased {
     private func setupLayout() {
         
         activityCollectionView.register(
+            UINib(nibName: GlobalActivityHeaderView.nibName, bundle: nil),
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: GlobalActivityHeaderView.reuseIdentifier
+        )
+        
+        activityCollectionView.register(
             UINib(nibName: GlobalActivityCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: GlobalActivityCell.reuseIdentifier
         )
         
         activityCollectionView.contentInset = UIEdgeInsets(
-            top: 0,
+            top: 16,
             left: activityCollectionHorizontalEdgeInset,
             bottom: 0,
             right: activityCollectionHorizontalEdgeInset
@@ -107,5 +114,29 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return activityCollectionCellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            
+            let headerView: GlobalActivityHeaderView = activityCollectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: GlobalActivityHeaderView.reuseIdentifier,
+                for: indexPath
+            ) as! GlobalActivityHeaderView
+            
+            return headerView
+        }
+        
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(
+            width: activityCollectionView.bounds.size.width,
+            height: activityCollectionHeaderHeight)
+        
     }
 }
