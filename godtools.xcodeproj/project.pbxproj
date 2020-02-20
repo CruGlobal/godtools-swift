@@ -201,8 +201,6 @@
 		4575C27723FC660A00D3265B /* SessionDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27623FC660A00D3265B /* SessionDataResponse.swift */; };
 		4575C27923FC6B1D00D3265B /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27823FC6B1D00D3265B /* JsonServices.swift */; };
 		4575C27B23FC6B2D00D3265B /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */; };
-		4575C27D23FC6CA600D3265B /* GlobalAnalyticsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */; };
-		4575C27F23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */; };
 		4575C28123FC6EEA00D3265B /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28023FC6EEA00D3265B /* RequestMethod.swift */; };
 		4575C28323FC711400D3265B /* SessionDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28223FC711400D3265B /* SessionDataServices.swift */; };
 		4575C28523FC775700D3265B /* GlobalActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C28423FC775700D3265B /* GlobalActivityCell.swift */; };
@@ -619,8 +617,6 @@
 		4575C27623FC660A00D3265B /* SessionDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDataResponse.swift; sourceTree = "<group>"; };
 		4575C27823FC6B1D00D3265B /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServicesType.swift; sourceTree = "<group>"; };
-		4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsData.swift; sourceTree = "<group>"; };
-		4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalyticsDataAttributes.swift; sourceTree = "<group>"; };
 		4575C28023FC6EEA00D3265B /* RequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		4575C28223FC711400D3265B /* SessionDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDataServices.swift; sourceTree = "<group>"; };
 		4575C28423FC775700D3265B /* GlobalActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityCell.swift; sourceTree = "<group>"; };
@@ -1493,8 +1489,6 @@
 				4575C26123FB45E600D3265B /* GlobalActivityServices.swift */,
 				4575C26023FB45E600D3265B /* GlobalActivityServicesType.swift */,
 				4575C26423FB45F200D3265B /* GlobalAnalytics.swift */,
-				4575C27C23FC6CA600D3265B /* GlobalAnalyticsData.swift */,
-				4575C27E23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift */,
 			);
 			path = GlobalActivityServices;
 			sourceTree = "<group>";
@@ -2706,7 +2700,6 @@
 				45668E8123E0E1CC002728E7 /* OnboardingTutorialUsageListCellViewModel.swift in Sources */,
 				457719AA23E8668A0049D236 /* MenuItem.swift in Sources */,
 				0F806C551EB2893500F3ED2B /* TractHeading.swift in Sources */,
-				4575C27F23FC6CC900D3265B /* GlobalAnalyticsDataAttributes.swift in Sources */,
 				457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */,
 				457719B423E86ED40049D236 /* MenuSection.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
@@ -2762,7 +2755,6 @@
 				4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */,
 				0F6982781EB8E31F00CAA284 /* TractCards.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
-				4575C27D23FC6CA600D3265B /* GlobalAnalyticsData.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,

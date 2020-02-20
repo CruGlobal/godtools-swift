@@ -39,7 +39,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         getGlobalAnalyticsOperation?.cancelAllOperations()
     }
     
-    private func createGlobalActivityAttributes(attributes: GlobalAnalyticsDataAttributes?) -> [GlobalActivityAttribute] {
+    private func createGlobalActivityAttributes(attributes: GlobalAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
         if let attributes = attributes {
             return [
                 GlobalActivityAttribute(activityType: .users, count: attributes.users),
