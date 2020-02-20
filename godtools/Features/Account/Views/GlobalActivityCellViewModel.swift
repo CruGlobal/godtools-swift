@@ -17,7 +17,7 @@ class GlobalActivityCellViewModel {
     required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool, errorOccurred: Bool) {
         
         if isLoading {
-            count = ""
+            count = "0"
         }
         else if errorOccurred {
             count = "-"
