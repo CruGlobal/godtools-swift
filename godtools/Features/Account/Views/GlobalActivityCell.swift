@@ -43,6 +43,7 @@ class GlobalActivityCell: UICollectionViewCell {
     func configure(viewModel: GlobalActivityCellViewModel) {
         
         countLabel.text = viewModel.count
+        titleLabel.text = viewModel.title
         
         if viewModel.isLoading {
             loadingView.alpha = 1
@@ -58,14 +59,16 @@ class GlobalActivityCell: UICollectionViewCell {
                     self?.countLabel.alpha = 1
                     self?.loadingView.alpha = 0
                 }) { (finished: Bool) in
-                    self?.loadingView.stopAnimating()
-                    self?.loadingView.alpha = 1
+                    if finished {
+                        self?.loadingView.stopAnimating()
+                        self?.loadingView.alpha = 1
+                    }
                 }
             }
         }
         
-        UIView.transition(with: titleLabel, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-            self?.titleLabel.text = viewModel.title
-        }, completion: nil)
+//        UIView.transition(with: titleLabel, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
+//            self?.titleLabel.text = viewModel.title
+//        }, completion: nil)
     }
 }

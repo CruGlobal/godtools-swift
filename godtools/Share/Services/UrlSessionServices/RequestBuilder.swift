@@ -8,11 +8,7 @@
 
 import Foundation
 
-class RequestBuilder {
-    
-    required init() {
-        
-    }
+struct RequestBuilder {
     
     func buildRequest(session: URLSession, urlString: String, method: RequestMethod, headers: [String: String]?, httpBody: [String: Any]?) -> URLRequest {
         

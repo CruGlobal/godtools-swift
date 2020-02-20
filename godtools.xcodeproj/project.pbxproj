@@ -198,7 +198,6 @@
 		4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C26423FB45F200D3265B /* GlobalAnalytics.swift */; };
 		4575C27223FC37F100D3265B /* SessionDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27023FC37F100D3265B /* SessionDataOperation.swift */; };
 		4575C27323FC37F100D3265B /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27123FC37F100D3265B /* RequestBuilder.swift */; };
-		4575C27523FC3BAC00D3265B /* SessionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27423FC3BAC00D3265B /* SessionBuilder.swift */; };
 		4575C27723FC660A00D3265B /* SessionDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27623FC660A00D3265B /* SessionDataResponse.swift */; };
 		4575C27923FC6B1D00D3265B /* JsonServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27823FC6B1D00D3265B /* JsonServices.swift */; };
 		4575C27B23FC6B2D00D3265B /* JsonServicesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */; };
@@ -617,7 +616,6 @@
 		4575C26423FB45F200D3265B /* GlobalAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalAnalytics.swift; sourceTree = "<group>"; };
 		4575C27023FC37F100D3265B /* SessionDataOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDataOperation.swift; sourceTree = "<group>"; };
 		4575C27123FC37F100D3265B /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
-		4575C27423FC3BAC00D3265B /* SessionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionBuilder.swift; sourceTree = "<group>"; };
 		4575C27623FC660A00D3265B /* SessionDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDataResponse.swift; sourceTree = "<group>"; };
 		4575C27823FC6B1D00D3265B /* JsonServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServices.swift; sourceTree = "<group>"; };
 		4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonServicesType.swift; sourceTree = "<group>"; };
@@ -1506,7 +1504,6 @@
 			children = (
 				4575C27123FC37F100D3265B /* RequestBuilder.swift */,
 				4575C28023FC6EEA00D3265B /* RequestMethod.swift */,
-				4575C27423FC3BAC00D3265B /* SessionBuilder.swift */,
 				4575C27023FC37F100D3265B /* SessionDataOperation.swift */,
 				4575C27623FC660A00D3265B /* SessionDataResponse.swift */,
 				4575C28223FC711400D3265B /* SessionDataServices.swift */,
@@ -2760,7 +2757,6 @@
 				4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */,
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
-				4575C27523FC3BAC00D3265B /* SessionBuilder.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
 				4575C26523FB45F200D3265B /* GlobalAnalytics.swift in Sources */,

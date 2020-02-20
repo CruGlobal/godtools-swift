@@ -28,23 +28,15 @@ class GlobalActivityCellViewModel {
             count = numberFormatter.string(from: NSNumber(value: globalActivityAttribute.count)) ?? String(globalActivityAttribute.count)
         }
         
-        let localizedTitle: String
         switch globalActivityAttribute.activityType {
         case .users:
-            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.users.title", comment: "")
+            title = NSLocalizedString("accountActivity.globalAnalytics.users.title", comment: "")
         case .countries:
-            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.countries.title", comment: "")
+            title = NSLocalizedString("accountActivity.globalAnalytics.countries.title", comment: "")
         case .launches:
-            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.launches.title", comment: "")
+            title = NSLocalizedString("accountActivity.globalAnalytics.launches.title", comment: "")
         case .gospelPresentation:
-            localizedTitle = NSLocalizedString("accountActivity.globalAnalytics.gospelPresentation.title", comment: "")
-        }
-        
-        if isLoading {
-            title = NSLocalizedString("accountActivity.globalAnalytics.loading.prefix", comment: "") + "\n" + localizedTitle
-        }
-        else {
-            title = localizedTitle
+            title = NSLocalizedString("accountActivity.globalAnalytics.gospelPresentation.title", comment: "")
         }
         
         self.isLoading = isLoading
