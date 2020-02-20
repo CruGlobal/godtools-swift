@@ -10,7 +10,7 @@ import Foundation
 
 class AccountItemCellViewModel {
     
-    let itemView: UIView
+    let itemView: AccountItemViewType
     
     required init(item: AccountItem, globalActivityServices: GlobalActivityServicesType) {
         

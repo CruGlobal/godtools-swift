@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol AccountItemCellDelegate: class {
+    
+    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessage)
+}
+
 class AccountItemCell: UICollectionViewCell {
     
     static let nibName: String = "AccountItemCell"
     static let reuseIdentifier: String = "AccountItemCellReuseIdentifier"
+    
+    private weak var delegate: AccountItemCellDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -28,11 +35,22 @@ class AccountItemCell: UICollectionViewCell {
         }
     }
     
-    func configure(viewModel: AccountItemCellViewModel) {
+    func configure(viewModel: AccountItemCellViewModel, delegate: AccountItemCellDelegate?) {
             
+        self.delegate = delegate
+        
         clearItemParentView()
         contentView.addSubview(viewModel.itemView)
         viewModel.itemView.frame = itemParentView.bounds
         viewModel.itemView.constrainEdgesToSuperview()
+        viewModel.itemView.delegate = self
+    }
+}
+
+// MARK: - AccountItemViewDelegate
+
+extension AccountItemCell: AccountItemViewDelegate {
+    func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessage) {
+        delegate?.accountItemCellDidProcessAlertMessage(cell: self, alertMessage: alertMessage)
     }
 }

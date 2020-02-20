@@ -176,3 +176,6 @@ The app can be downloaded from https://godtoolsapp.com";
 "accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
 "accountActivity.globalAnalytics.launches.title" = "Sessions";
 "accountActivity.globalAnalytics.countries.title" = "Countries";
+
+// Alerts
+"alert.action.ok" = "OK";

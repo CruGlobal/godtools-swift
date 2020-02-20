@@ -15,6 +15,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     let globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> = ObservableValue(value: [])
     let isLoadingGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
     let didFailToGetGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
+    let alertMessage: ObservableValue<AlertMessage?> = ObservableValue(value: nil)
     
     required init(globalActivityServices: GlobalActivityServicesType) {
         
@@ -31,6 +32,10 @@ class AccountActivityViewModel: AccountActivityViewModelType {
                 }
             case .failure(let error):
                 self?.didFailToGetGlobalActivity.accept(value: true)
+                let errorCancelled: Bool = (error as NSError).code == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
+                if !errorCancelled {
+                    self?.alertMessage.accept(value: AlertMessage(title: "", message: error.localizedDescription))
+                }
             }
         }
     }

@@ -13,4 +13,5 @@ protocol AccountActivityViewModelType {
     var globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> { get }
     var isLoadingGlobalActivity: ObservableValue<Bool> { get }
     var didFailToGetGlobalActivity: ObservableValue<Bool> { get }
+    var alertMessage: ObservableValue<AlertMessage?> { get }
 }

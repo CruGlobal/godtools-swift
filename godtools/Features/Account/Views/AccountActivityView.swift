@@ -8,12 +8,14 @@
 
 import UIKit
 
-class AccountActivityView: UIView, NibBased {
+class AccountActivityView: UIView, NibBased, AccountItemViewType {
     
     private let viewModel: AccountActivityViewModel
     private let activityCollectionHeaderHeight: CGFloat = 76
     private let activityCollectionHorizontalEdgeInset: CGFloat = 34
     private let activityCollectionCellSpacing: CGFloat = 20
+    
+    weak var delegate: AccountItemViewDelegate?
     
     @IBOutlet weak private var activityCollectionView: UICollectionView!
     
@@ -74,6 +76,12 @@ class AccountActivityView: UIView, NibBased {
         
         viewModel.didFailToGetGlobalActivity.addObserver(self) { [weak self] (didFail: Bool) in
             self?.activityCollectionView.reloadData()
+        }
+        
+        viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessage?) in
+            if let view = self, let alertMessage = alertMessage {
+                self?.delegate?.accountItemViewDidProcessAlertMessage(itemView: view, alertMessage: alertMessage)
+            }            
         }
     }
 }

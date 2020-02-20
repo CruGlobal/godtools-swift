@@ -100,10 +100,13 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
             withReuseIdentifier: AccountItemCell.reuseIdentifier,
             for: indexPath) as! AccountItemCell
         
-        cell.configure(viewModel: AccountItemCellViewModel(
-            item: viewModel.items[indexPath.row],
-            globalActivityServices: viewModel.globalActivityServices
-        ))
+        cell.configure(
+            viewModel: AccountItemCellViewModel(
+                item: viewModel.items[indexPath.row],
+                globalActivityServices: viewModel.globalActivityServices
+            ),
+            delegate: self
+        )
         
         cell.backgroundColor = .systemPink
         
@@ -124,5 +127,18 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - AccountItemCellDelegate
+
+extension AccountView: AccountItemCellDelegate {
+    
+    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessage) {
+        
+        let viewModel = AlertMessageViewModel(title: alertMessage.title, message: alertMessage.message, handler: nil)
+        let view = AlertMessageView(viewModel: viewModel)
+        
+        present(view.controller, animated: true, completion: nil)
     }
 }
