@@ -40,7 +40,8 @@ class AccountItemCell: UICollectionViewCell {
         self.delegate = delegate
         
         clearItemParentView()
-        contentView.addSubview(viewModel.itemView)
+        
+        itemParentView.addSubview(viewModel.itemView)
         viewModel.itemView.frame = itemParentView.bounds
         viewModel.itemView.constrainEdgesToSuperview()
         viewModel.itemView.delegate = self
