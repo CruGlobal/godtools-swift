@@ -13,29 +13,41 @@ extension RequestResponse {
     func getResult<SuccessType: Decodable, ClientErrorType: Decodable>() -> RequestResult<SuccessType, ClientErrorType> {
         
         if let error = error {
+            
             return .failure(clientError: nil, error: error)
         }
-        else if let data = data {
+        else if httpStatusCode >= 200 && httpStatusCode < 201 {
             
-            if httpStatusCode >= 200 && httpStatusCode < 201 {
-                
-                do {
-                    let object: SuccessType = try JSONDecoder().decode(SuccessType.self, from: data)
-                    return .success(object: object)
-                }
-                catch let error {
-                    return .failure(clientError: nil, error: error)
-                }
+            guard let data = data else {
+                return .success(object: nil)
             }
-            else if httpStatusCode >= 400 {
-                
-                do {
-                    let object: ClientErrorType = try JSONDecoder().decode(ClientErrorType.self, from: data)
-                    return .failure(clientError: object, error: NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "An error on the client server occurred."]))
-                }
-                catch let error {
-                    return .failure(clientError: nil, error: error)
-                }
+            
+            do {
+                let object: SuccessType = try JSONDecoder().decode(SuccessType.self, from: data)
+                return .success(object: object)
+            }
+            catch let error {
+                return .failure(clientError: nil, error: error)
+            }
+        }
+        else if httpStatusCode >= 201 && httpStatusCode < 400 {
+            
+            return .success(object: nil)
+        }
+        else if httpStatusCode >= 400 {
+            
+            let clientError: Error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "An error on the client server occurred."])
+            
+            guard let data = data else {
+                return .failure(clientError: nil, error: clientError)
+            }
+            
+            do {
+                let object: ClientErrorType = try JSONDecoder().decode(ClientErrorType.self, from: data)
+                return .failure(clientError: object, error: clientError)
+            }
+            catch let error {
+                return .failure(clientError: nil, error: error)
             }
         }
         
