@@ -31,7 +31,7 @@ struct GlobalActivityServices: GlobalActivityServicesType {
         baseUrl = config.mobileContentApiBaseUrl
     }
         
-    var globalAnalyticsOperation: SessionDataOperation {
+    var globalAnalyticsOperation: RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.buildRequest(
             session: session,
@@ -41,11 +41,19 @@ struct GlobalActivityServices: GlobalActivityServicesType {
             httpBody: nil
         )
         
-        return SessionDataOperation(session: session, urlRequest: urlRequest)
+        return RequestOperation(session: session, urlRequest: urlRequest)
     }
 
-    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalAnalytics?, Error>) -> Void)) -> OperationQueue? {
+    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalAnalytics, RequestClientError>) -> Void)) -> OperationQueue? {
         
-        return getSessionDataObject(operation: globalAnalyticsOperation, complete: complete)
+        return globalAnalyticsOperation.executeRequest { (response: RequestResponse) in
+            
+            let result: RequestResult<GlobalAnalytics, RequestClientError> = response.getResult()
+            
+            DispatchQueue.main.async {
+                
+                complete(response, result)
+            }
+        }
     }
 }

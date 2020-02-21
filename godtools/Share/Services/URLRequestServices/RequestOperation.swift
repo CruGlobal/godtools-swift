@@ -1,14 +1,14 @@
 //
-//  SessionDataOperation.swift
+//  RequestOperation.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/18/20.
+//  Created by Levi Eggert on 2/21/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-class SessionDataOperation: Operation {
+class RequestOperation: Operation {
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -26,12 +26,22 @@ class SessionDataOperation: Operation {
     
     private var task: URLSessionDataTask?
     
-    var completion: ((_ response: SessionDataResponse) -> Void)?
+    var completion: ((_ response: RequestResponse) -> Void)?
     
     required init(session: URLSession, urlRequest: URLRequest) {
         self.session = session
         self.urlRequest = urlRequest
         super.init()
+    }
+    
+    func executeRequest(completion: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue? {
+        
+        self.completion = completion
+        
+        let queue: OperationQueue = OperationQueue()
+        queue.addOperations([self], waitUntilFinished: false)
+                
+        return queue
     }
     
     override func start() {
@@ -71,7 +81,7 @@ class SessionDataOperation: Operation {
             return
         }
         
-        completion(SessionDataResponse(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error))
+        completion(RequestResponse(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error))
     }
     
     // MARK: - State

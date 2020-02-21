@@ -1,40 +1,14 @@
 //
-//  SessionDataResponse.swift
+//  RequestResponse+Log.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/18/20.
+//  Created by Levi Eggert on 2/21/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct SessionDataResponse {
-        
-    let urlRequest: URLRequest
-    let data: Data?
-    let urlResponse: URLResponse?
-    let error: Error?
-        
-    var httpStatusCode: Int {
-        return (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
-    }
-    
-    var errorCode: Int? {
-        return (error as NSError?)?.code ?? nil
-    }
-    
-    var unauthorized: Bool {
-        return httpStatusCode == 401
-    }
-    
-    #if os(iOS)
-    var cancelled: Bool {
-        return errorCode == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
-    }
-    var notConnected: Bool {
-        return errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
-    }
-    #endif
+extension RequestResponse {
     
     func log() {
         

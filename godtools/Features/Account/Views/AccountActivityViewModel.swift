@@ -22,22 +22,29 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         isLoadingGlobalActivity.accept(value: true)
         globalActivityAttributes.accept(value: createGlobalActivityAttributes(attributes: nil))
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics { [weak self] (result: Result<GlobalAnalytics?, Error>) in
+        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalAnalytics, RequestClientError>) in
+            
             self?.isLoadingGlobalActivity.accept(value: false)
             
             switch result {
-            case .success(let globalAnalytics):
-                if let globalAnalytics = globalAnalytics {
-                    self?.globalActivityAttributes.accept(value: self?.createGlobalActivityAttributes(attributes: globalAnalytics.data.attributes) ?? [])
-                }
-            case .failure(let error):
+            
+            case .success(let globalActivity):
+                self?.globalActivityAttributes.accept(value: self?.createGlobalActivityAttributes(attributes: globalActivity?.data.attributes) ?? [])
+            
+            case .failure(let clientError, let error):
+                
                 self?.didFailToGetGlobalActivity.accept(value: true)
-                let errorCancelled: Bool = (error as NSError).code == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
-                if !errorCancelled {
-                    self?.alertMessage.accept(value: AlertMessage(title: "", message: error.localizedDescription))
+                
+                if !response.requestCancelled {
+                    self?.alertMessage.accept(
+                        value: AlertMessage(
+                            title: clientError?.title ?? "",
+                            message: clientError?.message ?? error.localizedDescription
+                        )
+                    )
                 }
             }
-        }
+        })
     }
     
     deinit {
