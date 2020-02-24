@@ -56,13 +56,14 @@ class AccountView: UIViewController {
             forCellWithReuseIdentifier: AccountItemCell.reuseIdentifier
         )
         
-        _ = addBarButtonItem(
-            to: .right,
-            image: ImageCatalog.navSettings.image,
-            color: nil,
-            target: self,
-            action: #selector(handleSettings(barButtonItem:))
-        )
+        // TODO: Add navigation gear icon in the future.  Disabling for now.  02/24/20.
+//        _ = addBarButtonItem(
+//            to: .right,
+//            image: ImageCatalog.navSettings.image,
+//            color: nil,
+//            target: self,
+//            action: #selector(handleSettings(barButtonItem:))
+//        )
     }
     
     private func setupBinding() {
