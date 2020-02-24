@@ -34,7 +34,7 @@ class RequestOperation: Operation {
         super.init()
     }
     
-    func executeRequest(completion: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue? {
+    func executeRequest(completion: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue {
         
         self.completion = completion
         

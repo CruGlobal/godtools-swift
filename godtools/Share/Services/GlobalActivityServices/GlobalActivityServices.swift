@@ -44,7 +44,7 @@ struct GlobalActivityServices: GlobalActivityServicesType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
 
-    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalAnalytics, RequestClientError>) -> Void)) -> OperationQueue? {
+    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
         
         return globalAnalyticsOperation.executeRequest { (response: RequestResponse) in
             
