@@ -8,9 +8,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="SF-Pro-Text-Light.otf">
-            <string>SFProText-Light</string>
-        </array>
         <array key="SF-Pro-Text-Semibold.otf">
             <string>SFProText-Semibold</string>
         </array>
@@ -21,7 +18,6 @@
                 <outlet property="headerView" destination="KOR-bH-3TB" id="0mi-US-xTs"/>
                 <outlet property="itemsCollectionView" destination="hdt-A5-OWM" id="bVS-Dx-8Hd"/>
                 <outlet property="itemsControl" destination="PDz-tb-0NA" id="HZv-Ry-VuH"/>
-                <outlet property="joinedLabel" destination="mmH-57-tlJ" id="ZRm-5k-bx9"/>
                 <outlet property="loadingProfileView" destination="GdP-lz-QhQ" id="SRd-7p-htJ"/>
                 <outlet property="nameLabel" destination="heM-pu-rNx" id="ZuU-Vc-mhl"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jce-JW-WOn"/>
@@ -61,12 +57,6 @@
                             <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joined April 10, 2019" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmH-57-tlJ" userLabel="joinedLabel">
-                            <rect key="frame" x="30" y="96.5" width="354" height="14.5"/>
-                            <fontDescription key="fontDescription" name="SFProText-Light" family="SF Pro Text" pointSize="12"/>
-                            <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="GdP-lz-QhQ" userLabel="loadingProfileView">
                             <rect key="frame" x="197" y="65.5" width="20" height="20"/>
                             <constraints>
@@ -79,12 +69,9 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="heM-pu-rNx" firstAttribute="centerY" secondItem="KOR-bH-3TB" secondAttribute="centerY" constant="2" id="1e0-6d-3pb"/>
-                        <constraint firstItem="mmH-57-tlJ" firstAttribute="top" secondItem="heM-pu-rNx" secondAttribute="bottom" constant="6" id="C5f-eQ-tjX"/>
                         <constraint firstItem="GdP-lz-QhQ" firstAttribute="centerX" secondItem="heM-pu-rNx" secondAttribute="centerX" id="FlK-0A-LaE"/>
-                        <constraint firstAttribute="trailing" secondItem="mmH-57-tlJ" secondAttribute="trailing" constant="30" id="Ofq-pn-9xc"/>
                         <constraint firstAttribute="trailing" secondItem="heM-pu-rNx" secondAttribute="trailing" constant="30" id="Qd5-OO-XNG"/>
                         <constraint firstItem="GdP-lz-QhQ" firstAttribute="centerY" secondItem="heM-pu-rNx" secondAttribute="centerY" id="YB1-QL-hYt"/>
-                        <constraint firstItem="mmH-57-tlJ" firstAttribute="leading" secondItem="KOR-bH-3TB" secondAttribute="leading" constant="30" id="nxF-kM-JhL"/>
                         <constraint firstItem="heM-pu-rNx" firstAttribute="leading" secondItem="KOR-bH-3TB" secondAttribute="leading" constant="30" id="uxF-SB-MQm"/>
                     </constraints>
                 </view>

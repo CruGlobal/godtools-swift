@@ -14,7 +14,6 @@ class AccountView: UIViewController {
     
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var nameLabel: UILabel!
-    @IBOutlet weak private var joinedLabel: UILabel!
     @IBOutlet weak private var loadingProfileView: UIActivityIndicatorView!
     @IBOutlet weak private var itemsControl: GTSegmentedControl!
     @IBOutlet weak private var itemsCollectionView: UICollectionView!
@@ -56,6 +55,14 @@ class AccountView: UIViewController {
             UINib(nibName: AccountItemCell.nibName, bundle: nil),
             forCellWithReuseIdentifier: AccountItemCell.reuseIdentifier
         )
+        
+        _ = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navSettings.image,
+            color: nil,
+            target: self,
+            action: #selector(handleSettings(barButtonItem:))
+        )
     }
     
     private func setupBinding() {
@@ -81,6 +88,10 @@ class AccountView: UIViewController {
             segments: viewModel.items,
             delegate: nil
         )
+    }
+    
+    @objc func handleSettings(barButtonItem: UIBarButtonItem) {
+        viewModel.settingsTapped()
     }
 }
 

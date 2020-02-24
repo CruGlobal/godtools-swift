@@ -15,4 +15,6 @@ protocol AccountViewModelType {
     var profileName: ObservableValue<(name: String, animated: Bool)> { get }
     var isLoadingProfile: ObservableValue<Bool> { get }
     var items: [AccountItem] { get }
+    
+    func settingsTapped()
 }

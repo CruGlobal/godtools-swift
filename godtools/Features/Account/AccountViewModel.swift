@@ -40,4 +40,8 @@ class AccountViewModel: AccountViewModelType {
             }
         }
     }
+    
+    func settingsTapped() {
+        print("TODO: AccountViewModel Implement settings.")
+    }
 }

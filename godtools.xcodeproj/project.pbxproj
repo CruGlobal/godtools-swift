@@ -150,6 +150,7 @@
 		4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */; };
 		4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */; };
 		4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */; };
+		455953DE24041259002330ED /* ImageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455953DD24041259002330ED /* ImageCatalog.swift */; };
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
@@ -572,6 +573,7 @@
 		4556AEE323E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundCellViewModel.swift; sourceTree = "<group>"; };
 		4556AEE523E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialGradientBackgroundView.swift; sourceTree = "<group>"; };
 		4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialBackgroundItem.swift; sourceTree = "<group>"; };
+		455953DD24041259002330ED /* ImageCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCatalog.swift; sourceTree = "<group>"; };
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
@@ -1549,6 +1551,7 @@
 			isa = PBXGroup;
 			children = (
 				4556AEDA23E2221E002C15E8 /* FontLibrary.swift */,
+				455953DD24041259002330ED /* ImageCatalog.swift */,
 				45D3C8AC23DF942100ECF70E /* Extensions */,
 				4556AEDC23E22241002C15E8 /* Objects */,
 				4556AEB423E1D97E002C15E8 /* Services */,
@@ -2750,6 +2753,7 @@
 				1E1A3B1120A0DEFB00EE60B6 /* TractEventProperties.swift in Sources */,
 				ECBE2E601EF04A6E00A13849 /* TractTextContent+UI.swift in Sources */,
 				4556AEB123E1D3D5002C15E8 /* Flow.swift in Sources */,
+				455953DE24041259002330ED /* ImageCatalog.swift in Sources */,
 				0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */,
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
