@@ -1,14 +1,14 @@
 //
-//  GTSegment.swift
+//  AlertMessage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/21/20.
+//  Created by Levi Eggert on 2/20/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct GTSegment: GTSegmentType {
-    let id: String
+struct AlertMessage {
     let title: String
+    let message: String
 }
