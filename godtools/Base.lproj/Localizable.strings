@@ -39,7 +39,7 @@
 
 // Tool Detail
 "about" = "About";
-"help" = "Help";
+"help" = "Frequently Asked Questions";
 "contact_us" = "Contact Us";
 "preview_mode_translators_only" = "Preview Mode (Translators Only)";
 "share_god_tools" = "Share the GodTools App";
@@ -124,8 +124,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "Download in progress" = "Download in progress";
 
 // Navigation
-"card_status1" = "PREV";
-"card_status2" = "NEXT";
+"card_status1" = "Prev";
+"card_status2" = "Next";
 
 // Language Name Strings
 "language_name_fa" = "Persian (Farsi)";
