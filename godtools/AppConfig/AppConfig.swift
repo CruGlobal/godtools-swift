@@ -51,14 +51,17 @@ struct AppConfig: ConfigType {
     
     var mobileContentApiBaseUrl: String {
         
+        let stagingUrl: String = "https://mobile-content-api-stage.cru.org"
+        let productionUrl: String = "https://mobile-content-api.cru.org"
+        
         switch build {
             
         case .staging:
-            return "https://mobile-content-api-stage.cru.org"
+            return stagingUrl
         case .production:
-            return "https://mobile-content-api.cru.org"
+            return productionUrl
         case .release:
-            return "https://mobile-content-api.cru.org"
+            return productionUrl
         }
     }
     
@@ -76,19 +79,6 @@ struct AppConfig: ConfigType {
     
     var googleAdwordsConversionId: String {
         return "uYJUCLG6tmoQ4cGaoAM"
-    }
-    
-    func logConfiguration() {
-        if isDebug {
-            print("AppConfig")
-            print("  isDebug: \(isDebug)")
-            print("  displayName: \(displayName)")
-            print("  appVersion: \(appVersion)")
-            print("  bundleVersion: \(bundleVersion)")
-            print("  configuration: \(configuration)")
-            print("  build: \(build)")
-            print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
-        }
     }
     
     // MARK: - Info.plist
@@ -115,5 +105,25 @@ struct AppConfig: ConfigType {
     
     private var configuration: String {
         return info["Configuration"] as? String ?? ""
+    }
+    
+    // MARK: - Log
+    
+    func logConfiguration() {
+        if isDebug {
+            print("AppConfig")
+            print("  build: \(build)")
+            print("  configuration: \(configuration)")
+            print("  isDebug: \(isDebug)")
+            print("  displayName: \(displayName)")
+            print("  appVersion: \(appVersion)")
+            print("  bundleVersion: \(bundleVersion)")
+            print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
+            print("  appsFlyerDevKey: \(appsFlyerDevKey)")
+            print("  googleAnalyticsApiKey: \(googleAnalyticsApiKey)")
+            print("  googleAdwordsLabel: \(googleAdwordsLabel)")
+            print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
+            print("")
+        }
     }
 }
