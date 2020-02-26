@@ -11,7 +11,6 @@ import PromiseKit
 import RealmSwift
 
 class DownloadedResourceManager: GTDataManager {    
-    let path = "/resources"
     
     func loadFromDisk() -> DownloadedResources {
         return findAllEntities(DownloadedResource.self)
@@ -191,7 +190,9 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     override func buildURL() -> URL? {
-        return Config.shared().baseUrl?
-                              .appendingPathComponent(self.path)
+        
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/resources"
+        return URL(string: baseUrl + path)
     }
 }

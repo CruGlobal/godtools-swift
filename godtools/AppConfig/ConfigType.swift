@@ -16,6 +16,9 @@ protocol ConfigType {
     var versionLabel: String { get }
     var mobileContentApiBaseUrl: String { get }
     var appsFlyerDevKey: String { get }
+    var googleAnalyticsApiKey: String { get }
+    var googleAdwordsConversionId: String { get }
+    var googleAdwordsLabel: String { get }
     
     func logConfiguration()
 }

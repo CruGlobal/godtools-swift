@@ -44,11 +44,6 @@ class GTDataManager: NSObject {
     }
         
     func issuePOSTRequest(_ params: Parameters) -> Promise<Data> {
-
-        #if DEBUG
-            let urlString = buildURL()?.absoluteString ?? ""
-            print("issuePOSTRequest: \(urlString): \(params)");
-        #endif
         
         return Alamofire
             .request(buildURL() ?? "",

@@ -25,7 +25,11 @@ struct AppConfig: ConfigType {
     }
     
     var build: AppBuild {
-        if let build = AppBuild(rawValue: configuration.lowercased()) {
+        
+        if !isDebug {
+            return .release
+        }
+        else if let build = AppBuild(rawValue: configuration.lowercased()) {
             return build
         }
         else if isDebug {
@@ -45,10 +49,6 @@ struct AppConfig: ConfigType {
         }
     }
     
-    var appsFlyerDevKey: String {
-        return "QdbVaVHi9bHRchUTWtoaij"
-    }
-    
     var mobileContentApiBaseUrl: String {
         
         switch build {
@@ -60,6 +60,22 @@ struct AppConfig: ConfigType {
         case .release:
             return "https://mobile-content-api.cru.org"
         }
+    }
+    
+    var appsFlyerDevKey: String {
+        return "QdbVaVHi9bHRchUTWtoaij"
+    }
+    
+    var googleAnalyticsApiKey: String {
+        return "UA-325725-50"
+    }
+    
+    var googleAdwordsLabel: String {
+        return "872849633"
+    }
+    
+    var googleAdwordsConversionId: String {
+        return "uYJUCLG6tmoQ4cGaoAM"
     }
     
     func logConfiguration() {
