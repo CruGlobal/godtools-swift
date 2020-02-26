@@ -18,6 +18,7 @@ enum FontLibrary: String {
     case sfProDisplayLight = "SFProDisplay-Light"
     case sfProTextLight = "SFProText-Light"
     case sfProTextRegular = "SFProText-Regular"
+    case sfProTextSemibold = "SFProText-Semibold"
     
     func font(size: CGFloat) -> UIFont? {
         

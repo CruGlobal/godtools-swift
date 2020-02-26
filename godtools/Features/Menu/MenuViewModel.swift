@@ -50,6 +50,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         let sections: [MenuSection] = [
             menuDataProvider.getMenuSection(id: .general),
+            menuDataProvider.getMenuSection(id: .account),
             menuDataProvider.getMenuSection(id: .share),
             menuDataProvider.getMenuSection(id: .legal)
         ]
@@ -64,38 +65,26 @@ class MenuViewModel: NSObject, MenuViewModelType {
                 
             case .general:
                 
-                if accountCreationIsSupported {
-                    
-                    if isAuthorized {
-                        items = [
-                            menuDataProvider.getMenuItem(id: .languageSettings),
-                            menuDataProvider.getMenuItem(id: .tutorial),
-                            menuDataProvider.getMenuItem(id: .logout),
-                            menuDataProvider.getMenuItem(id: .about),
-                            menuDataProvider.getMenuItem(id: .help),
-                            menuDataProvider.getMenuItem(id: .contactUs)
-                        ]
-                    }
-                    else if !isAuthorized {
-                        items = [
-                            menuDataProvider.getMenuItem(id: .languageSettings),
-                            menuDataProvider.getMenuItem(id: .tutorial),
-                            menuDataProvider.getMenuItem(id: .login),
-                            menuDataProvider.getMenuItem(id: .createAccount),
-                            menuDataProvider.getMenuItem(id: .about),
-                            menuDataProvider.getMenuItem(id: .help),
-                            menuDataProvider.getMenuItem(id: .contactUs)
-                        ]
-                    }
-                }
-                else if !accountCreationIsSupported {
-                    
+                items = [
+                    menuDataProvider.getMenuItem(id: .languageSettings),
+                    menuDataProvider.getMenuItem(id: .tutorial),
+                    menuDataProvider.getMenuItem(id: .about),
+                    menuDataProvider.getMenuItem(id: .help),
+                    menuDataProvider.getMenuItem(id: .contactUs)
+                ]
+                                
+            case .account:
+                
+                if isAuthorized {
                     items = [
-                        menuDataProvider.getMenuItem(id: .languageSettings),
-                        menuDataProvider.getMenuItem(id: .tutorial),
-                        menuDataProvider.getMenuItem(id: .about),
-                        menuDataProvider.getMenuItem(id: .help),
-                        menuDataProvider.getMenuItem(id: .contactUs)
+                        menuDataProvider.getMenuItem(id: .myAccount),
+                        menuDataProvider.getMenuItem(id: .logout)
+                    ]
+                }
+                else {
+                    items = [
+                        menuDataProvider.getMenuItem(id: .createAccount),
+                        menuDataProvider.getMenuItem(id: .login)
                     ]
                 }
                 
@@ -133,5 +122,9 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func tutorialTapped() {        
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
+    }
+    
+    func myAccountTapped() {
+        flowDelegate?.navigate(step: .myAccountTappedFromMenu)
     }
 }

@@ -56,6 +56,16 @@ extension MenuFlow: FlowDelegate {
             navigationController.dismiss(animated: true, completion: nil)
             self.tutorialFlow = nil
             
+        case .myAccountTappedFromMenu:
+            
+            let viewModel = AccountViewModel(
+                loginClient: appDiContainer.loginClient,
+                globalActivityServices: appDiContainer.globalActivityServices
+            )
+            let view = AccountView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
+            
         default:
             break
         }

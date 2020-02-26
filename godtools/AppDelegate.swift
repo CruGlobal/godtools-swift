@@ -34,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        appDiContainer.config.logConfiguration()
+        
         resetStateIfUITesting()
         
         loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,

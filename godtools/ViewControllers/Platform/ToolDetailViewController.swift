@@ -177,16 +177,18 @@ class ToolDetailViewController: BaseViewController {
         
         let aboutSegment = GTSegment(
             id: SegmentedControlId.about.rawValue,
-            title: String.localizedStringWithFormat(resource.isAvailableInLanguage(primaryLanguage) ? "about".localized(for: primaryLanguage?.code) ?? "about".localized : "about".localized, resource.totalViews)
+            title: String.localizedStringWithFormat(resource.isAvailableInLanguage(primaryLanguage) ? "about".localized(for: primaryLanguage?.code) ?? "about".localized : "about".localized, resource.totalViews).capitalized
         )
         
         let languageSement = GTSegment(
             id: SegmentedControlId.language.rawValue,
-            title: String.localizedStringWithFormat(localizedTotalLanguages.localized, resource.numberOfAvailableLanguages())
+            title: String.localizedStringWithFormat(localizedTotalLanguages.localized, resource.numberOfAvailableLanguages()).capitalized
         )
         
         detailsSegments = [aboutSegment, languageSement]
-        detailsControl.configure(segments: detailsSegments, delegate: self)
+        var detailsControlLayout = GTSegmentedControl.LayoutConfig.defaultLayout
+        detailsControlLayout.spacingBetweenSegments = 54
+        detailsControl.configure(segments: detailsSegments, delegate: self, layout: detailsControlLayout)
     }
     
     private var showsOpenToolButton: Bool {
@@ -343,7 +345,7 @@ extension ToolDetailViewController: TTTAttributedLabelDelegate {
 
 extension ToolDetailViewController: GTSegmentedControlDelegate {
     
-    func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegment, at index: Int) {
+    func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegmentType, at index: Int) {
         
         if let segmentId = SegmentedControlId(rawValue: segment.id) {
                     

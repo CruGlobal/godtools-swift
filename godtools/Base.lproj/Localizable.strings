@@ -24,10 +24,12 @@
 
 // Menu
 "menu_general" = "General";
+"menu_account" = "Account";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
 "menu.tutorial" = "Tutorial";
+"menu.my_account" = "My Account";
 
 // Login
 "login" = "Login";
@@ -163,3 +165,17 @@ The app can be downloaded from https://godtoolsapp.com";
 // OpenTutorial
 "openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
 "openTutorial.openTutorialButton.title" = "Open Tutorial";
+
+// Account
+"account.navTitle" = "My Profile";
+"account.activity.title" = "Activity";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Global Activity";
+"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
+"accountActivity.globalAnalytics.launches.title" = "Sessions";
+"accountActivity.globalAnalytics.countries.title" = "Countries";
+
+// Alerts
+"alert.action.ok" = "OK";

@@ -17,6 +17,7 @@ class AppDiContainer {
     let onboardingTutorialServices: OnboardingTutorialServicesType
     let tutorialServices: TutorialServicesType
     let analytics: GodToolsAnaltyics
+    let globalActivityServices: GlobalActivityServicesType
     
     required init() {
         
@@ -27,5 +28,6 @@ class AppDiContainer {
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
         analytics = GodToolsAnaltyics.shared
         analytics.appsFlyer = appsFlyer
+        globalActivityServices = GlobalActivityServices(config: config)
     }
 }

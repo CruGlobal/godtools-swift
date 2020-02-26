@@ -83,10 +83,10 @@
                     <rect key="frame" x="0.0" y="178" width="375" height="489"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYc-AD-3c6">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="503.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="517.5"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoj-58-Xtm" userLabel="detailsView">
-                                    <rect key="frame" x="0.0" y="295.5" width="375" height="208"/>
+                                    <rect key="frame" x="0.0" y="309.5" width="375" height="208"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVd-Gz-A8r" userLabel="detailsLabelsView">
                                             <rect key="frame" x="57.5" y="44" width="260" height="120"/>
@@ -125,7 +125,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7SW-QC-dbO" userLabel="detailsShadow">
-                                    <rect key="frame" x="0.0" y="265.5" width="375" height="30"/>
+                                    <rect key="frame" x="0.0" y="265.5" width="375" height="44"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8D-pv-wIq" userLabel="clipTopDetailsShadow">
@@ -133,10 +133,10 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="USz-Dm-Yeg" userLabel="detailsControl" customClass="GTSegmentedControl" customModule="godtools" customModuleProvider="target">
-                                    <rect key="frame" x="40" y="265.5" width="295" height="30"/>
+                                    <rect key="frame" x="0.0" y="265.5" width="375" height="44"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="hCv-Qw-Rgm"/>
+                                        <constraint firstAttribute="height" constant="44" id="hCv-Qw-Rgm"/>
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Falling Plates" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-LP-5i3" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
@@ -193,7 +193,7 @@
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="top" secondItem="d8D-pv-wIq" secondAttribute="bottom" id="GSG-Dn-rLV"/>
                                 <constraint firstItem="USz-Dm-Yeg" firstAttribute="top" secondItem="4bj-XL-FjG" secondAttribute="bottom" constant="50" id="I0o-NF-2d2"/>
                                 <constraint firstItem="4bj-XL-FjG" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="IK4-4C-tnA"/>
-                                <constraint firstItem="USz-Dm-Yeg" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" constant="40" id="Ita-T7-TAK"/>
+                                <constraint firstItem="USz-Dm-Yeg" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="Ita-T7-TAK"/>
                                 <constraint firstAttribute="trailing" secondItem="d8D-pv-wIq" secondAttribute="trailing" id="KHm-2a-BaZ"/>
                                 <constraint firstItem="aoj-58-Xtm" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="M5h-1G-luV"/>
                                 <constraint firstAttribute="trailing" secondItem="aoj-58-Xtm" secondAttribute="trailing" id="MmW-9x-LWl"/>
@@ -205,7 +205,7 @@
                                 <constraint firstItem="7SW-QC-dbO" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="YSv-VG-W8Z"/>
                                 <constraint firstItem="d8D-pv-wIq" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" id="ZHT-gc-XfC"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="centerX" secondItem="DYc-AD-3c6" secondAttribute="centerX" id="auX-TM-COk"/>
-                                <constraint firstAttribute="trailing" secondItem="USz-Dm-Yeg" secondAttribute="trailing" constant="40" id="doY-w3-6uf"/>
+                                <constraint firstAttribute="trailing" secondItem="USz-Dm-Yeg" secondAttribute="trailing" id="doY-w3-6uf"/>
                                 <constraint firstItem="1jS-vF-2Ds" firstAttribute="top" secondItem="XdA-LP-5i3" secondAttribute="bottom" constant="10" id="jVr-dy-p0m"/>
                                 <constraint firstItem="aoj-58-Xtm" firstAttribute="top" secondItem="USz-Dm-Yeg" secondAttribute="bottom" id="mXn-yn-H11"/>
                                 <constraint firstAttribute="trailing" secondItem="7SW-QC-dbO" secondAttribute="trailing" id="s8s-Or-yZw"/>

@@ -24,6 +24,12 @@ struct MenuDataProvider: MenuDataProviderType {
                 title: NSLocalizedString("menu_general", comment: "")
             )
             
+        case .account:
+            return MenuSection(
+                id: id,
+                title: NSLocalizedString("menu_account", comment: "")
+            )
+            
         case .share:
             return MenuSection(
                 id: id,
@@ -82,6 +88,12 @@ struct MenuDataProvider: MenuDataProviderType {
             return MenuItem(
                 id: id,
                 title: NSLocalizedString("create_account", comment: "")
+            )
+            
+        case .myAccount:
+            return MenuItem(
+                id: id,
+                title: NSLocalizedString("menu.my_account", comment: "")
             )
             
         case .shareGodTools:

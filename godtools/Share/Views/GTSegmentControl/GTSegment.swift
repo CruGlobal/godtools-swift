@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GTSegment {
+struct GTSegment: GTSegmentType {
     let id: String
     let title: String
 }
