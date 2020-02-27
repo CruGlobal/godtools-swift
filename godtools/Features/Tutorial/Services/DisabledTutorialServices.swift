@@ -10,6 +10,7 @@ import Foundation
 
 struct DisabledTutorialServices: TutorialServicesType {
     
+    let openTutorialCalloutDisabledSignal: Signal = Signal()
     let disabled: Bool
     
     init(disabled: Bool) {
@@ -30,5 +31,6 @@ struct DisabledTutorialServices: TutorialServicesType {
     
     func disableOpenTutorialCallout() {
         
+        openTutorialCalloutDisabledSignal.accept()
     }
 }
