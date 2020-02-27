@@ -12,6 +12,7 @@ protocol TutorialServicesType {
     
     var tutorialIsAvailable: Bool { get }
     var openTutorialCalloutIsAvailable: Bool { get }
+    var openTutorialCalloutDisabledSignal: Signal { get }
     
     func enableOpenTutorialCallout()
     func disableOpenTutorialCallout()

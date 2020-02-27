@@ -31,7 +31,8 @@ class MenuFlow: Flow {
             flowDelegate: self,
             loginClient: appDiContainer.loginClient,
             menuDataProvider: MenuDataProvider(),
-            deviceLanguage: DeviceLanguagePreferences()
+            deviceLanguage: DeviceLanguagePreferences(),
+            tutorialServices: appDiContainer.tutorialServices
         )
         menuView = MenuView(viewModel: viewModel)
     }

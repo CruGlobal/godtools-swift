@@ -14,6 +14,8 @@ struct TutorialServices: TutorialServicesType {
     
     private let languagePreferences: LanguagePreferencesType
     
+    let openTutorialCalloutDisabledSignal: Signal = Signal()
+    
     init(languagePreferences: LanguagePreferencesType) {
         self.languagePreferences = languagePreferences
     }
@@ -34,16 +36,21 @@ struct TutorialServices: TutorialServicesType {
     }
     
     func enableOpenTutorialCallout() {
+        
         UserDefaults.saveData(
             data: nil,
             key: TutorialServices.keyOpenTutorialCalloutDisabled
         )
+        
     }
     
     func disableOpenTutorialCallout() {
+        
         UserDefaults.saveData(
             data: true,
             key: TutorialServices.keyOpenTutorialCalloutDisabled
         )
+        
+        openTutorialCalloutDisabledSignal.accept()
     }
 }
