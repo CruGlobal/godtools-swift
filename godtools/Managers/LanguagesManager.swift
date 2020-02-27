@@ -12,9 +12,7 @@ import PromiseKit
 import RealmSwift
 
 class LanguagesManager: GTDataManager {
-    
-    let path = "languages"
-    
+        
     var selectingPrimaryLanguage = true
     
     static var _defaultLanguage: Language?
@@ -278,7 +276,8 @@ class LanguagesManager: GTDataManager {
     }
     
     override func buildURL() -> URL? {
-        return Config.shared().baseUrl?
-                              .appendingPathComponent(self.path)
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/languages"
+        return URL(string: baseUrl + path)
     }
 }

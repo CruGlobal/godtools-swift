@@ -215,10 +215,12 @@ class ArticleManager: GTDataManager {
     }
     
     func buildURL(aemSource: String) -> URL? {
-        return Config.shared().baseUrl?
-            .appendingPathComponent(aemSource)
+        
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/" + aemSource
+       
+        return URL(string: baseUrl + path)
     }
-    
 }
 
 
