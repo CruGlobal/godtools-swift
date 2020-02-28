@@ -8,7 +8,9 @@
 
 import Foundation
 
-class RequestOperation: Operation {
+class RequestOperation<SuccessType: Decodable, ErrorType: Decodable>: Operation {
+    
+    typealias Completion = ((_ response: RequestResponse, _ result: RequestResult<SuccessType, ErrorType>) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -25,8 +27,7 @@ class RequestOperation: Operation {
     private let urlRequest: URLRequest
     
     private var task: URLSessionDataTask?
-    
-    var completion: ((_ response: RequestResponse) -> Void)?
+    private var completion: Completion?
     
     required init(session: URLSession, urlRequest: URLRequest) {
         self.session = session
@@ -34,7 +35,7 @@ class RequestOperation: Operation {
         super.init()
     }
     
-    func executeRequest(completion: @escaping ((_ response: RequestResponse) -> Void)) -> OperationQueue {
+    func executeRequest(completion: @escaping Completion) -> OperationQueue {
         
         self.completion = completion
         
@@ -42,6 +43,10 @@ class RequestOperation: Operation {
         queue.addOperations([self], waitUntilFinished: false)
                 
         return queue
+    }
+    
+    func completionHandler(completion: @escaping Completion) {
+        self.completion = completion
     }
     
     override func start() {
@@ -81,7 +86,16 @@ class RequestOperation: Operation {
             return
         }
         
-        completion(RequestResponse(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error))
+        let response: RequestResponse = RequestResponse(
+            urlRequest: urlRequest,
+            data: data,
+            urlResponse: urlResponse,
+            error: error
+        )
+        
+        let result: RequestResult<SuccessType, ErrorType> = response.getResult()
+        
+        completion(response, result)
     }
     
     // MARK: - State

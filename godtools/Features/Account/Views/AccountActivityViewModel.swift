@@ -22,7 +22,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         isLoadingGlobalActivity.accept(value: true)
         globalActivityAttributes.accept(value: createGlobalActivityAttributes(attributes: nil))
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalAnalytics, RequestClientError>) in
+        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
             
             self?.isLoadingGlobalActivity.accept(value: false)
             
@@ -51,7 +51,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         getGlobalAnalyticsOperation?.cancelAllOperations()
     }
     
-    private func createGlobalActivityAttributes(attributes: GlobalAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
+    private func createGlobalActivityAttributes(attributes: GlobalActivityAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
         if let attributes = attributes {
             return [
                 GlobalActivityAttribute(activityType: .users, count: attributes.users),

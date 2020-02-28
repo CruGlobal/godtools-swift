@@ -8,51 +8,35 @@
 
 import Foundation
 
-struct GlobalActivityServices: GlobalActivityServicesType {
+class GlobalActivityServices: GlobalActivityServicesType {
     
-    private let session: URLSession
-    private let requestBuilder: RequestBuilder = RequestBuilder()
-    private let baseUrl: String
+    private let globalActivityApi: GlobalActivityAnalyticsApiType
+    private let globalActivityCache: GlobalActivityAnalyticsCacheType
     
-    init(config: ConfigType) {
+    required init(globalActivityApi: GlobalActivityAnalyticsApiType, globalActivityCache: GlobalActivityAnalyticsCacheType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
-        
-        baseUrl = config.mobileContentApiBaseUrl
+        self.globalActivityApi = globalActivityApi
+        self.globalActivityCache = globalActivityCache
     }
+    
+    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
         
-    var globalAnalyticsOperation: RequestOperation {
-        
-        let urlRequest: URLRequest = requestBuilder.buildRequest(
-            session: session,
-            urlString: baseUrl + "/analytics/global",
-            method: .get,
-            headers: nil,
-            httpBody: nil
-        )
-        
-        return RequestOperation(session: session, urlRequest: urlRequest)
-    }
-
-    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
-        
-        return globalAnalyticsOperation.executeRequest { (response: RequestResponse) in
+        return globalActivityApi.getGlobalAnalytics { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
             
-            let result: RequestResult<GlobalAnalytics, RequestClientError> = response.getResult()
-            
-            DispatchQueue.main.async {
+            switch result {
                 
+            case .success(let globalActivityAnalytics):
+                if let globalActivityAnalytics = globalActivityAnalytics {
+                    self?.globalActivityCache.cacheGlobalActivityAnalytics(globalAnalytics: globalActivityAnalytics)
+                }
                 complete(response, result)
+            case .failure( _, _):
+                if let cachedGlobalActivityAnalytics = self?.globalActivityCache.getGlobalActivityAnalytics() {
+                    complete(response, .success(object: cachedGlobalActivityAnalytics))
+                }
+                else {
+                    complete(response, result)
+                }
             }
         }
     }
