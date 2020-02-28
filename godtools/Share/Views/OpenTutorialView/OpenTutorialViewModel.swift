@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OpenTutorialViewModel: OpenTutorialViewModelType {
+class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     private let tutorialServices: TutorialServicesType
     private let analytics: GodToolsAnaltyics
@@ -28,18 +28,21 @@ class OpenTutorialViewModel: OpenTutorialViewModelType {
         showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
         openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
         hidesOpenTutorial = ObservableValue(value: (hidden: !tutorialServices.openTutorialCalloutIsAvailable, animated: false))
+        
+        super.init()
+        
+        tutorialServices.openTutorialCalloutDisabledSignal.addObserver(self) { [weak self] in
+            self?.hidesOpenTutorial.accept(value: (hidden: true, animated: true))
+        }
     }
     
     func openTutorialTapped() {
         tutorialServices.disableOpenTutorialCallout()
-        hidesOpenTutorial.accept(value: (hidden: true, animated: true))
         flowDelegate?.navigate(step: .openTutorialTapped)
     }
     
     func closeTapped() {
         tutorialServices.disableOpenTutorialCallout()
-        hidesOpenTutorial.accept(value: (hidden: true, animated: true))
-        
         analytics.recordActionForADBMobile(screenName: "home", actionName: "Tutorial Home Dismiss", data: ["cru.tutorial_home_dismiss": 1])
     }
 }

@@ -42,7 +42,12 @@ extension ToolsManager {
     }
     
     private func recordViewOnRemote(_ resource: DownloadedResource, quantity: NSNumber) -> Promise<String> {
-        return Alamofire.request((Config.shared().baseUrl?.appendingPathComponent(viewsPath))!,
+       
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/views"
+        let url = URL(string: baseUrl + path)
+        
+        return Alamofire.request(url!,
                           method: .post,
                           parameters: buildParameters(resource: resource, quantity: quantity),
                           encoding: URLEncoding.default,

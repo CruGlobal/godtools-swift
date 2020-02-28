@@ -59,33 +59,20 @@ struct AdobeAnalyticsConstants {
 }
 class GodToolsAnaltyics {
     
+    private let config: ConfigType = AppConfig()
+    private let tracker: GAITracker
     private let loggingEnabled: Bool = false
     
-    let tracker = GAI.sharedInstance().tracker(withTrackingId: Config().googleAnalyticsApiKey)
-    
     var previousScreenName = ""
-    var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics",
-                                                      qos: .background)
+    var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics", qos: .background)
     var appsFlyer: AppsFlyerType?
     
     static let shared: GodToolsAnaltyics = GodToolsAnaltyics()
     
     private init() {
         
-        let trackingID = Config().googleAnalyticsApiKey
-                
-        guard let gai = GAI.sharedInstance() else {
-            return
-        }
-        
-        gai.tracker(withTrackingId: trackingID)
-                        
-        #if DEBUG
-        // comment it out for now, it clutters debug window
-//            gai.logger.logLevel = .verbose
-            gai.dryRun = true
-        #endif
-        
+        tracker = GAI.sharedInstance().tracker(withTrackingId: config.googleAnalyticsApiKey)
+                                
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
@@ -98,16 +85,19 @@ class GodToolsAnaltyics {
         
         recordAdwordsConversion()
         
-        adobeAnalyticsBackgroundQueue.async { [unowned self] () in
-            self.configureAdobeAnalytics()
+        adobeAnalyticsBackgroundQueue.async { [weak self] () in
+            self?.configureAdobeAnalytics()
         }
     }
     
     private func recordAdwordsConversion() {
-        let conversionId = Config().googleAdwordsConversionId
-        let label = Config().googleAdwordsLabel
         
-        ACTConversionReporter.report(withConversionID: conversionId, label: label, value: "1.00", isRepeatable: false)
+        ACTConversionReporter.report(
+            withConversionID: config.googleAdwordsConversionId,
+            label: config.googleAdwordsLabel,
+            value: "1.00",
+            isRepeatable: false
+        )
     }
     
     private func configureAdobeAnalytics() {
@@ -152,7 +142,7 @@ class GodToolsAnaltyics {
     
     func recordScreenView(screenName: String, siteSection: String, siteSubSection: String) {
         
-        tracker?.set(kGAIScreenName, value: screenName)
+        tracker.set(kGAIScreenName, value: screenName)
         
         appsFlyer?.trackEvent(eventName: screenName, data: nil)
 
@@ -160,7 +150,7 @@ class GodToolsAnaltyics {
             return
         }
         
-        tracker?.send(screenViewInfo)
+        tracker.send(screenViewInfo)
         
         adobeAnalyticsBackgroundQueue.async { [unowned self] () in
             self.recordScreenViewInAdobe(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)

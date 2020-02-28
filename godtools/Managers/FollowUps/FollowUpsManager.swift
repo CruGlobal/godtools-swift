@@ -17,8 +17,6 @@ enum FollowUpError: Error {
 
 class FollowUpsManager: GTDataManager {
     
-    let path = "follow_ups"
-    
     func createSubscriber(params: [String: String]) -> Promise<Void>? {
         showNetworkingIndicator()
         
@@ -124,8 +122,10 @@ class FollowUpsManager: GTDataManager {
     }
     
     override func buildURL() -> URL? {
-        return Config.shared().baseUrl?
-            .appendingPathComponent(self.path)
+        
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/follow_ups"
+        
+        return URL(string: baseUrl + path)
     }
-
 }

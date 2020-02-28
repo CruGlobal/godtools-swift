@@ -27,9 +27,7 @@ class ToolsManager: GTDataManager {
         syncCachedRecordViews()
         registerDownloadCompletedObserver()
     }
-    
-    let viewsPath = "views"
-    
+        
     var resources = DownloadedResources()
     
     weak var delegate: ToolsManagerDelegate?

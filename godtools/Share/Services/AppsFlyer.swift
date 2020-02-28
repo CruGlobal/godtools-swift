@@ -36,7 +36,6 @@ class AppsFlyer: NSObject, AppsFlyerType {
         isConfigured = true
         
         let sharedAppsFlyer: AppsFlyerTracker = AppsFlyerTracker.shared()
-        sharedAppsFlyer.isDebug = config.isDebug
         sharedAppsFlyer.appsFlyerDevKey = config.appsFlyerDevKey
         sharedAppsFlyer.appleAppID = config.appleAppId
         sharedAppsFlyer.delegate = self

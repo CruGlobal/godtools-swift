@@ -25,7 +25,11 @@ struct AppConfig: ConfigType {
     }
     
     var build: AppBuild {
-        if let build = AppBuild(rawValue: configuration.lowercased()) {
+        
+        if !isDebug {
+            return .release
+        }
+        else if let build = AppBuild(rawValue: configuration.lowercased()) {
             return build
         }
         else if isDebug {
@@ -45,34 +49,36 @@ struct AppConfig: ConfigType {
         }
     }
     
-    var appsFlyerDevKey: String {
-        return "QdbVaVHi9bHRchUTWtoaij"
-    }
-    
     var mobileContentApiBaseUrl: String {
+        
+        let stagingUrl: String = "https://mobile-content-api-stage.cru.org"
+        let productionUrl: String = "https://mobile-content-api.cru.org"
         
         switch build {
             
         case .staging:
-            return "https://mobile-content-api-stage.cru.org"
+            return stagingUrl
         case .production:
-            return "https://mobile-content-api.cru.org"
+            return productionUrl
         case .release:
-            return "https://mobile-content-api.cru.org"
+            return productionUrl
         }
     }
     
-    func logConfiguration() {
-        if isDebug {
-            print("AppConfig")
-            print("  isDebug: \(isDebug)")
-            print("  displayName: \(displayName)")
-            print("  appVersion: \(appVersion)")
-            print("  bundleVersion: \(bundleVersion)")
-            print("  configuration: \(configuration)")
-            print("  build: \(build)")
-            print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
-        }
+    var appsFlyerDevKey: String {
+        return "QdbVaVHi9bHRchUTWtoaij"
+    }
+    
+    var googleAnalyticsApiKey: String {
+        return "UA-325725-50"
+    }
+    
+    var googleAdwordsLabel: String {
+        return "872849633"
+    }
+    
+    var googleAdwordsConversionId: String {
+        return "uYJUCLG6tmoQ4cGaoAM"
     }
     
     // MARK: - Info.plist
@@ -99,5 +105,25 @@ struct AppConfig: ConfigType {
     
     private var configuration: String {
         return info["Configuration"] as? String ?? ""
+    }
+    
+    // MARK: - Log
+    
+    func logConfiguration() {
+        if isDebug {
+            print("AppConfig")
+            print("  build: \(build)")
+            print("  configuration: \(configuration)")
+            print("  isDebug: \(isDebug)")
+            print("  displayName: \(displayName)")
+            print("  appVersion: \(appVersion)")
+            print("  bundleVersion: \(bundleVersion)")
+            print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
+            print("  appsFlyerDevKey: \(appsFlyerDevKey)")
+            print("  googleAnalyticsApiKey: \(googleAnalyticsApiKey)")
+            print("  googleAdwordsLabel: \(googleAdwordsLabel)")
+            print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
+            print("")
+        }
     }
 }

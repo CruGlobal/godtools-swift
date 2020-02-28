@@ -14,6 +14,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private let menuDataProvider: MenuDataProviderType
     private let deviceLanguage: DeviceLanguagePreferences
+    private let tutorialServices: TutorialServicesType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     
     private weak var flowDelegate: FlowDelegate?
@@ -21,12 +22,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let loginClient: TheKeyOAuthClient
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguagePreferences) {
+    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguagePreferences, tutorialServices: TutorialServicesType) {
         
         self.flowDelegate = flowDelegate
         self.loginClient = loginClient
         self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
+        self.tutorialServices = tutorialServices
         
         super.init()
                 
@@ -120,7 +122,8 @@ class MenuViewModel: NSObject, MenuViewModelType {
         )
     }
     
-    func tutorialTapped() {        
+    func tutorialTapped() {
+        tutorialServices.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
     }
     

@@ -7,7 +7,6 @@ PODS:
   - AppsFlyerFramework (5.1.0)
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
-  - CRUConfig (1.2.0)
   - Fabric (1.10.2)
   - FacebookCore (0.9.0):
     - FBSDKCoreKit (~> 5.0)
@@ -131,7 +130,6 @@ DEPENDENCIES:
   - Alamofire (~> 4.8)
   - AppsFlyerFramework (= 5.1.0)
   - Crashlytics
-  - CRUConfig (~> 1.2)
   - Fabric
   - FacebookCore
   - Firebase/Analytics
@@ -158,7 +156,6 @@ SPEC REPOS:
     - AppAuth
     - AppsFlyerFramework
     - Crashlytics
-    - CRUConfig
     - Fabric
     - FacebookCore
     - FBSDKCoreKit
@@ -196,7 +193,6 @@ SPEC CHECKSUMS:
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
   AppsFlyerFramework: b5e6d0d1718c445eeb151769e97246c00ae4628d
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  CRUConfig: 9f18a26fe5bc535f7bd6fb18de8acd088f6242c0
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FacebookCore: ba86524b66cfa86d0f8e65d08faa8504a9f732dd
   FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
@@ -229,6 +225,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 5bcecfc7e9ec618dcff4c051bc79b13616a23a97
+PODFILE CHECKSUM: 3557c61840633ad0d0da23d584f767aee2cf69c9
 
 COCOAPODS: 1.8.4

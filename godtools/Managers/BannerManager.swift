@@ -11,7 +11,6 @@ import PromiseKit
 import Crashlytics
 
 class BannerManager: GTDataManager {
-    let path = "attachments"
     
     override init() {
         super.init()
@@ -72,11 +71,12 @@ class BannerManager: GTDataManager {
     }
     
     func issueGETRequest(bannerId: String) -> Promise<Data> {
-        let url = Config.shared().baseUrl?
-            .appendingPathComponent(self.path)
-            .appendingPathComponent(bannerId)
-            .appendingPathComponent("download")
         
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/attachments"
+        
+        let url = URL(string: baseUrl + path + "/" + bannerId + "/download")
+                    
         return Alamofire.request(url!).responseData().then { rv -> Promise<Data> in
             .value(rv.data)
         }

@@ -15,8 +15,6 @@ import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
     
-    let path = "translations"
-    
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
@@ -253,9 +251,10 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func buildURL(translationId: String) -> URL? {
-        return Config.shared().baseUrl?
-                              .appendingPathComponent(self.path)
-                              .appendingPathComponent(translationId)
+        
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/translations"
+        return URL(string: baseUrl + path + "/" + translationId)
     }
     
     private func primaryDownloadComplete(translation: Translation) {
