@@ -31,7 +31,7 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
         
-    var globalAnalyticsOperation: RequestOperation<GlobalActivityAnalytics, RequestClientError> {
+    private var globalAnalyticsOperation: RequestOperation<GlobalActivityAnalytics, RequestClientError> {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,
