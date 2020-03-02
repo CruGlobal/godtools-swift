@@ -10,8 +10,6 @@ import Foundation
 
 protocol AccountActivityViewModelType {
     
-    var globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> { get }
-    var isLoadingGlobalActivity: ObservableValue<Bool> { get }
-    var didFailToGetGlobalActivity: ObservableValue<Bool> { get }
+    var globalActivityResults: ObservableValue<GlobalActivityResults> { get }
     var alertMessage: ObservableValue<AlertMessage?> { get }
 }

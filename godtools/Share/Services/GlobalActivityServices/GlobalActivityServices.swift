@@ -19,10 +19,14 @@ class GlobalActivityServices: GlobalActivityServicesType {
         self.globalActivityCache = globalActivityCache
     }
     
+    var cachedGlobalAnalytics: GlobalActivityAnalytics? {
+        return globalActivityCache.getGlobalActivityAnalytics()
+    }
+    
     func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
         
         return globalActivityApi.getGlobalAnalytics { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
-            
+                        
             switch result {
                 
             case .success(let globalActivityAnalytics):

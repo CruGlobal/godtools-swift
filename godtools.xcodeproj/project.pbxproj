@@ -222,6 +222,7 @@
 		457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C123E8BAE50049D236 /* MenuDataProvider.swift */; };
 		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
 		457719C623E8C3BA0049D236 /* MenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C523E8C3BA0049D236 /* MenuFlow.swift */; };
+		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
 		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */; };
 		45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */; };
@@ -648,6 +649,7 @@
 		457719C123E8BAE50049D236 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
 		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
 		457719C523E8C3BA0049D236 /* MenuFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFlow.swift; sourceTree = "<group>"; };
+		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApi.swift; sourceTree = "<group>"; };
 		45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApiType.swift; sourceTree = "<group>"; };
@@ -1526,6 +1528,7 @@
 				4575C24F23FAF7C200D3265B /* AccountItem.swift */,
 				4575C25323FB332000D3265B /* AccountItemId.swift */,
 				4575C28C23FC8E8500D3265B /* GlobalActivityAttribute.swift */,
+				45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2580,6 +2583,7 @@
 				457719C623E8C3BA0049D236 /* MenuFlow.swift in Sources */,
 				45668E6F23E0E1CC002728E7 /* OnboardingTutorialViewModel.swift in Sources */,
 				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
+				45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,

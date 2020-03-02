@@ -10,5 +10,7 @@ import Foundation
 
 protocol GlobalActivityServicesType {
         
+    var cachedGlobalAnalytics: GlobalActivityAnalytics? { get }
+    
     func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue
 }
