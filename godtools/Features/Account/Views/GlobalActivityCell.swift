@@ -12,9 +12,7 @@ class GlobalActivityCell: UICollectionViewCell {
     
     static let nibName: String = "GlobalActivityCell"
     static let reuseIdentifier: String = "GlobalActivityCellReuseIdentifier"
-    
-    private let delayCountLabel: BlockBasedTimer = BlockBasedTimer()
-    
+        
     @IBOutlet weak private var countLabel: UILabel!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -22,10 +20,6 @@ class GlobalActivityCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupLayout()
-    }
-    
-    deinit {
-        delayCountLabel.stop()
     }
     
     private func setupLayout() {
