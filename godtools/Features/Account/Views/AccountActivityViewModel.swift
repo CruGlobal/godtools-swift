@@ -12,28 +12,33 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     
     private var getGlobalAnalyticsOperation: OperationQueue?
     
-    let globalActivityAttributes: ObservableValue<[GlobalActivityAttribute]> = ObservableValue(value: [])
-    let isLoadingGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
-    let didFailToGetGlobalActivity: ObservableValue<Bool> = ObservableValue(value: false)
+    let globalActivityResults: ObservableValue<GlobalActivityResults> = ObservableValue(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: []))
     let alertMessage: ObservableValue<AlertMessage?> = ObservableValue(value: nil)
     
     required init(globalActivityServices: GlobalActivityServicesType) {
         
-        isLoadingGlobalActivity.accept(value: true)
-        globalActivityAttributes.accept(value: createGlobalActivityAttributes(attributes: nil))
+        let cachedAttributes: GlobalActivityAnalytics.Data.Attributes? = globalActivityServices.cachedGlobalAnalytics?.data.attributes
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalAnalytics, RequestClientError>) in
-            
-            self?.isLoadingGlobalActivity.accept(value: false)
-            
+        let globalActivityAttributes: [GlobalActivityAttribute] = createGlobalActivityAttributes(attributes: cachedAttributes ?? nil)
+        
+        globalActivityResults.accept(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: globalActivityAttributes))
+        
+        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
+                        
             switch result {
             
             case .success(let globalActivity):
-                self?.globalActivityAttributes.accept(value: self?.createGlobalActivityAttributes(attributes: globalActivity?.data.attributes) ?? [])
+                
+                let attributes = globalActivity?.data.attributes
+                let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: attributes) ?? []
+                
+                self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: false, globalActivityAttributes: globalActivityAttributes))
             
             case .failure(let clientError, let error):
+                                
+                let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: nil) ?? []
                 
-                self?.didFailToGetGlobalActivity.accept(value: true)
+                self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
                 
                 if !response.requestCancelled {
                     self?.alertMessage.accept(
@@ -51,7 +56,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         getGlobalAnalyticsOperation?.cancelAllOperations()
     }
     
-    private func createGlobalActivityAttributes(attributes: GlobalAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
+    private func createGlobalActivityAttributes(attributes: GlobalActivityAnalytics.Data.Attributes?) -> [GlobalActivityAttribute] {
         if let attributes = attributes {
             return [
                 GlobalActivityAttribute(activityType: .users, count: attributes.users),

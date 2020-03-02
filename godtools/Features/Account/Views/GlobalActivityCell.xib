@@ -38,7 +38,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Z0e-l7-dNr" userLabel="loadingView">
-                        <rect key="frame" x="140" y="136" width="20" height="20"/>
+                        <rect key="frame" x="270" y="170.5" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="0Yf-fK-EzY"/>
                             <constraint firstAttribute="width" constant="20" id="tcV-9C-Tvs"/>
@@ -48,12 +48,12 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="Z0e-l7-dNr" firstAttribute="centerY" secondItem="AOp-v3-RXH" secondAttribute="centerY" id="05V-W4-is5"/>
                     <constraint firstItem="AOp-v3-RXH" firstAttribute="centerY" secondItem="2hB-BP-MYI" secondAttribute="centerY" constant="-4" id="FRN-M4-8mZ"/>
                     <constraint firstItem="oTM-hI-mWS" firstAttribute="leading" secondItem="2hB-BP-MYI" secondAttribute="leading" id="KUy-gQ-sph"/>
                     <constraint firstItem="AOp-v3-RXH" firstAttribute="leading" secondItem="2hB-BP-MYI" secondAttribute="leading" constant="20" id="OPj-KW-C5u"/>
+                    <constraint firstItem="Z0e-l7-dNr" firstAttribute="centerY" secondItem="oTM-hI-mWS" secondAttribute="centerY" id="PUn-nX-dtH"/>
                     <constraint firstAttribute="trailing" secondItem="AOp-v3-RXH" secondAttribute="trailing" constant="20" id="VtP-bB-TBy"/>
-                    <constraint firstItem="Z0e-l7-dNr" firstAttribute="centerX" secondItem="AOp-v3-RXH" secondAttribute="centerX" id="fxP-Pa-UUh"/>
+                    <constraint firstAttribute="trailing" secondItem="Z0e-l7-dNr" secondAttribute="trailing" constant="10" id="bWG-9Y-jlg"/>
                     <constraint firstAttribute="trailing" secondItem="oTM-hI-mWS" secondAttribute="trailing" id="l98-2W-HpN"/>
                     <constraint firstItem="oTM-hI-mWS" firstAttribute="top" secondItem="AOp-v3-RXH" secondAttribute="bottom" constant="12" id="oWW-0d-EwR"/>
                 </constraints>

@@ -12,9 +12,7 @@ class GlobalActivityCell: UICollectionViewCell {
     
     static let nibName: String = "GlobalActivityCell"
     static let reuseIdentifier: String = "GlobalActivityCellReuseIdentifier"
-    
-    private let delayCountLabel: BlockBasedTimer = BlockBasedTimer()
-    
+        
     @IBOutlet weak private var countLabel: UILabel!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -22,10 +20,6 @@ class GlobalActivityCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupLayout()
-    }
-    
-    deinit {
-        delayCountLabel.stop()
     }
     
     private func setupLayout() {
@@ -48,27 +42,16 @@ class GlobalActivityCell: UICollectionViewCell {
         if viewModel.isLoading {
             loadingView.alpha = 1
             loadingView.startAnimating()
-            countLabel.alpha = 0
         }
         else {
-            countLabel.alpha = 0
-            let randomDelay: Double = Double.random(in: 0.05 ..< 0.75)
-            delayCountLabel.start(timeInterval: randomDelay, repeats: false) { [weak self] in
-                
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                    self?.countLabel.alpha = 1
-                    self?.loadingView.alpha = 0
-                }) { (finished: Bool) in
-                    if finished {
-                        self?.loadingView.stopAnimating()
-                        self?.loadingView.alpha = 1
-                    }
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.loadingView.alpha = 0
+            }) { [weak self] (finished: Bool) in
+                if finished {
+                    self?.loadingView.stopAnimating()
+                    self?.loadingView.alpha = 1
                 }
             }
         }
-        
-//        UIView.transition(with: titleLabel, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
-//            self?.titleLabel.text = viewModel.title
-//        }, completion: nil)
     }
 }

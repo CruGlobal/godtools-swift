@@ -1,16 +1,14 @@
 //
-//  GlobalActivityServicesType.swift
+//  GlobalActivityAnalyticsApiType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/17/20.
+//  Created by Levi Eggert on 2/28/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol GlobalActivityServicesType {
-        
-    var cachedGlobalAnalytics: GlobalActivityAnalytics? { get }
+protocol GlobalActivityAnalyticsApiType {
     
     func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue
 }
