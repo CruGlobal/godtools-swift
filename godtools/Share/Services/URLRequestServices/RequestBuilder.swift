@@ -10,12 +10,12 @@ import Foundation
 
 struct RequestBuilder {
     
-    func buildRequest(session: URLSession, urlString: String, method: RequestMethod, headers: [String: String]?, httpBody: [String: Any]?) -> URLRequest {
+    func build(session: URLSession, urlString: String, method: RequestMethod, headers: [String: String]?, httpBody: [String: Any]?) -> URLRequest {
         
         let url: URL? = URL(string: urlString)
         
         if let url = url {
-            let result: Result<URLRequest, Error> = buildRequest(session: session, url: url, method: method, headers: headers, httpBody: httpBody)
+            let result: Result<URLRequest, Error> = build(session: session, url: url, method: method, headers: headers, httpBody: httpBody)
             switch result {
             case .success(let request):
                 return request
@@ -31,7 +31,7 @@ struct RequestBuilder {
         }
     }
     
-    func buildRequest(session: URLSession, url: URL, method: RequestMethod, headers: [String: String]?, httpBody: [String: Any]?) -> Result<URLRequest, Error> {
+    func build(session: URLSession, url: URL, method: RequestMethod, headers: [String: String]?, httpBody: [String: Any]?) -> Result<URLRequest, Error> {
         
         let configuration = session.configuration
         

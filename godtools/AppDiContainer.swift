@@ -28,6 +28,9 @@ class AppDiContainer {
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
         analytics = GodToolsAnaltyics.shared
         analytics.appsFlyer = appsFlyer
-        globalActivityServices = GlobalActivityServices(config: config)
+        globalActivityServices = GlobalActivityServices(
+            globalActivityApi: GlobalActivityAnalyticsApi(config: config),
+            globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
+        )
     }
 }

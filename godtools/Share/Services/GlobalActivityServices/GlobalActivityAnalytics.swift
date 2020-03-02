@@ -1,16 +1,16 @@
 //
-//  GlobalAnalytics.swift
+//  GlobalActivityAnalyticsGlobal.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/17/20.
+//  Created by Levi Eggert on 2/28/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct GlobalAnalytics: Codable {
- 
-    let data: GlobalAnalytics.Data
+struct GlobalActivityAnalytics: Codable {
+    
+    let data: GlobalActivityAnalytics.Data
     
     enum CodingKeys: String, CodingKey {
         case data = "data"
@@ -20,7 +20,7 @@ struct GlobalAnalytics: Codable {
         
         let id: String
         let type: String
-        let attributes: GlobalAnalytics.Data.Attributes
+        let attributes: GlobalActivityAnalytics.Data.Attributes
         
         enum CodingKeys: String, CodingKey {
             case id = "id"

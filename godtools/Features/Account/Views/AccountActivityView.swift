@@ -66,15 +66,7 @@ class AccountActivityView: UIView, NibBased, AccountItemViewType {
     
     private func setupBinding() {
         
-        viewModel.globalActivityAttributes.addObserver(self) { [weak self] (attributes: [GlobalActivityAttribute]) in
-            self?.activityCollectionView.reloadData()
-        }
-        
-        viewModel.isLoadingGlobalActivity.addObserver(self) { [weak self] (isLoading: Bool) in
-            self?.activityCollectionView.reloadData()
-        }
-        
-        viewModel.didFailToGetGlobalActivity.addObserver(self) { [weak self] (didFail: Bool) in
+        viewModel.globalActivityResults.addObserver(self) { [weak self] (results: GlobalActivityResults) in
             self?.activityCollectionView.reloadData()
         }
         
@@ -95,7 +87,10 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.globalActivityAttributes.value.count
+        
+        let globalActivityResults: GlobalActivityResults = viewModel.globalActivityResults.value
+        
+        return globalActivityResults.globalActivityAttributes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -104,11 +99,13 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
             withReuseIdentifier: GlobalActivityCell.reuseIdentifier,
             for: indexPath) as! GlobalActivityCell
              
-        let globalActivityAttributes = viewModel.globalActivityAttributes.value[indexPath.row]
+        let globalActivityResults: GlobalActivityResults = viewModel.globalActivityResults.value
+        let globalActivityAttribute: GlobalActivityAttribute = globalActivityResults.globalActivityAttributes[indexPath.row]
+        
         let cellViewModel = GlobalActivityCellViewModel(
-            globalActivityAttribute: globalActivityAttributes,
-            isLoading: viewModel.isLoadingGlobalActivity.value,
-            errorOccurred: viewModel.didFailToGetGlobalActivity.value
+            globalActivityAttribute: globalActivityAttribute,
+            isLoading: globalActivityResults.isLoading,
+            errorOccurred: globalActivityResults.didFail
         )
         
         cell.configure(viewModel: cellViewModel)
