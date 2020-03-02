@@ -1,13 +1,3 @@
-"language_name_fa" = "Персийски (фарси)";
-"downloadprogress" = "Процес на изтегляне";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Отворете инструмента";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Назад";
-
-"card_status2" = "Напред";
 "language_onboard" = "80+ Езика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Споделете";
 "menu_legal" = "Правни условия";
 "language_settings" = "Езикови настройки";
-
 // Login
 "login" = "Вписване";
 "logout" = "Изход";
@@ -98,6 +87,8 @@
 "done" = "Направено";
 "remove" = "Отстраняване";
 "clear" = "Изтриване";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Отворете инструмента";
 
 // Alerts
 "error" = "Грешка";
@@ -118,3 +109,14 @@
 "general_about_8" = "Посетете godtoolsapp.com за повече информация.";
 "general_about_9" = "Като поемате инициативата да споделите Вашата вяра, запомнете, че Бог е този, който променя сърцето. Обичайте всеки човек, като слушате, за да разберете.";
 "general_about_10" = "\"Това, което говорите, да бъде винаги с благодат, подправено със сол, за да знаете как трябва да отговаряте на всекиго.\" Колосяни 4:6";
+
+// Downloads
+"Download in progress" = "Процес на изтегляне";
+
+// Navigation
+"card_status1" = "Назад";
+"card_status2" = "Напред";
+
+// Language Name Strings
+"language_name_fa" = "Персийски (фарси)";
+

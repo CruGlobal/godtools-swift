@@ -1,13 +1,3 @@
-"language_name_fa" = "Persisk (Farsi)";
-"downloadprogress" = "Download i gang";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Åbn værktøj";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Forr.";
-
-"card_status2" = "Næste";
 "language_onboard" = "Over 80 sprog";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Del";
 "menu_legal" = "Juridisk";
 "language_settings" = "Sprogindstillinger";
-
 // Login
 "login" = "Log på";
 "logout" = "Log af";
@@ -98,6 +87,8 @@ Appen kan downloades fra https://godtoolsapp.com";
 "done" = "Fuldfør";
 "remove" = "Fjern";
 "clear" = "Ryd";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Åbn værktøj";
 
 // Alerts
 "error" = "Fejl";
@@ -118,3 +109,14 @@ Appen kan downloades fra https://godtoolsapp.com";
 "general_about_8" = "Besøg godtoolsapp.com for at få flere oplysninger.";
 "general_about_9" = "Når du tager initiativ til at dele din tro, skal du huske, at Gud er den, som ændrer hjertet. Elsk alle personer ved at lytte og forstå dem.";
 "general_about_10" = "\"Eders Tale være altid med Ynde, krydret med Salt, saa I vide, hvorledes I bør svare enhver især.\" Kolossenserne 4:6";
+
+// Downloads
+"Download in progress" = "Download i gang";
+
+// Navigation
+"card_status1" = "Forr.";
+"card_status2" = "Næste";
+
+// Language Name Strings
+"language_name_fa" = "Persisk (Farsi)";
+

@@ -1,13 +1,3 @@
-"language_name_fa" = "Ba Tư (Farsi)";
-"downloadprogress" = "Đang tải về";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Mở Công cụ";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Trước";
-
-"card_status2" = "Tiếp theo";
 "language_onboard" = "Hơn 80 Ngôn ngữ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Chia sẻ";
 "menu_legal" = "Hợp pháp";
 "language_settings" = "Các thiết lập ngôn ngữ";
-
 // Login
 "login" = "Đăng nhập";
 "logout" = "Đăng xuất";
@@ -98,6 +87,8 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "done" = "Đã xong";
 "remove" = "Loại bỏ";
 "clear" = "Rõ ràng";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Mở Công cụ";
 
 // Alerts
 "error" = "Lỗi";
@@ -118,3 +109,14 @@ Một phiên bản trực tuyến có thể tìm thấy ở https://knowgod.com/
 "general_about_8" = "Ghé thăm godtoolsapp.com để biết thêm thông tin.";
 "general_about_9" = "Vì bạn đã bắt đầu chia sẻ niềm tin của mình, hãy ghi nhớ rằng Chúa là người thay đổi trái tim. Hãy yêu thương từng người thật tốt bằng cách lắng nghe để thấu hiểu.";
 "general_about_10" = "\"Hãy để cuộc hội thoại của bạn luôn chứa đầy sự duyên dáng, nồng nhiệt để bạn có thể biết cách trả lời mọi người.\" Colossians 4:6";
+
+// Downloads
+"Download in progress" = "Đang tải về";
+
+// Navigation
+"card_status1" = "Trước";
+"card_status2" = "Tiếp theo";
+
+// Language Name Strings
+"language_name_fa" = "Ba Tư (Farsi)";
+

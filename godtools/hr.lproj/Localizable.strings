@@ -1,13 +1,3 @@
-"language_name_fa" = "Perzijski (farsi)";
-"downloadprogress" = "Preuzimanje u tijeku";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Otvorite alat";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Pret.";
-
-"card_status2" = "Sljedeći";
 "language_onboard" = "Više od 80 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Podijeli";
 "menu_legal" = "Pravno";
 "language_settings" = "Postavke jezika";
-
 // Login
 "login" = "Prijava";
 "logout" = "Odjava";
@@ -98,6 +87,8 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 "done" = "Gotovo";
 "remove" = "Ukloni";
 "clear" = "Očisti";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otvorite alat";
 
 // Alerts
 "error" = "Pogreška";
@@ -118,3 +109,14 @@ Aplikaciju je moguće preuzeti na adresi: http://godtoolsapp.com";
 "general_about_8" = "Posjetite godtoolsapp.com za više informacija.";
 "general_about_9" = "Kada poduzmete inicijativu dijeljenja svoje vjere, zapamtite da je Bog taj koji mijenja srce. Ljubite svaku osobu slušajući kako biste razumijeli.";
 "general_about_10" = "\"Neka vaš razgovor uvijek bude pun milosti, začinjen solju kako biste mogli odgovoriti svima.\" Kološanima 4:6";
+
+// Downloads
+"Download in progress" = "Preuzimanje u tijeku";
+
+// Navigation
+"card_status1" = "Pret.";
+"card_status2" = "Sljedeći";
+
+// Language Name Strings
+"language_name_fa" = "Perzijski (farsi)";
+

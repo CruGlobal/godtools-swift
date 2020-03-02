@@ -1,13 +1,3 @@
-"language_name_fa" = "ພາສາເປີເຊຍ";
-"downloadprogress" = "ກຳລັງດາວໂຫລດຢູ່";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "ເປີດເຄື່ອງມື";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "ກ່ອນ";
-
-"card_status2" = "ຖັດໄປ";
 "language_onboard" = "80+ ພາສາ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "ແບ່ງປັນ";
 "menu_legal" = "ກົດໝາຍ";
 "language_settings" = "ການຕັ້ງຄ່າພາສາ";
-
 // Login
 "login" = "ເຂົ້າສູ່ລະບົບ";
 "logout" = "ອອກຈາກລະບົບ";
@@ -97,6 +86,8 @@
 "done" = "ສຳເລັດແລ້ວ";
 "remove" = "ນຳອອກໄປ";
 "clear" = "ລຶບລ້າງ";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ເປີດເຄື່ອງມື";
 
 // Alerts
 "error" = "ຜິດພາດ";
@@ -117,3 +108,14 @@
 "general_about_8" = "ເຂົ້າໄປທີ່ godtoolsapp.com ເພື່ອຊອກຫາຂໍ້ມູນເພີ່ມເຕີມ.";
 "general_about_9" = "ໃນການທີ່ທ່ານຈະເຜີຍແພ່ ຄວາມເຊື່ອ ຫຼື ສັດທາ ທີ່ທ່ານມີຕໍ່ພຣະຜູ້ເປັນເຈົ້າ, ໃຫ້ທ່ານຈື່ໄວ້ສະເໝີວ່າ ພຣະອົງເປັນຜູ້ປ່ຽນແປງຈິດໃຈ. ສະນັ້ນ ຂໍໃຫ້ເປີດໃຈຟັງຢ່າງເຂົ້າໃຈ.";
 "general_about_10" = "“ຈົ່ງໃຫ້ວາຈາຂອງເຈົ້າທັງຫຼາຍປະກອບດ້ວຍເມດຕາຄຸນຢູ່ສະເໝີ ປະສົມດ້ວຍເກືອ ເພື່ອເຈົ້າທັງຫຼາຍຈະໄດ້ຮູ້ວິທີຕອບທີ່ຖືກໃຈແກ່ທຸກຄົນ.” ໂກໂລຊາຍ 4:6";
+
+// Downloads
+"Download in progress" = "ກຳລັງດາວໂຫລດຢູ່";
+
+// Navigation
+"card_status1" = "ກ່ອນ";
+"card_status2" = "ຖັດໄປ";
+
+// Language Name Strings
+"language_name_fa" = "ພາສາເປີເຊຍ";
+

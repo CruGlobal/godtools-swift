@@ -1,13 +1,3 @@
-"language_name_fa" = "फ़ारसी";
-"downloadprogress" = "डाउनलोड प्रगति पर";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "टूल खोलें";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "पिछला";
-
-"card_status2" = "अगला";
 "language_onboard" = "80+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "शेयर करें";
 "menu_legal" = "कानूनी";
 "language_settings" = "भाषा सेटिंग्स";
-
 // Login
 "login" = "लॉग-इन";
 "logout" = "लॉग-आउट";
@@ -98,6 +87,8 @@
 "done" = "पूरा हुआ";
 "remove" = "हटाएं";
 "clear" = "साफ करें";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "टूल खोलें";
 
 // Alerts
 "error" = "त्रुटि";
@@ -118,3 +109,14 @@
 "general_about_8" = "अधिक जानकारी के लिए godtoolsapp.com पर जाएं।";
 "general_about_9" = "अपना विश्वास प्रकट करने के दौरान याद रखें कि केवल भगवान ही हृदय परिवर्तन कराता है। समझने के लिए सुनकर हरेक व्यक्ति से प्रेम करें।";
 "general_about_10" = "\"अपनी बातचीत को हमेशा भावपूर्ण बनाएं रखें, परिपक्व रखें, ताकि आप समझ सकें हरेक व्यक्ति को कैसे उत्तर देना है।\" कोलोसियन्स 4:6";
+
+// Downloads
+"Download in progress" = "डाउनलोड प्रगति पर";
+
+// Navigation
+"card_status1" = "पिछला";
+"card_status2" = "अगला";
+
+// Language Name Strings
+"language_name_fa" = "फ़ारसी";
+

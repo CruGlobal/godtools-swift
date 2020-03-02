@@ -1,13 +1,3 @@
-"language_name_fa" = "Persiano (farsi)";
-"downloadprogress" = "Download in corso";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Apri Strumento";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Prec.";
-
-"card_status2" = "Succ.";
 "language_onboard" = "Oltre 80 lingue";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Condividi";
 "menu_legal" = "Legale";
 "language_settings" = "Impostazioni della lingua";
-
 // Login
 "login" = "Accedi";
 "logout" = "Esci";
@@ -99,6 +88,8 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 "done" = "Fatto";
 "remove" = "Rimuovi";
 "clear" = "Elimina";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Apri Strumento";
 
 // Alerts
 "error" = "Errore";
@@ -119,3 +110,14 @@ La versione online è disponibile all'indirizzo https://knowgod.com/";
 "general_about_8" = "Per maggiori informazioni, vai su godtoolsapp.com.";
 "general_about_9" = "Quando prendi l'iniziativa di condividere la tua fede, ricordati che Dio è colui che cambia il cuore. Dimostra il tuo amore per il prossimo ascoltandolo e cercando di capirlo.";
 "general_about_10" = "“Il vostro parlare sia sempre con grazia, condito con sale, per sapere come dovete rispondere a ciascuno.\" Colossesi 4:6";
+
+// Downloads
+"Download in progress" = "Download in corso";
+
+// Navigation
+"card_status1" = "Prec.";
+"card_status2" = "Succ.";
+
+// Language Name Strings
+"language_name_fa" = "Persiano (farsi)";
+

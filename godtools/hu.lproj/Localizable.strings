@@ -1,13 +1,3 @@
-"language_name_fa" = "Perzsa (fárszi)";
-"downloadprogress" = "Letöltés folyamatban";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Eszköz megnyitása";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Előző";
-
-"card_status2" = "Következő";
 "language_onboard" = "80+ nyelv";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Megosztás";
 "menu_legal" = "Jogi információk";
 "language_settings" = "Nyelvbeállítások";
-
 // Login
 "login" = "Bejelentkezés";
 "logout" = "Kijelentkezés";
@@ -98,6 +87,8 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 "done" = "Kész";
 "remove" = "Eltávolítás";
 "clear" = "Törlés";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Eszköz megnyitása";
 
 // Alerts
 "error" = "Hiba";
@@ -118,3 +109,14 @@ Az alkalmazás a https://godtoolsapp.com címről tölthető le";
 "general_about_8" = "További információk a godtoolsapp.com címen.";
 "general_about_9" = "Ha magadhoz ragadod a kezdeményezést, és megosztod hitedet, ne feledd, hogy Isten az, aki az emberek szívét megváltoztatja. Szeress mindenkit, hallgasd meg és értsd meg őket.";
 "general_about_10" = "„Beszédetek legyen mindig szíves, sóval ízes, akkor majd helyesen meg tudtok felelni mindenkinek.” Kolosszeieknek írt levél 4:6";
+
+// Downloads
+"Download in progress" = "Letöltés folyamatban";
+
+// Navigation
+"card_status1" = "Előző";
+"card_status2" = "Következő";
+
+// Language Name Strings
+"language_name_fa" = "Perzsa (fárszi)";
+

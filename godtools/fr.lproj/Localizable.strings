@@ -1,13 +1,3 @@
-"language_name_fa" = "Perse (Farsi)";
-"downloadprogress" = "Téléchargement en cours";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Ouvrir l'outil";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Préc";
-
-"card_status2" = "Suivant";
 "language_onboard" = "Plus de 80 langues";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Partager";
 "menu_legal" = "Légal";
 "language_settings" = "Paramètres de langue";
-
 // Login
 "login" = "Connexion";
 "logout" = "Déconnexion";
@@ -98,6 +87,8 @@ L'application est téléchargeable depuis https://godtoolsapp.com";
 "done" = "Terminé";
 "remove" = "Supprimer";
 "clear" = "Effacer";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ouvrir l'outil";
 
 // Alerts
 "error" = "Erreur";
@@ -119,3 +110,14 @@ L'application est téléchargeable depuis https://godtoolsapp.com";
 "general_about_9" = "Lorsque vous prenez l'initiative de partager votre foi, rappelez-vous que Dieu est celui qui change le cœur. Aimez chacun bien en écoutant pour comprendre.";
 "general_about_10" = "« Que votre parole soit toujours accompagnée de grâce, assaisonnée de sel, afin que vous sachiez comment il faut répondre à chacun. »
 Colossiens 4:6";
+
+// Downloads
+"Download in progress" = "Téléchargement en cours";
+
+// Navigation
+"card_status1" = "Préc";
+"card_status2" = "Suivant";
+
+// Language Name Strings
+"language_name_fa" = "Perse (Farsi)";
+

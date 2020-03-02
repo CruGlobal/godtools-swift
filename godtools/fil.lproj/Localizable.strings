@@ -1,13 +1,3 @@
-"language_name_fa" = "Persian (Farsi)";
-"downloadprogress" = "Kasalukuyang dina-download";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buksan ang Tool";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Nauna";
-
-"card_status2" = "Susunod";
 "language_onboard" = "80+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Pagbabahagi";
 "menu_legal" = "Ayon sa Batas";
 "language_settings" = "Mga Setting ng Wika";
-
 // Login
 "login" = "Mag-log in";
 "logout" = "Mag-log out";
@@ -98,6 +87,8 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "done" = "Tapos na";
 "remove" = "Alisin";
 "clear" = "I-clear";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buksan ang Tool";
 
 // Alerts
 "error" = "Error";
@@ -118,3 +109,14 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "general_about_8" = "Pumunta sa godtoolsapp.com para sa karagdagang impormasyon.";
 "general_about_9" = "Habang ginagawa mo ang inisiyatiba para ibahagi ang iyong pananalampalataya, tandaan na ang Diyos ang siyang nagbabago sa puso. Mahaling mabuti ang bawat tao sa pamamagitan ng pakikinig para magkaunawaan.";
 "general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Taga-Colosas 4:6";
+
+// Downloads
+"Download in progress" = "Kasalukuyang dina-download";
+
+// Navigation
+"card_status1" = "Nauna";
+"card_status2" = "Susunod";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";
+

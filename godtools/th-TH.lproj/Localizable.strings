@@ -1,13 +1,3 @@
-"language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
-"downloadprogress" = "อยู่ระหว่างการดาวน์โหลด";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "เปิดเครื่องมือ";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "ก่อนหน้า";
-
-"card_status2" = "ถัดไป";
 "language_onboard" = "กว่า 80 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "แชร์";
 "menu_legal" = "กฎหมาย";
 "language_settings" = "การตั้งค่าภาษา";
-
 // Login
 "login" = "เข้าสู่ระบบ";
 "logout" = "ออกจากระบบ";
@@ -98,6 +87,8 @@
 "done" = "เสร็จ";
 "remove" = "ลบออก";
 "clear" = "ล้าง";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "เปิดเครื่องมือ";
 
 // Alerts
 "error" = "ข้อผิดพลาด";
@@ -118,3 +109,14 @@
 "general_about_8" = "ดูข้อมูลเพิ่มเติมได้ที่ godtoolsapp.com";
 "general_about_9" = "ในการเผยแผ่ศรัทธาที่คุณมีต่อพระผู้เป็นเจ้า โปรดระลึกว่าพระองค์เป็นผู้เปลี่ยนแปลงจิตใจ ขอให้เปิดใจฟังอย่างเข้าอกเข้าใจ";
 "general_about_10" = "\"จงให้ถ้อยคำของท่านทั้งหลายประกอบด้วยเมตตาคุณเสมอ ปรุงด้วยเกลือให้มีรส เพื่อท่านจะได้รู้ว่าควรจะตอบแต่ละคนอย่างไร\" โคโลสี 4:6";
+
+// Downloads
+"Download in progress" = "อยู่ระหว่างการดาวน์โหลด";
+
+// Navigation
+"card_status1" = "ก่อนหน้า";
+"card_status2" = "ถัดไป";
+
+// Language Name Strings
+"language_name_fa" = "เปอร์เซีย (ฟาร์ซี)";
+

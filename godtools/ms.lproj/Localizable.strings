@@ -1,13 +1,3 @@
-"language_name_fa" = "Bahasa Parsi (Parsi)";
-"downloadprogress" = "Muat turun sedang berjalan";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buka Alat";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Sblmnya";
-
-"card_status2" = "Seterusnya";
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
-
 // Login
 "login" = "Log masuk";
 "logout" = "Log keluar";
@@ -98,6 +87,8 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 "done" = "Selesai";
 "remove" = "Alih Keluar";
 "clear" = "Kosongkan";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
 
 // Alerts
 "error" = "Ralat";
@@ -118,3 +109,14 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 "general_about_8" = "Lawati godtoolsapp.com untuk maklumat lanjut.";
 "general_about_9" = "Apabila anda mengambil inisiatif untuk berkongsi kepercayaan anda, jangan lupa bahawa Tuhanlah yang mengubah hati. Sayang setiap orang dengan mendengar untuk memahami.";
 "general_about_10" = "\"Biarkan perbualan anda sentiasa penuh dengan rahmat, ditambah perisa, supaya anda tahu cara untuk menjawab semua orang.\" Colossians 4:6";
+
+// Downloads
+"Download in progress" = "Muat turun sedang berjalan";
+
+// Navigation
+"card_status1" = "Sblmnya";
+"card_status2" = "Seterusnya";
+
+// Language Name Strings
+"language_name_fa" = "Bahasa Parsi (Parsi)";
+

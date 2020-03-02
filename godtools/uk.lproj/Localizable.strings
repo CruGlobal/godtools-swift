@@ -1,13 +1,3 @@
-"language_name_fa" = "Перська (фарсі)";
-"downloadprogress" = "Завантажується...";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Відкрити інструмент";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Назад";
-
-"card_status2" = "Далі";
 "language_onboard" = "Понад 80 мов";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Переслати";
 "menu_legal" = "Юридичні документи";
 "language_settings" = "Налаштування мови";
-
 // Login
 "login" = "Увійти";
 "logout" = "Вийти";
@@ -98,6 +87,8 @@
 "done" = "Готово";
 "remove" = "Видалити";
 "clear" = "Очистити";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Відкрити інструмент";
 
 // Alerts
 "error" = "Помилка";
@@ -118,3 +109,14 @@
 "general_about_8" = "Відвідайте godtoolsapp.com за докладнішою інформацією.";
 "general_about_9" = "Вирішивши донести Божу вістку до інших, пам'ятайте, що любов — то є божий дар. Тому поширюйте її серед інших і уважно прислухайтеся і ви завжди знайдете порозуміння.";
 "general_about_10" = "«Нехай ваше слово завжди буде люб’язне, приправлене сіллю, щоб у розмові з будь-ким ви знали, як відповідати.» Колоссян 4:6";
+
+// Downloads
+"Download in progress" = "Завантажується...";
+
+// Navigation
+"card_status1" = "Назад";
+"card_status2" = "Далі";
+
+// Language Name Strings
+"language_name_fa" = "Перська (фарсі)";
+

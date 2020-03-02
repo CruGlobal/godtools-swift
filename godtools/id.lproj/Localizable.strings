@@ -1,13 +1,3 @@
-"language_name_fa" = "Persia (Farsi)";
-"downloadprogress" = "Undulant sedang berlangsung";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buka Alat";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Sebel.";
-
-"card_status2" = "Berikutnya";
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Berbagi";
 "menu_legal" = "Legal";
 "language_settings" = "Pengaturan Bahasa";
-
 // Login
 "login" = "Masuk";
 "logout" = "Keluar";
@@ -99,6 +88,8 @@ Aplikasi dapat diunduh dari https://godtoolsapp.com";
 "done" = "Selesai";
 "remove" = "Hapus";
 "clear" = "Hapus";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
 
 // Alerts
 "error" = "Kesalahan";
@@ -120,3 +111,14 @@ Aplikasi dapat diunduh dari https://godtoolsapp.com";
 "general_about_9" = "Sewaktu Anda mengambil inisiatif untuk membagikan keyakinan Anda, ingatlah bahwa Tuhanlah yang mengubah hati. Cintai setiap orang dengan baik dengan mendengarkan untuk dapat memahami.";
 "general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\"
 Kolose 4:6";
+
+// Downloads
+"Download in progress" = "Undulant sedang berlangsung";
+
+// Navigation
+"card_status1" = "Sebel.";
+"card_status2" = "Berikutnya";
+
+// Language Name Strings
+"language_name_fa" = "Persia (Farsi)";
+

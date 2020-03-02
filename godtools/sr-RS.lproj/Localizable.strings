@@ -1,13 +1,3 @@
-"language_name_fa" = "Персијски (фарси)";
-"downloadprogress" = "Преузимање је у току";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Отворени алат";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Претходно";
-
-"card_status2" = "Следеће";
 "language_onboard" = "Перко 80 језика";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Подели";
 "menu_legal" = "Правно";
 "language_settings" = "Подешавање језика";
-
 // Login
 "login" = "Пријава";
 "logout" = "Одјава";
@@ -96,6 +85,8 @@
 "done" = "Готово";
 "remove" = "Уклони";
 "clear" = "Обриши";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Отворени алат";
 
 // Alerts
 "error" = "Грешка";
@@ -116,3 +107,14 @@
 "general_about_8" = "Посетите godtoolsapp.com за више информација.";
 "general_about_9" = "Чим предузмете иницијативу да поделите своју веру, сетите се да је Бог онај који мења срце. Волите сваку особу тако што ћете је слушати да бисте је разумели.";
 "general_about_10" = "„Реч ваша да бива свагда у благодати, сољу зачињена, да знате како вам свакоме треба одговарати.“ Колошани 4, 6";
+
+// Downloads
+"Download in progress" = "Преузимање је у току";
+
+// Navigation
+"card_status1" = "Претходно";
+"card_status2" = "Следеће";
+
+// Language Name Strings
+"language_name_fa" = "Персијски (фарси)";
+

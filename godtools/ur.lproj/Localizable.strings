@@ -1,13 +1,3 @@
-"language_name_fa" = "فارسی";
-"downloadprogress" = "ڈاؤنلوڈ جاری ہے";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "ٹُول کھولیں";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "پچھلا";
-
-"card_status2" = "اگلی اسکرین";
 "language_onboard" = "80+ زبانیں";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "شیئر کریں";
 "menu_legal" = "لِیگل";
 "language_settings" = "زبان سیٹِنگز";
-
 // Login
 "login" = "لاگ اِن کریں";
 "logout" = "لاگ آؤٹ کریں";
@@ -101,6 +90,8 @@ https://godtoolsapp.com";
 "done" = "ہوگیا / کر لیا";
 "remove" = "ہٹا دیں";
 "clear" = "صاف";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ٹُول کھولیں";
 
 // Alerts
 "error" = "غلطی";
@@ -121,3 +112,14 @@ https://godtoolsapp.com";
 "general_about_8" = " مزید معلومات کے لئے godtoolsapp.com کا استعمال کریں۔";
 "general_about_9" = " جب آپ اپنا ایمان بانٹنے کے لئے آغازی فعل کو انجام دیتےہیں تو یاد رکھئے کہ وہ خداہی ہے جو دلوں کو بدلتاہے۔ اسے سمجھنے کے لئے دھیان سے سنتے ہوئے ہر ایک شخص سے اچھی طرح سے محبت سےپیش آئیں۔";
 "general_about_10" = "\"تمہارا کلام ہمیشہ ایسا پر فضل اور نمکین ہو کہ تمہیں ہر شخص کو مناسب جواب دینا جائے۔\" کلیسیوں 4:6";
+
+// Downloads
+"Download in progress" = "ڈاؤنلوڈ جاری ہے";
+
+// Navigation
+"card_status1" = "پچھلا";
+"card_status2" = "اگلی اسکرین";
+
+// Language Name Strings
+"language_name_fa" = "فارسی";
+

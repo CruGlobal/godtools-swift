@@ -1,13 +1,3 @@
-"language_name_fa" = "Persų (Farsi)";
-"downloadprogress" = "Atsisiunčiama";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Atidaryti įrankį";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Ankst";
-
-"card_status2" = "Kitas";
 "language_onboard" = "80+ kalbų";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Dalytis";
 "menu_legal" = "Teisė";
 "language_settings" = "Kalbos nustatymai";
-
 // Login
 "login" = "Prisijungti";
 "logout" = "Atsijungti";
@@ -97,6 +86,8 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "done" = "Atlikta";
 "remove" = "Pašalinti";
 "clear" = "Išvalyti";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Atidaryti įrankį";
 
 // Alerts
 "error" = "Klaida";
@@ -117,3 +108,14 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "general_about_8" = "Jei norite daugiau informacijos, apsilankykite godtoolsapp.com.";
 "general_about_9" = "Imdamiesi iniciatyvos pasidalyti savo tikėjimu, nepamirškite, kad tai Dievas keičia širdį. Suteikite kiekvienam asmeniui meilės išklausydami ir suprasdami.";
 "general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";
+
+// Downloads
+"Download in progress" = "Atsisiunčiama";
+
+// Navigation
+"card_status1" = "Ankst";
+"card_status2" = "Kitas";
+
+// Language Name Strings
+"language_name_fa" = "Persų (Farsi)";
+

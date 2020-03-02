@@ -1,13 +1,3 @@
-"language_name_fa" = "פרסית (פרסית)";
-"downloadprogress" = "ההורדה בתהליך";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "פתח כלי";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "קודם";
-
-"card_status2" = "הבא";
 "language_onboard" = "80+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "שתף";
 "menu_legal" = "חוקיות";
 "language_settings" = "הגדרות שפה";
-
 // Login
 "login" = "כניסה";
 "logout" = "יציאה";
@@ -97,6 +86,8 @@
 "done" = "סיים";
 "remove" = "הסר";
 "clear" = "נקה";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "פתח כלי";
 
 // Alerts
 "error" = "שגיאה";
@@ -119,3 +110,14 @@ support@godtoolsapp.com";
 "general_about_9" = "כאשר אתה לוקח את היוזמה לחלוק את האמונה שלך, זכור כי אלוהים הוא אשר משנה את הלב. אהוב כל אדם טוב על ידי הקשבה להבנה.";
 "general_about_10" = "\"יהיו נא דבריכם מלווים תמיד בחן ומתבלים במלח, באפן שתדעו איך להשיב לכל שואל.\"
 קולוסים 4:6";
+
+// Downloads
+"Download in progress" = "ההורדה בתהליך";
+
+// Navigation
+"card_status1" = "קודם";
+"card_status2" = "הבא";
+
+// Language Name Strings
+"language_name_fa" = "פרסית (פרסית)";
+

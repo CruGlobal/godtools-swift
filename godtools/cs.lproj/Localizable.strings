@@ -1,13 +1,3 @@
-"language_name_fa" = "Perština (fársí)";
-"downloadprogress" = "Probíhá stahování";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Otevřít nástroj";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Předch";
-
-"card_status2" = "Další";
 "language_onboard" = "80+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Sdílet";
 "menu_legal" = "Pravidla užívání a ochrany soukromí";
 "language_settings" = "Jazyková nastavení";
-
 // Login
 "login" = "Přihlášení";
 "logout" = "Odhlášení";
@@ -97,6 +86,8 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "done" = "Hotovo";
 "remove" = "Odstranit";
 "clear" = "Smazat";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otevřít nástroj";
 
 // Alerts
 "error" = "Chyba";
@@ -117,3 +108,14 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "general_about_8" = "Více informací naleznete na stránce godtoolsapp.com.";
 "general_about_9" = "Při chopení se iniciativy o sdílení vaší víry si pamatujte, že Bůh je ten, kdo mění srdce. Miluj všechny posloucháním, které vede k porozumění.";
 "general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";
+
+// Downloads
+"Download in progress" = "Probíhá stahování";
+
+// Navigation
+"card_status1" = "Předch";
+"card_status2" = "Další";
+
+// Language Name Strings
+"language_name_fa" = "Perština (fársí)";
+

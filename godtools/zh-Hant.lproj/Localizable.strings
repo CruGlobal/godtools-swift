@@ -1,13 +1,3 @@
-"language_name_fa" = "波斯文";
-"downloadprogress" = "正在下載中";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "開啟工具";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "前一頁";
-
-"card_status2" = "下一頁";
 "language_onboard" = "超過 80 種語言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "分享";
 "menu_legal" = "法律條款";
 "language_settings" = "語言選項";
-
 // Login
 "login" = "登入";
 "logout" = "登出";
@@ -98,6 +87,8 @@
 "done" = "完成";
 "remove" = "移除";
 "clear" = "清空";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "開啟工具";
 
 // Alerts
 "error" = "錯誤";
@@ -118,3 +109,14 @@
 "general_about_8" = "如需更多資訊，請前往godtoolsapp.com。";
 "general_about_9" = "在您踏出第一步分享您的信仰同時，也別忘了只有上帝能夠改變人心。請愛每個人，仔細聆聽對方的話，確認對方是否理解。";
 "general_about_10" = "「你們的話語總要帶著恩惠，像用鹽調和過的，好使你們知道該怎樣回答每一個人。」—歌羅西書 4:6";
+
+// Downloads
+"Download in progress" = "正在下載中";
+
+// Navigation
+"card_status1" = "前一頁";
+"card_status2" = "下一頁";
+
+// Language Name Strings
+"language_name_fa" = "波斯文";
+

@@ -1,13 +1,3 @@
-"language_name_fa" = "Persiešu (Farsi)";
-"downloadprogress" = "Notiek lejupielāde";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Atvērt rīku";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Atpakaļ";
-
-"card_status2" = "Tālāk";
 "language_onboard" = "80+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Dalīties";
 "menu_legal" = "Jurisprudence";
 "language_settings" = "Valodas iestatījumi";
-
 // Login
 "login" = "Pierakstīties";
 "logout" = "Izrakstīties";
@@ -98,6 +87,8 @@ Lietotni ir iespējams lejupielādēt šeit: https://godtoolsapp.com";
 "done" = "Labi";
 "remove" = "Noņemt";
 "clear" = "Dzēst";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Atvērt rīku";
 
 // Alerts
 "error" = "Kļūda";
@@ -119,3 +110,14 @@ Izmantojiet tos savā interneta vietnē!";
 "general_about_8" = "Apmeklējiet godtoolsapp.com, lai uzzinātu vairāk.";
 "general_about_9" = "Uzņemoties iniciatīvu dalīties savā ticībā, atcerieties, ka Dievs pārliecina cilvēku. Mīliet ikvienu, uzklausot un meklējot sapratni.";
 "general_about_10" = "\"Lai tava runa vienmēr ir labvēlīga, pieredzes bagāta, lai tu vienmēr spētu atbildēt ikvienam.\" Kolosieši 4:6";
+
+// Downloads
+"Download in progress" = "Notiek lejupielāde";
+
+// Navigation
+"card_status1" = "Atpakaļ";
+"card_status2" = "Tālāk";
+
+// Language Name Strings
+"language_name_fa" = "Persiešu (Farsi)";
+

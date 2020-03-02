@@ -1,13 +1,3 @@
-"language_name_fa" = "Persisch (Farsi)";
-"downloadprogress" = "Download läuft";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Tool öffnen";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Zurück";
-
-"card_status2" = "Weiter";
 "language_onboard" = "Über 80 Sprachen";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Teilen";
 "menu_legal" = "Rechtliche Hinweise";
 "language_settings" = "Spracheinstellungen";
-
 // Login
 "login" = "Anmelden";
 "logout" = "Abmelden";
@@ -98,6 +87,8 @@ Die App kann auf https://godtoolsapp.com heruntergeladen werden";
 "done" = "Fertig";
 "remove" = "Entfernen";
 "clear" = "Löschen";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Tool öffnen";
 
 // Alerts
 "error" = "Fehler";
@@ -118,3 +109,14 @@ Die App kann auf https://godtoolsapp.com heruntergeladen werden";
 "general_about_8" = "Besuche godtoolsapp.com für weitere Informationen.";
 "general_about_9" = "Wenn du ein Gespräch über deinen Glauben initiierst, vergiss nicht, dass Gott derjenige ist, der die Herzen verändert. Liebe jede Person, indem du zuhörst, um sie zu verstehen.";
 "general_about_10" = "\"Redet mit jedem Menschen freundlich; alles, was ihr sagt, soll gut und hilfreich sein. Bemüht euch darum, für jeden die richtigen Worte zu finden.\" Kolosses 4,6";
+
+// Downloads
+"Download in progress" = "Download läuft";
+
+// Navigation
+"card_status1" = "Zurück";
+"card_status2" = "Weiter";
+
+// Language Name Strings
+"language_name_fa" = "Persisch (Farsi)";
+

@@ -1,13 +1,3 @@
-"language_name_fa" = "Περσικά (Φαρσί)";
-"downloadprogress" = "Λήψη σε εξέλιξη";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Προηγ";
-
-"card_status2" = "Επόμενο";
 "language_onboard" = "80+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
-
 // Login
 "login" = "Σύνδεση";
 "logout" = "Αποσύνδεση";
@@ -98,6 +87,8 @@
 "done" = "Έγινε";
 "remove" = "Αφαίρεση";
 "clear" = "Καθαρισμός";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
 
 // Alerts
 "error" = "Σφάλμα";
@@ -118,3 +109,14 @@
 "general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
 "general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
 "general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
+
+// Downloads
+"Download in progress" = "Λήψη σε εξέλιξη";
+
+// Navigation
+"card_status1" = "Προηγ";
+"card_status2" = "Επόμενο";
+
+// Language Name Strings
+"language_name_fa" = "Περσικά (Φαρσί)";
+
