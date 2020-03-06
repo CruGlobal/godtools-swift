@@ -22,7 +22,7 @@ class AppDiContainer {
     required init() {
         
         config = AppConfig()
-        appsFlyer = AppsFlyer(config: config)
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
         loginClient = TheKeyOAuthClient.shared
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
