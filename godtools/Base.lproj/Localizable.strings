@@ -29,7 +29,7 @@
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
 "menu.tutorial" = "Tutorial";
-"menu.my_account" = "My Account";
+"menu.my_account" = "Global Activity";
 
 // Login
 "login" = "Login";
