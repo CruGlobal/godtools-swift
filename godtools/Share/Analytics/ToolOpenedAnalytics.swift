@@ -27,12 +27,16 @@ class ToolOpenedAnalytics {
 
             appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
             
-            UserDefaults.standard.set(true, forKey: keyFirstToolOpened)
-            UserDefaults.standard.synchronize()
+            defaults.set(true, forKey: keyFirstToolOpened)
+            defaults.synchronize()
         }
     }
     
+    private var defaults: UserDefaults {
+        return UserDefaults.standard
+    }
+    
     private var firstToolOpened: Bool {
-        return (UserDefaults.getData(key: keyFirstToolOpened) as? Bool) ?? false
+        return (defaults.object(forKey: keyFirstToolOpened) as? Bool) ?? false
     }
 }
