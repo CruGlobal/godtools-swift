@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.config.logConfiguration()
         
+        appDiContainer.appsFlyer.configure()
+        
         resetStateIfUITesting()
         
         loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
@@ -53,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
-        _ = GodToolsAnaltyics.shared
+
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         #if DEBUG
@@ -61,8 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif
         
         _ = FollowUpsManager().syncCachedFollowUps()
-        
-        appDiContainer.appsFlyer.configure()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white

@@ -22,12 +22,11 @@ class AppDiContainer {
     required init() {
         
         config = AppConfig()
-        appsFlyer = AppsFlyer(config: config)
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
         loginClient = TheKeyOAuthClient.shared
         onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
         tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
-        analytics = GodToolsAnaltyics.shared
-        analytics.appsFlyer = appsFlyer
+        analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
         globalActivityServices = GlobalActivityServices(
             globalActivityApi: GlobalActivityAnalyticsApi(config: config),
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
