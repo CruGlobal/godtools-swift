@@ -9,22 +9,17 @@
 import Foundation
 import AppsFlyerLib
 
-protocol AppsFlyerType {
-    
-    func configure()
-    func trackAppLaunch()
-    func trackEvent(eventName: String, data: [AnyHashable: Any]?)
-}
-
 class AppsFlyer: NSObject, AppsFlyerType {
     
     private let config: ConfigType
+    private let loggingEnabled: Bool
     
     private var isConfigured: Bool = false
     
-    required init(config: ConfigType) {
+    required init(config: ConfigType, loggingEnabled: Bool) {
         
         self.config = config
+        self.loggingEnabled = loggingEnabled
         
         super.init()
     }
@@ -53,6 +48,12 @@ class AppsFlyer: NSObject, AppsFlyerType {
         assertFailureIfNotConfigured()
         
         AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
+        
+        print("\nAppsFlyer trackEvent()")
+        print("  eventName: \(eventName)")
+        if let data = data {
+            print("  data: \(data)")
+        }
     }
     
     private func assertFailureIfNotConfigured() {

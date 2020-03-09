@@ -118,7 +118,6 @@
 		452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D224006372002B2453 /* RequestClientErrorType.swift */; };
 		452E3227240706FD00DB41B7 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3226240706FD00DB41B7 /* Signal.swift */; };
 		452E3229240708F000DB41B7 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3228240708F000DB41B7 /* SignalValue.swift */; };
-		4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4530901823F4503D00E4F243 /* AppsFlyer.swift */; };
 		453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A623FF212700921D75 /* AccountItemViewType.swift */; };
 		453AD7A923FF231200921D75 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A823FF231200921D75 /* AlertMessage.swift */; };
 		454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */; };
@@ -246,6 +245,11 @@
 		45D3C93223DF9D8800ECF70E /* TutorialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93123DF9D8800ECF70E /* TutorialCell.swift */; };
 		45D3C93423DF9D8F00ECF70E /* TutorialCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */; };
 		45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */; };
+		45DC81C92412D8E3001913D6 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81C82412D8E3001913D6 /* AppsFlyer.swift */; };
+		45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81CA2412D911001913D6 /* AppsFlyerType.swift */; };
+		45DC81CD2412D953001913D6 /* ToolOpenedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81CC2412D953001913D6 /* ToolOpenedAnalytics.swift */; };
+		45DC81CF2412DC2A001913D6 /* TractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81CE2412DC2A001913D6 /* TractViewModel.swift */; };
+		45DC81D12412DC38001913D6 /* TractViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81D02412DC38001913D6 /* TractViewModelType.swift */; };
 		45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */; };
@@ -545,7 +549,6 @@
 		452036D224006372002B2453 /* RequestClientErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestClientErrorType.swift; sourceTree = "<group>"; };
 		452E3226240706FD00DB41B7 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		452E3228240708F000DB41B7 /* SignalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalValue.swift; sourceTree = "<group>"; };
-		4530901823F4503D00E4F243 /* AppsFlyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		453AD7A623FF212700921D75 /* AccountItemViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemViewType.swift; sourceTree = "<group>"; };
 		453AD7A823FF231200921D75 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTutorialServices.swift; sourceTree = "<group>"; };
@@ -673,6 +676,11 @@
 		45D3C93123DF9D8800ECF70E /* TutorialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCell.swift; sourceTree = "<group>"; };
 		45D3C93323DF9D8F00ECF70E /* TutorialCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialCell.xib; sourceTree = "<group>"; };
 		45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
+		45DC81C82412D8E3001913D6 /* AppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
+		45DC81CA2412D911001913D6 /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
+		45DC81CC2412D953001913D6 /* ToolOpenedAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolOpenedAnalytics.swift; sourceTree = "<group>"; };
+		45DC81CE2412DC2A001913D6 /* TractViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractViewModel.swift; sourceTree = "<group>"; };
+		45DC81D02412DC38001913D6 /* TractViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractViewModelType.swift; sourceTree = "<group>"; };
 		45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBasedTimer.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityHeaderView.swift; sourceTree = "<group>"; };
@@ -1338,7 +1346,6 @@
 		4556AEB423E1D97E002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				4530901823F4503D00E4F243 /* AppsFlyer.swift */,
 				4556AEB523E1D98B002C15E8 /* DeviceLanguagePreferences.swift */,
 				4575C27823FC6B1D00D3265B /* JsonServices.swift */,
 				4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */,
@@ -1566,6 +1573,7 @@
 			children = (
 				4556AEDA23E2221E002C15E8 /* FontLibrary.swift */,
 				455953DD24041259002330ED /* ImageCatalog.swift */,
+				45DC81C72412D8E3001913D6 /* Analytics */,
 				45D3C8AC23DF942100ECF70E /* Extensions */,
 				4556AEDC23E22241002C15E8 /* Objects */,
 				4556AEB423E1D97E002C15E8 /* Services */,
@@ -1646,6 +1654,16 @@
 				4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		45DC81C72412D8E3001913D6 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				45DC81C82412D8E3001913D6 /* AppsFlyer.swift */,
+				45DC81CA2412D911001913D6 /* AppsFlyerType.swift */,
+				45DC81CC2412D953001913D6 /* ToolOpenedAnalytics.swift */,
+			);
+			path = Analytics;
 			sourceTree = "<group>";
 		};
 		45E998DF23FD9E640088DD0C /* AppConfig */ = {
@@ -1815,8 +1833,10 @@
 			isa = PBXGroup;
 			children = (
 				0F9E324A1EDE778F0081DBB9 /* TractViewController */,
-				4F5707E01EAE8CA300A540C2 /* TractViewController.xib */,
 				4F5707E21EAE8CB600A540C2 /* TractViewController.swift */,
+				4F5707E01EAE8CA300A540C2 /* TractViewController.xib */,
+				45DC81CE2412DC2A001913D6 /* TractViewModel.swift */,
+				45DC81D02412DC38001913D6 /* TractViewModelType.swift */,
 			);
 			name = Tract;
 			sourceTree = "<group>";
@@ -2589,6 +2609,7 @@
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
 				4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
+				45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
 				4FD0659221A5D75700E69A98 /* ArticleToolViewController.swift in Sources */,
@@ -2778,6 +2799,7 @@
 				45668E7D23E0E1CC002728E7 /* MainOnboardingTutorialCell.swift in Sources */,
 				4575C25A23FB41EE00D3265B /* AccountItemCellViewModel.swift in Sources */,
 				0F806C571EB28D6000F3ED2B /* TractPage.swift in Sources */,
+				45DC81C92412D8E3001913D6 /* AppsFlyer.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
@@ -2797,6 +2819,7 @@
 				4FF3E6E721C1573200CA3B5C /* ArticleManager+Promises.swift in Sources */,
 				EC8245BB1EEEEE180023A203 /* TractEmailsProperties.swift in Sources */,
 				0F0853191ECBAF0400DDC86D /* TractModal.swift in Sources */,
+				45DC81D12412DC38001913D6 /* TractViewModelType.swift in Sources */,
 				45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */,
 				0F9E32381EDCC78A0081DBB9 /* TractTextContentProperties.swift in Sources */,
 				452036CF24005B2B002B2453 /* RequestResponse+RequestResult.swift in Sources */,
@@ -2846,7 +2869,7 @@
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
-				4530901923F4503D00E4F243 /* AppsFlyer.swift in Sources */,
+				45DC81CF2412DC2A001913D6 /* TractViewModel.swift in Sources */,
 				ECBE2E4A1EF03F6800A13849 /* TractCards+UI.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
@@ -2857,6 +2880,7 @@
 				455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */,
 				4575C24A23FAF71600D3265B /* AccountActivityViewModelType.swift in Sources */,
 				4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
+				45DC81CD2412D953001913D6 /* ToolOpenedAnalytics.swift in Sources */,
 				4FF3E6E521C03F8900CA3B5C /* RecurringTimer.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,

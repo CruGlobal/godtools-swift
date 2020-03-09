@@ -126,7 +126,12 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
-        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        
+        let viewModel = TractViewModel(
+            appsFlyer: appDiContainer.appsFlyer
+        )
+        
+        let viewController = TractViewController(viewModel: viewModel)
         viewController.resource = resource
         viewController.currentPage = page
         viewController.universalLinkLanguage = language
@@ -287,7 +292,12 @@ extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControll
     }
     
     func moveToTract(resource: DownloadedResource) {
-        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        
+        let viewModel = TractViewModel(
+            appsFlyer: appDiContainer.appsFlyer
+        )
+        
+        let viewController = TractViewController(viewModel: viewModel)
         viewController.resource = resource
         pushViewController(viewController: viewController)
     }
