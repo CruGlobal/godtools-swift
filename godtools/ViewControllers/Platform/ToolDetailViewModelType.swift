@@ -12,6 +12,8 @@ protocol ToolDetailViewModelType {
     
     var resource: DownloadedResource { get }
     var hidesOpenToolButton: Bool { get }
+    var aboutDetails: String { get }
+    var languageDetails: String { get }
     
     func urlTapped(url: URL)
 }

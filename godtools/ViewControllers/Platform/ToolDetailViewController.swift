@@ -168,22 +168,7 @@ class ToolDetailViewController: BaseViewController {
         let localizedTotalLanguages =  resource.isAvailableInLanguage(primaryLanguage) ? "total_languages".localized(for: primaryLanguage?.code) ?? "total_languages".localized : "total_languages".localized
         
         titleLabel.text = resource.localizedName(language: primaryLanguage)
-                
-        let resourceTranslations = Array(Set(resource.translations))
-        var translationStrings = [String]()
-        
-        let languageCode = primaryLanguage?.code ?? "en"
-        let locale = resource.isAvailableInLanguage(primaryLanguage) ? Locale(identifier:  languageCode) : Locale.current
-        for translation in resourceTranslations {
-            guard translation.language != nil else {
-                continue
-            }
-            guard let languageLocalName = translation.language?.localizedName(locale: locale) else {
-                continue
-            }
-            translationStrings.append(languageLocalName)
-        }
-        
+                                
         displayButton()
         bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
         
@@ -193,8 +178,8 @@ class ToolDetailViewController: BaseViewController {
         totalViewsLabel.textAlignment = textAlignment
         
         setupDetailsLabels(
-            aboutDetails: loadDescription(),
-            languageDetails: translationStrings.sorted(by: { $0 < $1 }).joined(separator: ", "),
+            aboutDetails: viewModel.aboutDetails,
+            languageDetails: viewModel.languageDetails,
             textAlignment: textAlignment
         )
         
@@ -222,7 +207,6 @@ class ToolDetailViewController: BaseViewController {
             textView.isScrollEnabled = false
             textView.isEditable = false
             textView.dataDetectorTypes = .link
-            //textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
             textView.delegate = self
         }
         
@@ -255,22 +239,6 @@ class ToolDetailViewController: BaseViewController {
         } else {
             mainButton.designAsDownloadButton()
         }
-    }
-    
-    private func loadDescription() -> String {
-        
-        let languagesManager = LanguagesManager()
-        let resource: DownloadedResource = viewModel.resource
-        
-        guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource.descr ?? ""
-        }
-        
-        if let translation = resource.getTranslationForLanguage(language) {
-            return translation.localizedDescription ?? ""
-        }
-        
-        return resource.descr ?? ""
     }
     
     private func registerForDownloadProgressNotifications() {
