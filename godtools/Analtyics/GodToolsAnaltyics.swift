@@ -205,6 +205,21 @@ class GodToolsAnaltyics {
         }
     }
     
+    func recordExitLinkAction(url: URL) {
+
+        let marketingCloudId: String = String(ADBMobile.visitorMarketingCloudID() ?? "")
+        
+        recordActionForADBMobile(
+            screenName: nil,
+            actionName: AdobeAnalyticsConstants.Values.exitLink,
+            data: [
+                AdobeAnalyticsConstants.Keys.exitAction: url.absoluteString,
+                AdobeAnalyticsConstants.Keys.marketingCloudID: marketingCloudId,
+                AdobeAnalyticsConstants.Keys.appName: AdobeAnalyticsConstants.Values.godTools
+            ]
+        )
+    }
+    
     private func recordScreenViewInAdobe(screenName: String, siteSection: String, siteSubSection: String) {
         var properties: [String: String] = [:]
         let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""

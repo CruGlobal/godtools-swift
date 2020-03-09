@@ -120,6 +120,13 @@ class BaseFlowController: NSObject, FlowDelegate {
             navigationController.dismiss(animated: true, completion: nil)
             tutorialFlow = nil
             
+        case .urlLinkTappedFromToolDetail(let url):
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+            
         default:
             break
         }
@@ -280,10 +287,16 @@ extension BaseFlowController: LanguagesTableViewControllerDelegate {
 extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControllerDelegate {
     
     func moveToToolDetail(resource: DownloadedResource) {
-        let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
-        viewController.resource = resource
-        viewController.delegate = self
-        self.pushViewController(viewController: viewController)
+        
+        let viewModel = ToolDetailViewModel(
+            flowDelegate: self,
+            resource: resource,
+            analytics: appDiContainer.analytics
+        )
+        let view = ToolDetailViewController(viewModel: viewModel)
+        view.delegate = self
+        
+        self.pushViewController(viewController: view)
     }
     
     func moveToTract(resource: DownloadedResource) {

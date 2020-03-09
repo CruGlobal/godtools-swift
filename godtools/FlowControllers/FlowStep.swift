@@ -15,6 +15,7 @@ enum FlowStep {
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
     case dismissTutorial
+    case urlLinkTappedFromToolDetail(url: URL)
     
     // onboarding
     case beginTappedFromOnboardingWelcome

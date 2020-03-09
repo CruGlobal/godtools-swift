@@ -59,6 +59,36 @@ extension UILabel {
     }
 }
 
+extension UITextView {
+    
+    private func getAttributedString() -> NSMutableAttributedString {
+        return attributedText.mutableCopy() as? NSMutableAttributedString ?? NSMutableAttributedString()
+    }
+    
+    private func getRangeOfString(string: String) -> NSRange {
+        return (text as NSString).range(of: string)
+    }
+    
+    func setLineSpacing(lineSpacing: CGFloat) {
+        
+        if !text.isEmpty {
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = lineSpacing
+            
+            let attributedString: NSMutableAttributedString = self.getAttributedString()
+            
+            attributedString.addAttribute(
+                NSAttributedString.Key.paragraphStyle,
+                value: paragraphStyle,
+                range: getRangeOfString(string: text)
+            )
+            
+            attributedText = attributedString
+        }
+    }
+}
+
 extension UIView {
     
     func drawBorder(color: UIColor = UIColor.red) {

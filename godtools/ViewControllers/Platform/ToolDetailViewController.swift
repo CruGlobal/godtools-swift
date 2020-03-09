@@ -21,6 +21,8 @@ class ToolDetailViewController: BaseViewController {
         case about = "about"
         case language = "language"
     }
+    
+    private let viewModel: ToolDetailViewModelType
         
     private var detailsSegments: [GTSegment] = Array()
     private var didLayoutSubviews: Bool = false
@@ -30,52 +32,53 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak private var youTubePlayerView: WKYTPlayerView!
     @IBOutlet weak private var youTubeLoadingView: UIView!
     @IBOutlet weak private var youTubeActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var titleLabel: GTLabel!
-    @IBOutlet weak var totalViewsLabel: GTLabel!
+    @IBOutlet weak private var titleLabel: GTLabel!
+    @IBOutlet weak private var totalViewsLabel: GTLabel!
     @IBOutlet weak private var openToolButton: GTButton!
-    @IBOutlet weak var mainButton: GTButton!
+    @IBOutlet weak private var mainButton: GTButton!
     @IBOutlet weak private var detailsControl: GTSegmentedControl!
     @IBOutlet weak private var detailsView: UIView!
     @IBOutlet weak private var detailsLabelsView: UIView!
-    @IBOutlet weak private var aboutDetailsLabel: TTTAttributedLabel!
-    @IBOutlet weak private var languageDetailsLabel: TTTAttributedLabel!
+    @IBOutlet weak private var aboutDetailsTextView: UITextView!
+    @IBOutlet weak private var languageDetailsTextView: UITextView!
     @IBOutlet weak private var detailsShadow: UIView!
-    @IBOutlet weak var downloadProgressView: GTProgressView!
-    @IBOutlet weak var bannerImageView: UIImageView!
+    @IBOutlet weak private var downloadProgressView: GTProgressView!
+    @IBOutlet weak private var bannerImageView: UIImageView!
     
-    @IBOutlet weak var topLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var mainButtonTopToTotalViewsLabel: NSLayoutConstraint!
-    @IBOutlet weak var mainButtonTopToOpenToolButton: NSLayoutConstraint!
+    @IBOutlet weak private var topLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak private var mainButtonTopToTotalViewsLabel: NSLayoutConstraint!
+    @IBOutlet weak private var mainButtonTopToOpenToolButton: NSLayoutConstraint!
     @IBOutlet weak private var detailsLabelsViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
-    @IBOutlet weak private var aboutDetailsLabelLeading: NSLayoutConstraint!
-    @IBOutlet weak private var languageDetailsLabelLeading: NSLayoutConstraint!
+    @IBOutlet weak private var aboutDetailsTextViewLeading: NSLayoutConstraint!
+    @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
     
     let toolsManager = ToolsManager.shared
-    
-    var resource: DownloadedResource?
-    
+        
     weak var delegate: ToolDetailViewControllerDelegate?
     
+    required init(viewModel: ToolDetailViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: "ToolDetailViewController", bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     deinit {
+        print("x deinit: \(type(of: self))")
         youTubePlayerView.stopVideo()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLayout()
+        setupBinding()
+        
         openToolButton.designAsOpenToolButton()
                     
-        topView.backgroundColor = view.backgroundColor
-        bottomView.backgroundColor = detailsView.backgroundColor
-        
-        youTubePlayerView.isHidden = true
-        
-        detailsShadow.layer.shadowOffset = CGSize(width: 0, height: 1)
-        detailsShadow.layer.shadowColor = UIColor.black.cgColor
-        detailsShadow.layer.shadowRadius = 5
-        detailsShadow.layer.shadowOpacity = 0.3
-        
         displayData()
         hideScreenTitle()
         registerForDownloadProgressNotifications()
@@ -84,11 +87,30 @@ class ToolDetailViewController: BaseViewController {
         openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
     }
     
+    private func setupLayout() {
+        
+        topView.backgroundColor = view.backgroundColor
+        bottomView.backgroundColor = detailsView.backgroundColor
+        
+        youTubePlayerView.isHidden = true
+        
+        // detailsShadow
+        detailsShadow.layer.shadowOffset = CGSize(width: 0, height: 1)
+        detailsShadow.layer.shadowColor = UIColor.black.cgColor
+        detailsShadow.layer.shadowRadius = 5
+        detailsShadow.layer.shadowOpacity = 0.3
+    }
+    
+    private func setupBinding() {
+        
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !didLayoutSubviews {
             didLayoutSubviews = true
-            if !showsOpenToolButton {
+            
+            if viewModel.hidesOpenToolButton {
                 mainButtonTopToTotalViewsLabel.isActive = true
                 mainButtonTopToOpenToolButton.isActive = false
                 openToolButton.isHidden = true
@@ -120,8 +142,9 @@ class ToolDetailViewController: BaseViewController {
     // MARK: Present data
     
     fileprivate func displayData() {
+        
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
-        guard let resource = resource else { return }
+        let resource: DownloadedResource = viewModel.resource
         
         let aboutVideoYouTubePlayerId: String = resource.aboutOverviewVideoYouTube ?? ""
         if aboutVideoYouTubePlayerId.isEmpty {
@@ -190,31 +213,30 @@ class ToolDetailViewController: BaseViewController {
         detailsControlLayout.spacingBetweenSegments = 54
         detailsControl.configure(segments: detailsSegments, delegate: self, layout: detailsControlLayout)
     }
-    
-    private var showsOpenToolButton: Bool {
-        return resource?.shouldDownload ?? false
-    }
-    
+
     private func setupDetailsLabels(aboutDetails: String, languageDetails: String, textAlignment: NSTextAlignment) {
         
-        let detailsLabels: [TTTAttributedLabel] = [aboutDetailsLabel, languageDetailsLabel]
+        let detailsTextViews: [UITextView] = [aboutDetailsTextView, languageDetailsTextView]
         
-        for detailLabel in detailsLabels {
-            detailLabel.enabledTextCheckingTypes = NSTextCheckingResult.CheckingType.link.rawValue
-            detailLabel.delegate = self
+        for textView in detailsTextViews {
+            textView.isScrollEnabled = false
+            textView.isEditable = false
+            textView.dataDetectorTypes = .link
+            //textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.red]
+            textView.delegate = self
         }
         
-        aboutDetailsLabel.text = aboutDetails
-        languageDetailsLabel.text = languageDetails
+        aboutDetailsTextView.text = aboutDetails
+        languageDetailsTextView.text = languageDetails
         
         var maxDetailLabelHeight: CGFloat = 0
         
-        for detailLabel in detailsLabels {
-            detailLabel.textAlignment = textAlignment
-            detailLabel.setLineSpacing(lineSpacing: 3)
-            detailLabel.layoutIfNeeded()
-            if detailLabel.frame.size.height > maxDetailLabelHeight {
-                maxDetailLabelHeight = detailLabel.frame.size.height
+        for textView in detailsTextViews {
+            textView.textAlignment = textAlignment
+            textView.setLineSpacing(lineSpacing: 3)
+            textView.layoutIfNeeded()
+            if textView.frame.size.height > maxDetailLabelHeight {
+                maxDetailLabelHeight = textView.frame.size.height
             }
         }
         
@@ -223,9 +245,12 @@ class ToolDetailViewController: BaseViewController {
     }
     
     private func displayButton() {
-        if resource!.numberOfAvailableLanguages() == 0 {
+        
+        let resource: DownloadedResource = viewModel.resource
+        
+        if resource.numberOfAvailableLanguages() == 0 {
             mainButton.designAsUnavailableButton()
-        } else if resource!.shouldDownload {
+        } else if resource.shouldDownload {
             mainButton.designAsDeleteButton()
         } else {
             mainButton.designAsDownloadButton()
@@ -233,17 +258,19 @@ class ToolDetailViewController: BaseViewController {
     }
     
     private func loadDescription() -> String {
+        
         let languagesManager = LanguagesManager()
+        let resource: DownloadedResource = viewModel.resource
         
         guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource!.descr ?? ""
+            return resource.descr ?? ""
         }
         
-        if let translation = resource!.getTranslationForLanguage(language) {
+        if let translation = resource.getTranslationForLanguage(language) {
             return translation.localizedDescription ?? ""
         }
         
-        return resource!.descr ?? ""
+        return resource.descr ?? ""
     }
     
     private func registerForDownloadProgressNotifications() {
@@ -254,11 +281,14 @@ class ToolDetailViewController: BaseViewController {
     }
     
     @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
+        
         guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
             return
         }
         
-        if resourceId != resource!.remoteId {
+        let resource: DownloadedResource = viewModel.resource
+        
+        if resourceId != resource.remoteId {
             return
         }
         
@@ -277,21 +307,17 @@ class ToolDetailViewController: BaseViewController {
     }
     
     @objc func handleOpenTool(button: UIButton) {
-        guard let resource = resource else {
-            assertionFailure("Resource should not be nil.")
-            return
-        }
-        delegate?.openToolTapped(toolDetail: self, resource: resource)
+
+        delegate?.openToolTapped(toolDetail: self, resource: viewModel.resource)
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         
         baseDelegate?.goHome()
 
+        let resource: DownloadedResource = viewModel.resource
+        
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) { [weak self] in
-            guard let resource = self?.resource else {
-                return
-            }
             
             if resource.shouldDownload {
                 DownloadedResourceManager().delete(resource)
@@ -314,12 +340,12 @@ class ToolDetailViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        let toolCode: String = resource?.code ?? ""
+        let toolCode: String = viewModel.resource.code
         return toolCode + "-" + "tool-info"
     }
     
     override func siteSection() -> String {
-        let toolCode: String = resource?.code ?? ""
+        let toolCode: String = viewModel.resource.code
         return toolCode
     }
     
@@ -329,17 +355,15 @@ class ToolDetailViewController: BaseViewController {
     
 }
 
-extension ToolDetailViewController: TTTAttributedLabelDelegate {
+// MARK: - UITextViewDelegate
+
+extension ToolDetailViewController: UITextViewDelegate {
     
-    func attributedLabel(_ label: TTTAttributedLabel!, didSelectLinkWith url: URL!) {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
+                
+        viewModel.urlTapped(url: URL)
         
-        guard let url = url else { return }
-        
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(url)
-        } else {
-            UIApplication.shared.openURL(url)
-        }
+        return false
     }
 }
 
@@ -353,11 +377,11 @@ extension ToolDetailViewController: GTSegmentedControlDelegate {
                     
             switch segmentId {
             case .about:
-                aboutDetailsLabelLeading.constant = 0
-                languageDetailsLabelLeading.constant = view.bounds.size.width
+                aboutDetailsTextViewLeading.constant = 0
+                languageDetailsTextViewLeading.constant = view.bounds.size.width
             case .language:
-                aboutDetailsLabelLeading.constant = view.bounds.size.width * -1
-                languageDetailsLabelLeading.constant = 0
+                aboutDetailsTextViewLeading.constant = view.bounds.size.width * -1
+                languageDetailsTextViewLeading.constant = 0
             }
             
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
