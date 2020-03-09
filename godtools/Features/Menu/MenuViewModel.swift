@@ -50,12 +50,13 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     private func createMenuDataSource(isAuthorized: Bool, accountCreationIsSupported: Bool, deviceIsEnglish: Bool) -> MenuDataSource {
         
-        let sections: [MenuSection] = [
-            menuDataProvider.getMenuSection(id: .general),
-            menuDataProvider.getMenuSection(id: .account),
-            menuDataProvider.getMenuSection(id: .share),
-            menuDataProvider.getMenuSection(id: .legal)
-        ]
+        var sections: [MenuSection] = Array()
+        sections.append(menuDataProvider.getMenuSection(id: .general))
+        if accountCreationIsSupported {
+            sections.append(menuDataProvider.getMenuSection(id: .account))
+        }
+        sections.append(menuDataProvider.getMenuSection(id: .share))
+        sections.append(menuDataProvider.getMenuSection(id: .legal))
         
         var itemsDictionary: [MenuSectionId: [MenuItem]] = Dictionary()
         
