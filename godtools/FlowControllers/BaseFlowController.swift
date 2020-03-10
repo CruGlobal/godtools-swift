@@ -120,13 +120,25 @@ class BaseFlowController: NSObject, FlowDelegate {
             navigationController.dismiss(animated: true, completion: nil)
             tutorialFlow = nil
             
+        case .urlLinkTappedFromToolDetail(let url):
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+            
         default:
             break
         }
     }
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
-        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        
+        let viewModel = TractViewModel(
+            appsFlyer: appDiContainer.appsFlyer
+        )
+        
+        let viewController = TractViewController(viewModel: viewModel)
         viewController.resource = resource
         viewController.currentPage = page
         viewController.universalLinkLanguage = language
@@ -280,14 +292,25 @@ extension BaseFlowController: LanguagesTableViewControllerDelegate {
 extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControllerDelegate {
     
     func moveToToolDetail(resource: DownloadedResource) {
-        let viewController = ToolDetailViewController(nibName: String(describing:ToolDetailViewController.self), bundle: nil)
-        viewController.resource = resource
-        viewController.delegate = self
-        self.pushViewController(viewController: viewController)
+        
+        let viewModel = ToolDetailViewModel(
+            flowDelegate: self,
+            resource: resource,
+            analytics: appDiContainer.analytics
+        )
+        let view = ToolDetailViewController(viewModel: viewModel)
+        view.delegate = self
+        
+        self.pushViewController(viewController: view)
     }
     
     func moveToTract(resource: DownloadedResource) {
-        let viewController = TractViewController(nibName: String(describing: TractViewController.self), bundle: nil)
+        
+        let viewModel = TractViewModel(
+            appsFlyer: appDiContainer.appsFlyer
+        )
+        
+        let viewController = TractViewController(viewModel: viewModel)
         viewController.resource = resource
         pushViewController(viewController: viewController)
     }

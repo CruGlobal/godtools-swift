@@ -59,17 +59,18 @@ struct AdobeAnalyticsConstants {
 }
 class GodToolsAnaltyics {
     
-    private let config: ConfigType = AppConfig()
+    private let config: ConfigType
+    private let appsFlyer: AppsFlyerType
     private let tracker: GAITracker
     private let loggingEnabled: Bool = false
     
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics", qos: .background)
-    var appsFlyer: AppsFlyerType?
-    
-    static let shared: GodToolsAnaltyics = GodToolsAnaltyics()
-    
-    private init() {
+        
+    required init(config: ConfigType, appsFlyer: AppsFlyerType) {
+        
+        self.config = config
+        self.appsFlyer = appsFlyer
         
         tracker = GAI.sharedInstance().tracker(withTrackingId: config.googleAnalyticsApiKey)
                                 
@@ -144,7 +145,7 @@ class GodToolsAnaltyics {
         
         tracker.set(kGAIScreenName, value: screenName)
         
-        appsFlyer?.trackEvent(eventName: screenName, data: nil)
+        appsFlyer.trackEvent(eventName: screenName, data: nil)
 
         guard let screenViewInfo = GAIDictionaryBuilder.createScreenView().build() as? [AnyHashable : Any] else {
             return
@@ -203,6 +204,21 @@ class GodToolsAnaltyics {
         adobeAnalyticsBackgroundQueue.async {
             ADBMobile.trackAction(actionName, data: mutableData)
         }
+    }
+    
+    func recordExitLinkAction(url: URL) {
+
+        let marketingCloudId: String = String(ADBMobile.visitorMarketingCloudID() ?? "")
+        
+        recordActionForADBMobile(
+            screenName: nil,
+            actionName: AdobeAnalyticsConstants.Values.exitLink,
+            data: [
+                AdobeAnalyticsConstants.Keys.exitAction: url.absoluteString,
+                AdobeAnalyticsConstants.Keys.marketingCloudID: marketingCloudId,
+                AdobeAnalyticsConstants.Keys.appName: AdobeAnalyticsConstants.Values.godTools
+            ]
+        )
     }
     
     private func recordScreenViewInAdobe(screenName: String, siteSection: String, siteSubSection: String) {
