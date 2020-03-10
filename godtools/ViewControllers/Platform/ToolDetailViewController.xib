@@ -15,8 +15,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="aboutDetailsLabel" destination="0qX-Ut-8NB" id="sgf-Sh-GyX"/>
-                <outlet property="aboutDetailsLabelLeading" destination="fta-bQ-e5y" id="d3K-to-A46"/>
+                <outlet property="aboutDetailsTextView" destination="dRz-gk-4aW" id="B6x-ed-RJI"/>
+                <outlet property="aboutDetailsTextViewLeading" destination="JJz-wz-bKN" id="seH-yh-6tH"/>
                 <outlet property="bannerImageView" destination="6sd-7g-yCc" id="8eK-eS-AVc"/>
                 <outlet property="bottomView" destination="2sU-du-hfT" id="GLB-5D-fqS"/>
                 <outlet property="detailsControl" destination="USz-Dm-Yeg" id="XwN-bS-nou"/>
@@ -26,8 +26,8 @@
                 <outlet property="detailsShadow" destination="7SW-QC-dbO" id="grg-2L-L7Z"/>
                 <outlet property="detailsView" destination="aoj-58-Xtm" id="GJa-1E-ypz"/>
                 <outlet property="downloadProgressView" destination="tqu-1c-gUh" id="Dyk-YF-IIa"/>
-                <outlet property="languageDetailsLabel" destination="9Kb-ab-Xfg" id="vDP-SG-Pht"/>
-                <outlet property="languageDetailsLabelLeading" destination="BX1-Xc-BbO" id="Pap-sr-SBE"/>
+                <outlet property="languageDetailsTextView" destination="jfi-f9-xPg" id="rS4-Eb-OBP"/>
+                <outlet property="languageDetailsTextViewLeading" destination="chB-Z5-euc" id="leb-Mu-tFC"/>
                 <outlet property="mainButton" destination="4bj-XL-FjG" id="CAB-WH-HRe"/>
                 <outlet property="mainButtonTopToOpenToolButton" destination="BRf-ip-8FY" id="i0W-JS-JJe"/>
                 <outlet property="mainButtonTopToTotalViewsLabel" destination="vbO-2X-fTp" id="HfA-wS-aQL"/>
@@ -91,29 +91,33 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVd-Gz-A8r" userLabel="detailsLabelsView">
                                             <rect key="frame" x="57.5" y="44" width="260" height="120"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qX-Ut-8NB" userLabel="aboutDetailsLabel" customClass="TTTAttributedLabel">
-                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="18"/>
-                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dRz-gk-4aW" userLabel="aboutDetailsTextView">
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="106"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
                                                     <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Kb-ab-Xfg" userLabel="languageDetailsLabel" customClass="TTTAttributedLabel">
-                                                    <rect key="frame" x="375" y="0.0" width="260" height="18"/>
                                                     <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jfi-f9-xPg" userLabel="languageDetailsTextView">
+                                                    <rect key="frame" x="375" y="0.0" width="260" height="106"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="0qX-Ut-8NB" firstAttribute="width" secondItem="yVd-Gz-A8r" secondAttribute="width" id="25u-ZY-D6H"/>
                                                 <constraint firstAttribute="height" constant="120" id="3sG-s0-tbM"/>
-                                                <constraint firstItem="9Kb-ab-Xfg" firstAttribute="leading" secondItem="yVd-Gz-A8r" secondAttribute="leading" constant="375" id="BX1-Xc-BbO"/>
-                                                <constraint firstItem="9Kb-ab-Xfg" firstAttribute="width" secondItem="yVd-Gz-A8r" secondAttribute="width" id="Sr0-Gq-Wbh"/>
-                                                <constraint firstItem="0qX-Ut-8NB" firstAttribute="top" secondItem="yVd-Gz-A8r" secondAttribute="top" id="bft-la-pOE"/>
-                                                <constraint firstItem="0qX-Ut-8NB" firstAttribute="leading" secondItem="yVd-Gz-A8r" secondAttribute="leading" id="fta-bQ-e5y"/>
+                                                <constraint firstItem="jfi-f9-xPg" firstAttribute="width" secondItem="yVd-Gz-A8r" secondAttribute="width" id="81B-L3-LRI"/>
+                                                <constraint firstItem="jfi-f9-xPg" firstAttribute="top" secondItem="yVd-Gz-A8r" secondAttribute="top" id="F1H-wQ-lQM"/>
+                                                <constraint firstItem="dRz-gk-4aW" firstAttribute="leading" secondItem="yVd-Gz-A8r" secondAttribute="leading" id="JJz-wz-bKN"/>
+                                                <constraint firstItem="dRz-gk-4aW" firstAttribute="width" secondItem="yVd-Gz-A8r" secondAttribute="width" id="Plq-X2-AcN"/>
+                                                <constraint firstItem="jfi-f9-xPg" firstAttribute="leading" secondItem="yVd-Gz-A8r" secondAttribute="leading" constant="375" id="chB-Z5-euc"/>
+                                                <constraint firstItem="dRz-gk-4aW" firstAttribute="top" secondItem="yVd-Gz-A8r" secondAttribute="top" id="dMA-bc-eCy"/>
                                                 <constraint firstAttribute="width" constant="260" id="fzE-ft-uex"/>
-                                                <constraint firstItem="9Kb-ab-Xfg" firstAttribute="top" secondItem="yVd-Gz-A8r" secondAttribute="top" id="jD3-zo-hou"/>
                                             </constraints>
                                         </view>
                                     </subviews>

@@ -120,6 +120,8 @@
 		452E3229240708F000DB41B7 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3228240708F000DB41B7 /* SignalValue.swift */; };
 		453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A623FF212700921D75 /* AccountItemViewType.swift */; };
 		453AD7A923FF231200921D75 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A823FF231200921D75 /* AlertMessage.swift */; };
+		454EA59C2416B40E00749728 /* ToolDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA59B2416B40E00749728 /* ToolDetailViewModel.swift */; };
+		454EA59E2416B41800749728 /* ToolDetailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454EA59D2416B41800749728 /* ToolDetailViewModelType.swift */; };
 		454F5A7D23E4BB01009E2321 /* DisabledTutorialServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */; };
 		4556AEA723E1CC64002C15E8 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */; };
 		4556AEA823E1CC64002C15E8 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */; };
@@ -551,6 +553,8 @@
 		452E3228240708F000DB41B7 /* SignalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalValue.swift; sourceTree = "<group>"; };
 		453AD7A623FF212700921D75 /* AccountItemViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemViewType.swift; sourceTree = "<group>"; };
 		453AD7A823FF231200921D75 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
+		454EA59B2416B40E00749728 /* ToolDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailViewModel.swift; sourceTree = "<group>"; };
+		454EA59D2416B41800749728 /* ToolDetailViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailViewModelType.swift; sourceTree = "<group>"; };
 		454F5A7C23E4BB01009E2321 /* DisabledTutorialServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTutorialServices.swift; sourceTree = "<group>"; };
 		4556AEA523E1CC64002C15E8 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		4556AEA623E1CC64002C15E8 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
@@ -1105,6 +1109,8 @@
 				0F93A93A1EAA70150049C110 /* AddToolsViewController.xib */,
 				0F93A9351EAA6FF80049C110 /* ToolDetailViewController.swift */,
 				0F93A9361EAA6FF80049C110 /* ToolDetailViewController.xib */,
+				454EA59B2416B40E00749728 /* ToolDetailViewModel.swift */,
+				454EA59D2416B41800749728 /* ToolDetailViewModelType.swift */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -2604,6 +2610,7 @@
 				45668E6F23E0E1CC002728E7 /* OnboardingTutorialViewModel.swift in Sources */,
 				EC15BE611EEB54C5006B2E1A /* TractCardsProperties.swift in Sources */,
 				45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */,
+				454EA59C2416B40E00749728 /* ToolDetailViewModel.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
@@ -2628,6 +2635,7 @@
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				EC55A6211EE0AC37000235CA /* TractBindings.swift in Sources */,
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
+				454EA59E2416B41800749728 /* ToolDetailViewModelType.swift in Sources */,
 				45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
