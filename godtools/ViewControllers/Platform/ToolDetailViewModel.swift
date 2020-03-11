@@ -34,17 +34,19 @@ class ToolDetailViewModel: ToolDetailViewModelType {
     
     var aboutDetails: String {
         
+        let resourceDescription: String = resource.descr ?? ""
+        
         let languagesManager = LanguagesManager()
         
         guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource.descr ?? ""
+            return resourceDescription
         }
         
         if let translation = resource.getTranslationForLanguage(language) {
             return translation.localizedDescription ?? ""
         }
         
-        return resource.descr ?? ""
+        return resourceDescription
     }
     
     var languageDetails: String {
