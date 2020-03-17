@@ -38,12 +38,22 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         
         let languagesManager = LanguagesManager()
         
-        guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resourceDescription
+        var languageOrder: [Language] = Array()
+        
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            languageOrder.append(primaryLanguage)
         }
         
-        if let translation = resource.getTranslationForLanguage(language) {
-            return translation.localizedDescription ?? ""
+        if let deviceLanguage = languagesManager.loadDevicePreferredLanguageFromDisk() {
+            languageOrder.append(deviceLanguage)
+        }
+        
+        for language in languageOrder {
+            if let translation = resource.getTranslationForLanguage(language) {
+                if let description = translation.localizedDescription, !description.isEmpty {
+                    return description
+                }
+            }
         }
         
         return resourceDescription
