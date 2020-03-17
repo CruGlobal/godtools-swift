@@ -308,8 +308,7 @@ class ToolDetailViewController: BaseViewController {
     // MARK: - Analytics
     
     override func screenName() -> String {
-        let toolCode: String = viewModel.resource.code
-        return toolCode + "-" + "tool-info"
+        return viewModel.screenName
     }
     
     override func siteSection() -> String {

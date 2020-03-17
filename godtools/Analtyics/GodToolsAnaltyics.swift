@@ -206,12 +206,12 @@ class GodToolsAnaltyics {
         }
     }
     
-    func recordExitLinkAction(url: URL) {
+    func recordExitLinkAction(screenName: String?, url: URL) {
 
         let marketingCloudId: String = String(ADBMobile.visitorMarketingCloudID() ?? "")
         
         recordActionForADBMobile(
-            screenName: nil,
+            screenName: screenName,
             actionName: AdobeAnalyticsConstants.Values.exitLink,
             data: [
                 AdobeAnalyticsConstants.Keys.exitAction: url.absoluteString,

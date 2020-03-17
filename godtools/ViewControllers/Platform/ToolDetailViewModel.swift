@@ -25,9 +25,14 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         self.hidesOpenToolButton = !resource.shouldDownload
     }
     
+    var screenName: String {
+        let toolCode: String = resource.code
+        return toolCode + "-" + "tool-info"
+    }
+    
     func urlTapped(url: URL) {
         
-        analytics.recordExitLinkAction(url: url)
+        analytics.recordExitLinkAction(screenName: screenName, url: url)
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url))
     }
