@@ -37,7 +37,7 @@ class TutorialCellViewModel {
             case .tutorialTools:
                 let tutorialTools: TutorialToolsView = TutorialToolsView()
                 tutorialTools.configure(viewModel: TutorialToolsViewModel(deviceLanguage: deviceLanguage))
-                customView = TutorialToolsView()
+                customView = tutorialTools
                 
             case .tutorialInMenu:
                 let tutorialInMenu: TutorialInMenuView = TutorialInMenuView()

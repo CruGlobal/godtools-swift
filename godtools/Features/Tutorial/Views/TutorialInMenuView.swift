@@ -23,6 +23,6 @@ class TutorialInMenuView: UIView, NibBased {
     }
     
     func configure(viewModel: TutorialInMenuViewModel) {
-
+        menuImageView.image = UIImage(named: viewModel.imageName)
     }
 }

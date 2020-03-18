@@ -23,7 +23,6 @@ class TutorialToolsView: UIView, NibBased {
     }
     
     func configure(viewModel: TutorialToolsViewModel) {
-        
         toolImageView.image = UIImage(named: viewModel.imageName)
     }
 }
