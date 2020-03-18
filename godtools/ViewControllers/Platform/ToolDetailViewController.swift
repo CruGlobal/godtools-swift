@@ -312,12 +312,11 @@ class ToolDetailViewController: BaseViewController {
     }
     
     override func siteSection() -> String {
-        let toolCode: String = viewModel.resource.code
-        return toolCode
+        return viewModel.siteSection
     }
     
     override func siteSubSection() -> String {
-        return ""
+        return viewModel.siteSubSection
     }
     
 }

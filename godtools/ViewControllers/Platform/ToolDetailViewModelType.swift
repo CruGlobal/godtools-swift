@@ -15,6 +15,8 @@ protocol ToolDetailViewModelType {
     var aboutDetails: String { get }
     var languageDetails: String { get }
     var screenName: String { get }
+    var siteSection: String { get }
+    var siteSubSection: String { get }
     
     func urlTapped(url: URL)
 }

@@ -30,9 +30,22 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         return toolCode + "-" + "tool-info"
     }
     
+    var siteSection: String {
+        return resource.code
+    }
+    
+    var siteSubSection: String {
+        return ""
+    }
+    
     func urlTapped(url: URL) {
         
-        analytics.recordExitLinkAction(screenName: screenName, url: url)
+        analytics.recordExitLinkAction(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            url: url
+        )
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url))
     }
