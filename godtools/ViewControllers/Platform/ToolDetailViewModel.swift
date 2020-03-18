@@ -48,6 +48,10 @@ class ToolDetailViewModel: ToolDetailViewModelType {
             languageOrder.append(deviceLanguage)
         }
         
+        if let englishLanguage = languagesManager.loadFromDisk(id: "en") {
+            languageOrder.append(englishLanguage)
+        }
+        
         for language in languageOrder {
             if let translation = resource.getTranslationForLanguage(language) {
                 if let description = translation.localizedDescription, !description.isEmpty {
