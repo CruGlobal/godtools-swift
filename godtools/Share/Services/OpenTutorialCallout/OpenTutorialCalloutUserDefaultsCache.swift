@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
+class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
     
     private let keyOpenTutorialCalloutDisabled: String = "keyOpenTutorialCalloutDisabled"
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OnboardingTutorialViewedUserDefaultsCache: OnboardingTutorialViewedCacheType {
+class OnboardingTutorialViewedUserDefaultsCache: OnboardingTutorialViewedCacheType {
     
     private let keyOnboardingTutorialViewed: String = "keyOnboardingTutorialViewed"
         

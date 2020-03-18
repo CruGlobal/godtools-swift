@@ -24,7 +24,7 @@ class TutorialCellViewModel {
     let hidesYouTubeVideoPlayer: Bool
     let hidesMainImage: Bool
     
-    required init(item: TutorialItem) {
+    required init(item: TutorialItem, deviceLanguage: DeviceLanguageType) {
         
         title = item.title
         message = item.message
@@ -36,12 +36,12 @@ class TutorialCellViewModel {
             switch customViewId {
             case .tutorialTools:
                 let tutorialTools: TutorialToolsView = TutorialToolsView()
-                tutorialTools.configure(viewModel: TutorialToolsViewModel())
+                tutorialTools.configure(viewModel: TutorialToolsViewModel(deviceLanguage: deviceLanguage))
                 customView = TutorialToolsView()
                 
             case .tutorialInMenu:
                 let tutorialInMenu: TutorialInMenuView = TutorialInMenuView()
-                tutorialInMenu.configure(viewModel: TutorialInMenuViewModel())
+                tutorialInMenu.configure(viewModel: TutorialInMenuViewModel(deviceLanguage: deviceLanguage))
                 customView = tutorialInMenu
             }
         }

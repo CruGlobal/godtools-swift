@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct OnboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
+class OnboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
     
     private let tutorialAvailability: TutorialAvailabilityType
     private let onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType
     
-    init(tutorialAvailability: TutorialAvailabilityType, onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType) {
+    required init(tutorialAvailability: TutorialAvailabilityType, onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType) {
                 
         self.tutorialAvailability = tutorialAvailability
         self.onboardingTutorialViewedCache = onboardingTutorialViewedCache
