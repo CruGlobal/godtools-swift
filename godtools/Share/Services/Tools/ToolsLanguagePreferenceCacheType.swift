@@ -14,5 +14,7 @@ protocol ToolsLanguagePreferenceCacheType {
     var parallelLanguageId: String? { get }
     
     func cachePrimaryLanguageId(id: String)
+    func deletePrimaryLanguageId()
     func cacheParallelLanguageId(id: String)
+    func deleteParallelLanguageId()
 }

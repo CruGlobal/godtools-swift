@@ -19,10 +19,6 @@ class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType
         
     }
     
-    private var defaults: UserDefaults {
-        return UserDefaults.standard
-    }
-    
     var primaryLanguageId: String? {
         return getLanguageId(key: .primaryLanguageId)
     }
@@ -35,8 +31,20 @@ class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType
         cacheLanguageId(id: id, key: .primaryLanguageId)
     }
     
+    func deletePrimaryLanguageId() {
+        deleteLanguageId(key: .primaryLanguageId)
+    }
+
     func cacheParallelLanguageId(id: String) {
         cacheLanguageId(id: id, key: .parallelLanguageId)
+    }
+    
+    func deleteParallelLanguageId() {
+        deleteLanguageId(key: .parallelLanguageId)
+    }
+    
+    private var defaults: UserDefaults {
+        return UserDefaults.standard
     }
     
     private func getLanguageId(key: LanguageKey) -> String? {
@@ -45,6 +53,11 @@ class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType
     
     private func cacheLanguageId(id: String, key: LanguageKey) {
         defaults.set(id, forKey: key.rawValue)
+        defaults.synchronize()
+    }
+    
+    private func deleteLanguageId(key: LanguageKey) {
+        defaults.set(nil, forKey: key.rawValue)
         defaults.synchronize()
     }
 }

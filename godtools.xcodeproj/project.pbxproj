@@ -118,6 +118,7 @@
 		452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D224006372002B2453 /* RequestClientErrorType.swift */; };
 		452E129B2422903000531B72 /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E12992422903000531B72 /* TutorialSupportedLanguagesType.swift */; };
 		452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E129A2422903000531B72 /* TutorialSupportedLanguages.swift */; };
+		452E129D2422B57500531B72 /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		452E3227240706FD00DB41B7 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3226240706FD00DB41B7 /* Signal.swift */; };
 		452E3229240708F000DB41B7 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3228240708F000DB41B7 /* SignalValue.swift */; };
 		453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A623FF212700921D75 /* AccountItemViewType.swift */; };
@@ -191,7 +192,6 @@
 		45732E7824218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7624218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift */; };
 		45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7924218A00006F0559 /* OnboardingTutorialAvailabilityType.swift */; };
 		45732E7C24218A00006F0559 /* OnboardingTutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7A24218A00006F0559 /* OnboardingTutorialAvailability.swift */; };
-		45732E81242192F3006F0559 /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		45732E8B24219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E8924219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift */; };
 		45732E8C24219C3A006F0559 /* ToolsLanguagePreferenceCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E8A24219C3A006F0559 /* ToolsLanguagePreferenceCacheType.swift */; };
 		45732E912421A78F006F0559 /* TutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E902421A78F006F0559 /* TutorialAvailability.swift */; };
@@ -2760,6 +2760,7 @@
 				0F13B5FB1EC4C88200C55B2A /* TractInput.swift in Sources */,
 				4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */,
 				0F9E324E1EDE78590081DBB9 /* TractViewControllerContent.swift in Sources */,
+				452E129D2422B57500531B72 /* GTSettings.swift in Sources */,
 				EC61B9D71EFDDC6B00615840 /* TractForm+Actions.swift in Sources */,
 				ECBE2E5D1EF04A2B00A13849 /* TractCallToAction+UI.swift in Sources */,
 				EC8245CD1EEEF1A00023A203 /* TractInputProperties.swift in Sources */,
@@ -2780,7 +2781,6 @@
 				0FB73E701EA90669000BA60D /* LanguagesTableViewController.swift in Sources */,
 				4F2F7C7021A86791009B41B0 /* WebArchiver.swift in Sources */,
 				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
-				45732E81242192F3006F0559 /* GTSettings.swift in Sources */,
 				0F806C6D1EB3E6D700F3ED2B /* TractCard.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				45732E912421A78F006F0559 /* TutorialAvailability.swift in Sources */,
