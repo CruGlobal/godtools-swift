@@ -18,9 +18,7 @@ struct TutorialAvailability: TutorialAvailabilityType {
     }
     
     var tutorialIsAvailable: Bool {
-        
-        // TODO: Inlcude all preferred language codes?
-        
+                
         let languageCode: String = Locale.current.languageCode ?? Locale.preferredLanguages.first ?? ""
         let languageCodeIsSupported: Bool = tutorialSupportedLanguages.supportsLanguageCode(code: languageCode)
         

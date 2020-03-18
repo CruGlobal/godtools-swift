@@ -116,6 +116,8 @@
 		452036CF24005B2B002B2453 /* RequestResponse+RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036CE24005B2B002B2453 /* RequestResponse+RequestResult.swift */; };
 		452036D124005B5B002B2453 /* RequestClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D024005B5B002B2453 /* RequestClientError.swift */; };
 		452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D224006372002B2453 /* RequestClientErrorType.swift */; };
+		452E129B2422903000531B72 /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E12992422903000531B72 /* TutorialSupportedLanguagesType.swift */; };
+		452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E129A2422903000531B72 /* TutorialSupportedLanguages.swift */; };
 		452E3227240706FD00DB41B7 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3226240706FD00DB41B7 /* Signal.swift */; };
 		452E3229240708F000DB41B7 /* SignalValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452E3228240708F000DB41B7 /* SignalValue.swift */; };
 		453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453AD7A623FF212700921D75 /* AccountItemViewType.swift */; };
@@ -189,8 +191,6 @@
 		45732E7824218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7624218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift */; };
 		45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7924218A00006F0559 /* OnboardingTutorialAvailabilityType.swift */; };
 		45732E7C24218A00006F0559 /* OnboardingTutorialAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7A24218A00006F0559 /* OnboardingTutorialAvailability.swift */; };
-		45732E7E24218E2F006F0559 /* TutorialSupportedLanguagesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7D24218E2F006F0559 /* TutorialSupportedLanguagesType.swift */; };
-		45732E8024218E67006F0559 /* TutorialSupportedLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E7F24218E67006F0559 /* TutorialSupportedLanguages.swift */; };
 		45732E81242192F3006F0559 /* GTSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8048041EB3A2FB00943DFF /* GTSettings.swift */; };
 		45732E8B24219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E8924219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift */; };
 		45732E8C24219C3A006F0559 /* ToolsLanguagePreferenceCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E8A24219C3A006F0559 /* ToolsLanguagePreferenceCacheType.swift */; };
@@ -555,6 +555,8 @@
 		452036CE24005B2B002B2453 /* RequestResponse+RequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestResponse+RequestResult.swift"; sourceTree = "<group>"; };
 		452036D024005B5B002B2453 /* RequestClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestClientError.swift; sourceTree = "<group>"; };
 		452036D224006372002B2453 /* RequestClientErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestClientErrorType.swift; sourceTree = "<group>"; };
+		452E12992422903000531B72 /* TutorialSupportedLanguagesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguagesType.swift; sourceTree = "<group>"; };
+		452E129A2422903000531B72 /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
 		452E3226240706FD00DB41B7 /* Signal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		452E3228240708F000DB41B7 /* SignalValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalValue.swift; sourceTree = "<group>"; };
 		453AD7A623FF212700921D75 /* AccountItemViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountItemViewType.swift; sourceTree = "<group>"; };
@@ -628,8 +630,6 @@
 		45732E7624218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialViewedUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45732E7924218A00006F0559 /* OnboardingTutorialAvailabilityType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialAvailabilityType.swift; sourceTree = "<group>"; };
 		45732E7A24218A00006F0559 /* OnboardingTutorialAvailability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialAvailability.swift; sourceTree = "<group>"; };
-		45732E7D24218E2F006F0559 /* TutorialSupportedLanguagesType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguagesType.swift; sourceTree = "<group>"; };
-		45732E7F24218E67006F0559 /* TutorialSupportedLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialSupportedLanguages.swift; sourceTree = "<group>"; };
 		45732E8924219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsLanguagePreferenceUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45732E8A24219C3A006F0559 /* ToolsLanguagePreferenceCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolsLanguagePreferenceCacheType.swift; sourceTree = "<group>"; };
 		45732E902421A78F006F0559 /* TutorialAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialAvailability.swift; sourceTree = "<group>"; };
@@ -1356,8 +1356,6 @@
 			children = (
 				45732E902421A78F006F0559 /* TutorialAvailability.swift */,
 				45732E922421A798006F0559 /* TutorialAvailabilityType.swift */,
-				45732E7F24218E67006F0559 /* TutorialSupportedLanguages.swift */,
-				45732E7D24218E2F006F0559 /* TutorialSupportedLanguagesType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1676,6 +1674,8 @@
 				45D3C92A23DF9AC200ECF70E /* TutorialItem.swift */,
 				45D3C92C23DF9C1000ECF70E /* TutorialItemProvider.swift */,
 				45D3C92E23DF9C1800ECF70E /* TutorialItemProviderType.swift */,
+				452E129A2422903000531B72 /* TutorialSupportedLanguages.swift */,
+				452E12992422903000531B72 /* TutorialSupportedLanguagesType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2654,7 +2654,6 @@
 				45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */,
 				4FF646291ECF35DF00953090 /* FirstLaunchInitializer.swift in Sources */,
 				0F806C6F1EB3E6FA00F3ED2B /* TractLabel.swift in Sources */,
-				45732E8024218E67006F0559 /* TutorialSupportedLanguages.swift in Sources */,
 				4FD0659221A5D75700E69A98 /* ArticleToolViewController.swift in Sources */,
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
@@ -2664,6 +2663,7 @@
 				ECBF59BC1FB2531600FAFC01 /* TractPageContainer.swift in Sources */,
 				45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
+				452E129B2422903000531B72 /* TutorialSupportedLanguagesType.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
 				4F8226F81EE8FEC10056DB04 /* LanguagesTableViewController+TableDataSource.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
@@ -2691,7 +2691,6 @@
 				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */,
 				45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */,
-				45732E7E24218E2F006F0559 /* TutorialSupportedLanguagesType.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
 				45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */,
@@ -2850,6 +2849,7 @@
 				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
+				452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */,
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				4F2F7C7121A86791009B41B0 /* WebArchive.swift in Sources */,
 				0F9E32501EDE78940081DBB9 /* TractViewControllerPageMovements.swift in Sources */,
