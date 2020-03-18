@@ -10,16 +10,30 @@ import Foundation
 import TheKeyOAuthSwift
 
 class AppDiContainer {
-        
+       
+    private(set) lazy var tutorialSupportedLanguages: TutorialSupportedLanguagesType = {
+        return TutorialSupportedLanguages()
+    }()
+    private(set) lazy var tutorialAvailability: TutorialAvailabilityType = {
+        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }()
+    
+    private(set) lazy var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType = {
+        return OnboardingTutorialViewedUserDefaultsCache()
+    }()
+    
+    private(set) lazy var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType = {
+        return OnboardingTutorialAvailability(
+            tutorialAvailability: tutorialAvailability,
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache
+        )
+    }()
+    
     let config: ConfigType
     let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
     let deviceLanguage: DeviceLanguageType
     let toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType
-    let tutorialSupportedLanguages: TutorialSupportedLanguagesType
-    let tutorialAvailability: TutorialAvailabilityType
-    let onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType
-    let onboardingTutorialAvailability: OnboardingTutorialAvailabilityType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     let globalActivityServices: GlobalActivityServicesType
@@ -35,17 +49,6 @@ class AppDiContainer {
         deviceLanguage = DeviceLanguage()
         
         toolsLanguagePreferencesCache = ToolsLanguagePreferenceUserDefaultsCache()
-        
-        tutorialSupportedLanguages = TutorialSupportedLanguages()
-        
-        tutorialAvailability = TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
-        
-        onboardingTutorialViewedCache = OnboardingTutorialViewedUserDefaultsCache()
-        
-        onboardingTutorialAvailability = OnboardingTutorialAvailability(
-            tutorialAvailability: tutorialAvailability,
-            onboardingTutorialViewedCache: onboardingTutorialViewedCache
-        )
         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
