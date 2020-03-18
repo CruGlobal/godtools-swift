@@ -10,54 +10,42 @@ import Foundation
 
 class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType {
     
-    enum LanguageKey: String {
-        case primaryLanguageId = "kPrimaryLanguageId"
-        case parallelLanguageId = "kParallelLanguageId"
-    }
+    private let keyPrimaryLanguageId: String = "kPrimaryLanguageId"
+    private let keyParallelLanguageId: String = "kParallelLanguageId"
         
     required init() {
         
-    }
-    
-    var primaryLanguageId: String? {
-        return getLanguageId(key: .primaryLanguageId)
-    }
-    
-    var parallelLanguageId: String? {
-        return getLanguageId(key: .parallelLanguageId)
-    }
-    
-    func cachePrimaryLanguageId(id: String) {
-        cacheLanguageId(id: id, key: .primaryLanguageId)
-    }
-    
-    func deletePrimaryLanguageId() {
-        deleteLanguageId(key: .primaryLanguageId)
-    }
-
-    func cacheParallelLanguageId(id: String) {
-        cacheLanguageId(id: id, key: .parallelLanguageId)
-    }
-    
-    func deleteParallelLanguageId() {
-        deleteLanguageId(key: .parallelLanguageId)
     }
     
     private var defaults: UserDefaults {
         return UserDefaults.standard
     }
     
-    private func getLanguageId(key: LanguageKey) -> String? {
-        return defaults.object(forKey: key.rawValue) as? String
+    var primaryLanguageId: String? {
+        return defaults.object(forKey: keyPrimaryLanguageId) as? String
     }
     
-    private func cacheLanguageId(id: String, key: LanguageKey) {
-        defaults.set(id, forKey: key.rawValue)
+    var parallelLanguageId: String? {
+        return defaults.object(forKey: keyParallelLanguageId) as? String
+    }
+    
+    func cachePrimaryLanguageId(id: String) {
+        defaults.set(id, forKey: keyPrimaryLanguageId)
+        defaults.synchronize()
+    }
+
+    func cacheParallelLanguageId(id: String) {
+        defaults.set(id, forKey: keyParallelLanguageId)
         defaults.synchronize()
     }
     
-    private func deleteLanguageId(key: LanguageKey) {
-        defaults.set(nil, forKey: key.rawValue)
+    func deletePrimaryLanguageId() {
+        defaults.set(nil, forKey: keyPrimaryLanguageId)
+        defaults.synchronize()
+    }
+    
+    func deleteParallelLanguageId() {
+        defaults.set(nil, forKey: keyParallelLanguageId)
         defaults.synchronize()
     }
 }
