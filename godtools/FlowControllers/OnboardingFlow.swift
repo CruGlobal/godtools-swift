@@ -55,8 +55,8 @@ extension OnboardingFlow: FlowDelegate {
                 analytics: appDiContainer.analytics,
                 appsFlyer: appDiContainer.appsFlyer,
                 onboardingTutorialProvider: OnboardingTutorialProvider(),
-                onboardingTutorialServices: appDiContainer.onboardingTutorialServices,
-                tutorialServices: appDiContainer.tutorialServices
+                onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
+                openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
             )
             let view = OnboardingTutorialView(viewModel: viewModel)
             navigationController.setViewControllers([view], animated: true)

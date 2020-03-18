@@ -13,8 +13,9 @@ import GTMAppAuth
 class MenuViewModel: NSObject, MenuViewModelType {
     
     private let menuDataProvider: MenuDataProviderType
-    private let deviceLanguage: DeviceLanguagePreferences
-    private let tutorialServices: TutorialServicesType
+    private let deviceLanguage: DeviceLanguageType
+    private let tutorialAvailability: TutorialAvailabilityType
+    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
     
     private weak var flowDelegate: FlowDelegate?
@@ -22,13 +23,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let loginClient: TheKeyOAuthClient
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguagePreferences, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.loginClient = loginClient
         self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
-        self.tutorialServices = tutorialServices
+        self.tutorialAvailability = tutorialAvailability
+        self.openTutorialCalloutCache = openTutorialCalloutCache
         
         super.init()
                 
@@ -43,12 +45,12 @@ class MenuViewModel: NSObject, MenuViewModelType {
             createMenuDataSource(
                 isAuthorized: loginClient.isAuthenticated(),
                 accountCreationIsSupported: accountCreationIsSupported,
-                deviceIsEnglish: deviceLanguage.isEnglish
+                tutorialIsAvailable: tutorialAvailability.tutorialIsAvailable
             )
         )
     }
     
-    private func createMenuDataSource(isAuthorized: Bool, accountCreationIsSupported: Bool, deviceIsEnglish: Bool) -> MenuDataSource {
+    private func createMenuDataSource(isAuthorized: Bool, accountCreationIsSupported: Bool, tutorialIsAvailable: Bool) -> MenuDataSource {
         
         var sections: [MenuSection] = Array()
         sections.append(menuDataProvider.getMenuSection(id: .general))
@@ -68,14 +70,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
                 
             case .general:
                 
-                items = [
-                    menuDataProvider.getMenuItem(id: .languageSettings),
-                    menuDataProvider.getMenuItem(id: .tutorial),
-                    menuDataProvider.getMenuItem(id: .about),
-                    menuDataProvider.getMenuItem(id: .help),
-                    menuDataProvider.getMenuItem(id: .contactUs)
-                ]
-                                
+                items.append(menuDataProvider.getMenuItem(id: .languageSettings))
+                if tutorialIsAvailable {
+                    items.append(menuDataProvider.getMenuItem(id: .tutorial))
+                }
+                items.append(menuDataProvider.getMenuItem(id: .about))
+                items.append(menuDataProvider.getMenuItem(id: .help))
+                items.append(menuDataProvider.getMenuItem(id: .contactUs))
+                
             case .account:
                 
                 if isAuthorized {
@@ -105,15 +107,6 @@ class MenuViewModel: NSObject, MenuViewModelType {
                 ]
             }
             
-            items = items.filter {
-                if !deviceIsEnglish {
-                    return $0.id != .tutorial
-                }
-                else {
-                    return true
-                }
-            }
-            
             itemsDictionary[section.id] = items
         }
         
@@ -124,7 +117,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func tutorialTapped() {
-        tutorialServices.disableOpenTutorialCallout()
+        openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
     }
     

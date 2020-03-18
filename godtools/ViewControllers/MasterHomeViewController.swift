@@ -130,7 +130,8 @@ class MasterHomeViewController: BaseViewController  {
         
         let openTutorialViewModel = OpenTutorialViewModel(
             flowDelegate: self,
-            tutorialServices: appDiContainer.tutorialServices,
+            tutorialAvailability: appDiContainer.tutorialAvailability,
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             analytics: appDiContainer.analytics
         )
         openTutorialView.configure(viewModel: openTutorialViewModel)

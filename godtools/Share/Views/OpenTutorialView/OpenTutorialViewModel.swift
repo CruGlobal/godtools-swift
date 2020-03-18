@@ -10,7 +10,8 @@ import Foundation
 
 class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
-    private let tutorialServices: TutorialServicesType
+    private let tutorialAvailability: TutorialAvailabilityType
+    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let analytics: GodToolsAnaltyics
     
     private weak var flowDelegate: FlowDelegate?
@@ -19,30 +20,33 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     let openTutorialTitle: String
     let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
     
-    required init(flowDelegate: FlowDelegate, tutorialServices: TutorialServicesType, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: GodToolsAnaltyics) {
         
         self.flowDelegate = flowDelegate
-        self.tutorialServices = tutorialServices
+        self.tutorialAvailability = tutorialAvailability
+        self.openTutorialCalloutCache = openTutorialCalloutCache
         self.analytics = analytics
         
         showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
         openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
-        hidesOpenTutorial = ObservableValue(value: (hidden: !tutorialServices.openTutorialCalloutIsAvailable, animated: false))
+        
+        let hidesOpenTutorialCallout: Bool = !tutorialAvailability.tutorialIsAvailable || openTutorialCalloutCache.openTutorialCalloutDisabled
+        hidesOpenTutorial = ObservableValue(value: (hidden: hidesOpenTutorialCallout, animated: false))
         
         super.init()
         
-        tutorialServices.openTutorialCalloutDisabledSignal.addObserver(self) { [weak self] in
+        openTutorialCalloutCache.openTutorialCalloutDisabledSignal.addObserver(self) { [weak self] in
             self?.hidesOpenTutorial.accept(value: (hidden: true, animated: true))
         }
     }
     
     func openTutorialTapped() {
-        tutorialServices.disableOpenTutorialCallout()
+        openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .openTutorialTapped)
     }
     
     func closeTapped() {
-        tutorialServices.disableOpenTutorialCallout()
+        openTutorialCalloutCache.disableOpenTutorialCallout()
         analytics.recordActionForADBMobile(screenName: "home", actionName: "Tutorial Home Dismiss", data: ["cru.tutorial_home_dismiss": 1])
     }
 }

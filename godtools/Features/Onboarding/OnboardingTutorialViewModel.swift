@@ -12,8 +12,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
     private let analytics: GodToolsAnaltyics
     private let appsFlyer: AppsFlyerType
-    private let onboardingTutorialServices: OnboardingTutorialServicesType
-    private let tutorialServices: TutorialServicesType
+    private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private var page: Int = 0
     
@@ -29,13 +28,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialServices: OnboardingTutorialServicesType, tutorialServices: TutorialServicesType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         self.appsFlyer = appsFlyer
-        self.onboardingTutorialServices = onboardingTutorialServices
-        self.tutorialServices = tutorialServices
+        self.openTutorialCalloutCache = openTutorialCalloutCache
         
         var tutorialItemsArray: [OnboardingTutorialItem] = Array()
         tutorialItemsArray.append(contentsOf: onboardingTutorialProvider.aboutTheAppItems)
@@ -45,7 +43,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
                 
         setPage(page: 0, animated: false)
         
-        onboardingTutorialServices.disableOnboardingTutorial()
+        onboardingTutorialAvailability.markOnboardingTutorialViewed()
     }
     
     private var analyticsScreenName: String {
@@ -112,7 +110,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     }
     
     func showMoreTapped() {
-        tutorialServices.disableOpenTutorialCallout()
+        openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
         analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "On-Boarding More", data: ["cru.onboarding_more": 1])

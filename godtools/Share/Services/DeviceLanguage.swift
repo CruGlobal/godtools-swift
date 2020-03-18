@@ -1,21 +1,17 @@
 //
-//  DeviceLanguagePreferences.swift
+//  DeviceLanguage.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/29/20.
+//  Created by Levi Eggert on 3/17/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct DeviceLanguagePreferences: LanguagePreferencesType {
-    
-    init() {
-        
-    }
+struct DeviceLanguage: DeviceLanguageType {
     
     var languageCode: String? {
-        return NSLocale.current.languageCode
+        return Locale.current.languageCode
     }
     
     var isEnglish: Bool {
