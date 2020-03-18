@@ -19,10 +19,7 @@ class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
     }
     
     var openTutorialCalloutDisabled: Bool {
-        if let disabled = defaults.object(forKey: keyOpenTutorialCalloutDisabled) as? Bool {
-            return disabled
-        }
-        return false
+        return defaults.object(forKey: keyOpenTutorialCalloutDisabled) as? Bool ?? false
     }
     
     private var defaults: UserDefaults {
