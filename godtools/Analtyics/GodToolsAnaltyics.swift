@@ -206,23 +206,47 @@ class GodToolsAnaltyics {
         }
     }
     
-    func recordExitLinkAction(url: URL) {
-
-        let marketingCloudId: String = String(ADBMobile.visitorMarketingCloudID() ?? "")
+    func recordExitLinkAction(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
+        
+        var properties: [String: Any] = getDefaultAnalyticsProperties(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection
+        )
+        
+        properties.updateValue(url.absoluteString, forKey: AdobeAnalyticsConstants.Keys.exitAction)
         
         recordActionForADBMobile(
-            screenName: nil,
+            screenName: screenName,
             actionName: AdobeAnalyticsConstants.Values.exitLink,
-            data: [
-                AdobeAnalyticsConstants.Keys.exitAction: url.absoluteString,
-                AdobeAnalyticsConstants.Keys.marketingCloudID: marketingCloudId,
-                AdobeAnalyticsConstants.Keys.appName: AdobeAnalyticsConstants.Values.godTools
-            ]
+            data: properties
         )
     }
     
     private func recordScreenViewInAdobe(screenName: String, siteSection: String, siteSubSection: String) {
-        var properties: [String: String] = [:]
+        
+        let properties: [String: Any] = getDefaultAnalyticsProperties(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection
+        )
+                
+        if loggingEnabled {
+            print("\nTracking Adobe Analytics Screen View")
+            print("  screenName: \(screenName)")
+            print("  data: \(properties)\n")
+        }
+        
+        previousScreenName = screenName
+        
+        ADBMobile.trackState(screenName, data: properties)
+       // debugPrint("\(properties.debugDescription)")
+    }
+    
+    private func getDefaultAnalyticsProperties(screenName: String, siteSection: String, siteSubSection: String) -> [String: Any] {
+        
+        var properties: [String: Any] = [:]
+        
         let primaryLanguageCode = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode") ?? ""
         let parallelLanguageCode = UserDefaults.standard.string(forKey: "kParallelLanguageCode") ?? ""
         
@@ -242,17 +266,8 @@ class GodToolsAnaltyics {
         if TheKeyOAuthClient.shared.isAuthenticated(), let grMasterPersonId = TheKeyOAuthClient.shared.grMasterPersonId {
             properties[AdobeAnalyticsConstants.Keys.grMasterPersonID] = grMasterPersonId
         }
-                
-        if loggingEnabled {
-            print("\nTracking Adobe Analytics Screen View")
-            print("  screenName: \(screenName)")
-            print("  data: \(properties)\n")
-        }
         
-        previousScreenName = screenName
-        
-        ADBMobile.trackState(screenName, data: properties)
-       // debugPrint("\(properties.debugDescription)")
+        return properties
     }
     
     private func getLoggedInStatus() -> String {
