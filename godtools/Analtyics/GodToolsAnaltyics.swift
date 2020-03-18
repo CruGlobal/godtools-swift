@@ -62,7 +62,7 @@ class GodToolsAnaltyics {
     private let config: ConfigType
     private let appsFlyer: AppsFlyerType
     private let tracker: GAITracker
-    private let loggingEnabled: Bool = true
+    private let loggingEnabled: Bool = false
     
     var previousScreenName = ""
     var adobeAnalyticsBackgroundQueue = DispatchQueue(label: "org.cru.godtools.adobeAnalytics", qos: .background)
