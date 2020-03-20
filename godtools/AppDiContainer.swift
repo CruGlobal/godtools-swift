@@ -11,7 +11,7 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
        
-    private(set) lazy var tutorialSupportedLanguages: TutorialSupportedLanguagesType = {
+    private(set) lazy var tutorialSupportedLanguages: SupportedLanguagesType = {
         return TutorialSupportedLanguages()
     }()
     private(set) lazy var tutorialAvailability: TutorialAvailabilityType = {

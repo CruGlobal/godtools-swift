@@ -8,20 +8,16 @@
 
 import Foundation
 
-struct TutorialSupportedLanguages: TutorialSupportedLanguagesType {
+struct TutorialSupportedLanguages: SupportedLanguagesType {
     
-    let supportedLanguageCodes: [String] = ["en", "es", "zh"]
-    
-    func supportsLanguageCode(code: String) -> Bool {
-        return supportedLanguageCodes.contains(code)
-    }
-    
-    func supportsLanguageCode(fromLanguageCodes: [String]) -> Bool {
-        for languageCode in fromLanguageCodes {
-            if supportedLanguageCodes.contains(languageCode) {
-                return true
-            }
-        }
-        return false
+    let languages: [Locale]
+        
+    init() {
+        
+        languages = [
+            Locale(identifier: "en"),
+            Locale(identifier: "es"),
+            Locale(identifier: "zh-Hans")
+        ]
     }
 }

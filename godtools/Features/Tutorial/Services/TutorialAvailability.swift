@@ -9,19 +9,15 @@
 import Foundation
 
 struct TutorialAvailability: TutorialAvailabilityType {
-    
-    private let tutorialSupportedLanguages: TutorialSupportedLanguagesType
-    
-    init(tutorialSupportedLanguages: TutorialSupportedLanguagesType) {
         
-        self.tutorialSupportedLanguages = tutorialSupportedLanguages
+    private let tutorialLanguageAvailability: TutorialLanguageAvailability
+    
+    init(tutorialSupportedLanguages: SupportedLanguagesType) {
+        
+        tutorialLanguageAvailability = TutorialLanguageAvailability(supportedLanguages: tutorialSupportedLanguages)
     }
     
-    var tutorialIsAvailable: Bool {
-                
-        let languageCode: String = Locale.current.languageCode ?? Locale.preferredLanguages.first ?? ""
-        let languageCodeIsSupported: Bool = tutorialSupportedLanguages.supportsLanguageCode(code: languageCode)
-        
-        return languageCodeIsSupported
+    var tutorialIsAvailable: Bool {        
+        return tutorialLanguageAvailability.isAvailableInLanguage(locale: Locale.current)
     }
 }
