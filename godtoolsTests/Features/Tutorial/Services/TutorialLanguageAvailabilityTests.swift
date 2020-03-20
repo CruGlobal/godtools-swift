@@ -45,20 +45,15 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
         
         XCTAssertEqual(tutorialLanguageAvailability.isAvailableInLanguage(locale: deviceEnglishLanguage), tutorialShouldBeAvailable)
     }
-    
-    /*
-     
-     // TODO: I can't write this test at the moment, for some reason when I create a Locale with identifier LanguageCode-ScriptCode_RegionCode, the script code is nil.
-     // Need to look into why that is. ~Levi
-     
+          
     func testThatATutorialSupportingSimplifiedChineseIsAvailableForADeviceInSimplifiedChineseLanguage() {
         
         let simplifedChineseLocales = [
             Locale(identifier: "zh_Hans"),
-            Locale(identifier: "zh_Hans_CN"),
-            Locale(identifier: "zh_Hans_SG"),
-            Locale(identifier: "zh_Hans_MO"),
-            Locale(identifier: "zh_Hans_HK")
+            Locale(identifier: "zh-Hans-CN"),
+            Locale(identifier: "zh-Hans-SG"),
+            Locale(identifier: "zh-Hans-MO"),
+            Locale(identifier: "zh-Hans-HK")
         ]
         
         let supportedLangauges = MockSupportedLanguages(
@@ -73,7 +68,34 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             
             let tutorialShouldBeAvailable: Bool = true
                         
-            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: simplifiedChineseLanguage), tutorialShouldBeAvailable, "Chinese simplified language \(simplifiedChineseLanguage) is not available in the list of tutorial supported languages.")
+            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: simplifiedChineseLanguage), tutorialShouldBeAvailable, "Chinese simplified language \(simplifiedChineseLanguage) should be available in the supported simplified chinese language.")
         }
-    }*/
+    }
+    
+    func testThatATutorialSupportingSimplifiedChineseIsNotAvailableForADeviceInTraditionalChineseLanguage() {
+        
+        let traditionalChineseLocales = [
+            Locale(identifier: "zh"),
+            Locale(identifier: "zh-Hant"),
+            Locale(identifier: "zh-Hant-CN"),
+            Locale(identifier: "zh-Hant-TW"),
+            Locale(identifier: "zh-Hant-MO"),
+            Locale(identifier: "zh-Hant-HK")
+        ]
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "zh-Hans")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        for traditionalChineseLanguage in traditionalChineseLocales {
+            
+            let tutorialShouldBeAvailable: Bool = false
+                        
+            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: traditionalChineseLanguage), tutorialShouldBeAvailable, "Chinese traditional language \(traditionalChineseLanguage) should not be available in the supported simplified chinese language.")
+        }
+    }
 }

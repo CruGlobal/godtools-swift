@@ -13,7 +13,7 @@ struct TutorialLanguageAvailability {
     let supportedLanguages: SupportedLanguagesType
         
     func isAvailableInLanguage(locale: Locale) -> Bool {
-        
+                
         if locale.languageCode != nil {
             
             for supportingLocale in supportedLanguages.languages {
@@ -21,7 +21,7 @@ struct TutorialLanguageAvailability {
                 let languagesCodesMatch: Bool = locale.languageCode == supportingLocale.languageCode
                 let scriptCodesMatch: Bool = (supportingLocale.scriptCode?.isEmpty ?? true) || supportingLocale.scriptCode == locale.scriptCode
                 let regionCodesMatch: Bool = (supportingLocale.regionCode?.isEmpty ?? true) || supportingLocale.regionCode == locale.regionCode
-                
+                                
                 if languagesCodesMatch && scriptCodesMatch && regionCodesMatch {
                     return true
                 }
