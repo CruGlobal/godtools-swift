@@ -229,6 +229,8 @@
 		457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C123E8BAE50049D236 /* MenuDataProvider.swift */; };
 		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
 		457719C623E8C3BA0049D236 /* MenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C523E8C3BA0049D236 /* MenuFlow.swift */; };
+		45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
+		4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
 		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */; };
@@ -675,6 +677,7 @@
 		457719C123E8BAE50049D236 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
 		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
 		457719C523E8C3BA0049D236 /* MenuFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFlow.swift; sourceTree = "<group>"; };
+		45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
 		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApi.swift; sourceTree = "<group>"; };
@@ -1368,6 +1371,7 @@
 				45732E902421A78F006F0559 /* TutorialAvailability.swift */,
 				45732E922421A798006F0559 /* TutorialAvailabilityType.swift */,
 				45FA6969242519F50006878C /* TutorialLanguageAvailability.swift */,
+				45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2685,6 +2689,7 @@
 				454EA59C2416B40E00749728 /* ToolDetailViewModel.swift in Sources */,
 				ECBE2E4F1EF0480D00A13849 /* TractModal+ChildSetup.swift in Sources */,
 				4FA9C3AC2242BAB200DAE207 /* WKWebViewController.swift in Sources */,
+				45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */,
 				0F7741D91EBB8A8900888D20 /* TractCard+Animations.swift in Sources */,
 				4F75CC58219DD70C0042200E /* CategoryResource.swift in Sources */,
 				EC3140C51EE76F99009347D3 /* TractEmailProperties.swift in Sources */,
@@ -3000,6 +3005,7 @@
 				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
 				45FA69632425180F0006878C /* TutorialAvailabilityType.swift in Sources */,
 				45FA6968242519BD0006878C /* SupportedLanguagesType.swift in Sources */,
+				4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */,
 				45FA6964242518120006878C /* TutorialAvailability.swift in Sources */,
 				45FA696C24251CA00006878C /* TutorialLanguageAvailabilityTests.swift in Sources */,
 				45FA696D24251CE50006878C /* TutorialLanguageAvailability.swift in Sources */,

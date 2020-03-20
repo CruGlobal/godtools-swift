@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TutorialLanguageAvailability {
+struct TutorialLanguageAvailability: LanguageAvailabilityType {
     
     let supportedLanguages: SupportedLanguagesType
         
@@ -28,6 +28,15 @@ struct TutorialLanguageAvailability {
             }
         }
 
+        return false
+    }
+    
+    func isAvailableInLanguages(identifiers: [String]) -> Bool {
+        for identifier in identifiers {
+            if isAvailableInLanguage(locale: Locale(identifier: identifier)) {
+                return true
+            }
+        }
         return false
     }
 }

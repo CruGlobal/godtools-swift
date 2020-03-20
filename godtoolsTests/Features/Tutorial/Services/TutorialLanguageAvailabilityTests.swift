@@ -98,4 +98,122 @@ class TutorialLanguageAvailabilityTests: XCTestCase {
             XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: traditionalChineseLanguage), tutorialShouldBeAvailable, "Chinese traditional language \(traditionalChineseLanguage) should not be available in the supported simplified chinese language.")
         }
     }
+    
+    func testThatATutorialSupportingEnglishIsAvaliableForADeviceInEnglishLanguageAndFrenchRegion() {
+        
+        let deviceLanguage: Locale = Locale(identifier: "en-FR")
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "en")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        let tutorialShouldBeAvailable: Bool = true
+        
+        XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: deviceLanguage), tutorialShouldBeAvailable, "English language in French region \(deviceLanguage) should be available in the supported english language.")
+    }
+    
+    func testThatATutorialSupportingEnglishLanguageInCanadaRegionIsAvailableForADeviceInEnglishLanguageAndCanadaRegion() {
+        
+        let deviceLanguage: Locale = Locale(identifier: "en-CA")
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "en-CA")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        let tutorialShouldBeAvailable: Bool = true
+        
+        XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: deviceLanguage), tutorialShouldBeAvailable, "English language in Canada region \(deviceLanguage) should be available in the supported English language and Canada region.")
+    }
+    
+    func testThatATutorialSupportingSimplifiedChineseInHongKongRegionIsNotAvailableToChineseLanguagesNotInSimplifedChineseLanguageInHongKongRegion() {
+        
+        let chineseLocales = [
+            Locale(identifier: "zh_Hans"),
+            Locale(identifier: "zh-Hans-CN"),
+            Locale(identifier: "zh-Hans-SG"),
+            Locale(identifier: "zh-Hans-MO"),
+            Locale(identifier: "zh"),
+            Locale(identifier: "zh-Hant"),
+            Locale(identifier: "zh-Hant-CN"),
+            Locale(identifier: "zh-Hant-TW"),
+            Locale(identifier: "zh-Hant-MO"),
+            Locale(identifier: "zh-Hant-HK")
+        ]
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "zh-Hans-HK")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        for chineseLanguage in chineseLocales {
+            
+            let tutorialShouldBeAvailable: Bool = false
+                        
+            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: chineseLanguage), tutorialShouldBeAvailable, "Chinese language \(chineseLanguage) should not be available in the supported Simplified Chinese language in Hong Kong region.")
+        }
+    }
+    
+    func testThatATutorialSupportingChineseLanguageInHongKongRegionIsAvailableToSimplifiedAndTraditionalChineseLanguagesInHongKongRegion() {
+        
+        let chineseLocales = [
+            Locale(identifier: "zh-Hans-HK"),
+            Locale(identifier: "zh-Hant-HK")
+        ]
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "zh-HK")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        for chineseLanguage in chineseLocales {
+            
+            let tutorialShouldBeAvailable: Bool = true
+                        
+            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: chineseLanguage), tutorialShouldBeAvailable, "Chinese language \(chineseLanguage) should be available in the supported Chinese language in Hong Kong region.")
+        }
+    }
+    
+    func testThatATutorialSupportingChineseLanguagesInHongKongRegionIsNotAvailableToChineseLanguagesThatAreNotInHongKongRegion() {
+        
+        let chineseLocales = [
+            Locale(identifier: "zh_Hans"),
+            Locale(identifier: "zh-Hans-CN"),
+            Locale(identifier: "zh-Hans-SG"),
+            Locale(identifier: "zh-Hans-MO"),
+            Locale(identifier: "zh"),
+            Locale(identifier: "zh-Hant"),
+            Locale(identifier: "zh-Hant-CN"),
+            Locale(identifier: "zh-Hant-TW"),
+            Locale(identifier: "zh-Hant-MO")
+        ]
+        
+        let supportedLangauges = MockSupportedLanguages(
+            languages: [
+                Locale(identifier: "zh-HK")
+            ]
+        )
+        
+        let tutorialLanuageAvailability = TutorialLanguageAvailability(supportedLanguages: supportedLangauges)
+        
+        for chineseLanguage in chineseLocales {
+            
+            let tutorialShouldBeAvailable: Bool = false
+                        
+            XCTAssertEqual(tutorialLanuageAvailability.isAvailableInLanguage(locale: chineseLanguage), tutorialShouldBeAvailable, "Chinese language \(chineseLanguage) should not be available in the supported Chinese language in Hong Kong region.")
+        }
+    }
 }
