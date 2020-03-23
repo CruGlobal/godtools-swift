@@ -18,17 +18,19 @@ class TutorialViewModel: TutorialViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
+    let deviceLanguage: DeviceLanguageType
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         self.appsFlyer = appsFlyer
+        self.deviceLanguage = deviceLanguage
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         

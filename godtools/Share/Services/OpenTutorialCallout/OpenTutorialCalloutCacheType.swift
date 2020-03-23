@@ -1,17 +1,17 @@
 //
-//  TutorialServicesType.swift
+//  OpenTutorialCalloutCacheType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 1/29/20.
+//  Created by Levi Eggert on 3/17/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol TutorialServicesType {
+protocol OpenTutorialCalloutCacheType {
     
-    var tutorialIsAvailable: Bool { get }
-    var openTutorialCalloutIsAvailable: Bool { get }
+    var openTutorialCalloutEnabled: Bool { get }
+    var openTutorialCalloutDisabled: Bool { get }
     var openTutorialCalloutDisabledSignal: Signal { get }
     
     func enableOpenTutorialCallout()

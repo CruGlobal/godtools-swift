@@ -10,23 +10,50 @@ import Foundation
 import TheKeyOAuthSwift
 
 class AppDiContainer {
-        
+       
+    private(set) lazy var tutorialSupportedLanguages: SupportedLanguagesType = {
+        return TutorialSupportedLanguages()
+    }()
+    private(set) lazy var tutorialAvailability: TutorialAvailabilityType = {
+        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }()
+    
+    private(set) lazy var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType = {
+        return OnboardingTutorialViewedUserDefaultsCache()
+    }()
+    
+    private(set) lazy var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType = {
+        return OnboardingTutorialAvailability(
+            tutorialAvailability: tutorialAvailability,
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache
+        )
+    }()
+    
     let config: ConfigType
     let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
-    let onboardingTutorialServices: OnboardingTutorialServicesType
-    let tutorialServices: TutorialServicesType
+    let deviceLanguage: DeviceLanguageType
+    let toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType
+    let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     let globalActivityServices: GlobalActivityServicesType
     
     required init() {
         
         config = AppConfig()
+        
         appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
+        
         loginClient = TheKeyOAuthClient.shared
-        onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
-        tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
+        
+        deviceLanguage = DeviceLanguage()
+        
+        toolsLanguagePreferencesCache = ToolsLanguagePreferenceUserDefaultsCache()
+        
+        openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
+                
         analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
+        
         globalActivityServices = GlobalActivityServices(
             globalActivityApi: GlobalActivityAnalyticsApi(config: config),
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()

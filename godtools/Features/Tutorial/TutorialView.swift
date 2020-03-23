@@ -177,8 +177,12 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
             for: indexPath) as! TutorialCell
         
         let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
+        let cellViewModel = TutorialCellViewModel(
+            item: tutorialItem,
+            deviceLanguage: viewModel.deviceLanguage
+        )
         
-        cell.configure(viewModel: TutorialCellViewModel(item: tutorialItem), delegate: self)
+        cell.configure(viewModel: cellViewModel, delegate: self)
         
         return cell
     }
