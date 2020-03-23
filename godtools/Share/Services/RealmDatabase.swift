@@ -1,18 +1,42 @@
 //
-//  GTDataManager+Migrations.swift
+//  RealmDatabase.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 6/19/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 3/20/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 import RealmSwift
 
-extension GTDataManager {
-    static func config() -> Realm.Configuration  {
+class RealmDatabase {
+    
+    // TODO: This static variable needs to be removed once Realm is injected properly
+    // into GTDataManager. ~Levi
+    static var sharedRealm: Realm!
+    
+    private static let schemaVersion: UInt64 = 11
+    
+    let realm: Realm
+    
+    required init() {
+        
+        let config = RealmDatabase.config
+        
+        do {
+            realm = try Realm(configuration: config)
+        }
+        catch let error {
+            assertionFailure(error.localizedDescription)
+            realm = try! Realm(configuration: config)
+        }
+        
+        RealmDatabase.sharedRealm = realm
+    }
+    
+    private static var config: Realm.Configuration  {
         return Realm.Configuration(
-            schemaVersion: 11,
+            schemaVersion: RealmDatabase.schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
