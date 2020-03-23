@@ -21,20 +21,20 @@ class RealmDatabase {
     
     required init() {
         
-        let config = RealmDatabase.config
+        let config = RealmDatabase.createConfig
         
         do {
             realm = try Realm(configuration: config)
         }
         catch let error {
-            assertionFailure(error.localizedDescription)
+            assertionFailure("RealmDatabase: Did fail to initialize realm with error: \(error.localizedDescription) ")
             realm = try! Realm(configuration: config)
         }
         
         RealmDatabase.sharedRealm = realm
     }
     
-    private static var config: Realm.Configuration  {
+    private static var createConfig: Realm.Configuration  {
         return Realm.Configuration(
             schemaVersion: RealmDatabase.schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
