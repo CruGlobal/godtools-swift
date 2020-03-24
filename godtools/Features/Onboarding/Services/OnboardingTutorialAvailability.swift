@@ -12,15 +12,17 @@ class OnboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
     
     private let tutorialAvailability: TutorialAvailabilityType
     private let onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType
+    private let isNewUserCache: IsNewUserCacheType
     
-    required init(tutorialAvailability: TutorialAvailabilityType, onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType) {
+    required init(tutorialAvailability: TutorialAvailabilityType, onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType, isNewUserCache: IsNewUserCacheType) {
                 
         self.tutorialAvailability = tutorialAvailability
         self.onboardingTutorialViewedCache = onboardingTutorialViewedCache
+        self.isNewUserCache = isNewUserCache
     }
     
     var onboardingTutorialIsAvailable: Bool {
-        return !onboardingTutorialViewedCache.onboardingTutorialHasBeenViewed && tutorialAvailability.tutorialIsAvailable
+        return isNewUserCache.isNewUser && !onboardingTutorialViewedCache.onboardingTutorialHasBeenViewed && tutorialAvailability.tutorialIsAvailable
     }
     
     func markOnboardingTutorialViewed() {

@@ -10,8 +10,6 @@ import Foundation
 
 class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
     
-    private let keyOpenTutorialCalloutDisabled: String = "keyOpenTutorialCalloutDisabled"
-    
     let openTutorialCalloutDisabledSignal: Signal = Signal()
     
     var openTutorialCalloutEnabled: Bool {
@@ -20,6 +18,10 @@ class OpenTutorialCalloutUserDefaultsCache: OpenTutorialCalloutCacheType {
     
     var openTutorialCalloutDisabled: Bool {
         return defaults.object(forKey: keyOpenTutorialCalloutDisabled) as? Bool ?? false
+    }
+    
+    private var keyOpenTutorialCalloutDisabled: String {
+        return "keyOpenTutorialCalloutDisabled"
     }
     
     private var defaults: UserDefaults {

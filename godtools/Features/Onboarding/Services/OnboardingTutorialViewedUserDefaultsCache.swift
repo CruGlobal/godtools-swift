@@ -9,11 +9,13 @@
 import Foundation
 
 class OnboardingTutorialViewedUserDefaultsCache: OnboardingTutorialViewedCacheType {
-    
-    private let keyOnboardingTutorialViewed: String = "keyOnboardingTutorialViewed"
-        
+            
     var onboardingTutorialHasBeenViewed: Bool {
         return getViewedValueFromCache() ?? false
+    }
+    
+    private var keyOnboardingTutorialViewed: String {
+        return "keyOnboardingTutorialViewed"
     }
     
     private var defaults: UserDefaults {

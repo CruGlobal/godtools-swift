@@ -233,6 +233,12 @@
 		457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C123E8BAE50049D236 /* MenuDataProvider.swift */; };
 		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
 		457719C623E8C3BA0049D236 /* MenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C523E8C3BA0049D236 /* MenuFlow.swift */; };
+		458EA1E624291B5E0002C263 /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E524291B5E0002C263 /* RealmDatabase.swift */; };
+		458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E824291B660002C263 /* IsNewUserService.swift */; };
+		458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */; };
+		458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */; };
+		458EA1F124291B660002C263 /* IsNewUserCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */; };
+		458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */; };
 		45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
@@ -310,7 +316,6 @@
 		4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A361EB0E28900C03447 /* TractParagraph.swift */; };
 		4F462A3B1EB0E28900C03447 /* TractTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A371EB0E28900C03447 /* TractTextContent.swift */; };
 		4F462A3D1EB0F43400C03447 /* BaseTractElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */; };
-		4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */; };
 		4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707D81EAE760D00A540C2 /* GTDataManager.swift */; };
 		4F5707E11EAE8CA300A540C2 /* TractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5707E01EAE8CA300A540C2 /* TractViewController.xib */; };
 		4F5707E31EAE8CB600A540C2 /* TractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5707E21EAE8CB600A540C2 /* TractViewController.swift */; };
@@ -685,6 +690,12 @@
 		457719C123E8BAE50049D236 /* MenuDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProvider.swift; sourceTree = "<group>"; };
 		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
 		457719C523E8C3BA0049D236 /* MenuFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFlow.swift; sourceTree = "<group>"; };
+		458EA1E524291B5E0002C263 /* RealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
+		458EA1E824291B660002C263 /* IsNewUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserService.swift; sourceTree = "<group>"; };
+		458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserDefaultsCache.swift; sourceTree = "<group>"; };
+		458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetermineIfNewUserType.swift; sourceTree = "<group>"; };
+		458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserCacheType.swift; sourceTree = "<group>"; };
+		458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineNewUserIfPrimaryLanguageSet.swift; sourceTree = "<group>"; };
 		45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
 		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
@@ -785,7 +796,6 @@
 		4F462A361EB0E28900C03447 /* TractParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractParagraph.swift; path = Views/TractElements/TractParagraph.swift; sourceTree = "<group>"; };
 		4F462A371EB0E28900C03447 /* TractTextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractTextContent.swift; path = Views/TractElements/TractTextContent.swift; sourceTree = "<group>"; };
 		4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseTractElement.swift; path = Views/TractElements/BaseTractElement.swift; sourceTree = "<group>"; };
-		4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "GTDataManager+Migrations.swift"; path = "Managers/GTDataManager+Migrations.swift"; sourceTree = "<group>"; };
 		4F5707D81EAE760D00A540C2 /* GTDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTDataManager.swift; path = Managers/GTDataManager.swift; sourceTree = "<group>"; };
 		4F5707E01EAE8CA300A540C2 /* TractViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TractViewController.xib; path = Tract/TractViewController.xib; sourceTree = "<group>"; };
 		4F5707E21EAE8CB600A540C2 /* TractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TractViewController.swift; path = Tract/TractViewController.swift; sourceTree = "<group>"; };
@@ -1402,6 +1412,8 @@
 				45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */,
 				4575C27823FC6B1D00D3265B /* JsonServices.swift */,
 				4575C27A23FC6B2D00D3265B /* JsonServicesType.swift */,
+				458EA1E524291B5E0002C263 /* RealmDatabase.swift */,
+				458EA1E724291B660002C263 /* DetermineNewUser */,
 				4575C25F23FB45E600D3265B /* GlobalActivityServices */,
 				45732E942421A915006F0559 /* OpenTutorialCallout */,
 				45732E8824219C3A006F0559 /* Tools */,
@@ -1641,6 +1653,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		458EA1E724291B660002C263 /* DetermineNewUser */ = {
+			isa = PBXGroup;
+			children = (
+				458EA1EA24291B660002C263 /* DetermineIfNewUserType.swift */,
+				458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */,
+				458EA1E824291B660002C263 /* IsNewUserService.swift */,
+				458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */,
+				458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */,
+			);
+			path = DetermineNewUser;
+			sourceTree = "<group>";
+		};
 		45B59D7A242434F700F9D594 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -1858,7 +1882,6 @@
 				4FF646281ECF35DF00953090 /* FirstLaunchInitializer.swift */,
 				4FDA96232155451C00D3BA15 /* JSONResource.swift */,
 				4F5707D81EAE760D00A540C2 /* GTDataManager.swift */,
-				4F4FE0811EF86EFC008AE579 /* GTDataManager+Migrations.swift */,
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
 				4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */,
 				0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */,
@@ -2721,6 +2744,7 @@
 				4F1C95711EA70582007B47DB /* LanguagesManager.swift in Sources */,
 				0F9E32491EDD22960081DBB9 /* TractPageProperties.swift in Sources */,
 				4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */,
+				458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */,
 				EC8245B51EEEEB340023A203 /* TractFormProperties.swift in Sources */,
 				452036C4240057B2002B2453 /* RequestMethod.swift in Sources */,
 				45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */,
@@ -2756,6 +2780,7 @@
 				45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */,
 				0F0352CB1EC27CA4006CD4E5 /* TractCallToAction+Animations.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
+				458EA1F124291B660002C263 /* IsNewUserCacheType.swift in Sources */,
 				45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */,
 				1E911CAB20DAF03C0068E62A /* LoginBannerView.swift in Sources */,
 				4FEF812D1EE775F3002B77C8 /* Attachment.swift in Sources */,
@@ -2817,6 +2842,7 @@
 				45E998DC23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift in Sources */,
 				45732E8B24219C3A006F0559 /* ToolsLanguagePreferenceUserDefaultsCache.swift in Sources */,
 				ECBE2E521EF048B700A13849 /* TractParagraph+UI.swift in Sources */,
+				458EA1E624291B5E0002C263 /* RealmDatabase.swift in Sources */,
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
 				EC55A6231EE0AC37000235CA /* TractConfigurations.swift in Sources */,
 				0F85C7981ECCAC2400023723 /* TractCard+Actions.swift in Sources */,
@@ -2913,6 +2939,7 @@
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
 				1E1A3B0F20A0DE6200EE60B6 /* TractEvent.swift in Sources */,
+				458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				0F9E324C1EDE77AE0081DBB9 /* TractViewControllerGestures.swift in Sources */,
 				452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */,
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
@@ -2975,6 +3002,7 @@
 				45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */,
 				4F462A3A1EB0E28900C03447 /* TractParagraph.swift in Sources */,
 				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
+				458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				0FB73E6D1EA90669000BA60D /* BaseViewController.swift in Sources */,
 				0F0853171ECBAEEA00DDC86D /* TractModals.swift in Sources */,
@@ -2988,6 +3016,7 @@
 				4F9910B31EE8FB9800DA4317 /* LanguagesTableViewController+TableDelegate.swift in Sources */,
 				0F13B5F91EC4C86D00C55B2A /* TractButton.swift in Sources */,
 				4F2FF1DE21C404C200BF7110 /* ArticleCategoryViewController.swift in Sources */,
+				458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */,
 				45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */,
 				4575C27B23FC6B2D00D3265B /* JsonServicesType.swift in Sources */,
 				0F93A9371EAA6FF80049C110 /* ToolDetailViewController.swift in Sources */,
@@ -3013,7 +3042,6 @@
 				ECBE2E551EF048F600A13849 /* TractCard+UI.swift in Sources */,
 				0F28379C1EC65A330049CCE5 /* TractTab.swift in Sources */,
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
-				4F4FE0821EF86EFC008AE579 /* GTDataManager+Migrations.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
 				0F9E32411EDD170C0081DBB9 /* TractCallToAction+Actions.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
