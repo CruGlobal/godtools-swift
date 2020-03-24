@@ -36,7 +36,7 @@ class AppDiContainer {
         
         loginClient = TheKeyOAuthClient.shared
         
-        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: true)
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
                         
