@@ -86,12 +86,14 @@ class GodToolsAnaltyics {
     
     @objc private func recordActionForADBMobile(notification: Notification) {
                 
-        guard let userInfo = notification.userInfo as? [String: Any] else {
+        guard var userInfo = notification.userInfo as? [String: Any] else {
             return
         }
         guard let actionName = userInfo["action"] as? String else {
             return
         }
+        
+        userInfo.removeValue(forKey: "action")
         
         recordActionForADBMobile(screenName: nil, actionName: actionName, data: userInfo)
     }

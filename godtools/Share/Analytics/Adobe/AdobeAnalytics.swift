@@ -112,8 +112,6 @@ class AdobeAnalytics: AdobeAnalyticsType {
             trackingData[key] = value
         }
         
-        trackingData.removeValue(forKey: "action")
-        
         if loggingEnabled {
             print("\nAdobe Analytics - Track Action")
             print("  actionName: \(actionName)")
