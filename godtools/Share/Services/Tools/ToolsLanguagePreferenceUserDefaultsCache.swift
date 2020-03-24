@@ -10,11 +10,15 @@ import Foundation
 
 class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType {
     
-    private let keyPrimaryLanguageId: String = "kPrimaryLanguageId"
-    private let keyParallelLanguageId: String = "kParallelLanguageId"
-        
     required init() {
         
+    }
+    
+    private var keyPrimaryLanguageId: String {
+        return "kPrimaryLanguageId"
+    }
+    private var keyParallelLanguageId: String {
+        return "kParallelLanguageId"
     }
     
     private var defaults: UserDefaults {

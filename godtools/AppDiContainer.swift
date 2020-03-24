@@ -10,51 +10,68 @@ import Foundation
 import TheKeyOAuthSwift
 
 class AppDiContainer {
-       
-    private(set) lazy var tutorialSupportedLanguages: SupportedLanguagesType = {
-        return TutorialSupportedLanguages()
-    }()
-    private(set) lazy var tutorialAvailability: TutorialAvailabilityType = {
-        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
-    }()
     
-    private(set) lazy var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType = {
-        return OnboardingTutorialViewedUserDefaultsCache()
-    }()
-    
-    private(set) lazy var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType = {
-        return OnboardingTutorialAvailability(
-            tutorialAvailability: tutorialAvailability,
-            onboardingTutorialViewedCache: onboardingTutorialViewedCache
-        )
-    }()
-    
+    let realmDatabase: RealmDatabase
+    let isNewUserCache: IsNewUserCacheType
+    let isNewUserService: IsNewUserService
     let config: ConfigType
     let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
-    let deviceLanguage: DeviceLanguageType
-    let toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
-    let globalActivityServices: GlobalActivityServicesType
     
     required init() {
+        
+        realmDatabase = RealmDatabase()
+        
+        isNewUserCache = IsNewUserDefaultsCache()
+        
+        isNewUserService = IsNewUserService(
+            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageManager: LanguagesManager()),
+            isNewUserCache: isNewUserCache
+        )
         
         config = AppConfig()
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
         
         loginClient = TheKeyOAuthClient.shared
-        
-        deviceLanguage = DeviceLanguage()
-        
-        toolsLanguagePreferencesCache = ToolsLanguagePreferenceUserDefaultsCache()
-        
+                        
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
-        
-        globalActivityServices = GlobalActivityServices(
+    }
+    
+    var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
+        return OnboardingTutorialAvailability(
+            tutorialAvailability: tutorialAvailability,
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
+            isNewUserCache: isNewUserCache
+        )
+    }
+    
+    var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
+        return OnboardingTutorialViewedUserDefaultsCache()
+    }
+    
+    var tutorialSupportedLanguages: SupportedLanguagesType {
+        return TutorialSupportedLanguages()
+    }
+    
+    var tutorialAvailability: TutorialAvailabilityType {
+        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }
+    
+    var toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType {
+        return ToolsLanguagePreferenceUserDefaultsCache()
+    }
+    
+    var deviceLanguage: DeviceLanguageType {
+        return DeviceLanguage()
+    }
+    
+    var globalActivityServices: GlobalActivityServicesType {
+        return GlobalActivityServices(
             globalActivityApi: GlobalActivityAnalyticsApi(config: config),
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
         )
