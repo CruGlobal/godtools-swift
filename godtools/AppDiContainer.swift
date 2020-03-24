@@ -30,8 +30,9 @@ class AppDiContainer {
     }()
     
     let config: ConfigType
-    let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
+    let adobeAnalytics: AdobeAnalyticsType
+    let appsFlyer: AppsFlyerType
     let deviceLanguage: DeviceLanguageType
     let toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
@@ -42,9 +43,11 @@ class AppDiContainer {
         
         config = AppConfig()
         
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
-        
         loginClient = TheKeyOAuthClient.shared
+        
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
+        
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
         
         deviceLanguage = DeviceLanguage()
         

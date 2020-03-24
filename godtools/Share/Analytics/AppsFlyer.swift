@@ -24,7 +24,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         super.init()
     }
     
-    func configure() {
+    func configure(adobeAnalytics: AdobeAnalyticsType) {
         if isConfigured {
             return
         }
@@ -33,6 +33,7 @@ class AppsFlyer: NSObject, AppsFlyerType {
         let sharedAppsFlyer: AppsFlyerTracker = AppsFlyerTracker.shared()
         sharedAppsFlyer.appsFlyerDevKey = config.appsFlyerDevKey
         sharedAppsFlyer.appleAppID = config.appleAppId
+        sharedAppsFlyer.customData = ["marketingCloudID": adobeAnalytics.visitorMarketingCloudID]
         sharedAppsFlyer.delegate = self
     }
     

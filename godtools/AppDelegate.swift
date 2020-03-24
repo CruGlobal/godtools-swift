@@ -37,7 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.config.logConfiguration()
         
-        appDiContainer.appsFlyer.configure()
+        appDiContainer.adobeAnalytics.configure()
+        
+        appDiContainer.appsFlyer.configure(adobeAnalytics: appDiContainer.adobeAnalytics)
         
         resetStateIfUITesting()
         

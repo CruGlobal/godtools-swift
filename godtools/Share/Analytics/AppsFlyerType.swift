@@ -10,7 +10,7 @@ import Foundation
 
 protocol AppsFlyerType {
     
-    func configure()
+    func configure(adobeAnalytics: AdobeAnalyticsType)
     func trackAppLaunch()
     func trackEvent(eventName: String, data: [AnyHashable: Any]?)
 }
