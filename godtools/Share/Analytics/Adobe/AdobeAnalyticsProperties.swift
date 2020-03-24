@@ -11,18 +11,18 @@ import TheKeyOAuthSwift
 
 struct AdobeAnalyticsProperties: Encodable {
     
-    let appName: String?
-    let contentLanguage: String?
-    let contentLanguageSecondary: String?
+    var appName: String?
+    var contentLanguage: String?
+    var contentLanguageSecondary: String?
     var exitLink: String?
-    let grMasterPersonID: String?
-    let loggedInStatus: String?
-    let marketingCloudID: String?
-    let previousScreenName: String?
-    let screenName: String?
-    let siteSection: String?
-    let siteSubSection: String?
-    let ssoguid: String?
+    var grMasterPersonID: String?
+    var loggedInStatus: String?
+    var marketingCloudID: String?
+    var previousScreenName: String?
+    var screenName: String?
+    var siteSection: String?
+    var siteSubSection: String?
+    var ssoguid: String?
     
     enum CodingKeys: String, CodingKey {
         

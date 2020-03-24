@@ -96,8 +96,35 @@ class AdobeAnalytics: AdobeAnalyticsType {
         previousTrackedScreenName = screenName
     }
     
+    func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]) {
+        
+        assertFailureIfNotConfigured()
+        
+        let properties: AdobeAnalyticsProperties = createDefaultProperties(
+            screenName: screenName,
+            siteSection: nil,
+            siteSubSection: nil
+        )
+        
+        var trackingData: [AnyHashable: Any] = JsonServices().encode(object: properties)
+        
+        for (key, value) in data {
+            trackingData[key] = value
+        }
+        
+        if loggingEnabled {
+            print("\nAdobe Analytics - Track Action")
+            print("  actionName: \(actionName)")
+            print("  data: \(trackingData)")
+        }
+        
+        ADBMobile.trackAction(actionName, data: trackingData)
+    }
+    
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-                
+              
+        assertFailureIfNotConfigured()
+        
         var properties: AdobeAnalyticsProperties = createDefaultProperties(
             screenName: screenName,
             siteSection: siteSection,
@@ -106,25 +133,20 @@ class AdobeAnalytics: AdobeAnalyticsType {
         
         properties.exitLink = url.absoluteString
         
-        trackAction(actionName: "Exit Link Engaged", properties: properties)
-    }
-    
-    private func trackAction(actionName: String, properties: AdobeAnalyticsProperties) {
-        
-        assertFailureIfNotConfigured()
+        let actionName: String = "Exit Link Engaged"
         
         let data: [AnyHashable: Any] = JsonServices().encode(object: properties)
-        
+                
         if loggingEnabled {
-            print("\nAdobe Analytics - Track Action")
+            print("\nAdobe Analytics - Track Exit Link Action")
             print("  actionName: \(actionName)")
             print("  data: \(data)")
         }
-                
+        
         ADBMobile.trackAction(actionName, data: data)
     }
     
-    private func createDefaultProperties(screenName: String, siteSection: String, siteSubSection: String) -> AdobeAnalyticsProperties {
+    private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?) -> AdobeAnalyticsProperties {
         
         let defaultProperties = AdobeAnalyticsProperties(
             appName: appName,

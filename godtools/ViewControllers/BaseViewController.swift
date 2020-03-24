@@ -247,7 +247,7 @@ class BaseViewController: UIViewController {
         let relay = AnalyticsRelay.shared
         relay.screenName = screenName
         
-        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsConstants.Keys.siteSection: siteSection, AdobeAnalyticsConstants.Keys.siteSubSection: siteSubSection]
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: siteSection, AdobeAnalyticsProperties.CodingKeys.siteSubSection.rawValue: siteSubSection]
         NotificationCenter.default.post(name: .screenViewNotification,
                                         object: nil,
                                         userInfo: userInfo)

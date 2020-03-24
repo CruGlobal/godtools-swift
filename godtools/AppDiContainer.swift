@@ -36,13 +36,13 @@ class AppDiContainer {
         
         loginClient = TheKeyOAuthClient.shared
         
-        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: true)
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
-        analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
+        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {

@@ -10,19 +10,7 @@ import Foundation
 
 struct AdobeAnalyticsConstants {
     struct Keys {
-        static let appName = "cru.appname"
-        static let loggedInStatus = "cru.loggedinstatus"
-        static let marketingCloudID = "cru.mcid"
-        static let ssoguid = "cru.ssoguid"
-        static let grMasterPersonID = "cru.grmpid"
-        static let screenName = "cru.screenname"
-        static let siteSection = "cru.siteSection"
-        static let siteSubSection = "cru.siteSubSection"
-        static let previousScreenName = "cru.previousscreenname"
-        static let contentLanguage = "cru.contentlanguage"
-        static let contentLanguageSecondary = "cru.contentlanguagesecondary"
         static let shareAction = "cru.shareiconengaged"
-        static let exitAction = "cru.mobileexitlink"
         static let toggleAction = "cru.toggleswitch"
         static let gospelPresentedTimedAction = "cru.presentingthegospel"
         static let presentingHolySpiritTimedAction = "cru.presentingtheholyspirit"

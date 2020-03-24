@@ -31,7 +31,7 @@ import UIKit
             let propertiesString = properties.url
             let stringWithProtocol = prependProtocolToURLStringIfNecessary(propertiesString)
             if let url = URL(string: stringWithProtocol) {
-                var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.exitAction: stringWithProtocol]
+                var userInfo: [String: Any] = [AdobeAnalyticsProperties.CodingKeys.exitLink.rawValue: stringWithProtocol]
                 userInfo["action"] = AdobeAnalyticsConstants.Values.exitLink
                 sendNotificationForAction(userInfo: userInfo)
                 UIApplication.shared.openURL(url)
