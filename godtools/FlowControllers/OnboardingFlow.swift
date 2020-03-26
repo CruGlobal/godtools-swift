@@ -34,8 +34,7 @@ class OnboardingFlow: Flow {
         
         let viewModel = OnboardingWelcomeViewModel(
             flowDelegate: self,
-            analytics: appDiContainer.analytics,
-            appsFlyer: appDiContainer.appsFlyer
+            analytics: appDiContainer.analytics
         )
         let view = OnboardingWelcomeView(viewModel: viewModel)
         navigationController.setViewControllers([view], animated: false)
@@ -53,7 +52,6 @@ extension OnboardingFlow: FlowDelegate {
             let viewModel = OnboardingTutorialViewModel(
                 flowDelegate: self,
                 analytics: appDiContainer.analytics,
-                appsFlyer: appDiContainer.appsFlyer,
                 onboardingTutorialProvider: OnboardingTutorialProvider(),
                 onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
                 openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache

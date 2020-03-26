@@ -15,8 +15,9 @@ class AppDiContainer {
     let isNewUserCache: IsNewUserCacheType
     let isNewUserService: IsNewUserService
     let config: ConfigType
-    let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
+    let adobeAnalytics: AdobeAnalyticsType
+    let appsFlyer: AppsFlyerType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     
@@ -33,13 +34,15 @@ class AppDiContainer {
         
         config = AppConfig()
         
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
-        
         loginClient = TheKeyOAuthClient.shared
+        
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
+        
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
-        analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
+        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {

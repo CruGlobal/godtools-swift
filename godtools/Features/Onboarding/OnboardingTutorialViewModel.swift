@@ -11,10 +11,9 @@ import Foundation
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
     private let analytics: GodToolsAnaltyics
-    private let appsFlyer: AppsFlyerType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
-    private var page: Int = 0
+    private var page: Int = -1
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -28,11 +27,10 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
-        self.appsFlyer = appsFlyer
         self.openTutorialCalloutCache = openTutorialCalloutCache
         
         var tutorialItemsArray: [OnboardingTutorialItem] = Array()
@@ -56,6 +54,8 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             return
         }
         
+        let previousPage: Int = self.page
+        
         self.page = page
         
         if shouldSetCurrentTutorialItemIndex {
@@ -75,13 +75,13 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
             tutorialButtonLayout.accept(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: animated))
         }
         
-        analytics.recordScreenView(
-            screenName: analyticsScreenName,
-            siteSection: "onboarding",
-            siteSubSection: ""
-        )
-        
-        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+        if previousPage != page {
+            analytics.recordScreenView(
+                screenName: analyticsScreenName,
+                siteSection: "onboarding",
+                siteSubSection: ""
+            )
+        }
     }
     
     func skipTapped() {
