@@ -11,15 +11,22 @@
 
 "unavailable" = "不可用";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "跳过";
+
 // Onboarding
 "add_new_tools" = "添加新工具";
 "set_your_languages" = "设置您的语言";
 "okay" = "确定";
 // Menu
 "menu_general" = "通用";
+"menu_account" = "账户";
 "menu_share" = "分享";
 "menu_legal" = "法律";
 "language_settings" = "语言设置";
+"menu.tutorial" = "教程";
+"menu.my_account" = "我的账户";
+
 // Login
 "login" = "登录";
 "logout" = "退出";
@@ -28,17 +35,17 @@
 
 // Tool Detail
 "about" = "关于";
-"help" = "帮助";
+"help" = "常见问题";
 "contact_us" = "请联系我们";
 "preview_mode_translators_only" = "预览模式（仅限译员）";
 "share_god_tools" = "分享GodTools应用";
-"share_a_story_with_us" = "和我们分享你的故事";
+"share_a_story_with_us" = "和我们分享你的使用心得";
 "terms_of_use" = "使用条款";
 "privacy_policy" = "隐私政策";
 "copyright_info" = "版权信息";
 "share_god_tools_share_sheet_text" = "下载GodTools应用：https://godtoolsapp.com
 
-在线版地址：https://knowgod.com/";
+网页版地址：https://knowgod.com/";
 
 // Add Tools
 "add_tools" = "添加工具";
@@ -49,27 +56,27 @@
 // Language Settings
 "primary_language" = "主要语言";
 "select_primary_language" = "选择主要语言";
-"parallel_language" = "同步语言";
-"select_parallel_language" = "选择同步语言";
+"parallel_language" = "同步展示语言";
+"select_parallel_language" = "选择同步展示语言";
 "share_god_tools_native_language" = "用他人的母语与他们分享GodTools";
-"not_every_tool_is_available" = "有些工具不能涵盖所有的语种";
+"not_every_tool_is_available" = "有些工具暂未涵盖所有的语种";
 
 // Settings
 "settings" = "设置";
 
 // Alert & Info Controllers
-"download_error" = "下载错误";
-"language_download_error" = "目前无法下载可用的语言。请检查您的网络连接或稍后重试。";
-"tract_loading_error_message" = "打开此资源时出现问题。请尝试重新下载。\n\n您想重新下载吗？";
+"download_error" = "下载出错";
+"language_download_error" = "目前无法下载可用语言。请检查您的网络连接或稍后重试。";
+"tract_loading_error_message" = "打开此资源时出现问题。请尝试重新下载。\n\n您想现在重新下载吗？";
 "no_internet_title" = "没有网络连接";
 "no_internet" = "请检查你的互联网连接，然后重试。";
 
 // the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
-"device_locale_download_error" = "最新的中文版本目前无法下载。有英文版本可以下载。请检查您的网络连接或者稍后重试。";
+"device_locale_download_error" = "最新的中文版本目前无法下载，但您可以暂时使用英文版本。请检查您的网络连接或者稍后重试。";
 
 // the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
-"device_locale_download_success" = "有最新的中文版本可以下载。\n\n您要将主要语言设置为中文并下载这些资源吗？";
-"the_tool_you_requested_is_loading" = "正在加载您申请的工具...";
+"device_locale_download_success" = "有最新的中文版本可供下载。\n\n您要将主要语言设置为中文并下载这些资源吗？";
+"the_tool_you_requested_is_loading" = "正在加载您要使用的工具...";
 "loading" = "正在加载...";
 
 // Actions
@@ -101,7 +108,7 @@
 // About
 "general_about_1" = "GodTools帮助您以简单明了的方式分享您的信仰。";
 "general_about_2" = "从未分享过福音？对方的母语与您不同？没关系，这些工具仍然能帮助您清楚地向他人解释如何通过耶稣基督与神建立关系。";
-"general_about_3" = "根据您的偏好和受众选择需用的工具。有些工具不能涵盖所有语种。";
+"general_about_3" = "根据您的偏好和受众选择需用的工具。有些工具暂未涵盖所有语种。";
 "general_about_4" = "每个工具的末尾都附有其他资源的链接。";
 "general_about_5" = "下载每种新工具和/或语言都需要网络连接。下载后即可离线使用。";
 "general_about_6" = "如有任何问题、建议或要求，请通过support@godtoolsapp.com与我们联系";
@@ -120,3 +127,52 @@
 // Language Name Strings
 "language_name_fa" = "波斯语";
 
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "欢迎";
+"onboardingWelcome.titleLabel.tagline" = "帮助你分享自己的信仰";
+"onboardingWelcome.beginButton" = "开始";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "与他人分享";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools旨在引导你完成信仰对话";
+"onboardingTutorial.aboutAppItem.1.title" = "选择你的工具";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools在属灵对话之前、之中和之后为你提供帮助";
+"onboardingTutorial.aboutAppItem.2.title" = "时刻做好准备";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools竭诚为你提供帮助，随时准备就绪";
+"onboardingTutorial.appUsageItem.0.message" = "为任何对话做好准备";
+"onboardingTutorial.appUsageItem.1.message" = "向某人传播福音";
+"onboardingTutorial.appUsageItem.2.message" = "同时运行两种语言";
+"onboardingTutorial.appUsageItem.3.message" = "超过80种语言可供选择";
+"onboardingTutorial.appUsageItem.4.message" = "帮助某人开始成为基督徒";
+"onboardingTutorial.continueButton.title" = "继续";
+"onboardingTutorial.showMoreButton.title" = "显示更多";
+"onboardingTutorial.getStartedButton.title" = "开始体验";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "观看";
+"tutorial.tutorialItem.0.message" = "在我们的演示视频中观看GodTools可以发挥的作用";
+"tutorial.tutorialItem.1.title" = "准备";
+"tutorial.tutorialItem.1.message" = "熟悉一些工具。“教我分享”工具是很好的起点。";
+"tutorial.tutorialItem.2.title" = "尝试";
+"tutorial.tutorialItem.2.message" = "人人都是从初学者开始的。尝试在对话中使用工具，看看自己学到了什么。";
+"tutorial.tutorialItem.3.title" = "可以在菜单中再次查看本教程";
+"tutorial.continueButton.title.continue" = "继续";
+"tutorial.continueButton.title.startUsingGodTools" = "开始使用GodTools";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "给我看教程";
+"openTutorial.openTutorialButton.title" = "打开教程";
+
+// Account
+"account.navTitle" = "我的个人资料";
+"account.activity.title" = "活动";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "全球活动";
+"accountActivity.globalAnalytics.users.title" = "独一\n用户";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "分享\n福音";
+"accountActivity.globalAnalytics.launches.title" = "会话";
+"accountActivity.globalAnalytics.countries.title" = "国家/地区";
+
+// Alerts
+"alert.action.ok" = "确定";

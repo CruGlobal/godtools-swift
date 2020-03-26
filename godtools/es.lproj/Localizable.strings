@@ -11,15 +11,22 @@
 
 "unavailable" = "No disponible";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Omitir";
+
 // Onboarding
 "add_new_tools" = "Agrega nuevas herramientas";
 "set_your_languages" = "Establece tus idiomas";
 "okay" = "Ok";
 // Menu
 "menu_general" = "General";
+"menu_account" = "Cuenta";
 "menu_share" = "Compartir";
 "menu_legal" = "Legal";
 "language_settings" = "Ajustes de idioma";
+"menu.tutorial" = "Tutorial";
+"menu.my_account" = "Mi cuenta";
+
 // Login
 "login" = "Iniciar sesión";
 "logout" = "Cerrar sesión";
@@ -28,7 +35,7 @@
 
 // Tool Detail
 "about" = "Acerca de";
-"help" = "Ayuda";
+"help" = "Preguntas frecuentes";
 "contact_us" = "Cóntactanos";
 "preview_mode_translators_only" = "Modo vista previa (solo traductores)";
 "share_god_tools" = "Comparte la aplicación GodTools";
@@ -120,3 +127,52 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 // Language Name Strings
 "language_name_fa" = "Persa (farsi)";
 
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Bienvenido";
+"onboardingWelcome.titleLabel.tagline" = "Te ayudamos a compartir tu fe";
+"onboardingWelcome.beginButton" = "Comenzar";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Compartir con otros";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools está diseñada para orientar tus conversaciones sobre fe.";
+"onboardingTutorial.aboutAppItem.1.title" = "Elige tus herramientas";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools te ayuda antes, durante y después de una conversación espiritual.";
+"onboardingTutorial.aboutAppItem.2.title" = "Siempre dispuesta";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools está para ayudarte y dispuesta cuando tú lo estés.";
+"onboardingTutorial.appUsageItem.0.message" = "Prepárate para cualquier conversación";
+"onboardingTutorial.appUsageItem.1.message" = "Orienta a los demás por el evangelio";
+"onboardingTutorial.appUsageItem.2.message" = "Muestra dos idiomas en paralelo";
+"onboardingTutorial.appUsageItem.3.message" = "Elige ente más de 80 idiomas";
+"onboardingTutorial.appUsageItem.4.message" = "Ayuda a los demás a iniciarse en el cristianismo";
+"onboardingTutorial.continueButton.title" = "Continuar";
+"onboardingTutorial.showMoreButton.title" = "Mostrarme más";
+"onboardingTutorial.getStartedButton.title" = "Empezar";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Ver";
+"tutorial.tutorialItem.0.message" = "Mira lo que ofrece GodTools en nuestro vídeo de demostración.";
+"tutorial.tutorialItem.1.title" = "Prepárate";
+"tutorial.tutorialItem.1.message" = "Familiarízate con algunas de nuestras herramientas. La herramienta \"Enséñame a compartir\" es un buen punto de partida. ";
+"tutorial.tutorialItem.2.title" = "Pruébate";
+"tutorial.tutorialItem.2.message" = "Todo el mundo empieza como principiante. Prueba a usar una herramienta en una conversación y observa lo que aprendes.";
+"tutorial.tutorialItem.3.title" = "Este tutorial está disponible para volver a verlo en el menú.";
+"tutorial.continueButton.title.continue" = "Continuar";
+"tutorial.continueButton.title.startUsingGodTools" = "Empieza a usar GodTools";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Muéstrame un tutorial";
+"openTutorial.openTutorialButton.title" = "Abrir tutorial";
+
+// Account
+"account.navTitle" = "Mi perfil";
+"account.activity.title" = "Actividad";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Actividad global";
+"accountActivity.globalAnalytics.users.title" = "Único\nUsuarios";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Evangelio\nPresentaciones";
+"accountActivity.globalAnalytics.launches.title" = "Sesiones";
+"accountActivity.globalAnalytics.countries.title" = "Países";
+
+// Alerts
+"alert.action.ok" = "Aceptar";
