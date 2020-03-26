@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial_menu_item" translatesAutoresizingMaskIntoConstraints="NO" id="Jqp-u1-Xrs" userLabel="menuImageView">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tutorial_in_menu_english" translatesAutoresizingMaskIntoConstraints="NO" id="Jqp-u1-Xrs" userLabel="menuImageView">
                     <rect key="frame" x="37.5" y="0.0" width="339" height="441.5"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Jqp-u1-Xrs" secondAttribute="height" multiplier="303:394" id="FzY-ig-l8q"/>
@@ -35,6 +35,6 @@
         </view>
     </objects>
     <resources>
-        <image name="tutorial_menu_item" width="303" height="394"/>
+        <image name="tutorial_in_menu_english" width="303" height="394"/>
     </resources>
 </document>

@@ -225,8 +225,8 @@ class TractViewController: BaseViewController {
                                         object: nil,
                                         userInfo: ["action": AdobeAnalyticsConstants.Values.parallelLanguageToggle,
                                                    AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
-                                                   AdobeAnalyticsConstants.Keys.contentLanguageSecondary: language.code,
-                                                   AdobeAnalyticsConstants.Keys.siteSection: (resource?.code) as Any])
+                                                   AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
+                                                   AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: (resource?.code) as Any])
     }
     
     // MARK: - Navigation buttons actions

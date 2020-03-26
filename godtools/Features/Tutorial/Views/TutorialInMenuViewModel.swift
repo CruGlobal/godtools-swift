@@ -10,4 +10,10 @@ import Foundation
 
 class TutorialInMenuViewModel {
     
+    let imageName: String
+    
+    required init(deviceLanguage: DeviceLanguageType) {
+        
+        imageName = deviceLanguage.isEnglish ? ImageCatalog.tutorialInMenuEnglish.name : ImageCatalog.tutorialInMenuNonEnglish.name
+    }
 }

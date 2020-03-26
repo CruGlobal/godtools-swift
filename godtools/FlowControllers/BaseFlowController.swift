@@ -38,7 +38,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     private func setupInitialNavigation() {
         
-        if appDiContainer.onboardingTutorialServices.tutorialIsAvailable {
+        if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
             navigate(step: .showOnboardingTutorial(animated: false))
         }
         else {

@@ -11,7 +11,6 @@ import UIKit
 class TutorialToolsView: UIView, NibBased {
     
     @IBOutlet weak private var toolImageView: UIImageView!
-    @IBOutlet weak private var moreInfoImageView: UIImageView!
     
     required init() {
         super.init(frame: UIScreen.main.bounds)
@@ -24,6 +23,6 @@ class TutorialToolsView: UIView, NibBased {
     }
     
     func configure(viewModel: TutorialToolsViewModel) {
-
+        toolImageView.image = UIImage(named: viewModel.imageName)
     }
 }

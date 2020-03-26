@@ -10,24 +10,71 @@ import Foundation
 import TheKeyOAuthSwift
 
 class AppDiContainer {
-        
+    
+    let realmDatabase: RealmDatabase
+    let isNewUserCache: IsNewUserCacheType
+    let isNewUserService: IsNewUserService
     let config: ConfigType
-    let appsFlyer: AppsFlyerType
     let loginClient: TheKeyOAuthClient
-    let onboardingTutorialServices: OnboardingTutorialServicesType
-    let tutorialServices: TutorialServicesType
+    let adobeAnalytics: AdobeAnalyticsType
+    let appsFlyer: AppsFlyerType
+    let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
-    let globalActivityServices: GlobalActivityServicesType
     
     required init() {
         
+        realmDatabase = RealmDatabase()
+        
+        isNewUserCache = IsNewUserDefaultsCache()
+        
+        isNewUserService = IsNewUserService(
+            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageManager: LanguagesManager()),
+            isNewUserCache: isNewUserCache
+        )
+        
         config = AppConfig()
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
+        
         loginClient = TheKeyOAuthClient.shared
-        onboardingTutorialServices = OnboardingTutorialServices(languagePreferences: DeviceLanguagePreferences())
-        tutorialServices = TutorialServices(languagePreferences: DeviceLanguagePreferences())
-        analytics = GodToolsAnaltyics(config: config, appsFlyer: appsFlyer)
-        globalActivityServices = GlobalActivityServices(
+        
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
+        
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
+                        
+        openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
+                
+        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
+    }
+    
+    var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
+        return OnboardingTutorialAvailability(
+            tutorialAvailability: tutorialAvailability,
+            onboardingTutorialViewedCache: onboardingTutorialViewedCache,
+            isNewUserCache: isNewUserCache
+        )
+    }
+    
+    var onboardingTutorialViewedCache: OnboardingTutorialViewedCacheType {
+        return OnboardingTutorialViewedUserDefaultsCache()
+    }
+    
+    var tutorialSupportedLanguages: SupportedLanguagesType {
+        return TutorialSupportedLanguages()
+    }
+    
+    var tutorialAvailability: TutorialAvailabilityType {
+        return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }
+    
+    var toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType {
+        return ToolsLanguagePreferenceUserDefaultsCache()
+    }
+    
+    var deviceLanguage: DeviceLanguageType {
+        return DeviceLanguage()
+    }
+    
+    var globalActivityServices: GlobalActivityServicesType {
+        return GlobalActivityServices(
             globalActivityApi: GlobalActivityAnalyticsApi(config: config),
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
         )

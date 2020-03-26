@@ -10,6 +10,7 @@ import Foundation
 
 protocol TutorialViewModelType {
     
+    var deviceLanguage: DeviceLanguageType { get }
     var hidesBackButton: ObservableValue<Bool> { get }
     var tutorialItems: ObservableValue<[TutorialItem]> { get }
     var currentTutorialItemIndex: ObservableValue<Int> { get }

@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 class GTSettings {
     static let shared = GTSettings()
     static let ignoredTools: [String] = []

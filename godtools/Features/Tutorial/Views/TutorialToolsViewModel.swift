@@ -10,7 +10,10 @@ import Foundation
 
 class TutorialToolsViewModel {
         
-    required init() {
+    let imageName: String
+    
+    required init(deviceLanguage: DeviceLanguageType) {
         
+        imageName = deviceLanguage.isEnglish ? ImageCatalog.tutorialToolEnglish.name : ImageCatalog.tutorialToolNonEnglish.name
     }
 }

@@ -17,19 +17,18 @@ enum DataManagerError: Error {
 }
 
 class GTDataManager: NSObject {
+    
     let documentsPath: String
     let resourcesPath: String
     let bannersPath: URL
-    
     let realm: Realm
     
     override init() {
+        
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = documentsPath.appending("/").appending("Resources")
         bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
-    
-        Realm.Configuration.defaultConfiguration = GTDataManager.config()
-        realm = try! Realm()
+        realm = RealmDatabase.sharedRealm
         
         super.init()
     }

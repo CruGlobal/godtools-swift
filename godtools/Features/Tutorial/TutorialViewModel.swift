@@ -11,24 +11,24 @@ import Foundation
 class TutorialViewModel: TutorialViewModelType {
     
     private let analytics: GodToolsAnaltyics
-    private let appsFlyer: AppsFlyerType
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
-    private var page: Int = 0
+    private var page: Int = -1
     
     private weak var flowDelegate: FlowDelegate?
     
+    let deviceLanguage: DeviceLanguageType
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
     let currentTutorialItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, appsFlyer: AppsFlyerType, tutorialItemsProvider: TutorialItemProviderType) {
+    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
-        self.appsFlyer = appsFlyer
+        self.deviceLanguage = deviceLanguage
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
@@ -44,6 +44,8 @@ class TutorialViewModel: TutorialViewModelType {
         guard page >= 0 && page < tutorialItems.value.count else {
             return
         }
+        
+        let previousPage: Int = self.page
         
         self.page = page
         
@@ -63,13 +65,13 @@ class TutorialViewModel: TutorialViewModelType {
             continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
         }
         
-        analytics.recordScreenView(
-            screenName: analyticsScreenName,
-            siteSection: "tutorial",
-            siteSubSection: ""
-        )
-        
-        appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+        if previousPage != page {
+            analytics.recordScreenView(
+                screenName: analyticsScreenName,
+                siteSection: "tutorial",
+                siteSubSection: ""
+            )
+        }
     }
     
     func backTapped() {

@@ -25,26 +25,60 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         self.hidesOpenToolButton = !resource.shouldDownload
     }
     
+    var screenName: String {
+        let toolCode: String = resource.code
+        return toolCode + "-" + "tool-info"
+    }
+    
+    var siteSection: String {
+        return resource.code
+    }
+    
+    var siteSubSection: String {
+        return ""
+    }
+    
     func urlTapped(url: URL) {
         
-        analytics.recordExitLinkAction(url: url)
+        analytics.recordExitLinkAction(
+            screenName: screenName,
+            siteSection: siteSection,
+            siteSubSection: siteSubSection,
+            url: url
+        )
         
         flowDelegate?.navigate(step: .urlLinkTappedFromToolDetail(url: url))
     }
     
     var aboutDetails: String {
         
+        let resourceDescription: String = resource.descr ?? ""
+        
         let languagesManager = LanguagesManager()
         
-        guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource.descr ?? ""
+        var languageOrder: [Language] = Array()
+        
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            languageOrder.append(primaryLanguage)
         }
         
-        if let translation = resource.getTranslationForLanguage(language) {
-            return translation.localizedDescription ?? ""
+        if let deviceLanguage = languagesManager.loadDevicePreferredLanguageFromDisk() {
+            languageOrder.append(deviceLanguage)
         }
         
-        return resource.descr ?? ""
+        if let englishLanguage = languagesManager.loadFromDisk(id: "en") {
+            languageOrder.append(englishLanguage)
+        }
+        
+        for language in languageOrder {
+            if let translation = resource.getTranslationForLanguage(language) {
+                if let description = translation.localizedDescription, !description.isEmpty {
+                    return description
+                }
+            }
+        }
+        
+        return resourceDescription
     }
     
     var languageDetails: String {
