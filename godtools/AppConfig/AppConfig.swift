@@ -81,6 +81,21 @@ struct AppConfig: ConfigType {
         return "uYJUCLG6tmoQ4cGaoAM"
     }
     
+    var firebaseGoogleServiceFileName: String {
+        
+        let debugFileName: String = "GoogleService-Info-Debug"
+        let productionFileName: String = "GoogleService-Info"
+        
+        switch build {
+        case .staging:
+            return debugFileName
+        case .production:
+            return productionFileName
+        case .release:
+            return productionFileName
+        }
+    }
+    
     // MARK: - Info.plist
     
     private var info: [String: Any] {
@@ -123,6 +138,7 @@ struct AppConfig: ConfigType {
             print("  googleAnalyticsApiKey: \(googleAnalyticsApiKey)")
             print("  googleAdwordsLabel: \(googleAdwordsLabel)")
             print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
+            print("  firebaseGoogleServiceFileName: \(firebaseGoogleServiceFileName)")
             print("")
         }
     }

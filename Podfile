@@ -16,6 +16,10 @@ target 'godtools' do
     pod 'PromiseKit', '~> 6.8'
     pod 'PromiseKit/Alamofire', '~> 6.8'
     
+    pod 'Firebase', '6.16.0'
+    pod 'Firebase/InAppMessaging', '6.16.0'
+    pod 'Firebase/Analytics', '6.16.0'
+    
     pod 'AppsFlyerFramework', '5.1.0'
     pod 'RealmSwift', '4.3.0'
     pod 'SSZipArchive'
@@ -28,7 +32,6 @@ target 'godtools' do
     pod 'AdobeMobileSDK', '~> 4.19'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
-    pod 'Firebase/Analytics'
     pod 'FacebookCore'
     pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
     
