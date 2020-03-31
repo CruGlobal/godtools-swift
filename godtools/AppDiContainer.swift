@@ -45,6 +45,10 @@ class AppDiContainer {
         analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
     }
     
+    var firebaseConfiguration: FirebaseConfiguration {
+        return FirebaseConfiguration(config: config)
+    }
+    
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
         return OnboardingTutorialAvailability(
             tutorialAvailability: tutorialAvailability,

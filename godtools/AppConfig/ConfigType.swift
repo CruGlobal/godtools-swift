@@ -19,6 +19,7 @@ protocol ConfigType {
     var googleAnalyticsApiKey: String { get }
     var googleAdwordsConversionId: String { get }
     var googleAdwordsLabel: String { get }
+    var firebaseGoogleServiceFileName: String { get }
     
     func logConfiguration()
 }
