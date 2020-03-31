@@ -134,7 +134,7 @@
 
 // OnboardingTutorial
 "onboardingTutorial.aboutAppItem.0.title" = "与他人分享";
-"onboardingTutorial.aboutAppItem.0.message" = "GodTools旨在引导你完成信仰对话";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools旨在引导你进行属灵对话";
 "onboardingTutorial.aboutAppItem.1.title" = "选择你的工具";
 "onboardingTutorial.aboutAppItem.1.message" = "GodTools在属灵对话之前、之中和之后为你提供帮助";
 "onboardingTutorial.aboutAppItem.2.title" = "时刻做好准备";
@@ -143,7 +143,7 @@
 "onboardingTutorial.appUsageItem.1.message" = "向某人传播福音";
 "onboardingTutorial.appUsageItem.2.message" = "同时运行两种语言";
 "onboardingTutorial.appUsageItem.3.message" = "超过80种语言可供选择";
-"onboardingTutorial.appUsageItem.4.message" = "帮助某人开始成为基督徒";
+"onboardingTutorial.appUsageItem.4.message" = "帮助他人成为基督徒";
 "onboardingTutorial.continueButton.title" = "继续";
 "onboardingTutorial.showMoreButton.title" = "显示更多";
 "onboardingTutorial.getStartedButton.title" = "开始体验";
@@ -160,7 +160,7 @@
 "tutorial.continueButton.title.startUsingGodTools" = "开始使用GodTools";
 
 // OpenTutorial
-"openTutorial.showTutorialLabel.text" = "给我看教程";
+"openTutorial.showTutorialLabel.text" = "开始使用教程";
 "openTutorial.openTutorialButton.title" = "打开教程";
 
 // Account
