@@ -13,7 +13,6 @@ import PromiseKit
 import RealmSwift
 import AppAuth
 import TheKeyOAuthSwift
-import Firebase
 import FBSDKCoreKit
 
 enum ShortcutItemType: String {
@@ -37,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.config.logConfiguration()
         
+        appDiContainer.firebaseConfiguration.configure()
+        
         appDiContainer.adobeAnalytics.configure()
         
         appDiContainer.appsFlyer.configure(adobeAnalytics: appDiContainer.adobeAnalytics)
@@ -55,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        FirebaseApp.configure()
         Fabric.with([Crashlytics.self, Answers.self])
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)

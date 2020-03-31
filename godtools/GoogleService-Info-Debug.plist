@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>71275134527-st5s63prkvuh46t7ohb1gmhq39qokh78.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.71275134527-st5s63prkvuh46t7ohb1gmhq39qokh78</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>71275134527-92dqujp3jcvp7hqd9rtjjutn7s9f4piu.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCy_CPleKrvDrTUWhhvDEklTycEXSVv0x0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>71275134527</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.cru.godtools.beta</string>
+	<key>PROJECT_ID</key>
+	<string>godtools-b2f82</string>
+	<key>STORAGE_BUCKET</key>
+	<string>godtools-b2f82.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:71275134527:ios:a57a8a3cc2b03bb7c5028a</string>
+	<key>DATABASE_URL</key>
+	<string>https://godtools-b2f82.firebaseio.com</string>
+</dict>
+</plist>

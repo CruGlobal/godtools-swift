@@ -37,9 +37,9 @@ class LanguagesManager: GTDataManager {
                 return preferredLanguage
             }
         }
-        
-        if let localeCode = Locale.current.languageCode {
-            return loadFromDisk(code: localeCode)
+                
+        if let currentLocaleLanguage = loadFromDisk(locale: Locale.current) {
+            return currentLocaleLanguage
         }
 
         return nil
@@ -61,6 +61,42 @@ class LanguagesManager: GTDataManager {
     
     func loadFromDisk(code: String) -> Language? {
         return findEntity(Language.self, byAttribute: "code", withValue: code)
+    }
+    
+    func loadFromDisk(locale: Locale) -> Language? {
+        
+        let separator: String = "-"
+        var possibleLocaleIdCombinations: [String] = Array()
+        
+        if let languageCode = locale.languageCode, let scriptCode = locale.scriptCode, let regionCode = locale.regionCode {
+            let code: String = [languageCode, scriptCode, regionCode].joined(separator: separator)
+            possibleLocaleIdCombinations.append(code)
+        }
+        
+        if let languageCode = locale.languageCode, let scriptCode = locale.scriptCode {
+            let code: String = [languageCode, scriptCode].joined(separator: separator)
+            possibleLocaleIdCombinations.append(code)
+        }
+        
+        if let languageCode = locale.languageCode, let regionCode = locale.regionCode {
+            let code: String = [languageCode, regionCode].joined(separator: separator)
+            possibleLocaleIdCombinations.append(code)
+        }
+        
+        if let languageCode = locale.languageCode {
+            possibleLocaleIdCombinations.append(languageCode)
+        }
+        
+        for id in possibleLocaleIdCombinations {
+            
+            let languages = realm.objects(Language.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), id.lowercased()))
+            
+            if let language = languages.first {
+                return language
+            }
+        }
+                
+        return nil
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {

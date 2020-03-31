@@ -16,6 +16,8 @@ PODS:
   - FBSDKCoreKit/Basics (5.15.1)
   - FBSDKCoreKit/Core (5.15.1):
     - FBSDKCoreKit/Basics
+  - Firebase (6.16.0):
+    - Firebase/Core (= 6.16.0)
   - Firebase/Analytics (6.16.0):
     - Firebase/Core
   - Firebase/Core (6.16.0):
@@ -23,6 +25,9 @@ PODS:
     - FirebaseAnalytics (= 6.2.2)
   - Firebase/CoreOnly (6.16.0):
     - FirebaseCore (= 6.6.1)
+  - Firebase/InAppMessaging (6.16.0):
+    - Firebase/CoreOnly
+    - FirebaseInAppMessaging (~> 0.17.0)
   - FirebaseAnalytics (6.2.2):
     - FirebaseCore (~> 6.6)
     - FirebaseInstanceID (~> 4.3)
@@ -32,6 +37,7 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (= 0.3.9011)
+  - FirebaseAnalyticsInterop (1.5.0)
   - FirebaseCore (6.6.1):
     - FirebaseCoreDiagnostics (~> 1.2)
     - FirebaseCoreDiagnosticsInterop (~> 1.2)
@@ -44,6 +50,11 @@ PODS:
     - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
   - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseInAppMessaging (0.17.0):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.2)
+    - FirebaseInstanceID (~> 4.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
   - FirebaseInstallations (1.1.0):
     - FirebaseCore (~> 6.6)
     - GoogleUtilities/UserDefaults (~> 6.5)
@@ -132,7 +143,9 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - FacebookCore
-  - Firebase/Analytics
+  - Firebase (= 6.16.0)
+  - Firebase/Analytics (= 6.16.0)
+  - Firebase/InAppMessaging (= 6.16.0)
   - Fuzi
   - GoogleAnalytics (~> 3.17.0)
   - GoogleConversionTracking (~> 3.4.0)
@@ -161,9 +174,11 @@ SPEC REPOS:
     - FBSDKCoreKit
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
+    - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseInstanceID
     - Fuzi
@@ -198,9 +213,11 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
   Firebase: 497158b816d0a86fc31babbd05546fcd7e6083ff
   FirebaseAnalytics: cf95d3aab897612783020fbd98401d5366f135ee
+  FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
   FirebaseCore: 85064903ed6c28e47fec9c7bd149d94ba1b6b6e7
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseInAppMessaging: 7fbdce4f57017abfc448f67571f2b1694a4f5b47
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   Fuzi: bcc5694488dd6e672e126cbf3c5471d7a79506d1
@@ -225,6 +242,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 3557c61840633ad0d0da23d584f767aee2cf69c9
+PODFILE CHECKSUM: 45b87924278cdd6ac50fab22b13df2c070bbe422
 
 COCOAPODS: 1.8.4
