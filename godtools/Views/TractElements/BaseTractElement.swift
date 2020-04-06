@@ -244,56 +244,53 @@ class BaseTractElement: UIView {
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
+        
+        var newElements: [BaseTractElement] = Array()
+        
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
-        var elementNumber: Int = 0
-        
-        
-        if self.elements == nil {
-            self.elements = [BaseTractElement]()
-        }
         
         for dictionary in data {
             
-            if let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber) {
+            if let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: newElements.count) {
                 
                 for child in dictionary.children {
-                        guard let childElement = child.element else { continue }
-                        if childElement.name.contains("analytics") {
-                            element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
-                        }
+                    guard let childElement = child.element else { continue }
+                    if childElement.name.contains("analytics") {
+                        element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
                     }
+                }
                     
+                newElements.append(element)
                 
-                    self.elements!.append(element)
-                    
-                    if element.isKind(of: TractCallToAction.self) {
-                        self.didFindCallToAction = true
-                    } else if element.isKind(of: TractModals.self) {
-                        continue
-                    }
-                    
-                    if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
-                        maxYPosition = element.elementFrame.yEndPosition()
-                    } else {
-                        currentYPosition = element.elementFrame.yEndPosition()
-                    }
-                    
-                    elementNumber += 1
+                if element.isKind(of: TractCallToAction.self) {
+                    didFindCallToAction = true
+                } else if element.isKind(of: TractModals.self) {
+                    continue
+                }
+                
+                if horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
+                    maxYPosition = element.elementFrame.yEndPosition()
+                } else {
+                    currentYPosition = element.elementFrame.yEndPosition()
+                }
             }
         }
         
-        if self.isKind(of: TractPageContainer.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
+        if isKind(of: TractPageContainer.self) && !didFindCallToAction && !(tractConfigurations!.pagination?.didReachEnd())! {
+           
             let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self)
             currentYPosition = element.elementFrame.yEndPosition()
-            self.elements!.append(element)
+            newElements.append(element)
         }
         
-        if self.horizontalContainer {
-            self.height = maxYPosition
+        if horizontalContainer {
+            height = maxYPosition
         } else {
-            self.height = currentYPosition
+            height = currentYPosition
         }
+        
+        elements = newElements
     }
     
     func setupView(properties: Dictionary<String, Any>) {
