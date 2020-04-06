@@ -1861,14 +1861,14 @@
 		4F1C953A1EA6B850007B47DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4FDFC8DD1EFB17BC00B8CC33 /* Navbar */,
-				ECC194BE1EEB2CDB00A56332 /* Tract */,
-				0FB0E7C31EB00C5300583BF3 /* Switch */,
+				4FEE566E1EC4EAD20085249E /* GTProgressView.swift */,
 				0FB73E4B1EA9063E000BA60D /* Buttons */,
 				0FB73E4E1EA9063E000BA60D /* Cells */,
 				0FB73E511EA9063E000BA60D /* Labels */,
+				4FDFC8DD1EFB17BC00B8CC33 /* Navbar */,
+				0FB0E7C31EB00C5300583BF3 /* Switch */,
 				0F08530F1ECB56DA00DDC86D /* Text */,
-				4FEE566E1EC4EAD20085249E /* GTProgressView.swift */,
+				ECC194BE1EEB2CDB00A56332 /* Tract */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2015,7 +2015,6 @@
 				4F66E17B1F194509004BBEF1 /* AppDelegateExtensions */,
 				4F33042A1F0C1073009D92A0 /* Analytics */,
 				0FB73E721EA906A7000BA60D /* Constants */,
-				EC55A61D1EE0AC2B000235CA /* TractClasses */,
 				45D3C8B123DF942100ECF70E /* Features */,
 				0FB73E5E1EA90669000BA60D /* FlowControllers */,
 				0F350D991EAE78310025C4BB /* GeneralExtensions */,
@@ -2023,6 +2022,7 @@
 				4F1C95391EA6B84A007B47DB /* Models */,
 				45F335A523D24D3100295D1C /* Protocols */,
 				45D3C8AA23DF942100ECF70E /* Share */,
+				EC55A61D1EE0AC2B000235CA /* TractClasses */,
 				4F1C953A1EA6B850007B47DB /* Views */,
 				0FB73E631EA90669000BA60D /* ViewControllers */,
 				ECB2E2981EE9FAC300346FBE /* XMLManagement */,
@@ -2106,11 +2106,11 @@
 		4FF82B9A1EB0D85800890E53 /* TractElements */ = {
 			isa = PBXGroup;
 			children = (
+				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 				0F69826E1EB7D96100CAA284 /* BaseTractElement */,
 				0F6982751EB83A8E00CAA284 /* Containers */,
 				0F6982761EB83AF700CAA284 /* Nodes */,
 				0F9E322D1EDCC7150081DBB9 /* Properties */,
-				4F462A3C1EB0F43400C03447 /* BaseTractElement.swift */,
 			);
 			name = TractElements;
 			sourceTree = "<group>";
@@ -2118,16 +2118,16 @@
 		EC55A61D1EE0AC2B000235CA /* TractClasses */ = {
 			isa = PBXGroup;
 			children = (
+				ECC194B51EEAF15500A56332 /* ManifestProperties.swift */,
+				1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */,
 				EC55A61E1EE0AC37000235CA /* TractBindings.swift */,
 				EC55A6201EE0AC37000235CA /* TractConfigurations.swift */,
-				EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */,
 				EC8245B01EEEE96A0023A203 /* TractElementFrame.swift */,
-				ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */,
-				ECBE2E6A1EF1053000A13849 /* TractProperties.swift */,
-				ECC194B51EEAF15500A56332 /* ManifestProperties.swift */,
-				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
 				4FC97EB320D2B71400084A33 /* TractEventHelper.swift */,
-				1ED47BA220D412E000470D2A /* TractAnalyticEvent.swift */,
+				ECBE2E681EF05E8500A13849 /* TractImageConfig.swift */,
+				EC8A6B9A1EE200CF003B4C02 /* TractPagination.swift */,
+				ECBE2E6A1EF1053000A13849 /* TractProperties.swift */,
+				ECAA2C151EF9B4770067ED78 /* TractResource.swift */,
 			);
 			name = TractClasses;
 			sourceTree = "<group>";
@@ -2268,8 +2268,8 @@
 		ECC194BE1EEB2CDB00A56332 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
-				4FF82B9A1EB0D85800890E53 /* TractElements */,
 				4F462A301EB0DF3E00C03447 /* TractView.swift */,
+				4FF82B9A1EB0D85800890E53 /* TractElements */,
 			);
 			name = Tract;
 			sourceTree = "<group>";

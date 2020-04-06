@@ -254,31 +254,33 @@ class BaseTractElement: UIView {
         }
         
         for dictionary in data {
-            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             
-            for child in dictionary.children {
-                guard let childElement = child.element else { continue }
-                if childElement.name.contains("analytics") {
-                    element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
-                }
+            if let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber) {
+                
+                for child in dictionary.children {
+                        guard let childElement = child.element else { continue }
+                        if childElement.name.contains("analytics") {
+                            element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+                        }
+                    }
+                    
+                
+                    self.elements!.append(element)
+                    
+                    if element.isKind(of: TractCallToAction.self) {
+                        self.didFindCallToAction = true
+                    } else if element.isKind(of: TractModals.self) {
+                        continue
+                    }
+                    
+                    if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
+                        maxYPosition = element.elementFrame.yEndPosition()
+                    } else {
+                        currentYPosition = element.elementFrame.yEndPosition()
+                    }
+                    
+                    elementNumber += 1
             }
-            
-        
-            self.elements!.append(element)
-            
-            if element.isKind(of: TractCallToAction.self) {
-                self.didFindCallToAction = true
-            } else if element.isKind(of: TractModals.self) {
-                continue
-            }
-            
-            if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
-                maxYPosition = element.elementFrame.yEndPosition()
-            } else {
-                currentYPosition = element.elementFrame.yEndPosition()
-            }
-            
-            elementNumber += 1
         }
         
         if self.isKind(of: TractPageContainer.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
