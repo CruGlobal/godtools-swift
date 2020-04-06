@@ -50,10 +50,12 @@ class AppsFlyer: NSObject, AppsFlyerType {
         
         AppsFlyerTracker.shared().trackEvent(eventName, withValues: data)
         
-        print("\nAppsFlyer trackEvent()")
-        print("  eventName: \(eventName)")
-        if let data = data {
-            print("  data: \(data)")
+        if loggingEnabled {
+            print("\nAppsFlyer trackEvent()")
+            print("  eventName: \(eventName)")
+            if let data = data {
+                print("  data: \(data)")
+            }
         }
     }
     

@@ -36,9 +36,9 @@ class AppDiContainer {
         
         loginClient = TheKeyOAuthClient.shared
         
-        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
+        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
+        appsFlyer = AppsFlyer(config: config, loggingEnabled: false)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
