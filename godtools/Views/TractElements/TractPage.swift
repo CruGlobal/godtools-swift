@@ -67,12 +67,9 @@ class TractPage: BaseTractElement {
     }
     
     func buildPageContainer(data: [XMLIndexer]) {
-        print("\n TractPage buildPageContainer: \(self)")
-        print("  data: \(data)")
         self.elements = [BaseTractElement]()
         let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
         self.elements!.append(element)
-        print("  elements: \(elements?.count)")
         self.height = element.elementFrame.yEndPosition()
         self.pageContainer = element
     }
