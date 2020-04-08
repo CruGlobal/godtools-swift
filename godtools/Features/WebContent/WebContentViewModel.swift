@@ -21,7 +21,7 @@ class WebContentViewModel: WebContentViewModelType {
         self.analytics = analytics
         self.webContent = webContent
         
-        self.navTitle.accept(value: webContent.navTitle)
+        navTitle.accept(value: webContent.navTitle)
         url.accept(value: webContent.url)
     }
     
