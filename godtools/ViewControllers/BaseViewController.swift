@@ -65,9 +65,9 @@ class BaseViewController: UIViewController {
     }
     
     func displayNavigationButtons() {
-        self.configureNavigationButtons()
-        self.displayNavigationLeftButtons()
-        self.displayNavigationRightButtons()
+        configureNavigationButtons()
+        displayNavigationLeftButtons()
+        displayNavigationRightButtons()
     }
     
     func displayNavigationLeftButtons() {

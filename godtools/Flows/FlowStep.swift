@@ -33,4 +33,10 @@ enum FlowStep {
     // menu
     case tutorialTappedFromMenu
     case myAccountTappedFromMenu
+    case helpTappedFromMenu
+    case contactUsTappedFromMenu
+    case shareAStoryWithUsTappedFromMenu
+    case termsOfUseTappedFromMenu
+    case privacyPolicyTappedFromMenu
+    case copyrightInfoTappedFromMenu
 }

@@ -124,4 +124,28 @@ class MenuViewModel: NSObject, MenuViewModelType {
     func myAccountTapped() {
         flowDelegate?.navigate(step: .myAccountTappedFromMenu)
     }
+    
+    func helpTapped() {
+        flowDelegate?.navigate(step: .helpTappedFromMenu)
+    }
+    
+    func contactUsTapped() {
+        flowDelegate?.navigate(step: .contactUsTappedFromMenu)
+    }
+    
+    func shareAStoryWithUsTapped() {
+        flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
+    }
+    
+    func termsOfUseTapped() {
+        flowDelegate?.navigate(step: .termsOfUseTappedFromMenu)
+    }
+    
+    func privacyPolicyTapped() {
+        flowDelegate?.navigate(step: .privacyPolicyTappedFromMenu)
+    }
+    
+    func copyrightInfoTapped() {
+        flowDelegate?.navigate(step: .copyrightInfoTappedFromMenu)
+    }
 }
