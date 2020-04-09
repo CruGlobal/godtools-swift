@@ -46,10 +46,7 @@ class HomeViewController: BaseViewController {
         self.setupStyle()
         self.defineObservers()
         addRefreshControl()
-        
-        if onboardingShouldDisplay() {
-            self.displayOnboarding()
-        }
+
         let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
         pressGesture.minimumPressDuration = 0.75
         tableView.addGestureRecognizer(pressGesture)
@@ -156,21 +153,6 @@ class HomeViewController: BaseViewController {
         // MARK - Product owner has requested to not display this quite yet.
         
        // loginBannerView = createLoginBannerView()
-    }
-    
-    fileprivate func displayOnboarding() {
-        let onboardingViewController = OnboardingViewController(nibName: String(describing:OnboardingViewController.self), bundle: nil)
-        onboardingViewController.modalPresentationStyle = .overCurrentContext
-        self.present(onboardingViewController, animated: true, completion: nil)
-        
-        UserDefaults.standard.set(true, forKey: GTConstants.kOnboardingScreensShownKey)
-    }
-
-    private func onboardingShouldDisplay() -> Bool {
-        return false
-        // temp removed by request
-//        let hasAlreadyShown = UserDefaults.standard.bool(forKey: GTConstants.kOnboardingScreensShownKey)
-//        return !hasAlreadyShown
     }
     
     private func loginBannerShouldDisplay() -> Bool {

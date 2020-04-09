@@ -266,14 +266,6 @@ extension BaseFlowController: MenuViewControllerDelegate {
         let viewController = AboutViewController(nibName: String(describing:AboutViewController.self), bundle: nil)
         self.pushViewController(viewController: viewController)
     }
-    
-    func openWebView(url: URL, title: String, analyticsTitle: String) {
-        let viewController = WKWebViewController.create()
-        viewController.websiteUrl = url
-        viewController.pageTitle = title
-        viewController.pageTitleForAnalytics = analyticsTitle
-        self.pushViewController(viewController: viewController)
-    }
 }
 
 extension BaseFlowController: LanguageSettingsViewControllerDelegate {

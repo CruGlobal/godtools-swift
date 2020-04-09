@@ -14,7 +14,6 @@ import GTMAppAuth
 protocol MenuViewControllerDelegate: class {
     func moveToUpdateLanguageSettings()
     func moveToAbout()
-    func openWebView(url: URL, title: String, analyticsTitle: String)
 }
 
 /*
@@ -186,15 +185,14 @@ extension MenuView: UITableViewDelegate {
             delegate?.moveToAbout()
         
         case .help:
-            let url = URL(string: "http://www.godtoolsapp.com/faq")
-            delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
+            viewModel.helpTapped()
         
         case .contactUs:
+            // TODO: Conditional should be handled in MenuFlow ~Levi
             if MFMailComposeViewController.canSendMail() {
                 sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
             } else {
-                let url = URL(string: "http://www.godtoolsapp.com/#contact")
-                delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
+                viewModel.contactUsTapped()
             }
         
         case .logout:
@@ -224,25 +222,22 @@ extension MenuView: UITableViewDelegate {
             present(activityViewController, animated: true, completion: nil)
         
         case .shareAStoryWithUs:
+            // TODO: Conditional should be handled in MenuFlow ~Levi
             if MFMailComposeViewController.canSendMail() {
                 sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
             } else {
-                let url = URL(string: "http://www.godtoolsapp.com/#contact")
-                delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
+                viewModel.shareAStoryWithUsTapped()
             }
             sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
         
         case .termsOfUse:
-            let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
-            delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
+            viewModel.termsOfUseTapped()
         
         case .privacyPolicy:
-            let url = URL(string: "https://www.cru.org/about/privacy.html")
-            delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
+            viewModel.privacyPolicyTapped()
         
         case .copyrightInfo:
-            let url = URL(string: "http://www.godtoolsapp.com/copyright")
-            delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
+            viewModel.copyrightInfoTapped()
             
         case .tutorial:
             viewModel.tutorialTapped()

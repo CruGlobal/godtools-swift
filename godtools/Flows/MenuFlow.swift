@@ -37,9 +37,6 @@ class MenuFlow: Flow {
         )
         menuView = MenuView(viewModel: viewModel)
     }
-}
-
-extension MenuFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
         
@@ -68,8 +65,43 @@ extension MenuFlow: FlowDelegate {
             
             navigationController.pushViewController(view, animated: true)
             
+        case .helpTappedFromMenu:
+                        
+            navigateToWebContentView(webContent: HelpWebContent())
+            
+        case .contactUsTappedFromMenu:
+           
+            navigateToWebContentView(webContent: ContactUsWebContent())
+             
+        case .shareAStoryWithUsTappedFromMenu:
+            
+            navigateToWebContentView(webContent: ShareAStoryWithUsWebContent())
+            
+        case .termsOfUseTappedFromMenu:
+            
+            navigateToWebContentView(webContent: TermsOfUseWebContent())
+            
+        case .privacyPolicyTappedFromMenu:
+            
+            navigateToWebContentView(webContent: PrivacyPolicyWebContent())
+            
+        case .copyrightInfoTappedFromMenu:
+            
+            navigateToWebContentView(webContent: CopyrightInfoWebContent())
+            
         default:
             break
         }
+    }
+    
+    private func navigateToWebContentView(webContent: WebContentType) {
+        
+        let viewModel = WebContentViewModel(
+            analytics: appDiContainer.analytics,
+            webContent: webContent
+        )
+        let view = WebContentView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
     }
 }
