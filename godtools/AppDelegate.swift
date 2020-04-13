@@ -34,13 +34,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        appDiContainer.config.logConfiguration()
+        let config = appDiContainer.config
+        let firebaseConfiguration = appDiContainer.firebaseConfiguration
+        let adobeAnalytics = appDiContainer.adobeAnalytics
+        let appsFlyer = appDiContainer.appsFlyer
         
-        appDiContainer.firebaseConfiguration.configure()
+        config.logConfiguration()
         
-        appDiContainer.adobeAnalytics.configure()
+        firebaseConfiguration.configure()
         
-        appDiContainer.appsFlyer.configure(adobeAnalytics: appDiContainer.adobeAnalytics)
+        adobeAnalytics.configure()
+        
+        adobeAnalytics.collectLifecycleData()
+        
+        appsFlyer.configure(adobeAnalytics: adobeAnalytics)
         
         resetStateIfUITesting()
         
