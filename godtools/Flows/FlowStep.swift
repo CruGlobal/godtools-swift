@@ -14,7 +14,6 @@ enum FlowStep {
     case showMasterView(animated: Bool, shouldCreateNewInstance: Bool)
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
-    case dismissTutorial
     case urlLinkTappedFromToolDetail(url: URL)
     
     // onboarding
@@ -25,12 +24,16 @@ enum FlowStep {
     
     // home
     case openTutorialTapped
+    case menuTappedFromHome
+    case languagesTappedFromHome
     
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
     
     // menu
+    case doneTappedFromMenu
+    case languageSettingsTappedFromMenu
     case tutorialTappedFromMenu
     case myAccountTappedFromMenu
     case helpTappedFromMenu
@@ -39,4 +42,9 @@ enum FlowStep {
     case termsOfUseTappedFromMenu
     case privacyPolicyTappedFromMenu
     case copyrightInfoTappedFromMenu
+    
+    // language settings
+    case choosePrimaryLanguageTappedFromLanguageSettings
+    case chooseParallelLanguageTappedFromLanguageSettings
+    case languageTappedFromChooseLanguage
 }

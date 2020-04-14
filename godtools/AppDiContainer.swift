@@ -83,4 +83,12 @@ class AppDiContainer {
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
         )
     }
+    
+    var languagesManager: LanguagesManager {
+        return LanguagesManager()
+    }
+    
+    var translationZipImporter: TranslationZipImporter {
+        return TranslationZipImporter()
+    }
 }

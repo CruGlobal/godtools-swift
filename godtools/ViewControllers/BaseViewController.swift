@@ -41,9 +41,9 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        self.displayNavigationButtons()
+        displayNavigationButtons()
         
-        self.addAccessibilityIdentifiers()
+        addAccessibilityIdentifiers()
         
         navigationController?.navigationBar.barStyle = .black
     }
@@ -64,7 +64,7 @@ class BaseViewController: UIViewController {
         self.navigationItem.titleView = UILabel()
     }
     
-    func displayNavigationButtons() {
+    private func displayNavigationButtons() {
         configureNavigationButtons()
         displayNavigationLeftButtons()
         displayNavigationRightButtons()
@@ -109,16 +109,6 @@ class BaseViewController: UIViewController {
         self.navigationLeftButtons.append(button)
     }
     
-    func addNavigationBurgerButton() {
-        let button = self.buildNavigationButton(imageName: "burger_white", action: #selector(navigationBurgerButtonAction))
-        self.navigationLeftButtons.append(button)
-    }
-    
-    func addNavigationLanguageButton() {
-        let button = self.buildNavigationButton(imageName: "language_logo_white", action: #selector(navigationLanguageButtonAction))
-        self.navigationRightButtons.append(button)
-    }
-    
     func addHomeButton() {
         let button = UIBarButtonItem(image: #imageLiteral(resourceName: "home"), style: UIBarButtonItem.Style.done, target: self, action: #selector(homeButtonAction))
         self.navigationLeftButtons.append(button)
@@ -131,11 +121,6 @@ class BaseViewController: UIViewController {
     
     func addDoneButton() {
         let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(doneButtonAction))
-        self.navigationRightButtons.append(button)
-    }
-    
-    func addClearButton() {
-        let button = UIBarButtonItem(title: "clear".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(clearButtonAction))
         self.navigationRightButtons.append(button)
     }
     
@@ -162,13 +147,6 @@ class BaseViewController: UIViewController {
         }
     }
     // MARK: - Navigation Buttons Actions
-    
-    @objc func navigationBurgerButtonAction() {
-        NotificationCenter.default.post(name: .displayMenuNotification, object: nil)
-    }
-    
-    @objc func navigationLanguageButtonAction() {
-    }
     
     @objc func homeButtonAction() {
         baseDelegate?.goHome()

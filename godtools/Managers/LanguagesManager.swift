@@ -12,9 +12,7 @@ import PromiseKit
 import RealmSwift
 
 class LanguagesManager: GTDataManager {
-        
-    var selectingPrimaryLanguage = true
-    
+            
     static var _defaultLanguage: Language?
     static var defaultLanguage: Language? {
         get {
@@ -140,7 +138,6 @@ class LanguagesManager: GTDataManager {
         let ls = Languages()
         ls.append(objectsIn: lSeq)
         return ls
-//        return Languages(languages.sorted(by: { return $0.localizedName() < $1.localizedName() }))
     }
     
     func loadFromRemote() -> Promise<Languages> {
@@ -267,25 +264,17 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func selectedLanguageId() -> String? {
-        if selectingPrimaryLanguage {
-            return GTSettings.shared.primaryLanguageId
-        } else {
-            return GTSettings.shared.parallelLanguageId
+    func setPrimaryLanguage(language: Language) {
+        LanguagesManager.defaultLanguage = language
+        GTSettings.shared.primaryLanguageId = language.remoteId
+        if language.remoteId == GTSettings.shared.parallelLanguageId {
+            GTSettings.shared.parallelLanguageId = nil
         }
     }
     
-    func setSelectedLanguage(_ language: Language) {
-        if selectingPrimaryLanguage {
-            LanguagesManager.defaultLanguage = language
-            GTSettings.shared.primaryLanguageId = language.remoteId
-            if language.remoteId == GTSettings.shared.parallelLanguageId {
-                GTSettings.shared.parallelLanguageId = nil
-            }
-        } else {
-            GTSettings.shared.parallelLanguageId = language.remoteId
-            UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
-        }
+    func setParallelLanguage(language: Language) {
+        GTSettings.shared.parallelLanguageId = language.remoteId
+        UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
     }
     
     func setInitialPrimaryLanguage(forceEnglish: Bool = false) {

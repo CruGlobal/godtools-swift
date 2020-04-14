@@ -33,13 +33,13 @@ class ToolsLanguagePreferenceUserDefaultsCache: ToolsLanguagePreferenceCacheType
         return defaults.object(forKey: keyParallelLanguageId) as? String
     }
     
-    func cachePrimaryLanguageId(id: String) {
-        defaults.set(id, forKey: keyPrimaryLanguageId)
+    func cachePrimaryLanguageId(language: Language) {
+        defaults.set(language.remoteId, forKey: keyPrimaryLanguageId)
         defaults.synchronize()
     }
 
-    func cacheParallelLanguageId(id: String) {
-        defaults.set(id, forKey: keyParallelLanguageId)
+    func cacheParallelLanguageId(language: Language) {
+        defaults.set(language.remoteId, forKey: keyParallelLanguageId)
         defaults.synchronize()
     }
     

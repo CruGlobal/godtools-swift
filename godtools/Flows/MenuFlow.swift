@@ -41,6 +41,10 @@ class MenuFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .languageSettingsTappedFromMenu:
+            break
+            
         case .tutorialTappedFromMenu:
             
             let tutorialFlow = TutorialFlow(
@@ -51,10 +55,13 @@ class MenuFlow: Flow {
             navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
             self.tutorialFlow = tutorialFlow
             
-        case .dismissTutorial:
+        case .closeTappedFromTutorial:
             navigationController.dismiss(animated: true, completion: nil)
             self.tutorialFlow = nil
             
+        case .startUsingGodToolsTappedFromTutorial:
+            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+                        
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(

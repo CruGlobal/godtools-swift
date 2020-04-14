@@ -13,8 +13,8 @@ protocol ToolsLanguagePreferenceCacheType {
     var primaryLanguageId: String? { get }
     var parallelLanguageId: String? { get }
     
-    func cachePrimaryLanguageId(id: String)
-    func cacheParallelLanguageId(id: String)
+    func cachePrimaryLanguageId(language: Language)
+    func cacheParallelLanguageId(language: Language)
     func deletePrimaryLanguageId()
     func deleteParallelLanguageId()
 }

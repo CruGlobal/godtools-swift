@@ -12,7 +12,6 @@ import TheKeyOAuthSwift
 import GTMAppAuth
 
 protocol MenuViewControllerDelegate: class {
-    func moveToUpdateLanguageSettings()
     func moveToAbout()
 }
 
@@ -179,7 +178,7 @@ extension MenuView: UITableViewDelegate {
         switch menuItem.id {
             
         case .languageSettings:
-            delegate?.moveToUpdateLanguageSettings()
+            viewModel.languageSettingsTapped()
         
         case .about:
             delegate?.moveToAbout()
