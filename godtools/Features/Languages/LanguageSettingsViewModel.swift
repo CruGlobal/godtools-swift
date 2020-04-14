@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LanguageSettingsViewModel: LanguageSettingsViewModelType {
+class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
     private let languagesManager: LanguagesManager
     private let analytics: GodToolsAnaltyics
@@ -25,15 +25,25 @@ class LanguageSettingsViewModel: LanguageSettingsViewModelType {
         self.languagesManager = languagesManager
         self.analytics = analytics
         
-        reloadPrimaryLanguageButtonTitle()
-        reloadParallelLanguageButtonTitle()
+        super.init()
+        
+        _ = languagesManager.loadPrimaryLanguageFromDisk()
+        _ = languagesManager.loadParallelLanguageFromDisk()
+        
+        languagesManager.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: Language?) in
+            self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
+        }
+        
+        languagesManager.parallelLanguage.addObserver(self) { [weak self] (language: Language?) in
+            self?.reloadParallelLanguageButtonTitle(parallelLanguage: language)
+        }
     }
     
-    private func reloadPrimaryLanguageButtonTitle() {
+    private func reloadPrimaryLanguageButtonTitle(primaryLanguage: Language?) {
         
         let title: String
         
-        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+        if let primaryLanguage = primaryLanguage {
             title = primaryLanguage.localizedName()
         }
         else {
@@ -43,12 +53,11 @@ class LanguageSettingsViewModel: LanguageSettingsViewModelType {
         primaryLanguageButtonTitle.accept(value: title)
     }
     
-    private func reloadParallelLanguageButtonTitle() {
+    private func reloadParallelLanguageButtonTitle(parallelLanguage: Language?) {
         
         let title: String
         
-        // TODO: Would like to replace GTSettings with something more specific here. ~Levi
-        if let id = GTSettings.shared.parallelLanguageId, let parallelLanguage = languagesManager.loadFromDisk(id: id) {
+        if let parallelLanguage = parallelLanguage {
             title = parallelLanguage.localizedName()
         }
         else {

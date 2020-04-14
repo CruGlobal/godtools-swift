@@ -19,6 +19,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     private let translationZipImporter: TranslationZipImporter
     private let analytics: GodToolsAnaltyics
     private let chooseLanguageType: ChooseLanguageType
+    private let allLanguages: [Language]
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -36,17 +37,29 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         
+        let allLanguagesOnDisk: [Language] = Array(languagesManager.loadFromDisk())
+        
         switch chooseLanguageType {
         case .primary:
             navTitle.accept(value: NSLocalizedString("primary_language", comment: ""))
             selectedLanguage.accept(value: languagesManager.loadPrimaryLanguageFromDisk())
+            allLanguages = allLanguagesOnDisk
         case .parallel:
             navTitle.accept(value: NSLocalizedString("parallel_language", comment: ""))
             selectedLanguage.accept(value: languagesManager.loadParallelLanguageFromDisk())
+            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+                allLanguages = allLanguagesOnDisk.filter {
+                    !$0.localizedName().lowercased().contains(primaryLanguage.localizedName().lowercased())
+                }
+            }
+            else {
+                allLanguages = allLanguagesOnDisk
+            }
         }
         
         reloadHidesDeleteLanguageButton()
-        reloadLanguages()
+        
+        languages.accept(value: allLanguages)
     }
     
     private func reloadHidesDeleteLanguageButton() {
@@ -59,28 +72,19 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         }
     }
     
-    private func reloadLanguages() {
-        
-        let allLanguages: [Language] = Array(languagesManager.loadFromDisk())
-        
-        languages.accept(value: allLanguages)
-    }
-    
     func pageViewed() {
         
         analytics.recordScreenView(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings")
     }
     
     func deleteLanguageTapped() {
-        
-        //GTSettings.shared.parallelLanguageId = nil
-        //languagesTableView.reloadData()
-        
+                
         switch chooseLanguageType {
         case .primary:
             break
         case .parallel:
-            break
+            languagesManager.deleteParallelLanguage()
+            selectedLanguage.accept(value: nil)
         }
     }
     
@@ -90,15 +94,33 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
         
         switch chooseLanguageType {
         case .primary:
-            languagesManager.setPrimaryLanguage(language: language)
+            languagesManager.updatePrimaryLanguage(language: language)
+            // User chose a primary language that is the set parallel language.
+            if let parallelLanguage = languagesManager.loadParallelLanguageFromDisk(), language.remoteId == parallelLanguage.remoteId {
+                languagesManager.deleteParallelLanguage()
+            }
         case .parallel:
-            languagesManager.setParallelLanguage(language: language)
+            languagesManager.updateParallelLanguage(language: language)
         }
         
-        // TODO: Clean up. ~Levi
+        // TODO: Investigate these two calls more. ~Levi
         languagesManager.recordLanguageShouldDownload(language: language)
         translationZipImporter.download(language: language)
         
         flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)
+    }
+    
+    func searchLanguageTextInputChanged(text: String) {
+                        
+        if !text.isEmpty {
+                        
+            let filteredLanguages = allLanguages.filter {
+                $0.localizedName().lowercased().contains(text.lowercased())
+            }
+            languages.accept(value: filteredLanguages)
+        }
+        else {
+            languages.accept(value: allLanguages)
+        }
     }
 }

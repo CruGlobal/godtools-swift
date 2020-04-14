@@ -20,6 +20,7 @@ class AppDiContainer {
     let appsFlyer: AppsFlyerType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
+    let languagesManager: LanguagesManager
     
     required init() {
         
@@ -43,6 +44,8 @@ class AppDiContainer {
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
+        
+        languagesManager = LanguagesManager()
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -79,11 +82,7 @@ class AppDiContainer {
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
         )
     }
-    
-    var languagesManager: LanguagesManager {
-        return LanguagesManager()
-    }
-    
+
     var translationZipImporter: TranslationZipImporter {
         return TranslationZipImporter()
     }

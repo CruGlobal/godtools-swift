@@ -118,22 +118,10 @@ extension ChooseLanguageView: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // TODO: Implement. ~Levi
-        
-        /*
-        if searchText != "" {
-            filterContentForSearchText(searchText)
-            isFiltering = true
-            languagesTableView.reloadData()
-        } else {
-            isFiltering = false
-            languagesTableView.reloadData()
-        }
-        */
+        viewModel.searchLanguageTextInputChanged(text: searchText)
     }
     
-    func toolBarViewForKeyboard() -> UIToolbar {
+    fileprivate func toolBarViewForKeyboard() -> UIToolbar {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let dismissButton = UIBarButtonItem(title: "dismiss".localized, style: .plain, target: self, action: #selector(hideKeyboard))

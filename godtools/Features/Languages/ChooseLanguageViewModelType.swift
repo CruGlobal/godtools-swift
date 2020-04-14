@@ -19,4 +19,5 @@ protocol ChooseLanguageViewModelType {
     func pageViewed()
     func deleteLanguageTapped()
     func languageTapped(language: Language)
+    func searchLanguageTextInputChanged(text: String)
 }

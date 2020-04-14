@@ -15,6 +15,9 @@ class LanguagesManager: GTDataManager {
             
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     
+    let primaryLanguage: ObservableValue<Language?> = ObservableValue(value: nil)
+    let parallelLanguage: ObservableValue<Language?> = ObservableValue(value: nil)
+    
     static var _defaultLanguage: Language?
     static var defaultLanguage: Language? {
         get {
@@ -100,24 +103,35 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadPrimaryLanguageFromDisk() -> Language? {
-        if GTSettings.shared.primaryLanguageId == nil {
-            return nil
+        
+        var language: Language?
+        
+        if let id = languageSettingsCache.primaryLanguageId {
+            language = loadFromDisk(id: id)
         }
-        let primaryLanguage = loadFromDisk(id: GTSettings.shared.primaryLanguageId!)
-        return primaryLanguage
+        
+        primaryLanguage.accept(value: language)
+        
+        return language
     }
     
     func loadParallelLanguageFromDisk(arrivingFromUniversalLink: Bool = false) -> Language? {
+        
+        // TOOD: Why is this needed? ~Levi
         if !arrivingFromUniversalLink {
-            if GTSettings.shared.parallelLanguageId == nil {
-                return nil
+            
+            var language: Language?
+            
+            if let id = languageSettingsCache.parallelLanguageId {
+                language = loadFromDisk(id: id)
             }
             
-            if let parallelLanguage = loadFromDisk(id: GTSettings.shared.parallelLanguageId!) {
-                return parallelLanguage
-            }
+            parallelLanguage.accept(value: language)
+            
+            return language
         }
         else {
+            // TOOD: Why is this needed? ~Levi
             if GTSettings.shared.parallelLanguageCode == nil {
                 return nil
             }
@@ -198,30 +212,6 @@ class LanguagesManager: GTDataManager {
     }
     
     private func saveToDisk(_ languages: [LanguageResource]) {
-//        safelyWriteToRealm {
-//            for remoteLanguage in languages {
-//                if let oldLanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
-//                    realm.delete(oldLanguage)
-//                }
-//
-//                let newLanguage = Language()
-//                newLanguage.remoteId = remoteLanguage.id
-//                newLanguage.code = remoteLanguage.code
-//                newLanguage.direction = remoteLanguage.direction  // IO: small bugfix
-//                realm.add(newLanguage)
-//            }
-//        }
-
-//        val remoteLanguages = getLanguagesFromApi()
-//        val existingLanguages = getLanguagesFromDb()
-//        for (language in remoteLanguages) {
-//            updateOrAddToRealm(language)
-//            existingLanguages.remove(language)
-//        }
-//
-//        for (language in existingLanguages) {
-//            deleteFromRealm(language)
-//        }
         
         safelyWriteToRealm {
             var cachedLanguages = [Language]()
@@ -266,33 +256,57 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func setPrimaryLanguage(language: Language) {
+    func updatePrimaryLanguage(language: Language) {
+        
+        // TODO: Look into what this is for. ~Levi
         LanguagesManager.defaultLanguage = language
-        GTSettings.shared.primaryLanguageId = language.remoteId
-        if language.remoteId == GTSettings.shared.parallelLanguageId {
-            GTSettings.shared.parallelLanguageId = nil
-        }
+        
+        languageSettingsCache.cachePrimaryLanguageId(language: language)
+        
+        primaryLanguage.accept(value: language)
     }
     
-    func setParallelLanguage(language: Language) {
-        GTSettings.shared.parallelLanguageId = language.remoteId
+    func updateParallelLanguage(language: Language) {
+        
+        languageSettingsCache.cacheParallelLanguageId(language: language)
+        
+        // TODO: What is this set for. ~Levi
         UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
+        
+        parallelLanguage.accept(value: language)
+    }
+    
+    func deleteParallelLanguage() {
+        languageSettingsCache.deleteParallelLanguageId()
+        
+        // TODO: What is this set for. ~Levi
+        UserDefaults.standard.set(nil, forKey: "kParallelLanguageCode")
+        
+        parallelLanguage.accept(value: nil)
     }
     
     func setInitialPrimaryLanguage(forceEnglish: Bool = false) {
         safelyWriteToRealm {
             if !forceEnglish {
                 if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
-                    GTSettings.shared.primaryLanguageId = preferredLanguage.remoteId
+                    updatePrimaryLanguage(language: preferredLanguage)
                     preferredLanguage.shouldDownload = true
                     return
                 }
             }
             if let english = loadFromDisk(code: "en") {
                 english.shouldDownload = true
-                GTSettings.shared.primaryLanguageId = english.remoteId
+                updatePrimaryLanguage(language: english)
             }
         }
+    }
+    
+    func isPrimaryLanguage(language: Language) -> Bool {
+        return language.remoteId == languageSettingsCache.primaryLanguageId
+    }
+    
+    func isParallelLanguage(language: Language) -> Bool {
+        return language.remoteId == languageSettingsCache.parallelLanguageId
     }
 
     func setPrimaryLanguageForInitialDeviceLanguageDownload() {
