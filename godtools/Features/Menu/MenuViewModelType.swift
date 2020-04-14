@@ -19,6 +19,7 @@ protocol MenuViewModelType {
     func languageSettingsTapped()
     func tutorialTapped()
     func myAccountTapped()
+    func aboutTapped()
     func helpTapped()
     func contactUsTapped()
     func shareAStoryWithUsTapped()

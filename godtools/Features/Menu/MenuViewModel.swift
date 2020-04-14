@@ -133,6 +133,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
         flowDelegate?.navigate(step: .myAccountTappedFromMenu)
     }
     
+    func aboutTapped() {
+        flowDelegate?.navigate(step: .aboutTappedFromMenu)
+    }
+    
     func helpTapped() {
         flowDelegate?.navigate(step: .helpTappedFromMenu)
     }

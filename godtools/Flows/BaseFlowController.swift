@@ -228,9 +228,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
-        
-        menuView.delegate = self
-        
+                
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
         guard let currentFrame = currentViewController?.view.frame else { return }
         menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
@@ -277,14 +275,6 @@ extension BaseFlowController: BaseViewControllerDelegate {
     func goBack() {
         _ = navigationController.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
-    }
-}
-
-extension BaseFlowController: MenuViewControllerDelegate {
-    
-    func moveToAbout() {
-        let viewController = AboutViewController(nibName: String(describing:AboutViewController.self), bundle: nil)
-        self.pushViewController(viewController: viewController)
     }
 }
 

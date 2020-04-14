@@ -80,6 +80,15 @@ class MenuFlow: Flow {
             
             navigationController.pushViewController(view, animated: true)
             
+        case .aboutTappedFromMenu:
+            
+            let viewModel = AboutViewModel(
+                analytics: appDiContainer.analytics
+            )
+            let view = AboutView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
+            
         case .helpTappedFromMenu:
                         
             navigateToWebContentView(webContent: HelpWebContent())

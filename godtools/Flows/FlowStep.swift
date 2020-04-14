@@ -36,6 +36,7 @@ enum FlowStep {
     case languageSettingsTappedFromMenu
     case tutorialTappedFromMenu
     case myAccountTappedFromMenu
+    case aboutTappedFromMenu
     case helpTappedFromMenu
     case contactUsTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
