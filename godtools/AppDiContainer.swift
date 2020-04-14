@@ -69,10 +69,6 @@ class AppDiContainer {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
     }
     
-    var toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType {
-        return ToolsLanguagePreferenceUserDefaultsCache()
-    }
-    
     var deviceLanguage: DeviceLanguageType {
         return DeviceLanguage()
     }

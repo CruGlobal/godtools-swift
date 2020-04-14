@@ -43,9 +43,7 @@ class ChooseLanguageView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        addTapToDismissKeyboard()
-        
+                
         addDefaultNavBackItem()
         
         searchBar.delegate = self
@@ -56,7 +54,8 @@ class ChooseLanguageView: UIViewController {
     private func setupLayout() {
         
         // searchBar
-        searchBar.backgroundImage = UIImage(color: .gtGreyLight)
+        searchBar.barTintColor = .gtGreyLight
+        searchBar.searchTextField.backgroundColor = .white
         searchBar.isTranslucent = true
         searchBar.returnKeyType = .done
         searchBar.inputAccessoryView = toolBarViewForKeyboard()
@@ -134,16 +133,6 @@ extension ChooseLanguageView: UISearchBarDelegate {
         */
     }
     
-    func addTapToDismissKeyboard() {
-        
-        // TODO: Implement this?? ~Levi
-        /*
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
-        */
-    }
-    
     func toolBarViewForKeyboard() -> UIToolbar {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -177,9 +166,7 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
         
         viewModel.languageTapped(language: language)
         
-                
-        // TODO: Go back to previous controller. ~Levi
-        //baseDelegate?.goBack()
+        searchBar.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -200,5 +187,14 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+extension ChooseLanguageView: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == languagesTableView {
+            searchBar.resignFirstResponder()
+        }
     }
 }

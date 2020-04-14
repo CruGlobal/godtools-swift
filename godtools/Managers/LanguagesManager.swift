@@ -13,6 +13,8 @@ import RealmSwift
 
 class LanguagesManager: GTDataManager {
             
+    private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    
     static var _defaultLanguage: Language?
     static var defaultLanguage: Language? {
         get {
