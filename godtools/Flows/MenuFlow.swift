@@ -12,6 +12,7 @@ class MenuFlow: Flow {
     
     private(set) var menuView: MenuView!
     private var tutorialFlow: TutorialFlow?
+    private var languageSettingsFlow: LanguageSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -43,7 +44,16 @@ class MenuFlow: Flow {
         switch step {
             
         case .languageSettingsTappedFromMenu:
-            break
+            
+            let languageSettingsFlow = LanguageSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController
+            )
+            
+            navigationController.pushViewController(languageSettingsFlow.view, animated: true)
+            
+            self.languageSettingsFlow = languageSettingsFlow
             
         case .tutorialTappedFromMenu:
             
