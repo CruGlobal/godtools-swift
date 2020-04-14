@@ -35,6 +35,7 @@ class LanguageSettingsView: UIViewController {
     }
     
     override func viewDidLoad() {
+        print("view didload: \(type(of: self))")
         super.viewDidLoad()
         
         setupLayout()

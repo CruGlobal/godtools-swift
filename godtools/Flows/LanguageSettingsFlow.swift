@@ -9,16 +9,11 @@
 import Foundation
 
 class LanguageSettingsFlow: Flow {
-    
-    private var languageSettingsView: LanguageSettingsView!
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
-    var view: UIViewController {
-        return languageSettingsView
-    }
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
         
@@ -31,7 +26,9 @@ class LanguageSettingsFlow: Flow {
             languagesManager: appDiContainer.languagesManager,
             analytics: appDiContainer.analytics
         )
-        languageSettingsView = LanguageSettingsView(viewModel: viewModel)
+        let view = LanguageSettingsView(viewModel: viewModel)
+        
+        sharedNavigationController.pushViewController(view, animated: true)
     }
     
     func navigate(step: FlowStep) {

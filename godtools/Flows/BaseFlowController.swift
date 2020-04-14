@@ -141,7 +141,6 @@ class BaseFlowController: NSObject, FlowDelegate {
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController
             )
-            navigationController.pushViewController(languageSettingsFlow.view, animated: true)
             
             self.languageSettingsFlow = languageSettingsFlow
                         

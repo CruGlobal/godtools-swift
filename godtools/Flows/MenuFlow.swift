@@ -50,9 +50,7 @@ class MenuFlow: Flow {
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController
             )
-            
-            navigationController.pushViewController(languageSettingsFlow.view, animated: true)
-            
+                        
             self.languageSettingsFlow = languageSettingsFlow
             
         case .tutorialTappedFromMenu:
