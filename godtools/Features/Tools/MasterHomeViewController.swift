@@ -254,12 +254,6 @@ class MasterHomeViewController: BaseViewController  {
         toolsManager.loadResourceList()
     }
     
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-
-    }
-    
     // MARK: - Analytics
     
     override func screenName() -> String {

@@ -305,6 +305,20 @@ extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControll
     }
     
     func moveToArticle(resource: DownloadedResource) {
+        
+        // TODO: Instantiate from Flow: navigate(step: FlowStep) ~Levi
+        /*
+        let viewModel = ArticleViewModel(
+            articleManager: appDiContainer.articleManager,
+            languageManager: appDiContainer.languagesManager,
+            resource: resource,
+            analytics: appDiContainer.analytics
+        )
+        let view = ArticleView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+        */
+        
         let viewController = ArticleToolViewController.create()
         viewController.resource = resource
         pushViewController(viewController: viewController)

@@ -40,7 +40,10 @@ class AboutView: UIViewController {
     }
     
     private func setupBinding() {
-        title = viewModel.navTitle
+        
+        viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
+            self?.title = navTitle
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

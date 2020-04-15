@@ -1,5 +1,5 @@
 //
-//  AboutViewModelType.swift
+//  ArticleViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol AboutViewModelType {
+protocol ArticleViewModelType {
     
     var navTitle: ObservableValue<String> { get }
     

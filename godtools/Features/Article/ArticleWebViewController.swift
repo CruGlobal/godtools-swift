@@ -66,14 +66,8 @@ class ArticleWebViewController: BaseViewController {
         if let url = data?.local {
             webView.loadFileURL(url, allowingReadAccessTo: url)
         }
-
-//  If you need to add viewport width this is the first way...
-//        var scriptContent = "var meta = document.createElement('meta');"
-//        scriptContent += "meta.name='viewport';"
-//        scriptContent += "meta.content='width=device-width';"
-//        scriptContent += "document.getElementsByTagName('head')[0].appendChild(meta);"
-//
-//        webView.evaluateJavaScript(scriptContent, completionHandler: nil)
+        
+        addDefaultNavBackItem()
     }
     
     

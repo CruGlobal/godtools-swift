@@ -92,6 +92,8 @@ class ArticleCategoryViewController: BaseViewController {
                 }
             }
         }
+        
+        addDefaultNavBackItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {

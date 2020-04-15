@@ -39,9 +39,9 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="cof-hu-oAw" firstAttribute="leading" secondItem="ojZ-Jh-Pf7" secondAttribute="trailing" constant="8" id="8ou-bC-oXK"/>
                     <constraint firstItem="cNY-kv-DOQ" firstAttribute="top" secondItem="I6C-AX-CyH" secondAttribute="top" id="IbF-9S-pDk"/>
                     <constraint firstAttribute="trailingMargin" secondItem="cof-hu-oAw" secondAttribute="trailing" constant="8" id="Moo-l4-nza"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="ojZ-Jh-Pf7" secondAttribute="trailing" constant="38" id="VYF-dA-GiZ"/>
                     <constraint firstAttribute="bottom" secondItem="cNY-kv-DOQ" secondAttribute="bottom" id="b7U-oE-nah"/>
                     <constraint firstItem="cof-hu-oAw" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="gt5-Gc-hfT"/>
                     <constraint firstItem="ojZ-Jh-Pf7" firstAttribute="centerY" secondItem="I6C-AX-CyH" secondAttribute="centerY" id="ieJ-72-PHu"/>

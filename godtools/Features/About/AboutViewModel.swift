@@ -12,13 +12,11 @@ class AboutViewModel: AboutViewModelType {
     
     private let analytics: GodToolsAnaltyics
     
-    let navTitle: String
+    let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("about", comment: ""))
     
     required init(analytics: GodToolsAnaltyics) {
         
-        self.analytics = analytics
-        
-        navTitle = NSLocalizedString("about", comment: "")
+        self.analytics = analytics        
     }
     
     func pageViewed() {

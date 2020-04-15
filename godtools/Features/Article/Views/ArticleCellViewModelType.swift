@@ -1,5 +1,5 @@
 //
-//  AboutViewModelType.swift
+//  ArticleCellViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -8,9 +8,6 @@
 
 import Foundation
 
-protocol AboutViewModelType {
+protocol ArticleCellViewModelType {
     
-    var navTitle: ObservableValue<String> { get }
-    
-    func pageViewed()
 }

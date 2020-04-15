@@ -41,10 +41,6 @@ class AddToolsViewController: BaseViewController {
         refreshView()
     }
     
-    override func configureNavigationButtons() {
-
-    }
-    
     // MARK: - Helpers
     
     fileprivate func registerCells() {

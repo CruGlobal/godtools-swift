@@ -86,4 +86,8 @@ class AppDiContainer {
     var translationZipImporter: TranslationZipImporter {
         return TranslationZipImporter()
     }
+    
+    var articleManager: ArticleManager {
+        return ArticleManager()
+    }
 }
