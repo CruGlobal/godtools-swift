@@ -12,6 +12,7 @@ class MenuFlow: Flow {
     
     private(set) var menuView: MenuView!
     private var tutorialFlow: TutorialFlow?
+    private var languageSettingsFlow: LanguageSettingsFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -41,6 +42,17 @@ class MenuFlow: Flow {
     func navigate(step: FlowStep) {
         
         switch step {
+            
+        case .languageSettingsTappedFromMenu:
+            
+            let languageSettingsFlow = LanguageSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController
+            )
+                        
+            self.languageSettingsFlow = languageSettingsFlow
+            
         case .tutorialTappedFromMenu:
             
             let tutorialFlow = TutorialFlow(
@@ -51,10 +63,13 @@ class MenuFlow: Flow {
             navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
             self.tutorialFlow = tutorialFlow
             
-        case .dismissTutorial:
+        case .closeTappedFromTutorial:
             navigationController.dismiss(animated: true, completion: nil)
             self.tutorialFlow = nil
             
+        case .startUsingGodToolsTappedFromTutorial:
+            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+                        
         case .myAccountTappedFromMenu:
             
             let viewModel = AccountViewModel(
@@ -62,6 +77,15 @@ class MenuFlow: Flow {
                 globalActivityServices: appDiContainer.globalActivityServices
             )
             let view = AccountView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
+            
+        case .aboutTappedFromMenu:
+            
+            let viewModel = AboutViewModel(
+                analytics: appDiContainer.analytics
+            )
+            let view = AboutView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
             

@@ -171,21 +171,6 @@ extension ArticleManager {
         return URLSession.shared.dataTask(.promise, with: request).then { (arg) -> Promise<Data> in
             return .value(arg.data)
         }
-        
-//        // cache the same result for one hour
-//        let finalURL = URL(string: url.cleanedPath + ".999.json?_=\(Int64( (NSDate().timeIntervalSince1970 / 3600.0).rounded() ))")
-//        let request = URLRequest(url: finalURL!)
-//        let dataTask  = URLSession.shared.dataTask(with: request) as URLDataPromise
-//
-//        return dataTask.asDataAndResponse().then { d, response -> Promise<Data> in
-//#if DEBUG
-//            debugPrint("Downloaded JSON: \(finalURL!.absoluteString)")
-//#endif
-//            return .value(d)
-//        }
-        
-        
-        
     }
 
 

@@ -10,7 +10,6 @@ import UIKit
 import PromiseKit
 
 protocol MasterHomeViewControllerDelegate: class {
-    func moveToUpdateLanguageSettings()
     func moveToToolDetail(resource: DownloadedResource)
     func moveToTract(resource: DownloadedResource)
     func moveToArticle(resource: DownloadedResource)
@@ -20,10 +19,9 @@ class MasterHomeViewController: BaseViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
-    private let appDiContainer: AppDiContainer
+    private let viewModel: MasterHomeViewModelType
     private let toolsManager = ToolsManager.shared
         
-    private weak var flowDelegate: FlowDelegate?
     private weak var delegate: MasterHomeViewControllerDelegate?
     
     private lazy var homeViewController: HomeViewController = {
@@ -55,10 +53,9 @@ class MasterHomeViewController: BaseViewController  {
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
-    required init(flowDelegate: FlowDelegate, delegate: MasterHomeViewControllerDelegate, appDiContainer: AppDiContainer) {
-        self.flowDelegate = flowDelegate
+    required init(viewModel: MasterHomeViewModelType, delegate: MasterHomeViewControllerDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
-        self.appDiContainer = appDiContainer
         super.init(nibName: "MasterHomeViewController", bundle: nil)
     }
     
@@ -77,9 +74,7 @@ class MasterHomeViewController: BaseViewController  {
         setupBinding()
         
         defineObservers()
-        
-        toolsManager.delegate = self
-        
+                
         segmentedControl.addTarget(
             self,
             action: #selector(selectionDidChange(_:)), for: .valueChanged
@@ -87,6 +82,22 @@ class MasterHomeViewController: BaseViewController  {
         segmentedControl.selectedSegmentIndex = 0
         
         updateView()
+        
+        _ = addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navMenu.image,
+            color: .white,
+            target: self,
+            action: #selector(handleMenu(barButtonItem:))
+        )
+        
+        _ = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navLanguage.image,
+            color: .white,
+            target: self,
+            action: #selector(handleLanguage(barButtonItem:))
+        )
     }
     
     private func setupLayout() {
@@ -128,20 +139,27 @@ class MasterHomeViewController: BaseViewController  {
 
     private func setupBinding() {
         
-        let openTutorialViewModel = OpenTutorialViewModel(
-            flowDelegate: self,
-            tutorialAvailability: appDiContainer.tutorialAvailability,
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-            analytics: appDiContainer.analytics
-        )
-        openTutorialView.configure(viewModel: openTutorialViewModel)
-        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
-            self?.setOpenTutorialHidden(tuple.hidden, animated: tuple.animated)
+        if let flowDelegate = viewModel.flowDelegate {
+         
+            let openTutorialViewModel = OpenTutorialViewModel(
+                flowDelegate: flowDelegate,
+                tutorialAvailability: viewModel.tutorialAvailability,
+                openTutorialCalloutCache: viewModel.openTutorialCalloutCache,
+                analytics: viewModel.analytics
+            )
+            openTutorialView.configure(viewModel: openTutorialViewModel)
+            openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
+                self?.setOpenTutorialHidden(tuple.hidden, animated: tuple.animated)
+            }
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    @objc func handleMenu(barButtonItem: UIBarButtonItem) {
+        viewModel.menuTapped()
+    }
+    
+    @objc func handleLanguage(barButtonItem: UIBarButtonItem) {
+        viewModel.languageTapped()
     }
     
     // MARK: - View Methods
@@ -188,10 +206,6 @@ class MasterHomeViewController: BaseViewController  {
     override func homeButtonAction() {
         baseDelegate?.goHome()
         navigationController?.popToRootViewController(animated: true)
-    }
-    
-    override func navigationLanguageButtonAction() {
-        delegate?.moveToUpdateLanguageSettings()
     }
 
     // MARK: - Helper Methods
@@ -240,13 +254,6 @@ class MasterHomeViewController: BaseViewController  {
         toolsManager.loadResourceList()
     }
     
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-        addNavigationBurgerButton()
-        addNavigationLanguageButton()
-    }
-    
     // MARK: - Analytics
     
     override func screenName() -> String {
@@ -261,22 +268,7 @@ class MasterHomeViewController: BaseViewController  {
 
 }
 
-extension MasterHomeViewController: LanguageSettingsViewControllerDelegate {
-    
-    func moveToLanguagesList(primaryLanguage: Bool) {
-        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
-        viewController.delegate = self
-        viewController.selectingForPrimary = primaryLanguage
-        // pushViewController(viewController: viewController)
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-}
-
 extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewControllerDelegate {
-    
-    func moveToUpdateLanguageSettings() {
-        delegate?.moveToUpdateLanguageSettings()
-    }
     
     func moveToToolDetail(resource: DownloadedResource) {
         delegate?.moveToToolDetail(resource: resource)
@@ -298,20 +290,4 @@ extension MasterHomeViewController: FindToolsDelegate {
         updateView()
     }
 
-}
-
-extension MasterHomeViewController: ToolsManagerDelegate, LanguagesTableViewControllerDelegate {
-
-    func infoButtonWasPressed(resource: DownloadedResource) {
-        // Tools Manager Delegate required
-    }
-    
-}
-
-// MARK: - FlowDelegate
-
-extension MasterHomeViewController: FlowDelegate {
-    func navigate(step: FlowStep) {
-        flowDelegate?.navigate(step: step)
-    }
 }

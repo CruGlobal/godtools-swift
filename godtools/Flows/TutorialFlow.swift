@@ -43,19 +43,16 @@ class TutorialFlow: Flow {
         let animated: Bool = sharedNavigationController != nil
         navigationController.setViewControllers([view], animated: animated)
     }
-}
-
-extension TutorialFlow: FlowDelegate {
     
     func navigate(step: FlowStep) {
         
         switch step {
            
         case .closeTappedFromTutorial:
-            flowDelegate?.navigate(step: .dismissTutorial)
+            flowDelegate?.navigate(step: .closeTappedFromTutorial)
             
         case .startUsingGodToolsTappedFromTutorial:
-            flowDelegate?.navigate(step: .dismissTutorial)
+            flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
             
         default:
             break

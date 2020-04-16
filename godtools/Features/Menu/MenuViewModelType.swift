@@ -14,9 +14,12 @@ protocol MenuViewModelType {
     var loginClient: TheKeyOAuthClient { get }
     var menuDataSource: ObservableValue<MenuDataSource> { get }
     
+    func doneTapped()
     func reloadMenuDataSource()
+    func languageSettingsTapped()
     func tutorialTapped()
     func myAccountTapped()
+    func aboutTapped()
     func helpTapped()
     func contactUsTapped()
     func shareAStoryWithUsTapped()
