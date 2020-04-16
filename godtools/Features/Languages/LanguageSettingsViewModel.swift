@@ -39,6 +39,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         }
     }
     
+    deinit {
+        languagesManager.primaryLanguage.removeObserver(self)
+        languagesManager.parallelLanguage.removeObserver(self)
+    }
+    
     private func reloadPrimaryLanguageButtonTitle(primaryLanguage: Language?) {
         
         let title: String
