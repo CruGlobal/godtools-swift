@@ -69,10 +69,6 @@ struct AppConfig: ConfigType {
         return "QdbVaVHi9bHRchUTWtoaij"
     }
     
-    var googleAnalyticsApiKey: String {
-        return "UA-325725-50"
-    }
-    
     var googleAdwordsLabel: String {
         return "872849633"
     }
@@ -135,7 +131,6 @@ struct AppConfig: ConfigType {
             print("  bundleVersion: \(bundleVersion)")
             print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
             print("  appsFlyerDevKey: \(appsFlyerDevKey)")
-            print("  googleAnalyticsApiKey: \(googleAnalyticsApiKey)")
             print("  googleAdwordsLabel: \(googleAdwordsLabel)")
             print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
             print("  firebaseGoogleServiceFileName: \(firebaseGoogleServiceFileName)")

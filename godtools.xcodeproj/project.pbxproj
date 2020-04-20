@@ -181,6 +181,7 @@
 		45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */; };
 		4568D15A244DF91A00328639 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D159244DF91A00328639 /* FirebaseAnalytics.swift */; };
 		4568D15C244DFA1200328639 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */; };
+		4568D15E244DFF4600328639 /* ScreenViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D15D244DFF4600328639 /* ScreenViewedAnalytics.swift */; };
 		4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */; };
 		4573221624453EC100D653FF /* LanguageSettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221524453EC100D653FF /* LanguageSettingsViewModelType.swift */; };
 		4573221824453FC300D653FF /* LanguageSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221724453FC300D653FF /* LanguageSettingsFlow.swift */; };
@@ -662,6 +663,7 @@
 		45668E9323E0E8D3002728E7 /* OpenTutorialViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialViewModelType.swift; sourceTree = "<group>"; };
 		4568D159244DF91A00328639 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
+		4568D15D244DFF4600328639 /* ScreenViewedAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenViewedAnalytics.swift; sourceTree = "<group>"; };
 		4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		4573221524453EC100D653FF /* LanguageSettingsViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModelType.swift; sourceTree = "<group>"; };
 		4573221724453FC300D653FF /* LanguageSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsFlow.swift; sourceTree = "<group>"; };
@@ -1781,6 +1783,7 @@
 				45DC81CA2412D911001913D6 /* AppsFlyerType.swift */,
 				4568D159244DF91A00328639 /* FirebaseAnalytics.swift */,
 				4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */,
+				4568D15D244DFF4600328639 /* ScreenViewedAnalytics.swift */,
 				45DC81CC2412D953001913D6 /* ToolOpenedAnalytics.swift */,
 				4508F7A12429669700ECA950 /* Adobe */,
 			);
@@ -2996,6 +2999,7 @@
 				45FCFF5F243D0A9800865501 /* ArticleToolViewController.swift in Sources */,
 				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
+				4568D15E244DFF4600328639 /* ScreenViewedAnalytics.swift in Sources */,
 				4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
 				45FCFF4E243D09C800865501 /* ToolDetailViewModel.swift in Sources */,

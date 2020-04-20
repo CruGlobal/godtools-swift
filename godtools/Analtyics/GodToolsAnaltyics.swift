@@ -14,7 +14,6 @@ class GodToolsAnaltyics {
     private let adobeAnalytics: AdobeAnalyticsType
     private let appsFlyer: AppsFlyerType
     private let firebaseAnalytics: FirebaseAnalyticsType
-    private let tracker: GAITracker
     
     var previousScreenName = ""
         
@@ -24,9 +23,7 @@ class GodToolsAnaltyics {
         self.adobeAnalytics = adobeAnalytics
         self.appsFlyer = appsFlyer
         self.firebaseAnalytics = firebaseAnalytics
-        
-        tracker = GAI.sharedInstance().tracker(withTrackingId: config.googleAnalyticsApiKey)
-                                
+                                        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
@@ -70,17 +67,11 @@ class GodToolsAnaltyics {
     }
     
     func recordScreenView(screenName: String, siteSection: String, siteSubSection: String) {
-        
-        tracker.set(kGAIScreenName, value: screenName)
-        
+                
         adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         
         appsFlyer.trackEvent(eventName: screenName, data: nil)
 
-        if let screenViewInfo = GAIDictionaryBuilder.createScreenView()?.build() as? [AnyHashable: Any] {
-            tracker.send(screenViewInfo)
-        }
-        
         firebaseAnalytics.trackScreenView(screenName: screenName)
     }
     

@@ -10,4 +10,7 @@ import Foundation
 
 class AnalyticsContainer {
      
+    required init() {
+        
+    }
 }

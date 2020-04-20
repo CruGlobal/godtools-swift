@@ -123,11 +123,11 @@ class ArticleToolViewController: BaseViewController {
         if forceDownload && !Reachability.isConnectedToNetwork() {
             refreshControl.endRefreshing()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.showNoInternetAlert()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.showNoInternetAlert()
             }
-            return
             
+            return
         }
         
         let _ = self.articleManager.loadResource(resource: self.resource!, language: primaryLanguage!, forceDownload: forceDownload)
