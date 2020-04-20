@@ -15,6 +15,8 @@ import RealmSwift
 
 class TranslationZipImporter: GTDataManager {
     
+    private let languageManager: LanguagesManager = LanguagesManager()
+    
     var translationDownloadQueue = [Translation]()
     
     var isProcessingQueue = false
@@ -57,7 +59,7 @@ class TranslationZipImporter: GTDataManager {
         let translations = Array(translations)
         
         let primaryTranslations = translations.filter( {
-            $0.shouldDownload() && $0.language != nil && $0.language!.isPrimary()
+            $0.shouldDownload() && $0.language != nil && !languageManager.isPrimaryLanguage(language: $0.language!)
         } )
         
         translationDownloadQueue.append(contentsOf: primaryTranslations.map({ (translation) -> Translation in
@@ -68,7 +70,7 @@ class TranslationZipImporter: GTDataManager {
         }))
         
         let parallelTranslations = translations.filter( {
-            $0.shouldDownload() && $0.language != nil && $0.language!.isParallel()
+            $0.shouldDownload() && $0.language != nil && !languageManager.isParallelLanguage(language: $0.language!)
         } )
         
         translationDownloadQueue.append(contentsOf: parallelTranslations.map({ (translation) -> Translation in
@@ -156,9 +158,11 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func downloadFromRemote(translation: Translation) -> Promise<Data> {
+        
         let translationId = translation.remoteId
         let isAvailableInPrimary = isTranslationAvailableInPrimaryLanguage(translation: translation)
         let isAvailableInParallel = isTranslationAvailableInParallelLanguage(translation: translation)
+        let languageManager = self.languageManager
         
         return Alamofire.request(buildURL(translationId: translationId) ?? "")
             .downloadProgress { (progress) in
@@ -168,7 +172,8 @@ class TranslationZipImporter: GTDataManager {
                 guard let resource = translation.downloadedResource else {
                     return
                 }
-                if !language.isPrimary() && !language.isParallel() {
+                
+                if !languageManager.isPrimaryLanguage(language: language) && !languageManager.isParallelLanguage(language: language) {
                     return
                 }
                 if !isAvailableInPrimary && !isAvailableInParallel && language.code != "en" {

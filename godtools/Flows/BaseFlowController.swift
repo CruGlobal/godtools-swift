@@ -14,6 +14,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     private var onboardingFlow: OnboardingFlow?
     private var tutorialFlow: TutorialFlow?
     private var menuFlow: MenuFlow?
+    private var languageSettingsFlow: LanguageSettingsFlow?
     
     private var navigationStarted: Bool = false
     
@@ -60,12 +61,15 @@ class BaseFlowController: NSObject, FlowDelegate {
             
             if shouldCreateNewInstance || currentMasterView == nil {
                 
-                let masterView = MasterHomeViewController(
+                let viewModel = MasterHomeViewModel(
                     flowDelegate: self,
-                    delegate: self,
-                    appDiContainer: appDiContainer
+                    tutorialAvailability: appDiContainer.tutorialAvailability,
+                    openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+                    analytics: appDiContainer.analytics
                 )
                 
+                let masterView = MasterHomeViewController(viewModel: viewModel, delegate: self)
+
                 navigationController.setViewControllers([masterView], animated: false)
                 currentViewController = masterView
                 
@@ -114,11 +118,11 @@ class BaseFlowController: NSObject, FlowDelegate {
             navigationController.present(tutorialFlow.navigationController, animated: true, completion: nil)
             self.tutorialFlow = tutorialFlow
     
-        case .dismissTutorial:
+        case .closeTappedFromTutorial:
+            dismissTutorial()
             
-            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
-            navigationController.dismiss(animated: true, completion: nil)
-            tutorialFlow = nil
+        case .startUsingGodToolsTappedFromTutorial:
+            dismissTutorial()
             
         case .urlLinkTappedFromToolDetail(let url):
             if #available(iOS 10.0, *) {
@@ -127,9 +131,29 @@ class BaseFlowController: NSObject, FlowDelegate {
                 UIApplication.shared.openURL(url)
             }
             
+        case .menuTappedFromHome:
+            displayMenu()
+            
+        case .languagesTappedFromHome:
+            
+            let languageSettingsFlow = LanguageSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController
+            )
+            
+            self.languageSettingsFlow = languageSettingsFlow
+                        
         default:
             break
         }
+    }
+    
+    private func dismissTutorial() {
+        dismissMenu()
+        navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+        navigationController.dismiss(animated: true, completion: nil)
+        tutorialFlow = nil
     }
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
@@ -177,6 +201,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     // Notifications
     
     func defineObservers() {
+                
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(displayMenu),
                                                name: .displayMenuNotification,
@@ -203,9 +228,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
             }
         }
-        
-        menuView.delegate = self
-        
+                
         let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
         guard let currentFrame = currentViewController?.view.frame else { return }
         menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
@@ -255,32 +278,6 @@ extension BaseFlowController: BaseViewControllerDelegate {
     }
 }
 
-extension BaseFlowController: MenuViewControllerDelegate {
-    func moveToUpdateLanguageSettings() {
-        let viewController = LanguageSettingsViewController(nibName: String(describing:LanguageSettingsViewController.self), bundle: nil)
-        viewController.delegate = self
-        self.pushViewController(viewController: viewController)
-    }
-    
-    func moveToAbout() {
-        let viewController = AboutViewController(nibName: String(describing:AboutViewController.self), bundle: nil)
-        self.pushViewController(viewController: viewController)
-    }
-}
-
-extension BaseFlowController: LanguageSettingsViewControllerDelegate {
-    func moveToLanguagesList(primaryLanguage: Bool) {
-        let viewController = LanguagesTableViewController(nibName: String(describing:LanguagesTableViewController.self), bundle: nil)
-        viewController.delegate = self
-        viewController.selectingForPrimary = primaryLanguage
-        self.pushViewController(viewController: viewController)
-    }
-}
-
-extension BaseFlowController: LanguagesTableViewControllerDelegate {
-    
-}
-
 extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControllerDelegate {
     
     func moveToToolDetail(resource: DownloadedResource) {
@@ -308,6 +305,20 @@ extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControll
     }
     
     func moveToArticle(resource: DownloadedResource) {
+        
+        // TODO: Instantiate from Flow: navigate(step: FlowStep) ~Levi
+        /*
+        let viewModel = ArticleViewModel(
+            articleManager: appDiContainer.articleManager,
+            languageManager: appDiContainer.languagesManager,
+            resource: resource,
+            analytics: appDiContainer.analytics
+        )
+        let view = ArticleView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+        */
+        
         let viewController = ArticleToolViewController.create()
         viewController.resource = resource
         pushViewController(viewController: viewController)

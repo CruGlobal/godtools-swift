@@ -73,6 +73,8 @@ class ArticleToolViewController: BaseViewController {
         // should be fixed to "en" for now
         primaryLanguage = LanguagesManager().loadFromDisk(code: "en")
         getResourceData(forceDownload: false)
+        
+        addDefaultNavBackItem()
     }
     
     func defineObservers() {
@@ -106,7 +108,6 @@ class ArticleToolViewController: BaseViewController {
         }
     }
     
-    
     func getResourceData(forceDownload: Bool) {
         
         if forceDownload && !Reachability.isConnectedToNetwork() {
@@ -121,9 +122,6 @@ class ArticleToolViewController: BaseViewController {
         
         let _ = self.articleManager.loadResource(resource: self.resource!, language: primaryLanguage!, forceDownload: forceDownload)
     }
-    
-    
-    
 }
 
 

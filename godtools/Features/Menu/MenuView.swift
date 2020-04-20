@@ -11,11 +11,6 @@ import MessageUI
 import TheKeyOAuthSwift
 import GTMAppAuth
 
-protocol MenuViewControllerDelegate: class {
-    func moveToUpdateLanguageSettings()
-    func moveToAbout()
-}
-
 /*
  ----The OAuth client ID.----
  For client configuration instructions, see the [README](h ttps://github.com/openid/AppAuth-iOS/blob/master/Examples/Example-iOS_Swift-Carthage/README.md).
@@ -44,9 +39,7 @@ class MenuView: BaseViewController {
     private let rowHeight: CGFloat = 50
     
     @IBOutlet weak var tableView: UITableView!
-    
-    weak var delegate: MenuViewControllerDelegate?
-    
+        
     var isComingFromLoginBanner = false
     
     required init(viewModel: MenuViewModelType) {
@@ -179,10 +172,10 @@ extension MenuView: UITableViewDelegate {
         switch menuItem.id {
             
         case .languageSettings:
-            delegate?.moveToUpdateLanguageSettings()
+            viewModel.languageSettingsTapped()
         
         case .about:
-            delegate?.moveToAbout()
+            viewModel.aboutTapped()
         
         case .help:
             viewModel.helpTapped()

@@ -116,6 +116,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
         )
     }
     
+    func doneTapped() {
+        flowDelegate?.navigate(step: .doneTappedFromMenu)
+    }
+    
+    func languageSettingsTapped() {
+        flowDelegate?.navigate(step: .languageSettingsTappedFromMenu)
+    }
+    
     func tutorialTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .tutorialTappedFromMenu)
@@ -123,6 +131,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func myAccountTapped() {
         flowDelegate?.navigate(step: .myAccountTappedFromMenu)
+    }
+    
+    func aboutTapped() {
+        flowDelegate?.navigate(step: .aboutTappedFromMenu)
     }
     
     func helpTapped() {

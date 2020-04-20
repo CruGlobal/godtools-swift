@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageSettingsViewController" customModule="godtools" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageSettingsView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="exclamationImageView" destination="ttT-jJ-AoH" id="5vz-f5-7Wd"/>
+                <outlet property="languageAvailabilityLabel" destination="4sz-fA-Y1h" id="gt9-Lw-zDp"/>
+                <outlet property="languageImageView" destination="2QP-b4-GGk" id="VK1-yc-exb"/>
                 <outlet property="parallelLanguageButton" destination="iQc-Pj-d7G" id="YfO-kP-oRl"/>
+                <outlet property="parallelLanguageLabel" destination="2n1-cR-Y3q" id="COF-PU-BiN"/>
                 <outlet property="primaryLanguageButton" destination="wUa-h5-W1Y" id="Uke-8U-JRb"/>
+                <outlet property="primaryLanguageLabel" destination="mQB-PV-ktd" id="eyi-gg-TFh"/>
+                <outlet property="shareGodToolsLabel" destination="1hm-LH-y2y" id="Ecj-kX-4Zi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,15 +25,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk">
-                    <rect key="frame" x="158" y="99" width="60" height="60"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk" userLabel="languageImageView">
+                    <rect key="frame" x="157.5" y="99" width="60" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="26C-fX-oLX"/>
                         <constraint firstAttribute="width" constant="60" id="mEt-cr-TNZ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="119" y="196" width="138.5" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd" userLabel="primaryLanguageLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="118.5" y="196" width="138.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="5bn-pM-ha9"/>
                     </constraints>
@@ -41,8 +45,8 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="primary_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="226" width="260" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" userLabel="primaryLanguageButton" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="226" width="260" height="48"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="4Ta-gu-BSe"/>
                         <constraint firstAttribute="height" constant="48" id="CPc-21-Fgk"/>
@@ -56,12 +60,9 @@
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="pressSelectPrimaryLanguage:" destination="-1" eventType="touchUpInside" id="0CS-JV-4ip"/>
-                    </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="120.5" y="314" width="135.5" height="22"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" userLabel="parallelLanguageLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="120" y="314" width="135.5" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="tSj-gF-6XC"/>
                     </constraints>
@@ -73,8 +74,8 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="parallel_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="344" width="260" height="36"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" userLabel="shareGodToolsLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="344" width="260" height="36"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="260" id="wal-lI-811"/>
                     </constraints>
@@ -86,19 +87,19 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="share_god_tools_native_language"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="58" y="388" width="260" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" userLabel="parallelLanguageButton" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="388" width="260" height="48"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="48" id="B7i-pN-iv9"/>
                         <constraint firstAttribute="width" constant="260" id="BNf-Su-7st"/>
                     </constraints>
                     <state key="normal" title="Select a Parallel Language"/>
-                    <connections>
-                        <action selector="pressSelectParallelLanguage:" destination="-1" eventType="touchUpInside" id="3iC-LE-Yfw"/>
-                    </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="67" y="606" width="242" height="41"/>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH" userLabel="exclamationImageView">
+                    <rect key="frame" x="165.5" y="550" width="44" height="44"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" userLabel="languageAvailabilityLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="66.5" y="606" width="242" height="41"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="242" id="jwl-EJ-icG"/>
                     </constraints>
@@ -110,9 +111,6 @@
                         <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="not_every_tool_is_available"/>
                     </userDefinedRuntimeAttributes>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH">
-                    <rect key="frame" x="165" y="550" width="44" height="44"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>

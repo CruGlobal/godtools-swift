@@ -10,7 +10,6 @@ import UIKit
 
 protocol AddToolsViewControllerDelegate {
     mutating func moveToToolDetail(resource: DownloadedResource)
-    mutating func moveToUpdateLanguageSettings()
 }
 
 class AddToolsViewController: BaseViewController {
@@ -40,10 +39,6 @@ class AddToolsViewController: BaseViewController {
         self.toolsManager.delegate = self
         self.toolsManager.loadResourceList()
         refreshView()
-    }
-    
-    override func configureNavigationButtons() {
-        self.addNavigationLanguageButton()
     }
     
     // MARK: - Helpers

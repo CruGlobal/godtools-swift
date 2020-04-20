@@ -1,20 +1,20 @@
 //
-//  ToolsLanguagePreferenceCacheType.swift
+//  LanguageSettingsCacheType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 3/17/20.
+//  Created by Levi Eggert on 4/14/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol ToolsLanguagePreferenceCacheType {
+protocol LanguageSettingsCacheType {
     
     var primaryLanguageId: String? { get }
     var parallelLanguageId: String? { get }
     
-    func cachePrimaryLanguageId(id: String)
-    func cacheParallelLanguageId(id: String)
+    func cachePrimaryLanguageId(language: Language)
+    func cacheParallelLanguageId(language: Language)
     func deletePrimaryLanguageId()
     func deleteParallelLanguageId()
 }
