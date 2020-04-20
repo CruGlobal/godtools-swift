@@ -26,5 +26,13 @@ class ArticleCell: UITableViewCell {
     func configure(viewModel: ArticleCellViewModelType) {
         
         self.viewModel = viewModel
+        
+        viewModel.articleImage.addObserver(self) { [weak self] (image: UIImage?) in
+            self?.articleImageView.image = image
+        }
+        
+        viewModel.title.addObserver(self) { [weak self] (title: String?) in
+            self?.titleLabel.text = title
+        }
     }
 }
