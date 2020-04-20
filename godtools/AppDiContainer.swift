@@ -18,6 +18,7 @@ class AppDiContainer {
     let loginClient: TheKeyOAuthClient
     let adobeAnalytics: AdobeAnalyticsType
     let appsFlyer: AppsFlyerType
+    let firebaseAnalytics: FirebaseAnalyticsType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     let languagesManager: LanguagesManager
@@ -40,10 +41,12 @@ class AppDiContainer {
         adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: false)
-                        
+            
+        firebaseAnalytics = FirebaseAnalytics()
+        
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
-        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
+        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer, firebaseAnalytics: firebaseAnalytics)
         
         languagesManager = LanguagesManager()
     }

@@ -7,22 +7,23 @@
 //
 
 import Foundation
-import FirebaseAnalytics
 
 class GodToolsAnaltyics {
     
     private let config: ConfigType
     private let adobeAnalytics: AdobeAnalyticsType
     private let appsFlyer: AppsFlyerType
+    private let firebaseAnalytics: FirebaseAnalyticsType
     private let tracker: GAITracker
     
     var previousScreenName = ""
         
-    required init(config: ConfigType, adobeAnalytics: AdobeAnalyticsType, appsFlyer: AppsFlyerType) {
+    required init(config: ConfigType, adobeAnalytics: AdobeAnalyticsType, appsFlyer: AppsFlyerType, firebaseAnalytics: FirebaseAnalyticsType) {
         
         self.config = config
         self.adobeAnalytics = adobeAnalytics
         self.appsFlyer = appsFlyer
+        self.firebaseAnalytics = firebaseAnalytics
         
         tracker = GAI.sharedInstance().tracker(withTrackingId: config.googleAnalyticsApiKey)
                                 
@@ -80,8 +81,7 @@ class GodToolsAnaltyics {
             tracker.send(screenViewInfo)
         }
         
-        // Record screen view for Firebase Analytics
-        Analytics.setScreenName(screenName, screenClass: nil)
+        firebaseAnalytics.trackScreenView(screenName: screenName)
     }
     
     @objc private func recordActionForADBMobile(notification: Notification) {
