@@ -42,16 +42,7 @@ class ArticleToolViewController: BaseViewController {
         return storyboard.instantiateViewController(withIdentifier: "ArticleToolViewControllerID") as! ArticleToolViewController
     }
     
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.delegate = self
-            tableView.dataSource = self
-        }
-    }
-    
-    fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: String(describing: ArticleTableViewCell.self), bundle: nil), forCellReuseIdentifier: ArticleTableViewCell.cellID)
-    }
+    @IBOutlet weak var tableView: UITableView!
     
     deinit {
         self.removeObservers()
@@ -59,6 +50,8 @@ class ArticleToolViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupLayout()
         
         refreshControl.addTarget(self, action: #selector(downloadManifestData), for: .valueChanged)
         defineObservers()
@@ -68,13 +61,30 @@ class ArticleToolViewController: BaseViewController {
         } else {
             tableView.addSubview(refreshControl)
         }
+                
+        if let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk() {
+            self.primaryLanguage = primaryLanguage
+        }
+        else {
+            primaryLanguage = LanguagesManager().loadFromDisk(code: "en")
+        }
         
-        registerCells()
-        // should be fixed to "en" for now
-        primaryLanguage = LanguagesManager().loadFromDisk(code: "en")
         getResourceData(forceDownload: false)
         
         addDefaultNavBackItem()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func setupLayout() {
+        
+        tableView.register(
+            UINib(nibName: ArticleCell.nibName, bundle: nil),
+            forCellReuseIdentifier: ArticleCell.reuseIdentifier
+        )
+        let articleAspectRatio: CGSize = CGSize(width: 15, height: 8)
+        tableView.rowHeight = floor(UIScreen.main.bounds.size.width / articleAspectRatio.width * articleAspectRatio.height)
     }
     
     func defineObservers() {
@@ -124,23 +134,9 @@ class ArticleToolViewController: BaseViewController {
     }
 }
 
+// MARK: - UITableViewDataSource, UITableViewDelegate
 
-
-extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate
-{
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleTableViewCell.cellID) as! ArticleTableViewCell
-        
-        // TODO: refactor to ViewModel
-        let category = articleManager.categories[indexPath.row]
-        let image = articleManager.getImage(forCategory: category)
-        cell.imgView.image = image
-        cell.titleLabel.text = articleManager.getTitle(forCategory: category)
-        
-        return cell
-    }
+extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articleManager.categories.count
@@ -149,6 +145,25 @@ extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let category = articleManager.categories[indexPath.row]
         presentArticlesList(category: category)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell: ArticleCell = tableView.dequeueReusableCell(
+            withIdentifier: ArticleCell.reuseIdentifier,
+            for: indexPath) as! ArticleCell
+        
+        let category: XMLArticleCategory = articleManager.categories[indexPath.row]
+        
+        let cellViewModel = ArticleCellViewModel(
+            category: category,
+            articleManager: articleManager
+        )
+        cell.configure(viewModel: cellViewModel)
+        
+        cell.selectionStyle = .none
+        
+        return cell
     }
     
     

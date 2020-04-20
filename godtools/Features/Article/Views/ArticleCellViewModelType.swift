@@ -6,8 +6,10 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ArticleCellViewModelType {
     
+    var articleImage: ObservableValue<UIImage?> { get }
+    var title: ObservableValue<String?> { get }
 }
