@@ -312,8 +312,6 @@
 		45FCFF60243D0A9800865501 /* Articles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45FCFF58243D0A9800865501 /* Articles.storyboard */; };
 		45FCFF61243D0A9800865501 /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF59243D0A9800865501 /* ArticleWebViewController.swift */; };
 		45FCFF62243D0A9800865501 /* ArticleCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF5B243D0A9800865501 /* ArticleCategoryTableViewCell.swift */; };
-		45FCFF63243D0A9800865501 /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF5C243D0A9800865501 /* ArticleTableViewCell.swift */; };
-		45FCFF64243D0A9800865501 /* ArticleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FCFF5D243D0A9800865501 /* ArticleTableViewCell.xib */; };
 		45FCFF65243D0A9800865501 /* ArticleCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF5E243D0A9800865501 /* ArticleCategoryViewController.swift */; };
 		45FCFF76243D0BE000865501 /* LanguageSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF6F243D0BE000865501 /* LanguageSettingsView.swift */; };
 		45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF70243D0BE000865501 /* ChooseLanguageView.swift */; };
@@ -787,8 +785,6 @@
 		45FCFF58243D0A9800865501 /* Articles.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Articles.storyboard; sourceTree = "<group>"; };
 		45FCFF59243D0A9800865501 /* ArticleWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
 		45FCFF5B243D0A9800865501 /* ArticleCategoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategoryTableViewCell.swift; sourceTree = "<group>"; };
-		45FCFF5C243D0A9800865501 /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleTableViewCell.swift; sourceTree = "<group>"; };
-		45FCFF5D243D0A9800865501 /* ArticleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArticleTableViewCell.xib; sourceTree = "<group>"; };
 		45FCFF5E243D0A9800865501 /* ArticleCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleCategoryViewController.swift; sourceTree = "<group>"; };
 		45FCFF6F243D0BE000865501 /* LanguageSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageSettingsView.swift; sourceTree = "<group>"; };
 		45FCFF70243D0BE000865501 /* ChooseLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageView.swift; sourceTree = "<group>"; };
@@ -1887,8 +1883,6 @@
 				45AC8E022446A9FF00368CA2 /* ArticleCell.xib */,
 				45AC8E042446ABBA00368CA2 /* ArticleCellViewModel.swift */,
 				45AC8E062446ABC300368CA2 /* ArticleCellViewModelType.swift */,
-				45FCFF5C243D0A9800865501 /* ArticleTableViewCell.swift */,
-				45FCFF5D243D0A9800865501 /* ArticleTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2587,7 +2581,6 @@
 				4556AECF23E22185002C15E8 /* SF-Pro-Text-Regular.otf in Resources */,
 				4556AED923E221FE002C15E8 /* NotoSansEthiopic-Bold.ttf in Resources */,
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
-				45FCFF64243D0A9800865501 /* ArticleTableViewCell.xib in Resources */,
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				45668E6E23E0E1CC002728E7 /* OnboardingTutorialView.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
@@ -3043,7 +3036,6 @@
 				0F7741E51EBBCB8400888D20 /* TractCard+Gestures.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
-				45FCFF63243D0A9800865501 /* ArticleTableViewCell.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				1E9973CB206951BD00AFEEE4 /* AnalyticsRelay.swift in Sources */,
