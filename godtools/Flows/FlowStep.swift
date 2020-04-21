@@ -48,4 +48,7 @@ enum FlowStep {
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
     case languageTappedFromChooseLanguage
+    
+    // articles
+    case articleTappedFromArticles(category: XMLArticleCategory, resource: DownloadedResource)
 }

@@ -10,51 +10,20 @@
 import Foundation
 import SwiftyJSON
 
-
-
-
-struct ArticleData: Codable, Hashable, Comparable {
-    
-    static func < (lhs: ArticleData, rhs: ArticleData) -> Bool {
-        return lhs.title! < rhs.title!
-    }
-    static func == (lhs: ArticleData, rhs: ArticleData) -> Bool {
-        let b = lhs.url?.path == rhs.url?.path
-        print("----\nEqual:\(b)   \nlhs:\(lhs.title ?? "")\nrhs:\(rhs.title ?? "")")
-        return lhs.url?.path == rhs.url?.path
-    }
-    
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self.url)
-    }
-    
-    var title: String?
-    var url: URL?
-    var local: URL?
-    var canonical: String?
-}
-
-
-
 class ArticleManifestMetadata: NSObject {
 
     var json: JSON
     var url: URL
 
-    
-    private override init() {
-        assert(false, "Cannot happen")
-        fatalError()
-    }
-    
     init(json: JSON, url: URL) {
+       
         self.json = json
         self.url = url
+       
         super.init()
     }
 
-    // returns dictionary with aemtag  key and the set of corresponding articles
+    // returns dictionary with aemtag key and the set of corresponding articles
     func processMetadata(tags: Set<String?>) -> [String:Set<ArticleData>] {
         
         var result = [String:Set<ArticleData>]()
@@ -102,5 +71,4 @@ class ArticleManifestMetadata: NSObject {
 
         return result;
     }
-
 }

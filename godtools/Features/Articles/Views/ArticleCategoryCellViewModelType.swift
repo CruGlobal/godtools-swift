@@ -1,5 +1,5 @@
 //
-//  ArticleCellViewModelType.swift
+//  ArticleCategoryCellViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ArticleCellViewModelType {
+protocol ArticleCategoryCellViewModelType {
     
     var articleImage: ObservableValue<UIImage?> { get }
     var title: ObservableValue<String?> { get }

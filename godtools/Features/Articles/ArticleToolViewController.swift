@@ -11,45 +11,40 @@ import UIKit
 
 class ArticleToolViewController: BaseViewController {
     
+    private let viewModel: ArticleCategoriesViewModelType
+    
     var resource: DownloadedResource?
     var articleManager = ArticleManager()
     
     var primaryLanguage: Language?
-    var xmlPages: XMLArticlePages?
-    var xmlPagesForPrimaryLang: XMLArticlePages?
     
     var refreshControl = UIRefreshControl()
-    
-    var arrivedByUniversalLink = false
-    var universalLinkLanguage: Language?
-    
+        
     override var screenTitle: String {
         get {
             return resource?.name ?? super.screenTitle
         }
     }
     
-    override func screenName() -> String {
-        return "Categories"
+    @IBOutlet weak private var tableView: UITableView!
+    
+    required init(viewModel: ArticleCategoriesViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: "ArticleToolViewController", bundle: nil)
     }
     
-    override func siteSection() -> String {
-        return resource?.code ?? "article"
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
-    static func create() -> ArticleToolViewController {
-        let storyboard = UIStoryboard(name: Storyboard.articles, bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "ArticleToolViewControllerID") as! ArticleToolViewController
-    }
-    
-    @IBOutlet weak var tableView: UITableView!
     
     deinit {
+        print("x deinit: \(type(of: self))")
         self.removeObservers()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view didload: \(type(of: self))")
         
         setupLayout()
         
@@ -80,8 +75,8 @@ class ArticleToolViewController: BaseViewController {
     private func setupLayout() {
         
         tableView.register(
-            UINib(nibName: ArticleCell.nibName, bundle: nil),
-            forCellReuseIdentifier: ArticleCell.reuseIdentifier
+            UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
+            forCellReuseIdentifier: ArticleCategoryCell.reuseIdentifier
         )
         let articleAspectRatio: CGSize = CGSize(width: 15, height: 8)
         tableView.rowHeight = floor(UIScreen.main.bounds.size.width / articleAspectRatio.width * articleAspectRatio.height)
@@ -121,6 +116,7 @@ class ArticleToolViewController: BaseViewController {
     func getResourceData(forceDownload: Bool) {
         
         if forceDownload && !Reachability.isConnectedToNetwork() {
+            
             refreshControl.endRefreshing()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -149,17 +145,17 @@ extension ArticleToolViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ArticleCell = tableView.dequeueReusableCell(
-            withIdentifier: ArticleCell.reuseIdentifier,
-            for: indexPath) as! ArticleCell
+        let cell: ArticleCategoryCell = tableView.dequeueReusableCell(
+            withIdentifier: ArticleCategoryCell.reuseIdentifier,
+            for: indexPath) as! ArticleCategoryCell
         
         let category: XMLArticleCategory = articleManager.categories[indexPath.row]
         
-        let cellViewModel = ArticleCellViewModel(
-            category: category,
-            articleManager: articleManager
-        )
-        cell.configure(viewModel: cellViewModel)
+//        let cellViewModel = ArticleCellViewModel(
+//            category: category,
+//            articleManager: articleManager
+//        )
+//        cell.configure(viewModel: cellViewModel)
         
         cell.selectionStyle = .none
         

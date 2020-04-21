@@ -98,7 +98,6 @@ class ArticleCategoryViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        spinnerView(on: articleManager?.isDownloading ?? false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -13,25 +13,6 @@ import Fuzi
 
 public class WebArchiver {
     
-    enum ArchivingError: LocalizedError {
-        case unsupportedUrl
-        case requestFailed(resource: String, error: Error)
-        case invalidResponse(resource: String)
-        case unsupportedEncoding
-        case invalidReferenceUrl(string: String)
-        
-        // TODO: Localization
-        var errorDescription: String? {
-            switch self {
-            case .unsupportedUrl: return "Unsupported URL"
-            case .requestFailed(let res, _): return "Failed to load " + res
-            case .invalidResponse(let res): return "Invalid response for " + res
-            case .unsupportedEncoding: return "Unsupported encoding"
-            case .invalidReferenceUrl(let string): return "Invalid reference URL: " + string
-            }
-        }
-    }
-    
     enum ArchivingResult {
         case success(plistData: Data)
         case failure(error: Error)
@@ -54,7 +35,7 @@ public class WebArchiver {
     static func archive(url: URL, includeJavascript: Bool = true, completion: @escaping (ArchivingResult) -> ()) {
         
         guard let host = url.host, let scheme = url.scheme, scheme == "https" else {
-            completion(.failure(error: ArchivingError.unsupportedUrl))
+            completion(.failure(error: WebArchivingError.unsupportedUrl))
             return
         }
         
@@ -70,7 +51,7 @@ public class WebArchiver {
                     for reference in references {
                         
                         guard let resourceUrl = URL(string: reference) else {
-                            throw ArchivingError.invalidReferenceUrl(string: reference)
+                            throw WebArchivingError.invalidReferenceUrl(string: reference)
                         }
                         
                         let task = URLSession.shared.dataTask(with: resourceUrl) { (data, response, error) in
@@ -107,10 +88,10 @@ public class WebArchiver {
     private static func resourceFromResponse(url: String, _ data: Data?, _ response: URLResponse?, _ error: Error?) throws -> WebArchiveResource {
         
         if let error = error {
-            throw ArchivingError.requestFailed(resource: url, error: error)
+            throw WebArchivingError.requestFailed(resource: url, error: error)
         }
         guard let data = data, let mimeType = (response as? HTTPURLResponse)?.mimeType else {
-            throw ArchivingError.invalidResponse(resource: url)
+            throw WebArchivingError.invalidResponse(resource: url)
         }
         return WebArchiveResource(url: url, data: data, mimeType: mimeType)
     }
@@ -118,7 +99,7 @@ public class WebArchiver {
     private static func extractHTMLReferences(from resource: WebArchiveResource, host: String, includeJavascript: Bool) throws -> [String] {
         
         guard let htmlString = String(data: resource.data, encoding: .utf8) else {
-            throw ArchivingError.unsupportedEncoding
+            throw WebArchivingError.unsupportedEncoding
         }
         
         let doc = try HTMLDocument(string: htmlString, encoding: .utf8)

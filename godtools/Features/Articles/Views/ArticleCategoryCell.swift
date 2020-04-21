@@ -1,5 +1,5 @@
 //
-//  ArticleCell.swift
+//  ArticleCategoryCell.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/14/20.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ArticleCell: UITableViewCell {
+class ArticleCategoryCell: UITableViewCell {
     
-    static let nibName: String = "ArticleCell"
-    static let reuseIdentifier: String = "ArticleCellReuseIdentifier"
+    static let nibName: String = "ArticleCategoryCell"
+    static let reuseIdentifier: String = "ArticleCategoryCellReuseIdentifier"
     
-    private var viewModel: ArticleCellViewModelType?
+    private var viewModel: ArticleCategoryCellViewModelType?
     
     @IBOutlet weak private var articleImageView: UIImageView!
     @IBOutlet weak private var titleLabel: UILabel!
@@ -23,7 +23,7 @@ class ArticleCell: UITableViewCell {
         viewModel = nil
     }
     
-    func configure(viewModel: ArticleCellViewModelType) {
+    func configure(viewModel: ArticleCategoryCellViewModelType) {
         
         self.viewModel = viewModel
         

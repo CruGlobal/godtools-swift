@@ -13,6 +13,7 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     private var onboardingFlow: OnboardingFlow?
     private var tutorialFlow: TutorialFlow?
+    private var articlesFlow: ArticlesFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     
@@ -306,22 +307,25 @@ extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControll
     
     func moveToArticle(resource: DownloadedResource) {
         
-        // TODO: Instantiate from Flow: navigate(step: FlowStep) ~Levi
-        /*
-        let viewModel = ArticleViewModel(
-            articleManager: appDiContainer.articleManager,
-            languageManager: appDiContainer.languagesManager,
+        // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
+        let languagesManager: LanguagesManager = appDiContainer.languagesManager
+        var language: Language?
+        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+            language = primaryLanguage
+        }
+        else {
+            language = languagesManager.loadFromDisk(code: "en")
+        }
+        
+        let articlesFlow = ArticlesFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
             resource: resource,
-            analytics: appDiContainer.analytics
+            language: language!
         )
-        let view = ArticleView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
-        */
-        
-        let viewController = ArticleToolViewController.create()
-        viewController.resource = resource
-        pushViewController(viewController: viewController)
+        self.articlesFlow = articlesFlow
     }
 }
 

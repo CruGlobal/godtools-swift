@@ -10,11 +10,8 @@ import UIKit
 
 class CategoryResource: GodToolsJSONResource {
     
-    
     override func type() -> String {
         return "category"
     }
-
-
 }
 

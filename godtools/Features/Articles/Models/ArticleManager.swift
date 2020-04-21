@@ -1,15 +1,182 @@
 //
-//  ArticleManager+Promises.swift
+//  ArticleManager.swift
 //  godtools
 //
-//  Created by Igor Ostriz on 12/12/2018.
+//  Created by Igor Ostriz on 13/11/2018.
 //  Copyright © 2018 Cru. All rights reserved.
 //
 
 
+import Foundation
 import PromiseKit
 import SwiftyJSON
+import SWXMLHash
 
+class ArticleManager: GTDataManager {
+    
+    var aemTags = Set<String>()    // set of all aem-tags in this manifest
+    var articlesDataForTag = Dictionary<String, Set<ArticleData>>()
+
+    var categories: [XMLArticleCategory] = [XMLArticleCategory]()
+    var pages: XMLArticlePages?
+    var manifestProperties: ManifestProperties?
+    var articleManifestID: String?
+    var articlesPath: String?
+    var articlesTempPath: String?
+    var articleManifestFilename: String?
+    
+    func loadResource(resource: DownloadedResource, language: Language, forceDownload: Bool = false) -> (pages: XMLArticlePages?, categories: [XMLArticleCategory]?, manifestProperties: ManifestProperties?) {
+                
+        categories = [XMLArticleCategory]()
+        manifestProperties = ManifestProperties()
+        
+        var xmlData: XMLIndexer?
+        
+        guard let translation = resource.getTranslationForLanguage(language),
+              let manifestPath = translation.manifestFilename
+        else {
+            return (pages, categories, manifestProperties)
+        }
+        
+        var components = manifestPath.components(separatedBy: ".")
+        components.removeLast()
+        articleManifestID = components.joined(separator: ".")
+        articleManifestFilename = translation.manifestFilename
+        articlesPath = documentsPath.appending("/WebCache/").appending(articleManifestID!).appending("/")
+        let articlesExist = FileManager.default.fileExists(atPath: articlesPath!)
+        
+        articlesTempPath = NSTemporaryDirectory().appending("WebCache/").appending(articleManifestID!).appending("/")
+        
+        xmlData = loadXMLFile(manifestPath)
+        
+        guard let manifest = xmlData?["manifest"] else {
+            return (pages, categories, manifestProperties)
+        }
+        
+        let xmlManager = XMLManager()
+        let manifestContent = xmlManager.getContentElements(manifest)
+        manifestProperties!.load(manifestContent.properties)
+        
+        
+        // load article pages
+        
+        
+        pages = XMLArticlePages(withXML: manifest["pages"])
+        if pages == nil {
+            return (pages, categories, manifestProperties)
+        }
+        
+        for child in manifest["resources"].children {
+            let filename = child.element?.attribute(by: "filename")?.text
+            let src = child.element?.attribute(by: "src")?.text
+            let resource = documentsPath.appending("/Resources/").appending(src!)
+            manifestProperties!.resources[filename!] = resource
+        }
+        
+        // load article categories
+        for child in manifest["categories"].children {
+            let category = XMLArticleCategory(withXML: child, articleID: articleManifestID!)
+            aemTags.formUnion(category.aemTagIDs())
+            debugPrint("\(category.label() ?? "err")")
+            categories.append(category)
+        }
+        
+        processManifest(uuid: articleManifestID, shouldDownload: forceDownload || !articlesExist)
+        
+        return (pages!, categories, manifestProperties!)
+    }
+    
+    private func processManifest(uuid: String?, shouldDownload: Bool) {
+        
+        let from = articlesTempPath!
+        let to = articlesPath!
+        
+        if shouldDownload {
+            
+            dnloadWholeManifestData(manifestFilename: articleManifestFilename).done { [from, to] _ -> Void in
+                
+                do {
+                    
+                    if !FileManager.default.fileExists(atPath: to) {
+                        // create the destination path (mainly because of .../WebArchive/... directory for the initial run (when it does not exist). It will create .../WebArchive/ArticleID,
+                        //  but the last one (ArticleID) will be deleted in the following step
+                        try! FileManager.default.createDirectory(atPath: to, withIntermediateDirectories: true, attributes: nil)
+                    }
+                    
+                    try? FileManager.default.removeItem(atPath: to)
+                    // copy all from tmp folder to the real one
+                    try FileManager.default.copyItem(atPath: from, toPath: to)
+                    // finaly remove tmp folder
+                    try FileManager.default.removeItem(atPath: from)
+                    
+                }
+                catch let error {
+
+                }
+            }
+            .ensure { () -> Void in
+                
+                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": self.articleManifestID!])
+            }
+            .catch { error in
+                    
+            }
+        }
+        else {
+            processManifestFromLocalData(manifestFilename: articleManifestFilename).done { [articleManifestID] _ -> Void in
+                NotificationCenter.default.post(name: .articleProcessingCompleted, object: nil, userInfo: ["articleID": articleManifestID!])
+            }
+            .catch { error in
+                    
+            }
+        }
+    }
+
+    func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
+
+        let file = documentsPath.appending("/Resources/").appending(resourcePath)
+
+        var xml: XMLIndexer?
+        do {
+            let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
+            xml = SWXMLHash.parse(content)
+        }
+        catch let error {
+            
+        }
+
+        return xml
+    }
+
+    func getImage(forCategory: XMLArticleCategory) -> UIImage? {
+        
+        guard let imagePath = manifestProperties?.getResourceForFile(filename: forCategory.banner()!) else {
+            return nil
+        }
+        guard let data = NSData(contentsOfFile: imagePath) else {
+            return nil
+        }
+        guard let image = UIImage(data: data as Data) else {
+            return nil
+        }
+
+        return image
+    }
+    
+    func getTitle(forCategory: XMLArticleCategory) -> String? {
+        return forCategory.label()
+    }
+    
+    func buildURL(aemSource: String) -> URL? {
+        
+        let baseUrl: String = AppConfig().mobileContentApiBaseUrl
+        let path: String = "/" + aemSource
+       
+        return URL(string: baseUrl + path)
+    }
+}
+
+// MARK: - Promises
 
 extension ArticleManager {
     
@@ -19,7 +186,6 @@ extension ArticleManager {
         // it actually does not need to do anything
         return Promise<Void>()
     }
-    
     
     // Promise for downloading everything
     func dnloadWholeManifestData(manifestFilename: String?) -> Promise<Void> {
@@ -32,20 +198,7 @@ extension ArticleManager {
         let metadataPromises = getMetadataPromises(aemSources: pgs.aemSources())
         
         return when(fulfilled: metadataPromises).then { _ -> Promise<Void> in
-            
-#if DEBUG
-            // print out all
-            var set = Set<ArticleData>()
-            self.articlesDataForTag.values.forEach { (s) in
-                set.formUnion(s)
-            }
-            let ar = Array(set).sorted()
-            
-            ar.forEach { (a) in
-                print("******\n  aem-tag: \("nil")\n  title:   \(a.title ?? "nil")\n  url:     \(a.url?.absoluteString ?? "nil")")
-            }
-#endif
-            
+                        
             let webarchivePromises = self.getWebArchivePromises()
             return when(fulfilled: webarchivePromises).then { rv -> Promise<Void> in
                 
@@ -80,16 +233,6 @@ extension ArticleManager {
                     downloadMetadata(url: url)
                     
                 }.then { jsonData -> Promise<Void> in
-                    
-                    #if DEBUG
-                    do {
-                        let fileUrls = try FileManager.default.contentsOfDirectory(at: URL(fileURLWithPath: self.articlesTempPath!), includingPropertiesForKeys: nil)
-                        print("Files: \(fileUrls)")
-                    } catch {
-                        print("Error while enumerating files \(error.localizedDescription)")
-                    }
-                    #endif
-                    
                     
                     // save json file with unique name
                     let name = src.md5 + ".json"
@@ -135,7 +278,6 @@ extension ArticleManager {
         
         // in key is aem-tag, value is a list of all ArticleData for the given tag
         for (key, value) in self.articlesDataForTag {
-            debugPrint("Key: \(key)")
             
             var foldCnt: Int = 0
             
@@ -204,9 +346,7 @@ extension ArticleManager {
                 let data = try JSONEncoder().encode(additionalProperties)
                 try data.write(to: folderUrl.appendingPathComponent("properties"))
                 try webArchData.write(to: folderUrl.appendingPathComponent("page.webarchive"))
-#if DEBUG
-                debugPrint("Saved archives to: \(folderUrl.absoluteString)")
-#endif
+
                 seal.fulfill(())
 
             } catch {

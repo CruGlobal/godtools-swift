@@ -16,12 +16,16 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
+    let translationsApi: TranslationsApiType
+    let resourcesLatestTranslationsZipFileCache: ResourcesLatestTranslationsZipFileCache
+    let getResourceLatestTranslationServices: GetResourceLatestTranslationServices
     let adobeAnalytics: AdobeAnalyticsType
     let appsFlyer: AppsFlyerType
     let firebaseAnalytics: FirebaseAnalyticsType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     let languagesManager: LanguagesManager
+    
     
     required init() {
         
@@ -37,6 +41,15 @@ class AppDiContainer {
         config = AppConfig()
         
         loginClient = TheKeyOAuthClient.shared
+        
+        translationsApi = TranslationsApi(config: config)
+        
+        resourcesLatestTranslationsZipFileCache = ResourcesLatestTranslationsZipFileCache()
+        
+        getResourceLatestTranslationServices = GetResourceLatestTranslationServices(
+            translationsApi: translationsApi,
+            cache: resourcesLatestTranslationsZipFileCache
+        )
         
         adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         
