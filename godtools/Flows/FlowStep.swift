@@ -50,5 +50,5 @@ enum FlowStep {
     case languageTappedFromChooseLanguage
     
     // articles
-    case articleTappedFromArticles(category: XMLArticleCategory, resource: DownloadedResource)
+    case articleCategoryTappedFromArticleCategories(category: ArticleCategory, resource: DownloadedResource, articleManifestXmlParser: ArticleManifestXmlParser)
 }

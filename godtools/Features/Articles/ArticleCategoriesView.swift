@@ -14,7 +14,7 @@ class ArticleCategoriesView: UIViewController {
        
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
     
-    @IBOutlet weak private var articlesTableView: UITableView!
+    @IBOutlet weak private var categoriesTableView: UITableView!
     
     required init(viewModel: ArticleCategoriesViewModelType) {
         self.viewModel = viewModel
@@ -38,8 +38,8 @@ class ArticleCategoriesView: UIViewController {
         
         addDefaultNavBackItem()
         
-        articlesTableView.delegate = self
-        articlesTableView.dataSource = self
+        categoriesTableView.delegate = self
+        categoriesTableView.dataSource = self
         
         refreshArticlesControl.addTarget(
             self,
@@ -50,18 +50,18 @@ class ArticleCategoriesView: UIViewController {
     
     private func setupLayout() {
         
-        articlesTableView.register(
+        categoriesTableView.register(
             UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
             forCellReuseIdentifier: ArticleCategoryCell.reuseIdentifier
         )
-        articlesTableView.separatorStyle = .none
-        let articleAspectRatio: CGSize = CGSize(width: 15, height: 8)
-        articlesTableView.rowHeight = floor(UIScreen.main.bounds.size.width / articleAspectRatio.width * articleAspectRatio.height)
+        categoriesTableView.separatorStyle = .none
+        let cellAspectRatio: CGSize = CGSize(width: 15, height: 8)
+        categoriesTableView.rowHeight = floor(UIScreen.main.bounds.size.width / cellAspectRatio.width * cellAspectRatio.height)
         
         if #available(iOS 10.0, *) {
-            articlesTableView.refreshControl = refreshArticlesControl
+            categoriesTableView.refreshControl = refreshArticlesControl
         } else {
-            articlesTableView.addSubview(refreshArticlesControl)
+            categoriesTableView.addSubview(refreshArticlesControl)
         }
     }
     
@@ -69,7 +69,7 @@ class ArticleCategoriesView: UIViewController {
 
         viewModel.categories.addObserver(self) { [weak self] (categories: [ArticleCategory]) in
             self?.refreshArticlesControl.endRefreshing()
-            self?.articlesTableView.reloadData()
+            self?.categoriesTableView.reloadData()
         }
         
         viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
@@ -107,7 +107,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ArticleCategoryCell = articlesTableView.dequeueReusableCell(
+        let cell: ArticleCategoryCell = categoriesTableView.dequeueReusableCell(
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         

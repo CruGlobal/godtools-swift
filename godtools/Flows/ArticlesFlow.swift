@@ -37,15 +37,26 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleTappedFromArticles(let category, let resource):
+        case .articleCategoryTappedFromArticleCategories(let category, let resource, let articleManifestXmlParser):
+            
+            let viewModel = ArticlesViewModel(
+                flowDelegate: self,
+                resource: resource,
+                category: category,
+                articleManifestXmlParser: articleManifestXmlParser,
+                analytics: appDiContainer.analytics
+            )
+            let view = ArticlesView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
             
             // TODO: Add ViewModel. ~Levi
-            let vc = ArticleCategoryViewController.create()
-            vc.articleManager = appDiContainer.articleManager
-            vc.category = category
-            vc.articlesPath = appDiContainer.articleManager.articlesPath
-            vc.resource = resource
-            navigationController.pushViewController(vc, animated: true)
+            //let vc = ArticleCategoryViewController.create()
+            //vc.articleManager = appDiContainer.articleManager
+            //vc.category = category
+            //vc.articlesPath = appDiContainer.articleManager.articlesPath
+            //vc.resource = resource
+            //navigationController.pushViewController(vc, animated: true)
             
         default:
             break

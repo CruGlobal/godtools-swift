@@ -8,17 +8,11 @@
 
 import Foundation
 
-struct ArticleCategory: Decodable {
+struct ArticleCategory {
     
+    let aemTags: [String]
     let bannerFilename: String
     let bannerSrc: String
     let id: String
     let title: String
-    
-    enum CodingKeys: String, CodingKey {
-        case bannerFilename = "banner_filename"
-        case bannerSrc = "banner_src"
-        case id = "id"
-        case title = "title"
-    }
 }

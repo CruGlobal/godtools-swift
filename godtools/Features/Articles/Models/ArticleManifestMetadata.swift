@@ -31,8 +31,9 @@ class ArticleManifestMetadata: NSObject {
         func process(json: JSON, currentPath: String) {
             
             let content = json["jcr:content"]
-
-            if !content.isEmpty && GTConstants.kArticleSupportedTemplates.contains(content["cq:template"].stringValue) {
+            let supportedTemplates: Set<String> = ["/conf/cru/settings/wcm/templates/experience-fragment-cru-godtools-variation"]
+            
+            if !content.isEmpty && supportedTemplates.contains(content["cq:template"].stringValue) {
 
                 // this is our ArticleData
                 var data = ArticleData()
@@ -50,9 +51,6 @@ class ArticleManifestMetadata: NSObject {
                         result[tag] = Set()
                     }
                     result[tag]!.insert(data)
-#if DEBUG
-                    print("---------------- currentPath: \(tag):  \(currentPath)")
-#endif
                 }
             }
             

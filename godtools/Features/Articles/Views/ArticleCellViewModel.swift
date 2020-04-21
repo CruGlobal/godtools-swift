@@ -1,5 +1,5 @@
 //
-//  ArticleResource.swift
+//  ArticleCellViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,8 +8,6 @@
 
 import Foundation
 
-struct ArticleResource {
+class ArticleCellViewModel {
     
-    let filename: String
-    let src: String
 }

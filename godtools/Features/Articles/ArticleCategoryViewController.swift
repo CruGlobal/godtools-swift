@@ -82,12 +82,13 @@ class ArticleCategoryViewController: BaseViewController {
                 // give it a little slack (0.5 sec) to avoid flickering
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     
+                    /*
                     if let c = self.articleManager?.categories.first(where: { (category) -> Bool in
                         return category.id() == self.category?.id()
                     }) {
                         self.category = c
                         self.reloadData()
-                    }
+                    }*/
                     
                 }
             }

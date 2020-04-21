@@ -66,7 +66,16 @@ class ArticleManifestXmlParser: NSObject {
                 bannerSrc = ""
             }
             
+            var aemTags: [String] = Array()
+            
+            for articleTag in category["article:aem-tag"].all {
+                if let id = articleTag.element?.attribute(by: "id")?.text {
+                    aemTags.append(id)
+                }
+            }
+                        
             let category = ArticleCategory(
+                aemTags: aemTags,
                 bannerFilename: bannerFilename,
                 bannerSrc: bannerSrc,
                 id: id,
@@ -95,5 +104,19 @@ class ArticleManifestXmlParser: NSObject {
         catch let error {
             return .failure(error)
         }
+    }
+    
+    var pages: [ArticlePage] {
+        
+        var pages: [ArticlePage] = Array()
+        
+        for page in xmlHash["manifest"]["pages"]["article:aem-import"].all {
+            if let src = page.element?.attribute(by: "src")?.text {
+                let page = ArticlePage(src: src)
+                pages.append(page)
+            }
+        }
+        
+        return pages
     }
 }

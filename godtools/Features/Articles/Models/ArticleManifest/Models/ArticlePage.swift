@@ -1,5 +1,5 @@
 //
-//  ArticleAemTag.swift
+//  ArticlePage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticleAemTag {
+struct ArticlePage {
     
-    let id: String
+    let src: String
 }

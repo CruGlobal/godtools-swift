@@ -10,7 +10,6 @@
 import Foundation
 import Fuzi
 
-
 public class WebArchiver {
     
     enum ArchivingResult {

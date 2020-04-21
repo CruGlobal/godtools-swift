@@ -72,7 +72,12 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     func articleTapped(category: ArticleCategory) {
         
-        print("Article Tapped: \(category)")
-        //flowDelegate?.navigate(step: .articleTappedFromArticles(category: category, resource: resource))
+        if let articleManifestXmlParser = articleManifestXmlParser {
+            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(category: category, resource: resource, articleManifestXmlParser: articleManifestXmlParser))
+        }
+        else {
+            // TODO: Show Error. ~Levi
+            // There is no way for someone to move on to an article without the article manifest xml parser being created first because categories come from there.
+        }
     }
 }

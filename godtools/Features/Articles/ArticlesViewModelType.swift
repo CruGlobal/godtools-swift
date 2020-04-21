@@ -1,5 +1,5 @@
 //
-//  ArticleResource.swift
+//  ArticlesViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct ArticleResource {
+protocol ArticlesViewModelType {
     
-    let filename: String
-    let src: String
+    func pageViewed()
 }

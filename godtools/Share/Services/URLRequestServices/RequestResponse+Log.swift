@@ -12,7 +12,7 @@ extension RequestResponse {
     
     func log() {
         
-        print("\n SessionDataResponse log() -----")
+        print("\n \(String(describing: RequestResponse.self)) log() -----")
         
         print("  request.url: \(String(describing: urlRequest.url?.absoluteString))")
         print("  request.headers: \(String(describing: urlRequest.allHTTPHeaderFields))")
