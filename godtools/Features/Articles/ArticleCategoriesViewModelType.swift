@@ -13,6 +13,7 @@ protocol ArticleCategoriesViewModelType {
     var resourceLanguageTranslationFilesCache: ResourceLanguageTranslationFilesCache { get }
     var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }
+    var isLoading: ObservableValue<Bool> { get }
     
     func pageViewed()
     func refreshArticles()

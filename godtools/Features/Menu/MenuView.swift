@@ -44,7 +44,7 @@ class MenuView: BaseViewController {
     
     required init(viewModel: MenuViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "MenuView", bundle: nil)
+        super.init(nibName: String(describing: MenuView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

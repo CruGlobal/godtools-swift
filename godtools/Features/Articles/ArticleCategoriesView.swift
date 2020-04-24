@@ -15,6 +15,7 @@ class ArticleCategoriesView: UIViewController {
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
     
     @IBOutlet weak private var categoriesTableView: UITableView!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: ArticleCategoriesViewModelType) {
         self.viewModel = viewModel
@@ -67,13 +68,27 @@ class ArticleCategoriesView: UIViewController {
     
     private func setupBinding() {
 
-        viewModel.categories.addObserver(self) { [weak self] (categories: [ArticleCategory]) in
-            self?.refreshArticlesControl.endRefreshing()
-            self?.categoriesTableView.reloadData()
-        }
-        
         viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
             self?.title = navTitle
+        }
+        
+        viewModel.categories.addObserver(self) { [weak self] (categories: [ArticleCategory]) in
+            
+            self?.refreshArticlesControl.endRefreshing()
+            self?.categoriesTableView.reloadData()
+            
+            if categories.isEmpty {
+                self?.categoriesTableView.alpha = 0
+            }
+            else {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                    self?.categoriesTableView.alpha = 1
+                }, completion: nil)
+            }
+        }
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
     }
     

@@ -19,7 +19,7 @@ class ChooseLanguageView: UIViewController {
     
     required init(viewModel: ChooseLanguageViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "ChooseLanguageView", bundle: nil)
+        super.init(nibName: String(describing: ChooseLanguageView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

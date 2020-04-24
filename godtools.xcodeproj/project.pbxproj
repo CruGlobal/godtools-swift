@@ -295,6 +295,7 @@
 		45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF22409B61000683A98 /* GlobalActivityAnalytics.swift */; };
 		45C2CFF52409B6AF00683A98 /* GlobalActivityAnalyticsCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF42409B6AF00683A98 /* GlobalActivityAnalyticsCacheType.swift */; };
 		45C2CFF72409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF62409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift */; };
+		45C740AF24528CEE002E1F07 /* WebArchiveCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C740AE24528CEE002E1F07 /* WebArchiveCache.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
 		45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */; };
@@ -816,6 +817,7 @@
 		45C2CFF22409B61000683A98 /* GlobalActivityAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalytics.swift; sourceTree = "<group>"; };
 		45C2CFF42409B6AF00683A98 /* GlobalActivityAnalyticsCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsCacheType.swift; sourceTree = "<group>"; };
 		45C2CFF62409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsUserDefaultsCache.swift; sourceTree = "<group>"; };
+		45C740AE24528CEE002E1F07 /* WebArchiveCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveCache.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
 		45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardPrimaryButton.swift; sourceTree = "<group>"; };
@@ -1629,6 +1631,7 @@
 		455F4B8D24527C2D00AE6007 /* WebArchiver */ = {
 			isa = PBXGroup;
 			children = (
+				45C740AE24528CEE002E1F07 /* WebArchiveCache.swift */,
 				455F4B8E24527C2D00AE6007 /* WebArchiver.swift */,
 				455F4B9324527C2D00AE6007 /* WebArchivingError.swift */,
 				455F4B8F24527C2D00AE6007 /* Models */,
@@ -3392,6 +3395,7 @@
 				4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */,
 				0F806C671EB3E69D00F3ED2B /* TractHeader.swift in Sources */,
 				EC00B0061F016CED00A0A61F /* TractCard+UITextFieldDelegate.swift in Sources */,
+				45C740AF24528CEE002E1F07 /* WebArchiveCache.swift in Sources */,
 				45FCFF52243D09C800865501 /* ToolDetailViewController.swift in Sources */,
 				ECED9F541F0EA06E0006EA5E /* TractCards+Gestures.swift in Sources */,
 				452036D124005B5B002B2453 /* RequestClientError.swift in Sources */,

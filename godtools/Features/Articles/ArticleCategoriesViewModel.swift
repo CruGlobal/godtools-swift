@@ -21,6 +21,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     let categories: ObservableValue<[ArticleCategory]> = ObservableValue(value: [])
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
+    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
     required init(flowDelegate: FlowDelegate, resource: DownloadedResource, language: Language, getResourceLatestTranslationServices: GetResourceLatestTranslationServices, analytics: GodToolsAnaltyics) {
         
@@ -45,12 +46,15 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private func reloadArticles(forceDownload: Bool) {
         
+        isLoading.accept(value: true)
+        
         getResourceLatestTranslationServices.getManifestXmlData(resource: resource, language: language, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
                             
             if let manifestXmlData = manifestXmlData {
                 let articleManifestXmlParser = ArticleManifestXmlParser(xmlData: manifestXmlData)
                 self?.categories.accept(value: articleManifestXmlParser.categories)
                 self?.articleManifestXmlParser = articleManifestXmlParser
+                self?.isLoading.accept(value: false)
             }
             else if let error = error {
                 // TODO: Handle error. ~Levi

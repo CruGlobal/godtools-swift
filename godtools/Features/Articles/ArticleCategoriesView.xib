@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticleCategoriesView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="categoriesTableView" destination="Ryh-T7-ckk" id="T7V-fb-fwC"/>
+                <outlet property="loadingView" destination="08p-lk-op8" id="IXh-MY-etd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="GoM-my-abu"/>
             </connections>
         </placeholder>
@@ -23,10 +24,16 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="08p-lk-op8" userLabel="loadingView">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="08p-lk-op8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8yO-Pu-NKn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ryh-T7-ckk" secondAttribute="trailing" id="dUO-jY-Pnq"/>
+                <constraint firstItem="08p-lk-op8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="l8M-pq-xUu"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Ryh-T7-ckk" secondAttribute="bottom" id="njH-xz-ZRg"/>
                 <constraint firstItem="Ryh-T7-ckk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qZ3-9e-elr"/>
                 <constraint firstItem="Ryh-T7-ckk" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="zwC-fB-ygL"/>

@@ -30,7 +30,7 @@ class OnboardingTutorialView: UIViewController {
     
     required init(viewModel: OnboardingTutorialViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "OnboardingTutorialView", bundle: nil)
+        super.init(nibName: String(describing: OnboardingTutorialView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -45,19 +45,13 @@ class ArticlesViewModel: ArticlesViewModelType {
     }
     
     private func reloadArticleAemImportData(category: ArticleCategory) {
-        
-        var articleImportDataArray: [RealmArticleAemImportData] = Array()
-        
-        for tag in category.aemTags {
-            let cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.articleAemImportCache.getData(tagId: tag)
-            articleImportDataArray.append(contentsOf: cachedArticleImportDataArray)
-            
-            articleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
-                rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
-            }
+                
+        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.articleAemImportCache.getArticlesWithTags(aemTags: category.aemTags)
+        cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
+            rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
         }
         
-        articleAemImportData.accept(value: articleImportDataArray)
+        articleAemImportData.accept(value: cachedArticleImportDataArray)
     }
     
     func pageViewed() {

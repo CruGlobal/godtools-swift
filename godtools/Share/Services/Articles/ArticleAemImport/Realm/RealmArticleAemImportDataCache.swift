@@ -22,24 +22,36 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
         return realm.objects(RealmArticleAemImportData.self).count > 0
     }
     
-    func getData(tagId: String) -> [RealmArticleAemImportData] {
-                
+    func getArticlesWithTags(aemTags: [String]) -> [RealmArticleAemImportData] {
+        
+        var articlesByTag: [RealmArticleAemImportData] = Array()
+        var articleUrlsByTag: [String] = Array()
+        
         let cachedArticleAemImportDataArray: [RealmArticleAemImportData] = Array(realm.objects(RealmArticleAemImportData.self))
         
-        var articleAemImportDataByTag: [RealmArticleAemImportData] = Array()
-        
-        for cachedArticleAemImportData in cachedArticleAemImportDataArray {
+        for tagId in aemTags {
             
-            if let tags = cachedArticleAemImportData.articleJcrContent?.tags, tags.contains(tagId) {
+            for cachedArticleAemImportData in cachedArticleAemImportDataArray {
                 
-                articleAemImportDataByTag.append(cachedArticleAemImportData)
+                if let cachedTags = cachedArticleAemImportData.articleJcrContent?.tags, cachedTags.contains(tagId),
+                    let aemImportUrl = cachedArticleAemImportData.url, !articleUrlsByTag.contains(aemImportUrl) {
+                    
+                    articlesByTag.append(cachedArticleAemImportData)
+                    // This is here to make sure the same url isn't returned because urls can have multiple tags.
+                    articleUrlsByTag.append(aemImportUrl)
+                }
             }
         }
-                
-        return articleAemImportDataByTag
+        
+        return articlesByTag
     }
     
     func cache(articleAemImportData: ArticleAemImportData) -> Error? {
+        
+        print("\n Cache ArticleAemImportData")
+        print("  url: \(String(describing: articleAemImportData.url))")
+        print("  title: \(String(describing: articleAemImportData.articleJcrContent?.title))")
+        print("  tags: \(String(describing: articleAemImportData.articleJcrContent?.tags))")
         
         let realmArticleAemImportData = RealmArticleAemImportData()
         realmArticleAemImportData.url = articleAemImportData.url
