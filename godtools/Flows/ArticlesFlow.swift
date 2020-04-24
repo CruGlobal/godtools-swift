@@ -37,13 +37,13 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let category, let resource, let articleManifestXmlParser):
+        case .articleCategoryTappedFromArticleCategories(let category, let resource, let articleManifest):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
                 category: category,
-                articleManifestXmlParser: articleManifestXmlParser,
+                articleManifest: articleManifest,
                 articleAemImportService: appDiContainer.articleAemImportService,
                 analytics: appDiContainer.analytics
             )

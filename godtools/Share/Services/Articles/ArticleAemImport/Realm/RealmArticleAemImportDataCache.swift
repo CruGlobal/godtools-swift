@@ -32,13 +32,13 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
         for tagId in aemTags {
             
             for cachedArticleAemImportData in cachedArticleAemImportDataArray {
+                    
+                let articleAdded: Bool = articleUrlsByTag.contains(cachedArticleAemImportData.url)
                 
-                if let cachedTags = cachedArticleAemImportData.articleJcrContent?.tags, cachedTags.contains(tagId),
-                    let aemImportUrl = cachedArticleAemImportData.url, !articleUrlsByTag.contains(aemImportUrl) {
+                if !articleAdded, let cachedTags = cachedArticleAemImportData.articleJcrContent?.tags, cachedTags.contains(tagId) {
                     
                     articlesByTag.append(cachedArticleAemImportData)
-                    // This is here to make sure the same url isn't returned because urls can have multiple tags.
-                    articleUrlsByTag.append(aemImportUrl)
+                    articleUrlsByTag.append(cachedArticleAemImportData.url)
                 }
             }
         }

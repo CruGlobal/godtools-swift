@@ -9,7 +9,7 @@
 import Foundation
 import SWXMLHash
 
-class ArticleManifestXmlParser: NSObject {
+class ArticleManifestXmlParser: NSObject, ArticleManifestType {
     
     private let xmlHash: XMLIndexer
     private let errorDomain: String
@@ -26,7 +26,7 @@ class ArticleManifestXmlParser: NSObject {
         return xmlHash["manifest"]["title"]["content:text"].element?.text
     }
     
-    func getManifestAttributes() -> Result<ArticleManifestAttributes, Error> {
+    func getManifestAttributesResult() -> Result<ArticleManifestAttributes, Error> {
         
         if let manifestAttributes = xmlHash["manifest"].element?.allAttributes {
             do {
@@ -48,6 +48,15 @@ class ArticleManifestXmlParser: NSObject {
         return .failure(error)
     }
     
+    var attributes: ArticleManifestAttributes? {
+        switch getManifestAttributesResult() {
+        case .success(let attributes):
+            return attributes
+        case .failure( _):
+            return nil
+        }
+    }
+    
     var categories: [ArticleCategory] {
                 
         var categories: [ArticleCategory] = Array()
@@ -59,7 +68,7 @@ class ArticleManifestXmlParser: NSObject {
             let title: String = category["label"]["content:text"].element?.text ?? ""
             let bannerSrc: String
             
-            switch getResource(filename: bannerFilename) {
+            switch getResourceResult(filename: bannerFilename) {
             case .success(let resource):
                 bannerSrc = resource.src
             case .failure( _):
@@ -88,7 +97,7 @@ class ArticleManifestXmlParser: NSObject {
         return categories
     }
     
-    func getResource(filename: String) -> Result<ArticleResource, Error> {
+    func getResourceResult(filename: String) -> Result<ArticleResource, Error> {
         
         do {
             
@@ -105,8 +114,18 @@ class ArticleManifestXmlParser: NSObject {
             return .failure(error)
         }
     }
+    
+    func getResource(filename: String) -> ArticleResource? {
+                
+        switch getResourceResult(filename: filename) {
+        case .success(let resource):
+            return resource
+        case .failure( _):
+            return nil
+        }
+    }
 
-    var articleAemImportSrcs: [String] {
+    var aemImportSrcs: [String] {
         
         var urls: [String] = Array()
         

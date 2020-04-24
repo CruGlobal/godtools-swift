@@ -77,7 +77,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     func articleTapped(category: ArticleCategory) {
         
         if let articleManifestXmlParser = articleManifestXmlParser {
-            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(category: category, resource: resource, articleManifestXmlParser: articleManifestXmlParser))
+            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(category: category, resource: resource, articleManifest: articleManifestXmlParser))
         }
         else {
             // TODO: Show Error. ~Levi

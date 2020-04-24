@@ -13,5 +13,5 @@ protocol ArticleAemImportDataType {
     associatedtype ArticleJcrContentAssociatedType = ArticleJcrContentType
     
     var articleJcrContent: ArticleJcrContentAssociatedType? { get }
-    var url: String? { get }
+    var url: String { get }
 }

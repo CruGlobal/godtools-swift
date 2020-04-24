@@ -12,5 +12,5 @@ import RealmSwift
 class RealmArticleAemImportData: Object, ArticleAemImportDataType {
     
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
-    @objc dynamic var url: String?
+    @objc dynamic var url: String = ""
 }

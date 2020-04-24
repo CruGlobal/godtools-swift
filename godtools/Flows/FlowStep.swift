@@ -50,6 +50,6 @@ enum FlowStep {
     case languageTappedFromChooseLanguage
     
     // articles
-    case articleCategoryTappedFromArticleCategories(category: ArticleCategory, resource: DownloadedResource, articleManifestXmlParser: ArticleManifestXmlParser)
+    case articleCategoryTappedFromArticleCategories(category: ArticleCategory, resource: DownloadedResource, articleManifest: ArticleManifestType)
     case articleTappedFromArticles(articleAemImportData: RealmArticleAemImportData, resource: DownloadedResource)
 }
