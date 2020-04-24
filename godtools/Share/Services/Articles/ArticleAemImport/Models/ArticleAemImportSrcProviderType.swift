@@ -1,5 +1,5 @@
 //
-//  ArticlePage.swift
+//  ArticleAemImportSrcProviderType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/21/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ArticlePage {
+protocol ArticleAemImportSrcProviderType {
     
-    let src: String
+    var aemImportSrcs: [String] { get }
 }

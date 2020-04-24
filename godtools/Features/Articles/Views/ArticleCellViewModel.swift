@@ -8,6 +8,12 @@
 
 import Foundation
 
-class ArticleCellViewModel {
+class ArticleCellViewModel: ArticleCellViewModelType {
     
+    let title: String?
+    
+    required init(articleAemImportData: RealmArticleAemImportData) {
+        
+        title = articleAemImportData.articleJcrContent?.title
+    }
 }

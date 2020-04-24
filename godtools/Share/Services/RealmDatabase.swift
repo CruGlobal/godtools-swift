@@ -15,7 +15,7 @@ class RealmDatabase {
     // into GTDataManager. ~Levi
     static var sharedRealm: Realm!
     
-    private static let schemaVersion: UInt64 = 11
+    private static let schemaVersion: UInt64 = 15
     
     let realm: Realm
     
@@ -89,10 +89,7 @@ class RealmDatabase {
                 }
                 if oldSchemaVersion < 9 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
-
                         new!["toolType"] = "tract"
-                        
-                        
                     })
                 }
                 if oldSchemaVersion < 10 {

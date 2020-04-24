@@ -10,4 +10,5 @@ import Foundation
 
 protocol ArticleCellViewModelType {
     
+    var title: String? { get }
 }

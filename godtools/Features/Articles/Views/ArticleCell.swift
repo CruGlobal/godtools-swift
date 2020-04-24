@@ -15,6 +15,8 @@ class ArticleCell: UITableViewCell {
     
     private var viewModel: ArticleCellViewModelType?
     
+    @IBOutlet weak private var titleLabel: UILabel!
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         viewModel = nil
@@ -23,5 +25,7 @@ class ArticleCell: UITableViewCell {
     func configure(viewModel: ArticleCellViewModelType) {
         
         self.viewModel = viewModel
+        
+        titleLabel.text = viewModel.title
     }
 }

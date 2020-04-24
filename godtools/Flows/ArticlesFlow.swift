@@ -44,19 +44,24 @@ class ArticlesFlow: Flow {
                 resource: resource,
                 category: category,
                 articleManifestXmlParser: articleManifestXmlParser,
+                articleAemImportService: appDiContainer.articleAemImportService,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
+                        
+        case .articleTappedFromArticles(let articleAemImportData, let resource):
             
-            // TODO: Add ViewModel. ~Levi
-            //let vc = ArticleCategoryViewController.create()
-            //vc.articleManager = appDiContainer.articleManager
-            //vc.category = category
-            //vc.articlesPath = appDiContainer.articleManager.articlesPath
-            //vc.resource = resource
-            //navigationController.pushViewController(vc, animated: true)
+            let viewModel = ArticleWebViewModel(
+                articleAemImportData: articleAemImportData,
+                resource: resource,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ArticleWebView(viewModel: viewModel)
+            
+            navigationController.pushViewController(view, animated: true)
             
         default:
             break

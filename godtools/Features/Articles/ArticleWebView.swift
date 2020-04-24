@@ -1,26 +1,26 @@
 //
-//  WebContentView.swift
+//  ArticleWebView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 4/7/20.
+//  Created by Levi Eggert on 4/23/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 import WebKit
 
-class WebContentView: UIViewController {
+class ArticleWebView: UIViewController {
     
-    private let viewModel: WebContentViewModelType
+    private let viewModel: ArticleWebViewModelType
         
     private var webView: WKWebView!
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
-    required init(viewModel: WebContentViewModelType) {
+    required init(viewModel: ArticleWebViewModelType) {
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
-        super.init(nibName: "WebContentView", bundle: nil)
+        super.init(nibName: String(describing: ArticleWebView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -84,7 +84,7 @@ class WebContentView: UIViewController {
     }
 }
 
-extension WebContentView: WKNavigationDelegate {
+extension ArticleWebView: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
                 

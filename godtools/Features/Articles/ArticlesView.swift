@@ -13,6 +13,7 @@ class ArticlesView: UIViewController {
     private let viewModel: ArticlesViewModelType
            
     @IBOutlet weak private var articlesTableView: UITableView!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: ArticlesViewModelType) {
         self.viewModel = viewModel
@@ -43,15 +44,36 @@ class ArticlesView: UIViewController {
     private func setupLayout() {
         
         articlesTableView.register(
-            UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
-            forCellReuseIdentifier: ArticleCategoryCell.reuseIdentifier
+            UINib(nibName: ArticleCell.nibName, bundle: nil),
+            forCellReuseIdentifier: ArticleCell.reuseIdentifier
         )
         articlesTableView.separatorStyle = .none
-        articlesTableView.rowHeight = 70
+        articlesTableView.rowHeight = UITableView.automaticDimension
     }
     
     private func setupBinding() {
 
+        viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
+            self?.title = navTitle
+        }
+        
+        viewModel.articleAemImportData.addObserver(self) { [weak self] (articleAemImportData: [RealmArticleAemImportData]) in
+        
+            self?.articlesTableView.reloadData()
+            
+            if articleAemImportData.isEmpty {
+                self?.articlesTableView.alpha = 0
+            }
+            else {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                    self?.articlesTableView.alpha = 1
+                }, completion: nil)
+            }
+        }
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,33 +91,31 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0//viewModel.articles.value.count
+        return viewModel.articleAemImportData.value.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //let category: ArticleCategory = viewModel.categories.value[indexPath.row]
-        //viewModel.articleTapped(category: category)
+        let articleAemImportData: RealmArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
+        viewModel.articleTapped(articleAemImportData: articleAemImportData)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        return UITableViewCell()
-//        let cell: ArticleCategoryCell = categoriesTableView.dequeueReusableCell(
-//            withIdentifier: ArticleCategoryCell.reuseIdentifier,
-//            for: indexPath) as! ArticleCategoryCell
-//
-//        let category: ArticleCategory = viewModel.categories.value[indexPath.row]
-//
-//        let cellViewModel = ArticleCategoryCellViewModel(
-//            category: category,
-//            cache: viewModel.resourceLanguageTranslationFilesCache
-//        )
-//        cell.configure(viewModel: cellViewModel)
-//
-//        cell.selectionStyle = .none
-//        cell.backgroundColor = .lightGray
-//
-//        return cell
+        let cell: ArticleCell = articlesTableView.dequeueReusableCell(
+            withIdentifier: ArticleCell.reuseIdentifier,
+            for: indexPath) as! ArticleCell
+        
+        let articleAemImportData: RealmArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
+        
+        let cellViewModel = ArticleCellViewModel(
+            articleAemImportData: articleAemImportData
+        )
+        
+        cell.configure(viewModel: cellViewModel)
+        
+        cell.selectionStyle = .none
+
+        return cell
     }
 }

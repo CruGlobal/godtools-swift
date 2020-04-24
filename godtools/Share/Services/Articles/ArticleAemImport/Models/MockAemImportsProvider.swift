@@ -8,15 +8,13 @@
 
 import Foundation
 
-struct MockAemImportsProvider: AemImportsProviderType {
-    
-    private let urlStrings: [String]
-    
-    let aemImportUrls: [URL]
+struct MockAemImportsProvider: ArticleAemImportSrcProviderType {
+        
+    let aemImportSrcs: [String]
     
     init() {
         
-        urlStrings = [
+        aemImportSrcs = [
             "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/does-god-answer-our-prayers-",
             "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/can-you-explain-the-trinity--",
             "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/what-is-christianity/who-is-the-holy-spirit-",
@@ -38,14 +36,5 @@ struct MockAemImportsProvider: AemImportsProviderType {
             "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/obstacles-to-faith/peace-of-mind-in-an-unstable-world",
             "https://www.cru.org/content/experience-fragments/shared-library/language-masters/en/how-to-know-god/gods-existence/is-there-a-god-/is-there-a-god-"
         ]
-        
-        var urls: [URL] = Array()
-        for urlString in urlStrings {
-            if let url = URL(string: urlString) {
-                urls.append(url)
-            }
-        }
-        
-        aemImportUrls = urls
     }
 }

@@ -31,7 +31,9 @@ public class WebArchiver {
     
     static let wq = DispatchQueue(label: "WebArchiverWorkQueue")
     
-    static func archive(url: URL, includeJavascript: Bool = true, completion: @escaping (ArchivingResult) -> ()) {
+    static func archive(url: URL, completion: @escaping (ArchivingResult) -> ()) {
+        
+        let includeJavascript: Bool = true
         
         guard let host = url.host, let scheme = url.scheme, scheme == "https" else {
             completion(.failure(error: WebArchivingError.unsupportedUrl))

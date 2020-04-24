@@ -16,6 +16,7 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
+    let articleAemImportService: ArticleAemImportService
     let translationsApi: TranslationsApiType
     let resourcesLatestTranslationsZipFileCache: ResourcesLatestTranslationsZipFileCache
     let getResourceLatestTranslationServices: GetResourceLatestTranslationServices
@@ -25,7 +26,6 @@ class AppDiContainer {
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let analytics: GodToolsAnaltyics
     let languagesManager: LanguagesManager
-    
     
     required init() {
         
@@ -41,6 +41,8 @@ class AppDiContainer {
         config = AppConfig()
         
         loginClient = TheKeyOAuthClient.shared
+        
+        articleAemImportService = ArticleAemImportService(realm: realmDatabase.realm)
         
         translationsApi = TranslationsApi(config: config)
         
@@ -98,12 +100,8 @@ class AppDiContainer {
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
         )
     }
-
+    
     var translationZipImporter: TranslationZipImporter {
         return TranslationZipImporter()
-    }
-    
-    var articleManager: ArticleManager {
-        return ArticleManager()
     }
 }

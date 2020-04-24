@@ -10,7 +10,7 @@ import Foundation
 import SWXMLHash
 
 class ArticleManifestXmlParser: NSObject {
-      
+    
     private let xmlHash: XMLIndexer
     private let errorDomain: String
     
@@ -105,18 +105,17 @@ class ArticleManifestXmlParser: NSObject {
             return .failure(error)
         }
     }
-    
-    var pages: [ArticlePage] {
+
+    var articleAemImportSrcs: [String] {
         
-        var pages: [ArticlePage] = Array()
+        var urls: [String] = Array()
         
-        for page in xmlHash["manifest"]["pages"]["article:aem-import"].all {
-            if let src = page.element?.attribute(by: "src")?.text {
-                let page = ArticlePage(src: src)
-                pages.append(page)
+        for articleAemImport in xmlHash["manifest"]["pages"]["article:aem-import"].all {
+            if let src = articleAemImport.element?.attribute(by: "src")?.text {
+                urls.append(src)
             }
         }
-        
-        return pages
+    
+        return urls
     }
 }

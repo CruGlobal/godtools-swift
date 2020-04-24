@@ -10,5 +10,10 @@ import Foundation
 
 protocol ArticlesViewModelType {
     
+    var navTitle: ObservableValue<String> { get }
+    var articleAemImportData: ObservableValue<[RealmArticleAemImportData]> { get }
+    var isLoading: ObservableValue<Bool> { get }
+    
     func pageViewed()
+    func articleTapped(articleAemImportData: RealmArticleAemImportData)
 }

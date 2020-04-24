@@ -11,13 +11,13 @@ import Foundation
 struct ResourcesLatestTranslationsZipFileCacheLocation: ZipFileContentsCacheLocationType {
         
     let resourceId: String
-    let languageId: String
+    let languageCode: String
     let relativeUrl: URL?
     
     init(resource: DownloadedResource, language: Language) {
         
-        self.resourceId = resource.remoteId
-        self.languageId = language.remoteId
-        self.relativeUrl = URL(string: resourceId)?.appendingPathComponent(languageId).appendingPathComponent("translation_contents")
+        resourceId = resource.remoteId
+        languageCode = language.code
+        relativeUrl = URL(string: resourceId)?.appendingPathComponent(languageCode).appendingPathComponent("translation_contents")
     }
 }
