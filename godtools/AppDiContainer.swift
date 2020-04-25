@@ -16,10 +16,7 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
-    let articleAemImportService: ArticleAemImportService
     let translationsApi: TranslationsApiType
-    let resourcesLatestTranslationsZipFileCache: ResourcesLatestTranslationsZipFileCache
-    let getResourceLatestTranslationServices: GetResourceLatestTranslationServices
     let adobeAnalytics: AdobeAnalyticsType
     let appsFlyer: AppsFlyerType
     let firebaseAnalytics: FirebaseAnalyticsType
@@ -41,18 +38,9 @@ class AppDiContainer {
         config = AppConfig()
         
         loginClient = TheKeyOAuthClient.shared
-        
-        articleAemImportService = ArticleAemImportService(realm: realmDatabase.realm)
-        
+                
         translationsApi = TranslationsApi(config: config)
-        
-        resourcesLatestTranslationsZipFileCache = ResourcesLatestTranslationsZipFileCache()
-        
-        getResourceLatestTranslationServices = GetResourceLatestTranslationServices(
-            translationsApi: translationsApi,
-            cache: resourcesLatestTranslationsZipFileCache
-        )
-        
+                        
         adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: false)
@@ -103,5 +91,21 @@ class AppDiContainer {
     
     var translationZipImporter: TranslationZipImporter {
         return TranslationZipImporter()
+    }
+    
+    func getResourceLatestTranslationServices(godToolsResource: GodToolsResource) -> ResourceLatestTranslationServices {
+        
+        return ResourceLatestTranslationServices(
+            translationsApi: translationsApi,
+            fileCache: ResourcesLatestTranslationsFileCache(),
+            godToolsResource: godToolsResource
+        )
+    }
+    
+    func getArticleAemImportService(godToolsResource: GodToolsResource) -> ArticleAemImportService {
+        return ArticleAemImportService(
+            realm: realmDatabase.realm,
+            godToolsResource: godToolsResource
+        )
     }
 }

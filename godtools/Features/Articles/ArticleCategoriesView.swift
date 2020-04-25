@@ -130,7 +130,8 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
         
         let cellViewModel = ArticleCategoryCellViewModel(
             category: category,
-            cache: viewModel.resourceLanguageTranslationFilesCache
+            godToolsResource: viewModel.godToolsResource,
+            resourcesFileCache: viewModel.resourceLatestTranslationServices.fileCache
         )
         cell.configure(viewModel: cellViewModel)
  

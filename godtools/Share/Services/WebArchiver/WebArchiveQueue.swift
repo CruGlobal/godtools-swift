@@ -31,7 +31,7 @@ class WebArchiveQueue {
 
     }
     
-    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<Data?, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
+    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
         
         let queue = OperationQueue()
         
@@ -41,7 +41,7 @@ class WebArchiveQueue {
             
             let operation = WebArchiveOperation(session: session, url: url)
             
-            operation.completionHandler { [weak self] (result: Result<Data?, Error>) in
+            operation.completionHandler { [weak self] (result: Result<WebArchiveOperationResult, Error>) in
                 
                 didArchivePlistData(result)
                 

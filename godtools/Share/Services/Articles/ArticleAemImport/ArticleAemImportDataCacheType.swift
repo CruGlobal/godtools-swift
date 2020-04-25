@@ -15,6 +15,6 @@ protocol ArticleAemImportDataCacheType {
     var dataExistsInCache: Bool { get }
     
     func getArticlesWithTags(aemTags: [String]) -> [ArticleAemImportDataAssociatedType]
-    func cache(articleAemImportData: ArticleAemImportData) -> Error?
+    func cache(articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ error: Error?) -> Void))
     func deleteAllData() -> Error?
 }

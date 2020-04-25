@@ -17,7 +17,7 @@ class WebArchiveOperation: Operation {
         let resourceUrls: [String]
     }
     
-    typealias Completion = ((_ result: Result<Data?, Error>) -> Void)
+    typealias Completion = ((_ result: Result<WebArchiveOperationResult, Error>) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -273,13 +273,19 @@ class WebArchiveOperation: Operation {
             return
         }
         
-        var result: Result<Data?, Error>
+        var result: Result<WebArchiveOperationResult, Error>
         
         if let error = error {
             result = .failure(error)
         }
         else if let webArchivePlistData = webArchivePlistData {
-            result = .success(webArchivePlistData)
+            
+            let operationResult = WebArchiveOperationResult(
+                url: url,
+                webArchivePlistData: webArchivePlistData
+            )
+            
+            result = .success(operationResult)
         }
         else {
             result = .failure(unknownError)

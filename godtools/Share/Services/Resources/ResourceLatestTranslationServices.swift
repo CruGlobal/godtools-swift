@@ -1,5 +1,5 @@
 //
-//  GetResourceLatestTranslationServices.swift
+//  ResourceLatestTranslationServices.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -8,39 +8,29 @@
 
 import Foundation
 
-class GetResourceLatestTranslationServices {
-    
-    private let translationsApi: TranslationsApiType
-    
+class ResourceLatestTranslationServices {
+        
     private var getTranslationZipDataOperation: OperationQueue?
     
-    let cache: ResourcesLatestTranslationsZipFileCache
+    let translationsApi: TranslationsApiType
+    let fileCache: ResourcesLatestTranslationsFileCache
+    let godToolsResource: GodToolsResource
     let isFetchingManifestXmlData: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(translationsApi: TranslationsApiType, cache: ResourcesLatestTranslationsZipFileCache) {
+    required init(translationsApi: TranslationsApiType, fileCache: ResourcesLatestTranslationsFileCache, godToolsResource: GodToolsResource) {
         
         self.translationsApi = translationsApi
-        self.cache = cache
+        self.fileCache = fileCache
+        self.godToolsResource = godToolsResource
     }
     
-    func getManifestXmlData(resource: DownloadedResource, language: Language, translation: Translation, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
-        
-        guard let manifestFilename = translation.manifestFilename else {
-            
-            let error = NSError(
-                domain: String(describing: GetResourceLatestTranslationServices.self),
-                code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Error fetching manifest xml data for resource.  Either the translation does not exist for the provided language or the translation does not provide a manifestFilename.\n  resource.remoteId: \(resource.remoteId)\n  language.code: \(language.code)\n  manifestFilename: \(translation.manifestFilename ?? "")"]
-            )
-            
-            complete(nil, error)
-            return
-        }
-        
-        let translationZipContentsCacheLocation = ResourcesLatestTranslationsZipFileCacheLocation(resource: resource, language: language)
+    func getManifestXmlData(forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
                 
+        let translationZipContentsCacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
+        let translationManifestFileName: String = godToolsResource.translationManifestFilename
+        
         var contentsExist: Bool = false
-        switch cache.contentsExist(location: translationZipContentsCacheLocation) {
+        switch fileCache.contentsExist(location: translationZipContentsCacheLocation) {
         case .success(let exist):
             contentsExist = exist
         case .failure( _):
@@ -49,7 +39,7 @@ class GetResourceLatestTranslationServices {
         
         var cachedXmlData: Data?
         if contentsExist {
-            switch cache.getManifestXmlData(location: translationZipContentsCacheLocation, manifestFileName: manifestFilename) {
+            switch fileCache.getData(location: translationZipContentsCacheLocation, path: translationManifestFileName) {
             case .success(let xmlData):
                 cachedXmlData = xmlData
             case .failure( _):
@@ -64,7 +54,7 @@ class GetResourceLatestTranslationServices {
             
             isFetchingManifestXmlData.accept(value: true)
             
-            getTranslationZipDataOperation = translationsApi.getTranslationZipData(translationId: translation.remoteId) { [weak self] (response: RequestResponse, result: RequestResult<Data, NoRequestResultType>) in
+            getTranslationZipDataOperation = translationsApi.getTranslationZipData(translationId: godToolsResource.translationId) { [weak self] (response: RequestResponse, result: RequestResult<Data, NoRequestResultType>) in
                 
                 switch result {
                 
@@ -73,9 +63,9 @@ class GetResourceLatestTranslationServices {
                     var manifestXmlData: Data?
                     var cacheError: Error?
                     
-                    if let zipData = optionalZipData, let cache = self?.cache {
+                    if let zipData = optionalZipData, let fileCache = self?.fileCache {
                         
-                        switch cache.cacheContents(location: translationZipContentsCacheLocation, zipData: zipData) {
+                        switch fileCache.cacheContents(location: translationZipContentsCacheLocation, zipData: zipData) {
                         case .success( _):
                             // successfully cached contents from zip file
                             break
@@ -83,7 +73,7 @@ class GetResourceLatestTranslationServices {
                             cacheError = error
                         }
                         
-                        switch cache.getManifestXmlData(location: translationZipContentsCacheLocation, manifestFileName: manifestFilename) {
+                        switch fileCache.getData(location: translationZipContentsCacheLocation, path: translationManifestFileName) {
                         case .success(let data):
                             manifestXmlData = data
                         case .failure(let error):
@@ -102,7 +92,7 @@ class GetResourceLatestTranslationServices {
         }
     }
     
-    func cancelGetManifestXmlData() {
+    func cancelOperations() {
         getTranslationZipDataOperation?.cancelAllOperations()
     }
 }

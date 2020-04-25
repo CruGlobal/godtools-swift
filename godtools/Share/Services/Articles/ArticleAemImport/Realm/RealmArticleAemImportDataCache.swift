@@ -46,32 +46,42 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
         return articlesByTag
     }
     
-    func cache(articleAemImportData: ArticleAemImportData) -> Error? {
-                
-        let inMemoryJcrContent: ArticleJcrContent? = articleAemImportData.articleJcrContent
+    func cache(articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ error: Error?) -> Void)) {
         
-        let realmJcrContent = RealmArticleJcrContent(
-            canonical: inMemoryJcrContent?.canonical,
-            title: inMemoryJcrContent?.title,
-            uuid: inMemoryJcrContent?.uuid,
-            tags: inMemoryJcrContent?.tags ?? []
-        )
+        var realmArticleAemImportDataArray: [RealmArticleAemImportData] = Array()
         
-        let realmArticleAemImportData = RealmArticleAemImportData(
-            articleJcrContent: realmJcrContent,
-            id: articleAemImportData.id,
-            webUrl: articleAemImportData.webUrl
-        )
-                        
+        for articleAemImportData in articleAemImportDataObjects {
+            
+            let inMemoryJcrContent: ArticleJcrContent? = articleAemImportData.articleJcrContent
+            
+            let realmJcrContent = RealmArticleJcrContent(
+                canonical: inMemoryJcrContent?.canonical,
+                title: inMemoryJcrContent?.title,
+                uuid: inMemoryJcrContent?.uuid,
+                tags: inMemoryJcrContent?.tags ?? []
+            )
+            
+            let realmArticleAemImportData = RealmArticleAemImportData(
+                articleJcrContent: realmJcrContent,
+                id: articleAemImportData.id,
+                webUrl: articleAemImportData.webUrl
+            )
+            
+            realmArticleAemImportDataArray.append(realmArticleAemImportData)
+        }
+        
         do {
+            print("  write to realm")
             try realm.write {
-                realm.add(realmArticleAemImportData)
+                realm.add(realmArticleAemImportDataArray)
+                print("  added objects to realm, complete")
+                complete(nil)
             }
-            return nil
         }
         catch let error {
             print("\n \(String(describing: RealmArticleAemImportDataCache.self)) Failed to cache articleAemImportData with error: \(error)")
-            return error
+            print("  error adding objects to realm")
+            complete(error)
         }
     }
     

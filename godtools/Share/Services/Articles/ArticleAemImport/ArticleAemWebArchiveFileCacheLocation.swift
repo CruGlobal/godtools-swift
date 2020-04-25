@@ -14,10 +14,10 @@ struct ArticleAemWebArchiveFileCacheLocation: FileCacheLocationType {
     let filename: String
     let fileExtension: String?
     
-    init(resource: DownloadedResource, language: Language, filename: String, fileExtension: String?) {
+    init(godToolsResource: GodToolsResource, aemImportUrl: URL) {
         
-        directory = resource.remoteId + "/" + language.code + "/" + "archives"
-        self.filename = filename
-        self.fileExtension = fileExtension
+        directory = godToolsResource.resourceId + "/" + godToolsResource.languageCode
+        self.filename = aemImportUrl.lastPathComponent
+        self.fileExtension = nil
     }
 }

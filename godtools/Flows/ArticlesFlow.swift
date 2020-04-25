@@ -21,13 +21,23 @@ class ArticlesFlow: Flow {
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
+        // TODO: Need to think of how to handle grabbing the latest translation without force unwrapping. ~Levi
+        let translation: Translation = resource.getTranslationForLanguage(language)!
+        let godToolsResource: GodToolsResource = GodToolsResource(
+            resource: resource,
+            language: language,
+            translation: translation
+        )
+        
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
             resource: resource,
-            language: language,
-            getResourceLatestTranslationServices: appDiContainer.getResourceLatestTranslationServices,
+            godToolsResource: godToolsResource,
+            resourceLatestTranslationServices: appDiContainer.getResourceLatestTranslationServices(godToolsResource: godToolsResource),
+            articleAemImportService: appDiContainer.getArticleAemImportService(godToolsResource: godToolsResource),
             analytics: appDiContainer.analytics
         )
+        
         let view = ArticleCategoriesView(viewModel: viewModel)
         
         sharedNavigationController.pushViewController(view, animated: true)        
@@ -37,25 +47,27 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let category, let resource, let articleManifest):
+        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category, let articleManifest):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
+                godToolsResource: godToolsResource,
                 category: category,
                 articleManifest: articleManifest,
-                articleAemImportService: appDiContainer.articleAemImportService,
+                articleAemImportService: appDiContainer.getArticleAemImportService(godToolsResource: godToolsResource),
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
                         
-        case .articleTappedFromArticles(let articleAemImportData, let resource):
+        case .articleTappedFromArticles(let resource, let godToolsResource, let articleAemImportData):
             
             let viewModel = ArticleWebViewModel(
-                articleAemImportData: articleAemImportData,
                 resource: resource,
+                godToolsResource: godToolsResource,
+                articleAemImportData: articleAemImportData,
                 analytics: appDiContainer.analytics
             )
             

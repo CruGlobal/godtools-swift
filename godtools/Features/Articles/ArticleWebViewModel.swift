@@ -10,17 +10,19 @@ import Foundation
 
 class ArticleWebViewModel: ArticleWebViewModelType {
     
-    private let articleAemImportData: RealmArticleAemImportData
     private let resource: DownloadedResource
+    private let articleAemImportData: RealmArticleAemImportData
+    private let godToolsResource: GodToolsResource
     private let analytics: GodToolsAnaltyics
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(articleAemImportData: RealmArticleAemImportData, resource: DownloadedResource, analytics: GodToolsAnaltyics) {
+    required init(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, analytics: GodToolsAnaltyics) {
         
-        self.articleAemImportData = articleAemImportData
         self.resource = resource
+        self.articleAemImportData = articleAemImportData
+        self.godToolsResource = godToolsResource
         self.analytics = analytics
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")

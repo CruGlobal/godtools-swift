@@ -7,54 +7,47 @@
 //
 
 import Foundation
+import RealmSwift
 
 class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private let resource: DownloadedResource
-    private let language: Language
-    private let getResourceLatestTranslationServices: GetResourceLatestTranslationServices
     private let analytics: GodToolsAnaltyics
     
     private var articleManifestXmlParser: ArticleManifestXmlParser?
     
     private weak var flowDelegate: FlowDelegate?
     
+    let godToolsResource: GodToolsResource
+    let resourceLatestTranslationServices: ResourceLatestTranslationServices
+    let articleAemImportService: ArticleAemImportService
     let categories: ObservableValue<[ArticleCategory]> = ObservableValue(value: [])
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, language: Language, getResourceLatestTranslationServices: GetResourceLatestTranslationServices, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, resourceLatestTranslationServices: ResourceLatestTranslationServices, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.language = language
-        self.getResourceLatestTranslationServices = getResourceLatestTranslationServices
+        self.godToolsResource = godToolsResource
+        self.resourceLatestTranslationServices = resourceLatestTranslationServices
+        self.articleAemImportService = articleAemImportService
         self.analytics = analytics
-        
+                
         navTitle.accept(value: resource.name)
         
         reloadArticles(forceDownload: false)
     }
     
     deinit {
-        getResourceLatestTranslationServices.cancelGetManifestXmlData()
-    }
-    
-    var resourceLanguageTranslationFilesCache: ResourceLanguageTranslationFilesCache {
-        return ResourceLanguageTranslationFilesCache(resource: resource, language: language, cache: getResourceLatestTranslationServices.cache)
+        resourceLatestTranslationServices.cancelOperations()
     }
     
     private func reloadArticles(forceDownload: Bool) {
         
-        guard let translation = resource.getTranslationForLanguage(language) else {
-            // TODO: Should report error if translation could not be found.
-            // TODO: Would like to add service that based on the resource and chosen laungage, fetch the latest translation to use.
-            return
-        }
-        
         isLoading.accept(value: true)
         
-        getResourceLatestTranslationServices.getManifestXmlData(resource: resource, language: language, translation: translation, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
+        resourceLatestTranslationServices.getManifestXmlData(forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
                             
             if let manifestXmlData = manifestXmlData {
                 let articleManifestXmlParser = ArticleManifestXmlParser(xmlData: manifestXmlData)
@@ -83,7 +76,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     func articleTapped(category: ArticleCategory) {
         
         if let articleManifestXmlParser = articleManifestXmlParser {
-            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(category: category, resource: resource, articleManifest: articleManifestXmlParser))
+            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, godToolsResource: godToolsResource, category: category, articleManifest: articleManifestXmlParser))
         }
         else {
             // TODO: Show Error. ~Levi

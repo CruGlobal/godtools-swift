@@ -10,7 +10,9 @@ import Foundation
 
 protocol ArticleCategoriesViewModelType {
     
-    var resourceLanguageTranslationFilesCache: ResourceLanguageTranslationFilesCache { get }
+    var godToolsResource: GodToolsResource { get }
+    var resourceLatestTranslationServices: ResourceLatestTranslationServices { get }
+    var articleAemImportService: ArticleAemImportService { get }
     var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }
     var isLoading: ObservableValue<Bool> { get }

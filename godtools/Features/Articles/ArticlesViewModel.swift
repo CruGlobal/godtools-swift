@@ -11,6 +11,7 @@ import Foundation
 class ArticlesViewModel: ArticlesViewModelType {
     
     private let resource: DownloadedResource
+    private let godToolsResource: GodToolsResource
     private let category: ArticleCategory
     private let articleManifest: ArticleManifestType
     private let articleAemImportService: ArticleAemImportService
@@ -22,10 +23,11 @@ class ArticlesViewModel: ArticlesViewModelType {
     let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, category: ArticleCategory, articleManifest: ArticleManifestType, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
+        self.godToolsResource = godToolsResource
         self.category = category
         self.articleManifest = articleManifest
         self.articleAemImportService = articleAemImportService
@@ -59,6 +61,6 @@ class ArticlesViewModel: ArticlesViewModelType {
     }
     
     func articleTapped(articleAemImportData: RealmArticleAemImportData) {
-        flowDelegate?.navigate(step: .articleTappedFromArticles(articleAemImportData: articleAemImportData, resource: resource))
+        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, godToolsResource: godToolsResource, articleAemImportData: articleAemImportData))
     }
 }
