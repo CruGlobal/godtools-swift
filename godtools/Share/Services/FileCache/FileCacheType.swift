@@ -14,30 +14,80 @@ protocol FileCacheType {
     var errorDomain: String { get }
     
     func getRootDirectory() -> Result<URL, Error>
+    func getDirectory(location: FileCacheLocationType) -> Result<URL, Error>
     func getFile(location: FileCacheLocationType) -> Result<URL, Error>
     func cache(location: FileCacheLocationType, data: Data) -> Result<URL, Error>
-    func getDataLocation(location: FileCacheLocationType) -> Result<Data?, Error>
-    func getData(url: URL) -> Data?
+    func getData(location: FileCacheLocationType) -> Result<Data?, Error>
     func fileExists(location: FileCacheLocationType) -> Result<Bool, Error>
 }
 
-extension FileCache {
+extension FileCacheType {
     
-    func getFile(location: FileCacheLocationType) -> Result<URL, Error> {
+    func getDirectory(location: FileCacheLocationType) -> Result<URL, Error> {
         
-        guard let relativeUrl = location.relativeUrl else {
-            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Relative url can't be null."]))
+        guard let directoryUrl = location.directoryUrl else {
+            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Directory url can't be null."]))
         }
         
         switch getRootDirectory() {
         case .success(let rootDirectory):
-            return .success(rootDirectory.appendingPathComponent(relativeUrl.path))
+            return .success(rootDirectory.appendingPathComponent(directoryUrl.path))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+
+    func getFile(location: FileCacheLocationType) -> Result<URL, Error> {
+        
+        guard let fileUrl = location.fileUrl else {
+            return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "File url can't be null."]))
+        }
+        
+        switch getRootDirectory() {
+        case .success(let rootDirectory):
+            return .success(rootDirectory.appendingPathComponent(fileUrl.path))
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
+    private func createDirectoryIfNotExists(location: FileCacheLocationType) -> Result<URL, Error> {
+        
+        switch getDirectory(location: location) {
+        
+        case .success(let directoryUrl):
+            
+            if !fileManager.fileExists(atPath: directoryUrl.path) {
+                
+                do {
+                    try fileManager.createDirectory(
+                        at: directoryUrl,
+                        withIntermediateDirectories: true,
+                        attributes: nil
+                    )
+                    return .success(directoryUrl)
+                }
+                catch let error {
+                    return .failure(error)
+                }
+            }
+            else {
+                return .success(directoryUrl)
+            }
+            
         case .failure(let error):
             return .failure(error)
         }
     }
     
     func cache(location: FileCacheLocationType, data: Data) -> Result<URL, Error> {
+        
+        switch createDirectoryIfNotExists(location: location) {
+        case .success( _):
+            break
+        case .failure(let error):
+            return .failure(error)
+        }
         
         switch getFile(location: location) {
         case .success(let url):
@@ -52,7 +102,7 @@ extension FileCache {
         }
     }
     
-    func getDataLocation(location: FileCacheLocationType) -> Result<Data?, Error> {
+    func getData(location: FileCacheLocationType) -> Result<Data?, Error> {
         
         switch getFile(location: location) {
         case .success(let url):
@@ -60,10 +110,6 @@ extension FileCache {
         case .failure(let error):
             return .failure(error)
         }
-    }
-    
-    func getData(url: URL) -> Data? {
-        return fileManager.contents(atPath: url.path)
     }
     
     func fileExists(location: FileCacheLocationType) -> Result<Bool, Error> {

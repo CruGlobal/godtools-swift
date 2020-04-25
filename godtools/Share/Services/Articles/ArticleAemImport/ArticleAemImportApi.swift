@@ -39,7 +39,7 @@ class ArticleAemImportApi {
     
     func downloadAemImportSrcs(aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
         
-        let operationQueue = OperationQueue()
+        let queue = OperationQueue()
         
         var operations: [ArticleAemImportOperation] = Array()
         
@@ -47,11 +47,11 @@ class ArticleAemImportApi {
             
             let operation = createNewAemImportOperation(aemImportSrc: aemImportSrc, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels)
             
-            operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
+            operation.completionHandler { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
                 
                 didDownloadAemImport(response, result)
                 
-                let finished: Bool = operationQueue.operations.isEmpty
+                let finished: Bool = queue.operations.isEmpty
                 
                 if finished, let complete = complete {
                     complete()
@@ -62,12 +62,12 @@ class ArticleAemImportApi {
         }
         
         if operations.count > 0 {
-            operationQueue.addOperations(operations, waitUntilFinished: false)
+            queue.addOperations(operations, waitUntilFinished: false)
         }
         else if let complete = complete {
             complete()
         }
         
-        return operationQueue
+        return queue
     }
 }

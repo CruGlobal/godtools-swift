@@ -12,5 +12,20 @@ import RealmSwift
 class RealmArticleAemImportData: Object, ArticleAemImportDataType {
     
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
-    @objc dynamic var url: String = ""
+    @objc dynamic var id: String = ""
+    @objc dynamic var webUrl: String = ""
+    
+    required init(articleJcrContent: RealmArticleJcrContent?, id: String, webUrl: String) {
+        self.articleJcrContent = articleJcrContent
+        self.id = id
+        self.webUrl = webUrl
+    }
+    
+    required init() {
+        
+    }
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }

@@ -46,7 +46,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     
     private func reloadArticleAemImportData(category: ArticleCategory) {
                 
-        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.articleAemImportCache.getArticlesWithTags(aemTags: category.aemTags)
+        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.getArticlesWithTags(aemTags: category.aemTags)
         cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
             rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
         }

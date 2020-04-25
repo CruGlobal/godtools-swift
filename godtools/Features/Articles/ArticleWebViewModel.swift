@@ -25,7 +25,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
-        if let articleUrl = URL(string: articleAemImportData.url) {
+        if let articleUrl = URL(string: articleAemImportData.webUrl) {
             url.accept(value: articleUrl)
         }
     }

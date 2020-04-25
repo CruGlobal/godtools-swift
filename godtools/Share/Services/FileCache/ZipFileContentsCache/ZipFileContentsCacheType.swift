@@ -14,6 +14,7 @@ protocol ZipFileContentsCacheType {
     var fileManager: FileManager { get }
     var errorDomain: String { get }
     
+    func getUserDocumentsDirectory() -> Result<URL, Error>
     func getRootDirectory() -> Result<URL, Error>
     func getContentsDirectory(location: ZipFileContentsCacheLocationType) -> Result<URL, Error>
     func deleteContentsDirectory(location: ZipFileContentsCacheLocationType) -> Result<URL, Error>
@@ -26,7 +27,23 @@ protocol ZipFileContentsCacheType {
 }
 
 extension ZipFileContentsCacheType {
+    
+    func getUserDocumentsDirectory() -> Result<URL, Error> {
         
+        do {
+            let documentsDirectory: URL = try fileManager.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: false
+            )
+            return .success(documentsDirectory)
+        }
+        catch let error {
+            return .failure(error)
+        }
+    }
+    
     func getContentsDirectory(location: ZipFileContentsCacheLocationType) -> Result<URL, Error> {
         
         guard let relativeUrl = location.relativeUrl else {

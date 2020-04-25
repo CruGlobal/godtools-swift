@@ -23,25 +23,14 @@ class GetResourceLatestTranslationServices {
         self.cache = cache
     }
     
-    func getManifestXmlData(resource: DownloadedResource, language: Language, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
+    func getManifestXmlData(resource: DownloadedResource, language: Language, translation: Translation, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
         
-        // TODO Should I require the translation to get passed in here?  What if someone passes a language that a translation does not exist for? ~Levi
-        
-        var languageTranslation: Translation?
-        
-        // find the resource translation for the provided language
-        for translation in resource.translations {
-            if translation.language?.code == language.code {
-                languageTranslation = translation
-            }
-        }
-        
-        guard let translation = languageTranslation, let manifestFilename = translation.manifestFilename else {
+        guard let manifestFilename = translation.manifestFilename else {
             
             let error = NSError(
                 domain: String(describing: GetResourceLatestTranslationServices.self),
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Error fetching manifest xml data for resource.  Either the translation does not exist for the provided language or the translation does not provide a manifestFilename.\n  resource.remoteId: \(resource.remoteId)\n  language.code: \(language.code)\n  manifestFilename: \(languageTranslation?.manifestFilename ?? "")"]
+                userInfo: [NSLocalizedDescriptionKey: "Error fetching manifest xml data for resource.  Either the translation does not exist for the provided language or the translation does not provide a manifestFilename.\n  resource.remoteId: \(resource.remoteId)\n  language.code: \(language.code)\n  manifestFilename: \(translation.manifestFilename ?? "")"]
             )
             
             complete(nil, error)

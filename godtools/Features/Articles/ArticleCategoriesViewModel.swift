@@ -46,9 +46,15 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private func reloadArticles(forceDownload: Bool) {
         
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            // TODO: Should report error if translation could not be found.
+            // TODO: Would like to add service that based on the resource and chosen laungage, fetch the latest translation to use.
+            return
+        }
+        
         isLoading.accept(value: true)
         
-        getResourceLatestTranslationServices.getManifestXmlData(resource: resource, language: language, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
+        getResourceLatestTranslationServices.getManifestXmlData(resource: resource, language: language, translation: translation, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
                             
             if let manifestXmlData = manifestXmlData {
                 let articleManifestXmlParser = ArticleManifestXmlParser(xmlData: manifestXmlData)

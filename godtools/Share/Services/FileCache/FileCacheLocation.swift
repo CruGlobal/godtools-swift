@@ -10,5 +10,7 @@ import Foundation
 
 struct FileCacheLocation: FileCacheLocationType {
     
-    let relativeUrl: URL?
+    let directory: String
+    let filename: String
+    let fileExtension: String?
 }

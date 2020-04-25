@@ -33,12 +33,12 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
             
             for cachedArticleAemImportData in cachedArticleAemImportDataArray {
                     
-                let articleAdded: Bool = articleUrlsByTag.contains(cachedArticleAemImportData.url)
+                let articleAdded: Bool = articleUrlsByTag.contains(cachedArticleAemImportData.webUrl)
                 
                 if !articleAdded, let cachedTags = cachedArticleAemImportData.articleJcrContent?.tags, cachedTags.contains(tagId) {
                     
                     articlesByTag.append(cachedArticleAemImportData)
-                    articleUrlsByTag.append(cachedArticleAemImportData.url)
+                    articleUrlsByTag.append(cachedArticleAemImportData.webUrl)
                 }
             }
         }
@@ -47,24 +47,22 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
     }
     
     func cache(articleAemImportData: ArticleAemImportData) -> Error? {
-        
-        print("\n Cache ArticleAemImportData")
-        print("  url: \(String(describing: articleAemImportData.url))")
-        print("  title: \(String(describing: articleAemImportData.articleJcrContent?.title))")
-        print("  tags: \(String(describing: articleAemImportData.articleJcrContent?.tags))")
-        
-        let realmArticleAemImportData = RealmArticleAemImportData()
-        realmArticleAemImportData.url = articleAemImportData.url
-        
-        let realmJcrContent = RealmArticleJcrContent()
-        let inMemoryJcrContent: ArticleJcrContent? = articleAemImportData.articleJcrContent
-        realmJcrContent.canonical = inMemoryJcrContent?.canonical
-        realmJcrContent.tags.append(objectsIn: inMemoryJcrContent?.tags ?? [])
-        realmJcrContent.title = inMemoryJcrContent?.title
-        realmJcrContent.uuid = inMemoryJcrContent?.uuid
-        
-        realmArticleAemImportData.articleJcrContent = realmJcrContent
                 
+        let inMemoryJcrContent: ArticleJcrContent? = articleAemImportData.articleJcrContent
+        
+        let realmJcrContent = RealmArticleJcrContent(
+            canonical: inMemoryJcrContent?.canonical,
+            title: inMemoryJcrContent?.title,
+            uuid: inMemoryJcrContent?.uuid,
+            tags: inMemoryJcrContent?.tags ?? []
+        )
+        
+        let realmArticleAemImportData = RealmArticleAemImportData(
+            articleJcrContent: realmJcrContent,
+            id: articleAemImportData.id,
+            webUrl: articleAemImportData.webUrl
+        )
+                        
         do {
             try realm.write {
                 realm.add(realmArticleAemImportData)

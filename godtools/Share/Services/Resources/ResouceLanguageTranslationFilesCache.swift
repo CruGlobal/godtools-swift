@@ -10,8 +10,8 @@ import Foundation
 
 class ResourceLanguageTranslationFilesCache {
     
-    let cacheLocation: ResourcesLatestTranslationsZipFileCacheLocation
-    let cache: ResourcesLatestTranslationsZipFileCache
+    private let cacheLocation: ResourcesLatestTranslationsZipFileCacheLocation
+    private let cache: ResourcesLatestTranslationsZipFileCache
     
     required init(resource: DownloadedResource, language: Language, cache: ResourcesLatestTranslationsZipFileCache) {
         

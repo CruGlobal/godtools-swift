@@ -12,7 +12,7 @@ class ArticleAemImportDataParser {
     
     private let articleJcrContentParser: ArticleJcrContentParser = ArticleJcrContentParser()
     private let errorDomain: String = String(describing: ArticleAemImportDataParser.self)
-    
+        
     required init() {
         
     }
@@ -22,17 +22,13 @@ class ArticleAemImportDataParser {
     }
     
     func parse(aemImportSrc: URL, aemImportJson: [String: Any]) -> Result<ArticleAemImportData, Error> {
-        
-        let preferredVariationOrder = getPrefferedVariationOrder(aemImportSrc: aemImportSrc)
-        
-        print("\n PREFERRED VARIATION ORDER: \(preferredVariationOrder)")
-        
-        guard let variation = getPreferredVariation(preferredVariationOrder: preferredVariationOrder, jsonDictionary: aemImportJson) else {
+                        
+        guard let variation = getPreferredVariation(aemImportSrc: aemImportSrc, aemImportJson: aemImportJson) else {
             
             let variationError = NSError(
                 domain: errorDomain,
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because a variation does not exist from the preferred variations.\n preferred variations: \(preferredVariationOrder)"
+                userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because a variation does not exist from the preferred variations.\n preferred variations: \(getPrefferedVariationOrder(aemImportSrc: aemImportSrc))"
             ])
             
             return .failure(variationError)
@@ -49,13 +45,14 @@ class ArticleAemImportDataParser {
             return .failure(variationJsonError)
         }
         
-        print("  variation: \(variation)")
-
         let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(jsonDictionary: variationJsonDictionary)
+        
+        let aemImportWebUrl: String = aemImportSrc.absoluteString + "/" + variation + ".html"
         
         let articleAemImportData = ArticleAemImportData(
             articleJcrContent: articleJcrContent,
-            url: aemImportSrc.absoluteString + "/" + variation + ".html"
+            id: NSUUID().uuidString,
+            webUrl: aemImportWebUrl
         )
         
         return .success(articleAemImportData)
@@ -90,11 +87,13 @@ class ArticleAemImportDataParser {
      
     */
     
-    private func getPreferredVariation(preferredVariationOrder: [String], jsonDictionary: [String: Any]) -> String? {
+    private func getPreferredVariation(aemImportSrc: URL, aemImportJson: [String: Any]) -> String? {
            
+        let preferredVariationOrder: [String] = getPrefferedVariationOrder(aemImportSrc: aemImportSrc)
+        
         for variation in preferredVariationOrder {
             
-            for (rootKey, _) in jsonDictionary {
+            for (rootKey, _) in aemImportJson {
                 
                 if rootKey == variation {
                     
