@@ -143,4 +143,45 @@ class FileCache<CacheLocation: FileCacheLocationType>: FileCacheType {
             return .failure(error)
         }
     }
+    
+    func removeRootDirectory() -> Error? {
+        
+        switch getRootDirectory() {
+        case .success(let rootDirectoryUrl):
+            return removeItem(url: rootDirectoryUrl)
+        case .failure(let error):
+            return error
+        }
+    }
+    
+    func removeDirectory(location: CacheLocation) -> Error? {
+        
+        switch getDirectory(location: location) {
+        case .success(let directoryUrl):
+            return removeItem(url: directoryUrl)
+        case .failure(let error):
+            return error
+        }
+    }
+    
+    func removeFile(location: CacheLocation) -> Error? {
+        
+        switch getFile(location: location) {
+        case .success(let fileUrl):
+            return removeItem(url: fileUrl)
+        case .failure(let error):
+            return error
+        }
+    }
+    
+    func removeItem(url: URL) -> Error? {
+        
+        do {
+            try fileManager.removeItem(at: url)
+            return nil
+        }
+        catch let error {
+            return error
+        }
+    }
 }

@@ -14,11 +14,13 @@ struct GodToolsResource {
     let languageCode: String // bcp47 language tag
     let translationId: String
     let translationManifestFilename: String
+    let translationsVersion: Int16
     
     init(resource: DownloadedResource, language: Language, translation: Translation) {
         resourceId = resource.remoteId
         languageCode = language.code
         translationId = translation.remoteId
         translationManifestFilename = translation.manifestFilename ?? ""
+        translationsVersion = translation.version
     }
 }

@@ -11,7 +11,8 @@ import Foundation
 protocol ArticleWebViewModelType {
     
     var navTitle: ObservableValue<String> { get }
-    var url: ObservableValue<URL?> { get }
+    var webUrl: ObservableValue<URL?> { get }
+    var webArchiveUrl: ObservableValue<URL?> { get }
     
     func pageViewed()
 }

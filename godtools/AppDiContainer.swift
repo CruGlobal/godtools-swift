@@ -17,6 +17,7 @@ class AppDiContainer {
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
     let translationsApi: TranslationsApiType
+    let resourceLatestTranslationServices: ResourceLatestTranslationServices
     let adobeAnalytics: AdobeAnalyticsType
     let appsFlyer: AppsFlyerType
     let firebaseAnalytics: FirebaseAnalyticsType
@@ -40,7 +41,9 @@ class AppDiContainer {
         loginClient = TheKeyOAuthClient.shared
                 
         translationsApi = TranslationsApi(config: config)
-                        
+          
+        resourceLatestTranslationServices = ResourceLatestTranslationServices(translationsApi: translationsApi)
+        
         adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         
         appsFlyer = AppsFlyer(config: config, loggingEnabled: false)
@@ -93,19 +96,9 @@ class AppDiContainer {
         return TranslationZipImporter()
     }
     
-    func getResourceLatestTranslationServices(godToolsResource: GodToolsResource) -> ResourceLatestTranslationServices {
-        
-        return ResourceLatestTranslationServices(
-            translationsApi: translationsApi,
-            fileCache: ResourcesLatestTranslationsFileCache(),
-            godToolsResource: godToolsResource
-        )
-    }
-    
-    func getArticleAemImportService(godToolsResource: GodToolsResource) -> ArticleAemImportService {
+    var articleAemImportService: ArticleAemImportService {
         return ArticleAemImportService(
-            realm: realmDatabase.realm,
-            godToolsResource: godToolsResource
+            realm: realmDatabase.mainThreadRealm
         )
     }
 }

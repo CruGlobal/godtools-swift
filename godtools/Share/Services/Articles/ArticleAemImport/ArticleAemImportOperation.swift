@@ -24,6 +24,7 @@ class ArticleAemImportOperation: Operation {
     }
     
     private let session: URLSession
+    private let godToolsResource: GodToolsResource
     private let aemImportSrc: String
     private let maxAemImportJsonTreeLevels: Int
     private let errorDomain: String = String(describing: ArticleAemImportOperation.self)
@@ -32,8 +33,9 @@ class ArticleAemImportOperation: Operation {
     private var task: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
+    required init(session: URLSession, godToolsResource: GodToolsResource, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
         self.session = session
+        self.godToolsResource = godToolsResource
         self.aemImportSrc = aemImportSrc
         self.maxAemImportJsonTreeLevels = maxAemImportJsonTreeLevels
         super.init()
@@ -84,6 +86,8 @@ class ArticleAemImportOperation: Operation {
             timeoutInterval: session.configuration.timeoutIntervalForRequest
         )
         
+        let godToolsResourceRef = godToolsResource
+        
         self.urlRequest = urlJsonRequest
         
         task = session.dataTask(with: urlJsonRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
@@ -105,7 +109,8 @@ class ArticleAemImportOperation: Operation {
                     
                     let aemImportParserResult = aemImportDataParser.parse(
                         aemImportSrc: aemImportSrcUrl,
-                        aemImportJson: jsonDictionary
+                        aemImportJson: jsonDictionary,
+                        godToolsResource: godToolsResourceRef
                     )
                     
                     switch aemImportParserResult {

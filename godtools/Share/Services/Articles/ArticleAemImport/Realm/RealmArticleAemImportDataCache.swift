@@ -18,20 +18,24 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
         self.realm = realm
     }
     
-    var dataExistsInCache: Bool {
-        return realm.objects(RealmArticleAemImportData.self).count > 0
+    func getArticleAemImportDataObjects(godToolsResource: GodToolsResource) -> [RealmArticleAemImportData] {
+        
+        let filter: String = "resourceId = '\(godToolsResource.resourceId)' AND languageCode = '\(godToolsResource.languageCode)'"
+        let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = Array(realm.objects(RealmArticleAemImportData.self).filter(filter))
+        
+        return cachedArticleAemImportDataObjects
     }
     
-    func getArticlesWithTags(aemTags: [String]) -> [RealmArticleAemImportData] {
+    func getArticlesWithTags(godToolsResource: GodToolsResource, aemTags: [String]) -> [RealmArticleAemImportData] {
         
         var articlesByTag: [RealmArticleAemImportData] = Array()
         var articleUrlsByTag: [String] = Array()
         
-        let cachedArticleAemImportDataArray: [RealmArticleAemImportData] = Array(realm.objects(RealmArticleAemImportData.self))
-        
+        let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = getArticleAemImportDataObjects(godToolsResource: godToolsResource)
+                
         for tagId in aemTags {
             
-            for cachedArticleAemImportData in cachedArticleAemImportDataArray {
+            for cachedArticleAemImportData in cachedArticleAemImportDataObjects {
                     
                 let articleAdded: Bool = articleUrlsByTag.contains(cachedArticleAemImportData.webUrl)
                 
@@ -63,29 +67,42 @@ class RealmArticleAemImportDataCache: ArticleAemImportDataCacheType {
             
             let realmArticleAemImportData = RealmArticleAemImportData(
                 articleJcrContent: realmJcrContent,
-                id: articleAemImportData.id,
-                webUrl: articleAemImportData.webUrl
+                languageCode: articleAemImportData.languageCode,
+                resourceId: articleAemImportData.resourceId,
+                webUrl: articleAemImportData.webUrl,
+                webArchiveFilename: articleAemImportData.webArchiveFilename
             )
             
             realmArticleAemImportDataArray.append(realmArticleAemImportData)
         }
         
         do {
-            print("  write to realm")
             try realm.write {
                 realm.add(realmArticleAemImportDataArray)
-                print("  added objects to realm, complete")
                 complete(nil)
             }
         }
         catch let error {
-            print("\n \(String(describing: RealmArticleAemImportDataCache.self)) Failed to cache articleAemImportData with error: \(error)")
-            print("  error adding objects to realm")
             complete(error)
         }
     }
     
-    func deleteAllData() -> Error? {
+    func deleteAemImportDataObjects(godToolsResource: GodToolsResource) -> Error? {
+        
+        let cachedArticleAemImportDataObjects: [RealmArticleAemImportData] = getArticleAemImportDataObjects(godToolsResource: godToolsResource)
+        
+        do {
+            try realm.write {
+                realm.delete(cachedArticleAemImportDataObjects)
+            }
+            return nil
+        }
+        catch let error {
+            return error
+        }
+    }
+    
+    func deleteAllAemImportDataObjects() -> Error? {
         
         let results: Results<RealmArticleAemImportData> = realm.objects(RealmArticleAemImportData.self)
         if !results.isEmpty {

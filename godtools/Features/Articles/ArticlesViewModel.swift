@@ -36,19 +36,19 @@ class ArticlesViewModel: ArticlesViewModelType {
         navTitle.accept(value: category.title)
         
         isLoading.accept(value: true)
-        articleAemImportService.download(aemImportSrcs: articleManifest.aemImportSrcs) { [weak self] in
+        articleAemImportService.downloadToCacheAndWebArchive(godToolsResource: godToolsResource, aemImportSrcs: articleManifest.aemImportSrcs, forceDownload: false) { [weak self] in
             self?.reloadArticleAemImportData(category: category)
             self?.isLoading.accept(value: false)
         }
     }
     
     deinit {
-        articleAemImportService.cancelDownload()
+        articleAemImportService.cancel()
     }
     
     private func reloadArticleAemImportData(category: ArticleCategory) {
                 
-        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.getArticlesWithTags(aemTags: category.aemTags)
+        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: category.aemTags)
         cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
             rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
         }

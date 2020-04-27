@@ -23,4 +23,8 @@ protocol FileCacheType {
     func cache(location: CacheLocation, data: Data) -> Result<URL, Error>
     func getData(location: CacheLocation) -> Result<Data?, Error>
     func fileExists(location: CacheLocation) -> Result<Bool, Error>
+    func removeRootDirectory() -> Error?
+    func removeDirectory(location: CacheLocation) -> Error?
+    func removeFile(location: CacheLocation) -> Error?
+    func removeItem(url: URL) -> Error?
 }

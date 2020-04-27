@@ -28,24 +28,25 @@ class ArticleAemImportApi {
         session = URLSession(configuration: configuration)
     }
     
-    func createNewAemImportOperation(aemImportSrc: String, maxAemImportJsonTreeLevels: Int) -> ArticleAemImportOperation {
+    func newAemImportOperation(godToolsResource: GodToolsResource, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) -> ArticleAemImportOperation {
         
         return ArticleAemImportOperation(
             session: session,
+            godToolsResource: godToolsResource,
             aemImportSrc: aemImportSrc,
             maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels
         )
     }
     
-    func downloadAemImportSrcs(aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
+    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [ArticleAemImportOperation] = Array()
-        
+                
         for aemImportSrc in aemImportSrcs {
             
-            let operation = createNewAemImportOperation(aemImportSrc: aemImportSrc, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels)
+            let operation = newAemImportOperation(godToolsResource: godToolsResource, aemImportSrc: aemImportSrc, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels)
             
             operation.completionHandler { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
                 

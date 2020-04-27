@@ -286,6 +286,7 @@
 		458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */; };
 		45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
 		4592258824253C8A00D7ED22 /* LanguageAvailabilityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */; };
+		45A606832456406B002BD578 /* ArticleAemImportServiceCacheValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A606822456406B002BD578 /* ArticleAemImportServiceCacheValidation.swift */; };
 		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
 		45ADD0C724549D6200E82DD8 /* ArticleAemWebArchiveFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADD0C524549D6200E82DD8 /* ArticleAemWebArchiveFileCache.swift */; };
 		45ADD0C824549D6200E82DD8 /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ADD0C624549D6200E82DD8 /* ArticleAemWebArchiveFileCacheLocation.swift */; };
@@ -811,6 +812,7 @@
 		458EA1EC24291B660002C263 /* IsNewUserCacheType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserCacheType.swift; sourceTree = "<group>"; };
 		458EA1F22429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetermineNewUserIfPrimaryLanguageSet.swift; sourceTree = "<group>"; };
 		45922586242539B300D7ED22 /* LanguageAvailabilityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageAvailabilityType.swift; sourceTree = "<group>"; };
+		45A606822456406B002BD578 /* ArticleAemImportServiceCacheValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportServiceCacheValidation.swift; sourceTree = "<group>"; };
 		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45ADD0C524549D6200E82DD8 /* ArticleAemWebArchiveFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemWebArchiveFileCache.swift; sourceTree = "<group>"; };
 		45ADD0C624549D6200E82DD8 /* ArticleAemWebArchiveFileCacheLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleAemWebArchiveFileCacheLocation.swift; sourceTree = "<group>"; };
@@ -2047,6 +2049,7 @@
 				45EC836B2451E16400E8DE48 /* ArticleAemImportDataParser.swift */,
 				45EC836F2451E16400E8DE48 /* ArticleAemImportOperation.swift */,
 				45EC83712451E16400E8DE48 /* ArticleAemImportService.swift */,
+				45A606822456406B002BD578 /* ArticleAemImportServiceCacheValidation.swift */,
 				45EC836A2451E16400E8DE48 /* ArticleJcrContentParser.swift */,
 				45ADD0C524549D6200E82DD8 /* ArticleAemWebArchiveFileCache.swift */,
 				45ADD0C624549D6200E82DD8 /* ArticleAemWebArchiveFileCacheLocation.swift */,
@@ -3389,6 +3392,7 @@
 				45668E8F23E0E462002728E7 /* OpenTutorialView.swift in Sources */,
 				45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
+				45A606832456406B002BD578 /* ArticleAemImportServiceCacheValidation.swift in Sources */,
 				EC8245B31EEEEA520023A203 /* TractHeroProperties.swift in Sources */,
 				45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */,
 				45647257244F784500CB202D /* ArticleCellViewModelType.swift in Sources */,

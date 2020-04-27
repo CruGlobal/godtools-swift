@@ -31,7 +31,7 @@ class TranslationsApi: TranslationsApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    func translationZipDataRequest(translationId: String) -> URLRequest {
+    private func newTranslationZipDataRequest(translationId: String) -> URLRequest {
         
         return requestBuilder.build(
             session: session,
@@ -42,15 +42,24 @@ class TranslationsApi: TranslationsApiType {
         )
     }
     
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, NoRequestResultType>) -> Void)) -> OperationQueue {
+    private func newTranslationZipDataOperation(translationId: String) -> RequestOperation<NoRequestResultType, NoRequestResultType> {
         
-        let urlRequest = translationZipDataRequest(translationId: translationId)
+        let urlRequest = newTranslationZipDataRequest(translationId: translationId)
+        let operation: RequestOperation<NoRequestResultType, NoRequestResultType> = RequestOperation(
+            session: session,
+            urlRequest: urlRequest
+        )
         
-        let operation: RequestOperation<NoRequestResultType, NoRequestResultType> = RequestOperation(session: session, urlRequest: urlRequest)
+        return operation
+    }
+    
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, Error>) -> Void)) -> OperationQueue {
         
-        return operation.executeRequest { (response: RequestResponse, result: RequestResult<NoRequestResultType, NoRequestResultType>) in
+        let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
+        
+        return translationZipDataOperation.executeRequest { (response: RequestResponse, result: RequestResult<NoRequestResultType, NoRequestResultType>) in
                 
-            let dataResult: RequestResult<Data, NoRequestResultType>
+            let dataResult: RequestResult<Data, Error>
             
             switch result {
             case .success( _):

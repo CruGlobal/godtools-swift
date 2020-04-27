@@ -10,5 +10,5 @@ import Foundation
 
 protocol TranslationsApiType {
     
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, NoRequestResultType>) -> Void)) -> OperationQueue
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, Error>) -> Void)) -> OperationQueue
 }

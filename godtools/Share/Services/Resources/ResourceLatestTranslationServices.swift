@@ -10,27 +10,28 @@ import Foundation
 
 class ResourceLatestTranslationServices {
         
+    private let translationsApi: TranslationsApiType
+    
     private var getTranslationZipDataOperation: OperationQueue?
+        
+    let fileCache: ResourcesLatestTranslationsFileCache = ResourcesLatestTranslationsFileCache()
     
-    let translationsApi: TranslationsApiType
-    let fileCache: ResourcesLatestTranslationsFileCache
-    let godToolsResource: GodToolsResource
-    let isFetchingManifestXmlData: ObservableValue<Bool> = ObservableValue(value: false)
-    
-    required init(translationsApi: TranslationsApiType, fileCache: ResourcesLatestTranslationsFileCache, godToolsResource: GodToolsResource) {
+    required init(translationsApi: TranslationsApiType) {
         
         self.translationsApi = translationsApi
-        self.fileCache = fileCache
-        self.godToolsResource = godToolsResource
     }
     
-    func getManifestXmlData(forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
+    func cancel() {
+        getTranslationZipDataOperation?.cancelAllOperations()
+    }
+    
+    func getManifestXmlData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
                 
-        let translationZipContentsCacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
+        let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
         let translationManifestFileName: String = godToolsResource.translationManifestFilename
         
         var contentsExist: Bool = false
-        switch fileCache.contentsExist(location: translationZipContentsCacheLocation) {
+        switch fileCache.contentsExist(location: cacheLocation) {
         case .success(let exist):
             contentsExist = exist
         case .failure( _):
@@ -39,7 +40,7 @@ class ResourceLatestTranslationServices {
         
         var cachedXmlData: Data?
         if contentsExist {
-            switch fileCache.getData(location: translationZipContentsCacheLocation, path: translationManifestFileName) {
+            switch fileCache.getData(location: cacheLocation, path: translationManifestFileName) {
             case .success(let xmlData):
                 cachedXmlData = xmlData
             case .failure( _):
@@ -48,51 +49,54 @@ class ResourceLatestTranslationServices {
         }
 
         if let cachedXmlData = cachedXmlData, !forceDownload {
+            
             complete(cachedXmlData, nil)
         }
         else {
             
-            isFetchingManifestXmlData.accept(value: true)
-            
-            getTranslationZipDataOperation = translationsApi.getTranslationZipData(translationId: godToolsResource.translationId) { [weak self] (response: RequestResponse, result: RequestResult<Data, NoRequestResultType>) in
-                
-                switch result {
-                
-                case .success(let optionalZipData):
-                   
-                    var manifestXmlData: Data?
-                    var cacheError: Error?
-                    
-                    if let zipData = optionalZipData, let fileCache = self?.fileCache {
+            let fileCacheRef = self.fileCache
                         
-                        switch fileCache.cacheContents(location: translationZipContentsCacheLocation, zipData: zipData) {
-                        case .success( _):
-                            // successfully cached contents from zip file
-                            break
-                        case .failure(let error):
-                            cacheError = error
-                        }
-                        
-                        switch fileCache.getData(location: translationZipContentsCacheLocation, path: translationManifestFileName) {
-                        case .success(let data):
-                            manifestXmlData = data
-                        case .failure(let error):
-                            cacheError = error
-                        }
-                    }
-                    
-                    self?.isFetchingManifestXmlData.accept(value: false)
-                    complete(manifestXmlData, cacheError)
-                    
-                case .failure( _, let error):
-                    self?.isFetchingManifestXmlData.accept(value: false)
+            downloadTranslationZipDataToCache(godToolsResource: godToolsResource) { [weak self] (error: Error?) in
+                
+                if let error = error {
                     complete(nil, error)
+                }
+                else {
+                    
+                    switch fileCacheRef.getData(location: cacheLocation, path: translationManifestFileName) {
+                    case .success(let xmlData):
+                        complete(xmlData, nil)
+                    case .failure(let error):
+                        complete(nil, error)
+                    }
                 }
             }
         }
     }
     
-    func cancelOperations() {
-        getTranslationZipDataOperation?.cancelAllOperations()
+    private func downloadTranslationZipDataToCache(godToolsResource: GodToolsResource, complete: @escaping ((_ error: Error?) -> Void)) {
+        
+        getTranslationZipDataOperation = translationsApi.getTranslationZipData(translationId: godToolsResource.translationId, complete: { [weak self] (response: RequestResponse, result: RequestResult<Data, Error>) in
+            
+            switch result {
+                
+            case .success(let zipData):
+                
+                if let zipData = zipData, let fileCache = self?.fileCache {
+                    
+                    let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
+                    
+                    switch fileCache.cacheContents(location: cacheLocation, zipData: zipData) {
+                    case .success( _):
+                        complete(nil)
+                    case .failure(let error):
+                        complete(error)
+                    }
+                }
+            
+            case .failure( _, let error):
+                complete(error)
+            }
+        })
     }
 }

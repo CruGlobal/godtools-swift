@@ -11,10 +11,10 @@ import Foundation
 protocol ArticleAemImportDataCacheType {
     
     associatedtype ArticleAemImportDataAssociatedType = ArticleAemImportDataType
-    
-    var dataExistsInCache: Bool { get }
-    
-    func getArticlesWithTags(aemTags: [String]) -> [ArticleAemImportDataAssociatedType]
+        
+    func getArticleAemImportDataObjects(godToolsResource: GodToolsResource) -> [RealmArticleAemImportData]
+    func getArticlesWithTags(godToolsResource: GodToolsResource, aemTags: [String]) -> [ArticleAemImportDataAssociatedType]
     func cache(articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ error: Error?) -> Void))
-    func deleteAllData() -> Error?
+    func deleteAemImportDataObjects(godToolsResource: GodToolsResource) -> Error?
+    func deleteAllAemImportDataObjects() -> Error?
 }

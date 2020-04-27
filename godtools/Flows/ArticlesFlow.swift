@@ -33,8 +33,7 @@ class ArticlesFlow: Flow {
             flowDelegate: self,
             resource: resource,
             godToolsResource: godToolsResource,
-            resourceLatestTranslationServices: appDiContainer.getResourceLatestTranslationServices(godToolsResource: godToolsResource),
-            articleAemImportService: appDiContainer.getArticleAemImportService(godToolsResource: godToolsResource),
+            resourceLatestTranslationServices: appDiContainer.resourceLatestTranslationServices,
             analytics: appDiContainer.analytics
         )
         
@@ -55,7 +54,7 @@ class ArticlesFlow: Flow {
                 godToolsResource: godToolsResource,
                 category: category,
                 articleManifest: articleManifest,
-                articleAemImportService: appDiContainer.getArticleAemImportService(godToolsResource: godToolsResource),
+                articleAemImportService: appDiContainer.articleAemImportService,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
@@ -68,6 +67,7 @@ class ArticlesFlow: Flow {
                 resource: resource,
                 godToolsResource: godToolsResource,
                 articleAemImportData: articleAemImportData,
+                articleAemImportService: appDiContainer.articleAemImportService,
                 analytics: appDiContainer.analytics
             )
             

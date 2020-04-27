@@ -11,6 +11,8 @@ import Foundation
 struct ArticleAemImportData: ArticleAemImportDataType {
     
     let articleJcrContent: ArticleJcrContent?
-    let id: String
+    let languageCode: String
+    let resourceId: String
     let webUrl: String
+    let webArchiveFilename: String
 }

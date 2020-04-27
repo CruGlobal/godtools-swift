@@ -61,7 +61,7 @@ class WebArchiveOperation: Operation {
                 
                 var resourceUrls: [String] = documentData.resourceUrls
                 
-                self?.requestHtmlDocumentResourcesSerially(resourceUrls: &resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
+                self?.requestHtmlDocumentResources(resourceUrls: resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
                     
                     let webArchive = WebArchive(
                         mainResource: documentData.mainResource,
@@ -89,46 +89,34 @@ class WebArchiveOperation: Operation {
         state = .executing
     }
     
-    private func requestHtmlDocumentResourcesSerially(resourceUrls: inout [String], complete: @escaping ((_ resources: [WebArchiveResource]) -> Void)) {
-                
+    private func requestHtmlDocumentResources(resourceUrls: [String], complete: @escaping ((_ resources: [WebArchiveResource]) -> Void)) {
+        
         var fetchedResources: [WebArchiveResource] = Array()
         
-        if let resourceUrl = getNextResourceUrl(resourceUrls: &resourceUrls) {
+        let totalNumberOfResourcesToFetch: Int = resourceUrls.count
+        var fetchCount: Int = 0
+        
+        for resourceUrlString in resourceUrls {
             
-            var remainingResourceUrls: [String] = resourceUrls
-                        
-            requestHtmlDocumentResources(resourceUrl: resourceUrl) { [weak self] (result: Result<WebArchiveResource, Error>) in
+            if let resourceUrl = URL(string: resourceUrlString) {
                 
-                switch result {
-                case .success(let webArchiveResource):
-                    fetchedResources.append(webArchiveResource)
-                case .failure( _):
-                    break
+                requestHtmlDocumentResources(resourceUrl: resourceUrl) { [weak self] (result: Result<WebArchiveResource, Error>) in
+                    
+                    switch result {
+                    case .success(let webArchiveResource):
+                        fetchedResources.append(webArchiveResource)
+                    case .failure( _):
+                        break
+                    }
+                    
+                    fetchCount = fetchCount + 1
+                    
+                    if fetchCount == totalNumberOfResourcesToFetch {
+                        complete(fetchedResources)
+                    }
                 }
-                
-                //continue fetching resources
-                self?.requestHtmlDocumentResourcesSerially(resourceUrls: &remainingResourceUrls, complete: complete)
             }
         }
-        else {
-            
-            complete(fetchedResources)
-        }
-    }
-    
-    private func getNextResourceUrl(resourceUrls: inout [String]) -> URL? {
-        
-        var nextResourceUrl: URL?
-        
-        while !resourceUrls.isEmpty && nextResourceUrl == nil {
-            
-            let resourceUrl: String = resourceUrls[0]
-            resourceUrls.remove(at: 0)
-            
-            nextResourceUrl = URL(string: resourceUrl)
-        }
-        
-        return nextResourceUrl
     }
     
     private func requestHtmlDocumentResources(resourceUrl: URL, complete: @escaping ((_ result: Result<WebArchiveResource, Error>) -> Void)) {

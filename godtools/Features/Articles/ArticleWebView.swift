@@ -66,10 +66,17 @@ class ArticleWebView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.url.addObserver(self) { [weak self] (url: URL?) in
+        viewModel.webUrl.addObserver(self) { [weak self] (url: URL?) in
             if let url = url {
                 self?.webView.navigationDelegate = self
                 self?.webView.load(URLRequest(url: url))
+            }
+        }
+        
+        viewModel.webArchiveUrl.addObserver(self) { [weak self] (url: URL?) in
+            if let url = url {
+                self?.webView.navigationDelegate = self
+                self?.webView.loadFileURL(url, allowingReadAccessTo: url)
             }
         }
     }

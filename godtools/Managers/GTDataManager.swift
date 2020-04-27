@@ -28,7 +28,7 @@ class GTDataManager: NSObject {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = documentsPath.appending("/").appending("Resources")
         bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
-        realm = RealmDatabase.sharedRealm
+        realm = RealmDatabase.sharedMainThreadRealm
         
         super.init()
     }

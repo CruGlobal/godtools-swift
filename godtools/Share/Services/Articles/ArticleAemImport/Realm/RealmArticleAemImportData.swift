@@ -12,20 +12,20 @@ import RealmSwift
 class RealmArticleAemImportData: Object, ArticleAemImportDataType {
     
     @objc dynamic var articleJcrContent: RealmArticleJcrContent?
-    @objc dynamic var id: String = ""
+    @objc dynamic var languageCode: String = ""
+    @objc dynamic var resourceId: String = ""
     @objc dynamic var webUrl: String = ""
+    @objc dynamic var webArchiveFilename: String = ""
     
-    required init(articleJcrContent: RealmArticleJcrContent?, id: String, webUrl: String) {
+    required init(articleJcrContent: RealmArticleJcrContent?, languageCode: String, resourceId: String, webUrl: String, webArchiveFilename: String) {
         self.articleJcrContent = articleJcrContent
-        self.id = id
+        self.languageCode = languageCode
+        self.resourceId = resourceId
         self.webUrl = webUrl
+        self.webArchiveFilename = webArchiveFilename
     }
     
     required init() {
         
-    }
-    
-    override static func primaryKey() -> String? {
-        return "id"
     }
 }
