@@ -143,7 +143,6 @@
 		455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70823F6F643004A4854 /* GTSegment.swift */; };
 		455BF70E23F6F643004A4854 /* GTSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BF70923F6F643004A4854 /* GTSegmentedControl.swift */; };
 		455BF70F23F6F643004A4854 /* GTSegmentedControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */; };
-		455D7F33244E6F000059EC49 /* ZipFileContentsCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D7F32244E6F000059EC49 /* ZipFileContentsCacheTests.swift */; };
 		455D7F37244E6F3E0059EC49 /* test_for_zip_file_contents_cache.zip in Resources */ = {isa = PBXBuildFile; fileRef = 455D7F35244E6F380059EC49 /* test_for_zip_file_contents_cache.zip */; };
 		455D7F42244E77D40059EC49 /* TranslationsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D7F41244E77D40059EC49 /* TranslationsApi.swift */; };
 		455D7F44244E77E00059EC49 /* TranslationsApiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455D7F43244E77E00059EC49 /* TranslationsApiType.swift */; };
@@ -674,7 +673,6 @@
 		455BF70823F6F643004A4854 /* GTSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegment.swift; sourceTree = "<group>"; };
 		455BF70923F6F643004A4854 /* GTSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentedControl.swift; sourceTree = "<group>"; };
 		455BF70A23F6F643004A4854 /* GTSegmentedControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTSegmentedControl.xib; sourceTree = "<group>"; };
-		455D7F32244E6F000059EC49 /* ZipFileContentsCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipFileContentsCacheTests.swift; sourceTree = "<group>"; };
 		455D7F35244E6F380059EC49 /* test_for_zip_file_contents_cache.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = test_for_zip_file_contents_cache.zip; sourceTree = "<group>"; };
 		455D7F41244E77D40059EC49 /* TranslationsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsApi.swift; sourceTree = "<group>"; };
 		455D7F43244E77E00059EC49 /* TranslationsApiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsApiType.swift; sourceTree = "<group>"; };
@@ -1561,30 +1559,6 @@
 			path = GTSegmentControl;
 			sourceTree = "<group>";
 		};
-		455D7F2F244E6F000059EC49 /* Share */ = {
-			isa = PBXGroup;
-			children = (
-				455D7F30244E6F000059EC49 /* Services */,
-			);
-			path = Share;
-			sourceTree = "<group>";
-		};
-		455D7F30244E6F000059EC49 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				455D7F31244E6F000059EC49 /* ZipFileContentsCache */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		455D7F31244E6F000059EC49 /* ZipFileContentsCache */ = {
-			isa = PBXGroup;
-			children = (
-				455D7F32244E6F000059EC49 /* ZipFileContentsCacheTests.swift */,
-			);
-			path = ZipFileContentsCache;
-			sourceTree = "<group>";
-		};
 		455D7F34244E6F380059EC49 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -2441,7 +2415,6 @@
 			children = (
 				1737DFD822F9D4D700223CB0 /* LanguageTests.swift */,
 				45B59D7A242434F700F9D594 /* Features */,
-				455D7F2F244E6F000059EC49 /* Share */,
 				4FC97EAA20D2B27B00084A33 /* Info.plist */,
 				4FC97EAC20D2B2BB00084A33 /* analytics-test1.xml */,
 				4FC97EB820D2C37900084A33 /* analytics-test2.xml */,
@@ -3490,7 +3463,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				455D7F33244E6F000059EC49 /* ZipFileContentsCacheTests.swift in Sources */,
 				45FA696E24251CF40006878C /* TutorialSupportedLanguages.swift in Sources */,
 				45FA696F24251D360006878C /* MockSupportedLanguages.swift in Sources */,
 				4586306D2453CD74002E06D1 /* FileCacheType.swift in Sources */,
