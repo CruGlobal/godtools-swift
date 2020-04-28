@@ -14,9 +14,9 @@ class MasterHomeViewModel: MasterHomeViewModelType {
     
     let tutorialAvailability: TutorialAvailabilityType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    let analytics: GodToolsAnaltyics
+    let analytics: AnalyticsContainer
     
-    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.tutorialAvailability = tutorialAvailability

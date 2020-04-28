@@ -10,11 +10,24 @@ import Foundation
 
 class TractViewModel: TractViewModelType {
     
+    private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     
-    required init(appsFlyer: AppsFlyerType) {
+    let resource: DownloadedResource
+    let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
+    
+    private weak var flowDelegate: FlowDelegate?
+    
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics) {
         
-        self.toolOpenedAnalytics = ToolOpenedAnalytics(appsFlyer: appsFlyer)
+        self.flowDelegate = flowDelegate
+        self.resource = resource
+        self.analytics = analytics
+        self.toolOpenedAnalytics = toolOpenedAnalytics
+    }
+    
+    func navHomeTapped() {
+        flowDelegate?.navigate(step: .homeTappedFromTract)
     }
     
     func viewLoaded() {

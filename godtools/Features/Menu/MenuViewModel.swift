@@ -17,7 +17,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -26,7 +26,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String = NSLocalizedString("done", comment: "")
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.loginClient = loginClient
@@ -121,7 +121,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "Menu", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Menu", siteSection: "", siteSubSection: "")
     }
     
     func doneTapped() {
@@ -163,14 +163,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
             data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
         )
         
-        analytics.recordScreenView(screenName: "Share App", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Share App", siteSection: "", siteSubSection: "")
     }
     
     func shareAStoryWithUsTapped() {
         
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
         
-        analytics.recordScreenView(screenName: "Share Story", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Share Story", siteSection: "", siteSubSection: "")
     }
     
     func termsOfUseTapped() {

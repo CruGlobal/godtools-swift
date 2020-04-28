@@ -15,7 +15,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     private let category: ArticleCategory
     private let articleManifest: ArticleManifestType
     private let articleAemImportService: ArticleAemImportService
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -23,7 +23,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -57,7 +57,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "Category : \(category.title)", siteSection: resource.code, siteSubSection: "articles-list")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Category : \(category.title)", siteSection: resource.code, siteSubSection: "articles-list")
     }
     
     func articleTapped(articleAemImportData: RealmArticleAemImportData) {

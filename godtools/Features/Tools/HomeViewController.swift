@@ -21,7 +21,6 @@ class HomeViewController: UIViewController {
     
     let toolsManager = ToolsManager.shared
     var refreshControl = UIRefreshControl()
-    var loginBannerView: UIView?
    
     
     @IBOutlet weak var emptyStateView: UIView!
@@ -65,12 +64,6 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
         
-        // MARK - Product owner has requested to not display this quite yet.
-        
-//        if loginBannerShouldDisplay() {
-//            self.displayLoginBanner()
-//        }
-        
         toolsManager.delegate = self
         reloadView()
         tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
@@ -113,10 +106,6 @@ class HomeViewController: UIViewController {
         normalStateView.isHidden = !toolsManager.hasResources()
 
         tableView.reloadData()
-        
-        // MARK - Product owner has requested to not display this quite yet.
-        
-        //updateHeaderView()
     }
     
     @objc private func loadLatestResources() {
@@ -159,52 +148,6 @@ class HomeViewController: UIViewController {
         self.tableView.backgroundColor = .gtWhite
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsets(top: 64.0, left: 0.0, bottom: 0.0, right: 0.0)
-        
-        // MARK - Product owner has requested to not display this quite yet.
-        
-       // loginBannerView = createLoginBannerView()
-    }
-    
-    private func loginBannerShouldDisplay() -> Bool {
-        var shouldDisplayBanner = false
-        
-        // MARK - These are the current conditions that have to be met to display the login banner.
-        let hasTappedFindTools = UserDefaults.standard.bool(forKey: GTConstants.kHasTappedFindTools)
-        let hasAlreadyAccessedATract = UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
-        let bannerHasDiplayedOnce = UserDefaults.standard.bool(forKey: GTConstants.kHasDiplayedBannerOnce)
-        let bannerHasBeenDismissed = UserDefaults.standard.bool(forKey: GTConstants.kBannerHasBeenDismissed)
-        let languageIsEnglish = (Locale.current.languageCode == "en")
-        
-        if hasTappedFindTools && hasAlreadyAccessedATract && !bannerHasDiplayedOnce && !bannerHasBeenDismissed && languageIsEnglish {
-            shouldDisplayBanner = true
-            UserDefaults.standard.set(true, forKey: GTConstants.kHasDiplayedBannerOnce)
-        }
-
-        return shouldDisplayBanner
-    }
-    
-    private func updateHeaderView() {
-        DispatchQueue.main.async {
-            let bannerHasDiplayedOnce = UserDefaults.standard.bool(forKey: GTConstants.kHasDiplayedBannerOnce)
-            let bannerHasBeenDismissed = UserDefaults.standard.bool(forKey: GTConstants.kBannerHasBeenDismissed)
-            if bannerHasDiplayedOnce && !bannerHasBeenDismissed  {
-                self.tableView.tableHeaderView = self.loginBannerView
-            } else {
-                self.tableView.tableHeaderView = UIView()
-            }
-        }
-    }
-    
-    private func createLoginBannerView() -> UIView {
-        let loginBanner = LoginBannerView()
-        loginBanner.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 75)
-        return loginBanner
-    }
-    
-    private func displayLoginBanner() {
-        DispatchQueue.main.async {
-            self.tableView.tableHeaderView = self.loginBannerView
-        }
     }
     
     func addAccessibilityIdentifiers() {

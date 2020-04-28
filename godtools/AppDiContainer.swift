@@ -11,18 +11,17 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
     
+    private let godToolsAnalytics: GodToolsAnaltyics
+    
     let realmDatabase: RealmDatabase
     let isNewUserCache: IsNewUserCacheType
     let isNewUserService: IsNewUserService
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
+    let analytics: AnalyticsContainer
     let translationsApi: TranslationsApiType
     let resourceLatestTranslationServices: ResourceLatestTranslationServices
-    let adobeAnalytics: AdobeAnalyticsType
-    let appsFlyer: AppsFlyerType
-    let firebaseAnalytics: FirebaseAnalyticsType
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    let analytics: GodToolsAnaltyics
     let languagesManager: LanguagesManager
     
     required init() {
@@ -39,26 +38,38 @@ class AppDiContainer {
         config = AppConfig()
         
         loginClient = TheKeyOAuthClient.shared
+        
+        analytics = AnalyticsContainer(
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: false),
+            firebaseAnalytics: FirebaseAnalytics()
+        )
+        
+        godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
                 
         translationsApi = TranslationsApi(config: config)
           
         resourceLatestTranslationServices = ResourceLatestTranslationServices(translationsApi: translationsApi)
-        
-        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
-        
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: false)
-            
-        firebaseAnalytics = FirebaseAnalytics()
-        
+                        
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
-        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer, firebaseAnalytics: firebaseAnalytics)
-        
         languagesManager = LanguagesManager()
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
         return FirebaseConfiguration(config: config)
+    }
+    
+    var googleAdwordsAnalytics: GoogleAdwordsAnalytics {
+        return GoogleAdwordsAnalytics(config: config)
+    }
+    
+    var toolOpenedAnalytics: ToolOpenedAnalytics {
+        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyer)
+    }
+    
+    var exitLinkAnalytics: ExitLinkAnalytics {
+        return ExitLinkAnalytics(adobeAnalytics: analytics.adobeAnalytics)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {

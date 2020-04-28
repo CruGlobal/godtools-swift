@@ -10,32 +10,40 @@ import Foundation
 
 class ToolDetailViewModel: ToolDetailViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
+    private let exitLinkAnalytics: ExitLinkAnalytics
     
     private weak var flowDelegate: FlowDelegate?
     
     let resource: DownloadedResource
+    let navTitle: String = ""
     let hidesOpenToolButton: Bool
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.analytics = analytics
+        self.exitLinkAnalytics = exitLinkAnalytics
         self.hidesOpenToolButton = !resource.shouldDownload
     }
     
-    var screenName: String {
+    private var screenName: String {
         let toolCode: String = resource.code
         return toolCode + "-" + "tool-info"
     }
     
-    var siteSection: String {
+    private var siteSection: String {
         return resource.code
     }
     
-    var siteSubSection: String {
+    private var siteSubSection: String {
         return ""
+    }
+    
+    func pageViewed() {
+        
+        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
     }
     
     func openToolTapped() {
@@ -43,8 +51,8 @@ class ToolDetailViewModel: ToolDetailViewModelType {
     }
     
     func urlTapped(url: URL) {
-        
-        analytics.recordExitLinkAction(
+                
+        exitLinkAnalytics.trackExitLink(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,

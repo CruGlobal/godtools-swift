@@ -13,7 +13,7 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailViewController" customModule="godtools" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolDetailView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="aboutDetailsTextView" destination="dRz-gk-4aW" id="B6x-ed-RJI"/>
                 <outlet property="aboutDetailsTextViewLeading" destination="JJz-wz-bKN" id="seH-yh-6tH"/>

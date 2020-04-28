@@ -11,13 +11,12 @@ import Foundation
 protocol ToolDetailViewModelType {
     
     var resource: DownloadedResource { get }
+    var navTitle: String { get }
     var hidesOpenToolButton: Bool { get }
     var aboutDetails: String { get }
     var languageDetails: String { get }
-    var screenName: String { get }
-    var siteSection: String { get }
-    var siteSubSection: String { get }
     
+    func pageViewed()
     func openToolTapped()
     func urlTapped(url: URL)
 }

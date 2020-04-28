@@ -10,18 +10,18 @@ import Foundation
 
 class FindToolsViewModel: FindToolsViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
     }
     
     func toolTapped(resource: DownloadedResource) {

@@ -38,9 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.firebaseConfiguration.configure()
         
-        appDiContainer.adobeAnalytics.configure()
+        appDiContainer.analytics.adobeAnalytics.configure()
         
-        appDiContainer.appsFlyer.configure(adobeAnalytics: appDiContainer.adobeAnalytics)
+        appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        
+        appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         resetStateIfUITesting()
         
@@ -95,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
         flowController?.applicationDidBecomeActive(application)
-        appDiContainer.appsFlyer.trackAppLaunch()
+        appDiContainer.analytics.appsFlyer.trackAppLaunch()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

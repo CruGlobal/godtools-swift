@@ -10,6 +10,7 @@ import UIKit
 
 enum ImageCatalog: String {
     
+    case navHome = "home"
     case navLanguage = "nav_language"
     case navMenu = "nav_menu"
     case navSettings = "nav_gear"

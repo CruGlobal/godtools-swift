@@ -38,6 +38,9 @@ enum FlowStep {
     // toolDetails
     case openToolTappedFromToolDetails(resource: DownloadedResource)
     
+    // tract
+    case homeTappedFromTract
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial

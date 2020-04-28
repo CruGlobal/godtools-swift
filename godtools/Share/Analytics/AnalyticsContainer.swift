@@ -10,7 +10,24 @@ import Foundation
 
 class AnalyticsContainer {
      
-    required init() {
+    // analytics systems
+    let adobeAnalytics: AdobeAnalyticsType
+    let appsFlyer: AppsFlyerType
+    let firebaseAnalytics: FirebaseAnalyticsType
+    
+    // shared analytics tracking
+    let pageViewedAnalytics: PageViewedAnalytics
+    
+    required init(adobeAnalytics: AdobeAnalyticsType, appsFlyer: AppsFlyerType, firebaseAnalytics: FirebaseAnalyticsType) {
         
+        self.pageViewedAnalytics = PageViewedAnalytics(
+            adobeAnalytics: adobeAnalytics,
+            appsFlyer: appsFlyer,
+            firebaseAnalytics: firebaseAnalytics
+        )
+        
+        self.adobeAnalytics = adobeAnalytics
+        self.appsFlyer = appsFlyer
+        self.firebaseAnalytics = firebaseAnalytics
     }
 }

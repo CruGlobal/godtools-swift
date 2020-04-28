@@ -10,7 +10,7 @@ import UIKit
 
 class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -18,7 +18,7 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     let title: ObservableValue<String>
     let beginTitle: ObservableValue<String>
         
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -34,7 +34,7 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     
     func pageViewed() {
         
-        analytics.recordScreenView(
+        analytics.pageViewedAnalytics.trackPageView(
             screenName: analyticsScreenName,
             siteSection: "onboarding",
             siteSubSection: ""

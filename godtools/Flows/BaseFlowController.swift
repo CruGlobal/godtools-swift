@@ -30,9 +30,7 @@ class BaseFlowController: NSObject, FlowDelegate {
         self.navigationController = UINavigationController()
         
         super.init()
-        
-        defineObservers()
-        
+                
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([LaunchView()], animated: false)
@@ -163,6 +161,10 @@ class BaseFlowController: NSObject, FlowDelegate {
             
             self.languageSettingsFlow = languageSettingsFlow
                         
+        case .homeTappedFromTract:
+            _ = navigationController.popToRootViewController(animated: true)
+            resetNavigationControllerColorToDefault()
+            
         default:
             break
         }
@@ -197,12 +199,14 @@ class BaseFlowController: NSObject, FlowDelegate {
         case .tract:
             
             let viewModel = TractViewModel(
-                appsFlyer: appDiContainer.appsFlyer
+                flowDelegate: self,
+                resource: resource,
+                analytics: appDiContainer.analytics,
+                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
             )
-            
-            let viewController = TractViewController(viewModel: viewModel)
-            viewController.resource = resource
-            pushViewController(viewController: viewController)
+            let view = TractViewController(viewModel: viewModel)
+
+            navigationController.pushViewController(view, animated: true)
         
         case .unknown:
             let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
@@ -216,11 +220,12 @@ class BaseFlowController: NSObject, FlowDelegate {
         let viewModel = ToolDetailViewModel(
             flowDelegate: self,
             resource: resource,
-            analytics: appDiContainer.analytics
+            analytics: appDiContainer.analytics,
+            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )
-        let view = ToolDetailViewController(viewModel: viewModel)
+        let view = ToolDetailView(viewModel: viewModel)
         
-        self.pushViewController(viewController: view)
+        navigationController.pushViewController(view, animated: true)
     }
     
     private func dismissTutorial() {
@@ -233,24 +238,19 @@ class BaseFlowController: NSObject, FlowDelegate {
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
         let viewModel = TractViewModel(
-            appsFlyer: appDiContainer.appsFlyer
+            flowDelegate: self,
+            resource: resource,
+            analytics: appDiContainer.analytics,
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
         )
+        let view = TractViewController(viewModel: viewModel)
         
-        let viewController = TractViewController(viewModel: viewModel)
-        viewController.resource = resource
-        viewController.currentPage = page
-        viewController.universalLinkLanguage = language
-        viewController.arrivedByUniversalLink = true
+        view.currentPage = page
+        view.universalLinkLanguage = language
+        view.arrivedByUniversalLink = true
         GTSettings.shared.parallelLanguageCode = parallelLanguageCode
         
-        pushViewController(viewController: viewController)
-    }
-    
-    func pushViewController(viewController: UIViewController) {
-        if viewController.isKind(of: BaseViewController.self) {
-            (viewController as! BaseViewController).baseDelegate = self
-        }
-        navigationController.pushViewController(viewController, animated: true)
+        navigationController.pushViewController(view, animated: true)
     }
         
     // MARK: - Helpers
@@ -271,22 +271,8 @@ class BaseFlowController: NSObject, FlowDelegate {
         navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
                                                                   NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)]
     }
-  
-    // Notifications
     
-    func defineObservers() {
-                
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(displayMenu),
-                                               name: .displayMenuNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(dismissMenu),
-                                               name: .dismissMenuNotification,
-                                               object: nil)
-    }
-    
-    @objc func displayMenu(notification: Notification? = nil) {
+    func displayMenu(notification: Notification? = nil) {
         
         let menuFlow: MenuFlow = MenuFlow(
             flowDelegate: self,
@@ -320,7 +306,7 @@ class BaseFlowController: NSObject, FlowDelegate {
         })
     }
     
-    @objc func dismissMenu() {
+    func dismissMenu() {
         guard let menuView = navigationController.topViewController as? MenuView else { return }
         guard let dst = currentViewController else { return }
         let dstViewWidth = dst.view.frame.size.width
@@ -337,19 +323,6 @@ class BaseFlowController: NSObject, FlowDelegate {
         })
     }
     
-}
-
-extension BaseFlowController: BaseViewControllerDelegate {
-    
-    func goHome() {
-        _ = navigationController.popToRootViewController(animated: true)
-        resetNavigationControllerColorToDefault()
-    }
-    
-    func goBack() {
-        _ = navigationController.popViewController(animated: true)
-        resetNavigationControllerColorToDefault()
-    }
 }
 
 extension BaseFlowController: UIApplicationDelegate {

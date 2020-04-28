@@ -9,7 +9,7 @@
 import UIKit
 import PromiseKit
 
-class MasterHomeViewController: BaseViewController  {
+class MasterHomeViewController: UIViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
@@ -61,6 +61,8 @@ class MasterHomeViewController: BaseViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addAccessibilityIdentifiers()
         
         setupLayout()
         setupBinding()
@@ -154,6 +156,37 @@ class MasterHomeViewController: BaseViewController  {
         viewModel.languageTapped()
     }
     
+    private func determineMyToolsSegment() -> String {
+        let myTools = "my_tools".localized
+        return myTools
+    }
+    
+    private func determineFindToolsSegment() -> String {
+        let findTools = "find_tools".localized
+        return findTools
+    }
+    
+    private func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
+        let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
+        var fontSize: CGFloat = 15.0
+        if count > 14 {
+            switch count {
+            case 15:
+                fontSize = 14.0
+            case 16:
+                fontSize = 13.5
+            case 17:
+                fontSize = 13.0
+            case 18:
+                fontSize = 12.5
+            default:
+                fontSize = 12.0
+            }
+        }
+        
+        return fontSize
+    }
+    
     // MARK: - View Methods
     
     func updateView() {
@@ -193,11 +226,6 @@ class MasterHomeViewController: BaseViewController  {
     
     @objc func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
-    }
-    
-    override func homeButtonAction() {
-        baseDelegate?.goHome()
-        navigationController?.popToRootViewController(animated: true)
     }
 
     // MARK: - Helper Methods
@@ -246,15 +274,7 @@ class MasterHomeViewController: BaseViewController  {
         toolsManager.loadResourceList()
     }
     
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Home"
-    }
-    
-    // MARK: - Accessiblity
-    
-    override func addAccessibilityIdentifiers() {
+    func addAccessibilityIdentifiers() {
         segmentedControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
 

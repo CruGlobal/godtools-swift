@@ -14,7 +14,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     private let godToolsResource: GodToolsResource
     private let articleAemImportData: RealmArticleAemImportData
     private let articleAemImportService: ArticleAemImportService
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -23,7 +23,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -59,7 +59,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     
     func pageViewed() {
         
-        analytics.recordScreenView(
+        analytics.pageViewedAnalytics.trackPageView(
             screenName: "Article : \(articleAemImportData.articleJcrContent?.title ?? "")",
             siteSection: resource.code,
             siteSubSection: "article"

@@ -13,7 +13,7 @@ protocol MasterHomeViewModelType {
     var flowDelegate: FlowDelegate? { get }
     var tutorialAvailability: TutorialAvailabilityType { get }
     var openTutorialCalloutCache: OpenTutorialCalloutCacheType { get }
-    var analytics: GodToolsAnaltyics { get }
+    var analytics: AnalyticsContainer { get }
     
     func menuTapped()
     func languageTapped()

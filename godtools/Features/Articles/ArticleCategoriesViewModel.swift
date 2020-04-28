@@ -12,7 +12,7 @@ import RealmSwift
 class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private let resource: DownloadedResource
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private var articleManifest: ArticleManifestXmlParser?
     
@@ -24,7 +24,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -66,7 +66,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "Categories", siteSection: resource.code, siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Categories", siteSection: resource.code, siteSubSection: "")
     }
     
     func refreshArticles() {

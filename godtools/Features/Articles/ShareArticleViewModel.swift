@@ -10,12 +10,12 @@ import Foundation
 
 class ShareArticleViewModel: ShareArticleViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     private let articleAemImportData: RealmArticleAemImportData
     
     let shareMessage: String
     
-    required init(articleAemImportData: RealmArticleAemImportData, analytics: GodToolsAnaltyics) {
+    required init(articleAemImportData: RealmArticleAemImportData, analytics: AnalyticsContainer) {
         
         self.analytics = analytics
         self.articleAemImportData = articleAemImportData
@@ -40,7 +40,7 @@ class ShareArticleViewModel: ShareArticleViewModelType {
     
     func pageViewed() {
         
-        analytics.recordScreenView(
+        analytics.pageViewedAnalytics.trackPageView(
             screenName: analyticsScreenName,
             siteSection: "",
             siteSubSection: ""

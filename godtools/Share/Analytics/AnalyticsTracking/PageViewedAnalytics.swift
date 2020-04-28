@@ -1,5 +1,5 @@
 //
-//  ScreenViewedAnalytics.swift
+//  PageViewedAnalytics.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ScreenViewedAnalytics {
+class PageViewedAnalytics {
     
     private let adobeAnalytics: AdobeAnalyticsType
     private let appsFlyer: AppsFlyerType
@@ -21,7 +21,7 @@ class ScreenViewedAnalytics {
         self.firebaseAnalytics = firebaseAnalytics
     }
     
-    func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
+    func trackPageView(screenName: String, siteSection: String, siteSubSection: String) {
         
         adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         

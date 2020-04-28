@@ -1,5 +1,5 @@
 //
-//  ToolDetailViewController.swift
+//  ToolDetailView.swift
 //  godtools
 //
 //  Created by Devserker on 4/21/17.
@@ -11,7 +11,7 @@ import UIKit
 import TTTAttributedLabel
 import YoutubePlayer_in_WKWebView
 
-class ToolDetailViewController: BaseViewController {
+class ToolDetailView: UIViewController {
     
     enum SegmentedControlId: String {
         case about = "about"
@@ -53,7 +53,7 @@ class ToolDetailViewController: BaseViewController {
             
     required init(viewModel: ToolDetailViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "ToolDetailViewController", bundle: nil)
+        super.init(nibName: String(describing: ToolDetailView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,11 +74,16 @@ class ToolDetailViewController: BaseViewController {
         openToolButton.designAsOpenToolButton()
                     
         displayData()
-        hideScreenTitle()
         registerForDownloadProgressNotifications()
         setTopHeight()
         
-        openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
+        addDefaultNavBackItem()
+        
+        openToolButton.addTarget(
+            self,
+            action: #selector(handleOpenTool(button:)),
+            for: .touchUpInside
+        )
     }
     
     private func setupLayout() {
@@ -97,6 +102,7 @@ class ToolDetailViewController: BaseViewController {
     
     private func setupBinding() {
         
+        title = viewModel.navTitle
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,6 +120,7 @@ class ToolDetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.pageViewed()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -275,7 +282,8 @@ class ToolDetailViewController: BaseViewController {
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
         
-        baseDelegate?.goHome()
+        // TODO: Navigate back to my tools through flow. ~Levi
+        navigationController?.popViewController(animated: true)
 
         let resource: DownloadedResource = viewModel.resource
         
@@ -295,29 +303,15 @@ class ToolDetailViewController: BaseViewController {
     private func returnToHome() {
         let time = DispatchTime.now() + 0.55
         DispatchQueue.main.asyncAfter(deadline: time) { [weak self] in
-            self?.baseDelegate?.goHome()
+            // TODO: Navigate back to my tools through flow. ~Levi
+            self?.navigationController?.popViewController(animated: true)
         }
     }
-    
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return viewModel.screenName
-    }
-    
-    override func siteSection() -> String {
-        return viewModel.siteSection
-    }
-    
-    override func siteSubSection() -> String {
-        return viewModel.siteSubSection
-    }
-    
 }
 
 // MARK: - UITextViewDelegate
 
-extension ToolDetailViewController: UITextViewDelegate {
+extension ToolDetailView: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
                 
@@ -329,7 +323,7 @@ extension ToolDetailViewController: UITextViewDelegate {
 
 // MARK: - GTSegmentedControlDelegate
 
-extension ToolDetailViewController: GTSegmentedControlDelegate {
+extension ToolDetailView: GTSegmentedControlDelegate {
     
     func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegmentType, at index: Int) {
         
@@ -351,7 +345,7 @@ extension ToolDetailViewController: GTSegmentedControlDelegate {
     }
 }
 
-extension ToolDetailViewController: WKYTPlayerViewDelegate {
+extension ToolDetailView: WKYTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
         
