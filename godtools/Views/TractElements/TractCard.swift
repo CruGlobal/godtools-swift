@@ -68,10 +68,6 @@ class TractCard: BaseTractElement {
         }
     }
     
-    var tractCardAnalyticEvents: [TractAnalyticEvent]  {
-            return self.analyticsUserInfo
-    }
-    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
@@ -111,6 +107,15 @@ class TractCard: BaseTractElement {
             setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: pageCount)
         }
         TractBindings.addBindings(self)
+        
+        print("\n TractCard render()")
+        for analyticEvent in analyticsUserInfo {
+            print(" action: \(analyticEvent.action)")
+            print("   system: \(analyticEvent.system)")
+            print("   trigger: \(analyticEvent.trigger)")
+            print("   delay: \(analyticEvent.delay)")
+        }
+        
         return self
     }
     
