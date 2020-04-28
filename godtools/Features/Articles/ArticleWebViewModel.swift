@@ -16,12 +16,16 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     private let articleAemImportService: ArticleAemImportService
     private let analytics: GodToolsAnaltyics
     
+    private weak var flowDelegate: FlowDelegate?
+    
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
+    let hidesShareButton: ObservableValue<Bool> = ObservableValue(value: false)
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articleAemImportService: ArticleAemImportService, analytics: GodToolsAnaltyics) {
         
+        self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.articleAemImportData = articleAemImportData
@@ -49,6 +53,8 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         else if let articleWebUrl = URL(string: articleAemImportData.webUrl) {
             webUrl.accept(value: articleWebUrl)
         }
+        
+        hidesShareButton.accept(value: articleAemImportData.articleJcrContent?.canonical == nil)
     }
     
     func pageViewed() {
@@ -58,5 +64,10 @@ class ArticleWebViewModel: ArticleWebViewModelType {
             siteSection: resource.code,
             siteSubSection: "article"
         )
+    }
+    
+    func sharedTapped() {
+        
+        flowDelegate?.navigate(step: .sharedTappedFromArticle(articleAemImportData: articleAemImportData))
     }
 }

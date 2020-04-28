@@ -37,6 +37,7 @@ class ChooseLanguageView: UIViewController {
         deleteLanguageButton = addBarButtonItem(
             to: .right,
             title: viewModel.deleteLanguageButtonTitle,
+            style: .plain,
             color: .white,
             target: self, action: #selector(handleDeleteLanguage(barButtonItem:))
         )

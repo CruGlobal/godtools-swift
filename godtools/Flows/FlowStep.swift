@@ -39,6 +39,7 @@ enum FlowStep {
     case aboutTappedFromMenu
     case helpTappedFromMenu
     case contactUsTappedFromMenu
+    case shareGodToolsTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
     case termsOfUseTappedFromMenu
     case privacyPolicyTappedFromMenu
@@ -52,4 +53,5 @@ enum FlowStep {
     // articles
     case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType)
     case articleTappedFromArticles(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData)
+    case sharedTappedFromArticle(articleAemImportData: RealmArticleAemImportData)
 }

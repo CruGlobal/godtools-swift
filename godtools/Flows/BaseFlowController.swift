@@ -135,6 +135,9 @@ class BaseFlowController: NSObject, FlowDelegate {
         case .menuTappedFromHome:
             displayMenu()
             
+        case .doneTappedFromMenu:
+            dismissMenu()
+            
         case .languagesTappedFromHome:
             
             let languageSettingsFlow = LanguageSettingsFlow(

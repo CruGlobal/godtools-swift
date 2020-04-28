@@ -64,6 +64,7 @@ class ArticlesFlow: Flow {
         case .articleTappedFromArticles(let resource, let godToolsResource, let articleAemImportData):
             
             let viewModel = ArticleWebViewModel(
+                flowDelegate: self,
                 resource: resource,
                 godToolsResource: godToolsResource,
                 articleAemImportData: articleAemImportData,
@@ -74,6 +75,17 @@ class ArticlesFlow: Flow {
             let view = ArticleWebView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
+            
+        case .sharedTappedFromArticle(let articleAemImportData):
+            
+            let viewModel = ShareArticleViewModel(
+                articleAemImportData: articleAemImportData,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ShareArticleView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
             
         default:
             break

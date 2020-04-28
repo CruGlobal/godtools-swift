@@ -115,6 +115,7 @@ class OnboardingTutorialView: UIViewController {
                     view.skipButton = view.addBarButtonItem(
                         to: skipButtonPosition,
                         title: view.viewModel.skipButtonTitle,
+                        style: .plain,
                         color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
                         target: self,
                         action: #selector(view.handleSkip(barButtonItem:))

@@ -36,15 +36,18 @@ class MasterHomeViewController: BaseViewController  {
         return viewController
     }()
     
-    private lazy var addToolsViewController: AddToolsViewController = {
+    private lazy var addToolsViewController: FindToolsView = {
         
-        let viewController = AddToolsViewController(nibName: "AddToolsViewController", bundle: nil)
-        viewController.delegate = self
+        let findToolsViewModel = FindToolsViewModel(analytics: self.viewModel.analytics)
+        let view = FindToolsView(viewModel: findToolsViewModel)
         
-        // Add View Controller as Child View Controller
-        add(asChildViewController: viewController)
+        // TODO: Would like to remove delegate and use flow ~Levi.
+        view.delegate = self
         
-        return viewController
+        // TODO: I think view might get added twice because this is called from segment. ~Levi
+        add(asChildViewController: view)
+        
+        return view
     }()
     
     @IBOutlet weak private var openTutorialView: OpenTutorialView!

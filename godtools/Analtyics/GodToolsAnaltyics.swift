@@ -11,9 +11,9 @@ import Foundation
 class GodToolsAnaltyics {
     
     private let config: ConfigType
-    private let adobeAnalytics: AdobeAnalyticsType
-    private let appsFlyer: AppsFlyerType
-    private let firebaseAnalytics: FirebaseAnalyticsType
+    let adobeAnalytics: AdobeAnalyticsType
+    let appsFlyer: AppsFlyerType
+    let firebaseAnalytics: FirebaseAnalyticsType
     
     var previousScreenName = ""
         

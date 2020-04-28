@@ -14,6 +14,7 @@ class ArticleWebView: UIViewController {
     private let viewModel: ArticleWebViewModelType
         
     private var webView: WKWebView!
+    private var shareButton: UIBarButtonItem?
     
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
         
@@ -39,11 +40,18 @@ class ArticleWebView: UIViewController {
         setupBinding()
         
         addDefaultNavBackItem()
+        
+        shareButton = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navShare.image,
+            color: .white,
+            target: self,
+            action: #selector(handleShare(barButtonItem:))
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         viewModel.pageViewed()
     }
     
@@ -66,6 +74,18 @@ class ArticleWebView: UIViewController {
             self?.title = navTitle
         }
         
+        viewModel.hidesShareButton.addObserver(self) { [weak self] (hidesShareButton) in
+            if let shareButton = self?.shareButton {
+                let shareButtonPosition = ButtonItemPosition.right
+                if hidesShareButton {
+                    self?.removeBarButtonItem(item: shareButton, barPosition: shareButtonPosition)
+                }
+                else {
+                    self?.addBarButtonItem(item: shareButton, barPosition: shareButtonPosition)
+                }
+            }
+        }
+        
         viewModel.webUrl.addObserver(self) { [weak self] (url: URL?) in
             if let url = url {
                 self?.webView.navigationDelegate = self
@@ -79,6 +99,10 @@ class ArticleWebView: UIViewController {
                 self?.webView.loadFileURL(url, allowingReadAccessTo: url)
             }
         }
+    }
+    
+    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+        viewModel.sharedTapped()
     }
     
     private func finishedLoadingWebView() {

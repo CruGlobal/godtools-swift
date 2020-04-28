@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 class MenuFlow: Flow {
     
@@ -34,7 +35,8 @@ class MenuFlow: Flow {
             menuDataProvider: MenuDataProvider(),
             deviceLanguage: appDiContainer.deviceLanguage,
             tutorialAvailability: appDiContainer.tutorialAvailability,
-            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
+            openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            analytics: appDiContainer.analytics
         )
         menuView = MenuView(viewModel: viewModel)
     }
@@ -69,6 +71,9 @@ class MenuFlow: Flow {
             
         case .startUsingGodToolsTappedFromTutorial:
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
+            
+        case .doneTappedFromMenu:
+            flowDelegate?.navigate(step: .doneTappedFromMenu)
                         
         case .myAccountTappedFromMenu:
             
@@ -95,11 +100,58 @@ class MenuFlow: Flow {
             
         case .contactUsTappedFromMenu:
            
-            navigateToWebContentView(webContent: ContactUsWebContent())
-             
+            if MFMailComposeViewController.canSendMail() {
+                
+                let finishedSendingMail = CallbackHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let viewModel = MailViewModel(
+                    flowDelegate: self,
+                    toRecipients: ["support@godtoolsapp.com"],
+                    subject: "Email to GodTools support",
+                    message: "",
+                    finishedSendingMailHandler: finishedSendingMail
+                )
+                
+                let view = MailView(viewModel: viewModel)
+                
+                navigationController.present(view, animated: true, completion: nil)
+            }
+            else {
+                navigateToWebContentView(webContent: ContactUsWebContent())
+            }
+            
+        case .shareGodToolsTappedFromMenu:
+            
+            let textToShare: String = NSLocalizedString("share_god_tools_share_sheet_text", comment: "")
+            let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
+            
+            navigationController.present(view, animated: true, completion: nil)
+            
         case .shareAStoryWithUsTappedFromMenu:
             
-            navigateToWebContentView(webContent: ShareAStoryWithUsWebContent())
+            if MFMailComposeViewController.canSendMail() {
+                
+                let finishedSendingMail = CallbackHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let viewModel = MailViewModel(
+                    flowDelegate: self,
+                    toRecipients: ["support@godtoolsapp.com"],
+                    subject: "GodTools story",
+                    message: "",
+                    finishedSendingMailHandler: finishedSendingMail
+                )
+                
+                let view = MailView(viewModel: viewModel)
+                
+                navigationController.present(view, animated: true, completion: nil)
+            }
+            else {
+                navigateToWebContentView(webContent: ShareAStoryWithUsWebContent())
+            }
             
         case .termsOfUseTappedFromMenu:
             

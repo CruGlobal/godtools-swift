@@ -1,41 +1,70 @@
 //
-//  AddToolsViewController.swift
+//  FindToolsView.swift
 //  godtools
 //
-//  Created by Devserker on 4/21/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 4/28/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
 
-protocol AddToolsViewControllerDelegate {
-    mutating func moveToToolDetail(resource: DownloadedResource)
+protocol AddToolsViewControllerDelegate: class {
+    func moveToToolDetail(resource: DownloadedResource)
 }
 
-class AddToolsViewController: BaseViewController {
+class FindToolsView: UIViewController {
     
-    var delegate: AddToolsViewControllerDelegate?
-    
+    private let viewModel: FindToolsViewModelType
+        
     let toolsManager = ToolsManager.shared
     
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.delegate = toolsManager
-            tableView.dataSource = toolsManager
-        }
-    }
+    @IBOutlet weak private var toolsTableView: UITableView!
+
     var emptyView = UIView()
+    
+    weak var delegate: AddToolsViewControllerDelegate?
+    
+    required init(viewModel: FindToolsViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: FindToolsView.self), bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view didload: \(type(of: self))")
+        
         self.registerCells()
         self.setupStyle()
         emptyView = addMessageForEmptyResources()
         self.view.addSubview(emptyView)
+        
+        setupLayout()
+        setupBinding()
+        
+        toolsTableView.delegate = toolsManager
+        toolsTableView.dataSource = toolsManager
+    }
+    
+    private func setupLayout() {
+        
+    }
+    
+    private func setupBinding() {
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.pageViewed()
+        
         self.toolsManager.delegate = self
         self.toolsManager.loadResourceList()
         refreshView()
@@ -44,15 +73,18 @@ class AddToolsViewController: BaseViewController {
     // MARK: - Helpers
     
     fileprivate func registerCells() {
-        self.tableView.register(UINib(nibName: String(describing:HomeToolTableViewCell.self), bundle: nil), forCellReuseIdentifier: ToolsManager.toolCellIdentifier)
+        self.toolsTableView.register(
+            UINib(nibName: String(describing:HomeToolTableViewCell.self), bundle: nil),
+            forCellReuseIdentifier: ToolsManager.toolCellIdentifier
+        )
     }
     
     fileprivate func setupStyle() {
-        self.tableView.separatorStyle = .none
+        self.toolsTableView.separatorStyle = .none
     }
     
     func refreshView() {
-        self.tableView.reloadData()
+        self.toolsTableView.reloadData()
         self.emptyView.isHidden = self.toolsManager.hasResources()
         self.view.setNeedsDisplay()
     }
@@ -85,20 +117,9 @@ class AddToolsViewController: BaseViewController {
         
         return emptyBaseView
     }
-    
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Find Tools"
-    }
-    
-    override func siteSection() -> String {
-        return "tools"
-    }
-    
 }
 
-extension AddToolsViewController: ToolsManagerDelegate {
+extension FindToolsView: ToolsManagerDelegate {
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         self.delegate?.moveToToolDetail(resource: cell.resource!)
     }

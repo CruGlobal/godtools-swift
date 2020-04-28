@@ -119,11 +119,6 @@ class BaseViewController: UIViewController {
         self.navigationRightButtons.append(button)
     }
     
-    func addDoneButton() {
-        let button = UIBarButtonItem(title: "done".localized, style: UIBarButtonItem.Style.done, target: self, action: #selector(doneButtonAction))
-        self.navigationRightButtons.append(button)
-    }
-    
     func buildNavigationButton(imageName: String, action: Selector) -> UIBarButtonItem {
         let buttonFrame = CGRect(x: 0.0, y: 0.0, width: kNavigationItemWidth, height: kNavigationItemHeight)
         let button: UIButton = UIButton(frame: buttonFrame)

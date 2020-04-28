@@ -17,13 +17,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
+    private let analytics: GodToolsAnaltyics
     
     private weak var flowDelegate: FlowDelegate?
     
     let loginClient: TheKeyOAuthClient
+    let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("settings", comment: ""))
+    let navDoneButtonTitle: String = NSLocalizedString("done", comment: "")
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: GodToolsAnaltyics) {
         
         self.flowDelegate = flowDelegate
         self.loginClient = loginClient
@@ -31,6 +34,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         self.deviceLanguage = deviceLanguage
         self.tutorialAvailability = tutorialAvailability
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.analytics = analytics
         
         super.init()
                 
@@ -116,6 +120,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
         )
     }
     
+    func pageViewed() {
+        analytics.recordScreenView(screenName: "Menu", siteSection: "", siteSubSection: "")
+    }
+    
     func doneTapped() {
         flowDelegate?.navigate(step: .doneTappedFromMenu)
     }
@@ -145,8 +153,24 @@ class MenuViewModel: NSObject, MenuViewModelType {
         flowDelegate?.navigate(step: .contactUsTappedFromMenu)
     }
     
+    func shareGodToolsTapped() {
+        
+        flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
+        
+        analytics.adobeAnalytics.trackAction(
+            screenName: nil,
+            actionName: AdobeAnalyticsConstants.Values.share,
+            data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
+        )
+        
+        analytics.recordScreenView(screenName: "Share App", siteSection: "", siteSubSection: "")
+    }
+    
     func shareAStoryWithUsTapped() {
+        
         flowDelegate?.navigate(step: .shareAStoryWithUsTappedFromMenu)
+        
+        analytics.recordScreenView(screenName: "Share Story", siteSection: "", siteSubSection: "")
     }
     
     func termsOfUseTapped() {

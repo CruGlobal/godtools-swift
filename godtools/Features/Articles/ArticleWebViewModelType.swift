@@ -11,8 +11,10 @@ import Foundation
 protocol ArticleWebViewModelType {
     
     var navTitle: ObservableValue<String> { get }
+    var hidesShareButton: ObservableValue<Bool> { get }
     var webUrl: ObservableValue<URL?> { get }
     var webArchiveUrl: ObservableValue<URL?> { get }
     
     func pageViewed()
+    func sharedTapped()
 }
