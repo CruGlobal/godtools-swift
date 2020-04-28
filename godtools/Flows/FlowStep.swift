@@ -27,6 +27,17 @@ enum FlowStep {
     case menuTappedFromHome
     case languagesTappedFromHome
     
+    // myTools
+    case toolTappedFromMyTools(resource: DownloadedResource)
+    case toolInfoTappedFromMyTools(resource: DownloadedResource)
+    
+    // findTools
+    case toolTappedFromFindTools(resource: DownloadedResource)
+    case toolInfoTappedFromFindTools(resource: DownloadedResource)
+    
+    // toolDetails
+    case openToolTappedFromToolDetails(resource: DownloadedResource)
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial

@@ -9,19 +9,14 @@
 import UIKit
 import PromiseKit
 
-protocol HomeViewControllerDelegate {
-    mutating func moveToToolDetail(resource: DownloadedResource)
-    mutating func moveToTract(resource: DownloadedResource)
-    mutating func moveToArticle(resource: DownloadedResource)
-}
-
 protocol FindToolsDelegate: class {
     func goToFindTools()
 }
 
-class HomeViewController: BaseViewController {
+class HomeViewController: UIViewController {
     
-    var delegate: HomeViewControllerDelegate?
+    private let viewModel: MyToolsViewModelType
+    
     weak var findDelegate: FindToolsDelegate?
     
     let toolsManager = ToolsManager.shared
@@ -38,6 +33,19 @@ class HomeViewController: BaseViewController {
         }
     }
     
+    required init(viewModel: MyToolsViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: HomeViewController.self), bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.displayWorkingView()
@@ -45,6 +53,8 @@ class HomeViewController: BaseViewController {
         self.setupStyle()
         self.defineObservers()
         addRefreshControl()
+        
+        addAccessibilityIdentifiers()
 
         let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
         pressGesture.minimumPressDuration = 0.75
@@ -53,6 +63,7 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.pageViewed()
         
         // MARK - Product owner has requested to not display this quite yet.
         
@@ -196,21 +207,14 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Home"
-    }
-    
-    // MARK: - Accessiblity
-    
-    override func addAccessibilityIdentifiers() {
-        self.view.accessibilityIdentifier = GTAccessibilityConstants.Home.homeMyToolsView
-        self.tableView.accessibilityIdentifier = GTAccessibilityConstants.Home.homeTableView
+    func addAccessibilityIdentifiers() {
+        view.accessibilityIdentifier = GTAccessibilityConstants.Home.homeMyToolsView
+        tableView.accessibilityIdentifier = GTAccessibilityConstants.Home.homeTableView
     }
 }
 
 extension HomeViewController: ToolsManagerDelegate {
+    
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         
         // prevent opening tool before download is complete
@@ -218,20 +222,13 @@ extension HomeViewController: ToolsManagerDelegate {
             showDownloadInProgressAlert()
             return
         }
-
-        switch cell.resource!.toolType {
-        case "tract":
-            self.delegate?.moveToTract(resource: cell.resource!)
-        case "article":
-            self.delegate?.moveToArticle(resource: cell.resource!)
-        default:
-            // TODO: should not crash if unrecognized tool type; for now - ignore (maybe a friendly alert message through another delegate function?)
-            debugPrint("Unrecognized tool type \(cell.resource!.toolType)")
-        }
+        
+        viewModel.toolTapped(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.moveToToolDetail(resource: resource)
+        
+        viewModel.toolInfoTapped(resource: resource)        
     }
     
     func showDownloadInProgressAlert() {

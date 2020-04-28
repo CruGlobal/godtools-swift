@@ -69,7 +69,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                     analytics: appDiContainer.analytics
                 )
                 
-                let masterView = MasterHomeViewController(viewModel: viewModel, delegate: self)
+                let masterView = MasterHomeViewController(viewModel: viewModel)
 
                 navigationController.setViewControllers([masterView], animated: false)
                 currentViewController = masterView
@@ -138,6 +138,21 @@ class BaseFlowController: NSObject, FlowDelegate {
         case .doneTappedFromMenu:
             dismissMenu()
             
+        case .toolTappedFromMyTools(let resource):
+            navigateToTool(resource: resource)
+            
+        case .toolInfoTappedFromMyTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .toolTappedFromFindTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .toolInfoTappedFromFindTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .openToolTappedFromToolDetails(let resource):
+            navigateToTool(resource: resource)
+            
         case .languagesTappedFromHome:
             
             let languageSettingsFlow = LanguageSettingsFlow(
@@ -151,6 +166,61 @@ class BaseFlowController: NSObject, FlowDelegate {
         default:
             break
         }
+    }
+    
+    private func navigateToTool(resource: DownloadedResource) {
+        
+        switch resource.toolTypeEnum {
+        
+        case .article:
+            
+            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
+            let languagesManager: LanguagesManager = appDiContainer.languagesManager
+            var language: Language?
+            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+                language = primaryLanguage
+            }
+            else {
+                language = languagesManager.loadFromDisk(code: "en")
+            }
+            
+            let articlesFlow = ArticlesFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController,
+                resource: resource,
+                language: language!
+            )
+            
+            self.articlesFlow = articlesFlow
+        
+        case .tract:
+            
+            let viewModel = TractViewModel(
+                appsFlyer: appDiContainer.appsFlyer
+            )
+            
+            let viewController = TractViewController(viewModel: viewModel)
+            viewController.resource = resource
+            pushViewController(viewController: viewController)
+        
+        case .unknown:
+            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
+            let view = AlertMessageView(viewModel: viewModel)
+            navigationController.present(view.controller, animated: true, completion: nil)
+        }
+    }
+    
+    private func navigateToToolDetail(resource: DownloadedResource) {
+        
+        let viewModel = ToolDetailViewModel(
+            flowDelegate: self,
+            resource: resource,
+            analytics: appDiContainer.analytics
+        )
+        let view = ToolDetailViewController(viewModel: viewModel)
+        
+        self.pushViewController(viewController: view)
     }
     
     private func dismissTutorial() {
@@ -279,72 +349,6 @@ extension BaseFlowController: BaseViewControllerDelegate {
     func goBack() {
         _ = navigationController.popViewController(animated: true)
         resetNavigationControllerColorToDefault()
-    }
-}
-
-extension BaseFlowController: MasterHomeViewControllerDelegate, HomeViewControllerDelegate {
-    
-    func moveToToolDetail(resource: DownloadedResource) {
-        
-        let viewModel = ToolDetailViewModel(
-            flowDelegate: self,
-            resource: resource,
-            analytics: appDiContainer.analytics
-        )
-        let view = ToolDetailViewController(viewModel: viewModel)
-        view.delegate = self
-        
-        self.pushViewController(viewController: view)
-    }
-    
-    func moveToTract(resource: DownloadedResource) {
-        
-        let viewModel = TractViewModel(
-            appsFlyer: appDiContainer.appsFlyer
-        )
-        
-        let viewController = TractViewController(viewModel: viewModel)
-        viewController.resource = resource
-        pushViewController(viewController: viewController)
-    }
-    
-    func moveToArticle(resource: DownloadedResource) {
-        
-        // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-        let languagesManager: LanguagesManager = appDiContainer.languagesManager
-        var language: Language?
-        if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-            language = primaryLanguage
-        }
-        else {
-            language = languagesManager.loadFromDisk(code: "en")
-        }
-        
-        let articlesFlow = ArticlesFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController,
-            resource: resource,
-            language: language!
-        )
-        
-        self.articlesFlow = articlesFlow
-    }
-}
-
-extension BaseFlowController: ToolDetailViewControllerDelegate {
-    func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource) {
-        
-        switch resource.toolTypeEnum {
-        case .article:
-            moveToArticle(resource: resource)
-        case .tract:
-            moveToTract(resource: resource)
-        case .unknown:
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
-            let view = AlertMessageView(viewModel: viewModel)
-            navigationController.present(view.controller, animated: true, completion: nil)
-        }
     }
 }
 

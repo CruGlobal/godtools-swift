@@ -11,4 +11,6 @@ import Foundation
 protocol MyToolsViewModelType {
     
     func pageViewed()
+    func toolTapped(resource: DownloadedResource)
+    func toolInfoTapped(resource: DownloadedResource)
 }

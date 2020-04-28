@@ -18,5 +18,6 @@ protocol ToolDetailViewModelType {
     var siteSection: String { get }
     var siteSubSection: String { get }
     
+    func openToolTapped()
     func urlTapped(url: URL)
 }

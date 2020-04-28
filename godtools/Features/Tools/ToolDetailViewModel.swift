@@ -38,6 +38,10 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         return ""
     }
     
+    func openToolTapped() {
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
+    }
+    
     func urlTapped(url: URL) {
         
         analytics.recordExitLinkAction(

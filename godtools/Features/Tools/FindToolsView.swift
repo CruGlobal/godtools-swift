@@ -8,10 +8,6 @@
 
 import UIKit
 
-protocol AddToolsViewControllerDelegate: class {
-    func moveToToolDetail(resource: DownloadedResource)
-}
-
 class FindToolsView: UIViewController {
     
     private let viewModel: FindToolsViewModelType
@@ -21,9 +17,7 @@ class FindToolsView: UIViewController {
     @IBOutlet weak private var toolsTableView: UITableView!
 
     var emptyView = UIView()
-    
-    weak var delegate: AddToolsViewControllerDelegate?
-    
+        
     required init(viewModel: FindToolsViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: FindToolsView.self), bundle: nil)
@@ -120,12 +114,13 @@ class FindToolsView: UIViewController {
 }
 
 extension FindToolsView: ToolsManagerDelegate {
+    
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
-        self.delegate?.moveToToolDetail(resource: cell.resource!)
+        viewModel.toolTapped(resource: cell.resource!)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.moveToToolDetail(resource: resource)
+        viewModel.toolTapped(resource: resource)
     }
     
     func downloadButtonWasPressed(resource: DownloadedResource) {

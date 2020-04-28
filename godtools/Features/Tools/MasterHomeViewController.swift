@@ -9,41 +9,31 @@
 import UIKit
 import PromiseKit
 
-protocol MasterHomeViewControllerDelegate: class {
-    func moveToToolDetail(resource: DownloadedResource)
-    func moveToTract(resource: DownloadedResource)
-    func moveToArticle(resource: DownloadedResource)
-}
-
 class MasterHomeViewController: BaseViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
     private let viewModel: MasterHomeViewModelType
     private let toolsManager = ToolsManager.shared
-        
-    private weak var delegate: MasterHomeViewControllerDelegate?
-    
+            
     private lazy var homeViewController: HomeViewController = {
         
-        let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        viewController.delegate = self
-        viewController.findDelegate = self
+        let myToolsViewModel = MyToolsViewModel(flowDelegate: viewModel.flowDelegate!, analytics: viewModel.analytics)
+        let view = HomeViewController(viewModel: myToolsViewModel)
+        
+        view.findDelegate = self
         
         // Add View Controller as Child View Controller
-        add(asChildViewController: viewController)
+        add(asChildViewController: view)
         
-        return viewController
+        return view
     }()
     
     private lazy var addToolsViewController: FindToolsView = {
         
-        let findToolsViewModel = FindToolsViewModel(analytics: self.viewModel.analytics)
+        let findToolsViewModel = FindToolsViewModel(flowDelegate: viewModel.flowDelegate!, analytics: viewModel.analytics)
         let view = FindToolsView(viewModel: findToolsViewModel)
-        
-        // TODO: Would like to remove delegate and use flow ~Levi.
-        view.delegate = self
-        
+                
         // TODO: I think view might get added twice because this is called from segment. ~Levi
         add(asChildViewController: view)
         
@@ -56,9 +46,8 @@ class MasterHomeViewController: BaseViewController  {
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
-    required init(viewModel: MasterHomeViewModelType, delegate: MasterHomeViewControllerDelegate) {
+    required init(viewModel: MasterHomeViewModelType) {
         self.viewModel = viewModel
-        self.delegate = delegate
         super.init(nibName: "MasterHomeViewController", bundle: nil)
     }
     
@@ -269,21 +258,6 @@ class MasterHomeViewController: BaseViewController  {
         segmentedControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
 
-}
-
-extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewControllerDelegate {
-    
-    func moveToToolDetail(resource: DownloadedResource) {
-        delegate?.moveToToolDetail(resource: resource)
-    }
-    
-    func moveToTract(resource: DownloadedResource) {
-        delegate?.moveToTract(resource: resource)
-    }
-    func moveToArticle(resource: DownloadedResource) {
-        delegate?.moveToArticle(resource: resource)
-    }
-    
 }
 
 extension MasterHomeViewController: FindToolsDelegate {

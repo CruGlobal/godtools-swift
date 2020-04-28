@@ -11,10 +11,6 @@ import UIKit
 import TTTAttributedLabel
 import YoutubePlayer_in_WKWebView
 
-protocol ToolDetailViewControllerDelegate: class {
-    func openToolTapped(toolDetail: ToolDetailViewController, resource: DownloadedResource)
-}
-
 class ToolDetailViewController: BaseViewController {
     
     enum SegmentedControlId: String {
@@ -54,9 +50,7 @@ class ToolDetailViewController: BaseViewController {
     @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
     
     let toolsManager = ToolsManager.shared
-        
-    weak var delegate: ToolDetailViewControllerDelegate?
-    
+            
     required init(viewModel: ToolDetailViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: "ToolDetailViewController", bundle: nil)
@@ -276,7 +270,7 @@ class ToolDetailViewController: BaseViewController {
     
     @objc func handleOpenTool(button: UIButton) {
 
-        delegate?.openToolTapped(toolDetail: self, resource: viewModel.resource)
+        viewModel.openToolTapped()
     }
     
     @IBAction func mainButtonWasPressed(_ sender: Any) {
