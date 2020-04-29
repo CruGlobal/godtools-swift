@@ -56,7 +56,10 @@ class ChooseLanguageView: UIViewController {
         
         // searchBar
         searchBar.barTintColor = .gtGreyLight
-        searchBar.searchTextField.backgroundColor = .white
+        if #available(iOS 13, *) {
+            searchBar.searchTextField.backgroundColor = .white
+        }
+        
         searchBar.isTranslucent = true
         searchBar.returnKeyType = .done
         searchBar.inputAccessoryView = toolBarViewForKeyboard()
