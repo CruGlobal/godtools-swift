@@ -12,20 +12,35 @@ extension RequestResponse {
     
     func log() {
         
-        print("\n SessionDataResponse log() -----")
+        RequestResponse.log(urlRequest: urlRequest, data: data, urlResponse: urlResponse, error: error)
+    }
+    
+    static func log(urlRequest: URLRequest?, data: Data?, urlResponse: URLResponse?, error: Error?) {
         
-        print("  request.url: \(String(describing: urlRequest.url?.absoluteString))")
-        print("  request.headers: \(String(describing: urlRequest.allHTTPHeaderFields))")
+        let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
         
-        if let httpBody = urlRequest.httpBody {
+        print("\n \(String(describing: RequestResponse.self)) log() -----")
+        
+        print("  request.url: \(String(describing: urlRequest?.url?.absoluteString))")
+        print("  request.headers: \(String(describing: urlRequest?.allHTTPHeaderFields))")
+        
+        if let httpBody = urlRequest?.httpBody {
             if let stringBody = String(data: httpBody, encoding: .utf8) {
                 print("  \nbody: \(stringBody)")
             }
         }
         
+        if let data = data {
+            print("  data: \(data)")
+        }
+        
         print("  error: \(String(describing: error))")
         print("  errorOccurred: \(error != nil)")
         print("  httpStatusCode: \(String(describing: httpStatusCode))")
+        
+        if let mimeType = urlResponse?.mimeType {
+            print("  mimeType: \(mimeType)")
+        }
         
         var responseJson: Any?
         if let data = data {

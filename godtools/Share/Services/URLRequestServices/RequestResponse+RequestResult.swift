@@ -27,7 +27,8 @@ extension RequestResponse {
                 return .success(object: object)
             }
             catch let error {
-                return .failure(clientError: nil, error: error)
+                print("\nRequestResponse: getResult() The request was successful, but there was an error decoding the response data. :\(error)")
+                return .success(object: nil)
             }
         }
         else if httpStatusCode >= 201 && httpStatusCode < 400 {

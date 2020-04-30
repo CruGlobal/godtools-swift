@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MessageUI
 import TheKeyOAuthSwift
 import GTMAppAuth
 
@@ -32,7 +31,7 @@ let kAppAuthExampleAuthStateKey: String = "authState";
   */
 
 
-class MenuView: BaseViewController {
+class MenuView: UIViewController {
     
     private let viewModel: MenuViewModelType
     private let headerHeight: CGFloat = 40.0
@@ -44,17 +43,11 @@ class MenuView: BaseViewController {
     
     required init(viewModel: MenuViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "MenuView", bundle: nil)
+        super.init(nibName: String(describing: MenuView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override var screenTitle: String {
-        get {
-            return "settings".localized
-        }
     }
 
     override func viewDidLoad() {
@@ -64,6 +57,18 @@ class MenuView: BaseViewController {
         setupBinding()
         
         viewModel.loginClient.addStateChangeDelegate(delegate: self)
+        
+        // TODO: Would like the MenuView to have it's own navigation bar, this would no longer be needed. ~Levi
+        hideBackBarButtonItem()
+        
+        _ = addBarButtonItem(
+            to: .right,
+            title: viewModel.navDoneButtonTitle,
+            style: .done,
+            color: nil,
+            target: self,
+            action: #selector(handleDone(barButtonItem:))
+        )
     }
     
     private func setupLayout() {
@@ -81,6 +86,10 @@ class MenuView: BaseViewController {
     
     private func setupBinding() {
         
+        viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
+            self?.title = title
+        }
+        
         viewModel.menuDataSource.addObserver(self) { [weak self] (menuDataSource: MenuDataSource) in
             self?.tableView.reloadData()
         }
@@ -88,6 +97,7 @@ class MenuView: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.pageViewed()
         viewModel.reloadMenuDataSource()
     }
     
@@ -99,19 +109,9 @@ class MenuView: BaseViewController {
         }
     }
     
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-        addEmptyLeftButton()
-        addDoneButton()
+    @objc func handleDone(barButtonItem: UIBarButtonItem) {
+        viewModel.doneTapped()
     }
-    
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Menu"
-    }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -181,12 +181,7 @@ extension MenuView: UITableViewDelegate {
             viewModel.helpTapped()
         
         case .contactUs:
-            // TODO: Conditional should be handled in MenuFlow ~Levi
-            if MFMailComposeViewController.canSendMail() {
-                sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
-            } else {
-                viewModel.contactUsTapped()
-            }
+            viewModel.contactUsTapped()
         
         case .logout:
             DispatchQueue.main.async { [weak self] in
@@ -203,25 +198,10 @@ extension MenuView: UITableViewDelegate {
             viewModel.myAccountTapped()
         
         case .shareGodTools:
-            let textToShare = [ "share_god_tools_share_sheet_text".localized ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            
-            var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.shareAction: 1]
-            userInfo["action"] = AdobeAnalyticsConstants.Values.share
-            NotificationCenter.default.post(name: .actionTrackNotification,
-                                            object: nil,
-                                            userInfo: userInfo)
-            sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
-            present(activityViewController, animated: true, completion: nil)
+            viewModel.shareGodToolsTapped()
         
         case .shareAStoryWithUs:
-            // TODO: Conditional should be handled in MenuFlow ~Levi
-            if MFMailComposeViewController.canSendMail() {
-                sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
-            } else {
-                viewModel.shareAStoryWithUsTapped()
-            }
-            sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
+            viewModel.shareAStoryWithUsTapped()
         
         case .termsOfUse:
             viewModel.termsOfUseTapped()
@@ -290,24 +270,6 @@ extension MenuView {
             initiateLogin()
         }
     }
-}
-
-// MARK: - MFMailComposeViewControllerDelegate
-
-extension MenuView: MFMailComposeViewControllerDelegate {
-    
-    func sendEmail(recipient: String, subject: String) {
-        let composeVC = MFMailComposeViewController()
-        composeVC.mailComposeDelegate = self
-        composeVC.setToRecipients([ recipient ])
-        composeVC.setSubject(subject)
-        present(composeVC, animated: true, completion: nil)
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
 }
 
 // MARK: - OIDAuthStateChangeDelegate

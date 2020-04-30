@@ -10,37 +10,49 @@ import Foundation
 
 class ToolDetailViewModel: ToolDetailViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
+    private let exitLinkAnalytics: ExitLinkAnalytics
     
     private weak var flowDelegate: FlowDelegate?
     
     let resource: DownloadedResource
+    let navTitle: String = ""
     let hidesOpenToolButton: Bool
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.analytics = analytics
+        self.exitLinkAnalytics = exitLinkAnalytics
         self.hidesOpenToolButton = !resource.shouldDownload
     }
     
-    var screenName: String {
+    private var screenName: String {
         let toolCode: String = resource.code
         return toolCode + "-" + "tool-info"
     }
     
-    var siteSection: String {
+    private var siteSection: String {
         return resource.code
     }
     
-    var siteSubSection: String {
+    private var siteSubSection: String {
         return ""
     }
     
-    func urlTapped(url: URL) {
+    func pageViewed() {
         
-        analytics.recordExitLinkAction(
+        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
+    }
+    
+    func openToolTapped() {
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
+    }
+    
+    func urlTapped(url: URL) {
+                
+        exitLinkAnalytics.trackExitLink(
             screenName: screenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,

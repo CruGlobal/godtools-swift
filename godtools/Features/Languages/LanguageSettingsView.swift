@@ -23,7 +23,7 @@ class LanguageSettingsView: UIViewController {
     
     required init(viewModel: LanguageSettingsViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "LanguageSettingsView", bundle: nil)
+        super.init(nibName: String(describing: LanguageSettingsView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

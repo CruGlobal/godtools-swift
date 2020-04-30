@@ -19,7 +19,7 @@ class ChooseLanguageView: UIViewController {
     
     required init(viewModel: ChooseLanguageViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "ChooseLanguageView", bundle: nil)
+        super.init(nibName: String(describing: ChooseLanguageView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +37,7 @@ class ChooseLanguageView: UIViewController {
         deleteLanguageButton = addBarButtonItem(
             to: .right,
             title: viewModel.deleteLanguageButtonTitle,
+            style: .plain,
             color: .white,
             target: self, action: #selector(handleDeleteLanguage(barButtonItem:))
         )
@@ -55,7 +56,10 @@ class ChooseLanguageView: UIViewController {
         
         // searchBar
         searchBar.barTintColor = .gtGreyLight
-        searchBar.searchTextField.backgroundColor = .white
+        if #available(iOS 13, *) {
+            searchBar.searchTextField.backgroundColor = .white
+        }
+        
         searchBar.isTranslucent = true
         searchBar.returnKeyType = .done
         searchBar.inputAccessoryView = toolBarViewForKeyboard()

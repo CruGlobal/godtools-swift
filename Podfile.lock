@@ -65,7 +65,6 @@ PODS:
     - GoogleUtilities/Environment (~> 6.5)
     - GoogleUtilities/UserDefaults (~> 6.5)
   - Fuzi (3.1.1)
-  - GoogleAnalytics (3.17.0)
   - GoogleAppMeasurement (6.2.2):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -147,7 +146,6 @@ DEPENDENCIES:
   - Firebase/Analytics (= 6.16.0)
   - Firebase/InAppMessaging (= 6.16.0)
   - Fuzi
-  - GoogleAnalytics (~> 3.17.0)
   - GoogleConversionTracking (~> 3.4.0)
   - GTMAppAuth (= 0.7.0)
   - PromiseKit (~> 6.8)
@@ -182,7 +180,6 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseInstanceID
     - Fuzi
-    - GoogleAnalytics
     - GoogleAppMeasurement
     - GoogleConversionTracking
     - GoogleDataTransport
@@ -221,7 +218,6 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
   Fuzi: bcc5694488dd6e672e126cbf3c5471d7a79506d1
-  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GoogleAppMeasurement: d0560d915abf15e692e8538ba1d58442217b6aff
   GoogleConversionTracking: ca8c89abda2bd28bb6472b316eeb4ece9264e279
   GoogleDataTransport: 0048df6388dab1c254799f2a30365b1dffe20422
@@ -242,6 +238,6 @@ SPEC CHECKSUMS:
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 45b87924278cdd6ac50fab22b13df2c070bbe422
+PODFILE CHECKSUM: b84b5e8a65c0059dfcf2179a5d9510ea898973ca
 
 COCOAPODS: 1.8.4

@@ -24,9 +24,11 @@ extension UIViewController {
         navigationItem.setHidesBackButton(true, animated: false)
     }
         
-    func addBarButtonItem(to barPosition: ButtonItemPosition, title: String?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
+    func addBarButtonItem(to barPosition: ButtonItemPosition, title: String?, style: UIBarButtonItem.Style?, color: UIColor?, target: Any?, action: Selector?) -> UIBarButtonItem {
         
-        let item = UIBarButtonItem(title: title, style: .plain, target: target, action: action)
+        let buttonStyle: UIBarButtonItem.Style = style ?? .plain
+        
+        let item = UIBarButtonItem(title: title, style: buttonStyle, target: target, action: action)
         if let color = color {
             item.tintColor = color
         }

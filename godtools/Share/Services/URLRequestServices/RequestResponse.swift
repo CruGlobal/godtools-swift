@@ -10,7 +10,7 @@ import Foundation
 
 struct RequestResponse {
         
-    let urlRequest: URLRequest
+    let urlRequest: URLRequest?
     let data: Data?
     let urlResponse: URLResponse?
     let error: Error?

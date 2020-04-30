@@ -27,6 +27,20 @@ enum FlowStep {
     case menuTappedFromHome
     case languagesTappedFromHome
     
+    // myTools
+    case toolTappedFromMyTools(resource: DownloadedResource)
+    case toolInfoTappedFromMyTools(resource: DownloadedResource)
+    
+    // findTools
+    case toolTappedFromFindTools(resource: DownloadedResource)
+    case toolInfoTappedFromFindTools(resource: DownloadedResource)
+    
+    // toolDetails
+    case openToolTappedFromToolDetails(resource: DownloadedResource)
+    
+    // tract
+    case homeTappedFromTract
+    
     // tutorial
     case closeTappedFromTutorial
     case startUsingGodToolsTappedFromTutorial
@@ -39,6 +53,7 @@ enum FlowStep {
     case aboutTappedFromMenu
     case helpTappedFromMenu
     case contactUsTappedFromMenu
+    case shareGodToolsTappedFromMenu
     case shareAStoryWithUsTappedFromMenu
     case termsOfUseTappedFromMenu
     case privacyPolicyTappedFromMenu
@@ -48,4 +63,9 @@ enum FlowStep {
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
     case languageTappedFromChooseLanguage
+    
+    // articles
+    case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType)
+    case articleTappedFromArticles(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData)
+    case sharedTappedFromArticle(articleAemImportData: RealmArticleAemImportData)
 }
