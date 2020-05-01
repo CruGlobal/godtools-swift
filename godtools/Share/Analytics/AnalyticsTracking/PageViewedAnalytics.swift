@@ -11,13 +11,11 @@ import Foundation
 class PageViewedAnalytics {
     
     private let adobeAnalytics: AdobeAnalyticsType
-    private let appsFlyer: AppsFlyerType
     private let firebaseAnalytics: FirebaseAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, appsFlyer: AppsFlyerType, firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType) {
         
         self.adobeAnalytics = adobeAnalytics
-        self.appsFlyer = appsFlyer
         self.firebaseAnalytics = firebaseAnalytics
     }
     
@@ -25,8 +23,6 @@ class PageViewedAnalytics {
         
         adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         
-        appsFlyer.trackEvent(eventName: screenName, data: nil)
-
         firebaseAnalytics.trackScreenView(screenName: screenName)
     }
 }

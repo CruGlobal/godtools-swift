@@ -22,7 +22,6 @@ class AnalyticsContainer {
         
         self.pageViewedAnalytics = PageViewedAnalytics(
             adobeAnalytics: adobeAnalytics,
-            appsFlyer: appsFlyer,
             firebaseAnalytics: firebaseAnalytics
         )
         
