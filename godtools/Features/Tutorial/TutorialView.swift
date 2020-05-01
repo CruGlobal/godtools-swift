@@ -23,7 +23,7 @@ class TutorialView: UIViewController {
     
     required init(viewModel: TutorialViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "TutorialView", bundle: nil)
+        super.init(nibName: String(describing: TutorialView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

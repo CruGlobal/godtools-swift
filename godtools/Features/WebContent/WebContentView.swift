@@ -20,7 +20,7 @@ class WebContentView: UIViewController {
     required init(viewModel: WebContentViewModelType) {
         self.webView = WKWebView(frame: UIScreen.main.bounds)
         self.viewModel = viewModel
-        super.init(nibName: "WebContentView", bundle: nil)
+        super.init(nibName: String(describing: WebContentView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,7 +56,7 @@ class WebContentView: UIViewController {
         view.addSubview(webView)
         webView.constrainEdgesToSuperview()
         webView.alpha = 0
-        webView.scrollView.showsVerticalScrollIndicator = false
+        webView.scrollView.showsVerticalScrollIndicator = true
         webView.scrollView.showsHorizontalScrollIndicator = false
     }
     

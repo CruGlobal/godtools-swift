@@ -10,16 +10,16 @@ import Foundation
 
 class AboutViewModel: AboutViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("about", comment: ""))
     
-    required init(analytics: GodToolsAnaltyics) {
+    required init(analytics: AnalyticsContainer) {
         
         self.analytics = analytics        
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "About", siteSection: "menu", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "About", siteSection: "menu", siteSubSection: "")
     }
 }

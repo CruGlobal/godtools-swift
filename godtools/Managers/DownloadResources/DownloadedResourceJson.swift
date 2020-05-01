@@ -23,8 +23,6 @@ class DownloadedResourceJson: GodToolsJSONResource {
     
     @objc var latestTranslations: [TranslationResource]?
     @objc var attachments: [AttachmentResource]?
-    @objc var categories: [CategoryResource]?
-
 }
 
 // Mark - JSONResource protocol functions

@@ -18,7 +18,7 @@ class OnboardingWelcomeView: UIViewController {
     
     required init(viewModel: OnboardingWelcomeViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "OnboardingWelcomeView", bundle: nil)
+        super.init(nibName: String(describing: OnboardingWelcomeView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

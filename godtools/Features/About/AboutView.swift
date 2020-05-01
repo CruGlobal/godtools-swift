@@ -14,7 +14,7 @@ class AboutView: UIViewController {
         
     required init(viewModel: AboutViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "AboutView", bundle: nil)
+        super.init(nibName: String(describing: AboutView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

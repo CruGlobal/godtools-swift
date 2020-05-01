@@ -13,25 +13,25 @@ class RealmDatabase {
     
     // TODO: This static variable needs to be removed once Realm is injected properly
     // into GTDataManager. ~Levi
-    static var sharedRealm: Realm!
+    static var sharedMainThreadRealm: Realm!
     
-    private static let schemaVersion: UInt64 = 11
+    private static let schemaVersion: UInt64 = 12
     
-    let realm: Realm
+    let mainThreadRealm: Realm
     
     required init() {
         
         let config = RealmDatabase.createConfig
         
         do {
-            realm = try Realm(configuration: config)
+            mainThreadRealm = try Realm(configuration: config)
         }
         catch let error {
             assertionFailure("RealmDatabase: Did fail to initialize realm with error: \(error.localizedDescription) ")
-            realm = try! Realm(configuration: config)
+            mainThreadRealm = try! Realm(configuration: config)
         }
         
-        RealmDatabase.sharedRealm = realm
+        RealmDatabase.sharedMainThreadRealm = mainThreadRealm
     }
     
     private static var createConfig: Realm.Configuration  {
@@ -89,10 +89,7 @@ class RealmDatabase {
                 }
                 if oldSchemaVersion < 9 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
-
                         new!["toolType"] = "tract"
-                        
-                        
                     })
                 }
                 if oldSchemaVersion < 10 {

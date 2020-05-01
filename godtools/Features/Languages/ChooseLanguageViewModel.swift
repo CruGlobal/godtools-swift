@@ -17,7 +17,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     
     private let languagesManager: LanguagesManager
     private let translationZipImporter: TranslationZipImporter
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
     private let allLanguages: [Language]
     
@@ -29,7 +29,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     let languages: ObservableValue<[Language]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<Language?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, translationZipImporter: TranslationZipImporter, analytics: GodToolsAnaltyics, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, translationZipImporter: TranslationZipImporter, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.languagesManager = languagesManager
@@ -74,7 +74,7 @@ class ChooseLanguageViewModel: ChooseLanguageViewModelType {
     
     func pageViewed() {
         
-        analytics.recordScreenView(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Select Language", siteSection: "menu", siteSubSection: "language settings")
     }
     
     func deleteLanguageTapped() {

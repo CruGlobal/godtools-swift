@@ -20,7 +20,7 @@ class AccountView: UIViewController {
     
     required init(viewModel: AccountViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "AccountView", bundle: nil)
+        super.init(nibName: String(describing: AccountView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

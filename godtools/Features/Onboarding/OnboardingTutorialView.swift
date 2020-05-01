@@ -30,7 +30,7 @@ class OnboardingTutorialView: UIViewController {
     
     required init(viewModel: OnboardingTutorialViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "OnboardingTutorialView", bundle: nil)
+        super.init(nibName: String(describing: OnboardingTutorialView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -115,6 +115,7 @@ class OnboardingTutorialView: UIViewController {
                     view.skipButton = view.addBarButtonItem(
                         to: skipButtonPosition,
                         title: view.viewModel.skipButtonTitle,
+                        style: .plain,
                         color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
                         target: self,
                         action: #selector(view.handleSkip(barButtonItem:))

@@ -7,25 +7,15 @@
 //
 
 import Foundation
-import FirebaseAnalytics
 
 class GodToolsAnaltyics {
+                
+    private let analytics: AnalyticsContainer
     
-    private let config: ConfigType
-    private let adobeAnalytics: AdobeAnalyticsType
-    private let appsFlyer: AppsFlyerType
-    private let tracker: GAITracker
-    
-    var previousScreenName = ""
+    required init(analytics: AnalyticsContainer) {
         
-    required init(config: ConfigType, adobeAnalytics: AdobeAnalyticsType, appsFlyer: AppsFlyerType) {
-        
-        self.config = config
-        self.adobeAnalytics = adobeAnalytics
-        self.appsFlyer = appsFlyer
-        
-        tracker = GAI.sharedInstance().tracker(withTrackingId: config.googleAnalyticsApiKey)
-                                
+        self.analytics = analytics
+                                        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(recordScreenView(notification:)),
                                                name: .screenViewNotification,
@@ -35,18 +25,6 @@ class GodToolsAnaltyics {
                                                selector: #selector(recordActionForADBMobile(notification:)),
                                                name: .actionTrackNotification,
                                                object: nil)
-        
-        recordAdwordsConversion()
-    }
-    
-    private func recordAdwordsConversion() {
-        
-        ACTConversionReporter.report(
-            withConversionID: config.googleAdwordsConversionId,
-            label: config.googleAdwordsLabel,
-            value: "1.00",
-            isRepeatable: false
-        )
     }
     
     @objc private func recordScreenView(notification: Notification) {
@@ -69,19 +47,8 @@ class GodToolsAnaltyics {
     }
     
     func recordScreenView(screenName: String, siteSection: String, siteSubSection: String) {
-        
-        tracker.set(kGAIScreenName, value: screenName)
-        
-        adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
-        
-        appsFlyer.trackEvent(eventName: screenName, data: nil)
-
-        if let screenViewInfo = GAIDictionaryBuilder.createScreenView()?.build() as? [AnyHashable: Any] {
-            tracker.send(screenViewInfo)
-        }
-        
-        // Record screen view for Firebase Analytics
-        Analytics.setScreenName(screenName, screenClass: nil)
+                        
+        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
     }
     
     @objc private func recordActionForADBMobile(notification: Notification) {
@@ -100,16 +67,6 @@ class GodToolsAnaltyics {
     
     func recordActionForADBMobile(screenName: String?, actionName: String, data: [String: Any]) {
         
-        adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
-    }
-    
-    func recordExitLinkAction(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-        
-        adobeAnalytics.trackExitLink(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            url: url
-        )
+        analytics.adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
     }
 }
