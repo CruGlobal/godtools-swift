@@ -2355,8 +2355,6 @@
 		45FCFF7A243D0C9200865501 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
-				451DB0662461D90000FB14BF /* TractClasses */,
-				451DB0732461D90000FB14BF /* Views */,
 				45FCFF80243D0C9200865501 /* TractViewController.swift */,
 				45FCFF7F243D0C9200865501 /* TractViewController.xib */,
 				45FCFF7D243D0C9200865501 /* TractViewModel.swift */,
@@ -2364,6 +2362,8 @@
 				45FCFF7B243D0C9200865501 /* TractViewControllerActions.swift */,
 				45FCFF83243D0C9200865501 /* TractViewControllerGestures.swift */,
 				45FCFF82243D0C9200865501 /* TractViewControllerPageMovements.swift */,
+				451DB0662461D90000FB14BF /* TractClasses */,
+				451DB0732461D90000FB14BF /* Views */,
 			);
 			path = Tract;
 			sourceTree = "<group>";
