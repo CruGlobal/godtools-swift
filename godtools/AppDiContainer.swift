@@ -41,7 +41,7 @@ class AppDiContainer {
         
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: false),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: true),
             firebaseAnalytics: FirebaseAnalytics()
         )
         
