@@ -108,14 +108,6 @@ class TractCard: BaseTractElement {
         }
         TractBindings.addBindings(self)
         
-        print("\n TractCard render()")
-        for analyticEvent in analyticsUserInfo {
-            print(" action: \(analyticEvent.action)")
-            print("   system: \(analyticEvent.system)")
-            print("   trigger: \(analyticEvent.trigger)")
-            print("   delay: \(analyticEvent.delay)")
-        }
-        
         return self
     }
     
