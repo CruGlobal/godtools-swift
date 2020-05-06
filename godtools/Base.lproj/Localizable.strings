@@ -27,6 +27,7 @@
 "menu_account" = "Account";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
+"menu_version" = "Version";
 "language_settings" = "Language Settings";
 "menu.tutorial" = "Tutorial";
 "menu.my_account" = "Global Activity";
