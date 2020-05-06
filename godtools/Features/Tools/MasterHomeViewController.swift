@@ -9,42 +9,35 @@
 import UIKit
 import PromiseKit
 
-protocol MasterHomeViewControllerDelegate: class {
-    func moveToToolDetail(resource: DownloadedResource)
-    func moveToTract(resource: DownloadedResource)
-    func moveToArticle(resource: DownloadedResource)
-}
-
-class MasterHomeViewController: BaseViewController  {
+class MasterHomeViewController: UIViewController  {
         
     private var segmentedControl = UISegmentedControl()
     
     private let viewModel: MasterHomeViewModelType
     private let toolsManager = ToolsManager.shared
-        
-    private weak var delegate: MasterHomeViewControllerDelegate?
-    
+            
     private lazy var homeViewController: HomeViewController = {
         
-        let viewController = HomeViewController(nibName: "HomeViewController", bundle: nil)
-        viewController.delegate = self
-        viewController.findDelegate = self
+        let myToolsViewModel = MyToolsViewModel(flowDelegate: viewModel.flowDelegate!, analytics: viewModel.analytics)
+        let view = HomeViewController(viewModel: myToolsViewModel)
+        
+        view.findDelegate = self
         
         // Add View Controller as Child View Controller
-        add(asChildViewController: viewController)
+        add(asChildViewController: view)
         
-        return viewController
+        return view
     }()
     
-    private lazy var addToolsViewController: AddToolsViewController = {
+    private lazy var addToolsViewController: FindToolsView = {
         
-        let viewController = AddToolsViewController(nibName: "AddToolsViewController", bundle: nil)
-        viewController.delegate = self
+        let findToolsViewModel = FindToolsViewModel(flowDelegate: viewModel.flowDelegate!, analytics: viewModel.analytics)
+        let view = FindToolsView(viewModel: findToolsViewModel)
+                
+        // TODO: I think view might get added twice because this is called from segment. ~Levi
+        add(asChildViewController: view)
         
-        // Add View Controller as Child View Controller
-        add(asChildViewController: viewController)
-        
-        return viewController
+        return view
     }()
     
     @IBOutlet weak private var openTutorialView: OpenTutorialView!
@@ -53,9 +46,8 @@ class MasterHomeViewController: BaseViewController  {
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
 
-    required init(viewModel: MasterHomeViewModelType, delegate: MasterHomeViewControllerDelegate) {
+    required init(viewModel: MasterHomeViewModelType) {
         self.viewModel = viewModel
-        self.delegate = delegate
         super.init(nibName: "MasterHomeViewController", bundle: nil)
     }
     
@@ -69,6 +61,8 @@ class MasterHomeViewController: BaseViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addAccessibilityIdentifiers()
         
         setupLayout()
         setupBinding()
@@ -162,6 +156,37 @@ class MasterHomeViewController: BaseViewController  {
         viewModel.languageTapped()
     }
     
+    private func determineMyToolsSegment() -> String {
+        let myTools = "my_tools".localized
+        return myTools
+    }
+    
+    private func determineFindToolsSegment() -> String {
+        let findTools = "find_tools".localized
+        return findTools
+    }
+    
+    private func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {
+        let count = (myTools.count > findTools.count) ? myTools.count : findTools.count
+        var fontSize: CGFloat = 15.0
+        if count > 14 {
+            switch count {
+            case 15:
+                fontSize = 14.0
+            case 16:
+                fontSize = 13.5
+            case 17:
+                fontSize = 13.0
+            case 18:
+                fontSize = 12.5
+            default:
+                fontSize = 12.0
+            }
+        }
+        
+        return fontSize
+    }
+    
     // MARK: - View Methods
     
     func updateView() {
@@ -201,11 +226,6 @@ class MasterHomeViewController: BaseViewController  {
     
     @objc func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
-    }
-    
-    override func homeButtonAction() {
-        baseDelegate?.goHome()
-        navigationController?.popToRootViewController(animated: true)
     }
 
     // MARK: - Helper Methods
@@ -254,33 +274,10 @@ class MasterHomeViewController: BaseViewController  {
         toolsManager.loadResourceList()
     }
     
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Home"
-    }
-    
-    // MARK: - Accessiblity
-    
-    override func addAccessibilityIdentifiers() {
+    func addAccessibilityIdentifiers() {
         segmentedControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
 
-}
-
-extension MasterHomeViewController: HomeViewControllerDelegate, AddToolsViewControllerDelegate {
-    
-    func moveToToolDetail(resource: DownloadedResource) {
-        delegate?.moveToToolDetail(resource: resource)
-    }
-    
-    func moveToTract(resource: DownloadedResource) {
-        delegate?.moveToTract(resource: resource)
-    }
-    func moveToArticle(resource: DownloadedResource) {
-        delegate?.moveToArticle(resource: resource)
-    }
-    
 }
 
 extension MasterHomeViewController: FindToolsDelegate {

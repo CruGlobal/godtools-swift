@@ -9,24 +9,18 @@
 import UIKit
 import PromiseKit
 
-protocol HomeViewControllerDelegate {
-    mutating func moveToToolDetail(resource: DownloadedResource)
-    mutating func moveToTract(resource: DownloadedResource)
-    mutating func moveToArticle(resource: DownloadedResource)
-}
-
 protocol FindToolsDelegate: class {
     func goToFindTools()
 }
 
-class HomeViewController: BaseViewController {
+class HomeViewController: UIViewController {
     
-    var delegate: HomeViewControllerDelegate?
+    private let viewModel: MyToolsViewModelType
+    
     weak var findDelegate: FindToolsDelegate?
     
     let toolsManager = ToolsManager.shared
     var refreshControl = UIRefreshControl()
-    var loginBannerView: UIView?
    
     
     @IBOutlet weak var emptyStateView: UIView!
@@ -38,6 +32,19 @@ class HomeViewController: BaseViewController {
         }
     }
     
+    required init(viewModel: MyToolsViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: String(describing: HomeViewController.self), bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.displayWorkingView()
@@ -45,6 +52,8 @@ class HomeViewController: BaseViewController {
         self.setupStyle()
         self.defineObservers()
         addRefreshControl()
+        
+        addAccessibilityIdentifiers()
 
         let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureReconizer:)))
         pressGesture.minimumPressDuration = 0.75
@@ -53,12 +62,7 @@ class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // MARK - Product owner has requested to not display this quite yet.
-        
-//        if loginBannerShouldDisplay() {
-//            self.displayLoginBanner()
-//        }
+        viewModel.pageViewed()
         
         toolsManager.delegate = self
         reloadView()
@@ -102,10 +106,6 @@ class HomeViewController: BaseViewController {
         normalStateView.isHidden = !toolsManager.hasResources()
 
         tableView.reloadData()
-        
-        // MARK - Product owner has requested to not display this quite yet.
-        
-        //updateHeaderView()
     }
     
     @objc private func loadLatestResources() {
@@ -148,69 +148,16 @@ class HomeViewController: BaseViewController {
         self.tableView.backgroundColor = .gtWhite
         self.tableView.separatorStyle = .none
         self.tableView.contentInset = UIEdgeInsets(top: 64.0, left: 0.0, bottom: 0.0, right: 0.0)
-        
-        // MARK - Product owner has requested to not display this quite yet.
-        
-       // loginBannerView = createLoginBannerView()
     }
     
-    private func loginBannerShouldDisplay() -> Bool {
-        var shouldDisplayBanner = false
-        
-        // MARK - These are the current conditions that have to be met to display the login banner.
-        let hasTappedFindTools = UserDefaults.standard.bool(forKey: GTConstants.kHasTappedFindTools)
-        let hasAlreadyAccessedATract = UserDefaults.standard.bool(forKey: GTConstants.kAlreadyAccessTract)
-        let bannerHasDiplayedOnce = UserDefaults.standard.bool(forKey: GTConstants.kHasDiplayedBannerOnce)
-        let bannerHasBeenDismissed = UserDefaults.standard.bool(forKey: GTConstants.kBannerHasBeenDismissed)
-        let languageIsEnglish = (Locale.current.languageCode == "en")
-        
-        if hasTappedFindTools && hasAlreadyAccessedATract && !bannerHasDiplayedOnce && !bannerHasBeenDismissed && languageIsEnglish {
-            shouldDisplayBanner = true
-            UserDefaults.standard.set(true, forKey: GTConstants.kHasDiplayedBannerOnce)
-        }
-
-        return shouldDisplayBanner
-    }
-    
-    private func updateHeaderView() {
-        DispatchQueue.main.async {
-            let bannerHasDiplayedOnce = UserDefaults.standard.bool(forKey: GTConstants.kHasDiplayedBannerOnce)
-            let bannerHasBeenDismissed = UserDefaults.standard.bool(forKey: GTConstants.kBannerHasBeenDismissed)
-            if bannerHasDiplayedOnce && !bannerHasBeenDismissed  {
-                self.tableView.tableHeaderView = self.loginBannerView
-            } else {
-                self.tableView.tableHeaderView = UIView()
-            }
-        }
-    }
-    
-    private func createLoginBannerView() -> UIView {
-        let loginBanner = LoginBannerView()
-        loginBanner.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 75)
-        return loginBanner
-    }
-    
-    private func displayLoginBanner() {
-        DispatchQueue.main.async {
-            self.tableView.tableHeaderView = self.loginBannerView
-        }
-    }
-    
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Home"
-    }
-    
-    // MARK: - Accessiblity
-    
-    override func addAccessibilityIdentifiers() {
-        self.view.accessibilityIdentifier = GTAccessibilityConstants.Home.homeMyToolsView
-        self.tableView.accessibilityIdentifier = GTAccessibilityConstants.Home.homeTableView
+    func addAccessibilityIdentifiers() {
+        view.accessibilityIdentifier = GTAccessibilityConstants.Home.homeMyToolsView
+        tableView.accessibilityIdentifier = GTAccessibilityConstants.Home.homeTableView
     }
 }
 
 extension HomeViewController: ToolsManagerDelegate {
+    
     func didSelectTableViewRow(cell: HomeToolTableViewCell) {
         
         // prevent opening tool before download is complete
@@ -218,20 +165,13 @@ extension HomeViewController: ToolsManagerDelegate {
             showDownloadInProgressAlert()
             return
         }
-
-        switch cell.resource!.toolType {
-        case "tract":
-            self.delegate?.moveToTract(resource: cell.resource!)
-        case "article":
-            self.delegate?.moveToArticle(resource: cell.resource!)
-        default:
-            // TODO: should not crash if unrecognized tool type; for now - ignore (maybe a friendly alert message through another delegate function?)
-            debugPrint("Unrecognized tool type \(cell.resource!.toolType)")
-        }
+        
+        viewModel.toolTapped(resource: resource)
     }
     
     func infoButtonWasPressed(resource: DownloadedResource) {
-        self.delegate?.moveToToolDetail(resource: resource)
+        
+        viewModel.toolInfoTapped(resource: resource)        
     }
     
     func showDownloadInProgressAlert() {

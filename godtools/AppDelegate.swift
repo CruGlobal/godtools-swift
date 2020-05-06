@@ -34,20 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let config = appDiContainer.config
-        let firebaseConfiguration = appDiContainer.firebaseConfiguration
-        let adobeAnalytics = appDiContainer.adobeAnalytics
-        let appsFlyer = appDiContainer.appsFlyer
+        appDiContainer.config.logConfiguration()
         
-        config.logConfiguration()
+        appDiContainer.firebaseConfiguration.configure()
         
-        firebaseConfiguration.configure()
+        appDiContainer.analytics.adobeAnalytics.configure()
         
-        adobeAnalytics.configure()
+        appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
-        adobeAnalytics.collectLifecycleData()
-        
-        appsFlyer.configure(adobeAnalytics: adobeAnalytics)
+        appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         resetStateIfUITesting()
         
@@ -102,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         AppEvents.activateApp()
         flowController?.applicationDidBecomeActive(application)
-        appDiContainer.appsFlyer.trackAppLaunch()
+        appDiContainer.analytics.appsFlyer.trackAppLaunch()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

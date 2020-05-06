@@ -6,13 +6,12 @@
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import SWXMLHash
 import MessageUI
 import PromiseKit
 
-class TractViewController: BaseViewController {
+class TractViewController: UIViewController {
     
     private let viewModel: TractViewModelType
     
@@ -21,7 +20,6 @@ class TractViewController: BaseViewController {
     var selectedLanguage: Language?
     
     let tractsManager: TractManager = TractManager()
-    var resource: DownloadedResource?
     var viewsWereGenerated = false
     var xmlPages = [XMLPage]()
     var xmlPagesForPrimaryLang = [XMLPage]()
@@ -64,9 +62,16 @@ class TractViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        print("view didload: \(type(of: self))")
+        
+        setupLayout()
+        setupBinding()
         
         viewModel.viewLoaded()
         
@@ -76,6 +81,31 @@ class TractViewController: BaseViewController {
         setupSwipeGestures()
         defineObservers()
         UIApplication.shared.isIdleTimerDisabled = true
+        
+        _ = addBarButtonItem(
+            to: .left,
+            image: ImageCatalog.navHome.image,
+            color: .white,
+            target: self,
+            action: #selector(handleHome(barButtonItem:))
+        )
+        
+        _ = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navShare.image,
+            color: .white,
+            target: self,
+            action: #selector(handleShare(barButtonItem:))
+        )
+        
+        for translation in viewModel.resource.translations {
+            if let languageCode = translation.language?.code {
+                if languageCode.contains("en") {
+                    print("translation id: \(translation.remoteId)")
+                    print("  language code: \(languageCode)")
+                }
+            }
+        }
     }
     
     override func viewWillLayoutSubviews() {
@@ -93,6 +123,7 @@ class TractViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: "")
         setupNavigationBarStyles()
     }
     
@@ -102,17 +133,52 @@ class TractViewController: BaseViewController {
         UIApplication.shared.isIdleTimerDisabled = false
     }
     
-    // MARK: - UI setup
-    
-    override func configureNavigationButtons() {
-        self.addHomeButton()
+    private func setupLayout() {
         
-        if self.resource?.code == nil || GTSettings.ignoredTools.contains(self.resource!.code) {
-            return
-        }
-        
-        self.addShareButton()
     }
+    
+    private func setupBinding() {
+        
+        viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
+            self?.title = title
+        }
+    }
+    
+    @objc func handleHome(barButtonItem: UIBarButtonItem) {
+        removeViewsBeforeCurrentView()
+        viewModel.navHomeTapped()
+    }
+    
+    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+        
+        // TODO: Would like to handle this through viewmodel. ~Levi
+        let languageCode = self.selectedLanguage?.code ?? "en"
+
+        let shareMessage = buildShareMessage(viewModel.resource.code, languageCode)
+        
+        let activityController = UIActivityViewController(activityItems: [shareMessage], applicationActivities: nil)
+        present(activityController, animated: true, completion: nil)
+        
+        let userInfo: [String: Any] = ["action": AdobeAnalyticsConstants.Values.share,
+                        AdobeAnalyticsConstants.Keys.shareAction: 1,
+                        GTConstants.kAnalyticsScreenNameKey: screenName()]
+        NotificationCenter.default.post(name: .actionTrackNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+        sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: "")
+    }
+    
+    func sendScreenViewNotification(screenName: String, siteSection: String, siteSubSection: String) {
+        let relay = AnalyticsRelay.shared
+        relay.screenName = screenName
+        
+        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: siteSection, AdobeAnalyticsProperties.CodingKeys.siteSubSection.rawValue: siteSubSection]
+        NotificationCenter.default.post(name: .screenViewNotification,
+                                        object: nil,
+                                        userInfo: userInfo)
+    }
+    
+    // MARK: - UI setup
     
     fileprivate func setupContainerView() {
         let startingYPos: CGFloat = 0.0
@@ -129,9 +195,8 @@ class TractViewController: BaseViewController {
     }
     
     fileprivate func currentTractTitle() -> String {
-        guard let resource = resource else { return "" }
         let primaryLanguage = resolvePrimaryLanguage()
-        return resource.localizedName(language: primaryLanguage)
+        return viewModel.resource.localizedName(language: primaryLanguage)
     }
     
     fileprivate func setupNavigationBarStyles() {
@@ -226,35 +291,11 @@ class TractViewController: BaseViewController {
                                         userInfo: ["action": AdobeAnalyticsConstants.Values.parallelLanguageToggle,
                                                    AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
                                                    AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
-                                                   AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: (resource?.code) as Any])
+                                                   AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: (viewModel.resource.code) as Any])
     }
     
     // MARK: - Navigation buttons actions
     
-    override func homeButtonAction() {
-        removeViewsBeforeCurrentView()
-        super.homeButtonAction()
-    }
-    
-    override func shareButtonAction() {
-        let languageCode = self.selectedLanguage?.code ?? "en"
-        guard let resourceCode = self.resource?.code else {
-            return
-        }
-        
-        let shareMessage = buildShareMessage(resourceCode, languageCode)
-        
-        let activityController = UIActivityViewController(activityItems: [shareMessage], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
-        
-        let userInfo: [String: Any] = ["action": AdobeAnalyticsConstants.Values.share,
-                        AdobeAnalyticsConstants.Keys.shareAction: 1,
-                        GTConstants.kAnalyticsScreenNameKey: screenName()]
-        NotificationCenter.default.post(name: .actionTrackNotification,
-                                        object: nil,
-                                        userInfo: userInfo)
-        self.sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: siteSubSection())
-    }
     
     private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {
         let shareURLString = buildShareURLString(resourceCode, languageCode)
@@ -295,30 +336,22 @@ class TractViewController: BaseViewController {
     
     // MARK: - Helpers
     
-    override func screenName() -> String {
-        guard let resource = self.resource else {
-            return super.screenName()
-        }
-        return "\(resource.code)-\(self.currentPage)"
+    func screenName() -> String {
+        return "\(viewModel.resource.code)-\(self.currentPage)"
     }
     
-    override func siteSection() -> String {
-        guard let resource = self.resource else {
-            return super.siteSection()
-        }
-        return "\(resource.code)"
+    func siteSection() -> String {
+
+        return "\(viewModel.resource.code)"
     }
     
     private func loadLanguages() {
-        guard let resource = resource else {
-            return
-        }
-        
+
         let languagesManager = LanguagesManager()
         
         primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
         
-        if resource.getTranslationForLanguage(primaryLanguage!) == nil {
+        if viewModel.resource.getTranslationForLanguage(primaryLanguage!) == nil {
             primaryLanguage = languagesManager.loadFromDisk(code: "en")
         }
         
@@ -351,5 +384,294 @@ extension TractViewController: BaseTractElementDelegate {
         } else {
             return languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
         }
+    }
+}
+
+// MARK: - Content
+
+extension TractViewController {
+    
+    static let snapshotViewTag = 3210123
+    static let distanceToCurrentView = 1
+    
+    func buildPages(width: CGFloat, height: CGFloat) {
+        let range = getRangeOfViews()
+        if range.end < range.start {
+            viewModel.navHomeTapped()
+            showErrorMessage()
+            return
+        }
+        
+        var currentElement: BaseTractElement?
+        if self.pagesViews.count > self.currentPage {
+            currentElement = self.pagesViews[self.currentPage]?.contentView
+        }
+        cleanContainerView()
+    
+        for pageNumber in range.start...range.end {
+            var parallelElement: BaseTractElement?
+            if pageNumber == self.currentPage {
+                parallelElement = currentElement
+            }
+            
+            let view = buildPage(pageNumber, width: width, height: height, parallelElement: parallelElement)
+            self.pagesViews[pageNumber] = view
+            self.containerView.addSubview(view)
+        }
+        
+        removeSnapshotView()
+    }
+    
+    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
+        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        let xPosition = (width * CGFloat(pageNumber)) * multiplier
+        let frame = CGRect(x: xPosition,
+                           y: 0.0,
+                           width: width,
+                           height: height)
+        
+        let page = getPage(pageNumber)
+        let configurations = TractConfigurations()
+        configurations.defaultTextAlignment = getLanguageTextAlignment()
+        configurations.pagination = page.pagination
+        configurations.language = self.selectedLanguage
+        configurations.resource = viewModel.resource
+        let view = TractView(frame: frame,
+                             data: page.pageContent(),
+                             manifestProperties: self.manifestProperties,
+                             configurations: configurations,
+                             parallelElement: parallelElement,
+                             delegate: self)
+        
+        view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        view.tag = self.viewTagOrigin + pageNumber
+        
+        return view
+    }
+    
+    func reloadPagesViews() -> Promise<Bool> {
+        return Promise<Bool> { seal in
+            let range = getRangeOfViews()
+            let lastPosition = self.totalPages() - 1
+            let width = self.containerView.frame.size.width
+            let height = self.containerView.frame.size.height
+            
+            for position in range.start...range.end {
+                _ = addPageViewAtPosition(position: position, width: width, height: height)
+            }
+            
+            if range.start > 0 {
+                for position in 0...(range.start - 1) {
+                    _ = removePageViewAtPosition(position: position)
+                }
+            }
+            
+            if range.end < lastPosition {
+                for position in (range.end + 1)...lastPosition {
+                    _ = removePageViewAtPosition(position: position)
+                }
+            }
+            
+            seal.fulfill(true)
+        }
+    }
+    
+    func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
+        return Promise<Bool> { seal in
+            
+            if self.pagesViews[position] == nil {
+                guard let firstView = self.containerView.subviews.first else {
+                    seal.fulfill(false)
+                    return
+                }
+                
+                let view = buildPage(position, width: width, height: height, parallelElement: nil)
+                self.pagesViews[position] = view
+                if firstView.tag > view.tag {
+                    self.containerView.insertSubview(view, at: 0)
+                } else {
+                    self.containerView.addSubview(view)
+                }
+            }
+            
+            seal.fulfill(true)
+        }
+    }
+    
+    func removePageViewAtPosition(position: Int) -> Promise<Bool> {
+        return Promise<Bool> { seal in
+            let pageView = self.pagesViews[position]
+            if pageView != nil {
+                pageView!.removeFromSuperview()
+                self.pagesViews[position] = nil
+            }
+            seal.fulfill(true)
+        }
+    }
+    
+    func getRangeOfViews() -> (start: Int, end: Int) {
+        var start = self.currentPage - TractViewController.distanceToCurrentView
+        if start < 0 {
+            start = 0
+        }
+        
+        var end = self.currentPage + TractViewController.distanceToCurrentView
+        if end >= self.totalPages() {
+            end = totalPages() - 1
+        }
+        
+        return (start, end)
+    }
+    
+    func cleanContainerView() {
+        addSnapshotView()
+        
+        for view in self.containerView.subviews {
+            if view.tag != TractViewController.snapshotViewTag {
+                view.removeFromSuperview()
+            }
+        }
+        
+        self.pagesViews.removeAll()
+        resetPagesView()
+    }
+    
+    func resetPagesView() {
+        self.pagesViews = [TractView?](repeating: nil, count: totalPages())
+    }
+    
+    private func addSnapshotView() {
+        let imageView = UIImageView(frame: self.containerView.frame)
+        imageView.image = UIImage.init(view: self.containerView)
+        imageView.tag = TractViewController.snapshotViewTag
+        self.containerView.addSubview(imageView)
+    }
+    
+    private func removeSnapshotView() {
+        let snapshotView = self.containerView.viewWithTag(TractViewController.snapshotViewTag)
+        snapshotView?.removeFromSuperview()
+    }
+    
+    private func showErrorMessage() {
+        let alert = UIAlertController(title: "error".localized,
+                                      message: "tract_loading_error_message".localized,
+                                      preferredStyle: .alert)
+        
+        let actionYes = UIAlertAction(title: "yes".localized,
+                                      style: .default,
+                                      handler: { action in
+                                        self.redownloadResources()
+        })
+        
+        let actionNo = UIAlertAction(title: "no".localized,
+                                      style: .cancel,
+                                      handler: { action in
+                                        self.disableResource()
+        })
+        
+        alert.addAction(actionYes)
+        alert.addAction(actionNo)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func redownloadResources() {
+        DownloadedResourceManager().delete(viewModel.resource)
+        DownloadedResourceManager().download(viewModel.resource)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func disableResource() {
+        DownloadedResourceManager().delete(viewModel.resource)
+        postReloadHomeScreenNotification()
+    }
+    
+    private func postReloadHomeScreenNotification() {
+        NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
+    }
+}
+
+// MARK: - Data Management
+
+extension TractViewController {
+    
+    // MARK: - Management of languages
+    
+    func parallelLanguageIsAvailable() -> Bool {
+        if parallelLanguage == nil {
+            return false
+        }
+        
+        return viewModel.resource.isDownloadedInLanguage(parallelLanguage)
+    }
+    
+    func determinePrimaryLabel() -> String {
+        let primaryLanguage = resolvePrimaryLanguage()
+        
+        if primaryLanguage == nil {
+            return Locale.current.localizedString(forLanguageCode: Locale.current.languageCode!)!
+        } else {
+            return primaryLanguage!.localizedName()
+        }
+    }
+    
+    func determineParallelLabel() -> String {
+        return parallelLanguage?.localizedName() ?? ""
+    }
+    
+    func getLanguageTextAlignment() -> NSTextAlignment {
+        return .left
+    }
+    
+    // MARK: - Management of resources
+    
+    func getResourceData() {
+        loadResourcesForLanguage()
+        loadResourcesForParallelLanguage()
+        usePrimaryLanguageResources()
+        loadPagesIds()
+    }
+    
+    func loadResourcesForLanguage() {
+        guard let language = resolvePrimaryLanguage() else { return }
+        let content = self.tractsManager.loadResource(resource: viewModel.resource, language: language)
+        self.xmlPagesForPrimaryLang = content.pages
+        self.manifestProperties = content.manifestProperties
+    }
+    
+    func loadResourcesForParallelLanguage() {
+        if parallelLanguageIsAvailable() {
+            let content = self.tractsManager.loadResource(resource: viewModel.resource, language: parallelLanguage!)
+            self.xmlPagesForParallelLang = content.pages
+        }
+    }
+    
+    func loadPagesIds() {
+        var counter = 0
+        for page in self.xmlPages {
+            guard let pageListeners = page.pageListeners() else { continue }
+            for listener in pageListeners {
+                TractBindings.addPageBinding(listener, counter)
+            }
+            
+            counter += 1
+        }
+    }
+    
+    func usePrimaryLanguageResources() {
+        self.selectedLanguage = resolvePrimaryLanguage()
+        self.xmlPages = self.xmlPagesForPrimaryLang
+    }
+    
+    func useParallelLanguageResources() {
+        self.selectedLanguage = parallelLanguage
+        self.xmlPages = self.xmlPagesForParallelLang
+    }
+    
+    func getPage(_ pageNumber: Int) -> XMLPage {
+        return self.xmlPages[pageNumber]
+    }
+    
+    func totalPages() -> Int {
+        return self.xmlPages.count;
     }
 }

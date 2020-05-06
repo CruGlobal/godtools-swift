@@ -10,13 +10,13 @@ import Foundation
 
 class WebContentViewModel: WebContentViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     private let webContent: WebContentType
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let url: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(analytics: GodToolsAnaltyics, webContent: WebContentType) {
+    required init(analytics: AnalyticsContainer, webContent: WebContentType) {
         
         self.analytics = analytics
         self.webContent = webContent
@@ -27,7 +27,7 @@ class WebContentViewModel: WebContentViewModelType {
     
     func pageViewed() {
         
-        analytics.recordScreenView(
+        analytics.pageViewedAnalytics.trackPageView(
             screenName: webContent.analyticsScreenName,
             siteSection: "",
             siteSubSection: ""

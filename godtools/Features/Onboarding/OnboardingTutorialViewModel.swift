@@ -10,7 +10,7 @@ import Foundation
 
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
     private var page: Int = -1
@@ -27,7 +27,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     let hidesSkipButton: ObservableValue<Bool> = ObservableValue(value: false)
     let tutorialButtonLayout: ObservableValue<OnboardingTutorialButtonLayout> = ObservableValue(value: OnboardingTutorialButtonLayout(state: .continueButton, animated: false))
         
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -76,7 +76,7 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         }
         
         if previousPage != page {
-            analytics.recordScreenView(
+            analytics.pageViewedAnalytics.trackPageView(
                 screenName: analyticsScreenName,
                 siteSection: "onboarding",
                 siteSubSection: ""
@@ -113,12 +113,12 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         openTutorialCalloutCache.disableOpenTutorialCallout()
         flowDelegate?.navigate(step: .showMoreTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "On-Boarding More", data: ["cru.onboarding_more": 1])
+        analytics.adobeAnalytics.trackAction(screenName: analyticsScreenName, actionName: "On-Boarding More", data: ["cru.onboarding_more": 1])
     }
     
     func getStartedTapped() {
         flowDelegate?.navigate(step: .getStartedTappedFromOnboardingTutorial)
         
-        analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "On-Boarding Start", data: ["cru.onboarding_start": 1])
+        analytics.adobeAnalytics.trackAction(screenName: analyticsScreenName, actionName: "On-Boarding Start", data: ["cru.onboarding_start": 1])
     }
 }

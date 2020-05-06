@@ -6,8 +6,7 @@
 //  Copyright © 2018 Cru. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
 
 extension UIViewController {
     

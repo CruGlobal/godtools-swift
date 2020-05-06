@@ -27,7 +27,6 @@ target 'godtools' do
     pod 'Fuzi'
     pod 'Fabric'
     pod 'Crashlytics'
-    pod 'GoogleAnalytics', '~> 3.17.0'
     pod 'GoogleConversionTracking', '~> 3.4.0'
     pod 'AdobeMobileSDK', '~> 4.19'
     pod 'SwiftyJSON'

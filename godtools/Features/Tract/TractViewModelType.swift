@@ -10,5 +10,9 @@ import Foundation
 
 protocol TractViewModelType {
     
+    var resource: DownloadedResource { get }
+    var navTitle: ObservableValue<String> { get }
+    
+    func navHomeTapped()
     func viewLoaded()
 }

@@ -11,7 +11,7 @@ import Foundation
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
     private let languagesManager: LanguagesManager
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -19,7 +19,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.languagesManager = languagesManager
@@ -73,7 +73,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     }
     
     func pageViewed() {
-        analytics.recordScreenView(screenName: "Language Settings", siteSection: "menu", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Language Settings", siteSection: "menu", siteSubSection: "")
     }
     
     func choosePrimaryLanguageTapped() {
