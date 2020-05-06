@@ -66,11 +66,22 @@ class TutorialViewModel: TutorialViewModelType {
         }
         
         if previousPage != page {
+            
+            let isFirstPage: Bool = page == 0
+            let isLastPage: Bool = page == tutorialItems.value.count - 1
+            
             analytics.pageViewedAnalytics.trackPageView(
                 screenName: analyticsScreenName,
                 siteSection: "tutorial",
                 siteSubSection: ""
             )
+            
+            if isFirstPage {
+                analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            }
+            else if isLastPage {
+                analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            }
         }
     }
     

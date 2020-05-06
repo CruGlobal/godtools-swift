@@ -12,16 +12,13 @@ import MessageUI
 class MailViewModel: MailViewModelType {
         
     private let finishedSendingMailHandler: CallbackHandler
-    
-    private weak var flowDelegate: FlowDelegate?
-    
+        
     let toRecipients: [String]
     let subject: String
     let message: String
     let canSendViaMailApp: Bool
     
-    required init(flowDelegate: FlowDelegate, toRecipients: [String], subject: String, message: String, finishedSendingMailHandler: CallbackHandler) {
-        self.flowDelegate = flowDelegate
+    required init(toRecipients: [String], subject: String, message: String, finishedSendingMailHandler: CallbackHandler) {
         self.toRecipients = toRecipients
         self.subject = subject
         self.message = message

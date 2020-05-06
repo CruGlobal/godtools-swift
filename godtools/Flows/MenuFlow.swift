@@ -107,7 +107,6 @@ class MenuFlow: Flow {
                 }
                 
                 let viewModel = MailViewModel(
-                    flowDelegate: self,
                     toRecipients: ["support@godtoolsapp.com"],
                     subject: "Email to GodTools support",
                     message: "",
@@ -138,7 +137,6 @@ class MenuFlow: Flow {
                 }
                 
                 let viewModel = MailViewModel(
-                    flowDelegate: self,
                     toRecipients: ["support@godtoolsapp.com"],
                     subject: "GodTools story",
                     message: "",

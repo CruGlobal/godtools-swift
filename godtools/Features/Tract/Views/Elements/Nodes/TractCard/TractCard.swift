@@ -68,10 +68,6 @@ class TractCard: BaseTractElement {
         }
     }
     
-    var tractCardAnalyticEvents: [TractAnalyticEvent]  {
-            return self.analyticsUserInfo
-    }
-    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
@@ -111,6 +107,7 @@ class TractCard: BaseTractElement {
             setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: pageCount)
         }
         TractBindings.addBindings(self)
+        
         return self
     }
     

@@ -22,6 +22,9 @@ extension TractCard {
     }
     
     func processSwipeUp() {
+        
+        print("\n TRACT CARD PROCESS SWIPE UP")
+        
         let properties = cardProperties()
         if properties.cardState == .preview || properties.cardState == .close {
             showCardAndPreviousCards()
@@ -84,9 +87,23 @@ extension TractCard {
     }
     
     func showCard() {
+        
         let properties = cardProperties()
+        
         if properties.cardState == .open {
             return
+        }
+        
+        print("\n SHOW CARD()")
+        print("   card: \(self)")
+        print("   card.cardState: \(properties.cardState)")
+        
+        for analyticEvent in analyticsUserInfo {
+            print(" analytics event")
+            print("   action: \(analyticEvent.action)")
+            print("   system: \(analyticEvent.system)")
+            print("   trigger: \(analyticEvent.trigger)")
+            print("   delay: \(analyticEvent.delay)")
         }
         
         if isHiddenKindCard() {

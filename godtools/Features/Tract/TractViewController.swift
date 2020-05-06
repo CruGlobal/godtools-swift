@@ -97,6 +97,15 @@ class TractViewController: UIViewController {
             target: self,
             action: #selector(handleShare(barButtonItem:))
         )
+        
+        for translation in viewModel.resource.translations {
+            if let languageCode = translation.language?.code {
+                if languageCode.contains("en") {
+                    print("translation id: \(translation.remoteId)")
+                    print("  language code: \(languageCode)")
+                }
+            }
+        }
     }
     
     override func viewWillLayoutSubviews() {
