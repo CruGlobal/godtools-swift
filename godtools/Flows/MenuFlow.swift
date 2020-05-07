@@ -80,7 +80,8 @@ class MenuFlow: Flow {
             
             let viewModel = AccountViewModel(
                 loginClient: appDiContainer.loginClient,
-                globalActivityServices: appDiContainer.globalActivityServices
+                globalActivityServices: appDiContainer.globalActivityServices,
+                analytics: appDiContainer.analytics
             )
             let view = AccountView(viewModel: viewModel)
             
