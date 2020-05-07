@@ -107,7 +107,9 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                        
+           
+        print("\n CELL FOR ROW: \(indexPath.row)")
+        
         let cell: AccountItemCell = itemsCollectionView.dequeueReusableCell(
             withReuseIdentifier: AccountItemCell.reuseIdentifier,
             for: indexPath) as! AccountItemCell
@@ -139,6 +141,42 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension AccountView: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == itemsCollectionView {
+            if !decelerate {
+                handleDidScrollToItemInItemsCollectionView()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == itemsCollectionView {
+            handleDidScrollToItemInItemsCollectionView()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == itemsCollectionView {
+            handleDidScrollToItemInItemsCollectionView()
+        }
+    }
+    
+    private func handleDidScrollToItemInItemsCollectionView() {
+        
+        itemsCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = itemsCollectionView.visibleCells.first {
+            if let indexPath = itemsCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToAccountItem(item: indexPath.item)
+            }
+        }
     }
 }
 

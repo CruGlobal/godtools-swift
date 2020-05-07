@@ -31,8 +31,7 @@ class AccountViewModel: AccountViewModelType {
         
         isLoadingProfile.accept(value: true)
         loginClient.fetchAttributes { [weak self] (attributes: [String: String]?, error: Error?) in
-            DispatchQueue.main.async {
-                
+            DispatchQueue.main.async { [weak self] in
                 self?.isLoadingProfile.accept(value: false)
                 if let attributes = attributes, let firstName = attributes["firstName"], let lastName = attributes["lastName"] {
                     self?.profileName.accept(value: (name: firstName + " " + lastName, animated: true))
@@ -43,5 +42,10 @@ class AccountViewModel: AccountViewModelType {
     
     func settingsTapped() {
         print("TODO: AccountViewModel Implement settings.")
+    }
+    
+    func didScrollToAccountItem(item: Int) {
+        
+        print("\n DID SCROLL TO ACCOUNT ITEM: \(item)")
     }
 }

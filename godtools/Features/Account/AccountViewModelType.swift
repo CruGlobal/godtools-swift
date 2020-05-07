@@ -17,4 +17,5 @@ protocol AccountViewModelType {
     var items: [AccountItem] { get }
     
     func settingsTapped()
+    func didScrollToAccountItem(item: Int)
 }
