@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.firebaseConfiguration.configure()
         
         appDiContainer.analytics.adobeAnalytics.configure()
+        appDiContainer.analytics.adobeAnalytics.collectLifecycleData()
         
         appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         

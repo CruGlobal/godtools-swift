@@ -15,10 +15,14 @@ struct AppConfig: ConfigType {
     
     init() {
         
+        // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
         #if RELEASE
             isDebug = false
-        #else
+        #elseif DEBUG
             isDebug = true
+        #else
+            isDebug = false
+            assertionFailure("In ( Build Settings > Other Swift Flags ) set either -DDEBUG or -DRELEASE for each scheme.")
         #endif
         
         appleAppId = "542773210"
