@@ -139,7 +139,17 @@ extension MenuView: UITableViewDataSource {
         cell.selectionStyle = .none
                 
         let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
-        cell.configure(viewModel: MenuCellViewModel(menuItem: menuItem))
+        
+        let selectionDisabled: Bool = menuItem.id == .version
+        let numberOfRowsInSection: Int = tableView.numberOfRows(inSection: indexPath.section)
+        let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
+        
+        cell.configure(
+            viewModel: MenuCellViewModel(
+                menuItem: menuItem,
+                selectionDisabled: selectionDisabled,
+                hidesSeparator: isLastRowOfSection
+        ))
         
         return cell
     }
@@ -214,6 +224,9 @@ extension MenuView: UITableViewDelegate {
             
         case .tutorial:
             viewModel.tutorialTapped()
+            
+        case .version:
+            break
         }
     }
     
