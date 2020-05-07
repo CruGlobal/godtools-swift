@@ -24,4 +24,5 @@ enum MenuItemId {
     case privacyPolicy
     case copyrightInfo
     case tutorial
+    case version
 }

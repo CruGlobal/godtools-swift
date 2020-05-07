@@ -12,6 +12,7 @@ import GTMAppAuth
 
 class MenuViewModel: NSObject, MenuViewModelType {
     
+    private let config: ConfigType
     private let menuDataProvider: MenuDataProviderType
     private let deviceLanguage: DeviceLanguageType
     private let tutorialAvailability: TutorialAvailabilityType
@@ -26,9 +27,10 @@ class MenuViewModel: NSObject, MenuViewModelType {
     let navDoneButtonTitle: String = NSLocalizedString("done", comment: "")
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
+        self.config = config
         self.loginClient = loginClient
         self.menuDataProvider = menuDataProvider
         self.deviceLanguage = deviceLanguage
@@ -63,6 +65,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         }
         sections.append(menuDataProvider.getMenuSection(id: .share))
         sections.append(menuDataProvider.getMenuSection(id: .legal))
+        sections.append(menuDataProvider.getMenuSection(id: .version))
         
         var itemsDictionary: [MenuSectionId: [MenuItem]] = Dictionary()
         
@@ -109,6 +112,15 @@ class MenuViewModel: NSObject, MenuViewModelType {
                     menuDataProvider.getMenuItem(id: .privacyPolicy),
                     menuDataProvider.getMenuItem(id: .copyrightInfo)
                 ]
+                
+            case .version:
+                
+                let versionMenuItem = MenuItem(
+                    id: .version,
+                    title: config.versionLabel
+                )
+                
+                items = [versionMenuItem]
             }
             
             itemsDictionary[section.id] = items

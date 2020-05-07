@@ -14,4 +14,5 @@ enum MenuSectionId: Hashable {
     case account
     case share
     case legal
+    case version
 }

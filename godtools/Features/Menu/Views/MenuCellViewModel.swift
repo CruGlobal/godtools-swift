@@ -11,8 +11,12 @@ import Foundation
 class MenuCellViewModel {
     
     let title: String
+    let selectionDisabled: Bool
+    let hidesSeparator: Bool
     
-    required init(menuItem: MenuItem) {
+    required init(menuItem: MenuItem, selectionDisabled: Bool, hidesSeparator: Bool) {
         title = menuItem.title
+        self.selectionDisabled = selectionDisabled
+        self.hidesSeparator = hidesSeparator
     }
 }

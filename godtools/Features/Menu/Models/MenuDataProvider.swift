@@ -41,6 +41,12 @@ struct MenuDataProvider: MenuDataProviderType {
                 id: id,
                 title: NSLocalizedString("menu_legal", comment: "")
             )
+            
+        case .version:
+            return MenuSection(
+                id: id,
+                title: NSLocalizedString("menu_version", comment: "")
+            )
         }
     }
     
@@ -130,6 +136,12 @@ struct MenuDataProvider: MenuDataProviderType {
             return MenuItem(
                 id: id,
                 title: NSLocalizedString("menu.tutorial", comment: "")
+            )
+            
+        case .version:
+            return MenuItem(
+                id: id,
+                title: ""
             )
         }
     }
