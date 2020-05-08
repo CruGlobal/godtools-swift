@@ -17,7 +17,6 @@ struct GTConstants {
     static let kDownloadProgressResourceIdKey = "org.cru.godtools.downloadProgressResourceIdKey"
     static let kDownloadBannerResourceIdKey = "org.cru.godtools.downloadBannerResourceIdKey"
     
-    static let kOnboardingScreensShownKey = "org.cru.godtools.onboardingScreensShownKey"
     static let kFirstLaunchKey = "org.cru.godtools.firstLaunchKey"
     static let kDownloadDeviceLocaleKey = "org.cru.godtools.downloadDeviceLocaleKey"
     static let kAlreadyAccessTract = "org.cru.godtools.defaults.tract.alreadyAccess"
@@ -27,15 +26,11 @@ struct GTConstants {
     
     static let kAnalyticsScreenNameKey = "org.cru.godtools.analyticsScreeNameKey"
     static let kUserEmailIsRegistered = "org.cru.godtools.userEmailIsRegistered"
-
-    static let kArticleSupportedTemplates: Set<String> = [  "/conf/cru/settings/wcm/templates/experience-fragment-cru-godtools-variation" ]
-
 }
 
 enum Storyboard {
     
     static let main = "Main"
     static let articles = "Articles"
-    
 }
 

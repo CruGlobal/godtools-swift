@@ -18,7 +18,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
-    
+        
     required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, loggingEnabled: Bool) {
         
         self.config = config
@@ -32,6 +32,8 @@ class AdobeAnalytics: AdobeAnalyticsType {
         }
     }
     
+    // NOTE: When calling this field, call it from a non blocking UI thread.
+    // From Adobe SDK: @note This method can cause a blocking network call and should not be used from a UI thread.
     var visitorMarketingCloudID: String {
         assertFailureIfNotConfigured()
         if let visitorMarketingCloudID = ADBMobile.visitorMarketingCloudID() {
@@ -44,125 +46,125 @@ class AdobeAnalytics: AdobeAnalyticsType {
     }
     
     func configure() {
+        
         if isConfigured {
             return
         }
-        isConfigured = true
-        
+                
         ADBMobile.overrideConfigPath(
             Bundle.main.path(
                 forResource: config.isDebug ? "ADBMobileConfig_debug" : "ADBMobileConfig",
                 ofType: "json"
         ))
         
-        let lifeCycleData: AdobeAnalyticsProperties = AdobeAnalyticsProperties(
-            appName: appName,
-            contentLanguage: nil,
-            contentLanguageSecondary: nil,
-            exitLink: nil,
-            grMasterPersonID: nil,
-            loggedInStatus: loggedInStatus,
-            marketingCloudID: visitorMarketingCloudID,
-            previousScreenName: nil,
-            screenName: nil,
-            siteSection: nil,
-            siteSubSection: nil,
-            ssoguid: nil
-        )
+        isConfigured = true
         
-        ADBMobile.collectLifecycleData(withAdditionalData: JsonServices().encode(object: lifeCycleData))
+        log(method: "configure()", label: nil, labelValue: nil, data: nil)
+    }
+    
+    func collectLifecycleData() {
+                
+        var lifecycleData = AdobeAnalyticsProperties()
+        lifecycleData.appName = appName
+        lifecycleData.loggedInStatus = loggedInStatus
+        
+        DispatchQueue.global().async { [weak self] in
+            
+            self?.assertFailureIfNotConfigured()
+            
+            lifecycleData.marketingCloudID = self?.visitorMarketingCloudID ?? ""
+            
+            ADBMobile.collectLifecycleData(withAdditionalData: JsonServices().encode(object: lifecycleData))
+            
+            self?.log(method: "collectLifecycleData()", label: nil, labelValue: nil, data: nil)
+        }
     }
     
     func trackScreenView(screenName: String, siteSection: String, siteSubSection: String) {
         
         assertFailureIfNotConfigured()
         
-        let defaultProperties: AdobeAnalyticsProperties = createDefaultProperties(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection
-        )
-        
-        let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
-        
-        if loggingEnabled {
-            print("\nAdobe Analytics - Track Screen View")
-            print("  screenName: \(screenName)")
-            print("  data: \(data)")
-        }
-        
-        ADBMobile.trackState(screenName, data: data)
+        let previousScreenName: String = self.previousTrackedScreenName
         
         previousTrackedScreenName = screenName
+        
+        createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+            
+            let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
+            
+            ADBMobile.trackState(screenName, data: data)
+            
+            self?.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: data)
+        }
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]) {
         
         assertFailureIfNotConfigured()
         
-        let properties: AdobeAnalyticsProperties = createDefaultProperties(
-            screenName: screenName,
-            siteSection: nil,
-            siteSubSection: nil
-        )
-        
-        var trackingData: [AnyHashable: Any] = JsonServices().encode(object: properties)
-        
-        for (key, value) in data {
-            trackingData[key] = value
+        createDefaultProperties(screenName: screenName, siteSection: nil, siteSubSection: nil, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+            
+            var trackingData: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
+            
+            for (key, value) in data {
+                trackingData[key] = value
+            }
+            
+            ADBMobile.trackAction(actionName, data: trackingData)
+            
+            self?.log(method: "trackAction()", label: "actionName", labelValue: actionName, data: trackingData)
         }
-        
-        if loggingEnabled {
-            print("\nAdobe Analytics - Track Action")
-            print("  actionName: \(actionName)")
-            print("  data: \(trackingData)")
-        }
-        
-        ADBMobile.trackAction(actionName, data: trackingData)
     }
     
     func trackExitLink(screenName: String, siteSection: String, siteSubSection: String, url: URL) {
-              
+           
         assertFailureIfNotConfigured()
         
-        var properties: AdobeAnalyticsProperties = createDefaultProperties(
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection
-        )
-        
-        properties.exitLink = url.absoluteString
-        
-        let actionName: String = "Exit Link Engaged"
-        
-        let data: [AnyHashable: Any] = JsonServices().encode(object: properties)
-                
-        if loggingEnabled {
-            print("\nAdobe Analytics - Track Exit Link Action")
-            print("  actionName: \(actionName)")
-            print("  data: \(data)")
+        createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousTrackedScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
+            
+            var properties = defaultProperties
+            
+            properties.exitLink = url.absoluteString
+            
+            let actionName: String = "Exit Link Engaged"
+            
+            let data: [AnyHashable: Any] = JsonServices().encode(object: properties)
+            
+            ADBMobile.trackAction(actionName, data: data)
+            
+            self?.log(method: "trackExitLink()", label: actionName, labelValue: actionName, data: data)
         }
-        
-        ADBMobile.trackAction(actionName, data: data)
     }
     
-    private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?) -> AdobeAnalyticsProperties {
+    private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
         
-        let defaultProperties = AdobeAnalyticsProperties(
-            appName: appName,
-            contentLanguage: UserDefaults.standard.string(forKey: "kPrimaryLanguageCode"),
-            contentLanguageSecondary: UserDefaults.standard.string(forKey: "kParallelLanguageCode"),
-            grMasterPersonID: keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil,
-            loggedInStatus: loggedInStatus,
-            marketingCloudID: ADBMobile.visitorMarketingCloudID(),
-            previousScreenName: previousTrackedScreenName,
-            screenName: screenName,
-            siteSection: siteSection,
-            siteSubSection: siteSubSection,
-            ssoguid: keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
-        )
+        let appName: String = self.appName
+        let contentLanguage: String? = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode")
+        let contentLanguageSecondary: String? = UserDefaults.standard.string(forKey: "kParallelLanguageCode")
+        let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
+        let loggedInStatus: String = self.loggedInStatus
+        let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
         
-        return defaultProperties
+        DispatchQueue.global().async { [weak self] in
+            
+            let visitorMarketingCloudID: String? = self?.visitorMarketingCloudID
+            
+            let defaultProperties = AdobeAnalyticsProperties(
+                appName: appName,
+                contentLanguage: contentLanguage,
+                contentLanguageSecondary: contentLanguageSecondary,
+                grMasterPersonID: grMasterPersonID,
+                loggedInStatus: loggedInStatus,
+                marketingCloudID: visitorMarketingCloudID,
+                previousScreenName: previousScreenName,
+                screenName: screenName,
+                siteSection: siteSection,
+                siteSubSection: siteSubSection,
+                ssoguid: ssoguid
+            )
+            
+            complete(defaultProperties)
+        }
     }
     
     private var appName: String {
@@ -171,5 +173,18 @@ class AdobeAnalytics: AdobeAnalyticsType {
     
     private var loggedInStatus: String {
         return keyAuthClient.isAuthenticated() ? AdobeAnalyticsConstants.Values.isLoggedIn : AdobeAnalyticsConstants.Values.notLoggedIn
+    }
+    
+    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+        
+        if loggingEnabled {
+            print("\nAdobeAnalytics \(method)")
+            if let label = label, let labelValue = labelValue {
+               print("  \(label): \(labelValue)")
+            }
+            if let data = data {
+                print("  data: \(data)")
+            }
+        }
     }
 }

@@ -9,42 +9,8 @@
 import Foundation
 
 class GTSettings {
+   
     static let shared = GTSettings()
-    static let ignoredTools: [String] = []
-    
-    private var primaryLanguageIdInternal: String?
-    private var parallelLanguageIdInternal: String?
+        
     var parallelLanguageCode: String?
-    
-    var primaryLanguageId: String? {
-        get {
-            if primaryLanguageIdInternal != nil {
-                return primaryLanguageIdInternal
-            }
-            
-            primaryLanguageIdInternal = UserDefaults.standard.string(forKey: "kPrimaryLanguageId")
-            return primaryLanguageIdInternal
-        }
-        
-        set {
-            primaryLanguageIdInternal = newValue
-            UserDefaults.standard.set(newValue, forKey: "kPrimaryLanguageId")
-        }
-    }
-    
-    var parallelLanguageId: String? {
-        get {
-            if parallelLanguageIdInternal != nil {
-                return parallelLanguageIdInternal
-            }
-            
-            parallelLanguageIdInternal = UserDefaults.standard.string(forKey: "kParallelLanguageId")
-            return parallelLanguageIdInternal
-        }
-        
-        set {
-            parallelLanguageIdInternal = newValue
-            UserDefaults.standard.set(newValue, forKey: "kParallelLanguageId")
-        }
-    }
 }

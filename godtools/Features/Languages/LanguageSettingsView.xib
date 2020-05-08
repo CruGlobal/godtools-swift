@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageSettingsView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="exclamationImageView" destination="ttT-jJ-AoH" id="5vz-f5-7Wd"/>
+                <outlet property="languageAvailabilityLabel" destination="4sz-fA-Y1h" id="gt9-Lw-zDp"/>
+                <outlet property="languageImageView" destination="2QP-b4-GGk" id="VK1-yc-exb"/>
+                <outlet property="parallelLanguageButton" destination="iQc-Pj-d7G" id="YfO-kP-oRl"/>
+                <outlet property="parallelLanguageLabel" destination="2n1-cR-Y3q" id="COF-PU-BiN"/>
+                <outlet property="primaryLanguageButton" destination="wUa-h5-W1Y" id="Uke-8U-JRb"/>
+                <outlet property="primaryLanguageLabel" destination="mQB-PV-ktd" id="eyi-gg-TFh"/>
+                <outlet property="shareGodToolsLabel" destination="1hm-LH-y2y" id="Ecj-kX-4Zi"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="language_logo" translatesAutoresizingMaskIntoConstraints="NO" id="2QP-b4-GGk" userLabel="languageImageView">
+                    <rect key="frame" x="157.5" y="99" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="26C-fX-oLX"/>
+                        <constraint firstAttribute="width" constant="60" id="mEt-cr-TNZ"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mQB-PV-ktd" userLabel="primaryLanguageLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="118.5" y="196" width="138.5" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="5bn-pM-ha9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="primary_language"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-h5-W1Y" userLabel="primaryLanguageButton" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="226" width="260" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="260" id="4Ta-gu-BSe"/>
+                        <constraint firstAttribute="height" constant="48" id="CPc-21-Fgk"/>
+                    </constraints>
+                    <state key="normal" title="Select a Primary Language"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parallel Language" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2n1-cR-Y3q" userLabel="parallelLanguageLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="120" y="314" width="135.5" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="tSj-gF-6XC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blueHeader1"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="parallel_language"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share God Tools with someone in their native language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hm-LH-y2y" userLabel="shareGodToolsLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="344" width="260" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="260" id="wal-lI-811"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="blackText"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="share_god_tools_native_language"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQc-Pj-d7G" userLabel="parallelLanguageButton" customClass="BlueButton" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="57.5" y="388" width="260" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="B7i-pN-iv9"/>
+                        <constraint firstAttribute="width" constant="260" id="BNf-Su-7st"/>
+                    </constraints>
+                    <state key="normal" title="Select a Parallel Language"/>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation_red" translatesAutoresizingMaskIntoConstraints="NO" id="ttT-jJ-AoH" userLabel="exclamationImageView">
+                    <rect key="frame" x="165.5" y="550" width="44" height="44"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not every tool is available in every language" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sz-fA-Y1h" userLabel="languageAvailabilityLabel" customClass="GTLabel" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="66.5" y="606" width="242" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="242" id="jwl-EJ-icG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="gtStyle" value="redText"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="translationKey" value="not_every_tool_is_available"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mQB-PV-ktd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="04v-yM-ZEj"/>
+                <constraint firstAttribute="bottom" secondItem="4sz-fA-Y1h" secondAttribute="bottom" constant="20" id="05d-jA-pxh"/>
+                <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" multiplier="3:4" id="859-CQ-k5c"/>
+                <constraint firstItem="4sz-fA-Y1h" firstAttribute="top" secondItem="ttT-jJ-AoH" secondAttribute="bottom" constant="12" id="9hu-Vv-Dmk"/>
+                <constraint firstItem="2n1-cR-Y3q" firstAttribute="top" secondItem="wUa-h5-W1Y" secondAttribute="bottom" constant="40" id="CAg-jS-0n3"/>
+                <constraint firstItem="wUa-h5-W1Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="IPj-S7-m6T"/>
+                <constraint firstItem="iQc-Pj-d7G" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="McU-E7-KVx"/>
+                <constraint firstItem="wUa-h5-W1Y" firstAttribute="top" secondItem="mQB-PV-ktd" secondAttribute="bottom" constant="8" id="PJM-Sq-DjY"/>
+                <constraint firstItem="4sz-fA-Y1h" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Pvp-Th-BiN"/>
+                <constraint firstItem="ttT-jJ-AoH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iQc-Pj-d7G" secondAttribute="bottom" constant="22" id="ZQd-Pp-ptK"/>
+                <constraint firstItem="1hm-LH-y2y" firstAttribute="top" secondItem="2n1-cR-Y3q" secondAttribute="bottom" constant="8" id="bZk-2f-Q9t"/>
+                <constraint firstItem="2QP-b4-GGk" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="f4t-bV-Iwj"/>
+                <constraint firstItem="iQc-Pj-d7G" firstAttribute="top" secondItem="1hm-LH-y2y" secondAttribute="bottom" constant="8" id="hGT-E2-gao"/>
+                <constraint firstItem="mQB-PV-ktd" firstAttribute="top" secondItem="2QP-b4-GGk" secondAttribute="bottom" priority="750" constant="37" id="jCf-qZ-DPM"/>
+                <constraint firstItem="ttT-jJ-AoH" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="kv7-ZQ-XWa"/>
+                <constraint firstItem="2QP-b4-GGk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="nIo-UJ-rCZ"/>
+                <constraint firstItem="2n1-cR-Y3q" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ncb-9H-vNO"/>
+                <constraint firstItem="1hm-LH-y2y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="qlD-Be-SKC"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <point key="canvasLocation" x="35.5" y="54.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="exclamation_red" width="44" height="44"/>
+        <image name="language_logo" width="60" height="60"/>
+    </resources>
+</document>

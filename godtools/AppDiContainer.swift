@@ -11,15 +11,18 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
     
+    private let godToolsAnalytics: GodToolsAnaltyics
+    
     let realmDatabase: RealmDatabase
     let isNewUserCache: IsNewUserCacheType
     let isNewUserService: IsNewUserService
     let config: ConfigType
     let loginClient: TheKeyOAuthClient
-    let adobeAnalytics: AdobeAnalyticsType
-    let appsFlyer: AppsFlyerType
+    let analytics: AnalyticsContainer
+    let translationsApi: TranslationsApiType
+    let resourceLatestTranslationServices: ResourceLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    let analytics: GodToolsAnaltyics
+    let languagesManager: LanguagesManager
     
     required init() {
         
@@ -36,17 +39,38 @@ class AppDiContainer {
         
         loginClient = TheKeyOAuthClient.shared
         
-        adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
+        let analyticsLoggingEnabled: Bool = config.isDebug
+        analytics = AnalyticsContainer(
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
+            firebaseAnalytics: FirebaseAnalytics()
+        )
         
-        appsFlyer = AppsFlyer(config: config, loggingEnabled: config.isDebug)
+        godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
+                
+        translationsApi = TranslationsApi(config: config)
+          
+        resourceLatestTranslationServices = ResourceLatestTranslationServices(translationsApi: translationsApi)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
-        analytics = GodToolsAnaltyics(config: config, adobeAnalytics: adobeAnalytics, appsFlyer: appsFlyer)
+        languagesManager = LanguagesManager()
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
         return FirebaseConfiguration(config: config)
+    }
+    
+    var googleAdwordsAnalytics: GoogleAdwordsAnalytics {
+        return GoogleAdwordsAnalytics(config: config)
+    }
+    
+    var toolOpenedAnalytics: ToolOpenedAnalytics {
+        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyer)
+    }
+    
+    var exitLinkAnalytics: ExitLinkAnalytics {
+        return ExitLinkAnalytics(adobeAnalytics: analytics.adobeAnalytics)
     }
     
     var onboardingTutorialAvailability: OnboardingTutorialAvailabilityType {
@@ -69,10 +93,6 @@ class AppDiContainer {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
     }
     
-    var toolsLanguagePreferencesCache: ToolsLanguagePreferenceCacheType {
-        return ToolsLanguagePreferenceUserDefaultsCache()
-    }
-    
     var deviceLanguage: DeviceLanguageType {
         return DeviceLanguage()
     }
@@ -81,6 +101,16 @@ class AppDiContainer {
         return GlobalActivityServices(
             globalActivityApi: GlobalActivityAnalyticsApi(config: config),
             globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
+        )
+    }
+    
+    var translationZipImporter: TranslationZipImporter {
+        return TranslationZipImporter()
+    }
+    
+    var articleAemImportService: ArticleAemImportService {
+        return ArticleAemImportService(
+            realm: realmDatabase.mainThreadRealm
         )
     }
 }

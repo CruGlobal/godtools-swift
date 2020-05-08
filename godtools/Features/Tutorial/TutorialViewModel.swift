@@ -10,7 +10,7 @@ import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
     
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
     private var page: Int = -1
@@ -24,7 +24,7 @@ class TutorialViewModel: TutorialViewModelType {
     let currentPage: ObservableValue<Int> = ObservableValue(value: 0)
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, analytics: GodToolsAnaltyics, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
+    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
@@ -66,11 +66,22 @@ class TutorialViewModel: TutorialViewModelType {
         }
         
         if previousPage != page {
-            analytics.recordScreenView(
+            
+            let isFirstPage: Bool = page == 0
+            let isLastPage: Bool = page == tutorialItems.value.count - 1
+            
+            analytics.pageViewedAnalytics.trackPageView(
                 screenName: analyticsScreenName,
                 siteSection: "tutorial",
                 siteSubSection: ""
             )
+            
+            if isFirstPage {
+                analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            }
+            else if isLastPage {
+                analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+            }
         }
     }
     
@@ -116,7 +127,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         if !youTubeVideoTracked {
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.recordActionForADBMobile(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
+            analytics.adobeAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }

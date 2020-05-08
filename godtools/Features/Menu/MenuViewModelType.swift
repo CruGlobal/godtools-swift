@@ -12,9 +12,22 @@ import TheKeyOAuthSwift
 protocol MenuViewModelType {
     
     var loginClient: TheKeyOAuthClient { get }
+    var navTitle: ObservableValue<String> { get }
+    var navDoneButtonTitle: String { get }
     var menuDataSource: ObservableValue<MenuDataSource> { get }
     
+    func pageViewed()
+    func doneTapped()
     func reloadMenuDataSource()
+    func languageSettingsTapped()
     func tutorialTapped()
     func myAccountTapped()
+    func aboutTapped()
+    func helpTapped()
+    func contactUsTapped()
+    func shareGodToolsTapped()
+    func shareAStoryWithUsTapped()
+    func termsOfUseTapped()
+    func privacyPolicyTapped()
+    func copyrightInfoTapped()
 }

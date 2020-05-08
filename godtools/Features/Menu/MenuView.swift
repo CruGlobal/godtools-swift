@@ -7,15 +7,8 @@
 //
 
 import UIKit
-import MessageUI
 import TheKeyOAuthSwift
 import GTMAppAuth
-
-protocol MenuViewControllerDelegate: class {
-    func moveToUpdateLanguageSettings()
-    func moveToAbout()
-    func openWebView(url: URL, title: String, analyticsTitle: String)
-}
 
 /*
  ----The OAuth client ID.----
@@ -38,31 +31,23 @@ let kAppAuthExampleAuthStateKey: String = "authState";
   */
 
 
-class MenuView: BaseViewController {
+class MenuView: UIViewController {
     
     private let viewModel: MenuViewModelType
     private let headerHeight: CGFloat = 40.0
     private let rowHeight: CGFloat = 50
     
     @IBOutlet weak var tableView: UITableView!
-    
-    weak var delegate: MenuViewControllerDelegate?
-    
+        
     var isComingFromLoginBanner = false
     
     required init(viewModel: MenuViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "MenuView", bundle: nil)
+        super.init(nibName: String(describing: MenuView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override var screenTitle: String {
-        get {
-            return "settings".localized
-        }
     }
 
     override func viewDidLoad() {
@@ -72,6 +57,18 @@ class MenuView: BaseViewController {
         setupBinding()
         
         viewModel.loginClient.addStateChangeDelegate(delegate: self)
+        
+        // TODO: Would like the MenuView to have it's own navigation bar, this would no longer be needed. ~Levi
+        hideBackBarButtonItem()
+        
+        _ = addBarButtonItem(
+            to: .right,
+            title: viewModel.navDoneButtonTitle,
+            style: .done,
+            color: nil,
+            target: self,
+            action: #selector(handleDone(barButtonItem:))
+        )
     }
     
     private func setupLayout() {
@@ -89,6 +86,10 @@ class MenuView: BaseViewController {
     
     private func setupBinding() {
         
+        viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
+            self?.title = title
+        }
+        
         viewModel.menuDataSource.addObserver(self) { [weak self] (menuDataSource: MenuDataSource) in
             self?.tableView.reloadData()
         }
@@ -96,6 +97,7 @@ class MenuView: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.pageViewed()
         viewModel.reloadMenuDataSource()
     }
     
@@ -107,19 +109,9 @@ class MenuView: BaseViewController {
         }
     }
     
-    // MARK: - Navigation Buttons
-    
-    override func configureNavigationButtons() {
-        addEmptyLeftButton()
-        addDoneButton()
+    @objc func handleDone(barButtonItem: UIBarButtonItem) {
+        viewModel.doneTapped()
     }
-    
-    // MARK: - Analytics
-    
-    override func screenName() -> String {
-        return "Menu"
-    }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -147,7 +139,17 @@ extension MenuView: UITableViewDataSource {
         cell.selectionStyle = .none
                 
         let menuItem: MenuItem = viewModel.menuDataSource.value.getMenuItem(at: indexPath)
-        cell.configure(viewModel: MenuCellViewModel(menuItem: menuItem))
+        
+        let selectionDisabled: Bool = menuItem.id == .version
+        let numberOfRowsInSection: Int = tableView.numberOfRows(inSection: indexPath.section)
+        let isLastRowOfSection: Bool = indexPath.row == numberOfRowsInSection - 1
+        
+        cell.configure(
+            viewModel: MenuCellViewModel(
+                menuItem: menuItem,
+                selectionDisabled: selectionDisabled,
+                hidesSeparator: isLastRowOfSection
+        ))
         
         return cell
     }
@@ -180,22 +182,16 @@ extension MenuView: UITableViewDelegate {
         switch menuItem.id {
             
         case .languageSettings:
-            delegate?.moveToUpdateLanguageSettings()
+            viewModel.languageSettingsTapped()
         
         case .about:
-            delegate?.moveToAbout()
+            viewModel.aboutTapped()
         
         case .help:
-            let url = URL(string: "http://www.godtoolsapp.com/faq")
-            delegate?.openWebView(url: url!, title: "help".localized, analyticsTitle: "Help")
+            viewModel.helpTapped()
         
         case .contactUs:
-            if MFMailComposeViewController.canSendMail() {
-                sendEmail(recipient: "support@godtoolsapp.com", subject: "Email to GodTools support")
-            } else {
-                let url = URL(string: "http://www.godtoolsapp.com/#contact")
-                delegate?.openWebView(url: url!, title: "contact_us".localized, analyticsTitle: "Contact Us")
-            }
+            viewModel.contactUsTapped()
         
         case .logout:
             DispatchQueue.main.async { [weak self] in
@@ -212,40 +208,25 @@ extension MenuView: UITableViewDelegate {
             viewModel.myAccountTapped()
         
         case .shareGodTools:
-            let textToShare = [ "share_god_tools_share_sheet_text".localized ]
-            let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-            
-            var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.shareAction: 1]
-            userInfo["action"] = AdobeAnalyticsConstants.Values.share
-            NotificationCenter.default.post(name: .actionTrackNotification,
-                                            object: nil,
-                                            userInfo: userInfo)
-            sendScreenViewNotification(screenName: "Share App", siteSection: siteSection(), siteSubSection: siteSubSection())
-            present(activityViewController, animated: true, completion: nil)
+            viewModel.shareGodToolsTapped()
         
         case .shareAStoryWithUs:
-            if MFMailComposeViewController.canSendMail() {
-                sendEmail(recipient: "support@godtoolsapp.com", subject: "GodTools story")
-            } else {
-                let url = URL(string: "http://www.godtoolsapp.com/#contact")
-                delegate?.openWebView(url: url!, title: "share_a_story_with_us".localized, analyticsTitle: "Share Story")
-            }
-            sendScreenViewNotification(screenName: "Share Story", siteSection: siteSection(), siteSubSection: siteSubSection())
+            viewModel.shareAStoryWithUsTapped()
         
         case .termsOfUse:
-            let url = URL(string: "https://godtoolsapp.com/terms-of-use/")
-            delegate?.openWebView(url: url!, title: "terms_of_use".localized, analyticsTitle: "Terms of Use")
+            viewModel.termsOfUseTapped()
         
         case .privacyPolicy:
-            let url = URL(string: "https://www.cru.org/about/privacy.html")
-            delegate?.openWebView(url: url!, title: "privacy_policy".localized, analyticsTitle: "Privacy Policy")
+            viewModel.privacyPolicyTapped()
         
         case .copyrightInfo:
-            let url = URL(string: "http://www.godtoolsapp.com/copyright")
-            delegate?.openWebView(url: url!, title: "copyright_info".localized, analyticsTitle: "Copyright Info")
+            viewModel.copyrightInfoTapped()
             
         case .tutorial:
             viewModel.tutorialTapped()
+            
+        case .version:
+            break
         }
     }
     
@@ -302,24 +283,6 @@ extension MenuView {
             initiateLogin()
         }
     }
-}
-
-// MARK: - MFMailComposeViewControllerDelegate
-
-extension MenuView: MFMailComposeViewControllerDelegate {
-    
-    func sendEmail(recipient: String, subject: String) {
-        let composeVC = MFMailComposeViewController()
-        composeVC.mailComposeDelegate = self
-        composeVC.setToRecipients([ recipient ])
-        composeVC.setSubject(subject)
-        present(composeVC, animated: true, completion: nil)
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
 }
 
 // MARK: - OIDAuthStateChangeDelegate

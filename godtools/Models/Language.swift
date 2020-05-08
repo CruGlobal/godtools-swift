@@ -30,14 +30,6 @@ class Language: Object {
         return "remoteId"
     }
     
-    func isPrimary() -> Bool {
-        return remoteId == GTSettings.shared.primaryLanguageId
-    }
-    
-    func isParallel() -> Bool {
-        return remoteId == GTSettings.shared.parallelLanguageId
-    }
-    
     func localizedName(locale: Locale = NSLocale.current, table: String? = nil) -> String {
         
         

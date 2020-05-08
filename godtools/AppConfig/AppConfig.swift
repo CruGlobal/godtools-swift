@@ -15,10 +15,14 @@ struct AppConfig: ConfigType {
     
     init() {
         
+        // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
         #if RELEASE
             isDebug = false
-        #else
+        #elseif DEBUG
             isDebug = true
+        #else
+            isDebug = false
+            assertionFailure("In ( Build Settings > Other Swift Flags ) set either -DDEBUG or -DRELEASE for each scheme.")
         #endif
         
         appleAppId = "542773210"
@@ -67,10 +71,6 @@ struct AppConfig: ConfigType {
     
     var appsFlyerDevKey: String {
         return "QdbVaVHi9bHRchUTWtoaij"
-    }
-    
-    var googleAnalyticsApiKey: String {
-        return "UA-325725-50"
     }
     
     var googleAdwordsLabel: String {
@@ -135,7 +135,6 @@ struct AppConfig: ConfigType {
             print("  bundleVersion: \(bundleVersion)")
             print("  mobileContentApiBaseUrl: \(mobileContentApiBaseUrl)")
             print("  appsFlyerDevKey: \(appsFlyerDevKey)")
-            print("  googleAnalyticsApiKey: \(googleAnalyticsApiKey)")
             print("  googleAdwordsLabel: \(googleAdwordsLabel)")
             print("  googleAdwordsConversionId: \(googleAdwordsConversionId)")
             print("  firebaseGoogleServiceFileName: \(firebaseGoogleServiceFileName)")

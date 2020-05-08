@@ -12,6 +12,8 @@ class AccountView: UIViewController {
     
     private let viewModel: AccountViewModelType
     
+    private var didLayoutSubviews: Bool = false
+    
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var loadingProfileView: UIActivityIndicatorView!
@@ -20,7 +22,7 @@ class AccountView: UIViewController {
     
     required init(viewModel: AccountViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "AccountView", bundle: nil)
+        super.init(nibName: String(describing: AccountView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,8 +40,44 @@ class AccountView: UIViewController {
         setupLayout()
         setupBinding()
         
-        itemsCollectionView.delegate = self
-        itemsCollectionView.dataSource = self
+        addDefaultNavBackItem()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            
+            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
+            
+            itemsCollectionView.delegate = self
+            itemsCollectionView.dataSource = self
+            
+            viewModel.accountItems.addObserver(self) { [weak self] (items: [AccountItem]) in
+                
+                self?.itemsControl.configure(
+                    segments: items,
+                    delegate: nil
+                )
+                
+                self?.itemsCollectionView.reloadData()
+            }
+            
+            viewModel.currentAccountItemIndex.addObserver(self) { [weak self] (index: Int) in
+                
+                if let itemsCollectionView = self?.itemsCollectionView {
+                    let numberOfItems: Int = itemsCollectionView.numberOfItems(inSection: 0)
+                    if numberOfItems > 0 {
+                        itemsCollectionView.scrollToItem(
+                            at: IndexPath(item: index, section: 0),
+                            at: .centeredHorizontally,
+                            animated: true
+                        )
+                    }
+                }
+            }
+        }
     }
     
     private func setupLayout() {
@@ -84,11 +122,6 @@ class AccountView: UIViewController {
         viewModel.isLoadingProfile.addObserver(self) { [weak self] (isLoading: Bool) in
             isLoading ? self?.loadingProfileView.startAnimating() : self?.loadingProfileView.stopAnimating()
         }
-        
-        itemsControl.configure(
-            segments: viewModel.items,
-            delegate: nil
-        )
     }
     
     @objc func handleSettings(barButtonItem: UIBarButtonItem) {
@@ -103,18 +136,18 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.items.count
+        return viewModel.accountItems.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                        
+                   
         let cell: AccountItemCell = itemsCollectionView.dequeueReusableCell(
             withReuseIdentifier: AccountItemCell.reuseIdentifier,
             for: indexPath) as! AccountItemCell
         
         cell.configure(
             viewModel: AccountItemCellViewModel(
-                item: viewModel.items[indexPath.row],
+                item: viewModel.accountItems.value[indexPath.row],
                 globalActivityServices: viewModel.globalActivityServices
             ),
             delegate: self
@@ -139,6 +172,42 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension AccountView: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == itemsCollectionView {
+            if !decelerate {
+                handleDidScrollToItemInItemsCollectionView()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == itemsCollectionView {
+            handleDidScrollToItemInItemsCollectionView()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == itemsCollectionView {
+            handleDidScrollToItemInItemsCollectionView()
+        }
+    }
+    
+    private func handleDidScrollToItemInItemsCollectionView() {
+        
+        itemsCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = itemsCollectionView.visibleCells.first {
+            if let indexPath = itemsCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToAccountItem(item: indexPath.item)
+            }
+        }
     }
 }
 

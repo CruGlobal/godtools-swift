@@ -100,7 +100,7 @@ extension ToolsManager: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? HomeToolTableViewCell else { return }
         
-        if !(self.delegate is AddToolsViewController) {
+        if !(self.delegate is FindToolsView) {
             recordViewed(cell.resource!)
         }
         

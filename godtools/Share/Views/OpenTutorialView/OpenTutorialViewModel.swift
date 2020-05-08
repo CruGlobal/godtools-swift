@@ -12,7 +12,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    private let analytics: GodToolsAnaltyics
+    private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -20,7 +20,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     let openTutorialTitle: String
     let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
     
-    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: GodToolsAnaltyics) {
+    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.tutorialAvailability = tutorialAvailability
@@ -47,6 +47,6 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     func closeTapped() {
         openTutorialCalloutCache.disableOpenTutorialCallout()
-        analytics.recordActionForADBMobile(screenName: "home", actionName: "Tutorial Home Dismiss", data: ["cru.tutorial_home_dismiss": 1])
+        analytics.adobeAnalytics.trackAction(screenName: "home", actionName: "Tutorial Home Dismiss", data: ["cru.tutorial_home_dismiss": 1])
     }
 }
