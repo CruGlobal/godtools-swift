@@ -11,6 +11,7 @@ import Foundation
 struct AccountItem: GTSegmentType {
     let itemId: AccountItemId
     let title: String
+    let analyticsScreenName: String
 }
 
 extension AccountItem {
