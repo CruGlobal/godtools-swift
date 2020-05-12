@@ -278,6 +278,7 @@
 		45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E972421A984006F0559 /* OpenTutorialCalloutCacheType.swift */; };
 		45732E9B2421AF00006F0559 /* DeviceLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9A2421AF00006F0559 /* DeviceLanguage.swift */; };
 		45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */; };
+		457471E6246B3BEB00448946 /* TractXmlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457471E5246B3BEB00448946 /* TractXmlResource.swift */; };
 		4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C23923FAEBE300D3265B /* AccountView.swift */; };
 		4575C23C23FAEBEC00D3265B /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4575C23B23FAEBEC00D3265B /* AccountView.xib */; };
 		4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4575C23D23FAEBF600D3265B /* AccountViewModel.swift */; };
@@ -820,6 +821,7 @@
 		45732E972421A984006F0559 /* OpenTutorialCalloutCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenTutorialCalloutCacheType.swift; sourceTree = "<group>"; };
 		45732E9A2421AF00006F0559 /* DeviceLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguage.swift; sourceTree = "<group>"; };
 		45732E9C2421AF11006F0559 /* DeviceLanguageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceLanguageType.swift; sourceTree = "<group>"; };
+		457471E5246B3BEB00448946 /* TractXmlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractXmlResource.swift; sourceTree = "<group>"; };
 		4575C23923FAEBE300D3265B /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		4575C23B23FAEBEC00D3265B /* AccountView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountView.xib; sourceTree = "<group>"; };
 		4575C23D23FAEBF600D3265B /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
@@ -2440,6 +2442,7 @@
 				0F93A9331EAA56EC0049C110 /* ToolsManager.swift */,
 				4FE4AF291EE0F19C000E3125 /* ToolsManager+ResourceViews.swift */,
 				0F0352BD1EC0CE97006CD4E5 /* TractManager.swift */,
+				457471E5246B3BEB00448946 /* TractXmlResource.swift */,
 				4F855F091EC3907300B42146 /* TranslationZipImporter.swift */,
 				4FF6462C1ECF69D400953090 /* TranslationFileRemover.swift */,
 				4FA2A536215938700018762C /* GodToolsJSONResource.swift */,
@@ -3459,6 +3462,7 @@
 				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
 				45FCFF84243D0C9200865501 /* TractViewControllerActions.swift in Sources */,
 				458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */,
+				457471E6246B3BEB00448946 /* TractXmlResource.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
 				454526D8243E195500B84B29 /* TermsOfUseWebContent.swift in Sources */,
 				457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */,

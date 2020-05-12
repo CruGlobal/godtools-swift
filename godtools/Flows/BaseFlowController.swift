@@ -215,6 +215,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 resource: resource,
                 primaryLanguage: language!,
                 parallelLanguage: parallelLanguage,
+                tractManager: appDiContainer.tractManager,
                 analytics: appDiContainer.analytics,
                 toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
             )
@@ -251,11 +252,21 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
+        let parallelLanguage: Language?
+        
+        if let parallelLanguageCode = parallelLanguageCode {
+            parallelLanguage = LanguagesManager().loadFromDisk(code: parallelLanguageCode)
+        }
+        else {
+            parallelLanguage = nil
+        }
+                
         let viewModel = TractViewModel(
             flowDelegate: self,
             resource: resource,
             primaryLanguage: language,
-            parallelLanguage: nil,
+            parallelLanguage: parallelLanguage,
+            tractManager: appDiContainer.tractManager,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
         )

@@ -30,8 +30,6 @@ class TractViewController: UIViewController {
     var xmlPagesForPrimaryLang = [XMLPage]()
     var xmlPagesForParallelLang = [XMLPage]()
     var manifestProperties = ManifestProperties()
-    var primaryTextColor: UIColor?
-    var textColor: UIColor?
     var currentPage = 0
     var isRightToLeft: Bool {
         return primaryLanguage?.isRightToLeft() ?? false
@@ -141,6 +139,10 @@ class TractViewController: UIViewController {
         
         viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
             self?.title = title
+        }
+        
+        viewModel.selectedLanguage.addObserver(self) { [weak self] (language: Language) in
+            
         }
     }
     

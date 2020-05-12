@@ -113,4 +113,8 @@ class AppDiContainer {
             realm: realmDatabase.mainThreadRealm
         )
     }
+    
+    var tractManager: TractManager {
+        return TractManager()
+    }
 }

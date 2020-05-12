@@ -15,7 +15,8 @@ protocol TractViewModelType {
     var hidesChooseLanguageControl: Bool { get }
     var chooseLanguageControlPrimaryLanguageTitle: String { get }
     var chooseLanguageControlParallelLanguageTitle: String { get }
-    var selectedLanguage: ObservableValue<Language?> { get }
+    var selectedLanguage: ObservableValue<Language> { get }
+    var toolXmlPages: ObservableValue<[XMLPage]> { get }
     
     func navHomeTapped()
     func primaryLanguageTapped()
