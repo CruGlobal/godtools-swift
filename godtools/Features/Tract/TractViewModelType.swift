@@ -12,7 +12,13 @@ protocol TractViewModelType {
     
     var resource: DownloadedResource { get }
     var navTitle: ObservableValue<String> { get }
+    var hidesChooseLanguageControl: Bool { get }
+    var chooseLanguageControlPrimaryLanguageTitle: String { get }
+    var chooseLanguageControlParallelLanguageTitle: String { get }
+    var selectedLanguage: ObservableValue<Language?> { get }
     
     func navHomeTapped()
+    func primaryLanguageTapped()
+    func parallelLanguagedTapped()
     func viewLoaded()
 }

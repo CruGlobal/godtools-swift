@@ -60,21 +60,6 @@ extension TractViewController {
         }
     }
     
-    @objc func removeViewsBeforeCurrentView() {
-        if self.currentPage == 0 {
-            return
-        }
-        
-        let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin)
-        
-        for pageView in self.pagesViews {
-            if pageView == currentPageView {
-                break
-            }
-            pageView?.removeFromSuperview()
-        }
-    }
-    
     // MARK: - Promises
     
     fileprivate func moveViews() {

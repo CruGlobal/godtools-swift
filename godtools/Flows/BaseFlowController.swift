@@ -198,9 +198,23 @@ class BaseFlowController: NSObject, FlowDelegate {
         
         case .tract:
             
+            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
+            let languagesManager: LanguagesManager = appDiContainer.languagesManager
+            var language: Language?
+            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+                language = primaryLanguage
+            }
+            else {
+                language = languagesManager.loadFromDisk(code: "en")
+            }
+            
+            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+            
             let viewModel = TractViewModel(
                 flowDelegate: self,
                 resource: resource,
+                primaryLanguage: language!,
+                parallelLanguage: parallelLanguage,
                 analytics: appDiContainer.analytics,
                 toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
             )
@@ -240,6 +254,8 @@ class BaseFlowController: NSObject, FlowDelegate {
         let viewModel = TractViewModel(
             flowDelegate: self,
             resource: resource,
+            primaryLanguage: language,
+            parallelLanguage: nil,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
         )
