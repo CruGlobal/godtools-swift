@@ -96,6 +96,20 @@ struct AppConfig: ConfigType {
         }
     }
     
+    var snowplowAppId: String {
+        let debugAppId: String = "godtools-dev"
+        let productionAppId: String = "godtools"
+
+        switch build {
+        case .staging:
+            return debugAppId
+        case .production:
+            return productionAppId
+        case .release:
+            return productionAppId
+        }
+    }
+    
     // MARK: - Info.plist
     
     private var info: [String: Any] {

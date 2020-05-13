@@ -45,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
+        appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
+        
         resetStateIfUITesting()
         
         loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,

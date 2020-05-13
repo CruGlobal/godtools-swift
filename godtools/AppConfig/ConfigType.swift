@@ -19,6 +19,7 @@ protocol ConfigType {
     var googleAdwordsConversionId: String { get }
     var googleAdwordsLabel: String { get }
     var firebaseGoogleServiceFileName: String { get }
+    var snowplowAppId: String { get }
     
     func logConfiguration()
 }
