@@ -18,7 +18,7 @@ class ToolOpenedAnalytics {
     }
     
     func trackToolOpened() {
-        var eventName = "tool-opened"
+        let eventName = "tool-opened"
         
         analytics.appsFlyer.trackEvent(eventName: eventName, data: nil)
         analytics.snowplowAnalytics.trackAction(action: eventName, data: nil)
@@ -27,7 +27,7 @@ class ToolOpenedAnalytics {
     func trackFirstToolOpenedIfNeeded() {
         
         if !firstToolOpened {
-            var eventName = "first-tool-opened"
+            let eventName = "first-tool-opened"
             
             analytics.appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
             analytics.snowplowAnalytics.trackAction(action: eventName, data: nil)

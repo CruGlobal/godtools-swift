@@ -12,9 +12,9 @@ import SnowplowTracker
 class SnowplowAnalytics: NSObject, SnowplowAnalyticsType  {
 
     private let config: ConfigType
-    private let emitter: SPEmitter
-    private let subject: SPSubject
-    private let tracker: SPTracker
+    private var emitter: SPEmitter? = nil
+    private var subject: SPSubject? = nil
+    private var tracker: SPTracker? = nil
 
     private let url: String! = "s.cru.org"
     private var isConfigured: Bool = false
@@ -23,7 +23,6 @@ class SnowplowAnalytics: NSObject, SnowplowAnalyticsType  {
     required init(config: ConfigType, loggingEnabled: Bool) {
 
         self.config = config
-        self.loggingEnabled = loggingEnabled
 
         super.init()
     }
@@ -36,36 +35,40 @@ class SnowplowAnalytics: NSObject, SnowplowAnalyticsType  {
 
         isConfiguring = true
 
-        emitter = SPEmitter.build({ (builder : SPEmitterBuilder!) -> Void in
-            builder.setUrlEndpoint(url)
-            builder.setHttpMethod(method: .post)
-            builder.setProtocol(protocol: .https)
+        self.emitter = SPEmitter.build({ (builder : SPEmitterBuilder!) -> Void in
+            builder.setUrlEndpoint(self.url)
+            builder.setHttpMethod(.post)
+            builder.setProtocol(.https)
         })
         subject = SPSubject(platformContext: true, andGeoContext: true)
-        tracker = SPTracker.build({ (builder: SPTrackerBuilder) -> Void in
-            builder.setEmitter(emitter)
-            builder.setAppId(config.appleAppId)
-            builder.setSubject(subject)
+        tracker = SPTracker.build({ (builder: SPTrackerBuilder!) -> Void in
+            builder.setEmitter(self.emitter)
+            builder.setAppId(self.config.snowplowAppId)
+            builder.setSubject(self.subject)
             builder.setSessionContext(true)
             builder.setApplicationContext(true)
             builder.setLifecycleEvents(true)
         })
     }
 
-    func trackScreenView(screenName: String!, data: [AnyHashable : Any]?) {
-        var event = SPScreenView.build({ (builder : SPScreenViewBuilder!) -> Void in
+    func trackScreenView(screenName: String!, data: NSMutableArray?) {
+        self.assertFailureIfNotConfigured()
+        
+        let event = SPScreenView.build({ (builder : SPScreenViewBuilder!) -> Void in
             builder.setName(screenName)
             builder.setContexts(data)
         })
-        tracker.trackScreenViewEvent(event)
+        tracker?.trackScreenViewEvent(event)
     }
 
-    func trackAction(action: String!, data: [AnyHashable : Any]?) {
-        var event = SPStructured.build({ (builder : SPStructuredBuilder!) -> Void in
+    func trackAction(action: String!, data: NSMutableArray?) {
+        self.assertFailureIfNotConfigured()
+        
+        let event = SPStructured.build({ (builder : SPStructuredBuilder!) -> Void in
             builder.setAction(action)
             builder.setContexts(data)
         })
-        tracker.trackStructuredEvent(event)
+        tracker?.trackStructuredEvent(event)
     }
 
     private func assertFailureIfNotConfigured() {
