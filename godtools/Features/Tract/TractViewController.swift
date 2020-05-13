@@ -25,11 +25,9 @@ class TractViewController: UIViewController {
     
     var viewsWereGenerated = false
     var currentPage = 0
-    var isRightToLeft: Bool {
-        return primaryLanguage?.isRightToLeft() ?? false
-    }
+
     var currentMovement: CGFloat {
-        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        let multiplier: CGFloat = viewModel.isRightToLeftLanguage ? -1 : 1
         return CGFloat(currentPage) * -self.view.frame.width * multiplier
     }
     var containerView = UIView()
@@ -264,11 +262,6 @@ class TractViewController: UIViewController {
         buildPages(width: size.width, height: size.height)
     }
     
-    fileprivate func currentTractTitle() -> String {
-        let primaryLanguage = resolvePrimaryLanguage()
-        return viewModel.resource.localizedName(language: primaryLanguage)
-    }
-    
     @objc fileprivate func setupNavigationBarFrame() {
         guard let navController = navigationController else {
             return
@@ -417,7 +410,7 @@ extension TractViewController {
     }
     
     func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
-        let multiplier: CGFloat = isRightToLeft ? -1 : 1
+        let multiplier: CGFloat = viewModel.isRightToLeftLanguage ? -1 : 1
         let xPosition = (width * CGFloat(pageNumber)) * multiplier
         let frame = CGRect(x: xPosition,
                            y: 0.0,
@@ -622,5 +615,150 @@ extension TractViewController {
     
     func totalPages() -> Int {
         return viewModel.toolXmlPages.value.count
+    }
+}
+
+// MARK: - Gestures
+
+extension TractViewController {
+    
+    func setupSwipeGestures() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right && !viewModel.isRightToLeftLanguage {
+            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
+        } else if sender.direction == .left && !viewModel.isRightToLeftLanguage {
+            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
+        }
+        else if sender.direction == .right && viewModel.isRightToLeftLanguage {
+            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
+        } else if sender.direction == .left && viewModel.isRightToLeftLanguage {
+            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
+        }
+    }
+}
+
+// MARK: - Page Movements
+
+extension TractViewController {
+    
+    @objc func moveToPage(notification: Notification) {
+        guard let dictionary = notification.userInfo as? [String: String] else {
+            return
+        }
+        
+        guard let pageListener = dictionary["pageListener"] else { return }
+        guard let page = TractBindings.pageBindings[pageListener] else { return }
+        
+        self.currentPage = page
+        _ = reloadPagesViews()
+        sendPageToAnalytics()
+        
+        _ = moveViews()
+    }
+    
+    @objc func moveToNextPage() {
+        if self.currentPage >= totalPages() - 1 {
+            return
+        }
+        
+        _ = self.moveForewards()
+            .then { (success) -> Promise<Bool> in
+                if success {
+                    _ = self.reloadPagesViews()
+                    self.sendPageToAnalytics()
+                    return .value(true)
+                }
+                return .value(false)
+        }
+    }
+    
+    @objc func moveToPreviousPage() {
+        if self.currentPage == 0 {
+            return
+        }
+        
+        _ = self.moveBackwards()
+            .then { (success) -> Promise<Bool> in
+                if success == true {
+                    _ = self.reloadPagesViews()
+                    self.sendPageToAnalytics()
+                    return .value(true)
+                }
+                return .value(false)
+        }
+    }
+    
+    // MARK: - Promises
+    
+    fileprivate func moveViews() {
+    
+        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
+            for view in self.pagesViews {
+                view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+            }
+        }) { (finished) in
+            self.notifyCurrentViewDidAppearOnTract()
+        }
+        
+    }
+    
+    fileprivate func moveForewards() -> Promise<Bool> {
+        self.currentPage += 1
+        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
+            return .value(false)
+        }
+        
+        return movePageView(currentPageView).then { _ -> Promise<Bool> in
+            self.moveViewsExceptCurrentViews(pageViews: [currentPageView])
+            return .value(true)
+        }
+    }
+    
+    fileprivate func moveBackwards() -> Promise<Bool> {
+        self.currentPage -= 1
+        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
+            return .value(false)
+        }
+        guard let nextPageView = self.view.viewWithTag(self.currentPage + 1 + self.viewTagOrigin) else {
+            return .value(false)
+        }
+        
+        currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        return movePageView(nextPageView).then { _ -> Promise<Bool> in
+            self.moveViewsExceptCurrentViews(pageViews: [currentPageView, nextPageView])
+            return .value(true)
+        }
+    }
+    
+    fileprivate func movePageView(_ pageView: UIView) -> Guarantee<Bool> {
+        
+        return UIView.animate(.promise, duration: 0.35, delay: 0.0, options: [.curveEaseInOut], animations: {
+            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
+        })
+    }
+    
+    fileprivate func moveViewsExceptCurrentViews(pageViews: [UIView]) {
+        for view in self.pagesViews {
+            if view == nil || pageViews.firstIndex(of: view!) != nil {
+                continue
+            }
+            let translationX = !viewModel.isRightToLeftLanguage ? currentMovement : -currentMovement
+            view?.transform = CGAffineTransform(translationX: translationX, y: 0.0)
+        }
+        self.notifyCurrentViewDidAppearOnTract()
+    }
+    
+    fileprivate func notifyCurrentViewDidAppearOnTract() {
+        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as? TractView
+        currentTractView?.contentView?.notifyViewDidAppearOnTract()
     }
 }

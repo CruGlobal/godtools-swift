@@ -448,8 +448,6 @@
 		45FCFF85243D0C9200865501 /* TractViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF7C243D0C9200865501 /* TractViewModelType.swift */; };
 		45FCFF86243D0C9200865501 /* TractViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF7D243D0C9200865501 /* TractViewModel.swift */; };
 		45FCFF89243D0C9200865501 /* TractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF80243D0C9200865501 /* TractViewController.swift */; };
-		45FCFF8B243D0C9200865501 /* TractViewControllerPageMovements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF82243D0C9200865501 /* TractViewControllerPageMovements.swift */; };
-		45FCFF8C243D0C9200865501 /* TractViewControllerGestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF83243D0C9200865501 /* TractViewControllerGestures.swift */; };
 		45FCFF8F243D0CE900865501 /* MasterHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FCFF8D243D0CE900865501 /* MasterHomeViewController.xib */; };
 		45FCFF90243D0CE900865501 /* MasterHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FCFF8E243D0CE900865501 /* MasterHomeViewController.swift */; };
 		45FCFF94243D0D1100865501 /* LoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45FCFF92243D0D1100865501 /* LoadingViewController.xib */; };
@@ -983,8 +981,6 @@
 		45FCFF7C243D0C9200865501 /* TractViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewModelType.swift; sourceTree = "<group>"; };
 		45FCFF7D243D0C9200865501 /* TractViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewModel.swift; sourceTree = "<group>"; };
 		45FCFF80243D0C9200865501 /* TractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewController.swift; sourceTree = "<group>"; };
-		45FCFF82243D0C9200865501 /* TractViewControllerPageMovements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewControllerPageMovements.swift; sourceTree = "<group>"; };
-		45FCFF83243D0C9200865501 /* TractViewControllerGestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractViewControllerGestures.swift; sourceTree = "<group>"; };
 		45FCFF8D243D0CE900865501 /* MasterHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterHomeViewController.xib; sourceTree = "<group>"; };
 		45FCFF8E243D0CE900865501 /* MasterHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterHomeViewController.swift; sourceTree = "<group>"; };
 		45FCFF92243D0D1100865501 /* LoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingViewController.xib; sourceTree = "<group>"; };
@@ -2372,8 +2368,6 @@
 				45FCFF7D243D0C9200865501 /* TractViewModel.swift */,
 				45FCFF7C243D0C9200865501 /* TractViewModelType.swift */,
 				45FCFF7B243D0C9200865501 /* TractViewControllerActions.swift */,
-				45FCFF83243D0C9200865501 /* TractViewControllerGestures.swift */,
-				45FCFF82243D0C9200865501 /* TractViewControllerPageMovements.swift */,
 				45E62FAF246C3C09006F0CD5 /* Models */,
 				451DB0662461D90000FB14BF /* TractClasses */,
 				451DB0732461D90000FB14BF /* Views */,
@@ -3286,7 +3280,6 @@
 				451DB0C82461D90000FB14BF /* TractImageConfig.swift in Sources */,
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
 				451DB1C62461DDFA00FB14BF /* TractPageContainer.swift in Sources */,
-				45FCFF8C243D0C9200865501 /* TractViewControllerGestures.swift in Sources */,
 				4FF6462D1ECF69D400953090 /* TranslationFileRemover.swift in Sources */,
 				4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */,
 				452E129D2422B57500531B72 /* GTSettings.swift in Sources */,
@@ -3500,7 +3493,6 @@
 				45EC838E2451E9E200E8DE48 /* RealmArticleAemImportDataCache.swift in Sources */,
 				45826F7C24548279008018B7 /* ResourcesLatestTranslationsFileCache.swift in Sources */,
 				45FCFF9F243D0FAC00865501 /* WebContentViewModel.swift in Sources */,
-				45FCFF8B243D0C9200865501 /* TractViewControllerPageMovements.swift in Sources */,
 				451DB1982461DC3100FB14BF /* TractCallToAction+Actions.swift in Sources */,
 				451DB13D2461DA4200FB14BF /* TractModalProperties.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,

@@ -59,6 +59,10 @@ class TractViewModel: TractViewModelType {
         toolXmlPages.accept(value: primaryTractXmlResource.pages)
     }
     
+    var isRightToLeftLanguage: Bool {
+        return primaryLanguage.isRightToLeft()
+    }
+    
     func navHomeTapped() {
         flowDelegate?.navigate(step: .homeTappedFromTract)
     }
