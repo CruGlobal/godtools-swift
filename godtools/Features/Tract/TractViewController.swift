@@ -12,12 +12,7 @@ import MessageUI
 import PromiseKit
 
 class TractViewController: UIViewController {
-    
-    static let iPhoneXStatusBarHeight: CGFloat = 44.0
-    static let iPhoneXMarginBottomToSafeArea: CGFloat = 44.0
-    static let navigationBarHeight: CGFloat = 44.0
-    static let standardStatusBarInitialYPosition: CGFloat = 0.0
-    
+        
     private let viewModel: TractViewModelType
         
     var viewsWereGenerated = false
@@ -32,10 +27,6 @@ class TractViewController: UIViewController {
             
     let viewTagOrigin = 100
         
-    override var prefersStatusBarHidden: Bool {
-        return !UIDevice.current.iPhoneWithNotch()
-    }
-    
     required init(viewModel: TractViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: "TractViewController", bundle: nil)
@@ -101,7 +92,6 @@ class TractViewController: UIViewController {
         }
         
         setupContainerView()
-        setupNavigationBarFrame()
         loadPagesViews()
         self.viewsWereGenerated = true
     }
@@ -256,20 +246,6 @@ class TractViewController: UIViewController {
     fileprivate func loadPagesViews() {
         let size = self.containerView.frame.size
         buildPages(width: size.width, height: size.height)
-    }
-    
-    @objc fileprivate func setupNavigationBarFrame() {
-        guard let navController = navigationController else {
-            return
-        }
-        
-        let navigationBar = navController.navigationBar
-        let xOrigin: CGFloat = 0.0
-        let yOrigin: CGFloat = UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXStatusBarHeight : TractViewController.standardStatusBarInitialYPosition
-        let width = navigationBar.frame.size.width
-        let height: CGFloat = TractViewController.navigationBarHeight
-        
-        navigationBar.frame = CGRect(x: xOrigin, y: yOrigin, width: width, height: height)
     }
     
     // MARK: - Navigation buttons actions

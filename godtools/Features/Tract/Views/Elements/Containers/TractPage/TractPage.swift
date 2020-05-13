@@ -18,10 +18,6 @@ class TractPage: BaseTractElement {
     // MARK: - Setup
     static var navbarHeight: CGFloat = 50 // TODO: Remove this.  Should use constraints (safe area) to place below the navbar.
     
-    static var statusbarHeight: CGFloat {
-        return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXStatusBarHeight : CGFloat(0)
-    }
-    
     //  * The only designated initializer for this class should be this one
     override init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         super.init(startWithData: data, withMaxHeight: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
@@ -63,7 +59,7 @@ class TractPage: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return TractPage.statusbarHeight
+        return 0
     }
     
     func buildPageContainer(data: [XMLIndexer]) {

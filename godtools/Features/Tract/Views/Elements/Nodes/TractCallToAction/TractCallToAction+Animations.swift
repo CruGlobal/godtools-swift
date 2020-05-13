@@ -44,7 +44,7 @@ extension TractCallToAction {
     }
     
     private func bottomConstant() -> CGFloat {
-        return TractPage.statusbarHeight + TractPageContainer.marginBottom
+        return TractPageContainer.marginBottom
     }
     
 }

@@ -19,8 +19,10 @@ class TractPageContainer: BaseTractElement {
     }
     
     // MARK: - Setup
+    // TODO: This is not needed. Should use constrainsts. Remove this. ~Levi
     static var marginBottom: CGFloat {
-        return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXMarginBottomToSafeArea : CGFloat(0.0)
+        //return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXMarginBottomToSafeArea : CGFloat(0.0)
+        return 0
     }
     
     override func propertiesKind() -> TractProperties.Type {
@@ -33,7 +35,7 @@ class TractPageContainer: BaseTractElement {
     }
     
     override func updateFrameHeight() {
-        self.elementFrame.height = self.parent!.getMaxHeight() - TractPage.statusbarHeight
+        self.elementFrame.height = self.parent!.getMaxHeight()
         self.frame = self.elementFrame.getFrame()
     }
     
