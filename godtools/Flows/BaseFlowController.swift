@@ -273,8 +273,6 @@ class BaseFlowController: NSObject, FlowDelegate {
         let view = TractViewController(viewModel: viewModel)
         
         view.currentPage = page
-        view.universalLinkLanguage = language
-        view.arrivedByUniversalLink = true
         GTSettings.shared.parallelLanguageCode = parallelLanguageCode
         
         navigationController.pushViewController(view, animated: true)

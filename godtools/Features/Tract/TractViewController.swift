@@ -19,10 +19,7 @@ class TractViewController: UIViewController {
     static let standardStatusBarInitialYPosition: CGFloat = 0.0
     
     private let viewModel: TractViewModelType
-    
-    var primaryLanguage: Language?
-    var parallelLanguage: Language?
-    
+        
     var viewsWereGenerated = false
     var currentPage = 0
 
@@ -32,10 +29,7 @@ class TractViewController: UIViewController {
     }
     var containerView = UIView()
     var pagesViews = [TractView?]()
-        
-    var arrivedByUniversalLink = false
-    var universalLinkLanguage: Language?
-    
+            
     let viewTagOrigin = 100
         
     override var prefersStatusBarHidden: Bool {
@@ -65,7 +59,7 @@ class TractViewController: UIViewController {
         viewModel.viewLoaded()
         
         TractBindings.setupBindings()
-        loadLanguages()
+
         getResourceData()
         setupSwipeGestures()
         defineObservers()
@@ -326,27 +320,6 @@ class TractViewController: UIViewController {
 
         return "\(viewModel.resource.code)"
     }
-    
-    private func loadLanguages() {
-
-        let languagesManager = LanguagesManager()
-        
-        primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
-        
-        if viewModel.resource.getTranslationForLanguage(primaryLanguage!) == nil {
-            primaryLanguage = languagesManager.loadFromDisk(code: "en")
-        }
-        
-        parallelLanguage = languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
-    }
-    
-    func resolvePrimaryLanguage() -> Language? {        
-        if arrivedByUniversalLink {
-            return universalLinkLanguage
-        } else {
-            return primaryLanguage
-        }
-    }
 }
 
 extension TractViewController: BaseTractElementDelegate {
@@ -580,19 +553,7 @@ extension TractViewController {
 // MARK: - Data Management
 
 extension TractViewController {
-    
-    // MARK: - Management of languages
-    
-    func parallelLanguageIsAvailable() -> Bool {
-        if parallelLanguage == nil {
-            return false
-        }
         
-        return viewModel.resource.isDownloadedInLanguage(parallelLanguage)
-    }
-    
-    // MARK: - Management of resources
-    
     func getResourceData() {
         loadPagesIds()
     }
