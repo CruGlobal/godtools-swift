@@ -47,6 +47,7 @@ class TractViewController: UIViewController {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        UIApplication.shared.isIdleTimerDisabled = false
     }
     
     override func viewDidLoad() {
@@ -63,7 +64,6 @@ class TractViewController: UIViewController {
         getResourceData()
         setupSwipeGestures()
         defineObservers()
-        UIApplication.shared.isIdleTimerDisabled = true
         
         _ = addBarButtonItem(
             to: .left,
@@ -80,6 +80,8 @@ class TractViewController: UIViewController {
             target: self,
             action: #selector(handleShare(barButtonItem:))
         )
+        
+        UIApplication.shared.isIdleTimerDisabled = true
         
         for translation in viewModel.resource.translations {
             if let languageCode = translation.language?.code {
@@ -112,7 +114,7 @@ class TractViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TractBindings.clearAllBindings()
-        UIApplication.shared.isIdleTimerDisabled = false
+        
     }
     
     private func setupLayout() {
