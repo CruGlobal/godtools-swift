@@ -78,9 +78,11 @@ class TutorialViewModel: TutorialViewModelType {
             
             if isFirstPage {
                 analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+                analytics.snowplowAnalytics.trackScreenView(analyticsScreenName)
             }
             else if isLastPage {
                 analytics.appsFlyer.trackEvent(eventName: analyticsScreenName, data: nil)
+                analytics.snowplowAnalytics.trackScreenView(analyticsScreenName)
             }
         }
     }

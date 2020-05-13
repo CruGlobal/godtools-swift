@@ -52,12 +52,20 @@ class SnowplowAnalytics: NSObject, SnowplowAnalyticsType  {
         })
     }
 
-    func trackScreenView() {
-        <#code#>
+    func trackScreenView(screenName: String!, data: [AnyHashable : Any]?) {
+        var event = SPScreenView.build({ (builder : SPScreenViewBuilder!) -> Void in
+            builder.setName(screenName)
+            builder.setContexts(data)
+        })
+        tracker.trackScreenViewEvent(event)
     }
 
-    func trackAction() {
-        <#code#>
+    func trackAction(action: String!, data: [AnyHashable : Any]?) {
+        var event = SPStructured.build({ (builder : SPStructuredBuilder!) -> Void in
+            builder.setAction(action)
+            builder.setContexts(data)
+        })
+        tracker.trackStructuredEvent(event)
     }
 
     private func assertFailureIfNotConfigured() {

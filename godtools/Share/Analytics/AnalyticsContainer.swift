@@ -14,6 +14,8 @@ class AnalyticsContainer {
     let adobeAnalytics: AdobeAnalyticsType
     let appsFlyer: AppsFlyerType
     let firebaseAnalytics: FirebaseAnalyticsType
+    let snowplowAnalytics: SnowplowAnalyticsType
+
     
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics

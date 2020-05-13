@@ -11,21 +11,26 @@ import Foundation
 class ToolOpenedAnalytics {
     
     private let keyFirstToolOpened: String = "toolOpenedAnalytics.keyFirstToolOpened"
-    private let appsFlyer: AppsFlyerType
+    private let analytics: AnalyticsContainer
     
-    required init(appsFlyer: AppsFlyerType) {
-        self.appsFlyer = appsFlyer
+    required init(analytics: AnalyticsContainer) {
+        self.analytics = analytics
     }
     
     func trackToolOpened() {
-        appsFlyer.trackEvent(eventName: "tool-opened", data: nil)
+        var eventName = "tool-opened"
+        
+        analytics.appsFlyer.trackEvent(eventName: eventName, data: nil)
+        analytics.snowplowAnalytics.trackAction(action: eventName, data: nil)
     }
     
     func trackFirstToolOpenedIfNeeded() {
         
         if !firstToolOpened {
-
-            appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
+            var eventName = "first-tool-opened"
+            
+            analytics.appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
+            analytics.snowplowAnalytics.trackAction(action: eventName, data: nil)
             
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()

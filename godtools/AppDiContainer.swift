@@ -67,7 +67,7 @@ class AppDiContainer {
     }
     
     var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyer)
+        return ToolOpenedAnalytics(analytics: analytics)
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {
