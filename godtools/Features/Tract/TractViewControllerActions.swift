@@ -41,12 +41,4 @@ extension TractViewController: MFMailComposeViewControllerDelegate {
         alert.addAction(UIAlertAction(title: "ok".localized, style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-    func sendPageToAnalytics() {
-        let screenName = self.screenName()
-        let siteSection = self.siteSection()
-        let siteSubSubsection = ""
-        sendScreenViewNotification(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSubsection)
-    }
-    
 }

@@ -63,8 +63,27 @@ class TractViewModel: TractViewModelType {
         return primaryLanguage.isRightToLeft()
     }
     
+    func pageViewed() {
+        
+        // TODO: Get current page number ~Levi
+        let pageNumber: Int = 0
+        
+        // TODO: Call when a new page within the tool is tapped. ~Levi
+        
+        analytics.pageViewedAnalytics.trackPageView(
+            screenName: resource.code + "-" + String(pageNumber),
+            siteSection: resource.code,
+            siteSubSection: ""
+        )
+    }
+    
     func navHomeTapped() {
         flowDelegate?.navigate(step: .homeTappedFromTract)
+    }
+    
+    func shareTapped() {
+        // TODO: Set pageNumber for current page in tool. ~Levi
+        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedLanguage.value, pageNumber: 0))
     }
     
     func primaryLanguageTapped() {

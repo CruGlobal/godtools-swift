@@ -45,6 +45,9 @@
 		4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */; };
 		4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A62429669700ECA950 /* AdobeAnalytics.swift */; };
 		4508F7AC2429671500ECA950 /* AdobeAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7AB2429671500ECA950 /* AdobeAnalyticsProperties.swift */; };
+		450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18C246C586E00B78FA3 /* ShareToolView.swift */; };
+		450EA18F246C587800B78FA3 /* ShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */; };
+		450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */; };
 		451DB0C32461D90000FB14BF /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0672461D90000FB14BF /* TractResource.swift */; };
 		451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0682461D90000FB14BF /* TractBindings.swift */; };
 		451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0692461D90000FB14BF /* TractConfigurations.swift */; };
@@ -589,6 +592,9 @@
 		4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsConstants.swift; sourceTree = "<group>"; };
 		4508F7A62429669700ECA950 /* AdobeAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalytics.swift; sourceTree = "<group>"; };
 		4508F7AB2429671500ECA950 /* AdobeAnalyticsProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsProperties.swift; sourceTree = "<group>"; };
+		450EA18C246C586E00B78FA3 /* ShareToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolView.swift; sourceTree = "<group>"; };
+		450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModel.swift; sourceTree = "<group>"; };
+		450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModelType.swift; sourceTree = "<group>"; };
 		451DB0672461D90000FB14BF /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractResource.swift; sourceTree = "<group>"; };
 		451DB0682461D90000FB14BF /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractBindings.swift; sourceTree = "<group>"; };
 		451DB0692461D90000FB14BF /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractConfigurations.swift; sourceTree = "<group>"; };
@@ -2363,6 +2369,9 @@
 		45FCFF7A243D0C9200865501 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
+				450EA18C246C586E00B78FA3 /* ShareToolView.swift */,
+				450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */,
+				450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */,
 				45FCFF80243D0C9200865501 /* TractViewController.swift */,
 				45ED1E8C246B1BEF00CF0AB0 /* TractViewController.xib */,
 				45FCFF7D243D0C9200865501 /* TractViewModel.swift */,
@@ -3293,6 +3302,7 @@
 				45EC83872451E88700E8DE48 /* ArticleAemImportDataCacheType.swift in Sources */,
 				45B2AE4124587BB500253BAD /* ShareArticleViewModelType.swift in Sources */,
 				45EC83822451E1EA00E8DE48 /* ArticleCategory.swift in Sources */,
+				450EA18F246C587800B78FA3 /* ShareToolViewModel.swift in Sources */,
 				454526D6243E17A400B84B29 /* ContactUsWebContent.swift in Sources */,
 				455F4B9C2452806D00AE6007 /* ArticleWebView.swift in Sources */,
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
@@ -3416,11 +3426,13 @@
 				45FCFF44243D07B800865501 /* BaseFlowController.swift in Sources */,
 				451DB1A92461DC3100FB14BF /* TractCard+Actions.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
+				450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */,
 				451DB1932461DC3100FB14BF /* TractTextContent.swift in Sources */,
 				451DB1452461DA4200FB14BF /* TractEventProperties.swift in Sources */,
 				45732E7724218997006F0559 /* OnboardingTutorialViewedCacheType.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
+				450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,

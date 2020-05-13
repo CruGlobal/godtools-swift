@@ -96,11 +96,6 @@ class TractViewController: UIViewController {
         self.viewsWereGenerated = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: "")
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TractBindings.clearAllBindings()
@@ -126,6 +121,10 @@ class TractViewController: UIViewController {
     
     @objc func handleHome(barButtonItem: UIBarButtonItem) {
         viewModel.navHomeTapped()
+    }
+    
+    @objc func handleShare(barButtonItem: UIBarButtonItem) {
+        viewModel.shareTapped()
     }
     
     @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
@@ -203,34 +202,7 @@ class TractViewController: UIViewController {
         }
     }
     
-    @objc func handleShare(barButtonItem: UIBarButtonItem) {
-        
-        // TODO: Would like to handle this through viewmodel. ~Levi
-        let languageCode: String = viewModel.selectedLanguage.value.code
-
-        let shareMessage = buildShareMessage(viewModel.resource.code, languageCode)
-        
-        let activityController = UIActivityViewController(activityItems: [shareMessage], applicationActivities: nil)
-        present(activityController, animated: true, completion: nil)
-        
-        let userInfo: [String: Any] = ["action": AdobeAnalyticsConstants.Values.share,
-                        AdobeAnalyticsConstants.Keys.shareAction: 1,
-                        GTConstants.kAnalyticsScreenNameKey: screenName()]
-        NotificationCenter.default.post(name: .actionTrackNotification,
-                                        object: nil,
-                                        userInfo: userInfo)
-        sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: "")
-    }
     
-    func sendScreenViewNotification(screenName: String, siteSection: String, siteSubSection: String) {
-        let relay = AnalyticsRelay.shared
-        relay.screenName = screenName
-        
-        let userInfo = [GTConstants.kAnalyticsScreenNameKey: screenName, AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: siteSection, AdobeAnalyticsProperties.CodingKeys.siteSubSection.rawValue: siteSubSection]
-        NotificationCenter.default.post(name: .screenViewNotification,
-                                        object: nil,
-                                        userInfo: userInfo)
-    }
     
     // MARK: - UI setup
     
@@ -246,25 +218,6 @@ class TractViewController: UIViewController {
     fileprivate func loadPagesViews() {
         let size = self.containerView.frame.size
         buildPages(width: size.width, height: size.height)
-    }
-    
-    // MARK: - Navigation buttons actions
-    
-    
-    private func buildShareMessage(_ resourceCode: String, _ languageCode: String) -> String {
-        let shareURLString = buildShareURLString(resourceCode, languageCode)
-        return String.localizedStringWithFormat("tract_share_message".localized, shareURLString)
-    }
-    
-    private func buildShareURLString(_ resourceCode: String, _ languageCode: String) -> String {
-        var shareURLString = "https://www.knowgod.com/\(languageCode)/\(resourceCode)"
-        
-        if currentPage > 0 {
-            shareURLString = shareURLString.appending("/").appending("\(currentPage)")
-        }
-        
-        // the space is intentional to separate any punctuation in the share message from the end of the URL
-        return shareURLString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
     }
     
     // Notifications
@@ -599,7 +552,6 @@ extension TractViewController {
         
         self.currentPage = page
         _ = reloadPagesViews()
-        sendPageToAnalytics()
         
         _ = moveViews()
     }
@@ -613,7 +565,6 @@ extension TractViewController {
             .then { (success) -> Promise<Bool> in
                 if success {
                     _ = self.reloadPagesViews()
-                    self.sendPageToAnalytics()
                     return .value(true)
                 }
                 return .value(false)
@@ -629,7 +580,6 @@ extension TractViewController {
             .then { (success) -> Promise<Bool> in
                 if success == true {
                     _ = self.reloadPagesViews()
-                    self.sendPageToAnalytics()
                     return .value(true)
                 }
                 return .value(false)

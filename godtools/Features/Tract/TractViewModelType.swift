@@ -21,7 +21,9 @@ protocol TractViewModelType {
     var toolXmlPages: ObservableValue<[XMLPage]> { get }
     var isRightToLeftLanguage: Bool { get }
     
+    func pageViewed()
     func navHomeTapped()
+    func shareTapped()
     func primaryLanguageTapped()
     func parallelLanguagedTapped()
     func viewLoaded()

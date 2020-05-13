@@ -40,6 +40,7 @@ enum FlowStep {
     
     // tract
     case homeTappedFromTract
+    case shareTappedFromTract(resource: DownloadedResource, language: Language, pageNumber: Int)
     
     // tutorial
     case closeTappedFromTutorial
