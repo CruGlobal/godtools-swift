@@ -12,10 +12,12 @@ protocol TractViewModelType {
     
     var resource: DownloadedResource { get }
     var navTitle: ObservableValue<String> { get }
+    var navBarAttributes: ToolNavBarAttributes { get }
     var hidesChooseLanguageControl: Bool { get }
     var chooseLanguageControlPrimaryLanguageTitle: String { get }
     var chooseLanguageControlParallelLanguageTitle: String { get }
     var selectedLanguage: ObservableValue<Language> { get }
+    var toolManifest: ManifestProperties { get }
     var toolXmlPages: ObservableValue<[XMLPage]> { get }
     
     func navHomeTapped()

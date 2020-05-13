@@ -16,7 +16,7 @@ class TractPage: BaseTractElement {
     var pageContainer: TractPageContainer?
     
     // MARK: - Setup
-    static var navbarHeight: CGFloat = 0.0
+    static var navbarHeight: CGFloat = 50 // TODO: Remove this.  Should use constraints (safe area) to place below the navbar.
     
     static var statusbarHeight: CGFloat {
         return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXStatusBarHeight : CGFloat(0)

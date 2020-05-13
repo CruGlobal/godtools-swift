@@ -22,14 +22,8 @@ class TractViewController: UIViewController {
     
     var primaryLanguage: Language?
     var parallelLanguage: Language?
-    var selectedLanguage: Language?
     
-    let tractsManager: TractManager = TractManager()
     var viewsWereGenerated = false
-    var xmlPages = [XMLPage]()
-    var xmlPagesForPrimaryLang = [XMLPage]()
-    var xmlPagesForParallelLang = [XMLPage]()
-    var manifestProperties = ManifestProperties()
     var currentPage = 0
     var isRightToLeft: Bool {
         return primaryLanguage?.isRightToLeft() ?? false
@@ -82,7 +76,7 @@ class TractViewController: UIViewController {
         _ = addBarButtonItem(
             to: .left,
             image: ImageCatalog.navHome.image,
-            color: .white,
+            color: viewModel.navBarAttributes.navBarControlColor,
             target: self,
             action: #selector(handleHome(barButtonItem:))
         )
@@ -90,7 +84,7 @@ class TractViewController: UIViewController {
         _ = addBarButtonItem(
             to: .right,
             image: ImageCatalog.navShare.image,
-            color: .white,
+            color: viewModel.navBarAttributes.navBarControlColor,
             target: self,
             action: #selector(handleShare(barButtonItem:))
         )
@@ -121,7 +115,6 @@ class TractViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         sendScreenViewNotification(screenName: screenName(), siteSection: siteSection(), siteSubSection: "")
-        //setupNavigationBarStyles()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,6 +125,7 @@ class TractViewController: UIViewController {
     
     private func setupLayout() {
         
+        setupNavigationBar()
         setupChooseLanguageControl()
     }
     
@@ -152,28 +146,41 @@ class TractViewController: UIViewController {
     
     @objc func didChooseLanguage(segmentedControl: UISegmentedControl) {
         
-        if segmentedControl.selectedSegmentIndex == 0 {
-            
+        let segmentIndex: Int = segmentedControl.selectedSegmentIndex
+        
+        if segmentIndex == 0 {
             viewModel.primaryLanguageTapped()
-            
-            usePrimaryLanguageResources()
-        } else {
-            
+        }
+        else if segmentIndex == 1 {
             viewModel.parallelLanguagedTapped()
-            
-            useParallelLanguageResources()
         }
         
         loadPagesViews()
         view.setNeedsLayout()
     }
     
+    private func setupNavigationBar() {
+        
+        let navBarColor: UIColor = viewModel.navBarAttributes.navBarColor
+        let navBarControlColor: UIColor = viewModel.navBarAttributes.navBarControlColor
+                    
+        navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: navBarControlColor,
+            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
+        ]
+        
+        navigationController?.navigationBar.tintColor = navBarControlColor
+    }
+    
     private func setupChooseLanguageControl() {
         
         if !viewModel.hidesChooseLanguageControl {
                 
-            let navBarColor: UIColor = manifestProperties.navbarColor ?? manifestProperties.primaryColor
-            let navBarControlColor: UIColor = manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor
+            let navBarColor: UIColor = viewModel.navBarAttributes.navBarColor
+            let navBarControlColor: UIColor = viewModel.navBarAttributes.navBarControlColor
             let chooseLanguageControl: UISegmentedControl = UISegmentedControl()
             
             chooseLanguageControl.insertSegment(
@@ -215,7 +222,7 @@ class TractViewController: UIViewController {
     @objc func handleShare(barButtonItem: UIBarButtonItem) {
         
         // TODO: Would like to handle this through viewmodel. ~Levi
-        let languageCode = self.selectedLanguage?.code ?? "en"
+        let languageCode: String = viewModel.selectedLanguage.value.code
 
         let shareMessage = buildShareMessage(viewModel.resource.code, languageCode)
         
@@ -260,25 +267,6 @@ class TractViewController: UIViewController {
     fileprivate func currentTractTitle() -> String {
         let primaryLanguage = resolvePrimaryLanguage()
         return viewModel.resource.localizedName(language: primaryLanguage)
-    }
-    
-    fileprivate func setupNavigationBarStyles() {
-        
-        let navBarColor: UIColor = manifestProperties.navbarColor ?? manifestProperties.primaryColor
-        let navBarControlColor: UIColor = manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor
-                    
-        navigationController?.navigationBar.barTintColor = .clear
-        navigationController?.navigationBar.setBackgroundImage(NavigationBarBackground.createFrom(navBarColor), for: .default)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: navBarControlColor,
-            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
-        ]
-        
-        navigationController?.navigationBar.tintColor = navBarControlColor
-        
-        guard let navigationBar = navigationController?.navigationBar else { return }
-        TractPage.navbarHeight = navigationBar.frame.size.height
     }
     
     @objc fileprivate func setupNavigationBarFrame() {
@@ -438,13 +426,13 @@ extension TractViewController {
         
         let page = getPage(pageNumber)
         let configurations = TractConfigurations()
-        configurations.defaultTextAlignment = getLanguageTextAlignment()
+        configurations.defaultTextAlignment = .left
         configurations.pagination = page.pagination
-        configurations.language = self.selectedLanguage
+        configurations.language = viewModel.selectedLanguage.value
         configurations.resource = viewModel.resource
         let view = TractView(frame: frame,
                              data: page.pageContent(),
-                             manifestProperties: self.manifestProperties,
+                             manifestProperties: viewModel.toolManifest,
                              configurations: configurations,
                              parallelElement: parallelElement,
                              delegate: self)
@@ -610,36 +598,15 @@ extension TractViewController {
         return viewModel.resource.isDownloadedInLanguage(parallelLanguage)
     }
     
-    func getLanguageTextAlignment() -> NSTextAlignment {
-        return .left
-    }
-    
     // MARK: - Management of resources
     
     func getResourceData() {
-        loadResourcesForLanguage()
-        loadResourcesForParallelLanguage()
-        usePrimaryLanguageResources()
         loadPagesIds()
-    }
-    
-    func loadResourcesForLanguage() {
-        guard let language = resolvePrimaryLanguage() else { return }
-        let content = self.tractsManager.loadResource(resource: viewModel.resource, language: language)
-        self.xmlPagesForPrimaryLang = content.pages
-        self.manifestProperties = content.manifestProperties
-    }
-    
-    func loadResourcesForParallelLanguage() {
-        if parallelLanguageIsAvailable() {
-            let content = self.tractsManager.loadResource(resource: viewModel.resource, language: parallelLanguage!)
-            self.xmlPagesForParallelLang = content.pages
-        }
     }
     
     func loadPagesIds() {
         var counter = 0
-        for page in self.xmlPages {
+        for page in viewModel.toolXmlPages.value {
             guard let pageListeners = page.pageListeners() else { continue }
             for listener in pageListeners {
                 TractBindings.addPageBinding(listener, counter)
@@ -649,21 +616,11 @@ extension TractViewController {
         }
     }
     
-    func usePrimaryLanguageResources() {
-        self.selectedLanguage = resolvePrimaryLanguage()
-        self.xmlPages = self.xmlPagesForPrimaryLang
-    }
-    
-    func useParallelLanguageResources() {
-        self.selectedLanguage = parallelLanguage
-        self.xmlPages = self.xmlPagesForParallelLang
-    }
-    
     func getPage(_ pageNumber: Int) -> XMLPage {
-        return self.xmlPages[pageNumber]
+        return viewModel.toolXmlPages.value[pageNumber]
     }
     
     func totalPages() -> Int {
-        return self.xmlPages.count;
+        return viewModel.toolXmlPages.value.count
     }
 }

@@ -382,6 +382,7 @@
 		45D3C93623DF9D9700ECF70E /* TutorialCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */; };
 		45DC81C92412D8E3001913D6 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81C82412D8E3001913D6 /* AppsFlyer.swift */; };
 		45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81CA2412D911001913D6 /* AppsFlyerType.swift */; };
+		45E62FB1246C3C2B006F0CD5 /* ToolNavBarAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E62FB0246C3C2B006F0CD5 /* ToolNavBarAttributes.swift */; };
 		45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
 		45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */; };
@@ -921,6 +922,7 @@
 		45D3C93523DF9D9700ECF70E /* TutorialCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCellViewModel.swift; sourceTree = "<group>"; };
 		45DC81C82412D8E3001913D6 /* AppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		45DC81CA2412D911001913D6 /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
+		45E62FB0246C3C2B006F0CD5 /* ToolNavBarAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolNavBarAttributes.swift; sourceTree = "<group>"; };
 		45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBasedTimer.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
 		45E998D723FD7FE00088DD0C /* GlobalActivityHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityHeaderView.swift; sourceTree = "<group>"; };
@@ -2174,6 +2176,14 @@
 			path = Analytics;
 			sourceTree = "<group>";
 		};
+		45E62FAF246C3C09006F0CD5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				45E62FB0246C3C2B006F0CD5 /* ToolNavBarAttributes.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		45E998DF23FD9E640088DD0C /* AppConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -2364,6 +2374,7 @@
 				45FCFF7B243D0C9200865501 /* TractViewControllerActions.swift */,
 				45FCFF83243D0C9200865501 /* TractViewControllerGestures.swift */,
 				45FCFF82243D0C9200865501 /* TractViewControllerPageMovements.swift */,
+				45E62FAF246C3C09006F0CD5 /* Models */,
 				451DB0662461D90000FB14BF /* TractClasses */,
 				451DB0732461D90000FB14BF /* Views */,
 			);
@@ -3153,6 +3164,7 @@
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
 				451DB1962461DC3100FB14BF /* TractCallToAction+Animations.swift in Sources */,
+				45E62FB1246C3C2B006F0CD5 /* ToolNavBarAttributes.swift in Sources */,
 				45EC83732451E16400E8DE48 /* ArticleJcrContentParser.swift in Sources */,
 				45EC83812451E1EA00E8DE48 /* ArticleManifestXmlParser.swift in Sources */,
 				452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */,

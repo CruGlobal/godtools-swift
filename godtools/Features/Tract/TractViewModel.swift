@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TractViewModel: TractViewModelType {
     
@@ -20,10 +20,12 @@ class TractViewModel: TractViewModelType {
     let primaryLanguage: Language
     let parallelLanguage: Language?
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
+    let navBarAttributes: ToolNavBarAttributes
     let hidesChooseLanguageControl: Bool
     let chooseLanguageControlPrimaryLanguageTitle: String
     let chooseLanguageControlParallelLanguageTitle: String
     let selectedLanguage: ObservableValue<Language>
+    let toolManifest: ManifestProperties
     let toolXmlPages: ObservableValue<[XMLPage]> = ObservableValue(value: [])
     
     private weak var flowDelegate: FlowDelegate?
@@ -44,10 +46,17 @@ class TractViewModel: TractViewModelType {
         else {
             parallelTractXmlResource = nil
         }
+        let primaryManifest: ManifestProperties = primaryTractXmlResource.manifestProperties
+        navBarAttributes = ToolNavBarAttributes(
+            navBarColor: primaryManifest.navbarColor ?? primaryManifest.primaryColor,
+            navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
+        )
         hidesChooseLanguageControl = self.parallelLanguage == nil
         chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
         chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
         selectedLanguage = ObservableValue(value: primaryLanguage)
+        toolManifest = primaryTractXmlResource.manifestProperties
+        toolXmlPages.accept(value: primaryTractXmlResource.pages)
     }
     
     func navHomeTapped() {
