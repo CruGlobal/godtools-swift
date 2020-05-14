@@ -16,6 +16,8 @@ class TractViewModel: TractViewModelType {
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
+    private var toolPage: Int = -1
+    
     let resource: DownloadedResource
     let primaryLanguage: Language
     let parallelLanguage: Language?
@@ -27,6 +29,7 @@ class TractViewModel: TractViewModelType {
     let selectedLanguage: ObservableValue<Language>
     let toolManifest: ManifestProperties
     let toolXmlPages: ObservableValue<[XMLPage]> = ObservableValue(value: [])
+    let currentToolPageItemIndex: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -57,24 +60,36 @@ class TractViewModel: TractViewModelType {
         selectedLanguage = ObservableValue(value: primaryLanguage)
         toolManifest = primaryTractXmlResource.manifestProperties
         toolXmlPages.accept(value: primaryTractXmlResource.pages)
+        
+        setToolPage(page: 0, shouldSetCurrentToolPageItemIndex: true, animated: false)
+    }
+    
+    private func setToolPage(page: Int, shouldSetCurrentToolPageItemIndex: Bool, animated: Bool) {
+        
+        guard page >= 0 && page < toolXmlPages.value.count else {
+            return
+        }
+        
+        let previousToolPage: Int = toolPage
+        
+        self.toolPage = page
+        
+        if shouldSetCurrentToolPageItemIndex {
+            currentToolPageItemIndex.accept(value: AnimatableValue(value: page, animated: animated))
+        }
+        
+        if previousToolPage != page {
+            
+            analytics.pageViewedAnalytics.trackPageView(
+                screenName: resource.code + "-" + String(page),
+                siteSection: resource.code,
+                siteSubSection: ""
+            )
+        }
     }
     
     var isRightToLeftLanguage: Bool {
         return primaryLanguage.isRightToLeft()
-    }
-    
-    func pageViewed() {
-        
-        // TODO: Get current page number ~Levi
-        let pageNumber: Int = 0
-        
-        // TODO: Call when a new page within the tool is tapped. ~Levi
-        
-        analytics.pageViewedAnalytics.trackPageView(
-            screenName: resource.code + "-" + String(pageNumber),
-            siteSection: resource.code,
-            siteSubSection: ""
-        )
     }
     
     func navHomeTapped() {
@@ -82,8 +97,7 @@ class TractViewModel: TractViewModelType {
     }
     
     func shareTapped() {
-        // TODO: Set pageNumber for current page in tool. ~Levi
-        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedLanguage.value, pageNumber: 0))
+        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedLanguage.value, pageNumber: toolPage))
     }
     
     func primaryLanguageTapped() {
@@ -117,8 +131,8 @@ class TractViewModel: TractViewModelType {
     }
     
     func didScrollToToolPage(index: Int) {
-        
-        print("\n DID SCROLL TO TOOL PAGE: \(index)")
+                
+        setToolPage(page: index, shouldSetCurrentToolPageItemIndex: false, animated: false)
     }
     
     private func trackTappedLanguage(language: Language) {

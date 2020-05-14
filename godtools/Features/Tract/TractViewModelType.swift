@@ -19,9 +19,9 @@ protocol TractViewModelType {
     var selectedLanguage: ObservableValue<Language> { get }
     var toolManifest: ManifestProperties { get }
     var toolXmlPages: ObservableValue<[XMLPage]> { get }
+    var currentToolPageItemIndex: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
     
-    func pageViewed()
     func navHomeTapped()
     func shareTapped()
     func primaryLanguageTapped()

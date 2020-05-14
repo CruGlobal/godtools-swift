@@ -107,6 +107,20 @@ class TractViewController: UIViewController {
             // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
             toolPagesCollectionView.delegate = self
             toolPagesCollectionView.dataSource = self
+            
+            viewModel.currentToolPageItemIndex.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
+                
+                if let toolPagesCollectionView = self?.toolPagesCollectionView {
+                    let numberOfItems: Int = toolPagesCollectionView.numberOfItems(inSection: 0)
+                    if numberOfItems > 0 {
+                        toolPagesCollectionView.scrollToItem(
+                            at: IndexPath(item: animatableValue.value, section: 0),
+                            at: .centeredHorizontally,
+                            animated: animatableValue.animated
+                        )
+                    }
+                }
+            }
         }
     }
     
@@ -225,8 +239,6 @@ class TractViewController: UIViewController {
             navigationItem.titleView = chooseLanguageControl
         }
     }
-    
-    
     
     // MARK: - UI setup
     
