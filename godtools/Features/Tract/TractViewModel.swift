@@ -116,6 +116,11 @@ class TractViewModel: TractViewModelType {
         toolOpenedAnalytics.trackToolOpened()
     }
     
+    func didScrollToToolPage(index: Int) {
+        
+        print("\n DID SCROLL TO TOOL PAGE: \(index)")
+    }
+    
     private func trackTappedLanguage(language: Language) {
         
         let data: [AnyHashable: String] = [

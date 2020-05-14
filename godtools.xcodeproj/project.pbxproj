@@ -21,7 +21,6 @@
 		0F7D50281EA95DE200F5957E /* HomeToolTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */; };
 		0F7D50291EA95DE200F5957E /* HomeToolTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */; };
 		0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F93A9331EAA56EC0049C110 /* ToolsManager.swift */; };
-		0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */; };
 		0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */; };
 		0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB1B2091EB151300033DAB9 /* TransparentButton.swift */; };
 		0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB73E4C1EA9063E000BA60D /* BlueButton.swift */; };
@@ -48,6 +47,8 @@
 		450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18C246C586E00B78FA3 /* ShareToolView.swift */; };
 		450EA18F246C587800B78FA3 /* ShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */; };
 		450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */; };
+		450EA193246C6E9400B78FA3 /* ToolPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA192246C6E9400B78FA3 /* ToolPageCell.swift */; };
+		450EA195246C6E9E00B78FA3 /* ToolPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450EA194246C6E9E00B78FA3 /* ToolPageCell.xib */; };
 		451DB0C32461D90000FB14BF /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0672461D90000FB14BF /* TractResource.swift */; };
 		451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0682461D90000FB14BF /* TractBindings.swift */; };
 		451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0692461D90000FB14BF /* TractConfigurations.swift */; };
@@ -567,7 +568,6 @@
 		0F7D50261EA95DE200F5957E /* HomeToolTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeToolTableViewCell.swift; sourceTree = "<group>"; };
 		0F7D50271EA95DE200F5957E /* HomeToolTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeToolTableViewCell.xib; sourceTree = "<group>"; };
 		0F93A9331EAA56EC0049C110 /* ToolsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToolsManager.swift; path = Managers/ToolsManager.swift; sourceTree = "<group>"; };
-		0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		0FB0E7C41EB00C6F00583BF3 /* GTSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GTSwitch.swift; path = Views/Switch/GTSwitch.swift; sourceTree = "<group>"; };
 		0FB1B2091EB151300033DAB9 /* TransparentButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransparentButton.swift; sourceTree = "<group>"; };
 		0FB73E4C1EA9063E000BA60D /* BlueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
@@ -595,6 +595,8 @@
 		450EA18C246C586E00B78FA3 /* ShareToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolView.swift; sourceTree = "<group>"; };
 		450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModel.swift; sourceTree = "<group>"; };
 		450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModelType.swift; sourceTree = "<group>"; };
+		450EA192246C6E9400B78FA3 /* ToolPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolPageCell.swift; sourceTree = "<group>"; };
+		450EA194246C6E9E00B78FA3 /* ToolPageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolPageCell.xib; sourceTree = "<group>"; };
 		451DB0672461D90000FB14BF /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractResource.swift; sourceTree = "<group>"; };
 		451DB0682461D90000FB14BF /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractBindings.swift; sourceTree = "<group>"; };
 		451DB0692461D90000FB14BF /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractConfigurations.swift; sourceTree = "<group>"; };
@@ -1222,7 +1224,6 @@
 				1E9973C6206591FC00AFEEE4 /* Integer.swift */,
 				4F75415021D1450F002300DD /* Reachability.swift */,
 				0F350D9A1EAE786A0025C4BB /* String.swift */,
-				0F9E32531EDE8D0D0081DBB9 /* UIImage.swift */,
 				ECA4B3431EE7119A00BAE23C /* UIColor.swift */,
 				EC98C0D41F1EE27E00A68FF5 /* UIFont.swift */,
 				ECF9DADB1FB0D89D00CF6816 /* UIDevice.swift */,
@@ -1346,6 +1347,8 @@
 		451DB0732461D90000FB14BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				450EA192246C6E9400B78FA3 /* ToolPageCell.swift */,
+				450EA194246C6E9E00B78FA3 /* ToolPageCell.xib */,
 				451DB0742461D90000FB14BF /* TractView.swift */,
 				451DB0752461D90000FB14BF /* Elements */,
 			);
@@ -2882,6 +2885,7 @@
 				4FB90B232280944600C6B872 /* readme.txt in Resources */,
 				45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				45668E6E23E0E1CC002728E7 /* OnboardingTutorialView.xib in Resources */,
+				450EA195246C6E9E00B78FA3 /* ToolPageCell.xib in Resources */,
 				0F0352B91EC0CD03006CD4E5 /* kgp-0.xml in Resources */,
 				1737DFDF22FDB48000223CB0 /* GoogleService-Info.plist in Resources */,
 				455F4B9E2452807900AE6007 /* ArticleWebView.xib in Resources */,
@@ -3122,7 +3126,6 @@
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */,
 				45FCFF89243D0C9200865501 /* TractViewController.swift in Sources */,
-				0F9E32541EDE8D0D0081DBB9 /* UIImage.swift in Sources */,
 				451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */,
 				45869EE42453419400733B0C /* HTMLDocument+ResourceUrls.swift in Sources */,
 				451DB1382461DA4200FB14BF /* TractEmailProperties.swift in Sources */,
@@ -3413,6 +3416,7 @@
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */,
 				451DB15A2461DAF700FB14BF /* TractCards+UI.swift in Sources */,
+				450EA193246C6E9400B78FA3 /* ToolPageCell.swift in Sources */,
 				451DB0CD2461D90000FB14BF /* TractEvent.swift in Sources */,
 				451DB1992461DC3100FB14BF /* TractCallToAction.swift in Sources */,
 				4FA2A537215938700018762C /* GodToolsJSONResource.swift in Sources */,

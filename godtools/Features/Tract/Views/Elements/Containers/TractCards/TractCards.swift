@@ -24,7 +24,7 @@ class TractCards: BaseTractElement {
     
     override var height: CGFloat {
         get {
-            return self.getMaxHeight() - TractPage.navbarHeight - TractPageContainer.marginBottom
+            return self.getMaxHeight() - TractPage.navbarHeight - TractPage.statusbarHeight - TractPageContainer.marginBottom
         }
         set { } // Unused
     }

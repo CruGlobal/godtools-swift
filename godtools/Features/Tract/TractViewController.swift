@@ -15,7 +15,11 @@ class TractViewController: UIViewController {
         
     private let viewModel: TractViewModelType
         
-    var viewsWereGenerated = false
+    // TODO: Need this for now to keep tractPages in memory. ~Levi
+    private var tractPages: [Int: TractPage] = Dictionary()
+    
+    private var didLayoutSubviews: Bool = false
+    
     var currentPage = 0
 
     var currentMovement: CGFloat {
@@ -26,7 +30,9 @@ class TractViewController: UIViewController {
     var pagesViews = [TractView?]()
             
     let viewTagOrigin = 100
-        
+       
+    @IBOutlet weak private var toolPagesCollectionView: UICollectionView!
+    
     required init(viewModel: TractViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: "TractViewController", bundle: nil)
@@ -50,10 +56,14 @@ class TractViewController: UIViewController {
         
         viewModel.viewLoaded()
         
+        // TODO: Need to find out what this does. ~Levi
         TractBindings.setupBindings()
 
-        getResourceData()
-        setupSwipeGestures()
+        loadPagesIds()
+
+        // TODO: Want to remove this and use collection view. ~Levi
+        //setupSwipeGestures()
+        
         defineObservers()
         
         _ = addBarButtonItem(
@@ -84,28 +94,45 @@ class TractViewController: UIViewController {
         }
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
-        if self.viewsWereGenerated {
-            return
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            
+            let navigationBarHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 50
+            print("\n DID LAYOUT SUBVIEWS nav bar height: \(navigationBarHeight)")
+            TractPage.navbarHeight = navigationBarHeight
+               
+            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
+            toolPagesCollectionView.delegate = self
+            toolPagesCollectionView.dataSource = self
         }
-        
-        setupContainerView()
-        loadPagesViews()
-        self.viewsWereGenerated = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         TractBindings.clearAllBindings()
-        
     }
     
     private func setupLayout() {
         
+        view.backgroundColor = viewModel.navBarAttributes.navBarColor
+        
         setupNavigationBar()
+        
         setupChooseLanguageControl()
+        
+        toolPagesCollectionView.register(
+            UINib(nibName: ToolPageCell.nibName, bundle: nil),
+            forCellWithReuseIdentifier: ToolPageCell.reuseIdentifier
+        )
+        toolPagesCollectionView.isScrollEnabled = true
+        toolPagesCollectionView.isPagingEnabled = true
+        toolPagesCollectionView.showsVerticalScrollIndicator = false
+        toolPagesCollectionView.showsHorizontalScrollIndicator = false
+        toolPagesCollectionView.contentInset = UIEdgeInsets.zero
+        automaticallyAdjustsScrollViewInsets = false
     }
     
     private func setupBinding() {
@@ -137,9 +164,6 @@ class TractViewController: UIViewController {
         else if segmentIndex == 1 {
             viewModel.parallelLanguagedTapped()
         }
-        
-        loadPagesViews()
-        view.setNeedsLayout()
     }
     
     private func setupNavigationBar() {
@@ -207,6 +231,7 @@ class TractViewController: UIViewController {
     // MARK: - UI setup
     
     fileprivate func setupContainerView() {
+        
         let startingYPos: CGFloat = 0.0
         
         let width = self.view.frame.size.width
@@ -239,17 +264,6 @@ class TractViewController: UIViewController {
                                                selector: #selector(sendEmail),
                                                name: .sendEmailFromTractForm,
                                                object: nil)
-    }
-    
-    // MARK: - Helpers
-    
-    func screenName() -> String {
-        return "\(viewModel.resource.code)-\(self.currentPage)"
-    }
-    
-    func siteSection() -> String {
-
-        return "\(viewModel.resource.code)"
     }
 }
 
@@ -309,11 +323,10 @@ extension TractViewController {
             self.pagesViews[pageNumber] = view
             self.containerView.addSubview(view)
         }
-        
-        removeSnapshotView()
     }
     
     func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
+        
         let multiplier: CGFloat = viewModel.isRightToLeftLanguage ? -1 : 1
         let xPosition = (width * CGFloat(pageNumber)) * multiplier
         let frame = CGRect(x: xPosition,
@@ -415,7 +428,6 @@ extension TractViewController {
     }
     
     func cleanContainerView() {
-        addSnapshotView()
         
         for view in self.containerView.subviews {
             if view.tag != TractViewController.snapshotViewTag {
@@ -429,18 +441,6 @@ extension TractViewController {
     
     func resetPagesView() {
         self.pagesViews = [TractView?](repeating: nil, count: totalPages())
-    }
-    
-    private func addSnapshotView() {
-        let imageView = UIImageView(frame: self.containerView.frame)
-        imageView.image = UIImage.init(view: self.containerView)
-        imageView.tag = TractViewController.snapshotViewTag
-        self.containerView.addSubview(imageView)
-    }
-    
-    private func removeSnapshotView() {
-        let snapshotView = self.containerView.viewWithTag(TractViewController.snapshotViewTag)
-        snapshotView?.removeFromSuperview()
     }
     
     private func showErrorMessage() {
@@ -484,10 +484,6 @@ extension TractViewController {
 // MARK: - Data Management
 
 extension TractViewController {
-        
-    func getResourceData() {
-        loadPagesIds()
-    }
     
     func loadPagesIds() {
         var counter = 0
@@ -557,6 +553,9 @@ extension TractViewController {
     }
     
     @objc func moveToNextPage() {
+        
+        print("\n MOVE TO NEXT PAGE")
+        
         if self.currentPage >= totalPages() - 1 {
             return
         }
@@ -649,5 +648,111 @@ extension TractViewController {
     fileprivate func notifyCurrentViewDidAppearOnTract() {
         let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as? TractView
         currentTractView?.contentView?.notifyViewDidAppearOnTract()
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
+
+extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.toolXmlPages.value.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: ToolPageCell = toolPagesCollectionView.dequeueReusableCell(
+            withReuseIdentifier: ToolPageCell.reuseIdentifier,
+            for: indexPath) as! ToolPageCell
+                
+        let pageParentView: UIView = cell.contentView
+        
+        for subview in pageParentView.subviews {
+            subview.removeFromSuperview()
+        }
+        
+        let toolXmlPage: XMLPage = viewModel.toolXmlPages.value[indexPath.row]
+                
+        let configurations = TractConfigurations()
+        configurations.defaultTextAlignment = .left
+        configurations.pagination = toolXmlPage.pagination
+        configurations.language = viewModel.selectedLanguage.value
+        configurations.resource = viewModel.resource
+                
+        let tractPage = TractPage(
+            startWithData: toolXmlPage.pageContent(),
+            height: toolPagesCollectionView.bounds.size.height,
+            manifestProperties: viewModel.toolManifest,
+            configurations: configurations,
+            parallelElement: nil
+        )
+        
+        tractPage.setDelegate(self)
+        
+        tractPages[indexPath.row] = tractPage
+        
+        pageParentView.addSubview(tractPage.renderedView)
+                
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return toolPagesCollectionView.bounds.size
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension TractViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView == toolPagesCollectionView {
+            if !decelerate {
+                handleDidScrollToItemInToolPagesCollectionView()
+            }
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if scrollView == toolPagesCollectionView {
+            handleDidScrollToItemInToolPagesCollectionView()
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if scrollView == toolPagesCollectionView {
+            handleDidScrollToItemInToolPagesCollectionView()
+        }
+    }
+    
+    private func handleDidScrollToItemInToolPagesCollectionView() {
+        
+        toolPagesCollectionView.layoutIfNeeded()
+        
+        if let visibleCell = toolPagesCollectionView.visibleCells.first {
+            if let indexPath = toolPagesCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToToolPage(index: indexPath.item)
+            }
+        }
     }
 }

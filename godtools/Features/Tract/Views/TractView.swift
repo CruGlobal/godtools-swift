@@ -10,16 +10,18 @@ import Foundation
 import UIKit
 import SWXMLHash
 
+// TODO: Remove this class. ~Levi
 class TractView: UIView {
     
     var contentView: TractPage?
     
     init(frame: CGRect, data: XMLIndexer, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, delegate: BaseTractElementDelegate) {
+        
         super.init(frame: frame)
         
         let height = self.frame.size.height
         self.contentView = TractPage(startWithData: data,
-                                     withMaxHeight: height,
+                                     height: height,
                                      manifestProperties: manifestProperties,
                                      configurations: configurations,
                                      parallelElement: parallelElement)

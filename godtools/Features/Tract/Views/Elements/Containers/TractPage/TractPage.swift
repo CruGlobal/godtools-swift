@@ -15,12 +15,18 @@ class TractPage: BaseTractElement {
     
     var pageContainer: TractPageContainer?
     
+    private(set) var renderedView: UIView!
+    
     // MARK: - Setup
-    static var navbarHeight: CGFloat = 50 // TODO: Remove this.  Should use constraints (safe area) to place below the navbar.
+    
+    static var navbarHeight: CGFloat = 50.0
+    static var statusbarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
     
     //  * The only designated initializer for this class should be this one
-    override init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
-        super.init(startWithData: data, withMaxHeight: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+    override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
+        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+        
+        renderedView = render()
     }
     
     override init(data: XMLIndexer, startOnY yPosition: CGFloat) { fatalError("init(coder:) has not been implemented") }
@@ -59,7 +65,7 @@ class TractPage: BaseTractElement {
     }
     
     override func startingYPos() -> CGFloat {
-        return 0
+        return TractPage.statusbarHeight
     }
     
     func buildPageContainer(data: [XMLIndexer]) {

@@ -68,6 +68,10 @@ class TractCard: BaseTractElement {
         }
     }
     
+    var tractCardAnalyticEvents: [TractAnalyticEvent]  {
+            return self.analyticsUserInfo
+    }
+    
     // MARK: - Setup
     
     override func propertiesKind() -> TractProperties.Type {
@@ -107,7 +111,6 @@ class TractCard: BaseTractElement {
             setupNavigation(pageNumber: cardProperties().cardNumber + 1, pageCount: pageCount)
         }
         TractBindings.addBindings(self)
-        
         return self
     }
     
@@ -182,7 +185,7 @@ class TractCard: BaseTractElement {
     }
     
     func cardHeight() -> CGFloat {
-        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight - TractPageContainer.marginBottom
+        return self.getMaxHeight() - TractCard.yBottomMarginConstant - TractPage.navbarHeight - TractPage.statusbarHeight - TractPageContainer.marginBottom
     }
     
     func endCardEditing() {

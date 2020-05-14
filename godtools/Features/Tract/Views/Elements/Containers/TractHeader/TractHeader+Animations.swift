@@ -11,36 +11,36 @@ import UIKit
 
 extension TractHeader {
     
-    func showHeaderWithoutAnimation() {
+    func showHeader(animated: Bool) {
+        
         self.currentAnimation = .none
-        self.transform = CGAffineTransform(translationX: 0, y: 0.0)
+        let newTransform = CGAffineTransform(translationX: 0, y: 0.0)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
     }
     
-    func hideHeaderWithoutAnimation() {
+    func hideHeader(animated: Bool) {
+        
         self.currentAnimation = .hide
-        let translationY = -self.elementFrame.y - self.height
-        self.transform = CGAffineTransform(translationX: 0, y: translationY)
+        let translationY = -elementFrame.y - height - 20
+        let newTransform = CGAffineTransform(translationX: 0, y: translationY)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
     }
-    
-    func showHeader() {
-        self.currentAnimation = .none
-        UIView.animate(withDuration: 0.30,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
-                       completion: nil )
-    }
-    
-    func hideHeader() {
-        self.currentAnimation = .hide
-        let translationY = -self.elementFrame.y - self.height
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
-                       completion: nil )
-    }
-    
 }

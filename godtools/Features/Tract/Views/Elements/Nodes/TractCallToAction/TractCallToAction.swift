@@ -87,7 +87,7 @@ class TractCallToAction: BaseTractElement {
         let callToActionElement = element as! TractCallToAction
         switch callToActionElement.currentAnimation {
         case .show:
-            showCallToActionWithoutAnimation()
+            showCallToAction(animated: false)
         default:
             break
         }

@@ -11,40 +11,37 @@ import UIKit
 
 extension TractCallToAction {
     
-    func showCallToActionWithoutAnimation() {
-        self.currentAnimation = .show
-        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height - bottomConstant()
-        self.transform = CGAffineTransform(translationX: 0, y: translationY)
+    func showCallToAction(animated: Bool) {
+        
+        currentAnimation = .show
+        let bottomConstant: CGFloat = TractPage.statusbarHeight + TractPageContainer.marginBottom
+        let translationY = parent!.getMaxHeight() - elementFrame.finalY() - height - bottomConstant
+        let newTransform = CGAffineTransform(translationX: 0, y: translationY)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
     }
     
-    func hideCallToActionWithoutAnimation() {
-        self.currentAnimation = .none
-        self.transform = CGAffineTransform(translationX: 0, y: 0.0)
+    func hideCallToAction(animated: Bool) {
+        
+        currentAnimation = .none
+        let newTransform = CGAffineTransform(translationX: 0, y: 0.0)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
     }
-    
-    func showCallToActionAnimation() {
-        self.currentAnimation = .show
-        let translationY = self.parent!.getMaxHeight() - self.elementFrame.finalY() - self.height - bottomConstant()
-        UIView.animate(withDuration: 0.35,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: translationY) },
-                       completion: nil )
-    }
-    
-    func hideCallToActionAnimation() {
-        self.currentAnimation = .none
-        UIView.animate(withDuration: 0.30,
-                       delay: 0.0,
-                       options: UIView.AnimationOptions.curveEaseInOut,
-                       animations: {
-                        self.transform = CGAffineTransform(translationX: 0, y: 0.0) },
-                       completion: nil )
-    }
-    
-    private func bottomConstant() -> CGFloat {
-        return TractPageContainer.marginBottom
-    }
-    
 }

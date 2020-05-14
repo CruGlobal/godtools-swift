@@ -14,7 +14,7 @@ extension TractPage {
         for element in self.pageContainer!.elements! {
             if BaseTractElement.isHeaderElement(element) {
                 let header = element as! TractHeader
-                header.showHeader()
+                header.showHeader(animated: true)
                 break
             }
         }
@@ -24,7 +24,7 @@ extension TractPage {
         for element in self.pageContainer!.elements! {
             if BaseTractElement.isHeaderElement(element) {
                 let header = element as! TractHeader
-                header.hideHeader()
+                header.hideHeader(animated: true)
                 break
             }
         }
@@ -34,12 +34,7 @@ extension TractPage {
         for element in self.pageContainer!.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
-                if animated {
-                    callToAction.showCallToActionAnimation()
-                }
-                else {
-                    callToAction.showCallToActionWithoutAnimation()
-                }
+                callToAction.showCallToAction(animated: animated)
                 break
             }
         }
@@ -49,7 +44,7 @@ extension TractPage {
         for element in self.pageContainer!.elements! {
             if BaseTractElement.isCallToActionElement(element) {
                 let callToAction = element as! TractCallToAction
-                callToAction.hideCallToActionAnimation()
+                callToAction.hideCallToAction(animated: true)
                 break
             }
         }

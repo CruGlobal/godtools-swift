@@ -56,7 +56,7 @@ class TractHeader: BaseTractElement {
         let headerElement = element as! TractHeader
         switch headerElement.currentAnimation {
         case .hide:
-            hideHeaderWithoutAnimation()
+            hideHeader(animated: false)
         default:
             break
         }
