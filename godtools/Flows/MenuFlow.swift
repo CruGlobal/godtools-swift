@@ -112,6 +112,7 @@ class MenuFlow: Flow {
                     toRecipients: ["support@godtoolsapp.com"],
                     subject: "Email to GodTools support",
                     message: "",
+                    isHtml: false,
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 
@@ -142,6 +143,7 @@ class MenuFlow: Flow {
                     toRecipients: ["support@godtoolsapp.com"],
                     subject: "GodTools story",
                     message: "",
+                    isHtml: false,
                     finishedSendingMailHandler: finishedSendingMail
                 )
                 

@@ -12,23 +12,28 @@ protocol TractViewModelType {
     
     var resource: DownloadedResource { get }
     var navTitle: ObservableValue<String> { get }
-    var navBarAttributes: ToolNavBarAttributes { get }
+    var navBarAttributes: TractNavBarAttributes { get }
     var hidesChooseLanguageControl: Bool { get }
     var chooseLanguageControlPrimaryLanguageTitle: String { get }
     var chooseLanguageControlParallelLanguageTitle: String { get }
-    var selectedLanguage: ObservableValue<Language> { get }
-    var toolManifest: ManifestProperties { get }
-    var toolXmlPages: ObservableValue<[XMLPage]> { get }
-    var currentToolPageItemIndex: ObservableValue<AnimatableValue<Int>> { get }
+    var selectedTractLanguage: ObservableValue<TractLanguage> { get }
+    var primaryLanguage: Language { get }
+    var parallelLanguage: Language? { get }
+    var tractManifest: ManifestProperties { get }
+    var primaryTractPages: [XMLPage] { get }
+    var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
+    var currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
+    var currentTractPage: Int { get }
     
     func navHomeTapped()
     func shareTapped()
     func primaryLanguageTapped()
     func parallelLanguagedTapped()
     func viewLoaded()
-    func didScrollToToolPage(index: Int)
+    func didScrollToTractPage(page: Int)
     func navigateToNextPageTapped()
     func navigateToPreviousPageTapped()
     func navigateToPageTapped(page: Int)
+    func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
 }

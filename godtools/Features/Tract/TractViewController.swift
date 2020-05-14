@@ -7,21 +7,21 @@
 //
 
 import UIKit
-import SWXMLHash
-import MessageUI
-import PromiseKit
 
 class TractViewController: UIViewController {
         
     private let viewModel: TractViewModelType
         
     // TODO: Need this for now to keep tractPages in memory. ~Levi
-    private var tractPages: [Int: TractPage] = Dictionary()
+    // Would like this to be a service part of the view model.
+    private var cachedTractPageItems: [Int: TractXmlPageItem] = Dictionary()
     
     private var didLayoutSubviews: Bool = false
     private var didAddObservers: Bool = false
            
-    @IBOutlet weak private var toolPagesCollectionView: UICollectionView!
+    private weak var languageControl: UISegmentedControl?
+    
+    @IBOutlet weak private var tractPagesCollectionView: UICollectionView!
     
     required init(viewModel: TractViewModelType) {
         self.viewModel = viewModel
@@ -71,6 +71,12 @@ class TractViewController: UIViewController {
             action: #selector(handleShare(barButtonItem:))
         )
         
+        languageControl?.addTarget(
+            self,
+            action: #selector(didChooseLanguage(segmentedControl:)),
+            for: .valueChanged
+        )
+        
         UIApplication.shared.isIdleTimerDisabled = true
         
         for translation in viewModel.resource.translations {
@@ -95,15 +101,19 @@ class TractViewController: UIViewController {
             TractPage.navbarHeight = navigationBarHeight
                
             // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
-            toolPagesCollectionView.delegate = self
-            toolPagesCollectionView.dataSource = self
+            tractPagesCollectionView.delegate = self
+            tractPagesCollectionView.dataSource = self
             
-            viewModel.currentToolPageItemIndex.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
+            viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
+                self?.tractPagesCollectionView.reloadData()
+            }
+            
+            viewModel.currentTractPageItemIndex.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
                 
-                if let toolPagesCollectionView = self?.toolPagesCollectionView {
-                    let numberOfItems: Int = toolPagesCollectionView.numberOfItems(inSection: 0)
+                if let tractPagesCollectionView = self?.tractPagesCollectionView {
+                    let numberOfItems: Int = tractPagesCollectionView.numberOfItems(inSection: 0)
                     if numberOfItems > 0 {
-                        toolPagesCollectionView.scrollToItem(
+                        tractPagesCollectionView.scrollToItem(
                             at: IndexPath(item: animatableValue.value, section: 0),
                             at: .centeredHorizontally,
                             animated: animatableValue.animated
@@ -122,15 +132,15 @@ class TractViewController: UIViewController {
         
         setupChooseLanguageControl()
         
-        toolPagesCollectionView.register(
-            UINib(nibName: ToolPageCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: ToolPageCell.reuseIdentifier
+        tractPagesCollectionView.register(
+            UINib(nibName: TractPageCell.nibName, bundle: nil),
+            forCellWithReuseIdentifier: TractPageCell.reuseIdentifier
         )
-        toolPagesCollectionView.isScrollEnabled = true
-        toolPagesCollectionView.isPagingEnabled = true
-        toolPagesCollectionView.showsVerticalScrollIndicator = false
-        toolPagesCollectionView.showsHorizontalScrollIndicator = false
-        toolPagesCollectionView.contentInset = UIEdgeInsets.zero
+        tractPagesCollectionView.isScrollEnabled = true
+        tractPagesCollectionView.isPagingEnabled = true
+        tractPagesCollectionView.showsVerticalScrollIndicator = false
+        tractPagesCollectionView.showsHorizontalScrollIndicator = false
+        tractPagesCollectionView.contentInset = UIEdgeInsets.zero
         automaticallyAdjustsScrollViewInsets = false
     }
     
@@ -138,6 +148,18 @@ class TractViewController: UIViewController {
         
         viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
             self?.title = title
+        }
+        
+        viewModel.selectedTractLanguage.addObserver(self) { [weak self] (tractLanguage: TractLanguage) in
+            
+            switch tractLanguage.languageType {
+            case .primary:
+                self?.languageControl?.selectedSegmentIndex = 0
+            case .parallel:
+                self?.languageControl?.selectedSegmentIndex = 1
+            }
+            
+            self?.tractPagesCollectionView.reloadData()
         }
     }
     
@@ -179,7 +201,7 @@ class TractViewController: UIViewController {
     
     private func setupChooseLanguageControl() {
         
-        if !viewModel.hidesChooseLanguageControl {
+        if !viewModel.hidesChooseLanguageControl && languageControl == nil {
                 
             let navBarColor: UIColor = viewModel.navBarAttributes.navBarColor
             let navBarControlColor: UIColor = viewModel.navBarAttributes.navBarControlColor
@@ -211,13 +233,9 @@ class TractViewController: UIViewController {
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarControlColor], for: .normal)
             chooseLanguageControl.setTitleTextAttributes([.font: font, .foregroundColor: navBarColor.withAlphaComponent(1)], for: .selected)
             
-            chooseLanguageControl.addTarget(
-                self,
-                action: #selector(didChooseLanguage(segmentedControl:)),
-                for: .valueChanged
-            )
-            
             navigationItem.titleView = chooseLanguageControl
+            
+            languageControl = chooseLanguageControl
         }
     }
     
@@ -264,6 +282,17 @@ class TractViewController: UIViewController {
     @objc func moveToPreviousPage() {
         viewModel.navigateToPreviousPageTapped()
     }
+    
+    @objc func sendEmail(notification: Notification) {
+        
+        let dictionary: [AnyHashable: Any] = notification.userInfo ?? [:]
+        
+        viewModel.sendEmailTapped(
+            subject: dictionary["subject"] as? String,
+            message: dictionary["content"] as? String,
+            isHtml: dictionary["html"] as? Bool
+        )
+    }
 }
 
 extension TractViewController: BaseTractElementDelegate {
@@ -276,16 +305,16 @@ extension TractViewController: BaseTractElementDelegate {
         
         // TODO: Why is this method needed here? ~Levi
         
-        return viewModel.selectedLanguage.value
+        return viewModel.selectedTractLanguage.value.language
     }
 }
 
 extension TractViewController {
     
-    // TODO: Need to findout what this is for. ~Levi
+    // TODO: Need to find out what this is for. ~Levi
     func loadPagesIds() {
         var counter = 0
-        for page in viewModel.toolXmlPages.value {
+        for page in viewModel.primaryTractPages {
             guard let pageListeners = page.pageListeners() else { continue }
             for listener in pageListeners {
                 TractBindings.addPageBinding(listener, counter)
@@ -305,14 +334,14 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.toolXmlPages.value.count
+        return viewModel.tractXmlPageItems.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: ToolPageCell = toolPagesCollectionView.dequeueReusableCell(
-            withReuseIdentifier: ToolPageCell.reuseIdentifier,
-            for: indexPath) as! ToolPageCell
+        let cell: TractPageCell = tractPagesCollectionView.dequeueReusableCell(
+            withReuseIdentifier: TractPageCell.reuseIdentifier,
+            for: indexPath) as! TractPageCell
                 
         let pageParentView: UIView = cell.contentView
         
@@ -320,28 +349,55 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
             subview.removeFromSuperview()
         }
         
-        let toolXmlPage: XMLPage = viewModel.toolXmlPages.value[indexPath.row]
+        let tractXmlPageItem: TractXmlPageItem = viewModel.tractXmlPageItems.value[indexPath.row]
+        
+        // load parallel tract
+        var parallelTractPage: TractPage?
+        
+        if let parallelXmlPage = tractXmlPageItem.parallelXmlPage {
+            
+            let parallelConfig = TractConfigurations()
+            parallelConfig.defaultTextAlignment = .left
+            parallelConfig.pagination = parallelXmlPage.pagination
+            parallelConfig.language = viewModel.parallelLanguage
+            parallelConfig.resource = viewModel.resource
+                    
+            parallelTractPage = TractPage(
+                startWithData: parallelXmlPage.pageContent(),
+                height: tractPagesCollectionView.bounds.size.height,
+                manifestProperties: viewModel.tractManifest,
+                configurations: parallelConfig,
+                parallelElement: nil
+            )
+            
+            parallelTractPage?.setDelegate(self)
+        }
+        
+        // load primary tract
+        let primaryXmlPage: XMLPage = tractXmlPageItem.primaryXmlPage
+        
+        let primaryConfig = TractConfigurations()
+        primaryConfig.defaultTextAlignment = .left
+        primaryConfig.pagination = primaryXmlPage.pagination
+        primaryConfig.language = viewModel.primaryLanguage
+        primaryConfig.resource = viewModel.resource
                 
-        let configurations = TractConfigurations()
-        configurations.defaultTextAlignment = .left
-        configurations.pagination = toolXmlPage.pagination
-        configurations.language = viewModel.selectedLanguage.value
-        configurations.resource = viewModel.resource
-                
-        let tractPage = TractPage(
-            startWithData: toolXmlPage.pageContent(),
-            height: toolPagesCollectionView.bounds.size.height,
-            manifestProperties: viewModel.toolManifest,
-            configurations: configurations,
-            parallelElement: nil
+        let primaryTractPage = TractPage(
+            startWithData: primaryXmlPage.pageContent(),
+            height: tractPagesCollectionView.bounds.size.height,
+            manifestProperties: viewModel.tractManifest,
+            configurations: primaryConfig,
+            parallelElement: parallelTractPage
         )
         
-        tractPage.setDelegate(self)
+        primaryTractPage.setDelegate(self)
         
-        tractPages[indexPath.row] = tractPage
-        
-        pageParentView.addSubview(tractPage.renderedView)
-                
+        cell.configure(
+            primaryTract: primaryTractPage.renderedView,
+            parallelTract: parallelTractPage?.renderedView,
+            language: viewModel.selectedTractLanguage.value.languageType
+        )
+                                
         return cell
     }
     
@@ -354,7 +410,7 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return toolPagesCollectionView.bounds.size
+        return tractPagesCollectionView.bounds.size
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -371,32 +427,32 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 extension TractViewController: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == toolPagesCollectionView {
+        if scrollView == tractPagesCollectionView {
             if !decelerate {
-                handleDidScrollToItemInToolPagesCollectionView()
+                handleDidScrollToItemInTractPagesCollectionView()
             }
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == toolPagesCollectionView {
-            handleDidScrollToItemInToolPagesCollectionView()
+        if scrollView == tractPagesCollectionView {
+            handleDidScrollToItemInTractPagesCollectionView()
         }
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == toolPagesCollectionView {
-            handleDidScrollToItemInToolPagesCollectionView()
+        if scrollView == tractPagesCollectionView {
+            handleDidScrollToItemInTractPagesCollectionView()
         }
     }
     
-    private func handleDidScrollToItemInToolPagesCollectionView() {
+    private func handleDidScrollToItemInTractPagesCollectionView() {
         
-        toolPagesCollectionView.layoutIfNeeded()
+        tractPagesCollectionView.layoutIfNeeded()
         
-        if let visibleCell = toolPagesCollectionView.visibleCells.first {
-            if let indexPath = toolPagesCollectionView.indexPath(for: visibleCell) {
-                viewModel.didScrollToToolPage(index: indexPath.item)
+        if let visibleCell = tractPagesCollectionView.visibleCells.first {
+            if let indexPath = tractPagesCollectionView.indexPath(for: visibleCell) {
+                viewModel.didScrollToTractPage(page: indexPath.item)
             }
         }
     }

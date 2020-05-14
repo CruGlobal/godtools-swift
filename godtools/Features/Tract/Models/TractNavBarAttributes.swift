@@ -1,5 +1,5 @@
 //
-//  ToolNavBarAttributes.swift
+//  TractNavBarAttributes.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/13/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ToolNavBarAttributes {
+struct TractNavBarAttributes {
     
     let navBarColor: UIColor
     let navBarControlColor: UIColor

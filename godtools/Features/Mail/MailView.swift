@@ -36,7 +36,7 @@ class MailView: UIViewController {
             
             mailComposeViewController.setToRecipients(viewModel.toRecipients)
             mailComposeViewController.setSubject(viewModel.subject)
-            mailComposeViewController.setMessageBody(viewModel.message, isHTML: false)
+            mailComposeViewController.setMessageBody(viewModel.message, isHTML: viewModel.isHtml)
             mailComposeViewController.mailComposeDelegate = self
             
             addChild(mailComposeViewController)

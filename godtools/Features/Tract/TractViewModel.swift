@@ -16,24 +16,24 @@ class TractViewModel: TractViewModelType {
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
-    private var toolPage: Int = -1
+    private var tractPage: Int = -1
     
     let resource: DownloadedResource
     let primaryLanguage: Language
     let parallelLanguage: Language?
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
-    let navBarAttributes: ToolNavBarAttributes
+    let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
     let chooseLanguageControlPrimaryLanguageTitle: String
     let chooseLanguageControlParallelLanguageTitle: String
-    let selectedLanguage: ObservableValue<Language>
-    let toolManifest: ManifestProperties
-    let toolXmlPages: ObservableValue<[XMLPage]> = ObservableValue(value: [])
-    let currentToolPageItemIndex: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
+    let selectedTractLanguage: ObservableValue<TractLanguage>
+    let tractManifest: ManifestProperties
+    let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
+    let currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, toolPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -50,33 +50,56 @@ class TractViewModel: TractViewModelType {
             parallelTractXmlResource = nil
         }
         let primaryManifest: ManifestProperties = primaryTractXmlResource.manifestProperties
-        navBarAttributes = ToolNavBarAttributes(
+        navBarAttributes = TractNavBarAttributes(
             navBarColor: primaryManifest.navbarColor ?? primaryManifest.primaryColor,
             navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
         )
         hidesChooseLanguageControl = self.parallelLanguage == nil
         chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
         chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
-        selectedLanguage = ObservableValue(value: primaryLanguage)
-        toolManifest = primaryTractXmlResource.manifestProperties
-        toolXmlPages.accept(value: primaryTractXmlResource.pages)
+        selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
+        tractManifest = primaryTractXmlResource.manifestProperties
         
-        let startingToolPage: Int = toolPage ?? 0
-        setToolPage(page: startingToolPage, shouldSetCurrentToolPageItemIndex: true, animated: false)
+        loadTractXmlPages()
+                
+        let startingTractPage: Int = tractPage ?? 0
+        setTractPage(page: startingTractPage, shouldSetCurrentToolPageItemIndex: true, animated: false)
     }
     
-    private func setToolPage(page: Int, shouldSetCurrentToolPageItemIndex: Bool, animated: Bool) {
+    private func loadTractXmlPages() {
         
-        guard page >= 0 && page < toolXmlPages.value.count else {
+        var tractItems: [TractXmlPageItem] = Array()
+        
+        for index in 0 ..< primaryTractXmlResource.pages.count {
+            
+            let primaryPage: XMLPage = primaryTractXmlResource.pages[index]
+            let parallelPage: XMLPage?
+            
+            if let parallelTractXmlResource = parallelTractXmlResource, index >= 0 && index < parallelTractXmlResource.pages.count {
+                parallelPage = parallelTractXmlResource.pages[index]
+            }
+            else {
+                parallelPage = nil
+            }
+            
+            tractItems.append(TractXmlPageItem(primaryXmlPage: primaryPage, parallelXmlPage: parallelPage))
+        }
+        
+        tractXmlPageItems.accept(value: tractItems)
+    }
+    
+    private func setTractPage(page: Int, shouldSetCurrentToolPageItemIndex: Bool, animated: Bool) {
+        
+        guard page >= 0 && page < tractXmlPageItems.value.count else {
             return
         }
         
-        let previousToolPage: Int = toolPage
+        let previousToolPage: Int = tractPage
         
-        self.toolPage = page
+        self.tractPage = page
         
         if shouldSetCurrentToolPageItemIndex {
-            currentToolPageItemIndex.accept(value: AnimatableValue(value: page, animated: animated))
+            currentTractPageItemIndex.accept(value: AnimatableValue(value: page, animated: animated))
         }
         
         if previousToolPage != page {
@@ -93,21 +116,27 @@ class TractViewModel: TractViewModelType {
         return primaryLanguage.isRightToLeft()
     }
     
+    var currentTractPage: Int {
+        return tractPage
+    }
+    
+    var primaryTractPages: [XMLPage] {
+        return primaryTractXmlResource.pages
+    }
+    
     func navHomeTapped() {
         flowDelegate?.navigate(step: .homeTappedFromTract)
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedLanguage.value, pageNumber: toolPage))
+        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedTractLanguage.value.language, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {
                 
         trackTappedLanguage(language: primaryLanguage)
-        
-        selectedLanguage.accept(value: primaryLanguage)
-        
-        toolXmlPages.accept(value: primaryTractXmlResource.pages)
+                
+        selectedTractLanguage.accept(value: TractLanguage(languageType: .primary, language: primaryLanguage))
     }
     
     func parallelLanguagedTapped() {
@@ -117,12 +146,8 @@ class TractViewModel: TractViewModelType {
         }
                 
         trackTappedLanguage(language: parallelLanguage)
-        
-        selectedLanguage.accept(value: parallelLanguage)
-        
-        if let parallelTractXmlResource = self.parallelTractXmlResource {
-            toolXmlPages.accept(value: parallelTractXmlResource.pages)
-        }
+                
+        selectedTractLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
     }
     
     private func trackTappedLanguage(language: Language) {
@@ -146,26 +171,30 @@ class TractViewModel: TractViewModelType {
         toolOpenedAnalytics.trackToolOpened()
     }
     
-    func didScrollToToolPage(index: Int) {
+    func didScrollToTractPage(page: Int) {
                 
-        setToolPage(page: index, shouldSetCurrentToolPageItemIndex: false, animated: false)
+        setTractPage(page: page, shouldSetCurrentToolPageItemIndex: false, animated: false)
     }
     
     func navigateToNextPageTapped() {
-        let nextPage: Int = toolPage + 1
-        if nextPage < toolXmlPages.value.count {
-            setToolPage(page: nextPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
+        let nextPage: Int = tractPage + 1
+        if nextPage < tractXmlPageItems.value.count {
+            setTractPage(page: nextPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
         }
     }
     
     func navigateToPreviousPageTapped() {
-        let previousPage: Int = toolPage - 1
+        let previousPage: Int = tractPage - 1
         if previousPage > 0 {
-            setToolPage(page: previousPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
+            setTractPage(page: previousPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
         }
     }
     
     func navigateToPageTapped(page: Int) {
-        setToolPage(page: page, shouldSetCurrentToolPageItemIndex: true, animated: true)
+        setTractPage(page: page, shouldSetCurrentToolPageItemIndex: true, animated: true)
+    }
+    
+    func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
+        flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
     }
 }

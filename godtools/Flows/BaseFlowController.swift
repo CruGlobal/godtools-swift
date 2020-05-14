@@ -8,6 +8,7 @@
 
 import UIKit
 import TheKeyOAuthSwift
+import MessageUI
 
 class BaseFlowController: NSObject, FlowDelegate {
     
@@ -160,7 +161,8 @@ class BaseFlowController: NSObject, FlowDelegate {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
-                        
+                   
+        // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
             _ = navigationController.popToRootViewController(animated: true)
             resetNavigationControllerColorToDefault()
@@ -181,6 +183,48 @@ class BaseFlowController: NSObject, FlowDelegate {
                 animated: true,
                 completion: nil
             )
+            
+        case .sendEmailTappedFromTract(let subject, let message, let isHtml):
+            
+            if MFMailComposeViewController.canSendMail() {
+                
+                let finishedSendingMail = CallbackHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let viewModel = MailViewModel(
+                    toRecipients: [],
+                    subject: subject,
+                    message: message,
+                    isHtml: isHtml,
+                    finishedSendingMailHandler: finishedSendingMail
+                )
+                
+                let view = MailView(viewModel: viewModel)
+                
+                navigationController.present(view, animated: true, completion: nil)
+            }
+            else {
+                
+                let handler = AlertMessageViewAcceptHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let title: String = "GodTools"
+                let message: String = NSLocalizedString("error_can_not_send_email", comment: "")
+                let acceptedTitle: String = NSLocalizedString("ok", comment: "")
+                
+                let viewModel = AlertMessageViewModel(
+                    title: title,
+                    message: message,
+                    acceptActionTitle: acceptedTitle,
+                    handler: handler
+                )
+                
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+            }
             
         default:
             break
@@ -235,7 +279,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 tractManager: appDiContainer.tractManager,
                 analytics: appDiContainer.analytics,
                 toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-                toolPage: 0
+                tractPage: 0
             )
             let view = TractViewController(viewModel: viewModel)
 
@@ -290,7 +334,7 @@ class BaseFlowController: NSObject, FlowDelegate {
             tractManager: appDiContainer.tractManager,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-            toolPage: page
+            tractPage: page
         )
         
         let view = TractViewController(viewModel: viewModel)
