@@ -234,7 +234,8 @@ class BaseFlowController: NSObject, FlowDelegate {
                 parallelLanguage: parallelLanguage,
                 tractManager: appDiContainer.tractManager,
                 analytics: appDiContainer.analytics,
-                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
+                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+                toolPage: 0
             )
             let view = TractViewController(viewModel: viewModel)
 
@@ -269,6 +270,9 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
+        // TODO: Is this needed? ~Levi
+        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
+        
         let parallelLanguage: Language?
         
         if let parallelLanguageCode = parallelLanguageCode {
@@ -285,12 +289,11 @@ class BaseFlowController: NSObject, FlowDelegate {
             parallelLanguage: parallelLanguage,
             tractManager: appDiContainer.tractManager,
             analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            toolPage: page
         )
-        let view = TractViewController(viewModel: viewModel)
         
-        view.currentPage = page
-        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
+        let view = TractViewController(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
     }

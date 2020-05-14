@@ -19,18 +19,8 @@ class TractViewController: UIViewController {
     private var tractPages: [Int: TractPage] = Dictionary()
     
     private var didLayoutSubviews: Bool = false
-    
-    var currentPage = 0
-
-    var currentMovement: CGFloat {
-        let multiplier: CGFloat = viewModel.isRightToLeftLanguage ? -1 : 1
-        return CGFloat(currentPage) * -self.view.frame.width * multiplier
-    }
-    var containerView = UIView()
-    var pagesViews = [TractView?]()
-            
-    let viewTagOrigin = 100
-       
+    private var didAddObservers: Bool = false
+           
     @IBOutlet weak private var toolPagesCollectionView: UICollectionView!
     
     required init(viewModel: TractViewModelType) {
@@ -45,6 +35,8 @@ class TractViewController: UIViewController {
     deinit {
         print("x deinit: \(type(of: self))")
         UIApplication.shared.isIdleTimerDisabled = false
+        // TODO: Find out what TractBindings does. ~Levi
+        TractBindings.clearAllBindings()
     }
     
     override func viewDidLoad() {
@@ -60,11 +52,8 @@ class TractViewController: UIViewController {
         TractBindings.setupBindings()
 
         loadPagesIds()
-
-        // TODO: Want to remove this and use collection view. ~Levi
-        //setupSwipeGestures()
         
-        defineObservers()
+        addObservers()
         
         _ = addBarButtonItem(
             to: .left,
@@ -101,7 +90,8 @@ class TractViewController: UIViewController {
             didLayoutSubviews = true
             
             let navigationBarHeight: CGFloat = navigationController?.navigationBar.frame.size.height ?? 50
-            print("\n DID LAYOUT SUBVIEWS nav bar height: \(navigationBarHeight)")
+            // TODO: Eventually I'd like to do something different here rather than set a global on TractPage.
+            // Instead tool pages can have a contentInset top, bottom to move content in which can be injected. ~Levi
             TractPage.navbarHeight = navigationBarHeight
                
             // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
@@ -122,11 +112,6 @@ class TractViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        TractBindings.clearAllBindings()
     }
     
     private func setupLayout() {
@@ -153,10 +138,6 @@ class TractViewController: UIViewController {
         
         viewModel.navTitle.addObserver(self) { [weak self] (title: String) in
             self?.title = title
-        }
-        
-        viewModel.selectedLanguage.addObserver(self) { [weak self] (language: Language) in
-            
         }
     }
     
@@ -240,263 +221,68 @@ class TractViewController: UIViewController {
         }
     }
     
-    // MARK: - UI setup
-    
-    fileprivate func setupContainerView() {
-        
-        let startingYPos: CGFloat = 0.0
-        
-        let width = self.view.frame.size.width
-        let height = self.view.frame.size.height - startingYPos
-        self.containerView.frame = CGRect(x: 0.0, y: startingYPos, width: width, height: height)
-        self.view.addSubview(self.containerView)
+    private func addObservers() {
+                
+        if !didAddObservers {
+            didAddObservers = true
+            
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(moveToPage),
+                                                   name: .moveToPageNotification,
+                                                   object: nil)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(moveToNextPage),
+                                                   name: .moveToNextPageNotification,
+                                                   object: nil)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(moveToPreviousPage),
+                                                   name: .moveToPreviousPageNotification,
+                                                   object: nil)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(sendEmail),
+                                                   name: .sendEmailFromTractForm,
+                                                   object: nil)
+        }
     }
+    
+    @objc func moveToPage(notification: Notification) {
         
-    fileprivate func loadPagesViews() {
-        let size = self.containerView.frame.size
-        buildPages(width: size.width, height: size.height)
+        guard let dictionary = notification.userInfo as? [String: String] else {
+            return
+        }
+        
+        guard let pageListener = dictionary["pageListener"] else { return }
+        guard let page = TractBindings.pageBindings[pageListener] else { return }
+        
+        viewModel.navigateToPageTapped(page: page)
     }
     
-    // Notifications
+    @objc func moveToNextPage() {
+        viewModel.navigateToNextPageTapped()
+    }
     
-    func defineObservers() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(moveToPage),
-                                               name: .moveToPageNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(moveToNextPage),
-                                               name: .moveToNextPageNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(moveToPreviousPage),
-                                               name: .moveToPreviousPageNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(sendEmail),
-                                               name: .sendEmailFromTractForm,
-                                               object: nil)
+    @objc func moveToPreviousPage() {
+        viewModel.navigateToPreviousPageTapped()
     }
 }
 
 extension TractViewController: BaseTractElementDelegate {
+    
     func showAlert(_ alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
     }
     
     func displayedLanguage() -> Language? {
         
-        // TODO: Implement back in. ~Levi
+        // TODO: Why is this method needed here? ~Levi
         
-//        let languagesManager = LanguagesManager()
-//        
-//        guard let languageSegmentedControl = languageSegmentedControl else {
-//            return resolvePrimaryLanguage()
-//        }
-//        
-//        if languageSegmentedControl.selectedSegmentIndex == 0 {
-//            return resolvePrimaryLanguage()
-//        } else {
-//            return languagesManager.loadParallelLanguageFromDisk(arrivingFromUniversalLink: arrivedByUniversalLink)
-//        }
-        
-        return nil
+        return viewModel.selectedLanguage.value
     }
 }
 
-// MARK: - Content
-
 extension TractViewController {
     
-    static let snapshotViewTag = 3210123
-    static let distanceToCurrentView = 1
-    
-    func buildPages(width: CGFloat, height: CGFloat) {
-        let range = getRangeOfViews()
-        if range.end < range.start {
-            viewModel.navHomeTapped()
-            showErrorMessage()
-            return
-        }
-        
-        var currentElement: BaseTractElement?
-        if self.pagesViews.count > self.currentPage {
-            currentElement = self.pagesViews[self.currentPage]?.contentView
-        }
-        cleanContainerView()
-    
-        for pageNumber in range.start...range.end {
-            var parallelElement: BaseTractElement?
-            if pageNumber == self.currentPage {
-                parallelElement = currentElement
-            }
-            
-            let view = buildPage(pageNumber, width: width, height: height, parallelElement: parallelElement)
-            self.pagesViews[pageNumber] = view
-            self.containerView.addSubview(view)
-        }
-    }
-    
-    func buildPage(_ pageNumber: Int, width: CGFloat, height: CGFloat, parallelElement: BaseTractElement?) -> TractView {
-        
-        let multiplier: CGFloat = viewModel.isRightToLeftLanguage ? -1 : 1
-        let xPosition = (width * CGFloat(pageNumber)) * multiplier
-        let frame = CGRect(x: xPosition,
-                           y: 0.0,
-                           width: width,
-                           height: height)
-        
-        let page = getPage(pageNumber)
-        let configurations = TractConfigurations()
-        configurations.defaultTextAlignment = .left
-        configurations.pagination = page.pagination
-        configurations.language = viewModel.selectedLanguage.value
-        configurations.resource = viewModel.resource
-        let view = TractView(frame: frame,
-                             data: page.pageContent(),
-                             manifestProperties: viewModel.toolManifest,
-                             configurations: configurations,
-                             parallelElement: parallelElement,
-                             delegate: self)
-        
-        view.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        view.tag = self.viewTagOrigin + pageNumber
-        
-        return view
-    }
-    
-    func reloadPagesViews() -> Promise<Bool> {
-        return Promise<Bool> { seal in
-            let range = getRangeOfViews()
-            let lastPosition = self.totalPages() - 1
-            let width = self.containerView.frame.size.width
-            let height = self.containerView.frame.size.height
-            
-            for position in range.start...range.end {
-                _ = addPageViewAtPosition(position: position, width: width, height: height)
-            }
-            
-            if range.start > 0 {
-                for position in 0...(range.start - 1) {
-                    _ = removePageViewAtPosition(position: position)
-                }
-            }
-            
-            if range.end < lastPosition {
-                for position in (range.end + 1)...lastPosition {
-                    _ = removePageViewAtPosition(position: position)
-                }
-            }
-            
-            seal.fulfill(true)
-        }
-    }
-    
-    func addPageViewAtPosition(position: Int, width: CGFloat, height: CGFloat) -> Promise<Bool> {
-        return Promise<Bool> { seal in
-            
-            if self.pagesViews[position] == nil {
-                guard let firstView = self.containerView.subviews.first else {
-                    seal.fulfill(false)
-                    return
-                }
-                
-                let view = buildPage(position, width: width, height: height, parallelElement: nil)
-                self.pagesViews[position] = view
-                if firstView.tag > view.tag {
-                    self.containerView.insertSubview(view, at: 0)
-                } else {
-                    self.containerView.addSubview(view)
-                }
-            }
-            
-            seal.fulfill(true)
-        }
-    }
-    
-    func removePageViewAtPosition(position: Int) -> Promise<Bool> {
-        return Promise<Bool> { seal in
-            let pageView = self.pagesViews[position]
-            if pageView != nil {
-                pageView!.removeFromSuperview()
-                self.pagesViews[position] = nil
-            }
-            seal.fulfill(true)
-        }
-    }
-    
-    func getRangeOfViews() -> (start: Int, end: Int) {
-        var start = self.currentPage - TractViewController.distanceToCurrentView
-        if start < 0 {
-            start = 0
-        }
-        
-        var end = self.currentPage + TractViewController.distanceToCurrentView
-        if end >= self.totalPages() {
-            end = totalPages() - 1
-        }
-        
-        return (start, end)
-    }
-    
-    func cleanContainerView() {
-        
-        for view in self.containerView.subviews {
-            if view.tag != TractViewController.snapshotViewTag {
-                view.removeFromSuperview()
-            }
-        }
-        
-        self.pagesViews.removeAll()
-        resetPagesView()
-    }
-    
-    func resetPagesView() {
-        self.pagesViews = [TractView?](repeating: nil, count: totalPages())
-    }
-    
-    private func showErrorMessage() {
-        let alert = UIAlertController(title: "error".localized,
-                                      message: "tract_loading_error_message".localized,
-                                      preferredStyle: .alert)
-        
-        let actionYes = UIAlertAction(title: "yes".localized,
-                                      style: .default,
-                                      handler: { action in
-                                        self.redownloadResources()
-        })
-        
-        let actionNo = UIAlertAction(title: "no".localized,
-                                      style: .cancel,
-                                      handler: { action in
-                                        self.disableResource()
-        })
-        
-        alert.addAction(actionYes)
-        alert.addAction(actionNo)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    private func redownloadResources() {
-        DownloadedResourceManager().delete(viewModel.resource)
-        DownloadedResourceManager().download(viewModel.resource)
-        postReloadHomeScreenNotification()
-    }
-    
-    private func disableResource() {
-        DownloadedResourceManager().delete(viewModel.resource)
-        postReloadHomeScreenNotification()
-    }
-    
-    private func postReloadHomeScreenNotification() {
-        NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
-    }
-}
-
-// MARK: - Data Management
-
-extension TractViewController {
-    
+    // TODO: Need to findout what this is for. ~Levi
     func loadPagesIds() {
         var counter = 0
         for page in viewModel.toolXmlPages.value {
@@ -507,159 +293,6 @@ extension TractViewController {
             
             counter += 1
         }
-    }
-    
-    func getPage(_ pageNumber: Int) -> XMLPage {
-        return viewModel.toolXmlPages.value[pageNumber]
-    }
-    
-    func totalPages() -> Int {
-        return viewModel.toolXmlPages.value.count
-    }
-}
-
-// MARK: - Gestures
-
-extension TractViewController {
-    
-    func setupSwipeGestures() {
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
-    @objc private func handleGesture(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right && !viewModel.isRightToLeftLanguage {
-            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
-        } else if sender.direction == .left && !viewModel.isRightToLeftLanguage {
-            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
-        }
-        else if sender.direction == .right && viewModel.isRightToLeftLanguage {
-            NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil, userInfo: nil)
-        } else if sender.direction == .left && viewModel.isRightToLeftLanguage {
-            NotificationCenter.default.post(name: .moveToPreviousPageNotification, object: nil, userInfo: nil)
-        }
-    }
-}
-
-// MARK: - Page Movements
-
-extension TractViewController {
-    
-    @objc func moveToPage(notification: Notification) {
-        guard let dictionary = notification.userInfo as? [String: String] else {
-            return
-        }
-        
-        guard let pageListener = dictionary["pageListener"] else { return }
-        guard let page = TractBindings.pageBindings[pageListener] else { return }
-        
-        self.currentPage = page
-        _ = reloadPagesViews()
-        
-        _ = moveViews()
-    }
-    
-    @objc func moveToNextPage() {
-        
-        print("\n MOVE TO NEXT PAGE")
-        
-        if self.currentPage >= totalPages() - 1 {
-            return
-        }
-        
-        _ = self.moveForewards()
-            .then { (success) -> Promise<Bool> in
-                if success {
-                    _ = self.reloadPagesViews()
-                    return .value(true)
-                }
-                return .value(false)
-        }
-    }
-    
-    @objc func moveToPreviousPage() {
-        if self.currentPage == 0 {
-            return
-        }
-        
-        _ = self.moveBackwards()
-            .then { (success) -> Promise<Bool> in
-                if success == true {
-                    _ = self.reloadPagesViews()
-                    return .value(true)
-                }
-                return .value(false)
-        }
-    }
-    
-    // MARK: - Promises
-    
-    fileprivate func moveViews() {
-    
-        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-            for view in self.pagesViews {
-                view?.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-            }
-        }) { (finished) in
-            self.notifyCurrentViewDidAppearOnTract()
-        }
-        
-    }
-    
-    fileprivate func moveForewards() -> Promise<Bool> {
-        self.currentPage += 1
-        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
-            return .value(false)
-        }
-        
-        return movePageView(currentPageView).then { _ -> Promise<Bool> in
-            self.moveViewsExceptCurrentViews(pageViews: [currentPageView])
-            return .value(true)
-        }
-    }
-    
-    fileprivate func moveBackwards() -> Promise<Bool> {
-        self.currentPage -= 1
-        guard let currentPageView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) else {
-            return .value(false)
-        }
-        guard let nextPageView = self.view.viewWithTag(self.currentPage + 1 + self.viewTagOrigin) else {
-            return .value(false)
-        }
-        
-        currentPageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        return movePageView(nextPageView).then { _ -> Promise<Bool> in
-            self.moveViewsExceptCurrentViews(pageViews: [currentPageView, nextPageView])
-            return .value(true)
-        }
-    }
-    
-    fileprivate func movePageView(_ pageView: UIView) -> Guarantee<Bool> {
-        
-        return UIView.animate(.promise, duration: 0.35, delay: 0.0, options: [.curveEaseInOut], animations: {
-            pageView.transform = CGAffineTransform(translationX: self.currentMovement, y: 0.0)
-        })
-    }
-    
-    fileprivate func moveViewsExceptCurrentViews(pageViews: [UIView]) {
-        for view in self.pagesViews {
-            if view == nil || pageViews.firstIndex(of: view!) != nil {
-                continue
-            }
-            let translationX = !viewModel.isRightToLeftLanguage ? currentMovement : -currentMovement
-            view?.transform = CGAffineTransform(translationX: translationX, y: 0.0)
-        }
-        self.notifyCurrentViewDidAppearOnTract()
-    }
-    
-    fileprivate func notifyCurrentViewDidAppearOnTract() {
-        let currentTractView = self.view.viewWithTag(self.currentPage + self.viewTagOrigin) as? TractView
-        currentTractView?.contentView?.notifyViewDidAppearOnTract()
     }
 }
 

@@ -33,7 +33,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, toolPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -61,7 +61,8 @@ class TractViewModel: TractViewModelType {
         toolManifest = primaryTractXmlResource.manifestProperties
         toolXmlPages.accept(value: primaryTractXmlResource.pages)
         
-        setToolPage(page: 0, shouldSetCurrentToolPageItemIndex: true, animated: false)
+        let startingToolPage: Int = toolPage ?? 0
+        setToolPage(page: startingToolPage, shouldSetCurrentToolPageItemIndex: true, animated: false)
     }
     
     private func setToolPage(page: Int, shouldSetCurrentToolPageItemIndex: Bool, animated: Bool) {
@@ -124,17 +125,6 @@ class TractViewModel: TractViewModelType {
         }
     }
     
-    func viewLoaded() {
-        
-        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
-        toolOpenedAnalytics.trackToolOpened()
-    }
-    
-    func didScrollToToolPage(index: Int) {
-                
-        setToolPage(page: index, shouldSetCurrentToolPageItemIndex: false, animated: false)
-    }
-    
     private func trackTappedLanguage(language: Language) {
         
         let data: [AnyHashable: String] = [
@@ -148,5 +138,34 @@ class TractViewModel: TractViewModelType {
             actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle,
             data: data
         )
+    }
+    
+    func viewLoaded() {
+        
+        toolOpenedAnalytics.trackFirstToolOpenedIfNeeded()
+        toolOpenedAnalytics.trackToolOpened()
+    }
+    
+    func didScrollToToolPage(index: Int) {
+                
+        setToolPage(page: index, shouldSetCurrentToolPageItemIndex: false, animated: false)
+    }
+    
+    func navigateToNextPageTapped() {
+        let nextPage: Int = toolPage + 1
+        if nextPage < toolXmlPages.value.count {
+            setToolPage(page: nextPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
+        }
+    }
+    
+    func navigateToPreviousPageTapped() {
+        let previousPage: Int = toolPage - 1
+        if previousPage > 0 {
+            setToolPage(page: previousPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
+        }
+    }
+    
+    func navigateToPageTapped(page: Int) {
+        setToolPage(page: page, shouldSetCurrentToolPageItemIndex: true, animated: true)
     }
 }

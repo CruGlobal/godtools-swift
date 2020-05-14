@@ -28,4 +28,7 @@ protocol TractViewModelType {
     func parallelLanguagedTapped()
     func viewLoaded()
     func didScrollToToolPage(index: Int)
+    func navigateToNextPageTapped()
+    func navigateToPreviousPageTapped()
+    func navigateToPageTapped(page: Int)
 }
