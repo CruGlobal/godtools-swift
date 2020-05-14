@@ -16,7 +16,6 @@ class AnalyticsContainer {
     let firebaseAnalytics: FirebaseAnalyticsType
     let snowplowAnalytics: SnowplowAnalyticsType
 
-    
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics
     
@@ -29,7 +28,8 @@ class AnalyticsContainer {
         
         self.pageViewedAnalytics = PageViewedAnalytics(
             adobeAnalytics: adobeAnalytics,
-            firebaseAnalytics: firebaseAnalytics
+            firebaseAnalytics: firebaseAnalytics,
+            snowplowAnalytics: snowplowAnalytics
         )
         
         self.adobeAnalytics = adobeAnalytics

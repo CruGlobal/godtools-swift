@@ -10,8 +10,7 @@ import Foundation
 
 protocol SnowplowAnalyticsType {
 
-    func configure(adobeAnalytics: AdobeAnalyticsType)
-    func trackScreenView(screenName: String!, data: NSMutableArray?)
-    func trackAction(action: String!, data: NSMutableArray?)
+    func trackScreenView(screenName: String, contexts: [[String: Any]])
+    func trackAction(action: String, contexts: [[String: Any]])
 }
 

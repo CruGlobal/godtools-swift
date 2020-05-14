@@ -44,7 +44,7 @@ class AppDiContainer {
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics()
+            snowplowAnalytics: SnowplowAnalytics(config: config, loggingEnabled: analyticsLoggingEnabled)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -67,7 +67,10 @@ class AppDiContainer {
     }
     
     var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(analytics: analytics)
+        return ToolOpenedAnalytics(
+            appsFlyer: analytics.appsFlyer,
+            snowplowAnalytics: analytics.snowplowAnalytics
+        )
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {

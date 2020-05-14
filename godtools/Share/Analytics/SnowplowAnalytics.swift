@@ -9,71 +9,84 @@
 import Foundation
 import SnowplowTracker
 
-class SnowplowAnalytics: NSObject, SnowplowAnalyticsType  {
+class SnowplowAnalytics: SnowplowAnalyticsType  {
 
-    private let config: ConfigType
-    private var emitter: SPEmitter? = nil
-    private var subject: SPSubject? = nil
-    private var tracker: SPTracker? = nil
-
-    private let url: String! = "s.cru.org"
-    private var isConfigured: Bool = false
-    private var isConfiguring: Bool = false
+    private let tracker: SPTracker
+    private let loggingEnabled: Bool
 
     required init(config: ConfigType, loggingEnabled: Bool) {
-
-        self.config = config
-
-        super.init()
-    }
-
-    func configure(adobeAnalytics: AdobeAnalyticsType) {
-
-        if isConfigured || isConfiguring {
-            return
-        }
-
-        isConfiguring = true
-
-        self.emitter = SPEmitter.build({ (builder : SPEmitterBuilder!) -> Void in
-            builder.setUrlEndpoint(self.url)
+        
+        self.loggingEnabled = loggingEnabled
+        
+        let emitter = SPEmitter.build({ (builder: SPEmitterBuilder?) in
+            guard let builder = builder else {
+                return
+            }
+            builder.setUrlEndpoint("s.cru.org")
             builder.setHttpMethod(.post)
             builder.setProtocol(.https)
         })
-        subject = SPSubject(platformContext: true, andGeoContext: true)
-        tracker = SPTracker.build({ (builder: SPTrackerBuilder!) -> Void in
-            builder.setEmitter(self.emitter)
-            builder.setAppId(self.config.snowplowAppId)
-            builder.setSubject(self.subject)
+        
+        let subject = SPSubject(
+            platformContext: true,
+            andGeoContext: true
+        )
+        
+        tracker = SPTracker.build({ (builder: SPTrackerBuilder?) in
+            guard let builder = builder else {
+                return
+            }
+            builder.setEmitter(emitter)
+            builder.setAppId(config.snowplowAppId)
+            builder.setSubject(subject)
             builder.setSessionContext(true)
             builder.setApplicationContext(true)
             builder.setLifecycleEvents(true)
         })
     }
 
-    func trackScreenView(screenName: String!, data: NSMutableArray?) {
-        self.assertFailureIfNotConfigured()
+    func trackScreenView(screenName: String, contexts: [[String: Any]]) {
         
-        let event = SPScreenView.build({ (builder : SPScreenViewBuilder!) -> Void in
+        let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
             builder.setName(screenName)
-            builder.setContexts(data)
-        })
-        tracker?.trackScreenViewEvent(event)
-    }
-
-    func trackAction(action: String!, data: NSMutableArray?) {
-        self.assertFailureIfNotConfigured()
+            if !contexts.isEmpty {
+                builder.setContexts(NSMutableArray(array: contexts))
+            }
+        }
         
-        let event = SPStructured.build({ (builder : SPStructuredBuilder!) -> Void in
-            builder.setAction(action)
-            builder.setContexts(data)
-        })
-        tracker?.trackStructuredEvent(event)
+        DispatchQueue.global().async { [weak self] in
+            self?.tracker.trackScreenViewEvent(event)
+        }
+        
+        log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
     }
 
-    private func assertFailureIfNotConfigured() {
-           if !isConfigured {
-               assertionFailure("Snowplow has not been configured.  Call configure() on application didFinishLaunching.")
-           }
-       }
+    func trackAction(action: String, contexts: [[String: Any]]) {
+        
+        let event = SPStructured.build { (builder: SPStructuredBuilder) in
+            builder.setAction(action)
+            if !contexts.isEmpty {
+                builder.setContexts(NSMutableArray(array: contexts))
+            }
+        }
+        
+        DispatchQueue.global().async { [weak self] in
+            self?.tracker.trackStructuredEvent(event)
+        }
+        
+        log(method: "trackAction()", label: "action", labelValue: action, data: nil)
+    }
+    
+    private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
+        
+        if loggingEnabled {
+            print("\nSnowplowTracker \(method)")
+            if let label = label, let labelValue = labelValue {
+               print("  \(label): \(labelValue)")
+            }
+            if let data = data {
+                print("  data: \(data)")
+            }
+        }
+    }
 }
