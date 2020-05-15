@@ -45,6 +45,22 @@ class TractCards: BaseTractElement {
     
     // MARK: - Setup
     
+    override func reset() {
+        super.reset()
+        
+        changeToPreviewCards()
+        
+        lastCardOpened = nil
+        
+        if let elements = elements {
+            for element in elements {
+                if let tractCard = element as? TractCard {
+                    tractCard.reset()
+                }
+            }
+        }
+    }
+    
     override func propertiesKind() -> TractProperties.Type {
         return TractCardsProperties.self
     }
@@ -134,16 +150,6 @@ extension TractCards {
             showCallToAction()
         } else {
             hideCallToAction()
-        }
-    }
-    
-    func resetEnvironment() {
-        changeToPreviewCards()
-        self.lastCardOpened = nil
-        
-        for element in elements! {
-            let elementCard = element as! TractCard
-            elementCard.resetCard()
         }
     }
     

@@ -194,6 +194,10 @@ class BaseTractElement: UIView {
         super.init(coder: aDecoder)
     }
     
+    func reset() {
+        
+    }
+    
     // MARK: - Setup
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {

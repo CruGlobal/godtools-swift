@@ -21,6 +21,16 @@ class TractPageContainer: BaseTractElement {
     
     // MARK: - Setup
     
+    override func reset() {
+        super.reset()
+        
+        if let elements = elements {
+            for element in elements {
+                element.reset()
+            }
+        }
+    }
+    
     static var marginBottom: CGFloat {
         // TODO: I don't like this because what if there is a new device in the future.  ~Levi
         let iphoneXMarginBottomToSafeArea: CGFloat = 44

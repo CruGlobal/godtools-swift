@@ -110,9 +110,12 @@ class TractViewModel: TractViewModelType {
             languageType: selectedTractLanguage.value.languageType,
             page: page
         )
-                
-        // TODO: Reset cached tract pages once outside specific range.
         
+        resetTractPagesOutsideOfBuffer(
+            buffer: 2,
+            currentPage: page
+        )
+                        
         let previousToolPage: Int = tractPage
         
         self.tractPage = page
@@ -255,6 +258,36 @@ class TractViewModel: TractViewModelType {
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
         flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
+    }
+    
+    // MARK: - Resetting Tract Pages
+    
+    private func resetTractPagesOutsideOfBuffer(buffer: Int, currentPage: Int) {
+                
+        resetTractPagesOutsideOfBuffer(languageType: .primary, buffer: buffer, currentPage: currentPage)
+        
+        resetTractPagesOutsideOfBuffer(languageType: .parallel, buffer: buffer, currentPage: currentPage)
+    }
+    
+    private func resetTractPagesOutsideOfBuffer(languageType: TractLanguageType, buffer: Int, currentPage: Int) {
+        
+        let tractPagesCache: [Int: TractPage]
+        
+        switch languageType {
+        case .primary:
+            tractPagesCache = cachedPrimaryTractPages
+        case .parallel:
+            tractPagesCache = cachedParallelTractPages
+        }
+        
+        let tractPageKeys: [Int] = Array(tractPagesCache.keys)
+                
+        for key in tractPageKeys {
+            let distance: Int = abs(currentPage - key)
+            if distance > buffer {
+                tractPagesCache[key]?.reset()
+            }
+        }
     }
     
     // MARK: - Building New Tract Pages

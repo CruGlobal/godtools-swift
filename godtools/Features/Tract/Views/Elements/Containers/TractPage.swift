@@ -35,6 +35,15 @@ class TractPage: BaseTractElement {
     required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
     override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) { fatalError("init(children:yPosition:parent:) has not been implemented") }
     
+    override func reset() {
+        super.reset()
+        
+        if let elements = elements {
+            for element in elements {
+                element.reset()
+            }
+        }
+    }
     
     override func propertiesKind() -> TractProperties.Type {
         return TractPageProperties.self

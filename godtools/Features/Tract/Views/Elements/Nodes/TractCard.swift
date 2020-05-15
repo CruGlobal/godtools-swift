@@ -73,6 +73,26 @@ class TractCard: BaseTractElement {
     
     // MARK: - Setup
     
+    override func reset() {
+        super.reset()
+        
+        let properties = cardProperties()
+        
+        if properties.cardState == .preview {
+            return
+        }
+        
+        if isHiddenKindCard() {
+            setStateHidden()
+        } else {
+            setStatePreview()
+        }
+        
+        hideTexts()
+        resetCardToOriginalPositionAnimation()
+        disableScrollview()
+    }
+    
     override func propertiesKind() -> TractProperties.Type {
         return TractCardProperties.self
     }
@@ -322,29 +342,11 @@ extension TractCard {
         }
         
         hideTexts()
-        self.cardsParentView.resetEnvironment()
+        self.cardsParentView.reset()
         self.cardsParentView.hideCallToAction()
 
     }
-    
-    func resetCard() {
-        let properties = cardProperties()
-        
-        if properties.cardState == .preview {
-            return
-        }
-        
-        if isHiddenKindCard() {
-            setStateHidden()
-        } else {
-            setStatePreview()
-        }
-        
-        hideTexts()
-        resetCardToOriginalPositionAnimation()
-        disableScrollview()
-    }
-    
+
     func showTexts() {
         for element in self.elements! {
             if BaseTractElement.isLabelElement(element) {
@@ -553,7 +555,7 @@ extension TractCard {
                        completion: { (completed) in
                         if completed {
                             if properties.cardNumber == 0 {
-                                self.cardsParentView.resetEnvironment()
+                                self.cardsParentView.reset()
                             }
                             
                             if properties.cardState == .hidden {
