@@ -82,10 +82,12 @@ class TractViewController: UIViewController {
         defineObservers()
         UIApplication.shared.isIdleTimerDisabled = true
         
+        let navBarControlColor: UIColor = manifestProperties.navbarControlColor ?? manifestProperties.primaryTextColor
+        
         _ = addBarButtonItem(
             to: .left,
             image: ImageCatalog.navHome.image,
-            color: .white,
+            color: navBarControlColor,
             target: self,
             action: #selector(handleHome(barButtonItem:))
         )
@@ -93,7 +95,7 @@ class TractViewController: UIViewController {
         _ = addBarButtonItem(
             to: .right,
             image: ImageCatalog.navShare.image,
-            color: .white,
+            color: navBarControlColor,
             target: self,
             action: #selector(handleShare(barButtonItem:))
         )
