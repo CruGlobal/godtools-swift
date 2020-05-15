@@ -41,6 +41,11 @@ class TractCallToAction: BaseTractElement {
     
     // MARK: - Setup
     
+    override func reset() {
+        super.reset()
+        hideCallToAction(animated: false)
+    }
+    
     override func propertiesKind() -> TractProperties.Type {
         return TractCallToActionProperties.self
     }
