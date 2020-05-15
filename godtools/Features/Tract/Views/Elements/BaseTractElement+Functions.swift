@@ -15,23 +15,19 @@ enum EventResult {
 
 extension BaseTractElement {
     
-    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat, elementNumber: Int) -> BaseTractElement? {
-        
+    func buildElementForDictionary(_ data: XMLIndexer, startOnY yPosition: CGFloat, elementNumber: Int) -> BaseTractElement {
         let xmlManager = XMLManager()
         let nodeClassType = xmlManager.parser.getNodeClass(data)
-        
-        let restrictToText: String = data.element?.allAttributes["restrictTo"]?.text ?? ""
-        if !restrictToText.isEmpty && !restrictToText.contains("mobile") {
-            return nil
-        }
-        
-        if nodeClassType == TractModals.self ||
-            nodeClassType == TractEmails.self ||
-            nodeClassType == TractEmail.self {
-            
+        if nodeClassType == TractModals.self || nodeClassType == TractEmails.self || nodeClassType == TractEmail.self {
             return nodeClassType.init(data: data, parent: self)
-        }
-        else {
+        } else if nodeClassType == TractImage.self {
+            let imageIsForMobile = inspectImage(data: data)
+            if imageIsForMobile {
+                return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            }
+            let nonMobileElement = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            return filteredNonMobileElement(element: nonMobileElement)
+        } else {
             return nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
         }
     }
@@ -134,6 +130,27 @@ extension BaseTractElement {
     
     func getParentCard() -> TractCard? {
         return BaseTractElement.getParentCardForElement(self)
+    }
+    
+    func inspectImage(data: XMLIndexer) -> Bool {
+        guard let imageAttributes = data.element?.allAttributes else { return true }
+        
+        var imageDictionary = [String: String]()
+        for (_, dictionary) in (imageAttributes.enumerated()) {
+            imageDictionary[dictionary.key] = dictionary.value.text
+        }
+        
+        guard let imageValue = imageDictionary["restrictTo"] else { return true }
+        
+        return imageValue.contains("mobile")
+    }
+    
+    func filteredNonMobileElement(element: BaseTractElement) -> BaseTractElement {
+        element.elementFrame.height = 0
+        element.elementFrame.yMarginTop = 0
+        element.elementFrame.yMarginBottom = 0
+        element.isHidden = true
+        return element
     }
     
     // MARK: - Form Functions
