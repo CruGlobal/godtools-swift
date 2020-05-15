@@ -18,11 +18,14 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         
         self.loggingEnabled = loggingEnabled
         
+        let urlEndpoint: String = "s.cru.org"
+        let trackerNamespace: String = "godtools-ios"
+        
         let emitter = SPEmitter.build({ (builder: SPEmitterBuilder?) in
             guard let builder = builder else {
                 return
             }
-            builder.setUrlEndpoint("s.cru.org")
+            builder.setUrlEndpoint(urlEndpoint)
             builder.setHttpMethod(.post)
             builder.setProtocol(.https)
         })
@@ -38,6 +41,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             }
             builder.setEmitter(emitter)
             builder.setAppId(config.snowplowAppId)
+            builder.setTrackerNamespace(trackerNamespace)
             builder.setSubject(subject)
             builder.setSessionContext(true)
             builder.setApplicationContext(true)

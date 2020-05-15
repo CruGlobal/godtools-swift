@@ -97,15 +97,14 @@ struct AppConfig: ConfigType {
     }
     
     var snowplowAppId: String {
+        
         let debugAppId: String = "godtools-dev"
         let productionAppId: String = "godtools"
 
-        switch build {
-        case .staging:
+        if isDebug {
             return debugAppId
-        case .production:
-            return productionAppId
-        case .release:
+        }
+        else {
             return productionAppId
         }
     }
