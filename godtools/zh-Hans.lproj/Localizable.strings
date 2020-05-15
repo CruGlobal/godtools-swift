@@ -150,7 +150,9 @@
 
 // Tutorial
 "tutorial.tutorialItem.0.title" = "观看";
-"tutorial.tutorialItem.0.message" = "在我们的演示视频中观看GodTools可以发挥的作用";
+"tutorial.tutorialItem.0.message" = "在我们的演示视频中观看GodTools可以发挥的作用
+
+(点击视频，设置字幕)";
 "tutorial.tutorialItem.1.title" = "准备";
 "tutorial.tutorialItem.1.message" = "熟悉一些工具。“教我分享”工具是很好的起点。";
 "tutorial.tutorialItem.2.title" = "尝试";
