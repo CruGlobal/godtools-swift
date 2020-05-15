@@ -10,13 +10,14 @@ import UIKit
 
 class TractViewModel: TractViewModelType {
     
-    private var tractPageCache: TractPageCache = TractPageCache()
     private let tractManager: TractManager
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
+    private var cachedPrimaryTractPages: [Int: TractPage] = Dictionary()
+    private var cachedParallelTractPages: [Int: TractPage] = Dictionary()
     private var tractPage: Int = -1
     
     let resource: DownloadedResource
@@ -63,11 +64,18 @@ class TractViewModel: TractViewModelType {
         
         let startingTractPage: Int = tractPage ?? 0
         
-        cacheTractPageIfNeeded(page: startingTractPage)
+        cacheTractPageIfNeeded(
+            languageType: selectedTractLanguage.value.languageType,
+            page: startingTractPage
+        )
         
         loadTractXmlPages()
         
-        setTractPage(page: startingTractPage, shouldSetCurrentToolPageItemIndex: true, animated: false)
+        setTractPage(
+            page: startingTractPage,
+            shouldSetCurrentToolPageItemIndex: true,
+            animated: false
+        )
     }
     
     private func loadTractXmlPages() {
@@ -97,12 +105,13 @@ class TractViewModel: TractViewModelType {
         guard page >= 0 && page < tractXmlPageItems.value.count else {
             return
         }
+                        
+        cacheSurroundingTractPagesIfNeeded(
+            languageType: selectedTractLanguage.value.languageType,
+            page: page
+        )
                 
-        cacheTractPageIfNeeded(page: page - 2)
-        cacheTractPageIfNeeded(page: page - 1)
-        cacheTractPageIfNeeded(page: page + 1)
-        cacheTractPageIfNeeded(page: page + 2)
-        tractPageCache.deleteTractPagesOutsideBuffer(buffer: 2, page: page)
+        // TODO: Reset cached tract pages once outside specific range.
         
         let previousToolPage: Int = tractPage
         
@@ -143,8 +152,26 @@ class TractViewModel: TractViewModelType {
     }
     
     func primaryLanguageTapped() {
-                
-        refreshTractPageForParallelLanguage(languageType: .parallel, page: tractPage)
+                                
+        let cachedParallelTractPage: TractPage? = getCachedTractPage(
+            languageType: .parallel,
+            page: tractPage
+        )
+        
+        let newPrimaryTractPage: TractPage? = buildTractPageForLanguage(
+            languageType: .primary,
+            page: tractPage,
+            parallelTractPage: cachedParallelTractPage
+        )
+        
+        if let newPrimaryTractPage = newPrimaryTractPage {
+            
+            cacheTractPage(
+                languageType: .primary,
+                page: tractPage,
+                tractPage: newPrimaryTractPage
+            )
+        }
         
         trackTappedLanguage(language: primaryLanguage)
                 
@@ -156,8 +183,26 @@ class TractViewModel: TractViewModelType {
         guard let parallelLanguage = parallelLanguage else {
             return
         }
+                
+        let cachedPrimaryTractPage: TractPage? = getCachedTractPage(
+            languageType: .primary,
+            page: tractPage
+        )
         
-        refreshTractPageForParallelLanguage(languageType: .primary, page: tractPage)
+        let newParallelTractPage: TractPage? = buildTractPageForLanguage(
+            languageType: .parallel,
+            page: tractPage,
+            parallelTractPage: cachedPrimaryTractPage
+        )
+        
+        if let newParallelTractPage = newParallelTractPage {
+            
+            cacheTractPage(
+                languageType: .parallel,
+                page: tractPage,
+                tractPage: newParallelTractPage
+            )
+        }
                 
         trackTappedLanguage(language: parallelLanguage)
                 
@@ -212,12 +257,7 @@ class TractViewModel: TractViewModelType {
         flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
     }
     
-    // MARK: - Tract Pages
-    
-    private func buildTractPageForCurrentLanguage(page: Int, parallelTractPage: TractPage?) -> TractPage? {
-        
-        return buildTractPageForLanguage(languageType: selectedTractLanguage.value.languageType, page: page, parallelTractPage: parallelTractPage)
-    }
+    // MARK: - Building New Tract Pages
     
     private func buildTractPageForLanguage(languageType: TractLanguageType, page: Int, parallelTractPage: TractPage?) -> TractPage? {
         
@@ -282,45 +322,87 @@ class TractViewModel: TractViewModelType {
         return nil
     }
     
-    private func refreshTractPageForParallelLanguage(languageType: TractLanguageType, page: Int) {
-        
-        let cachedTractPage: TractPage? = tractPageCache.getTractPage(type: languageType, page: page)
-        
-        let oppositeLanguage: TractLanguageType
-        
+    // MARK: - Cacheing Tract Pages
+    
+    private func cacheSurroundingTractPagesIfNeeded(languageType: TractLanguageType, page: Int) {
+                
+        cacheTractPageIfNeeded(languageType: languageType, page: page - 2)
+        cacheTractPageIfNeeded(languageType: languageType, page: page - 1)
+        cacheTractPageIfNeeded(languageType: languageType, page: page + 1)
+        cacheTractPageIfNeeded(languageType: languageType, page: page + 2)
+    }
+    
+    private func getTractPageCacheDictionary(languageType: TractLanguageType) -> [Int: TractPage] {
         switch languageType {
         case .primary:
-            oppositeLanguage = .parallel
+            return cachedPrimaryTractPages
         case .parallel:
-            oppositeLanguage = .primary
-        }
-        
-        tractPageCache.deleteTractPage(type: oppositeLanguage, page: page)
-        
-        if let tractPage = buildTractPageForLanguage(languageType: oppositeLanguage, page: page, parallelTractPage: cachedTractPage) {
-            tractPageCache.cacheTractPage(type: oppositeLanguage, page: page, tractPage: tractPage)
+            return cachedParallelTractPages
         }
     }
     
-    private func cacheTractPageIfNeeded(page: Int) {
-                    
-        let cachedTract: TractPage? = tractPageCache.getTractPage(type: selectedTractLanguage.value.languageType, page: page)
+    private func cacheTractPage(languageType: TractLanguageType, page: Int, tractPage: TractPage) {
+        
+        switch languageType {
+        case .primary:
+            cachedPrimaryTractPages[page] = tractPage
+        case .parallel:
+            cachedParallelTractPages[page] = tractPage
+        }
+    }
+    
+    private func getCachedTractPage(languageType: TractLanguageType, page: Int) -> TractPage? {
+        return getTractPageCacheDictionary(languageType: languageType)[page]
+    }
+    
+    private func cacheTractPageIfNeeded(languageType: TractLanguageType, page: Int) {
+                            
+        let cachedTract: TractPage? = getCachedTractPage(
+            languageType: languageType,
+            page: page
+        )
+        
         let tractIsCached: Bool = cachedTract != nil
         
-        if !tractIsCached, let tractPage = buildTractPageForCurrentLanguage(page: page, parallelTractPage: nil) {
+        if !tractIsCached, let tractPage = buildTractPageForLanguage(languageType: languageType, page: page, parallelTractPage: nil) {
                         
-            tractPageCache.cacheTractPage(type: selectedTractLanguage.value.languageType, page: page, tractPage: tractPage)
+            cacheTractPage(
+                languageType: languageType,
+                page: page,
+                tractPage: tractPage
+            )
         }
     }
     
     func getTractPage(page: Int) -> TractPage? {
-                
-        if let cachedTractPage = tractPageCache.getTractPage(type: selectedTractLanguage.value.languageType, page: page) {
+            
+        let selectedLanguageType: TractLanguageType = selectedTractLanguage.value.languageType
+        
+        let cachedTractPage: TractPage? = getCachedTractPage(
+            languageType: selectedLanguageType,
+            page: page
+        )
+        
+        if let cachedTractPage = cachedTractPage {
+            
             return cachedTractPage
         }
-        else if let tractPage = buildTractPageForCurrentLanguage(page: page, parallelTractPage: nil) {
-            tractPageCache.cacheTractPage(type: selectedTractLanguage.value.languageType, page: page, tractPage: tractPage)
-            return tractPage
+        
+        let newTractPage: TractPage? = buildTractPageForLanguage(
+            languageType: selectedLanguageType,
+            page: page,
+            parallelTractPage: nil
+        )
+        
+        if let newTractPage = newTractPage {
+            
+            cacheTractPage(
+                languageType: selectedLanguageType,
+                page: page,
+                tractPage: newTractPage
+            )
+            
+            return newTractPage
         }
         
         return nil

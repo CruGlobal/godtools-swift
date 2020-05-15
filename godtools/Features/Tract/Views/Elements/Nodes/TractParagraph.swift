@@ -1,13 +1,50 @@
 //
-//  TractParagraph+UI.swift
+//  TractParagraph.swift
 //  godtools
 //
-//  Created by Pablo Marti on 6/13/17.
+//  Created by Ryan Carlson on 4/26/17.
 //  Copyright © 2017 Cru. All rights reserved.
 //
 
-import Foundation
 import UIKit
+
+class TractParagraph: BaseTractElement {
+    
+    // MARK: Positions constants
+    
+    static let xMarginConstant: CGFloat = 0.0
+    static let yMarginConstant: CGFloat = 8.0
+    
+    // MARK: - Setup
+    
+    override func propertiesKind() -> TractProperties.Type {
+        return TractParagraphProperties.self
+    }
+    
+    override func loadFrameProperties() {
+        if BaseTractElement.isModalElement(self) {
+            buildModalFrame()
+        } else {
+            buildStandardFrame()
+        }        
+    }
+    
+    override func textStyle() -> TractTextContentProperties {
+        if BaseTractElement.isModalElement(self) {
+            return buildModalParagraph()
+        } else {
+            return buildStandardParagraph()
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    func paragraphProperties() -> TractParagraphProperties {
+        return self.properties as! TractParagraphProperties
+    }
+}
+
+// MARK: - UI
 
 extension TractParagraph {
     
@@ -58,5 +95,4 @@ extension TractParagraph {
         self.elementFrame.yMarginTop = TractParagraph.yMarginConstant
         self.elementFrame.yMarginBottom = TractParagraph.yMarginConstant
     }
-    
 }

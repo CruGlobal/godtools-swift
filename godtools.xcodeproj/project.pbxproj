@@ -89,54 +89,13 @@
 		451DB1472461DA4200FB14BF /* TractPageProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1312461DA4200FB14BF /* TractPageProperties.swift */; };
 		451DB1482461DA4200FB14BF /* TractInputProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1322461DA4200FB14BF /* TractInputProperties.swift */; };
 		451DB1492461DA4200FB14BF /* TractHeaderProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1332461DA4200FB14BF /* TractHeaderProperties.swift */; };
-		451DB15A2461DAF700FB14BF /* TractCards+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB14C2461DAF700FB14BF /* TractCards+UI.swift */; };
-		451DB15B2461DAF700FB14BF /* TractCards+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB14D2461DAF700FB14BF /* TractCards+ChildSetup.swift */; };
-		451DB15C2461DAF700FB14BF /* TractCards+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB14E2461DAF700FB14BF /* TractCards+Actions.swift */; };
-		451DB15D2461DAF700FB14BF /* TractCards+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB14F2461DAF700FB14BF /* TractCards+Animations.swift */; };
-		451DB15F2461DAF700FB14BF /* TractHeader+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1522461DAF700FB14BF /* TractHeader+Animations.swift */; };
-		451DB1602461DAF700FB14BF /* TractForm+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1542461DAF700FB14BF /* TractForm+Actions.swift */; };
-		451DB1622461DAF700FB14BF /* TractTabs+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1582461DAF700FB14BF /* TractTabs+UI.swift */; };
-		451DB1632461DAF700FB14BF /* TractTabs+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1592461DAF700FB14BF /* TractTabs+ChildSetup.swift */; };
-		451DB18F2461DC3100FB14BF /* TractLabel+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1662461DC3100FB14BF /* TractLabel+UI.swift */; };
-		451DB1902461DC3100FB14BF /* TractLabel+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1672461DC3100FB14BF /* TractLabel+Gestures.swift */; };
-		451DB1912461DC3100FB14BF /* TractLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1682461DC3100FB14BF /* TractLabel.swift */; };
-		451DB1922461DC3100FB14BF /* TractTextContent+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB16A2461DC3100FB14BF /* TractTextContent+UI.swift */; };
-		451DB1932461DC3100FB14BF /* TractTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB16B2461DC3100FB14BF /* TractTextContent.swift */; };
 		451DB1942461DC3100FB14BF /* TractInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB16C2461DC3100FB14BF /* TractInput.swift */; };
 		451DB1952461DC3100FB14BF /* TractTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB16D2461DC3100FB14BF /* TractTitle.swift */; };
-		451DB1962461DC3100FB14BF /* TractCallToAction+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB16F2461DC3100FB14BF /* TractCallToAction+Animations.swift */; };
-		451DB1972461DC3100FB14BF /* TractCallToAction+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1702461DC3100FB14BF /* TractCallToAction+UI.swift */; };
-		451DB1982461DC3100FB14BF /* TractCallToAction+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1712461DC3100FB14BF /* TractCallToAction+Actions.swift */; };
-		451DB1992461DC3100FB14BF /* TractCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1722461DC3100FB14BF /* TractCallToAction.swift */; };
-		451DB19A2461DC3100FB14BF /* TractLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1742461DC3100FB14BF /* TractLink.swift */; };
-		451DB19B2461DC3100FB14BF /* TractLink+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1752461DC3100FB14BF /* TractLink+Actions.swift */; };
-		451DB19C2461DC3100FB14BF /* TractParagraph+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1772461DC3100FB14BF /* TractParagraph+UI.swift */; };
-		451DB19D2461DC3100FB14BF /* TractParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1782461DC3100FB14BF /* TractParagraph.swift */; };
-		451DB19E2461DC3100FB14BF /* TractEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB17A2461DC3100FB14BF /* TractEmail.swift */; };
-		451DB1A02461DC3100FB14BF /* TractEmail+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB17C2461DC3100FB14BF /* TractEmail+Actions.swift */; };
 		451DB1A12461DC3100FB14BF /* TractNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB17D2461DC3100FB14BF /* TractNumber.swift */; };
-		451DB1A22461DC3100FB14BF /* TractModal+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB17F2461DC3100FB14BF /* TractModal+Actions.swift */; };
-		451DB1A32461DC3100FB14BF /* TractModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1802461DC3100FB14BF /* TractModal.swift */; };
-		451DB1A42461DC3100FB14BF /* TractModal+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1812461DC3100FB14BF /* TractModal+ChildSetup.swift */; };
 		451DB1A52461DC3100FB14BF /* TractHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1822461DC3100FB14BF /* TractHeading.swift */; };
 		451DB1A62461DC3100FB14BF /* TractImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1832461DC3100FB14BF /* TractImage.swift */; };
-		451DB1A72461DC3100FB14BF /* TractCard+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1852461DC3100FB14BF /* TractCard+UI.swift */; };
-		451DB1A82461DC3100FB14BF /* TractCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1862461DC3100FB14BF /* TractCard.swift */; };
-		451DB1A92461DC3100FB14BF /* TractCard+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1872461DC3100FB14BF /* TractCard+Actions.swift */; };
-		451DB1AA2461DC3100FB14BF /* TractCard+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1882461DC3100FB14BF /* TractCard+UITextFieldDelegate.swift */; };
-		451DB1AB2461DC3100FB14BF /* TractCard+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1892461DC3100FB14BF /* TractCard+Animations.swift */; };
-		451DB1AC2461DC3100FB14BF /* TractButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB18B2461DC3100FB14BF /* TractButton.swift */; };
-		451DB1AD2461DC3100FB14BF /* TractButton+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB18C2461DC3100FB14BF /* TractButton+Actions.swift */; };
-		451DB1AE2461DC3100FB14BF /* TractButton+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB18D2461DC3100FB14BF /* TractButton+UI.swift */; };
 		451DB1AF2461DC3100FB14BF /* TractTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB18E2461DC3100FB14BF /* TractTab.swift */; };
 		451DB1B12461DCAE00FB14BF /* TractEmails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1B02461DCAE00FB14BF /* TractEmails.swift */; };
-		451DB1B42461DD6200FB14BF /* TractCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1B22461DD6200FB14BF /* TractCards.swift */; };
-		451DB1B52461DD6200FB14BF /* TractCards+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1B32461DD6200FB14BF /* TractCards+Gestures.swift */; };
-		451DB1B72461DD8C00FB14BF /* TractForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1B62461DD8B00FB14BF /* TractForm.swift */; };
-		451DB1B92461DD9A00FB14BF /* TractHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1B82461DD9A00FB14BF /* TractHeader.swift */; };
-		451DB1BB2461DDA500FB14BF /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1BA2461DDA500FB14BF /* TractPage.swift */; };
-		451DB1BD2461DDB600FB14BF /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1BC2461DDB600FB14BF /* TractTabs.swift */; };
-		451DB1BF2461DDCA00FB14BF /* TractCard+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1BE2461DDCA00FB14BF /* TractCard+Gestures.swift */; };
 		451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1C02461DDE400FB14BF /* TractFormProperties.swift */; };
 		451DB1C52461DDFA00FB14BF /* TractModals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1C22461DDFA00FB14BF /* TractModals.swift */; };
 		451DB1C62461DDFA00FB14BF /* TractPageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1C32461DDFA00FB14BF /* TractPageContainer.swift */; };
@@ -333,6 +292,20 @@
 		4586C04324631C2100927A42 /* AnalyticsRelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586C04224631C2100927A42 /* AnalyticsRelay.swift */; };
 		4586C04624631C3900927A42 /* ADBMobileConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04424631C3900927A42 /* ADBMobileConfig.json */; };
 		4586C04724631C3900927A42 /* ADBMobileConfig_debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */; };
+		4586D7CE246ECB530062D988 /* TractPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7CD246ECB530062D988 /* TractPage.swift */; };
+		4586D7D1246ECBDB0062D988 /* TractHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7CF246ECBDB0062D988 /* TractHeader.swift */; };
+		4586D7D2246ECBDB0062D988 /* TractTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7D0246ECBDB0062D988 /* TractTabs.swift */; };
+		4586D7D5246ECC5E0062D988 /* TractForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7D3246ECC5E0062D988 /* TractForm.swift */; };
+		4586D7D6246ECC5E0062D988 /* TractCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7D4246ECC5E0062D988 /* TractCards.swift */; };
+		4586D7D9246ECCE00062D988 /* TractTextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7D7246ECCE00062D988 /* TractTextContent.swift */; };
+		4586D7DA246ECCE00062D988 /* TractParagraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7D8246ECCE00062D988 /* TractParagraph.swift */; };
+		4586D7DC246ECD810062D988 /* TractCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7DB246ECD810062D988 /* TractCard.swift */; };
+		4586D7DE246ECDC90062D988 /* TractModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7DD246ECDC80062D988 /* TractModal.swift */; };
+		4586D7E1246ECE350062D988 /* TractLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7DF246ECE350062D988 /* TractLabel.swift */; };
+		4586D7E2246ECE350062D988 /* TractLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E0246ECE350062D988 /* TractLink.swift */; };
+		4586D7E6246ECEE90062D988 /* TractEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E3246ECEE90062D988 /* TractEmail.swift */; };
+		4586D7E7246ECEE90062D988 /* TractCallToAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E4246ECEE90062D988 /* TractCallToAction.swift */; };
+		4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4586D7E5246ECEE90062D988 /* TractButton.swift */; };
 		458EA1E624291B5E0002C263 /* RealmDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E524291B5E0002C263 /* RealmDatabase.swift */; };
 		458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E824291B660002C263 /* IsNewUserService.swift */; };
 		458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */; };
@@ -639,54 +612,13 @@
 		451DB1312461DA4200FB14BF /* TractPageProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractPageProperties.swift; sourceTree = "<group>"; };
 		451DB1322461DA4200FB14BF /* TractInputProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractInputProperties.swift; sourceTree = "<group>"; };
 		451DB1332461DA4200FB14BF /* TractHeaderProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractHeaderProperties.swift; sourceTree = "<group>"; };
-		451DB14C2461DAF700FB14BF /* TractCards+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+UI.swift"; sourceTree = "<group>"; };
-		451DB14D2461DAF700FB14BF /* TractCards+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+ChildSetup.swift"; sourceTree = "<group>"; };
-		451DB14E2461DAF700FB14BF /* TractCards+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+Actions.swift"; sourceTree = "<group>"; };
-		451DB14F2461DAF700FB14BF /* TractCards+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+Animations.swift"; sourceTree = "<group>"; };
-		451DB1522461DAF700FB14BF /* TractHeader+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractHeader+Animations.swift"; sourceTree = "<group>"; };
-		451DB1542461DAF700FB14BF /* TractForm+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractForm+Actions.swift"; sourceTree = "<group>"; };
-		451DB1582461DAF700FB14BF /* TractTabs+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractTabs+UI.swift"; sourceTree = "<group>"; };
-		451DB1592461DAF700FB14BF /* TractTabs+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractTabs+ChildSetup.swift"; sourceTree = "<group>"; };
-		451DB1662461DC3100FB14BF /* TractLabel+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractLabel+UI.swift"; sourceTree = "<group>"; };
-		451DB1672461DC3100FB14BF /* TractLabel+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractLabel+Gestures.swift"; sourceTree = "<group>"; };
-		451DB1682461DC3100FB14BF /* TractLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractLabel.swift; sourceTree = "<group>"; };
-		451DB16A2461DC3100FB14BF /* TractTextContent+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractTextContent+UI.swift"; sourceTree = "<group>"; };
-		451DB16B2461DC3100FB14BF /* TractTextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTextContent.swift; sourceTree = "<group>"; };
 		451DB16C2461DC3100FB14BF /* TractInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractInput.swift; sourceTree = "<group>"; };
 		451DB16D2461DC3100FB14BF /* TractTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTitle.swift; sourceTree = "<group>"; };
-		451DB16F2461DC3100FB14BF /* TractCallToAction+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCallToAction+Animations.swift"; sourceTree = "<group>"; };
-		451DB1702461DC3100FB14BF /* TractCallToAction+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCallToAction+UI.swift"; sourceTree = "<group>"; };
-		451DB1712461DC3100FB14BF /* TractCallToAction+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCallToAction+Actions.swift"; sourceTree = "<group>"; };
-		451DB1722461DC3100FB14BF /* TractCallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCallToAction.swift; sourceTree = "<group>"; };
-		451DB1742461DC3100FB14BF /* TractLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractLink.swift; sourceTree = "<group>"; };
-		451DB1752461DC3100FB14BF /* TractLink+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractLink+Actions.swift"; sourceTree = "<group>"; };
-		451DB1772461DC3100FB14BF /* TractParagraph+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractParagraph+UI.swift"; sourceTree = "<group>"; };
-		451DB1782461DC3100FB14BF /* TractParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractParagraph.swift; sourceTree = "<group>"; };
-		451DB17A2461DC3100FB14BF /* TractEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractEmail.swift; sourceTree = "<group>"; };
-		451DB17C2461DC3100FB14BF /* TractEmail+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractEmail+Actions.swift"; sourceTree = "<group>"; };
 		451DB17D2461DC3100FB14BF /* TractNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractNumber.swift; sourceTree = "<group>"; };
-		451DB17F2461DC3100FB14BF /* TractModal+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractModal+Actions.swift"; sourceTree = "<group>"; };
-		451DB1802461DC3100FB14BF /* TractModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractModal.swift; sourceTree = "<group>"; };
-		451DB1812461DC3100FB14BF /* TractModal+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractModal+ChildSetup.swift"; sourceTree = "<group>"; };
 		451DB1822461DC3100FB14BF /* TractHeading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractHeading.swift; sourceTree = "<group>"; };
 		451DB1832461DC3100FB14BF /* TractImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractImage.swift; sourceTree = "<group>"; };
-		451DB1852461DC3100FB14BF /* TractCard+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCard+UI.swift"; sourceTree = "<group>"; };
-		451DB1862461DC3100FB14BF /* TractCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCard.swift; sourceTree = "<group>"; };
-		451DB1872461DC3100FB14BF /* TractCard+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCard+Actions.swift"; sourceTree = "<group>"; };
-		451DB1882461DC3100FB14BF /* TractCard+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCard+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
-		451DB1892461DC3100FB14BF /* TractCard+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCard+Animations.swift"; sourceTree = "<group>"; };
-		451DB18B2461DC3100FB14BF /* TractButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractButton.swift; sourceTree = "<group>"; };
-		451DB18C2461DC3100FB14BF /* TractButton+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractButton+Actions.swift"; sourceTree = "<group>"; };
-		451DB18D2461DC3100FB14BF /* TractButton+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractButton+UI.swift"; sourceTree = "<group>"; };
 		451DB18E2461DC3100FB14BF /* TractTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTab.swift; sourceTree = "<group>"; };
 		451DB1B02461DCAE00FB14BF /* TractEmails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractEmails.swift; sourceTree = "<group>"; };
-		451DB1B22461DD6200FB14BF /* TractCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCards.swift; sourceTree = "<group>"; };
-		451DB1B32461DD6200FB14BF /* TractCards+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+Gestures.swift"; sourceTree = "<group>"; };
-		451DB1B62461DD8B00FB14BF /* TractForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractForm.swift; sourceTree = "<group>"; };
-		451DB1B82461DD9A00FB14BF /* TractHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractHeader.swift; sourceTree = "<group>"; };
-		451DB1BA2461DDA500FB14BF /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractPage.swift; sourceTree = "<group>"; };
-		451DB1BC2461DDB600FB14BF /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTabs.swift; sourceTree = "<group>"; };
-		451DB1BE2461DDCA00FB14BF /* TractCard+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCard+Gestures.swift"; sourceTree = "<group>"; };
 		451DB1C02461DDE400FB14BF /* TractFormProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractFormProperties.swift; sourceTree = "<group>"; };
 		451DB1C22461DDFA00FB14BF /* TractModals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractModals.swift; sourceTree = "<group>"; };
 		451DB1C32461DDFA00FB14BF /* TractPageContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractPageContainer.swift; sourceTree = "<group>"; };
@@ -878,6 +810,20 @@
 		4586C04224631C2100927A42 /* AnalyticsRelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalyticsRelay.swift; path = Analtyics/AnalyticsRelay.swift; sourceTree = "<group>"; };
 		4586C04424631C3900927A42 /* ADBMobileConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig.json; sourceTree = "<group>"; };
 		4586C04524631C3900927A42 /* ADBMobileConfig_debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ADBMobileConfig_debug.json; sourceTree = "<group>"; };
+		4586D7CD246ECB530062D988 /* TractPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractPage.swift; sourceTree = "<group>"; };
+		4586D7CF246ECBDB0062D988 /* TractHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractHeader.swift; sourceTree = "<group>"; };
+		4586D7D0246ECBDB0062D988 /* TractTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTabs.swift; sourceTree = "<group>"; };
+		4586D7D3246ECC5E0062D988 /* TractForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractForm.swift; sourceTree = "<group>"; };
+		4586D7D4246ECC5E0062D988 /* TractCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCards.swift; sourceTree = "<group>"; };
+		4586D7D7246ECCE00062D988 /* TractTextContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractTextContent.swift; sourceTree = "<group>"; };
+		4586D7D8246ECCE00062D988 /* TractParagraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractParagraph.swift; sourceTree = "<group>"; };
+		4586D7DB246ECD810062D988 /* TractCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCard.swift; sourceTree = "<group>"; };
+		4586D7DD246ECDC80062D988 /* TractModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractModal.swift; sourceTree = "<group>"; };
+		4586D7DF246ECE350062D988 /* TractLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractLabel.swift; sourceTree = "<group>"; };
+		4586D7E0246ECE350062D988 /* TractLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractLink.swift; sourceTree = "<group>"; };
+		4586D7E3246ECEE90062D988 /* TractEmail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractEmail.swift; sourceTree = "<group>"; };
+		4586D7E4246ECEE90062D988 /* TractCallToAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractCallToAction.swift; sourceTree = "<group>"; };
+		4586D7E5246ECEE90062D988 /* TractButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractButton.swift; sourceTree = "<group>"; };
 		458EA1E524291B5E0002C263 /* RealmDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmDatabase.swift; sourceTree = "<group>"; };
 		458EA1E824291B660002C263 /* IsNewUserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserService.swift; sourceTree = "<group>"; };
 		458EA1E924291B660002C263 /* IsNewUserDefaultsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsNewUserDefaultsCache.swift; sourceTree = "<group>"; };
@@ -1405,178 +1351,39 @@
 		451DB14A2461DAF700FB14BF /* Containers */ = {
 			isa = PBXGroup;
 			children = (
-				451DB14B2461DAF700FB14BF /* TractCards */,
-				451DB1532461DAF700FB14BF /* TractForm */,
-				451DB1512461DAF700FB14BF /* TractHeader */,
-				451DB1552461DAF700FB14BF /* TractPage */,
-				451DB1572461DAF700FB14BF /* TractTabs */,
+				4586D7D4246ECC5E0062D988 /* TractCards.swift */,
 				451DB1B02461DCAE00FB14BF /* TractEmails.swift */,
+				4586D7D3246ECC5E0062D988 /* TractForm.swift */,
+				4586D7CF246ECBDB0062D988 /* TractHeader.swift */,
 				451DB1C42461DDFA00FB14BF /* TractHero.swift */,
 				451DB1C22461DDFA00FB14BF /* TractModals.swift */,
+				4586D7CD246ECB530062D988 /* TractPage.swift */,
 				451DB1C32461DDFA00FB14BF /* TractPageContainer.swift */,
+				4586D7D0246ECBDB0062D988 /* TractTabs.swift */,
 			);
 			path = Containers;
-			sourceTree = "<group>";
-		};
-		451DB14B2461DAF700FB14BF /* TractCards */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1B22461DD6200FB14BF /* TractCards.swift */,
-				451DB14E2461DAF700FB14BF /* TractCards+Actions.swift */,
-				451DB14F2461DAF700FB14BF /* TractCards+Animations.swift */,
-				451DB14D2461DAF700FB14BF /* TractCards+ChildSetup.swift */,
-				451DB1B32461DD6200FB14BF /* TractCards+Gestures.swift */,
-				451DB14C2461DAF700FB14BF /* TractCards+UI.swift */,
-			);
-			path = TractCards;
-			sourceTree = "<group>";
-		};
-		451DB1512461DAF700FB14BF /* TractHeader */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1B82461DD9A00FB14BF /* TractHeader.swift */,
-				451DB1522461DAF700FB14BF /* TractHeader+Animations.swift */,
-			);
-			path = TractHeader;
-			sourceTree = "<group>";
-		};
-		451DB1532461DAF700FB14BF /* TractForm */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1B62461DD8B00FB14BF /* TractForm.swift */,
-				451DB1542461DAF700FB14BF /* TractForm+Actions.swift */,
-			);
-			path = TractForm;
-			sourceTree = "<group>";
-		};
-		451DB1552461DAF700FB14BF /* TractPage */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1BA2461DDA500FB14BF /* TractPage.swift */,
-			);
-			path = TractPage;
-			sourceTree = "<group>";
-		};
-		451DB1572461DAF700FB14BF /* TractTabs */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1BC2461DDB600FB14BF /* TractTabs.swift */,
-				451DB1592461DAF700FB14BF /* TractTabs+ChildSetup.swift */,
-				451DB1582461DAF700FB14BF /* TractTabs+UI.swift */,
-			);
-			path = TractTabs;
 			sourceTree = "<group>";
 		};
 		451DB1642461DC3100FB14BF /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				451DB18A2461DC3100FB14BF /* TractButton */,
-				451DB16E2461DC3100FB14BF /* TractCallToAction */,
-				451DB1842461DC3100FB14BF /* TractCard */,
-				451DB1792461DC3100FB14BF /* TractEmail */,
-				451DB1652461DC3100FB14BF /* TractLabel */,
-				451DB1732461DC3100FB14BF /* TractLink */,
-				451DB17E2461DC3100FB14BF /* TractModal */,
-				451DB1762461DC3100FB14BF /* TractParagraph */,
-				451DB1692461DC3100FB14BF /* TractTextContent */,
+				4586D7E5246ECEE90062D988 /* TractButton.swift */,
+				4586D7E4246ECEE90062D988 /* TractCallToAction.swift */,
+				4586D7DB246ECD810062D988 /* TractCard.swift */,
+				4586D7E3246ECEE90062D988 /* TractEmail.swift */,
 				451DB1822461DC3100FB14BF /* TractHeading.swift */,
 				451DB1832461DC3100FB14BF /* TractImage.swift */,
 				451DB16C2461DC3100FB14BF /* TractInput.swift */,
+				4586D7DF246ECE350062D988 /* TractLabel.swift */,
+				4586D7E0246ECE350062D988 /* TractLink.swift */,
+				4586D7DD246ECDC80062D988 /* TractModal.swift */,
 				451DB17D2461DC3100FB14BF /* TractNumber.swift */,
+				4586D7D8246ECCE00062D988 /* TractParagraph.swift */,
 				451DB18E2461DC3100FB14BF /* TractTab.swift */,
+				4586D7D7246ECCE00062D988 /* TractTextContent.swift */,
 				451DB16D2461DC3100FB14BF /* TractTitle.swift */,
 			);
 			path = Nodes;
-			sourceTree = "<group>";
-		};
-		451DB1652461DC3100FB14BF /* TractLabel */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1682461DC3100FB14BF /* TractLabel.swift */,
-				451DB1672461DC3100FB14BF /* TractLabel+Gestures.swift */,
-				451DB1662461DC3100FB14BF /* TractLabel+UI.swift */,
-			);
-			path = TractLabel;
-			sourceTree = "<group>";
-		};
-		451DB1692461DC3100FB14BF /* TractTextContent */ = {
-			isa = PBXGroup;
-			children = (
-				451DB16B2461DC3100FB14BF /* TractTextContent.swift */,
-				451DB16A2461DC3100FB14BF /* TractTextContent+UI.swift */,
-			);
-			path = TractTextContent;
-			sourceTree = "<group>";
-		};
-		451DB16E2461DC3100FB14BF /* TractCallToAction */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1722461DC3100FB14BF /* TractCallToAction.swift */,
-				451DB1712461DC3100FB14BF /* TractCallToAction+Actions.swift */,
-				451DB16F2461DC3100FB14BF /* TractCallToAction+Animations.swift */,
-				451DB1702461DC3100FB14BF /* TractCallToAction+UI.swift */,
-			);
-			path = TractCallToAction;
-			sourceTree = "<group>";
-		};
-		451DB1732461DC3100FB14BF /* TractLink */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1742461DC3100FB14BF /* TractLink.swift */,
-				451DB1752461DC3100FB14BF /* TractLink+Actions.swift */,
-			);
-			path = TractLink;
-			sourceTree = "<group>";
-		};
-		451DB1762461DC3100FB14BF /* TractParagraph */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1782461DC3100FB14BF /* TractParagraph.swift */,
-				451DB1772461DC3100FB14BF /* TractParagraph+UI.swift */,
-			);
-			path = TractParagraph;
-			sourceTree = "<group>";
-		};
-		451DB1792461DC3100FB14BF /* TractEmail */ = {
-			isa = PBXGroup;
-			children = (
-				451DB17A2461DC3100FB14BF /* TractEmail.swift */,
-				451DB17C2461DC3100FB14BF /* TractEmail+Actions.swift */,
-			);
-			path = TractEmail;
-			sourceTree = "<group>";
-		};
-		451DB17E2461DC3100FB14BF /* TractModal */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1802461DC3100FB14BF /* TractModal.swift */,
-				451DB17F2461DC3100FB14BF /* TractModal+Actions.swift */,
-				451DB1812461DC3100FB14BF /* TractModal+ChildSetup.swift */,
-			);
-			path = TractModal;
-			sourceTree = "<group>";
-		};
-		451DB1842461DC3100FB14BF /* TractCard */ = {
-			isa = PBXGroup;
-			children = (
-				451DB1862461DC3100FB14BF /* TractCard.swift */,
-				451DB1872461DC3100FB14BF /* TractCard+Actions.swift */,
-				451DB1892461DC3100FB14BF /* TractCard+Animations.swift */,
-				451DB1BE2461DDCA00FB14BF /* TractCard+Gestures.swift */,
-				451DB1852461DC3100FB14BF /* TractCard+UI.swift */,
-				451DB1882461DC3100FB14BF /* TractCard+UITextFieldDelegate.swift */,
-			);
-			path = TractCard;
-			sourceTree = "<group>";
-		};
-		451DB18A2461DC3100FB14BF /* TractButton */ = {
-			isa = PBXGroup;
-			children = (
-				451DB18B2461DC3100FB14BF /* TractButton.swift */,
-				451DB18C2461DC3100FB14BF /* TractButton+Actions.swift */,
-				451DB18D2461DC3100FB14BF /* TractButton+UI.swift */,
-			);
-			path = TractButton;
 			sourceTree = "<group>";
 		};
 		452036BB240057B2002B2453 /* URLRequestServices */ = {
@@ -3132,6 +2939,7 @@
 				457719C323E8BAE50049D236 /* MenuDataProvider.swift in Sources */,
 				45E998D823FD7FE00088DD0C /* GlobalActivityHeaderView.swift in Sources */,
 				45FCFF89243D0C9200865501 /* TractViewController.swift in Sources */,
+				4586D7E2246ECE350062D988 /* TractLink.swift in Sources */,
 				451DB1C12461DDE400FB14BF /* TractFormProperties.swift in Sources */,
 				45869EE42453419400733B0C /* HTMLDocument+ResourceUrls.swift in Sources */,
 				451DB1382461DA4200FB14BF /* TractEmailProperties.swift in Sources */,
@@ -3143,8 +2951,8 @@
 				454526DC243E19DA00B84B29 /* CopyrightInfoWebContent.swift in Sources */,
 				45ADD0CF2454A29500E82DD8 /* GodToolsResource.swift in Sources */,
 				45B2AE652458DC4600253BAD /* ExitLinkAnalytics.swift in Sources */,
+				4586D7CE246ECB530062D988 /* TractPage.swift in Sources */,
 				45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */,
-				451DB1AE2461DC3100FB14BF /* TractButton+UI.swift in Sources */,
 				45922587242539B300D7ED22 /* LanguageAvailabilityType.swift in Sources */,
 				45EC83902451EA5B00E8DE48 /* ArticleAemImportDataType.swift in Sources */,
 				45732E7B24218A00006F0559 /* OnboardingTutorialAvailabilityType.swift in Sources */,
@@ -3157,13 +2965,13 @@
 				451DB1C72461DDFA00FB14BF /* TractHero.swift in Sources */,
 				45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */,
 				458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */,
-				451DB1AD2461DC3100FB14BF /* TractButton+Actions.swift in Sources */,
 				452036C4240057B2002B2453 /* RequestMethod.swift in Sources */,
 				45869ED224530C2D00733B0C /* FileCacheLocationType.swift in Sources */,
 				45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */,
-				451DB1BD2461DDB600FB14BF /* TractTabs.swift in Sources */,
 				45B2AE3F24587BAB00253BAD /* ShareArticleViewModel.swift in Sources */,
+				4586D7D1246ECBDB0062D988 /* TractHeader.swift in Sources */,
 				45668E5223E0D908002728E7 /* UIViewController+NavBackItem.swift in Sources */,
+				4586D7D6246ECC5E0062D988 /* TractCards.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
@@ -3175,14 +2983,12 @@
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
-				451DB1962461DC3100FB14BF /* TractCallToAction+Animations.swift in Sources */,
 				45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */,
 				45EC83732451E16400E8DE48 /* ArticleJcrContentParser.swift in Sources */,
 				451830EB246DB78F00DDF264 /* TractXmlPageItem.swift in Sources */,
 				45EC83812451E1EA00E8DE48 /* ArticleManifestXmlParser.swift in Sources */,
 				452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */,
 				45FCFF90243D0CE900865501 /* MasterHomeViewController.swift in Sources */,
-				451DB1AB2461DC3100FB14BF /* TractCard+Animations.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
 				45B2AE502458901800253BAD /* FindToolsViewModel.swift in Sources */,
 				4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */,
@@ -3195,6 +3001,7 @@
 				45FCFF55243D09C800865501 /* ToolDetailViewModelType.swift in Sources */,
 				452AB58724461C5200445050 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				451DB13B2461DA4200FB14BF /* TractImageProperties.swift in Sources */,
+				4586D7D2246ECBDB0062D988 /* TractTabs.swift in Sources */,
 				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				45EC838A2451E9AB00E8DE48 /* RealmArticleAemImportData.swift in Sources */,
 				455F4B8424525BEF00AE6007 /* ArticleAemImportSrcProviderType.swift in Sources */,
@@ -3218,16 +3025,13 @@
 				4564724F244F723E00CB202D /* ArticlesViewModelType.swift in Sources */,
 				45F66CAA23E4C5230053CB5B /* MenuViewModelType.swift in Sources */,
 				ECC194C01EEB32FA00A56332 /* XMLPage.swift in Sources */,
-				451DB1602461DAF700FB14BF /* TractForm+Actions.swift in Sources */,
-				451DB19A2461DC3100FB14BF /* TractLink.swift in Sources */,
+				4586D7DE246ECDC90062D988 /* TractModal.swift in Sources */,
 				45FCFF3D243D07B800865501 /* FlowStep.swift in Sources */,
 				451DB1372461DA4200FB14BF /* TractParagraphProperties.swift in Sources */,
-				451DB1902461DC3100FB14BF /* TractLabel+Gestures.swift in Sources */,
 				45FCFF40243D07B800865501 /* MenuFlow.swift in Sources */,
 				ECA4B3441EE7119A00BAE23C /* UIColor.swift in Sources */,
 				45B2AE522458902300253BAD /* FindToolsViewModelType.swift in Sources */,
 				45869ECC24530BC300733B0C /* FileCacheType.swift in Sources */,
-				451DB1622461DAF700FB14BF /* TractTabs+UI.swift in Sources */,
 				451DB1362461DA4200FB14BF /* TractTitleProperties.swift in Sources */,
 				4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
@@ -3240,21 +3044,23 @@
 				45D3C92623DF999600ECF70E /* TutorialViewModelType.swift in Sources */,
 				451DB0CA2461D90000FB14BF /* TractElementFrame.swift in Sources */,
 				45668E7A23E0E1CC002728E7 /* OnboardingTutorialUsageListCell.swift in Sources */,
+				4586D7E1246ECE350062D988 /* TractLabel.swift in Sources */,
 				45869EC924530BAD00733B0C /* ZipFileContentsCacheType.swift in Sources */,
 				45B2AE5A2458A00C00253BAD /* MyToolsViewModel.swift in Sources */,
 				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */,
 				45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */,
 				451DB1412461DA4200FB14BF /* TractNumberProperties.swift in Sources */,
+				4586D7DC246ECD810062D988 /* TractCard.swift in Sources */,
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45668E7623E0E1CC002728E7 /* OnboardingWelcomeView.swift in Sources */,
 				45647246244F6FAB00CB202D /* ArticleCategoryCellViewModelType.swift in Sources */,
+				4586D7D5246ECC5E0062D988 /* TractForm.swift in Sources */,
 				45FCFF50243D09C800865501 /* HomeViewController.swift in Sources */,
 				451DB1492461DA4200FB14BF /* TractHeaderProperties.swift in Sources */,
 				45EC83A22452438500E8DE48 /* AnimatableValue.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
-				451DB1BB2461DDA500FB14BF /* TractPage.swift in Sources */,
 				4575C25423FB332000D3265B /* AccountItemId.swift in Sources */,
 				45B2AE47245886B100253BAD /* MailView.swift in Sources */,
 				452AB58B24464D0100445050 /* AboutViewModelType.swift in Sources */,
@@ -3262,7 +3068,6 @@
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				451DB13C2461DA4200FB14BF /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
-				451DB15B2461DAF700FB14BF /* TractCards+ChildSetup.swift in Sources */,
 				451DB0CC2461D90000FB14BF /* TractProperties.swift in Sources */,
 				451DB1AF2461DC3100FB14BF /* TractTab.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
@@ -3275,8 +3080,6 @@
 				45FCFF43243D07B800865501 /* FlowDelegate.swift in Sources */,
 				4562B0DE23F1BC5C006B53A9 /* AlertMessageViewModelType.swift in Sources */,
 				452036CD24005B1E002B2453 /* RequestResult.swift in Sources */,
-				451DB18F2461DC3100FB14BF /* TractLabel+UI.swift in Sources */,
-				451DB1A02461DC3100FB14BF /* TractEmail+Actions.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */,
 				451DB1A52461DC3100FB14BF /* TractHeading.swift in Sources */,
@@ -3293,7 +3096,6 @@
 				45647249244F71CB00CB202D /* ArticlesView.swift in Sources */,
 				4FC74ED11ED5D56300D6BFFF /* BannerManager.swift in Sources */,
 				45E998DC23FD85600088DD0C /* GlobalActivityHeaderViewModel.swift in Sources */,
-				451DB1B52461DD6200FB14BF /* TractCards+Gestures.swift in Sources */,
 				458EA1E624291B5E0002C263 /* RealmDatabase.swift in Sources */,
 				451DB0C82461D90000FB14BF /* TractImageConfig.swift in Sources */,
 				4575C23A23FAEBE300D3265B /* AccountView.swift in Sources */,
@@ -3315,16 +3117,13 @@
 				454526D6243E17A400B84B29 /* ContactUsWebContent.swift in Sources */,
 				455F4B9C2452806D00AE6007 /* ArticleWebView.swift in Sources */,
 				4FDA96242155451C00D3BA15 /* JSONResource.swift in Sources */,
-				451DB1A22461DC3100FB14BF /* TractModal+Actions.swift in Sources */,
 				4FEE566F1EC4EAD20085249E /* GTProgressView.swift in Sources */,
 				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
 				4573221624453EC100D653FF /* LanguageSettingsViewModelType.swift in Sources */,
-				451DB1AA2461DC3100FB14BF /* TractCard+UITextFieldDelegate.swift in Sources */,
 				45869ED4245314BD00733B0C /* ArticleManifestType.swift in Sources */,
 				451DB10E2461D90000FB14BF /* BaseTractElement+StaticFunctions.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
 				451DB1942461DC3100FB14BF /* TractInput.swift in Sources */,
-				451DB1632461DAF700FB14BF /* TractTabs+ChildSetup.swift in Sources */,
 				45732E912421A78F006F0559 /* TutorialAvailability.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
 				452E3227240706FD00DB41B7 /* Signal.swift in Sources */,
@@ -3337,7 +3136,6 @@
 				455D7F46244E79F60059EC49 /* NoRequestResultType.swift in Sources */,
 				4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */,
 				0F350D9B1EAE786A0025C4BB /* String.swift in Sources */,
-				451DB1A42461DC3100FB14BF /* TractModal+ChildSetup.swift in Sources */,
 				45EC83792451E16400E8DE48 /* ArticleAemImportService.swift in Sources */,
 				45FCFF4E243D09C800865501 /* ToolDetailViewModel.swift in Sources */,
 				45D3C8CF23DF942100ECF70E /* OnboardPrimaryButton.swift in Sources */,
@@ -3345,9 +3143,6 @@
 				45668E7723E0E1CC002728E7 /* OnboardingWelcomeViewModelType.swift in Sources */,
 				ECB2E29A1EE9FB0600346FBE /* XMLManager.swift in Sources */,
 				45FCFF42243D07B800865501 /* OnboardingFlow.swift in Sources */,
-				451DB1A82461DC3100FB14BF /* TractCard.swift in Sources */,
-				451DB19D2461DC3100FB14BF /* TractParagraph.swift in Sources */,
-				451DB1B42461DD6200FB14BF /* TractCards.swift in Sources */,
 				455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */,
 				45EC83762451E16400E8DE48 /* ArticleAemImportData.swift in Sources */,
 				45B2AE5C2458A01400253BAD /* MyToolsViewModelType.swift in Sources */,
@@ -3359,7 +3154,6 @@
 				4F66E17D1F19452F004BBEF1 /* AppDelegate+UniversalLinks.swift in Sources */,
 				4FEF812F1EE779AA002B77C8 /* ReferencedFile.swift in Sources */,
 				45D3C92D23DF9C1000ECF70E /* TutorialItemProvider.swift in Sources */,
-				451DB19B2461DC3100FB14BF /* TractLink+Actions.swift in Sources */,
 				4FD8F8031F042CAD00A70A0D /* FollowUp.swift in Sources */,
 				451DB0C32461D90000FB14BF /* TractResource.swift in Sources */,
 				452AB58524461C1800445050 /* LanguageSettingsCacheType.swift in Sources */,
@@ -3374,13 +3168,13 @@
 				457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */,
 				457719B423E86ED40049D236 /* MenuSection.swift in Sources */,
 				455D7F4B244E835B0059EC49 /* ResourcesLatestTranslationsFileCacheLocation.swift in Sources */,
-				451DB1AC2461DC3100FB14BF /* TractButton.swift in Sources */,
 				45FCFFA1243D0FB700865501 /* WebContentViewModelType.swift in Sources */,
 				4F5707D91EAE760D00A540C2 /* GTDataManager.swift in Sources */,
 				4575C27923FC6B1D00D3265B /* JsonServices.swift in Sources */,
 				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
 				4564723E244F6F4F00CB202D /* ArticleCategoriesViewModel.swift in Sources */,
 				4FC74ED81ED5E2BD00D6BFFF /* AttachmentResource.swift in Sources */,
+				4586D7E6246ECEE90062D988 /* TractEmail.swift in Sources */,
 				45732229244548A800D653FF /* ChooseLanguageCellViewModelType.swift in Sources */,
 				45FCFF95243D0D1100865501 /* LoadingViewController.swift in Sources */,
 				45FCFF3F243D07B800865501 /* Flow.swift in Sources */,
@@ -3398,14 +3192,12 @@
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
 				45FCFF86243D0C9200865501 /* TractViewModel.swift in Sources */,
 				45284692244514E300F12B2F /* MasterHomeViewModelType.swift in Sources */,
-				451DB1922461DC3100FB14BF /* TractTextContent+UI.swift in Sources */,
 				45668E7D23E0E1CC002728E7 /* MainOnboardingTutorialCell.swift in Sources */,
 				45732E7C24218A00006F0559 /* OnboardingTutorialAvailability.swift in Sources */,
 				4575C25A23FB41EE00D3265B /* AccountItemCellViewModel.swift in Sources */,
 				45B2AE672458DC4600253BAD /* ToolOpenedAnalytics.swift in Sources */,
 				45DC81C92412D8E3001913D6 /* AppsFlyer.swift in Sources */,
 				4575C23E23FAEBF600D3265B /* AccountViewModel.swift in Sources */,
-				451DB1B72461DD8C00FB14BF /* TractForm.swift in Sources */,
 				4508F7AC2429671500ECA950 /* AdobeAnalyticsProperties.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				4573221824453FC300D653FF /* LanguageSettingsFlow.swift in Sources */,
@@ -3413,32 +3205,28 @@
 				452AB58F24464D8500445050 /* AboutView.swift in Sources */,
 				458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */,
-				451DB19C2461DC3100FB14BF /* TractParagraph+UI.swift in Sources */,
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */,
 				45284690244514D500F12B2F /* MasterHomeViewModel.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
-				451DB1BF2461DDCA00FB14BF /* TractCard+Gestures.swift in Sources */,
 				451DB1952461DC3100FB14BF /* TractTitle.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
 				45668E5023E0D0DA002728E7 /* TutorialToolsViewModel.swift in Sources */,
-				451DB15A2461DAF700FB14BF /* TractCards+UI.swift in Sources */,
 				450EA193246C6E9400B78FA3 /* TractPageCell.swift in Sources */,
 				451DB0CD2461D90000FB14BF /* TractEvent.swift in Sources */,
-				451DB1992461DC3100FB14BF /* TractCallToAction.swift in Sources */,
 				4FA2A537215938700018762C /* GodToolsJSONResource.swift in Sources */,
 				451DB0F32461D90000FB14BF /* BaseTractElement+Functions.swift in Sources */,
 				451DB1C52461DDFA00FB14BF /* TractModals.swift in Sources */,
 				45ADD0C724549D6200E82DD8 /* ArticleAemWebArchiveFileCache.swift in Sources */,
+				4586D7E7246ECEE90062D988 /* TractCallToAction.swift in Sources */,
 				45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */,
 				451DB13F2461DA4200FB14BF /* TractCardsProperties.swift in Sources */,
 				455D7F44244E77E00059EC49 /* TranslationsApiType.swift in Sources */,
 				452036CF24005B2B002B2453 /* RequestResponse+RequestResult.swift in Sources */,
 				45FCFF44243D07B800865501 /* BaseFlowController.swift in Sources */,
-				451DB1A92461DC3100FB14BF /* TractCard+Actions.swift in Sources */,
+				4586D7D9246ECCE00062D988 /* TractTextContent.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
 				450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */,
-				451DB1932461DC3100FB14BF /* TractTextContent.swift in Sources */,
 				451DB1452461DA4200FB14BF /* TractEventProperties.swift in Sources */,
 				45732E7724218997006F0559 /* OnboardingTutorialViewedCacheType.swift in Sources */,
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
@@ -3458,7 +3246,6 @@
 				451DB1A62461DC3100FB14BF /* TractImage.swift in Sources */,
 				45647257244F784500CB202D /* ArticleCellViewModelType.swift in Sources */,
 				451830EF246DC18100DDF264 /* TractLanguage.swift in Sources */,
-				451DB15F2461DAF700FB14BF /* TractHeader+Animations.swift in Sources */,
 				451DB1482461DA4200FB14BF /* TractInputProperties.swift in Sources */,
 				45732E962421A976006F0559 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
 				455F4B9624527C2D00AE6007 /* WebArchive.swift in Sources */,
@@ -3472,7 +3259,6 @@
 				45647245244F6FAB00CB202D /* ArticleCategoryCellViewModel.swift in Sources */,
 				45869EC624530BAD00733B0C /* ZipFileContentsCacheLocationType.swift in Sources */,
 				45FA696A242519F50006878C /* TutorialLanguageAvailability.swift in Sources */,
-				451DB15C2461DAF700FB14BF /* TractCards+Actions.swift in Sources */,
 				455F4BA02452808300AE6007 /* ArticleWebViewModel.swift in Sources */,
 				454526DA243E19C300B84B29 /* PrivacyPolicyWebContent.swift in Sources */,
 				4573221A2445469100D653FF /* ChooseLanguageViewModel.swift in Sources */,
@@ -3481,9 +3267,9 @@
 				4568D15C244DFA1200328639 /* FirebaseAnalyticsType.swift in Sources */,
 				45FCFF41243D07B800865501 /* TutorialFlow.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
+				4586D7DA246ECCE00062D988 /* TractParagraph.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				45668E7123E0E1CC002728E7 /* OnboardingTutorialProvider.swift in Sources */,
-				451DB15D2461DAF700FB14BF /* TractCards+Animations.swift in Sources */,
 				4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */,
 				45FCFF52243D09C800865501 /* ToolDetailView.swift in Sources */,
 				452036D124005B5B002B2453 /* RequestClientError.swift in Sources */,
@@ -3498,11 +3284,9 @@
 				455F4BA22452809300AE6007 /* ArticleWebViewModelType.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				45EC83752451E16400E8DE48 /* ArticleJcrContent.swift in Sources */,
-				451DB19E2461DC3100FB14BF /* TractEmail.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,
-				451DB1B92461DD9A00FB14BF /* TractHeader.swift in Sources */,
 				45EC83772451E16400E8DE48 /* ArticleAemImportOperation.swift in Sources */,
 				458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */,
 				45732E982421A984006F0559 /* OpenTutorialCalloutCacheType.swift in Sources */,
@@ -3516,11 +3300,11 @@
 				45EC838E2451E9E200E8DE48 /* RealmArticleAemImportDataCache.swift in Sources */,
 				45826F7C24548279008018B7 /* ResourcesLatestTranslationsFileCache.swift in Sources */,
 				45FCFF9F243D0FAC00865501 /* WebContentViewModel.swift in Sources */,
-				451DB1982461DC3100FB14BF /* TractCallToAction+Actions.swift in Sources */,
 				451DB13D2461DA4200FB14BF /* TractModalProperties.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
+				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
 				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
 				45668E7523E0E1CC002728E7 /* OnboardingTutorialUsageItem.swift in Sources */,
@@ -3533,13 +3317,9 @@
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
-				451DB1972461DC3100FB14BF /* TractCallToAction+UI.swift in Sources */,
-				451DB1A32461DC3100FB14BF /* TractModal.swift in Sources */,
-				451DB1912461DC3100FB14BF /* TractLabel.swift in Sources */,
 				455F4B8524525BEF00AE6007 /* MockAemImportsProvider.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
-				451DB1A72461DC3100FB14BF /* TractCard+UI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

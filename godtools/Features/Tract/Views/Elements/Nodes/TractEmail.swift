@@ -33,5 +33,15 @@ class TractEmail: BaseTractElement {
     func emailProperties() -> TractEmailProperties {
         return self.properties as! TractEmailProperties
     }
+}
 
+// MARK: - Actions
+
+extension TractEmail {
+    
+    override func receiveMessage() {
+        let properties = emailProperties()
+        let userInfo = ["subject": properties.subject, "content": properties.content, "html": properties.html] as [String : Any]
+        NotificationCenter.default.post(name: .sendEmailFromTractForm, object: nil, userInfo: userInfo)
+    }
 }

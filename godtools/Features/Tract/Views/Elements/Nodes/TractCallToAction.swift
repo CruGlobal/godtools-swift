@@ -98,5 +98,88 @@ class TractCallToAction: BaseTractElement {
     func callToActionProperties() -> TractCallToActionProperties {
         return self.properties as! TractCallToActionProperties
     }
+}
 
+// MARK: - Actions
+
+@objc extension TractCallToAction {
+    
+    func moveToNextView() {
+        NotificationCenter.default.post(name: .moveToNextPageNotification, object: nil)
+    }
+}
+
+// MARK: - Animations
+
+extension TractCallToAction {
+    
+    func showCallToAction(animated: Bool) {
+        
+        currentAnimation = .show
+        let bottomConstant: CGFloat = TractPage.statusbarHeight + TractPageContainer.marginBottom
+        let translationY = parent!.getMaxHeight() - elementFrame.finalY() - height - bottomConstant
+        let newTransform = CGAffineTransform(translationX: 0, y: translationY)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
+    }
+    
+    func hideCallToAction(animated: Bool) {
+        
+        currentAnimation = .none
+        let newTransform = CGAffineTransform(translationX: 0, y: 0.0)
+        
+        if animated {
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                //animations
+                self?.transform = newTransform
+            }, completion: nil)
+        }
+        else {
+            transform = newTransform
+        }
+    }
+}
+
+// MARK: - UI
+
+extension TractCallToAction {
+    
+    func addArrowButton() {
+        let xPosition = self.buttonXPosition
+        let yPosition = (self.height - self.buttonSizeConstant) / 2
+        let origin = CGPoint(x: xPosition, y: yPosition)
+        let size = CGSize(width: self.buttonSizeConstant, height: self.buttonSizeConstant)
+        let buttonFrame = CGRect(origin: origin, size: size)
+        
+        let button = createButton(with: buttonFrame)
+        
+        if isPrimaryRightToLeft {
+            button.transform = CGAffineTransform(rotationAngle: .pi)
+        }
+        self.addSubview(button)
+    }
+    
+    private func createButton(with frame: CGRect) -> UIButton {
+        let button = UIButton(type: .system)
+        button.frame = frame
+        
+        let image = UIImage(named: "right_arrow_blue")
+        
+        let controlColor = callToActionProperties().controlColor;
+        let pagePrimaryColor = page?.pageProperties().primaryColor;
+        
+        button.setImage(image, for: UIControl.State.normal)
+        button.tintColor = controlColor != nil ? controlColor : pagePrimaryColor
+        button.addTarget(self, action: #selector(moveToNextView), for: UIControl.Event.touchUpInside)
+        
+        return button
+    }
 }

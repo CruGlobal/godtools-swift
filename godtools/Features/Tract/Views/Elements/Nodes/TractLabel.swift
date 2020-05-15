@@ -73,5 +73,51 @@ class TractLabel: BaseTractElement {
     func labelProperties() -> TractLabelProperties {
         return self.properties as! TractLabelProperties
     }
+}
 
+// MARK: - Gestures
+
+extension TractLabel {
+    
+    func setupPressGestures() {
+        if (self.parent?.isKind(of: TractCard.self))! {
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleGesture))
+            tapGesture.numberOfTapsRequired = 1
+            tapGesture.numberOfTouchesRequired = 1
+            
+            let frame = CGRect(x: 0.0,
+                               y: 0.0,
+                               width: self.width,
+                               height: 60.0)
+            self.tapView.frame = frame
+            self.tapView.addGestureRecognizer(tapGesture)
+            self.tapView.isUserInteractionEnabled = true
+            self.addSubview(self.tapView)
+        }
+    }
+    
+    @objc func handleGesture(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            let cardView = self.parent as! TractCard
+            cardView.processCardWithState()
+        }
+    }
+}
+
+// MARK: - UI
+
+extension TractLabel {
+    
+    func buildHorizontalLine() {
+        let height: CGFloat = 1.0
+        let yPosition = self.frame.size.height - height
+        let horizontalLine = UIView()
+        horizontalLine.frame = CGRect(x: 0.0,
+                                      y: yPosition,
+                                      width: self.elementFrame.finalWidth(),
+                                      height: height)
+        horizontalLine.backgroundColor = .gtGreyLight
+        self.addSubview(horizontalLine)
+        
+    }
 }
