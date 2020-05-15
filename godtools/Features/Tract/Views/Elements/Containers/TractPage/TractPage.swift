@@ -24,7 +24,7 @@ class TractPage: BaseTractElement {
     
     //  * The only designated initializer for this class should be this one
     override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
-        super.init(startWithData: data, height: UIScreen.main.bounds.size.height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
         
         renderedView = render()
     }
@@ -120,6 +120,44 @@ class TractPage: BaseTractElement {
 
         parentView.addSubview(imageView)
     }
-
     
+    func showHeader() {
+        for element in self.pageContainer!.elements! {
+            if BaseTractElement.isHeaderElement(element) {
+                let header = element as! TractHeader
+                header.showHeader(animated: true)
+                break
+            }
+        }
+    }
+    
+    func hideHeader() {
+        for element in self.pageContainer!.elements! {
+            if BaseTractElement.isHeaderElement(element) {
+                let header = element as! TractHeader
+                header.hideHeader(animated: true)
+                break
+            }
+        }
+    }
+    
+    func showCallToAction(animated: Bool = true) {
+        for element in self.pageContainer!.elements! {
+            if BaseTractElement.isCallToActionElement(element) {
+                let callToAction = element as! TractCallToAction
+                callToAction.showCallToAction(animated: animated)
+                break
+            }
+        }
+    }
+    
+    func hideCallToAction() {
+        for element in self.pageContainer!.elements! {
+            if BaseTractElement.isCallToActionElement(element) {
+                let callToAction = element as! TractCallToAction
+                callToAction.hideCallToAction(animated: true)
+                break
+            }
+        }
+    }
 }

@@ -95,7 +95,6 @@
 		451DB15D2461DAF700FB14BF /* TractCards+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB14F2461DAF700FB14BF /* TractCards+Animations.swift */; };
 		451DB15F2461DAF700FB14BF /* TractHeader+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1522461DAF700FB14BF /* TractHeader+Animations.swift */; };
 		451DB1602461DAF700FB14BF /* TractForm+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1542461DAF700FB14BF /* TractForm+Actions.swift */; };
-		451DB1612461DAF700FB14BF /* TractPage+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1562461DAF700FB14BF /* TractPage+Actions.swift */; };
 		451DB1622461DAF700FB14BF /* TractTabs+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1582461DAF700FB14BF /* TractTabs+UI.swift */; };
 		451DB1632461DAF700FB14BF /* TractTabs+ChildSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1592461DAF700FB14BF /* TractTabs+ChildSetup.swift */; };
 		451DB18F2461DC3100FB14BF /* TractLabel+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB1662461DC3100FB14BF /* TractLabel+UI.swift */; };
@@ -646,7 +645,6 @@
 		451DB14F2461DAF700FB14BF /* TractCards+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractCards+Animations.swift"; sourceTree = "<group>"; };
 		451DB1522461DAF700FB14BF /* TractHeader+Animations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractHeader+Animations.swift"; sourceTree = "<group>"; };
 		451DB1542461DAF700FB14BF /* TractForm+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractForm+Actions.swift"; sourceTree = "<group>"; };
-		451DB1562461DAF700FB14BF /* TractPage+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractPage+Actions.swift"; sourceTree = "<group>"; };
 		451DB1582461DAF700FB14BF /* TractTabs+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractTabs+UI.swift"; sourceTree = "<group>"; };
 		451DB1592461DAF700FB14BF /* TractTabs+ChildSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractTabs+ChildSetup.swift"; sourceTree = "<group>"; };
 		451DB1662461DC3100FB14BF /* TractLabel+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TractLabel+UI.swift"; sourceTree = "<group>"; };
@@ -1455,7 +1453,6 @@
 			isa = PBXGroup;
 			children = (
 				451DB1BA2461DDA500FB14BF /* TractPage.swift */,
-				451DB1562461DAF700FB14BF /* TractPage+Actions.swift */,
 			);
 			path = TractPage;
 			sourceTree = "<group>";
@@ -3198,7 +3195,6 @@
 				45FCFF55243D09C800865501 /* ToolDetailViewModelType.swift in Sources */,
 				452AB58724461C5200445050 /* LanguageSettingsUserDefaultsCache.swift in Sources */,
 				451DB13B2461DA4200FB14BF /* TractImageProperties.swift in Sources */,
-				451DB1612461DAF700FB14BF /* TractPage+Actions.swift in Sources */,
 				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				45EC838A2451E9AB00E8DE48 /* RealmArticleAemImportData.swift in Sources */,
 				455F4B8424525BEF00AE6007 /* ArticleAemImportSrcProviderType.swift in Sources */,
