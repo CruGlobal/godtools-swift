@@ -24,7 +24,7 @@ class TractPage: BaseTractElement {
     
     //  * The only designated initializer for this class should be this one
     override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
-        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+        super.init(startWithData: data, height: UIScreen.main.bounds.size.height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
         
         renderedView = render()
     }

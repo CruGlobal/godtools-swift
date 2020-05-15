@@ -11,11 +11,7 @@ import UIKit
 class TractViewController: UIViewController {
         
     private let viewModel: TractViewModelType
-        
-    // TODO: Need this for now to keep tractPages in memory in order to regenerate parallel tract. ~Levi
-    // Would like to eventually use a cache in the view model to fetch these.
-    private var currentTractPages: [Int: TractPage] = Dictionary()
-    
+            
     private var didLayoutSubviews: Bool = false
     private var didAddObservers: Bool = false
            
@@ -85,6 +81,10 @@ class TractViewController: UIViewController {
                     print("translation id: \(translation.remoteId)")
                     print("  language code: \(languageCode)")
                 }
+                else if languageCode.contains("es") {
+                    print("translation id: \(translation.remoteId)")
+                    print("  language code: \(languageCode)")
+                }
             }
         }
     }
@@ -105,7 +105,6 @@ class TractViewController: UIViewController {
             tractPagesCollectionView.dataSource = self
             
             viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
-                self?.currentTractPages.removeAll()
                 self?.tractPagesCollectionView.reloadData()
             }
             
@@ -343,22 +342,15 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell: TractPageCell = tractPagesCollectionView.dequeueReusableCell(
             withReuseIdentifier: TractPageCell.reuseIdentifier,
             for: indexPath) as! TractPageCell
-           
-        
-        let tractPage: TractPage? = viewModel.buildTractPage(
-            page: indexPath.row,
-            size: tractPagesCollectionView.bounds.size,
-            parallelElement: currentTractPages[indexPath.row]
-        )
-        
+                
+        let tractPage: TractPage? = viewModel.getTractPage(page: indexPath.item)
+                
         tractPage?.setDelegate(self)
-        
+
         if let tractPage = tractPage {
             cell.setTractPage(tractPage: tractPage)
         }
-        
-        currentTractPages[indexPath.row] = tractPage
-                                
+                                        
         return cell
     }
     
@@ -367,18 +359,7 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-                
-        // remove cached tract pages
-        let buffer: Int = 2
-        let currentPage: Int = indexPath.item
-        let currentTractPageKeys: [Int] = Array(currentTractPages.keys)
-        for key in currentTractPageKeys {
-    
-            let distance: Int = abs(currentPage - key)
-            if distance > buffer {
-                currentTractPages[key] = nil
-            }
-        }
+               
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -418,6 +418,7 @@
 		45EC83A22452438500E8DE48 /* AnimatableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC83A12452438500E8DE48 /* AnimatableValue.swift */; };
 		45EC83A42452494D00E8DE48 /* WebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC83A32452494D00E8DE48 /* WebContent.swift */; };
 		45ED1E8D246B1BEF00CF0AB0 /* TractViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45ED1E8C246B1BEF00CF0AB0 /* TractViewController.xib */; };
+		45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE3325246E237B003CC641 /* TractPageCache.swift */; };
 		45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CA323E4C3C20053CB5B /* MenuView.xib */; };
 		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
 		45F66CA823E4C51B0053CB5B /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */; };
@@ -962,6 +963,7 @@
 		45EC83A12452438500E8DE48 /* AnimatableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableValue.swift; sourceTree = "<group>"; };
 		45EC83A32452494D00E8DE48 /* WebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContent.swift; sourceTree = "<group>"; };
 		45ED1E8C246B1BEF00CF0AB0 /* TractViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TractViewController.xib; sourceTree = "<group>"; };
+		45EE3325246E237B003CC641 /* TractPageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageCache.swift; sourceTree = "<group>"; };
 		45F66CA323E4C3C20053CB5B /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
 		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		45F66CA723E4C51B0053CB5B /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
@@ -2192,6 +2194,7 @@
 				451830EC246DC14C00DDF264 /* TractLanguageType.swift */,
 				45E62FB0246C3C2B006F0CD5 /* TractNavBarAttributes.swift */,
 				451830EA246DB78F00DDF264 /* TractXmlPageItem.swift */,
+				45EE3325246E237B003CC641 /* TractPageCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3523,6 +3526,7 @@
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
+				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
 				45668E7523E0E1CC002728E7 /* OnboardingTutorialUsageItem.swift in Sources */,
 				45732E9B2421AF00006F0559 /* DeviceLanguage.swift in Sources */,
 				4562B0DA23F1BC4A006B53A9 /* AlertMessageView.swift in Sources */,

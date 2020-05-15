@@ -36,5 +36,5 @@ protocol TractViewModelType {
     func navigateToPreviousPageTapped()
     func navigateToPageTapped(page: Int)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
-    func buildTractPage(page: Int, size: CGSize, parallelElement: TractPage?) -> TractPage?
+    func getTractPage(page: Int) -> TractPage?
 }
