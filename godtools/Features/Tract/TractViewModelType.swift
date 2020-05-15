@@ -6,7 +6,7 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol TractViewModelType {
     
@@ -36,4 +36,5 @@ protocol TractViewModelType {
     func navigateToPreviousPageTapped()
     func navigateToPageTapped(page: Int)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
+    func buildTractPage(page: Int, size: CGSize, parallelElement: TractPage?) -> TractPage?
 }

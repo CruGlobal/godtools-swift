@@ -12,9 +12,9 @@ class TractViewController: UIViewController {
         
     private let viewModel: TractViewModelType
         
-    // TODO: Need this for now to keep tractPages in memory. ~Levi
-    // Would like this to be a service part of the view model.
-    private var cachedTractPageItems: [Int: TractXmlPageItem] = Dictionary()
+    // TODO: Need this for now to keep tractPages in memory in order to regenerate parallel tract. ~Levi
+    // Would like to eventually use a cache in the view model to fetch these.
+    private var currentTractPages: [Int: TractPage] = Dictionary()
     
     private var didLayoutSubviews: Bool = false
     private var didAddObservers: Bool = false
@@ -105,6 +105,7 @@ class TractViewController: UIViewController {
             tractPagesCollectionView.dataSource = self
             
             viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
+                self?.currentTractPages.removeAll()
                 self?.tractPagesCollectionView.reloadData()
             }
             
@@ -342,61 +343,21 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
         let cell: TractPageCell = tractPagesCollectionView.dequeueReusableCell(
             withReuseIdentifier: TractPageCell.reuseIdentifier,
             for: indexPath) as! TractPageCell
-                
-        let pageParentView: UIView = cell.contentView
+           
         
-        for subview in pageParentView.subviews {
-            subview.removeFromSuperview()
-        }
-        
-        let tractXmlPageItem: TractXmlPageItem = viewModel.tractXmlPageItems.value[indexPath.row]
-        
-        // load parallel tract
-        var parallelTractPage: TractPage?
-        
-        if let parallelXmlPage = tractXmlPageItem.parallelXmlPage {
-            
-            let parallelConfig = TractConfigurations()
-            parallelConfig.defaultTextAlignment = .left
-            parallelConfig.pagination = parallelXmlPage.pagination
-            parallelConfig.language = viewModel.parallelLanguage
-            parallelConfig.resource = viewModel.resource
-                    
-            parallelTractPage = TractPage(
-                startWithData: parallelXmlPage.pageContent(),
-                height: tractPagesCollectionView.bounds.size.height,
-                manifestProperties: viewModel.tractManifest,
-                configurations: parallelConfig,
-                parallelElement: nil
-            )
-            
-            parallelTractPage?.setDelegate(self)
-        }
-        
-        // load primary tract
-        let primaryXmlPage: XMLPage = tractXmlPageItem.primaryXmlPage
-        
-        let primaryConfig = TractConfigurations()
-        primaryConfig.defaultTextAlignment = .left
-        primaryConfig.pagination = primaryXmlPage.pagination
-        primaryConfig.language = viewModel.primaryLanguage
-        primaryConfig.resource = viewModel.resource
-                
-        let primaryTractPage = TractPage(
-            startWithData: primaryXmlPage.pageContent(),
-            height: tractPagesCollectionView.bounds.size.height,
-            manifestProperties: viewModel.tractManifest,
-            configurations: primaryConfig,
-            parallelElement: parallelTractPage
+        let tractPage: TractPage? = viewModel.buildTractPage(
+            page: indexPath.row,
+            size: tractPagesCollectionView.bounds.size,
+            parallelElement: currentTractPages[indexPath.row]
         )
         
-        primaryTractPage.setDelegate(self)
+        tractPage?.setDelegate(self)
         
-        cell.configure(
-            primaryTract: primaryTractPage.renderedView,
-            parallelTract: parallelTractPage?.renderedView,
-            language: viewModel.selectedTractLanguage.value.languageType
-        )
+        if let tractPage = tractPage {
+            cell.setTractPage(tractPage: tractPage)
+        }
+        
+        currentTractPages[indexPath.row] = tractPage
                                 
         return cell
     }
@@ -406,7 +367,18 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
+                
+        // remove cached tract pages
+        let buffer: Int = 2
+        let currentPage: Int = indexPath.item
+        let currentTractPageKeys: [Int] = Array(currentTractPages.keys)
+        for key in currentTractPageKeys {
+    
+            let distance: Int = abs(currentPage - key)
+            if distance > buffer {
+                currentTractPages[key] = nil
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

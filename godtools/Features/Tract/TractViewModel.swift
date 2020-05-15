@@ -197,4 +197,40 @@ class TractViewModel: TractViewModelType {
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
         flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
     }
+    
+    func buildTractPage(page: Int, size: CGSize, parallelElement: TractPage?) -> TractPage? {
+        
+        let tractXmlResource: TractXmlResource?
+        
+        switch selectedTractLanguage.value.languageType {
+            
+        case .primary:
+            tractXmlResource = primaryTractXmlResource
+        case .parallel:
+            tractXmlResource = parallelTractXmlResource
+        }
+        
+        if let pages = tractXmlResource?.pages, page >= 0 && page < pages.count {
+            
+            let xmlPage: XMLPage = pages[page]
+            
+            let config = TractConfigurations()
+            config.defaultTextAlignment = .left
+            config.pagination = xmlPage.pagination
+            config.language = selectedTractLanguage.value.language
+            config.resource = resource
+            
+            let tractPage = TractPage(
+                startWithData: xmlPage.pageContent(),
+                height: size.height,
+                manifestProperties: tractManifest,
+                configurations: config,
+                parallelElement: parallelElement
+            )
+            
+            return tractPage
+        }
+        
+        return nil
+    }
 }
