@@ -281,7 +281,7 @@ class BaseFlowController: NSObject, FlowDelegate {
                 toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
                 tractPage: 0
             )
-            let view = TractViewController(viewModel: viewModel)
+            let view = TractView(viewModel: viewModel)
 
             navigationController.pushViewController(view, animated: true)
         
@@ -337,7 +337,7 @@ class BaseFlowController: NSObject, FlowDelegate {
             tractPage: page
         )
         
-        let view = TractViewController(viewModel: viewModel)
+        let view = TractView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
     }

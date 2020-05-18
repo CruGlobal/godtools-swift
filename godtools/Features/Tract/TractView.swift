@@ -1,5 +1,5 @@
 //
-//  TractViewController.swift
+//  TractView.swift
 //  godtools
 //
 //  Created by Ryan Carlson on 4/24/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractViewController: UIViewController {
+class TractView: UIViewController {
         
     private let viewModel: TractViewModelType
             
@@ -21,7 +21,7 @@ class TractViewController: UIViewController {
     
     required init(viewModel: TractViewModelType) {
         self.viewModel = viewModel
-        super.init(nibName: "TractViewController", bundle: nil)
+        super.init(nibName: String(describing: TractView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -295,7 +295,7 @@ class TractViewController: UIViewController {
     }
 }
 
-extension TractViewController: BaseTractElementDelegate {
+extension TractView: BaseTractElementDelegate {
     
     func showAlert(_ alert: UIAlertController) {
         present(alert, animated: true, completion: nil)
@@ -309,7 +309,7 @@ extension TractViewController: BaseTractElementDelegate {
     }
 }
 
-extension TractViewController {
+extension TractView {
     
     // TODO: Need to find out what this is for. ~Levi
     func loadPagesIds() {
@@ -327,7 +327,7 @@ extension TractViewController {
 
 // MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
 
-extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension TractView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -377,7 +377,7 @@ extension TractViewController: UICollectionViewDelegateFlowLayout, UICollectionV
 
 // MARK: - UIScrollViewDelegate
 
-extension TractViewController: UIScrollViewDelegate {
+extension TractView: UIScrollViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if scrollView == tractPagesCollectionView {
