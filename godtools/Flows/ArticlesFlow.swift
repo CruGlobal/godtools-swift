@@ -22,11 +22,24 @@ class ArticlesFlow: Flow {
         self.navigationController = sharedNavigationController
         
         // TODO: Need to think of how to handle grabbing the latest translation without force unwrapping. ~Levi
-        let translation: Translation = resource.getTranslationForLanguage(language)!
+        // TODO: What if a translation does not exist for the provided language? ~Levi
+        
+        var articleTranslation: Translation?
+        
+        if let languageTranslation = resource.getTranslationForLanguage(language) {
+            articleTranslation = languageTranslation
+        }
+        else if let englishLanguage = LanguagesManager().loadFromDisk(code: "en"), let englishTranslation = resource.getTranslationForLanguage(englishLanguage) {
+            articleTranslation = englishTranslation
+        }
+        else if let firstTranslation = resource.translations.first {
+            articleTranslation = firstTranslation
+        }
+        
         let godToolsResource: GodToolsResource = GodToolsResource(
             resource: resource,
             language: language,
-            translation: translation
+            translation: articleTranslation!
         )
         
         let viewModel = ArticleCategoriesViewModel(
