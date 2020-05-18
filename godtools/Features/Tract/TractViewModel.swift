@@ -44,19 +44,23 @@ class TractViewModel: TractViewModelType {
         self.tractManager = tractManager
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
+        
         primaryTractXmlResource = tractManager.loadResource(resource: resource, language: primaryLanguage)
+        
         if let parallelLanguage = self.parallelLanguage {
             parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
         }
         else {
             parallelTractXmlResource = nil
         }
+        
         let primaryManifest: ManifestProperties = primaryTractXmlResource.manifestProperties
         navBarAttributes = TractNavBarAttributes(
             navBarColor: primaryManifest.navbarColor ?? primaryManifest.primaryColor,
             navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
         )
-        hidesChooseLanguageControl = self.parallelLanguage == nil
+        
+        hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
         chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
         chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
@@ -132,6 +136,25 @@ class TractViewModel: TractViewModelType {
                 siteSubSection: ""
             )
         }
+    }
+    
+    static private func parallelLanguageIsValid(resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?) -> Bool {
+                
+        let parallelLanguageIsPrimaryLanguage: Bool = primaryLanguage.code == parallelLanguage?.code
+        
+        var parallelLanguageTranslationExists: Bool = false
+        if let parallelLanguageCode = parallelLanguage?.code {
+            for translation in resource.translations {
+                if let languageCode = translation.language?.code {
+                    if languageCode == parallelLanguageCode {
+                        parallelLanguageTranslationExists = true
+                        break
+                    }
+                }
+            }
+        }
+        
+        return !parallelLanguageIsPrimaryLanguage && parallelLanguageTranslationExists
     }
     
     var isRightToLeftLanguage: Bool {

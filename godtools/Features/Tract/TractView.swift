@@ -142,6 +142,9 @@ class TractView: UIViewController {
         tractPagesCollectionView.showsHorizontalScrollIndicator = false
         tractPagesCollectionView.contentInset = UIEdgeInsets.zero
         automaticallyAdjustsScrollViewInsets = false
+        if viewModel.isRightToLeftLanguage {
+            tractPagesCollectionView.semanticContentAttribute = .forceRightToLeft
+        }
     }
     
     private func setupBinding() {
