@@ -512,6 +512,7 @@
 		4FF7FF5F2284D062005C8BE1 /* resources.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495531F069CEF0015A6BB /* resources.json */; };
 		4FF7FF602284D062005C8BE1 /* languages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F8495551F069D130015A6BB /* languages.json */; };
 		8C8C44BD9B31E90E469C99FF /* Pods_godtoolsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */; };
+		D1166557246F3EEE00874BDE /* SnowplowAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1166556246F3EEE00874BDE /* SnowplowAnalyticsProperties.swift */; };
 		D15CD148246C23F4008EB17B /* SnowplowAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15CD147246C23F4008EB17B /* SnowplowAnalytics.swift */; };
 		D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15CD149246C2431008EB17B /* SnowplowAnalyticsType.swift */; };
 		EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC61B9CE1EFDDBC300615840 /* GTGlobalTractBindings.swift */; };
@@ -1102,6 +1103,7 @@
 		684328F11EB7CF66005E9131 /* godtoolsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = godtoolsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9BDC99CD6AA5FF3CCAC0E93 /* Pods-godtools.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.staging.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.staging.xcconfig"; sourceTree = "<group>"; };
 		B03BA6AC6918BE450406F1E6 /* Pods-godtools.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.debug.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.debug.xcconfig"; sourceTree = "<group>"; };
+		D1166556246F3EEE00874BDE /* SnowplowAnalyticsProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowplowAnalyticsProperties.swift; sourceTree = "<group>"; };
 		D15CD147246C23F4008EB17B /* SnowplowAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowplowAnalytics.swift; sourceTree = "<group>"; };
 		D15CD149246C2431008EB17B /* SnowplowAnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnowplowAnalyticsType.swift; sourceTree = "<group>"; };
 		D487087EDFEFD1AF7B39128C /* Pods_godtoolsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_godtoolsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2174,6 +2176,7 @@
 				45B2AE5D2458D98C00253BAD /* GoogleAdwordsAnalytics.swift */,
 				D15CD147246C23F4008EB17B /* SnowplowAnalytics.swift */,
 				D15CD149246C2431008EB17B /* SnowplowAnalyticsType.swift */,
+				D1166556246F3EEE00874BDE /* SnowplowAnalyticsProperties.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -3499,6 +3502,7 @@
 				45FCFF8B243D0C9200865501 /* TractViewControllerPageMovements.swift in Sources */,
 				451DB1982461DC3100FB14BF /* TractCallToAction+Actions.swift in Sources */,
 				451DB13D2461DA4200FB14BF /* TractModalProperties.swift in Sources */,
+				D1166557246F3EEE00874BDE /* SnowplowAnalyticsProperties.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
