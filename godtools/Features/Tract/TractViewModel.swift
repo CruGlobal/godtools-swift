@@ -112,7 +112,7 @@ class TractViewModel: TractViewModelType {
         )
         
         resetTractPagesOutsideOfBuffer(
-            buffer: 2,
+            buffer: 1,
             currentPage: page
         )
                         
@@ -156,25 +156,7 @@ class TractViewModel: TractViewModelType {
     
     func primaryLanguageTapped() {
                                 
-        let cachedParallelTractPage: TractPage? = getCachedTractPage(
-            languageType: .parallel,
-            page: tractPage
-        )
-        
-        let newPrimaryTractPage: TractPage? = buildTractPageForLanguage(
-            languageType: .primary,
-            page: tractPage,
-            parallelTractPage: cachedParallelTractPage
-        )
-        
-        if let newPrimaryTractPage = newPrimaryTractPage {
-            
-            cacheTractPage(
-                languageType: .primary,
-                page: tractPage,
-                tractPage: newPrimaryTractPage
-            )
-        }
+        switchFromParallelTractPageToPrimaryTractPage(page: tractPage)
         
         trackTappedLanguage(language: primaryLanguage)
                 
@@ -186,26 +168,8 @@ class TractViewModel: TractViewModelType {
         guard let parallelLanguage = parallelLanguage else {
             return
         }
-                
-        let cachedPrimaryTractPage: TractPage? = getCachedTractPage(
-            languageType: .primary,
-            page: tractPage
-        )
         
-        let newParallelTractPage: TractPage? = buildTractPageForLanguage(
-            languageType: .parallel,
-            page: tractPage,
-            parallelTractPage: cachedPrimaryTractPage
-        )
-        
-        if let newParallelTractPage = newParallelTractPage {
-            
-            cacheTractPage(
-                languageType: .parallel,
-                page: tractPage,
-                tractPage: newParallelTractPage
-            )
-        }
+        switchFromPrimaryTractPageToParallelTractPage(page: tractPage)
                 
         trackTappedLanguage(language: parallelLanguage)
                 
@@ -258,6 +222,54 @@ class TractViewModel: TractViewModelType {
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
         flowDelegate?.navigate(step: .sendEmailTappedFromTract(subject: subject ?? "", message: message ?? "", isHtml: isHtml ?? false))
+    }
+    
+    // MARK: - Switching Between Primary and Parallel Tract Pages
+    
+    private func switchFromPrimaryTractPageToParallelTractPage(page: Int) {
+               
+        let cachedPrimaryTractPage: TractPage? = getCachedTractPage(
+            languageType: .primary,
+            page: page
+        )
+        
+        let newParallelTractPage: TractPage? = buildTractPageForLanguage(
+            languageType: .parallel,
+            page: page,
+            parallelTractPage: cachedPrimaryTractPage
+        )
+        
+        if let newParallelTractPage = newParallelTractPage {
+            
+            cacheTractPage(
+                languageType: .parallel,
+                page: page,
+                tractPage: newParallelTractPage
+            )
+        }
+    }
+    
+    private func switchFromParallelTractPageToPrimaryTractPage(page: Int) {
+        
+        let cachedParallelTractPage: TractPage? = getCachedTractPage(
+            languageType: .parallel,
+            page: page
+        )
+        
+        let newPrimaryTractPage: TractPage? = buildTractPageForLanguage(
+            languageType: .primary,
+            page: page,
+            parallelTractPage: cachedParallelTractPage
+        )
+        
+        if let newPrimaryTractPage = newPrimaryTractPage {
+            
+            cacheTractPage(
+                languageType: .primary,
+                page: page,
+                tractPage: newPrimaryTractPage
+            )
+        }
     }
     
     // MARK: - Resetting Tract Pages
