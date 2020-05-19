@@ -13,35 +13,27 @@ import Crashlytics
 
 class TractManager: GTDataManager {
     
-    let testMode = false
-
 }
 
 extension TractManager {
     
-    func loadResource(resource: DownloadedResource, language: Language) -> (pages: [XMLPage], manifestProperties: ManifestProperties) {
+    func loadResource(resource: DownloadedResource, language: Language) -> TractXmlResource {
         var pages = [XMLPage]()
         let manifestProperties = ManifestProperties()
         var xmlData: XMLIndexer?
         
-        if testMode {
-            let manifestPath = "kgp-manifest"
-            xmlData = loadXMLFile(manifestPath)
-        
-        } else {
-            guard let translation = resource.getTranslationForLanguage(language) else {
-                return (pages, manifestProperties)
-            }
-            
-            guard let manifestPath = translation.manifestFilename else {
-                return (pages, manifestProperties)
-            }
-            
-            xmlData = loadXMLFile(manifestPath)
+        guard let translation = resource.getTranslationForLanguage(language) else {
+            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
         }
         
+        guard let manifestPath = translation.manifestFilename else {
+            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
+        }
+        
+        xmlData = loadXMLFile(manifestPath)
+        
         guard let manifest = xmlData?["manifest"] else {
-            return (pages, manifestProperties)
+            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
         }
         
         let xmlManager = XMLManager()
@@ -66,8 +58,7 @@ extension TractManager {
             manifestProperties.resources[filename!] = resource
         }
         
-        
-        return (pages, manifestProperties)
+        return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
     }
     
     func loadPage(_ child: XMLIndexer) -> XMLPage{
@@ -78,11 +69,12 @@ extension TractManager {
     }
     
     func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
-        let file = testMode ? Bundle.main.path(forResource: resourcePath, ofType: "xml") : documentsPath.appending("/Resources/").appending(resourcePath)
+        
+        let file: String = documentsPath.appending("/Resources/").appending(resourcePath)
         
         var xml: XMLIndexer?
         do {
-            let content = try String(contentsOfFile: file!, encoding: String.Encoding.utf8)
+            let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
             xml = SWXMLHash.parse(content)
         }
         catch {

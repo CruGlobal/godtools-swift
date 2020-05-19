@@ -16,12 +16,14 @@ class MailViewModel: MailViewModelType {
     let toRecipients: [String]
     let subject: String
     let message: String
+    let isHtml: Bool
     let canSendViaMailApp: Bool
     
-    required init(toRecipients: [String], subject: String, message: String, finishedSendingMailHandler: CallbackHandler) {
+    required init(toRecipients: [String], subject: String, message: String, isHtml: Bool, finishedSendingMailHandler: CallbackHandler) {
         self.toRecipients = toRecipients
         self.subject = subject
         self.message = message
+        self.isHtml = isHtml
         self.canSendViaMailApp = MFMailComposeViewController.canSendMail()
         self.finishedSendingMailHandler = finishedSendingMailHandler
     }
