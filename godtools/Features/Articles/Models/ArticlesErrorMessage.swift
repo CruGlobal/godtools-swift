@@ -1,5 +1,5 @@
 //
-//  ArticleCategoriesErrorMessage.swift
+//  ArticlesErrorMessage.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/19/20.
@@ -8,12 +8,9 @@
 
 import Foundation
 
-struct ArticleCategoriesErrorMessage {
+struct ArticlesErrorMessage {
     
-    let title: String
     let message: String
-    let downloadArticlesButtonTitle: String
-    let hidesDownloadArticlesButton: Bool
     let hidesErrorMessage: Bool
     let shouldAnimate: Bool
 }

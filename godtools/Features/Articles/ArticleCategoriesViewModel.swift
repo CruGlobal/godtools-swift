@@ -23,7 +23,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let loadingMessage: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
-    let errorMessage: ObservableValue<ArticleCategoriesErrorMessage> = ObservableValue(value: ArticleCategoriesErrorMessage(title: "", message: "", downloadArticlesButtonTitle: "", hidesDownloadArticlesButton: false, hidesErrorMessage: true, shouldAnimate: false))
+    let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
     required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
         
@@ -46,7 +46,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private func reloadArticles(forceDownload: Bool, animated: Bool) {
         
-        errorMessage.accept(value: ArticleCategoriesErrorMessage(title: "", message: "", downloadArticlesButtonTitle: "", hidesDownloadArticlesButton: false, hidesErrorMessage: true, shouldAnimate: animated))
+        errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
         
         loadingMessage.accept(value: NSLocalizedString("articles.loadingView.downloadingArticles", comment: ""))
         isLoading.accept(value: true)
@@ -64,14 +64,10 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
                     self?.categories.accept(value: articleManifest.categories)
                 case .failure(let error):
                     self?.categories.accept(value: [])
-                    let errorTitle: String = NSLocalizedString("articles.downloadingArticles.errorMessage.title", comment: "")
                     let errorMessage: String = error.localizedDescription
                     self?.errorMessage.accept(
-                        value: ArticleCategoriesErrorMessage(
-                            title: errorTitle,
+                        value: ArticlesErrorMessage(
                             message: errorMessage,
-                            downloadArticlesButtonTitle: NSLocalizedString("articles.downloadArticlesButton.title.retryDownload", comment: ""),
-                            hidesDownloadArticlesButton: false,
                             hidesErrorMessage: false,
                             shouldAnimate: true
                     ))

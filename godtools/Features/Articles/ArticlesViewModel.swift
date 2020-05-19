@@ -21,6 +21,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
     required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articlesService: ArticlesService, analytics: AnalyticsContainer) {
         
@@ -33,14 +34,14 @@ class ArticlesViewModel: ArticlesViewModelType {
         
         navTitle.accept(value: category.title)
         
-        loadArticles(category: category)
+        reloadArticles(category: category, animated: false)
     }
     
     deinit {
         articlesService.cancel()
     }
     
-    private func loadArticles(category: ArticleCategory) {
+    private func reloadArticles(category: ArticleCategory, animated: Bool) {
         
         let cachedArticleImportData: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(
             godToolsResource: godToolsResource,
@@ -48,6 +49,8 @@ class ArticlesViewModel: ArticlesViewModelType {
         )
         
         if cachedArticleImportData.isEmpty {
+            
+            errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
             
             isLoading.accept(value: true)
             
@@ -61,8 +64,14 @@ class ArticlesViewModel: ArticlesViewModelType {
                         
                     case .success( _):
                         self?.reloadArticleAemImportDataFromCache(category: category)
-                    case .failure( _):
-                        break
+                    case .failure( let error):
+                        let errorMessage: String = error.localizedDescription
+                        self?.errorMessage.accept(
+                            value: ArticlesErrorMessage(
+                                message: errorMessage,
+                                hidesErrorMessage: false,
+                                shouldAnimate: true
+                        ))
                     }
                 }
             }
@@ -88,5 +97,9 @@ class ArticlesViewModel: ArticlesViewModelType {
     
     func articleTapped(articleAemImportData: RealmArticleAemImportData) {
         flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, godToolsResource: godToolsResource, articleAemImportData: articleAemImportData))
+    }
+    
+    func downloadArticlesTapped() {
+        reloadArticles(category: category, animated: true)
     }
 }

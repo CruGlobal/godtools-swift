@@ -16,7 +16,7 @@ protocol ArticleCategoriesViewModelType {
     var navTitle: ObservableValue<String> { get }
     var loadingMessage: ObservableValue<String> { get }
     var isLoading: ObservableValue<Bool> { get }
-    var errorMessage: ObservableValue<ArticleCategoriesErrorMessage> { get }
+    var errorMessage: ObservableValue<ArticlesErrorMessage> { get }
     
     func pageViewed()
     func downloadArticlesTapped()

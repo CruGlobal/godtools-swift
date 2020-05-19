@@ -145,8 +145,12 @@
 		452036CF24005B2B002B2453 /* RequestResponse+RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036CE24005B2B002B2453 /* RequestResponse+RequestResult.swift */; };
 		452036D124005B5B002B2453 /* RequestClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D024005B5B002B2453 /* RequestClientError.swift */; };
 		452036D324006372002B2453 /* RequestClientErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036D224006372002B2453 /* RequestClientErrorType.swift */; };
-		4521730D24741D32001AAD8F /* ArticleCategoriesErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521730C24741D32001AAD8F /* ArticleCategoriesErrorMessage.swift */; };
+		4521730D24741D32001AAD8F /* ArticlesErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521730C24741D32001AAD8F /* ArticlesErrorMessage.swift */; };
 		4521730F24742D01001AAD8F /* ResourceCacheValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521730E24742D01001AAD8F /* ResourceCacheValidation.swift */; };
+		452173132474540E001AAD8F /* ArticlesErrorMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452173122474540E001AAD8F /* ArticlesErrorMessageView.swift */; };
+		4521731524745432001AAD8F /* ArticlesErrorMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4521731424745432001AAD8F /* ArticlesErrorMessageView.xib */; };
+		4521731724745441001AAD8F /* ArticlesErrorMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521731624745441001AAD8F /* ArticlesErrorMessageViewModel.swift */; };
+		4521731924745A5A001AAD8F /* UIView+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4521731824745A5A001AAD8F /* UIView+Animations.swift */; };
 		45284690244514D500F12B2F /* MasterHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528468F244514D500F12B2F /* MasterHomeViewModel.swift */; };
 		45284692244514E300F12B2F /* MasterHomeViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45284691244514E300F12B2F /* MasterHomeViewModelType.swift */; };
 		452AB5822446058300445050 /* ChooseLanguageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452AB5812446058300445050 /* ChooseLanguageView.xib */; };
@@ -691,8 +695,12 @@
 		452036CE24005B2B002B2453 /* RequestResponse+RequestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RequestResponse+RequestResult.swift"; sourceTree = "<group>"; };
 		452036D024005B5B002B2453 /* RequestClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestClientError.swift; sourceTree = "<group>"; };
 		452036D224006372002B2453 /* RequestClientErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestClientErrorType.swift; sourceTree = "<group>"; };
-		4521730C24741D32001AAD8F /* ArticleCategoriesErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategoriesErrorMessage.swift; sourceTree = "<group>"; };
+		4521730C24741D32001AAD8F /* ArticlesErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesErrorMessage.swift; sourceTree = "<group>"; };
 		4521730E24742D01001AAD8F /* ResourceCacheValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCacheValidation.swift; sourceTree = "<group>"; };
+		452173122474540E001AAD8F /* ArticlesErrorMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesErrorMessageView.swift; sourceTree = "<group>"; };
+		4521731424745432001AAD8F /* ArticlesErrorMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ArticlesErrorMessageView.xib; sourceTree = "<group>"; };
+		4521731624745441001AAD8F /* ArticlesErrorMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesErrorMessageViewModel.swift; sourceTree = "<group>"; };
+		4521731824745A5A001AAD8F /* UIView+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations.swift"; sourceTree = "<group>"; };
 		4528468F244514D500F12B2F /* MasterHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewModel.swift; sourceTree = "<group>"; };
 		45284691244514E300F12B2F /* MasterHomeViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterHomeViewModelType.swift; sourceTree = "<group>"; };
 		452AB5812446058300445050 /* ChooseLanguageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChooseLanguageView.xib; sourceTree = "<group>"; };
@@ -1591,7 +1599,7 @@
 		4521730B24741D27001AAD8F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4521730C24741D32001AAD8F /* ArticleCategoriesErrorMessage.swift */,
+				4521730C24741D32001AAD8F /* ArticlesErrorMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1889,6 +1897,9 @@
 				45647252244F782D00CB202D /* ArticleCell.xib */,
 				45647254244F783C00CB202D /* ArticleCellViewModel.swift */,
 				45647256244F784500CB202D /* ArticleCellViewModelType.swift */,
+				452173122474540E001AAD8F /* ArticlesErrorMessageView.swift */,
+				4521731424745432001AAD8F /* ArticlesErrorMessageView.xib */,
+				4521731624745441001AAD8F /* ArticlesErrorMessageViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2092,6 +2103,7 @@
 			isa = PBXGroup;
 			children = (
 				45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */,
+				4521731824745A5A001AAD8F /* UIView+Animations.swift */,
 				45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */,
 				45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */,
 			);
@@ -2893,6 +2905,7 @@
 				4556AED723E221FE002C15E8 /* NotoSansMyanmar-Bold.ttf in Resources */,
 				4564722A244F212D00CB202D /* test_for_zip_file_contents_cache.zip in Resources */,
 				4FF7FF592284D062005C8BE1 /* 36ec96dc7e53cf2387e448a34740c599fe6fb3c51a597fc49667664ca2828e52.png in Resources */,
+				4521731524745432001AAD8F /* ArticlesErrorMessageView.xib in Resources */,
 				4556AEE223E23B2C002C15E8 /* OnboardingTutorialBackgroundCell.xib in Resources */,
 				45647247244F6FAB00CB202D /* ArticleCategoryCell.xib in Resources */,
 				45668E6D23E0E1CC002728E7 /* OnboardingWelcomeView.xib in Resources */,
@@ -3175,7 +3188,7 @@
 				45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */,
 				45869ECE24530BD000733B0C /* FileCache.swift in Sources */,
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
-				4521730D24741D32001AAD8F /* ArticleCategoriesErrorMessage.swift in Sources */,
+				4521730D24741D32001AAD8F /* ArticlesErrorMessage.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
 				EC98C0D51F1EE27E00A68FF5 /* UIFont.swift in Sources */,
 				4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */,
@@ -3250,6 +3263,7 @@
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				451DB13C2461DA4200FB14BF /* TractCardProperties.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
+				4521731924745A5A001AAD8F /* UIView+Animations.swift in Sources */,
 				451DB15B2461DAF700FB14BF /* TractCards+ChildSetup.swift in Sources */,
 				451DB0CC2461D90000FB14BF /* TractProperties.swift in Sources */,
 				451DB1AF2461DC3100FB14BF /* TractTab.swift in Sources */,
@@ -3319,6 +3333,7 @@
 				45FCFF3E243D07B800865501 /* BaseFlowController+Alerts.swift in Sources */,
 				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
+				4521731724745441001AAD8F /* ArticlesErrorMessageViewModel.swift in Sources */,
 				451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */,
 				451DB1B12461DCAE00FB14BF /* TractEmails.swift in Sources */,
 				455D7F46244E79F60059EC49 /* NoRequestResultType.swift in Sources */,
@@ -3483,6 +3498,7 @@
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				45EC83752451E16400E8DE48 /* ArticleJcrContent.swift in Sources */,
 				451DB19E2461DC3100FB14BF /* TractEmail.swift in Sources */,
+				452173132474540E001AAD8F /* ArticlesErrorMessageView.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,

@@ -14,10 +14,7 @@ class ArticleCategoriesView: UIViewController {
     
     private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
            
-    @IBOutlet weak private var errorMessageView: UIView!
-    @IBOutlet weak private var errorTitleLabel: UILabel!
-    @IBOutlet weak private var errorMessageLabel: UILabel!
-    @IBOutlet weak private var downloadArticlesButton: UIButton!
+    @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var categoriesTableView: UITableView!
     @IBOutlet weak private var loadingMessageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
@@ -43,9 +40,7 @@ class ArticleCategoriesView: UIViewController {
         setupBinding()
         
         addDefaultNavBackItem()
-        
-        downloadArticlesButton.addTarget(self, action: #selector(handleDownloadArticles(button:)), for: .touchUpInside)
-        
+                
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
         
@@ -103,17 +98,18 @@ class ArticleCategoriesView: UIViewController {
             isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
         
-        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticleCategoriesErrorMessage) in
+        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
                 
             if errorMessage.hidesErrorMessage {
-                self?.hideErrorMessage(animated: errorMessage.shouldAnimate)
+                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
             }
             else {
-                self?.errorTitleLabel.text = errorMessage.title
-                self?.errorMessageLabel.text = errorMessage.message
-                self?.downloadArticlesButton.setTitle(errorMessage.downloadArticlesButtonTitle, for: .normal)
-                self?.downloadArticlesButton.isHidden = errorMessage.hidesDownloadArticlesButton
-                self?.showErrorMessage(animated: errorMessage.shouldAnimate)
+                
+                self?.errorMessageView.configure(
+                    viewModel: ArticlesErrorMessageViewModel(message: errorMessage.message),
+                    delegate: self
+                )
+                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
             }
         }
     }
@@ -129,30 +125,6 @@ class ArticleCategoriesView: UIViewController {
     
     @objc func handleRefreshArticleCategoriesControl() {
         viewModel.refreshArticles()
-    }
-    
-    private func showErrorMessage(animated: Bool) {
-        
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.errorMessageView.alpha = 1
-            }, completion: nil)
-        }
-        else {
-            errorMessageView.alpha = 1
-        }
-    }
-    
-    private func hideErrorMessage(animated: Bool) {
-        
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.errorMessageView.alpha = 0
-            }, completion: nil)
-        }
-        else {
-            errorMessageView.alpha = 0
-        }
     }
 }
 
@@ -193,5 +165,13 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = .lightGray
         
         return cell
+    }
+}
+
+// MARK: - ArticlesErrorMessageViewDelegate
+
+extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+        viewModel.downloadArticlesTapped()
     }
 }
