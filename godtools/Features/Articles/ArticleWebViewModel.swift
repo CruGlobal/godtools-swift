@@ -13,7 +13,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     private let resource: DownloadedResource
     private let godToolsResource: GodToolsResource
     private let articleAemImportData: RealmArticleAemImportData
-    private let articleAemImportService: ArticleAemImportService
+    private let articlesService: ArticlesService
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -23,13 +23,13 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articlesService: ArticlesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.articleAemImportData = articleAemImportData
-        self.articleAemImportService = articleAemImportService
+        self.articlesService = articlesService
         self.analytics = analytics
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
@@ -40,7 +40,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
             filename: articleAemImportData.webArchiveFilename
         )
         
-        switch articleAemImportService.aemWebArchiveFileCache.getFile(location: webArchiveLocation) {
+        switch articlesService.articleAemImportService.aemWebArchiveFileCache.getFile(location: webArchiveLocation) {
         case .success(let url):
             cachedWebArchiveUrl = url
         case .failure( _):

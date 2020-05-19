@@ -13,7 +13,6 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private let resource: DownloadedResource
     private let articlesService: ArticlesService
-    private let articleAemImportService: ArticleAemImportService
     private let analytics: AnalyticsContainer
         
     private weak var flowDelegate: FlowDelegate?
@@ -26,13 +25,12 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticleCategoriesErrorMessage> = ObservableValue(value: ArticleCategoriesErrorMessage(title: "", message: "", downloadArticlesButtonTitle: "", hidesDownloadArticlesButton: false, hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, resourceLatestTranslationServices: ResourceLatestTranslationServices, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.articlesService = articlesService
-        self.articleAemImportService = articleAemImportService
         self.resourceLatestTranslationServices = resourceLatestTranslationServices
         self.analytics = analytics
                 

@@ -13,7 +13,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     private let resource: DownloadedResource
     private let godToolsResource: GodToolsResource
     private let category: ArticleCategory
-    private let articleAemImportService: ArticleAemImportService
+    private let articlesService: ArticlesService
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -22,27 +22,59 @@ class ArticlesViewModel: ArticlesViewModelType {
     let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articlesService: ArticlesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.category = category
-        self.articleAemImportService = articleAemImportService
+        self.articlesService = articlesService
         self.analytics = analytics
         
         navTitle.accept(value: category.title)
         
-        reloadArticleAemImportData(category: category)
+        loadArticles(category: category)
     }
     
     deinit {
-        articleAemImportService.cancel()
+        articlesService.cancel()
+    }
+    
+    private func loadArticles(category: ArticleCategory) {
+        
+        let cachedArticleImportData: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(
+            godToolsResource: godToolsResource,
+            aemTags: category.aemTags
+        )
+        
+        if cachedArticleImportData.isEmpty {
+            
+            isLoading.accept(value: true)
+            
+            articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: true) { [weak self] (result: Result<ArticleManifestXmlParser, Error>) in
+               
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.isLoading.accept(value: false)
+                                    
+                    switch result {
+                        
+                    case .success( _):
+                        self?.reloadArticleAemImportData(category: category)
+                    case .failure( _):
+                        break
+                    }
+                }
+            }
+        }
+        else {
+            reloadArticleAemImportData(category: category)
+        }
     }
     
     private func reloadArticleAemImportData(category: ArticleCategory) {
                 
-        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articleAemImportService.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: category.aemTags)
+        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: category.aemTags)
         cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
             rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
         }
