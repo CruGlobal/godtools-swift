@@ -22,30 +22,33 @@ class ArticleAemImportDataParser {
     }
     
     func parse(aemImportSrc: URL, aemImportJson: [String: Any], godToolsResource: GodToolsResource) -> Result<ArticleAemImportData, Error> {
-                        
-        guard let variation = getPreferredVariation(aemImportSrc: aemImportSrc, aemImportJson: aemImportJson) else {
-            
-            let variationError = NSError(
-                domain: errorDomain,
-                code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because a variation does not exist from the preferred variations.\n preferred variations: \(getPrefferedVariationOrder(aemImportSrc: aemImportSrc))"
-            ])
-            
-            return .failure(variationError)
-        }
-
-        guard let variationJsonDictionary = aemImportJson[variation] as? [String: Any] else {
-            
-            let variationJsonError = NSError(
-                domain: errorDomain,
-                code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)"
-            ])
-            
-            return .failure(variationJsonError)
-        }
+              
+        let variation: String
+        let variationJson: [String: Any]
         
-        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(jsonDictionary: variationJsonDictionary)
+        if let preferredVariation = getPreferredVariation(aemImportSrc: aemImportSrc, aemImportJson: aemImportJson) {
+            
+            variation = preferredVariation
+            
+            guard let variationJsonDictionary = aemImportJson[preferredVariation] as? [String: Any] else {
+                
+                let variationJsonError = NSError(
+                    domain: errorDomain,
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)"
+                ])
+                
+                return .failure(variationJsonError)
+            }
+            
+            variationJson = variationJsonDictionary
+        }
+        else {
+            variation = ""
+            variationJson = aemImportJson
+        }
+                
+        let articleJcrContent: ArticleJcrContent? = articleJcrContentParser.parse(jsonDictionary: variationJson)
         
         let aemImportWebUrl: String = aemImportSrc.absoluteString + "/" + variation + ".html"
         
