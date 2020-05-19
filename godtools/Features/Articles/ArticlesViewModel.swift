@@ -60,7 +60,7 @@ class ArticlesViewModel: ArticlesViewModelType {
                     switch result {
                         
                     case .success( _):
-                        self?.reloadArticleAemImportData(category: category)
+                        self?.reloadArticleAemImportDataFromCache(category: category)
                     case .failure( _):
                         break
                     }
@@ -68,11 +68,11 @@ class ArticlesViewModel: ArticlesViewModelType {
             }
         }
         else {
-            reloadArticleAemImportData(category: category)
+            reloadArticleAemImportDataFromCache(category: category)
         }
     }
     
-    private func reloadArticleAemImportData(category: ArticleCategory) {
+    private func reloadArticleAemImportDataFromCache(category: ArticleCategory) {
                 
         var cachedArticleImportDataArray: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: category.aemTags)
         cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
