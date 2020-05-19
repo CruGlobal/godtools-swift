@@ -11,22 +11,47 @@ import Foundation
 class ResourceLatestTranslationServices {
         
     private let translationsApi: TranslationsApiType
-    
-    private var getTranslationZipDataOperation: OperationQueue?
-        
+            
     let fileCache: ResourcesLatestTranslationsFileCache = ResourcesLatestTranslationsFileCache()
     
     required init(translationsApi: TranslationsApiType) {
         
         self.translationsApi = translationsApi
     }
-    
-    func cancel() {
-        getTranslationZipDataOperation?.cancelAllOperations()
+
+    func getManifestXmlData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) -> OperationQueue? {
+                
+        if let cachedXmlData = getCachedManifestXmlData(godToolsResource: godToolsResource), !forceDownload {
+            
+            complete(cachedXmlData, nil)
+            
+            return nil
+        }
+        else {
+            
+            let fileCacheRef = self.fileCache
+            let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
+                        
+            return downloadTranslationZipDataToCache(godToolsResource: godToolsResource) { (error: Error?) in
+                
+                if let error = error {
+                    complete(nil, error)
+                }
+                else {
+                    
+                    switch fileCacheRef.getData(location: cacheLocation, path: godToolsResource.translationManifestFilename) {
+                    case .success(let xmlData):
+                        complete(xmlData, nil)
+                    case .failure(let error):
+                        complete(nil, error)
+                    }
+                }
+            }
+        }
     }
     
-    func getManifestXmlData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) {
-                
+    func getCachedManifestXmlData(godToolsResource: GodToolsResource) -> Data? {
+        
         let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
         let translationManifestFileName: String = godToolsResource.translationManifestFilename
         
@@ -47,36 +72,13 @@ class ResourceLatestTranslationServices {
                 break
             }
         }
-
-        if let cachedXmlData = cachedXmlData, !forceDownload {
-            
-            complete(cachedXmlData, nil)
-        }
-        else {
-            
-            let fileCacheRef = self.fileCache
-                        
-            downloadTranslationZipDataToCache(godToolsResource: godToolsResource) { [weak self] (error: Error?) in
-                
-                if let error = error {
-                    complete(nil, error)
-                }
-                else {
-                    
-                    switch fileCacheRef.getData(location: cacheLocation, path: translationManifestFileName) {
-                    case .success(let xmlData):
-                        complete(xmlData, nil)
-                    case .failure(let error):
-                        complete(nil, error)
-                    }
-                }
-            }
-        }
+        
+        return cachedXmlData
     }
     
-    private func downloadTranslationZipDataToCache(godToolsResource: GodToolsResource, complete: @escaping ((_ error: Error?) -> Void)) {
+    private func downloadTranslationZipDataToCache(godToolsResource: GodToolsResource, complete: @escaping ((_ error: Error?) -> Void)) -> OperationQueue {
         
-        getTranslationZipDataOperation = translationsApi.getTranslationZipData(translationId: godToolsResource.translationId, complete: { [weak self] (response: RequestResponse, result: RequestResult<Data, Error>) in
+        return translationsApi.getTranslationZipData(translationId: godToolsResource.translationId, complete: { [weak self] (response: RequestResponse, result: RequestResult<Data, Error>) in
             
             switch result {
                 

@@ -180,3 +180,8 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Alerts
 "alert.action.ok" = "OK";
+
+// Articles
+"articles.loadingView.downloadingArticles" = "Downloading articles...";
+"articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
+"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";

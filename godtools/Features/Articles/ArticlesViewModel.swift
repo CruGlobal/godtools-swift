@@ -13,7 +13,6 @@ class ArticlesViewModel: ArticlesViewModelType {
     private let resource: DownloadedResource
     private let godToolsResource: GodToolsResource
     private let category: ArticleCategory
-    private let articleManifest: ArticleManifestType
     private let articleAemImportService: ArticleAemImportService
     private let analytics: AnalyticsContainer
     
@@ -23,23 +22,18 @@ class ArticlesViewModel: ArticlesViewModelType {
     let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleAemImportService: ArticleAemImportService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.category = category
-        self.articleManifest = articleManifest
         self.articleAemImportService = articleAemImportService
         self.analytics = analytics
         
         navTitle.accept(value: category.title)
         
-        isLoading.accept(value: true)
-        articleAemImportService.downloadToCacheAndWebArchive(godToolsResource: godToolsResource, aemImportSrcs: articleManifest.aemImportSrcs, forceDownload: false) { [weak self] in
-            self?.reloadArticleAemImportData(category: category)
-            self?.isLoading.accept(value: false)
-        }
+        reloadArticleAemImportData(category: category)
     }
     
     deinit {

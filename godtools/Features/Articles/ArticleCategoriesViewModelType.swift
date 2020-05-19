@@ -14,9 +14,12 @@ protocol ArticleCategoriesViewModelType {
     var resourceLatestTranslationServices: ResourceLatestTranslationServices { get }
     var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }
+    var loadingMessage: ObservableValue<String> { get }
     var isLoading: ObservableValue<Bool> { get }
+    var errorMessage: ObservableValue<ArticleCategoriesErrorMessage> { get }
     
     func pageViewed()
+    func downloadArticlesTapped()
     func refreshArticles()
     func articleTapped(category: ArticleCategory)
 }

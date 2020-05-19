@@ -42,10 +42,10 @@ class TranslationsApi: TranslationsApiType {
         )
     }
     
-    private func newTranslationZipDataOperation(translationId: String) -> RequestOperation<NoRequestResultType, NoRequestResultType> {
+    private func newTranslationZipDataOperation(translationId: String) -> RequestOperation {
         
         let urlRequest = newTranslationZipDataRequest(translationId: translationId)
-        let operation: RequestOperation<NoRequestResultType, NoRequestResultType> = RequestOperation(
+        let operation = RequestOperation(
             session: session,
             urlRequest: urlRequest
         )
@@ -57,8 +57,10 @@ class TranslationsApi: TranslationsApiType {
         
         let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
         
-        return translationZipDataOperation.executeRequest { (response: RequestResponse, result: RequestResult<NoRequestResultType, NoRequestResultType>) in
+        return translationZipDataOperation.executeRequest { (response: RequestResponse) in
                 
+            let result: RequestResult<NoRequestResultType, NoRequestResultType> = response.getResult()
+            
             let dataResult: RequestResult<Data, Error>
             
             switch result {

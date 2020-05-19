@@ -191,7 +191,7 @@ class ArticleAemImportOperation: Operation {
     }
     
     private func handleOperationCancelled() {
-        
+                
         let cancelledError = NSError(
             domain: errorDomain,
             code: NSURLErrorCancelled,
@@ -204,7 +204,7 @@ class ArticleAemImportOperation: Operation {
     private var unknownError: Error {
         return NSError(
             domain: errorDomain,
-            code: NSURLErrorCancelled,
+            code: -1,
             userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."]
         )
     }

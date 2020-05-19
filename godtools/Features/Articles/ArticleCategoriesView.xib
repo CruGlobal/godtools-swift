@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticleCategoriesView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="categoriesTableView" destination="Ryh-T7-ckk" id="T7V-fb-fwC"/>
+                <outlet property="downloadArticlesButton" destination="Gex-Nj-VNY" id="QeQ-QZ-oRk"/>
+                <outlet property="errorMessageLabel" destination="8Zo-Tx-gCO" id="r22-M3-wRR"/>
+                <outlet property="errorMessageView" destination="v43-40-rKL" id="1D3-Ri-WPd"/>
+                <outlet property="errorTitleLabel" destination="yV7-a2-ucU" id="g2t-U6-euG"/>
+                <outlet property="loadingMessageLabel" destination="xA3-hw-Lav" id="AWe-G5-zgA"/>
                 <outlet property="loadingView" destination="08p-lk-op8" id="IXh-MY-etd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="GoM-my-abu"/>
             </connections>
@@ -20,22 +33,74 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ryh-T7-ckk" userLabel="categoriesTableView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v43-40-rKL" userLabel="errorMessageView">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yV7-a2-ucU" userLabel="errorTitleLabel">
+                            <rect key="frame" x="30" y="60" width="354" height="21.5"/>
+                            <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Zo-Tx-gCO" userLabel="errorMessageLabel">
+                            <rect key="frame" x="30" y="91.5" width="354" height="86"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gex-Nj-VNY" userLabel="downloadArticlesButton">
+                            <rect key="frame" x="30" y="227.5" width="354" height="50"/>
+                            <color key="backgroundColor" red="0.21176470589999999" green="0.57647058819999997" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="ZLH-9s-7xS"/>
+                            </constraints>
+                            <state key="normal" title="Download">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                </tableView>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="8Zo-Tx-gCO" secondAttribute="trailing" constant="30" id="08g-C8-ajb"/>
+                        <constraint firstAttribute="trailing" secondItem="Gex-Nj-VNY" secondAttribute="trailing" constant="30" id="92e-Ec-ZfI"/>
+                        <constraint firstItem="Gex-Nj-VNY" firstAttribute="top" secondItem="8Zo-Tx-gCO" secondAttribute="bottom" constant="50" id="BJP-2g-7Wc"/>
+                        <constraint firstItem="yV7-a2-ucU" firstAttribute="top" secondItem="v43-40-rKL" secondAttribute="top" constant="60" id="Frw-kU-MPn"/>
+                        <constraint firstAttribute="trailing" secondItem="yV7-a2-ucU" secondAttribute="trailing" constant="30" id="MS3-wk-37w"/>
+                        <constraint firstItem="8Zo-Tx-gCO" firstAttribute="top" secondItem="yV7-a2-ucU" secondAttribute="bottom" constant="10" id="SHR-rF-JDa"/>
+                        <constraint firstItem="yV7-a2-ucU" firstAttribute="leading" secondItem="v43-40-rKL" secondAttribute="leading" constant="30" id="gq4-lf-MWx"/>
+                        <constraint firstItem="8Zo-Tx-gCO" firstAttribute="leading" secondItem="v43-40-rKL" secondAttribute="leading" constant="30" id="wHx-dQ-Ebe"/>
+                        <constraint firstItem="Gex-Nj-VNY" firstAttribute="leading" secondItem="v43-40-rKL" secondAttribute="leading" constant="30" id="zNf-Ov-Xdb"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Downloading articles..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xA3-hw-Lav" userLabel="loadingMessageLabel">
+                    <rect key="frame" x="30" y="397.5" width="354" height="20.5"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="08p-lk-op8" userLabel="loadingView">
                     <rect key="frame" x="197" y="438" width="20" height="20"/>
                     <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </activityIndicatorView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ryh-T7-ckk" userLabel="categoriesTableView">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="08p-lk-op8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8yO-Pu-NKn"/>
+                <constraint firstItem="v43-40-rKL" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="DRA-sc-ZbZ"/>
+                <constraint firstItem="xA3-hw-Lav" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="JEA-bi-GUY"/>
+                <constraint firstItem="v43-40-rKL" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="LRi-i7-o9J"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xA3-hw-Lav" secondAttribute="trailing" constant="30" id="RR8-bz-U3s"/>
+                <constraint firstItem="v43-40-rKL" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="bdv-AG-RQQ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ryh-T7-ckk" secondAttribute="trailing" id="dUO-jY-Pnq"/>
                 <constraint firstItem="08p-lk-op8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="l8M-pq-xUu"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Ryh-T7-ckk" secondAttribute="bottom" id="njH-xz-ZRg"/>
+                <constraint firstItem="08p-lk-op8" firstAttribute="top" secondItem="xA3-hw-Lav" secondAttribute="bottom" constant="20" id="ntI-mV-S8P"/>
                 <constraint firstItem="Ryh-T7-ckk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qZ3-9e-elr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="v43-40-rKL" secondAttribute="bottom" id="yhM-5c-cUM"/>
                 <constraint firstItem="Ryh-T7-ckk" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="zwC-fB-ygL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

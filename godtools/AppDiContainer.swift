@@ -113,4 +113,11 @@ class AppDiContainer {
             realm: realmDatabase.mainThreadRealm
         )
     }
+    
+    var articlesService: ArticlesService {
+        return ArticlesService(
+            resourceLatestTranslationServices: resourceLatestTranslationServices,
+            realm: realmDatabase.mainThreadRealm
+        )
+    }
 }
