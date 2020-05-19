@@ -154,7 +154,7 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
+    init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.manifestProperties = manifestProperties
@@ -192,6 +192,10 @@ class BaseTractElement: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func reset() {
+        
     }
     
     // MARK: - Setup
@@ -408,3 +412,4 @@ class BaseTractElement: UIView {
         return parent!.delegate
     }
 }
+
