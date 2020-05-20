@@ -11,16 +11,14 @@ import SnowplowTracker
 import TheKeyOAuthSwift
 
 class SnowplowAnalytics: SnowplowAnalyticsType  {
-
+   
     private let serialQueue: DispatchQueue = DispatchQueue(label: "snowplow.serial.queue")
     private let tracker: SPTracker
     private let keyAuthClient: TheKeyOAuthClient
     private let loggingEnabled: Bool
     
-    private var appName: String
-    private var visitorMarketingCloudID: String
-    private let ssoGuid: String
-    private let grMasterPersonId: String
+    private var appName: String = ""
+    private var visitorMarketingCloudID: String = ""
     
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
@@ -61,7 +59,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         })
     }
     
-    func configure (adobeAnalytics: AdobeAnalytics) {
+    func configure (adobeAnalytics: AdobeAnalyticsType) {
         if isConfigured || isConfiguring {
             return
         }
@@ -82,10 +80,10 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
 
     func trackScreenView(screenName: String) {
-        createDefaultProperties(screenName: screenName) { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
+        createDefaultProperties() { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
             let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
                 builder.setName(screenName)
-                builder.setContexts(NSMutableArray(array: defaultProperties))
+                builder.setContexts(NSMutableArray(object: defaultProperties))
             }
             
             DispatchQueue.global().async { [weak self] in
@@ -96,13 +94,11 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
     }
 
-    func trackAction(action: String, contexts: [[String: Any]]) {
-        createDefaultProperties(screenName: screenName) { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
+    func trackAction(action: String) {
+        createDefaultProperties() { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
             let event = SPStructured.build { (builder: SPStructuredBuilder) in
                 builder.setAction(action)
-                if !contexts.isEmpty {
-                    builder.setContexts(NSMutableArray(array: contexts))
-                }
+                builder.setContexts(NSMutableArray(object: defaultProperties))
             }
         
             DispatchQueue.global().async { [weak self] in
@@ -113,7 +109,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         log(method: "trackAction()", label: "action", labelValue: action, data: nil)
     }
     
-    private func createDefaultProperties(screenName: String?, complete: @escaping ((_ properties: SnowplowAnalyticsProperties) -> Void)) {
+    private func createDefaultProperties(complete: @escaping ((_ properties: SnowplowAnalyticsProperties) -> Void)) {
         
         let appName: String = self.appName
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil

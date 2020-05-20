@@ -24,7 +24,6 @@ class ToolOpenedAnalytics {
         let eventName = "tool-opened"
         
         appsFlyer.trackEvent(eventName: eventName, data: nil)
-        snowplowAnalytics.trackAction(action: eventName, contexts: [])
     }
     
     func trackFirstToolOpenedIfNeeded() {
@@ -34,7 +33,6 @@ class ToolOpenedAnalytics {
             let eventName = "first-tool-opened"
             
             appsFlyer.trackEvent(eventName: eventName, data: nil)
-            snowplowAnalytics.trackAction(action: eventName, contexts: [])
             
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()

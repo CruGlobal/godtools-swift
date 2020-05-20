@@ -10,6 +10,7 @@ import Foundation
 
 protocol AdobeAnalyticsType {
     
+    var appName: String { get }
     var visitorMarketingCloudID: String { get }
     
     func configure()

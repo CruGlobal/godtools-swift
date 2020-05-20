@@ -44,7 +44,7 @@ class AppDiContainer {
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, loggingEnabled: analyticsLoggingEnabled)
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)

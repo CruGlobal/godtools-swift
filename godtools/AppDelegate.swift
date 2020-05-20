@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.analytics.appsFlyer.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
         
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
+        
+        appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
                 
         resetStateIfUITesting()
         
