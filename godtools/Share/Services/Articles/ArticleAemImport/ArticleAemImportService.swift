@@ -14,10 +14,9 @@ class ArticleAemImportService {
     private let aemImportApi: ArticleAemImportApi = ArticleAemImportApi()
     private let aemImportDataRealmCache: RealmArticleAemImportDataCache
     private let aemWebArchiver: WebArchiveQueue = WebArchiveQueue()
-    private let cacheValidation: ArticleAemImportServiceCacheValidation = ArticleAemImportServiceCacheValidation()
     private let maxAemImportJsonTreeLevels: Int = 10
     
-    private var downloadOperation: OperationQueue?
+    private var downloadAemImportSrcsOperation: OperationQueue?
     private var archiveOperation: OperationQueue?
         
     let aemWebArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
@@ -27,7 +26,7 @@ class ArticleAemImportService {
     }
     
     func cancel() {
-        downloadOperation?.cancelAllOperations()
+        downloadAemImportSrcsOperation?.cancelAllOperations()
         archiveOperation?.cancelAllOperations()
     }
     
@@ -35,59 +34,47 @@ class ArticleAemImportService {
         return aemImportDataRealmCache.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: aemTags)
     }
     
-    func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], forceDownload: Bool, complete: @escaping (() -> Void)) {
+    func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], complete: @escaping (( _ error: Error?) -> Void)) {
                   
-        if cacheValidation.cacheIsValid(godToolsResource: godToolsResource) {
-                        
-            complete()
-        }
-        else {
+        var downloadedAemImportData: [ArticleAemImportData] = Array()
+        
+        downloadAemImportSrcsOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
             
-            var downloadedAemImportData: [ArticleAemImportData] = Array()
+            switch result {
             
-            downloadOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
+            case .success(let articleAemImportData):
+                downloadedAemImportData.append(articleAemImportData)
+                                    
+            case .failure(let error):
+                print("\n \(String(describing: ArticleAemImportService.self)) Failed to download aemImportSrc with error: \(error)")
+            }
+            
+        }, complete: { [weak self] (error: Error?) in
                 
-                switch result {
+            if let error = error {
                 
-                case .success(let articleAemImportData):
-                    downloadedAemImportData.append(articleAemImportData)
-                                        
-                case .failure(let error):
-                    print("\n \(String(describing: ArticleAemImportService.self)) Failed to download aemImportSrc with error: \(error)")
-                }
+                complete(error)
+            }
+            else if downloadedAemImportData.count > 0 {
                 
-            }, complete: { [weak self] in
-                          
-                if downloadedAemImportData.count > 0 {
+                self?.deleteCachedAemImportData(godToolsResource: godToolsResource, complete: { [weak self] in
                     
-                    DispatchQueue.main.async { [weak self] in
-                        
-                        self?.deleteCachedAemImportData(godToolsResource: godToolsResource)
-                        
-                        self?.archiveAemImportData(aemImportDataObjects: downloadedAemImportData, godToolsResource: godToolsResource, complete: { [weak self] in
-                                                
-                            self?.cacheAemImportData(aemImportDataObjects: downloadedAemImportData, complete: {
-                                
-                                DispatchQueue.main.async { [weak self] in
-                                    
-                                    self?.cacheValidation.setCacheDate(godToolsResource: godToolsResource)
-                                    
-                                    complete()
-                                }
-                            })
+                    self?.archiveAemImportData(aemImportDataObjects: downloadedAemImportData, godToolsResource: godToolsResource, complete: { [weak self] in
+                                            
+                        self?.cacheAemImportData(aemImportDataObjects: downloadedAemImportData, complete: {
+                            
+                            complete(nil)
                         })
-                    }
-                }
-                else {
-                    DispatchQueue.main.async {
-                        complete()
-                    }
-                }
-            })
-        }
+                    })
+                })
+            }
+            else {
+                complete(nil)
+            }
+        })
     }
     
-    private func deleteCachedAemImportData(godToolsResource: GodToolsResource) {
+    private func deleteCachedAemImportData(godToolsResource: GodToolsResource, complete: @escaping (() -> Void)) {
         
         // Delete WebArchives
         
@@ -111,11 +98,15 @@ class ArticleAemImportService {
                 print("\n \(String(describing: ArticleAemImportService.self)) Failed to delete webarchives with error: \(error)")
             }
         }
-
-        // Delete Realm Objects
         
-        if let error = aemImportDataRealmCache.deleteAemImportDataObjects(godToolsResource: godToolsResource) {
-            print("\n \(String(describing: ArticleAemImportService.self)) Failed to delete article aem data from realm with error: \(error)")
+        // Delete Realm Objects
+        DispatchQueue.main.async { [weak self] in
+            
+            if let error = self?.aemImportDataRealmCache.deleteAemImportDataObjects(godToolsResource: godToolsResource) {
+                print("\n \(String(describing: ArticleAemImportService.self)) Failed to delete article aem data from realm with error: \(error)")
+            }
+            
+            complete()
         }
     }
     

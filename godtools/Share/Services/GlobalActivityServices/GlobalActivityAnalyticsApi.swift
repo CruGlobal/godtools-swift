@@ -31,7 +31,7 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
         
-    private var globalAnalyticsOperation: RequestOperation<GlobalActivityAnalytics, RequestClientError> {
+    private var globalAnalyticsOperation: RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,
@@ -46,8 +46,10 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
 
     func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
         
-        return globalAnalyticsOperation.executeRequest { (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
+        return globalAnalyticsOperation.executeRequest { (response: RequestResponse) in
                         
+            let result: RequestResult<GlobalActivityAnalytics, RequestClientError> = response.getResult()
+            
             DispatchQueue.main.async {
                 
                 complete(response, result)
