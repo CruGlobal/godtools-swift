@@ -40,6 +40,8 @@ enum FlowStep {
     
     // tract
     case homeTappedFromTract
+    case shareTappedFromTract(resource: DownloadedResource, language: Language, pageNumber: Int)
+    case sendEmailTappedFromTract(subject: String, message: String, isHtml: Bool)
     
     // tutorial
     case closeTappedFromTutorial
@@ -65,7 +67,7 @@ enum FlowStep {
     case languageTappedFromChooseLanguage
     
     // articles
-    case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articleManifest: ArticleManifestType)
+    case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory)
     case articleTappedFromArticles(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData)
     case sharedTappedFromArticle(articleAemImportData: RealmArticleAemImportData)
 }

@@ -107,10 +107,15 @@ class AppDiContainer {
     var translationZipImporter: TranslationZipImporter {
         return TranslationZipImporter()
     }
-    
-    var articleAemImportService: ArticleAemImportService {
-        return ArticleAemImportService(
+
+    var articlesService: ArticlesService {
+        return ArticlesService(
+            resourceLatestTranslationServices: resourceLatestTranslationServices,
             realm: realmDatabase.mainThreadRealm
         )
+    }
+    
+    var tractManager: TractManager {
+        return TractManager()
     }
 }

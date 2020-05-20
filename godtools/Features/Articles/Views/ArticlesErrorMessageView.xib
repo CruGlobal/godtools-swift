@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Semibold.otf">
+            <string>SFProText-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticlesErrorMessageView" customModule="godtools" customModuleProvider="target">
+            <connections>
+                <outlet property="downloadArticlesButton" destination="FUB-aF-Xqj" id="CXo-cL-23u"/>
+                <outlet property="messageLabel" destination="sAA-Mm-HM5" id="a5g-90-Sht"/>
+                <outlet property="titleLabel" destination="yDs-sX-aeH" id="unw-Fe-TDS"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="XNB-cv-HdO">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDs-sX-aeH" userLabel="titleLabel">
+                    <rect key="frame" x="30" y="60" width="354" height="21.5"/>
+                    <fontDescription key="fontDescription" name="SFProText-Semibold" family="SF Pro Text" pointSize="18"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAA-Mm-HM5" userLabel="messageLabel">
+                    <rect key="frame" x="30" y="91.5" width="354" height="86"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="18"/>
+                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FUB-aF-Xqj" userLabel="downloadArticlesButton">
+                    <rect key="frame" x="30" y="227.5" width="354" height="50"/>
+                    <color key="backgroundColor" red="0.21176470589999999" green="0.57647058819999997" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="LBU-b6-PN3"/>
+                    </constraints>
+                    <state key="normal" title="Download">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="FUB-aF-Xqj" secondAttribute="trailing" constant="30" id="8E1-ac-q7b"/>
+                <constraint firstItem="sAA-Mm-HM5" firstAttribute="top" secondItem="yDs-sX-aeH" secondAttribute="bottom" constant="10" id="C0d-Ew-W2n"/>
+                <constraint firstAttribute="trailing" secondItem="yDs-sX-aeH" secondAttribute="trailing" constant="30" id="EAR-ir-3UK"/>
+                <constraint firstItem="FUB-aF-Xqj" firstAttribute="leading" secondItem="XNB-cv-HdO" secondAttribute="leading" constant="30" id="HN5-S0-pdf"/>
+                <constraint firstItem="sAA-Mm-HM5" firstAttribute="leading" secondItem="XNB-cv-HdO" secondAttribute="leading" constant="30" id="LEn-XO-4EC"/>
+                <constraint firstItem="yDs-sX-aeH" firstAttribute="top" secondItem="XNB-cv-HdO" secondAttribute="top" constant="60" id="Wbr-pJ-Ey6"/>
+                <constraint firstItem="FUB-aF-Xqj" firstAttribute="top" secondItem="sAA-Mm-HM5" secondAttribute="bottom" constant="50" id="ZE8-cf-RnW"/>
+                <constraint firstAttribute="trailing" secondItem="sAA-Mm-HM5" secondAttribute="trailing" constant="30" id="bIz-53-Lh2"/>
+                <constraint firstItem="yDs-sX-aeH" firstAttribute="leading" secondItem="XNB-cv-HdO" secondAttribute="leading" constant="30" id="u8Z-nH-bLg"/>
+            </constraints>
+            <point key="canvasLocation" x="-348" y="-194"/>
+        </view>
+    </objects>
+</document>

@@ -8,6 +8,7 @@
 
 import UIKit
 import TheKeyOAuthSwift
+import MessageUI
 
 class BaseFlowController: NSObject, FlowDelegate {
     
@@ -160,10 +161,70 @@ class BaseFlowController: NSObject, FlowDelegate {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
-                        
+                   
+        // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
             _ = navigationController.popToRootViewController(animated: true)
             resetNavigationControllerColorToDefault()
+            
+        case .shareTappedFromTract(let resource, let language, let pageNumber):
+            
+            let viewModel = ShareToolViewModel(
+                resource: resource,
+                language: language,
+                pageNumber: pageNumber,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ShareToolView(viewModel: viewModel)
+            
+            navigationController.present(
+                view.controller,
+                animated: true,
+                completion: nil
+            )
+            
+        case .sendEmailTappedFromTract(let subject, let message, let isHtml):
+            
+            if MFMailComposeViewController.canSendMail() {
+                
+                let finishedSendingMail = CallbackHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let viewModel = MailViewModel(
+                    toRecipients: [],
+                    subject: subject,
+                    message: message,
+                    isHtml: isHtml,
+                    finishedSendingMailHandler: finishedSendingMail
+                )
+                
+                let view = MailView(viewModel: viewModel)
+                
+                navigationController.present(view, animated: true, completion: nil)
+            }
+            else {
+                
+                let handler = AlertMessageViewAcceptHandler { [weak self] in
+                    self?.navigationController.dismiss(animated: true, completion: nil)
+                }
+                
+                let title: String = "GodTools"
+                let message: String = NSLocalizedString("error_can_not_send_email", comment: "")
+                let acceptedTitle: String = NSLocalizedString("ok", comment: "")
+                
+                let viewModel = AlertMessageViewModel(
+                    title: title,
+                    message: message,
+                    acceptActionTitle: acceptedTitle,
+                    handler: handler
+                )
+                
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+            }
             
         default:
             break
@@ -198,13 +259,40 @@ class BaseFlowController: NSObject, FlowDelegate {
         
         case .tract:
             
+            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
+            let languagesManager: LanguagesManager = appDiContainer.languagesManager
+            var primaryLanguage: Language?
+            if let settingsPrimaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
+                primaryLanguage = settingsPrimaryLanguage
+            }
+            
+            var resourceSupportsPrimaryLanguage: Bool = false
+            for translation in resource.translations {
+                if let code = translation.language?.code {
+                    if code == primaryLanguage?.code {
+                        resourceSupportsPrimaryLanguage = true
+                        break
+                    }
+                }
+            }
+                        
+            if primaryLanguage == nil || !resourceSupportsPrimaryLanguage {
+                primaryLanguage = languagesManager.loadFromDisk(code: "en")
+            }
+            
+            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
+            
             let viewModel = TractViewModel(
                 flowDelegate: self,
                 resource: resource,
+                primaryLanguage: primaryLanguage!,
+                parallelLanguage: parallelLanguage,
+                tractManager: appDiContainer.tractManager,
                 analytics: appDiContainer.analytics,
-                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
+                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+                tractPage: 0
             )
-            let view = TractViewController(viewModel: viewModel)
+            let view = TractView(viewModel: viewModel)
 
             navigationController.pushViewController(view, animated: true)
         
@@ -237,18 +325,30 @@ class BaseFlowController: NSObject, FlowDelegate {
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
+        // TODO: Is this needed? ~Levi
+        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
+        
+        let parallelLanguage: Language?
+        
+        if let parallelLanguageCode = parallelLanguageCode {
+            parallelLanguage = LanguagesManager().loadFromDisk(code: parallelLanguageCode)
+        }
+        else {
+            parallelLanguage = nil
+        }
+                
         let viewModel = TractViewModel(
             flowDelegate: self,
             resource: resource,
+            primaryLanguage: language,
+            parallelLanguage: parallelLanguage,
+            tractManager: appDiContainer.tractManager,
             analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            tractPage: page
         )
-        let view = TractViewController(viewModel: viewModel)
         
-        view.currentPage = page
-        view.universalLinkLanguage = language
-        view.arrivedByUniversalLink = true
-        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
+        let view = TractView(viewModel: viewModel)
         
         navigationController.pushViewController(view, animated: true)
     }

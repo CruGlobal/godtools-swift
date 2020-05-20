@@ -12,55 +12,66 @@ import RealmSwift
 class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private let resource: DownloadedResource
+    private let articlesService: ArticlesService
     private let analytics: AnalyticsContainer
-    
-    private var articleManifest: ArticleManifestXmlParser?
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let godToolsResource: GodToolsResource
     let resourceLatestTranslationServices: ResourceLatestTranslationServices
     let categories: ObservableValue<[ArticleCategory]> = ObservableValue(value: [])
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
+    let loadingMessage: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
+        self.articlesService = articlesService
         self.resourceLatestTranslationServices = resourceLatestTranslationServices
         self.analytics = analytics
                 
         navTitle.accept(value: resource.name)
         
-        reloadArticles(forceDownload: false)
+        reloadArticles(forceDownload: false, animated: false)
     }
     
     deinit {
-        resourceLatestTranslationServices.cancel()
+        
+        articlesService.cancel()
     }
     
-    private func reloadArticles(forceDownload: Bool) {
+    private func reloadArticles(forceDownload: Bool, animated: Bool) {
         
+        errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
+        
+        loadingMessage.accept(value: NSLocalizedString("articles.loadingView.downloadingArticles", comment: ""))
         isLoading.accept(value: true)
         
-        resourceLatestTranslationServices.getManifestXmlData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
-                            
-            if let manifestXmlData = manifestXmlData {
+        articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (result: Result<ArticleManifestXmlParser, Error>) in
+           
+            DispatchQueue.main.async { [weak self] in
                 
-                let articleManifest = ArticleManifestXmlParser(xmlData: manifestXmlData)
-                
-                self?.categories.accept(value: articleManifest.categories)
-                self?.articleManifest = articleManifest
+                self?.loadingMessage.accept(value: "")
                 self?.isLoading.accept(value: false)
-            }
-            else if let error = error {
-                // TODO: Handle error. ~Levi
-                print("\n ERROR: \(error)")
-            }
-            else {
-                // TODO: Handle no data. ~Levi
+                                
+                switch result {
+                    
+                case .success(let articleManifest):
+                    self?.categories.accept(value: articleManifest.categories)
+                case .failure(let error):
+                    self?.categories.accept(value: [])
+                    let errorMessage: String = error.localizedDescription
+                    self?.errorMessage.accept(
+                        value: ArticlesErrorMessage(
+                            message: errorMessage,
+                            hidesErrorMessage: false,
+                            shouldAnimate: true
+                    ))
+                }
             }
         }
     }
@@ -69,18 +80,16 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Categories", siteSection: resource.code, siteSubSection: "")
     }
     
+    func downloadArticlesTapped() {
+        reloadArticles(forceDownload: true, animated: true)
+    }
+    
     func refreshArticles() {
-        reloadArticles(forceDownload: true)
+        reloadArticles(forceDownload: true, animated: true)
     }
     
     func articleTapped(category: ArticleCategory) {
         
-        if let articleManifest = articleManifest {
-            flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, godToolsResource: godToolsResource, category: category, articleManifest: articleManifest))
-        }
-        else {
-            // TODO: Show Error. ~Levi
-            // There is no way for someone to move on to an article without the article manifest xml parser being created first because categories come from there.
-        }
+        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, godToolsResource: godToolsResource, category: category))
     }
 }

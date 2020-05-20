@@ -23,7 +23,7 @@ class ArticleAemImportApi {
         configuration.httpShouldSetCookies = false
         configuration.httpCookieStorage = nil
         
-        configuration.timeoutIntervalForRequest = 60
+        configuration.timeoutIntervalForRequest = 20
             
         session = URLSession(configuration: configuration)
     }
@@ -38,24 +38,43 @@ class ArticleAemImportApi {
         )
     }
     
-    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
+    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: @escaping ((_ error: Error?) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [ArticleAemImportOperation] = Array()
+        var didCompleteWithError: Bool = false
                 
         for aemImportSrc in aemImportSrcs {
             
-            let operation = newAemImportOperation(godToolsResource: godToolsResource, aemImportSrc: aemImportSrc, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels)
+            let operation = newAemImportOperation(
+                godToolsResource: godToolsResource,
+                aemImportSrc: aemImportSrc,
+                maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels
+            )
             
-            operation.completionHandler { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
+            operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
+            
+                guard !didCompleteWithError else {
+                    return
+                }
+                
+                if let error = response.error, response.notConnectedToInternet {
+                    
+                    didCompleteWithError = true
+                    
+                    queue.cancelAllOperations()
+                    
+                    complete(error)
+                    
+                    return
+                }
                 
                 didDownloadAemImport(response, result)
                 
-                let finished: Bool = queue.operations.isEmpty
-                
-                if finished, let complete = complete {
-                    complete()
+                if queue.operations.isEmpty {
+                    
+                    complete(nil)
                 }
             }
             
@@ -65,8 +84,8 @@ class ArticleAemImportApi {
         if operations.count > 0 {
             queue.addOperations(operations, waitUntilFinished: false)
         }
-        else if let complete = complete {
-            complete()
+        else {
+            complete(nil)
         }
         
         return queue

@@ -46,6 +46,7 @@ class ArticlesFlow: Flow {
             flowDelegate: self,
             resource: resource,
             godToolsResource: godToolsResource,
+            articlesService: appDiContainer.articlesService,
             resourceLatestTranslationServices: appDiContainer.resourceLatestTranslationServices,
             analytics: appDiContainer.analytics
         )
@@ -59,15 +60,14 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category, let articleManifest):
+        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
                 godToolsResource: godToolsResource,
                 category: category,
-                articleManifest: articleManifest,
-                articleAemImportService: appDiContainer.articleAemImportService,
+                articlesService: appDiContainer.articlesService,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
@@ -81,7 +81,7 @@ class ArticlesFlow: Flow {
                 resource: resource,
                 godToolsResource: godToolsResource,
                 articleAemImportData: articleAemImportData,
-                articleAemImportService: appDiContainer.articleAemImportService,
+                articlesService: appDiContainer.articlesService,
                 analytics: appDiContainer.analytics
             )
             

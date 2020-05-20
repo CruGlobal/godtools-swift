@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArticlesView" customModule="godtools" customModuleProvider="target">
             <connections>
                 <outlet property="articlesTableView" destination="8vr-UK-a6B" id="DMo-G8-rDg"/>
+                <outlet property="errorMessageView" destination="mkK-5k-Fz7" id="t5f-Oc-Tpi"/>
                 <outlet property="loadingView" destination="2q2-aF-Bme" id="Bkc-OJ-3iM"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Dih-1X-L7J"/>
             </connections>
@@ -20,6 +21,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mkK-5k-Fz7" userLabel="articlesErrorMessageView" customClass="ArticlesErrorMessageView" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8vr-UK-a6B" userLabel="articlesTableView">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -32,8 +37,12 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="8vr-UK-a6B" secondAttribute="bottom" id="2UG-cE-aLr"/>
+                <constraint firstItem="mkK-5k-Fz7" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="GpO-aw-nfY"/>
+                <constraint firstItem="mkK-5k-Fz7" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="H7V-1b-L8j"/>
+                <constraint firstItem="mkK-5k-Fz7" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Qls-4F-WqM"/>
                 <constraint firstItem="2q2-aF-Bme" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="c9w-E0-555"/>
                 <constraint firstItem="2q2-aF-Bme" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eRv-AN-Rhk"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="mkK-5k-Fz7" secondAttribute="bottom" id="hL7-dR-rYX"/>
                 <constraint firstItem="8vr-UK-a6B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="iR0-iV-3JV"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="8vr-UK-a6B" secondAttribute="trailing" id="mxQ-6q-mii"/>
                 <constraint firstItem="8vr-UK-a6B" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="zMj-d9-3pa"/>

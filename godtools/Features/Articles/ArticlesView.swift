@@ -12,6 +12,7 @@ class ArticlesView: UIViewController {
     
     private let viewModel: ArticlesViewModelType
            
+    @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var articlesTableView: UITableView!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
@@ -74,6 +75,21 @@ class ArticlesView: UIViewController {
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
             isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
+        
+        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
+                
+            if errorMessage.hidesErrorMessage {
+                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
+            }
+            else {
+                
+                self?.errorMessageView.configure(
+                    viewModel: ArticlesErrorMessageViewModel(message: errorMessage.message),
+                    delegate: self
+                )
+                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,5 +133,13 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
 
         return cell
+    }
+}
+
+// MARK: - ArticlesErrorMessageViewDelegate
+
+extension ArticlesView: ArticlesErrorMessageViewDelegate {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+        viewModel.downloadArticlesTapped()
     }
 }

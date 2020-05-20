@@ -13,7 +13,9 @@ protocol ArticlesViewModelType {
     var navTitle: ObservableValue<String> { get }
     var articleAemImportData: ObservableValue<[RealmArticleAemImportData]> { get }
     var isLoading: ObservableValue<Bool> { get }
+    var errorMessage: ObservableValue<ArticlesErrorMessage> { get }
     
     func pageViewed()
     func articleTapped(articleAemImportData: RealmArticleAemImportData)
+    func downloadArticlesTapped()
 }

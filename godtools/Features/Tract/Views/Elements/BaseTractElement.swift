@@ -154,7 +154,7 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, withMaxHeight height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
+    init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         self.manifestProperties = manifestProperties
@@ -194,9 +194,14 @@ class BaseTractElement: UIView {
         super.init(coder: aDecoder)
     }
     
+    func reset() {
+        
+    }
+    
     // MARK: - Setup
     
     func setupElement(data: XMLIndexer, startOnY yPosition: CGFloat) {
+        
         self.elementFrame.y = yPosition
         
         let contentElements = self.xmlManager.getContentElements(data)
@@ -244,6 +249,7 @@ class BaseTractElement: UIView {
     }
     
     func buildChildrenForData(_ data: [XMLIndexer]) {
+        
         var currentYPosition: CGFloat = startingYPos()
         var maxYPosition: CGFloat = 0.0
         var elementNumber: Int = 0
@@ -254,31 +260,42 @@ class BaseTractElement: UIView {
         }
         
         for dictionary in data {
-            let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
             
-            for child in dictionary.children {
-                guard let childElement = child.element else { continue }
-                if childElement.name.contains("analytics") {
-                    element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+            let isMobileElement: Bool
+            if let restrictTo = dictionary.element?.allAttributes["restrictTo"]?.text, !restrictTo.isEmpty {
+                isMobileElement = restrictTo.contains("mobile")
+            }
+            else {
+                isMobileElement = true
+            }
+            
+            if isMobileElement {
+                
+                let element = buildElementForDictionary(dictionary, startOnY: currentYPosition, elementNumber: elementNumber)
+                    
+                for child in dictionary.children {
+                    guard let childElement = child.element else { continue }
+                    if childElement.name.contains("analytics") {
+                        element.analyticsUserInfo = TractEventHelper.buildAnalyticsEvents(data: dictionary)
+                    }
                 }
+            
+                self.elements!.append(element)
+                
+                if element.isKind(of: TractCallToAction.self) {
+                    self.didFindCallToAction = true
+                } else if element.isKind(of: TractModals.self) {
+                    continue
+                }
+                
+                if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
+                    maxYPosition = element.elementFrame.yEndPosition()
+                } else {
+                    currentYPosition = element.elementFrame.yEndPosition()
+                }
+                    
+                elementNumber += 1
             }
-            
-        
-            self.elements!.append(element)
-            
-            if element.isKind(of: TractCallToAction.self) {
-                self.didFindCallToAction = true
-            } else if element.isKind(of: TractModals.self) {
-                continue
-            }
-            
-            if self.horizontalContainer && element.elementFrame.yEndPosition() > maxYPosition {
-                maxYPosition = element.elementFrame.yEndPosition()
-            } else {
-                currentYPosition = element.elementFrame.yEndPosition()
-            }
-            
-            elementNumber += 1
         }
         
         if self.isKind(of: TractPageContainer.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
@@ -408,3 +425,4 @@ class BaseTractElement: UIView {
         return parent!.delegate
     }
 }
+
