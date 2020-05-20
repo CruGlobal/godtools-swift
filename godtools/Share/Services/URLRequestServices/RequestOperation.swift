@@ -8,9 +8,9 @@
 
 import Foundation
 
-class RequestOperation<SuccessType: Decodable, ErrorType: Decodable>: Operation {
+class RequestOperation: Operation {
     
-    typealias Completion = ((_ response: RequestResponse, _ result: RequestResult<SuccessType, ErrorType>) -> Void)
+    typealias Completion = ((_ response: RequestResponse) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -25,6 +25,7 @@ class RequestOperation<SuccessType: Decodable, ErrorType: Decodable>: Operation 
     
     private let session: URLSession
     private let urlRequest: URLRequest
+    private let errorDomain: String = String(describing: RequestOperation.self)
     
     private var task: URLSessionDataTask?
     private var completion: Completion?
@@ -64,7 +65,7 @@ class RequestOperation<SuccessType: Decodable, ErrorType: Decodable>: Operation 
         else {
             
             let cancelledError: Error = NSError(
-                domain: "SessionDataOperation",
+                domain: errorDomain,
                 code: NSURLErrorCancelled,
                 userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
             )
@@ -92,10 +93,10 @@ class RequestOperation<SuccessType: Decodable, ErrorType: Decodable>: Operation 
             urlResponse: urlResponse,
             error: error
         )
+                
+        response.log()
         
-        let result: RequestResult<SuccessType, ErrorType> = response.getResult()
-        
-        completion(response, result)
+        completion(response)
     }
     
     // MARK: - State

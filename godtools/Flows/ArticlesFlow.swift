@@ -22,17 +22,31 @@ class ArticlesFlow: Flow {
         self.navigationController = sharedNavigationController
         
         // TODO: Need to think of how to handle grabbing the latest translation without force unwrapping. ~Levi
-        let translation: Translation = resource.getTranslationForLanguage(language)!
+        // TODO: What if a translation does not exist for the provided language? ~Levi
+        
+        var articleTranslation: Translation?
+        
+        if let languageTranslation = resource.getTranslationForLanguage(language) {
+            articleTranslation = languageTranslation
+        }
+        else if let englishLanguage = LanguagesManager().loadFromDisk(code: "en"), let englishTranslation = resource.getTranslationForLanguage(englishLanguage) {
+            articleTranslation = englishTranslation
+        }
+        else if let firstTranslation = resource.translations.first {
+            articleTranslation = firstTranslation
+        }
+        
         let godToolsResource: GodToolsResource = GodToolsResource(
             resource: resource,
             language: language,
-            translation: translation
+            translation: articleTranslation!
         )
         
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
             resource: resource,
             godToolsResource: godToolsResource,
+            articlesService: appDiContainer.articlesService,
             resourceLatestTranslationServices: appDiContainer.resourceLatestTranslationServices,
             analytics: appDiContainer.analytics
         )
@@ -46,15 +60,14 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category, let articleManifest):
+        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
                 godToolsResource: godToolsResource,
                 category: category,
-                articleManifest: articleManifest,
-                articleAemImportService: appDiContainer.articleAemImportService,
+                articlesService: appDiContainer.articlesService,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
@@ -68,7 +81,7 @@ class ArticlesFlow: Flow {
                 resource: resource,
                 godToolsResource: godToolsResource,
                 articleAemImportData: articleAemImportData,
-                articleAemImportService: appDiContainer.articleAemImportService,
+                articlesService: appDiContainer.articlesService,
                 analytics: appDiContainer.analytics
             )
             

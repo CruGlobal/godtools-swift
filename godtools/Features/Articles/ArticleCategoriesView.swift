@@ -11,10 +11,12 @@ import UIKit
 class ArticleCategoriesView: UIViewController {
     
     private let viewModel: ArticleCategoriesViewModelType
-       
-    private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
     
+    private var refreshArticlesControl: UIRefreshControl = UIRefreshControl()
+           
+    @IBOutlet weak private var errorMessageView: ArticlesErrorMessageView!
     @IBOutlet weak private var categoriesTableView: UITableView!
+    @IBOutlet weak private var loadingMessageLabel: UILabel!
     @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     required init(viewModel: ArticleCategoriesViewModelType) {
@@ -38,7 +40,7 @@ class ArticleCategoriesView: UIViewController {
         setupBinding()
         
         addDefaultNavBackItem()
-        
+                
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
         
@@ -51,6 +53,7 @@ class ArticleCategoriesView: UIViewController {
     
     private func setupLayout() {
         
+        // categoriesTableView
         categoriesTableView.register(
             UINib(nibName: ArticleCategoryCell.nibName, bundle: nil),
             forCellReuseIdentifier: ArticleCategoryCell.reuseIdentifier
@@ -87,14 +90,37 @@ class ArticleCategoriesView: UIViewController {
             }
         }
         
+        viewModel.loadingMessage.addObserver(self) { [weak self] (loadingMessage: String) in
+            self?.loadingMessageLabel.text = loadingMessage
+        }
+        
         viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
             isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
+        }
+        
+        viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
+                
+            if errorMessage.hidesErrorMessage {
+                self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
+            }
+            else {
+                
+                self?.errorMessageView.configure(
+                    viewModel: ArticlesErrorMessageViewModel(message: errorMessage.message),
+                    delegate: self
+                )
+                self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)
+            }
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
+    }
+    
+    @objc func handleDownloadArticles(button: UIButton) {
+        viewModel.downloadArticlesTapped()
     }
     
     @objc func handleRefreshArticleCategoriesControl() {
@@ -139,5 +165,13 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = .lightGray
         
         return cell
+    }
+}
+
+// MARK: - ArticlesErrorMessageViewDelegate
+
+extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+        viewModel.downloadArticlesTapped()
     }
 }

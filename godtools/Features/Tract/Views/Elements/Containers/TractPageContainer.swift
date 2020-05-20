@@ -9,6 +9,7 @@
 import UIKit
 import SWXMLHash
 
+// TODO: Is TractPageContainer needed? ~Levi
 class TractPageContainer: BaseTractElement {
     
     override var properties: TractProperties {
@@ -19,8 +20,21 @@ class TractPageContainer: BaseTractElement {
     }
     
     // MARK: - Setup
+    
+    override func reset() {
+        super.reset()
+        
+        if let elements = elements {
+            for element in elements {
+                element.reset()
+            }
+        }
+    }
+    
     static var marginBottom: CGFloat {
-        return UIDevice.current.iPhoneWithNotch() ? TractViewController.iPhoneXMarginBottomToSafeArea : CGFloat(0.0)
+        // TODO: I don't like this because what if there is a new device in the future.  ~Levi
+        let iphoneXMarginBottomToSafeArea: CGFloat = 44
+        return UIDevice.current.iPhoneWithNotch() ? iphoneXMarginBottomToSafeArea : CGFloat(0.0)
     }
     
     override func propertiesKind() -> TractProperties.Type {
