@@ -1,16 +1,15 @@
 //
-//  GTBaseFlowController.swift
+//  AppFlow.swift
 //  godtools
 //
-//  Created by Devserker on 4/19/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 5/20/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
-import TheKeyOAuthSwift
 import MessageUI
 
-class BaseFlowController: NSObject, FlowDelegate {
+class AppFlow: NSObject, FlowDelegate {
     
     private var onboardingFlow: OnboardingFlow?
     private var tutorialFlow: TutorialFlow?
@@ -21,20 +20,24 @@ class BaseFlowController: NSObject, FlowDelegate {
     private var navigationStarted: Bool = false
     
     let appDiContainer: AppDiContainer
+    let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
     let navigationController: UINavigationController
-    
-    var currentViewController: UIViewController?
-    
+        
     init(appDiContainer: AppDiContainer) {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
         
         super.init()
-                
+        
+        rootController.view.frame = UIScreen.main.bounds
+        rootController.view.backgroundColor = UIColor.white
+        
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
         navigationController.setViewControllers([LaunchView()], animated: false)
+        
+        rootController.addChildController(child: navigationController)
     }
     
     private func setupInitialNavigation() {
@@ -71,7 +74,6 @@ class BaseFlowController: NSObject, FlowDelegate {
                 let masterView = MasterHomeViewController(viewModel: viewModel)
 
                 navigationController.setViewControllers([masterView], animated: false)
-                currentViewController = masterView
                 
                 if animated {
                     masterView.view.alpha = 0
@@ -132,10 +134,10 @@ class BaseFlowController: NSObject, FlowDelegate {
             }
             
         case .menuTappedFromHome:
-            displayMenu()
+            navigateToMenu(animated: true)
             
         case .doneTappedFromMenu:
-            dismissMenu()
+            closeMenu(animated: true)
             
         case .toolTappedFromMyTools(let resource):
             navigateToTool(resource: resource)
@@ -317,10 +319,61 @@ class BaseFlowController: NSObject, FlowDelegate {
     }
     
     private func dismissTutorial() {
-        dismissMenu()
+        closeMenu(animated: true)
         navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
         navigationController.dismiss(animated: true, completion: nil)
         tutorialFlow = nil
+    }
+    
+    private func navigateToMenu(animated: Bool) {
+        
+        let menuFlow: MenuFlow = MenuFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer
+        )
+        self.menuFlow = menuFlow
+        
+        rootController.addChildController(child: menuFlow.navigationController)
+        
+        if animated {
+                        
+            let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+            menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
+                        
+            UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                self?.navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
+            }, completion: nil)
+        }
+    }
+    
+    private func closeMenu(animated: Bool) {
+                
+        if let menuFlow = menuFlow {
+                        
+            let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+            
+            menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
+            
+            if animated {
+                
+                UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                    menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
+                    self?.navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                }, completion: { [weak self] ( finished: Bool) in
+                    menuFlow.navigationController.removeAsChildController()
+                    self?.menuFlow = nil
+                })
+            }
+            else {
+                
+                menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
+                navigationController.view.transform = CGAffineTransform(translationX: 0, y: 0)
+                menuFlow.navigationController.removeAsChildController()
+                self.menuFlow = nil
+            }
+        }
     }
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
@@ -371,61 +424,9 @@ class BaseFlowController: NSObject, FlowDelegate {
         navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
                                                                   NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)]
     }
-    
-    func displayMenu(notification: Notification? = nil) {
-        
-        let menuFlow: MenuFlow = MenuFlow(
-            flowDelegate: self,
-            appDiContainer: appDiContainer,
-            sharedNavigationController: navigationController
-        )
-        self.menuFlow = menuFlow
-        
-        let menuView: MenuView = menuFlow.menuView
-        
-        if let menuNotification = notification {
-            if let userInfo = menuNotification.userInfo as? [String: Any] {
-                menuView.isComingFromLoginBanner = userInfo["isSentFromLoginBanner"] as? Bool ?? false
-            }
-        }
-                
-        let navBarHeight = (navigationController.navigationBar.intrinsicContentSize.height) + UIApplication.shared.statusBarFrame.height
-        guard let currentFrame = currentViewController?.view.frame else { return }
-        menuView.view.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY + navBarHeight, width: currentFrame.width, height: currentFrame.height)
-        
-        guard let src = currentViewController else { return }
-        let srcViewWidth = src.view.frame.size.width
-        
-        src.view.superview?.insertSubview(menuView.view, aboveSubview: src.view)
-        menuView.view.transform = CGAffineTransform(translationX: -(srcViewWidth), y: 0)
-        UIView.animate(withDuration: 0.35, delay: 0.0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
-            src.view.transform = CGAffineTransform(translationX: srcViewWidth, y: 0)
-            menuView.view.transform = CGAffineTransform(translationX: 0, y: 0)
-        },completion: { [weak self] finished in
-            self?.navigationController.pushViewController(menuView, animated: false)
-        })
-    }
-    
-    func dismissMenu() {
-        guard let menuView = navigationController.topViewController as? MenuView else { return }
-        guard let dst = currentViewController else { return }
-        let dstViewWidth = dst.view.frame.size.width
-        
-        menuView.view.superview?.insertSubview(dst.view, aboveSubview: (menuView.view))
-        dst.view.transform = CGAffineTransform(translationX: dstViewWidth, y: 0)
-        
-        UIView.animate(withDuration: 0.35, delay: 0.0, options: .curveEaseInOut, animations: {
-            menuView.view.transform = CGAffineTransform(translationX: -(dstViewWidth), y: 0)
-            dst.view.transform = CGAffineTransform(translationX: 0, y: 0)
-        }, completion: { [weak self] finished in
-            self?.menuFlow = nil
-            _ = self?.navigationController.popViewController(animated: false)
-        })
-    }
-    
 }
 
-extension BaseFlowController: UIApplicationDelegate {
+extension AppFlow: UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         if !navigationStarted {
             navigationStarted = true

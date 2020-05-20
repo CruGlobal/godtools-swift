@@ -11,7 +11,6 @@ import MessageUI
 
 class MenuFlow: Flow {
     
-    private(set) var menuView: MenuView!
     private var tutorialFlow: TutorialFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     
@@ -19,15 +18,21 @@ class MenuFlow: Flow {
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
-    var view: UIViewController {
-        return menuView
-    }
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
-        self.navigationController = sharedNavigationController
+        
+        navigationController = UINavigationController()
+        navigationController.navigationBar.barTintColor = UIColor.gtBlue
+        navigationController.navigationBar.tintColor = UIColor.white
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.gtWhite,
+            NSAttributedString.Key.font: UIFont.gtSemiBold(size: 17.0)
+        ]
         
         let viewModel = MenuViewModel(
             flowDelegate: self,
@@ -39,7 +44,17 @@ class MenuFlow: Flow {
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
             analytics: appDiContainer.analytics
         )
-        menuView = MenuView(viewModel: viewModel)
+        let view = MenuView(viewModel: viewModel)
+        
+        navigationController.setViewControllers([view], animated: false)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    var view: UIView {
+        return navigationController.view
     }
     
     func navigate(step: FlowStep) {
@@ -74,6 +89,7 @@ class MenuFlow: Flow {
             flowDelegate?.navigate(step: .startUsingGodToolsTappedFromTutorial)
             
         case .doneTappedFromMenu:
+            print(" menu flow done tapped")
             flowDelegate?.navigate(step: .doneTappedFromMenu)
                         
         case .myAccountTappedFromMenu:
