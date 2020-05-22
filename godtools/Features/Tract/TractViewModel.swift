@@ -207,7 +207,7 @@ class TractViewModel: TractViewModelType {
             AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.code
         ]
         
-        analytics.adobeAnalytics.trackAction(
+        analytics.trackActionAnalytics.trackAction(
             screenName: nil,
             actionName: AdobeAnalyticsConstants.Values.parallelLanguageToggle,
             data: data

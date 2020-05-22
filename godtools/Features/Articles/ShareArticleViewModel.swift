@@ -54,7 +54,7 @@ class ShareArticleViewModel: ShareArticleViewModelType {
             GTConstants.kAnalyticsScreenNameKey: analyticsScreenName
         ]
         
-        analytics.adobeAnalytics.trackAction(
+        analytics.trackActionAnalytics.trackAction(
             screenName: nil,
             actionName: AdobeAnalyticsConstants.Values.share,
             data: data

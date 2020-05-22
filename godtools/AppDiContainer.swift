@@ -44,7 +44,8 @@ class AppDiContainer {
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
+            trackActionAnalytics: trackActionAnalytics
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -69,6 +70,13 @@ class AppDiContainer {
     var toolOpenedAnalytics: ToolOpenedAnalytics {
         return ToolOpenedAnalytics(
             appsFlyer: analytics.appsFlyer,
+            snowplowAnalytics: analytics.snowplowAnalytics
+        )
+    }
+    
+    var trackActionAnalytics: TrackActionAnalytics {
+        return TrackActionAnalytics(
+            adobeAnalytics: analytics.adobeAnalytics,
             snowplowAnalytics: analytics.snowplowAnalytics
         )
     }

@@ -127,7 +127,7 @@ class TutorialViewModel: TutorialViewModelType {
         
         if !youTubeVideoTracked {
             trackedAnalyticsForYouTubeVideoIds.append(youTubeVideoId)
-            analytics.adobeAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
+            analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tutorial Video", data: ["cru.tutorial_video": 1, "video_id": youTubeVideoId])
         }
     }
 }
