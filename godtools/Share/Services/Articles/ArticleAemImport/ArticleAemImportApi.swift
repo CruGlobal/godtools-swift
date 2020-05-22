@@ -38,12 +38,11 @@ class ArticleAemImportApi {
         )
     }
     
-    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: @escaping ((_ error: Error?) -> Void)) -> OperationQueue {
+    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: @escaping (() -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [ArticleAemImportOperation] = Array()
-        var didCompleteWithError: Bool = false
                 
         for aemImportSrc in aemImportSrcs {
             
@@ -55,37 +54,22 @@ class ArticleAemImportApi {
             
             operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
             
-                guard !didCompleteWithError else {
-                    return
-                }
-                
-                if let error = response.error, response.notConnectedToInternet {
-                    
-                    didCompleteWithError = true
-                    
-                    queue.cancelAllOperations()
-                    
-                    complete(error)
-                    
-                    return
-                }
-                
                 didDownloadAemImport(response, result)
                 
                 if queue.operations.isEmpty {
                     
-                    complete(nil)
+                    complete()
                 }
             }
             
             operations.append(operation)
         }
-        
+                
         if operations.count > 0 {
             queue.addOperations(operations, waitUntilFinished: false)
         }
         else {
-            complete(nil)
+            complete()
         }
         
         return queue

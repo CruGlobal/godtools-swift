@@ -46,7 +46,7 @@ class ArticleAemImportOperation: Operation {
     }
     
     override func start() {
-        
+                
         guard !isCancelled else {
             handleOperationCancelled()
             return
@@ -93,7 +93,7 @@ class ArticleAemImportOperation: Operation {
         task = session.dataTask(with: urlJsonRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
             
             if let operation = self {
-                
+                                
                 guard !operation.isCancelled else {
                     operation.handleOperationCancelled()
                     return

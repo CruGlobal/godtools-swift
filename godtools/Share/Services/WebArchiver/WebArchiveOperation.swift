@@ -11,12 +11,6 @@ import Fuzi
 
 class WebArchiveOperation: Operation {
     
-    struct HTMLDocumentData {
-        let mainResource: WebArchiveMainResource
-        let htmlDocument: HTMLDocument
-        let resourceUrls: [String]
-    }
-    
     typealias Completion = ((_ result: Result<WebArchiveOperationResult, Error>) -> Void)
     
     enum ObserverKey: String {
@@ -35,6 +29,7 @@ class WebArchiveOperation: Operation {
     private let urlRequest: URLRequest
     private let includeJavascript: Bool = true
     private let errorDomain: String = String(describing: WebArchiveOperation.self)
+    private let getHtmlResourcesQueue: OperationQueue = OperationQueue()
     
     private var getHtmlDocumentTask: URLSessionDataTask?
     private var getHtmlResourceTask: URLSessionDataTask?
@@ -52,17 +47,15 @@ class WebArchiveOperation: Operation {
     }
     
     override func start() {
-                
+                        
         requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, Error>) in
             
             switch result {
                 
             case .success(let documentData):
-                
-                var resourceUrls: [String] = documentData.resourceUrls
-                
-                self?.requestHtmlDocumentResources(resourceUrls: resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
-                    
+                                
+                self?.requestHtmlDocumentResources(resourceUrls: documentData.resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
+                                        
                     let webArchive = WebArchive(
                         mainResource: documentData.mainResource,
                         webSubresources: resources
@@ -91,73 +84,71 @@ class WebArchiveOperation: Operation {
     
     private func requestHtmlDocumentResources(resourceUrls: [String], complete: @escaping ((_ resources: [WebArchiveResource]) -> Void)) {
         
-        var fetchedResources: [WebArchiveResource] = Array()
-        
-        let totalNumberOfResourcesToFetch: Int = resourceUrls.count
-        var fetchCount: Int = 0
-        
-        for resourceUrlString in resourceUrls {
-            
-            if let resourceUrl = URL(string: resourceUrlString) {
-                
-                requestHtmlDocumentResources(resourceUrl: resourceUrl) { [weak self] (result: Result<WebArchiveResource, Error>) in
-                    
-                    switch result {
-                    case .success(let webArchiveResource):
-                        fetchedResources.append(webArchiveResource)
-                    case .failure( _):
-                        break
-                    }
-                    
-                    fetchCount = fetchCount + 1
-                    
-                    if fetchCount == totalNumberOfResourcesToFetch {
-                        complete(fetchedResources)
-                    }
-                }
-            }
-        }
-    }
-    
-    private func requestHtmlDocumentResources(resourceUrl: URL, complete: @escaping ((_ result: Result<WebArchiveResource, Error>) -> Void)) {
-                
         guard !isCancelled else {
             handleOperationCancelled()
             return
         }
         
-        getHtmlResourceTask = session.dataTask(with: url, completionHandler: { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
-                        
-            let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
-            let mimeType: String = urlResponse?.mimeType ?? ""
-            
-            if let error = error {
-                
-                complete(.failure(error))
-            }
-            else if httpStatusCode == 200, let data = data, !mimeType.isEmpty {
-                
-                let resource = WebArchiveResource(
-                    url: resourceUrl,
-                    data: data,
-                    mimeType: mimeType
-                )
-                
-                complete(.success(resource))
-            }
-            else {
-                
-                let noHtmlData = NSError(
-                    domain: self?.errorDomain ?? "",
-                    code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource, there wasn't sufficent html to parse."
-                ])
-                
-                complete(.failure(noHtmlData))
-            }
-        })
+        var fetchedWebArchiveResources: [WebArchiveResource] = Array()
         
-        getHtmlResourceTask?.resume()
+        var resourceOperations: [RequestOperation] = Array()
+        
+        for resourceUrlString in resourceUrls {
+            
+            if let resourceUrl = URL(string: resourceUrlString) {
+                
+                let operation = RequestOperation(session: session, urlRequest: URLRequest(url: resourceUrl))
+                
+                operation.completionHandler { [weak self] (response: RequestResponse) in
+                    
+                    if let isCancelled = self?.isCancelled {
+                        guard !isCancelled else {
+                            self?.handleOperationCancelled()
+                            return
+                        }
+                    }
+                    
+                    let httpStatusCode: Int = response.httpStatusCode
+                    let mimeType: String = response.urlResponse?.mimeType ?? ""
+                                        
+                    if let error = response.error {
+                        
+                        // Do something with Error?
+                    }
+                    else if httpStatusCode == 200, let data = response.data, !mimeType.isEmpty {
+                        
+                        let webArchiveResource = WebArchiveResource(
+                            url: resourceUrl,
+                            data: data,
+                            mimeType: mimeType
+                        )
+                        
+                        fetchedWebArchiveResources.append(webArchiveResource)
+                    }
+                    else {
+                        
+                        let noHtmlData = NSError(
+                            domain: self?.errorDomain ?? "",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource, there wasn't sufficent html to parse."
+                        ])
+                        
+                        // Do something with Error?
+                    }
+                    
+                    if let queue = self?.getHtmlResourcesQueue, queue.operations.isEmpty {
+                        complete(fetchedWebArchiveResources)
+                    }
+                }
+                
+                resourceOperations.append(operation)
+            }
+        }
+        
+        getHtmlResourcesQueue.addOperations(
+            resourceOperations,
+            waitUntilFinished: false
+        )
     }
     
     private func requestHtmlDocumentData(url: URL, includeJavascript: Bool, complete: @escaping ((_ result: Result<HTMLDocumentData, Error>) -> Void)) {
@@ -180,12 +171,12 @@ class WebArchiveOperation: Operation {
         }
         
         let urlRequest: URLRequest = URLRequest(url: url)
-        
+                
         getHtmlDocumentTask = session.dataTask(with: urlRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
             
             let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
             let mimeType: String = urlResponse?.mimeType ?? ""
-                            
+                                 
             if let error = error {
                 complete(.failure(error))
             }
@@ -240,6 +231,7 @@ class WebArchiveOperation: Operation {
         super.cancel()
         getHtmlDocumentTask?.cancel()
         getHtmlResourceTask?.cancel()
+        getHtmlResourcesQueue.cancelAllOperations()
     }
     
     private func handleOperationCancelled() {
