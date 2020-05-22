@@ -367,6 +367,8 @@
 		45DC81C92412D8E3001913D6 /* AppsFlyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81C82412D8E3001913D6 /* AppsFlyer.swift */; };
 		45DC81CB2412D911001913D6 /* AppsFlyerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DC81CA2412D911001913D6 /* AppsFlyerType.swift */; };
 		45DED956247826CF00B0A71D /* HTMLDocumentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED955247826CF00B0A71D /* HTMLDocumentData.swift */; };
+		45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED9572478401700B0A71D /* WebArchiveOperationError.swift */; };
+		45DED95C247858BE00B0A71D /* ArticleAemImportServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED95B247858BE00B0A71D /* ArticleAemImportServiceError.swift */; };
 		45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E62FB0246C3C2B006F0CD5 /* TractNavBarAttributes.swift */; };
 		45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -890,6 +892,8 @@
 		45DC81C82412D8E3001913D6 /* AppsFlyer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsFlyer.swift; sourceTree = "<group>"; };
 		45DC81CA2412D911001913D6 /* AppsFlyerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsFlyerType.swift; sourceTree = "<group>"; };
 		45DED955247826CF00B0A71D /* HTMLDocumentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLDocumentData.swift; sourceTree = "<group>"; };
+		45DED9572478401700B0A71D /* WebArchiveOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveOperationError.swift; sourceTree = "<group>"; };
+		45DED95B247858BE00B0A71D /* ArticleAemImportServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportServiceError.swift; sourceTree = "<group>"; };
 		45E62FB0246C3C2B006F0CD5 /* TractNavBarAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractNavBarAttributes.swift; sourceTree = "<group>"; };
 		45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBasedTimer.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
@@ -1602,6 +1606,7 @@
 			children = (
 				45DED955247826CF00B0A71D /* HTMLDocumentData.swift */,
 				455F4B9124527C2D00AE6007 /* WebArchive.swift */,
+				45DED9572478401700B0A71D /* WebArchiveOperationError.swift */,
 				45ADD0CB24549F2100E82DD8 /* WebArchiveOperationResult.swift */,
 			);
 			path = Models;
@@ -2073,6 +2078,7 @@
 				45EC838F2451EA5B00E8DE48 /* ArticleAemImportDataType.swift */,
 				45EC836D2451E16400E8DE48 /* ArticleJcrContent.swift */,
 				45EC83912451EA6A00E8DE48 /* ArticleJcrContentType.swift */,
+				45DED95B247858BE00B0A71D /* ArticleAemImportServiceError.swift */,
 				455F4B8224525BEF00AE6007 /* ArticleAemImportSrcProviderType.swift */,
 				455F4B8324525BEF00AE6007 /* MockAemImportsProvider.swift */,
 			);
@@ -3240,6 +3246,7 @@
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,
 				451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */,
 				45284690244514D500F12B2F /* MasterHomeViewModel.swift in Sources */,
+				45DED95C247858BE00B0A71D /* ArticleAemImportServiceError.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				451DB1952461DC3100FB14BF /* TractTitle.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,
@@ -3335,6 +3342,7 @@
 				451DB13D2461DA4200FB14BF /* TractModalProperties.swift in Sources */,
 				0F0352BE1EC0CE97006CD4E5 /* TractManager.swift in Sources */,
 				4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */,
+				45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
 				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,

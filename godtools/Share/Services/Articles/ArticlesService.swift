@@ -47,7 +47,7 @@ class ArticlesService {
                 
                 let articleManifest = ArticleManifestXmlParser(xmlData: manifestXmlData)
                 
-                self?.articleAemImportService.downloadToCacheAndWebArchive(godToolsResource: godToolsResource, aemImportSrcs: articleManifest.aemImportSrcs, complete: { (error: Error?) in
+                self?.articleAemImportService.downloadToCacheAndWebArchive(godToolsResource: godToolsResource, aemImportSrcs: articleManifest.aemImportSrcs, complete: { (error: ArticleAemImportServiceError?) in
                     
                     if let error = error {
                         complete(.failure(error))

@@ -11,7 +11,7 @@ import Fuzi
 
 class WebArchiveOperation: Operation {
     
-    typealias Completion = ((_ result: Result<WebArchiveOperationResult, Error>) -> Void)
+    typealias Completion = ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -48,6 +48,8 @@ class WebArchiveOperation: Operation {
     
     override func start() {
                         
+        let urlRef: URL = url
+        
         requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, Error>) in
             
             switch result {
@@ -66,16 +68,15 @@ class WebArchiveOperation: Operation {
                     
                     do {
                         let plistData: Data = try plistEncoder.encode(webArchive)
-                        self?.handleOperationFinished(webArchivePlistData: plistData, error: nil)
+                        self?.handleOperationFinished(result: .success(WebArchiveOperationResult(url: urlRef, webArchivePlistData: plistData)))
                     }
                     catch let error {
-                        self?.handleOperationFinished(webArchivePlistData: nil, error: error)
+                        self?.handleOperationFinished(result: .failure(WebArchiveOperationError(url: urlRef, error: error, reason: .failedEncodingPlistData)))
                     }
                 })
             
             case .failure(let error):
-            
-                self?.handleOperationFinished(webArchivePlistData: nil, error: error)
+                self?.handleOperationFinished(result: .failure(WebArchiveOperationError(url: urlRef, error: error, reason: .failedFetchingHtmlDocument)))
             }
         }
         
@@ -115,7 +116,7 @@ class WebArchiveOperation: Operation {
                         
                         // Do something with Error?
                     }
-                    else if httpStatusCode == 200, let data = response.data, !mimeType.isEmpty {
+                    else if httpStatusCode >= 200 && httpStatusCode < 400, let data = response.data, !mimeType.isEmpty {
                         
                         let webArchiveResource = WebArchiveResource(
                             url: resourceUrl,
@@ -180,7 +181,7 @@ class WebArchiveOperation: Operation {
             if let error = error {
                 complete(.failure(error))
             }
-            else if httpStatusCode != 200 {
+            else if httpStatusCode < 200 || httpStatusCode >= 400 {
                 
                 let responseError = NSError(
                     domain: self?.errorDomain ?? "",
@@ -242,10 +243,10 @@ class WebArchiveOperation: Operation {
             userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
         )
         
-        handleOperationFinished(webArchivePlistData: nil, error: cancelledError)
+        handleOperationFinished(result: .failure(WebArchiveOperationError(url: url, error: cancelledError, reason: .operationCancelled)))
     }
     
-    private func handleOperationFinished(webArchivePlistData: Data?, error: Error?) {
+    private func handleOperationFinished(result: Result<WebArchiveOperationResult, WebArchiveOperationError>) {
              
         state = .finished
         
@@ -253,24 +254,6 @@ class WebArchiveOperation: Operation {
             return
         }
         
-        var result: Result<WebArchiveOperationResult, Error>
-        
-        if let error = error {
-            result = .failure(error)
-        }
-        else if let webArchivePlistData = webArchivePlistData {
-            
-            let operationResult = WebArchiveOperationResult(
-                url: url,
-                webArchivePlistData: webArchivePlistData
-            )
-            
-            result = .success(operationResult)
-        }
-        else {
-            result = .failure(unknownError)
-        }
-                
         completion(result)
     }
     
