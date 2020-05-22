@@ -78,60 +78,56 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             self?.log(method: "configure()", label: nil, labelValue: nil, data: nil)
         }
     }
+    
+    private func assertFailureIfNotConfigured() {
+        if !isConfigured {
+            assertionFailure("Snowplow has not been configured.  Call configure() on application didFinishLaunching.")
+        }
+    }
 
     func trackScreenView(screenName: String) {
-        createDefaultProperties() { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
-            let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
-                builder.setName(screenName)
-                builder.setContexts(NSMutableArray(object: defaultProperties))
-            }
+        let context = createDefaultProperties()
+        let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
+            builder.setName(screenName)
+            builder.setContexts(NSMutableArray(object: defaultProperties))
+        }
             
-            DispatchQueue.global().async { [weak self] in
-                self?.tracker.trackScreenViewEvent(event)
-            }
+        serialQueue.async { [weak self] in
+            self?.tracker.trackScreenViewEvent(event)
         }
         
         log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
     }
 
     func trackAction(action: String) {
-        createDefaultProperties() { [weak self] (defaultProperties: SnowplowAnalyticsProperties) in
-            let event = SPStructured.build { (builder: SPStructuredBuilder) in
-                builder.setAction(action)
-                builder.setContexts(NSMutableArray(object: defaultProperties))
-            }
+        let context = createDefaultProperties()
+        let event = SPStructured.build { (builder: SPStructuredBuilder) in
+            builder.setAction(action)
+            builder.setContexts(NSMutableArray(object: defaultProperties))
+        }
         
-            DispatchQueue.global().async { [weak self] in
-                self?.tracker.trackStructuredEvent(event)
-            }
+        serialQueue.async { [weak self] in
+            self?.tracker.trackStructuredEvent(event)
         }
         
         log(method: "trackAction()", label: "action", labelValue: action, data: nil)
     }
     
-    private func createDefaultProperties(complete: @escaping ((_ properties: SnowplowAnalyticsProperties) -> Void)) {
-        
+    private func createDefaultProperties() -> SnowplowAnalyticsProperties {
         let appName: String = self.appName
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
+        let marketingCloudID: String? = self?.visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
-        
-        DispatchQueue.global().async { [weak self] in
             
-            let visitorMarketingCloudID: String? = self?.visitorMarketingCloudID
-            
-            let defaultProperties = SnowplowAnalyticsProperties(
-                appName: appName,
-                grMasterPersonID: grMasterPersonID,
-                marketingCloudID: visitorMarketingCloudID,
-                ssoguid: ssoguid
-            )
-            
-            complete(defaultProperties)
-        }
+        return SnowplowAnalyticsProperties(
+            appName: appName,
+            grMasterPersonID: grMasterPersonID,
+            marketingCloudID: marketingCloudID,
+            ssoguid: ssoguid
+        )
     }
     
     private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
-        
         if loggingEnabled {
             print("\nSnowplowTracker \(method)")
             if let label = label, let labelValue = labelValue {
