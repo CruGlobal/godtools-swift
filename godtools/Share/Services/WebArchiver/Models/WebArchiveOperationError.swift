@@ -8,16 +8,15 @@
 
 import Foundation
 
-struct WebArchiveOperationError: Error {
+enum WebArchiveOperationError: Error {
     
-    enum Reason {
-        case failedEncodingPlistData
-        case failedFetchingHtmlDocument
-        case noNetworkConnection
-        case operationCancelled
-    }
-    
-    let url: URL
-    let error: Error
-    let reason: WebArchiveOperationError.Reason
+    case cancelled
+    case failedEncodingPlistData(error: Error)
+    case failedFetchingHtmlDocument(error: Error)
+    case failedToParseHtmlDocument(error: Error)
+    case invalidHost(error: Error)
+    case invalidMimeType(error: Error)
+    case noNetworkConnection
+    case responseError(error: Error)
+    case unknownError(error: Error)
 }

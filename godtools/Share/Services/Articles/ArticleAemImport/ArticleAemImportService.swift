@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 class ArticleAemImportService {
-    
+        
     private let aemImportApi: ArticleAemImportApi = ArticleAemImportApi()
     private let aemImportDataRealmCache: RealmArticleAemImportDataCache
     private let aemWebArchiver: WebArchiveQueue = WebArchiveQueue()
@@ -38,22 +38,10 @@ class ArticleAemImportService {
     func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], complete: @escaping (( _ error: ArticleAemImportServiceError?) -> Void)) {
                 
         print("\n DOWNLOAD TO CACHE AND WEB ARCHIVE")
-        
-        var noNetworkError: Error?
-        var cancelledError: Error?
-        
+                
         var downloadedAemImportData: [ArticleAemImportData] = Array()
         
-        downloadAemImportSrcsOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
-            
-            if let error = response.error {
-                if response.notConnectedToInternet {
-                    noNetworkError = error
-                }
-                else if response.requestCancelled {
-                    cancelledError = error
-                }
-            }
+        downloadAemImportSrcsOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, ArticleAemImportOperationError>) in
             
             switch result {
             
@@ -64,15 +52,13 @@ class ArticleAemImportService {
                 print("\n \(String(describing: ArticleAemImportService.self)) Failed to download aemImportSrc with error: \(error)")
             }
             
-        }, complete: { [weak self] in
-                 
-            if let error = noNetworkError {
-                complete(ArticleAemImportServiceError(error: error, reason: .noNetworkConnection))
+        }, complete: { [weak self] (error: ArticleAemImportApiError?) in
+
+            if let apiError = error {
+                
+                complete(.apiError(error: apiError))
             }
-            else if let error = cancelledError {
-                complete(ArticleAemImportServiceError(error: error, reason: .cancelled))
-            }
-            else if downloadedAemImportData.count > 0 {
+            if downloadedAemImportData.count > 0 {
                             
                 self?.deleteCachedAemImportData(godToolsResource: godToolsResource, complete: { [weak self] in
                     
@@ -148,10 +134,10 @@ class ArticleAemImportService {
         
         DispatchQueue.main.async { [weak self] in
             
-            self?.aemImportDataRealmCache.cache(articleAemImportDataObjects: aemImportDataObjects, complete: { (error: Error?) in
+            self?.aemImportDataRealmCache.cache(articleAemImportDataObjects: aemImportDataObjects, complete: { (cacheError: Error?) in
                         
-                if let error = error {
-                    complete(ArticleAemImportServiceError(error: error, reason: .failedToCacheAemImportDataToRealm))
+                if let cacheError = cacheError {
+                    complete(.failedToCacheAemImportDataToRealm(error: cacheError))
                 }
                 else {
                     complete(nil)
@@ -218,12 +204,10 @@ class ArticleAemImportService {
         }, complete: { [weak self] in
             
             if webArchiveOperationErrors.count == aemImportDataObjects.count {
-                let error: Error = NSError(domain: self?.errorDomain ?? "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Web archive operations failed."])
-                complete(ArticleAemImportServiceError(error: error, reason: .webArchiveOperationsFailed(webArchiveOperationErrors: webArchiveOperationErrors)))
+                complete(.webArchiveOperationsFailed(webArchiveOperationErrors: webArchiveOperationErrors))
             }
             else if cacheWebArchivePlistDataErrors.count == aemImportDataObjects.count {
-                let error: Error = NSError(domain: self?.errorDomain ?? "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to cache webarchive plist data to file system."])
-                complete(ArticleAemImportServiceError(error: error, reason: .failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors)))
+                complete(.failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors))
             }
             else {
                 complete(nil)

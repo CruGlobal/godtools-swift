@@ -8,17 +8,10 @@
 
 import Foundation
 
-struct ArticleAemImportServiceError: Error {
+enum ArticleAemImportServiceError: Error {
     
-    enum Reason {
-        
-        case cancelled
-        case failedToCacheAemImportDataToRealm
-        case failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: [Error])
-        case noNetworkConnection
-        case webArchiveOperationsFailed(webArchiveOperationErrors: [WebArchiveOperationError])
-    }
-    
-    let error: Error
-    let reason: Reason
+    case apiError(error: ArticleAemImportApiError)
+    case failedToCacheAemImportDataToRealm(error: Error)
+    case failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: [Error])
+    case webArchiveOperationsFailed(webArchiveOperationErrors: [WebArchiveOperationError])
 }

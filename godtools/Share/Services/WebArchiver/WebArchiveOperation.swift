@@ -50,7 +50,7 @@ class WebArchiveOperation: Operation {
                         
         let urlRef: URL = url
         
-        requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, Error>) in
+        requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, WebArchiveOperationError>) in
             
             switch result {
                 
@@ -71,12 +71,13 @@ class WebArchiveOperation: Operation {
                         self?.handleOperationFinished(result: .success(WebArchiveOperationResult(url: urlRef, webArchivePlistData: plistData)))
                     }
                     catch let error {
-                        self?.handleOperationFinished(result: .failure(WebArchiveOperationError(url: urlRef, error: error, reason: .failedEncodingPlistData)))
+                        
+                        self?.handleOperationFinished(result: .failure(.failedEncodingPlistData(error: error)))                        
                     }
                 })
             
-            case .failure(let error):
-                self?.handleOperationFinished(result: .failure(WebArchiveOperationError(url: urlRef, error: error, reason: .failedFetchingHtmlDocument)))
+            case .failure(let webArchiveOperationError):
+                self?.handleOperationFinished(result: .failure(webArchiveOperationError))
             }
         }
         
@@ -152,7 +153,7 @@ class WebArchiveOperation: Operation {
         )
     }
     
-    private func requestHtmlDocumentData(url: URL, includeJavascript: Bool, complete: @escaping ((_ result: Result<HTMLDocumentData, Error>) -> Void)) {
+    private func requestHtmlDocumentData(url: URL, includeJavascript: Bool, complete: @escaping ((_ result: Result<HTMLDocumentData, WebArchiveOperationError>) -> Void)) {
         
         guard !isCancelled else {
             handleOperationCancelled()
@@ -161,13 +162,13 @@ class WebArchiveOperation: Operation {
         
         guard let host = url.host else {
             
-            let error = NSError(
+            let error: Error = NSError(
                 domain: errorDomain,
                 code: -1,
                 userInfo: [NSLocalizedDescriptionKey: "Invalid url host."
             ])
             
-            complete(.failure(error))
+            complete(.failure(.invalidHost(error: error)))
             return
         }
         
@@ -177,29 +178,43 @@ class WebArchiveOperation: Operation {
             
             let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
             let mimeType: String = urlResponse?.mimeType ?? ""
-                                 
+               
             if let error = error {
-                complete(.failure(error))
+                
+                let errorCode: Int = (error as NSError).code
+                let operationError: WebArchiveOperationError
+                
+                if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
+                    operationError = .cancelled
+                }
+                else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
+                    operationError = .noNetworkConnection
+                }
+                else {
+                    operationError = .unknownError(error: error)
+                }
+                
+                complete(.failure(operationError))                
             }
             else if httpStatusCode < 200 || httpStatusCode >= 400 {
                 
-                let responseError = NSError(
+                let error: Error = NSError(
                     domain: self?.errorDomain ?? "",
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
                 ])
                 
-                complete(.failure(responseError))
+                complete(.failure(.responseError(error: error)))
             }
             else if mimeType != "text/html" {
                 
-                let invalideMimeTypeError = NSError(
+                let error: Error = NSError(
                     domain: self?.errorDomain ?? "",
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "Failed to archive url because the mimetype is not text/html. Found mimeType: \(mimeType)"
                 ])
                 
-                complete(.failure(invalideMimeTypeError))
+                complete(.failure(.invalidMimeType(error: error)))
             }
             else if let data = data, let htmlString = String(data: data, encoding: .utf8) {
                 do {
@@ -210,7 +225,7 @@ class WebArchiveOperation: Operation {
                     complete(.success(HTMLDocumentData(mainResource: mainResource, htmlDocument: htmlDocument, resourceUrls: resourceUrls)))
                 }
                 catch let parseHtmlDocumentError {
-                    complete(.failure(parseHtmlDocumentError))
+                    complete(.failure(.failedToParseHtmlDocument(error: parseHtmlDocumentError)))
                 }
             }
             else {
@@ -221,7 +236,7 @@ class WebArchiveOperation: Operation {
                     userInfo: [NSLocalizedDescriptionKey: "Failed to archive url there wasn't sufficent html to parse."
                 ])
                 
-                complete(.failure(noHtmlData))
+                complete(.failure(.failedToParseHtmlDocument(error: noHtmlData)))
             }
         }
         
@@ -237,13 +252,7 @@ class WebArchiveOperation: Operation {
     
     private func handleOperationCancelled() {
         
-        let cancelledError = NSError(
-            domain: errorDomain,
-            code: NSURLErrorCancelled,
-            userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
-        )
-        
-        handleOperationFinished(result: .failure(WebArchiveOperationError(url: url, error: cancelledError, reason: .operationCancelled)))
+        handleOperationFinished(result: .failure(.cancelled))
     }
     
     private func handleOperationFinished(result: Result<WebArchiveOperationResult, WebArchiveOperationError>) {

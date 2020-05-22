@@ -10,7 +10,7 @@ import Foundation
 
 class ArticleAemImportOperation: Operation {
     
-    typealias Completion = ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void)
+    typealias Completion = ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, ArticleAemImportOperationError>) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -54,13 +54,12 @@ class ArticleAemImportOperation: Operation {
            
         guard let aemImportSrcUrl = URL(string: aemImportSrc) else {
             
-            let error: Error = NSError(
-                domain: errorDomain,
-                code: NSURLErrorCancelled,
-                userInfo: [NSLocalizedDescriptionKey: "Invalid aem import url."]
+            handleOperationFinished(
+                articleAemImportData: nil,
+                data: nil,
+                urlResponse: nil,
+                error: .invalidAemImportSrcUrl
             )
-            
-            handleOperationFinished(articleAemImportData: nil, data: nil, urlResponse: nil, error: error)
             
             return
         }
@@ -69,13 +68,12 @@ class ArticleAemImportOperation: Operation {
         
         guard let urlJson: URL = URL(string: urlJsonString) else {
             
-            let error: Error = NSError(
-                domain: errorDomain,
-                code: NSURLErrorCancelled,
-                userInfo: [NSLocalizedDescriptionKey: "Invalid aem import json url."]
+            handleOperationFinished(
+                articleAemImportData: nil,
+                data: nil,
+                urlResponse: nil,
+                error: .invalidAemImportJsonUrl
             )
-            
-            handleOperationFinished(articleAemImportData: nil, data: nil, urlResponse: nil, error: error)
             
             return
         }
@@ -93,96 +91,108 @@ class ArticleAemImportOperation: Operation {
         task = session.dataTask(with: urlJsonRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
             
             if let operation = self {
-                                
                 guard !operation.isCancelled else {
                     operation.handleOperationCancelled()
                     return
                 }
+            }
+            
+            let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
+            
+            if let error = error {
                 
-                let result: Result<[String: Any], Error> = operation.validateResponse(data: data, urlResponse: urlResponse, error: error)
-                                
-                switch result {
+                let errorCode: Int = (error as NSError).code
+                let operationError: ArticleAemImportOperationError
+                
+                if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
+                    operationError = .cancelled
+                }
+                else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
+                    operationError = .noNetworkConnection
+                }
+                else {
+                    operationError = .unknownError(error: error)
+                }
+                
+                self?.handleOperationFinished(articleAemImportData: nil, data: data, urlResponse: urlResponse, error: operationError)
+            }
+            else if httpStatusCode < 200 || httpStatusCode >= 400 {
+                
+                let responseError = NSError(
+                    domain: self?.errorDomain ?? "",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
+                ])
+                
+                self?.handleOperationFinished(articleAemImportData: nil, data: data, urlResponse: urlResponse, error: .unknownError(error: responseError))
+            }
+            else {
+
+                // validate json
+                var jsonDictionary: [String: Any] = Dictionary()
+                var jsonError: Error?
+                
+                if let data = data {
+                    do {
+                        let json: Any = try JSONSerialization.jsonObject(with: data, options: [])
+                        if let dictionary = json as? [String: Any] {
+                            jsonDictionary = dictionary
+                        }
+                    }
+                    catch let error {
+                        jsonError = error
+                    }
+                }
+                
+                if jsonDictionary.isEmpty, jsonError == nil {
                     
-                case .success(let jsonDictionary):
+                    jsonError = NSError(
+                        domain: self?.errorDomain ?? "",
+                        code: -1,
+                        userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because data does not exist."
+                    ])
+                }
+                
+                if let jsonError = jsonError {
+                    
+                    self?.handleOperationFinished(articleAemImportData: nil, data: data, urlResponse: urlResponse, error: .failedToSerializeJson(error: jsonError))
+                }
+                else {
                     
                     let aemImportDataParser = ArticleAemImportDataParser()
                     
-                    let aemImportParserResult = aemImportDataParser.parse(
+                    let aemImportParserResult: Result<ArticleAemImportData, ArticleAemImportDataParserError> = aemImportDataParser.parse(
                         aemImportSrc: aemImportSrcUrl,
                         aemImportJson: jsonDictionary,
                         godToolsResource: godToolsResourceRef
                     )
                     
                     switch aemImportParserResult {
+                    
                     case .success(let articleAemImportData):
-                        operation.handleOperationFinished(articleAemImportData: articleAemImportData, data: data, urlResponse: urlResponse, error: error)
+                        
+                        self?.handleOperationFinished(
+                            articleAemImportData: articleAemImportData,
+                            data: data,
+                            urlResponse: urlResponse,
+                            error: nil
+                        )
+                        
                     case .failure(let aemImportParserError):
-                        operation.handleOperationFinished(articleAemImportData: nil, data: data, urlResponse: urlResponse, error: aemImportParserError)
+                        
+                        self?.handleOperationFinished(
+                            articleAemImportData: nil,
+                            data: data,
+                            urlResponse: urlResponse,
+                            error: .failedToParseJson(error: aemImportParserError)
+                        )
                     }
-                
-                case .failure(let responseError):
-                    operation.handleOperationFinished(articleAemImportData: nil, data: data, urlResponse: urlResponse, error: responseError)
                 }
             }
         }
         
         task?.resume()
         state = .executing
-    }
-    
-    private func validateResponse(data: Data?, urlResponse: URLResponse?, error: Error?) -> Result<[String: Any], Error> {
-        
-        let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
-        
-        if let error = error {
-            return .failure(error)
-        }
-        else if httpStatusCode != 200 {
-            
-            let responseError = NSError(
-                domain: errorDomain,
-                code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
-            ])
-            
-            return .failure(responseError)
-        }
-        else {
-
-            // validate json
-            var jsonDictionary: [String: Any] = Dictionary()
-            var jsonError: Error?
-            
-            if let data = data {
-                do {
-                    let json: Any = try JSONSerialization.jsonObject(with: data, options: [])
-                    if let dictionary = json as? [String: Any] {
-                        jsonDictionary = dictionary
-                    }
-                }
-                catch let error {
-                    jsonError = error
-                }
-            }
-            
-            if let jsonError = jsonError {
-                
-                return .failure(jsonError)
-            }
-            
-            if jsonDictionary.isEmpty {
-                
-                let jsonError = NSError(
-                    domain: errorDomain,
-                    code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Failed to parse jsonData because none exists."
-                ])
-                
-                return .failure(jsonError)
-            }
-            
-            return .success(jsonDictionary)
-        }
     }
     
     override func cancel() {
@@ -192,13 +202,7 @@ class ArticleAemImportOperation: Operation {
     
     private func handleOperationCancelled() {
                 
-        let cancelledError = NSError(
-            domain: errorDomain,
-            code: NSURLErrorCancelled,
-            userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
-        )
-        
-        handleOperationFinished(articleAemImportData: nil, data: nil, urlResponse: nil, error: cancelledError)
+        handleOperationFinished(articleAemImportData: nil, data: nil, urlResponse: nil, error: .cancelled)
     }
     
     private var unknownError: Error {
@@ -209,7 +213,7 @@ class ArticleAemImportOperation: Operation {
         )
     }
     
-    private func handleOperationFinished(articleAemImportData: ArticleAemImportData?, data: Data?, urlResponse: URLResponse?, error: Error?) {
+    private func handleOperationFinished(articleAemImportData: ArticleAemImportData?, data: Data?, urlResponse: URLResponse?, error: ArticleAemImportOperationError?) {
         
         state = .finished
         
@@ -224,7 +228,7 @@ class ArticleAemImportOperation: Operation {
             error: error
         )
         
-        var result: Result<ArticleAemImportData, Error>
+        var result: Result<ArticleAemImportData, ArticleAemImportOperationError>
         
         if let error = error {
             result = .failure(error)
@@ -233,7 +237,7 @@ class ArticleAemImportOperation: Operation {
             result = .success(articleAemImportData)
         }
         else {
-            result = .failure(unknownError)
+            result = .failure(.unknownError(error: unknownError))
         }
                 
         completion(response, result)
