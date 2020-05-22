@@ -32,7 +32,6 @@ class WebArchiveOperation: Operation {
     private let getHtmlResourcesQueue: OperationQueue = OperationQueue()
     
     private var getHtmlDocumentTask: URLSessionDataTask?
-    private var getHtmlResourceTask: URLSessionDataTask?
     private var completion: Completion?
     
     required init(session: URLSession, url: URL) {
@@ -57,7 +56,14 @@ class WebArchiveOperation: Operation {
             case .success(let documentData):
                                 
                 self?.requestHtmlDocumentResources(resourceUrls: documentData.resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
-                                        
+                           
+                    if let operation = self {
+                        guard !operation.isCancelled else {
+                            self?.handleOperationCancelled()
+                            return
+                        }
+                    }
+                    
                     let webArchive = WebArchive(
                         mainResource: documentData.mainResource,
                         webSubresources: resources
@@ -103,13 +109,6 @@ class WebArchiveOperation: Operation {
                 
                 operation.completionHandler { [weak self] (response: RequestResponse) in
                     
-                    if let isCancelled = self?.isCancelled {
-                        guard !isCancelled else {
-                            self?.handleOperationCancelled()
-                            return
-                        }
-                    }
-                    
                     let httpStatusCode: Int = response.httpStatusCode
                     let mimeType: String = response.urlResponse?.mimeType ?? ""
                                         
@@ -129,10 +128,10 @@ class WebArchiveOperation: Operation {
                     }
                     else {
                         
-                        let noHtmlData = NSError(
+                        let noData = NSError(
                             domain: self?.errorDomain ?? "",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource, there wasn't sufficent html to parse."
+                            userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource."
                         ])
                         
                         // Do something with Error?
@@ -246,7 +245,6 @@ class WebArchiveOperation: Operation {
     override func cancel() {
         super.cancel()
         getHtmlDocumentTask?.cancel()
-        getHtmlResourceTask?.cancel()
         getHtmlResourcesQueue.cancelAllOperations()
     }
     
@@ -256,7 +254,7 @@ class WebArchiveOperation: Operation {
     }
     
     private func handleOperationFinished(result: Result<WebArchiveOperationResult, WebArchiveOperationError>) {
-             
+        
         state = .finished
         
         guard let completion = completion else {

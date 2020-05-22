@@ -51,7 +51,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
         loadingMessage.accept(value: NSLocalizedString("articles.loadingView.downloadingArticles", comment: ""))
         isLoading.accept(value: true)
         
-        articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (result: Result<ArticleManifestXmlParser, Error>) in
+        articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (result: Result<ArticleManifestXmlParser, ArticlesServiceError>) in
            
             DispatchQueue.main.async { [weak self] in
                 

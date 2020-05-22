@@ -372,6 +372,7 @@
 		45DED95E2478603900B0A71D /* ArticleAemImportOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED95D2478603900B0A71D /* ArticleAemImportOperationError.swift */; };
 		45DED960247878CA00B0A71D /* ArticleAemImportDataParserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED95F247878CA00B0A71D /* ArticleAemImportDataParserError.swift */; };
 		45DED96224787ACF00B0A71D /* ArticleAemImportApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED96124787ACF00B0A71D /* ArticleAemImportApiError.swift */; };
+		45DED964247886F200B0A71D /* ArticlesServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DED963247886F200B0A71D /* ArticlesServiceError.swift */; };
 		45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E62FB0246C3C2B006F0CD5 /* TractNavBarAttributes.swift */; };
 		45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */; };
 		45E998D623FD7B090088DD0C /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */; };
@@ -900,6 +901,7 @@
 		45DED95D2478603900B0A71D /* ArticleAemImportOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportOperationError.swift; sourceTree = "<group>"; };
 		45DED95F247878CA00B0A71D /* ArticleAemImportDataParserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportDataParserError.swift; sourceTree = "<group>"; };
 		45DED96124787ACF00B0A71D /* ArticleAemImportApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportApiError.swift; sourceTree = "<group>"; };
+		45DED963247886F200B0A71D /* ArticlesServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesServiceError.swift; sourceTree = "<group>"; };
 		45E62FB0246C3C2B006F0CD5 /* TractNavBarAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractNavBarAttributes.swift; sourceTree = "<group>"; };
 		45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockBasedTimer.swift; sourceTree = "<group>"; };
 		45E998D523FD7B090088DD0C /* SF-Pro-Text-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Semibold.otf"; sourceTree = "<group>"; };
@@ -2054,6 +2056,7 @@
 			isa = PBXGroup;
 			children = (
 				453DBA71247484B30000BA85 /* ArticlesService.swift */,
+				45DED963247886F200B0A71D /* ArticlesServiceError.swift */,
 				45EC83682451E16400E8DE48 /* ArticleAemImport */,
 				45EC837A2451E1EA00E8DE48 /* ArticleManifest */,
 			);
@@ -3258,6 +3261,7 @@
 				451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */,
 				45284690244514D500F12B2F /* MasterHomeViewModel.swift in Sources */,
 				45DED95C247858BE00B0A71D /* ArticleAemImportServiceError.swift in Sources */,
+				45DED964247886F200B0A71D /* ArticlesServiceError.swift in Sources */,
 				0F0853111ECB571E00DDC86D /* GTTextField.swift in Sources */,
 				451DB1952461DC3100FB14BF /* TractTitle.swift in Sources */,
 				4F1C95831EA7B05D007B47DB /* LanguageResource.swift in Sources */,

@@ -29,7 +29,7 @@ class ArticlesService {
         articleAemImportService.cancel()
     }
     
-    func downloadAndCacheArticleData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ result: Result<ArticleManifestXmlParser, Error>) -> Void)) {
+    func downloadAndCacheArticleData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ result: Result<ArticleManifestXmlParser, ArticlesServiceError>) -> Void)) {
                         
         let secondsInDay: TimeInterval = 86400
         let cacheExpirationSeconds: TimeInterval = secondsInDay * 7
@@ -50,7 +50,7 @@ class ArticlesService {
                 self?.articleAemImportService.downloadToCacheAndWebArchive(godToolsResource: godToolsResource, aemImportSrcs: articleManifest.aemImportSrcs, complete: { (error: ArticleAemImportServiceError?) in
                     
                     if let error = error {
-                        complete(.failure(error))
+                        complete(.failure(.aemImportServiceError(error: error)))
                     }
                     else {
                         self?.resourceCacheValidation.setResourceCached(godToolsResource: godToolsResource)
@@ -59,7 +59,7 @@ class ArticlesService {
                 })
             }
             else if let error = error {
-                complete(.failure(error))
+                complete(.failure(.fetchManifestError(error: error)))
             }
             else {
                 let unknownError: Error = NSError(
@@ -67,8 +67,18 @@ class ArticlesService {
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."]
                 )
-                complete(.failure(unknownError))
+                complete(.failure(.fetchManifestError(error: unknownError)))
             }
         }
+    }
+    
+    func getCachedArticlesManifestXml(godToolsResource: GodToolsResource) -> ArticleManifestXmlParser? {
+        
+        if let data = resourceLatestTranslationServices.getCachedManifestXmlData(godToolsResource: godToolsResource) {
+            
+            return ArticleManifestXmlParser(xmlData: data)
+        }
+        
+        return nil
     }
 }
