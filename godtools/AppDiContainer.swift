@@ -40,12 +40,16 @@ class AppDiContainer {
         loginClient = TheKeyOAuthClient.shared
         
         let analyticsLoggingEnabled: Bool = config.isDebug
+        
+        let adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+        let snowplowAnalytics = SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+        
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
+            adobeAnalytics: adobeAnalytics,
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
-            trackActionAnalytics: trackActionAnalytics
+            snowplowAnalytics: snowplowAnalytics,
+            trackActionAnalytics: TrackActionAnalytics(adobeAnalytics: adobeAnalytics, snowplowAnalytics: snowplowAnalytics )
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)

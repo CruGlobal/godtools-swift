@@ -19,7 +19,7 @@ class TrackActionAnalytics {
     }
     
     func trackAction(screenName: String?, actionName: String, data: [AnyHashable : Any]) {
-        adobeAnalytics.trackAction(screenName, actionName, data)
+        adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
         snowplowAnalytics.trackAction(action: actionName)
     }
 }
