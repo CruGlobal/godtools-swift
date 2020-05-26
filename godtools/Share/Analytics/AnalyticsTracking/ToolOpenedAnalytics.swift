@@ -12,21 +12,19 @@ class ToolOpenedAnalytics {
     
     private let keyFirstToolOpened: String = "toolOpenedAnalytics.keyFirstToolOpened"
     private let appsFlyer: AppsFlyerType
-    private let snowplowAnalytics: SnowplowAnalyticsType
     
-    required init(appsFlyer: AppsFlyerType, snowplowAnalytics: SnowplowAnalyticsType) {
+    required init(appsFlyer: AppsFlyerType) {
         self.appsFlyer = appsFlyer
-        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackToolOpened() {
-       appsFlyer.trackEvent(eventName: "tool-opened", data: nil)
+        appsFlyer.trackEvent(eventName: "tool-opened", data: nil)
     }
     
     func trackFirstToolOpenedIfNeeded() {
         
         if !firstToolOpened {
-            
+
             appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
             
             defaults.set(true, forKey: keyFirstToolOpened)
