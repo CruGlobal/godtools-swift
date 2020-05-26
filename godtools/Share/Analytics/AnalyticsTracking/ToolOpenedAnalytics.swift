@@ -20,19 +20,14 @@ class ToolOpenedAnalytics {
     }
     
     func trackToolOpened() {
-        
-        let eventName = "tool-opened"
-        
-        appsFlyer.trackEvent(eventName: eventName, data: nil)
+       appsFlyer.trackEvent(eventName: "tool-opened", data: nil)
     }
     
     func trackFirstToolOpenedIfNeeded() {
         
         if !firstToolOpened {
             
-            let eventName = "first-tool-opened"
-            
-            appsFlyer.trackEvent(eventName: eventName, data: nil)
+            appsFlyer.trackEvent(eventName: "first-tool-opened", data: nil)
             
             defaults.set(true, forKey: keyFirstToolOpened)
             defaults.synchronize()
