@@ -10,11 +10,12 @@ import Foundation
 import RealmSwift
 
 class ArticleAemImportService {
-    
+        
     private let aemImportApi: ArticleAemImportApi = ArticleAemImportApi()
     private let aemImportDataRealmCache: RealmArticleAemImportDataCache
     private let aemWebArchiver: WebArchiveQueue = WebArchiveQueue()
     private let maxAemImportJsonTreeLevels: Int = 10
+    private let errorDomain: String = String(describing: ArticleAemImportService.self)
     
     private var downloadAemImportSrcsOperation: OperationQueue?
     private var archiveOperation: OperationQueue?
@@ -34,11 +35,13 @@ class ArticleAemImportService {
         return aemImportDataRealmCache.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: aemTags)
     }
     
-    func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], complete: @escaping (( _ error: Error?) -> Void)) {
-                  
+    func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], complete: @escaping (( _ error: ArticleAemImportServiceError?) -> Void)) {
+                
+        print("\n DOWNLOAD TO CACHE AND WEB ARCHIVE")
+                
         var downloadedAemImportData: [ArticleAemImportData] = Array()
         
-        downloadAemImportSrcsOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
+        downloadAemImportSrcsOperation = aemImportApi.downloadAemImportSrcs(godToolsResource: godToolsResource, aemImportSrcs: aemImportSrcs, maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels, didDownloadAemImport: { [weak self] (response: RequestResponse, result: Result<ArticleAemImportData, ArticleAemImportOperationError>) in
             
             switch result {
             
@@ -49,22 +52,19 @@ class ArticleAemImportService {
                 print("\n \(String(describing: ArticleAemImportService.self)) Failed to download aemImportSrc with error: \(error)")
             }
             
-        }, complete: { [weak self] (error: Error?) in
+        }, complete: { [weak self] (error: ArticleAemImportApiError?) in
+
+            if let apiError = error {
                 
-            if let error = error {
-                
-                complete(error)
+                complete(.apiError(error: apiError))
             }
-            else if downloadedAemImportData.count > 0 {
-                
+            if downloadedAemImportData.count > 0 {
+                            
                 self?.deleteCachedAemImportData(godToolsResource: godToolsResource, complete: { [weak self] in
                     
-                    self?.archiveAemImportData(aemImportDataObjects: downloadedAemImportData, godToolsResource: godToolsResource, complete: { [weak self] in
-                                            
-                        self?.cacheAemImportData(aemImportDataObjects: downloadedAemImportData, complete: {
-                            
-                            complete(nil)
-                        })
+                    self?.archiveAndCacheAemImportData(aemImportDataObjects: downloadedAemImportData, godToolsResource: godToolsResource, complete: { (error: ArticleAemImportServiceError?) in
+                        
+                        complete(error)
                     })
                 })
             }
@@ -110,70 +110,111 @@ class ArticleAemImportService {
         }
     }
     
-    private func cacheAemImportData(aemImportDataObjects: [ArticleAemImportData], complete: @escaping (() -> Void)) {
+    private func archiveAndCacheAemImportData(aemImportDataObjects: [ArticleAemImportData], godToolsResource: GodToolsResource, complete: @escaping ((_ error: ArticleAemImportServiceError?) -> Void)) {
+        
+        archiveAemImportData(aemImportDataObjects: aemImportDataObjects, godToolsResource: godToolsResource, complete: { [weak self] (error: ArticleAemImportServiceError?) in
+                
+            if let error = error {
+                
+                complete(error)
+            }
+            else {
+                
+                self?.cacheAemImportData(aemImportDataObjects: aemImportDataObjects, complete: { (error: ArticleAemImportServiceError?) in
+                    
+                    complete(error)
+                })
+            }
+        })
+    }
+    
+    private func cacheAemImportData(aemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ error: ArticleAemImportServiceError?) -> Void)) {
+        
+        print("\n CACHE AEM IMPORT DATA TO REALM")
         
         DispatchQueue.main.async { [weak self] in
             
-            self?.aemImportDataRealmCache.cache(articleAemImportDataObjects: aemImportDataObjects, complete: { (error: Error?) in
-                                        
-                complete()
+            self?.aemImportDataRealmCache.cache(articleAemImportDataObjects: aemImportDataObjects, complete: { (cacheError: Error?) in
+                        
+                if let cacheError = cacheError {
+                    complete(.failedToCacheAemImportDataToRealm(error: cacheError))
+                }
+                else {
+                    complete(nil)
+                }
             })
         }
     }
     
-    private func archiveAemImportData(aemImportDataObjects: [ArticleAemImportData], godToolsResource: GodToolsResource, complete: @escaping (() -> Void)) {
+    private func archiveAemImportData(aemImportDataObjects: [ArticleAemImportData], godToolsResource: GodToolsResource, complete: @escaping ((_ error: ArticleAemImportServiceError?) -> Void)) {
                 
+        print("\n ARCHIVE AEM IMPORT DATA")
+        
         var urls: [URL] = Array()
-        var filenames: [String] = Array()
+        var webArchiveFilenames: [String] = Array()
         
         for aemImportData in aemImportDataObjects {
             if let url = URL(string: aemImportData.webUrl) {
                 urls.append(url)
-                filenames.append(aemImportData.webArchiveFilename)
+                webArchiveFilenames.append(aemImportData.webArchiveFilename)
             }
         }
+           
+        var webArchiveOperationErrors: [WebArchiveOperationError] = Array()
+        var cacheWebArchivePlistDataErrors: [Error] = Array()
         
-        archiveOperation = aemWebArchiver.archive(urls: urls, didArchivePlistData: { [weak self] (result: Result<WebArchiveOperationResult, Error>) in
+        archiveOperation = aemWebArchiver.archive(urls: urls, didArchivePlistData: { [weak self] (result: Result<WebArchiveOperationResult, WebArchiveOperationError>) in
             
             switch result {
             
             case .success(let operationResult):
 
-                let webArchivePlistData: Data? = operationResult.webArchivePlistData
+                let webArchivePlistData: Data = operationResult.webArchivePlistData
                 let url: URL = operationResult.url
                 var cacheFilename: String?
                 if let index = urls.firstIndex(of: url) {
-                    cacheFilename = filenames[index]
+                    cacheFilename = webArchiveFilenames[index]
                 }
                 
-                guard let plistData = webArchivePlistData, let filename = cacheFilename else {
-                    
+                guard let webArchiveFilename = cacheFilename else {
+                    // TODO: Should handle error here. ~Levi
                     return
                 }
-
+                
                 let cacheLocation = ArticleAemWebArchiveFileCacheLocation(
                     godToolsResource: godToolsResource,
-                    filename: filename
+                    filename: webArchiveFilename
                 )
-                
-                
 
-                if let cacheResult = self?.aemWebArchiveFileCache.cache(location: cacheLocation, data: plistData) {
+                if let cacheResult = self?.aemWebArchiveFileCache.cache(location: cacheLocation, data: webArchivePlistData) {
                     switch cacheResult {
                     case .success(let url):
                         print("\n \(String(describing: ArticleAemImportService.self)) Did cache web archive plist data at url: \(url.absoluteString)")
                     case .failure(let error):
                         print("\n \(String(describing: ArticleAemImportService.self)) Failed to cache aem webarchive with error: \(error)")
+                        cacheWebArchivePlistDataErrors.append(error)
                     }
                 }
                 
-            case .failure( _):
-                break
+            case .failure(let operationError):
+                print("\n \(String(describing: ArticleAemImportService.self)) Failed to archive aemImportData with error: \(operationError)")
+                webArchiveOperationErrors.append(operationError)
             }
             
-        }, complete: {
+            }, complete: { [weak self] (error: WebArchiveError?) in
             
-            complete()
+                if let error = error {
+                    complete(.webArchiveError(error: error))
+                }
+                else if webArchiveOperationErrors.count == aemImportDataObjects.count {
+                    complete(.webArchiveOperationsFailed(webArchiveOperationErrors: webArchiveOperationErrors))
+                }
+                else if cacheWebArchivePlistDataErrors.count == aemImportDataObjects.count {
+                    complete(.failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors))
+                }
+                else {
+                    complete(nil)
+                }
         })
     }
 }
