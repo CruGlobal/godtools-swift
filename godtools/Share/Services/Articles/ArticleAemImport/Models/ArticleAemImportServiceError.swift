@@ -14,4 +14,5 @@ enum ArticleAemImportServiceError: Error {
     case failedToCacheAemImportDataToRealm(error: Error)
     case failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: [Error])
     case webArchiveOperationsFailed(webArchiveOperationErrors: [WebArchiveOperationError])
+    case webArchiveError(error: WebArchiveError)
 }

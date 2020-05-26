@@ -201,17 +201,20 @@ class ArticleAemImportService {
                 webArchiveOperationErrors.append(operationError)
             }
             
-        }, complete: { [weak self] in
+            }, complete: { [weak self] (error: WebArchiveError?) in
             
-            if webArchiveOperationErrors.count == aemImportDataObjects.count {
-                complete(.webArchiveOperationsFailed(webArchiveOperationErrors: webArchiveOperationErrors))
-            }
-            else if cacheWebArchivePlistDataErrors.count == aemImportDataObjects.count {
-                complete(.failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors))
-            }
-            else {
-                complete(nil)
-            }
+                if let error = error {
+                    complete(.webArchiveError(error: error))
+                }
+                else if webArchiveOperationErrors.count == aemImportDataObjects.count {
+                    complete(.webArchiveOperationsFailed(webArchiveOperationErrors: webArchiveOperationErrors))
+                }
+                else if cacheWebArchivePlistDataErrors.count == aemImportDataObjects.count {
+                    complete(.failedToCacheWebArchivePlistData(cacheWebArchivePlistDataErrors: cacheWebArchivePlistDataErrors))
+                }
+                else {
+                    complete(nil)
+                }
         })
     }
 }

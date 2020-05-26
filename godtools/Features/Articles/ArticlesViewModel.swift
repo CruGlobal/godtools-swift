@@ -65,10 +65,11 @@ class ArticlesViewModel: ArticlesViewModelType {
                     case .success( _):
                         self?.reloadArticleAemImportDataFromCache(category: category)
                     case .failure( let error):
-                        let errorMessage: String = error.localizedDescription
+                        
+                        let errorViewModel = DownloadArticlesErrorViewModel(error: error)
                         self?.errorMessage.accept(
                             value: ArticlesErrorMessage(
-                                message: errorMessage,
+                                message: errorViewModel.message,
                                 hidesErrorMessage: false,
                                 shouldAnimate: true
                         ))

@@ -36,7 +36,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
                 
         navTitle.accept(value: resource.name)
         
-        reloadArticles(forceDownload: false, animated: false)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: false, animated: false)
     }
     
     deinit {
@@ -44,7 +44,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
         articlesService.cancel()
     }
     
-    private func reloadArticles(forceDownload: Bool, animated: Bool) {
+    private func reloadArticles(godToolsResource: GodToolsResource, forceDownload: Bool, animated: Bool) {
         
         errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
         
@@ -63,14 +63,22 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
                 case .success(let articleManifest):
                     self?.categories.accept(value: articleManifest.categories)
                 case .failure(let error):
-                    self?.categories.accept(value: [])
-                    let errorMessage: String = error.localizedDescription
-                    self?.errorMessage.accept(
-                        value: ArticlesErrorMessage(
-                            message: errorMessage,
-                            hidesErrorMessage: false,
-                            shouldAnimate: true
-                    ))
+                    
+                    if let cachedManfiest = self?.articlesService.getCachedArticlesManifestXml(godToolsResource: godToolsResource) {
+                        self?.categories.accept(value: cachedManfiest.categories)
+                    }
+                    else {
+                        self?.categories.accept(value: [])
+                        
+                        let errorViewModel = DownloadArticlesErrorViewModel(error: error)
+                        
+                        self?.errorMessage.accept(
+                            value: ArticlesErrorMessage(
+                                message: errorViewModel.message,
+                                hidesErrorMessage: false,
+                                shouldAnimate: true
+                        ))
+                    }
                 }
             }
         }
@@ -81,11 +89,11 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     }
     
     func downloadArticlesTapped() {
-        reloadArticles(forceDownload: true, animated: true)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: true, animated: true)
     }
     
     func refreshArticles() {
-        reloadArticles(forceDownload: true, animated: true)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: true, animated: true)
     }
     
     func articleTapped(category: ArticleCategory) {
