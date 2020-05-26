@@ -31,23 +31,7 @@ class WebArchiveQueue {
 
     }
     
-    func archive(url: URL, complete: @escaping ((_ result: Result<WebArchiveOperationResult, Error>) -> Void)) -> OperationQueue {
-        
-        let singleQueue = OperationQueue()
-        
-        let operation = WebArchiveOperation(session: session, url: url)
-        
-        operation.completionHandler { [weak self] (result: Result<WebArchiveOperationResult, Error>) in
-            
-            complete(result)
-        }
-        
-        singleQueue.addOperations([operation], waitUntilFinished: false)
-        
-        return singleQueue
-    }
-    
-    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, Error>) -> Void), complete: (() -> Void)? = nil) -> OperationQueue {
+    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void), complete: @escaping ((_ error: WebArchiveError?) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
@@ -55,18 +39,58 @@ class WebArchiveQueue {
         
         let queueRef = queue
         
+        var networkFailed: Bool = false
+        var cancelled: Bool = false
+        
         for url in urls {
             
             let operation = WebArchiveOperation(session: session, url: url)
             
-            operation.completionHandler { [weak self] (result: Result<WebArchiveOperationResult, Error>) in
+            operation.completionHandler { [weak self] (result: Result<WebArchiveOperationResult, WebArchiveOperationError>) in
+                
+                switch result {
+                case .success( _):
+                    break
+                case .failure(let operationError):
+                    switch operationError {
+                    case .cancelled:
+                        cancelled = true
+                    case .failedEncodingPlistData( _):
+                        break
+                    case .failedFetchingHtmlDocument( _):
+                        break
+                    case .failedToParseHtmlDocument( _):
+                        break
+                    case .invalidHost( _):
+                        break
+                    case .invalidMimeType( _):
+                        break
+                    case .noNetworkConnection:
+                        networkFailed = true
+                    case .responseError( _):
+                        break
+                    case .unknownError( _):
+                        break
+                    }
+                }
                 
                 didArchivePlistData(result)
-                
-                let finished: Bool = queueRef.operations.isEmpty
-                
-                if finished, let complete = complete {
-                    complete()
+                                
+                if queueRef.operations.isEmpty {
+                   
+                    let error: WebArchiveError?
+                    
+                    if networkFailed {
+                        error = .noNetworkConnection
+                    }
+                    else if cancelled {
+                        error = .cancelled
+                    }
+                    else {
+                        error = nil
+                    }
+                    
+                    complete(error)
                 }
             }
             
@@ -76,8 +100,8 @@ class WebArchiveQueue {
         if operations.count > 0 {
             queue.addOperations(operations, waitUntilFinished: false)
         }
-        else if let complete = complete {
-            complete()
+        else {
+            complete(nil)
         }
         
         return queue
