@@ -19,7 +19,7 @@ protocol TractViewModelType {
     var selectedTractLanguage: ObservableValue<TractLanguage> { get }
     var primaryLanguage: Language { get }
     var parallelLanguage: Language? { get }
-    var tractManifest: ManifestProperties { get }
+    var primaryTractManifest: ManifestProperties { get }
     var primaryTractPages: [XMLPage] { get }
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
     var currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> { get }
