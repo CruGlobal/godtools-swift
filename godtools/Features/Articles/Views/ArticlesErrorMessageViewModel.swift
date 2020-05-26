@@ -10,7 +10,7 @@ import Foundation
 
 class ArticlesErrorMessageViewModel {
     
-    let title: String = NSLocalizedString("articles.downloadingArticles.errorMessage.title", comment: "")
+    let title: String = NSLocalizedString("download_error", comment: "")
     let message: String
     let downloadArticlesButtonTitle: String = NSLocalizedString("articles.downloadArticlesButton.title.retryDownload", comment: "")
     
