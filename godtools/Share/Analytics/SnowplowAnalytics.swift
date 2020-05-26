@@ -89,7 +89,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         let context = createDefaultProperties()
         let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
             builder.setName(screenName)
-            builder.setContexts(NSMutableArray(object: context))
+            builder.setContexts([ context ])
         }
             
         serialQueue.async { [weak self] in
@@ -103,7 +103,8 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         let context = createDefaultProperties()
         let event = SPStructured.build { (builder: SPStructuredBuilder) in
             builder.setAction(action)
-            builder.setContexts(NSMutableArray(object: context))
+            builder.setCategory("Custom Event")
+            builder.setContexts([ context ])
         }
         
         serialQueue.async { [weak self] in
@@ -113,20 +114,18 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         log(method: "trackAction()", label: "action", labelValue: action, data: nil)
     }
     
-    private func createDefaultProperties() -> SnowplowAnalyticsProperties {
+    private func createDefaultProperties() -> SPSelfDescribingJson {
         let appName: String = self.appName
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let marketingCloudID: String? = self.visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
             
-        return SPSelfDescribingJson(schema: <#T##String!#>, andData: <#T##NSObject!#>)
-        
-        /*return SnowplowAnalyticsProperties(
-            appName: appName,
-            grMasterPersonID: grMasterPersonID,
-            marketingCloudID: marketingCloudID,
-            ssoguid: ssoguid
-        )*/
+        return SPSelfDescribingJson(schema: "iglu:com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#", andData: [
+            "appName": appName,
+            "grMasterPersonID": grMasterPersonID,
+            "marketingCloudID": marketingCloudID,
+            "ssoguid": ssoguid,
+        ] as NSObject)
     }
     
     private func log(method: String, label: String?, labelValue: String?, data: [AnyHashable: Any]?) {
