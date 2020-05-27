@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyToolsView" customModule="godtools" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AllToolsView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="toolsTableView" destination="bEn-NB-oIS" id="55w-PD-Uhy"/>
-                <outlet property="view" destination="iN0-l3-epB" id="X0B-7g-aQC"/>
+                <outlet property="toolsTableView" destination="3A0-HO-ff0" id="s4U-mC-EuV"/>
+                <outlet property="view" destination="iN0-l3-epB" id="skI-Wd-FlR"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -19,17 +19,17 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bEn-NB-oIS" userLabel="toolsTableView">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3A0-HO-ff0" userLabel="toolsTableView">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="bEn-NB-oIS" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="9tQ-c2-50y"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="bEn-NB-oIS" secondAttribute="bottom" id="Onf-UA-37c"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bEn-NB-oIS" secondAttribute="trailing" id="Ttg-0C-wZt"/>
-                <constraint firstItem="bEn-NB-oIS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uD7-2G-1ZC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="3A0-HO-ff0" secondAttribute="bottom" id="IBu-hi-lBi"/>
+                <constraint firstItem="3A0-HO-ff0" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="PCv-uu-7TK"/>
+                <constraint firstItem="3A0-HO-ff0" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cdR-0E-clF"/>
+                <constraint firstItem="3A0-HO-ff0" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="uuB-8g-YFh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="139" y="153"/>

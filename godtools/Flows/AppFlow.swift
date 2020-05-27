@@ -12,10 +12,11 @@ import MessageUI
 class AppFlow: NSObject, FlowDelegate {
     
     private var onboardingFlow: OnboardingFlow?
-    private var tutorialFlow: TutorialFlow?
-    private var articlesFlow: ArticlesFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
+    private var toolsFlow: ToolsFlow?
+    private var tutorialFlow: TutorialFlow?
+    private var articlesFlow: ArticlesFlow?
     
     private var navigationStarted: Bool = false
     
@@ -46,7 +47,7 @@ class AppFlow: NSObject, FlowDelegate {
             navigate(step: .showOnboardingTutorial(animated: false))
         }
         else {
-            navigate(step: .showMasterView(animated: true, shouldCreateNewInstance: true))
+            navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
     }
     
@@ -54,31 +55,27 @@ class AppFlow: NSObject, FlowDelegate {
 
         switch step {
         
-        case .showMasterView(let animated, let shouldCreateNewInstance):
+        case .showTools(let animated, let shouldCreateNewInstance):
             
             navigationController.setNavigationBarHidden(false, animated: false)
             
             configureNavigation(navigationController: navigationController)
             
-            let currentMasterView: MasterHomeViewController? = navigationController.viewControllers.first as? MasterHomeViewController
-            
-            if shouldCreateNewInstance || currentMasterView == nil {
+            if shouldCreateNewInstance || toolsFlow == nil {
                 
-                let viewModel = MasterHomeViewModel(
+                let toolsFlow: ToolsFlow = ToolsFlow(
                     flowDelegate: self,
-                    tutorialAvailability: appDiContainer.tutorialAvailability,
-                    openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-                    analytics: appDiContainer.analytics
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController:
+                    navigationController
                 )
                 
-                let masterView = MasterHomeViewController(viewModel: viewModel)
-
-                navigationController.setViewControllers([masterView], animated: false)
+                self.toolsFlow = toolsFlow
                 
-                if animated {
-                    masterView.view.alpha = 0
+                if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
+                    toolsView.alpha = 0
                     UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                        masterView.view.alpha = 1
+                        toolsView.alpha = 1
                     }, completion: nil)
                 }
             }
@@ -96,7 +93,7 @@ class AppFlow: NSObject, FlowDelegate {
             
         case .dismissOnboardingTutorial:
             
-            navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+            navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
             navigationController.dismiss(animated: true, completion: nil)
             onboardingFlow = nil
                             
@@ -133,11 +130,21 @@ class AppFlow: NSObject, FlowDelegate {
                 UIApplication.shared.openURL(url)
             }
             
-        case .menuTappedFromHome:
+        case .showMenu:
             navigateToMenu(animated: true)
             
         case .doneTappedFromMenu:
             closeMenu(animated: true)
+            
+        case .showLanguageSettings:
+            
+            let languageSettingsFlow = LanguageSettingsFlow(
+                flowDelegate: self,
+                appDiContainer: appDiContainer,
+                sharedNavigationController: navigationController
+            )
+            
+            self.languageSettingsFlow = languageSettingsFlow
             
         case .toolTappedFromMyTools(let resource):
             navigateToTool(resource: resource)
@@ -153,16 +160,6 @@ class AppFlow: NSObject, FlowDelegate {
             
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
-            
-        case .languagesTappedFromHome:
-            
-            let languageSettingsFlow = LanguageSettingsFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController
-            )
-            
-            self.languageSettingsFlow = languageSettingsFlow
                    
         // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
@@ -320,7 +317,7 @@ class AppFlow: NSObject, FlowDelegate {
     
     private func dismissTutorial() {
         closeMenu(animated: true)
-        navigate(step: .showMasterView(animated: false, shouldCreateNewInstance: false))
+        navigate(step: .showTools(animated: false, shouldCreateNewInstance: false))
         navigationController.dismiss(animated: true, completion: nil)
         tutorialFlow = nil
     }

@@ -25,10 +25,10 @@ class MasterHomeViewModel: MasterHomeViewModelType {
     }
     
     func menuTapped() {
-        flowDelegate?.navigate(step: .menuTappedFromHome)
+        flowDelegate?.navigate(step: .menuTappedFromTools)
     }
     
     func languageTapped() {
-        flowDelegate?.navigate(step: .languagesTappedFromHome)
+        flowDelegate?.navigate(step: .languageSettingsTappedFromTools)
     }
 }
