@@ -11,13 +11,7 @@ import Fuzi
 
 class WebArchiveOperation: Operation {
     
-    struct HTMLDocumentData {
-        let mainResource: WebArchiveMainResource
-        let htmlDocument: HTMLDocument
-        let resourceUrls: [String]
-    }
-    
-    typealias Completion = ((_ result: Result<WebArchiveOperationResult, Error>) -> Void)
+    typealias Completion = ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void)
     
     enum ObserverKey: String {
         case isExecuting = "isExecuting"
@@ -35,9 +29,9 @@ class WebArchiveOperation: Operation {
     private let urlRequest: URLRequest
     private let includeJavascript: Bool = true
     private let errorDomain: String = String(describing: WebArchiveOperation.self)
+    private let getHtmlResourcesQueue: OperationQueue = OperationQueue()
     
     private var getHtmlDocumentTask: URLSessionDataTask?
-    private var getHtmlResourceTask: URLSessionDataTask?
     private var completion: Completion?
     
     required init(session: URLSession, url: URL) {
@@ -52,16 +46,23 @@ class WebArchiveOperation: Operation {
     }
     
     override func start() {
-                
-        requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, Error>) in
+                        
+        let urlRef: URL = url
+        
+        requestHtmlDocumentData(url: url, includeJavascript: includeJavascript) { [weak self] (_ result: Result<HTMLDocumentData, WebArchiveOperationError>) in
             
             switch result {
                 
             case .success(let documentData):
-                
-                var resourceUrls: [String] = documentData.resourceUrls
-                
-                self?.requestHtmlDocumentResources(resourceUrls: resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
+                                
+                self?.requestHtmlDocumentResources(resourceUrls: documentData.resourceUrls, complete: { [weak self] (resources: [WebArchiveResource]) in
+                           
+                    if let operation = self {
+                        guard !operation.isCancelled else {
+                            self?.handleOperationCancelled()
+                            return
+                        }
+                    }
                     
                     let webArchive = WebArchive(
                         mainResource: documentData.mainResource,
@@ -73,16 +74,16 @@ class WebArchiveOperation: Operation {
                     
                     do {
                         let plistData: Data = try plistEncoder.encode(webArchive)
-                        self?.handleOperationFinished(webArchivePlistData: plistData, error: nil)
+                        self?.handleOperationFinished(result: .success(WebArchiveOperationResult(url: urlRef, webArchivePlistData: plistData)))
                     }
                     catch let error {
-                        self?.handleOperationFinished(webArchivePlistData: nil, error: error)
+                        
+                        self?.handleOperationFinished(result: .failure(.failedEncodingPlistData(error: error)))                        
                     }
                 })
             
-            case .failure(let error):
-            
-                self?.handleOperationFinished(webArchivePlistData: nil, error: error)
+            case .failure(let webArchiveOperationError):
+                self?.handleOperationFinished(result: .failure(webArchiveOperationError))
             }
         }
         
@@ -91,76 +92,67 @@ class WebArchiveOperation: Operation {
     
     private func requestHtmlDocumentResources(resourceUrls: [String], complete: @escaping ((_ resources: [WebArchiveResource]) -> Void)) {
         
-        var fetchedResources: [WebArchiveResource] = Array()
-        
-        let totalNumberOfResourcesToFetch: Int = resourceUrls.count
-        var fetchCount: Int = 0
-        
-        for resourceUrlString in resourceUrls {
-            
-            if let resourceUrl = URL(string: resourceUrlString) {
-                
-                requestHtmlDocumentResources(resourceUrl: resourceUrl) { [weak self] (result: Result<WebArchiveResource, Error>) in
-                    
-                    switch result {
-                    case .success(let webArchiveResource):
-                        fetchedResources.append(webArchiveResource)
-                    case .failure( _):
-                        break
-                    }
-                    
-                    fetchCount = fetchCount + 1
-                    
-                    if fetchCount == totalNumberOfResourcesToFetch {
-                        complete(fetchedResources)
-                    }
-                }
-            }
-        }
-    }
-    
-    private func requestHtmlDocumentResources(resourceUrl: URL, complete: @escaping ((_ result: Result<WebArchiveResource, Error>) -> Void)) {
-                
         guard !isCancelled else {
             handleOperationCancelled()
             return
         }
         
-        getHtmlResourceTask = session.dataTask(with: url, completionHandler: { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
-                        
-            let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
-            let mimeType: String = urlResponse?.mimeType ?? ""
-            
-            if let error = error {
-                
-                complete(.failure(error))
-            }
-            else if httpStatusCode == 200, let data = data, !mimeType.isEmpty {
-                
-                let resource = WebArchiveResource(
-                    url: resourceUrl,
-                    data: data,
-                    mimeType: mimeType
-                )
-                
-                complete(.success(resource))
-            }
-            else {
-                
-                let noHtmlData = NSError(
-                    domain: self?.errorDomain ?? "",
-                    code: -1,
-                    userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource, there wasn't sufficent html to parse."
-                ])
-                
-                complete(.failure(noHtmlData))
-            }
-        })
+        var fetchedWebArchiveResources: [WebArchiveResource] = Array()
         
-        getHtmlResourceTask?.resume()
+        var resourceOperations: [RequestOperation] = Array()
+        
+        for resourceUrlString in resourceUrls {
+            
+            if let resourceUrl = URL(string: resourceUrlString) {
+                
+                let operation = RequestOperation(session: session, urlRequest: URLRequest(url: resourceUrl))
+                
+                operation.completionHandler { [weak self] (response: RequestResponse) in
+                    
+                    let httpStatusCode: Int = response.httpStatusCode
+                    let mimeType: String = response.urlResponse?.mimeType ?? ""
+                                        
+                    if let error = response.error {
+                        
+                        // Do something with Error?
+                    }
+                    else if httpStatusCode >= 200 && httpStatusCode < 400, let data = response.data, !mimeType.isEmpty {
+                        
+                        let webArchiveResource = WebArchiveResource(
+                            url: resourceUrl,
+                            data: data,
+                            mimeType: mimeType
+                        )
+                        
+                        fetchedWebArchiveResources.append(webArchiveResource)
+                    }
+                    else {
+                        
+                        let noData = NSError(
+                            domain: self?.errorDomain ?? "",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "Failed to fetch resource."
+                        ])
+                        
+                        // Do something with Error?
+                    }
+                    
+                    if let queue = self?.getHtmlResourcesQueue, queue.operations.isEmpty {
+                        complete(fetchedWebArchiveResources)
+                    }
+                }
+                
+                resourceOperations.append(operation)
+            }
+        }
+        
+        getHtmlResourcesQueue.addOperations(
+            resourceOperations,
+            waitUntilFinished: false
+        )
     }
     
-    private func requestHtmlDocumentData(url: URL, includeJavascript: Bool, complete: @escaping ((_ result: Result<HTMLDocumentData, Error>) -> Void)) {
+    private func requestHtmlDocumentData(url: URL, includeJavascript: Bool, complete: @escaping ((_ result: Result<HTMLDocumentData, WebArchiveOperationError>) -> Void)) {
         
         guard !isCancelled else {
             handleOperationCancelled()
@@ -169,45 +161,59 @@ class WebArchiveOperation: Operation {
         
         guard let host = url.host else {
             
-            let error = NSError(
+            let error: Error = NSError(
                 domain: errorDomain,
                 code: -1,
                 userInfo: [NSLocalizedDescriptionKey: "Invalid url host."
             ])
             
-            complete(.failure(error))
+            complete(.failure(.invalidHost(error: error)))
             return
         }
         
         let urlRequest: URLRequest = URLRequest(url: url)
-        
+                
         getHtmlDocumentTask = session.dataTask(with: urlRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
             
             let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
             let mimeType: String = urlResponse?.mimeType ?? ""
-                            
+               
             if let error = error {
-                complete(.failure(error))
-            }
-            else if httpStatusCode != 200 {
                 
-                let responseError = NSError(
+                let errorCode: Int = (error as NSError).code
+                let operationError: WebArchiveOperationError
+                
+                if errorCode == CFNetworkErrors.cfurlErrorCancelled.rawValue {
+                    operationError = .cancelled
+                }
+                else if errorCode == CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue {
+                    operationError = .noNetworkConnection
+                }
+                else {
+                    operationError = .unknownError(error: error)
+                }
+                
+                complete(.failure(operationError))                
+            }
+            else if httpStatusCode < 200 || httpStatusCode >= 400 {
+                
+                let error: Error = NSError(
                     domain: self?.errorDomain ?? "",
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "The request failed with a status code: \(httpStatusCode)"
                 ])
                 
-                complete(.failure(responseError))
+                complete(.failure(.responseError(error: error)))
             }
             else if mimeType != "text/html" {
                 
-                let invalideMimeTypeError = NSError(
+                let error: Error = NSError(
                     domain: self?.errorDomain ?? "",
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "Failed to archive url because the mimetype is not text/html. Found mimeType: \(mimeType)"
                 ])
                 
-                complete(.failure(invalideMimeTypeError))
+                complete(.failure(.invalidMimeType(error: error)))
             }
             else if let data = data, let htmlString = String(data: data, encoding: .utf8) {
                 do {
@@ -218,7 +224,7 @@ class WebArchiveOperation: Operation {
                     complete(.success(HTMLDocumentData(mainResource: mainResource, htmlDocument: htmlDocument, resourceUrls: resourceUrls)))
                 }
                 catch let parseHtmlDocumentError {
-                    complete(.failure(parseHtmlDocumentError))
+                    complete(.failure(.failedToParseHtmlDocument(error: parseHtmlDocumentError)))
                 }
             }
             else {
@@ -229,7 +235,7 @@ class WebArchiveOperation: Operation {
                     userInfo: [NSLocalizedDescriptionKey: "Failed to archive url there wasn't sufficent html to parse."
                 ])
                 
-                complete(.failure(noHtmlData))
+                complete(.failure(.failedToParseHtmlDocument(error: noHtmlData)))
             }
         }
         
@@ -239,46 +245,22 @@ class WebArchiveOperation: Operation {
     override func cancel() {
         super.cancel()
         getHtmlDocumentTask?.cancel()
-        getHtmlResourceTask?.cancel()
+        getHtmlResourcesQueue.cancelAllOperations()
     }
     
     private func handleOperationCancelled() {
         
-        let cancelledError = NSError(
-            domain: errorDomain,
-            code: NSURLErrorCancelled,
-            userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
-        )
-        
-        handleOperationFinished(webArchivePlistData: nil, error: cancelledError)
+        handleOperationFinished(result: .failure(.cancelled))
     }
     
-    private func handleOperationFinished(webArchivePlistData: Data?, error: Error?) {
-             
+    private func handleOperationFinished(result: Result<WebArchiveOperationResult, WebArchiveOperationError>) {
+        
         state = .finished
         
         guard let completion = completion else {
             return
         }
         
-        var result: Result<WebArchiveOperationResult, Error>
-        
-        if let error = error {
-            result = .failure(error)
-        }
-        else if let webArchivePlistData = webArchivePlistData {
-            
-            let operationResult = WebArchiveOperationResult(
-                url: url,
-                webArchivePlistData: webArchivePlistData
-            )
-            
-            result = .success(operationResult)
-        }
-        else {
-            result = .failure(unknownError)
-        }
-                
         completion(result)
     }
     

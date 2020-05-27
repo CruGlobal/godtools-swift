@@ -48,6 +48,10 @@ class TractCard: BaseTractElement {
     
     // MARK: - Object properties
     
+    private let shouldDecreaseTractCollectionViewPanningSensitivity: Bool = true
+    
+    private var panGestureToControlTractCollectionViewPanningSensitivity: UIPanGestureRecognizer?
+    
     var shadowView = UIView()
     let scrollView = UIScrollView()
     let backgroundView = UIView()
@@ -596,16 +600,23 @@ extension TractCard {
 
 // MARK: - Gestures
 
-extension TractCard {
+extension TractCard: UIGestureRecognizerDelegate {
     
     func setupSwipeGestures() {
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeUp.direction = .up
-        self.addGestureRecognizer(swipeUp)
+        addGestureRecognizer(swipeUp)
         
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
         swipeDown.direction = .down
-        self.addGestureRecognizer(swipeDown)
+        addGestureRecognizer(swipeDown)
+        
+        if shouldDecreaseTractCollectionViewPanningSensitivity {
+            let panGesture = UIPanGestureRecognizer()
+            panGesture.delegate = self
+            addGestureRecognizer(panGesture)
+            self.panGestureToControlTractCollectionViewPanningSensitivity = panGesture
+        }
     }
     
     @objc func handleGesture(sender: UISwipeGestureRecognizer) {
@@ -616,6 +627,46 @@ extension TractCard {
         }
     }
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        if let panGesture = self.panGestureToControlTractCollectionViewPanningSensitivity, gestureRecognizer == panGesture {
+                        
+            if let otherView = otherGestureRecognizer.view, otherView is UICollectionView, let tractPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer {
+                
+                let velocity: CGPoint = tractPanGesture.velocity(in: self)
+                        
+                let angleRadians: CGFloat = atan2(velocity.y, velocity.x)
+                var angleDegrees: CGFloat = angleRadians * 57.2958
+                if angleDegrees < 0 {
+                    angleDegrees *= -1
+                }
+                let rightToLeftDegrees: CGFloat = 180
+                let leftToRightDegrees: CGFloat = 0
+                let allowedPanOffsetDegrees: CGFloat = 20
+                                    
+                let shouldRecognizeTractPanning: Bool
+                
+                if angleDegrees >= rightToLeftDegrees - allowedPanOffsetDegrees && angleDegrees <= rightToLeftDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeTractPanning = true
+                }
+                else if angleDegrees >= leftToRightDegrees - allowedPanOffsetDegrees && angleDegrees <= leftToRightDegrees + allowedPanOffsetDegrees {
+                    shouldRecognizeTractPanning = true
+                }
+                else {
+                    shouldRecognizeTractPanning = false
+                }
+                
+                return shouldRecognizeTractPanning
+            }
+            else {
+
+                // Allow simultaneous gestures whenever the tract card pan gesture is active against any gesture that is not the tract collection view pan gesture.
+                return true
+            }
+        }
+        
+        return false
+    }
 }
 
 extension TractCard : UIScrollViewDelegate {

@@ -38,12 +38,14 @@ class ArticleAemImportApi {
         )
     }
     
-    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, Error>) -> Void), complete: @escaping ((_ error: Error?) -> Void)) -> OperationQueue {
+    func downloadAemImportSrcs(godToolsResource: GodToolsResource, aemImportSrcs: [String], maxAemImportJsonTreeLevels: Int, didDownloadAemImport: @escaping ((_ response: RequestResponse, _ result: Result<ArticleAemImportData, ArticleAemImportOperationError>) -> Void), complete: @escaping ((_ error: ArticleAemImportApiError?) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [ArticleAemImportOperation] = Array()
-        var didCompleteWithError: Bool = false
+        
+        var networkFailed: Bool = false
+        var operationCancelled: Bool = false
                 
         for aemImportSrc in aemImportSrcs {
             
@@ -53,34 +55,53 @@ class ArticleAemImportApi {
                 maxAemImportJsonTreeLevels: maxAemImportJsonTreeLevels
             )
             
-            operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemImportData, Error>) in
-            
-                guard !didCompleteWithError else {
-                    return
-                }
+            operation.completionHandler { (response: RequestResponse, result: Result<ArticleAemImportData, ArticleAemImportOperationError>) in
                 
-                if let error = response.error, response.notConnectedToInternet {
-                    
-                    didCompleteWithError = true
-                    
-                    queue.cancelAllOperations()
-                    
-                    complete(error)
-                    
-                    return
+                switch result {
+                case .success( _):
+                    break
+                case .failure(let aemImportOperationError):
+                    switch aemImportOperationError {
+                    case .cancelled:
+                        operationCancelled = true
+                    case .failedToParseJson( _):
+                        break
+                    case .failedToSerializeJson( _):
+                        break
+                    case .invalidAemImportJsonUrl:
+                        break
+                    case .invalidAemImportSrcUrl:
+                        break
+                    case .noNetworkConnection:
+                        networkFailed = true
+                    case .unknownError( _):
+                        break
+                    }
                 }
                 
                 didDownloadAemImport(response, result)
                 
                 if queue.operations.isEmpty {
                     
-                    complete(nil)
+                    let error: ArticleAemImportApiError?
+                    
+                    if networkFailed {
+                        error = .noNetworkConnection
+                    }
+                    else if operationCancelled {
+                        error = .cancelled
+                    }
+                    else {
+                        error = nil
+                    }
+                    
+                    complete(error)
                 }
             }
             
             operations.append(operation)
         }
-        
+                
         if operations.count > 0 {
             queue.addOperations(operations, waitUntilFinished: false)
         }

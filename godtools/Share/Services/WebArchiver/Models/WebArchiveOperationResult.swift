@@ -10,5 +10,5 @@ import Foundation
 
 struct WebArchiveOperationResult {
     let url: URL
-    let webArchivePlistData: Data?
+    let webArchivePlistData: Data
 }

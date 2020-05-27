@@ -21,7 +21,7 @@ class ArticleAemImportDataParser {
         return ["godtools", "godtools-variation", aemImportSrc.lastPathComponent, "master"]
     }
     
-    func parse(aemImportSrc: URL, aemImportJson: [String: Any], godToolsResource: GodToolsResource) -> Result<ArticleAemImportData, Error> {
+    func parse(aemImportSrc: URL, aemImportJson: [String: Any], godToolsResource: GodToolsResource) -> Result<ArticleAemImportData, ArticleAemImportDataParserError> {
               
         let variation: String
         let variationJson: [String: Any]
@@ -32,13 +32,13 @@ class ArticleAemImportDataParser {
             
             guard let variationJsonDictionary = aemImportJson[preferredVariation] as? [String: Any] else {
                 
-                let variationJsonError = NSError(
+                let variationJsonError: Error = NSError(
                     domain: errorDomain,
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "Failed to parse aem import json result because json for the preferred variation does not exist.\n variation: \(variation)"
                 ])
                 
-                return .failure(variationJsonError)
+                return .failure(.failedToLocateJson(error: variationJsonError))
             }
             
             variationJson = variationJsonDictionary
