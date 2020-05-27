@@ -8,11 +8,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolsView" customModule="godtools" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolsMenuView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="allToolsContainerView" destination="3bJ-1S-vZ5" id="cBB-vc-vCH"/>
-                <outlet property="favoritedToolsContainerLeading" destination="g3S-v0-nRA" id="VbE-si-Ok9"/>
-                <outlet property="favoritedToolsContainerView" destination="1xw-Ar-50N" id="6fR-Jn-FyH"/>
+                <outlet property="allTools" destination="3bJ-1S-vZ5" id="dEH-PQ-u0X"/>
+                <outlet property="favoritedTools" destination="1xw-Ar-50N" id="38a-lG-eVw"/>
+                <outlet property="favoritedToolsLeading" destination="g3S-v0-nRA" id="p1K-HW-5Qe"/>
                 <outlet property="openTutorialHeight" destination="oQu-7g-Nb6" id="DKx-T3-ZM4"/>
                 <outlet property="openTutorialTop" destination="2Kf-vy-gUd" id="1TE-nf-fsF"/>
                 <outlet property="openTutorialView" destination="9S2-uP-4kg" id="Fcg-W0-fmF"/>
@@ -31,13 +31,13 @@
                         <constraint firstAttribute="height" constant="110" id="oQu-7g-Nb6"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xw-Ar-50N" userLabel="favoritedToolsContainerView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1xw-Ar-50N" userLabel="favoritedTools" customClass="FavoritedToolsView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="154" width="414" height="708"/>
-                    <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bJ-1S-vZ5" userLabel="allToolsContainerView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bJ-1S-vZ5" userLabel="allTools" customClass="AllToolsView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="414" y="154" width="414" height="708"/>
-                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

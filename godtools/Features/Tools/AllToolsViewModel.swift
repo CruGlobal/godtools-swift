@@ -12,12 +12,15 @@ import RealmSwift
 class AllToolsViewModel: AllToolsViewModelType {
     
     private let realm: Realm
+    private let analytics: AnalyticsContainer
     
     let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
+    let message: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(realm: Realm) {
+    required init(realm: Realm, analytics: AnalyticsContainer) {
         
         self.realm = realm
+        self.analytics = analytics
         
         reloadTools()
     }
@@ -30,10 +33,17 @@ class AllToolsViewModel: AllToolsViewModelType {
         let filteredResources: Results<DownloadedResource> = allResources.filter(predicate)
         let resources: [DownloadedResource] = Array(filteredResources)
                 
-        tools.accept(value: resources)
+        if resources.isEmpty {
+            message.accept(value: NSLocalizedString("You have downloaded all available tools.", comment: ""))
+            tools.accept(value: [])
+        }
+        else {
+            tools.accept(value: resources)
+        }
     }
     
     func pageViewed() {
         
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
     }
 }

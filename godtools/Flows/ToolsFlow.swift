@@ -33,22 +33,22 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics
         )
         
-        let myToolsViewModel = MyToolsViewModel(
-            flowDelegate: self,
+        let favoritedToolsViewModel = FavoritedToolsViewModel(
             analytics: appDiContainer.analytics
         )
         
         let allToolsViewModel = AllToolsViewModel(
-            realm: appDiContainer.realmDatabase.mainThreadRealm
+            realm: appDiContainer.realmDatabase.mainThreadRealm,
+            analytics: appDiContainer.analytics
         )
         
-        let viewModel = ToolsViewModel(
+        let toolsMenuViewModel = ToolsMenuViewModel(
             flowDelegate: self
         )
-        let view = ToolsView(
-            viewModel: viewModel,
+        let view = ToolsMenuView(
+            viewModel: toolsMenuViewModel,
             openTutorialViewModel: openTutorialViewModel,
-            myToolsViewModel: myToolsViewModel,
+            favoritedToolsViewModel: favoritedToolsViewModel,
             allToolsViewModel: allToolsViewModel
         )
         

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Bold.otf">
+            <string>SFProText-Bold</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToolCellReuseIdentifier" rowHeight="239" id="EBc-78-Vsg" userLabel="ToolCell" customClass="ToolCell" customModule="godtools" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EBc-78-Vsg" id="Cll-3w-iEW">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="230"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Nv-9X-2XM" userLabel="toolShadowView">
+                        <rect key="frame" x="15" y="15" width="384" height="212.5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ON1-CZ-kyr" userLabel="toolContentView">
+                        <rect key="frame" x="15" y="15" width="384" height="212.5"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zB8-IL-euH" userLabel="bannerImageView">
+                                <rect key="frame" x="0.0" y="0.0" width="384" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="MSw-6N-hOG"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
+                                <rect key="frame" x="12" y="92" width="219" height="21.5"/>
+                                <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
+                                <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
+                                <rect key="frame" x="12" y="116.5" width="342" height="17"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVf-Mj-BIx" userLabel="parallelLanguageLabel">
+                                <rect key="frame" x="322" y="95.5" width="39" height="15"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" red="0.50196078431372548" green="0.50980392156862742" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bVm-eV-R3X" userLabel="aboutToolButton">
+                                <rect key="frame" x="139" y="164.5" width="115" height="38"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                <state key="normal" title="About">
+                                    <color key="titleColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFT-6s-l9f" userLabel="openToolButton">
+                                <rect key="frame" x="259" y="164.5" width="115" height="38"/>
+                                <color key="backgroundColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="mzL-7M-xzz"/>
+                                    <constraint firstAttribute="width" constant="115" id="rip-i3-kBh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
+                                <state key="normal" title="Open">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="HFT-6s-l9f" secondAttribute="bottom" constant="10" id="0Yv-Zg-lLS"/>
+                            <constraint firstAttribute="trailing" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="30" id="68U-LX-f5Q"/>
+                            <constraint firstItem="HFT-6s-l9f" firstAttribute="leading" secondItem="bVm-eV-R3X" secondAttribute="trailing" constant="5" id="6Au-qm-6h4"/>
+                            <constraint firstItem="zB8-IL-euH" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="BAm-Xe-SFd"/>
+                            <constraint firstAttribute="trailing" secondItem="zB8-IL-euH" secondAttribute="trailing" id="H7J-uw-N3e"/>
+                            <constraint firstItem="39M-E6-07b" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" constant="12" id="QK7-z1-gHe"/>
+                            <constraint firstItem="39M-E6-07b" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" constant="12" id="UwE-Li-ZHw"/>
+                            <constraint firstItem="bVm-eV-R3X" firstAttribute="centerY" secondItem="HFT-6s-l9f" secondAttribute="centerY" id="VMc-KC-4Of"/>
+                            <constraint firstItem="bVm-eV-R3X" firstAttribute="height" secondItem="HFT-6s-l9f" secondAttribute="height" id="XG2-To-12I"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="centerY" secondItem="39M-E6-07b" secondAttribute="centerY" id="c50-Dd-Vfc"/>
+                            <constraint firstItem="bVm-eV-R3X" firstAttribute="top" secondItem="I2y-Ji-clW" secondAttribute="bottom" constant="31" id="csb-C7-y2B"/>
+                            <constraint firstItem="zB8-IL-euH" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="kYF-0r-6nd"/>
+                            <constraint firstAttribute="trailing" secondItem="YVf-Mj-BIx" secondAttribute="trailing" constant="23" id="kmj-hG-6rx"/>
+                            <constraint firstItem="bVm-eV-R3X" firstAttribute="width" secondItem="HFT-6s-l9f" secondAttribute="width" id="m68-PT-6Io"/>
+                            <constraint firstItem="I2y-Ji-clW" firstAttribute="top" secondItem="39M-E6-07b" secondAttribute="bottom" constant="3" id="u5V-p7-Tk1"/>
+                            <constraint firstAttribute="trailing" secondItem="HFT-6s-l9f" secondAttribute="trailing" constant="10" id="wHn-FM-QB9"/>
+                            <constraint firstItem="I2y-Ji-clW" firstAttribute="leading" secondItem="39M-E6-07b" secondAttribute="leading" id="wpz-eI-Vqb"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="ON1-CZ-kyr" secondAttribute="bottom" constant="2.5" id="AGA-0f-CP1"/>
+                    <constraint firstItem="5Nv-9X-2XM" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="KuF-ZG-r6x"/>
+                    <constraint firstAttribute="trailing" secondItem="ON1-CZ-kyr" secondAttribute="trailing" constant="15" id="MvS-ze-xpC"/>
+                    <constraint firstItem="5Nv-9X-2XM" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="T8y-pU-8RY"/>
+                    <constraint firstItem="5Nv-9X-2XM" firstAttribute="bottom" secondItem="ON1-CZ-kyr" secondAttribute="bottom" id="VI4-UO-VJo"/>
+                    <constraint firstItem="5Nv-9X-2XM" firstAttribute="trailing" secondItem="ON1-CZ-kyr" secondAttribute="trailing" id="dWh-lI-Ojh"/>
+                    <constraint firstItem="ON1-CZ-kyr" firstAttribute="leading" secondItem="Cll-3w-iEW" secondAttribute="leading" constant="15" id="pZ1-8t-8dr"/>
+                    <constraint firstItem="ON1-CZ-kyr" firstAttribute="top" secondItem="Cll-3w-iEW" secondAttribute="top" constant="15" id="png-jj-unV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="aboutToolButton" destination="bVm-eV-R3X" id="nso-dl-vhM"/>
+                <outlet property="bannerImageView" destination="zB8-IL-euH" id="9Q2-3P-ip8"/>
+                <outlet property="descriptionLabel" destination="I2y-Ji-clW" id="vnI-TE-Q2m"/>
+                <outlet property="openToolButton" destination="HFT-6s-l9f" id="hrM-gJ-oKg"/>
+                <outlet property="parallelLanguageLabel" destination="YVf-Mj-BIx" id="k1f-MU-bId"/>
+                <outlet property="titleLabel" destination="39M-E6-07b" id="jWt-4t-QIx"/>
+                <outlet property="toolContentView" destination="ON1-CZ-kyr" id="sgO-2e-gBa"/>
+                <outlet property="toolShadowView" destination="5Nv-9X-2XM" id="UXE-lp-1Wg"/>
+            </connections>
+            <point key="canvasLocation" x="-117.39130434782609" y="3.0133928571428572"/>
+        </tableViewCell>
+    </objects>
+</document>

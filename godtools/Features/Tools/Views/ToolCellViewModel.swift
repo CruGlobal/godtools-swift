@@ -1,5 +1,5 @@
 //
-//  ToolsViewModelType.swift
+//  ToolCellViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/27/20.
@@ -8,7 +8,6 @@
 
 import Foundation
 
-protocol ToolsViewModelType {
+class ToolCellViewModel: ToolCellViewModelType {
     
-    var tools: ObservableValue<[DownloadedResource]> { get }
 }

@@ -20,3 +20,9 @@ struct ToolMenuItem {
         (self.title as NSString).accessibilityLabel = accessibilityLabel
     }
 }
+
+extension ToolMenuItem: Equatable {
+    static func ==(lhs: ToolMenuItem, rhs: ToolMenuItem) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

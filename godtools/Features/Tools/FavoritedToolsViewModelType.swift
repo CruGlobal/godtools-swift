@@ -1,5 +1,5 @@
 //
-//  AllToolsViewModelType.swift
+//  FavoritedToolsViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/27/20.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol AllToolsViewModelType: ToolsViewModelType {
-    
-    var message: ObservableValue<String> { get }
+protocol FavoritedToolsViewModelType: ToolsViewModelType {
     
     func pageViewed()
 }

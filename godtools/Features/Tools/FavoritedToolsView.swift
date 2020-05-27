@@ -1,19 +1,18 @@
 //
-//  AllToolsView.swift
+//  FavoritedToolsView.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/26/20.
+//  Created by Levi Eggert on 5/27/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
 
-class AllToolsView: UIView, NibBased {
+class FavoritedToolsView: UIView, NibBased {
     
-    private var viewModel: AllToolsViewModelType?
+    private var viewModel: FavoritedToolsViewModelType?
     
     @IBOutlet weak private var toolsView: ToolsTableView!
-    @IBOutlet weak private var messageLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +30,7 @@ class AllToolsView: UIView, NibBased {
         setupLayout()
     }
     
-    func configure(viewModel: AllToolsViewModelType) {
+    func configure(viewModel: FavoritedToolsViewModelType) {
         
         self.viewModel = viewModel
         
@@ -50,9 +49,5 @@ class AllToolsView: UIView, NibBased {
     
     private func setupBinding() {
         
-        viewModel?.message.addObserver(self, onObserve: { [weak self] (message: String) in
-            self?.messageLabel.isHidden = message.isEmpty
-            self?.messageLabel.text = message
-        })
     }
 }

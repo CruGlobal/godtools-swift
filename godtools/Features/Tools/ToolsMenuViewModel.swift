@@ -1,5 +1,5 @@
 //
-//  ToolsViewModel.swift
+//  ToolsMenuViewModel.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/26/20.
@@ -8,21 +8,27 @@
 
 import Foundation
 
-class ToolsViewModel: ToolsViewModelType {
+class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
     let toolMenuItems: ObservableValue<[ToolMenuItem]> = ObservableValue(value: [])
-    let selectedToolMenuItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
+    let selectedToolMenuItem: ObservableValue<ToolMenuItem?> = ObservableValue(value: nil)
     
     required init(flowDelegate: FlowDelegate) {
         
         self.flowDelegate = flowDelegate
         
-        toolMenuItems.accept(value: [
-            ToolMenuItem(id: .favorites, title: NSLocalizedString("my_tools", comment: ""), accessibilityLabel: "my_tools"),
-            ToolMenuItem(id: .allTools, title: NSLocalizedString("find_tools", comment: ""), accessibilityLabel: "find_tools")
-        ])        
+        reloadToolMenu()
+    }
+    
+    private func reloadToolMenu() {
+        
+        let favorites: ToolMenuItem = ToolMenuItem(id: .favorites, title: NSLocalizedString("my_tools", comment: ""), accessibilityLabel: "my_tools")
+        let allTools: ToolMenuItem = ToolMenuItem(id: .allTools, title: NSLocalizedString("find_tools", comment: ""), accessibilityLabel: "find_tools")
+        
+        toolMenuItems.accept(value: [favorites, allTools])
+        selectedToolMenuItem.accept(value: favorites)
     }
     
     func menuTapped() {

@@ -1,5 +1,5 @@
 //
-//  ToolsView.swift
+//  ToolsMenuView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/26/20.
@@ -8,29 +8,29 @@
 
 import UIKit
 
-class ToolsView: UIViewController {
+class ToolsMenuView: UIViewController {
     
-    private let viewModel: ToolsViewModelType
+    private let viewModel: ToolsMenuViewModelType
     private let openTutorialViewModel: OpenTutorialViewModelType
-    private let myToolsView: MyToolsView
-    private let allToolsView: AllToolsView
+    private let favoritedToolsViewModel: FavoritedToolsViewModelType
+    private let allToolsViewModel: AllToolsViewModelType
     
-    private var toolsControl: UISegmentedControl = UISegmentedControl()
+    private var toolsMenuControl: UISegmentedControl = UISegmentedControl()
                 
     @IBOutlet weak private var openTutorialView: OpenTutorialView!
-    @IBOutlet weak private var favoritedToolsContainerView: UIView!
-    @IBOutlet weak private var allToolsContainerView: UIView!
+    @IBOutlet weak private var favoritedTools: FavoritedToolsView!
+    @IBOutlet weak private var allTools: AllToolsView!
     
     @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
     @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
-    @IBOutlet weak private var favoritedToolsContainerLeading: NSLayoutConstraint!
+    @IBOutlet weak private var favoritedToolsLeading: NSLayoutConstraint!
     
-    required init(viewModel: ToolsViewModelType, openTutorialViewModel: OpenTutorialViewModelType, myToolsViewModel: MyToolsViewModelType, allToolsViewModel: AllToolsViewModelType) {
+    required init(viewModel: ToolsMenuViewModelType, openTutorialViewModel: OpenTutorialViewModelType, favoritedToolsViewModel: FavoritedToolsViewModelType, allToolsViewModel: AllToolsViewModelType) {
         self.viewModel = viewModel
         self.openTutorialViewModel = openTutorialViewModel
-        myToolsView = MyToolsView(viewModel: myToolsViewModel)
-        allToolsView = AllToolsView(viewModel: allToolsViewModel)
-        super.init(nibName: String(describing: ToolsView.self), bundle: nil)
+        self.favoritedToolsViewModel = favoritedToolsViewModel
+        self.allToolsViewModel = allToolsViewModel
+        super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +44,10 @@ class ToolsView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
-                
+        
+        favoritedTools.configure(viewModel: favoritedToolsViewModel)
+        allTools.configure(viewModel: allToolsViewModel)
+        
         setupLayout()
         setupBinding()
         
@@ -64,25 +67,17 @@ class ToolsView: UIViewController {
             action: #selector(handleLanguage(barButtonItem:))
         )
         
-        toolsControl.addTarget(
+        toolsMenuControl.addTarget(
             self,
-            action: #selector(handleToolControlChanged(toolsControl:)),
+            action: #selector(handleToolsMenuControlChanged(toolsControl:)),
             for: .valueChanged
         )
     }
     
     private func setupLayout() {
         
-        // toolsControl
-        toolsControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
-        
-        // myToolsView
-        addChildController(child: myToolsView, toView: favoritedToolsContainerView)
-        myToolsView.view.constrainEdgesToSuperview()
-        
-        // allToolsView
-        addChildController(child: allToolsView, toView: allToolsContainerView)
-        allToolsView.view.constrainEdgesToSuperview()
+        // toolsMenuControl
+        toolsMenuControl.accessibilityIdentifier = GTAccessibilityConstants.Home.homeNavSegmentedControl
     }
     
     private func setupBinding() {
@@ -93,11 +88,14 @@ class ToolsView: UIViewController {
         }
         
         viewModel.toolMenuItems.addObserver(self) { [weak self] (toolMenuItems: [ToolMenuItem]) in
-            self?.reloadToolsControl()
+            self?.reloadToolsMenuControl()
         }
         
-        viewModel.selectedToolMenuItemIndex.addObserver(self) { [weak self] (selectedToolMenuItemIndex: Int) in
-            self?.toolsControl.selectedSegmentIndex = selectedToolMenuItemIndex
+        viewModel.selectedToolMenuItem.addObserver(self) { [weak self] (toolMenuItem: ToolMenuItem?) in
+            if let toolMenuItem = toolMenuItem, let menuItems = self?.viewModel.toolMenuItems.value, let index = menuItems.firstIndex(of: toolMenuItem) {
+                self?.toolsMenuControl.selectedSegmentIndex = index
+                self?.navigateToToolMenuItem(menuItem: toolMenuItem, animated: true)
+            }
         }
     }
     
@@ -109,7 +107,7 @@ class ToolsView: UIViewController {
         viewModel.languageTapped()
     }
     
-    @objc func handleToolControlChanged(toolsControl: UISegmentedControl) {
+    @objc func handleToolsMenuControlChanged(toolsControl: UISegmentedControl) {
         
         let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
         
@@ -140,45 +138,43 @@ class ToolsView: UIViewController {
         }
     }
     
-    private func reloadToolsControl() {
+    private func reloadToolsMenuControl() {
         
-        toolsControl.removeAllSegments()
+        toolsMenuControl.removeAllSegments()
         
         for index in 0 ..< viewModel.toolMenuItems.value.count {
             let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[index]
-            toolsControl.insertSegment(withTitle: menuItem.title, at: index, animated: false)
+            toolsMenuControl.insertSegment(withTitle: menuItem.title, at: index, animated: false)
         }
         
         let titleFont: UIFont = UIFont.defaultFont(size: 15, weight: nil)
                 
         if #available(iOS 13.0, *) {
-            toolsControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor.white], for: .normal)
-            toolsControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
-            toolsControl.layer.borderColor = UIColor.white.cgColor
-            toolsControl.layer.borderWidth = 1
-            toolsControl.selectedSegmentTintColor = .white
-            toolsControl.backgroundColor = .clear
+            toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor.white], for: .normal)
+            toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
+            toolsMenuControl.layer.borderColor = UIColor.white.cgColor
+            toolsMenuControl.layer.borderWidth = 1
+            toolsMenuControl.selectedSegmentTintColor = .white
+            toolsMenuControl.backgroundColor = .clear
         }
         else {
-            toolsControl.setTitleTextAttributes([.font: titleFont], for: .normal)
+            toolsMenuControl.setTitleTextAttributes([.font: titleFont], for: .normal)
         }
         
-        navigationItem.titleView = toolsControl
+        navigationItem.titleView = toolsMenuControl
     }
     
     private func navigateToToolMenuItem(menuItem: ToolMenuItem, animated: Bool) {
-        
-        let favoritesLeading: CGFloat
-        
+                
         switch menuItem.id {
         case .favorites:
-            favoritesLeading = 0
+            favoritedToolsLeading.constant = 0
+            favoritedTools.pageViewed()
         case .allTools:
-            favoritesLeading = view.bounds.size.width * -1
+            favoritedToolsLeading.constant = view.bounds.size.width * -1
+            allTools.pageViewed()
         }
-        
-        favoritedToolsContainerLeading.constant = favoritesLeading
-        
+                
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
                 self?.view.layoutIfNeeded()
