@@ -10,10 +10,10 @@ import Foundation
 
 protocol TranslationAttributesType: Codable {
     
-    var isPublished: Bool? { get }
+    var isPublished: Bool { get }
     var manifestName: String? { get }
     var translatedDescription: String? { get }
     var translatedName: String? { get }
     var translatedTagline: String? { get }
-    var version: Int? { get }
+    var version: Int { get }
 }

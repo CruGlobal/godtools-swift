@@ -12,21 +12,26 @@ import RealmSwift
 class ResourcesService: ResourcesServiceType {
     
     private let resourcesApi: ResourcesApiType
-    private let resourcesCache: ResourcesCacheType
+    
+    let resourcesCache: ResourcesRealmCache
     
     required init(config: ConfigType, mainThreadRealm: Realm) {
         
         resourcesApi = ResourcesApi(config: config)
-        resourcesCache = RealmResourcesCache(mainThreadRealm: mainThreadRealm)
+        resourcesCache = ResourcesRealmCache(mainThreadRealm: mainThreadRealm)
     }
     
     func downloadAndCacheResources() {
         
+        print("\n DOWNLOAD AND CACHE RESOURCES")
+        
         resourcesApi.getResourcesJson { [weak self] (result: Result<ResourcesJson, ResourcesApiError>) in
+            
+            print("  did download resources")
             
             switch result {
             case .success(let resourcesJson):
-                break
+                self?.resourcesCache.cacheResources(resources: resourcesJson)
             case .failure(let apiError):
                 break
             }
