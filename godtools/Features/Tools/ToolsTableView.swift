@@ -78,6 +78,8 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         let cell: ToolCell = tableView.dequeueReusableCell(
             withIdentifier: ToolCell.reuseIdentifier,
             for: indexPath) as! ToolCell
+        
+        cell.selectionStyle = .none
                 
         return cell
     }

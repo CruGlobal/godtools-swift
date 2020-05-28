@@ -1,5 +1,5 @@
 //
-//  ResourceLatestTranslationServices.swift
+//  ResourcesLatestTranslationServices.swift
 //  godtools
 //
 //  Created by Levi Eggert on 4/20/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResourceLatestTranslationServices {
+class ResourcesLatestTranslationServices {
         
     private let translationsApi: TranslationsApiType
             

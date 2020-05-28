@@ -47,7 +47,6 @@ class ArticlesFlow: Flow {
             resource: resource,
             godToolsResource: godToolsResource,
             articlesService: appDiContainer.articlesService,
-            resourceLatestTranslationServices: appDiContainer.resourceLatestTranslationServices,
             analytics: appDiContainer.analytics
         )
         

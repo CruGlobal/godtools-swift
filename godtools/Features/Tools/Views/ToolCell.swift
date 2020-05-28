@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ToolCellDelegate: class {
+    func toolCellAboutToolTapped()
+    func toolCellOpenToolTapped()
+}
+
 class ToolCell: UITableViewCell {
     
     static let nibName: String = "ToolCell"
@@ -16,6 +21,8 @@ class ToolCell: UITableViewCell {
     private let toolCornerRadius: CGFloat = 12
     
     private var viewModel: ToolCellViewModelType?
+    
+    private weak var delegate: ToolCellDelegate?
     
     @IBOutlet weak private var toolShadowView: UIView!
     @IBOutlet weak private var toolContentView: UIView!
@@ -29,11 +36,15 @@ class ToolCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupLayout()
+        
+        aboutToolButton.addTarget(self, action: #selector(handleAboutTool(button:)), for: .touchUpInside)
+        openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         viewModel = nil
+        delegate = nil
     }
     
     private func setupLayout() {
@@ -63,8 +74,17 @@ class ToolCell: UITableViewCell {
         openToolButton.layer.cornerRadius = buttonCornerRadius
     }
     
-    func configure(viewModel: ToolCellViewModelType) {
+    func configure(viewModel: ToolCellViewModelType, delegate: ToolCellDelegate) {
         
         self.viewModel = viewModel
+        self.delegate = delegate
+    }
+    
+    @objc func handleAboutTool(button: UIButton) {
+        delegate?.toolCellAboutToolTapped()
+    }
+    
+    @objc func handleOpenTool(button: UIButton) {
+        delegate?.toolCellOpenToolTapped()
     }
 }

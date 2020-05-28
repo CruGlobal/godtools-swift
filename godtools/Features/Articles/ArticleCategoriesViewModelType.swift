@@ -11,7 +11,7 @@ import Foundation
 protocol ArticleCategoriesViewModelType {
     
     var godToolsResource: GodToolsResource { get }
-    var resourceLatestTranslationServices: ResourceLatestTranslationServices { get }
+    var resourceLatestTranslationServices: ResourcesLatestTranslationServices { get }
     var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }
     var loadingMessage: ObservableValue<String> { get }

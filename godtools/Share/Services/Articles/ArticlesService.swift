@@ -15,10 +15,10 @@ class ArticlesService {
     
     private var getManifestXmlOperation: OperationQueue?
     
-    let resourceLatestTranslationServices: ResourceLatestTranslationServices
+    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let articleAemImportService: ArticleAemImportService
     
-    required init(resourceLatestTranslationServices: ResourceLatestTranslationServices, realm: Realm) {
+    required init(resourceLatestTranslationServices: ResourcesLatestTranslationServices, realm: Realm) {
         
         self.resourceLatestTranslationServices = resourceLatestTranslationServices
         self.articleAemImportService = ArticleAemImportService(realm: realm)
