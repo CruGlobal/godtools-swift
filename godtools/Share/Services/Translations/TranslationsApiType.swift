@@ -10,5 +10,9 @@ import Foundation
 
 protocol TranslationsApiType {
     
+    var session: URLSession { get }
+    
+    func newTranslationZipDataRequest(translationId: String) -> URLRequest
+    func newTranslationZipDataOperation(translationId: String) -> RequestOperation
     func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, Error>) -> Void)) -> OperationQueue
 }

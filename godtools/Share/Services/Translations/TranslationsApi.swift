@@ -10,9 +10,10 @@ import Foundation
 
 class TranslationsApi: TranslationsApiType {
     
-    private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
+    
+    let session: URLSession
     
     required init(config: ConfigType) {
         
@@ -31,7 +32,7 @@ class TranslationsApi: TranslationsApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    private func newTranslationZipDataRequest(translationId: String) -> URLRequest {
+    func newTranslationZipDataRequest(translationId: String) -> URLRequest {
         
         return requestBuilder.build(
             session: session,
@@ -42,7 +43,7 @@ class TranslationsApi: TranslationsApiType {
         )
     }
     
-    private func newTranslationZipDataOperation(translationId: String) -> RequestOperation {
+    func newTranslationZipDataOperation(translationId: String) -> RequestOperation {
         
         let urlRequest = newTranslationZipDataRequest(translationId: translationId)
         let operation = RequestOperation(
