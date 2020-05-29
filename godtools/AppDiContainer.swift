@@ -20,7 +20,7 @@ class AppDiContainer {
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let translationsApi: TranslationsApiType
-    let resourceLatestTranslationServices: ResourceLatestTranslationServices
+    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
     
@@ -50,7 +50,7 @@ class AppDiContainer {
                 
         translationsApi = TranslationsApi(config: config)
           
-        resourceLatestTranslationServices = ResourceLatestTranslationServices(translationsApi: translationsApi)
+        resourceLatestTranslationServices = ResourcesLatestTranslationServices(translationsApi: translationsApi)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
