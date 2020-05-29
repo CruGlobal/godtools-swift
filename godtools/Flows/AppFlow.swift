@@ -367,15 +367,21 @@ class AppFlow: NSObject, FlowDelegate {
         
         rootController.addChildController(child: menuFlow.navigationController)
         
+        let screenWidth: CGFloat = UIScreen.main.bounds.size.width
+        
         if animated {
                         
-            let screenWidth: CGFloat = UIScreen.main.bounds.size.width
             menuFlow.view.transform = CGAffineTransform(translationX: screenWidth * -1, y: 0)
                         
             UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseOut, animations: { [weak self] in
                 menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
                 self?.navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
             }, completion: nil)
+        }
+        else {
+            
+            menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
+            navigationController.view.transform = CGAffineTransform(translationX: screenWidth, y: 0)
         }
     }
     
