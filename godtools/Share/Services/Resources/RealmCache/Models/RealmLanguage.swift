@@ -14,13 +14,11 @@ class RealmLanguage: Object, LanguageType {
     @objc dynamic var id: String = ""
     @objc dynamic var type: String = ""
     @objc dynamic var attributes: RealmLanguageAttributes?
-    @objc dynamic var relationships: RealmLanguageRelationships?
     
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case type = "type"
         case attributes = "attributes"
-        case relationships = "relationships"
     }
     
     override static func primaryKey() -> String? {

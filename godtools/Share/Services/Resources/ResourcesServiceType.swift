@@ -10,5 +10,4 @@ import Foundation
 
 protocol ResourcesServiceType {
     
-    func downloadAndCacheResources()
 }

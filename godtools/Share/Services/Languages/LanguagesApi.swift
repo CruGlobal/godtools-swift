@@ -1,14 +1,14 @@
 //
-//  ResourcesApi.swift
+//  LanguagesApi.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/27/20.
+//  Created by Levi Eggert on 5/28/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-class ResourcesApi: ResourcesApiType {
+class LanguagesApi: LanguagesApiType {
     
     private let session: URLSession
     private let requestBuilder: RequestBuilder = RequestBuilder()
@@ -31,11 +31,11 @@ class ResourcesApi: ResourcesApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    private func newResourcesPlusLatestTranslationsAndAttachmentsOperation() -> RequestOperation {
+    private func newLanguagesOperation() -> RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,
-            urlString: baseUrl + "/resources?include=latest-translations,attachments",
+            urlString: baseUrl + "/languages",
             method: .get,
             headers: nil,
             httpBody: nil
@@ -44,13 +44,13 @@ class ResourcesApi: ResourcesApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue {
+    func getLanguages(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
-        let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
+        let languagesOperation: RequestOperation = newLanguagesOperation()
                     
-        resourcesOperation.completionHandler { (response: RequestResponse) in
+        languagesOperation.completionHandler { (response: RequestResponse) in
             
             let result: RequestResult<NoRequestResultType, NoRequestResultType> = response.getResult()
             
@@ -62,7 +62,7 @@ class ResourcesApi: ResourcesApiType {
             }
         }
         
-        queue.addOperations([resourcesOperation], waitUntilFinished: false)
+        queue.addOperations([languagesOperation], waitUntilFinished: false)
         
         return queue
     }

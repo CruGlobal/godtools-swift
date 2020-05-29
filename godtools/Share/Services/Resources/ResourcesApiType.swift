@@ -10,5 +10,5 @@ import Foundation
 
 protocol ResourcesApiType {
     
-    func getResourcesJson(complete: @escaping ((_ result: Result<ResourcesJson, ResourcesApiError>) -> Void)) -> OperationQueue
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue
 }

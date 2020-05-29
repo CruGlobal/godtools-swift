@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ResourcesRealmCache: ResourcesCacheType {
+class ResourcesRealmCache {
     
     private let mainThreadRealm: Realm
     
@@ -22,43 +22,54 @@ class ResourcesRealmCache: ResourcesCacheType {
         
         print("\n CACHE RESOURCES")
         
-        if let data = resources.languagesJson {
-              
-            let realmLanguagesData: RealmLanguagesData?
+        DispatchQueue.global().async { [weak self] in
             
-            do {
-                realmLanguagesData = try JSONDecoder().decode(RealmLanguagesData.self, from: data)
+            var realmLanguagesToCache: [RealmLanguage] = Array()
+            var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
+            
+            let jsonServices = JsonServices()
+            
+            let decodedLanguagesResult: Result<RealmLanguagesData?, Error> = jsonServices.decodeObject(data: resources.languagesJson)
+            
+            switch decodedLanguagesResult {
+            case .success(let realmLanguagesObject):
+                if let languages = realmLanguagesObject?.data {
+                    for language in languages {
+                        realmLanguagesToCache.append(language)
+                        realmLanguagesDictionary[language.id] = language
+                    }
+                }
+            case .failure(let error):
+                // TODO: Handle error.
+                assertionFailure("Failed to decode realm languages: \(error)")
             }
-            catch let error {
-                realmLanguagesData = nil
-            }
+            
+            // TODO: Decode resources and latest translations and attachments
+            
+            let decodedResourcesResult: Result<RealmResourcesData?, Error> = jsonServices.decodeObject(data: resources.resourcesPlusLatestTranslationsAndAttachmentsJson)
+            
             
             DispatchQueue.main.async { [weak self] in
                 
-                if let languagesList = realmLanguagesData?.data {
-                   
-                    print("  cache languages: \(Array(languagesList).count)")
+                if let realm = self?.mainThreadRealm {
                     
-                    var realmLanguages: [RealmLanguage] = Array()
-                    
-                    for language in languagesList {
-                                   
-                        if let translations = language.relationships?.languageTranslations?.data {
-                            for translation in translations {
-                                translation.language = language
-                            }
+                    do {
+                        try realm.write {
+                            realm.delete(realm.objects(RealmLanguage.self))
+                            realm.delete(realm.objects(RealmResource.self))
+                            realm.delete(realm.objects(RealmTranslation.self))
+                            // TODO: Delete attachments.
+                            
+                            realm.add(realmLanguagesToCache, update: .modified)
                         }
-                        
-                        realmLanguages.append(language)
                     }
-                                        
-                    self?.cacheObjects(objects: realmLanguages, updatePolicy: .modified, complete: { (error: Error?) in
-                        
-                    })
-                    
-                    print("\n DID CACHE ALL LANGUAGES")
-                    self?.getLanguages()
+                    catch let error {
+                        // TODO: Handle error.
+                        assertionFailure("Failed to cache realm resources: \(error)")
+                    }
                 }
+                
+                
             }
         }
     }
@@ -73,26 +84,6 @@ class ResourcesRealmCache: ResourcesCacheType {
         for translation in cachedTranslations {
             print("  translation id: \(translation.id)")
             print("    translation LANGUAGE CODE: \(translation.language?.attributes?.code)")
-        }
-    }
-
-    private func cacheObjects<T: Object>(objects: [T], updatePolicy: Realm.UpdatePolicy?, complete: @escaping ((_ error: Error?) -> Void)) {
-        
-        DispatchQueue.main.async { [weak self] in
-            do {
-                try self?.mainThreadRealm.write {
-                    if let updatePolicy = updatePolicy {
-                        self?.mainThreadRealm.add(objects, update: updatePolicy)
-                    }
-                    else {
-                        self?.mainThreadRealm.add(objects)
-                    }
-                }
-                complete(nil)
-            }
-            catch let error {
-                complete(error)
-            }
         }
     }
 }

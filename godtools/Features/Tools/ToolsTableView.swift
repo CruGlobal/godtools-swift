@@ -42,10 +42,10 @@ class ToolsTableView: UIView, NibBased {
     
     private func setupLayout() {
         
-        tableView.register(
-            UINib(nibName: ToolCell.nibName, bundle: nil),
-            forCellReuseIdentifier: ToolCell.reuseIdentifier
-        )
+//        tableView.register(
+//            UINib(nibName: ToolCell.nibName, bundle: nil),
+//            forCellReuseIdentifier: ToolCell.reuseIdentifier
+//        )
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.estimatedRowHeight = 120
@@ -75,12 +75,14 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: ToolCell = tableView.dequeueReusableCell(
-            withIdentifier: ToolCell.reuseIdentifier,
-            for: indexPath) as! ToolCell
+//        let cell: ToolCell = tableView.dequeueReusableCell(
+//            withIdentifier: ToolCell.reuseIdentifier,
+//            for: indexPath) as! ToolCell
+//
+//        cell.selectionStyle = .none
+//
+//        return cell
         
-        cell.selectionStyle = .none
-                
-        return cell
+        return UITableViewCell()
     }
 }

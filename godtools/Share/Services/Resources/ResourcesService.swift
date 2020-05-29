@@ -11,30 +11,52 @@ import RealmSwift
 
 class ResourcesService: ResourcesServiceType {
     
+    private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     
     let resourcesCache: ResourcesRealmCache
     
     required init(config: ConfigType, mainThreadRealm: Realm) {
         
+        languagesApi = LanguagesApi(config: config)
         resourcesApi = ResourcesApi(config: config)
         resourcesCache = ResourcesRealmCache(mainThreadRealm: mainThreadRealm)
     }
     
-    func downloadAndCacheResources() {
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() {
         
         print("\n DOWNLOAD AND CACHE RESOURCES")
         
-        resourcesApi.getResourcesJson { [weak self] (result: Result<ResourcesJson, ResourcesApiError>) in
+    }
+    
+    // TODO: Need to implement this back in.
+    private func handleGetResourcesJsonComplete(resourcesResponse: RequestResponse, languagesResponse: RequestResponse, complete: @escaping ((_ result: Result<ResourcesJson, ResourcesApiError>) -> Void)) {
+        
+        let error: Error? = resourcesResponse.error ?? languagesResponse.error
+        
+        if let error = error {
             
-            print("  did download resources")
+            let resourcesApiError: ResourcesApiError
             
-            switch result {
-            case .success(let resourcesJson):
-                self?.resourcesCache.cacheResources(resources: resourcesJson)
-            case .failure(let apiError):
-                break
+            if error.notConnectedToInternet {
+                resourcesApiError = .noNetworkConnection
             }
+            else if error.isCancelled {
+                resourcesApiError = .cancelled
+            }
+            else {
+                resourcesApiError = .unknownError(error: error)
+            }
+            
+            complete(.failure(resourcesApiError))
+        }
+        else {
+            
+            let resourcesJson = ResourcesJson(
+                resourcesPlusLatestTranslationsAndAttachmentsJson: resourcesResponse.data,
+                languagesJson: languagesResponse.data
+            )
+            complete(.success(resourcesJson))
         }
     }
 }
