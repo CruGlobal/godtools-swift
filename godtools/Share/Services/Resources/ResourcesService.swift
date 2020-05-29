@@ -27,6 +27,8 @@ class ResourcesService: ResourcesServiceType {
         
         print("\n DOWNLOAD AND CACHE RESOURCES")
         
+        // TODO Implement new resource downloading and cacheing. ~Levi
+        
     }
     
     // TODO: Need to implement this back in.
