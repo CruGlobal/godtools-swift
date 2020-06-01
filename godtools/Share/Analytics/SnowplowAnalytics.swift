@@ -17,8 +17,13 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     private let keyAuthClient: TheKeyOAuthClient
     private let loggingEnabled: Bool
     
-    private var appName: String = ""
     private var visitorMarketingCloudID: String = ""
+    
+    private let idSchema = "iglu:org.cru/ids/jsonschema/1-0-3"
+    private let uriSchema = "iglu:org.cru/content-scoring/jsonschema/1-0-0"
+    
+    private let actionURI = "godtools://action/"
+    private let screenURI = "godtools://screenview/"
     
     private var isConfigured: Bool = false
     private var isConfiguring: Bool = false
@@ -67,10 +72,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         isConfiguring = true
         
         serialQueue.async { [weak self] in
-                        
             self?.visitorMarketingCloudID = adobeAnalytics.visitorMarketingCloudID
-            self?.appName = adobeAnalytics.appName
-
             
             self?.isConfigured = true
             self?.isConfiguring = false
@@ -113,18 +115,28 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         
         log(method: "trackAction()", label: "action", labelValue: action, data: nil)
     }
-    
-    private func createDefaultProperties() -> SPSelfDescribingJson {
-        let appName: String = self.appName
+
+    private func idContext() -> SPSelfDescribingJson {
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let marketingCloudID: String? = self.visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
-            
-        return SPSelfDescribingJson(schema: "iglu:com.snowplowanalytics.self-desc/schema/jsonschema/1-0-0#", andData: [
-            "appName": appName,
-            "grMasterPersonID": grMasterPersonID,
-            "marketingCloudID": marketingCloudID,
-            "ssoguid": ssoguid,
+        
+        return SPSelfDescribingJson(schema: self.idSchema, andData: [
+            "gr_master_person_id": grMasterPersonID,
+            "mcid": marketingCloudID,
+            "sso_guid": ssoguid,
+        ] as NSObject)
+    }
+    
+    private func screenURI(screenname: String) -> SPSelfDescribingJson {
+        return SPSelfDescribingJson(schema: self.uriSchema, andData: [
+            "uri": self.screenURI + screenname
+        ] as NSObject)
+    }
+    
+    private func actionURI(action: String) -> SPSelfDescribingJson {
+        return SPSelfDescribingJson(schema: self.uriSchema, andData: [
+            "uri": self.actionURI + action
         ] as NSObject)
     }
     
