@@ -13,6 +13,8 @@ class ResourceTranslationsDownloadAndCacheQueue {
     private let translationsApi: TranslationsApiType
     private let latestTranslationsCache: ResourcesLatestTranslationsFileCache
     
+    let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
+    
     required init(translationsApi: TranslationsApiType, latestTranslationsCache: ResourcesLatestTranslationsFileCache) {
         
         self.translationsApi = translationsApi
@@ -23,12 +25,12 @@ class ResourceTranslationsDownloadAndCacheQueue {
 
     }
     
-    func downloadAndCacheResourceTranslations(resources: [GodToolsResource]) -> OperationQueue {
+    func downloadAndCacheResourceTranslations(resources: [GodToolsResource], complete: @escaping ((_ errors: [ResourceTranslationDownloadAndCacheOperationError]) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [ResourceTranslationDownloadAndCacheOperation] = Array()
-        
+        var operationErrors: [ResourceTranslationDownloadAndCacheOperationError] = Array()
         var progress: Double = 0
         var completedOperationCount: Int = 0
         var totalOperationCount: Int = 0
@@ -44,20 +46,25 @@ class ResourceTranslationsDownloadAndCacheQueue {
             operation.completionHandler { [weak self] (result: Result<ResourceTranslationDownloadAndCacheOperationResult, ResourceTranslationDownloadAndCacheOperationError>) in
                 
                 switch result {
-                case .success(let operationResult):
+                case .success( _):
                     break
                 case .failure(let error):
-                    break
+                    operationErrors.append(error)
                 }
                 
                 completedOperationCount += 1
                 progress = Double(completedOperationCount / totalOperationCount)
+                if progress > 1 {
+                    progress = 1
+                }
+                
+                self?.downloadProgress.accept(value: progress)
                 
                 if operations.isEmpty {
                     
                     progress = 1
-                    
-                    // TODO: Complete.
+                                        
+                    complete(operationErrors)
                 }
             }
             
@@ -71,6 +78,7 @@ class ResourceTranslationsDownloadAndCacheQueue {
         }
         else {
             
+            complete([])
         }
         
         return queue

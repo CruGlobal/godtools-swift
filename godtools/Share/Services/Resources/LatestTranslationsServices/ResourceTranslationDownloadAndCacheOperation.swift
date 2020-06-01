@@ -76,6 +76,7 @@ class ResourceTranslationDownloadAndCacheOperation: Operation {
                     cacheLocation: cacheLocation,
                     zipData: zipData
                 )
+                
                 if let cacheError = cacheError {
                     self?.handleOperationFinished(result: .failure(.failedToCacheTranslationZipData(error: cacheError)))
                 }
