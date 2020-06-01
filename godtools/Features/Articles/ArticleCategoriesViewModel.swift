@@ -18,25 +18,23 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let godToolsResource: GodToolsResource
-    let resourceLatestTranslationServices: ResourceLatestTranslationServices
     let categories: ObservableValue<[ArticleCategory]> = ObservableValue(value: [])
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let loadingMessage: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, resourceLatestTranslationServices: ResourceLatestTranslationServices, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articlesService: ArticlesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.godToolsResource = godToolsResource
         self.articlesService = articlesService
-        self.resourceLatestTranslationServices = resourceLatestTranslationServices
         self.analytics = analytics
                 
         navTitle.accept(value: resource.name)
         
-        reloadArticles(forceDownload: false, animated: false)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: false, animated: false)
     }
     
     deinit {
@@ -44,14 +42,18 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
         articlesService.cancel()
     }
     
-    private func reloadArticles(forceDownload: Bool, animated: Bool) {
+    var resourceLatestTranslationServices: ResourcesLatestTranslationServices {
+        return articlesService.resourceLatestTranslationServices
+    }
+    
+    private func reloadArticles(godToolsResource: GodToolsResource, forceDownload: Bool, animated: Bool) {
         
         errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
         
         loadingMessage.accept(value: NSLocalizedString("articles.loadingView.downloadingArticles", comment: ""))
         isLoading.accept(value: true)
         
-        articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (result: Result<ArticleManifestXmlParser, Error>) in
+        articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (result: Result<ArticleManifestXmlParser, ArticlesServiceError>) in
            
             DispatchQueue.main.async { [weak self] in
                 
@@ -63,14 +65,22 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
                 case .success(let articleManifest):
                     self?.categories.accept(value: articleManifest.categories)
                 case .failure(let error):
-                    self?.categories.accept(value: [])
-                    let errorMessage: String = error.localizedDescription
-                    self?.errorMessage.accept(
-                        value: ArticlesErrorMessage(
-                            message: errorMessage,
-                            hidesErrorMessage: false,
-                            shouldAnimate: true
-                    ))
+                    
+                    if let cachedManfiest = self?.articlesService.getCachedArticlesManifestXml(godToolsResource: godToolsResource) {
+                        self?.categories.accept(value: cachedManfiest.categories)
+                    }
+                    else {
+                        self?.categories.accept(value: [])
+                        
+                        let errorViewModel = DownloadArticlesErrorViewModel(error: error)
+                        
+                        self?.errorMessage.accept(
+                            value: ArticlesErrorMessage(
+                                message: errorViewModel.message,
+                                hidesErrorMessage: false,
+                                shouldAnimate: true
+                        ))
+                    }
                 }
             }
         }
@@ -81,11 +91,11 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     }
     
     func downloadArticlesTapped() {
-        reloadArticles(forceDownload: true, animated: true)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: true, animated: true)
     }
     
     func refreshArticles() {
-        reloadArticles(forceDownload: true, animated: true)
+        reloadArticles(godToolsResource: godToolsResource, forceDownload: true, animated: true)
     }
     
     func articleTapped(category: ArticleCategory) {

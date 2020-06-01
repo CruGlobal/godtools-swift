@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Study what this does. ~Levi
 class GTGlobalTractBindings: NSObject {
     
     enum Bindings:String {

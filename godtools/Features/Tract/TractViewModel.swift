@@ -29,7 +29,6 @@ class TractViewModel: TractViewModelType {
     let chooseLanguageControlPrimaryLanguageTitle: String
     let chooseLanguageControlParallelLanguageTitle: String
     let selectedTractLanguage: ObservableValue<TractLanguage>
-    let tractManifest: ManifestProperties
     let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
     let currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
@@ -64,7 +63,6 @@ class TractViewModel: TractViewModelType {
         chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
         chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
-        tractManifest = primaryTractXmlResource.manifestProperties
         
         let startingTractPage: Int = tractPage ?? 0
         
@@ -163,6 +161,10 @@ class TractViewModel: TractViewModelType {
     
     var currentTractPage: Int {
         return tractPage
+    }
+    
+    var primaryTractManifest: ManifestProperties {
+        return primaryTractXmlResource.manifestProperties
     }
     
     var primaryTractPages: [XMLPage] {
@@ -343,6 +345,7 @@ class TractViewModel: TractViewModelType {
             page: page,
             language: primaryLanguage,
             tractXmlResource: primaryTractXmlResource,
+            tractManifest: primaryTractXmlResource.manifestProperties,
             parallelTractPage: parallelTractPage
         )
     }
@@ -355,6 +358,7 @@ class TractViewModel: TractViewModelType {
                 page: page,
                 language: parallelLanguage,
                 tractXmlResource: parallelTractXmlResource,
+                tractManifest: parallelTractXmlResource.manifestProperties,
                 parallelTractPage: parallelTractPage
             )
         }
@@ -362,7 +366,7 @@ class TractViewModel: TractViewModelType {
         return nil
     }
     
-    private func buildTractPage(page: Int, language: Language, tractXmlResource: TractXmlResource, parallelTractPage: TractPage?) -> TractPage? {
+    private func buildTractPage(page: Int, language: Language, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
         
         let pages: [XMLPage] = tractXmlResource.pages
         

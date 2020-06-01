@@ -70,6 +70,7 @@ class TranslationsApi: TranslationsApiType {
                 dataResult = .failure(clientError: nil, error: error)
             }
             
+            // TODO: Would like to remove this DispatchQueue.main and force clients to transition to main queue when needed. ~Levi
             DispatchQueue.main.async {
                 complete(response, dataResult)
             }

@@ -93,9 +93,7 @@ class RequestOperation: Operation {
             urlResponse: urlResponse,
             error: error
         )
-                
-        response.log()
-        
+                        
         completion(response)
     }
     
