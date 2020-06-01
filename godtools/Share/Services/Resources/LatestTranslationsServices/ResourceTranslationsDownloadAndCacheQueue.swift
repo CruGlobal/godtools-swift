@@ -61,9 +61,7 @@ class ResourceTranslationsDownloadAndCacheQueue {
                 self?.downloadProgress.accept(value: progress)
                 
                 if operations.isEmpty {
-                    
-                    progress = 1
-                                        
+                                                            
                     complete(operationErrors)
                 }
             }
