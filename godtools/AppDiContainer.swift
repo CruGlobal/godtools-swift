@@ -41,15 +41,11 @@ class AppDiContainer {
         
         let analyticsLoggingEnabled: Bool = config.isDebug
         
-        let adobeAnalytics = AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
-        let snowplowAnalytics = SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
-        
         analytics = AnalyticsContainer(
-            adobeAnalytics: adobeAnalytics,
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: snowplowAnalytics,
-            trackActionAnalytics: TrackActionAnalytics(adobeAnalytics: adobeAnalytics, snowplowAnalytics: snowplowAnalytics )
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -72,17 +68,7 @@ class AppDiContainer {
     }
     
     var toolOpenedAnalytics: ToolOpenedAnalytics {
-        return ToolOpenedAnalytics(
-            appsFlyer: analytics.appsFlyer,
-            snowplowAnalytics: analytics.snowplowAnalytics
-        )
-    }
-    
-    var trackActionAnalytics: TrackActionAnalytics {
-        return TrackActionAnalytics(
-            adobeAnalytics: analytics.adobeAnalytics,
-            snowplowAnalytics: analytics.snowplowAnalytics
-        )
+        return ToolOpenedAnalytics(appsFlyer: analytics.appsFlyer)
     }
     
     var exitLinkAnalytics: ExitLinkAnalytics {

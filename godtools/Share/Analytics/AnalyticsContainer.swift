@@ -15,17 +15,16 @@ class AnalyticsContainer {
     let appsFlyer: AppsFlyerType
     let firebaseAnalytics: FirebaseAnalyticsType
     let snowplowAnalytics: SnowplowAnalyticsType
-    let trackActionAnalytics: TrackActionAnalytics
 
     // shared analytics tracking
     let pageViewedAnalytics: PageViewedAnalytics
+    let trackActionAnalytics: TrackActionAnalytics
     
     required init(
         adobeAnalytics: AdobeAnalyticsType,
         appsFlyer: AppsFlyerType,
         firebaseAnalytics: FirebaseAnalyticsType,
-        snowplowAnalytics: SnowplowAnalyticsType,
-        trackActionAnalytics: TrackActionAnalytics
+        snowplowAnalytics: SnowplowAnalyticsType
     ) {
         
         self.pageViewedAnalytics = PageViewedAnalytics(
@@ -33,11 +32,14 @@ class AnalyticsContainer {
             firebaseAnalytics: firebaseAnalytics,
             snowplowAnalytics: snowplowAnalytics
         )
-        
+        self.trackActionAnalytics = TrackActionAnalytics(
+            adobeAnalytics: adobeAnalytics,
+            snowplowAnalytics: snowplowAnalytics
+        )
+
         self.adobeAnalytics = adobeAnalytics
         self.appsFlyer = appsFlyer
         self.firebaseAnalytics = firebaseAnalytics
         self.snowplowAnalytics = snowplowAnalytics
-        self.trackActionAnalytics = trackActionAnalytics
     }
 }

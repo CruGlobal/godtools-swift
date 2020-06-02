@@ -167,7 +167,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
         }
     }
     
-    var appName: String {
+    private var appName: String {
         return AdobeAnalyticsConstants.Values.godTools
     }
     
