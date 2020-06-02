@@ -88,10 +88,9 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
 
     func trackScreenView(screenName: String) {
-        let context = createDefaultProperties()
         let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
             builder.setName(screenName)
-            builder.setContexts([ context ])
+            builder.setContexts([ self.idContext(), self.screenURI(screenName: screenName) ])
         }
             
         serialQueue.async { [weak self] in
@@ -102,11 +101,10 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
 
     func trackAction(action: String) {
-        let context = createDefaultProperties()
         let event = SPStructured.build { (builder: SPStructuredBuilder) in
             builder.setAction(action)
             builder.setCategory("Custom Event")
-            builder.setContexts([ context ])
+            builder.setContexts([ self.idContext(), self.actionURI(action: action) ])
         }
         
         serialQueue.async { [weak self] in
@@ -128,9 +126,9 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         ] as NSObject)
     }
     
-    private func screenURI(screenname: String) -> SPSelfDescribingJson {
+    private func screenURI(screenName: String) -> SPSelfDescribingJson {
         return SPSelfDescribingJson(schema: self.uriSchema, andData: [
-            "uri": self.screenURI + screenname
+            "uri": self.screenURI + screenName
         ] as NSObject)
     }
     
