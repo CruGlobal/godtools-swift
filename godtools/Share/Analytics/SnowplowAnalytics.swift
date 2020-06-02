@@ -103,7 +103,6 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     func trackAction(action: String) {
         let event = SPStructured.build { (builder: SPStructuredBuilder) in
             builder.setAction(action)
-            builder.setCategory("Custom Event")
             builder.setContexts([ self.idContext(), self.actionURI(action: action) ])
         }
         
