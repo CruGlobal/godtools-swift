@@ -1,5 +1,5 @@
 //
-//  ResourcesServiceType.swift
+//  ResourcesDownloadAndCacheType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/27/20.
@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ResourcesServiceType {
+protocol ResourcesDownloadAndCacheType {
     
 }

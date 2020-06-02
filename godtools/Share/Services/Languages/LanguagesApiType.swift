@@ -10,5 +10,6 @@ import Foundation
 
 protocol LanguagesApiType {
     
+    func newGetLanguagesOperation() -> RequestOperation
     func getLanguages(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue
 }

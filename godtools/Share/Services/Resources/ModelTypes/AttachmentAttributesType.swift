@@ -11,7 +11,7 @@ import Foundation
 protocol AttachmentAttributesType: Codable {
     
     var file: String? { get }
-    var isZipped: Bool? { get }
+    var isZipped: Bool { get }
     var sha256: String? { get }
     var fileFilename: String? { get }
 }

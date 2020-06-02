@@ -1,22 +1,21 @@
 //
-//  RealmTranslation.swift
+//  RealmAttachment.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/28/20.
+//  Created by Levi Eggert on 6/1/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 import RealmSwift
 
-class RealmTranslation: Object, TranslationType {
+class RealmAttachment: Object, AttachmentType {
     
     @objc dynamic var id: String = ""
     @objc dynamic var type: String = ""
-    @objc dynamic var attributes: RealmTranslationAttributes?
+    @objc dynamic var attributes: RealmAttachmentAttributes?
     @objc dynamic var resource: RealmResource?
-    @objc dynamic var language: RealmLanguage?
-        
+    
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case type = "type"

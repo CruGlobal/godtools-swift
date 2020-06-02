@@ -10,5 +10,6 @@ import Foundation
 
 protocol ResourcesApiType {
     
+    func newResourcesPlusLatestTranslationsAndAttachmentsOperation() -> RequestOperation
     func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue
 }

@@ -11,8 +11,12 @@ import Foundation
 protocol TranslationType: Codable {
     
     associatedtype Attributes: TranslationAttributesType
+    associatedtype Resource: ResourceType
+    associatedtype Language: LanguageType
     
     var id: String { get }
     var type: String { get }
     var attributes: Attributes? { get }
+    var resource: Resource? { get }
+    var language: Language? { get }
 }
