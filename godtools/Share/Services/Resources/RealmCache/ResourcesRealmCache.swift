@@ -22,12 +22,9 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
                 
         DispatchQueue.global().async { [weak self] in
                         
-            var realmLanguagesToCache: [RealmLanguage] = Array()
+            var realmObjectsToCache: [Object] = Array()
             var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
-            var realmResourcesToCache: [RealmResource] = Array()
             var realmResourcesDictionary: [String: RealmResource] = Dictionary()
-            var realmLatestTranslationsToCache: [RealmTranslation] = Array()
-            var realmLatestAttachmentsToCache: [RealmAttachment] = Array()
             
             let jsonServices = JsonServices()
             
@@ -39,7 +36,7 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
             case .success(let realmLanguagesObject):
                 if let languages = realmLanguagesObject?.data {
                     for language in languages {
-                        realmLanguagesToCache.append(language)
+                        realmObjectsToCache.append(language)
                         realmLanguagesDictionary[language.id] = language
                     }
                 }
@@ -82,7 +79,7 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
                 switch realmResourceResult {
                 case .success(let realmResource):
                     if let realmResource = realmResource {
-                        realmResourcesToCache.append(realmResource)
+                        realmObjectsToCache.append(realmResource)
                         realmResourcesDictionary[realmResource.id] = realmResource
                     }
                 case .failure(let error):
@@ -126,7 +123,7 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
                             if let relationshipLanguageId = relationshipLanguageId {
                                 realmTranslation.language = realmLanguagesDictionary[relationshipLanguageId]
                             }
-                            realmLatestTranslationsToCache.append(realmTranslation)
+                            realmObjectsToCache.append(realmTranslation)
                         }
                     case .failure(let error):
                         complete(.failedToDecodeTranslations(error: error))
@@ -153,7 +150,7 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
                             if let relationshipResourceId = relationshipResourceId {
                                 realmAttachment.resource = realmResourcesDictionary[relationshipResourceId]
                             }
-                            realmLatestAttachmentsToCache.append(realmAttachment)
+                            realmObjectsToCache.append(realmAttachment)
                         }
                     case .failure(let error):
                         complete(.failedToDecodeAttachments(error: error))
@@ -163,20 +160,12 @@ class ResourcesRealmCache: ResourcesRealmCacheType {
             }
             
             DispatchQueue.main.async { [weak self] in
-                
+                                
                 if let realm = self?.mainThreadRealm {
                     
                     do {
                         try realm.write {
-                            realm.delete(realm.objects(RealmLanguage.self))
-                            realm.delete(realm.objects(RealmResource.self))
-                            realm.delete(realm.objects(RealmTranslation.self))
-                            realm.delete(realm.objects(RealmAttachment.self))
-                            
-                            realm.add(realmLanguagesToCache, update: .modified)
-                            realm.add(realmResourcesToCache, update: .modified)
-                            realm.add(realmLatestTranslationsToCache, update: .modified)
-                            realm.add(realmLatestAttachmentsToCache, update: .modified)
+                            realm.add(realmObjectsToCache, update: .modified)
                         }
                         
                         complete(nil)
