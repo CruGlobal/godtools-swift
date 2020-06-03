@@ -157,6 +157,10 @@
 		454526DA243E19C300B84B29 /* PrivacyPolicyWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526D9243E19C300B84B29 /* PrivacyPolicyWebContent.swift */; };
 		454526DC243E19DA00B84B29 /* CopyrightInfoWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526DB243E19DA00B84B29 /* CopyrightInfoWebContent.swift */; };
 		454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526DD243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift */; };
+		454A00E8248167F200315799 /* ResourceTranslationDownloadAndCacheOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A00E7248167F200315799 /* ResourceTranslationDownloadAndCacheOperation.swift */; };
+		454A00EA2481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A00E92481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift */; };
+		454A00ED248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A00EC248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift */; };
+		454A00EF24816D7700315799 /* ResourceTranslationDownloadAndCacheOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A00EE24816D7700315799 /* ResourceTranslationDownloadAndCacheOperationError.swift */; };
 		45553AC3248024CF003A789C /* AttachmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AB9248024CE003A789C /* AttachmentType.swift */; };
 		45553AC4248024CF003A789C /* TranslationAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553ABA248024CE003A789C /* TranslationAttributesType.swift */; };
 		45553AC5248024CF003A789C /* LanguagesDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553ABB248024CE003A789C /* LanguagesDataType.swift */; };
@@ -741,6 +745,10 @@
 		454526D9243E19C300B84B29 /* PrivacyPolicyWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyWebContent.swift; sourceTree = "<group>"; };
 		454526DB243E19DA00B84B29 /* CopyrightInfoWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyrightInfoWebContent.swift; sourceTree = "<group>"; };
 		454526DD243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAStoryWithUsWebContent.swift; sourceTree = "<group>"; };
+		454A00E7248167F200315799 /* ResourceTranslationDownloadAndCacheOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationDownloadAndCacheOperation.swift; sourceTree = "<group>"; };
+		454A00E92481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsDownloadAndCacheQueue.swift; sourceTree = "<group>"; };
+		454A00EC248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationDownloadAndCacheOperationResult.swift; sourceTree = "<group>"; };
+		454A00EE24816D7700315799 /* ResourceTranslationDownloadAndCacheOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationDownloadAndCacheOperationError.swift; sourceTree = "<group>"; };
 		45553AB9248024CE003A789C /* AttachmentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentType.swift; sourceTree = "<group>"; };
 		45553ABA248024CE003A789C /* TranslationAttributesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationAttributesType.swift; sourceTree = "<group>"; };
 		45553ABB248024CE003A789C /* LanguagesDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguagesDataType.swift; sourceTree = "<group>"; };
@@ -1570,6 +1578,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		454A00EB2481689800315799 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				454A00EC248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift */,
+				454A00EE24816D7700315799 /* ResourceTranslationDownloadAndCacheOperationError.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		45553AB8248024CE003A789C /* ModelTypes */ = {
 			isa = PBXGroup;
 			children = (
@@ -2011,6 +2028,9 @@
 				458E57B1247F343100C75EDD /* ResourcesLatestTranslationsFileCacheLocation.swift */,
 				458E57B2247F343100C75EDD /* ResourcesLatestTranslationsFileCache.swift */,
 				458E57B7247F345700C75EDD /* ResourcesLatestTranslationServices.swift */,
+				454A00E7248167F200315799 /* ResourceTranslationDownloadAndCacheOperation.swift */,
+				454A00E92481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift */,
+				454A00EB2481689800315799 /* Models */,
 			);
 			path = LatestTranslationsServices;
 			sourceTree = "<group>";
@@ -3486,6 +3506,7 @@
 				4508F7AC2429671500ECA950 /* AdobeAnalyticsProperties.swift in Sources */,
 				45668E7823E0E1CC002728E7 /* OnboardingTutorialViewModelType.swift in Sources */,
 				45ACBD16247DC7EF00514E75 /* AllToolsViewModel.swift in Sources */,
+				454A00ED248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift in Sources */,
 				4573221824453FC300D653FF /* LanguageSettingsFlow.swift in Sources */,
 				45553AD624802521003A789C /* ResourcesRealmCache.swift in Sources */,
 				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
@@ -3527,6 +3548,7 @@
 				4F8048011EB38B4F00943DFF /* TranslationsManager.swift in Sources */,
 				4537454E24857B3200F672A1 /* RequestClientError.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
+				454A00EA2481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift in Sources */,
 				450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
@@ -3546,6 +3568,7 @@
 				45732E962421A976006F0559 /* OpenTutorialCalloutUserDefaultsCache.swift in Sources */,
 				455F4B9624527C2D00AE6007 /* WebArchive.swift in Sources */,
 				451DB0C72461D90000FB14BF /* TractPagination.swift in Sources */,
+				454A00E8248167F200315799 /* ResourceTranslationDownloadAndCacheOperation.swift in Sources */,
 				4564723D244F6F4F00CB202D /* ArticleCategoriesView.swift in Sources */,
 				45EC83922451EA6A00E8DE48 /* ArticleJcrContentType.swift in Sources */,
 				451DB1462461DA4200FB14BF /* TractTabProperties.swift in Sources */,
@@ -3605,6 +3628,7 @@
 				45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
 				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
+				454A00EF24816D7700315799 /* ResourceTranslationDownloadAndCacheOperationError.swift in Sources */,
 				45B2AE49245886B100253BAD /* MailViewModel.swift in Sources */,
 				45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */,
 				45668E7523E0E1CC002728E7 /* OnboardingTutorialUsageItem.swift in Sources */,
