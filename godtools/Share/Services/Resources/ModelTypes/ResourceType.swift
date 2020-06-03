@@ -11,8 +11,12 @@ import Foundation
 protocol ResourceType: Codable {
     
     associatedtype Attributes: ResourceAttributesType
+    associatedtype Translations: Sequence
+    associatedtype Attachments: Sequence
     
     var id: String { get }
     var type: String { get }
     var attributes: Attributes? { get }
+    var latestTranslations: Translations { get }
+    var attachments: Attachments { get }
 }

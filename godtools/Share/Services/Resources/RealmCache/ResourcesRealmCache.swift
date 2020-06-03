@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ResourcesRealmCache {
+class ResourcesRealmCache: ResourcesRealmCacheType {
     
     private let mainThreadRealm: Realm
     
@@ -19,9 +19,7 @@ class ResourcesRealmCache {
     }
     
     func cacheResources(resources: ResourcesJson, complete: @escaping ((_ error: ResourcesRealmCacheError?) -> Void)) {
-        
-        print("\n CACHE RESOURCES")
-        
+                
         DispatchQueue.global().async { [weak self] in
                         
             var realmLanguagesToCache: [RealmLanguage] = Array()
@@ -98,15 +96,13 @@ class ResourcesRealmCache {
             for latestObjectJson in latestTranslationsAndAttachmentsJsonArray {
                 
                 let latestType: String? = latestObjectJson["type"] as? String
+                                
+                let resourceDataObject: [String: Any]? = ((latestObjectJson["relationships"] as? [String: Any])?["resource"] as? [String: Any])?["data"] as? [String: Any]
+                let relationshipResourceId: String? = resourceDataObject?["id"] as? String
                 
-                var relationshipResourceId: String?
-                if let relationshipsObject = latestObjectJson["relationships"] as? [String: Any],
-                    let resourceObject = relationshipsObject["resource"] as? [String: Any],
-                    let resourceDataObject = resourceObject["data"] as? [String: Any] {
-                    
-                    relationshipResourceId = resourceDataObject["id"] as? String
-                }
-                
+                let languageDataObject: [String: Any]? = ((latestObjectJson["relationships"] as? [String: Any])?["language"] as? [String: Any])?["data"] as? [String: Any]
+                let relationshipLanguageId: String? = languageDataObject?["id"] as? String
+
                 if latestType == "translation" {
                     
                     let translationDataResult: Result<Data?, Error> = jsonServices.getJsonData(json: latestObjectJson)
@@ -124,6 +120,12 @@ class ResourcesRealmCache {
                     switch realmTranslationResult {
                     case .success(let realmTranslation):
                         if let realmTranslation = realmTranslation {
+                            if let relationshipResourceId = relationshipResourceId {
+                                realmTranslation.resource = realmResourcesDictionary[relationshipResourceId]
+                            }
+                            if let relationshipLanguageId = relationshipLanguageId {
+                                realmTranslation.language = realmLanguagesDictionary[relationshipLanguageId]
+                            }
                             realmLatestTranslationsToCache.append(realmTranslation)
                         }
                     case .failure(let error):
@@ -148,6 +150,9 @@ class ResourcesRealmCache {
                     switch realmAttachmentResult {
                     case .success(let realmAttachment):
                         if let realmAttachment = realmAttachment {
+                            if let relationshipResourceId = relationshipResourceId {
+                                realmAttachment.resource = realmResourcesDictionary[relationshipResourceId]
+                            }
                             realmLatestAttachmentsToCache.append(realmAttachment)
                         }
                     case .failure(let error):
@@ -181,19 +186,6 @@ class ResourcesRealmCache {
                     }
                 }
             }
-        }
-    }
-    
-    func getLanguages() {
-        
-        let cachedLanguages: [RealmLanguage] = Array(mainThreadRealm.objects(RealmLanguage.self))
-        print("  number of cached languages: \(cachedLanguages.count)")
-        
-        let cachedTranslations: [RealmTranslation] = Array(mainThreadRealm.objects(RealmTranslation.self))
-        print("  number of cached translations: \(cachedTranslations.count)")
-        for translation in cachedTranslations {
-            print("  translation id: \(translation.id)")
-            print("    translation LANGUAGE CODE: \(translation.language?.attributes?.code)")
         }
     }
 }

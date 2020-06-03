@@ -24,9 +24,7 @@ class ResourcesDownloadAndCache: ResourcesDownloadAndCacheType {
     }
     
     func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ error: ResourcesDownloadAndCacheError?) -> Void)) -> OperationQueue {
-        
-        print("\n DOWNLOAD AND CACHE RESOURCES")
-        
+                
         let queue = OperationQueue()
         
         let languagesOperation: RequestOperation = languagesApi.newGetLanguagesOperation()
@@ -71,14 +69,6 @@ class ResourcesDownloadAndCache: ResourcesDownloadAndCacheType {
         )
         
         return queue
-    }
-    
-    private var unknownError: Error {
-        return NSError(
-            domain: String(describing: ResourcesDownloadAndCache.self),
-            code: -1,
-            userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."]
-        )
     }
     
     private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResponse: RequestResponse?, resourcesResponse: RequestResponse?, complete: @escaping ((_ error: ResourcesDownloadAndCacheError?) -> Void)) {
@@ -133,5 +123,13 @@ class ResourcesDownloadAndCache: ResourcesDownloadAndCacheType {
                 complete(nil)
             }
         }
+    }
+    
+    private var unknownError: Error {
+        return NSError(
+            domain: String(describing: ResourcesDownloadAndCache.self),
+            code: -1,
+            userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."]
+        )
     }
 }

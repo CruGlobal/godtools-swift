@@ -10,4 +10,5 @@ import Foundation
 
 protocol ResourcesDownloadAndCacheType {
     
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ error: ResourcesDownloadAndCacheError?) -> Void)) -> OperationQueue
 }

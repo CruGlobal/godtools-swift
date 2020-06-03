@@ -165,7 +165,6 @@
 		45553AC8248024CF003A789C /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553ABE248024CE003A789C /* ResourceType.swift */; };
 		45553AC9248024CF003A789C /* TranslationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553ABF248024CE003A789C /* TranslationType.swift */; };
 		45553ACA248024CF003A789C /* ResourceAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AC0248024CE003A789C /* ResourceAttributesType.swift */; };
-		45553ACB248024CF003A789C /* ResourcesDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AC1248024CE003A789C /* ResourcesDataType.swift */; };
 		45553ACC248024CF003A789C /* LanguageAttributesType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AC2248024CE003A789C /* LanguageAttributesType.swift */; };
 		45553AD624802521003A789C /* ResourcesRealmCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553ACE24802520003A789C /* ResourcesRealmCache.swift */; };
 		45553AD724802521003A789C /* RealmLanguagesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AD024802520003A789C /* RealmLanguagesData.swift */; };
@@ -173,7 +172,6 @@
 		45553AD924802521003A789C /* RealmResourceAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AD224802520003A789C /* RealmResourceAttributes.swift */; };
 		45553ADA24802521003A789C /* RealmLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AD324802520003A789C /* RealmLanguage.swift */; };
 		45553ADB24802521003A789C /* RealmLanguageAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AD424802520003A789C /* RealmLanguageAttributes.swift */; };
-		45553ADC24802521003A789C /* RealmResourcesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AD524802520003A789C /* RealmResourcesData.swift */; };
 		45553AEE2480355F003A789C /* RealmTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AED2480355F003A789C /* RealmTranslation.swift */; };
 		45553AF024803579003A789C /* RealmTranslationAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AEF24803579003A789C /* RealmTranslationAttributes.swift */; };
 		45553AF6248057E8003A789C /* LanguagesApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45553AF5248057E8003A789C /* LanguagesApi.swift */; };
@@ -268,6 +266,7 @@
 		4568D15C244DFA1200328639 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */; };
 		4568D164244E156C00328639 /* ArticlesFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D163244E156C00328639 /* ArticlesFlow.swift */; };
 		456993A32479D78E003E58B6 /* WebArchiveError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456993A22479D78E003E58B6 /* WebArchiveError.swift */; };
+		4570D0822487ED86007B38C4 /* ResourcesRealmCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4570D0812487ED86007B38C4 /* ResourcesRealmCacheType.swift */; };
 		4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */; };
 		4573221624453EC100D653FF /* LanguageSettingsViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221524453EC100D653FF /* LanguageSettingsViewModelType.swift */; };
 		4573221824453FC300D653FF /* LanguageSettingsFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221724453FC300D653FF /* LanguageSettingsFlow.swift */; };
@@ -750,7 +749,6 @@
 		45553ABE248024CE003A789C /* ResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45553ABF248024CE003A789C /* TranslationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationType.swift; sourceTree = "<group>"; };
 		45553AC0248024CE003A789C /* ResourceAttributesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceAttributesType.swift; sourceTree = "<group>"; };
-		45553AC1248024CE003A789C /* ResourcesDataType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesDataType.swift; sourceTree = "<group>"; };
 		45553AC2248024CE003A789C /* LanguageAttributesType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageAttributesType.swift; sourceTree = "<group>"; };
 		45553ACE24802520003A789C /* ResourcesRealmCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesRealmCache.swift; sourceTree = "<group>"; };
 		45553AD024802520003A789C /* RealmLanguagesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLanguagesData.swift; sourceTree = "<group>"; };
@@ -758,7 +756,6 @@
 		45553AD224802520003A789C /* RealmResourceAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourceAttributes.swift; sourceTree = "<group>"; };
 		45553AD324802520003A789C /* RealmLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLanguage.swift; sourceTree = "<group>"; };
 		45553AD424802520003A789C /* RealmLanguageAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmLanguageAttributes.swift; sourceTree = "<group>"; };
-		45553AD524802520003A789C /* RealmResourcesData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmResourcesData.swift; sourceTree = "<group>"; };
 		45553AED2480355F003A789C /* RealmTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslation.swift; sourceTree = "<group>"; };
 		45553AEF24803579003A789C /* RealmTranslationAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslationAttributes.swift; sourceTree = "<group>"; };
 		45553AF5248057E8003A789C /* LanguagesApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagesApi.swift; sourceTree = "<group>"; };
@@ -853,6 +850,7 @@
 		4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
 		4568D163244E156C00328639 /* ArticlesFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesFlow.swift; sourceTree = "<group>"; };
 		456993A22479D78E003E58B6 /* WebArchiveError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveError.swift; sourceTree = "<group>"; };
+		4570D0812487ED86007B38C4 /* ResourcesRealmCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesRealmCacheType.swift; sourceTree = "<group>"; };
 		4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
 		4573221524453EC100D653FF /* LanguageSettingsViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModelType.swift; sourceTree = "<group>"; };
 		4573221724453FC300D653FF /* LanguageSettingsFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsFlow.swift; sourceTree = "<group>"; };
@@ -1580,7 +1578,6 @@
 				45553ABB248024CE003A789C /* LanguagesDataType.swift */,
 				45553ABD248024CE003A789C /* LanguageType.swift */,
 				45553AC2248024CE003A789C /* LanguageAttributesType.swift */,
-				45553AC1248024CE003A789C /* ResourcesDataType.swift */,
 				45553ABE248024CE003A789C /* ResourceType.swift */,
 				45553AC0248024CE003A789C /* ResourceAttributesType.swift */,
 				45553ABF248024CE003A789C /* TranslationType.swift */,
@@ -1593,6 +1590,7 @@
 			isa = PBXGroup;
 			children = (
 				45553ACE24802520003A789C /* ResourcesRealmCache.swift */,
+				4570D0812487ED86007B38C4 /* ResourcesRealmCacheType.swift */,
 				4537455F2485B0C400F672A1 /* ResourcesRealmCacheError.swift */,
 				45553ACF24802520003A789C /* Models */,
 			);
@@ -1607,7 +1605,6 @@
 				45553AD024802520003A789C /* RealmLanguagesData.swift */,
 				45553AD324802520003A789C /* RealmLanguage.swift */,
 				45553AD424802520003A789C /* RealmLanguageAttributes.swift */,
-				45553AD524802520003A789C /* RealmResourcesData.swift */,
 				45553AD124802520003A789C /* RealmResource.swift */,
 				45553AD224802520003A789C /* RealmResourceAttributes.swift */,
 				45553AED2480355F003A789C /* RealmTranslation.swift */,
@@ -3233,6 +3230,7 @@
 				4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
 				45D3C92223DF998300ECF70E /* TutorialView.swift in Sources */,
+				4570D0822487ED86007B38C4 /* ResourcesRealmCacheType.swift in Sources */,
 				45E998E323FD9E870088DD0C /* ConfigType.swift in Sources */,
 				1E78090A21125CDC003E5F95 /* EmailSignUpManager.swift in Sources */,
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
@@ -3472,7 +3470,6 @@
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
 				45553ADB24802521003A789C /* RealmLanguageAttributes.swift in Sources */,
-				45553ADC24802521003A789C /* RealmResourcesData.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4568D15A244DF91A00328639 /* FirebaseAnalytics.swift in Sources */,
 				4F7CEDFD20852F3C00FE7BDE /* GTAccessibilityConstants.swift in Sources */,
@@ -3620,7 +3617,6 @@
 				0FB0E7C51EB00C6F00583BF3 /* GTSwitch.swift in Sources */,
 				452036C924005816002B2453 /* RequestResponse.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
-				45553ACB248024CF003A789C /* ResourcesDataType.swift in Sources */,
 				455F4B8524525BEF00AE6007 /* MockAemImportsProvider.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
