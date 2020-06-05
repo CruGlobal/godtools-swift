@@ -31,7 +31,7 @@ class LanguagesApi: LanguagesApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    private func newLanguagesOperation() -> RequestOperation {
+    func newGetLanguagesOperation() -> RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,
@@ -48,7 +48,7 @@ class LanguagesApi: LanguagesApiType {
         
         let queue = OperationQueue()
         
-        let languagesOperation: RequestOperation = newLanguagesOperation()
+        let languagesOperation: RequestOperation = newGetLanguagesOperation()
                     
         languagesOperation.completionHandler { (response: RequestResponse) in
             

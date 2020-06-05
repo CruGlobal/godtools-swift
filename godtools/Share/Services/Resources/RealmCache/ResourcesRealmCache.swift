@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ResourcesRealmCache {
+class ResourcesRealmCache: ResourcesRealmCacheType {
     
     private let mainThreadRealm: Realm
     
@@ -18,16 +18,17 @@ class ResourcesRealmCache {
         self.mainThreadRealm = mainThreadRealm
     }
     
-    func cacheResources(resources: ResourcesJson) {
-        
-        print("\n CACHE RESOURCES")
-        
+    func cacheResources(resources: ResourcesJson, complete: @escaping ((_ error: ResourcesRealmCacheError?) -> Void)) {
+                
         DispatchQueue.global().async { [weak self] in
-            
-            var realmLanguagesToCache: [RealmLanguage] = Array()
+                        
+            var realmObjectsToCache: [Object] = Array()
             var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
+            var realmResourcesDictionary: [String: RealmResource] = Dictionary()
             
             let jsonServices = JsonServices()
+            
+            // Decode languages jaon array
             
             let decodedLanguagesResult: Result<RealmLanguagesData?, Error> = jsonServices.decodeObject(data: resources.languagesJson)
             
@@ -35,55 +36,145 @@ class ResourcesRealmCache {
             case .success(let realmLanguagesObject):
                 if let languages = realmLanguagesObject?.data {
                     for language in languages {
-                        realmLanguagesToCache.append(language)
+                        realmObjectsToCache.append(language)
                         realmLanguagesDictionary[language.id] = language
                     }
                 }
             case .failure(let error):
-                // TODO: Handle error.
-                assertionFailure("Failed to decode realm languages: \(error)")
+                complete(.failedToDecodeLanguages(error: error))
+                return
             }
             
-            // TODO: Decode resources and latest translations and attachments
+            // Decode resources json array
             
-            let decodedResourcesResult: Result<RealmResourcesData?, Error> = jsonServices.decodeObject(data: resources.resourcesPlusLatestTranslationsAndAttachmentsJson)
+            let resourcesJsonObjectResult: Result<Any?, Error> = jsonServices.getJsonObject(data: resources.resourcesPlusLatestTranslationsAndAttachmentsJson, options: [])
+            let resourcesJsonObject: [String: Any]
             
+            switch resourcesJsonObjectResult {
+                
+            case .success(let object):
+                resourcesJsonObject = object as? [String: Any] ?? Dictionary()
+            case .failure(let error):
+                complete(.failedToDecodeResources(error: error))
+                return
+            }
+            
+            let resourcesJsonArray: [[String: Any]] = resourcesJsonObject["data"] as? [[String: Any]] ?? Array()
+            let latestTranslationsAndAttachmentsJsonArray: [[String: Any]] = resourcesJsonObject["included"] as? [[String: Any]] ?? Array()
+            
+            for resourceJson in resourcesJsonArray {
+                
+                let resourceDataResult: Result<Data?, Error> = jsonServices.getJsonData(json: resourceJson)
+                var resourceData: Data?
+                
+                switch resourceDataResult {
+                case .success(let data):
+                    resourceData = data
+                case .failure(let error):
+                    complete(.failedToDecodeResources(error: error))
+                    return
+                }
+                
+                let realmResourceResult: Result<RealmResource?, Error> = jsonServices.decodeObject(data: resourceData)
+                switch realmResourceResult {
+                case .success(let realmResource):
+                    if let realmResource = realmResource {
+                        realmObjectsToCache.append(realmResource)
+                        realmResourcesDictionary[realmResource.id] = realmResource
+                    }
+                case .failure(let error):
+                    complete(.failedToDecodeResources(error: error))
+                    return
+                }
+            }
+            
+            // Decode latest translations and attachments
+            
+            for latestObjectJson in latestTranslationsAndAttachmentsJsonArray {
+                
+                let latestType: String? = latestObjectJson["type"] as? String
+                                
+                let resourceDataObject: [String: Any]? = ((latestObjectJson["relationships"] as? [String: Any])?["resource"] as? [String: Any])?["data"] as? [String: Any]
+                let relationshipResourceId: String? = resourceDataObject?["id"] as? String
+                
+                let languageDataObject: [String: Any]? = ((latestObjectJson["relationships"] as? [String: Any])?["language"] as? [String: Any])?["data"] as? [String: Any]
+                let relationshipLanguageId: String? = languageDataObject?["id"] as? String
+
+                if latestType == "translation" {
+                    
+                    let translationDataResult: Result<Data?, Error> = jsonServices.getJsonData(json: latestObjectJson)
+                    var translationData: Data?
+                    
+                    switch translationDataResult {
+                    case .success(let data):
+                        translationData = data
+                    case .failure(let error):
+                        complete(.failedToDecodeTranslations(error: error))
+                        return
+                    }
+                    
+                    let realmTranslationResult: Result<RealmTranslation?, Error> = jsonServices.decodeObject(data: translationData)
+                    switch realmTranslationResult {
+                    case .success(let realmTranslation):
+                        if let realmTranslation = realmTranslation {
+                            if let relationshipResourceId = relationshipResourceId {
+                                realmTranslation.resource = realmResourcesDictionary[relationshipResourceId]
+                            }
+                            if let relationshipLanguageId = relationshipLanguageId {
+                                realmTranslation.language = realmLanguagesDictionary[relationshipLanguageId]
+                            }
+                            realmObjectsToCache.append(realmTranslation)
+                        }
+                    case .failure(let error):
+                        complete(.failedToDecodeTranslations(error: error))
+                        return
+                    }
+                }
+                else if latestType == "attachment" {
+                    
+                    let attachmentDataResult: Result<Data?, Error> = jsonServices.getJsonData(json: latestObjectJson)
+                    var attachmentData: Data?
+                    
+                    switch attachmentDataResult {
+                    case .success(let data):
+                        attachmentData = data
+                    case .failure(let error):
+                        complete(.failedToDecodeAttachments(error: error))
+                        return
+                    }
+                    
+                    let realmAttachmentResult: Result<RealmAttachment?, Error> = jsonServices.decodeObject(data: attachmentData)
+                    switch realmAttachmentResult {
+                    case .success(let realmAttachment):
+                        if let realmAttachment = realmAttachment {
+                            if let relationshipResourceId = relationshipResourceId {
+                                realmAttachment.resource = realmResourcesDictionary[relationshipResourceId]
+                            }
+                            realmObjectsToCache.append(realmAttachment)
+                        }
+                    case .failure(let error):
+                        complete(.failedToDecodeAttachments(error: error))
+                        return
+                    }
+                }
+            }
             
             DispatchQueue.main.async { [weak self] in
-                
+                                
                 if let realm = self?.mainThreadRealm {
                     
                     do {
                         try realm.write {
-                            realm.delete(realm.objects(RealmLanguage.self))
-                            realm.delete(realm.objects(RealmResource.self))
-                            realm.delete(realm.objects(RealmTranslation.self))
-                            // TODO: Delete attachments.
-                            
-                            realm.add(realmLanguagesToCache, update: .modified)
+                            realm.add(realmObjectsToCache, update: .modified)
                         }
+                        
+                        complete(nil)
                     }
                     catch let error {
-                        // TODO: Handle error.
-                        assertionFailure("Failed to cache realm resources: \(error)")
+                        complete(.failedToCacheToRealm(error: error))
                     }
                 }
-                
-                
             }
-        }
-    }
-    
-    func getLanguages() {
-        
-        let cachedLanguages: [RealmLanguage] = Array(mainThreadRealm.objects(RealmLanguage.self))
-        print("  number of cached languages: \(cachedLanguages.count)")
-        
-        let cachedTranslations: [RealmTranslation] = Array(mainThreadRealm.objects(RealmTranslation.self))
-        print("  number of cached translations: \(cachedTranslations.count)")
-        for translation in cachedTranslations {
-            print("  translation id: \(translation.id)")
-            print("    translation LANGUAGE CODE: \(translation.language?.attributes?.code)")
         }
     }
 }

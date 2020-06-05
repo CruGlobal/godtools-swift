@@ -31,7 +31,7 @@ class ResourcesApi: ResourcesApiType {
         baseUrl = config.mobileContentApiBaseUrl
     }
     
-    private func newResourcesPlusLatestTranslationsAndAttachmentsOperation() -> RequestOperation {
+    func newResourcesPlusLatestTranslationsAndAttachmentsOperation() -> RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,

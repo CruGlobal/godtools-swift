@@ -52,26 +52,18 @@ class RequestOperation: Operation {
     
     override func start() {
         
-        if !isCancelled {
-            
-            task = session.dataTask(with: urlRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
-                
-                self?.handleOperationFinished(data: data, urlResponse: urlResponse, error: error)
-            }
-            
-            task?.resume()
-            state = .executing
+        guard !isCancelled else {
+            handleOperationCancelled()
+            return
         }
-        else {
+        
+        task = session.dataTask(with: urlRequest) { [weak self] (data: Data?, urlResponse: URLResponse?, error: Error?) in
             
-            let cancelledError: Error = NSError(
-                domain: errorDomain,
-                code: NSURLErrorCancelled,
-                userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
-            )
-            
-            handleOperationFinished(data: nil, urlResponse: nil, error: cancelledError)
+            self?.handleOperationFinished(data: data, urlResponse: urlResponse, requestError: error)
         }
+        
+        task?.resume()
+        state = .executing
     }
     
     override func cancel() {
@@ -79,22 +71,29 @@ class RequestOperation: Operation {
         task?.cancel()
     }
     
-    private func handleOperationFinished(data: Data?, urlResponse: URLResponse?, error: Error?) {
+    private func handleOperationCancelled() {
+        
+        let cancelledError: Error = NSError(
+            domain: errorDomain,
+            code: NSURLErrorCancelled,
+            userInfo: [NSLocalizedDescriptionKey: "The operation was cancelled."]
+        )
+        
+        handleOperationFinished(data: nil, urlResponse: nil, requestError: cancelledError)
+    }
+    
+    private func handleOperationFinished(data: Data?, urlResponse: URLResponse?, requestError: Error?) {
         
         state = .finished
-        
-        guard let completion = completion else {
-            return
-        }
         
         let response: RequestResponse = RequestResponse(
             urlRequest: urlRequest,
             data: data,
             urlResponse: urlResponse,
-            error: error
+            requestError: requestError
         )
                         
-        completion(response)
+        completion?(response)
     }
     
     // MARK: - State
