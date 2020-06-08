@@ -8,33 +8,34 @@
 
 import Foundation
 
-struct RequestResponse {
-        
+class RequestResponse {
+            
     let urlRequest: URLRequest?
     let data: Data?
     let urlResponse: URLResponse?
     let requestError: Error?
     
-    var httpStatusCode: Int {
-        return (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
+    init(urlRequest: URLRequest?, data: Data?, urlResponse: URLResponse?, requestError: Error?) {
+                
+        self.urlRequest = urlRequest
+        self.data = data
+        self.urlResponse = urlResponse
+        self.requestError = requestError
     }
     
-    var requestFailed: Bool {
-        return httpStatusCode < 200 && httpStatusCode >= 400
+    var httpStatusCode: Int? {
+        return (urlResponse as? HTTPURLResponse)?.statusCode
     }
     
     var requestErrorCode: Int? {
         return (requestError as NSError?)?.code ?? nil
     }
     
-    var unauthorized: Bool {
-        return httpStatusCode == 401
-    }
-    
     #if os(iOS)
     var requestCancelled: Bool {
         return requestErrorCode == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
     }
+    
     var notConnectedToInternet: Bool {
         return requestErrorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
     }

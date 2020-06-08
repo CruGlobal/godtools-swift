@@ -41,7 +41,7 @@ class ArticlesService {
             return
         }
         
-        getManifestXmlOperation = resourceLatestTranslationServices.getManifestXmlData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: Error?) in
+        getManifestXmlOperation = resourceLatestTranslationServices.getManifestXmlData(godToolsResource: godToolsResource, forceDownload: forceDownload) { [weak self] (manifestXmlData: Data?, error: ResourcesLatestTranslationServicesError?) in
             
             if let manifestXmlData = manifestXmlData {
                 
@@ -67,7 +67,7 @@ class ArticlesService {
                     code: -1,
                     userInfo: [NSLocalizedDescriptionKey: "An unknown error occurred."]
                 )
-                complete(.failure(.fetchManifestError(error: unknownError)))
+                complete(.failure(.unknownError(error: unknownError)))
             }
         }
     }

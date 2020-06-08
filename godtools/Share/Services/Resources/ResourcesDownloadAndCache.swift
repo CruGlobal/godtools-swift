@@ -92,11 +92,17 @@ class ResourcesDownloadAndCache: ResourcesDownloadAndCacheType {
             }
         }
         
+        let languagesHttpStatusCode: Int = languagesResponse.httpStatusCode ?? -1
+        let languagesHttpRequestSuccess: Bool = languagesHttpStatusCode >= 200 && languagesHttpStatusCode < 400
+        
+        let resourcesHttpStatusCode: Int = resourcesResponse.httpStatusCode ?? -1
+        let resourcesHttpRequestSuccess: Bool = resourcesHttpStatusCode >= 200 && resourcesHttpStatusCode < 400
+        
         if let languagesRequestError = languagesResponse.requestError {
             complete(.failedToGetLanguages(error: languagesRequestError, data: languagesResponse.data))
             return
         }
-        else if languagesResponse.requestFailed {
+        else if !languagesHttpRequestSuccess {
             complete(.failedToGetLanguages(error: unknownError, data: languagesResponse.data))
             return
         }
@@ -104,7 +110,7 @@ class ResourcesDownloadAndCache: ResourcesDownloadAndCacheType {
             complete(.failedToGetResourcesPlusLatestTranslationsAndAttachments(error: resourcesRequestError, data: resourcesResponse.data))
             return
         }
-        else if resourcesResponse.requestFailed {
+        else if !resourcesHttpRequestSuccess {
             complete(.failedToGetResourcesPlusLatestTranslationsAndAttachments(error: unknownError, data: resourcesResponse.data))
             return
         }

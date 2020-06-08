@@ -11,5 +11,6 @@ import Foundation
 enum ArticlesServiceError: Error {
     
     case aemImportServiceError(error: ArticleAemImportServiceError)
-    case fetchManifestError(error: Error)
+    case fetchManifestError(error: ResourcesLatestTranslationServicesError)
+    case unknownError(error: Error)
 }

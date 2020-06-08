@@ -215,7 +215,7 @@ extension AccountView: UIScrollViewDelegate {
 
 extension AccountView: AccountItemCellDelegate {
     
-    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessage) {
+    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessageType) {
         
         let viewModel = AlertMessageViewModel(title: alertMessage.title, message: alertMessage.message, handler: nil)
         let view = AlertMessageView(viewModel: viewModel)

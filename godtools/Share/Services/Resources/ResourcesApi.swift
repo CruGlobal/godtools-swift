@@ -44,7 +44,7 @@ class ResourcesApi: ResourcesApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
-    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, Error>) -> Void)) -> OperationQueue {
+    func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
@@ -52,12 +52,12 @@ class ResourcesApi: ResourcesApiType {
                     
         resourcesOperation.completionHandler { (response: RequestResponse) in
             
-            let result: RequestResult<NoRequestResultType, NoRequestResultType> = response.getResult()
+            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
             
             switch result {
-            case .success( _):
+            case .success( _, _):
                 complete(.success(response.data))
-            case .failure( _, let error):
+            case .failure(let error):
                 complete(.failure(error))
             }
         }

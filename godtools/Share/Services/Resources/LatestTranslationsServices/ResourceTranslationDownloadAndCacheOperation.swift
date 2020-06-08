@@ -65,8 +65,9 @@ class ResourceTranslationDownloadAndCacheOperation: Operation {
             }
             
             let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
+            let httpRequestSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
                             
-            if error != nil || (httpStatusCode < 200 && httpStatusCode >= 400) {
+            if error != nil || !httpRequestSuccess {
                 
                 self?.handleTranslationZipDataRequestFailed(requestError: error, httpStatusCode: httpStatusCode)
             }
@@ -114,10 +115,13 @@ class ResourceTranslationDownloadAndCacheOperation: Operation {
     private func handleTranslationZipDataRequestFailed(requestError: Error?, httpStatusCode: Int) {
         
         if let requestError = requestError {
-            if requestError.isCancelled {
+            
+            let requestErrorCode: Int = (requestError as NSError).code
+            
+            if requestErrorCode == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue) {
                 handleOperationFinished(result: .failure(.cancelled))
             }
-            else if requestError.notConnectedToInternet {
+            else if requestErrorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue) {
                 handleOperationFinished(result: .failure(.noNetworkConnection))
             }
             else {

@@ -46,16 +46,29 @@ class DownloadArticlesErrorViewModel {
                 }
             }
             
-        case .fetchManifestError(let error):
-            if error.requestCancelled {
-                message = cancelledError
-            }
-            else if error.notConnectedToInternet {
-                message = notConnectedToNetworkMessage
-            }
-            else {
+        case .fetchManifestError(let getManifestError):
+            
+            switch getManifestError {
+                
+            case .apiError(let apiError):
+                switch apiError {
+                case .httpClientError( _):
+                    message = unknownError
+                case .noNetworkConnection:
+                    message = notConnectedToNetworkMessage
+                case .requestCancelled:
+                    message = cancelledError
+                case .requestFailed( _):
+                    message = unknownError
+                }
+            case .failedToCacheTranslationData( _):
+                message = unknownError
+            case .failedToGetCachedTranslationData( _):
                 message = unknownError
             }
+            
+        case .unknownError( _):
+            message = unknownError
         }
     }
 }

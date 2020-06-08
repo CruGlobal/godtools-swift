@@ -54,26 +54,17 @@ class TranslationsApi: TranslationsApiType {
         return operation
     }
     
-    func getTranslationZipData(translationId: String, complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<Data, Error>) -> Void)) -> OperationQueue {
+    func getTranslationZipData(translationId: String, complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
         let translationZipDataOperation = newTranslationZipDataOperation(translationId: translationId)
         
-        return translationZipDataOperation.executeRequest { (response: RequestResponse) in
-                
-            let result: RequestResult<NoRequestResultType, NoRequestResultType> = response.getResult()
-            
-            let dataResult: RequestResult<Data, Error>
+        return SingleRequestOperation().execute(operation: translationZipDataOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
             
             switch result {
-            case .success( _):
-                dataResult = .success(object: response.data)
-            case .failure( _, let error):
-                dataResult = .failure(clientError: nil, error: error)
-            }
-            
-            // TODO: Would like to remove this DispatchQueue.main and force clients to transition to main queue when needed. ~Levi
-            DispatchQueue.main.async {
-                complete(response, dataResult)
+            case .success( _, _):
+                complete(.success(response.data))
+            case .failure(let error):
+                complete(.failure(error))
             }
         }
     }

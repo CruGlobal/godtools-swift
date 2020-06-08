@@ -19,7 +19,7 @@ class ResourcesLatestTranslationServices {
         self.translationsApi = translationsApi
     }
 
-    func getManifestXmlData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: Error?) -> Void)) -> OperationQueue? {
+    func getManifestXmlData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ xmlData: Data?, _ error: ResourcesLatestTranslationServicesError?) -> Void)) -> OperationQueue? {
                 
         if let cachedXmlData = getCachedManifestXmlData(godToolsResource: godToolsResource), !forceDownload {
             
@@ -32,7 +32,7 @@ class ResourcesLatestTranslationServices {
             let fileCacheRef = self.fileCache
             let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
                         
-            return downloadTranslationZipDataToCache(godToolsResource: godToolsResource) { (error: Error?) in
+            return downloadTranslationZipDataToCache(godToolsResource: godToolsResource) { (error: ResourcesLatestTranslationServicesError?) in
                 
                 if let error = error {
                     complete(nil, error)
@@ -43,7 +43,7 @@ class ResourcesLatestTranslationServices {
                     case .success(let xmlData):
                         complete(xmlData, nil)
                     case .failure(let error):
-                        complete(nil, error)
+                        complete(nil, .failedToGetCachedTranslationData(error: error))
                     }
                 }
             }
@@ -55,30 +55,15 @@ class ResourcesLatestTranslationServices {
         let cacheLocation = ResourcesLatestTranslationsFileCacheLocation(godToolsResource: godToolsResource)
         let translationManifestFileName: String = godToolsResource.translationManifestFilename
         
-        var contentsExist: Bool = false
-        switch fileCache.contentsExist(location: cacheLocation) {
-        case .success(let exist):
-            contentsExist = exist
-        case .failure( _):
-            break
-        }
-        
-        var cachedXmlData: Data?
-        if contentsExist {
-            switch fileCache.getData(location: cacheLocation, path: translationManifestFileName) {
-            case .success(let xmlData):
-                cachedXmlData = xmlData
-            case .failure( _):
-                break
-            }
-        }
-        
-        return cachedXmlData
+        return fileCache.getCachedManifestXmlData(
+            cacheLocation: cacheLocation,
+            translationManifestFileName: translationManifestFileName
+        )
     }
     
-    private func downloadTranslationZipDataToCache(godToolsResource: GodToolsResource, complete: @escaping ((_ error: Error?) -> Void)) -> OperationQueue {
+    private func downloadTranslationZipDataToCache(godToolsResource: GodToolsResource, complete: @escaping ((_ error: ResourcesLatestTranslationServicesError?) -> Void)) -> OperationQueue {
         
-        return translationsApi.getTranslationZipData(translationId: godToolsResource.translationId, complete: { [weak self] (response: RequestResponse, result: RequestResult<Data, Error>) in
+        return translationsApi.getTranslationZipData(translationId: godToolsResource.translationId, complete: { [weak self] (result: Result<Data?, ResponseError<NoClientApiErrorType>>) in
             
             switch result {
                 
@@ -92,12 +77,12 @@ class ResourcesLatestTranslationServices {
                     case .success( _):
                         complete(nil)
                     case .failure(let error):
-                        complete(error)
+                        complete(.failedToCacheTranslationData(error: error))
                     }
                 }
             
-            case .failure( _, let error):
-                complete(error)
+            case .failure(let error):
+                complete(.apiError(error: error))
             }
         })
     }

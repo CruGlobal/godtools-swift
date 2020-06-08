@@ -109,14 +109,15 @@ class WebArchiveOperation: Operation {
                 
                 operation.completionHandler { [weak self] (response: RequestResponse) in
                     
-                    let httpStatusCode: Int = response.httpStatusCode
+                    let httpStatusCode: Int = response.httpStatusCode ?? -1
+                    let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
                     let mimeType: String = response.urlResponse?.mimeType ?? ""
                                         
                     if let error = response.requestError {
                         
                         // Do something with Error?
                     }
-                    else if httpStatusCode >= 200 && httpStatusCode < 400, let data = response.data, !mimeType.isEmpty {
+                    else if httpStatusCodeSuccess, let data = response.data, !mimeType.isEmpty {
                         
                         let webArchiveResource = WebArchiveResource(
                             url: resourceUrl,

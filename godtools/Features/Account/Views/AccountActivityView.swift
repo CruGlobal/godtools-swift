@@ -70,7 +70,7 @@ class AccountActivityView: UIView, NibBased, AccountItemViewType {
             self?.activityCollectionView.reloadData()
         }
         
-        viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessage?) in
+        viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessageType?) in
             if let view = self, let alertMessage = alertMessage {
                 self?.delegate?.accountItemViewDidProcessAlertMessage(itemView: view, alertMessage: alertMessage)
             }            

@@ -23,9 +23,9 @@ class GlobalActivityServices: GlobalActivityServicesType {
         return globalActivityCache.getGlobalActivityAnalytics()
     }
     
-    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
-        return globalActivityApi.getGlobalAnalytics { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
+        return globalActivityApi.getGlobalAnalytics { [weak self] (result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) in
                         
             switch result {
                 
@@ -33,13 +33,13 @@ class GlobalActivityServices: GlobalActivityServicesType {
                 if let globalActivityAnalytics = globalActivityAnalytics {
                     self?.globalActivityCache.cacheGlobalActivityAnalytics(globalAnalytics: globalActivityAnalytics)
                 }
-                complete(response, result)
-            case .failure( _, _):
+                complete(result)
+            case .failure( _):
                 if let cachedGlobalActivityAnalytics = self?.globalActivityCache.getGlobalActivityAnalytics() {
-                    complete(response, .success(object: cachedGlobalActivityAnalytics))
+                    complete(.success(cachedGlobalActivityAnalytics))
                 }
                 else {
-                    complete(response, result)
+                    complete(result)
                 }
             }
         }

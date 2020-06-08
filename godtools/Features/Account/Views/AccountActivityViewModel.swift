@@ -13,7 +13,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     private var getGlobalAnalyticsOperation: OperationQueue?
     
     let globalActivityResults: ObservableValue<GlobalActivityResults> = ObservableValue(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: []))
-    let alertMessage: ObservableValue<AlertMessage?> = ObservableValue(value: nil)
+    let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
     required init(globalActivityServices: GlobalActivityServicesType) {
         
@@ -23,7 +23,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
         
         globalActivityResults.accept(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: globalActivityAttributes))
         
-        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (response: RequestResponse, result: RequestResult<GlobalActivityAnalytics, RequestClientError>) in
+        getGlobalAnalyticsOperation = globalActivityServices.getGlobalAnalytics(complete: { [weak self] (result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) in
                         
             switch result {
             
@@ -34,19 +34,14 @@ class AccountActivityViewModel: AccountActivityViewModelType {
                 
                 self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: false, globalActivityAttributes: globalActivityAttributes))
             
-            case .failure(let clientError, let error):
+            case .failure(let error):
                                 
                 let globalActivityAttributes: [GlobalActivityAttribute] = self?.createGlobalActivityAttributes(attributes: nil) ?? []
                 
                 self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
                 
-                if !response.requestCancelled {
-                    self?.alertMessage.accept(
-                        value: AlertMessage(
-                            title: clientError?.title ?? "",
-                            message: clientError?.message ?? error.localizedDescription
-                        )
-                    )
+                if !error.cancelled {
+                    self?.alertMessage.accept(value: ResponseErrorAlertMessage(error: error))
                 }
             }
         })

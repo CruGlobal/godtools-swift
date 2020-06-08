@@ -1,14 +1,14 @@
 //
-//  RequestClientErrorType.swift
+//  AlertMessageType.swift
 //  godtools
 //
-//  Created by Levi Eggert on 2/21/20.
+//  Created by Levi Eggert on 6/8/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-protocol RequestClientErrorType: Codable {
+protocol AlertMessageType {
     
     var title: String { get }
     var message: String { get }
