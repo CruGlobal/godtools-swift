@@ -19,6 +19,7 @@ class AllToolsViewModel: AllToolsViewModelType {
     
     let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
+    let toolListIsEditable: Bool = false
     
     required init(flowDelegate: FlowDelegate, toolsManager: ToolsManager, realm: Realm, analytics: AnalyticsContainer) {
         
@@ -105,5 +106,9 @@ class AllToolsViewModel: AllToolsViewModelType {
     
     func toolDetailsTapped(resource: DownloadedResource) {
         flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
+    }
+    
+    func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {
+        // Do nothing because toolListIsEditable is currently set to false for all tools.
     }
 }

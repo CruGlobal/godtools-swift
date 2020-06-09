@@ -64,8 +64,29 @@ class ToolsTableView: UIView, NibBased {
     
     private func setupBinding() {
         
-        viewModel?.tools.addObserver(self) { [weak self] (tools: [DownloadedResource]) in
+        guard let viewModel = self.viewModel else {
+            assertionFailure("ToolsTableView not configured.  Be sure to call configure after view is loaded.")
+            return
+        }
+        
+        viewModel.tools.addObserver(self) { [weak self] (tools: [DownloadedResource]) in
             self?.tableView.reloadData()
+        }
+        
+        if viewModel.toolListIsEditable {
+            
+            let longPressGesture = UILongPressGestureRecognizer(
+                target: self,
+                action: #selector(handleLongPressForToolListEditing(gestureReconizer:))
+            )
+            longPressGesture.minimumPressDuration = 0.75
+            tableView.addGestureRecognizer(longPressGesture)
+        }
+    }
+    
+    @objc func handleLongPressForToolListEditing(gestureReconizer: UILongPressGestureRecognizer) {
+        if gestureReconizer.state == UIGestureRecognizer.State.began {
+            tableView.isEditing = !tableView.isEditing
         }
     }
 }
@@ -126,6 +147,18 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         delegate: self)
                 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+                
+        viewModel?.didEditToolList(movedSourceIndexPath: sourceIndexPath, toDestinationIndexPath: destinationIndexPath)
     }
 }
 

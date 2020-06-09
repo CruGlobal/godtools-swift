@@ -17,6 +17,7 @@ class FavoritedToolsViewModel: FavoritedToolsViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
+    let toolListIsEditable: Bool = true
     
     required init(flowDelegate: FlowDelegate, realm: Realm, analytics: AnalyticsContainer) {
         
@@ -97,5 +98,12 @@ class FavoritedToolsViewModel: FavoritedToolsViewModelType {
     
     func toolDetailsTapped(resource: DownloadedResource) {
         flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
+    }
+    
+    func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {
+        // TODO: Update sort order for favorited resources. ~Levi
+        print("\n Favorited Tools - Did Edit Tools List")
+        print("  movedSourceIndexPath: \(movedSourceIndexPath.row)")
+        print("  toDestinationIndexPath: \(toDestinationIndexPath.row)")
     }
 }
