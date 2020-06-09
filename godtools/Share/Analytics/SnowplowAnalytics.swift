@@ -115,10 +115,10 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
 
     private func idContext() -> SPSelfDescribingJson {
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
-        let marketingCloudID: String? = self.visitorMarketingCloudID
+        let marketingCloudID: String? = visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
         
-        return SPSelfDescribingJson(schema: self.idSchema, andData: [
+        return SPSelfDescribingJson(schema: idSchema, andData: [
             "gr_master_person_id": grMasterPersonID,
             "mcid": marketingCloudID,
             "sso_guid": ssoguid,
@@ -127,13 +127,13 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     
     private func screenURI(screenName: String) -> SPSelfDescribingJson {
         return SPSelfDescribingJson(schema: self.uriSchema, andData: [
-            "uri": self.screenURI + screenName
+            "uri": screenURI + screenName
         ] as NSObject)
     }
     
     private func actionURI(action: String) -> SPSelfDescribingJson {
-        return SPSelfDescribingJson(schema: self.uriSchema, andData: [
-            "uri": self.actionURI + action
+        return SPSelfDescribingJson(schema: uriSchema, andData: [
+            "uri": actionURI + action
         ] as NSObject)
     }
     
