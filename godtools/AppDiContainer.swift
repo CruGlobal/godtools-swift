@@ -23,7 +23,6 @@ class AppDiContainer {
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
-    let viewsService: ViewsServiceType
     
     required init() {
         
@@ -56,9 +55,6 @@ class AppDiContainer {
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         languagesManager = LanguagesManager()
-                
-        viewsService = ViewsService(config: config, realmDatabase: realmDatabase)
-        _ = viewsService.addFailedResourceViewsIfNeeded()
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -126,5 +122,9 @@ class AppDiContainer {
     var toolsManager: ToolsManager {
         // TODO: Eventually want to remove ToolsManager and replace by using ToolsTableView and viewModels with services for populating tools lists. ~Levi
         return ToolsManager.shared
+    }
+    
+    var viewsService: ViewsServiceType {
+        return ViewsService(config: config, realmDatabase: realmDatabase)
     }
 }

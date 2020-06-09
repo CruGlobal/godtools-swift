@@ -11,12 +11,13 @@ import MessageUI
 
 class AppFlow: NSObject, FlowDelegate {
     
+    private let viewsService: ViewsServiceType
+    
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
-    
     private var navigationStarted: Bool = false
     
     let appDiContainer: AppDiContainer
@@ -27,6 +28,7 @@ class AppFlow: NSObject, FlowDelegate {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
+        self.viewsService = appDiContainer.viewsService
         
         super.init()
         
@@ -363,7 +365,11 @@ class AppFlow: NSObject, FlowDelegate {
 }
 
 extension AppFlow: UIApplicationDelegate {
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
+        _ = viewsService.addFailedResourceViewsIfNeeded()
+        
         if !navigationStarted {
             navigationStarted = true
             setupInitialNavigation()
