@@ -25,10 +25,10 @@ class FindToolsViewModel: FindToolsViewModelType {
     }
     
     func toolTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolTappedFromFindTools(resource: resource))
+        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
     func toolInfoTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolInfoTappedFromFindTools(resource: resource))
+        flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
     }
 }

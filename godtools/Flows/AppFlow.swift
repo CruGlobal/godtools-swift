@@ -16,7 +16,6 @@ class AppFlow: NSObject, FlowDelegate {
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
-    private var articlesFlow: ArticlesFlow?
     
     private var navigationStarted: Bool = false
     
@@ -58,7 +57,7 @@ class AppFlow: NSObject, FlowDelegate {
         case .showTools(let animated, let shouldCreateNewInstance):
             
             // TODO: Eventually need to remove the old tools flow.  Everything within the useOldToolsFlow conditional. ~Levi
-            let useOldToolsFlow: Bool = true
+            let useOldToolsFlow: Bool = false
             
             if useOldToolsFlow {
                 
@@ -100,8 +99,7 @@ class AppFlow: NSObject, FlowDelegate {
                     let toolsFlow: ToolsFlow = ToolsFlow(
                         flowDelegate: self,
                         appDiContainer: appDiContainer,
-                        sharedNavigationController:
-                        navigationController
+                        sharedNavigationController: navigationController
                     )
 
                     self.toolsFlow = toolsFlow
@@ -180,23 +178,7 @@ class AppFlow: NSObject, FlowDelegate {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
-            
-        case .toolTappedFromMyTools(let resource):
-            navigateToTool(resource: resource)
-            
-        case .toolInfoTappedFromMyTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .toolTappedFromFindTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .toolInfoTappedFromFindTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resource: resource)
                    
-        // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
             _ = navigationController.popToRootViewController(animated: true)
             resetNavigationControllerColorToDefault()
@@ -263,91 +245,6 @@ class AppFlow: NSObject, FlowDelegate {
         default:
             break
         }
-    }
-    
-    private func navigateToTool(resource: DownloadedResource) {
-        
-        switch resource.toolTypeEnum {
-        
-        case .article:
-            
-            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-            let languagesManager: LanguagesManager = appDiContainer.languagesManager
-            var language: Language?
-            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                language = primaryLanguage
-            }
-            else {
-                language = languagesManager.loadFromDisk(code: "en")
-            }
-            
-            let articlesFlow = ArticlesFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                resource: resource,
-                language: language!
-            )
-            
-            self.articlesFlow = articlesFlow
-        
-        case .tract:
-            
-            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-            let languagesManager: LanguagesManager = appDiContainer.languagesManager
-            var primaryLanguage: Language?
-            if let settingsPrimaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                primaryLanguage = settingsPrimaryLanguage
-            }
-            
-            var resourceSupportsPrimaryLanguage: Bool = false
-            for translation in resource.translations {
-                if let code = translation.language?.code {
-                    if code == primaryLanguage?.code {
-                        resourceSupportsPrimaryLanguage = true
-                        break
-                    }
-                }
-            }
-                        
-            if primaryLanguage == nil || !resourceSupportsPrimaryLanguage {
-                primaryLanguage = languagesManager.loadFromDisk(code: "en")
-            }
-            
-            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
-            
-            let viewModel = TractViewModel(
-                flowDelegate: self,
-                resource: resource,
-                primaryLanguage: primaryLanguage!,
-                parallelLanguage: parallelLanguage,
-                tractManager: appDiContainer.tractManager,
-                analytics: appDiContainer.analytics,
-                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-                tractPage: 0
-            )
-            let view = TractView(viewModel: viewModel)
-
-            navigationController.pushViewController(view, animated: true)
-        
-        case .unknown:
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
-            let view = AlertMessageView(viewModel: viewModel)
-            navigationController.present(view.controller, animated: true, completion: nil)
-        }
-    }
-    
-    private func navigateToToolDetail(resource: DownloadedResource) {
-        
-        let viewModel = ToolDetailViewModel(
-            flowDelegate: self,
-            resource: resource,
-            analytics: appDiContainer.analytics,
-            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
-        )
-        let view = ToolDetailView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)
     }
     
     private func dismissTutorial() {

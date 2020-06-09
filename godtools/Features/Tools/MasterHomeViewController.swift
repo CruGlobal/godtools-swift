@@ -157,13 +157,11 @@ class MasterHomeViewController: UIViewController  {
     }
     
     private func determineMyToolsSegment() -> String {
-        let myTools = "my_tools".localized
-        return myTools
+        return "my_tools".localized
     }
     
     private func determineFindToolsSegment() -> String {
-        let findTools = "find_tools".localized
-        return findTools
+        return "find_tools".localized
     }
     
     private func determineSegmentFontSize(myTools: String, findTools: String) -> CGFloat {

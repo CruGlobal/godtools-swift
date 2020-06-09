@@ -118,4 +118,9 @@ class AppDiContainer {
     var tractManager: TractManager {
         return TractManager()
     }
+    
+    var toolsManager: ToolsManager {
+        // TODO: Eventually want to remove ToolsManager and replace by using ToolsTableView and viewModels with services for populating tools lists. ~Levi
+        return ToolsManager.shared
+    }
 }

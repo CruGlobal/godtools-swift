@@ -4,10 +4,10 @@
 "no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My Tools";
+"my_tools" = "Favorites";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find Tools";
+"find_tools" = "All Tools";
 
 "unavailable" = "Unavailable";
 

@@ -21,6 +21,7 @@ enum FlowStep {
     // tools
     case menuTappedFromTools
     case languageSettingsTappedFromTools
+    case openTutorialTapped
     
     // onboarding
     case beginTappedFromOnboardingWelcome
@@ -28,16 +29,13 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
-    // home
-    case openTutorialTapped
-    
     // myTools
-    case toolTappedFromMyTools(resource: DownloadedResource)
-    case toolInfoTappedFromMyTools(resource: DownloadedResource)
+    case toolTappedFromFavoritedTools(resource: DownloadedResource)
+    case toolDetailsTappedFromFavoritedTools(resource: DownloadedResource)
     
-    // findTools
-    case toolTappedFromFindTools(resource: DownloadedResource)
-    case toolInfoTappedFromFindTools(resource: DownloadedResource)
+    // allTools
+    case toolTappedFromAllTools(resource: DownloadedResource)
+    case toolDetailsTappedFromAllTools(resource: DownloadedResource)
     
     // toolDetails
     case openToolTappedFromToolDetails(resource: DownloadedResource)
