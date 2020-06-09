@@ -89,7 +89,6 @@ class ToolsFlow: Flow {
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             
-        // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
             flowDelegate?.navigate(step: .homeTappedFromTract)
             
@@ -155,6 +154,7 @@ class ToolsFlow: Flow {
                 primaryLanguage: primaryLanguage!,
                 parallelLanguage: parallelLanguage,
                 tractManager: appDiContainer.tractManager,
+                viewsService: appDiContainer.viewsService,
                 analytics: appDiContainer.analytics,
                 toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
                 tractPage: 0

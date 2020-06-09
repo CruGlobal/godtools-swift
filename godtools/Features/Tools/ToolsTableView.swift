@@ -90,7 +90,7 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         }
         
         let resource: DownloadedResource = viewModel.tools.value[indexPath.row]
-        
+                
         viewModel.toolTapped(resource: resource)
     }
     

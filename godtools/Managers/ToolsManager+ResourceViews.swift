@@ -41,7 +41,7 @@ extension ToolsManager {
         }
     }
     
-    private func recordViewOnRemote(_ resource: DownloadedResource, quantity: NSNumber) -> Promise<String> {
+    func recordViewOnRemote(_ resource: DownloadedResource, quantity: NSNumber) -> Promise<String> {
        
         let baseUrl: String = AppConfig().mobileContentApiBaseUrl
         let path: String = "/views"

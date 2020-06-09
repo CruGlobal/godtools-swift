@@ -11,6 +11,7 @@ import UIKit
 class TractViewModel: TractViewModelType {
     
     private let tractManager: TractManager
+    private let viewsService: ViewsServiceType
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
@@ -34,13 +35,14 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.tractManager = tractManager
+        self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
@@ -63,6 +65,8 @@ class TractViewModel: TractViewModelType {
         chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
         chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
+        
+        _ = viewsService.addNewResourceViews(resourceIds: [resource.remoteId])
         
         let startingTractPage: Int = tractPage ?? 0
         

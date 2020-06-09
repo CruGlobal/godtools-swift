@@ -23,6 +23,7 @@ class AppDiContainer {
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
+    let viewsService: ViewsServiceType
     
     required init() {
         
@@ -55,6 +56,9 @@ class AppDiContainer {
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         languagesManager = LanguagesManager()
+                
+        viewsService = ViewsService(config: config, realmDatabase: realmDatabase)
+        _ = viewsService.addFailedResourceViewsIfNeeded()
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

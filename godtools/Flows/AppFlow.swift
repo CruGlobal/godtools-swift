@@ -331,6 +331,7 @@ class AppFlow: NSObject, FlowDelegate {
             primaryLanguage: language,
             parallelLanguage: parallelLanguage,
             tractManager: appDiContainer.tractManager,
+            viewsService: appDiContainer.viewsService,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             tractPage: page
