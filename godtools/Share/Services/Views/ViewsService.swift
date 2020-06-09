@@ -59,57 +59,59 @@ class ViewsService: ViewsServiceType {
     }
     
     func addFailedResourceViewsIfNeeded() -> OperationQueue? {
-        
-        let cachedFailedViewedResources = failedViewedResourcesCache.cachedFailedViewedResources()
-                
-        guard !cachedFailedViewedResources.isEmpty else {
-            return nil
-        }
-        
-        var resourceViews: [ResourceView] = Array()
-        
-        for failedViewedResource in cachedFailedViewedResources {
-                        
-            let resouceView = ResourceView(
-                resourceId: failedViewedResource.resourceId,
-                quantity: failedViewedResource.failedViewsCount
-            )
             
-            resourceViews.append(resouceView)
-        }
-        
         let queue = OperationQueue()
+        let viewsApiRef: ViewsApiType = self.viewsApi
         
-        var operations: [RequestOperation] = Array()
-        
-        for resourceView in resourceViews {
+        failedViewedResourcesCache.getCachedFailedViewedResources { [weak self] (cachedFailedViewedResources: [RealmFailedViewedResource]) in
             
-            guard let resourceIdInt = Int(resourceView.resourceId) else {
-                continue
+            guard !cachedFailedViewedResources.isEmpty else {
+                return
             }
             
-            let operation = viewsApi.newAddViewsOperation(resourceId: resourceIdInt, quantity: resourceView.quantity)
+            var resourceViews: [ResourceView] = Array()
             
-            operations.append(operation)
-            
-            operation.completionHandler { [weak self] (response: RequestResponse) in
-                                
-                let httpStatusCode: Int = response.httpStatusCode ?? -1
-                let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+            for failedViewedResource in cachedFailedViewedResources {
+                            
+                let resouceView = ResourceView(
+                    resourceId: failedViewedResource.resourceId,
+                    quantity: failedViewedResource.failedViewsCount
+                )
                 
-                if httpStatusCodeSuccess {
-                    
-                    self?.failedViewedResourcesCache.deleteFailedViewedResourceFromCache(resourceId: resourceView.resourceId, complete: { (error: Error?) in
-                        
-                    })
+                resourceViews.append(resouceView)
+            }
+            
+            var operations: [RequestOperation] = Array()
+            
+            for resourceView in resourceViews {
+                
+                guard let resourceIdInt = Int(resourceView.resourceId) else {
+                    continue
                 }
-                else {
-                    // If we fail to update the resource view count, leave it in the cache for next time.
+                
+                let operation = viewsApiRef.newAddViewsOperation(resourceId: resourceIdInt, quantity: resourceView.quantity)
+                
+                operations.append(operation)
+                
+                operation.completionHandler { [weak self] (response: RequestResponse) in
+                                    
+                    let httpStatusCode: Int = response.httpStatusCode ?? -1
+                    let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+                    
+                    if httpStatusCodeSuccess {
+                        
+                        self?.failedViewedResourcesCache.deleteFailedViewedResourceFromCache(resourceId: resourceView.resourceId, complete: { (error: Error?) in
+                            
+                        })
+                    }
+                    else {
+                        // If we fail to update the resource view count, leave it in the cache for next time.
+                    }
                 }
             }
+            
+            queue.addOperations(operations, waitUntilFinished: false)
         }
-        
-        queue.addOperations(operations, waitUntilFinished: false)
         
         return queue
     }

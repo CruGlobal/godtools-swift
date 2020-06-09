@@ -22,9 +22,19 @@ class RealmFailedViewedResourcesCache {
                 
         DispatchQueue.main.async { [weak self] in
             
+            var cachedFailedViewedResource: RealmFailedViewedResource?
             var cacheError: Error?
             
-            if let cachedFailedViewedResource = self?.cachedFailedViewedResource(resourceId: resourceId) {
+            if let objects = self?.mainThreadRealm.objects(RealmFailedViewedResource.self).filter("resourceId = '\(resourceId)'") {
+                
+                if objects.count > 1 {
+                    assertionFailure("Count should never be greater than one because each FailedViewedResource has primary key resourceId.")
+                }
+                
+                cachedFailedViewedResource = objects.first
+            }
+                        
+            if let cachedFailedViewedResource = cachedFailedViewedResource {
                 
                 do {
                     try self?.mainThreadRealm.write {
@@ -57,20 +67,17 @@ class RealmFailedViewedResourcesCache {
         }
     }
     
-    func cachedFailedViewedResources() -> [RealmFailedViewedResource] {
+    func getCachedFailedViewedResources(complete: @escaping ((_ failedViewedResources: [RealmFailedViewedResource]) -> Void)) {
         
-        return Array(mainThreadRealm.objects(RealmFailedViewedResource.self))
-    }
-    
-    func cachedFailedViewedResource(resourceId: String) -> RealmFailedViewedResource? {
-        
-        let objects = mainThreadRealm.objects(RealmFailedViewedResource.self).filter("resourceId = '\(resourceId)'")
-        
-        if objects.count > 1 {
-            assertionFailure("Count should never be greater than one because each FailedViewedResource has primary key resourceId.")
+        DispatchQueue.main.async { [weak self] in
+            
+            if let failedViewedResources = self?.mainThreadRealm.objects(RealmFailedViewedResource.self) {
+                complete(Array(failedViewedResources))
+            }
+            else {
+                complete([])
+            }
         }
-        
-        return objects.first
     }
     
     func deleteFailedViewedResourceFromCache(resourceId: String, complete: @escaping ((_ error: Error?) -> Void)) {
