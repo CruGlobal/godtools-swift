@@ -12,11 +12,13 @@ class PageViewedAnalytics {
     
     private let adobeAnalytics: AdobeAnalyticsType
     private let firebaseAnalytics: FirebaseAnalyticsType
+    private let snowplowAnalytics: SnowplowAnalyticsType
     
-    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType) {
+    required init(adobeAnalytics: AdobeAnalyticsType, firebaseAnalytics: FirebaseAnalyticsType, snowplowAnalytics: SnowplowAnalyticsType) {
         
         self.adobeAnalytics = adobeAnalytics
         self.firebaseAnalytics = firebaseAnalytics
+        self.snowplowAnalytics = snowplowAnalytics
     }
     
     func trackPageView(screenName: String, siteSection: String, siteSubSection: String) {
@@ -24,5 +26,7 @@ class PageViewedAnalytics {
         adobeAnalytics.trackScreenView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
         
         firebaseAnalytics.trackScreenView(screenName: screenName)
+        
+        snowplowAnalytics.trackScreenView(screenName: screenName)
     }
 }

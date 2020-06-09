@@ -169,7 +169,7 @@ class MenuViewModel: NSObject, MenuViewModelType {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)
         
-        analytics.adobeAnalytics.trackAction(
+        analytics.trackActionAnalytics.trackAction(
             screenName: nil,
             actionName: AdobeAnalyticsConstants.Values.share,
             data: [AdobeAnalyticsConstants.Keys.shareAction: 1]
