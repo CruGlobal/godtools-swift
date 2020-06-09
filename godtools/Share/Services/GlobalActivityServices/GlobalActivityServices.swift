@@ -13,10 +13,10 @@ class GlobalActivityServices: GlobalActivityServicesType {
     private let globalActivityApi: GlobalActivityAnalyticsApiType
     private let globalActivityCache: GlobalActivityAnalyticsCacheType
     
-    required init(globalActivityApi: GlobalActivityAnalyticsApiType, globalActivityCache: GlobalActivityAnalyticsCacheType) {
+    required init(config: ConfigType) {
         
-        self.globalActivityApi = globalActivityApi
-        self.globalActivityCache = globalActivityCache
+        self.globalActivityApi = GlobalActivityAnalyticsApi(config: config)
+        self.globalActivityCache = GlobalActivityAnalyticsUserDefaultsCache()
     }
     
     var cachedGlobalAnalytics: GlobalActivityAnalytics? {

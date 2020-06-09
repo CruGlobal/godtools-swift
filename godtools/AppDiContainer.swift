@@ -98,10 +98,7 @@ class AppDiContainer {
     }
     
     var globalActivityServices: GlobalActivityServicesType {
-        return GlobalActivityServices(
-            globalActivityApi: GlobalActivityAnalyticsApi(config: config),
-            globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
-        )
+        return GlobalActivityServices(config: config)
     }
     
     var translationZipImporter: TranslationZipImporter {

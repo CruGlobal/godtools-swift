@@ -25,7 +25,7 @@ class ViewsApi: ViewsApiType {
         configuration.httpShouldSetCookies = false
         configuration.httpCookieStorage = nil
         
-        configuration.timeoutIntervalForRequest = 60
+        configuration.timeoutIntervalForRequest = 30
             
         session = URLSession(configuration: configuration)
         

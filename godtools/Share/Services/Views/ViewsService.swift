@@ -19,6 +19,10 @@ class ViewsService: ViewsServiceType {
         failedViewedResourcesCache = RealmFailedViewedResourcesCache(mainThreadRealm: realmDatabase.mainThreadRealm)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func addNewResourceViews(resourceIds: [String]) -> OperationQueue? {
         
         guard !resourceIds.isEmpty else {

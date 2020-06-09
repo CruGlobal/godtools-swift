@@ -46,13 +46,9 @@ class ResourcesApi: ResourcesApiType {
     
     func getResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
-        let queue = OperationQueue()
-        
         let resourcesOperation: RequestOperation = newResourcesPlusLatestTranslationsAndAttachmentsOperation()
-                    
-        resourcesOperation.completionHandler { (response: RequestResponse) in
-            
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        
+        return SingleRequestOperation().execute(operation: resourcesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
             
             switch result {
             case .success( _, _):
@@ -61,9 +57,5 @@ class ResourcesApi: ResourcesApiType {
                 complete(.failure(error))
             }
         }
-        
-        queue.addOperations([resourcesOperation], waitUntilFinished: false)
-        
-        return queue
     }
 }

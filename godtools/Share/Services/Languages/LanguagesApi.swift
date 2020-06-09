@@ -46,13 +46,9 @@ class LanguagesApi: LanguagesApiType {
     
     func getLanguages(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
-        let queue = OperationQueue()
-        
         let languagesOperation: RequestOperation = newGetLanguagesOperation()
-                    
-        languagesOperation.completionHandler { (response: RequestResponse) in
-            
-            let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        
+        return SingleRequestOperation().execute(operation: languagesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
             
             switch result {
             case .success( _, _):
@@ -61,9 +57,5 @@ class LanguagesApi: LanguagesApiType {
                 complete(.failure(error))
             }
         }
-        
-        queue.addOperations([languagesOperation], waitUntilFinished: false)
-        
-        return queue
     }
 }
