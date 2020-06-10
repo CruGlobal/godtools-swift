@@ -21,6 +21,7 @@ target 'godtools' do
     pod 'Firebase/Analytics', '6.16.0'
     
     pod 'AppsFlyerFramework', '5.1.0'
+    pod 'SnowplowTracker', '~> 1.3'
     pod 'RealmSwift', '4.3.0'
     pod 'SSZipArchive'
     pod 'SWXMLHash'
