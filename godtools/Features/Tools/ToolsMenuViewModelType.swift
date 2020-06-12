@@ -10,6 +10,8 @@ import Foundation
 
 protocol ToolsMenuViewModelType {
         
+    var favoritesMenuItem: ToolMenuItem { get }
+    var allToolsMenuItem: ToolMenuItem { get }
     var toolMenuItems: ObservableValue<[ToolMenuItem]> { get }
     var selectedToolMenuItem: ObservableValue<ToolMenuItem?> { get }
     

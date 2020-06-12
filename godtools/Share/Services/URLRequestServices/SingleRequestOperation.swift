@@ -15,9 +15,7 @@ class SingleRequestOperation {
         let queue = OperationQueue()
         
         operation.completionHandler { (response: RequestResponse) in
-            
-            response.log()
-            
+                        
             let result: ResponseResult<SuccessType, ClientApiErrorType> = response.getResult()
             
             if completeOnMainThread {

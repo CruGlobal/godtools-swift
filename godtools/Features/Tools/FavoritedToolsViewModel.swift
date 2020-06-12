@@ -7,75 +7,75 @@
 //
 
 import Foundation
-import RealmSwift
 
-class FavoritedToolsViewModel: FavoritedToolsViewModelType {
+class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
-    private let realm: Realm
+    private let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
-    let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
+    let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
+    let findToolsTitle: String = "Find Tools"
+    let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(flowDelegate: FlowDelegate, realm: Realm, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.realm = realm
+        self.resourcesDownloaderAndCache = resourcesDownloaderAndCache
+        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         
-        // TODO: Would like to remove notifications and handle data reloading through services. ~Levi
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleReloadToolsNotification),
-            name: .downloadPrimaryTranslationCompleteNotification,
-            object: nil
-        )
+        super.init()
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleReloadToolsNotification),
-            name: .reloadHomeListNotification,
-            object: nil
-        )
+        reloadFavoritedResourcesFromCache()
         
-        reloadTools()
+       if let downloadResourcesReceipt = resourcesDownloaderAndCache.currentRequestReceipt {
+           downloadResourcesReceipt.addCompletedObserver(observer: self, onObserve: { [weak self] (error: ResourcesDownloaderAndCacheError?) in
+               DispatchQueue.main.async { [weak self] in
+                   self?.reloadFavoritedResourcesFromCache()
+               }
+           })
+       }
+
+        setupBinding()
     }
     
     deinit {
-                
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .downloadPrimaryTranslationCompleteNotification,
-            object: nil
-        )
+        print("x deinit: \(type(of: self))")
         
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .reloadHomeListNotification,
-            object: nil
-        )
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
-    @objc func handleReloadToolsNotification() {
-        print("\n HANDLE RELOAD TOOLS NOTIFICATION")
-        reloadTools()
+    private func setupBinding() {
+        
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavoritedResourcesFromCache()
+        }
+        
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavoritedResourcesFromCache()
+        }
     }
     
-    private func reloadTools() {
-                
-        let predicate: NSPredicate = NSPredicate(format: "shouldDownload = true")
-
-        let allResources: Results<DownloadedResource> = realm.objects(DownloadedResource.self)
-        let filteredResources: Results<DownloadedResource> = allResources.filter(predicate)
-        let sortedResources: [DownloadedResource] = Array(filteredResources.sorted(byKeyPath: "sortOrder"))
-            
-        if sortedResources.isEmpty {
-            tools.accept(value: [])
+    private func reloadFavoritedResourcesFromCache() {
+        
+        let allResources: [RealmResource] = resourcesDownloaderAndCache.realmCache.getResources()
+        
+        let cachedFavoritedResources: [RealmFavoritedResource] = favoritedResourcesCache.getCachedFavoritedResources()
+        let cachedFavoritedResourcesIds: [String] = cachedFavoritedResources.map({$0.resourceId})
+        
+        let favoritedResources: [RealmResource] = allResources.filter({cachedFavoritedResourcesIds.contains($0.id)})
+        
+        if favoritedResources.isEmpty {
+            hidesFindToolsView.accept(value: false)
         }
         else {
-            tools.accept(value: sortedResources)
+            hidesFindToolsView.accept(value: true)
+            tools.accept(value: favoritedResources)
         }
     }
     
@@ -84,20 +84,20 @@ class FavoritedToolsViewModel: FavoritedToolsViewModelType {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Home", siteSection: "", siteSubSection: "")
     }
     
-    func favoriteTapped(resource: DownloadedResource) {
-        
+    func toolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
-    func unfavoriteTapped(resource: DownloadedResource) {
-        
+    func aboutToolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
     }
     
-    func toolTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+    func openToolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
-    func toolDetailsTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
+    func favoriteToolTapped(resource: RealmResource) {
+        favoritedResourcesCache.changeFavorited(resourceId: resource.id)
     }
     
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

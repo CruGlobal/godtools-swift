@@ -45,7 +45,7 @@ class ToolsMenuView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        favoritedTools.configure(viewModel: favoritedToolsViewModel)
+        favoritedTools.configure(viewModel: favoritedToolsViewModel, delegate: self)
         allTools.configure(viewModel: allToolsViewModel)
         
         setupLayout()
@@ -110,7 +110,7 @@ class ToolsMenuView: UIViewController {
     @objc func handleToolsMenuControlChanged(toolsControl: UISegmentedControl) {
         
         let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
-        
+
         viewModel.toolMenuItemTapped(menuItem: menuItem)
         
         navigateToToolMenuItem(menuItem: menuItem, animated: true)
@@ -182,6 +182,19 @@ class ToolsMenuView: UIViewController {
         }
         else {
             view.layoutIfNeeded()
+        }
+    }
+}
+
+// MARK: - FavoritedToolsViewDelegate
+
+extension ToolsMenuView: FavoritedToolsViewDelegate {
+    
+    func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
+                
+        if let index = viewModel.toolMenuItems.value.firstIndex(of: viewModel.allToolsMenuItem) {
+            toolsMenuControl.selectedSegmentIndex = index
+            handleToolsMenuControlChanged(toolsControl: toolsMenuControl)
         }
     }
 }

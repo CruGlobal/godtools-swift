@@ -10,12 +10,12 @@ import Foundation
 
 class IsNewUserService {
     
-    let isNewUserCache: IsNewUserCacheType
+    let determineNewUser: DetermineIfNewUserType
+    let isNewUserCache: IsNewUserCacheType = IsNewUserDefaultsCache()
     
-    required init(determineNewUser: DetermineIfNewUserType, isNewUserCache: IsNewUserCacheType) {
-        
-        self.isNewUserCache = isNewUserCache
-        
+    required init(languageManager: LanguagesManager) {
+                
+        determineNewUser = DetermineNewUserIfPrimaryLanguageSet(languageManager: languageManager)
         isNewUserCache.cacheIsNewUser(isNewUser: determineNewUser.isNewUser)
     }
 }

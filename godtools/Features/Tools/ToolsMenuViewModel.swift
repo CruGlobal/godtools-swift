@@ -12,6 +12,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
+    let favoritesMenuItem: ToolMenuItem = ToolMenuItem(id: .favorites, title: NSLocalizedString("my_tools", comment: ""), accessibilityLabel: "my_tools")
+    let allToolsMenuItem: ToolMenuItem = ToolMenuItem(id: .allTools, title: NSLocalizedString("find_tools", comment: ""), accessibilityLabel: "find_tools")
     let toolMenuItems: ObservableValue<[ToolMenuItem]> = ObservableValue(value: [])
     let selectedToolMenuItem: ObservableValue<ToolMenuItem?> = ObservableValue(value: nil)
     
@@ -24,11 +26,8 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     
     private func reloadToolMenu() {
         
-        let favorites: ToolMenuItem = ToolMenuItem(id: .favorites, title: NSLocalizedString("my_tools", comment: ""), accessibilityLabel: "my_tools")
-        let allTools: ToolMenuItem = ToolMenuItem(id: .allTools, title: NSLocalizedString("find_tools", comment: ""), accessibilityLabel: "find_tools")
-        
-        toolMenuItems.accept(value: [favorites, allTools])
-        selectedToolMenuItem.accept(value: favorites)
+        toolMenuItems.accept(value: [favoritesMenuItem, allToolsMenuItem])
+        selectedToolMenuItem.accept(value: favoritesMenuItem)
     }
     
     func menuTapped() {

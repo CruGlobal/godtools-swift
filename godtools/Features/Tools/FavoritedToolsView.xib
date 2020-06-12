@@ -3,12 +3,20 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoritedToolsView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="findToolsButton" destination="P2Q-BC-SVT" id="OaD-xs-sqS"/>
+                <outlet property="findToolsView" destination="jgm-cd-FPm" id="OnB-hg-39r"/>
+                <outlet property="searchImageView" destination="UOx-hw-u0b" id="urn-YI-cP1"/>
                 <outlet property="toolsView" destination="8ja-u9-mhA" id="0Aa-KG-7b2"/>
             </connections>
         </placeholder>
@@ -21,15 +29,51 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgm-cd-FPm" userLabel="findToolsView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconSearch" translatesAutoresizingMaskIntoConstraints="NO" id="UOx-hw-u0b" userLabel="searchImageView">
+                            <rect key="frame" x="135" y="331" width="144" height="144"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="144" id="JPU-wW-8zg"/>
+                                <constraint firstAttribute="height" constant="144" id="cK4-ie-7Dr"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2Q-BC-SVT" userLabel="findToolsButton">
+                            <rect key="frame" x="135" y="499" width="144" height="50"/>
+                            <color key="backgroundColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="S0v-mr-i4A"/>
+                                <constraint firstAttribute="width" constant="144" id="g0M-DR-Jlk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="17"/>
+                            <state key="normal" title="Find Tools"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="UOx-hw-u0b" firstAttribute="centerX" secondItem="jgm-cd-FPm" secondAttribute="centerX" id="afn-na-g60"/>
+                        <constraint firstItem="UOx-hw-u0b" firstAttribute="centerY" secondItem="jgm-cd-FPm" secondAttribute="centerY" multiplier="0.9" id="oC0-ra-oCV"/>
+                        <constraint firstItem="P2Q-BC-SVT" firstAttribute="centerX" secondItem="jgm-cd-FPm" secondAttribute="centerX" id="vnB-Wg-Lki"/>
+                        <constraint firstItem="P2Q-BC-SVT" firstAttribute="top" secondItem="UOx-hw-u0b" secondAttribute="bottom" constant="24" id="xZx-6w-l4B"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="jgm-cd-FPm" secondAttribute="bottom" id="J0v-6r-BgE"/>
                 <constraint firstItem="8ja-u9-mhA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OFj-Vo-OWV"/>
+                <constraint firstItem="jgm-cd-FPm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QGZ-qH-xsn"/>
                 <constraint firstAttribute="bottom" secondItem="8ja-u9-mhA" secondAttribute="bottom" id="TWV-nz-26d"/>
                 <constraint firstAttribute="trailing" secondItem="8ja-u9-mhA" secondAttribute="trailing" id="TdO-vv-Vi2"/>
+                <constraint firstItem="jgm-cd-FPm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YVb-mj-Mvg"/>
                 <constraint firstItem="8ja-u9-mhA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jgZ-t4-CPh"/>
+                <constraint firstAttribute="trailing" secondItem="jgm-cd-FPm" secondAttribute="trailing" id="yMB-o8-d5g"/>
             </constraints>
             <point key="canvasLocation" x="139" y="153"/>
         </view>
     </objects>
+    <resources>
+        <image name="iconSearch" width="144" height="144"/>
+    </resources>
 </document>

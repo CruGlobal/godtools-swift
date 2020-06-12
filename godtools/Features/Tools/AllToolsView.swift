@@ -10,7 +10,7 @@ import UIKit
 
 class AllToolsView: UIView, NibBased {
     
-    private var viewModel: AllToolsViewModelType?
+    private var viewModel: AllToolsViewModelType!
     
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -50,7 +50,7 @@ class AllToolsView: UIView, NibBased {
     
     private func setupBinding() {
         
-        viewModel?.message.addObserver(self, onObserve: { [weak self] (message: String) in
+        viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
             self?.messageLabel.isHidden = message.isEmpty
             self?.messageLabel.text = message
         })

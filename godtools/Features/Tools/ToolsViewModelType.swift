@@ -10,12 +10,19 @@ import Foundation
 
 protocol ToolsViewModelType {
     
-    var tools: ObservableValue<[DownloadedResource]> { get }
+    var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
+    var tools: ObservableValue<[RealmResource]> { get }
     var toolListIsEditable: Bool { get }
     
-    func favoriteTapped(resource: DownloadedResource)
-    func unfavoriteTapped(resource: DownloadedResource)
-    func toolTapped(resource: DownloadedResource)
-    func toolDetailsTapped(resource: DownloadedResource)
+    func toolTapped(resource: RealmResource)
+    func aboutToolTapped(resource: RealmResource)
+    func openToolTapped(resource: RealmResource)
+    func favoriteToolTapped(resource: RealmResource)
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath)
+}
+
+extension ToolsViewModelType {
+    func reloadTools() {
+        tools.accept(value: tools.value)
+    }
 }

@@ -7,81 +7,63 @@
 //
 
 import Foundation
-import RealmSwift
 
-class AllToolsViewModel: AllToolsViewModelType {
+class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
-    private let toolsManager: ToolsManager
-    private let realm: Realm
+    private let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
-    let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
+    let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     
-    required init(flowDelegate: FlowDelegate, toolsManager: ToolsManager, realm: Realm, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.toolsManager = toolsManager
-        self.realm = realm
+        self.resourcesDownloaderAndCache = resourcesDownloaderAndCache
+        self.favoritedResourcesCache = favoritedResourcesCache
         self.analytics = analytics
         
-        // TODO: Would like to remove notifications and handle data reloading through services. ~Levi
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleReloadToolsNotification),
-            name: .downloadPrimaryTranslationCompleteNotification,
-            object: nil
-        )
+        super.init()
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleReloadToolsNotification),
-            name: .reloadHomeListNotification,
-            object: nil
-        )
+        reloadResourcesFromCache()
+         
+        if let downloadResourcesReceipt = resourcesDownloaderAndCache.currentRequestReceipt {
+            downloadResourcesReceipt.addCompletedObserver(observer: self, onObserve: { [weak self] (error: ResourcesDownloaderAndCacheError?) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.reloadResourcesFromCache()
+                }
+            })
+        }
         
-        reloadTools()
+        setupBinding()
     }
     
     deinit {
-                
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .downloadPrimaryTranslationCompleteNotification,
-            object: nil
-        )
-        
-        NotificationCenter.default.removeObserver(
-            self,
-            name: .reloadHomeListNotification,
-            object: nil
-        )
+        print("x deinit: \(type(of: self))")
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
-    @objc func handleReloadToolsNotification() {
-        print("\n HANDLE RELOAD TOOLS NOTIFICATION")
-        reloadTools()
+    private func setupBinding() {
+        
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadTools()
+        }
+        
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadTools()
+        }
     }
     
-    private func reloadTools() {
+    private func reloadResourcesFromCache() {
         
-        let predicate: NSPredicate = NSPredicate(format: "shouldDownload = false")
-
-        let allResources: Results<DownloadedResource> = realm.objects(DownloadedResource.self)
-        let filteredResources: Results<DownloadedResource> = allResources.filter(predicate)
-        let resources: [DownloadedResource] = Array(filteredResources)
-                
-        if resources.isEmpty {
-            message.accept(value: NSLocalizedString("You have downloaded all available tools.", comment: ""))
-            tools.accept(value: [])
-        }
-        else {
-            message.accept(value: "")
-            tools.accept(value: resources)
-        }
+        let allResources: [RealmResource] = resourcesDownloaderAndCache.realmCache.getResources()
+        
+        tools.accept(value: allResources)
     }
     
     func pageViewed() {
@@ -89,23 +71,20 @@ class AllToolsViewModel: AllToolsViewModelType {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
     }
     
-    func favoriteTapped(resource: DownloadedResource) {
-        print("Favorite Tapped")
-        
-        // TODO: Would like to refactor this out and use service with OperationQueue which will report progress and completion of a downloaded resource without the use of NotificationCenter. ~Levi
-        DownloadedResourceManager().download(resource)
+    func toolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
-    func unfavoriteTapped(resource: DownloadedResource) {
-        print("Unfavorite Tapped")
+    func aboutToolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
     }
     
-    func toolTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
+    func openToolTapped(resource: RealmResource) {
+        //flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
-    func toolDetailsTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
+    func favoriteToolTapped(resource: RealmResource) {
+        favoritedResourcesCache.changeFavorited(resourceId: resource.id)
     }
     
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

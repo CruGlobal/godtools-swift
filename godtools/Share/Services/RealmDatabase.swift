@@ -15,7 +15,7 @@ class RealmDatabase {
     // into GTDataManager. ~Levi
     static var sharedMainThreadRealm: Realm!
     
-    private static let schemaVersion: UInt64 = 13
+    private static let schemaVersion: UInt64 = 14
     
     let mainThreadRealm: Realm
     

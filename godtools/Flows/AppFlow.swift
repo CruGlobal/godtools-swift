@@ -42,6 +42,10 @@ class AppFlow: NSObject, FlowDelegate {
         rootController.addChildController(child: navigationController)
     }
     
+    private func requestInitialData() {
+        _ = appDiContainer.resourcesDownloaderAndCache.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
+    }
+    
     private func setupInitialNavigation() {
         
         if appDiContainer.onboardingTutorialAvailability.onboardingTutorialIsAvailable {
@@ -372,6 +376,7 @@ extension AppFlow: UIApplicationDelegate {
         
         if !navigationStarted {
             navigationStarted = true
+            requestInitialData()
             setupInitialNavigation()
         }
     }

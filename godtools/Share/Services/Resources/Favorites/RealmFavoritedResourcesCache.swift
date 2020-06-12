@@ -13,72 +13,71 @@ class RealmFavoritedResourcesCache {
     
     private let mainThreadRealm: Realm
     
+    let resourceFavorited: SignalValue<String> = SignalValue()
+    let resourceUnfavorited: SignalValue<String> = SignalValue()
+    
     required init(realmDatabase: RealmDatabase) {
         
         mainThreadRealm = realmDatabase.mainThreadRealm
     }
     
-    func getCachedFavoritedResources(complete: @escaping ((_ favoritedResources: [RealmFavoritedResource]) -> Void)) {
-        
-        DispatchQueue.main.async { [weak self] in
-            
-            if let favoritedResources = self?.mainThreadRealm.objects(RealmFavoritedResource.self) {
-                complete(Array(favoritedResources))
-            }
-            else {
-                complete([])
-            }
+    func getCachedFavoritedResources() -> [RealmFavoritedResource] {
+        return Array(mainThreadRealm.objects(RealmFavoritedResource.self))
+    }
+    
+    func isFavorited(resourceId: String) -> Bool {
+        let objects = mainThreadRealm.objects(RealmFavoritedResource.self).filter("resourceId = '\(resourceId)'")
+        return !objects.isEmpty
+    }
+    
+    func changeFavorited(resourceId: String) {
+                
+        let resourceIsFavorited: Bool = isFavorited(resourceId: resourceId)
+                
+        if resourceIsFavorited {
+            _ = removeResourceFromFavorites(resourceId: resourceId)
+        }
+        else {
+            _ = addResourceToFavorites(resourceId: resourceId)
         }
     }
     
-    func addResourceToFavorites(resourceId: String, complete: @escaping ((_ error: Error?) -> Void)) {
+    func addResourceToFavorites(resourceId: String) -> Error? {
         
-        DispatchQueue.main.async { [weak self] in
-            
-            var cacheError: Error?
-            
-            let favoritedResource = RealmFavoritedResource()
-            favoritedResource.resourceId = resourceId
-            
-            do {
-                try self?.mainThreadRealm.write {
-                    self?.mainThreadRealm.add(favoritedResource)
-                }
+        let favoritedResource = RealmFavoritedResource()
+        favoritedResource.resourceId = resourceId
+        
+        do {
+            try mainThreadRealm.write {
+                mainThreadRealm.add(favoritedResource)
+                resourceFavorited.accept(value: resourceId)
             }
-            catch let error {
-                cacheError = error
-            }
-            
-            complete(cacheError)
         }
+        catch let error {
+            return error
+        }
+        
+        return nil
     }
     
-    func removeResourceFromFavorites(resourceId: String, complete: @escaping ((_ error: Error?) -> Void)) {
+    func removeResourceFromFavorites(resourceId: String) -> Error? {
         
-        DispatchQueue.main.async { [weak self] in
-               
-            guard let objects = self?.mainThreadRealm.objects(RealmFavoritedResource.self).filter("resourceId = '\(resourceId)'") else {
-                complete(nil)
-                return
-            }
-            
-            guard !objects.isEmpty else {
-                complete(nil)
-                return
-            }
-            
-            var cacheError: Error?
-            
-            do {
-                try self?.mainThreadRealm.write {
-                    self?.mainThreadRealm.delete(objects)
-                }
-            }
-            catch let error {
-                cacheError = error
-            }
-            
-            complete(cacheError)
+        let objects = mainThreadRealm.objects(RealmFavoritedResource.self).filter("resourceId = '\(resourceId)'")
+        
+        guard !objects.isEmpty else {
+            return nil
         }
+                
+        do {
+            try mainThreadRealm.write {
+                mainThreadRealm.delete(objects)
+                resourceUnfavorited.accept(value: resourceId)
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
     }
 }

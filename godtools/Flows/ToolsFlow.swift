@@ -37,14 +37,15 @@ class ToolsFlow: Flow {
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
-            realm: appDiContainer.realmDatabase.mainThreadRealm,
+            resourcesDownloaderAndCache: appDiContainer.resourcesDownloaderAndCache,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics
         )
         
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
-            toolsManager: appDiContainer.toolsManager,
-            realm: appDiContainer.realmDatabase.mainThreadRealm,
+            resourcesDownloaderAndCache: appDiContainer.resourcesDownloaderAndCache,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             analytics: appDiContainer.analytics
         )
         

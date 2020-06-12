@@ -13,39 +13,37 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics
     
-    let realmDatabase: RealmDatabase
-    let isNewUserCache: IsNewUserCacheType
-    let isNewUserService: IsNewUserService
     let config: ConfigType
+    let realmDatabase: RealmDatabase
+    let isNewUserService: IsNewUserService
+    let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
+    let favoritedResourcesCache: RealmFavoritedResourcesCache
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let translationsApi: TranslationsApiType
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
-    
+        
     required init() {
-        
-        realmDatabase = RealmDatabase()
-        
-        isNewUserCache = IsNewUserDefaultsCache()
-        
-        isNewUserService = IsNewUserService(
-            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageManager: LanguagesManager()),
-            isNewUserCache: isNewUserCache
-        )
         
         config = AppConfig()
         
+        realmDatabase = RealmDatabase()
+                
+        isNewUserService = IsNewUserService(languageManager: LanguagesManager())
+        
+        resourcesDownloaderAndCache = ResourcesDownloaderAndCache(config: config, realmDatabase: realmDatabase)
+        
+        favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        
         loginClient = TheKeyOAuthClient.shared
-        
-        let analyticsLoggingEnabled: Bool = config.isDebug
-        
+                
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: config.isDebug),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
@@ -79,7 +77,7 @@ class AppDiContainer {
         return OnboardingTutorialAvailability(
             tutorialAvailability: tutorialAvailability,
             onboardingTutorialViewedCache: onboardingTutorialViewedCache,
-            isNewUserCache: isNewUserCache
+            isNewUserCache: isNewUserService.isNewUserCache
         )
     }
     

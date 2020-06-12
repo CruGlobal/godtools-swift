@@ -58,4 +58,22 @@ class LanguagesApi: LanguagesApiType {
             }
         }
     }
+    
+    func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+        
+        let languagesOperation: RequestOperation = newGetLanguagesOperation()
+        
+        return SingleRequestOperation().execute(operation: languagesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<LanguagesDataModel, NoClientApiErrorType>) in
+            
+            switch result {
+            case .success( let languagesData, let decodeError):
+                if let decodeError = decodeError {
+                    assertionFailure("LanguagesApi: Failed to decode languages: \(decodeError)")
+                }
+                complete(.success(languagesData?.data ?? []))
+            case .failure(let error):
+                complete(.failure(error))
+            }
+        }
+    }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class ToolsTableView: UIView, NibBased {
     
-    private var viewModel: ToolsViewModelType?
+    private var viewModel: ToolsViewModelType!
     
     @IBOutlet weak private var tableView: UITableView!
     
@@ -46,31 +46,25 @@ class ToolsTableView: UIView, NibBased {
     
     private func setupLayout() {
         
-//        tableView.register(
-//            UINib(nibName: ToolCell.nibName, bundle: nil),
-//            forCellReuseIdentifier: ToolCell.reuseIdentifier
-//        )
-        
         tableView.register(
-            UINib(nibName: String(describing:HomeToolTableViewCell.self), bundle: nil),
-            forCellReuseIdentifier: ToolsManager.toolCellIdentifier
+            UINib(nibName: ToolCell.nibName, bundle: nil),
+            forCellReuseIdentifier: ToolCell.reuseIdentifier
         )
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.estimatedRowHeight = 120
-        tableView.rowHeight = 200//UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
+        tableView.alpha = 0
     }
     
     private func setupBinding() {
         
-        guard let viewModel = self.viewModel else {
-            assertionFailure("ToolsTableView not configured.  Be sure to call configure after view is loaded.")
-            return
-        }
-        
-        viewModel.tools.addObserver(self) { [weak self] (tools: [DownloadedResource]) in
+        viewModel.tools.addObserver(self) { [weak self] (tools: [RealmResource]) in
             self?.tableView.reloadData()
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                self?.tableView.alpha = tools.isEmpty ? 0 : 1
+            }, completion: nil)
         }
         
         if viewModel.toolListIsEditable {
@@ -100,34 +94,38 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.tools.value.count ?? 0
+        return viewModel.tools.value.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let viewModel = self.viewModel else {
-            assertionFailure("ToolsTableView not configured.  Be sure to call configure after view is loaded.")
-            return
-        }
-        
-        let resource: DownloadedResource = viewModel.tools.value[indexPath.row]
+        let resource = viewModel.tools.value[indexPath.row]
                 
         viewModel.toolTapped(resource: resource)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        let cell: ToolCell = tableView.dequeueReusableCell(
-//            withIdentifier: ToolCell.reuseIdentifier,
-//            for: indexPath) as! ToolCell
-//
-//        cell.selectionStyle = .none
-//
-//        return cell
+        let cell: ToolCell = tableView.dequeueReusableCell(
+            withIdentifier: ToolCell.reuseIdentifier,
+            for: indexPath) as! ToolCell
+
+        cell.selectionStyle = .none
+        
+        let resource = viewModel.tools.value[indexPath.row]
+        let cellViewModel = ToolCellViewModel(
+            resource: resource,
+            favoritedResourcesCache: viewModel.favoritedResourcesCache
+        )
+        
+        cell.configure(viewModel: cellViewModel, delegate: self)
+        
+        return cell
         
         
         // TODO: Would like to implement cell view model here. ~Levi
         
+        /*
         let cell: HomeToolTableViewCell = tableView.dequeueReusableCell(
             withIdentifier: ToolsManager.toolCellIdentifier,
             for: indexPath) as! HomeToolTableViewCell
@@ -145,8 +143,9 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
         banner: BannerManager().loadFor(remoteId: resource.bannerRemoteId),
         delegate: self)
-                
+        
         return cell
+         */
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -158,27 +157,35 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
                 
-        viewModel?.didEditToolList(movedSourceIndexPath: sourceIndexPath, toDestinationIndexPath: destinationIndexPath)
+        viewModel.didEditToolList(movedSourceIndexPath: sourceIndexPath, toDestinationIndexPath: destinationIndexPath)
     }
 }
 
-// MARK: - HomeToolTableViewCellDelegate
+// MARK: -
 
-extension ToolsTableView: HomeToolTableViewCellDelegate {
+extension ToolsTableView: ToolCellDelegate {
     
-    // TODO: Add delegate to cell for favorite tapped and unfavorite tapped. ~Levi
-    func downloadButtonWasPressed(resource: DownloadedResource) {
+    func toolCellAboutToolTapped(toolCell: ToolCell) {
         
-        // TODO: Don't pass resource from cell.  Cell should have no reference to DownloadedResource. ~Levi
-        
-        viewModel?.favoriteTapped(resource: resource)
+        if let indexPath = tableView.indexPath(for: toolCell) {
+            let resource = viewModel.tools.value[indexPath.row]
+            viewModel.aboutToolTapped(resource: resource)
+        }
     }
     
-    // TODO: Change to tool detail tapped. ~Levi
-    func infoButtonWasPressed(resource: DownloadedResource) {
+    func toolCellOpenToolTapped(toolCell: ToolCell) {
         
-        // TODO: Don't pass resource from cell.  Cell should have no reference to DownloadedResource. ~Levi
+        if let indexPath = tableView.indexPath(for: toolCell) {
+            let resource = viewModel.tools.value[indexPath.row]
+            viewModel.openToolTapped(resource: resource)
+        }
+    }
+    
+    func toolCellFavoriteTapped(toolCell: ToolCell) {
         
-        viewModel?.toolDetailsTapped(resource: resource)
+        if let indexPath = tableView.indexPath(for: toolCell) {
+            let resource = viewModel.tools.value[indexPath.row]
+            viewModel.favoriteToolTapped(resource: resource)
+        }
     }
 }
