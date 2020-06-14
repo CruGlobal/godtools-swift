@@ -83,9 +83,7 @@ class BannerManager: GTDataManager {
     }
     
     private func postCompletedNotification(resource: DownloadedResource) {
-#if DEBUG
-        print("posting notification downloadBannerCompleteNotifciation remoteId: \(resource.remoteId)")
-#endif
+
         NotificationCenter.default.post(name: .downloadBannerCompleteNotifciation,
                                         object: nil,
                                         userInfo: [GTConstants.kDownloadBannerResourceIdKey: resource.bannerRemoteId ?? ""])

@@ -115,6 +115,7 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         let resource = viewModel.tools.value[indexPath.row]
         let cellViewModel = ToolCellViewModel(
             resource: resource,
+            resourcesDownloaderAndCache: viewModel.resourcesDownloaderAndCache,
             favoritedResourcesCache: viewModel.favoritedResourcesCache
         )
         

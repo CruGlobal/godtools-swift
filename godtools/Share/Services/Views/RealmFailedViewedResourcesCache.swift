@@ -22,19 +22,9 @@ class RealmFailedViewedResourcesCache {
                 
         DispatchQueue.main.async { [weak self] in
             
-            var cachedFailedViewedResource: RealmFailedViewedResource?
             var cacheError: Error?
-            
-            if let objects = self?.mainThreadRealm.objects(RealmFailedViewedResource.self).filter("resourceId = '\(resourceId)'") {
-                
-                if objects.count > 1 {
-                    assertionFailure("Count should never be greater than one because each FailedViewedResource has primary key resourceId.")
-                }
-                
-                cachedFailedViewedResource = objects.first
-            }
-                        
-            if let cachedFailedViewedResource = cachedFailedViewedResource {
+                                     
+            if let cachedFailedViewedResource = self?.mainThreadRealm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) {
                 
                 do {
                     try self?.mainThreadRealm.write {
@@ -84,19 +74,13 @@ class RealmFailedViewedResourcesCache {
                 
         DispatchQueue.main.async { [weak self] in
                
-            guard let objects = self?.mainThreadRealm.objects(RealmFailedViewedResource.self).filter("resourceId = '\(resourceId)'") else {
-                complete(nil)
-                return
-            }
-            
-            guard !objects.isEmpty else {
-                complete(nil)
+            guard let object = self?.mainThreadRealm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) else {
                 return
             }
             
             do {
                 try self?.mainThreadRealm.write {
-                    self?.mainThreadRealm.delete(objects)
+                    self?.mainThreadRealm.delete(object)
                     complete(nil)
                 }
             }

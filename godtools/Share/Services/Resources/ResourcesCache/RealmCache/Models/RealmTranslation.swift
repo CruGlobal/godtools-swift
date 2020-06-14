@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmTranslation: Object, TranslationModelType {
+class RealmTranslation: Object, TranslationModelType, RealmPrimaryType {
     
     @objc dynamic var id: String = ""
     @objc dynamic var isPublished: Bool = false

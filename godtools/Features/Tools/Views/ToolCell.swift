@@ -28,12 +28,17 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var toolShadowView: UIView!
     @IBOutlet weak private var toolContentView: UIView!
     @IBOutlet weak private var bannerImageView: UIImageView!
+    @IBOutlet weak private var translationsDownloadProgress: UIView!
+    @IBOutlet weak private var attachmentsDownloadProgress: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var descriptionLabel: UILabel!
     @IBOutlet weak private var aboutToolButton: UIButton!
     @IBOutlet weak private var openToolButton: UIButton!
     @IBOutlet weak private var favoriteButton: UIButton!
+    
+    @IBOutlet weak private var translationsDownloadProgressWidth: NSLayoutConstraint!
+    @IBOutlet weak private var attachmentsDownloadProgressWidth: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -67,6 +72,7 @@ class ToolCell: UITableViewCell {
         toolContentView.clipsToBounds = true
         
         // bannerImageView
+        bannerImageView.alpha = 0
         bannerImageView.contentMode = .scaleAspectFill
         
         // about and open buttons
@@ -82,8 +88,17 @@ class ToolCell: UITableViewCell {
         self.viewModel = viewModel
         self.delegate = delegate
         
+        viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
+            self?.bannerImageView.image = bannerImage
+            if bannerImage != nil {
+                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                    self?.bannerImageView.alpha = 1
+                }, completion: nil)
+            }
+        }
+        
         titleLabel.text = viewModel.title
-        descriptionLabel.text = viewModel.description
+        descriptionLabel.text = viewModel.resourceDescription
         
         let favoritedImage: UIImage?
         if viewModel.isFavorited {

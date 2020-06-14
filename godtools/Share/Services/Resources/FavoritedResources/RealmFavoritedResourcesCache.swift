@@ -26,8 +26,7 @@ class RealmFavoritedResourcesCache {
     }
     
     func isFavorited(resourceId: String) -> Bool {
-        let objects = mainThreadRealm.objects(RealmFavoritedResource.self).filter("resourceId = '\(resourceId)'")
-        return !objects.isEmpty
+        return mainThreadRealm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil
     }
     
     func changeFavorited(resourceId: String) {
@@ -61,16 +60,14 @@ class RealmFavoritedResourcesCache {
     }
     
     func removeResourceFromFavorites(resourceId: String) -> Error? {
-        
-        let objects = mainThreadRealm.objects(RealmFavoritedResource.self).filter("resourceId = '\(resourceId)'")
-        
-        guard !objects.isEmpty else {
+                
+        guard let favoritedObject = mainThreadRealm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
             return nil
         }
                 
         do {
             try mainThreadRealm.write {
-                mainThreadRealm.delete(objects)
+                mainThreadRealm.delete(favoritedObject)
                 resourceUnfavorited.accept(value: resourceId)
             }
         }

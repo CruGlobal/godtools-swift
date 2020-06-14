@@ -13,9 +13,9 @@ class ResourcesRealmCache: ResourcesCacheType {
     
     private let mainThreadRealm: Realm
     
-    required init(mainThreadRealm: Realm) {
+    required init(realmDatabase: RealmDatabase) {
         
-        self.mainThreadRealm = mainThreadRealm
+        self.mainThreadRealm = realmDatabase.mainThreadRealm
     }
     
     func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ error: ResourcesCacheError?) -> Void)) {
@@ -95,5 +95,13 @@ class ResourcesRealmCache: ResourcesCacheType {
     
     func getResources() -> [RealmResource] {
         return Array(mainThreadRealm.objects(RealmResource.self))
+    }
+    
+    func getAttachment(id: String) -> RealmAttachment? {
+        return mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id)
+    }
+    
+    func getTranslation(id: String) -> RealmTranslation? {
+        return mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
     }
 }

@@ -6,11 +6,12 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolCellViewModelType {
     
+    var bannerImage: ObservableValue<UIImage?> { get }
     var title: String { get }
-    var description: String { get }
+    var resourceDescription: String { get }
     var isFavorited: Bool { get }
 }

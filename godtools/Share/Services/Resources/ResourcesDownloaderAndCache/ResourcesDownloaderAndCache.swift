@@ -12,33 +12,37 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
     
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
-    private let requestReceipts: RequestReceiptContainer<ResourcesDownloaderAndCacheError> = RequestReceiptContainer()
     
-    let realmCache: ResourcesRealmCache
+    private var currentQueue: OperationQueue?
+    
+    let resourcesCache: ResourcesRealmCache
+    let resourcesFileCache: ResourcesSHA256FilesCache
+    let resourceAttachmentsDownloaderAndCacheContainer: ResourceAttachmentsDownloaderAndCacheContainer
+    let started: ObservableValue<Bool> = ObservableValue(value: false)
+    let completed: SignalValue<ResourcesDownloaderAndCacheError?> = SignalValue()
     
     required init(config: ConfigType, realmDatabase: RealmDatabase) {
         
-        languagesApi = LanguagesApi(config: config)
-        resourcesApi = ResourcesApi(config: config)
-        realmCache = ResourcesRealmCache(mainThreadRealm: realmDatabase.mainThreadRealm)
+        self.languagesApi = LanguagesApi(config: config)
+        self.resourcesApi = ResourcesApi(config: config)
+        self.resourcesCache = ResourcesRealmCache(realmDatabase: realmDatabase)
+        self.resourcesFileCache = ResourcesSHA256FilesCache(realmDatabase: realmDatabase)
+        self.resourceAttachmentsDownloaderAndCacheContainer = ResourceAttachmentsDownloaderAndCacheContainer(resourcesFileCache: resourcesFileCache, resourcesCache: resourcesCache)
     }
-    
-    var isDownloadingResources: Bool {
-        return !requestReceipts.isEmpty
-    }
-    
-    var currentRequestReceipt: RequestReceipt<ResourcesDownloaderAndCacheError>? {
-        return requestReceipts.first
-    }
-    
-    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> RequestReceipt<ResourcesDownloaderAndCacheError> {
+
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue {
              
+        if let queue = currentQueue {
+            assertionFailure("ResourcesDownloaderAndCache:  Download is already running, this process only needs to run once when reloading all resource data from the server.")
+            return queue
+        }
+        
         let queue = OperationQueue()
         
-        let receipt: RequestReceipt<ResourcesDownloaderAndCacheError> = RequestReceipt(queue: queue)
+        self.currentQueue = queue
         
-        requestReceipts.add(receipt: receipt)
-        
+        started.accept(value: true)
+                
         let languagesOperation: RequestOperation = languagesApi.newGetLanguagesOperation()
         let resourcesPlusLatestTranslationsAndAttachmentsOperation: RequestOperation = resourcesApi.newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
@@ -55,8 +59,7 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
                 
                 self?.handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(
                     languagesResult: languagesResult,
-                    resourcesResult: resourcesResult,
-                    receipt: receipt
+                    resourcesResult: resourcesResult
                 )
             }
         }
@@ -69,8 +72,7 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
                 
                 self?.handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(
                     languagesResult: languagesResult,
-                    resourcesResult: resourcesResult,
-                    receipt: receipt
+                    resourcesResult: resourcesResult
                 )
             }
         }
@@ -80,10 +82,10 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
             waitUntilFinished: false
         )
         
-        return receipt
+        return queue
     }
     
-    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?, resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?, receipt: RequestReceipt<ResourcesDownloaderAndCacheError>) {
+    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?, resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?) {
         
         var languages: [LanguageModel] = Array()
         var resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
@@ -131,26 +133,34 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
         
         if let downloaderError = downloaderError {
             
-            handleDownloaderAndCacheCompleted(receipt: receipt, error: downloaderError)
+            handleDownloaderAndCacheCompleted(error: downloaderError)
         }
         else {
             
-            realmCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: ResourcesCacheError?) in
+            resourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: ResourcesCacheError?) in
                 
                 if let cacheError = cacheError {
-                    self?.handleDownloaderAndCacheCompleted(receipt: receipt, error: .failedToCacheResources(error: cacheError))
+                    self?.handleDownloaderAndCacheCompleted(error: .failedToCacheResources(error: cacheError))
                 }
                 else {
-                    self?.handleDownloaderAndCacheCompleted(receipt: receipt, error: nil)
+                    self?.handleDownloaderAndCacheCompleted(error: nil)
                 }
             }
         }
     }
     
-    private func handleDownloaderAndCacheCompleted(receipt: RequestReceipt<ResourcesDownloaderAndCacheError>, error: ResourcesDownloaderAndCacheError?) {
+    private func handleDownloaderAndCacheCompleted(error: ResourcesDownloaderAndCacheError?) {
                 
-        requestReceipts.remove(receipt: receipt)
+        currentQueue = nil
         
-        receipt.complete(value: error)
+        started.accept(value: false)
+        
+        completed.accept(value: error)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.resourceAttachmentsDownloaderAndCacheContainer.downloadAndCacheResourcesAttachments(
+                resources: self?.resourcesCache.getResources() ?? []
+            )
+        }
     }
 }

@@ -102,6 +102,8 @@ class AppFlow: NSObject, FlowDelegate {
 
                 if shouldCreateNewInstance || toolsFlow == nil {
 
+                    requestInitialData()
+                    
                     let toolsFlow: ToolsFlow = ToolsFlow(
                         flowDelegate: self,
                         appDiContainer: appDiContainer,
@@ -376,7 +378,6 @@ extension AppFlow: UIApplicationDelegate {
         
         if !navigationStarted {
             navigationStarted = true
-            requestInitialData()
             setupInitialNavigation()
         }
     }

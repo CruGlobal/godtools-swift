@@ -9,11 +9,6 @@
 import Foundation
 
 protocol ResourcesDownloaderAndCacheType {
-    
-    associatedtype T = Any
-    
-    var isDownloadingResources: Bool { get }
-    var currentRequestReceipt: RequestReceipt<T>? { get }
-    
-    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> RequestReceipt<T>
+            
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue
 }

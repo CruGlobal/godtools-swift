@@ -13,8 +13,8 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics
     
-    let config: ConfigType
     let realmDatabase: RealmDatabase
+    let config: ConfigType
     let isNewUserService: IsNewUserService
     let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     let favoritedResourcesCache: RealmFavoritedResourcesCache
@@ -27,12 +27,12 @@ class AppDiContainer {
         
     required init() {
         
+        realmDatabase = RealmDatabase()
+        
         config = AppConfig()
         
-        realmDatabase = RealmDatabase()
-                
         isNewUserService = IsNewUserService(languageManager: LanguagesManager())
-        
+                        
         resourcesDownloaderAndCache = ResourcesDownloaderAndCache(config: config, realmDatabase: realmDatabase)
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)

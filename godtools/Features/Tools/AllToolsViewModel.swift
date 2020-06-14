@@ -10,11 +10,11 @@ import Foundation
 
 class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
-    private let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
+    let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
@@ -31,24 +31,23 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         
         reloadResourcesFromCache()
          
-        if let downloadResourcesReceipt = resourcesDownloaderAndCache.currentRequestReceipt {
-            downloadResourcesReceipt.addCompletedObserver(observer: self, onObserve: { [weak self] (error: ResourcesDownloaderAndCacheError?) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.reloadResourcesFromCache()
-                }
-            })
-        }
-        
         setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        resourcesDownloaderAndCache.completed.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
+        
+        resourcesDownloaderAndCache.completed.addObserver(self) { [weak self] (error: ResourcesDownloaderAndCacheError?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadResourcesFromCache()
+            }
+        }
         
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             self?.reloadTools()
@@ -61,7 +60,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private func reloadResourcesFromCache() {
         
-        let allResources: [RealmResource] = resourcesDownloaderAndCache.realmCache.getResources()
+        let allResources: [RealmResource] = resourcesDownloaderAndCache.resourcesCache.getResources()
         
         tools.accept(value: allResources)
     }
