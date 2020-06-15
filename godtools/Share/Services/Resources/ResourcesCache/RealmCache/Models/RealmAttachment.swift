@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmAttachment: Object, AttachmentModelType, RealmPrimaryType {
+class RealmAttachment: Object, AttachmentModelType {
     
     @objc dynamic var file: String = ""
     @objc dynamic var fileFilename: String = ""

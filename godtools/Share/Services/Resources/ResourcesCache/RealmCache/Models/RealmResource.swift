@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmResource: Object, ResourceModelType, RealmPrimaryType {
+class RealmResource: Object, ResourceModelType {
     
     @objc dynamic var abbreviation: String = ""
     @objc dynamic var attrBanner: String = ""

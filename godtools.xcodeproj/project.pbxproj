@@ -516,7 +516,6 @@
 		45FFA1022493D2D900DD05F4 /* FileCacheLocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA0FF2493D2D900DD05F4 /* FileCacheLocationType.swift */; };
 		45FFA1032493D2D900DD05F4 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA1002493D2D900DD05F4 /* FileCache.swift */; };
 		45FFA1122493ED8200DD05F4 /* ResourcesSHA256FilesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA1102493ED8200DD05F4 /* ResourcesSHA256FilesCache.swift */; };
-		45FFA1182493F2A900DD05F4 /* RealmPrimaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA1172493F2A900DD05F4 /* RealmPrimaryType.swift */; };
 		45FFA11A2493F67800DD05F4 /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA1192493F67800DD05F4 /* SharedIgnoreCacheSession.swift */; };
 		45FFA11E2493FD6A00DD05F4 /* ResourceSHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA11D2493FD6A00DD05F4 /* ResourceSHA256FileLocation.swift */; };
 		45FFA1212494025900DD05F4 /* ResourceAttachmentsDownloaderAndCacheContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFA1202494025900DD05F4 /* ResourceAttachmentsDownloaderAndCacheContainer.swift */; };
@@ -1119,7 +1118,6 @@
 		45FFA0FF2493D2D900DD05F4 /* FileCacheLocationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCacheLocationType.swift; sourceTree = "<group>"; };
 		45FFA1002493D2D900DD05F4 /* FileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		45FFA1102493ED8200DD05F4 /* ResourcesSHA256FilesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FilesCache.swift; sourceTree = "<group>"; };
-		45FFA1172493F2A900DD05F4 /* RealmPrimaryType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmPrimaryType.swift; sourceTree = "<group>"; };
 		45FFA1192493F67800DD05F4 /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
 		45FFA11D2493FD6A00DD05F4 /* ResourceSHA256FileLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceSHA256FileLocation.swift; sourceTree = "<group>"; };
 		45FFA1202494025900DD05F4 /* ResourceAttachmentsDownloaderAndCacheContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceAttachmentsDownloaderAndCacheContainer.swift; sourceTree = "<group>"; };
@@ -2287,7 +2285,6 @@
 			children = (
 				45D569162492CD76003E5798 /* ResourcesRealmCache.swift */,
 				45D5690F2492CD76003E5798 /* Models */,
-				45FFA1162493F2A900DD05F4 /* ModelTypes */,
 			);
 			path = RealmCache;
 			sourceTree = "<group>";
@@ -2649,14 +2646,6 @@
 				45FFA1102493ED8200DD05F4 /* ResourcesSHA256FilesCache.swift */,
 			);
 			path = ResourcesFilesCache;
-			sourceTree = "<group>";
-		};
-		45FFA1162493F2A900DD05F4 /* ModelTypes */ = {
-			isa = PBXGroup;
-			children = (
-				45FFA1172493F2A900DD05F4 /* RealmPrimaryType.swift */,
-			);
-			path = ModelTypes;
 			sourceTree = "<group>";
 		};
 		45FFA11F2494025900DD05F4 /* ResourcesAttachmentsDownloaderAndCache */ = {
@@ -3807,7 +3796,6 @@
 				45EC83752451E16400E8DE48 /* ArticleJcrContent.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,
 				4562B0DC23F1BC54006B53A9 /* AlertMessageViewModel.swift in Sources */,
-				45FFA1182493F2A900DD05F4 /* RealmPrimaryType.swift in Sources */,
 				451DB13A2461DA4200FB14BF /* TractTextContentProperties.swift in Sources */,
 				45EC83772451E16400E8DE48 /* ArticleAemImportOperation.swift in Sources */,
 				458EA1EF24291B660002C263 /* DetermineIfNewUserType.swift in Sources */,

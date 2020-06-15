@@ -16,15 +16,17 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     
-    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resourcesDownloaderAndCache = resourcesDownloaderAndCache
         self.favoritedResourcesCache = favoritedResourcesCache
+        self.languageSettingsCache = languageSettingsCache
         self.analytics = analytics
         
         super.init()

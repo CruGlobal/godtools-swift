@@ -43,6 +43,7 @@ class ResourceAttachmentsDownloaderAndCache {
             return
         }
         
+        var numberOfOperationsCompleted: Double = 0
         var totalOperationCount: Double = 0
         var operations: [RequestOperation] = Array()
         var fileCacheLocations: [URL: ResourceSHA256FileLocation] = Dictionary()
@@ -86,7 +87,8 @@ class ResourceAttachmentsDownloaderAndCache {
                                 print("\n Failed to download attachment: \(error)")
                             }
                             
-                            self?.progress.accept(value: Double(queue.operations.count) / totalOperationCount)
+                            numberOfOperationsCompleted += 1
+                            self?.progress.accept(value: numberOfOperationsCompleted / totalOperationCount)
                             
                             if queue.operations.isEmpty {
                                 self?.handleDownloadAndCacheAttachmentsCompleted()
@@ -100,8 +102,6 @@ class ResourceAttachmentsDownloaderAndCache {
         }
         
         if !operations.isEmpty {
-            print("\n Starting to download attachments for resource: \(resource.id)")
-            print("   number of downloads: \(operations.count)")
             totalOperationCount = Double(operations.count)
             started.accept(value: true)
             progress.accept(value: 0)
@@ -113,10 +113,9 @@ class ResourceAttachmentsDownloaderAndCache {
     }
     
     private func handleDownloadAndCacheAttachmentsCompleted() {
-        
         currentQueue = nil
         started.accept(value: false)
-        progress.accept(value: 1)
+        progress.accept(value: 0)
         completed.accept()
     }
 }

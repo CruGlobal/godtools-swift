@@ -16,16 +16,18 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resourcesDownloaderAndCache = resourcesDownloaderAndCache
         self.favoritedResourcesCache = favoritedResourcesCache
+        self.languageSettingsCache = languageSettingsCache
         self.analytics = analytics
         
         super.init()

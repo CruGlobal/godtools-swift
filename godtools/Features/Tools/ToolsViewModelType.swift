@@ -12,6 +12,7 @@ protocol ToolsViewModelType {
     
     var resourcesDownloaderAndCache: ResourcesDownloaderAndCache { get }
     var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
+    var languageSettingsCache: LanguageSettingsCacheType { get }
     var tools: ObservableValue<[RealmResource]> { get }
     var toolListIsEditable: Bool { get }
     

@@ -18,6 +18,7 @@ class AppDiContainer {
     let isNewUserService: IsNewUserService
     let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
     let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let translationsApi: TranslationsApiType

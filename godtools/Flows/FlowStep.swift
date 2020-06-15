@@ -29,7 +29,7 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
-    // myTools
+    // favoritedTools
     case toolTappedFromFavoritedTools(resource: DownloadedResource)
     case toolDetailsTappedFromFavoritedTools(resource: DownloadedResource)
     

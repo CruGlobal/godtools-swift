@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmLanguage: Object, LanguageModelType, RealmPrimaryType {
+class RealmLanguage: Object, LanguageModelType {
     
     @objc dynamic var code: String = ""
     @objc dynamic var direction: String = ""

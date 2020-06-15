@@ -11,7 +11,9 @@ import UIKit
 protocol ToolCellViewModelType {
     
     var bannerImage: ObservableValue<UIImage?> { get }
+    var attachmentDownloadProgress: ObservableValue<Double> { get }
     var title: String { get }
     var resourceDescription: String { get }
+    var parallelLanguageName: String { get }
     var isFavorited: Bool { get }
 }

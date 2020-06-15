@@ -53,6 +53,8 @@ class ToolCell: UITableViewCell {
         super.prepareForReuse()
         viewModel = nil
         delegate = nil
+        setTranslationProgress(progress: 0, animated: false)
+        setAttachmentProgress(progress: 0, animated: false)
     }
     
     private func setupLayout() {
@@ -97,8 +99,13 @@ class ToolCell: UITableViewCell {
             }
         }
         
+        viewModel.attachmentDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            self?.setAttachmentProgress(progress: progress, animated: true)
+        }
+        
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.resourceDescription
+        parallelLanguageLabel.text = viewModel.parallelLanguageName
         
         let favoritedImage: UIImage?
         if viewModel.isFavorited {
@@ -108,6 +115,38 @@ class ToolCell: UITableViewCell {
             favoritedImage = ImageCatalog.notFavorited.image
         }
         favoriteButton.setImage(favoritedImage, for: .normal)
+    }
+    
+    private func setTranslationProgress(progress: Double, animated: Bool) {
+        
+    }
+    
+    private func setAttachmentProgress(progress: Double, animated: Bool) {
+        
+        if progress == 0 {
+            attachmentsDownloadProgressWidth.constant = 0
+            attachmentsDownloadProgress.alpha = 0
+            toolContentView.layoutIfNeeded()
+            return
+        }
+        
+        attachmentsDownloadProgressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
+        attachmentsDownloadProgress.alpha = 1
+        
+        if animated {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.toolContentView.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            toolContentView.layoutIfNeeded()
+        }
+        
+        if progress == 1 {
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: { [weak self] in
+                self?.attachmentsDownloadProgress.alpha = 0
+            }, completion: nil)
+        }
     }
     
     @objc func handleAboutTool(button: UIButton) {
