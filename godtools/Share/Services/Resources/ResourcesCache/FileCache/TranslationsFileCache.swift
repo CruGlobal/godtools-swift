@@ -10,12 +10,12 @@ import Foundation
 
 class TranslationsFileCache {
     
-    private let realmCache: ResourcesRealmCache
+    private let realmResources: RealmResourcesCache
     private let sha256FileCache: SHA256FilesCache
     
-    required init(realmCache: ResourcesRealmCache, sha256FileCache: SHA256FilesCache) {
+    required init(realmResources: RealmResourcesCache, realmSHA256FileCache: RealmSHA256FileCache, sha256FileCache: SHA256FilesCache) {
         
-        self.realmCache = realmCache
+        self.realmResources = realmResources
         self.sha256FileCache = sha256FileCache
     }
 }

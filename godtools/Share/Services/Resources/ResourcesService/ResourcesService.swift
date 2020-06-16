@@ -139,7 +139,7 @@ class ResourcesService {
         }
         else {
             
-            resourcesCache.realmCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: Error?) in
+            resourcesCache.realmResources.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: Error?) in
                 
                 if let cacheError = cacheError {
                     self?.handleDownloaderAndCacheCompleted(error: .failedToCacheResources(error: cacheError))
@@ -161,7 +161,7 @@ class ResourcesService {
         
         DispatchQueue.main.async { [weak self] in
             
-            let resources: [RealmResource] = self?.resourcesCache.realmCache.getResources() ?? []
+            let resources: [RealmResource] = self?.resourcesCache.realmResources.getResources() ?? []
             
             for resource in resources {
                 

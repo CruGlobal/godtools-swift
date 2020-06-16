@@ -56,7 +56,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private var userPrimaryLanguage: RealmLanguage? {
         if let primaryLanguageId = languageSettingsCache.primaryLanguageId.value {
-            return resourcesService.resourcesCache.realmCache.getLanguage(id: primaryLanguageId)
+            return resourcesService.resourcesCache.realmResources.getLanguage(id: primaryLanguageId)
         }
         else {
             return nil
@@ -65,7 +65,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private var userParallelLanguage: RealmLanguage? {
         if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
-            return resourcesService.resourcesCache.realmCache.getLanguage(id: parallelLanguageId)
+            return resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId)
         }
         else {
             return nil
@@ -74,7 +74,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private func reloadLanguages() {
         
-        let availableLanguages: [ChooseLanguageModel] = resourcesService.resourcesCache.realmCache.getLanguages().map({ChooseLanguageModel(language: $0)})
+        let availableLanguages: [ChooseLanguageModel] = resourcesService.resourcesCache.realmResources.getLanguages().map({ChooseLanguageModel(language: $0)})
         
         switch chooseLanguageType {
         case .primary:
@@ -133,7 +133,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         
         switch chooseLanguageType {
         case .primary:
-            if let realmLanguage = resourcesService.resourcesCache.realmCache.getLanguage(id: language.languageId) {
+            if let realmLanguage = resourcesService.resourcesCache.realmResources.getLanguage(id: language.languageId) {
                 languageSettingsCache.cachePrimaryLanguageId(language: realmLanguage)
             }
             
@@ -141,7 +141,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
                 languageSettingsCache.deleteParallelLanguageId()
             }
         case .parallel:
-            if let realmLanguage = resourcesService.resourcesCache.realmCache.getLanguage(id: language.languageId) {
+            if let realmLanguage = resourcesService.resourcesCache.realmResources.getLanguage(id: language.languageId) {
                 languageSettingsCache.cacheParallelLanguageId(language: realmLanguage)
             }
         }

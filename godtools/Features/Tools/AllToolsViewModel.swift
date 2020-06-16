@@ -62,7 +62,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private func reloadResourcesFromCache() {
         
-        let allResources: [RealmResource] = resourcesService.resourcesCache.realmCache.getResources()
+        let allResources: [RealmResource] = resourcesService.resourcesCache.realmResources.getResources()
         
         tools.accept(value: allResources)
     }

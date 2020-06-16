@@ -53,7 +53,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     
     private var userPrimaryLanguage: RealmLanguage? {
         if let primaryLanguageId = languageSettingsCache.primaryLanguageId.value {
-            return resourcesService.resourcesCache.realmCache.getLanguage(id: primaryLanguageId)
+            return resourcesService.resourcesCache.realmResources.getLanguage(id: primaryLanguageId)
         }
         else {
             return nil
@@ -62,7 +62,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     
     private var userParallelLanguage: RealmLanguage? {
         if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
-            return resourcesService.resourcesCache.realmCache.getLanguage(id: parallelLanguageId)
+            return resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId)
         }
         else {
             return nil

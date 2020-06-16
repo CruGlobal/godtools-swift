@@ -64,7 +64,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func reloadFavoritedResourcesFromCache() {
         
-        let allResources: [RealmResource] = resourcesService.resourcesCache.realmCache.getResources()
+        let allResources: [RealmResource] = resourcesService.resourcesCache.realmResources.getResources()
         
         let cachedFavoritedResources: [RealmFavoritedResource] = favoritedResourcesCache.getCachedFavoritedResources()
         let cachedFavoritedResourcesIds: [String] = cachedFavoritedResources.map({$0.resourceId})

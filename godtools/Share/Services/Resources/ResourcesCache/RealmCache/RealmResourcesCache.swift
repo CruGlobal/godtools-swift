@@ -1,5 +1,5 @@
 //
-//  ResourcesRealmCache.swift
+//  RealmResourcesCache.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/28/20.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ResourcesRealmCache {
+class RealmResourcesCache {
     
     private let mainThreadRealm: Realm
     

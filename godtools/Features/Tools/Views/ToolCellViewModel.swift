@@ -72,7 +72,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             if let language = resource.languages.filter("id = '\(parallelLanguageId)'").first {
                 name = "✓ " + LanguageNameViewModel(language: language).name
             }
-            else if let language = resourcesService.resourcesCache.realmCache.getLanguage(id: parallelLanguageId) {
+            else if let language = resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId) {
                 name = ""//x \(LanguageNameViewModel(language: language).name)" // TODO: Would like to do something here for tools that don't support the parallel language. ~Levi
             }
             else {

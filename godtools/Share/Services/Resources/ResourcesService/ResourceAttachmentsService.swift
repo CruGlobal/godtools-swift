@@ -49,7 +49,7 @@ class ResourceAttachmentsService {
         
         for attachmentId in resource.attachmentIds {
             
-            guard let attachment = resourcesCache.realmCache.getAttachment(id: attachmentId) else {
+            guard let attachment = resourcesCache.realmResources.getAttachment(id: attachmentId) else {
                 continue
             }
             
