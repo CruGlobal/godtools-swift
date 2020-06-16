@@ -13,7 +13,7 @@ import RealmSwift
 
 class LanguagesManager: GTDataManager {
             
-    private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    //private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     
     let primaryLanguage: ObservableValue<Language?> = ObservableValue(value: nil)
     let parallelLanguage: ObservableValue<Language?> = ObservableValue(value: nil)
@@ -106,9 +106,9 @@ class LanguagesManager: GTDataManager {
         
         var language: Language?
         
-        if let id = languageSettingsCache.primaryLanguageId.value {
-            language = loadFromDisk(id: id)
-        }
+//        if let id = languageSettingsCache.primaryLanguageId.value {
+//            language = loadFromDisk(id: id)
+//        }
         
         primaryLanguage.accept(value: language)
         
@@ -122,9 +122,9 @@ class LanguagesManager: GTDataManager {
             
             var language: Language?
             
-            if let id = languageSettingsCache.parallelLanguageId.value {
-                language = loadFromDisk(id: id)
-            }
+//            if let id = languageSettingsCache.parallelLanguageId.value {
+//                language = loadFromDisk(id: id)
+//            }
             
             parallelLanguage.accept(value: language)
             
@@ -277,7 +277,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func deleteParallelLanguage() {
-        languageSettingsCache.deleteParallelLanguageId()
+        //languageSettingsCache.deleteParallelLanguageId()
         
         // TODO: What is this set for. ~Levi
         UserDefaults.standard.set(nil, forKey: "kParallelLanguageCode")
@@ -302,11 +302,11 @@ class LanguagesManager: GTDataManager {
     }
     
     func isPrimaryLanguage(language: Language) -> Bool {
-        return language.remoteId == languageSettingsCache.primaryLanguageId.value
+        return true//return language.remoteId == languageSettingsCache.primaryLanguageId.value
     }
     
     func isParallelLanguage(language: Language) -> Bool {
-        return language.remoteId == languageSettingsCache.parallelLanguageId.value
+        return true//return language.remoteId == languageSettingsCache.parallelLanguageId.value
     }
 
     func setPrimaryLanguageForInitialDeviceLanguageDownload() {

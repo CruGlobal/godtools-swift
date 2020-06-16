@@ -10,10 +10,14 @@ import Foundation
 
 class LanguageSettingsUserDefaultsCache: LanguageSettingsCacheType {
     
+    private let realmResourcesCache: RealmResourcesCache
+    
     let primaryLanguageId: ObservableValue<String?> = ObservableValue(value: nil)
     let parallelLanguageId: ObservableValue<String?> = ObservableValue(value: nil)
     
-    required init() {
+    required init(realmResourcesCache: RealmResourcesCache) {
+        
+        self.realmResourcesCache = realmResourcesCache
         
         primaryLanguageId.accept(value: getLanguageId(setting: .primary))
         parallelLanguageId.accept(value: getLanguageId(setting: .parallel))
@@ -37,18 +41,16 @@ class LanguageSettingsUserDefaultsCache: LanguageSettingsCacheType {
         }
     }
     
-    func cachePrimaryLanguageId(language: RealmLanguage) {
-        cacheLanguage(setting: .primary, language: language)
+    func cachePrimaryLanguageId(languageId: String) {
+        cacheLanguage(setting: .primary, languageId: languageId)
     }
 
-    func cacheParallelLanguageId(language: RealmLanguage) {
-        cacheLanguage(setting: .parallel, language: language)
+    func cacheParallelLanguageId(languageId: String) {
+        cacheLanguage(setting: .parallel, languageId: languageId)
     }
     
-    private func cacheLanguage(setting: LanguageSettingType, language: RealmLanguage) {
-        
-        let languageId: String = language.id
-        
+    private func cacheLanguage(setting: LanguageSettingType, languageId: String) {
+                
         defaults.set(languageId, forKey: setting.key)
         defaults.synchronize()
         getObservable(setting: setting).accept(value: languageId)
@@ -67,5 +69,32 @@ class LanguageSettingsUserDefaultsCache: LanguageSettingsCacheType {
         defaults.set(nil, forKey: setting.key)
         defaults.synchronize()
         getObservable(setting: setting).accept(value: nil)
+    }
+    
+    func getPrimaryLanguage(complete: @escaping ((LanguageModel?) -> Void)) {
+        getLanguage(setting: .primary, complete: complete)
+    }
+    
+    func getParallelLanguage(complete: @escaping ((LanguageModel?) -> Void)) {
+        getLanguage(setting: .parallel, complete: complete)
+    }
+    
+    private func getLanguage(setting: LanguageSettingType, complete: @escaping ((LanguageModel?) -> Void)) {
+        
+        let id: String?
+        
+        switch setting {
+        case .primary:
+            id = primaryLanguageId.value
+        case .parallel:
+            id = parallelLanguageId.value
+        }
+        
+        if let id = id {
+            realmResourcesCache.getLanguage(id: id, complete: complete)
+        }
+        else {
+            complete(nil)
+        }
     }
 }

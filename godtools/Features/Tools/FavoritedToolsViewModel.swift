@@ -17,7 +17,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType
-    let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
+    let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
@@ -64,19 +64,21 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func reloadFavoritedResourcesFromCache() {
         
-        let allResources: [RealmResource] = resourcesService.resourcesCache.realmResources.getResources()
-        
-        let cachedFavoritedResources: [RealmFavoritedResource] = favoritedResourcesCache.getCachedFavoritedResources()
-        let cachedFavoritedResourcesIds: [String] = cachedFavoritedResources.map({$0.resourceId})
-        
-        let favoritedResources: [RealmResource] = allResources.filter({cachedFavoritedResourcesIds.contains($0.id)})
-        
-        if favoritedResources.isEmpty {
-            hidesFindToolsView.accept(value: false)
-        }
-        else {
-            hidesFindToolsView.accept(value: true)
-            tools.accept(value: favoritedResources)
+        resourcesService.resourcesCache.realmResources.getResources { [weak self] (allResources: [ResourceModel]) in
+            self?.favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
+                
+                
+                let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
+                let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})
+                
+                if favoritedResources.isEmpty {
+                    self?.hidesFindToolsView.accept(value: false)
+                }
+                else {
+                    self?.hidesFindToolsView.accept(value: true)
+                    self?.tools.accept(value: favoritedResources)
+                }
+            })
         }
     }
     
@@ -85,20 +87,20 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Home", siteSection: "", siteSubSection: "")
     }
     
-    func toolTapped(resource: RealmResource) {
+    func toolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
-    func aboutToolTapped(resource: RealmResource) {
+    func aboutToolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
     }
     
-    func openToolTapped(resource: RealmResource) {
+    func openToolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
-    func favoriteToolTapped(resource: RealmResource) {
-        favoritedResourcesCache.changeFavorited(resourceId: resource.id)
+    func favoriteToolTapped(resource: ResourceModel) {
+        favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
     }
     
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

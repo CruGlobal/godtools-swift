@@ -13,13 +13,13 @@ protocol ToolsViewModelType {
     var resourcesService: ResourcesService { get }
     var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
     var languageSettingsCache: LanguageSettingsCacheType { get }
-    var tools: ObservableValue<[RealmResource]> { get }
+    var tools: ObservableValue<[ResourceModel]> { get }
     var toolListIsEditable: Bool { get }
     
-    func toolTapped(resource: RealmResource)
-    func aboutToolTapped(resource: RealmResource)
-    func openToolTapped(resource: RealmResource)
-    func favoriteToolTapped(resource: RealmResource)
+    func toolTapped(resource: ResourceModel)
+    func aboutToolTapped(resource: ResourceModel)
+    func openToolTapped(resource: ResourceModel)
+    func favoriteToolTapped(resource: ResourceModel)
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath)
 }
 

@@ -49,4 +49,13 @@ struct LanguageModel: LanguageModelType, Decodable {
         direction = try attributesContainer?.decode(String.self, forKey: .direction) ?? ""
         name = try attributesContainer?.decode(String.self, forKey: .name) ?? ""
     }
+    
+    init(realmLanguage: RealmLanguage) {
+        
+        code = realmLanguage.code
+        direction = realmLanguage.direction
+        id = realmLanguage.id
+        name = realmLanguage.name
+        type = realmLanguage.type
+    }
 }

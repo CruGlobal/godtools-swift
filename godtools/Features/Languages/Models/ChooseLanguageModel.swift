@@ -13,7 +13,7 @@ struct ChooseLanguageModel {
     let languageId: String
     let languageName: String
     
-    init(language: RealmLanguage) {
+    init(language: LanguageModel) {
         languageId = language.id
         languageName = LanguageNameViewModel(language: language).name
     }

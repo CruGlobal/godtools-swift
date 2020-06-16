@@ -17,7 +17,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType
-    let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
+    let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     
@@ -61,10 +61,9 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func reloadResourcesFromCache() {
-        
-        let allResources: [RealmResource] = resourcesService.resourcesCache.realmResources.getResources()
-        
-        tools.accept(value: allResources)
+        resourcesService.resourcesCache.realmResources.getResources { [weak self] (allResources: [ResourceModel]) in
+            self?.tools.accept(value: allResources)
+        }
     }
     
     func pageViewed() {
@@ -72,20 +71,20 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
     }
     
-    func toolTapped(resource: RealmResource) {
+    func toolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
-    func aboutToolTapped(resource: RealmResource) {
+    func aboutToolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
     }
     
-    func openToolTapped(resource: RealmResource) {
+    func openToolTapped(resource: ResourceModel) {
         //flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
-    func favoriteToolTapped(resource: RealmResource) {
-        favoritedResourcesCache.changeFavorited(resourceId: resource.id)
+    func favoriteToolTapped(resource: ResourceModel) {
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
     }
     
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

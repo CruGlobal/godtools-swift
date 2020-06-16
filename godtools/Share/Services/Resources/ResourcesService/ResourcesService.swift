@@ -161,12 +161,13 @@ class ResourcesService {
         
         DispatchQueue.main.async { [weak self] in
             
+            /*
             let resources: [RealmResource] = self?.resourcesCache.realmResources.getResources() ?? []
             
             for resource in resources {
                 
                 self?.attachmentsServices.getResourceAttachmentsService(resourceId: resource.id).downloadAndCacheAttachments(resource: resource)
-            }
+            }*/
             
             //self?.resourceAttachmentsDownloaderAndCacheContainer.downloadAndCacheResourcesAttachments(resources: resources)
             //self?.resourceTranslationsDownloaderAndCacheContainer.downloadAndCacheResourcesTranslations(resources: resources)

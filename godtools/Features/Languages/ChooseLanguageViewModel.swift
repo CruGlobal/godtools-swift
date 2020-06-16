@@ -50,55 +50,67 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         }
         
         reloadLanguages()
-        
+        reloadSelectedLanguage()
         reloadHidesDeleteLanguageButton()
-    }
-    
-    private var userPrimaryLanguage: RealmLanguage? {
-        if let primaryLanguageId = languageSettingsCache.primaryLanguageId.value {
-            return resourcesService.resourcesCache.realmResources.getLanguage(id: primaryLanguageId)
-        }
-        else {
-            return nil
-        }
-    }
-    
-    private var userParallelLanguage: RealmLanguage? {
-        if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
-            return resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId)
-        }
-        else {
-            return nil
-        }
     }
     
     private func reloadLanguages() {
         
-        let availableLanguages: [ChooseLanguageModel] = resourcesService.resourcesCache.realmResources.getLanguages().map({ChooseLanguageModel(language: $0)})
+        resourcesService.resourcesCache.realmResources.getLanguages { [weak self] (allLanguages: [LanguageModel]) in
+            
+            guard let viewModel = self else {
+                return
+            }
+            
+            let availableLanguages: [ChooseLanguageModel] = allLanguages.map({ChooseLanguageModel(language: $0)})
+            
+            viewModel.allLanguages = availableLanguages
+            
+            switch viewModel.chooseLanguageType {
+            
+            case .primary:
+                
+                self?.languages.accept(value: availableLanguages)
+                
+            case .parallel:
+                
+                // remove primary language from available languages
+                self?.languageSettingsCache.getPrimaryLanguage(complete: { [weak self] (language: LanguageModel?) in
+                    if let language = language {
+                        viewModel.allLanguages = availableLanguages.filter {
+                            $0.languageId != language.id
+                        }
+                    }
+                    self?.languages.accept(value: availableLanguages)
+                })
+            }
+        }
+    }
+    
+    private func reloadSelectedLanguage() {
+        
+        let languageId: String?
         
         switch chooseLanguageType {
         case .primary:
-            allLanguages = availableLanguages
-            if let primaryLanguage = userPrimaryLanguage {
-                selectedLanguage.accept(value: ChooseLanguageModel(language: primaryLanguage))
-            }
+            languageId = languageSettingsCache.primaryLanguageId.value
         case .parallel:
-            // remove primary language from list
-            if let primaryLanguage = userPrimaryLanguage {
-                allLanguages = availableLanguages.filter {
-                    $0.languageId != primaryLanguage.id
-                }
-            }
-            else {
-                allLanguages = availableLanguages
-            }
-            
-            if let parallelLanguage = userParallelLanguage {
-                selectedLanguage.accept(value: ChooseLanguageModel(language: parallelLanguage))
-            }
+            languageId = languageSettingsCache.parallelLanguageId.value
         }
         
-        languages.accept(value: allLanguages)
+        guard let id = languageId else {
+            selectedLanguage.accept(value: nil)
+            return
+        }
+        
+        resourcesService.resourcesCache.realmResources.getLanguage(id: id) { [weak self] (language: LanguageModel?) in
+            if let language = language {
+                self?.selectedLanguage.accept(value: ChooseLanguageModel(language: language))
+            }
+            else {
+                self?.selectedLanguage.accept(value: nil)
+            }
+        }
     }
     
     private func reloadHidesDeleteLanguageButton() {
@@ -133,23 +145,14 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         
         switch chooseLanguageType {
         case .primary:
-            if let realmLanguage = resourcesService.resourcesCache.realmResources.getLanguage(id: language.languageId) {
-                languageSettingsCache.cachePrimaryLanguageId(language: realmLanguage)
-            }
-            
+            languageSettingsCache.cachePrimaryLanguageId(languageId: language.languageId)
             if language.languageId == languageSettingsCache.parallelLanguageId.value {
                 languageSettingsCache.deleteParallelLanguageId()
             }
         case .parallel:
-            if let realmLanguage = resourcesService.resourcesCache.realmResources.getLanguage(id: language.languageId) {
-                languageSettingsCache.cacheParallelLanguageId(language: realmLanguage)
-            }
+            languageSettingsCache.cacheParallelLanguageId(languageId: language.languageId)
         }
-        
-        // TODO: Investigate these two calls more. ~Levi
-        //languagesManager.recordLanguageShouldDownload(language: language)
-        //translationZipImporter.download(language: language)
-        
+                
         flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)
     }
     

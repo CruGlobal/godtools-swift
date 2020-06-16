@@ -13,8 +13,10 @@ protocol LanguageSettingsCacheType {
     var primaryLanguageId: ObservableValue<String?> { get }
     var parallelLanguageId: ObservableValue<String?> { get }
     
-    func cachePrimaryLanguageId(language: RealmLanguage)
-    func cacheParallelLanguageId(language: RealmLanguage)
+    func cachePrimaryLanguageId(languageId: String)
+    func cacheParallelLanguageId(languageId: String)
     func deletePrimaryLanguageId()
     func deleteParallelLanguageId()
+    func getPrimaryLanguage(complete: @escaping ((_ language: LanguageModel?) -> Void))
+    func getParallelLanguage(complete: @escaping ((_ language: LanguageModel?) -> Void))
 }

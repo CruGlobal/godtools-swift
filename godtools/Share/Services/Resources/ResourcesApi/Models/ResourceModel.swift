@@ -57,6 +57,26 @@ struct ResourceModel: ResourceModelType, Decodable {
         case data = "data"
     }
     
+    init(realmResource: RealmResource) {
+        
+        abbreviation = realmResource.abbreviation
+        attrBanner = realmResource.attrBanner
+        attrBannerAbout = realmResource.attrBannerAbout
+        attrCategory = realmResource.attrCategory
+        attrDefaultOrder = realmResource.attrDefaultOrder
+        id = realmResource.id
+        manifest = realmResource.manifest
+        name = realmResource.name
+        oneskyProjectId = realmResource.oneskyProjectId
+        resourceDescription = realmResource.resourceDescription
+        resourceType = realmResource.resourceType
+        totalViews = realmResource.totalViews
+        type = realmResource.type
+        
+        latestTranslationIds = Array(realmResource.latestTranslationIds)
+        attachmentIds = Array(realmResource.attachmentIds)
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)

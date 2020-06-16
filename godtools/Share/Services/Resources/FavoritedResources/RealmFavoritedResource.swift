@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmFavoritedResource: Object {
+class RealmFavoritedResource: Object, FavoritedResourceModelType {
     
     @objc dynamic var resourceId: String = ""
     @objc dynamic var sortOrder: Int = -1

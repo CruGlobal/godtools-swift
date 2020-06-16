@@ -10,71 +10,87 @@ import Foundation
 import RealmSwift
 
 class RealmFavoritedResourcesCache {
-    
-    private let mainThreadRealm: Realm
+        
+    private let realmDatabase: RealmDatabase
     
     let resourceFavorited: SignalValue<String> = SignalValue()
     let resourceUnfavorited: SignalValue<String> = SignalValue()
     
     required init(realmDatabase: RealmDatabase) {
         
-        mainThreadRealm = realmDatabase.mainThreadRealm
+        self.realmDatabase = realmDatabase
     }
     
-    func getCachedFavoritedResources() -> [RealmFavoritedResource] {
-        return Array(mainThreadRealm.objects(RealmFavoritedResource.self))
-    }
-    
-    func isFavorited(resourceId: String) -> Bool {
-        return mainThreadRealm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil
-    }
-    
-    func changeFavorited(resourceId: String) {
-                
-        let resourceIsFavorited: Bool = isFavorited(resourceId: resourceId)
-                
-        if resourceIsFavorited {
-            _ = removeResourceFromFavorites(resourceId: resourceId)
-        }
-        else {
-            _ = addResourceToFavorites(resourceId: resourceId)
-        }
-    }
-    
-    func addResourceToFavorites(resourceId: String) -> Error? {
-        
-        let favoritedResource = RealmFavoritedResource()
-        favoritedResource.resourceId = resourceId
-        
-        do {
-            try mainThreadRealm.write {
-                mainThreadRealm.add(favoritedResource)
-                resourceFavorited.accept(value: resourceId)
+    func getFavoritedResources(complete: @escaping ((_ favoritedResources: [FavoritedResourceModel]) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let realmFavoritedResources: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self))
+            let favoritedResources: [FavoritedResourceModel] = realmFavoritedResources.map({FavoritedResourceModel(model: $0)})
+            DispatchQueue.main.async {
+                complete(favoritedResources)
             }
         }
-        catch let error {
-            return error
-        }
-        
-        return nil
     }
     
-    func removeResourceFromFavorites(resourceId: String) -> Error? {
-                
-        guard let favoritedObject = mainThreadRealm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
-            return nil
-        }
-                
-        do {
-            try mainThreadRealm.write {
-                mainThreadRealm.delete(favoritedObject)
-                resourceUnfavorited.accept(value: resourceId)
+    func isFavorited(resourceId: String, complete: @escaping ((_ isFavorited: Bool) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let realmFavoritedResource: RealmFavoritedResource? = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId)
+            let isFavorited: Bool = realmFavoritedResource != nil
+            DispatchQueue.main.async {
+                complete(isFavorited)
             }
         }
-        catch let error {
-            return error
+    }
+    
+    func toggleFavorited(resourceId: String) {
+        isFavorited(resourceId: resourceId) { [weak self] (isFavorited: Bool) in
+            if isFavorited {
+                self?.removeResourceFromFavorites(resourceId: resourceId)
+            }
+            else {
+                self?.addResourceToFavorites(resourceId: resourceId)
+            }
         }
-        
-        return nil
+    }
+    
+    func addResourceToFavorites(resourceId: String) {
+        realmDatabase.background { [weak self] (realm: Realm) in
+            
+            let realmFavoritedResource = RealmFavoritedResource()
+            realmFavoritedResource.resourceId = resourceId
+            
+            do {
+                try realm.write {
+                    realm.add(realmFavoritedResource, update: .all)
+                }
+            }
+            catch let error {
+                assertionFailure(error.localizedDescription)
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.resourceFavorited.accept(value: resourceId)
+            }
+        }
+    }
+    
+    func removeResourceFromFavorites(resourceId: String) {
+        realmDatabase.background { [weak self] (realm: Realm) in
+            
+            if let realmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) {
+                
+                do {
+                    try realm.write {
+                        realm.delete(realmFavoritedResource)
+                    }
+                }
+                catch let error {
+                    assertionFailure(error.localizedDescription)
+                }
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.resourceUnfavorited.accept(value: resourceId)
+            }
+        }
     }
 }

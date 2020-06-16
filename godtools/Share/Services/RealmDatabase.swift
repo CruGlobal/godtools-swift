@@ -16,8 +16,12 @@ class RealmDatabase {
     static var sharedMainThreadRealm: Realm!
     
     private static let schemaVersion: UInt64 = 14
-    
+        
     let mainThreadRealm: Realm
+    
+    private let backgroundConfig: Realm.Configuration = RealmDatabase.createBackgroundConfig
+    
+    let serialQueue: DispatchQueue = DispatchQueue(label: "realm.serial_queue")
     
     required init() {
         
@@ -34,7 +38,45 @@ class RealmDatabase {
         RealmDatabase.sharedMainThreadRealm = mainThreadRealm
     }
     
+    func background(async: @escaping ((_ realm: Realm) -> Void)) {
+        
+        let configuration = backgroundConfig
+        
+        serialQueue.async {
+            autoreleasepool {
+                
+                let realm: Realm
+               
+                do {
+                    realm = try Realm(configuration: configuration)
+                }
+                catch let error {
+                    assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
+                    realm = try! Realm(configuration: configuration)
+                }
+                
+                async(realm)
+            }
+        }
+    }
+    
+    private static var createBackgroundConfig: Realm.Configuration {
+        
+        var config = Realm.Configuration()
+        config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("shared_background_realm")
+        config.schemaVersion = 1
+        
+        config.migrationBlock = { migration, oldSchemeVersion in
+            
+        }
+        
+        return config
+    }
+    
     private static var createConfig: Realm.Configuration  {
+        
+        
+        
         return Realm.Configuration(
             schemaVersion: RealmDatabase.schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in

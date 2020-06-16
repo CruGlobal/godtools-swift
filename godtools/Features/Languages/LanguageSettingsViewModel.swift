@@ -51,50 +51,38 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         }
     }
     
-    private var userPrimaryLanguage: RealmLanguage? {
-        if let primaryLanguageId = languageSettingsCache.primaryLanguageId.value {
-            return resourcesService.resourcesCache.realmResources.getLanguage(id: primaryLanguageId)
-        }
-        else {
-            return nil
-        }
-    }
-    
-    private var userParallelLanguage: RealmLanguage? {
-        if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
-            return resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId)
-        }
-        else {
-            return nil
-        }
-    }
-    
     private func reloadPrimaryLanguageButtonTitle() {
         
-        let title: String
-        
-        if let primaryLanguage = userPrimaryLanguage {
-            title = LanguageNameViewModel(language: primaryLanguage).name
+        languageSettingsCache.getPrimaryLanguage { [weak self] (languageModel: LanguageModel?) in
+            
+            let title: String
+            
+            if let languageModel = languageModel {
+                title = LanguageNameViewModel(language: languageModel).name
+            }
+            else {
+                title = NSLocalizedString("select_primary_language", comment: "")
+            }
+
+            self?.primaryLanguageButtonTitle.accept(value: title)
         }
-        else {
-            title = NSLocalizedString("select_primary_language", comment: "")
-        }
-        
-        primaryLanguageButtonTitle.accept(value: title)
     }
     
     private func reloadParallelLanguageButtonTitle() {
-        
-        let title: String
-        
-        if let parallelLanguage = userParallelLanguage {
-            title = LanguageNameViewModel(language: parallelLanguage).name
-        }
-        else {
-            title = NSLocalizedString("select_parallel_language", comment: "")
-        }
+                
+        languageSettingsCache.getParallelLanguage { [weak self] (languageModel: LanguageModel?) in
+            
+            let title: String
+            
+            if let languageModel = languageModel {
+                title = LanguageNameViewModel(language: languageModel).name
+            }
+            else {
+                title = NSLocalizedString("select_parallel_language", comment: "")
+            }
 
-        parallelLanguageButtonTitle.accept(value: title)
+            self?.parallelLanguageButtonTitle.accept(value: title)
+        }
     }
     
     func pageViewed() {

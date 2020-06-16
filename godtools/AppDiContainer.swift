@@ -13,7 +13,6 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics
     
-    let isNewUserService: IsNewUserService
     let realmDatabase: RealmDatabase
     let config: ConfigType
     let languagesApi: LanguagesApiType
@@ -24,7 +23,8 @@ class AppDiContainer {
     let resourceTranslationsServices: ResourceTranslationsServices
     let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
-    let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    let languageSettingsCache: LanguageSettingsCacheType
+    let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
@@ -32,8 +32,6 @@ class AppDiContainer {
     let languagesManager: LanguagesManager
         
     required init() {
-        
-        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
         realmDatabase = RealmDatabase()
 
@@ -54,6 +52,10 @@ class AppDiContainer {
         resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, resourcesCache: resourcesCache, attachmentsServices: resourceAttachmentsServices, translationsServices: resourceTranslationsServices)
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        
+        languageSettingsCache = LanguageSettingsUserDefaultsCache(realmResourcesCache: resourcesCache.realmResources)
+        
+        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
         loginClient = TheKeyOAuthClient.shared
                 

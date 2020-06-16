@@ -14,7 +14,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     //private let attachmentsDownloader: ResourceAttachmentsDownloaderAndCache
     //private let translationsDownloader: ResourceTranslationsDownloaderAndCache
     private let languageSettingsCache: LanguageSettingsCacheType
-    private let resource: RealmResource
+    private let resource: ResourceModel
     private let resourceId: String
     private let bannerAttachmentId: String
     
@@ -24,9 +24,9 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let title: String
     let resourceDescription: String
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
-    let isFavorited: Bool
+    let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: RealmResource, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.resourcesService = resourcesService
         //self.attachmentsDownloader = resourcesService.resourceAttachmentsDownloaderAndCacheContainer.getResourceAttachmentsDownloaderAndCache(resouceId: resource.id)
@@ -37,13 +37,16 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         self.bannerAttachmentId = resource.attrBanner
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
-        self.isFavorited = favoritedResourcesCache.isFavorited(resourceId: resource.id)
         
         super.init()
         
         reloadBannerImage()
         reloadParallelLanguageName()
         setupBinding()
+        
+        favoritedResourcesCache.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
+            self?.isFavorited.accept(value: isFavorited)
+        }
     }
     
     deinit {
@@ -65,25 +68,18 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     }
     
     private func reloadParallelLanguageName() {
-        
-        let name: String
-        
-        if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
-            if let language = resource.languages.filter("id = '\(parallelLanguageId)'").first {
-                name = "✓ " + LanguageNameViewModel(language: language).name
-            }
-            else if let language = resourcesService.resourcesCache.realmResources.getLanguage(id: parallelLanguageId) {
-                name = ""//x \(LanguageNameViewModel(language: language).name)" // TODO: Would like to do something here for tools that don't support the parallel language. ~Levi
+                
+        languageSettingsCache.getParallelLanguage { [weak self] (language: LanguageModel?) in
+                        
+            if let userParallelLanguage = language {
+                let name: String = "✓ " + LanguageNameViewModel(language: userParallelLanguage).name
+                self?.parallelLanguageName.accept(value: name)
             }
             else {
-                name = ""
+                
+                self?.parallelLanguageName.accept(value: "")
             }
         }
-        else {
-            name = ""
-        }
-        
-        parallelLanguageName.accept(value: name)
     }
     
     private func setupBinding() {

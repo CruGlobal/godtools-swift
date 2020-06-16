@@ -114,14 +114,16 @@ class ToolCell: UITableViewCell {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.resourceDescription
         
-        let favoritedImage: UIImage?
-        if viewModel.isFavorited {
-            favoritedImage = ImageCatalog.favorited.image
+        viewModel.isFavorited.addObserver(self) { [weak self] (isFavorited: Bool) in
+            let favoritedImage: UIImage?
+            if isFavorited {
+                favoritedImage = ImageCatalog.favorited.image
+            }
+            else {
+                favoritedImage = ImageCatalog.notFavorited.image
+            }
+            self?.favoriteButton.setImage(favoritedImage, for: .normal)
         }
-        else {
-            favoritedImage = ImageCatalog.notFavorited.image
-        }
-        favoriteButton.setImage(favoritedImage, for: .normal)
     }
     
     private func setAttachmentProgress(progress: Double, animated: Bool) {

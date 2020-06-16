@@ -60,7 +60,7 @@ class ToolsTableView: UIView, NibBased {
     
     private func setupBinding() {
         
-        viewModel.tools.addObserver(self) { [weak self] (tools: [RealmResource]) in
+        viewModel.tools.addObserver(self) { [weak self] (tools: [ResourceModel]) in
             self?.tableView.reloadData()
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self?.tableView.alpha = tools.isEmpty ? 0 : 1
@@ -100,7 +100,6 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let resource = viewModel.tools.value[indexPath.row]
-                
         viewModel.toolTapped(resource: resource)
     }
     
@@ -176,7 +175,7 @@ extension ToolsTableView: ToolCellDelegate {
     }
     
     func toolCellOpenToolTapped(toolCell: ToolCell) {
-        
+       
         if let indexPath = tableView.indexPath(for: toolCell) {
             let resource = viewModel.tools.value[indexPath.row]
             viewModel.openToolTapped(resource: resource)

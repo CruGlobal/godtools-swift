@@ -22,4 +22,17 @@ class RealmSHA256FileCache {
         
         return mainThreadRealm.object(ofType: RealmSHA256File.self, forPrimaryKey: sha256)
     }
+    
+    func addSHA256Files(sha256Files: [RealmSHA256File]) -> Error? {
+        
+        do {
+            try mainThreadRealm.write {
+                mainThreadRealm.add(sha256Files, update: .all)
+            }
+            return nil
+        }
+        catch let error {
+            return error
+        }
+    }
 }

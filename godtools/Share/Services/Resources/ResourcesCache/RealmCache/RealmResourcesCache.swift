@@ -11,21 +11,25 @@ import RealmSwift
 
 class RealmResourcesCache {
     
-    private let mainThreadRealm: Realm
+    typealias SHA256 = String
+    
+    private let realmDatabase: RealmDatabase
     
     required init(realmDatabase: RealmDatabase) {
         
-        self.mainThreadRealm = realmDatabase.mainThreadRealm
+        self.realmDatabase = realmDatabase
     }
     
     func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ error: Error?) -> Void)) {
                 
-        DispatchQueue.global().async { [weak self] in
-                   
+        realmDatabase.background { (realm: Realm) in
+            
             var realmObjectsToCache: [Object] = Array()
             var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
             var realmResourcesDictionary: [String: RealmResource] = Dictionary()
             var realmTranslationsDictionary: [String: RealmTranslation] = Dictionary()
+            
+            var attachmentFileGroups: [SHA256: [AttachmentFile]] = Dictionary()
             
             for language in languages {
                 
@@ -70,6 +74,11 @@ class RealmResourcesCache {
                 }
                 
                 realmObjectsToCache.append(realmAttachment)
+                
+                let attachmentFile = AttachmentFile(attachment: realmAttachment)
+                var attachmentFiles: [AttachmentFile] = attachmentFileGroups[attachmentFile.sha256] ?? []
+                attachmentFiles.append(attachmentFile)
+                attachmentFileGroups[attachmentFile.sha256] = attachmentFiles
             }
             
             for ( _, realmResource) in realmResourcesDictionary {
@@ -83,46 +92,76 @@ class RealmResourcesCache {
                 }
             }
             
-            DispatchQueue.main.async { [weak self] in
-                                
-                if let realm = self?.mainThreadRealm {
-                    
-                    do {
-                        try realm.write {
-                            realm.add(realmObjectsToCache, update: .all)
-                        }
-                        
-                        complete(nil)
-                    }
-                    catch let error {
-                        complete(error)
-                    }
+            do {
+                try realm.write {
+                    realm.add(realmObjectsToCache, update: .all)
                 }
+                complete(nil)
+            }
+            catch let error {
+                assertionFailure(error.localizedDescription)
+                complete(error)
             }
         }
     }
     
-    func getResources() -> [RealmResource] {
-        return Array(mainThreadRealm.objects(RealmResource.self))
+    func getResources(complete: @escaping ((_ resources: [ResourceModel]) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let realmResources: [RealmResource] = Array(realm.objects(RealmResource.self))
+            let resources: [ResourceModel] = realmResources.map({ResourceModel(realmResource: $0)})
+            DispatchQueue.main.async {
+                complete(resources)
+            }
+        }
     }
     
-    func getResource(id: String) -> RealmResource? {
-        return mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id)
+    func getResource(id: String, complete: @escaping ((_ resource: ResourceModel?) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let resource: ResourceModel?
+            
+            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {
+                resource = ResourceModel(realmResource: realmResource)
+            }
+            else {
+                resource = nil
+            }
+            DispatchQueue.main.async {
+                complete(resource)
+            }
+        }
     }
     
-    func getLanguages() -> [RealmLanguage] {
-        return Array(mainThreadRealm.objects(RealmLanguage.self))
+    func getLanguages(complete: @escaping ((_ languages: [LanguageModel]) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let realmLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
+            let languages: [LanguageModel] = realmLanguages.map({LanguageModel(realmLanguage: $0)})
+            DispatchQueue.main.async {
+                complete(languages)
+            }
+        }
     }
     
-    func getLanguage(id: String) -> RealmLanguage? {
-        return mainThreadRealm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
+    func getLanguage(id: String, complete: @escaping ((_ language: LanguageModel?) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            let language: LanguageModel?
+            
+            if let realmLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: id) {
+                language = LanguageModel(realmLanguage: realmLanguage)
+            }
+            else {
+                language = nil
+            }
+            DispatchQueue.main.async {
+                complete(language)
+            }
+        }
     }
     
     func getAttachment(id: String) -> RealmAttachment? {
-        return mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id)
+        return nil//mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id)
     }
     
     func getTranslation(id: String) -> RealmTranslation? {
-        return mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
+        return nil//mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
     }
 }

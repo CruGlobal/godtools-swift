@@ -16,5 +16,5 @@ protocol ToolCellViewModelType {
     var title: String { get }
     var resourceDescription: String { get }
     var parallelLanguageName: ObservableValue<String> { get }
-    var isFavorited: Bool { get }
+    var isFavorited: ObservableValue<Bool> { get }
 }
