@@ -1,14 +1,14 @@
 //
-//  ResourceSHA256FileLocation.swift
+//  SHA256FileLocation.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/12/20.
+//  Created by Levi Eggert on 6/15/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-struct ResourceSHA256FileLocation {
+struct SHA256FileLocation {
     
     let sha256: String
     let pathExtension: String

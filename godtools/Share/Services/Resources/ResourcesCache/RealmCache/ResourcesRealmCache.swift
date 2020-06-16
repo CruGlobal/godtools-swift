@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class ResourcesRealmCache: ResourcesCacheType {
+class ResourcesRealmCache {
     
     private let mainThreadRealm: Realm
     
@@ -18,13 +18,14 @@ class ResourcesRealmCache: ResourcesCacheType {
         self.mainThreadRealm = realmDatabase.mainThreadRealm
     }
     
-    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ error: ResourcesCacheError?) -> Void)) {
+    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ error: Error?) -> Void)) {
                 
         DispatchQueue.global().async { [weak self] in
                    
             var realmObjectsToCache: [Object] = Array()
             var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
             var realmResourcesDictionary: [String: RealmResource] = Dictionary()
+            var realmTranslationsDictionary: [String: RealmTranslation] = Dictionary()
             
             for language in languages {
                 
@@ -55,6 +56,7 @@ class ResourcesRealmCache: ResourcesCacheType {
                     realmTranslation.language = realmLanguagesDictionary[languageId]
                 }
                 
+                realmTranslationsDictionary[realmTranslation.id] = realmTranslation
                 realmObjectsToCache.append(realmTranslation)
             }
             
@@ -70,6 +72,17 @@ class ResourcesRealmCache: ResourcesCacheType {
                 realmObjectsToCache.append(realmAttachment)
             }
             
+            for ( _, realmResource) in realmResourcesDictionary {
+                for translationId in realmResource.latestTranslationIds {
+                    if let realmTranslation = realmTranslationsDictionary[translationId] {
+                        realmResource.latestTranslations.append(realmTranslation)
+                        if let realmLanguage = realmTranslation.language {
+                            realmResource.languages.append(realmLanguage)
+                        }
+                    }
+                }
+            }
+            
             DispatchQueue.main.async { [weak self] in
                                 
                 if let realm = self?.mainThreadRealm {
@@ -82,19 +95,27 @@ class ResourcesRealmCache: ResourcesCacheType {
                         complete(nil)
                     }
                     catch let error {
-                        complete(.failedToCacheResources(error: error))
+                        complete(error)
                     }
                 }
             }
         }
     }
     
+    func getResources() -> [RealmResource] {
+        return Array(mainThreadRealm.objects(RealmResource.self))
+    }
+    
+    func getResource(id: String) -> RealmResource? {
+        return mainThreadRealm.object(ofType: RealmResource.self, forPrimaryKey: id)
+    }
+    
     func getLanguages() -> [RealmLanguage] {
         return Array(mainThreadRealm.objects(RealmLanguage.self))
     }
     
-    func getResources() -> [RealmResource] {
-        return Array(mainThreadRealm.objects(RealmResource.self))
+    func getLanguage(id: String) -> RealmLanguage? {
+        return mainThreadRealm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
     }
     
     func getAttachment(id: String) -> RealmAttachment? {

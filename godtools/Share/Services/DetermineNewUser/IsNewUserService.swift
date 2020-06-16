@@ -13,9 +13,9 @@ class IsNewUserService {
     let determineNewUser: DetermineIfNewUserType
     let isNewUserCache: IsNewUserCacheType = IsNewUserDefaultsCache()
     
-    required init(languageManager: LanguagesManager) {
+    required init(languageSettingsCache: LanguageSettingsCacheType) {
                 
-        determineNewUser = DetermineNewUserIfPrimaryLanguageSet(languageManager: languageManager)
+        determineNewUser = DetermineNewUserIfPrimaryLanguageSet(languageSettingsCache: languageSettingsCache)
         isNewUserCache.cacheIsNewUser(isNewUser: determineNewUser.isNewUser)
     }
 }

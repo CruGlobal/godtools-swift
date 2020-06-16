@@ -10,7 +10,7 @@ import Foundation
 
 protocol ToolsViewModelType {
     
-    var resourcesDownloaderAndCache: ResourcesDownloaderAndCache { get }
+    var resourcesService: ResourcesService { get }
     var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
     var languageSettingsCache: LanguageSettingsCacheType { get }
     var tools: ObservableValue<[RealmResource]> { get }

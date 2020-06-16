@@ -1,5 +1,5 @@
 //
-//  RealmResourceSHA256File.swift
+//  RealmSHA256File.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/14/20.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmResourceSHA256File: Object {
+class RealmSHA256File: Object {
     
     @objc dynamic var sha256: String = ""
     @objc dynamic var pathExtension: String = ""

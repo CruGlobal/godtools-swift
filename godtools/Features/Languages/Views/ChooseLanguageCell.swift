@@ -33,14 +33,8 @@ class ChooseLanguageCell: UITableViewCell {
         
         self.viewModel = viewModel
         
-        viewModel.languageText.addObserver(self) { [weak self] (text: String) in
-            self?.languageLabel.text = text
-        }
-        
-        viewModel.hidesDownloadButton.addObserver(self) { [weak self] (hidden: Bool) in
-            self?.downloadButton.isHidden = hidden
-        }
-        
+        languageLabel.text = viewModel.languageName
+        downloadButton.isHidden = viewModel.hidesDownloadButton
         selectedView.isHidden = viewModel.hidesSelected
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ResourcesDownloaderAndCache.swift
+//  ResourcesService.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/27/20.
@@ -8,26 +8,28 @@
 
 import Foundation
 
-class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
+class ResourcesService {
     
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
-    
+    private let translationsApi: TranslationsApiType
+        
     private var currentQueue: OperationQueue?
     
-    let resourcesCache: ResourcesRealmCache
-    let resourcesFileCache: ResourcesSHA256FilesCache
-    let resourceAttachmentsDownloaderAndCacheContainer: ResourceAttachmentsDownloaderAndCacheContainer
+    let resourcesCache: ResourcesCache
+    let attachmentsServices: ResourceAttachmentsServices
+    let translationsServices: ResourceTranslationsServices
     let started: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: SignalValue<ResourcesDownloaderAndCacheError?> = SignalValue()
+    let completed: SignalValue<ResourcesServiceError?> = SignalValue()
     
-    required init(config: ConfigType, realmDatabase: RealmDatabase) {
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, resourcesCache: ResourcesCache, attachmentsServices: ResourceAttachmentsServices, translationsServices: ResourceTranslationsServices) {
         
-        self.languagesApi = LanguagesApi(config: config)
-        self.resourcesApi = ResourcesApi(config: config)
-        self.resourcesCache = ResourcesRealmCache(realmDatabase: realmDatabase)
-        self.resourcesFileCache = ResourcesSHA256FilesCache(realmDatabase: realmDatabase)
-        self.resourceAttachmentsDownloaderAndCacheContainer = ResourceAttachmentsDownloaderAndCacheContainer(resourcesFileCache: resourcesFileCache, resourcesCache: resourcesCache)
+        self.languagesApi = languagesApi
+        self.resourcesApi = resourcesApi
+        self.translationsApi = translationsApi
+        self.resourcesCache = resourcesCache
+        self.attachmentsServices = attachmentsServices
+        self.translationsServices = translationsServices
     }
 
     func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue {
@@ -89,7 +91,7 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
         
         var languages: [LanguageModel] = Array()
         var resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
-        var downloaderError: ResourcesDownloaderAndCacheError?
+        var downloaderError: ResourcesServiceError?
         
         if let languagesResult = languagesResult, let resourcesResult = resourcesResult {
             
@@ -137,7 +139,7 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
         }
         else {
             
-            resourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: ResourcesCacheError?) in
+            resourcesCache.realmCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: Error?) in
                 
                 if let cacheError = cacheError {
                     self?.handleDownloaderAndCacheCompleted(error: .failedToCacheResources(error: cacheError))
@@ -149,7 +151,7 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
         }
     }
     
-    private func handleDownloaderAndCacheCompleted(error: ResourcesDownloaderAndCacheError?) {
+    private func handleDownloaderAndCacheCompleted(error: ResourcesServiceError?) {
                 
         currentQueue = nil
         
@@ -158,9 +160,16 @@ class ResourcesDownloaderAndCache: ResourcesDownloaderAndCacheType {
         completed.accept(value: error)
         
         DispatchQueue.main.async { [weak self] in
-            self?.resourceAttachmentsDownloaderAndCacheContainer.downloadAndCacheResourcesAttachments(
-                resources: self?.resourcesCache.getResources() ?? []
-            )
+            
+            let resources: [RealmResource] = self?.resourcesCache.realmCache.getResources() ?? []
+            
+            for resource in resources {
+                
+                self?.attachmentsServices.getResourceAttachmentsService(resourceId: resource.id).downloadAndCacheAttachments(resource: resource)
+            }
+            
+            //self?.resourceAttachmentsDownloaderAndCacheContainer.downloadAndCacheResourcesAttachments(resources: resources)
+            //self?.resourceTranslationsDownloaderAndCacheContainer.downloadAndCacheResourcesTranslations(resources: resources)
         }
     }
 }

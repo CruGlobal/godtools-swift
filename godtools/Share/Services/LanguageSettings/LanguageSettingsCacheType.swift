@@ -10,11 +10,11 @@ import Foundation
 
 protocol LanguageSettingsCacheType {
     
-    var primaryLanguageId: String? { get }
-    var parallelLanguageId: String? { get }
+    var primaryLanguageId: ObservableValue<String?> { get }
+    var parallelLanguageId: ObservableValue<String?> { get }
     
-    func cachePrimaryLanguageId(language: Language)
-    func cacheParallelLanguageId(language: Language)
+    func cachePrimaryLanguageId(language: RealmLanguage)
+    func cacheParallelLanguageId(language: RealmLanguage)
     func deletePrimaryLanguageId()
     func deleteParallelLanguageId()
 }

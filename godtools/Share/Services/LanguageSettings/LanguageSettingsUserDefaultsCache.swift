@@ -10,48 +10,48 @@ import Foundation
 
 class LanguageSettingsUserDefaultsCache: LanguageSettingsCacheType {
     
-    enum LanguageSettingType {
+    let primaryLanguageId: ObservableValue<String?> = ObservableValue(value: nil)
+    let parallelLanguageId: ObservableValue<String?> = ObservableValue(value: nil)
+    
+    required init() {
         
-        case primary
-        case parallel
-        
-        var key: String {
-            switch self {
-            case .primary:
-                return "kPrimaryLanguageId"
-            case .parallel:
-                return "kParallelLanguageId"
-            }
-        }
+        primaryLanguageId.accept(value: getLanguageId(setting: .primary))
+        parallelLanguageId.accept(value: getLanguageId(setting: .parallel))
     }
     
     private var defaults: UserDefaults {
         return UserDefaults.standard
     }
-    
-    var primaryLanguageId: String? {
-        return getLanguageId(setting: .primary)
-    }
-    
-    var parallelLanguageId: String? {
-        return getLanguageId(setting: .parallel)
-    }
-    
+
     private func getLanguageId(setting: LanguageSettingType) -> String? {
         return defaults.object(forKey: setting.key) as? String
     }
     
-    func cachePrimaryLanguageId(language: Language) {
+    private func getObservable(setting: LanguageSettingType) -> ObservableValue<String?> {
+        
+        switch setting {
+        case .primary:
+            return primaryLanguageId
+        case .parallel:
+            return parallelLanguageId
+        }
+    }
+    
+    func cachePrimaryLanguageId(language: RealmLanguage) {
         cacheLanguage(setting: .primary, language: language)
     }
 
-    func cacheParallelLanguageId(language: Language) {
+    func cacheParallelLanguageId(language: RealmLanguage) {
         cacheLanguage(setting: .parallel, language: language)
     }
     
-    private func cacheLanguage(setting: LanguageSettingType, language: Language) {
-        defaults.set(language.remoteId, forKey: setting.key)
+    private func cacheLanguage(setting: LanguageSettingType, language: RealmLanguage) {
+        
+        let languageId: String = language.id
+        
+        defaults.set(languageId, forKey: setting.key)
         defaults.synchronize()
+        getObservable(setting: setting).accept(value: languageId)
     }
     
     func deletePrimaryLanguageId() {
@@ -63,7 +63,9 @@ class LanguageSettingsUserDefaultsCache: LanguageSettingsCacheType {
     }
     
     private func deleteLanguage(setting: LanguageSettingType) {
+        
         defaults.set(nil, forKey: setting.key)
         defaults.synchronize()
+        getObservable(setting: setting).accept(value: nil)
     }
 }

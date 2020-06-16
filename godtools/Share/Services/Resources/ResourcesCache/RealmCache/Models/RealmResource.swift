@@ -28,6 +28,9 @@ class RealmResource: Object, ResourceModelType {
     let latestTranslationIds = List<String>()
     let attachmentIds = List<String>()
     
+    let latestTranslations = List<RealmTranslation>()
+    let languages = List<RealmLanguage>()
+    
     override static func primaryKey() -> String? {
         return "id"
     }

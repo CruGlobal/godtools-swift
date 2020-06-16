@@ -37,7 +37,7 @@ class ToolsFlow: Flow {
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
-            resourcesDownloaderAndCache: appDiContainer.resourcesDownloaderAndCache,
+            resourcesService: appDiContainer.resourcesService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsCache: appDiContainer.languageSettingsCache,
             analytics: appDiContainer.analytics
@@ -45,7 +45,7 @@ class ToolsFlow: Flow {
         
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
-            resourcesDownloaderAndCache: appDiContainer.resourcesDownloaderAndCache,
+            resourcesService: appDiContainer.resourcesService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsCache: appDiContainer.languageSettingsCache,
             analytics: appDiContainer.analytics

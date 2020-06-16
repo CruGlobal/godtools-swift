@@ -106,7 +106,7 @@ class LanguagesManager: GTDataManager {
         
         var language: Language?
         
-        if let id = languageSettingsCache.primaryLanguageId {
+        if let id = languageSettingsCache.primaryLanguageId.value {
             language = loadFromDisk(id: id)
         }
         
@@ -122,7 +122,7 @@ class LanguagesManager: GTDataManager {
             
             var language: Language?
             
-            if let id = languageSettingsCache.parallelLanguageId {
+            if let id = languageSettingsCache.parallelLanguageId.value {
                 language = loadFromDisk(id: id)
             }
             
@@ -261,14 +261,14 @@ class LanguagesManager: GTDataManager {
         // TODO: Look into what this is for. ~Levi
         LanguagesManager.defaultLanguage = language
         
-        languageSettingsCache.cachePrimaryLanguageId(language: language)
+        //languageSettingsCache.cachePrimaryLanguageId(language: language)
         
         primaryLanguage.accept(value: language)
     }
     
     func updateParallelLanguage(language: Language) {
         
-        languageSettingsCache.cacheParallelLanguageId(language: language)
+        //languageSettingsCache.cacheParallelLanguageId(language: language)
         
         // TODO: What is this set for. ~Levi
         UserDefaults.standard.set((language.code), forKey: "kParallelLanguageCode")
@@ -302,11 +302,11 @@ class LanguagesManager: GTDataManager {
     }
     
     func isPrimaryLanguage(language: Language) -> Bool {
-        return language.remoteId == languageSettingsCache.primaryLanguageId
+        return language.remoteId == languageSettingsCache.primaryLanguageId.value
     }
     
     func isParallelLanguage(language: Language) -> Bool {
-        return language.remoteId == languageSettingsCache.parallelLanguageId
+        return language.remoteId == languageSettingsCache.parallelLanguageId.value
     }
 
     func setPrimaryLanguageForInitialDeviceLanguageDownload() {

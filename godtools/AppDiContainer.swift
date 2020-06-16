@@ -13,28 +13,45 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics
     
+    let isNewUserService: IsNewUserService
     let realmDatabase: RealmDatabase
     let config: ConfigType
-    let isNewUserService: IsNewUserService
-    let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
+    let languagesApi: LanguagesApiType
+    let resourcesApi: ResourcesApiType
+    let translationsApi: TranslationsApiType
+    let resourcesCache: ResourcesCache
+    let resourceAttachmentsServices: ResourceAttachmentsServices
+    let resourceTranslationsServices: ResourceTranslationsServices
+    let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
-    let translationsApi: TranslationsApiType
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
         
     required init() {
         
-        realmDatabase = RealmDatabase()
+        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
+        realmDatabase = RealmDatabase()
+
         config = AppConfig()
         
-        isNewUserService = IsNewUserService(languageManager: LanguagesManager())
+        languagesApi = LanguagesApi(config: config)
+        
+        resourcesApi = ResourcesApi(config: config)
+        
+        translationsApi = TranslationsApi(config: config)
+        
+        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
+        
+        resourceAttachmentsServices = ResourceAttachmentsServices(resourcesCache: resourcesCache)
+        
+        resourceTranslationsServices = ResourceTranslationsServices(translationsApi: translationsApi, resourcesCache: resourcesCache)
                         
-        resourcesDownloaderAndCache = ResourcesDownloaderAndCache(config: config, realmDatabase: realmDatabase)
+        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, resourcesCache: resourcesCache, attachmentsServices: resourceAttachmentsServices, translationsServices: resourceTranslationsServices)
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         
@@ -48,9 +65,7 @@ class AppDiContainer {
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
-                
-        translationsApi = TranslationsApi(config: config)
-          
+                          
         resourceLatestTranslationServices = ResourcesLatestTranslationServices(translationsApi: translationsApi)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()

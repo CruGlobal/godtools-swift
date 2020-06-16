@@ -103,9 +103,16 @@ class ToolCell: UITableViewCell {
             self?.setAttachmentProgress(progress: progress, animated: true)
         }
         
+        viewModel.translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            self?.setTranslationProgress(progress: progress, animated: true)
+        }
+        
+        viewModel.parallelLanguageName.addObserver(self) { [weak self] (name: String) in
+            self?.parallelLanguageLabel.text = name
+        }
+        
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.resourceDescription
-        parallelLanguageLabel.text = viewModel.parallelLanguageName
         
         let favoritedImage: UIImage?
         if viewModel.isFavorited {
@@ -117,21 +124,37 @@ class ToolCell: UITableViewCell {
         favoriteButton.setImage(favoritedImage, for: .normal)
     }
     
-    private func setTranslationProgress(progress: Double, animated: Bool) {
-        
-    }
-    
     private func setAttachmentProgress(progress: Double, animated: Bool) {
         
+        setProgress(
+            progressView: attachmentsDownloadProgress,
+            progressWidth: attachmentsDownloadProgressWidth,
+            progress: progress,
+            animated: true
+        )
+    }
+    
+    private func setTranslationProgress(progress: Double, animated: Bool) {
+        
+        setProgress(
+            progressView: translationsDownloadProgress,
+            progressWidth: translationsDownloadProgressWidth,
+            progress: progress,
+            animated: true
+        )
+    }
+    
+    private func setProgress(progressView: UIView, progressWidth: NSLayoutConstraint, progress: Double, animated: Bool) {
+        
         if progress == 0 {
-            attachmentsDownloadProgressWidth.constant = 0
-            attachmentsDownloadProgress.alpha = 0
+            progressWidth.constant = 0
+            progressView.alpha = 0
             toolContentView.layoutIfNeeded()
             return
         }
         
-        attachmentsDownloadProgressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
-        attachmentsDownloadProgress.alpha = 1
+        progressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
+        progressView.alpha = 1
         
         if animated {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
@@ -143,8 +166,8 @@ class ToolCell: UITableViewCell {
         }
         
         if progress == 1 {
-            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: { [weak self] in
-                self?.attachmentsDownloadProgress.alpha = 0
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
+                progressView.alpha = 0
             }, completion: nil)
         }
     }

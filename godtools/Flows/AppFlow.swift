@@ -43,7 +43,7 @@ class AppFlow: NSObject, FlowDelegate {
     }
     
     private func requestInitialData() {
-        _ = appDiContainer.resourcesDownloaderAndCache.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
+        _ = appDiContainer.resourcesService.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
     }
     
     private func setupInitialNavigation() {

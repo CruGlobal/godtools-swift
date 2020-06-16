@@ -10,7 +10,8 @@ import Foundation
 
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
-    private let languagesManager: LanguagesManager
+    private let resourcesService: ResourcesService
+    private let languageSettingsCache: LanguageSettingsCacheType
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -19,37 +20,61 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.languagesManager = languagesManager
+        self.resourcesService = resourcesService
+        self.languageSettingsCache = languageSettingsCache
         self.analytics = analytics
         
         super.init()
         
-        _ = languagesManager.loadPrimaryLanguageFromDisk()
-        _ = languagesManager.loadParallelLanguageFromDisk()
+        reloadPrimaryLanguageButtonTitle()
+        reloadParallelLanguageButtonTitle()
         
-        languagesManager.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: Language?) in
-            self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
-        }
-        
-        languagesManager.parallelLanguage.addObserver(self) { [weak self] (language: Language?) in
-            self?.reloadParallelLanguageButtonTitle(parallelLanguage: language)
-        }
+        setupBinding()
     }
     
     deinit {
-        languagesManager.primaryLanguage.removeObserver(self)
-        languagesManager.parallelLanguage.removeObserver(self)
+        languageSettingsCache.primaryLanguageId.removeObserver(self)
+        languageSettingsCache.parallelLanguageId.removeObserver(self)
     }
     
-    private func reloadPrimaryLanguageButtonTitle(primaryLanguage: Language?) {
+    private func setupBinding() {
+        
+        languageSettingsCache.primaryLanguageId.addObserver(self) { [weak self] (primaryLanguageId: String?) in
+            self?.reloadPrimaryLanguageButtonTitle()
+        }
+        
+        languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
+            self?.reloadParallelLanguageButtonTitle()
+        }
+    }
+    
+    private var userPrimaryLanguage: RealmLanguage? {
+        if let primaryLanguageId = languageSettingsCache.primaryLanguageId.value {
+            return resourcesService.resourcesCache.realmCache.getLanguage(id: primaryLanguageId)
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private var userParallelLanguage: RealmLanguage? {
+        if let parallelLanguageId = languageSettingsCache.parallelLanguageId.value {
+            return resourcesService.resourcesCache.realmCache.getLanguage(id: parallelLanguageId)
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private func reloadPrimaryLanguageButtonTitle() {
         
         let title: String
         
-        if let primaryLanguage = primaryLanguage {
-            title = primaryLanguage.localizedName()
+        if let primaryLanguage = userPrimaryLanguage {
+            title = LanguageNameViewModel(language: primaryLanguage).name
         }
         else {
             title = NSLocalizedString("select_primary_language", comment: "")
@@ -58,17 +83,17 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         primaryLanguageButtonTitle.accept(value: title)
     }
     
-    private func reloadParallelLanguageButtonTitle(parallelLanguage: Language?) {
+    private func reloadParallelLanguageButtonTitle() {
         
         let title: String
         
-        if let parallelLanguage = parallelLanguage {
-            title = parallelLanguage.localizedName()
+        if let parallelLanguage = userParallelLanguage {
+            title = LanguageNameViewModel(language: parallelLanguage).name
         }
         else {
             title = NSLocalizedString("select_parallel_language", comment: "")
         }
-        
+
         parallelLanguageButtonTitle.accept(value: title)
     }
     

@@ -14,17 +14,17 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let resourcesDownloaderAndCache: ResourcesDownloaderAndCache
+    let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[RealmResource]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     
-    required init(flowDelegate: FlowDelegate, resourcesDownloaderAndCache: ResourcesDownloaderAndCache, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesDownloaderAndCache = resourcesDownloaderAndCache
+        self.resourcesService = resourcesService
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsCache = languageSettingsCache
         self.analytics = analytics
@@ -38,14 +38,14 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        resourcesDownloaderAndCache.completed.removeObserver(self)
+        resourcesService.completed.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        resourcesDownloaderAndCache.completed.addObserver(self) { [weak self] (error: ResourcesDownloaderAndCacheError?) in
+        resourcesService.completed.addObserver(self) { [weak self] (error: ResourcesServiceError?) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadResourcesFromCache()
             }
@@ -62,7 +62,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private func reloadResourcesFromCache() {
         
-        let allResources: [RealmResource] = resourcesDownloaderAndCache.resourcesCache.getResources()
+        let allResources: [RealmResource] = resourcesService.resourcesCache.realmCache.getResources()
         
         tools.accept(value: allResources)
     }

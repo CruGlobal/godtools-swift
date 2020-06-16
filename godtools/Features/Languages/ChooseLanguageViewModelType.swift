@@ -13,11 +13,11 @@ protocol ChooseLanguageViewModelType {
     var navTitle: ObservableValue<String> { get }
     var deleteLanguageButtonTitle: String { get }
     var hidesDeleteLanguageButton: ObservableValue<Bool> { get }
-    var languages: ObservableValue<[Language]> { get }
-    var selectedLanguage: ObservableValue<Language?> { get }
+    var languages: ObservableValue<[ChooseLanguageModel]> { get }
+    var selectedLanguage: ObservableValue<ChooseLanguageModel?> { get }
     
     func pageViewed()
     func deleteLanguageTapped()
-    func languageTapped(language: Language)
+    func languageTapped(language: ChooseLanguageModel)
     func searchLanguageTextInputChanged(text: String)
 }
