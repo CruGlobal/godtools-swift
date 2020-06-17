@@ -57,8 +57,6 @@ class ResourceAttachmentsService {
             return
         }
         
-        bannerImageMemoryCache.removeAll()
-        
         var numberOfAttachmentsDownloaded: Double = 0
         var totalNumberOfAttachmentsToDownload: Double = 0
         var attachmentDownloadOperations: [RequestOperation] = Array()
