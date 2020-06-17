@@ -47,6 +47,8 @@ class ResourceAttachmentsService {
             assertionFailure("ResourceAttachmentsDownloaderAndCache:  Download is already running, this process only needs to run once when reloading all resource attachments from the server.")
             return
         }
+        
+        started.accept(value: true)
                 
         let queue: OperationQueue = OperationQueue()
         
@@ -83,6 +85,7 @@ class ResourceAttachmentsService {
                             let cacheError: Error? = self?.cacheAttachmentFile(location: location, fileData: fileData)
                             
                             if let cacheError = cacheError {
+                                // TODO: Do we need error reporting for these? ~Levi
                                 print("\n Failed to cache attachment: \(cacheError)")
                             }
                             else {
@@ -93,6 +96,7 @@ class ResourceAttachmentsService {
                             }
                         }
                     case .failure(let error):
+                        // TODO: Do we need error reporting for these? ~Levi
                         print("\n Failed to download attachment: \(error)")
                     }
                     
@@ -115,7 +119,6 @@ class ResourceAttachmentsService {
         if !attachmentDownloadOperations.isEmpty {
             numberOfAttachmentsDownloaded = 0
             totalNumberOfAttachmentsToDownload = Double(attachmentDownloadOperations.count)
-            started.accept(value: true)
             progress.accept(value: 0)
             queue.addOperations(attachmentDownloadOperations, waitUntilFinished: false)
         }

@@ -133,7 +133,7 @@ class SHA256FilesCache {
         }
     }
     
-    func decompressZipFileAndCacheSHA256FileContents(zipData: Data) -> Error? {
+    func decompressZipFileAndCacheSHA256FileContents(zipData: Data) -> Result<[SHA256FileLocation], Error> {
         
         switch getRootDirectory() {
         
@@ -141,23 +141,25 @@ class SHA256FilesCache {
              
             let contentsTempDirectory: URL = rootDirectory.appendingPathComponent("temp_directory")
             
+            var cachedSHA256FileLocations: [SHA256FileLocation] = Array()
+            
             switch createDirectoryIfNotExists(directoryUrl: contentsTempDirectory) {
             case .success( _):
                 break
             case .failure(let error):
-                return error
+                return .failure(error)
             }
             
             let zipFile: URL = contentsTempDirectory.appendingPathComponent("contents.zip")
                                      
             // create zip file inside contents temp directory
             if !fileManager.createFile(atPath: zipFile.path, contents: zipData, attributes: nil) {
-                return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create zip file at url: \(zipFile.absoluteString)"])
+                return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create zip file at url: \(zipFile.absoluteString)"]))
             }
              
             // unzip contents of zipfile into contents temp directory
             if !SSZipArchive.unzipFile(atPath: zipFile.path, toDestination: contentsTempDirectory.path) {
-                return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip file at url: \(zipFile.absoluteString)"])
+                return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip file at url: \(zipFile.absoluteString)"]))
             }
             
             // delete zipfile inside contents directory because contents were unzipped and it is no longer needed
@@ -165,7 +167,7 @@ class SHA256FilesCache {
                 try fileManager.removeItem(at: zipFile)
             }
             catch let error {
-                return error
+                return .failure(error)
             }
             
             // get zipfile contents
@@ -176,11 +178,11 @@ class SHA256FilesCache {
                 zipFileContents = contents.compactMap({URL(string: $0)})
             }
             catch let error {
-                return error
+                return .failure(error)
             }
             
             guard !zipFileContents.isEmpty else {
-                return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip contents because no files exist."])
+                return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to unzip contents because no files exist."]))
             }
             
             for fileUrl in zipFileContents {
@@ -199,20 +201,23 @@ class SHA256FilesCache {
                     else {
                         sha256 = path
                     }
+                    
+                    print("\n cacheing translation file")
+                    print("    sha256: \(sha256)")
+                    print("    pathExtension: \(pathExtension)")
+                    
+                    let location = SHA256FileLocation(sha256: sha256, pathExtension: pathExtension)
+                    let cacheError: Error? = cacheSHA256File(location: location, fileData: data)
                                         
-                    if let cacheError = cacheSHA256FileIfNotExists(
-                        location: SHA256FileLocation(sha256: sha256, pathExtension: pathExtension),
-                        fileData: data) {
-                        // Error cacheing file
-                        return cacheError
+                    if let cacheError = cacheError {
+                        return .failure(cacheError)
                     }
                     else {
-                        // successfully cached files
+                        cachedSHA256FileLocations.append(location)
                     }
                 }
                 else {
-                    // No file data
-                    return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed, file data does not exist."])
+                    return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed, file data does not exist."]))
                 }
             }
             
@@ -221,14 +226,14 @@ class SHA256FilesCache {
                 try fileManager.removeItem(at: contentsTempDirectory)
             }
             catch let error {
-                return error
+                return .failure(error)
             }
             
             // finished with no errors
-            return nil
+            return .success(cachedSHA256FileLocations)
              
          case .failure(let error):
-             return error
+            return .failure(error)
          }
     }
     

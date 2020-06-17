@@ -10,10 +10,10 @@ import UIKit
 
 class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
-    private let resourcesService: ResourcesService
-    //private let translationsDownloader: ResourceTranslationsDownloaderAndCache
-    private let languageSettingsCache: LanguageSettingsCacheType
     private let resource: ResourceModel
+    private let resourcesService: ResourcesService
+    private let languageSettingsCache: LanguageSettingsCacheType
+    private let translationService: ResourceTranslationsService
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -24,12 +24,12 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
         
-        self.resourcesService = resourcesService
-        //self.translationsDownloader = resourcesService.resourceTranslationsDownloaderAndCacheContainer.getResourceTranslationsDownloaderAndCache(resouceId: resource.id)
-        self.languageSettingsCache = languageSettingsCache
         self.resource = resource
+        self.resourcesService = resourcesService
+        self.languageSettingsCache = languageSettingsCache
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
+        self.translationService = resourcesService.translationsServices.getService(resourceId: resource.id)
         
         super.init()
         
@@ -44,8 +44,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     deinit {
         resourcesService.attachmentsService.completed.removeObserver(self)
-        //translationsDownloader.progress.removeObserver(self)
-        //translationsDownloader.completed.removeObserver(self)
+        translationService.progress.removeObserver(self)
         languageSettingsCache.parallelLanguageId.removeObserver(self)
     }
     
@@ -57,7 +56,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     private func reloadParallelLanguageName() {
 
-        let userParallelLanguageId: String? = languageSettingsCache.parallelLanguageId.value
+        let userParallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
         
         resourcesService.realmResourcesCache.getResourceLanguage(resourceId: resource.id, languageId: userParallelLanguageId ?? "") { [weak self] (language: LanguageModel?) in
             if let resourceSupportsParallelLanguage = language {
@@ -78,16 +77,12 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
                 self?.reloadBannerImage()
             }
         }
-        /*
-        translationsDownloader.progress.addObserver(self) { [weak self] (progress: Double) in
+        
+        translationService.progress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.translationDownloadProgress.accept(value: progress)
             }
         }
-        
-        translationsDownloader.completed.addObserver(self) { [weak self] in
-            
-        }*/
         
         languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
             self?.reloadParallelLanguageName()

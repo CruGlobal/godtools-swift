@@ -182,10 +182,12 @@ class RealmResourcesCache {
     }
     
     func getAttachment(id: String) -> RealmAttachment? {
+        // TODO: Get RealmAttachment and map to AttachmentModel.
         return nil//mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id)
     }
     
     func getTranslation(id: String) -> RealmTranslation? {
+        // TODO: Get RealmTranslation and map to TranslationModel.
         return nil//mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
     }
 }

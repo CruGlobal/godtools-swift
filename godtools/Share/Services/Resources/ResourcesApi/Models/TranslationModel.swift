@@ -47,6 +47,32 @@ struct TranslationModel: TranslationModelType, Decodable {
         case data = "data"
     }
     
+    init(realmTranslation: RealmTranslation) {
+        
+        id = realmTranslation.id
+        isPublished = realmTranslation.isPublished
+        manifestName = realmTranslation.manifestName
+        translatedDescription = realmTranslation.translatedDescription
+        translatedName = realmTranslation.translatedName
+        translatedTagline = realmTranslation.translatedTagline
+        type = realmTranslation.type
+        version = realmTranslation.version
+        
+        if let realmResource = realmTranslation.resource {
+            resource = ResourceModel(realmResource: realmResource)
+        }
+        else {
+            resource = nil
+        }
+        
+        if let realmLanguage = realmTranslation.language {
+            language = LanguageModel(realmLanguage: realmLanguage)
+        }
+        else {
+            language = nil
+        }
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)

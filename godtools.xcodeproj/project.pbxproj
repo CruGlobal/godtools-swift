@@ -323,7 +323,6 @@
 		45865D0B2498FAE300B95238 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D092498FAE300B95238 /* SHA256FileLocation.swift */; };
 		45865D0D2498FD9500B95238 /* ResourceAttachmentsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D0C2498FD9500B95238 /* ResourceAttachmentsService.swift */; };
 		45865D0F2498FDCC00B95238 /* ResourceTranslationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D0E2498FDCC00B95238 /* ResourceTranslationsService.swift */; };
-		45865D132498FE2A00B95238 /* TranslationsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D122498FE2A00B95238 /* TranslationsFileCache.swift */; };
 		45865D172498FE8300B95238 /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D152498FE8300B95238 /* RealmSHA256File.swift */; };
 		45865D1B2499016000B95238 /* ResourceTranslationsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D1A2499016000B95238 /* ResourceTranslationsServices.swift */; };
 		45869EC624530BAD00733B0C /* ZipFileContentsCacheLocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45869EC124530BAD00733B0C /* ZipFileContentsCacheLocationType.swift */; };
@@ -394,6 +393,7 @@
 		45B2AE652458DC4600253BAD /* ExitLinkAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE622458DC4600253BAD /* ExitLinkAnalytics.swift */; };
 		45B2AE672458DC4600253BAD /* ToolOpenedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE642458DC4600253BAD /* ToolOpenedAnalytics.swift */; };
 		45B2AE692458DE7C00253BAD /* PageViewedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */; };
+		45B881BD249A922B004DC491 /* RealmTranslationZipFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B881BC249A922B004DC491 /* RealmTranslationZipFile.swift */; };
 		45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */; };
 		45C2CFEF2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */; };
 		45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */; };
@@ -937,7 +937,6 @@
 		45865D092498FAE300B95238 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
 		45865D0C2498FD9500B95238 /* ResourceAttachmentsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceAttachmentsService.swift; sourceTree = "<group>"; };
 		45865D0E2498FDCC00B95238 /* ResourceTranslationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsService.swift; sourceTree = "<group>"; };
-		45865D122498FE2A00B95238 /* TranslationsFileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsFileCache.swift; sourceTree = "<group>"; };
 		45865D152498FE8300B95238 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
 		45865D1A2499016000B95238 /* ResourceTranslationsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsServices.swift; sourceTree = "<group>"; };
 		45869EC124530BAD00733B0C /* ZipFileContentsCacheLocationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipFileContentsCacheLocationType.swift; sourceTree = "<group>"; };
@@ -1007,6 +1006,7 @@
 		45B2AE622458DC4600253BAD /* ExitLinkAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExitLinkAnalytics.swift; sourceTree = "<group>"; };
 		45B2AE642458DC4600253BAD /* ToolOpenedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolOpenedAnalytics.swift; sourceTree = "<group>"; };
 		45B2AE682458DE7C00253BAD /* PageViewedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewedAnalytics.swift; sourceTree = "<group>"; };
+		45B881BC249A922B004DC491 /* RealmTranslationZipFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTranslationZipFile.swift; sourceTree = "<group>"; };
 		45BFD71923E4DF00004A097B /* MenuCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCellViewModel.swift; sourceTree = "<group>"; };
 		45C2CFEE2409B3A200683A98 /* GlobalActivityAnalyticsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApi.swift; sourceTree = "<group>"; };
 		45C2CFF02409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsApiType.swift; sourceTree = "<group>"; };
@@ -2102,7 +2102,7 @@
 		45865D062498FAAB00B95238 /* FileCache */ = {
 			isa = PBXGroup;
 			children = (
-				45865D122498FE2A00B95238 /* TranslationsFileCache.swift */,
+				45B881BC249A922B004DC491 /* RealmTranslationZipFile.swift */,
 				45865D152498FE8300B95238 /* RealmSHA256File.swift */,
 				45865D072498FAE300B95238 /* SHA256FileCache */,
 			);
@@ -3568,6 +3568,7 @@
 				451DB1492461DA4200FB14BF /* TractHeaderProperties.swift in Sources */,
 				45EC83A22452438500E8DE48 /* AnimatableValue.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
+				45B881BD249A922B004DC491 /* RealmTranslationZipFile.swift in Sources */,
 				45D5694B24932492003E5798 /* TranslationsApi.swift in Sources */,
 				4575C25423FB332000D3265B /* AccountItemId.swift in Sources */,
 				458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
@@ -3807,7 +3808,6 @@
 				4564723D244F6F4F00CB202D /* ArticleCategoriesView.swift in Sources */,
 				45EC83922451EA6A00E8DE48 /* ArticleJcrContentType.swift in Sources */,
 				451DB1462461DA4200FB14BF /* TractTabProperties.swift in Sources */,
-				45865D132498FE2A00B95238 /* TranslationsFileCache.swift in Sources */,
 				4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */,
 				45FFA0F22493CDCF00DD05F4 /* GodToolsResource.swift in Sources */,
 				45865D022498F91400B95238 /* ResourcesServiceError.swift in Sources */,

@@ -65,8 +65,13 @@ class RealmDatabase {
         config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("shared_background_realm")
         config.schemaVersion = 1
         
-        config.migrationBlock = { migration, oldSchemeVersion in
+        config.migrationBlock = { migration, oldSchemaVersion in
             
+            if (oldSchemaVersion < 1) {
+                // Nothing to do!
+                // Realm will automatically detect new properties and removed properties
+                // And will update the schema on disk automatically
+            }
         }
         
         return config

@@ -18,7 +18,6 @@ class AppDiContainer {
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
-    private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
     
     let config: ConfigType
@@ -45,14 +44,12 @@ class AppDiContainer {
         resourcesApi = ResourcesApi(config: config)
         
         translationsApi = TranslationsApi(config: config)
-                
-        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
-        
+                        
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
                 
         resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
-        resourceTranslationsServices = ResourceTranslationsServices(translationsApi: translationsApi)
+        resourceTranslationsServices = ResourceTranslationsServices(realmDatabase: realmDatabase, realmResourcesCache: realmResourcesCache, translationsApi: translationsApi, sha256FileCache: resourcesSHA256FileCache)
                         
         resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService, translationsServices: resourceTranslationsServices)
         

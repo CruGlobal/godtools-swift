@@ -174,6 +174,8 @@ class ResourcesService {
         if let resourcesCacheResult = resourcesCacheResult {
             
             attachmentsService.downloadAndCacheAttachments(from: resourcesCacheResult)
+            
+            // TODO: Download any new translations? ~Levi
         }
     }
 }

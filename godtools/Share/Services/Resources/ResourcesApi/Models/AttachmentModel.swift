@@ -41,6 +41,23 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         case data = "data"
     }
     
+    init(realmAttachment: RealmAttachment) {
+        
+        file = realmAttachment.file
+        fileFilename = realmAttachment.fileFilename
+        id = realmAttachment.id
+        isZipped = realmAttachment.isZipped
+        sha256 = realmAttachment.sha256
+        type = realmAttachment.type
+        
+        if let realmResource = realmAttachment.resource {
+            resource = ResourceModel(realmResource: realmResource)
+        }
+        else {
+            resource = nil
+        }
+    }
+    
     init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: RootKeys.self)
