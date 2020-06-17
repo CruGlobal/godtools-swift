@@ -121,3 +121,9 @@ struct ResourceModel: ResourceModelType, Decodable {
         attachmentIds = attachments.map({$0.id})
     }
 }
+
+extension ResourceModel: Equatable {
+    static func ==(lhs: ResourceModel, rhs: ResourceModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

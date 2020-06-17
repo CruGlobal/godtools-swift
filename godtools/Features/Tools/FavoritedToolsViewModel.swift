@@ -19,6 +19,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
+    let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
@@ -59,7 +60,8 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         }
         
         favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadFavoritedResourcesFromCache()
+            self?.removeTools(toolIdsToRemove: [resourceId])
+            self?.reloadHidesFindToolsView()
         }
     }
     
@@ -67,20 +69,18 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
         resourcesService.realmResourcesCache.getResources { [weak self] (allResources: [ResourceModel]) in
             self?.favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
-                
-                
+        
                 let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
                 let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})
                 
-                if favoritedResources.isEmpty {
-                    self?.hidesFindToolsView.accept(value: false)
-                }
-                else {
-                    self?.hidesFindToolsView.accept(value: true)
-                    self?.tools.accept(value: favoritedResources)
-                }
+                self?.tools.accept(value: favoritedResources)
+                self?.reloadHidesFindToolsView()
             })
         }
+    }
+    
+    private func reloadHidesFindToolsView() {
+        hidesFindToolsView.accept(value: !tools.value.isEmpty)
     }
     
     func pageViewed() {

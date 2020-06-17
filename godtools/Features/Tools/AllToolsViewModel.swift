@@ -19,6 +19,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
+    let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     

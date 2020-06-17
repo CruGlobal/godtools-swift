@@ -63,7 +63,7 @@ class AppFlow: NSObject, FlowDelegate {
         case .showTools(let animated, let shouldCreateNewInstance):
             
             // TODO: Eventually need to remove the old tools flow.  Everything within the useOldToolsFlow conditional. ~Levi
-            let useOldToolsFlow: Bool = true
+            let useOldToolsFlow: Bool = false
             
             if useOldToolsFlow {
                 

@@ -17,7 +17,7 @@ class ResourceAttachmentsService {
     private let realmDatabase: RealmDatabase
     private let sha256FileCache: SHA256FilesCache
     
-    private var bannerImageMemoryCache: [AttachmentId: UIImage] = Dictionary()
+    private var bannerImageMemoryCache: [AttachmentId: UIImage] = Dictionary() // TODO: Would like to replace this with a purging cache. ~Levi
     private var currentQueue: OperationQueue?
     
     let started: ObservableValue<Bool> = ObservableValue(value: false)
@@ -135,7 +135,6 @@ class ResourceAttachmentsService {
         
         if let image = bannerImageMemoryCache[attachmentId] {
             complete(image)
-            return
         }
         
         let sha256FileCacheRef: SHA256FilesCache = sha256FileCache

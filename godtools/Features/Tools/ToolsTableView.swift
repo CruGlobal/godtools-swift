@@ -52,7 +52,7 @@ class ToolsTableView: UIView, NibBased {
         )
         
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        tableView.estimatedRowHeight = 150
+        tableView.estimatedRowHeight = 220
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.alpha = 0
@@ -69,6 +69,12 @@ class ToolsTableView: UIView, NibBased {
         
         viewModel.toolRefreshed.addObserver(self) { [weak self] (indexPath: IndexPath) in
             self?.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
+        viewModel.toolsRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
+            if !indexPaths.isEmpty {
+                self?.tableView.deleteRows(at: indexPaths, with: .fade)
+            }
         }
         
         if viewModel.toolListIsEditable {
