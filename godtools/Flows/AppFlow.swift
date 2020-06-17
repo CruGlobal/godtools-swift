@@ -230,7 +230,7 @@ class AppFlow: NSObject, FlowDelegate {
             }
             else {
                 
-                let handler = AlertMessageViewAcceptHandler { [weak self] in
+                let handler = CallbackHandler { [weak self] in
                     self?.navigationController.dismiss(animated: true, completion: nil)
                 }
                 
@@ -241,8 +241,9 @@ class AppFlow: NSObject, FlowDelegate {
                 let viewModel = AlertMessageViewModel(
                     title: title,
                     message: message,
-                    acceptActionTitle: acceptedTitle,
-                    handler: handler
+                    cancelTitle: nil,
+                    acceptTitle: acceptedTitle,
+                    acceptHandler: handler
                 )
                 
                 let view = AlertMessageView(viewModel: viewModel)

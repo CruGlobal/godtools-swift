@@ -12,7 +12,8 @@ protocol AlertMessageViewModelType: class {
     
     var title: String { get }
     var message: String { get }
-    var acceptActionTitle: String { get }
+    var cancelTitle: String? { get }
+    var acceptTitle: String { get }
     
     func acceptTapped()
 }

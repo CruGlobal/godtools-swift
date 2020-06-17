@@ -8,26 +8,24 @@
 
 import Foundation
 
-struct AlertMessageViewAcceptHandler {
-    let acceptHandler: (() -> Void)
-}
-
 class AlertMessageViewModel: AlertMessageViewModelType {
     
     let title: String
     let message: String
-    let acceptActionTitle: String
-    let handler: AlertMessageViewAcceptHandler?
+    let cancelTitle: String?
+    let acceptTitle: String
+    let acceptHandler: CallbackHandler?
     
-    required init(title: String, message: String, acceptActionTitle: String = NSLocalizedString("alert.action.ok", comment: ""), handler: AlertMessageViewAcceptHandler?) {
+    required init(title: String, message: String, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
         
         self.title = title
         self.message = message
-        self.acceptActionTitle = acceptActionTitle
-        self.handler = handler
+        self.cancelTitle = cancelTitle
+        self.acceptTitle = acceptTitle
+        self.acceptHandler = acceptHandler
     }
     
     func acceptTapped() {
-        handler?.acceptHandler()
+        acceptHandler?.handle()
     }
 }

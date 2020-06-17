@@ -83,6 +83,30 @@ class ToolsFlow: Flow {
         case .toolDetailsTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
             
+        case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
+            
+            let handler = CallbackHandler { [weak self] in
+                removeHandler.handle()
+                self?.navigationController.dismiss(animated: true, completion: nil)
+            }
+            
+            // TODO: Localize this text. ~Levi
+            let title: String = "Remove From Favorites?"
+            let message: String = "Are you sure you want to remove \(resource.name) from your favorites?"
+            let acceptedTitle: String = "YES"
+            
+            let viewModel = AlertMessageViewModel(
+                title: title,
+                message: message,
+                cancelTitle: "NO",
+                acceptTitle: acceptedTitle,
+                acceptHandler: handler
+            )
+            
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
         case .toolTappedFromAllTools(let resource):
             navigateToTool(resource: resource)
             
@@ -167,7 +191,13 @@ class ToolsFlow: Flow {
             navigationController.pushViewController(view, animated: true)
         
         case .unknown:
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
+            let viewModel = AlertMessageViewModel(
+                title: "Internal Error",
+                message: "Unknown tool type for resource.",
+                cancelTitle: nil,
+                acceptTitle: "OK",
+                acceptHandler: nil
+            )
             let view = AlertMessageView(viewModel: viewModel)
             navigationController.present(view.controller, animated: true, completion: nil)
         }

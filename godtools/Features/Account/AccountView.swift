@@ -217,7 +217,13 @@ extension AccountView: AccountItemCellDelegate {
     
     func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessageType) {
         
-        let viewModel = AlertMessageViewModel(title: alertMessage.title, message: alertMessage.message, handler: nil)
+        let viewModel = AlertMessageViewModel(
+            title: alertMessage.title,
+            message: alertMessage.message,
+            cancelTitle: nil,
+            acceptTitle: "OK",
+            acceptHandler: nil
+        )
         let view = AlertMessageView(viewModel: viewModel)
         
         present(view.controller, animated: true, completion: nil)

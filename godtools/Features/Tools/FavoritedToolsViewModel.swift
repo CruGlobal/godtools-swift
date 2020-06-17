@@ -101,7 +101,11 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     }
     
     func favoriteToolTapped(resource: ResourceModel) {
-        favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
+        
+        let removedHandler = CallbackHandler { [weak self] in
+            self?.favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
+        }
+        flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }
     
     func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

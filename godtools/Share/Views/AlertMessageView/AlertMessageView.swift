@@ -20,7 +20,13 @@ class AlertMessageView {
             preferredStyle: .alert
         )
         
-        controller.addAction(UIAlertAction(title: viewModel.acceptActionTitle, style: .default, handler: { (action: UIAlertAction) in
+        if let cancelTitle = viewModel.cancelTitle {
+            controller.addAction(UIAlertAction(title: cancelTitle, style: .default, handler: { (action: UIAlertAction) in
+                
+            }))
+        }
+        
+        controller.addAction(UIAlertAction(title: viewModel.acceptTitle, style: .default, handler: { (action: UIAlertAction) in
             viewModel.acceptTapped()
         }))
     }
