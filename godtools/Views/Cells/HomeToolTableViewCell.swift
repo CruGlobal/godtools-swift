@@ -13,7 +13,6 @@ protocol HomeToolTableViewCellDelegate {
     func infoButtonWasPressed(resource: DownloadedResource)
 }
 
-@IBDesignable
 class HomeToolTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
