@@ -200,7 +200,7 @@ class SHA256FilesCache {
                         sha256 = path
                     }
                                         
-                    if let cacheError = cacheSHA256File(
+                    if let cacheError = cacheSHA256FileIfNotExists(
                         location: SHA256FileLocation(sha256: sha256, pathExtension: pathExtension),
                         fileData: data) {
                         // Error cacheing file
@@ -232,7 +232,7 @@ class SHA256FilesCache {
          }
     }
     
-    func cacheSHA256File(location: SHA256FileLocation, fileData: Data) -> Error? {
+    func cacheSHA256FileIfNotExists(location: SHA256FileLocation, fileData: Data) -> Error? {
         
         var fileExistsInCache: Bool = false
         
@@ -244,21 +244,25 @@ class SHA256FilesCache {
         }
         
         if !fileExistsInCache {
-            
-            switch getFile(location: location) {
-            case .success(let url):
-                if fileManager.createFile(atPath: url.path, contents: fileData, attributes: nil) {
-                    return nil
-                }
-                else {
-                    return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create file at url: \(url.absoluteString)"])
-                }
-            case.failure(let error):
-                return error
-            }
+            return cacheSHA256File(location: location, fileData: fileData)
         }
         else {
             return nil
+        }
+    }
+    
+    func cacheSHA256File(location: SHA256FileLocation, fileData: Data) -> Error? {
+        
+        switch getFile(location: location) {
+        case .success(let url):
+            if fileManager.createFile(atPath: url.path, contents: fileData, attributes: nil) {
+                return nil
+            }
+            else {
+                return NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create file at url: \(url.absoluteString)"])
+            }
+        case.failure(let error):
+            return error
         }
     }
 }

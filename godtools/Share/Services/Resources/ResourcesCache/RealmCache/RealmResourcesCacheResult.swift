@@ -9,8 +9,6 @@
 import Foundation
 
 struct RealmResourcesCacheResult {
-    
-    typealias SHA256 = String
-    
-    let attachmentFileGroups: [SHA256: [AttachmentFile]]
+        
+    let attachmentFiles: [AttachmentFile]
 }

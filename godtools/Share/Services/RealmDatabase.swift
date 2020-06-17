@@ -20,8 +20,7 @@ class RealmDatabase {
     let mainThreadRealm: Realm
     
     private let backgroundConfig: Realm.Configuration = RealmDatabase.createBackgroundConfig
-    
-    let serialQueue: DispatchQueue = DispatchQueue(label: "realm.serial_queue")
+    private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)
     
     required init() {
         
@@ -42,7 +41,7 @@ class RealmDatabase {
         
         let configuration = backgroundConfig
         
-        serialQueue.async {
+        backgroundQueue.async {
             autoreleasepool {
                 
                 let realm: Realm

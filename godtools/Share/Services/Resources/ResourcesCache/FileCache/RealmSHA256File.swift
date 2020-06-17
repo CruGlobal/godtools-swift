@@ -11,13 +11,12 @@ import RealmSwift
 
 class RealmSHA256File: Object {
     
-    @objc dynamic var sha256: String = ""
-    @objc dynamic var pathExtension: String = ""
+    @objc dynamic var sha256WithPathExtension: String = ""
     
     let attachments = List<RealmAttachment>()
     let translations = List<RealmTranslation>()
         
     override static func primaryKey() -> String? {
-        return "sha256"
+        return "sha256WithPathExtension"
     }
 }

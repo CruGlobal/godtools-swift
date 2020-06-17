@@ -8,18 +8,33 @@
 
 import Foundation
 
-struct AttachmentFile {
+class AttachmentFile {
     
-    let attachmentId: String
+    private(set) var relatedAttachmentIds: [String] = Array()
+    
+    let remoteFileUrl: URL
     let sha256: String
     let pathExtension: String
-    let remoteFileUrl: URL?
+    let location: SHA256FileLocation
     
-    init(attachment: RealmAttachment) {
+    required init(remoteFileUrl: URL, sha256: String, pathExtension: String) {
         
-        attachmentId = attachment.id
-        sha256 = attachment.sha256
-        remoteFileUrl = URL(string: attachment.file)
-        pathExtension = remoteFileUrl?.pathExtension ?? ""
+        self.remoteFileUrl = remoteFileUrl
+        self.sha256 = sha256
+        self.pathExtension = pathExtension
+        self.location = SHA256FileLocation(sha256: sha256, pathExtension: pathExtension)
+    }
+    
+    var sha256WithPathExtension: String {
+        if !pathExtension.isEmpty {
+            return sha256 + "." + pathExtension
+        }
+        return sha256
+    }
+    
+    func addAttachmentId(attachmentId: String) {
+        if !relatedAttachmentIds.contains(attachmentId) {
+            relatedAttachmentIds.append(attachmentId)
+        }
     }
 }

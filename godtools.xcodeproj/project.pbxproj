@@ -44,7 +44,6 @@
 		4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */; };
 		4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A62429669700ECA950 /* AdobeAnalytics.swift */; };
 		4508F7AC2429671500ECA950 /* AdobeAnalyticsProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7AB2429671500ECA950 /* AdobeAnalyticsProperties.swift */; };
-		450B671824990F1F00A54E50 /* RealmSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B671724990F1F00A54E50 /* RealmSHA256FileCache.swift */; };
 		450B671B2499134500A54E50 /* AttachmentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B671A2499134500A54E50 /* AttachmentFile.swift */; };
 		450B671D249914AB00A54E50 /* RealmResourcesCacheResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B671C249914AB00A54E50 /* RealmResourcesCacheResult.swift */; };
 		450B671F249959AD00A54E50 /* FavoritedResourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450B671E249959AD00A54E50 /* FavoritedResourceModel.swift */; };
@@ -317,18 +316,15 @@
 		457719C423E8BAE50049D236 /* MenuDataProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457719C223E8BAE50049D236 /* MenuDataProviderType.swift */; };
 		457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457C8583242E4B1D0025E079 /* FirebaseConfiguration.swift */; };
 		457C8586242E50D70025E079 /* GoogleService-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */; };
+		458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */; };
 		45865D022498F91400B95238 /* ResourcesServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D002498F91400B95238 /* ResourcesServiceError.swift */; };
 		45865D032498F91400B95238 /* ResourcesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D012498F91400B95238 /* ResourcesService.swift */; };
-		45865D052498FA6900B95238 /* ResourcesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D042498FA6900B95238 /* ResourcesCache.swift */; };
 		45865D0A2498FAE300B95238 /* SHA256FilesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D082498FAE300B95238 /* SHA256FilesCache.swift */; };
 		45865D0B2498FAE300B95238 /* SHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D092498FAE300B95238 /* SHA256FileLocation.swift */; };
 		45865D0D2498FD9500B95238 /* ResourceAttachmentsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D0C2498FD9500B95238 /* ResourceAttachmentsService.swift */; };
 		45865D0F2498FDCC00B95238 /* ResourceTranslationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D0E2498FDCC00B95238 /* ResourceTranslationsService.swift */; };
-		45865D112498FE1700B95238 /* AttachmentsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D102498FE1700B95238 /* AttachmentsFileCache.swift */; };
 		45865D132498FE2A00B95238 /* TranslationsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D122498FE2A00B95238 /* TranslationsFileCache.swift */; };
-		45865D162498FE8300B95238 /* RealmSHA256File+FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D142498FE8300B95238 /* RealmSHA256File+FileLocation.swift */; };
 		45865D172498FE8300B95238 /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D152498FE8300B95238 /* RealmSHA256File.swift */; };
-		45865D192499001A00B95238 /* ResourceAttachmentsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D182499001A00B95238 /* ResourceAttachmentsServices.swift */; };
 		45865D1B2499016000B95238 /* ResourceTranslationsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45865D1A2499016000B95238 /* ResourceTranslationsServices.swift */; };
 		45869EC624530BAD00733B0C /* ZipFileContentsCacheLocationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45869EC124530BAD00733B0C /* ZipFileContentsCacheLocationType.swift */; };
 		45869EC724530BAD00733B0C /* ZipFileContentsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45869EC224530BAD00733B0C /* ZipFileContentsCache.swift */; };
@@ -664,7 +660,6 @@
 		4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsConstants.swift; sourceTree = "<group>"; };
 		4508F7A62429669700ECA950 /* AdobeAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalytics.swift; sourceTree = "<group>"; };
 		4508F7AB2429671500ECA950 /* AdobeAnalyticsProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsProperties.swift; sourceTree = "<group>"; };
-		450B671724990F1F00A54E50 /* RealmSHA256FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSHA256FileCache.swift; sourceTree = "<group>"; };
 		450B671A2499134500A54E50 /* AttachmentFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentFile.swift; sourceTree = "<group>"; };
 		450B671C249914AB00A54E50 /* RealmResourcesCacheResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmResourcesCacheResult.swift; sourceTree = "<group>"; };
 		450B671E249959AD00A54E50 /* FavoritedResourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedResourceModel.swift; sourceTree = "<group>"; };
@@ -935,18 +930,15 @@
 		457719C223E8BAE50049D236 /* MenuDataProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuDataProviderType.swift; sourceTree = "<group>"; };
 		457C8583242E4B1D0025E079 /* FirebaseConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConfiguration.swift; sourceTree = "<group>"; };
 		457C8585242E50D70025E079 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
+		458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AttachmentModelType+SHA256FileLocation.swift"; sourceTree = "<group>"; };
 		45865D002498F91400B95238 /* ResourcesServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesServiceError.swift; sourceTree = "<group>"; };
 		45865D012498F91400B95238 /* ResourcesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesService.swift; sourceTree = "<group>"; };
-		45865D042498FA6900B95238 /* ResourcesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesCache.swift; sourceTree = "<group>"; };
 		45865D082498FAE300B95238 /* SHA256FilesCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FilesCache.swift; sourceTree = "<group>"; };
 		45865D092498FAE300B95238 /* SHA256FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256FileLocation.swift; sourceTree = "<group>"; };
 		45865D0C2498FD9500B95238 /* ResourceAttachmentsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceAttachmentsService.swift; sourceTree = "<group>"; };
 		45865D0E2498FDCC00B95238 /* ResourceTranslationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsService.swift; sourceTree = "<group>"; };
-		45865D102498FE1700B95238 /* AttachmentsFileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsFileCache.swift; sourceTree = "<group>"; };
 		45865D122498FE2A00B95238 /* TranslationsFileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationsFileCache.swift; sourceTree = "<group>"; };
-		45865D142498FE8300B95238 /* RealmSHA256File+FileLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RealmSHA256File+FileLocation.swift"; sourceTree = "<group>"; };
 		45865D152498FE8300B95238 /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
-		45865D182499001A00B95238 /* ResourceAttachmentsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceAttachmentsServices.swift; sourceTree = "<group>"; };
 		45865D1A2499016000B95238 /* ResourceTranslationsServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsServices.swift; sourceTree = "<group>"; };
 		45869EC124530BAD00733B0C /* ZipFileContentsCacheLocationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipFileContentsCacheLocationType.swift; sourceTree = "<group>"; };
 		45869EC224530BAD00733B0C /* ZipFileContentsCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZipFileContentsCache.swift; sourceTree = "<group>"; };
@@ -1496,6 +1488,7 @@
 			children = (
 				450E21C02491A4A200D489A1 /* AttachmentModel.swift */,
 				450E21C22491A4B400D489A1 /* AttachmentModelType.swift */,
+				458063C52499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift */,
 				450E21BA2491890800D489A1 /* ResourceModel.swift */,
 				450E21BC2491891200D489A1 /* ResourceModelType.swift */,
 				450E21BE24919E5500D489A1 /* ResourcesPlusLatestTranslationsAndAttachmentsModel.swift */,
@@ -2097,7 +2090,6 @@
 			isa = PBXGroup;
 			children = (
 				45865D0C2498FD9500B95238 /* ResourceAttachmentsService.swift */,
-				45865D182499001A00B95238 /* ResourceAttachmentsServices.swift */,
 				45865D0E2498FDCC00B95238 /* ResourceTranslationsService.swift */,
 				45865D1A2499016000B95238 /* ResourceTranslationsServices.swift */,
 				45865D012498F91400B95238 /* ResourcesService.swift */,
@@ -2110,11 +2102,8 @@
 		45865D062498FAAB00B95238 /* FileCache */ = {
 			isa = PBXGroup;
 			children = (
-				45865D102498FE1700B95238 /* AttachmentsFileCache.swift */,
 				45865D122498FE2A00B95238 /* TranslationsFileCache.swift */,
-				450B671724990F1F00A54E50 /* RealmSHA256FileCache.swift */,
 				45865D152498FE8300B95238 /* RealmSHA256File.swift */,
-				45865D142498FE8300B95238 /* RealmSHA256File+FileLocation.swift */,
 				45865D072498FAE300B95238 /* SHA256FileCache */,
 			);
 			path = FileCache;
@@ -2342,7 +2331,6 @@
 		45D5690D2492CD76003E5798 /* ResourcesCache */ = {
 			isa = PBXGroup;
 			children = (
-				45865D042498FA6900B95238 /* ResourcesCache.swift */,
 				45865D062498FAAB00B95238 /* FileCache */,
 				45D5690E2492CD76003E5798 /* RealmCache */,
 			);
@@ -3478,7 +3466,6 @@
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
-				45865D112498FE1700B95238 /* AttachmentsFileCache.swift in Sources */,
 				4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */,
 				45D5692E2492EDF3003E5798 /* ToolCell.swift in Sources */,
 				0F350DA11EAEB54A0025C4BB /* GTNotifications.swift in Sources */,
@@ -3493,7 +3480,6 @@
 				458E57B8247F345700C75EDD /* ResourcesLatestTranslationServices.swift in Sources */,
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
 				45D569172492CD76003E5798 /* RealmResource.swift in Sources */,
-				45865D162498FE8300B95238 /* RealmSHA256File+FileLocation.swift in Sources */,
 				45ACBD07247DB0D600514E75 /* ToolsMenuViewModel.swift in Sources */,
 				45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */,
 				45EC83732451E16400E8DE48 /* ArticleJcrContentParser.swift in Sources */,
@@ -3557,7 +3543,6 @@
 				45B2AE4E2458900E00253BAD /* FindToolsView.swift in Sources */,
 				45C2CFF72409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */,
 				453DBA7D247485560000BA85 /* ArticlesErrorMessage.swift in Sources */,
-				450B671824990F1F00A54E50 /* RealmSHA256FileCache.swift in Sources */,
 				452036CB24005AF0002B2453 /* RequestResponse+Log.swift in Sources */,
 				450E21C12491A4A200D489A1 /* AttachmentModel.swift in Sources */,
 				45668E8223E0E1CC002728E7 /* OnboardingWelcomeViewModel.swift in Sources */,
@@ -3585,6 +3570,7 @@
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
 				45D5694B24932492003E5798 /* TranslationsApi.swift in Sources */,
 				4575C25423FB332000D3265B /* AccountItemId.swift in Sources */,
+				458063C62499870C0070AA12 /* AttachmentModelType+SHA256FileLocation.swift in Sources */,
 				45B2AE47245886B100253BAD /* MailView.swift in Sources */,
 				452AB58B24464D0100445050 /* AboutViewModelType.swift in Sources */,
 				45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */,
@@ -3798,7 +3784,6 @@
 				454A00EA2481681C00315799 /* ResourceTranslationsDownloadAndCacheQueue.swift in Sources */,
 				450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */,
 				450B6721249959D400A54E50 /* FavoritedResourceModelType.swift in Sources */,
-				45865D192499001A00B95238 /* ResourceAttachmentsServices.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
@@ -3840,7 +3825,6 @@
 				4568D15C244DFA1200328639 /* FirebaseAnalyticsType.swift in Sources */,
 				45FCFF41243D07B800865501 /* TutorialFlow.swift in Sources */,
 				4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */,
-				45865D052498FA6900B95238 /* ResourcesCache.swift in Sources */,
 				4586D7DA246ECCE00062D988 /* TractParagraph.swift in Sources */,
 				0FB1B20A1EB151300033DAB9 /* TransparentButton.swift in Sources */,
 				45668E7123E0E1CC002728E7 /* OnboardingTutorialProvider.swift in Sources */,

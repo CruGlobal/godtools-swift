@@ -18,6 +18,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
+    let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let message: ObservableValue<String> = ObservableValue(value: "")
     let toolListIsEditable: Bool = false
     
@@ -52,16 +53,16 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         }
         
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadTools()
+            self?.reloadTool(resourceId: resourceId)
         }
         
         favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadTools()
+            self?.reloadTool(resourceId: resourceId)
         }
     }
     
     private func reloadResourcesFromCache() {
-        resourcesService.resourcesCache.realmResources.getResources { [weak self] (allResources: [ResourceModel]) in
+        resourcesService.realmResourcesCache.getResources { [weak self] (allResources: [ResourceModel]) in
             self?.tools.accept(value: allResources)
         }
     }

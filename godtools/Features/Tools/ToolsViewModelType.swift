@@ -14,6 +14,7 @@ protocol ToolsViewModelType {
     var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
     var languageSettingsCache: LanguageSettingsCacheType { get }
     var tools: ObservableValue<[ResourceModel]> { get }
+    var toolRefreshed: SignalValue<IndexPath> { get }
     var toolListIsEditable: Bool { get }
     
     func toolTapped(resource: ResourceModel)
@@ -24,7 +25,18 @@ protocol ToolsViewModelType {
 }
 
 extension ToolsViewModelType {
-    func reloadTools() {
+    
+    func reloadTool(resourceId: String) {
+        for index in 0 ..< tools.value.count {
+            if tools.value[index].id == resourceId {
+                let indexPath: IndexPath = IndexPath(row: index, section: 0)
+                toolRefreshed.accept(value: indexPath)
+                return
+            }
+        }
+    }
+    
+    func reloadAllTools() {
         tools.accept(value: tools.value)
     }
 }

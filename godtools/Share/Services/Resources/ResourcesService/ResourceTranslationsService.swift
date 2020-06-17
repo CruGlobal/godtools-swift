@@ -11,7 +11,6 @@ import Foundation
 class ResourceTranslationsService {
     
     private let translationsApi: TranslationsApiType
-    private let resourcesCache: ResourcesCache
     
     private var currentQueue: OperationQueue?
     
@@ -19,10 +18,9 @@ class ResourceTranslationsService {
     let progress: ObservableValue<Double> = ObservableValue(value: 0)
     let completed: Signal = Signal()
     
-    required init(translationsApi: TranslationsApiType, resourcesCache: ResourcesCache) {
+    required init(translationsApi: TranslationsApiType) {
         
         self.translationsApi = translationsApi
-        self.resourcesCache = resourcesCache
     }
     
     func downloadAndCacheTranslations(resource: RealmResource) {

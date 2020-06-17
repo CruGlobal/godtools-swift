@@ -29,7 +29,6 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var toolContentView: UIView!
     @IBOutlet weak private var bannerImageView: UIImageView!
     @IBOutlet weak private var translationsDownloadProgress: UIView!
-    @IBOutlet weak private var attachmentsDownloadProgress: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var descriptionLabel: UILabel!
@@ -38,7 +37,6 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var favoriteButton: UIButton!
     
     @IBOutlet weak private var translationsDownloadProgressWidth: NSLayoutConstraint!
-    @IBOutlet weak private var attachmentsDownloadProgressWidth: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,7 +52,6 @@ class ToolCell: UITableViewCell {
         viewModel = nil
         delegate = nil
         setTranslationProgress(progress: 0, animated: false)
-        setAttachmentProgress(progress: 0, animated: false)
     }
     
     private func setupLayout() {
@@ -91,16 +88,16 @@ class ToolCell: UITableViewCell {
         self.delegate = delegate
         
         viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
+            let newBannerImage: Bool = self?.bannerImageView.image == nil && bannerImage != nil
             self?.bannerImageView.image = bannerImage
-            if bannerImage != nil {
+            if newBannerImage {
                 UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                     self?.bannerImageView.alpha = 1
                 }, completion: nil)
             }
-        }
-        
-        viewModel.attachmentDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
-            self?.setAttachmentProgress(progress: progress, animated: true)
+            else {
+                self?.bannerImageView.alpha = 1
+            }
         }
         
         viewModel.translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
@@ -126,41 +123,21 @@ class ToolCell: UITableViewCell {
         }
     }
     
-    private func setAttachmentProgress(progress: Double, animated: Bool) {
-        
-        setProgress(
-            progressView: attachmentsDownloadProgress,
-            progressWidth: attachmentsDownloadProgressWidth,
-            progress: progress,
-            animated: true
-        )
-    }
-    
     private func setTranslationProgress(progress: Double, animated: Bool) {
         
-        setProgress(
-            progressView: translationsDownloadProgress,
-            progressWidth: translationsDownloadProgressWidth,
-            progress: progress,
-            animated: true
-        )
-    }
-    
-    private func setProgress(progressView: UIView, progressWidth: NSLayoutConstraint, progress: Double, animated: Bool) {
-        
         if progress == 0 {
-            progressWidth.constant = 0
-            progressView.alpha = 0
+            translationsDownloadProgressWidth.constant = 0
+            translationsDownloadProgress.alpha = 0
             toolContentView.layoutIfNeeded()
             return
         }
         
-        progressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
-        progressView.alpha = 1
+        translationsDownloadProgressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
+        translationsDownloadProgress.alpha = 1
         
         if animated {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.toolContentView.layoutIfNeeded()
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                self.toolContentView.layoutIfNeeded()
             }, completion: nil)
         }
         else {
@@ -169,7 +146,7 @@ class ToolCell: UITableViewCell {
         
         if progress == 1 {
             UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
-                progressView.alpha = 0
+                self.translationsDownloadProgress.alpha = 0
             }, completion: nil)
         }
     }

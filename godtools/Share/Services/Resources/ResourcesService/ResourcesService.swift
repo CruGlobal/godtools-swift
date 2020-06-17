@@ -16,19 +16,19 @@ class ResourcesService {
         
     private var currentQueue: OperationQueue?
     
-    let resourcesCache: ResourcesCache
-    let attachmentsServices: ResourceAttachmentsServices
+    let realmResourcesCache: RealmResourcesCache
+    let attachmentsService: ResourceAttachmentsService
     let translationsServices: ResourceTranslationsServices
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: SignalValue<ResourcesServiceError?> = SignalValue()
     
-    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, resourcesCache: ResourcesCache, attachmentsServices: ResourceAttachmentsServices, translationsServices: ResourceTranslationsServices) {
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, realmResourcesCache: RealmResourcesCache, attachmentsService: ResourceAttachmentsService, translationsServices: ResourceTranslationsServices) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi
         self.translationsApi = translationsApi
-        self.resourcesCache = resourcesCache
-        self.attachmentsServices = attachmentsServices
+        self.realmResourcesCache = realmResourcesCache
+        self.attachmentsService = attachmentsService
         self.translationsServices = translationsServices
     }
 
@@ -135,42 +135,45 @@ class ResourcesService {
         
         if let downloaderError = downloaderError {
             
-            handleDownloaderAndCacheCompleted(error: downloaderError)
+            handleDownloaderAndCacheCompleted(result: .failure(downloaderError))
         }
         else {
             
-            resourcesCache.realmResources.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (cacheError: Error?) in
+            realmResourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<RealmResourcesCacheResult, Error>) in
                 
-                if let cacheError = cacheError {
-                    self?.handleDownloaderAndCacheCompleted(error: .failedToCacheResources(error: cacheError))
-                }
-                else {
-                    self?.handleDownloaderAndCacheCompleted(error: nil)
+                switch result {
+                case .success(let cacheResult):
+                    self?.handleDownloaderAndCacheCompleted(result: .success(cacheResult))
+                case .failure(let cacheError):
+                    self?.handleDownloaderAndCacheCompleted(result: .failure(.failedToCacheResources(error: cacheError)))
                 }
             }
         }
     }
     
-    private func handleDownloaderAndCacheCompleted(error: ResourcesServiceError?) {
+    private func handleDownloaderAndCacheCompleted(result: Result<RealmResourcesCacheResult, ResourcesServiceError>) {
                 
+        let resourcesCacheResult: RealmResourcesCacheResult?
+        let serviceError: ResourcesServiceError?
+        
+        switch result {
+        case .success(let cacheResult):
+            resourcesCacheResult = cacheResult
+            serviceError = nil
+        case .failure(let error):
+            resourcesCacheResult = nil
+            serviceError = error
+        }
+        
         currentQueue = nil
         
         started.accept(value: false)
         
-        completed.accept(value: error)
+        completed.accept(value: serviceError)
         
-        DispatchQueue.main.async { [weak self] in
+        if let resourcesCacheResult = resourcesCacheResult {
             
-            /*
-            let resources: [RealmResource] = self?.resourcesCache.realmResources.getResources() ?? []
-            
-            for resource in resources {
-                
-                self?.attachmentsServices.getResourceAttachmentsService(resourceId: resource.id).downloadAndCacheAttachments(resource: resource)
-            }*/
-            
-            //self?.resourceAttachmentsDownloaderAndCacheContainer.downloadAndCacheResourcesAttachments(resources: resources)
-            //self?.resourceTranslationsDownloaderAndCacheContainer.downloadAndCacheResourcesTranslations(resources: resources)
+            attachmentsService.downloadAndCacheAttachments(from: resourcesCacheResult)
         }
     }
 }

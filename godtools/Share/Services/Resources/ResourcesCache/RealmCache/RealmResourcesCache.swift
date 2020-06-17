@@ -11,7 +11,7 @@ import RealmSwift
 
 class RealmResourcesCache {
     
-    typealias SHA256 = String
+    typealias SHA256PlusPathExtension = String
     
     private let realmDatabase: RealmDatabase
     
@@ -20,7 +20,7 @@ class RealmResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ error: Error?) -> Void)) {
+    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ result: Result<RealmResourcesCacheResult, Error>) -> Void)) {
                 
         realmDatabase.background { (realm: Realm) in
             
@@ -29,7 +29,7 @@ class RealmResourcesCache {
             var realmResourcesDictionary: [String: RealmResource] = Dictionary()
             var realmTranslationsDictionary: [String: RealmTranslation] = Dictionary()
             
-            var attachmentFileGroups: [SHA256: [AttachmentFile]] = Dictionary()
+            var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
             
             for language in languages {
                 
@@ -75,10 +75,20 @@ class RealmResourcesCache {
                 
                 realmObjectsToCache.append(realmAttachment)
                 
-                let attachmentFile = AttachmentFile(attachment: realmAttachment)
-                var attachmentFiles: [AttachmentFile] = attachmentFileGroups[attachmentFile.sha256] ?? []
-                attachmentFiles.append(attachmentFile)
-                attachmentFileGroups[attachmentFile.sha256] = attachmentFiles
+                let sha256WithPathExtension: String = realmAttachment.sha256FileLocation.sha256WithPathExtension
+                
+                if let attachmentFile = attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] {
+                    attachmentFile.addAttachmentId(attachmentId: realmAttachment.id)
+                }
+                else if let remoteFileUrl = URL(string: realmAttachment.file) {
+                    let attachmentFile: AttachmentFile = AttachmentFile(
+                        remoteFileUrl: remoteFileUrl,
+                        sha256: realmAttachment.sha256,
+                        pathExtension: remoteFileUrl.pathExtension
+                    )
+                    attachmentFile.addAttachmentId(attachmentId: realmAttachment.id)
+                    attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] = attachmentFile
+                }                
             }
             
             for ( _, realmResource) in realmResourcesDictionary {
@@ -96,11 +106,11 @@ class RealmResourcesCache {
                 try realm.write {
                     realm.add(realmObjectsToCache, update: .all)
                 }
-                complete(nil)
+                complete(.success(RealmResourcesCacheResult(attachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values))))
             }
             catch let error {
                 assertionFailure(error.localizedDescription)
-                complete(error)
+                complete(.failure(error))
             }
         }
     }
@@ -127,6 +137,20 @@ class RealmResourcesCache {
             }
             DispatchQueue.main.async {
                 complete(resource)
+            }
+        }
+    }
+    
+    func getResourceLanguage(resourceId: String, languageId: String, complete: @escaping ((_ language: LanguageModel?) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
+            var language: LanguageModel?
+            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
+                if let realmLanguage = realmResource.languages.filter("id = '\(languageId)'").first {
+                    language = LanguageModel(realmLanguage: realmLanguage)
+                }
+            }
+            DispatchQueue.main.async {
+                complete(language)
             }
         }
     }

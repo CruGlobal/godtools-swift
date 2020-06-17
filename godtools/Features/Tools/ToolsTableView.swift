@@ -67,6 +67,10 @@ class ToolsTableView: UIView, NibBased {
             }, completion: nil)
         }
         
+        viewModel.toolRefreshed.addObserver(self) { [weak self] (indexPath: IndexPath) in
+            self?.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
         if viewModel.toolListIsEditable {
             
             let longPressGesture = UILongPressGestureRecognizer(

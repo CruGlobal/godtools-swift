@@ -18,6 +18,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let favoritedResourcesCache: RealmFavoritedResourcesCache
     let languageSettingsCache: LanguageSettingsCacheType
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
+    let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolListIsEditable: Bool = true
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
@@ -64,7 +65,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func reloadFavoritedResourcesFromCache() {
         
-        resourcesService.resourcesCache.realmResources.getResources { [weak self] (allResources: [ResourceModel]) in
+        resourcesService.realmResourcesCache.getResources { [weak self] (allResources: [ResourceModel]) in
             self?.favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
                 
                 

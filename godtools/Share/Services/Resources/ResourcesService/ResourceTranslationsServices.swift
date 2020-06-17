@@ -13,14 +13,12 @@ class ResourceTranslationsServices {
     typealias ResourceId = String
     
     private let translationsApi: TranslationsApiType
-    private let resourcesCache: ResourcesCache
     
     private var services: [ResourceId: ResourceTranslationsService] = Dictionary()
     
-    required init(translationsApi: TranslationsApiType, resourcesCache: ResourcesCache) {
+    required init(translationsApi: TranslationsApiType) {
         
         self.translationsApi = translationsApi
-        self.resourcesCache = resourcesCache
     }
     
     func getResourceTranslationsService(resourceId: String) -> ResourceTranslationsService {
@@ -30,8 +28,7 @@ class ResourceTranslationsServices {
         }
         
         let newService =  ResourceTranslationsService(
-            translationsApi: translationsApi,
-            resourcesCache: resourcesCache
+            translationsApi: translationsApi
         )
         
         services[resourceId] = newService

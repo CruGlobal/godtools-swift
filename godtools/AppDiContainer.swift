@@ -11,15 +11,18 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
     
-    private let godToolsAnalytics: GodToolsAnaltyics
+    private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
-    let realmDatabase: RealmDatabase
+    private let resourcesSHA256FileCache: SHA256FilesCache = SHA256FilesCache(rootDirectory: "resources_files")
+    private let realmDatabase: RealmDatabase
+    private let languagesApi: LanguagesApiType
+    private let resourcesApi: ResourcesApiType
+    private let translationsApi: TranslationsApiType
+    private let translationsFileCache: TranslationsFileCache
+    private let realmResourcesCache: RealmResourcesCache
+    
     let config: ConfigType
-    let languagesApi: LanguagesApiType
-    let resourcesApi: ResourcesApiType
-    let translationsApi: TranslationsApiType
-    let resourcesCache: ResourcesCache
-    let resourceAttachmentsServices: ResourceAttachmentsServices
+    let resourceAttachmentsService: ResourceAttachmentsService
     let resourceTranslationsServices: ResourceTranslationsServices
     let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
@@ -33,27 +36,29 @@ class AppDiContainer {
         
     required init() {
         
-        realmDatabase = RealmDatabase()
-
         config = AppConfig()
         
+        realmDatabase = RealmDatabase()
+
         languagesApi = LanguagesApi(config: config)
         
         resourcesApi = ResourcesApi(config: config)
         
         translationsApi = TranslationsApi(config: config)
+                
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
-        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
+        realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
+                
+        resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
-        resourceAttachmentsServices = ResourceAttachmentsServices(resourcesCache: resourcesCache)
-        
-        resourceTranslationsServices = ResourceTranslationsServices(translationsApi: translationsApi, resourcesCache: resourcesCache)
+        resourceTranslationsServices = ResourceTranslationsServices(translationsApi: translationsApi)
                         
-        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, resourcesCache: resourcesCache, attachmentsServices: resourceAttachmentsServices, translationsServices: resourceTranslationsServices)
+        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService, translationsServices: resourceTranslationsServices)
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         
-        languageSettingsCache = LanguageSettingsUserDefaultsCache(realmResourcesCache: resourcesCache.realmResources)
+        languageSettingsCache = LanguageSettingsUserDefaultsCache(realmResourcesCache: realmResourcesCache)
         
         isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         

@@ -45,14 +45,6 @@
                                     <constraint firstAttribute="height" constant="2" id="sUC-ca-sZC"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtd-HL-NvG" userLabel="attachmentsDownloadProgress">
-                                <rect key="frame" x="0.0" y="82" width="0.0" height="2"/>
-                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" id="LIz-3b-gJf"/>
-                                    <constraint firstAttribute="height" constant="2" id="ocQ-gR-jLk"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
                                 <rect key="frame" x="12" y="95" width="219" height="21.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
@@ -101,8 +93,6 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="wtd-HL-NvG" firstAttribute="top" secondItem="89C-rq-BCp" secondAttribute="bottom" id="03i-bb-Enk"/>
-                            <constraint firstItem="wtd-HL-NvG" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="4qZ-Dg-fDw"/>
                             <constraint firstAttribute="trailing" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="30" id="68U-LX-f5Q"/>
                             <constraint firstItem="HFT-6s-l9f" firstAttribute="leading" secondItem="bVm-eV-R3X" secondAttribute="trailing" constant="5" id="6Au-qm-6h4"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="BAm-Xe-SFd"/>
@@ -140,8 +130,6 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aboutToolButton" destination="bVm-eV-R3X" id="nso-dl-vhM"/>
-                <outlet property="attachmentsDownloadProgress" destination="wtd-HL-NvG" id="mjx-vJ-aAL"/>
-                <outlet property="attachmentsDownloadProgressWidth" destination="LIz-3b-gJf" id="f1n-cz-ZVk"/>
                 <outlet property="bannerImageView" destination="zB8-IL-euH" id="9Q2-3P-ip8"/>
                 <outlet property="descriptionLabel" destination="I2y-Ji-clW" id="vnI-TE-Q2m"/>
                 <outlet property="favoriteButton" destination="402-Hl-aIK" id="5jU-GQ-uCA"/>

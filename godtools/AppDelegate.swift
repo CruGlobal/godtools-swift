@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+                
         appDiContainer.config.logConfiguration()
         
         appDiContainer.firebaseConfiguration.configure()

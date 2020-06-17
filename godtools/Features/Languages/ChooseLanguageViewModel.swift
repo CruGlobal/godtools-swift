@@ -56,7 +56,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private func reloadLanguages() {
         
-        resourcesService.resourcesCache.realmResources.getLanguages { [weak self] (allLanguages: [LanguageModel]) in
+        resourcesService.realmResourcesCache.getLanguages { [weak self] (allLanguages: [LanguageModel]) in
             
             guard let viewModel = self else {
                 return
@@ -103,7 +103,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             return
         }
         
-        resourcesService.resourcesCache.realmResources.getLanguage(id: id) { [weak self] (language: LanguageModel?) in
+        resourcesService.realmResourcesCache.getLanguage(id: id) { [weak self] (language: LanguageModel?) in
             if let language = language {
                 self?.selectedLanguage.accept(value: ChooseLanguageModel(language: language))
             }
