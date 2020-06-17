@@ -202,10 +202,6 @@ class SHA256FilesCache {
                         sha256 = path
                     }
                     
-                    print("\n cacheing translation file")
-                    print("    sha256: \(sha256)")
-                    print("    pathExtension: \(pathExtension)")
-                    
                     let location = SHA256FileLocation(sha256: sha256, pathExtension: pathExtension)
                     let cacheError: Error? = cacheSHA256File(location: location, fileData: data)
                                         
