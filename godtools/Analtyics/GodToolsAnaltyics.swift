@@ -67,6 +67,6 @@ class GodToolsAnaltyics {
     
     func recordActionForADBMobile(screenName: String?, actionName: String, data: [String: Any]) {
         
-        analytics.adobeAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
+        analytics.trackActionAnalytics.trackAction(screenName: screenName, actionName: actionName, data: data)
     }
 }

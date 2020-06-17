@@ -96,6 +96,19 @@ struct AppConfig: ConfigType {
         }
     }
     
+    var snowplowAppId: String {
+        
+        let debugAppId: String = "godtools-dev"
+        let productionAppId: String = "godtools"
+
+        if isDebug {
+            return debugAppId
+        }
+        else {
+            return productionAppId
+        }
+    }
+    
     // MARK: - Info.plist
     
     private var info: [String: Any] {

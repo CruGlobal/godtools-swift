@@ -20,7 +20,7 @@ class AppDiContainer {
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let translationsApi: TranslationsApiType
-    let resourceLatestTranslationServices: ResourceLatestTranslationServices
+    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
     
@@ -40,17 +40,19 @@ class AppDiContainer {
         loginClient = TheKeyOAuthClient.shared
         
         let analyticsLoggingEnabled: Bool = config.isDebug
+        
         analytics = AnalyticsContainer(
             adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
-            firebaseAnalytics: FirebaseAnalytics()
+            firebaseAnalytics: FirebaseAnalytics(),
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
                 
         translationsApi = TranslationsApi(config: config)
           
-        resourceLatestTranslationServices = ResourceLatestTranslationServices(translationsApi: translationsApi)
+        resourceLatestTranslationServices = ResourcesLatestTranslationServices(translationsApi: translationsApi)
                         
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 

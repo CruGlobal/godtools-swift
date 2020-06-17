@@ -11,10 +11,16 @@ import Foundation
 enum FlowStep {
     
     // app
-    case showMasterView(animated: Bool, shouldCreateNewInstance: Bool)
+    case showTools(animated: Bool, shouldCreateNewInstance: Bool)
+    case showMenu
+    case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
     case urlLinkTappedFromToolDetail(url: URL)
+    
+    // tools
+    case menuTappedFromTools
+    case languageSettingsTappedFromTools
     
     // onboarding
     case beginTappedFromOnboardingWelcome
@@ -24,8 +30,6 @@ enum FlowStep {
     
     // home
     case openTutorialTapped
-    case menuTappedFromHome
-    case languagesTappedFromHome
     
     // myTools
     case toolTappedFromMyTools(resource: DownloadedResource)

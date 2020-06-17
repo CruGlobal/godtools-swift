@@ -225,7 +225,7 @@ class ArticleAemImportOperation: Operation {
             urlRequest: urlRequest,
             data: data,
             urlResponse: urlResponse,
-            error: error
+            requestError: error
         )
         
         var result: Result<ArticleAemImportData, ArticleAemImportOperationError>

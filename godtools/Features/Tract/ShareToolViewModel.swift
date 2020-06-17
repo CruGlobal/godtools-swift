@@ -35,7 +35,7 @@ class ShareToolViewModel: ShareToolViewModelType {
             siteSubSection: ""
         )
                 
-        analytics.adobeAnalytics.trackAction(
+        analytics.trackActionAnalytics.trackAction(
             screenName: analyticsScreenName,
             actionName: AdobeAnalyticsConstants.Values.share,
             data: [

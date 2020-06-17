@@ -13,14 +13,18 @@ struct RequestResponse {
     let urlRequest: URLRequest?
     let data: Data?
     let urlResponse: URLResponse?
-    let error: Error?
+    let requestError: Error?
     
     var httpStatusCode: Int {
         return (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
     }
     
-    var errorCode: Int? {
-        return (error as NSError?)?.code ?? nil
+    var requestFailed: Bool {
+        return httpStatusCode < 200 && httpStatusCode >= 400
+    }
+    
+    var requestErrorCode: Int? {
+        return (requestError as NSError?)?.code ?? nil
     }
     
     var unauthorized: Bool {
@@ -29,10 +33,10 @@ struct RequestResponse {
     
     #if os(iOS)
     var requestCancelled: Bool {
-        return errorCode == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
+        return requestErrorCode == Int(CFNetworkErrors.cfurlErrorCancelled.rawValue)
     }
     var notConnectedToInternet: Bool {
-        return errorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
+        return requestErrorCode == Int(CFNetworkErrors.cfurlErrorNotConnectedToInternet.rawValue)
     }
     #endif
 }

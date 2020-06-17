@@ -49,6 +49,10 @@ class MenuView: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,10 +61,7 @@ class MenuView: UIViewController {
         setupBinding()
         
         viewModel.loginClient.addStateChangeDelegate(delegate: self)
-        
-        // TODO: Would like the MenuView to have it's own navigation bar, this would no longer be needed. ~Levi
-        hideBackBarButtonItem()
-        
+                
         _ = addBarButtonItem(
             to: .right,
             title: viewModel.navDoneButtonTitle,

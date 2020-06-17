@@ -222,6 +222,7 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     @objc private func refreshBannerImage(notification: NSNotification) {
+        
         guard let resourceId = notification.userInfo![GTConstants.kDownloadBannerResourceIdKey] as? String else {
             return
         }
@@ -230,9 +231,6 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         
-#if DEBUG
-        print("refreshBannerImage resourceId: \(resourceId)")
-#endif
         guard let bannerImage = BannerManager().loadFor(remoteId: resourceId) else {
             return
         }

@@ -112,7 +112,7 @@ class WebArchiveOperation: Operation {
                     let httpStatusCode: Int = response.httpStatusCode
                     let mimeType: String = response.urlResponse?.mimeType ?? ""
                                         
-                    if let error = response.error {
+                    if let error = response.requestError {
                         
                         // Do something with Error?
                     }

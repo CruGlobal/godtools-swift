@@ -46,5 +46,7 @@ class MyToolsView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.pageViewed()
+        
+        print("\nMyToolsView: viewWillAppear()")
     }
 }

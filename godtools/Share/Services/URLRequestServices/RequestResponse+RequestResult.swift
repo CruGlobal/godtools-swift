@@ -12,7 +12,7 @@ extension RequestResponse {
     
     func getResult<SuccessType: Decodable, ClientErrorType: Decodable>() -> RequestResult<SuccessType, ClientErrorType> {
         
-        if let error = error {
+        if let error = requestError {
             
             return .failure(clientError: nil, error: error)
         }

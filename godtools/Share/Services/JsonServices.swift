@@ -47,6 +47,34 @@ struct JsonServices: JsonServicesType {
         }
     }
     
+    func getJsonData(json: Any?, options: JSONSerialization.WritingOptions = []) -> Data? {
+        
+        let result: Result<Data?, Error> = getJsonData(json: json, options: options)
+        
+        switch result {
+        case .success(let data):
+            return data
+        case .failure(let error):
+            assertionFailure(error.localizedDescription)
+            return nil
+        }
+    }
+    
+    func getJsonData(json: Any?, options: JSONSerialization.WritingOptions = []) -> Result<Data?, Error> {
+        
+        guard let json = json else {
+            return .success(nil)
+        }
+        
+        do {
+            let jsonData: Data = try JSONSerialization.data(withJSONObject: json, options: options)
+            return .success(jsonData)
+        }
+        catch let error {
+            return .failure(error)
+        }
+    }
+    
     func getJsonObject(data: Data?, options: JSONSerialization.ReadingOptions = []) -> Any? {
         
         let result: Result<Any?, Error> = getJsonObject(data: data, options: options)
