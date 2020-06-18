@@ -9,7 +9,7 @@
 
 import UIKit
 
-
+// TODO: Remove this class. ~Levi
 @IBDesignable
 class GTLabel: UILabel {
     

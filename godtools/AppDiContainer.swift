@@ -32,6 +32,7 @@ class AppDiContainer {
     let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
+    let localizationServices: LocalizationServices = LocalizationServices()
         
     required init() {
         

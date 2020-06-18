@@ -100,6 +100,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "remove" = "Remove";
 "clear" = "Clear";
 "toolinfo_opentool" = "Open Tool";
+"add_to_favorites" = "Add to Favorites";
+"remove_from_favorites" = "Remove from Favorites";
 
 // Alerts
 "error" = "Error";

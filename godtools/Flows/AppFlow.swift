@@ -62,62 +62,27 @@ class AppFlow: NSObject, FlowDelegate {
         
         case .showTools(let animated, let shouldCreateNewInstance):
             
-            // TODO: Eventually need to remove the old tools flow.  Everything within the useOldToolsFlow conditional. ~Levi
-            let useOldToolsFlow: Bool = false
-            
-            if useOldToolsFlow {
+            navigationController.setNavigationBarHidden(false, animated: false)
+
+            configureNavigation(navigationController: navigationController)
+
+            if shouldCreateNewInstance || toolsFlow == nil {
+
+                requestInitialData()
                 
-                navigationController.setNavigationBarHidden(false, animated: false)
-                
-                configureNavigation(navigationController: navigationController)
-                
-                let currentMasterView: MasterHomeViewController? = navigationController.viewControllers.first as? MasterHomeViewController
-                
-                if shouldCreateNewInstance || currentMasterView == nil {
-                    
-                    let viewModel = MasterHomeViewModel(
-                        flowDelegate: self,
-                        tutorialAvailability: appDiContainer.tutorialAvailability,
-                        openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-                        analytics: appDiContainer.analytics
-                    )
-                    
-                    let masterView = MasterHomeViewController(viewModel: viewModel)
+                let toolsFlow: ToolsFlow = ToolsFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController: navigationController
+                )
 
-                    navigationController.setViewControllers([masterView], animated: false)
-                    
-                    if animated {
-                        masterView.view.alpha = 0
-                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                            masterView.view.alpha = 1
-                        }, completion: nil)
-                    }
-                }
-            }
-            else {
-                
-                navigationController.setNavigationBarHidden(false, animated: false)
+                self.toolsFlow = toolsFlow
 
-                configureNavigation(navigationController: navigationController)
-
-                if shouldCreateNewInstance || toolsFlow == nil {
-
-                    requestInitialData()
-                    
-                    let toolsFlow: ToolsFlow = ToolsFlow(
-                        flowDelegate: self,
-                        appDiContainer: appDiContainer,
-                        sharedNavigationController: navigationController
-                    )
-
-                    self.toolsFlow = toolsFlow
-
-                    if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
-                        toolsView.alpha = 0
-                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                            toolsView.alpha = 1
-                        }, completion: nil)
-                    }
+                if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
+                    toolsView.alpha = 0
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                        toolsView.alpha = 1
+                    }, completion: nil)
                 }
             }
             

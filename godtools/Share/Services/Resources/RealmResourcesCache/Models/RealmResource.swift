@@ -12,6 +12,7 @@ import RealmSwift
 class RealmResource: Object, ResourceModelType {
     
     @objc dynamic var abbreviation: String = ""
+    @objc dynamic var attrAboutOverviewVideoYoutube: String = ""
     @objc dynamic var attrBanner: String = ""
     @objc dynamic var attrBannerAbout: String = ""
     @objc dynamic var attrCategory: String = ""
@@ -38,6 +39,7 @@ class RealmResource: Object, ResourceModelType {
     func mapFrom(model: ResourceModel) {
         
         abbreviation = model.abbreviation
+        attrAboutOverviewVideoYoutube = model.attrAboutOverviewVideoYoutube
         attrBanner = model.attrBanner
         attrBannerAbout = model.attrBannerAbout
         attrCategory = model.attrCategory

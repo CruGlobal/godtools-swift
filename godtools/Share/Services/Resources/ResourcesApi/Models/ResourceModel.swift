@@ -11,6 +11,7 @@ import Foundation
 struct ResourceModel: ResourceModelType, Decodable {
     
     let abbreviation: String
+    let attrAboutOverviewVideoYoutube: String
     let attrBanner: String
     let attrBannerAbout: String
     let attrCategory: String
@@ -26,6 +27,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     
     let latestTranslationIds: [String]
     let attachmentIds: [String]
+    let languageIds: [String]
     
     enum RootKeys: String, CodingKey {
         case id = "id"
@@ -36,6 +38,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     
     enum AttributesKeys: String, CodingKey {
         case abbreviation = "abbreviation"
+        case attrAboutOverviewVideoYoutube = "attr-about-overview-video-youtube"
         case attrBanner = "attr-banner"
         case attrBannerAbout = "attr-banner-about"
         case attrCategory = "attr-category"
@@ -60,6 +63,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     init(realmResource: RealmResource) {
         
         abbreviation = realmResource.abbreviation
+        attrAboutOverviewVideoYoutube = realmResource.attrAboutOverviewVideoYoutube
         attrBanner = realmResource.attrBanner
         attrBannerAbout = realmResource.attrBannerAbout
         attrCategory = realmResource.attrCategory
@@ -75,6 +79,7 @@ struct ResourceModel: ResourceModelType, Decodable {
         
         latestTranslationIds = Array(realmResource.latestTranslationIds)
         attachmentIds = Array(realmResource.attachmentIds)
+        languageIds = Array(realmResource.languages).map({$0.id})
     }
     
     init(from decoder: Decoder) throws {
@@ -100,25 +105,29 @@ struct ResourceModel: ResourceModelType, Decodable {
         }
         
         // attributes
-        abbreviation = try attributesContainer?.decode(String.self, forKey: .abbreviation) ?? ""
-        attrBanner = try attributesContainer?.decode(String.self, forKey: .attrBanner) ?? ""
-        attrBannerAbout = try attributesContainer?.decode(String.self, forKey: .attrBannerAbout) ?? ""
-        attrCategory = try attributesContainer?.decode(String.self, forKey: .attrCategory) ?? ""
-        attrDefaultOrder = try attributesContainer?.decode(String.self, forKey: .attrDefaultOrder) ?? ""
-        manifest = try attributesContainer?.decode(String.self, forKey: .manifest) ?? ""
-        name = try attributesContainer?.decode(String.self, forKey: .name) ?? ""
-        oneskyProjectId = try attributesContainer?.decode(Int.self, forKey: .oneskyProjectId) ?? -1
-        resourceDescription = try attributesContainer?.decode(String.self, forKey: .description) ?? ""
-        resourceType = try attributesContainer?.decode(String.self, forKey: .resourceType) ?? ""
-        totalViews = try attributesContainer?.decode(Int.self, forKey: .totalViews) ?? -1
+        abbreviation = try attributesContainer?.decodeIfPresent(String.self, forKey: .abbreviation) ?? ""
+        attrAboutOverviewVideoYoutube = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrAboutOverviewVideoYoutube) ?? ""
+        attrBanner = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBanner) ?? ""
+        attrBannerAbout = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBannerAbout) ?? ""
+        attrCategory = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrCategory) ?? ""
+        attrDefaultOrder = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultOrder) ?? ""
+        manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
+        name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
+        oneskyProjectId = try attributesContainer?.decodeIfPresent(Int.self, forKey: .oneskyProjectId) ?? -1
+        resourceDescription = try attributesContainer?.decodeIfPresent(String.self, forKey: .description) ?? ""
+        resourceType = try attributesContainer?.decodeIfPresent(String.self, forKey: .resourceType) ?? ""
+        totalViews = try attributesContainer?.decodeIfPresent(Int.self, forKey: .totalViews) ?? -1
                 
         // relationships - latest-translations
-        let latestTranslations: [TranslationModel] = try latestTranslationsContainer?.decode([TranslationModel].self, forKey: .data) ?? []
+        let latestTranslations: [TranslationModel] = try latestTranslationsContainer?.decodeIfPresent([TranslationModel].self, forKey: .data) ?? []
         latestTranslationIds = latestTranslations.map({$0.id})
         
         // relationships - attachments
-        let attachments: [AttachmentModel] = try attachmentsContainer?.decode([AttachmentModel].self, forKey: .data) ?? []
+        let attachments: [AttachmentModel] = try attachmentsContainer?.decodeIfPresent([AttachmentModel].self, forKey: .data) ?? []
         attachmentIds = attachments.map({$0.id})
+        
+        // set when initialized from a RealmResource.
+        languageIds = Array()
     }
 }
 

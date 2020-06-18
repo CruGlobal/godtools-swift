@@ -93,7 +93,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     }
     
     func aboutToolTapped(resource: ResourceModel) {
-        //flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
+        flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
     }
     
     func openToolTapped(resource: ResourceModel) {

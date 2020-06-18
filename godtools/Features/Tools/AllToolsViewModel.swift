@@ -46,7 +46,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func setupBinding() {
-        
         resourcesService.completed.addObserver(self) { [weak self] (error: ResourcesServiceError?) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadResourcesFromCache()
@@ -78,7 +77,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     func aboutToolTapped(resource: ResourceModel) {
-        //flowDelegate?.navigate(step: .toolDetailsTappedFromAllTools(resource: resource))
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
     }
     
     func openToolTapped(resource: ResourceModel) {

@@ -26,10 +26,10 @@ class MyToolsViewModel: MyToolsViewModelType {
     }
     
     func toolTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+        //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
     func toolInfoTapped(resource: DownloadedResource) {
-        flowDelegate?.navigate(step: .toolDetailsTappedFromFavoritedTools(resource: resource))
+        //flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
     }
 }

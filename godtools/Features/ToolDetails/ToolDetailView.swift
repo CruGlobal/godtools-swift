@@ -2,10 +2,9 @@
 //  ToolDetailView.swift
 //  godtools
 //
-//  Created by Devserker on 4/21/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/18/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
-
 
 import UIKit
 import TTTAttributedLabel
@@ -13,44 +12,37 @@ import YoutubePlayer_in_WKWebView
 
 class ToolDetailView: UIViewController {
     
-    enum SegmentedControlId: String {
-        case about = "about"
-        case language = "language"
-    }
-    
     private let viewModel: ToolDetailViewModelType
-        
-    private var detailsSegments: [GTSegment] = Array()
-    private var didLayoutSubviews: Bool = false
-    
-    @IBOutlet weak private var topView: UIView!
-    @IBOutlet weak private var bottomView: UIView!
+            
+    //topMediaView
+    @IBOutlet weak private var topMediaView: UIView!
+    @IBOutlet weak private var youTubePlayerContentView: UIView!
     @IBOutlet weak private var youTubePlayerView: WKYTPlayerView!
     @IBOutlet weak private var youTubeLoadingView: UIView!
     @IBOutlet weak private var youTubeActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak private var titleLabel: GTLabel!
-    @IBOutlet weak private var totalViewsLabel: GTLabel!
-    @IBOutlet weak private var openToolButton: GTButton!
-    @IBOutlet weak private var mainButton: GTButton!
-    @IBOutlet weak private var detailsControl: GTSegmentedControl!
+    @IBOutlet weak private var bannerImageView: UIImageView!
+    //scrollView
+    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak private var contentView: UIView!
     @IBOutlet weak private var detailsView: UIView!
     @IBOutlet weak private var detailsLabelsView: UIView!
     @IBOutlet weak private var aboutDetailsTextView: UITextView!
     @IBOutlet weak private var languageDetailsTextView: UITextView!
     @IBOutlet weak private var detailsShadow: UIView!
-    @IBOutlet weak private var downloadProgressView: GTProgressView!
-    @IBOutlet weak private var bannerImageView: UIImageView!
+    @IBOutlet weak private var clipTopDetailsShadow: UIView!
+    @IBOutlet weak private var detailsControl: GTSegmentedControl!
+    @IBOutlet weak private var nameLabel: UILabel!
+    @IBOutlet weak private var totalViewsLabel: UILabel!
+    @IBOutlet weak private var openToolButton: UIButton!
+    @IBOutlet weak private var unfavoriteButton: UIButton!
+    @IBOutlet weak private var favoriteButton: UIButton!
     
-    @IBOutlet weak private var topLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak private var mainButtonTopToTotalViewsLabel: NSLayoutConstraint!
-    @IBOutlet weak private var mainButtonTopToOpenToolButton: NSLayoutConstraint!
+    //constraints
     @IBOutlet weak private var detailsLabelsViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
     @IBOutlet weak private var aboutDetailsTextViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
-    
-    let toolsManager = ToolsManager.shared
-            
+                
     required init(viewModel: ToolDetailViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: String(describing: ToolDetailView.self), bundle: nil)
@@ -70,52 +62,118 @@ class ToolDetailView: UIViewController {
         
         setupLayout()
         setupBinding()
-        
-        openToolButton.designAsOpenToolButton()
-                    
-        displayData()
-        registerForDownloadProgressNotifications()
-        setTopHeight()
-        
+                            
         addDefaultNavBackItem()
         
-        openToolButton.addTarget(
-            self,
-            action: #selector(handleOpenTool(button:)),
-            for: .touchUpInside
-        )
+        openToolButton.addTarget(self, action: #selector(handleOpenTool(button:)), for: .touchUpInside)
+        unfavoriteButton.addTarget(self, action: #selector(handleUnfavorite(button:)), for: .touchUpInside)
+        favoriteButton.addTarget(self, action: #selector(handleFavorite(button:)), for: .touchUpInside)
     }
     
     private func setupLayout() {
-        
-        topView.backgroundColor = view.backgroundColor
-        bottomView.backgroundColor = detailsView.backgroundColor
-        
-        youTubePlayerView.isHidden = true
+             
+        youTubeLoadingView.backgroundColor = topMediaView.backgroundColor
         
         // detailsShadow
         detailsShadow.layer.shadowOffset = CGSize(width: 0, height: 1)
         detailsShadow.layer.shadowColor = UIColor.black.cgColor
         detailsShadow.layer.shadowRadius = 5
         detailsShadow.layer.shadowOpacity = 0.3
+        
+        let buttonCornerRadius: CGFloat = 8
+        openToolButton.layer.cornerRadius = buttonCornerRadius
+        unfavoriteButton.layer.cornerRadius = buttonCornerRadius
+        favoriteButton.layer.cornerRadius = buttonCornerRadius
     }
     
     private func setupBinding() {
         
-        title = viewModel.navTitle
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            
-            if viewModel.hidesOpenToolButton {
-                mainButtonTopToTotalViewsLabel.isActive = true
-                mainButtonTopToOpenToolButton.isActive = false
-                openToolButton.isHidden = true
+        viewModel.navTitle.addObserver(self) { [weak self] (navTitle: String) in
+            self?.title = navTitle
+        }
+        
+        viewModel.topToolDetailMedia.addObserver(self) { [weak self] (toolDetailMedia: ToolDetailMedia?) in
+                      
+            if let newBannerImage = toolDetailMedia?.bannerImage {
+                self?.setTopBannerImage(image: newBannerImage)
+            }
+            else if let youtubePlayerId = toolDetailMedia?.youtubePlayerId, !youtubePlayerId.isEmpty {
+                self?.loadYoutubePlayerVideo(videoId: youtubePlayerId)
             }
         }
+        
+        bannerImageView.isHidden = viewModel.hidesBannerImage
+        youTubePlayerContentView.isHidden = viewModel.hidesYoutubePlayer
+        
+        viewModel.name.addObserver(self) { [weak self] (name: String) in
+            self?.nameLabel.text = name
+        }
+        
+        viewModel.totalViews.addObserver(self) { [weak self] (totalViews: String) in
+            self?.totalViewsLabel.text = totalViews
+        }
+        
+        viewModel.openToolTitle.addObserver(self) { [weak self] (title: String) in
+            self?.openToolButton.setTitle(title, for: .normal)
+        }
+        
+        viewModel.unfavoriteTitle.addObserver(self) { [weak self] (title: String) in
+            self?.unfavoriteButton.setTitle(title, for: .normal)
+        }
+        
+        viewModel.favoriteTitle.addObserver(self) { [weak self] (title: String) in
+            self?.favoriteButton.setTitle(title, for: .normal)
+        }
+        
+        viewModel.toolDetailsControls.addObserver(self) { [weak self] (detailsSegments: [ToolDetailControl]) in
+            
+            if !detailsSegments.isEmpty {
+                
+                guard let toolDetailView = self else {
+                    return
+                }
+                
+                var detailsControlLayout = GTSegmentedControl.LayoutConfig.defaultLayout
+                detailsControlLayout.spacingBetweenSegments = 54
+                self?.detailsControl.configure(
+                    segments: detailsSegments,
+                    delegate: toolDetailView,
+                    layout: detailsControlLayout
+                )
+            }
+        }
+        
+        viewModel.selectedDetailControl.addObserver(self) { [weak self] (detailControl: ToolDetailControl?) in
+            
+            guard let toolDetailView = self else {
+                return
+            }
+                        
+            switch detailControl?.controlId ?? .about {
+            case .about:
+                toolDetailView.aboutDetailsTextViewLeading.constant = 0
+                toolDetailView.languageDetailsTextViewLeading.constant = toolDetailView.view.bounds.size.width
+            case .languages:
+                toolDetailView.aboutDetailsTextViewLeading.constant = toolDetailView.view.bounds.size.width * -1
+                toolDetailView.languageDetailsTextViewLeading.constant = 0
+            }
+            
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                toolDetailView.detailsView.layoutIfNeeded()
+            }, completion: nil)
+        }
+    }
+    
+    @objc func handleOpenTool(button: UIButton) {
+        viewModel.openToolTapped()
+    }
+    
+    @objc func handleUnfavorite(button: UIButton) {
+        viewModel.unfavoriteTapped()
+    }
+    
+    @objc func handleFavorite(button: UIButton) {
+        viewModel.favoriteTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,16 +190,27 @@ class ToolDetailView: UIViewController {
         }
     }
     
-    func setTopHeight() {
-        let barHeight = navigationController?.navigationBar.frame.height ?? 0
-        let statusBarHeight = UIApplication.shared.isStatusBarHidden ? CGFloat(0) : UIApplication.shared.statusBarFrame.height
-        let topBar = barHeight + statusBarHeight
-        topLayoutConstraint.constant = topBar
-        view.layoutIfNeeded()
+    private func setTopBannerImage(image: UIImage) {
+        
+        let previousBannerImage: UIImage? = bannerImageView.image
+        
+        bannerImageView.image = image
+        
+        if previousBannerImage == nil {
+            bannerImageView.alpha = 0
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                self.bannerImageView.alpha = 1
+            }, completion: nil)
+        }
     }
-
-    // MARK: Present data
-    
+     
+    private func loadYoutubePlayerVideo(videoId: String) {
+        youTubeActivityIndicator.startAnimating()
+        youTubePlayerView.delegate = self
+        youTubePlayerView.load(withVideoId: videoId, playerVars: ["playsinline": 1])
+    }
+     
+    /*
     fileprivate func displayData() {
         
         let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
@@ -227,86 +296,7 @@ class ToolDetailView: UIViewController {
         
         detailsLabelsViewHeight.constant = maxDetailLabelHeight
         detailsView.layoutIfNeeded()
-    }
-    
-    private func displayButton() {
-        
-        let resource: DownloadedResource = viewModel.resource
-        
-        if resource.numberOfAvailableLanguages() == 0 {
-            mainButton.designAsUnavailableButton()
-        } else if resource.shouldDownload {
-            mainButton.designAsDeleteButton()
-        } else {
-            mainButton.designAsDownloadButton()
-        }
-    }
-    
-    private func registerForDownloadProgressNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(progressViewListenerShouldUpdate),
-                                               name: .downloadProgressViewUpdateNotification,
-                                               object: nil)
-    }
-    
-    @objc private func progressViewListenerShouldUpdate(notification: NSNotification) {
-        
-        guard let resourceId = notification.userInfo![GTConstants.kDownloadProgressResourceIdKey] as? String else {
-            return
-        }
-        
-        let resource: DownloadedResource = viewModel.resource
-        
-        if resourceId != resource.remoteId {
-            return
-        }
-        
-        guard let progress = notification.userInfo![GTConstants.kDownloadProgressProgressKey] as? Progress else {
-            return
-        }
-        
-        OperationQueue.main.addOperation { [weak self] in
-            
-            self?.downloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
-            
-            if progress.fractionCompleted == 1.0 {
-                self?.returnToHome()
-            }
-        }
-    }
-    
-    @objc func handleOpenTool(button: UIButton) {
-
-        viewModel.openToolTapped()
-    }
-    
-    @IBAction func mainButtonWasPressed(_ sender: Any) {
-        
-        // TODO: Navigate back to my tools through flow. ~Levi
-        navigationController?.popViewController(animated: true)
-
-        let resource: DownloadedResource = viewModel.resource
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) { [weak self] in
-            
-            if resource.shouldDownload {
-                DownloadedResourceManager().delete(resource)
-                self?.downloadProgressView.setProgress(0.0, animated: false)
-                NotificationCenter.default.post(name: .reloadHomeListNotification, object: nil)
-            } else {
-                DownloadedResourceManager().download(resource)
-            }
-        }
-        displayButton()
-    }
-    
-    private func returnToHome() {
-        let time = DispatchTime.now() + 0.55
-        DispatchQueue.main.asyncAfter(deadline: time) { [weak self] in
-            // TODO: Navigate back to my tools through flow. ~Levi
-            self?.navigationController?.popViewController(animated: true)
-        }
-    }
+    }*/
 }
 
 // MARK: - UITextViewDelegate
@@ -327,20 +317,8 @@ extension ToolDetailView: GTSegmentedControlDelegate {
     
     func segmentedControl(segmentedControl: GTSegmentedControl, didSelect segment: GTSegmentType, at index: Int) {
         
-        if let segmentId = SegmentedControlId(rawValue: segment.id) {
-                    
-            switch segmentId {
-            case .about:
-                aboutDetailsTextViewLeading.constant = 0
-                languageDetailsTextViewLeading.constant = view.bounds.size.width
-            case .language:
-                aboutDetailsTextViewLeading.constant = view.bounds.size.width * -1
-                languageDetailsTextViewLeading.constant = 0
-            }
-            
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.detailsView.layoutIfNeeded()
-            }, completion: nil)
+        if let detailControl = segment as? ToolDetailControl {
+            viewModel.detailControlTapped(detailControl: detailControl)
         }
     }
 }
@@ -360,17 +338,17 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
         
-        print("\n playerView didChangeTo state")
+        print("\n ToolDetailView playerView didChangeTo state")
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
         
-        print("\n playerView didChangeTo quality")
+        print("\n ToolDetailView playerView didChangeTo quality")
     }
     
     func playerView(_ playerView: WKYTPlayerView, receivedError error: WKYTPlayerError) {
         
-        print("\n playerView receivedError error")
+        print("\n ToolDetailView playerView receivedError error")
         print("  error: \(error)")
     }
 }

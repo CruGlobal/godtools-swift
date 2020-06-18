@@ -57,14 +57,20 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private func reloadParallelLanguageName() {
 
         let userParallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        let supportsParallelLanguage: Bool = resource.languageIds.contains(userParallelLanguageId)
         
-        resourcesService.realmResourcesCache.getResourceLanguage(resourceId: resource.id, languageId: userParallelLanguageId ?? "") { [weak self] (language: LanguageModel?) in
-            if let resourceSupportsParallelLanguage = language {
-                let name: String = "✓ " + LanguageNameViewModel(language: resourceSupportsParallelLanguage).name
+        resourcesService.realmResourcesCache.getLanguage(id: userParallelLanguageId) { [weak self] (language: LanguageModel?) in
+            
+            guard let language = language else {
+                self?.parallelLanguageName.accept(value: "")
+                return
+            }
+            
+            if supportsParallelLanguage {
+                let name: String = "✓ " + LanguageNameViewModel(language: language).name
                 self?.parallelLanguageName.accept(value: name)
             }
             else {
-                
                 self?.parallelLanguageName.accept(value: "")
             }
         }

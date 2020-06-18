@@ -80,7 +80,7 @@ class ToolsFlow: Flow {
         case .toolTappedFromFavoritedTools(let resource):
             navigateToTool(resource: resource)
             
-        case .toolDetailsTappedFromFavoritedTools(let resource):
+        case .aboutToolTappedFromFavoritedTools(let resource):
             navigateToToolDetail(resource: resource)
             
         case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
@@ -110,7 +110,7 @@ class ToolsFlow: Flow {
         case .toolTappedFromAllTools(let resource):
             navigateToTool(resource: resource)
             
-        case .toolDetailsTappedFromAllTools(let resource):
+        case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
         case .openToolTappedFromToolDetails(let resource):
@@ -203,11 +203,14 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func navigateToToolDetail(resource: DownloadedResource) {
+    private func navigateToToolDetail(resource: ResourceModel) {
         
         let viewModel = ToolDetailViewModel(
             flowDelegate: self,
             resource: resource,
+            resourcesService: appDiContainer.resourcesService,
+            languageSettingsCache: appDiContainer.languageSettingsCache,
+            localization: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )

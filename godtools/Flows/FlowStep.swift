@@ -31,12 +31,12 @@ enum FlowStep {
     
     // favoritedTools
     case toolTappedFromFavoritedTools(resource: DownloadedResource)
-    case toolDetailsTappedFromFavoritedTools(resource: DownloadedResource)
+    case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
     case unfavoriteToolTappedFromFavoritedTools(resource: ResourceModel, removeHandler: CallbackHandler)
     
     // allTools
     case toolTappedFromAllTools(resource: DownloadedResource)
-    case toolDetailsTappedFromAllTools(resource: DownloadedResource)
+    case aboutToolTappedFromAllTools(resource: ResourceModel)
     
     // toolDetails
     case openToolTappedFromToolDetails(resource: DownloadedResource)

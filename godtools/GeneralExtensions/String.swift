@@ -15,19 +15,22 @@ extension String {
     
     static var godtoolsRGBANumberFormatter: NumberFormatter?
     
+    // TODO: Remove and replace with LocalizationServices. ~Levi
     var localized: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
     }
+    
+    // TODO: Remove and replace with LocalizationServices. ~Levi
     func localized(default dflt: String) -> String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: dflt, comment: "")
     }
     
-    
+    // TODO: Remove and replace with LocalizationServices. ~Levi
     /// returns the translation for self using the given language
-    func localized(for language: String?) -> String? {
+    func localized(for languageCode: String?) -> String? {
         // if the language is not given, or corresponding translation bundle not found, use default localization
-        guard let language = language,
-            let path = Bundle.main.path(forResource: language, ofType: "lproj"),
+        guard let languageCode = languageCode,
+            let path = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
             let bundle = Bundle(path: path) else {
                 return localized
         }
@@ -71,30 +74,6 @@ extension String {
         String.godtoolsRGBANumberFormatter!.decimalSeparator = "."
     }
     
-    func transformToNumber() -> Int {
-        let data = self.data(using: .utf8)!
-        var finalValue = 0
-        
-        for item in data {
-            let hexString = String(format:"%02x", item)
-            let scanner = Scanner(string: hexString)
-            var value: UInt64 = 0
-            scanner.scanHexInt64(&value)
-            
-            finalValue += Int(value)
-        }
-        
-        return finalValue
-    }
-    
-    var dashCased: String? {
-        let pattern = "([a-z0-9])([A-Z])"
-        
-        let regex = try? NSRegularExpression(pattern: pattern, options: [])
-        let range = NSRange(location: 0, length: self.count)
-        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "$1-$2").lowercased()
-    }
-    
     var camelCased: String {
         let items = self.components(separatedBy: "-")
         var camelCase = ""
@@ -103,29 +82,4 @@ extension String {
         }
         return camelCase
     }
-    
-    
-    func deletePrefix(_ prefix: String) -> String {
-        guard self.hasPrefix(prefix) else { return self }
-        return String(self.dropFirst(prefix.count))
-    }
-    
-    
-    var md5: String! {
-        let str = self.cString(using: String.Encoding.utf8)
-        let strLen = CC_LONG(self.lengthOfBytes(using: String.Encoding.utf8))
-        let digestLen = Int(CC_MD5_DIGEST_LENGTH)
-        let result = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: digestLen)
-        
-        CC_MD5(str!, strLen, result)
-        
-        var hash = String()
-        for i in 0..<digestLen {
-            hash += String(format: "%02x", result[i])
-        }
-        result.deallocate()
-        
-        return hash
-    }
-    
 }
