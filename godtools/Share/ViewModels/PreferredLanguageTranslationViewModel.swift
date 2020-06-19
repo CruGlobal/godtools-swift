@@ -11,54 +11,81 @@ import RealmSwift
 
 class PreferredLanguageTranslationViewModel {
     
-    private let realmDatabase: RealmDatabase
+    private let resourcesCache: RealmResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType
     private let deviceLanguage: DeviceLanguageType
     
-    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
+    required init(resourcesCache: RealmResourcesCache, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
         
-        self.realmDatabase = realmDatabase
+        self.resourcesCache = resourcesCache
         self.languageSettingsCache = languageSettingsCache
         self.deviceLanguage = deviceLanguage
     }
     
-    func getPreferredLanguageTranslation(resourceId: String, complete: @escaping ((_ translation: TranslationModel?) -> Void)) {
-                
-        let userPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        
-        realmDatabase.background { [weak self] (realm: Realm) in
+    func getPreferredLanguageTranslation(resourceId: String, completeOnMain: @escaping ((_ translation: TranslationModel?) -> Void)) {
+                        
+        resourcesCache.realmDatabase.background { [weak self] (realm: Realm) in
             
-            let translation: TranslationModel?
-            var realmTranslation: RealmTranslation?
-            
-            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
-                
-                if !userPrimaryLanguageId.isEmpty, let userPrimaryLanguageTranslation = realmResource.latestTranslations.filter("language.id = '\(userPrimaryLanguageId)'").first {
-                    realmTranslation = userPrimaryLanguageTranslation
-                }
-                else if let localeLanguageCodes = self?.deviceLanguage.possibleLocaleCodes(locale: Locale.current) {
-                    for code in localeLanguageCodes {
-                        if let localeTranslation = realmResource.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), code.lowercased())).first {
-                            realmTranslation = localeTranslation
-                            break
-                        }
-                    }
-                }
-                else if let englishTranslation = realmResource.latestTranslations.filter("language.code = 'en'").first {
-                    realmTranslation = englishTranslation
-                }
-            }
-            
-            if let realmTranslation = realmTranslation {
-                translation = TranslationModel(realmTranslation: realmTranslation)
-            }
-            else {
-                translation = nil
-            }
-            
+            let translation: TranslationModel? = self?.getPreferredLanguageTranslation(
+                realm: realm,
+                resourceId: resourceId
+            )
+
             DispatchQueue.main.async {
-                complete(translation)
+                completeOnMain(translation)
             }
         }
+    }
+    
+    func getPreferredLanguageTranslation(realm: Realm, resourceId: String) -> TranslationModel? {
+         
+        let userPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let userPrimaryLanguage: RealmLanguage? = realm.object(ofType: RealmLanguage.self, forPrimaryKey: userPrimaryLanguageId)
+        let languageLocale: Locale
+        let resourceLatestTranslations: List<RealmTranslation>
+        var realmTranslation: RealmTranslation?
+        
+        if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
+            resourceLatestTranslations = realmResource.latestTranslations
+        }
+        else {
+            resourceLatestTranslations = List<RealmTranslation>()
+        }
+        
+        if let userPrimaryLanguage = userPrimaryLanguage {
+            languageLocale = Locale(identifier: userPrimaryLanguage.code)
+        }
+        else {
+            languageLocale = Locale.current
+        }
+        
+        if let userPrimaryLanguage = userPrimaryLanguage, let userPrimaryLanguageTranslation = resourceLatestTranslations.filter("language.id = '\(userPrimaryLanguage.id)'").first {
+            realmTranslation = userPrimaryLanguageTranslation
+        }
+        else {
+            
+            let localeLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: languageLocale)
+            
+            for code in localeLanguageCodes {
+                if let localeTranslation = resourceLatestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), code.lowercased())).first {
+                    realmTranslation = localeTranslation
+                    break
+                }
+            }
+        }
+        
+        if realmTranslation == nil, let englishTranslation = resourceLatestTranslations.filter("language.code = 'en'").first {
+            realmTranslation = englishTranslation
+        }
+        
+        let translation: TranslationModel?
+        if let realmTranslation = realmTranslation {
+            translation = TranslationModel(realmTranslation: realmTranslation)
+        }
+        else {
+            translation = nil
+        }
+        
+        return translation
     }
 }

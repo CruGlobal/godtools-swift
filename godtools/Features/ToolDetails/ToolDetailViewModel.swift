@@ -14,7 +14,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
     private let favoritedResourcesCache: RealmFavoritedResourcesCache
-    private let languageSettingsCache: LanguageSettingsCacheType
+    private let languageSettingsService: LanguageSettingsService
     private let localization: LocalizationServices
     private let preferredLanguageTranslation: PreferredLanguageTranslationViewModel
     private let analytics: AnalyticsContainer
@@ -40,13 +40,13 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesService = resourcesService
         self.favoritedResourcesCache = favoritedResourcesCache
-        self.languageSettingsCache = languageSettingsCache
+        self.languageSettingsService = languageSettingsService
         self.localization = localization
         self.preferredLanguageTranslation = preferredLanguageTranslation
         self.analytics = analytics
@@ -100,13 +100,14 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let resource: ResourceModel = self.resource
         let resourcesCache: RealmResourcesCache = self.resourcesService.realmResourcesCache
-        let userSettingsPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
+        let userSettingsPrimaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         let localization: LocalizationServices = self.localization
         
         reloadFavorited()
         
-        preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id) { [weak self] (translation: TranslationModel?) in
-                        
+        preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id, completeOnMain: { [weak self] (translation: TranslationModel?) in
+            
             if let preferredTranslation = translation {
                 self?.name.accept(value: preferredTranslation.translatedName)
                 self?.aboutDetails.accept(value: preferredTranslation.translatedDescription)
@@ -115,7 +116,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
                 self?.name.accept(value: resource.name)
                 self?.aboutDetails.accept(value: resource.resourceDescription)
             }
-        }
+        })
         
         resourcesCache.realmDatabase.background { (realm: Realm) in
             
@@ -127,7 +128,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
             if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resource.id) {
                 
                 let languages: [RealmLanguage] = Array(realmResource.languages)
-                let languageNames: [String] = languages.map({LanguageNameViewModel(language: $0).name})
+                let languageNames: [String] = languages.map({LanguageNameTranslationViewModel(language: $0, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: true).name})
                 let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
                 languageDetails = sortedLanguageNames
                 

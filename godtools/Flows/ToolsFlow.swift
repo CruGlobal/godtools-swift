@@ -39,7 +39,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resourcesService: appDiContainer.resourcesService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsCache: appDiContainer.languageSettingsCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
             analytics: appDiContainer.analytics
         )
         
@@ -47,7 +47,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resourcesService: appDiContainer.resourcesService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsCache: appDiContainer.languageSettingsCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
             analytics: appDiContainer.analytics
         )
         
@@ -217,7 +217,7 @@ class ToolsFlow: Flow {
             resource: resource,
             resourcesService: appDiContainer.resourcesService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            languageSettingsCache: appDiContainer.languageSettingsCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices,
             preferredLanguageTranslation: appDiContainer.preferredLanguageTranslation,
             analytics: appDiContainer.analytics,

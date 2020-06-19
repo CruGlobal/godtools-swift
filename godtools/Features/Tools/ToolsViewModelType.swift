@@ -12,7 +12,7 @@ protocol ToolsViewModelType {
     
     var resourcesService: ResourcesService { get }
     var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
-    var languageSettingsCache: LanguageSettingsCacheType { get }
+    var languageSettingsService: LanguageSettingsService { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }

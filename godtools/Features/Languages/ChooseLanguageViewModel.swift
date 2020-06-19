@@ -17,7 +17,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     }
     
     private let resourcesService: ResourcesService
-    private let languageSettingsCache: LanguageSettingsCacheType
+    private let languageSettingsService: LanguageSettingsService
     private let translationZipImporter: TranslationZipImporter
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
@@ -32,11 +32,11 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let languages: ObservableValue<[ChooseLanguageModel]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<ChooseLanguageModel?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsCache: LanguageSettingsCacheType, translationZipImporter: TranslationZipImporter, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsService: LanguageSettingsService, translationZipImporter: TranslationZipImporter, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.resourcesService = resourcesService
-        self.languageSettingsCache = languageSettingsCache
+        self.languageSettingsService = languageSettingsService
         self.translationZipImporter = translationZipImporter
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
@@ -58,31 +58,14 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     private func reloadLanguages() {
                 
         let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        let languageSettingsCache: LanguageSettingsCacheType = self.languageSettingsCache
+        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
         let chooseLanguageType: ChooseLanguageType = self.chooseLanguageType
-        let userPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let userParallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
+        let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
         
         resourcesCache.realmDatabase.background { [weak self] (realm: Realm) in
             
             let allLanguages: [LanguageModel] = resourcesCache.getLanguages(realm: realm).map({LanguageModel(realmLanguage: $0)})
-            
-            let userPrimaryLanguage: LanguageModel?
-            let userParallelLanguage: LanguageModel?
-            
-            if let realmUserPrimaryLanguage = resourcesCache.getLanguage(realm: realm, id: userPrimaryLanguageId) {
-                userPrimaryLanguage = LanguageModel(realmLanguage: realmUserPrimaryLanguage)
-            }
-            else {
-                userPrimaryLanguage = nil
-            }
-            
-            if let realmUserParallelLanguage = resourcesCache.getLanguage(realm: realm, id: userParallelLanguageId) {
-                userParallelLanguage = LanguageModel(realmLanguage: realmUserParallelLanguage)
-            }
-            else {
-                userParallelLanguage = nil
-            }
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -112,7 +95,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
                     }
                 }
                 
-                let languages: [ChooseLanguageModel] = availableLanguages.map({ChooseLanguageModel(language: $0)})
+                let languages: [ChooseLanguageModel] = availableLanguages.map({ChooseLanguageModel(language: $0, languageSettingsService: languageSettingsService)})
                 self?.allLanguages = languages
                 self?.languages.accept(value: languages)
             }
@@ -120,32 +103,22 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     }
     
     private func reloadSelectedLanguage() {
-        
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        
-        let languageId: String?
+                
+        let language: LanguageModel?
         
         switch chooseLanguageType {
         case .primary:
-            languageId = languageSettingsCache.primaryLanguageId.value
+            language = languageSettingsService.primaryLanguage.value
         case .parallel:
-            languageId = languageSettingsCache.parallelLanguageId.value
+            language = languageSettingsService.parallelLanguage.value
         }
         
-        guard let id = languageId else {
+        if let language = language {
+            selectedLanguage.accept(value: ChooseLanguageModel(language: language, languageSettingsService: languageSettingsService))
+        }
+        else {
             selectedLanguage.accept(value: nil)
-            return
         }
-        
-        resourcesCache.getLanguage(id: id, completeOnMain: { [weak self] (language: LanguageModel?) in
-            
-            if let language = language {
-                self?.selectedLanguage.accept(value: ChooseLanguageModel(language: language))
-            }
-            else {
-                self?.selectedLanguage.accept(value: nil)
-            }
-        })
     }
     
     private func reloadHidesDeleteLanguageButton() {
@@ -154,7 +127,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         case .primary:
             hidesDeleteLanguageButton.accept(value: true)
         case .parallel:
-            hidesDeleteLanguageButton.accept(value: languageSettingsCache.parallelLanguageId.value == nil)
+            hidesDeleteLanguageButton.accept(value: languageSettingsService.parallelLanguage.value == nil)
         }
     }
     
@@ -169,7 +142,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         case .primary:
             break
         case .parallel:
-            languageSettingsCache.deleteParallelLanguageId()
+            languageSettingsService.languageSettingsCache.deleteParallelLanguageId()
             selectedLanguage.accept(value: nil)
             reloadLanguages()
             reloadHidesDeleteLanguageButton()
@@ -183,12 +156,12 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         
         switch chooseLanguageType {
         case .primary:
-            languageSettingsCache.cachePrimaryLanguageId(languageId: language.languageId)
-            if language.languageId == languageSettingsCache.parallelLanguageId.value {
-                languageSettingsCache.deleteParallelLanguageId()
+            languageSettingsService.languageSettingsCache.cachePrimaryLanguageId(languageId: language.languageId)
+            if language.languageId == languageSettingsService.languageSettingsCache.parallelLanguageId.value {
+                languageSettingsService.languageSettingsCache.deleteParallelLanguageId()
             }
         case .parallel:
-            languageSettingsCache.cacheParallelLanguageId(languageId: language.languageId)
+            languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: language.languageId)
         }
                 
         flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)

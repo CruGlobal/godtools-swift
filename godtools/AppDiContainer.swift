@@ -19,13 +19,14 @@ class AppDiContainer {
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
+    private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     
     let config: ConfigType
     let resourceAttachmentsService: ResourceAttachmentsService
     let resourceTranslationsServices: ResourceTranslationsServices
     let resourcesService: ResourcesService
     let favoritedResourcesCache: RealmFavoritedResourcesCache
-    let languageSettingsCache: LanguageSettingsCacheType
+    let languageSettingsService: LanguageSettingsService
     let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
@@ -58,7 +59,7 @@ class AppDiContainer {
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         
-        languageSettingsCache = LanguageSettingsUserDefaultsCache()
+        languageSettingsService = LanguageSettingsService(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache)
         
         isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
@@ -79,7 +80,7 @@ class AppDiContainer {
                 
         languagesManager = LanguagesManager()
         
-        preferredLanguageTranslation = PreferredLanguageTranslationViewModel(realmDatabase: realmDatabase, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
+        preferredLanguageTranslation = PreferredLanguageTranslationViewModel(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

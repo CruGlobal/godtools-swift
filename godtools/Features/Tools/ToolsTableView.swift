@@ -126,37 +126,12 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
             resource: resource,
             resourcesService: viewModel.resourcesService,
             favoritedResourcesCache: viewModel.favoritedResourcesCache,
-            languageSettingsCache: viewModel.languageSettingsCache
+            languageSettingsService: viewModel.languageSettingsService
         )
         
         cell.configure(viewModel: cellViewModel, delegate: self)
         
         return cell
-        
-        
-        // TODO: Would like to implement cell view model here. ~Levi
-        
-        /*
-        let cell: HomeToolTableViewCell = tableView.dequeueReusableCell(
-            withIdentifier: ToolsManager.toolCellIdentifier,
-            for: indexPath) as! HomeToolTableViewCell
-        
-        guard let viewModel = self.viewModel else {
-            assertionFailure("ToolsTableView not configured.  Be sure to call configure after view is loaded.")
-            return cell
-        }
-        
-        let resource: DownloadedResource = viewModel.tools.value[indexPath.row]
-        let languagesManager = LanguagesManager()
-        
-        cell.configure(resource: resource,
-        primaryLanguage: languagesManager.loadPrimaryLanguageFromDisk(),
-        parallelLanguage: languagesManager.loadParallelLanguageFromDisk(),
-        banner: BannerManager().loadFor(remoteId: resource.bannerRemoteId),
-        delegate: self)
-        
-        return cell
-         */
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

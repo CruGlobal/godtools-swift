@@ -11,7 +11,7 @@ import Foundation
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
     private let resourcesService: ResourcesService
-    private let languageSettingsCache: LanguageSettingsCacheType
+    private let languageSettingsService: LanguageSettingsService
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,75 +20,60 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsCache: LanguageSettingsCacheType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resourcesService = resourcesService
-        self.languageSettingsCache = languageSettingsCache
+        self.languageSettingsService = languageSettingsService
         self.analytics = analytics
         
         super.init()
-        
-        reloadPrimaryLanguageButtonTitle()
-        reloadParallelLanguageButtonTitle()
-        
+                
         setupBinding()
     }
     
     deinit {
-        languageSettingsCache.primaryLanguageId.removeObserver(self)
-        languageSettingsCache.parallelLanguageId.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
+        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        languageSettingsCache.primaryLanguageId.addObserver(self) { [weak self] (primaryLanguageId: String?) in
-            self?.reloadPrimaryLanguageButtonTitle()
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
         }
         
-        languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
-            self?.reloadParallelLanguageButtonTitle()
+        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
+            self?.reloadParallelLanguageButtonTitle(parallelLanguage: parallelLanguage)
         }
     }
     
-    private func reloadPrimaryLanguageButtonTitle() {
+    private func reloadPrimaryLanguageButtonTitle(primaryLanguage: LanguageModel?) {
         
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        let primaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let title: String
         
-        resourcesCache.getLanguage(id: primaryLanguageId, completeOnMain: { [weak self] (language: LanguageModel?) in
-            
-            let title: String
-            
-            if let language = language {
-                title = LanguageNameViewModel(language: language).name
-            }
-            else {
-                title = NSLocalizedString("select_primary_language", comment: "")
-            }
+        if let primaryLanguage = primaryLanguage {
+            title = LanguageNameTranslationViewModel(language: primaryLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        }
+        else {
+            title = NSLocalizedString("select_primary_language", comment: "")
+        }
 
-            self?.primaryLanguageButtonTitle.accept(value: title)
-        })
+        primaryLanguageButtonTitle.accept(value: title)
     }
     
-    private func reloadParallelLanguageButtonTitle() {
+    private func reloadParallelLanguageButtonTitle(parallelLanguage: LanguageModel?) {
             
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        let parallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        let title: String
         
-        resourcesCache.getLanguage(id: parallelLanguageId, completeOnMain: { [weak self] (language: LanguageModel?) in
-            
-            let title: String
-            
-            if let language = language {
-                title = LanguageNameViewModel(language: language).name
-            }
-            else {
-                title = NSLocalizedString("select_parallel_language", comment: "")
-            }
+        if let parallelLanguage = parallelLanguage {
+            title = LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        }
+        else {
+            title = NSLocalizedString("select_parallel_language", comment: "")
+        }
 
-            self?.parallelLanguageButtonTitle.accept(value: title)
-        })
+        parallelLanguageButtonTitle.accept(value: title)
     }
     
     func pageViewed() {

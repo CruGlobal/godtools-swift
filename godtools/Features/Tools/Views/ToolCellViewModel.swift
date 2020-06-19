@@ -12,7 +12,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
-    private let languageSettingsCache: LanguageSettingsCacheType
+    private let languageSettingsService: LanguageSettingsService
     private let translationsServices: ResourceTranslationsServices
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
@@ -22,11 +22,11 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
         
         self.resource = resource
         self.resourcesService = resourcesService
-        self.languageSettingsCache = languageSettingsCache
+        self.languageSettingsService = languageSettingsService
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
         self.translationsServices = resourcesService.translationsServices
@@ -34,7 +34,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         super.init()
         
         reloadBannerImage()
-        reloadParallelLanguageName()
         setupBinding()
         
         favoritedResourcesCache.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
@@ -45,7 +44,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     deinit {
         resourcesService.attachmentsService.completed.removeObserver(self)
         translationsServices.progress(resource: resource).removeObserver(self)
-        languageSettingsCache.parallelLanguageId.removeObserver(self)
+        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func reloadBannerImage() {
@@ -56,23 +55,19 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     private func reloadParallelLanguageName() {
 
-        let userParallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        let userParallelLanguageId: String = languageSettingsService.parallelLanguage.value?.id ?? ""
         let supportsParallelLanguage: Bool = resource.languageIds.contains(userParallelLanguageId)
         
-        resourcesService.realmResourcesCache.getLanguage(id: userParallelLanguageId) { [weak self] (language: LanguageModel?) in
-            
-            guard let language = language else {
-                self?.parallelLanguageName.accept(value: "")
-                return
-            }
-            
-            if supportsParallelLanguage {
-                let name: String = "✓ " + LanguageNameViewModel(language: language).name
-                self?.parallelLanguageName.accept(value: name)
-            }
-            else {
-                self?.parallelLanguageName.accept(value: "")
-            }
+        guard let parallelLanguage = languageSettingsService.parallelLanguage.value else {
+            return
+        }
+        
+        if supportsParallelLanguage {
+            let name: String = "✓ " + LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+            parallelLanguageName.accept(value: name)
+        }
+        else {
+            parallelLanguageName.accept(value: "")
         }
     }
     
@@ -90,7 +85,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             }
         }
         
-        languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
+        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             self?.reloadParallelLanguageName()
         }
     }
