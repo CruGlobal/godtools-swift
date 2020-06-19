@@ -69,7 +69,8 @@ class ChooseLanguageView: UIViewController {
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
             forCellReuseIdentifier: ChooseLanguageCell.reuseIdentifier
         )
-        languagesTableView.rowHeight = 52
+        languagesTableView.rowHeight = 54
+        languagesTableView.separatorStyle = .none
     }
     
     private func setupBinding() {

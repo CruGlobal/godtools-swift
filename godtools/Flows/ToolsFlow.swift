@@ -113,11 +113,18 @@ class ToolsFlow: Flow {
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
+        case .homeTappedFromTract:
+            flowDelegate?.navigate(step: .homeTappedFromTract)
+            
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
             
-        case .homeTappedFromTract:
-            flowDelegate?.navigate(step: .homeTappedFromTract)
+        case .urlLinkTappedFromToolDetail(let url):
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
             
         default:
             break
@@ -211,6 +218,7 @@ class ToolsFlow: Flow {
             resourcesService: appDiContainer.resourcesService,
             languageSettingsCache: appDiContainer.languageSettingsCache,
             localization: appDiContainer.localizationServices,
+            preferredLanguageTranslation: appDiContainer.preferredLanguageTranslation,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )

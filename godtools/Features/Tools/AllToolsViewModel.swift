@@ -62,9 +62,12 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func reloadResourcesFromCache() {
-        resourcesService.realmResourcesCache.getResources { [weak self] (allResources: [ResourceModel]) in
+        
+        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        
+        resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
             self?.tools.accept(value: allResources)
-        }
+        })
     }
     
     func pageViewed() {

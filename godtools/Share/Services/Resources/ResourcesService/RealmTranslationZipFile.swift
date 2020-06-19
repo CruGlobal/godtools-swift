@@ -13,6 +13,7 @@ class RealmTranslationZipFile: Object {
     
     @objc dynamic var translationId: String = ""
     @objc dynamic var resourceId: String = ""
+    @objc dynamic var languageId: String = ""
     @objc dynamic var languageCode: String = "" // bcp47 language tag
     @objc dynamic var translationManifestFilename: String = ""
     @objc dynamic var translationsVersion: Int = -1

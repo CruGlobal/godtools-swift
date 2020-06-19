@@ -129,13 +129,6 @@ class AppFlow: NSObject, FlowDelegate {
         case .startUsingGodToolsTappedFromTutorial:
             dismissTutorial()
             
-        case .urlLinkTappedFromToolDetail(let url):
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-            
         case .showMenu:
             navigateToMenu(animated: true)
             

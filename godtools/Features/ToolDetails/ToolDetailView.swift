@@ -13,7 +13,9 @@ import YoutubePlayer_in_WKWebView
 class ToolDetailView: UIViewController {
     
     private let viewModel: ToolDetailViewModelType
-            
+    
+    private var didLayoutSubviews: Bool = false
+    
     //topMediaView
     @IBOutlet weak private var topMediaView: UIView!
     @IBOutlet weak private var youTubePlayerContentView: UIView!
@@ -21,6 +23,8 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var youTubeLoadingView: UIView!
     @IBOutlet weak private var youTubeActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak private var bannerImageView: UIImageView!
+    //bottomView
+    @IBOutlet weak private var bottomView: UIView!
     //scrollView
     @IBOutlet weak private var scrollView: UIScrollView!
     @IBOutlet weak private var contentView: UIView!
@@ -38,7 +42,6 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var favoriteButton: UIButton!
     
     //constraints
-    @IBOutlet weak private var detailsLabelsViewWidth: NSLayoutConstraint!
     @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
     @IBOutlet weak private var aboutDetailsTextViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
@@ -70,8 +73,25 @@ class ToolDetailView: UIViewController {
         favoriteButton.addTarget(self, action: #selector(handleFavorite(button:)), for: .touchUpInside)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !didLayoutSubviews {
+            didLayoutSubviews = true
+            
+            viewModel.aboutDetails.addObserver(self) { [weak self] (aboutDetails: String) in
+                self?.reloadDetailsTextViews()
+            }
+            
+            viewModel.languageDetails.addObserver(self) { [weak self] (aboutDetails: String) in
+                self?.reloadDetailsTextViews()
+            }
+        }
+    }
+    
     private func setupLayout() {
-             
+        
+        // youTubeLoadingView
         youTubeLoadingView.backgroundColor = topMediaView.backgroundColor
         
         // detailsShadow
@@ -80,10 +100,20 @@ class ToolDetailView: UIViewController {
         detailsShadow.layer.shadowRadius = 5
         detailsShadow.layer.shadowOpacity = 0.3
         
+        // favorite and unfavorite buttons
         let buttonCornerRadius: CGFloat = 8
         openToolButton.layer.cornerRadius = buttonCornerRadius
         unfavoriteButton.layer.cornerRadius = buttonCornerRadius
         favoriteButton.layer.cornerRadius = buttonCornerRadius
+        
+        favoriteButton.layer.borderWidth = 1
+        favoriteButton.layer.borderColor = favoriteButton.titleColor(for: .normal)?.cgColor
+        
+        unfavoriteButton.layer.borderWidth = 1
+        unfavoriteButton.layer.borderColor = unfavoriteButton.titleColor(for: .normal)?.cgColor
+        
+        // detailsView
+        detailsView.backgroundColor = bottomView.backgroundColor
     }
     
     private func setupBinding() {
@@ -209,67 +239,8 @@ class ToolDetailView: UIViewController {
         youTubePlayerView.delegate = self
         youTubePlayerView.load(withVideoId: videoId, playerVars: ["playsinline": 1])
     }
-     
-    /*
-    fileprivate func displayData() {
-        
-        let primaryLanguage = LanguagesManager().loadPrimaryLanguageFromDisk()
-        let resource: DownloadedResource = viewModel.resource
-        
-        let aboutVideoYouTubePlayerId: String = resource.aboutOverviewVideoYouTube ?? ""
-        if aboutVideoYouTubePlayerId.isEmpty {
-            youTubePlayerView.isHidden = true
-            youTubeLoadingView.isHidden = true
-            bannerImageView.isHidden = false
-        }
-        else {
-            youTubePlayerView.isHidden = false
-            youTubeLoadingView.isHidden = false
-            bannerImageView.isHidden = true
-            youTubeActivityIndicator.startAnimating()
-            youTubePlayerView.delegate = self
-            youTubePlayerView.load(withVideoId: aboutVideoYouTubePlayerId, playerVars: ["playsinline": 1])
-        }
-        
-        // if tool is available in primary language, attempt to retrieve string based on that lanague else default to device language
-        let localizedTotalViews = resource.isAvailableInLanguage(primaryLanguage) ? "total_views".localized(for: primaryLanguage?.code) ?? "total_views".localized : "total_views".localized
-        totalViewsLabel.text = String.localizedStringWithFormat(localizedTotalViews, resource.totalViews)
-        
-        let localizedTotalLanguages =  resource.isAvailableInLanguage(primaryLanguage) ? "total_languages".localized(for: primaryLanguage?.code) ?? "total_languages".localized : "total_languages".localized
-        
-        titleLabel.text = resource.localizedName(language: primaryLanguage)
-                                
-        displayButton()
-        bannerImageView.image = BannerManager().loadFor(remoteId: resource.aboutBannerRemoteId)
-        
-        let textAlignment: NSTextAlignment = (resource.isAvailableInLanguage(primaryLanguage) && primaryLanguage?.isRightToLeft() ?? false) ? .right : .natural
-                
-        titleLabel.textAlignment = textAlignment
-        totalViewsLabel.textAlignment = textAlignment
-        
-        setupDetailsLabels(
-            aboutDetails: viewModel.aboutDetails,
-            languageDetails: viewModel.languageDetails,
-            textAlignment: textAlignment
-        )
-        
-        let aboutSegment = GTSegment(
-            id: SegmentedControlId.about.rawValue,
-            title: String.localizedStringWithFormat(resource.isAvailableInLanguage(primaryLanguage) ? "about".localized(for: primaryLanguage?.code) ?? "about".localized : "about".localized, resource.totalViews).capitalized
-        )
-        
-        let languageSement = GTSegment(
-            id: SegmentedControlId.language.rawValue,
-            title: String.localizedStringWithFormat(localizedTotalLanguages.localized, resource.numberOfAvailableLanguages()).capitalized
-        )
-        
-        detailsSegments = [aboutSegment, languageSement]
-        var detailsControlLayout = GTSegmentedControl.LayoutConfig.defaultLayout
-        detailsControlLayout.spacingBetweenSegments = 54
-        detailsControl.configure(segments: detailsSegments, delegate: self, layout: detailsControlLayout)
-    }
 
-    private func setupDetailsLabels(aboutDetails: String, languageDetails: String, textAlignment: NSTextAlignment) {
+    private func reloadDetailsTextViews() {
         
         let detailsTextViews: [UITextView] = [aboutDetailsTextView, languageDetailsTextView]
         
@@ -280,8 +251,12 @@ class ToolDetailView: UIViewController {
             textView.delegate = self
         }
         
-        aboutDetailsTextView.text = aboutDetails
-        languageDetailsTextView.text = languageDetails
+        let aboutDetailsText: String = viewModel.aboutDetails.value
+        let languageDetailsText: String = viewModel.languageDetails.value
+        let textAlignment: NSTextAlignment = .center
+                
+        aboutDetailsTextView.text = aboutDetailsText
+        languageDetailsTextView.text = languageDetailsText
         
         var maxDetailLabelHeight: CGFloat = 0
         
@@ -289,14 +264,15 @@ class ToolDetailView: UIViewController {
             textView.textAlignment = textAlignment
             textView.setLineSpacing(lineSpacing: 3)
             textView.layoutIfNeeded()
+            textView.superview?.layoutIfNeeded()
             if textView.frame.size.height > maxDetailLabelHeight {
                 maxDetailLabelHeight = textView.frame.size.height
             }
         }
         
         detailsLabelsViewHeight.constant = maxDetailLabelHeight
-        detailsView.layoutIfNeeded()
-    }*/
+        view.layoutIfNeeded()
+    }
 }
 
 // MARK: - UITextViewDelegate

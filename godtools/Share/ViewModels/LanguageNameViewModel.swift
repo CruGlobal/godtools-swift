@@ -12,7 +12,7 @@ class LanguageNameViewModel {
 
     let name: String
     
-    init(language: LanguageModel) {
+    init(language: LanguageModelType) {
                 
         let localizedNameKey: String = "language_name_" + language.code
         let localizedName: String = NSLocalizedString(localizedNameKey, comment: "")

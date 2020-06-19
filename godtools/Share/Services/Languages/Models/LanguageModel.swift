@@ -59,3 +59,9 @@ struct LanguageModel: LanguageModelType, Decodable {
         type = realmLanguage.type
     }
 }
+
+extension LanguageModel: Equatable {
+    static func ==(lhs: LanguageModel, rhs: LanguageModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

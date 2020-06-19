@@ -16,8 +16,9 @@ class ChooseLanguageCell: UITableViewCell {
     private var viewModel: ChooseLanguageCellViewModelType?
         
     @IBOutlet weak private var selectedView: UIView!
-    @IBOutlet private weak var languageLabel: GTLabel!
+    @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var downloadButton: UIButton!
+    @IBOutlet weak private var separatorLine: UIView!
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,5 +37,6 @@ class ChooseLanguageCell: UITableViewCell {
         languageLabel.text = viewModel.languageName
         downloadButton.isHidden = viewModel.hidesDownloadButton
         selectedView.isHidden = viewModel.hidesSelected
+        separatorLine.isHidden = viewModel.hidesSeparator
     }
 }

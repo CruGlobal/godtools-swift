@@ -484,6 +484,7 @@
 		45EDC54A249BC2440020DC62 /* ToolDetailControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC549249BC2440020DC62 /* ToolDetailControl.swift */; };
 		45EDC54C249BC47C0020DC62 /* ToolDetailControlId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC54B249BC47C0020DC62 /* ToolDetailControlId.swift */; };
 		45EDC54E249BC8AA0020DC62 /* ToolDetailMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC54D249BC8AA0020DC62 /* ToolDetailMedia.swift */; };
+		45EDC550249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC54F249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift */; };
 		45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE3325246E237B003CC641 /* TractPageCache.swift */; };
 		45F66CA523E4C3C20053CB5B /* MenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45F66CA323E4C3C20053CB5B /* MenuView.xib */; };
 		45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F66CA423E4C3C20053CB5B /* MenuView.swift */; };
@@ -1101,6 +1102,7 @@
 		45EDC549249BC2440020DC62 /* ToolDetailControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailControl.swift; sourceTree = "<group>"; };
 		45EDC54B249BC47C0020DC62 /* ToolDetailControlId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailControlId.swift; sourceTree = "<group>"; };
 		45EDC54D249BC8AA0020DC62 /* ToolDetailMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailMedia.swift; sourceTree = "<group>"; };
+		45EDC54F249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredLanguageTranslationViewModel.swift; sourceTree = "<group>"; };
 		45EE3325246E237B003CC641 /* TractPageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageCache.swift; sourceTree = "<group>"; };
 		45F66CA323E4C3C20053CB5B /* MenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuView.xib; sourceTree = "<group>"; };
 		45F66CA423E4C3C20053CB5B /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
@@ -1502,6 +1504,7 @@
 			isa = PBXGroup;
 			children = (
 				451D77872497F38200B7C83D /* LanguageNameViewModel.swift */,
+				45EDC54F249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3751,6 +3754,7 @@
 				452AB58F24464D8500445050 /* AboutView.swift in Sources */,
 				458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				450E21B52491887700D489A1 /* ResourcesApiType.swift in Sources */,
+				45EDC550249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift in Sources */,
 				450E21BB2491890800D489A1 /* ResourceModel.swift in Sources */,
 				452E129C2422903000531B72 /* TutorialSupportedLanguages.swift in Sources */,
 				45668E7C23E0E1CC002728E7 /* OnboardingTutorialUsageCellViewModel.swift in Sources */,

@@ -23,8 +23,8 @@ protocol ToolDetailViewModelType {
     var hidesFavoriteButton: ObservableValue<Bool> { get }
     var toolDetailsControls: ObservableValue<[ToolDetailControl]> { get }
     var selectedDetailControl: ObservableValue<ToolDetailControl?> { get }
-    var aboutDetails: String { get }
-    var languageDetails: String { get }
+    var aboutDetails: ObservableValue<String> { get }
+    var languageDetails: ObservableValue<String> { get }
     
     func pageViewed()
     func openToolTapped()

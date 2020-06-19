@@ -16,7 +16,6 @@ enum FlowStep {
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
-    case urlLinkTappedFromToolDetail(url: URL)
     
     // tools
     case menuTappedFromTools
@@ -40,6 +39,7 @@ enum FlowStep {
     
     // toolDetails
     case openToolTappedFromToolDetails(resource: DownloadedResource)
+    case urlLinkTappedFromToolDetail(url: URL)
     
     // tract
     case homeTappedFromTract

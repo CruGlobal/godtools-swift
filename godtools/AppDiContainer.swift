@@ -13,8 +13,8 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
-    private let resourcesSHA256FileCache: SHA256FilesCache = SHA256FilesCache(rootDirectory: "resources_files")
     private let realmDatabase: RealmDatabase
+    private let resourcesSHA256FileCache: SHA256FilesCache = SHA256FilesCache(rootDirectory: "resources_files")
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
@@ -33,6 +33,8 @@ class AppDiContainer {
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
     let localizationServices: LocalizationServices = LocalizationServices()
+    let deviceLanguage: DeviceLanguageType = DeviceLanguage()
+    let preferredLanguageTranslation: PreferredLanguageTranslationViewModel
         
     required init() {
         
@@ -56,7 +58,7 @@ class AppDiContainer {
         
         favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
         
-        languageSettingsCache = LanguageSettingsUserDefaultsCache(realmResourcesCache: realmResourcesCache)
+        languageSettingsCache = LanguageSettingsUserDefaultsCache()
         
         isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
@@ -76,6 +78,8 @@ class AppDiContainer {
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         languagesManager = LanguagesManager()
+        
+        preferredLanguageTranslation = PreferredLanguageTranslationViewModel(realmDatabase: realmDatabase, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -112,10 +116,6 @@ class AppDiContainer {
     
     var tutorialAvailability: TutorialAvailabilityType {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
-    }
-    
-    var deviceLanguage: DeviceLanguageType {
-        return DeviceLanguage()
     }
     
     var globalActivityServices: GlobalActivityServicesType {

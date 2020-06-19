@@ -17,7 +17,7 @@ class RealmDatabase {
     
     private static let schemaVersion: UInt64 = 14
         
-    let mainThreadRealm: Realm
+    let mainThreadRealm: Realm // TODO: Remove after switching to background realm.
     
     private let backgroundConfig: Realm.Configuration = RealmDatabase.createBackgroundConfig
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)

@@ -17,6 +17,4 @@ protocol LanguageSettingsCacheType {
     func cacheParallelLanguageId(languageId: String)
     func deletePrimaryLanguageId()
     func deleteParallelLanguageId()
-    func getPrimaryLanguage(complete: @escaping ((_ language: LanguageModel?) -> Void))
-    func getParallelLanguage(complete: @escaping ((_ language: LanguageModel?) -> Void))
 }

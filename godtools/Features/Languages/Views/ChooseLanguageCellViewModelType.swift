@@ -13,4 +13,5 @@ protocol ChooseLanguageCellViewModelType {
     var languageName: String { get }
     var hidesDownloadButton: Bool { get }
     var hidesSelected: Bool { get }
+    var hidesSeparator: Bool { get }
 }

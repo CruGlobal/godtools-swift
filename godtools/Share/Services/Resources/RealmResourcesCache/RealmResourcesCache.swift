@@ -12,8 +12,11 @@ import RealmSwift
 class RealmResourcesCache {
     
     typealias SHA256PlusPathExtension = String
+    typealias ResourceId = String
+    typealias LanguageId = String
+    typealias TranslationId = String
     
-    private let realmDatabase: RealmDatabase
+    let realmDatabase: RealmDatabase
     
     required init(realmDatabase: RealmDatabase) {
         
@@ -25,9 +28,9 @@ class RealmResourcesCache {
         realmDatabase.background { (realm: Realm) in
             
             var realmObjectsToCache: [Object] = Array()
-            var realmLanguagesDictionary: [String: RealmLanguage] = Dictionary()
-            var realmResourcesDictionary: [String: RealmResource] = Dictionary()
-            var realmTranslationsDictionary: [String: RealmTranslation] = Dictionary()
+            var realmLanguagesDictionary: [LanguageId: RealmLanguage] = Dictionary()
+            var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
+            var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
             
             var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
             
@@ -115,79 +118,73 @@ class RealmResourcesCache {
         }
     }
     
-    func getResources(complete: @escaping ((_ resources: [ResourceModel]) -> Void)) {
-        realmDatabase.background { (realm: Realm) in
-            let realmResources: [RealmResource] = Array(realm.objects(RealmResource.self))
-            let resources: [ResourceModel] = realmResources.map({ResourceModel(realmResource: $0)})
+    // MARK: - RealmResource
+    
+    func getResources(completeOnMain: @escaping ((_ resources: [ResourceModel]) -> Void)) {
+        realmDatabase.background { [unowned self] (realm: Realm) in
+            let resources: [ResourceModel] = self.getResources(realm: realm).map({ResourceModel(realmResource: $0)})
             DispatchQueue.main.async {
-                complete(resources)
+                completeOnMain(resources)
             }
         }
     }
     
-    func getResource(id: String, complete: @escaping ((_ resource: ResourceModel?) -> Void)) {
-        realmDatabase.background { (realm: Realm) in
+    func getResources(realm: Realm) -> [RealmResource] {
+        let realmResources: [RealmResource] = Array(realm.objects(RealmResource.self))
+        return realmResources
+    }
+    
+    func getResource(id: String, completeOnMain: @escaping ((_ resource: ResourceModel?) -> Void)) {
+        realmDatabase.background { [unowned self] (realm: Realm) in
             let resource: ResourceModel?
-            
-            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {
+            if let realmResource = self.getResource(realm: realm, id: id) {
                 resource = ResourceModel(realmResource: realmResource)
             }
             else {
                 resource = nil
             }
             DispatchQueue.main.async {
-                complete(resource)
+                completeOnMain(resource)
             }
         }
     }
     
-    func getResourceLanguage(resourceId: String, languageId: String, complete: @escaping ((_ language: LanguageModel?) -> Void)) {
-        realmDatabase.background { (realm: Realm) in
-            var language: LanguageModel?
-            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
-                if let realmLanguage = realmResource.languages.filter("id = '\(languageId)'").first {
-                    language = LanguageModel(realmLanguage: realmLanguage)
-                }
-            }
+    func getResource(realm: Realm, id: String) -> RealmResource? {
+        return realm.object(ofType: RealmResource.self, forPrimaryKey: id)
+    }
+    
+    // MARK: - RealmLanguage
+    
+    func getLanguages(completeOnMain: @escaping ((_ languages: [LanguageModel]) -> Void)) {
+        realmDatabase.background { [unowned self] (realm: Realm) in
+            let languages: [LanguageModel] = self.getLanguages(realm: realm).map({LanguageModel(realmLanguage: $0)})
             DispatchQueue.main.async {
-                complete(language)
+                completeOnMain(languages)
             }
         }
     }
     
-    func getLanguages(complete: @escaping ((_ languages: [LanguageModel]) -> Void)) {
-        realmDatabase.background { (realm: Realm) in
-            let realmLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
-            let languages: [LanguageModel] = realmLanguages.map({LanguageModel(realmLanguage: $0)})
-            DispatchQueue.main.async {
-                complete(languages)
-            }
-        }
+    func getLanguages(realm: Realm) -> [RealmLanguage] {
+        let realmLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
+        return realmLanguages
     }
     
-    func getLanguage(id: String, complete: @escaping ((_ language: LanguageModel?) -> Void)) {
-        realmDatabase.background { (realm: Realm) in
+    func getLanguage(id: String, completeOnMain: @escaping ((_ language: LanguageModel?) -> Void)) {
+        realmDatabase.background { [unowned self] (realm: Realm) in
             let language: LanguageModel?
-            
-            if let realmLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: id) {
+            if let realmLanguage = self.getLanguage(realm: realm, id: id) {
                 language = LanguageModel(realmLanguage: realmLanguage)
             }
             else {
                 language = nil
             }
             DispatchQueue.main.async {
-                complete(language)
+                completeOnMain(language)
             }
         }
     }
     
-    func getAttachment(id: String) -> RealmAttachment? {
-        // TODO: Get RealmAttachment and map to AttachmentModel.
-        return nil//mainThreadRealm.object(ofType: RealmAttachment.self, forPrimaryKey: id)
-    }
-    
-    func getTranslation(id: String) -> RealmTranslation? {
-        // TODO: Get RealmTranslation and map to TranslationModel.
-        return nil//mainThreadRealm.object(ofType: RealmTranslation.self, forPrimaryKey: id)
+    func getLanguage(realm: Realm, id: String) -> RealmLanguage? {
+        return realm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
     }
 }

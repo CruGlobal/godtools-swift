@@ -67,16 +67,20 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func reloadFavoritedResourcesFromCache() {
         
-        resourcesService.realmResourcesCache.getResources { [weak self] (allResources: [ResourceModel]) in
-            self?.favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
+        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        let favoritedResourcesCache: RealmFavoritedResourcesCache = self.favoritedResourcesCache
         
-                let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
-                let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})
-                
-                self?.tools.accept(value: favoritedResources)
-                self?.reloadHidesFindToolsView()
-            })
-        }
+        resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
+
+            favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
+            
+                    let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
+                    let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})
+                    
+                    self?.tools.accept(value: favoritedResources)
+                    self?.reloadHidesFindToolsView()
+                })
+        })
     }
     
     private func reloadHidesFindToolsView() {

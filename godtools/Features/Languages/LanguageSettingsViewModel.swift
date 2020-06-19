@@ -53,36 +53,42 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     
     private func reloadPrimaryLanguageButtonTitle() {
         
-        languageSettingsCache.getPrimaryLanguage { [weak self] (languageModel: LanguageModel?) in
+        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        let primaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        
+        resourcesCache.getLanguage(id: primaryLanguageId, completeOnMain: { [weak self] (language: LanguageModel?) in
             
             let title: String
             
-            if let languageModel = languageModel {
-                title = LanguageNameViewModel(language: languageModel).name
+            if let language = language {
+                title = LanguageNameViewModel(language: language).name
             }
             else {
                 title = NSLocalizedString("select_primary_language", comment: "")
             }
 
             self?.primaryLanguageButtonTitle.accept(value: title)
-        }
+        })
     }
     
     private func reloadParallelLanguageButtonTitle() {
-                
-        languageSettingsCache.getParallelLanguage { [weak self] (languageModel: LanguageModel?) in
+            
+        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        let parallelLanguageId: String = languageSettingsCache.parallelLanguageId.value ?? ""
+        
+        resourcesCache.getLanguage(id: parallelLanguageId, completeOnMain: { [weak self] (language: LanguageModel?) in
             
             let title: String
             
-            if let languageModel = languageModel {
-                title = LanguageNameViewModel(language: languageModel).name
+            if let language = language {
+                title = LanguageNameViewModel(language: language).name
             }
             else {
                 title = NSLocalizedString("select_parallel_language", comment: "")
             }
 
             self?.parallelLanguageButtonTitle.accept(value: title)
-        }
+        })
     }
     
     func pageViewed() {
