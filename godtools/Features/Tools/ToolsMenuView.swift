@@ -112,8 +112,6 @@ class ToolsMenuView: UIViewController {
         let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
 
         viewModel.toolMenuItemTapped(menuItem: menuItem)
-        
-        navigateToToolMenuItem(menuItem: menuItem, animated: true)
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {

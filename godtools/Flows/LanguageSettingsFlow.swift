@@ -68,6 +68,10 @@ class LanguageSettingsFlow: Flow {
             
             navigationController.popViewController(animated: true)
             
+        case .deleteLanguageTappedFromChooseLanguage:
+            
+            navigationController.popViewController(animated: true)
+            
         default:
             break
         }

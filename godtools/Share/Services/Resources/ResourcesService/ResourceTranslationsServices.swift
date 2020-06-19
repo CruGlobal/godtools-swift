@@ -34,7 +34,22 @@ class ResourceTranslationsServices {
         }
     }
     
-    func getService(resourceId: String) -> ResourceTranslationsService {
+    func started(resource: ResourceModel) -> ObservableValue<Bool> {
+        let service: ResourceTranslationsService = getService(resourceId: resource.id)
+        return service.started
+    }
+    
+    func progress(resource: ResourceModel) -> ObservableValue<Double> {
+        let service: ResourceTranslationsService = getService(resourceId: resource.id)
+        return service.progress
+    }
+    
+    func complete(resource: ResourceModel) -> Signal {
+        let service: ResourceTranslationsService = getService(resourceId: resource.id)
+        return service.completed
+    }
+    
+    private func getService(resourceId: String) -> ResourceTranslationsService {
         
         if let service = services[resourceId] {
             return service

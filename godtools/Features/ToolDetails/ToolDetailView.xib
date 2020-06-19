@@ -37,6 +37,8 @@
                 <outlet property="scrollView" destination="5dK-hz-acy" id="dqH-vs-1wr"/>
                 <outlet property="topMediaView" destination="9Ef-Qo-9Rm" id="XyF-Ya-PAf"/>
                 <outlet property="totalViewsLabel" destination="6uD-7a-LcV" id="w9I-vo-DKd"/>
+                <outlet property="translationDownloadProgressView" destination="sgo-TD-B6f" id="po3-OH-yGw"/>
+                <outlet property="translationDownloadProgressWidth" destination="Wyt-eV-pDC" id="edC-T0-2Yq"/>
                 <outlet property="unfavoriteButton" destination="UBH-gg-xA6" id="gBf-5M-ASB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="youTubeActivityIndicator" destination="3vd-P2-CRA" id="cDn-mr-w4a"/>
@@ -170,6 +172,14 @@
                                         <constraint firstAttribute="height" constant="44" id="hCv-Qw-Rgm"/>
                                     </constraints>
                                 </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-TD-B6f" userLabel="translationDownloadProgressView">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="4"/>
+                                    <color key="backgroundColor" red="0.23137254901960785" green="0.64313725490196072" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="4" id="D50-JE-7xO"/>
+                                        <constraint firstAttribute="width" constant="414" id="Wyt-eV-pDC"/>
+                                    </constraints>
+                                </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Satisfied?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4yT-fU-eB8" userLabel="nameLabel">
                                     <rect key="frame" x="40" y="40" width="334" height="33.5"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Light" family="SF Pro Display" pointSize="28"/>
@@ -220,6 +230,7 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="sgo-TD-B6f" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="01X-IT-oTS"/>
                                 <constraint firstItem="d8D-pv-wIq" firstAttribute="leading" secondItem="DYc-AD-3c6" secondAttribute="leading" id="2m8-LF-ZKS"/>
                                 <constraint firstItem="4yT-fU-eB8" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" constant="40" id="5wa-bD-E7M"/>
                                 <constraint firstItem="yVd-Gz-A8r" firstAttribute="trailing" secondItem="4yT-fU-eB8" secondAttribute="trailing" id="68m-Py-zXL"/>
@@ -248,6 +259,7 @@
                                 <constraint firstItem="So6-Cj-qdp" firstAttribute="leading" secondItem="4yT-fU-eB8" secondAttribute="leading" id="fke-KC-FHE"/>
                                 <constraint firstItem="Fcg-c5-BEe" firstAttribute="trailing" secondItem="So6-Cj-qdp" secondAttribute="trailing" id="ghV-m9-rT5"/>
                                 <constraint firstItem="USz-Dm-Yeg" firstAttribute="top" secondItem="Fcg-c5-BEe" secondAttribute="bottom" constant="40" id="kBB-DC-0s0"/>
+                                <constraint firstItem="sgo-TD-B6f" firstAttribute="top" secondItem="DYc-AD-3c6" secondAttribute="top" id="lC4-aU-4fZ"/>
                                 <constraint firstItem="aoj-58-Xtm" firstAttribute="top" secondItem="USz-Dm-Yeg" secondAttribute="bottom" id="mXn-yn-H11"/>
                                 <constraint firstItem="So6-Cj-qdp" firstAttribute="trailing" secondItem="4yT-fU-eB8" secondAttribute="trailing" id="n2J-eo-5Xu"/>
                                 <constraint firstItem="Fcg-c5-BEe" firstAttribute="height" secondItem="So6-Cj-qdp" secondAttribute="height" id="n3u-pE-T2b"/>

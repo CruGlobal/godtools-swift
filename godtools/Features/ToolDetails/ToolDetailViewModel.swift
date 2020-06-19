@@ -9,22 +9,25 @@
 import UIKit
 import RealmSwift
 
-class ToolDetailViewModel: ToolDetailViewModelType {
+class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
+    private let favoritedResourcesCache: RealmFavoritedResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType
     private let localization: LocalizationServices
     private let preferredLanguageTranslation: PreferredLanguageTranslationViewModel
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
+    private let translationsServices: ResourceTranslationsServices
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let topToolDetailMedia: ObservableValue<ToolDetailMedia?> = ObservableValue(value: nil)
-    let hidesBannerImage: Bool
-    let hidesYoutubePlayer: Bool
+    let hidesBannerImage: ObservableValue<Bool> = ObservableValue(value: false)
+    let hidesYoutubePlayer: ObservableValue<Bool> = ObservableValue(value: false)
+    let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let name: ObservableValue<String> = ObservableValue(value: "")
     let totalViews: ObservableValue<String> = ObservableValue(value: "")
     let openToolTitle: ObservableValue<String> = ObservableValue(value: "")
@@ -37,43 +40,70 @@ class ToolDetailViewModel: ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, languageSettingsCache: LanguageSettingsCacheType, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesService = resourcesService
+        self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsCache = languageSettingsCache
         self.localization = localization
         self.preferredLanguageTranslation = preferredLanguageTranslation
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
+        self.translationsServices = resourcesService.translationsServices
                 
+        super.init()
+        
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
-            hidesBannerImage = true
-            hidesYoutubePlayer = false
+            hidesBannerImage.accept(value: true)
+            hidesYoutubePlayer.accept(value: false)
             topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: nil, youtubePlayerId: resource.attrAboutOverviewVideoYoutube))
         }
         else {
-            hidesBannerImage = false
-            hidesYoutubePlayer = true
+            hidesBannerImage.accept(value: false)
+            hidesYoutubePlayer.accept(value: true)
             resourcesService.attachmentsService.getAttachmentBanner(attachmentId: resource.attrBannerAbout) { [weak self] (image: UIImage?) in
                 self?.topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: image, youtubePlayerId: ""))
             }
         }
         
-        reloadData(
-            resource: resource,
-            resourcesCache: resourcesService.realmResourcesCache,
-            userSettingsPrimaryLanguageId: languageSettingsCache.primaryLanguageId.value ?? "",
-            localization: localization
-        )
+        reloadData()
+        setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        translationsServices.progress(resource: resource).removeObserver(self)
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
-    private func reloadData(resource: ResourceModel, resourcesCache: RealmResourcesCache, userSettingsPrimaryLanguageId: String, localization: LocalizationServices) {
+    private func setupBinding() {
+        
+        translationsServices.progress(resource: resource).addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async { [weak self] in
+                self?.translationDownloadProgress.accept(value: progress)
+            }
+        }
+        
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavorited()
+        }
+        
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavorited()
+        }
+    }
+    
+    private func reloadData() {
+        
+        let resource: ResourceModel = self.resource
+        let resourcesCache: RealmResourcesCache = self.resourcesService.realmResourcesCache
+        let userSettingsPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let localization: LocalizationServices = self.localization
+        
+        reloadFavorited()
         
         preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id) { [weak self] (translation: TranslationModel?) in
                         
@@ -144,6 +174,20 @@ class ToolDetailViewModel: ToolDetailViewModelType {
         }
     }
     
+    private func reloadFavorited() {
+        
+        favoritedResourcesCache.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
+            if isFavorited {
+                self?.hidesFavoriteButton.accept(value: true)
+                self?.hidesUnfavoriteButton.accept(value: false)
+            }
+            else {
+                self?.hidesFavoriteButton.accept(value: false)
+                self?.hidesUnfavoriteButton.accept(value: true)
+            }
+        }
+    }
+    
     private var screenName: String {
         return resource.abbreviation + "-" + "tool-info"
     }
@@ -166,11 +210,12 @@ class ToolDetailViewModel: ToolDetailViewModelType {
     }
     
     func favoriteTapped() {
-        
+        favoritedResourcesCache.addResourceToFavorites(resourceId: resource.id)
+        resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func unfavoriteTapped() {
-        
+        favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

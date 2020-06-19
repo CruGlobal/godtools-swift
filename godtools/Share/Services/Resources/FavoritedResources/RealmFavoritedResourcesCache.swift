@@ -21,22 +21,22 @@ class RealmFavoritedResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func getFavoritedResources(complete: @escaping ((_ favoritedResources: [FavoritedResourceModel]) -> Void)) {
+    func getFavoritedResources(completeOnMain: @escaping ((_ favoritedResources: [FavoritedResourceModel]) -> Void)) {
         realmDatabase.background { (realm: Realm) in
             let realmFavoritedResources: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self))
             let favoritedResources: [FavoritedResourceModel] = realmFavoritedResources.map({FavoritedResourceModel(model: $0)})
             DispatchQueue.main.async {
-                complete(favoritedResources)
+                completeOnMain(favoritedResources)
             }
         }
     }
     
-    func isFavorited(resourceId: String, complete: @escaping ((_ isFavorited: Bool) -> Void)) {
+    func isFavorited(resourceId: String, completeOnMain: @escaping ((_ isFavorited: Bool) -> Void)) {
         realmDatabase.background { (realm: Realm) in
             let realmFavoritedResource: RealmFavoritedResource? = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId)
             let isFavorited: Bool = realmFavoritedResource != nil
             DispatchQueue.main.async {
-                complete(isFavorited)
+                completeOnMain(isFavorited)
             }
         }
     }

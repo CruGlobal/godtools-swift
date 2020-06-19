@@ -72,7 +72,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         
         resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
 
-            favoritedResourcesCache.getFavoritedResources(complete: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
+            favoritedResourcesCache.getFavoritedResources(completeOnMain: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
             
                     let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
                     let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})

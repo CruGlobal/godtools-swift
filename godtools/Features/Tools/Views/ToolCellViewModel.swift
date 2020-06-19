@@ -13,7 +13,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
     private let languageSettingsCache: LanguageSettingsCacheType
-    private let translationService: ResourceTranslationsService
+    private let translationsServices: ResourceTranslationsServices
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -29,7 +29,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         self.languageSettingsCache = languageSettingsCache
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
-        self.translationService = resourcesService.translationsServices.getService(resourceId: resource.id)
+        self.translationsServices = resourcesService.translationsServices
         
         super.init()
         
@@ -44,7 +44,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     deinit {
         resourcesService.attachmentsService.completed.removeObserver(self)
-        translationService.progress.removeObserver(self)
+        translationsServices.progress(resource: resource).removeObserver(self)
         languageSettingsCache.parallelLanguageId.removeObserver(self)
     }
     
@@ -84,7 +84,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             }
         }
         
-        translationService.progress.addObserver(self) { [weak self] (progress: Double) in
+        translationsServices.progress(resource: resource).addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.translationDownloadProgress.accept(value: progress)
             }

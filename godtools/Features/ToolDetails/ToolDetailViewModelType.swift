@@ -12,8 +12,9 @@ protocol ToolDetailViewModelType {
     
     var navTitle: ObservableValue<String> { get }
     var topToolDetailMedia: ObservableValue<ToolDetailMedia?> { get }
-    var hidesBannerImage: Bool { get }
-    var hidesYoutubePlayer: Bool { get }
+    var hidesBannerImage: ObservableValue<Bool> { get }
+    var hidesYoutubePlayer: ObservableValue<Bool> { get }
+    var translationDownloadProgress: ObservableValue<Double> { get }
     var name: ObservableValue<String> { get }
     var totalViews: ObservableValue<String> { get }
     var openToolTitle: ObservableValue<String> { get }

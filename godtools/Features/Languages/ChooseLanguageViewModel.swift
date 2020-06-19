@@ -173,6 +173,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             selectedLanguage.accept(value: nil)
             reloadLanguages()
             reloadHidesDeleteLanguageButton()
+            flowDelegate?.navigate(step: .deleteLanguageTappedFromChooseLanguage)
         }
     }
     

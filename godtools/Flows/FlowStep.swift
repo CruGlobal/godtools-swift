@@ -40,7 +40,7 @@ enum FlowStep {
     // toolDetails
     case openToolTappedFromToolDetails(resource: DownloadedResource)
     case urlLinkTappedFromToolDetail(url: URL)
-    
+        
     // tract
     case homeTappedFromTract
     case shareTappedFromTract(resource: DownloadedResource, language: Language, pageNumber: Int)
@@ -68,6 +68,7 @@ enum FlowStep {
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
     case languageTappedFromChooseLanguage
+    case deleteLanguageTappedFromChooseLanguage
     
     // articles
     case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory)

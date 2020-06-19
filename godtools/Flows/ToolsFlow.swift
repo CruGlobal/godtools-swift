@@ -216,6 +216,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             resourcesService: appDiContainer.resourcesService,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsCache: appDiContainer.languageSettingsCache,
             localization: appDiContainer.localizationServices,
             preferredLanguageTranslation: appDiContainer.preferredLanguageTranslation,

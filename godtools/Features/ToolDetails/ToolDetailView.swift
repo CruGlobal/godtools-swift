@@ -35,6 +35,7 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var detailsShadow: UIView!
     @IBOutlet weak private var clipTopDetailsShadow: UIView!
     @IBOutlet weak private var detailsControl: GTSegmentedControl!
+    @IBOutlet weak private var translationDownloadProgressView: UIView!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var totalViewsLabel: UILabel!
     @IBOutlet weak private var openToolButton: UIButton!
@@ -45,6 +46,7 @@ class ToolDetailView: UIViewController {
     @IBOutlet weak private var detailsLabelsViewHeight: NSLayoutConstraint!
     @IBOutlet weak private var aboutDetailsTextViewLeading: NSLayoutConstraint!
     @IBOutlet weak private var languageDetailsTextViewLeading: NSLayoutConstraint!
+    @IBOutlet weak private var translationDownloadProgressWidth: NSLayoutConstraint!
                 
     required init(viewModel: ToolDetailViewModelType) {
         self.viewModel = viewModel
@@ -100,6 +102,9 @@ class ToolDetailView: UIViewController {
         detailsShadow.layer.shadowRadius = 5
         detailsShadow.layer.shadowOpacity = 0.3
         
+        // translation progress
+        setTranslationProgress(progress: 0, animated: false)
+        
         // favorite and unfavorite buttons
         let buttonCornerRadius: CGFloat = 8
         openToolButton.layer.cornerRadius = buttonCornerRadius
@@ -132,8 +137,20 @@ class ToolDetailView: UIViewController {
             }
         }
         
-        bannerImageView.isHidden = viewModel.hidesBannerImage
-        youTubePlayerContentView.isHidden = viewModel.hidesYoutubePlayer
+        viewModel.hidesBannerImage.addObserver(self) { [weak self] (isHidden: Bool) in
+            self?.bannerImageView.isHidden = isHidden
+        }
+        
+        viewModel.hidesYoutubePlayer.addObserver(self) { [weak self] (isHidden: Bool) in
+            self?.youTubePlayerContentView.isHidden = isHidden
+            if isHidden {
+                self?.youTubePlayerView.stopVideo()
+            }
+        }
+        
+        viewModel.translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            self?.setTranslationProgress(progress: progress, animated: true)
+        }
         
         viewModel.name.addObserver(self) { [weak self] (name: String) in
             self?.nameLabel.text = name
@@ -151,8 +168,16 @@ class ToolDetailView: UIViewController {
             self?.unfavoriteButton.setTitle(title, for: .normal)
         }
         
+        viewModel.hidesUnfavoriteButton.addObserver(self) { [weak self] (isHidden: Bool) in
+            self?.unfavoriteButton.isHidden = isHidden
+        }
+        
         viewModel.favoriteTitle.addObserver(self) { [weak self] (title: String) in
             self?.favoriteButton.setTitle(title, for: .normal)
+        }
+        
+        viewModel.hidesFavoriteButton.addObserver(self) { [weak self] (isHidden: Bool) in
+            self?.favoriteButton.isHidden = isHidden
         }
         
         viewModel.toolDetailsControls.addObserver(self) { [weak self] (detailsSegments: [ToolDetailControl]) in
@@ -272,6 +297,39 @@ class ToolDetailView: UIViewController {
         
         detailsLabelsViewHeight.constant = maxDetailLabelHeight
         view.layoutIfNeeded()
+    }
+    
+    private func setTranslationProgress(progress: Double, animated: Bool) {
+        
+        let widthConstraint: NSLayoutConstraint = translationDownloadProgressWidth
+        let progressView: UIView = translationDownloadProgressView
+        let layoutSuperiew: UIView = contentView
+        let maxProgressWidth: CGFloat = view.frame.size.width
+        
+        if progress == 0 {
+            widthConstraint.constant = 0
+            progressView.alpha = 0
+            layoutSuperiew.layoutIfNeeded()
+            return
+        }
+        
+        widthConstraint.constant = CGFloat(Double(maxProgressWidth) * progress)
+        progressView.alpha = 1
+        
+        if animated {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+                layoutSuperiew.layoutIfNeeded()
+            }, completion: nil)
+        }
+        else {
+            layoutSuperiew.layoutIfNeeded()
+        }
+        
+        if progress == 1 {
+            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
+                progressView.alpha = 0
+            }, completion: nil)
+        }
     }
 }
 

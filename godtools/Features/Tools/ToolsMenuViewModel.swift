@@ -43,9 +43,9 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
         switch menuItem.id {
             
         case .favorites:
-            print("\n FAVORITES TAPPED!")
+            selectedToolMenuItem.accept(value: favoritesMenuItem)
         case .allTools:
-            print("\n ALL TOOLS TAPPED")
+            selectedToolMenuItem.accept(value: allToolsMenuItem)
         }
     }
 }
