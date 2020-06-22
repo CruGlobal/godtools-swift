@@ -9,10 +9,10 @@
 import UIKit
 
 protocol HomeToolTableViewCellDelegate {
-    func downloadButtonWasPressed(resource: DownloadedResource)
     func infoButtonWasPressed(resource: DownloadedResource)
 }
 
+@IBDesignable
 class HomeToolTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
@@ -104,10 +104,6 @@ class HomeToolTableViewCell: UITableViewCell {
     }
 
     // MARK: - Actions
-    
-    @IBAction func pressDownloadButton(_ sender: Any) {
-        cellDelegate?.downloadButtonWasPressed(resource: resource!)
-    }
     
     @IBAction func pressInfoButton(_ sender: Any) {
         cellDelegate?.infoButtonWasPressed(resource: resource!)
