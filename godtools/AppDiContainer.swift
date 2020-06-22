@@ -14,19 +14,22 @@ class AppDiContainer {
     private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
     private let realmDatabase: RealmDatabase
-    private let resourcesSHA256FileCache: SHA256FilesCache = SHA256FilesCache(rootDirectory: "resources_files")
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    private let resourceTranslationsFileCache: ResourceTranslationsFileCache
+    private let articleAemImportService: ArticleAemImportService
     
     let config: ConfigType
     let resourceAttachmentsService: ResourceAttachmentsService
     let resourceTranslationsServices: ResourceTranslationsServices
     let resourcesService: ResourcesService
-    let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let favoritedResourcesService: FavoritedResourcesService
     let languageSettingsService: LanguageSettingsService
+    let articlesService: ArticlesService
     let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
@@ -50,16 +53,22 @@ class AppDiContainer {
         translationsApi = TranslationsApi(config: config)
                         
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
+        
+        resourceTranslationsFileCache = ResourceTranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
         resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
-        resourceTranslationsServices = ResourceTranslationsServices(realmDatabase: realmDatabase, realmResourcesCache: realmResourcesCache, translationsApi: translationsApi, sha256FileCache: resourcesSHA256FileCache)
+        resourceTranslationsServices = ResourceTranslationsServices(realmDatabase: realmDatabase, realmResourcesCache: realmResourcesCache, translationsApi: translationsApi, translationsFileCache: resourceTranslationsFileCache)
                         
         resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService, translationsServices: resourceTranslationsServices)
-        
-        favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+                
+        favoritedResourcesService = FavoritedResourcesService(realmDatabase: realmDatabase)
         
         languageSettingsService = LanguageSettingsService(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache)
+        
+        articleAemImportService = ArticleAemImportService(realmDatabase: realmDatabase)
+        
+        articlesService = ArticlesService(resourcesService: resourcesService, articleAemImportService: articleAemImportService)
         
         isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
@@ -127,13 +136,6 @@ class AppDiContainer {
         return TranslationZipImporter()
     }
 
-    var articlesService: ArticlesService {
-        return ArticlesService(
-            resourceLatestTranslationServices: resourceLatestTranslationServices,
-            realm: realmDatabase.mainThreadRealm
-        )
-    }
-    
     var tractManager: TractManager {
         return TractManager()
     }

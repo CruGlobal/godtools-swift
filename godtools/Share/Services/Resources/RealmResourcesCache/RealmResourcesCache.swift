@@ -149,6 +149,20 @@ class RealmResourcesCache {
         }
     }
     
+    func getResources(resourceIds: [String], completeOnMain: @escaping ((_ resources: [ResourceModel]) -> Void)) {
+        realmDatabase.background { [weak self] (realm: Realm) in
+            var resources: [ResourceModel] = Array()
+            for resourceId in resourceIds {
+                if let realmResource = self?.getResource(realm: realm, id: resourceId) {
+                    resources.append(ResourceModel(realmResource: realmResource))
+                }
+            }
+            DispatchQueue.main.async {
+                completeOnMain(resources)
+            }
+        }
+    }
+    
     func getResource(realm: Realm, id: String) -> RealmResource? {
         return realm.object(ofType: RealmResource.self, forPrimaryKey: id)
     }

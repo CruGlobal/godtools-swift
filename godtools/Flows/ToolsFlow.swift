@@ -38,7 +38,7 @@ class ToolsFlow: Flow {
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
             resourcesService: appDiContainer.resourcesService,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            favoritedResourcesService: appDiContainer.favoritedResourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             analytics: appDiContainer.analytics
         )
@@ -46,7 +46,7 @@ class ToolsFlow: Flow {
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
             resourcesService: appDiContainer.resourcesService,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            favoritedResourcesService: appDiContainer.favoritedResourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             analytics: appDiContainer.analytics
         )
@@ -131,34 +131,26 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func navigateToTool(resource: DownloadedResource) {
+    private func navigateToTool(resource: ResourceModel) {
         
-        switch resource.toolTypeEnum {
+        let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
+        
+        switch resourceType {
         
         case .article:
-            
-            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-            let languagesManager: LanguagesManager = appDiContainer.languagesManager
-            var language: Language?
-            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                language = primaryLanguage
-            }
-            else {
-                language = languagesManager.loadFromDisk(code: "en")
-            }
             
             let articlesFlow = ArticlesFlow(
                 flowDelegate: self,
                 appDiContainer: appDiContainer,
                 sharedNavigationController: navigationController,
-                resource: resource,
-                language: language!
+                resource: resource
             )
             
             self.articlesFlow = articlesFlow
         
         case .tract:
-            
+            break
+            /*
             // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
             let languagesManager: LanguagesManager = appDiContainer.languagesManager
             var primaryLanguage: Language?
@@ -196,7 +188,7 @@ class ToolsFlow: Flow {
             let view = TractView(viewModel: viewModel)
 
             navigationController.pushViewController(view, animated: true)
-        
+            */
         case .unknown:
             let viewModel = AlertMessageViewModel(
                 title: "Internal Error",
@@ -216,7 +208,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             resource: resource,
             resourcesService: appDiContainer.resourcesService,
-            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            favoritedResourcesService: appDiContainer.favoritedResourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices,
             preferredLanguageTranslation: appDiContainer.preferredLanguageTranslation,

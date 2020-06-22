@@ -17,15 +17,19 @@ class RealmArticleAemImportData: Object, ArticleAemImportDataType {
     @objc dynamic var webUrl: String = ""
     @objc dynamic var webArchiveFilename: String = ""
     
-    required init(articleJcrContent: RealmArticleJcrContent?, languageCode: String, resourceId: String, webUrl: String, webArchiveFilename: String) {
-        self.articleJcrContent = articleJcrContent
-        self.languageCode = languageCode
-        self.resourceId = resourceId
-        self.webUrl = webUrl
-        self.webArchiveFilename = webArchiveFilename
-    }
-    
-    required init() {
+    func mapFrom(model: ArticleAemImportData) {
         
+        if let jcrContent = model.articleJcrContent {
+            articleJcrContent = RealmArticleJcrContent()
+            articleJcrContent?.mapFrom(model: jcrContent)
+        }
+        else {
+            articleJcrContent = nil
+        }
+        
+        languageCode = model.languageCode
+        resourceId = model.resourceId
+        webUrl = model.webUrl
+        webArchiveFilename = model.webArchiveFilename
     }
 }

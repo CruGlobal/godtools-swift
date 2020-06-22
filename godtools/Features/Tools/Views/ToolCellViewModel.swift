@@ -13,22 +13,26 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
     private let languageSettingsService: LanguageSettingsService
+    private let attachmentsService: ResourceAttachmentsService
     private let translationsServices: ResourceTranslationsServices
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
+    let attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
+    let articlesDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let title: String
     let resourceDescription: String
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsService: LanguageSettingsService) {
+    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService) {
         
         self.resource = resource
         self.resourcesService = resourcesService
         self.languageSettingsService = languageSettingsService
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
+        self.attachmentsService = resourcesService.attachmentsService
         self.translationsServices = resourcesService.translationsServices
         
         super.init()
@@ -36,13 +40,14 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         reloadBannerImage()
         setupBinding()
         
-        favoritedResourcesCache.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
+        favoritedResourcesService.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
             self?.isFavorited.accept(value: isFavorited)
-        }
+        }        
     }
     
     deinit {
-        resourcesService.attachmentsService.completed.removeObserver(self)
+        attachmentsService.progress.removeObserver(self)
+        attachmentsService.completed.removeObserver(self)
         translationsServices.progress(resource: resource).removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
@@ -72,8 +77,14 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     }
     
     private func setupBinding() {
+           
+        attachmentsService.progress.addObserver(self) { [weak self] (progress: Double) in
+            DispatchQueue.main.async { [weak self] in
+                self?.attachmentsDownloadProgress.accept(value: progress)
+            }
+        }
         
-        resourcesService.attachmentsService.completed.addObserver(self) { [weak self] in
+        attachmentsService.completed.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadBannerImage()
             }

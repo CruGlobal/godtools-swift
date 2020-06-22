@@ -22,8 +22,8 @@ class ArticleAemImportService {
         
     let aemWebArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     
-    required init(realm: Realm) {
-        self.aemImportDataRealmCache = RealmArticleAemImportDataCache(realm: realm)
+    required init(realmDatabase: RealmDatabase) {
+        self.aemImportDataRealmCache = RealmArticleAemImportDataCache(realmDatabase: realmDatabase)
     }
     
     func cancel() {
@@ -32,7 +32,9 @@ class ArticleAemImportService {
     }
     
     func getArticlesWithTags(godToolsResource: GodToolsResource, aemTags: [String]) -> [RealmArticleAemImportData] {
-        return aemImportDataRealmCache.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: aemTags)
+        // TODO: Implement.
+        return []
+        //return aemImportDataRealmCache.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: aemTags)
     }
     
     func downloadToCacheAndWebArchive(godToolsResource: GodToolsResource, aemImportSrcs: [String], complete: @escaping (( _ error: ArticleAemImportServiceError?) -> Void)) {
@@ -76,6 +78,8 @@ class ArticleAemImportService {
     
     private func deleteCachedAemImportData(godToolsResource: GodToolsResource, complete: @escaping (() -> Void)) {
         
+        /*
+        
         // Delete WebArchives
         
         // Filename is not needed here because we are just deleting the directory.
@@ -107,7 +111,7 @@ class ArticleAemImportService {
             }
             
             complete()
-        }
+        }*/
     }
     
     private func archiveAndCacheAemImportData(aemImportDataObjects: [ArticleAemImportData], godToolsResource: GodToolsResource, complete: @escaping ((_ error: ArticleAemImportServiceError?) -> Void)) {

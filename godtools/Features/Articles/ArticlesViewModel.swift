@@ -38,7 +38,7 @@ class ArticlesViewModel: ArticlesViewModelType {
     }
     
     deinit {
-        articlesService.cancel()
+
     }
     
     private func reloadArticles(category: ArticleCategory, animated: Bool) {

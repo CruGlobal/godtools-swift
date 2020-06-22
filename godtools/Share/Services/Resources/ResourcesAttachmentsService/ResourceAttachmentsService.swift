@@ -15,7 +15,7 @@ class ResourceAttachmentsService {
     
     private let session: URLSession
     private let realmDatabase: RealmDatabase
-    private let sha256FileCache: SHA256FilesCache
+    private let sha256FileCache: ResourcesSHA256FileCache
     
     private var bannerImageMemoryCache: [AttachmentId: UIImage] = Dictionary() // TODO: Would like to replace this with a purging cache. ~Levi
     private var currentQueue: OperationQueue?
@@ -24,7 +24,7 @@ class ResourceAttachmentsService {
     let progress: ObservableValue<Double> = ObservableValue(value: 0)
     let completed: Signal = Signal()
     
-    required init(realmDatabase: RealmDatabase, sha256FileCache: SHA256FilesCache) {
+    required init(realmDatabase: RealmDatabase, sha256FileCache: ResourcesSHA256FileCache) {
         
         let configuration = URLSessionConfiguration.ephemeral
         configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
@@ -140,7 +140,7 @@ class ResourceAttachmentsService {
             complete(image)
         }
         
-        let sha256FileCacheRef: SHA256FilesCache = sha256FileCache
+        let sha256FileCacheRef: ResourcesSHA256FileCache = sha256FileCache
         
         realmDatabase.background { (realm: Realm) in
             

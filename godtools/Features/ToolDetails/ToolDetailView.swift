@@ -301,35 +301,14 @@ class ToolDetailView: UIViewController {
     
     private func setTranslationProgress(progress: Double, animated: Bool) {
         
-        let widthConstraint: NSLayoutConstraint = translationDownloadProgressWidth
-        let progressView: UIView = translationDownloadProgressView
-        let layoutSuperiew: UIView = contentView
-        let maxProgressWidth: CGFloat = view.frame.size.width
-        
-        if progress == 0 {
-            widthConstraint.constant = 0
-            progressView.alpha = 0
-            layoutSuperiew.layoutIfNeeded()
-            return
-        }
-        
-        widthConstraint.constant = CGFloat(Double(maxProgressWidth) * progress)
-        progressView.alpha = 1
-        
-        if animated {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                layoutSuperiew.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            layoutSuperiew.layoutIfNeeded()
-        }
-        
-        if progress == 1 {
-            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
-                progressView.alpha = 0
-            }, completion: nil)
-        }
+        UIView.setProgress(
+            progress: progress,
+            progressView: translationDownloadProgressView,
+            progressViewWidth: translationDownloadProgressWidth,
+            maxProgressViewWidth: view.frame.size.width,
+            layoutView: contentView,
+            animated: animated
+        )
     }
 }
 

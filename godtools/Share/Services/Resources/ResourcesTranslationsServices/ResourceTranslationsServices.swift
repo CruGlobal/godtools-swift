@@ -15,16 +15,16 @@ class ResourceTranslationsServices {
     private let realmDatabase: RealmDatabase
     private let realmResourcesCache: RealmResourcesCache
     private let translationsApi: TranslationsApiType
-    private let sha256FileCache: SHA256FilesCache
+    private let translationsFileCache: ResourceTranslationsFileCache
     
     private var services: [ResourceId: ResourceTranslationsService] = Dictionary()
     
-    required init(realmDatabase: RealmDatabase, realmResourcesCache: RealmResourcesCache, translationsApi: TranslationsApiType, sha256FileCache: SHA256FilesCache) {
+    required init(realmDatabase: RealmDatabase, realmResourcesCache: RealmResourcesCache, translationsApi: TranslationsApiType, translationsFileCache: ResourceTranslationsFileCache) {
         
         self.realmDatabase = realmDatabase
         self.realmResourcesCache = realmResourcesCache
         self.translationsApi = translationsApi
-        self.sha256FileCache = sha256FileCache
+        self.translationsFileCache = translationsFileCache
     }
     
     func downloadAndCacheTranslations(resource: ResourceModel) {
@@ -59,7 +59,7 @@ class ResourceTranslationsServices {
             realmDatabase: realmDatabase,
             realmResourcesCache: realmResourcesCache,
             translationsApi: translationsApi,
-            sha256FileCache: sha256FileCache,
+            translationsFileCache: translationsFileCache,
             resourceId: resourceId
         )
         

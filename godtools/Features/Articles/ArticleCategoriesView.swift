@@ -152,6 +152,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         
+        /*
         let category: ArticleCategory = viewModel.categories.value[indexPath.row]
         
         let cellViewModel = ArticleCategoryCellViewModel(
@@ -163,6 +164,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
  
         cell.selectionStyle = .none
         cell.backgroundColor = .lightGray
+        */
         
         return cell
     }

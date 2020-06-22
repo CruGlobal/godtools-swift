@@ -13,7 +13,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private let resource: ResourceModel
     private let resourcesService: ResourcesService
-    private let favoritedResourcesCache: RealmFavoritedResourcesCache
+    private let favoritedResourcesService: FavoritedResourcesService
     private let languageSettingsService: LanguageSettingsService
     private let localization: LocalizationServices
     private let preferredLanguageTranslation: PreferredLanguageTranslationViewModel
@@ -40,12 +40,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.resourcesService = resourcesService
-        self.favoritedResourcesCache = favoritedResourcesCache
+        self.favoritedResourcesService = favoritedResourcesService
         self.languageSettingsService = languageSettingsService
         self.localization = localization
         self.preferredLanguageTranslation = preferredLanguageTranslation
@@ -75,8 +75,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     deinit {
         print("x deinit: \(type(of: self))")
         translationsServices.progress(resource: resource).removeObserver(self)
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesService.resourceFavorited.removeObserver(self)
+        favoritedResourcesService.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -87,11 +87,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
             }
         }
         
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+        favoritedResourcesService.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             self?.reloadFavorited()
         }
         
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+        favoritedResourcesService.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
             self?.reloadFavorited()
         }
     }
@@ -176,8 +176,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     private func reloadFavorited() {
-        
-        favoritedResourcesCache.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
+                
+        favoritedResourcesService.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
             if isFavorited {
                 self?.hidesFavoriteButton.accept(value: true)
                 self?.hidesUnfavoriteButton.accept(value: false)
@@ -207,16 +207,16 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     func openToolTapped() {
-        //flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
+        flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
     func favoriteTapped() {
-        favoritedResourcesCache.addResourceToFavorites(resourceId: resource.id)
+        favoritedResourcesService.addToFavorites(resourceId: resource.id)
         resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func unfavoriteTapped() {
-        favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
+        favoritedResourcesService.removeFromFavorites(resourceId: resource.id)
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

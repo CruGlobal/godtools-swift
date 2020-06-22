@@ -14,6 +14,7 @@ class AllToolsView: UIView, NibBased {
     
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,5 +55,9 @@ class AllToolsView: UIView, NibBased {
             self?.messageLabel.isHidden = message.isEmpty
             self?.messageLabel.text = message
         })
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
+        }
     }
 }

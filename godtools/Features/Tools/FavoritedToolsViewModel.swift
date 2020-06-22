@@ -15,26 +15,27 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let resourcesService: ResourcesService
-    let favoritedResourcesCache: RealmFavoritedResourcesCache
+    let favoritedResourcesService: FavoritedResourcesService
     let languageSettingsService: LanguageSettingsService
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolListIsEditable: Bool = true
+    let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, favoritedResourcesCache: RealmFavoritedResourcesCache, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resourcesService = resourcesService
-        self.favoritedResourcesCache = favoritedResourcesCache
+        self.favoritedResourcesService = favoritedResourcesService
         self.languageSettingsService = languageSettingsService
         self.analytics = analytics
         
         super.init()
         
-        reloadFavoritedResourcesFromCache()
+        reloadFavoritedResources()
         
         setupBinding()
     }
@@ -43,44 +44,53 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         print("x deinit: \(type(of: self))")
         
         resourcesService.completed.removeObserver(self)
-        favoritedResourcesCache.resourceFavorited.removeObserver(self)
-        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesService.resourceFavorited.removeObserver(self)
+        favoritedResourcesService.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesService.resourceSorted.removeObserver(self)
     }
     
     private func setupBinding() {
         
         resourcesService.completed.addObserver(self) { [weak self] (error: ResourcesServiceError?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadFavoritedResourcesFromCache()
+                self?.reloadFavoritedResources()
             }
         }
         
-        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadFavoritedResourcesFromCache()
+        favoritedResourcesService.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavoritedResources()
         }
         
-        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.removeTools(toolIdsToRemove: [resourceId])
-            self?.reloadHidesFindToolsView()
+        favoritedResourcesService.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            self?.removeFavoritedResource(resourceIds: [resourceId])
+        }
+        
+        favoritedResourcesService.resourceSorted.addObserver(self) { [weak self] (resourceId: String) in
+            self?.reloadFavoritedResources()
         }
     }
     
-    private func reloadFavoritedResourcesFromCache() {
+    private func removeFavoritedResource(resourceIds: [String]) {
+        removeTools(toolIdsToRemove: resourceIds)
+        reloadHidesFindToolsView()
+    }
+    
+    private func reloadFavoritedResources() {
         
         let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        let favoritedResourcesCache: RealmFavoritedResourcesCache = self.favoritedResourcesCache
+        let favoritedResourcesService: FavoritedResourcesService = self.favoritedResourcesService
         
-        resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
-
-            favoritedResourcesCache.getFavoritedResources(completeOnMain: { [weak self] (allFavoritedResources: [FavoritedResourceModel]) in
+        favoritedResourcesService.getFavoritedResources { (favoritedResources: [FavoritedResourceModel]) in
+                        
+            let sortedFavoritedResources: [FavoritedResourceModel] = favoritedResources.sorted(by: {$0.sortOrder < $1.sortOrder})
+            let sortedFavoritedResourcesIds: [String] = sortedFavoritedResources.map({$0.resourceId})
             
-                    let favoritedResourcesIds: [String] = allFavoritedResources.map({$0.resourceId})
-                    let favoritedResources: [ResourceModel] = allResources.filter({favoritedResourcesIds.contains($0.id)})
-                    
-                    self?.tools.accept(value: favoritedResources)
-                    self?.reloadHidesFindToolsView()
-                })
-        })
+            resourcesCache.getResources(resourceIds: sortedFavoritedResourcesIds) { [weak self] (resources: [ResourceModel]) in
+                
+                self?.tools.accept(value: resources)
+                self?.reloadHidesFindToolsView()
+            }
+        }
     }
     
     private func reloadHidesFindToolsView() {
@@ -93,29 +103,34 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     }
     
     func toolTapped(resource: ResourceModel) {
-        //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+        toolListIsEditing.accept(value: false)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
     func aboutToolTapped(resource: ResourceModel) {
+        toolListIsEditing.accept(value: false)
         flowDelegate?.navigate(step: .aboutToolTappedFromFavoritedTools(resource: resource))
     }
     
     func openToolTapped(resource: ResourceModel) {
-        //flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
+        toolListIsEditing.accept(value: false)
+        flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
     
     func favoriteToolTapped(resource: ResourceModel) {
         
+        toolListIsEditing.accept(value: false)
+        
         let removedHandler = CallbackHandler { [weak self] in
-            self?.favoritedResourcesCache.removeResourceFromFavorites(resourceId: resource.id)
+            self?.favoritedResourcesService.removeFromFavorites(resourceId: resource.id)
         }
         flowDelegate?.navigate(step: .unfavoriteToolTappedFromFavoritedTools(resource: resource, removeHandler: removedHandler))
     }
     
-    func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {
-        // TODO: Update sort order for favorited resources. ~Levi
-        print("\n Favorited Tools - Did Edit Tools List")
-        print("  movedSourceIndexPath: \(movedSourceIndexPath.row)")
-        print("  toDestinationIndexPath: \(toDestinationIndexPath.row)")
+    func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {
+                
+        if movedSourceIndexPath.row != toDestinationIndexPath.row {
+            favoritedResourcesService.setSortOrder(resourceId: movedResource.id, sortOrder: toDestinationIndexPath.row)
+        }
     }
 }

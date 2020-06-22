@@ -11,18 +11,19 @@ import Foundation
 protocol ToolsViewModelType {
     
     var resourcesService: ResourcesService { get }
-    var favoritedResourcesCache: RealmFavoritedResourcesCache { get }
+    var favoritedResourcesService: FavoritedResourcesService { get }
     var languageSettingsService: LanguageSettingsService { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }
     var toolListIsEditable: Bool { get }
+    var toolListIsEditing: ObservableValue<Bool> { get }
     
     func toolTapped(resource: ResourceModel)
     func aboutToolTapped(resource: ResourceModel)
     func openToolTapped(resource: ResourceModel)
     func favoriteToolTapped(resource: ResourceModel)
-    func didEditToolList(movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath)
+    func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath)
 }
 
 extension ToolsViewModelType {

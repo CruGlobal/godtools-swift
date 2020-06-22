@@ -14,6 +14,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AllToolsView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="loadingView" destination="e8N-Gj-D0q" id="aAe-W2-MJC"/>
                 <outlet property="messageLabel" destination="SVw-GE-17I" id="EOA-ld-jKf"/>
                 <outlet property="toolsView" destination="x51-Xo-qQ0" id="rFa-Yc-F3n"/>
             </connections>
@@ -33,11 +34,17 @@
                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="e8N-Gj-D0q" userLabel="loadingView">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="SVw-GE-17I" secondAttribute="trailing" constant="30" id="9fN-82-DPg"/>
                 <constraint firstItem="SVw-GE-17I" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="Die-fe-ZCf"/>
+                <constraint firstItem="e8N-Gj-D0q" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Mkd-CY-Phs"/>
+                <constraint firstItem="e8N-Gj-D0q" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="XxQ-aa-9d2"/>
                 <constraint firstAttribute="trailing" secondItem="x51-Xo-qQ0" secondAttribute="trailing" id="a1Z-Ra-5qH"/>
                 <constraint firstItem="SVw-GE-17I" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="abk-5d-qlB"/>
                 <constraint firstItem="x51-Xo-qQ0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="apk-H4-nQ3"/>

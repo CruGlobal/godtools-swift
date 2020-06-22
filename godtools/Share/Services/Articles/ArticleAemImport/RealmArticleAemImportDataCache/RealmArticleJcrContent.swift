@@ -12,18 +12,17 @@ import RealmSwift
 class RealmArticleJcrContent: Object, ArticleJcrContentType {
     
     @objc dynamic var canonical: String?
-    let tags = List<String>()
     @objc dynamic var title: String?
     @objc dynamic var uuid: String?
     
-    required init(canonical: String?, title: String?, uuid: String?, tags: [String]) {
-        self.canonical = canonical
-        self.title = title
-        self.uuid = uuid
-        self.tags.append(objectsIn: tags)
-    }
+    let tags = List<String>()
     
-    required init() {
+    func mapFrom(model: ArticleJcrContent) {
         
+        canonical = model.canonical
+        title = model.title
+        uuid = model.title
+        tags.removeAll()
+        tags.append(objectsIn: model.tags)
     }
 }

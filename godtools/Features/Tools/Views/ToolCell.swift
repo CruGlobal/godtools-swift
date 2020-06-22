@@ -28,7 +28,9 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var toolShadowView: UIView!
     @IBOutlet weak private var toolContentView: UIView!
     @IBOutlet weak private var bannerImageView: UIImageView!
-    @IBOutlet weak private var translationsDownloadProgress: UIView!
+    @IBOutlet weak private var attachmentsDownloadProgressView: UIView!
+    @IBOutlet weak private var articlesDownloadProgressView: UIView!
+    @IBOutlet weak private var translationsDownloadProgressView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var descriptionLabel: UILabel!
@@ -36,6 +38,8 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var openToolButton: UIButton!
     @IBOutlet weak private var favoriteButton: UIButton!
     
+    @IBOutlet weak private var attachmentsDownloadProgressWidth: NSLayoutConstraint!
+    @IBOutlet weak private var articlesDownloadProgressWidth: NSLayoutConstraint!
     @IBOutlet weak private var translationsDownloadProgressWidth: NSLayoutConstraint!
     
     override func awakeFromNib() {
@@ -51,10 +55,16 @@ class ToolCell: UITableViewCell {
         super.prepareForReuse()
         viewModel = nil
         delegate = nil
+        setAttachmentsProgress(progress: 0, animated: false)
+        setArticlesProgress(progress: 0, animated: false)
         setTranslationProgress(progress: 0, animated: false)
     }
     
     private func setupLayout() {
+        
+        setAttachmentsProgress(progress: 0, animated: false)
+        setArticlesProgress(progress: 0, animated: false)
+        setTranslationProgress(progress: 0, animated: false)
         
         // toolShadowView
         toolShadowView.layer.cornerRadius = toolCornerRadius
@@ -88,16 +98,14 @@ class ToolCell: UITableViewCell {
         self.delegate = delegate
         
         viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
-            let newBannerImage: Bool = self?.bannerImageView.image == nil && bannerImage != nil
             self?.bannerImageView.image = bannerImage
-            if newBannerImage {
-                UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                    self?.bannerImageView.alpha = 1
-                }, completion: nil)
-            }
-            else {
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self?.bannerImageView.alpha = 1
-            }
+            }, completion: nil)
+        }
+        
+        viewModel.attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
+            self?.setAttachmentsProgress(progress: progress, animated: true)
         }
         
         viewModel.translationDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
@@ -123,32 +131,40 @@ class ToolCell: UITableViewCell {
         }
     }
     
+    private func setAttachmentsProgress(progress: Double, animated: Bool) {
+        
+        UIView.setProgress(
+            progress: progress,
+            progressView: attachmentsDownloadProgressView,
+            progressViewWidth: attachmentsDownloadProgressWidth,
+            maxProgressViewWidth: toolContentView.frame.size.width,
+            layoutView: toolContentView,
+            animated: animated
+        )
+    }
+    
+    private func setArticlesProgress(progress: Double, animated: Bool) {
+        
+        UIView.setProgress(
+            progress: progress,
+            progressView: articlesDownloadProgressView,
+            progressViewWidth: articlesDownloadProgressWidth,
+            maxProgressViewWidth: toolContentView.frame.size.width,
+            layoutView: toolContentView,
+            animated: animated
+        )
+    }
+    
     private func setTranslationProgress(progress: Double, animated: Bool) {
         
-        if progress == 0 {
-            translationsDownloadProgressWidth.constant = 0
-            translationsDownloadProgress.alpha = 0
-            toolContentView.layoutIfNeeded()
-            return
-        }
-        
-        translationsDownloadProgressWidth.constant = CGFloat(Double(toolContentView.frame.size.width) * progress)
-        translationsDownloadProgress.alpha = 1
-        
-        if animated {
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                self.toolContentView.layoutIfNeeded()
-            }, completion: nil)
-        }
-        else {
-            toolContentView.layoutIfNeeded()
-        }
-        
-        if progress == 1 {
-            UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
-                self.translationsDownloadProgress.alpha = 0
-            }, completion: nil)
-        }
+        UIView.setProgress(
+            progress: progress,
+            progressView: translationsDownloadProgressView,
+            progressViewWidth: translationsDownloadProgressWidth,
+            maxProgressViewWidth: toolContentView.frame.size.width,
+            layoutView: toolContentView,
+            animated: animated
+        )
     }
     
     @objc func handleAboutTool(button: UIButton) {

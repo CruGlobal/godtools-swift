@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmTranslationZipFile: Object {
+class RealmTranslationZipFile: Object, TranslationZipFileModelType {
     
     @objc dynamic var translationId: String = ""
     @objc dynamic var resourceId: String = ""

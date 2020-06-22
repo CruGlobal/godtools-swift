@@ -37,11 +37,27 @@
                                     <constraint firstAttribute="height" constant="80" id="MSw-6N-hOG"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89C-rq-BCp" userLabel="translationsDownloadProgress">
-                                <rect key="frame" x="0.0" y="80" width="0.0" height="2"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJ0-BP-j0n" userLabel="attachmentsDownloadProgressView">
+                                <rect key="frame" x="0.0" y="80" width="300" height="2"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="4T8-0a-GkE"/>
+                                    <constraint firstAttribute="width" constant="300" id="52V-tk-WZ5"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ihh-rW-qDU" userLabel="articlesDownloadProgressView">
+                                <rect key="frame" x="0.0" y="80" width="225" height="2"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="rTF-Ar-lOs"/>
+                                    <constraint firstAttribute="width" constant="225" id="w4U-Ob-Z6p"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="89C-rq-BCp" userLabel="translationsDownloadProgressView">
+                                <rect key="frame" x="0.0" y="80" width="150" height="2"/>
                                 <color key="backgroundColor" red="0.21176470589999999" green="0.57647058819999997" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" id="NcJ-p4-fHc"/>
+                                    <constraint firstAttribute="width" constant="150" id="NcJ-p4-fHc"/>
                                     <constraint firstAttribute="height" constant="2" id="sUC-ca-sZC"/>
                                 </constraints>
                             </view>
@@ -93,20 +109,24 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Ihh-rW-qDU" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="0je-7W-eYy"/>
                             <constraint firstAttribute="trailing" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="30" id="68U-LX-f5Q"/>
                             <constraint firstItem="HFT-6s-l9f" firstAttribute="leading" secondItem="bVm-eV-R3X" secondAttribute="trailing" constant="5" id="6Au-qm-6h4"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="BAm-Xe-SFd"/>
                             <constraint firstAttribute="trailing" secondItem="zB8-IL-euH" secondAttribute="trailing" id="H7J-uw-N3e"/>
                             <constraint firstItem="89C-rq-BCp" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="L19-ea-Fxb"/>
                             <constraint firstItem="39M-E6-07b" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" constant="15" id="QK7-z1-gHe"/>
+                            <constraint firstItem="nJ0-BP-j0n" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="Qm8-s8-Uf8"/>
                             <constraint firstAttribute="bottom" secondItem="HFT-6s-l9f" secondAttribute="bottom" constant="10" id="SMQ-Ak-33I"/>
                             <constraint firstItem="39M-E6-07b" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" constant="12" id="UwE-Li-ZHw"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="centerY" secondItem="HFT-6s-l9f" secondAttribute="centerY" id="VMc-KC-4Of"/>
                             <constraint firstItem="402-Hl-aIK" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" constant="10" id="WDK-2g-b7v"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="height" secondItem="HFT-6s-l9f" secondAttribute="height" id="XG2-To-12I"/>
+                            <constraint firstItem="Ihh-rW-qDU" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="bML-Yh-rtT"/>
                             <constraint firstItem="YVf-Mj-BIx" firstAttribute="centerY" secondItem="39M-E6-07b" secondAttribute="centerY" id="c50-Dd-Vfc"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="top" secondItem="I2y-Ji-clW" secondAttribute="bottom" constant="31" id="csb-C7-y2B"/>
                             <constraint firstAttribute="trailing" secondItem="402-Hl-aIK" secondAttribute="trailing" constant="10" id="fL9-PE-vkB"/>
+                            <constraint firstItem="nJ0-BP-j0n" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="gur-V2-s2z"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="kYF-0r-6nd"/>
                             <constraint firstAttribute="trailing" secondItem="YVf-Mj-BIx" secondAttribute="trailing" constant="23" id="kmj-hG-6rx"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="width" secondItem="HFT-6s-l9f" secondAttribute="width" id="m68-PT-6Io"/>
@@ -130,6 +150,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aboutToolButton" destination="bVm-eV-R3X" id="nso-dl-vhM"/>
+                <outlet property="articlesDownloadProgressView" destination="Ihh-rW-qDU" id="91l-fS-UBX"/>
+                <outlet property="articlesDownloadProgressWidth" destination="w4U-Ob-Z6p" id="SSn-Iz-fFY"/>
+                <outlet property="attachmentsDownloadProgressView" destination="nJ0-BP-j0n" id="Cm5-Ga-Qem"/>
+                <outlet property="attachmentsDownloadProgressWidth" destination="52V-tk-WZ5" id="lqP-Al-UYd"/>
                 <outlet property="bannerImageView" destination="zB8-IL-euH" id="9Q2-3P-ip8"/>
                 <outlet property="descriptionLabel" destination="I2y-Ji-clW" id="vnI-TE-Q2m"/>
                 <outlet property="favoriteButton" destination="402-Hl-aIK" id="5jU-GQ-uCA"/>
@@ -138,7 +162,7 @@
                 <outlet property="titleLabel" destination="39M-E6-07b" id="jWt-4t-QIx"/>
                 <outlet property="toolContentView" destination="ON1-CZ-kyr" id="sgO-2e-gBa"/>
                 <outlet property="toolShadowView" destination="5Nv-9X-2XM" id="UXE-lp-1Wg"/>
-                <outlet property="translationsDownloadProgress" destination="89C-rq-BCp" id="8lQ-KS-jop"/>
+                <outlet property="translationsDownloadProgressView" destination="89C-rq-BCp" id="W96-Rj-djG"/>
                 <outlet property="translationsDownloadProgressWidth" destination="NcJ-p4-fHc" id="wnF-ah-p0I"/>
             </connections>
             <point key="canvasLocation" x="-117.39130434782609" y="3.0133928571428572"/>

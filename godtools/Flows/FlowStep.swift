@@ -29,16 +29,16 @@ enum FlowStep {
     case getStartedTappedFromOnboardingTutorial
     
     // favoritedTools
-    case toolTappedFromFavoritedTools(resource: DownloadedResource)
+    case toolTappedFromFavoritedTools(resource: ResourceModel)
     case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
     case unfavoriteToolTappedFromFavoritedTools(resource: ResourceModel, removeHandler: CallbackHandler)
     
     // allTools
-    case toolTappedFromAllTools(resource: DownloadedResource)
+    case toolTappedFromAllTools(resource: ResourceModel)
     case aboutToolTappedFromAllTools(resource: ResourceModel)
     
     // toolDetails
-    case openToolTappedFromToolDetails(resource: DownloadedResource)
+    case openToolTappedFromToolDetails(resource: ResourceModel)
     case urlLinkTappedFromToolDetail(url: URL)
         
     // tract

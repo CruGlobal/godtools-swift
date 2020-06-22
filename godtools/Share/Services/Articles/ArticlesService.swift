@@ -10,27 +10,21 @@ import Foundation
 import RealmSwift
 
 class ArticlesService {
-    
-    private let resourceCacheValidation: ResourceCacheValidation = ResourceCacheValidation()
-    
+        
     private var getManifestXmlOperation: OperationQueue?
     
-    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
+    let resourcesService: ResourcesService
     let articleAemImportService: ArticleAemImportService
     
-    required init(resourceLatestTranslationServices: ResourcesLatestTranslationServices, realm: Realm) {
+    required init(resourcesService: ResourcesService, articleAemImportService: ArticleAemImportService) {
         
-        self.resourceLatestTranslationServices = resourceLatestTranslationServices
-        self.articleAemImportService = ArticleAemImportService(realm: realm)
-    }
-    
-    func cancel() {
-        getManifestXmlOperation?.cancelAllOperations()
-        articleAemImportService.cancel()
+        self.resourcesService = resourcesService
+        self.articleAemImportService = articleAemImportService
     }
     
     func downloadAndCacheArticleData(godToolsResource: GodToolsResource, forceDownload: Bool, complete: @escaping ((_ result: Result<ArticleManifestXmlParser, ArticlesServiceError>) -> Void)) {
-                        
+                
+        /*
         let secondsInDay: TimeInterval = 86400
         let cacheExpirationSeconds: TimeInterval = secondsInDay * 7
         
@@ -69,15 +63,16 @@ class ArticlesService {
                 )
                 complete(.failure(.unknownError(error: unknownError)))
             }
-        }
+        }*/
     }
     
     func getCachedArticlesManifestXml(godToolsResource: GodToolsResource) -> ArticleManifestXmlParser? {
         
+        /*
         if let data = resourceLatestTranslationServices.getCachedManifestXmlData(godToolsResource: godToolsResource) {
             
             return ArticleManifestXmlParser(xmlData: data)
-        }
+        }*/
         
         return nil
     }

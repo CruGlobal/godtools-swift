@@ -86,6 +86,10 @@ class ToolsTableView: UIView, NibBased {
             longPressGesture.minimumPressDuration = 0.75
             tableView.addGestureRecognizer(longPressGesture)
         }
+        
+        viewModel.toolListIsEditing.addObserver(self) { [weak self] (isEditing: Bool) in
+            self?.tableView.isEditing = isEditing
+        }
     }
     
     @objc func handleLongPressForToolListEditing(gestureReconizer: UILongPressGestureRecognizer) {
@@ -125,7 +129,7 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         let cellViewModel = ToolCellViewModel(
             resource: resource,
             resourcesService: viewModel.resourcesService,
-            favoritedResourcesCache: viewModel.favoritedResourcesCache,
+            favoritedResourcesService: viewModel.favoritedResourcesService,
             languageSettingsService: viewModel.languageSettingsService
         )
         
@@ -143,7 +147,11 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
                 
-        viewModel.didEditToolList(movedSourceIndexPath: sourceIndexPath, toDestinationIndexPath: destinationIndexPath)
+        viewModel.didEditToolList(
+            movedResource: viewModel.tools.value[sourceIndexPath.row],
+            movedSourceIndexPath: sourceIndexPath,
+            toDestinationIndexPath: destinationIndexPath
+        )
     }
 }
 

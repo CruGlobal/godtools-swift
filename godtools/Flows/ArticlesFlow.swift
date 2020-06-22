@@ -15,44 +15,23 @@ class ArticlesFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: DownloadedResource, language: Language) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
         
-        // TODO: Need to think of how to handle grabbing the latest translation without force unwrapping. ~Levi
-        // TODO: What if a translation does not exist for the provided language? ~Levi
-        
-        var articleTranslation: Translation?
-        
-        if let languageTranslation = resource.getTranslationForLanguage(language) {
-            articleTranslation = languageTranslation
-        }
-        else if let englishLanguage = LanguagesManager().loadFromDisk(code: "en"), let englishTranslation = resource.getTranslationForLanguage(englishLanguage) {
-            articleTranslation = englishTranslation
-        }
-        else if let firstTranslation = resource.translations.first {
-            articleTranslation = firstTranslation
-        }
-        
-        let godToolsResource: GodToolsResource = GodToolsResource(
-            resource: resource,
-            language: language,
-            translation: articleTranslation!
-        )
-        
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
             resource: resource,
-            godToolsResource: godToolsResource,
+            resourcesService: appDiContainer.resourcesService,
             articlesService: appDiContainer.articlesService,
             analytics: appDiContainer.analytics
         )
         
         let view = ArticleCategoriesView(viewModel: viewModel)
         
-        sharedNavigationController.pushViewController(view, animated: true)        
+        sharedNavigationController.pushViewController(view, animated: true)
     }
     
     func navigate(step: FlowStep) {
