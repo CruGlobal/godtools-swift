@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct TranslationZipFileModel {
+struct TranslationZipFileModel: TranslationZipFileModelType {
     
     let translationId: String
     let resourceId: String
@@ -16,7 +16,8 @@ struct TranslationZipFileModel {
     let languageCode: String // bcp47 language tag
     let translationManifestFilename: String
     let translationsVersion: Int
-        
+    let sha256Files: [SHA256FileModel]
+    
     init(realmTranslationZipFile: RealmTranslationZipFile) {
         
         translationId = realmTranslationZipFile.translationId
@@ -25,5 +26,6 @@ struct TranslationZipFileModel {
         languageCode = realmTranslationZipFile.languageCode
         translationManifestFilename = realmTranslationZipFile.translationManifestFilename
         translationsVersion = realmTranslationZipFile.translationsVersion
+        sha256Files = Array(realmTranslationZipFile.sha256Files).map({SHA256FileModel(realmSHA256File: $0)})
     }
 }

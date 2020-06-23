@@ -22,6 +22,7 @@ class ToolCell: UITableViewCell {
     private let toolCornerRadius: CGFloat = 12
     
     private var viewModel: ToolCellViewModelType?
+    private var isAnimatingBannerImage: Bool = false
     
     private weak var delegate: ToolCellDelegate?
     
@@ -98,10 +99,7 @@ class ToolCell: UITableViewCell {
         self.delegate = delegate
         
         viewModel.bannerImage.addObserver(self) { [weak self] (bannerImage: UIImage?) in
-            self?.bannerImageView.image = bannerImage
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                self?.bannerImageView.alpha = 1
-            }, completion: nil)
+            self?.setBannerImage(image: bannerImage)
         }
         
         viewModel.attachmentsDownloadProgress.addObserver(self) { [weak self] (progress: Double) in
@@ -128,6 +126,20 @@ class ToolCell: UITableViewCell {
                 favoritedImage = ImageCatalog.notFavorited.image
             }
             self?.favoriteButton.setImage(favoritedImage, for: .normal)
+        }
+    }
+    
+    private func setBannerImage(image: UIImage?) {
+        
+        bannerImageView.image = image
+        
+        if !isAnimatingBannerImage {
+            isAnimatingBannerImage = true
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
+                self?.bannerImageView.alpha = 1
+            }, completion: { [weak self] (finished: Bool) in
+                self?.isAnimatingBannerImage = false
+            })
         }
     }
     

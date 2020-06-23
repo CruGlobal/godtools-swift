@@ -108,7 +108,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         
         favoritedResourcesService.toggleFavorited(resourceId: resource.id)
         
-        resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
+        //resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

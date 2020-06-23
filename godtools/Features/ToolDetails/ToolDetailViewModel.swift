@@ -19,7 +19,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let preferredLanguageTranslation: PreferredLanguageTranslationViewModel
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
-    private let translationsServices: ResourceTranslationsServices
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -51,7 +50,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.preferredLanguageTranslation = preferredLanguageTranslation
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
-        self.translationsServices = resourcesService.translationsServices
                 
         super.init()
         
@@ -74,18 +72,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        translationsServices.progress(resource: resource).removeObserver(self)
         favoritedResourcesService.resourceFavorited.removeObserver(self)
         favoritedResourcesService.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
-        
-        translationsServices.progress(resource: resource).addObserver(self) { [weak self] (progress: Double) in
-            DispatchQueue.main.async { [weak self] in
-                self?.translationDownloadProgress.accept(value: progress)
-            }
-        }
         
         favoritedResourcesService.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             self?.reloadFavorited()
@@ -106,9 +97,9 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         reloadFavorited()
         
-        preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id, completeOnMain: { [weak self] (translation: TranslationModel?) in
+        preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id, completeOnMain: { [weak self] (result: PreferredLanguageTranslationResult) in
             
-            if let preferredTranslation = translation {
+            if let preferredTranslation = result.preferredLanguageTranslation {
                 self?.name.accept(value: preferredTranslation.translatedName)
                 self?.aboutDetails.accept(value: preferredTranslation.translatedDescription)
             }
@@ -212,7 +203,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func favoriteTapped() {
         favoritedResourcesService.addToFavorites(resourceId: resource.id)
-        resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
+        //resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func unfavoriteTapped() {

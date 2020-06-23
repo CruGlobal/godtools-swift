@@ -40,6 +40,20 @@
 		1E911CA920DAF0050068E62A /* LoginBannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E911CA820DAF0050068E62A /* LoginBannerView.xib */; };
 		1E911CAB20DAF03C0068E62A /* LoginBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E911CAA20DAF03C0068E62A /* LoginBannerView.swift */; };
 		1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9973C6206591FC00AFEEE4 /* Integer.swift */; };
+		45038D6624A240DA00345B42 /* ModalNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D6524A240DA00345B42 /* ModalNavigationController.swift */; };
+		45038D6824A24E8400345B42 /* CallbackValueHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D6724A24E8400345B42 /* CallbackValueHandler.swift */; };
+		45038D6C24A251EE00345B42 /* UIViewController+AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D6B24A251EE00345B42 /* UIViewController+AlertMessage.swift */; };
+		45038D7424A25BB100345B42 /* TranslationZipFileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D6F24A25BB100345B42 /* TranslationZipFileModelType.swift */; };
+		45038D7524A25BB100345B42 /* TranslationZipFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7024A25BB100345B42 /* TranslationZipFileModel.swift */; };
+		45038D7624A25BB100345B42 /* RealmTranslationZipFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7124A25BB100345B42 /* RealmTranslationZipFile.swift */; };
+		45038D7A24A25C0000345B42 /* TranslationsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7824A25C0000345B42 /* TranslationsFileCache.swift */; };
+		45038D7B24A25C0000345B42 /* TranslationsFileCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7924A25C0000345B42 /* TranslationsFileCacheError.swift */; };
+		45038D7D24A25C8800345B42 /* TranslationManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7C24A25C8800345B42 /* TranslationManifest.swift */; };
+		45038D7F24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D7E24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift */; };
+		45038D8624A2698E00345B42 /* TranslationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D8324A2698E00345B42 /* TranslationDownloader.swift */; };
+		45038D8724A2698E00345B42 /* TranslationDownloaderError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D8424A2698E00345B42 /* TranslationDownloaderError.swift */; };
+		45038D8824A2698E00345B42 /* NoTranslationZipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D8524A2698E00345B42 /* NoTranslationZipData.swift */; };
+		45038D9124A2724300345B42 /* DownloadTranslationsReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45038D9024A2724300345B42 /* DownloadTranslationsReceipt.swift */; };
 		4508F7A72429669700ECA950 /* AdobeAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A22429669700ECA950 /* AdobeAnalyticsType.swift */; };
 		4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */; };
 		4508F7AA2429669700ECA950 /* AdobeAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508F7A62429669700ECA950 /* AdobeAnalytics.swift */; };
@@ -179,20 +193,18 @@
 		4543157324A0EA2A00B5C37B /* RealmArticleAemImportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157024A0EA2A00B5C37B /* RealmArticleAemImportData.swift */; };
 		4543157424A0EA2A00B5C37B /* RealmArticleJcrContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157124A0EA2A00B5C37B /* RealmArticleJcrContent.swift */; };
 		4543157524A0EA2A00B5C37B /* RealmArticleAemImportDataCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157224A0EA2A00B5C37B /* RealmArticleAemImportDataCache.swift */; };
-		4543157D24A0ED8900B5C37B /* ResourceTranslationsServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157924A0ED8900B5C37B /* ResourceTranslationsServices.swift */; };
-		4543157E24A0ED8900B5C37B /* ResourceTranslationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157A24A0ED8900B5C37B /* ResourceTranslationsService.swift */; };
-		4543158024A0ED8900B5C37B /* RealmTranslationZipFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543157C24A0ED8900B5C37B /* RealmTranslationZipFile.swift */; };
-		4543158224A0EE5500B5C37B /* ResourceTranslationsFileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158124A0EE5500B5C37B /* ResourceTranslationsFileCache.swift */; };
-		4543158424A0EEDD00B5C37B /* ResourceTranslationsFileCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158324A0EEDD00B5C37B /* ResourceTranslationsFileCacheError.swift */; };
-		4543158624A0F16000B5C37B /* TranslationZipFileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158524A0F16000B5C37B /* TranslationZipFileModelType.swift */; };
-		4543158824A0F16800B5C37B /* TranslationZipFileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158724A0F16800B5C37B /* TranslationZipFileModel.swift */; };
-		4543158C24A0F57A00B5C37B /* NoTranslationZipData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158B24A0F57A00B5C37B /* NoTranslationZipData.swift */; };
-		4543158E24A0F73100B5C37B /* ResourceTranslationsServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158D24A0F73100B5C37B /* ResourceTranslationsServiceError.swift */; };
-		4543159024A0F7CB00B5C37B /* DownloadTranslationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543158F24A0F7CB00B5C37B /* DownloadTranslationService.swift */; };
-		4543159224A0FA2300B5C37B /* DownloadTranslationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159124A0FA2300B5C37B /* DownloadTranslationError.swift */; };
 		4543159624A102E500B5C37B /* ResourceAttachmentsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159424A102E500B5C37B /* ResourceAttachmentsService.swift */; };
 		4543159A24A1033B00B5C37B /* RealmSHA256File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159924A1033B00B5C37B /* RealmSHA256File.swift */; };
 		4543159C24A103C300B5C37B /* ResourcesSHA256FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159B24A103C300B5C37B /* ResourcesSHA256FileCache.swift */; };
+		454315A024A1463000B5C37B /* SHA256FileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543159F24A1463000B5C37B /* SHA256FileModel.swift */; };
+		454315A224A1464100B5C37B /* SHA256FileModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315A124A1464100B5C37B /* SHA256FileModelType.swift */; };
+		454315A424A14FF200B5C37B /* LoadingToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315A324A14FF200B5C37B /* LoadingToolView.swift */; };
+		454315A624A1505400B5C37B /* LoadingToolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454315A524A1505400B5C37B /* LoadingToolView.xib */; };
+		454315A824A1510B00B5C37B /* LoadingToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315A724A1510B00B5C37B /* LoadingToolViewModel.swift */; };
+		454315AA24A1511900B5C37B /* LoadingToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315A924A1511900B5C37B /* LoadingToolViewModelType.swift */; };
+		454315AD24A152D300B5C37B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315AC24A152D300B5C37B /* ProgressView.swift */; };
+		454315AF24A1530000B5C37B /* ProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454315AE24A1530000B5C37B /* ProgressView.xib */; };
+		454315B124A15B9700B5C37B /* PreferredLanguageTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454315B024A15B9700B5C37B /* PreferredLanguageTranslationResult.swift */; };
 		454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526CC243E138B00B84B29 /* AnalyticsContainer.swift */; };
 		454526D2243E172500B84B29 /* WebContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526D1243E172500B84B29 /* WebContentType.swift */; };
 		454526D4243E177000B84B29 /* HelpWebContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454526D3243E177000B84B29 /* HelpWebContent.swift */; };
@@ -674,6 +686,20 @@
 		1E911CAA20DAF03C0068E62A /* LoginBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBannerView.swift; sourceTree = "<group>"; };
 		1E9973C6206591FC00AFEEE4 /* Integer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Integer.swift; sourceTree = "<group>"; };
 		3795EC9D424F0613AD8AF610 /* Pods-godtools.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-godtools.release.xcconfig"; path = "Pods/Target Support Files/Pods-godtools/Pods-godtools.release.xcconfig"; sourceTree = "<group>"; };
+		45038D6524A240DA00345B42 /* ModalNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavigationController.swift; sourceTree = "<group>"; };
+		45038D6724A24E8400345B42 /* CallbackValueHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackValueHandler.swift; sourceTree = "<group>"; };
+		45038D6B24A251EE00345B42 /* UIViewController+AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AlertMessage.swift"; sourceTree = "<group>"; };
+		45038D6F24A25BB100345B42 /* TranslationZipFileModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationZipFileModelType.swift; sourceTree = "<group>"; };
+		45038D7024A25BB100345B42 /* TranslationZipFileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationZipFileModel.swift; sourceTree = "<group>"; };
+		45038D7124A25BB100345B42 /* RealmTranslationZipFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTranslationZipFile.swift; sourceTree = "<group>"; };
+		45038D7824A25C0000345B42 /* TranslationsFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationsFileCache.swift; sourceTree = "<group>"; };
+		45038D7924A25C0000345B42 /* TranslationsFileCacheError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationsFileCacheError.swift; sourceTree = "<group>"; };
+		45038D7C24A25C8800345B42 /* TranslationManifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifest.swift; sourceTree = "<group>"; };
+		45038D7E24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TranslationZipFileModelType+ManifestSHA256FileLocation.swift"; sourceTree = "<group>"; };
+		45038D8324A2698E00345B42 /* TranslationDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationDownloader.swift; sourceTree = "<group>"; };
+		45038D8424A2698E00345B42 /* TranslationDownloaderError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationDownloaderError.swift; sourceTree = "<group>"; };
+		45038D8524A2698E00345B42 /* NoTranslationZipData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoTranslationZipData.swift; sourceTree = "<group>"; };
+		45038D9024A2724300345B42 /* DownloadTranslationsReceipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadTranslationsReceipt.swift; sourceTree = "<group>"; };
 		4508F7A22429669700ECA950 /* AdobeAnalyticsType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsType.swift; sourceTree = "<group>"; };
 		4508F7A52429669700ECA950 /* AdobeAnalyticsConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalyticsConstants.swift; sourceTree = "<group>"; };
 		4508F7A62429669700ECA950 /* AdobeAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdobeAnalytics.swift; sourceTree = "<group>"; };
@@ -812,20 +838,18 @@
 		4543157024A0EA2A00B5C37B /* RealmArticleAemImportData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArticleAemImportData.swift; sourceTree = "<group>"; };
 		4543157124A0EA2A00B5C37B /* RealmArticleJcrContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArticleJcrContent.swift; sourceTree = "<group>"; };
 		4543157224A0EA2A00B5C37B /* RealmArticleAemImportDataCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmArticleAemImportDataCache.swift; sourceTree = "<group>"; };
-		4543157924A0ED8900B5C37B /* ResourceTranslationsServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsServices.swift; sourceTree = "<group>"; };
-		4543157A24A0ED8900B5C37B /* ResourceTranslationsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsService.swift; sourceTree = "<group>"; };
-		4543157C24A0ED8900B5C37B /* RealmTranslationZipFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTranslationZipFile.swift; sourceTree = "<group>"; };
-		4543158124A0EE5500B5C37B /* ResourceTranslationsFileCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsFileCache.swift; sourceTree = "<group>"; };
-		4543158324A0EEDD00B5C37B /* ResourceTranslationsFileCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsFileCacheError.swift; sourceTree = "<group>"; };
-		4543158524A0F16000B5C37B /* TranslationZipFileModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationZipFileModelType.swift; sourceTree = "<group>"; };
-		4543158724A0F16800B5C37B /* TranslationZipFileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationZipFileModel.swift; sourceTree = "<group>"; };
-		4543158B24A0F57A00B5C37B /* NoTranslationZipData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTranslationZipData.swift; sourceTree = "<group>"; };
-		4543158D24A0F73100B5C37B /* ResourceTranslationsServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTranslationsServiceError.swift; sourceTree = "<group>"; };
-		4543158F24A0F7CB00B5C37B /* DownloadTranslationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTranslationService.swift; sourceTree = "<group>"; };
-		4543159124A0FA2300B5C37B /* DownloadTranslationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTranslationError.swift; sourceTree = "<group>"; };
 		4543159424A102E500B5C37B /* ResourceAttachmentsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceAttachmentsService.swift; sourceTree = "<group>"; };
 		4543159924A1033B00B5C37B /* RealmSHA256File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmSHA256File.swift; sourceTree = "<group>"; };
 		4543159B24A103C300B5C37B /* ResourcesSHA256FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcesSHA256FileCache.swift; sourceTree = "<group>"; };
+		4543159F24A1463000B5C37B /* SHA256FileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256FileModel.swift; sourceTree = "<group>"; };
+		454315A124A1464100B5C37B /* SHA256FileModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256FileModelType.swift; sourceTree = "<group>"; };
+		454315A324A14FF200B5C37B /* LoadingToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingToolView.swift; sourceTree = "<group>"; };
+		454315A524A1505400B5C37B /* LoadingToolView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingToolView.xib; sourceTree = "<group>"; };
+		454315A724A1510B00B5C37B /* LoadingToolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingToolViewModel.swift; sourceTree = "<group>"; };
+		454315A924A1511900B5C37B /* LoadingToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingToolViewModelType.swift; sourceTree = "<group>"; };
+		454315AC24A152D300B5C37B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		454315AE24A1530000B5C37B /* ProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProgressView.xib; sourceTree = "<group>"; };
+		454315B024A15B9700B5C37B /* PreferredLanguageTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredLanguageTranslationResult.swift; sourceTree = "<group>"; };
 		454526CC243E138B00B84B29 /* AnalyticsContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsContainer.swift; sourceTree = "<group>"; };
 		454526D1243E172500B84B29 /* WebContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebContentType.swift; sourceTree = "<group>"; };
 		454526D3243E177000B84B29 /* HelpWebContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpWebContent.swift; sourceTree = "<group>"; };
@@ -1490,6 +1514,39 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45038D6424A240CC00345B42 /* Navigation-Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				45038D6524A240DA00345B42 /* ModalNavigationController.swift */,
+			);
+			path = "Navigation-Controllers";
+			sourceTree = "<group>";
+		};
+		45038D6D24A25BB100345B42 /* TranslationsFileCache */ = {
+			isa = PBXGroup;
+			children = (
+				45038D7124A25BB100345B42 /* RealmTranslationZipFile.swift */,
+				45038D7824A25C0000345B42 /* TranslationsFileCache.swift */,
+				45038D7924A25C0000345B42 /* TranslationsFileCacheError.swift */,
+				45038D7C24A25C8800345B42 /* TranslationManifest.swift */,
+				45038D7024A25BB100345B42 /* TranslationZipFileModel.swift */,
+				45038D6F24A25BB100345B42 /* TranslationZipFileModelType.swift */,
+				45038D7E24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift */,
+			);
+			path = TranslationsFileCache;
+			sourceTree = "<group>";
+		};
+		45038D8224A2698E00345B42 /* TranslationsDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				45038D9024A2724300345B42 /* DownloadTranslationsReceipt.swift */,
+				45038D8524A2698E00345B42 /* NoTranslationZipData.swift */,
+				45038D8324A2698E00345B42 /* TranslationDownloader.swift */,
+				45038D8424A2698E00345B42 /* TranslationDownloaderError.swift */,
+			);
+			path = TranslationsDownloader;
+			sourceTree = "<group>";
+		};
 		4508F7A12429669700ECA950 /* Adobe */ = {
 			isa = PBXGroup;
 			children = (
@@ -1532,6 +1589,7 @@
 			children = (
 				451D77872497F38200B7C83D /* LanguageNameTranslationViewModel.swift */,
 				45EDC54F249BE7520020DC62 /* PreferredLanguageTranslationViewModel.swift */,
+				454315B024A15B9700B5C37B /* PreferredLanguageTranslationResult.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1759,24 +1817,6 @@
 			path = RealmArticleAemImportDataCache;
 			sourceTree = "<group>";
 		};
-		4543157824A0ED8900B5C37B /* ResourcesTranslationsServices */ = {
-			isa = PBXGroup;
-			children = (
-				4543159124A0FA2300B5C37B /* DownloadTranslationError.swift */,
-				4543158F24A0F7CB00B5C37B /* DownloadTranslationService.swift */,
-				4543158B24A0F57A00B5C37B /* NoTranslationZipData.swift */,
-				4543158724A0F16800B5C37B /* TranslationZipFileModel.swift */,
-				4543158524A0F16000B5C37B /* TranslationZipFileModelType.swift */,
-				4543157C24A0ED8900B5C37B /* RealmTranslationZipFile.swift */,
-				4543158124A0EE5500B5C37B /* ResourceTranslationsFileCache.swift */,
-				4543158324A0EEDD00B5C37B /* ResourceTranslationsFileCacheError.swift */,
-				4543157A24A0ED8900B5C37B /* ResourceTranslationsService.swift */,
-				4543158D24A0F73100B5C37B /* ResourceTranslationsServiceError.swift */,
-				4543157924A0ED8900B5C37B /* ResourceTranslationsServices.swift */,
-			);
-			path = ResourcesTranslationsServices;
-			sourceTree = "<group>";
-		};
 		4543159324A102E500B5C37B /* ResourcesAttachmentsService */ = {
 			isa = PBXGroup;
 			children = (
@@ -1788,10 +1828,21 @@
 		4543159824A1033B00B5C37B /* ResourcesSHA256FileCache */ = {
 			isa = PBXGroup;
 			children = (
+				4543159F24A1463000B5C37B /* SHA256FileModel.swift */,
+				454315A124A1464100B5C37B /* SHA256FileModelType.swift */,
 				4543159924A1033B00B5C37B /* RealmSHA256File.swift */,
 				4543159B24A103C300B5C37B /* ResourcesSHA256FileCache.swift */,
 			);
 			path = ResourcesSHA256FileCache;
+			sourceTree = "<group>";
+		};
+		454315AB24A152C800B5C37B /* ProgressView */ = {
+			isa = PBXGroup;
+			children = (
+				454315AC24A152D300B5C37B /* ProgressView.swift */,
+				454315AE24A1530000B5C37B /* ProgressView.xib */,
+			);
+			path = ProgressView;
 			sourceTree = "<group>";
 		};
 		454526D0243E171900B84B29 /* Models */ = {
@@ -1899,6 +1950,7 @@
 				45EC83A12452438500E8DE48 /* AnimatableValue.swift */,
 				45E89F5523FDE8CE00C9D2F3 /* BlockBasedTimer.swift */,
 				45B2AE4B2458886B00253BAD /* CallbackHandler.swift */,
+				45038D6724A24E8400345B42 /* CallbackValueHandler.swift */,
 				4556AEDD23E22241002C15E8 /* ObservableValue.swift */,
 				452E3226240706FD00DB41B7 /* Signal.swift */,
 				452E3228240708F000DB41B7 /* SignalValue.swift */,
@@ -1929,6 +1981,8 @@
 			isa = PBXGroup;
 			children = (
 				45D5694724932491003E5798 /* TranslationsApi */,
+				45038D8224A2698E00345B42 /* TranslationsDownloader */,
+				45038D6D24A25BB100345B42 /* TranslationsFileCache */,
 			);
 			path = Translations;
 			sourceTree = "<group>";
@@ -1945,7 +1999,6 @@
 				4543159324A102E500B5C37B /* ResourcesAttachmentsService */,
 				45865CFF2498F8D200B95238 /* ResourcesService */,
 				4543159824A1033B00B5C37B /* ResourcesSHA256FileCache */,
-				4543157824A0ED8900B5C37B /* ResourcesTranslationsServices */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2378,6 +2431,7 @@
 				45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */,
 				453DBA7E247485780000BA85 /* UIView+Animations.swift */,
 				45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */,
+				45038D6B24A251EE00345B42 /* UIViewController+AlertMessage.swift */,
 				451B9CE32475B6D0006ACD32 /* UIViewController+Containment.swift */,
 				45668E5123E0D908002728E7 /* UIViewController+NavBackItem.swift */,
 				45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */,
@@ -2388,10 +2442,11 @@
 		45D3C8AF23DF942100ECF70E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */,
 				4562B0D823F1BC41006B53A9 /* AlertMessageView */,
 				455BF70523F6F643004A4854 /* GTSegmentControl */,
-				45D3C8B023DF942100ECF70E /* OnboardPrimaryButton.swift */,
 				45668E8A23E0E462002728E7 /* OpenTutorialView */,
+				454315AB24A152C800B5C37B /* ProgressView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2689,6 +2744,10 @@
 				45B2AE532458903600253BAD /* FindToolsView.xib */,
 				45B2AE4F2458901800253BAD /* FindToolsViewModel.swift */,
 				45B2AE512458902300253BAD /* FindToolsViewModelType.swift */,
+				454315A324A14FF200B5C37B /* LoadingToolView.swift */,
+				454315A524A1505400B5C37B /* LoadingToolView.xib */,
+				454315A724A1510B00B5C37B /* LoadingToolViewModel.swift */,
+				454315A924A1511900B5C37B /* LoadingToolViewModelType.swift */,
 				45B2AE5524589FF700253BAD /* MyToolsView.swift */,
 				45B2AE572458A00100253BAD /* MyToolsView.xib */,
 				45B2AE592458A00C00253BAD /* MyToolsViewModel.swift */,
@@ -2954,6 +3013,7 @@
 				45FCFF34243D07B800865501 /* Flows */,
 				0F350D991EAE78310025C4BB /* GeneralExtensions */,
 				4F1C953B1EA6B85C007B47DB /* Managers */,
+				45038D6424A240CC00345B42 /* Navigation-Controllers */,
 				4F1C95391EA6B84A007B47DB /* Models */,
 				45D3C8AA23DF942100ECF70E /* Share */,
 				4F1C953A1EA6B850007B47DB /* Views */,
@@ -3321,9 +3381,11 @@
 				45B2AE582458A00100253BAD /* MyToolsView.xib in Resources */,
 				4FF7FF5C2284D062005C8BE1 /* a6765002e46cea44dc6245bcb842ce01a0134c147c47cf108134a4c4d1a5c129.png in Resources */,
 				45668E4E23E0CAA6002728E7 /* TutorialToolsView.xib in Resources */,
+				454315AF24A1530000B5C37B /* ProgressView.xib in Resources */,
 				4FF7FF602284D062005C8BE1 /* languages.json in Resources */,
 				4FF7FF582284D062005C8BE1 /* 9a8cfa08121f0f0e78dbed54652c2c3f1d51c001a0b81dfdd092d378fd43633c.png in Resources */,
 				EC8A6B991EE1CD7A003B4C02 /* kgp-7.xml in Resources */,
+				454315A624A1505400B5C37B /* LoadingToolView.xib in Resources */,
 				450EF819247E9CA400978926 /* ToolsTableView.xib in Resources */,
 				4556AECD23E22185002C15E8 /* SF-Pro-Display-Light.otf in Resources */,
 				4FF7FF5E2284D062005C8BE1 /* e999c849242ba4abf20560274f92dd6c77631992d10db0eca5515e80ffb431c6.png in Resources */,
@@ -3530,6 +3592,7 @@
 				454526D2243E172500B84B29 /* WebContentType.swift in Sources */,
 				45668E6F23E0E1CC002728E7 /* OnboardingTutorialViewModel.swift in Sources */,
 				452AB58924464CFA00445050 /* AboutViewModel.swift in Sources */,
+				45038D6C24A251EE00345B42 /* UIViewController+AlertMessage.swift in Sources */,
 				454526DC243E19DA00B84B29 /* CopyrightInfoWebContent.swift in Sources */,
 				459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */,
 				45EB4045248FC7B700E7CCF4 /* ViewsService.swift in Sources */,
@@ -3552,6 +3615,7 @@
 				45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */,
 				451B9CE22475AEE6006ACD32 /* AppFlow.swift in Sources */,
 				458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */,
+				454315AD24A152D300B5C37B /* ProgressView.swift in Sources */,
 				450EF829247EAD6C00978926 /* FavoritedToolsViewModelType.swift in Sources */,
 				452036C4240057B2002B2453 /* RequestMethod.swift in Sources */,
 				4543157324A0EA2A00B5C37B /* RealmArticleAemImportData.swift in Sources */,
@@ -3559,6 +3623,8 @@
 				45FA69672425198F0006878C /* SupportedLanguagesType.swift in Sources */,
 				45B881C7249AAC35004DC491 /* SHA256FilesCache.swift in Sources */,
 				45F6E022249D44470077C7D9 /* LanguageSettingType.swift in Sources */,
+				454315AA24A1511900B5C37B /* LoadingToolViewModelType.swift in Sources */,
+				45038D9124A2724300345B42 /* DownloadTranslationsReceipt.swift in Sources */,
 				452C576E248E773700B39C09 /* ResponseError.swift in Sources */,
 				45ACBD0B247DB10200514E75 /* ToolsMenuViewModelType.swift in Sources */,
 				45B2AE3F24587BAB00253BAD /* ShareArticleViewModel.swift in Sources */,
@@ -3569,6 +3635,7 @@
 				4586D7D6246ECC5E0062D988 /* TractCards.swift in Sources */,
 				4F75415321D14655002300DD /* UIViewController+GodTools.swift in Sources */,
 				45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */,
+				454315A424A14FF200B5C37B /* LoadingToolView.swift in Sources */,
 				0FB73E761EA906A7000BA60D /* GTConstants.swift in Sources */,
 				4556AEE423E23BB6002C15E8 /* OnboardingTutorialBackgroundCellViewModel.swift in Sources */,
 				45D5692E2492EDF3003E5798 /* ToolCell.swift in Sources */,
@@ -3580,13 +3647,13 @@
 				451DB1392461DA4200FB14BF /* TractEmailsProperties.swift in Sources */,
 				4FEF81331EE77FF8002B77C8 /* Translation.swift in Sources */,
 				451D77882497F38200B7C83D /* LanguageNameTranslationViewModel.swift in Sources */,
-				4543158824A0F16800B5C37B /* TranslationZipFileModel.swift in Sources */,
 				458E57B8247F345700C75EDD /* ResourcesLatestTranslationServices.swift in Sources */,
 				455D8FBD23E329FC008D92DA /* LaunchView.swift in Sources */,
 				45ACBD07247DB0D600514E75 /* ToolsMenuViewModel.swift in Sources */,
 				45E62FB1246C3C2B006F0CD5 /* TractNavBarAttributes.swift in Sources */,
 				451830EB246DB78F00DDF264 /* TractXmlPageItem.swift in Sources */,
 				45EC83812451E1EA00E8DE48 /* ArticleManifestXmlParser.swift in Sources */,
+				45038D7424A25BB100345B42 /* TranslationZipFileModelType.swift in Sources */,
 				450E21C52491A52200D489A1 /* TranslationModel.swift in Sources */,
 				45FCFF90243D0CE900865501 /* MasterHomeViewController.swift in Sources */,
 				4FEF81351EE7815F002B77C8 /* Language.swift in Sources */,
@@ -3596,7 +3663,6 @@
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
 				451D778B2497FA1500B7C83D /* ChooseLanguageModel.swift in Sources */,
 				45B5DA06249FE2FC00CB017B /* FavoritedResourcesMemoryCache.swift in Sources */,
-				4543158024A0ED8900B5C37B /* RealmTranslationZipFile.swift in Sources */,
 				45FFA1032493D2D900DD05F4 /* FileCache.swift in Sources */,
 				453DBA74247485260000BA85 /* ResourceCacheValidation.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
@@ -3608,9 +3674,10 @@
 				4543155124A0E82100B5C37B /* ArticleAemWebArchiveFileCacheLocation.swift in Sources */,
 				1E9973C7206591FC00AFEEE4 /* Integer.swift in Sources */,
 				EC61B9CF1EFDDBC300615840 /* GTGlobalTractBindings.swift in Sources */,
-				4543157E24A0ED8900B5C37B /* ResourceTranslationsService.swift in Sources */,
 				45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */,
+				45038D7624A25BB100345B42 /* RealmTranslationZipFile.swift in Sources */,
 				4573221C244546A300D653FF /* ChooseLanguageViewModelType.swift in Sources */,
+				45038D8624A2698E00345B42 /* TranslationDownloader.swift in Sources */,
 				45F6E01A249D44270077C7D9 /* LanguagesApiType.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
@@ -3642,7 +3709,6 @@
 				45B2AE522458902300253BAD /* FindToolsViewModelType.swift in Sources */,
 				451DB1362461DA4200FB14BF /* TractTitleProperties.swift in Sources */,
 				4575C28923FC77C500D3265B /* GlobalActivityCellViewModel.swift in Sources */,
-				4543159224A0FA2300B5C37B /* DownloadTranslationError.swift in Sources */,
 				0FB73E571EA9063E000BA60D /* GTButton.swift in Sources */,
 				454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */,
 				451DB0CE2461D90000FB14BF /* ManifestProperties.swift in Sources */,
@@ -3659,6 +3725,7 @@
 				4586D7E1246ECE350062D988 /* TractLabel.swift in Sources */,
 				45869EC924530BAD00733B0C /* ZipFileContentsCacheType.swift in Sources */,
 				45B2AE5A2458A00C00253BAD /* MyToolsViewModel.swift in Sources */,
+				45038D7D24A25C8800345B42 /* TranslationManifest.swift in Sources */,
 				457719A623E862D20049D236 /* MenuItemId.swift in Sources */,
 				4575C24823FAF70B00D3265B /* AccountActivityViewModel.swift in Sources */,
 				45E89F5623FDE8CE00C9D2F3 /* BlockBasedTimer.swift in Sources */,
@@ -3666,8 +3733,6 @@
 				4586D7DC246ECD810062D988 /* TractCard.swift in Sources */,
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */,
-				4543158C24A0F57A00B5C37B /* NoTranslationZipData.swift in Sources */,
-				4543158E24A0F73100B5C37B /* ResourceTranslationsServiceError.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
 				45B881E7249AACED004DC491 /* RealmResourcesCacheResult.swift in Sources */,
 				453A61B8248E802B00DD3C27 /* ResponseErrorAlertMessage.swift in Sources */,
@@ -3675,6 +3740,7 @@
 				45647246244F6FAB00CB202D /* ArticleCategoryCellViewModelType.swift in Sources */,
 				4586D7D5246ECC5E0062D988 /* TractForm.swift in Sources */,
 				45FCFF50243D09C800865501 /* HomeViewController.swift in Sources */,
+				45038D7A24A25C0000345B42 /* TranslationsFileCache.swift in Sources */,
 				451DB1492461DA4200FB14BF /* TractHeaderProperties.swift in Sources */,
 				45EC83A22452438500E8DE48 /* AnimatableValue.swift in Sources */,
 				4F855F0A1EC3907300B42146 /* TranslationZipImporter.swift in Sources */,
@@ -3686,11 +3752,13 @@
 				45C2CFF12409B3CB00683A98 /* GlobalActivityAnalyticsApiType.swift in Sources */,
 				454526DE243E1A9100B84B29 /* ShareAStoryWithUsWebContent.swift in Sources */,
 				451DB13C2461DA4200FB14BF /* TractCardProperties.swift in Sources */,
+				454315B124A15B9700B5C37B /* PreferredLanguageTranslationResult.swift in Sources */,
 				45EDC540249BAB970020DC62 /* ToolDetailViewModelType.swift in Sources */,
 				4F33042C1F0C1098009D92A0 /* GodToolsAnaltyics.swift in Sources */,
 				451DB0CC2461D90000FB14BF /* TractProperties.swift in Sources */,
 				451DB1AF2461DC3100FB14BF /* TractTab.swift in Sources */,
 				453AD7A723FF212700921D75 /* AccountItemViewType.swift in Sources */,
+				454315A224A1464100B5C37B /* SHA256FileModelType.swift in Sources */,
 				4F94C68F21F2319100DA641B /* GTAttributedLabel.swift in Sources */,
 				45BFD71A23E4DF00004A097B /* MenuCellViewModel.swift in Sources */,
 				45B2AE5624589FF700253BAD /* MyToolsView.swift in Sources */,
@@ -3699,6 +3767,7 @@
 				45EC83A42452494D00E8DE48 /* WebContent.swift in Sources */,
 				45FCFF43243D07B800865501 /* FlowDelegate.swift in Sources */,
 				4562B0DE23F1BC5C006B53A9 /* AlertMessageViewModelType.swift in Sources */,
+				454315A024A1463000B5C37B /* SHA256FileModel.swift in Sources */,
 				0F93A9341EAA56EC0049C110 /* ToolsManager.swift in Sources */,
 				45668E4C23E0CA9B002728E7 /* TutorialToolsView.swift in Sources */,
 				451DB1A52461DC3100FB14BF /* TractHeading.swift in Sources */,
@@ -3733,7 +3802,6 @@
 				4575C28523FC775700D3265B /* GlobalActivityCell.swift in Sources */,
 				4F75415121D1450F002300DD /* Reachability.swift in Sources */,
 				45668E7423E0E1CC002728E7 /* OnboardingTutorialProviderType.swift in Sources */,
-				4543157D24A0ED8900B5C37B /* ResourceTranslationsServices.swift in Sources */,
 				453DBA72247484B30000BA85 /* ArticlesService.swift in Sources */,
 				45EB404A248FC82500E7CCF4 /* ResourceView.swift in Sources */,
 				454526D4243E177000B84B29 /* HelpWebContent.swift in Sources */,
@@ -3752,7 +3820,6 @@
 				45869ED4245314BD00733B0C /* ArticleManifestType.swift in Sources */,
 				451DB10E2461D90000FB14BF /* BaseTractElement+StaticFunctions.swift in Sources */,
 				4FE4AF2A1EE0F19C000E3125 /* ToolsManager+ResourceViews.swift in Sources */,
-				4543158624A0F16000B5C37B /* TranslationZipFileModelType.swift in Sources */,
 				451DB1942461DC3100FB14BF /* TractInput.swift in Sources */,
 				45732E912421A78F006F0559 /* TutorialAvailability.swift in Sources */,
 				0FF3D8CF1ED5E27200A19BCC /* GTAppDefaultStyle.swift in Sources */,
@@ -3762,6 +3829,7 @@
 				450B671F249959AD00A54E50 /* FavoritedResourceModel.swift in Sources */,
 				45865D032498F91400B95238 /* ResourcesService.swift in Sources */,
 				4FEF81311EE77B16002B77C8 /* DownloadedResource.swift in Sources */,
+				45038D8824A2698E00345B42 /* NoTranslationZipData.swift in Sources */,
 				451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */,
 				451DB1B12461DCAE00FB14BF /* TractEmails.swift in Sources */,
 				4556AEE823E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift in Sources */,
@@ -3789,6 +3857,7 @@
 				451DB0C32461D90000FB14BF /* TractResource.swift in Sources */,
 				45D5692D2492EDF3003E5798 /* ToolCellViewModelType.swift in Sources */,
 				4543155824A0E92700B5C37B /* ArticleJcrContent.swift in Sources */,
+				45038D6824A24E8400345B42 /* CallbackValueHandler.swift in Sources */,
 				456BF693248F171C0094C6F8 /* ViewsApiType.swift in Sources */,
 				450E21C72491A52900D489A1 /* TranslationModelType.swift in Sources */,
 				45668E9423E0E8D3002728E7 /* OpenTutorialViewModelType.swift in Sources */,
@@ -3799,7 +3868,6 @@
 				450EF81B247E9EEF00978926 /* ToolsViewModelType.swift in Sources */,
 				45B2AE5E2458D98C00253BAD /* GoogleAdwordsAnalytics.swift in Sources */,
 				452036C7240057F3002B2453 /* RequestOperation.swift in Sources */,
-				4543158424A0EEDD00B5C37B /* ResourceTranslationsFileCacheError.swift in Sources */,
 				45B2AE3D24587BA000253BAD /* ShareArticleView.swift in Sources */,
 				456993A32479D78E003E58B6 /* WebArchiveError.swift in Sources */,
 				457719BC23E8788F0049D236 /* MenuDataSource.swift in Sources */,
@@ -3827,7 +3895,6 @@
 				45ADD0CC24549F2100E82DD8 /* WebArchiveOperationResult.swift in Sources */,
 				4F1C959F1EA7EB65007B47DB /* TranslationResource.swift in Sources */,
 				4F1C959A1EA7E859007B47DB /* DownloadedResourceJson.swift in Sources */,
-				4543158224A0EE5500B5C37B /* ResourceTranslationsFileCache.swift in Sources */,
 				D1B68BBF24785580001A2894 /* TrackActionAnalytics.swift in Sources */,
 				4F1C95A11EA7ED43007B47DB /* DownloadedResourceManager.swift in Sources */,
 				4568D15A244DF91A00328639 /* FirebaseAnalytics.swift in Sources */,
@@ -3855,6 +3922,7 @@
 				454A00ED248168F700315799 /* ResourceTranslationDownloadAndCacheOperationResult.swift in Sources */,
 				4573221824453FC300D653FF /* LanguageSettingsFlow.swift in Sources */,
 				45E998E523FD9E870088DD0C /* AppConfig.swift in Sources */,
+				454315A824A1510B00B5C37B /* LoadingToolViewModel.swift in Sources */,
 				452AB58F24464D8500445050 /* AboutView.swift in Sources */,
 				458EA1F32429203C0002C263 /* DetermineNewUserIfPrimaryLanguageSet.swift in Sources */,
 				450E21B52491887700D489A1 /* ResourcesApiType.swift in Sources */,
@@ -3899,6 +3967,7 @@
 				450B6721249959D400A54E50 /* FavoritedResourceModelType.swift in Sources */,
 				ECC194B81EEAF3BA00A56332 /* XMLNode.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
+				45038D7524A25BB100345B42 /* TranslationZipFileModel.swift in Sources */,
 				0FB73E561EA9063E000BA60D /* BlueButton.swift in Sources */,
 				4575C24423FAF6DE00D3265B /* AccountActivityView.swift in Sources */,
 				45EC83832451E1EA00E8DE48 /* ArticleManifestAttributes.swift in Sources */,
@@ -3907,6 +3976,7 @@
 				451B9CE42475B6D0006ACD32 /* UIViewController+Containment.swift in Sources */,
 				45B2AE48245886B100253BAD /* MailViewModelType.swift in Sources */,
 				EC8245D41EEFA3430023A203 /* XMLParseManager.swift in Sources */,
+				45038D7B24A25C0000345B42 /* TranslationsFileCacheError.swift in Sources */,
 				45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */,
 				45EDC54E249BC8AA0020DC62 /* ToolDetailMedia.swift in Sources */,
 				451DB1A62461DC3100FB14BF /* TractImage.swift in Sources */,
@@ -3926,6 +3996,7 @@
 				45865D022498F91400B95238 /* ResourcesServiceError.swift in Sources */,
 				45732227244548A000D653FF /* ChooseLanguageCellViewModel.swift in Sources */,
 				45FCFF76243D0BE000865501 /* LanguageSettingsView.swift in Sources */,
+				45038D8724A2698E00345B42 /* TranslationDownloaderError.swift in Sources */,
 				45647245244F6FAB00CB202D /* ArticleCategoryCellViewModel.swift in Sources */,
 				45869EC624530BAD00733B0C /* ZipFileContentsCacheLocationType.swift in Sources */,
 				45F6E020249D44470077C7D9 /* LanguageSettingsCacheType.swift in Sources */,
@@ -3950,6 +4021,7 @@
 				4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */,
 				45D3C92B23DF9AC200ECF70E /* TutorialItem.swift in Sources */,
 				4575C25023FAF7C200D3265B /* AccountItem.swift in Sources */,
+				45038D7F24A260CC00345B42 /* TranslationZipFileModelType+ManifestSHA256FileLocation.swift in Sources */,
 				458EA1ED24291B660002C263 /* IsNewUserService.swift in Sources */,
 				457471E6246B3BEB00448946 /* TractXmlResource.swift in Sources */,
 				4F57328D1EA69CF00082035C /* AppDelegate.swift in Sources */,
@@ -3957,8 +4029,8 @@
 				45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */,
 				457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
-				4543159024A0F7CB00B5C37B /* DownloadTranslationService.swift in Sources */,
 				455F4BA22452809300AE6007 /* ArticleWebViewModelType.swift in Sources */,
+				45038D6624A240DA00345B42 /* ModalNavigationController.swift in Sources */,
 				0FB73E5C1EA9063E000BA60D /* GTLabel.swift in Sources */,
 				4537455124857B3200F672A1 /* ResponseResult.swift in Sources */,
 				4575C28D23FC8E8500D3265B /* GlobalActivityAttribute.swift in Sources */,

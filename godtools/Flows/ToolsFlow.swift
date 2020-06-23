@@ -131,23 +131,88 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func navigateToTool(resource: ResourceModel) {
+    private func presentLoadingToolView(resource: ResourceModel, preferredTranslationResult: PreferredLanguageTranslationResult, closeHandler: CallbackHandler, completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>) {
         
+        let viewModel = LoadingToolViewModel(
+            resource: resource,
+            preferredTranslation: preferredTranslationResult,
+            resourcesService: appDiContainer.resourcesService,
+            translationDownloader: appDiContainer.translationDownloader,
+            completeHandler: completeHandler
+        )
+        
+        let view = LoadingToolView(viewModel: viewModel)
+        
+        let modal = ModalNavigationController(rootView: view, hidesNavigationBar: false, closeHandler: closeHandler)
+        
+        navigationController.present(modal, animated: true, completion: nil)
+    }
+    
+    private func navigateToArticleFlow(resource: ResourceModel, translationManifest: TranslationManifest) {
+        
+        let articlesFlow = ArticlesFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            resource: resource,
+            translationManifest: translationManifest
+        )
+        
+        self.articlesFlow = articlesFlow
+    }
+    
+    private func navigateToTool(resource: ResourceModel) {
+                        
         let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
         
         switch resourceType {
         
         case .article:
             
-            let articlesFlow = ArticlesFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                resource: resource
-            )
+            let preferredLanguageTranslation: PreferredLanguageTranslationViewModel = appDiContainer.preferredLanguageTranslation
+            let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+
+            preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id) { (preferredLanguageTranslationResult: PreferredLanguageTranslationResult) in
+                                
+                let translation: TranslationModel? = preferredLanguageTranslationResult.preferredLanguageTranslation
+                
+                translationsFileCache.getTranslationManifest(translationId: translation?.id ?? "") { (result: Result<TranslationManifest, TranslationsFileCacheError>) in
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        
+                        switch result {
+                            
+                        case .success(let translationManifest):
+                            self?.navigateToArticleFlow(resource: resource, translationManifest: translationManifest)
+                            
+                        case .failure(let fileCacheError):
+                            
+                            let closeHandler: CallbackHandler = CallbackHandler {
+                                self?.navigationController.dismiss(animated: true, completion: nil)
+                            }
+                            
+                            let completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>> = CallbackValueHandler { (result: Result<TranslationManifest, TranslationDownloaderError>) in
+                                
+                                switch result {
+                                case .success(let translationManifest):
+                                    self?.navigateToArticleFlow(resource: resource, translationManifest: translationManifest)
+                                    self?.navigationController.dismiss(animated: true, completion: nil)
+                                case .failure(let downloadError):
+                                    break
+                                }
+                            }
+                            
+                            self?.presentLoadingToolView(
+                                resource: resource,
+                                preferredTranslationResult: preferredLanguageTranslationResult,
+                                closeHandler: closeHandler,
+                                completeHandler: completeHandler
+                            )
+                        }
+                    }
+                }
+            }
             
-            self.articlesFlow = articlesFlow
-        
         case .tract:
             break
             /*

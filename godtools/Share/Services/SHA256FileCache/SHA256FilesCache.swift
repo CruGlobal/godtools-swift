@@ -139,7 +139,8 @@ class SHA256FilesCache {
         
          case .success(let rootDirectory):
              
-            let contentsTempDirectory: URL = rootDirectory.appendingPathComponent("temp_directory")
+            let tempDirectoryName: String = "temp_directory_" + UUID().uuidString
+            let contentsTempDirectory: URL = rootDirectory.appendingPathComponent(tempDirectoryName)
             
             var cachedSHA256FileLocations: [SHA256FileLocation] = Array()
             
@@ -151,7 +152,7 @@ class SHA256FilesCache {
             }
             
             let zipFile: URL = contentsTempDirectory.appendingPathComponent("contents.zip")
-                                     
+                                                 
             // create zip file inside contents temp directory
             if !fileManager.createFile(atPath: zipFile.path, contents: zipData, attributes: nil) {
                 return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create zip file at url: \(zipFile.absoluteString)"]))

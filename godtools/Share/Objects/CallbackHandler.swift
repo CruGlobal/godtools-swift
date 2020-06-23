@@ -8,6 +8,11 @@
 
 import Foundation
 
-struct CallbackHandler {
+class CallbackHandler {
+    
     let handle: (() -> Void)
+    
+    required init(handle: @escaping (() -> Void)) {
+        self.handle = handle
+    }
 }

@@ -18,18 +18,16 @@ class ResourcesService {
     
     let realmResourcesCache: RealmResourcesCache
     let attachmentsService: ResourceAttachmentsService
-    let translationsServices: ResourceTranslationsServices
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: SignalValue<ResourcesServiceError?> = SignalValue()
     
-    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, realmResourcesCache: RealmResourcesCache, attachmentsService: ResourceAttachmentsService, translationsServices: ResourceTranslationsServices) {
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, realmResourcesCache: RealmResourcesCache, attachmentsService: ResourceAttachmentsService) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi
         self.translationsApi = translationsApi
         self.realmResourcesCache = realmResourcesCache
         self.attachmentsService = attachmentsService
-        self.translationsServices = translationsServices
     }
 
     func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue {

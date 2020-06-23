@@ -9,11 +9,10 @@
 import Foundation
 import RealmSwift
 
-class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
+class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     private let resource: ResourceModel
-    private let resourcesService: ResourcesService
-    private let articlesService: ArticlesService
+    private let translationManifest: TranslationManifest
     private let analytics: AnalyticsContainer
         
     private weak var flowDelegate: FlowDelegate?
@@ -24,13 +23,14 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, articlesService: ArticlesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifest, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.resourcesService = resourcesService
-        self.articlesService = articlesService
+        self.translationManifest = translationManifest
         self.analytics = analytics
+        
+        super.init()
                         
         navTitle.accept(value: resource.name)
         
@@ -43,6 +43,7 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
     
     private func reloadArticles(godToolsResource: GodToolsResource, forceDownload: Bool, animated: Bool) {
         
+        /*
         errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
         
         loadingMessage.accept(value: NSLocalizedString("articles.loadingView.downloadingArticles", comment: ""))
@@ -78,7 +79,11 @@ class ArticleCategoriesViewModel: ArticleCategoriesViewModelType {
                     }
                 }
             }
-        }
+        }*/
+    }
+    
+    private func reloadIsLoading() {
+        
     }
     
     func pageViewed() {

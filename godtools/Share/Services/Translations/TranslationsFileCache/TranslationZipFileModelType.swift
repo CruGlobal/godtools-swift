@@ -10,10 +10,13 @@ import Foundation
 
 protocol TranslationZipFileModelType {
         
+    associatedtype SHA256Files = Sequence
+    
     var translationId: String { get }
     var resourceId: String { get }
     var languageId: String { get }
     var languageCode: String { get } // bcp47 language tag
     var translationManifestFilename: String { get }
     var translationsVersion: Int { get }
+    var sha256Files: SHA256Files { get }
 }

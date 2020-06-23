@@ -118,8 +118,6 @@ class RealmResourcesCache {
         }
     }
     
-    // MARK: - RealmResource
-    
     func getResources(completeOnMain: @escaping ((_ resources: [ResourceModel]) -> Void)) {
         realmDatabase.background { [unowned self] (realm: Realm) in
             let resources: [ResourceModel] = self.getResources(realm: realm).map({ResourceModel(realmResource: $0)})
@@ -166,9 +164,7 @@ class RealmResourcesCache {
     func getResource(realm: Realm, id: String) -> RealmResource? {
         return realm.object(ofType: RealmResource.self, forPrimaryKey: id)
     }
-    
-    // MARK: - RealmLanguage
-    
+        
     func getLanguages(completeOnMain: @escaping ((_ languages: [LanguageModel]) -> Void)) {
         realmDatabase.background { [unowned self] (realm: Realm) in
             let languages: [LanguageModel] = self.getLanguages(realm: realm).map({LanguageModel(realmLanguage: $0)})
@@ -200,5 +196,25 @@ class RealmResourcesCache {
     
     func getLanguage(realm: Realm, id: String) -> RealmLanguage? {
         return realm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
+    }
+    
+    func getResourceLanguageTranslation(resourceId: String, languageId: String, completeOnMain: @escaping ((_ translation: TranslationModel?) -> Void)) {
+        
+        realmDatabase.background { (realm: Realm) in
+            
+            let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
+            let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
+            let translation: TranslationModel?
+            if let realmTranslation = realmTranslation {
+                translation = TranslationModel(realmTranslation: realmTranslation)
+            }
+            else {
+                translation = nil
+            }
+            
+            DispatchQueue.main.async {
+                completeOnMain(translation)
+            }
+        }
     }
 }

@@ -22,26 +22,25 @@ class PreferredLanguageTranslationViewModel {
         self.deviceLanguage = deviceLanguage
     }
     
-    func getPreferredLanguageTranslation(resourceId: String, completeOnMain: @escaping ((_ translation: TranslationModel?) -> Void)) {
+    func getPreferredLanguageTranslation(resourceId: String, completeOnMain: @escaping ((_ result: PreferredLanguageTranslationResult) -> Void)) {
                         
-        resourcesCache.realmDatabase.background { [weak self] (realm: Realm) in
+        resourcesCache.realmDatabase.background { [unowned self] (realm: Realm) in
             
-            let translation: TranslationModel? = self?.getPreferredLanguageTranslation(
-                realm: realm,
-                resourceId: resourceId
-            )
+            let result: PreferredLanguageTranslationResult = self.getPreferredLanguageTranslation(realm: realm, resourceId: resourceId)
 
             DispatchQueue.main.async {
-                completeOnMain(translation)
+                completeOnMain(result)
             }
         }
     }
     
-    func getPreferredLanguageTranslation(realm: Realm, resourceId: String) -> TranslationModel? {
+    func getPreferredLanguageTranslation(realm: Realm, resourceId: String) -> PreferredLanguageTranslationResult {
          
         let userPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
         let userPrimaryLanguage: RealmLanguage? = realm.object(ofType: RealmLanguage.self, forPrimaryKey: userPrimaryLanguageId)
+        let resourceSupportsPrimaryLanguage: Bool
         let languageLocale: Locale
+        var fallbackLanguageCode: String = ""
         let resourceLatestTranslations: List<RealmTranslation>
         var realmTranslation: RealmTranslation?
         
@@ -61,14 +60,18 @@ class PreferredLanguageTranslationViewModel {
         
         if let userPrimaryLanguage = userPrimaryLanguage, let userPrimaryLanguageTranslation = resourceLatestTranslations.filter("language.id = '\(userPrimaryLanguage.id)'").first {
             realmTranslation = userPrimaryLanguageTranslation
+            resourceSupportsPrimaryLanguage = true
         }
         else {
+            
+            resourceSupportsPrimaryLanguage = false
             
             let localeLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: languageLocale)
             
             for code in localeLanguageCodes {
                 if let localeTranslation = resourceLatestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), code.lowercased())).first {
                     realmTranslation = localeTranslation
+                    fallbackLanguageCode = code
                     break
                 }
             }
@@ -76,6 +79,7 @@ class PreferredLanguageTranslationViewModel {
         
         if realmTranslation == nil, let englishTranslation = resourceLatestTranslations.filter("language.code = 'en'").first {
             realmTranslation = englishTranslation
+            fallbackLanguageCode = "en"
         }
         
         let translation: TranslationModel?
@@ -86,6 +90,15 @@ class PreferredLanguageTranslationViewModel {
             translation = nil
         }
         
-        return translation
+        let result = PreferredLanguageTranslationResult(
+            resourceId: resourceId,
+            primaryLanguageId: userPrimaryLanguageId,
+            primaryLanguageTranslation: resourceSupportsPrimaryLanguage ? translation : nil,
+            fallbackLanguageCode: fallbackLanguageCode,
+            fallbackLanguageTranslation: !resourceSupportsPrimaryLanguage ? translation : nil,
+            resourceSupportsPrimaryLanguage: resourceSupportsPrimaryLanguage
+        )
+        
+        return result
     }
 }

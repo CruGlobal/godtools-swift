@@ -1,5 +1,5 @@
 //
-//  DownloadTranslationError.swift
+//  TranslationDownloaderError.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/22/20.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-enum DownloadTranslationError: Error {
+enum TranslationDownloaderError: Error {
     
-    case failedToCacheTranslation(error: ResourceTranslationsFileCacheError)
+    case failedToCacheTranslation(error: TranslationsFileCacheError)
     case failedToDownloadTranslation(error: ResponseError<NoClientApiErrorType>)
     case noTranslationZipData(missingTranslationZipData: NoTranslationZipData)
 }

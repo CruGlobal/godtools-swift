@@ -11,6 +11,7 @@ import UIKit
 enum ImageCatalog: String {
     
     case favorited = "favorited"
+    case navClose = "nav_item_close"
     case navHome = "home"
     case navLanguage = "nav_language"
     case navMenu = "nav_menu"

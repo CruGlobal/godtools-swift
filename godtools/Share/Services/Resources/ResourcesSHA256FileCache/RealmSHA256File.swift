@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmSHA256File: Object {
+class RealmSHA256File: Object, SHA256FileModelType {
     
     @objc dynamic var sha256WithPathExtension: String = ""
     

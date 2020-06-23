@@ -15,7 +15,7 @@ class ArticlesFlow: Flow {
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
     
-    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel) {
+    required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController, resource: ResourceModel, translationManifest: TranslationManifest) {
         
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
@@ -24,8 +24,7 @@ class ArticlesFlow: Flow {
         let viewModel = ArticleCategoriesViewModel(
             flowDelegate: self,
             resource: resource,
-            resourcesService: appDiContainer.resourcesService,
-            articlesService: appDiContainer.articlesService,
+            translationManifest: translationManifest,
             analytics: appDiContainer.analytics
         )
         

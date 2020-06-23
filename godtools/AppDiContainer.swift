@@ -20,12 +20,12 @@ class AppDiContainer {
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
-    private let resourceTranslationsFileCache: ResourceTranslationsFileCache
     private let articleAemImportService: ArticleAemImportService
     
     let config: ConfigType
+    let translationsFileCache: TranslationsFileCache
+    let translationDownloader: TranslationDownloader
     let resourceAttachmentsService: ResourceAttachmentsService
-    let resourceTranslationsServices: ResourceTranslationsServices
     let resourcesService: ResourcesService
     let favoritedResourcesService: FavoritedResourcesService
     let languageSettingsService: LanguageSettingsService
@@ -54,13 +54,13 @@ class AppDiContainer {
                         
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
         
-        resourceTranslationsFileCache = ResourceTranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
-        resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        translationDownloader = TranslationDownloader(translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
-        resourceTranslationsServices = ResourceTranslationsServices(realmDatabase: realmDatabase, realmResourcesCache: realmResourcesCache, translationsApi: translationsApi, translationsFileCache: resourceTranslationsFileCache)
-                        
-        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService, translationsServices: resourceTranslationsServices)
+        resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+                                
+        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService)
                 
         favoritedResourcesService = FavoritedResourcesService(realmDatabase: realmDatabase)
         
