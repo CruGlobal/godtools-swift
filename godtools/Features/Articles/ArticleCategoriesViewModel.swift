@@ -12,7 +12,7 @@ import RealmSwift
 class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     private let resource: ResourceModel
-    private let translationManifest: TranslationManifest
+    private let translationManifest: TranslationManifestData
     private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
     private let articleManifest: ArticleManifestXmlParser
@@ -27,7 +27,7 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifest, articleAemImportDownloader: ArticleAemImportDownloader, translationsFileCache: TranslationsFileCache, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleAemImportDownloader: ArticleAemImportDownloader, translationsFileCache: TranslationsFileCache, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

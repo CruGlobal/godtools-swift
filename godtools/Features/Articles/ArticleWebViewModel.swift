@@ -11,7 +11,7 @@ import Foundation
 class ArticleWebViewModel: ArticleWebViewModelType {
     
     private let resource: ResourceModel
-    private let translationManifest: TranslationManifest
+    private let translationManifest: TranslationManifestData
     private let articleAemImportData: ArticleAemImportData
     private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
@@ -23,7 +23,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifest, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource

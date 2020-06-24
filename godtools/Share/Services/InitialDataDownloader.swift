@@ -61,8 +61,16 @@ class InitialDataDownloader: NSObject {
         }
         
         resourcesDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
-            if let result = result {
-                self?.handleDidDownloadAndCacheAllLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(result: result)
+            
+            guard let resourceDownloadResult = result else {
+                return
+            }
+            
+            self?.downloadLatestAttachmentsIfNeeded(result: resourceDownloadResult)
+            
+            self?.choosePrimaryLanguageIfNeeded { [weak self] in
+                
+                self?.handleDownloadDataCompleted(result: resourceDownloadResult)
             }
         }
         
@@ -70,18 +78,8 @@ class InitialDataDownloader: NSObject {
                 
         downloadResourcesOperation = resourcesDownloader.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
     }
-    
-    private func handleDidDownloadAndCacheAllLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
-        
-        downloadLatestAttachmentsIfNeeded(result: result)
-        
-        choosePrimaryLanguageIfNeeded { [weak self] in
-            
-            self?.handleInitialDataDownloadCompleted(result: result)
-        }
-    }
-    
-    private func handleInitialDataDownloadCompleted(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
+
+    private func handleDownloadDataCompleted(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
         
         resourcesDownloader.completed.removeObserver(self)
         started.accept(value: false)

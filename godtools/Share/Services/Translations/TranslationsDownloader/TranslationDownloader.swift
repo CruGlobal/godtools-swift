@@ -22,7 +22,7 @@ class TranslationDownloader {
         self.translationsFileCache = translationsFileCache
     }
     
-    func downloadTranslation(translationId: String, complete: @escaping ((_ result: Result<TranslationManifest, TranslationDownloaderError>) -> Void)) -> OperationQueue {
+    func downloadTranslation(translationId: String, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) -> OperationQueue {
         
         let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
                 
@@ -60,7 +60,7 @@ class TranslationDownloader {
             
             operation.completionHandler { [weak self] (response: RequestResponse) in
                 
-                self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (result: Result<TranslationManifest, TranslationDownloaderError>) in
+                self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (result: Result<TranslationManifestData, TranslationDownloaderError>) in
                     
                     receipt.progress.accept(value: numberOfOperationsCompleted / totalOperationCount)
                     receipt.translationDownloaded.accept(value: result)
@@ -85,7 +85,7 @@ class TranslationDownloader {
         return receipt
     }
     
-    private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ result: Result<TranslationManifest, TranslationDownloaderError>) -> Void)) {
+    private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) {
         
         let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
         
@@ -95,7 +95,7 @@ class TranslationDownloader {
             
             if let zipData = response.data {
                 
-                translationsFileCache.cacheTranslationZipData(translationId: translationId, zipData: zipData, complete: { (result: Result<TranslationManifest, TranslationsFileCacheError>) in
+                translationsFileCache.cacheTranslationZipData(translationId: translationId, zipData: zipData, complete: { (result: Result<TranslationManifestData, TranslationsFileCacheError>) in
                     
                     switch result {
                     case .success(let translationManifest):

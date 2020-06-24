@@ -7,34 +7,26 @@
 //
 
 import Foundation
-import UIKit
 import SWXMLHash
-import Crashlytics
 
-class TractManager: GTDataManager {
+class TractManager {
     
-}
-
-extension TractManager {
+    private let translationsFileCache: TranslationsFileCache
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCache
     
-    func loadResource(resource: DownloadedResource, language: Language) -> TractXmlResource {
+    required init(translationsFileCache: TranslationsFileCache, resourcesSHA256FileCache: ResourcesSHA256FileCache) {
+        
+        self.translationsFileCache = translationsFileCache
+        self.resourcesSHA256FileCache = resourcesSHA256FileCache
+    }
+    
+    func loadResource(translationManifest: TranslationManifestData) -> TractXmlResource {
+        
         var pages = [XMLPage]()
-        let manifestProperties = ManifestProperties()
-        var xmlData: XMLIndexer?
-        
-        guard let translation = resource.getTranslationForLanguage(language) else {
-            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
-        }
-        
-        guard let manifestPath = translation.manifestFilename else {
-            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
-        }
-        
-        xmlData = loadXMLFile(manifestPath)
-        
-        guard let manifest = xmlData?["manifest"] else {
-            return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
-        }
+        let manifestProperties = ManifestProperties(sha256FileCache: resourcesSHA256FileCache)
+                
+        let xmlData: XMLIndexer = SWXMLHash.parse(translationManifest.manifestXml)
+        let manifest: XMLIndexer = xmlData["manifest"]
         
         let xmlManager = XMLManager()
         let manifestContent = xmlManager.getContentElements(manifest)
@@ -44,45 +36,49 @@ extension TractManager {
         var currentPage = 1
         for child in manifest["pages"].children {
             if child.element?.name == "page" {
-                let page = loadPage(child)
-                page.pagination = TractPagination(totalPages: totalPages, pageNumber: currentPage)
-                pages.append(page)
-                currentPage += 1
+                if let page = loadPage(child) {
+                    page.pagination = TractPagination(totalPages: totalPages, pageNumber: currentPage)
+                    pages.append(page)
+                    currentPage += 1
+                }
             }
         }
         
         for child in manifest["resources"].children {
-            let filename = child.element?.attribute(by: "filename")?.text
-            let src = child.element?.attribute(by: "src")?.text
-            let resource = documentsPath.appending("/Resources/").appending(src!)
-            manifestProperties.resources[filename!] = resource
+            
+            if let filename = child.element?.attribute(by: "filename")?.text, let src = child.element?.attribute(by: "src")?.text {
+                
+                let location: SHA256FileLocation = SHA256FileLocation(sha256WithPathExtension: src)
+                manifestProperties.resources[filename] = location
+            }
         }
         
         return TractXmlResource(pages: pages, manifestProperties: manifestProperties)
     }
     
-    func loadPage(_ child: XMLIndexer) -> XMLPage{
-        let resource = child.element?.attribute(by: "src")?.text
-        let pageXML = loadXMLFile(resource!)
-        let page = XMLPage(withXML: pageXML!)
-        return page
-    }
-    
-    func loadXMLFile(_ resourcePath: String) -> XMLIndexer? {
+    private func loadPage(_ child: XMLIndexer) -> XMLPage? {
         
-        let file: String = documentsPath.appending("/Resources/").appending(resourcePath)
+        let pageXmlFile: String? = child.element?.attribute(by: "src")?.text
         
-        var xml: XMLIndexer?
-        do {
-            let content = try String(contentsOfFile: file, encoding: String.Encoding.utf8)
-            xml = SWXMLHash.parse(content)
-        }
-        catch {
-            Crashlytics().recordError(error,
-                                      withAdditionalUserInfo: ["customMessage": "Error while reading the XML"])
+        var pageXmlData: Data?
+        
+        if let pageXmlFile = pageXmlFile {
+            
+            switch translationsFileCache.getData(location: SHA256FileLocation(sha256WithPathExtension: pageXmlFile)) {
+            case .success(let xmlData):
+                pageXmlData = xmlData
+            case .failure(let error):
+                break
+            }
         }
         
-        return xml
+        if let pageXmlData = pageXmlData {
+            
+            let pageXml: XMLIndexer = SWXMLHash.parse(pageXmlData)
+            
+            return XMLPage(withXML: pageXml)
+        }
+        
+        return nil
     }
-    
 }

@@ -30,7 +30,11 @@ class TranslationsFileCache {
         }
     }
     
-    func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifest, TranslationsFileCacheError>) -> Void)) {
+    func getData(location: SHA256FileLocation) -> Result<Data?, Error> {
+        return sha256FileCache.getData(location: location)
+    }
+    
+    func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
         
         let sha256FileCache: ResourcesSHA256FileCache = self.sha256FileCache
         
@@ -67,7 +71,7 @@ class TranslationsFileCache {
             DispatchQueue.main.async {
                 
                 if let translationZipFile = translationZipFileModel, let manifestXml = manifestData {
-                    completeOnMain(.success(TranslationManifest(translationZipFile: translationZipFile, manifestXml: manifestXml)))
+                    completeOnMain(.success(TranslationManifestData(translationZipFile: translationZipFile, manifestXml: manifestXml)))
                 }
                 else if let fileCacheError = fileCacheError {
                     completeOnMain(.failure(fileCacheError))
@@ -79,7 +83,7 @@ class TranslationsFileCache {
         }
     }
     
-    func cacheTranslationZipData(translationId: String, zipData: Data, complete: @escaping ((_ result: Result<TranslationManifest, TranslationsFileCacheError>) -> Void)) {
+    func cacheTranslationZipData(translationId: String, zipData: Data, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
                 
         let sha256FileCache: SHA256FilesCache = self.sha256FileCache
         
@@ -168,7 +172,7 @@ class TranslationsFileCache {
                 }
                 
                 if let manifestXmlData = manifestXmlData {
-                    complete(.success(TranslationManifest(translationZipFile: translationZipFile, manifestXml: manifestXmlData)))
+                    complete(.success(TranslationManifestData(translationZipFile: translationZipFile, manifestXml: manifestXmlData)))
                 }
                 else {
                     complete(.failure(.translationManifestDoesNotExistInFileCache))

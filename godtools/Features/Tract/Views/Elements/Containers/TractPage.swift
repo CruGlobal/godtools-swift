@@ -115,15 +115,15 @@ class TractPage: BaseTractElement {
     }
 
     final func addBackgroundImageSubview(imageFilename: String, scaleType: TractImageConfig.ImageScaleType, aligns: [TractImageConfig.ImageAlign], parentView: UIView) {
+        
         if imageFilename == "" {
             return
         }
-        let imagePath = self.manifestProperties.getResourceForFile(filename: imageFilename)
-        guard let data = NSData(contentsOfFile: imagePath),
-            let image = UIImage(data: data as Data) else {
-                return
+        
+        guard let image = manifestProperties.getResourceForFile(filename: imageFilename) else {
+            return
         }
-
+    
         let scaleType = scaleType
         let imageView = buildScaledImageView(parentView: parentView, image: image, aligns: aligns, scaleType: scaleType)
 

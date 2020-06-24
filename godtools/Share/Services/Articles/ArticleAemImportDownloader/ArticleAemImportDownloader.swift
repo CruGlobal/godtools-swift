@@ -41,7 +41,7 @@ class ArticleAemImportDownloader {
         self.realmCache = RealmArticleAemImportDataCache(realmDatabase: realmDatabase)
     }
     
-    func getArticlesWithTags(translationManifest: TranslationManifest, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
+    func getArticlesWithTags(translationManifest: TranslationManifestData, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
         
         let resourceId: String = translationManifest.translationZipFile.resourceId
         let languageCode: String = translationManifest.translationZipFile.languageCode
@@ -49,7 +49,7 @@ class ArticleAemImportDownloader {
         realmCache.getArticlesWithTags(resourceId: resourceId, languageCode: languageCode, aemTags: aemTags, completeOnMain: completeOnMain)
     }
     
-    func getDownloadReceipt(translationManifest: TranslationManifest) -> ArticleAemImportDownloaderReceipt {
+    func getDownloadReceipt(translationManifest: TranslationManifestData) -> ArticleAemImportDownloaderReceipt {
         
         let translationId: String = translationManifest.translationZipFile.translationId
         
@@ -63,17 +63,17 @@ class ArticleAemImportDownloader {
         }
     }
     
-    func articlesCached(translationManifest: TranslationManifest) -> Bool {
+    func articlesCached(translationManifest: TranslationManifestData) -> Bool {
         
         return ArticlesCacheValidation(translationManifest: translationManifest).isCached
     }
     
-    func articlesCacheExpired(translationManifest: TranslationManifest) -> Bool {
+    func articlesCacheExpired(translationManifest: TranslationManifestData) -> Bool {
         
         return ArticlesCacheValidation(translationManifest: translationManifest).cacheExpired
     }
     
-    func downloadAndCache(translationManifest: TranslationManifest, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
+    func downloadAndCache(translationManifest: TranslationManifestData, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
                 
         print("\n DOWNLOAD TO CACHE AND WEB ARCHIVE")
         
@@ -178,7 +178,7 @@ class ArticleAemImportDownloader {
         }
     }
     
-    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationManifest: TranslationManifest) {
+    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationManifest: TranslationManifestData) {
         
         let result = ArticleAemImportDownloaderResult(
             resourceId: translationManifest.translationZipFile.resourceId,

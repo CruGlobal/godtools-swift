@@ -12,8 +12,10 @@ class TractViewModel: TractViewModelType {
     
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
+    private let primaryTranslationManifest: TranslationManifestData
     private let parallelLanguage: LanguageModel?
-    private let languageSettingsService: LanguageSettingsService
+    private let languageSettingsService: LanguageSettingsService // TODO: Do we really need this service? ~Levi
+    private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let viewsService: ViewsServiceType
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
@@ -35,25 +37,26 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
+        self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.languageSettingsService = languageSettingsService
+        self.tractManager = tractManager
         self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
-        // TODO: Implement ~Levi
-        //primaryTractXmlResource = tractManager.loadResource(resource: resource, language: primaryLanguage)
-        primaryTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
+        primaryTractXmlResource = tractManager.loadResource(translationManifest: primaryTranslationManifest)
         
         if let parallelLanguage = self.parallelLanguage {
             // TODO: Implement. ~Levi
             //parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
-            parallelTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
+            //parallelTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
+            parallelTractXmlResource = nil
         }
         else {
             parallelTractXmlResource = nil

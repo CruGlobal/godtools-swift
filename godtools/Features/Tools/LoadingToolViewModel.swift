@@ -13,20 +13,20 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private let resource: ResourceModel
     private let preferredTranslation: PreferredLanguageTranslationResult
     private let translationDownloader: TranslationDownloader
-    private let completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>
+    private let completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>>
     private let closeHandler: CallbackHandler
     private let fakeDownloadProgressInterval: TimeInterval = 1 / 60
     private let fakeDownloadProgressTotalTimeSeconds: TimeInterval = 3
     
     private var fakeDownloadProgressTimer: Timer?
     private var downloadTranslationOperation: OperationQueue?
-    private var downloadTranslationResult: Result<TranslationManifest, TranslationDownloaderError>?
+    private var downloadTranslationResult: Result<TranslationManifestData, TranslationDownloaderError>?
         
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>, closeHandler: CallbackHandler) {
+    required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>>, closeHandler: CallbackHandler) {
 
         self.resource = resource
         self.preferredTranslation = preferredTranslation
@@ -68,7 +68,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
             repeats: true
         )
         
-        downloadTranslationOperation = translationDownloader.downloadTranslation(translationId: translationId, complete: { [weak self] (result: Result<TranslationManifest, TranslationDownloaderError>) in
+        downloadTranslationOperation = translationDownloader.downloadTranslation(translationId: translationId, complete: { [weak self] (result: Result<TranslationManifestData, TranslationDownloaderError>) in
             
             DispatchQueue.main.async { [weak self] in
             

@@ -71,7 +71,7 @@ enum FlowStep {
     case deleteLanguageTappedFromChooseLanguage
     
     // articles
-    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationManifest: TranslationManifest, category: ArticleCategory, articleManifest: ArticleManifestXmlParser)
-    case articleTappedFromArticles(resource: ResourceModel, translationManifest: TranslationManifest, articleAemImportData: ArticleAemImportData)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationManifest: TranslationManifestData, category: ArticleCategory, articleManifest: ArticleManifestXmlParser)
+    case articleTappedFromArticles(resource: ResourceModel, translationManifest: TranslationManifestData, articleAemImportData: ArticleAemImportData)
     case sharedTappedFromArticle(articleAemImportData: ArticleAemImportData)
 }

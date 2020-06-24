@@ -699,13 +699,7 @@ extension TractCard {
             return
         }
         
-        let imagePath = self.manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage)
-        
-        guard let data = NSData(contentsOfFile: imagePath) else {
-            return
-        }
-        
-        guard let image = UIImage(data: data as Data) else {
+        guard let image = manifestProperties.getResourceForFile(filename: elementProperties.backgroundImage) else {
             return
         }
         

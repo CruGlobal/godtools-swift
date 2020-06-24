@@ -131,7 +131,7 @@ class ToolsFlow: Flow {
         }
     }
     
-    private func loadToolTranslationManifest(resource: ResourceModel, completeOnMain: @escaping ((_ translationManifest: TranslationManifest) -> Void)) {
+    private func loadToolTranslationManifest(resource: ResourceModel, completeOnMain: @escaping ((_ translationManifest: TranslationManifestData) -> Void)) {
         
         let appDiContainer: AppDiContainer = self.appDiContainer
         let preferredLanguageTranslation: PreferredLanguageTranslationViewModel = appDiContainer.preferredLanguageTranslation
@@ -141,7 +141,7 @@ class ToolsFlow: Flow {
                             
             let translation: TranslationModel? = preferredLanguageTranslationResult.preferredLanguageTranslation
             
-            translationsFileCache.getTranslationManifest(translationId: translation?.id ?? "") { (result: Result<TranslationManifest, TranslationsFileCacheError>) in
+            translationsFileCache.getTranslationManifest(translationId: translation?.id ?? "") { (result: Result<TranslationManifestData, TranslationsFileCacheError>) in
                 
                 DispatchQueue.main.async { [weak self] in
                     
@@ -156,7 +156,7 @@ class ToolsFlow: Flow {
                             self?.navigationController.dismiss(animated: true, completion: nil)
                         }
                         
-                        let completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>> = CallbackValueHandler { (result: Result<TranslationManifest, TranslationDownloaderError>) in
+                        let completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>> = CallbackValueHandler { (result: Result<TranslationManifestData, TranslationDownloaderError>) in
                             
                             switch result {
                             case .success(let translationManifest):
@@ -199,7 +199,7 @@ class ToolsFlow: Flow {
         let flowDelegate: FlowDelegate = self
         let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
         
-        loadToolTranslationManifest(resource: resource, completeOnMain: { [weak self] (translationManifest: TranslationManifest) in
+        loadToolTranslationManifest(resource: resource, completeOnMain: { [weak self] (translationManifest: TranslationManifestData) in
             
             switch resourceType {
                 
@@ -232,8 +232,10 @@ class ToolsFlow: Flow {
                     flowDelegate: flowDelegate,
                     resource: resource,
                     primaryLanguage: primaryLanguage,
+                    primaryTranslationManifest: translationManifest,
                     parallelLanguage: languageSettingsService.parallelLanguage.value,
                     languageSettingsService: languageSettingsService,
+                    tractManager: appDiContainer.tractManager,
                     viewsService: appDiContainer.viewsService,
                     analytics: appDiContainer.analytics,
                     toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,

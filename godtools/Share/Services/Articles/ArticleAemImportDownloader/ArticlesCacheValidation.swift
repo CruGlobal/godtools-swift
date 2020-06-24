@@ -18,7 +18,7 @@ class ArticlesCacheValidation {
     private let primaryCacheKey: String
     private let cacheExpirationSeconds: TimeInterval = ArticlesCacheValidation.secondsInDay * 7
     
-    required init(translationManifest: TranslationManifest) {
+    required init(translationManifest: TranslationManifestData) {
         
         self.resourceId = translationManifest.translationZipFile.resourceId
         self.languageCode = translationManifest.translationZipFile.languageCode

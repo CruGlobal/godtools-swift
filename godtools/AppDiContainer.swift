@@ -143,7 +143,7 @@ class AppDiContainer {
     }
 
     var tractManager: TractManager {
-        return TractManager()
+        return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
     }
     
     var toolsManager: ToolsManager {
