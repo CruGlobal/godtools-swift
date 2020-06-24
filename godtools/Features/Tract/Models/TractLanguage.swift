@@ -11,5 +11,5 @@ import Foundation
 struct TractLanguage {
     
     let languageType: TractLanguageType
-    let language: Language
+    let language: LanguageModel
 }

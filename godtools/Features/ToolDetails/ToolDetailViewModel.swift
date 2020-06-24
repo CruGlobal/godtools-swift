@@ -12,7 +12,7 @@ import RealmSwift
 class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private let resource: ResourceModel
-    private let resourcesService: ResourcesService
+    private let dataDownloader: InitialDataDownloader
     private let favoritedResourcesService: FavoritedResourcesService
     private let languageSettingsService: LanguageSettingsService
     private let localization: LocalizationServices
@@ -39,11 +39,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslation: PreferredLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.resourcesService = resourcesService
+        self.dataDownloader = dataDownloader
         self.favoritedResourcesService = favoritedResourcesService
         self.languageSettingsService = languageSettingsService
         self.localization = localization
@@ -61,7 +61,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         else {
             hidesBannerImage.accept(value: false)
             hidesYoutubePlayer.accept(value: true)
-            resourcesService.attachmentsService.getAttachmentBanner(attachmentId: resource.attrBannerAbout) { [weak self] (image: UIImage?) in
+            dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) { [weak self] (image: UIImage?) in
                 self?.topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: image, youtubePlayerId: ""))
             }
         }
@@ -90,7 +90,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private func reloadData() {
         
         let resource: ResourceModel = self.resource
-        let resourcesCache: RealmResourcesCache = self.resourcesService.realmResourcesCache
+        let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
         let languageSettingsService: LanguageSettingsService = self.languageSettingsService
         let userSettingsPrimaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         let localization: LocalizationServices = self.localization

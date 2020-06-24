@@ -37,17 +37,17 @@ class ToolsFlow: Flow {
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
-            resourcesService: appDiContainer.resourcesService,
-            favoritedResourcesService: appDiContainer.favoritedResourcesService,
+            dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
         
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
-            resourcesService: appDiContainer.resourcesService,
-            favoritedResourcesService: appDiContainer.favoritedResourcesService,
+            dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
         
@@ -164,8 +164,10 @@ class ToolsFlow: Flow {
                                 completeOnMain(translationManifest)
                             case .failure(let downloadError):
                                 self?.navigationController.dismiss(animated: true, completion: { [weak self] in
-                                    let downloadTranslationAlert = TranslationDownloaderErrorViewModel(translationDownloaderError: downloadError)
-                                    self?.navigationController.presentAlertMessage(alertMessage: downloadTranslationAlert)
+                                    if !downloadError.cancelled {
+                                        let downloadTranslationAlert = TranslationDownloaderErrorViewModel(translationDownloaderError: downloadError)
+                                        self?.navigationController.presentAlertMessage(alertMessage: downloadTranslationAlert)
+                                    }
                                 })
                             }
                         }
@@ -174,7 +176,6 @@ class ToolsFlow: Flow {
                         let viewModel = LoadingToolViewModel(
                             resource: resource,
                             preferredTranslation: preferredLanguageTranslationResult,
-                            resourcesService: appDiContainer.resourcesService,
                             translationDownloader: appDiContainer.translationDownloader,
                             completeHandler: completeHandler,
                             closeHandler: closeHandler
@@ -215,37 +216,24 @@ class ToolsFlow: Flow {
                 self?.articlesFlow = articlesFlow
                 
             case .tract:
-                break
-                // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-                /*
-                let languagesManager: LanguagesManager = appDiContainer.languagesManager
-                var primaryLanguage: Language?
-                if let settingsPrimaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                    primaryLanguage = settingsPrimaryLanguage
+    
+                let languageSettingsService: LanguageSettingsService = appDiContainer.languageSettingsService
+                                
+                guard let primaryLanguage = languageSettingsService.primaryLanguage.value else {
+                    navigationController.presentAlertMessage(
+                        alertMessage: AlertMessage(
+                            title: "Internal Error",
+                            message: "Primary language not set.  Choose a primary language for viewing this tool."
+                    ))
+                    return
                 }
-                
-                var resourceSupportsPrimaryLanguage: Bool = false
-                for translation in resource.translations {
-                    if let code = translation.language?.code {
-                        if code == primaryLanguage?.code {
-                            resourceSupportsPrimaryLanguage = true
-                            break
-                        }
-                    }
-                }
-                            
-                if primaryLanguage == nil || !resourceSupportsPrimaryLanguage {
-                    primaryLanguage = languagesManager.loadFromDisk(code: "en")
-                }
-                
-                let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
                 
                 let viewModel = TractViewModel(
-                    flowDelegate: self,
+                    flowDelegate: flowDelegate,
                     resource: resource,
-                    primaryLanguage: primaryLanguage!,
-                    parallelLanguage: parallelLanguage,
-                    tractManager: appDiContainer.tractManager,
+                    primaryLanguage: primaryLanguage,
+                    parallelLanguage: languageSettingsService.parallelLanguage.value,
+                    languageSettingsService: languageSettingsService,
                     viewsService: appDiContainer.viewsService,
                     analytics: appDiContainer.analytics,
                     toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
@@ -254,7 +242,6 @@ class ToolsFlow: Flow {
                 let view = TractView(viewModel: viewModel)
 
                 navigationController.pushViewController(view, animated: true)
-                */
                 
             case .unknown:
                 
@@ -276,7 +263,7 @@ class ToolsFlow: Flow {
         let viewModel = ToolDetailViewModel(
             flowDelegate: self,
             resource: resource,
-            resourcesService: appDiContainer.resourcesService,
+            dataDownloader: appDiContainer.initialDataDownloader,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices,

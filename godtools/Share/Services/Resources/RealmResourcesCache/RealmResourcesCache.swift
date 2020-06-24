@@ -23,7 +23,7 @@ class RealmResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ result: Result<RealmResourcesCacheResult, Error>) -> Void)) {
+    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ result: Result<ResourcesDownloaderResult, Error>) -> Void)) {
                 
         realmDatabase.background { (realm: Realm) in
             
@@ -109,7 +109,7 @@ class RealmResourcesCache {
                 try realm.write {
                     realm.add(realmObjectsToCache, update: .all)
                 }
-                complete(.success(RealmResourcesCacheResult(attachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values))))
+                complete(.success(ResourcesDownloaderResult(latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values))))
             }
             catch let error {
                 assertionFailure(error.localizedDescription)

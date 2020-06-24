@@ -23,7 +23,6 @@ class LanguageSettingsFlow: Flow {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
-            resourcesService: appDiContainer.resourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             analytics: appDiContainer.analytics
         )
@@ -40,7 +39,7 @@ class LanguageSettingsFlow: Flow {
             
             let viewModel = ChooseLanguageViewModel(
                 flowDelegate: self,
-                resourcesService: appDiContainer.resourcesService,
+                dataDownloader: appDiContainer.initialDataDownloader,
                 languageSettingsService: appDiContainer.languageSettingsService,
                 translationZipImporter: appDiContainer.translationZipImporter,
                 analytics: appDiContainer.analytics,
@@ -54,7 +53,7 @@ class LanguageSettingsFlow: Flow {
             
             let viewModel = ChooseLanguageViewModel(
                 flowDelegate: self,
-                resourcesService: appDiContainer.resourcesService,
+                dataDownloader: appDiContainer.initialDataDownloader,
                 languageSettingsService: appDiContainer.languageSettingsService,
                 translationZipImporter: appDiContainer.translationZipImporter,
                 analytics: appDiContainer.analytics,

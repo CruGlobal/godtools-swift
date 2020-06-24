@@ -14,9 +14,9 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let resourcesService: ResourcesService
-    let favoritedResourcesService: FavoritedResourcesService
+    let dataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let favoritedResourcesService: FavoritedResourcesService
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -25,12 +25,12 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesService = resourcesService
-        self.favoritedResourcesService = favoritedResourcesService
+        self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.favoritedResourcesService = favoritedResourcesService
         self.analytics = analytics
         
         super.init()
@@ -42,23 +42,25 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        resourcesService.started.removeObserver(self)
-        resourcesService.completed.removeObserver(self)
+        dataDownloader.started.removeObserver(self)
+        dataDownloader.completed.removeObserver(self)
         favoritedResourcesService.resourceFavorited.removeObserver(self)
         favoritedResourcesService.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        resourcesService.started.addObserver(self) { [weak self] (started: Bool) in
+        dataDownloader.started.addObserver(self) { [weak self] (started: Bool) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadIsLoading()
             }
         }
         
-        resourcesService.completed.addObserver(self) { [weak self] (error: ResourcesServiceError?) in
+        dataDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadResourcesFromCache()
+                if result != nil {
+                    self?.reloadResourcesFromCache()
+                }
             }
         }
         
@@ -72,10 +74,8 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func reloadResourcesFromCache() {
-        
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
-        
-        resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
+                
+        dataDownloader.resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
             self?.tools.accept(value: allResources)
             self?.reloadIsLoading()
         })
@@ -83,7 +83,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private func reloadIsLoading() {
         
-        let isLoadingTools: Bool = resourcesService.started.value && tools.value.isEmpty
+        let isLoadingTools: Bool = dataDownloader.started.value && tools.value.isEmpty
         isLoading.accept(value: isLoadingTools)
     }
     

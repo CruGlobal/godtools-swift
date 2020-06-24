@@ -43,7 +43,7 @@ enum FlowStep {
         
     // tract
     case homeTappedFromTract
-    case shareTappedFromTract(resource: DownloadedResource, language: Language, pageNumber: Int)
+    case shareTappedFromTract(resource: ResourceModel, language: LanguageModel, pageNumber: Int)
     case sendEmailTappedFromTract(subject: String, message: String, isHtml: Bool)
     
     // tutorial

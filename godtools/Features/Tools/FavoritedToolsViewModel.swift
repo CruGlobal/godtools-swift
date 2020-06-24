@@ -14,9 +14,9 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    let resourcesService: ResourcesService
-    let favoritedResourcesService: FavoritedResourcesService
+    let dataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let favoritedResourcesService: FavoritedResourcesService
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -25,12 +25,12 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesService = resourcesService
-        self.favoritedResourcesService = favoritedResourcesService
+        self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.favoritedResourcesService = favoritedResourcesService
         self.analytics = analytics
         
         super.init()
@@ -43,7 +43,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     deinit {
         print("x deinit: \(type(of: self))")
         
-        resourcesService.completed.removeObserver(self)
+        dataDownloader.completed.removeObserver(self)
         favoritedResourcesService.resourceFavorited.removeObserver(self)
         favoritedResourcesService.resourceUnfavorited.removeObserver(self)
         favoritedResourcesService.resourceSorted.removeObserver(self)
@@ -51,9 +51,11 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func setupBinding() {
         
-        resourcesService.completed.addObserver(self) { [weak self] (error: ResourcesServiceError?) in
+        dataDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadFavoritedResources()
+                if result != nil {
+                    self?.reloadFavoritedResources()
+                }
             }
         }
         
@@ -77,7 +79,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func reloadFavoritedResources() {
         
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
         let favoritedResourcesService: FavoritedResourcesService = self.favoritedResourcesService
         
         favoritedResourcesService.getFavoritedResources { (favoritedResources: [FavoritedResourceModel]) in

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DeviceLanguage: DeviceLanguageType {
+class DeviceLanguage: DeviceLanguageType {
         
     var languageCode: String? {
         return Locale.current.languageCode

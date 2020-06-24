@@ -10,9 +10,9 @@ import Foundation
 
 protocol ToolsViewModelType {
     
-    var resourcesService: ResourcesService { get }
-    var favoritedResourcesService: FavoritedResourcesService { get }
+    var dataDownloader: InitialDataDownloader { get }
     var languageSettingsService: LanguageSettingsService { get }
+    var favoritedResourcesService: FavoritedResourcesService { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }

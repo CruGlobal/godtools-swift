@@ -43,7 +43,8 @@ class AppFlow: NSObject, FlowDelegate {
     }
     
     private func requestInitialData() {
-        _ = appDiContainer.resourcesService.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
+        
+        appDiContainer.initialDataDownloader.downloadData()
     }
     
     private func setupInitialNavigation() {
@@ -280,6 +281,10 @@ class AppFlow: NSObject, FlowDelegate {
     
     func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
+        // TODO: Implement universal linking.
+        
+        /*
+        
         // TODO: Is this needed? ~Levi
         GTSettings.shared.parallelLanguageCode = parallelLanguageCode
         
@@ -306,7 +311,7 @@ class AppFlow: NSObject, FlowDelegate {
         
         let view = TractView(viewModel: viewModel)
         
-        navigationController.pushViewController(view, animated: true)
+        navigationController.pushViewController(view, animated: true)*/
     }
         
     // MARK: - Helpers

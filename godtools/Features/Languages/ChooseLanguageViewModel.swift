@@ -16,7 +16,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         case parallel
     }
     
-    private let resourcesService: ResourcesService
+    private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let translationZipImporter: TranslationZipImporter
     private let analytics: AnalyticsContainer
@@ -32,10 +32,10 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let languages: ObservableValue<[ChooseLanguageModel]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<ChooseLanguageModel?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsService: LanguageSettingsService, translationZipImporter: TranslationZipImporter, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, translationZipImporter: TranslationZipImporter, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesService = resourcesService
+        self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.translationZipImporter = translationZipImporter
         self.analytics = analytics
@@ -57,7 +57,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private func reloadLanguages() {
                 
-        let resourcesCache: RealmResourcesCache = resourcesService.realmResourcesCache
+        let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
         let languageSettingsService: LanguageSettingsService = self.languageSettingsService
         let chooseLanguageType: ChooseLanguageType = self.chooseLanguageType
         let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value

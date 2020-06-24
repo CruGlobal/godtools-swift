@@ -10,7 +10,10 @@ import UIKit
 
 class TractViewModel: TractViewModelType {
     
-    private let tractManager: TractManager
+    private let resource: ResourceModel
+    private let primaryLanguage: LanguageModel
+    private let parallelLanguage: LanguageModel?
+    private let languageSettingsService: LanguageSettingsService
     private let viewsService: ViewsServiceType
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
@@ -21,9 +24,6 @@ class TractViewModel: TractViewModelType {
     private var cachedParallelTractPages: [Int: TractPage] = Dictionary()
     private var tractPage: Int = -1
     
-    let resource: DownloadedResource
-    let primaryLanguage: Language
-    let parallelLanguage: Language?
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
@@ -35,21 +35,25 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.tractManager = tractManager
+        self.languageSettingsService = languageSettingsService
         self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
-        primaryTractXmlResource = tractManager.loadResource(resource: resource, language: primaryLanguage)
+        // TODO: Implement ~Levi
+        //primaryTractXmlResource = tractManager.loadResource(resource: resource, language: primaryLanguage)
+        primaryTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
         
         if let parallelLanguage = self.parallelLanguage {
-            parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
+            // TODO: Implement. ~Levi
+            //parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
+            parallelTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
         }
         else {
             parallelTractXmlResource = nil
@@ -61,12 +65,25 @@ class TractViewModel: TractViewModelType {
             navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
         )
         
-        hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
-        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
-        chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
+        // TODO: Implement. ~Levi
+        //hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
+        hidesChooseLanguageControl = true
+        
+        chooseLanguageControlPrimaryLanguageTitle = LanguageNameTranslationViewModel(language: primaryLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        
+        let parallelLocalizedName: String
+        if let parallelLanguage = parallelLanguage {
+            parallelLocalizedName = LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        }
+        else {
+            parallelLocalizedName = ""
+        }
+        
+        chooseLanguageControlParallelLanguageTitle = parallelLocalizedName
+        
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
-        _ = viewsService.addNewResourceViews(resourceIds: [resource.remoteId])
+        _ = viewsService.addNewResourceViews(resourceIds: [resource.id])
         
         let startingTractPage: Int = tractPage ?? 0
         
@@ -133,8 +150,8 @@ class TractViewModel: TractViewModelType {
         if previousToolPage != page {
             
             analytics.pageViewedAnalytics.trackPageView(
-                screenName: resource.code + "-" + String(page),
-                siteSection: resource.code,
+                screenName: resource.abbreviation + "-" + String(page),
+                siteSection: resource.abbreviation,
                 siteSubSection: ""
             )
         }
@@ -160,7 +177,12 @@ class TractViewModel: TractViewModelType {
     }
     
     var isRightToLeftLanguage: Bool {
-        return primaryLanguage.isRightToLeft()
+        switch LanguageDirection.direction(language: primaryLanguage) {
+        case .leftToRight:
+            return false
+        case .rightToLeft:
+            return true
+        }
     }
     
     var currentTractPage: Int {
@@ -205,12 +227,12 @@ class TractViewModel: TractViewModelType {
         selectedTractLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
     }
     
-    private func trackTappedLanguage(language: Language) {
+    private func trackTappedLanguage(language: LanguageModel) {
         
         let data: [AnyHashable: String] = [
             AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
             AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
-            AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.code
+            AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation
         ]
         
         analytics.trackActionAnalytics.trackAction(
@@ -370,7 +392,7 @@ class TractViewModel: TractViewModelType {
         return nil
     }
     
-    private func buildTractPage(page: Int, language: Language, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
+    private func buildTractPage(page: Int, language: LanguageModel, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
         
         let pages: [XMLPage] = tractXmlResource.pages
         

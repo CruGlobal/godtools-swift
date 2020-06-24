@@ -10,7 +10,6 @@ import Foundation
 
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
-    private let resourcesService: ResourcesService
     private let languageSettingsService: LanguageSettingsService
     private let analytics: AnalyticsContainer
     
@@ -20,10 +19,9 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resourcesService: ResourcesService, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.resourcesService = resourcesService
         self.languageSettingsService = languageSettingsService
         self.analytics = analytics
         

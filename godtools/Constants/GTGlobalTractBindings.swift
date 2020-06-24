@@ -32,11 +32,10 @@ class GTGlobalTractBindings: NSObject {
             _ = manager.createSubscriber(params: params)?.done { (_) -> Void in
                 
                 guard let resource = form.tractConfigurations?.resource else { return }
-                let code = resource.code
                 
                 var userInfo: [String: Any] = [AdobeAnalyticsConstants.Keys.emailSignUpAction: 1]
 
-                switch code {
+                switch resource.abbreviation {
                 case "kgp":
                     userInfo["action"] = AdobeAnalyticsConstants.Values.kgpEmailSignUp
                 case "fourlaws":

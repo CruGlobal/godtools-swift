@@ -128,9 +128,9 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
         let resource = viewModel.tools.value[indexPath.row]
         let cellViewModel = ToolCellViewModel(
             resource: resource,
-            resourcesService: viewModel.resourcesService,
-            favoritedResourcesService: viewModel.favoritedResourcesService,
-            languageSettingsService: viewModel.languageSettingsService
+            dataDownloader: viewModel.dataDownloader,
+            languageSettingsService: viewModel.languageSettingsService,
+            favoritedResourcesService: viewModel.favoritedResourcesService
         )
         
         cell.configure(viewModel: cellViewModel, delegate: self)

@@ -2,8 +2,8 @@
 //  TractView.swift
 //  godtools
 //
-//  Created by Ryan Carlson on 4/24/17.
-//  Copyright © 2017 Cru. All rights reserved.
+//  Created by Levi Eggert on 6/23/20.
+//  Copyright © 2020 Cru. All rights reserved.
 //
 
 import UIKit
@@ -74,19 +74,6 @@ class TractView: UIViewController {
         )
         
         UIApplication.shared.isIdleTimerDisabled = true
-        
-        for translation in viewModel.resource.translations {
-            if let languageCode = translation.language?.code {
-                if languageCode.contains("en") {
-                    print("translation id: \(translation.remoteId)")
-                    print("  language code: \(languageCode)")
-                }
-                else if languageCode.contains("es") {
-                    print("translation id: \(translation.remoteId)")
-                    print("  language code: \(languageCode)")
-                }
-            }
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -304,7 +291,7 @@ extension TractView: BaseTractElementDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func displayedLanguage() -> Language? {
+    func displayedLanguage() -> LanguageModel? {
         
         // TODO: Why is this method needed here? ~Levi
         

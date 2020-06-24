@@ -1,40 +1,36 @@
 //
-//  ResourcesService.swift
+//  ResourcesDownloader.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/27/20.
+//  Created by Levi Eggert on 6/24/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-class ResourcesService {
+class ResourcesDownloader {
     
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
-    private let translationsApi: TranslationsApiType
-        
+    
     private var currentQueue: OperationQueue?
-    
-    let realmResourcesCache: RealmResourcesCache
-    let attachmentsService: ResourceAttachmentsService
+            
+    let resourcesCache: RealmResourcesCache
     let started: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: SignalValue<ResourcesServiceError?> = SignalValue()
+    let completed: ObservableValue<Result<ResourcesDownloaderResult, ResourcesDownloaderError>?> = ObservableValue(value: nil)
     
-    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, translationsApi: TranslationsApiType, realmResourcesCache: RealmResourcesCache, attachmentsService: ResourceAttachmentsService) {
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, resourcesCache: RealmResourcesCache) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi
-        self.translationsApi = translationsApi
-        self.realmResourcesCache = realmResourcesCache
-        self.attachmentsService = attachmentsService
+        self.resourcesCache = resourcesCache
     }
 
-    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue {
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue? {
              
-        if let queue = currentQueue {
-            assertionFailure("ResourcesDownloaderAndCache:  Download is already running, this process only needs to run once when reloading all resource data from the server.")
-            return queue
+        if currentQueue != nil {
+            assertionFailure("ResourcesDownloader: Download already started and only needs to run once at startup.")
+            return nil
         }
         
         let queue = OperationQueue()
@@ -42,7 +38,7 @@ class ResourcesService {
         self.currentQueue = queue
         
         started.accept(value: true)
-                
+                                
         let languagesOperation: RequestOperation = languagesApi.newGetLanguagesOperation()
         let resourcesPlusLatestTranslationsAndAttachmentsOperation: RequestOperation = resourcesApi.newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
@@ -89,7 +85,7 @@ class ResourcesService {
         
         var languages: [LanguageModel] = Array()
         var resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
-        var downloaderError: ResourcesServiceError?
+        var downloaderError: ResourcesDownloaderError?
         
         if let languagesResult = languagesResult, let resourcesResult = resourcesResult {
             
@@ -137,11 +133,13 @@ class ResourcesService {
         }
         else {
             
-            realmResourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<RealmResourcesCacheResult, Error>) in
+            resourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<ResourcesDownloaderResult, Error>) in
                 
                 switch result {
+                
                 case .success(let cacheResult):
                     self?.handleDownloaderAndCacheCompleted(result: .success(cacheResult))
+                
                 case .failure(let cacheError):
                     self?.handleDownloaderAndCacheCompleted(result: .failure(.failedToCacheResources(error: cacheError)))
                 }
@@ -149,31 +147,10 @@ class ResourcesService {
         }
     }
     
-    private func handleDownloaderAndCacheCompleted(result: Result<RealmResourcesCacheResult, ResourcesServiceError>) {
-                
-        let resourcesCacheResult: RealmResourcesCacheResult?
-        let serviceError: ResourcesServiceError?
-        
-        switch result {
-        case .success(let cacheResult):
-            resourcesCacheResult = cacheResult
-            serviceError = nil
-        case .failure(let error):
-            resourcesCacheResult = nil
-            serviceError = error
-        }
+    private func handleDownloaderAndCacheCompleted(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
         
         currentQueue = nil
-        
         started.accept(value: false)
-        
-        completed.accept(value: serviceError)
-        
-        if let resourcesCacheResult = resourcesCacheResult {
-            
-            attachmentsService.downloadAndCacheAttachments(from: resourcesCacheResult)
-            
-            // TODO: Download any new translations? ~Levi
-        }
+        completed.accept(value: result)
     }
 }

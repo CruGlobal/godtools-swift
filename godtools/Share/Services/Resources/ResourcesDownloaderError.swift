@@ -1,14 +1,14 @@
 //
-//  ResourcesServiceError.swift
+//  ResourcesDownloaderError.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/1/20.
+//  Created by Levi Eggert on 6/24/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-enum ResourcesServiceError: Error {
+enum ResourcesDownloaderError: Error {
     
     case failedToCacheResources(error: Error)
     case failedToDecodeLanguages(error: Error)

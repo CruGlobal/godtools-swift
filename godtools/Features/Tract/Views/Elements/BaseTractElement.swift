@@ -12,7 +12,7 @@ import SWXMLHash
 
 protocol BaseTractElementDelegate: class {
     func showAlert(_ alert: UIAlertController)
-    func displayedLanguage() -> Language?
+    func displayedLanguage() -> LanguageModel?
 }
 
 class BaseTractElement: UIView {
@@ -84,7 +84,10 @@ class BaseTractElement: UIView {
     }
     
     var isRightToLeft: Bool {
-        return tractConfigurations?.language?.isRightToLeft() ?? false
+        if let language = tractConfigurations?.language {
+            return LanguageDirection.direction(language: language) == .rightToLeft
+        }
+        return false
     }
     
     var isPrimaryRightToLeft: Bool {

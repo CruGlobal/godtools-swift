@@ -18,16 +18,18 @@ class AppDiContainer {
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
-    private let realmResourcesCache: RealmResourcesCache
+    private let resourcesCache: RealmResourcesCache
+    private let resourcesDownloader: ResourcesDownloader
+    private let attachmentsFileCache: AttachmentsFileCache
+    private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
-    let resourceAttachmentsService: ResourceAttachmentsService
-    let resourcesService: ResourcesService
     let favoritedResourcesService: FavoritedResourcesService
     let languageSettingsService: LanguageSettingsService
+    let initialDataDownloader: InitialDataDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
@@ -50,19 +52,29 @@ class AppDiContainer {
         
         translationsApi = TranslationsApi(config: config)
                         
-        realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
+        resourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
+        
+        resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi, resourcesCache: resourcesCache)
         
         translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
         translationDownloader = TranslationDownloader(translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
-        resourceAttachmentsService = ResourceAttachmentsService(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
-                                
-        resourcesService = ResourcesService(languagesApi: languagesApi, resourcesApi: resourcesApi, translationsApi: translationsApi, realmResourcesCache: realmResourcesCache, attachmentsService: resourceAttachmentsService)
-                
+        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        
+        attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache)
+                        
         favoritedResourcesService = FavoritedResourcesService(realmDatabase: realmDatabase)
         
-        languageSettingsService = LanguageSettingsService(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache)
+        languageSettingsService = LanguageSettingsService(resourcesCache: resourcesCache, languageSettingsCache: languageSettingsCache)
+        
+        initialDataDownloader = InitialDataDownloader(
+            realmDatabase: realmDatabase,
+            resourcesDownloader: resourcesDownloader,
+            attachmentsDownloader: attachmentsDownloader,
+            languageSettingsService: languageSettingsService,
+            deviceLanguage: deviceLanguage
+        )
         
         articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
                 
@@ -83,7 +95,7 @@ class AppDiContainer {
                 
         languagesManager = LanguagesManager()
         
-        preferredLanguageTranslation = PreferredLanguageTranslationViewModel(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
+        preferredLanguageTranslation = PreferredLanguageTranslationViewModel(resourcesCache: resourcesCache, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

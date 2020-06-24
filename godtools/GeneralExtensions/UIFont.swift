@@ -79,7 +79,7 @@ extension UIFont {
         }
     }
     
-    func transformToAppropriateFontByLanguage(_ language: Language, textScale: CGFloat = 1.0) -> UIFont {
+    func transformToAppropriateFontByLanguage(_ language: LanguageModel, textScale: CGFloat = 1.0) -> UIFont {
         
         let fontSize = pointSize * textScale
         var customFont: UIFont?

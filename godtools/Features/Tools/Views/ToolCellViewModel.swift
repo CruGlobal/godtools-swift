@@ -11,9 +11,8 @@ import UIKit
 class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     private let resource: ResourceModel
-    private let resourcesService: ResourcesService
+    private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
-    private let attachmentsService: ResourceAttachmentsService
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -24,14 +23,13 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, resourcesService: ResourcesService, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService) {
+    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService) {
         
         self.resource = resource
-        self.resourcesService = resourcesService
+        self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
-        self.attachmentsService = resourcesService.attachmentsService
         
         super.init()
         
@@ -44,13 +42,14 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     }
     
     deinit {
-        attachmentsService.progress.removeObserver(self)
-        attachmentsService.completed.removeObserver(self)
+        dataDownloader.attachmentsDownloaderStarted.removeObserver(self)
+        dataDownloader.attachmentsDownloaderProgress.removeObserver(self)
+        dataDownloader.attachmentsDownloaderCompleted.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func reloadBannerImage() {
-        resourcesService.attachmentsService.getAttachmentBanner(attachmentId: resource.attrBanner) { [weak self] (image: UIImage?) in
+        dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) { [weak self] (image: UIImage?) in
             self?.bannerImage.accept(value: image)
         }
     }
@@ -75,13 +74,13 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
     private func setupBinding() {
            
-        attachmentsService.progress.addObserver(self) { [weak self] (progress: Double) in
+        dataDownloader.attachmentsDownloaderProgress.addObserver(self) { [weak self] (progress: Double) in
             DispatchQueue.main.async { [weak self] in
                 self?.attachmentsDownloadProgress.accept(value: progress)
             }
         }
         
-        attachmentsService.completed.addObserver(self) { [weak self] in
+        dataDownloader.attachmentsDownloaderCompleted.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadBannerImage()
             }
