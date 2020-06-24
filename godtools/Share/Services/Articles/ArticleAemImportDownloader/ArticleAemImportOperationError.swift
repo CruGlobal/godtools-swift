@@ -1,5 +1,5 @@
 //
-//  WebArchiveOperationError.swift
+//  ArticleAemImportOperationError.swift
 //  godtools
 //
 //  Created by Levi Eggert on 5/22/20.
@@ -8,16 +8,14 @@
 
 import Foundation
 
-enum WebArchiveOperationError: Error {
+enum ArticleAemImportOperationError: Error {
     
     case cancelled
-    case failedEncodingPlistData(error: Error)
-    case failedFetchingHtmlDocument(error: Error)
-    case failedToParseHtmlDocument(error: Error)
-    case invalidHost(error: Error)
-    case invalidMimeType(error: Error)
+    case failedToParseJson(error: ArticleAemImportDataParserError)
+    case failedToSerializeJson(error: Error)
+    case invalidAemImportJsonUrl
+    case invalidAemImportSrcUrl
     case noNetworkConnection
-    case responseError(error: Error)
     case unknownError(error: Error)
     
     var cancelled: Bool {

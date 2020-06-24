@@ -20,6 +20,16 @@ class TranslationsFileCache {
         self.sha256FileCache = sha256FileCache
     }
     
+    func getImage(location: SHA256FileLocation) -> UIImage? {
+        
+        switch sha256FileCache.getImage(location: location) {
+        case .success(let image):
+            return image
+        case .failure( _):
+            return nil
+        }
+    }
+    
     func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifest, TranslationsFileCacheError>) -> Void)) {
         
         let sha256FileCache: ResourcesSHA256FileCache = self.sha256FileCache

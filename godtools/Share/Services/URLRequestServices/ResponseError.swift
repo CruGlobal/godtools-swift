@@ -17,13 +17,9 @@ enum ResponseError<ClientApiErrorType: Decodable>: Error {
     
     var cancelled: Bool {
         switch self {
-        case .httpClientError( _):
-            return false
-        case .noNetworkConnection:
-            return false
         case .requestCancelled:
             return true
-        case .requestFailed( _):
+        default:
             return false
         }
     }

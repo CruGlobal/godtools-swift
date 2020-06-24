@@ -24,7 +24,8 @@ class ArticleAemImportOperation: Operation {
     }
     
     private let session: URLSession
-    private let godToolsResource: GodToolsResource
+    private let resourceId: String
+    private let languageCode: String
     private let aemImportSrc: String
     private let maxAemImportJsonTreeLevels: Int
     private let errorDomain: String = String(describing: ArticleAemImportOperation.self)
@@ -33,9 +34,10 @@ class ArticleAemImportOperation: Operation {
     private var task: URLSessionDataTask?
     private var completion: Completion?
     
-    required init(session: URLSession, godToolsResource: GodToolsResource, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
+    required init(session: URLSession, resourceId: String, languageCode: String, aemImportSrc: String, maxAemImportJsonTreeLevels: Int) {
         self.session = session
-        self.godToolsResource = godToolsResource
+        self.resourceId = resourceId
+        self.languageCode = languageCode
         self.aemImportSrc = aemImportSrc
         self.maxAemImportJsonTreeLevels = maxAemImportJsonTreeLevels
         super.init()
@@ -84,7 +86,8 @@ class ArticleAemImportOperation: Operation {
             timeoutInterval: session.configuration.timeoutIntervalForRequest
         )
         
-        let godToolsResourceRef = godToolsResource
+        let resourceId: String = self.resourceId
+        let languageCode: String = self.languageCode
         
         self.urlRequest = urlJsonRequest
         
@@ -164,7 +167,8 @@ class ArticleAemImportOperation: Operation {
                     let aemImportParserResult: Result<ArticleAemImportData, ArticleAemImportDataParserError> = aemImportDataParser.parse(
                         aemImportSrc: aemImportSrcUrl,
                         aemImportJson: jsonDictionary,
-                        godToolsResource: godToolsResourceRef
+                        resourceId: resourceId,
+                        languageCode: languageCode
                     )
                     
                     switch aemImportParserResult {

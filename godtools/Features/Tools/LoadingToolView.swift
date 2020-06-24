@@ -36,6 +36,14 @@ class LoadingToolView: UIViewController {
         
         setupLayout()
         setupBinding()
+        
+        _ = addBarButtonItem(
+            to: .right,
+            image: ImageCatalog.navClose.image,
+            color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
+            target: self,
+            action: #selector(handleClose(barButtonItem:))
+        )
     }
     
     private func setupLayout() {
@@ -61,5 +69,9 @@ class LoadingToolView: UIViewController {
             }
             self?.presentAlertMessage(alertMessage: alertMessage)
         }
+    }
+    
+    @objc func handleClose(barButtonItem: UIBarButtonItem) {
+        viewModel.closeTapped()
     }
 }

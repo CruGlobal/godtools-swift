@@ -10,10 +10,10 @@ import Foundation
 
 class ArticleWebViewModel: ArticleWebViewModelType {
     
-    private let resource: DownloadedResource
-    private let godToolsResource: GodToolsResource
-    private let articleAemImportData: RealmArticleAemImportData
-    private let articlesService: ArticlesService
+    private let resource: ResourceModel
+    private let translationManifest: TranslationManifest
+    private let articleAemImportData: ArticleAemImportData
+    private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -23,24 +23,26 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData, articlesService: ArticlesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifest, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.godToolsResource = godToolsResource
+        self.translationManifest = translationManifest
         self.articleAemImportData = articleAemImportData
-        self.articlesService = articlesService
+        self.articleAemImportDownloader = articleAemImportDownloader
         self.analytics = analytics
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
+        let translationZipFile: TranslationZipFileModel = translationManifest.translationZipFile
         var cachedWebArchiveUrl: URL?
         let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
-            godToolsResource: godToolsResource,
+            resourceId: translationZipFile.resourceId,
+            languageCode: translationZipFile.languageCode,
             filename: articleAemImportData.webArchiveFilename
         )
         
-        switch articlesService.articleAemImportService.aemWebArchiveFileCache.getFile(location: webArchiveLocation) {
+        switch articleAemImportDownloader.webArchiveFileCache.getFile(location: webArchiveLocation) {
         case .success(let url):
             cachedWebArchiveUrl = url
         case .failure( _):
@@ -61,7 +63,7 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: "Article : \(articleAemImportData.articleJcrContent?.title ?? "")",
-            siteSection: resource.code,
+            siteSection: resource.abbreviation,
             siteSubSection: "article"
         )
     }

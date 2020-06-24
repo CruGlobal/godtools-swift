@@ -25,6 +25,8 @@ class ArticlesFlow: Flow {
             flowDelegate: self,
             resource: resource,
             translationManifest: translationManifest,
+            articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
+            translationsFileCache: appDiContainer.translationsFileCache,
             analytics: appDiContainer.analytics
         )
         
@@ -37,28 +39,29 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let resource, let godToolsResource, let category):
+        case .articleCategoryTappedFromArticleCategories(let resource, let translationManifest, let category, let articleManifest):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
-                godToolsResource: godToolsResource,
+                translationManifest: translationManifest,
                 category: category,
-                articlesService: appDiContainer.articlesService,
+                articleManifest: articleManifest,
+                articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)
             
             navigationController.pushViewController(view, animated: true)
                         
-        case .articleTappedFromArticles(let resource, let godToolsResource, let articleAemImportData):
+        case .articleTappedFromArticles(let resource, let translationManifest, let articleAemImportData):
             
             let viewModel = ArticleWebViewModel(
                 flowDelegate: self,
                 resource: resource,
-                godToolsResource: godToolsResource,
+                translationManifest: translationManifest,
                 articleAemImportData: articleAemImportData,
-                articlesService: appDiContainer.articlesService,
+                articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
                 analytics: appDiContainer.analytics
             )
             

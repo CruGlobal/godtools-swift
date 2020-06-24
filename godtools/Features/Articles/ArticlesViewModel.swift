@@ -8,65 +8,91 @@
 
 import Foundation
 
-class ArticlesViewModel: ArticlesViewModelType {
+class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
-    private let resource: DownloadedResource
-    private let godToolsResource: GodToolsResource
+    private let resource: ResourceModel
+    private let translationManifest: TranslationManifest
     private let category: ArticleCategory
-    private let articlesService: ArticlesService
+    private let articleManifest: ArticleManifestXmlParser
+    private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
-    
+    private let downloadArticlesReceipt: ArticleAemImportDownloaderReceipt
+        
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let articleAemImportData: ObservableValue<[RealmArticleAemImportData]> = ObservableValue(value: [])
+    let articleAemImportData: ObservableValue<[ArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory, articlesService: ArticlesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifest, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.godToolsResource = godToolsResource
+        self.translationManifest = translationManifest
         self.category = category
-        self.articlesService = articlesService
+        self.articleManifest = articleManifest
+        self.articleAemImportDownloader = articleAemImportDownloader
         self.analytics = analytics
+        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationManifest: translationManifest)
+        
+        super.init()
+        
+        setupBinding()
         
         navTitle.accept(value: category.title)
         
-        reloadArticles(category: category, animated: false)
+        reloadArticlesIfNeeded()
     }
     
     deinit {
-
+        print("x deinit: \(type(of: self))")
+        
+        downloadArticlesReceipt.started.removeObserver(self)
+        downloadArticlesReceipt.completed.removeObserver(self)
     }
     
-    private func reloadArticles(category: ArticleCategory, animated: Bool) {
+    private var articlesCached: Bool {
+        return articleAemImportDownloader.articlesCached(translationManifest: translationManifest)
+    }
+    
+    private var articlesCacheExpired: Bool {
+        return articleAemImportDownloader.articlesCacheExpired(translationManifest: translationManifest)
+    }
+    
+    private var shouldShowArticlesList: Bool {
+        return articlesCached
+    }
+    
+    private var showLoadingArticles: Bool {
+        !shouldShowArticlesList
+    }
+    
+    private func setupBinding() {
+                     
+        downloadArticlesReceipt.started.addObserver(self) { [weak self] (started: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                let showLoadingArticles: Bool = self?.showLoadingArticles ?? false
+                self?.isLoading.accept(value: started && showLoadingArticles)
+            }
+        }
         
-        let cachedArticleImportData: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(
-            godToolsResource: godToolsResource,
-            aemTags: category.aemTags
-        )
-        
-        if cachedArticleImportData.isEmpty {
-            
-            errorMessage.accept(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: animated))
-            
-            isLoading.accept(value: true)
-            
-            articlesService.downloadAndCacheArticleData(godToolsResource: godToolsResource, forceDownload: true) { [weak self] (result: Result<ArticleManifestXmlParser, ArticlesServiceError>) in
-               
-                DispatchQueue.main.async { [weak self] in
+        downloadArticlesReceipt.completed.addObserver(self) { [weak self] (result: ArticleAemImportDownloaderResult) in
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let category = self?.category else {
+                    return
+                }
+                
+                self?.reloadArticleAemImportDataFromCache(category: category, completeOnMain: { (cachedArticleData: [ArticleAemImportData]) in
                     
-                    self?.isLoading.accept(value: false)
-                                    
-                    switch result {
+                    let articlesCached: Bool = self?.articlesCached ?? false
+                    let showDownloadError: Bool = !articlesCached
+                    
+                    if let downloadError = result.downloadError, showDownloadError {
                         
-                    case .success( _):
-                        self?.reloadArticleAemImportDataFromCache(category: category)
-                    case .failure( let error):
+                        let errorViewModel = DownloadArticlesErrorViewModel(error: downloadError)
                         
-                        let errorViewModel = DownloadArticlesErrorViewModel(error: error)
                         self?.errorMessage.accept(
                             value: ArticlesErrorMessage(
                                 message: errorViewModel.message,
@@ -74,33 +100,62 @@ class ArticlesViewModel: ArticlesViewModelType {
                                 shouldAnimate: true
                         ))
                     }
-                }
+                })
             }
-        }
-        else {
-            reloadArticleAemImportDataFromCache(category: category)
         }
     }
     
-    private func reloadArticleAemImportDataFromCache(category: ArticleCategory) {
+    private func reloadArticlesIfNeeded() {
+        reloadArticleAemImportDataFromCache(category: category) { [weak self] (cachedArticles: [ArticleAemImportData]) in
+            if cachedArticles.isEmpty {
+                self?.reloadArticles(forceDownload: true)
+            }
+        }
+    }
+    
+    private func reloadArticles(forceDownload: Bool) {
+            
+        let articleManifest: ArticleManifestXmlParser = self.articleManifest
+        
+        let downloadRunning: Bool = downloadArticlesReceipt.started.value
                 
-        var cachedArticleImportDataArray: [RealmArticleAemImportData] = articlesService.articleAemImportService.getArticlesWithTags(godToolsResource: godToolsResource, aemTags: category.aemTags)
-        cachedArticleImportDataArray.sort {(rhs: RealmArticleAemImportData, lhs: RealmArticleAemImportData) in
-            rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
+        if (!articlesCached || articlesCacheExpired || forceDownload) && !downloadRunning {
+                                                
+            _ = articleAemImportDownloader.downloadAndCache(
+                translationManifest: translationManifest,
+                aemImportSrcs: articleManifest.aemImportSrcs
+            )
+        }
+    }
+    
+    private func reloadArticleAemImportDataFromCache(category: ArticleCategory, completeOnMain: @escaping ((_ cachedArticles: [ArticleAemImportData]) -> Void)) {
+           
+        if !shouldShowArticlesList {
+            completeOnMain([])
+            return
         }
         
-        articleAemImportData.accept(value: cachedArticleImportDataArray)
+        articleAemImportDownloader.getArticlesWithTags(translationManifest: translationManifest, aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
+            
+            let sortedArticles = cachedArticleImportDataArray.sorted {(rhs: ArticleAemImportData, lhs: ArticleAemImportData) in
+                rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
+            }
+            
+            self?.articleAemImportData.accept(value: sortedArticles)
+            
+            completeOnMain(sortedArticles)
+        })
     }
     
     func pageViewed() {
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Category : \(category.title)", siteSection: resource.code, siteSubSection: "articles-list")
+        analytics.pageViewedAnalytics.trackPageView(screenName: "Category : \(category.title)", siteSection: resource.abbreviation, siteSubSection: "articles-list")
     }
     
-    func articleTapped(articleAemImportData: RealmArticleAemImportData) {
-        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, godToolsResource: godToolsResource, articleAemImportData: articleAemImportData))
+    func articleTapped(articleAemImportData: ArticleAemImportData) {
+        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, translationManifest: translationManifest, articleAemImportData: articleAemImportData))
     }
     
     func downloadArticlesTapped() {
-        reloadArticles(category: category, animated: true)
+        reloadArticles(forceDownload: true)
     }
 }

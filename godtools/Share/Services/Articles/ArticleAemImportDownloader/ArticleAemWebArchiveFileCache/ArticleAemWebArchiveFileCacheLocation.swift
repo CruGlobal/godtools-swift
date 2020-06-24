@@ -16,13 +16,11 @@ struct ArticleAemWebArchiveFileCacheLocation: FileCacheLocationType {
     let filename: String
     let fileExtension: String?
     
-    init(godToolsResource: GodToolsResource, filename: String) {
+    init(resourceId: String, languageCode: String, filename: String) {
         
-        resourceId = godToolsResource.resourceId
-        languageCode = godToolsResource.languageCode
-        
-        directory = resourceId + "/" + languageCode
-        
+        self.resourceId = resourceId
+        self.languageCode = languageCode
+        self.directory = resourceId + "/" + languageCode
         self.filename = filename
         self.fileExtension = "webarchive"
     }

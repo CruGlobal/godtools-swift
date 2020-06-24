@@ -15,6 +15,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private let resourcesService: ResourcesService
     private let translationDownloader: TranslationDownloader
     private let completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>
+    private let closeHandler: CallbackHandler
     private let fakeDownloadProgressInterval: TimeInterval = 1 / 60
     
     private var fakeDownloadProgressTimer: Timer?
@@ -24,13 +25,14 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, resourcesService: ResourcesService, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>) {
+    required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, resourcesService: ResourcesService, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifest, TranslationDownloaderError>>, closeHandler: CallbackHandler) {
 
         self.resource = resource
         self.preferredTranslation = preferredTranslation
         self.resourcesService = resourcesService
         self.translationDownloader = translationDownloader
         self.completeHandler = completeHandler
+        self.closeHandler = closeHandler
 
         super.init()
 
@@ -91,5 +93,9 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private func stopFakeDownloadProgressTimer() {
         fakeDownloadProgressTimer?.invalidate()
         fakeDownloadProgressTimer = nil
+    }
+    
+    func closeTapped() {
+        closeHandler.handle()
     }
 }

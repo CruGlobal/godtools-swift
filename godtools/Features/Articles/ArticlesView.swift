@@ -58,7 +58,7 @@ class ArticlesView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.articleAemImportData.addObserver(self) { [weak self] (articleAemImportData: [RealmArticleAemImportData]) in
+        viewModel.articleAemImportData.addObserver(self) { [weak self] (articleAemImportData: [ArticleAemImportData]) in
         
             self?.articlesTableView.reloadData()
             
@@ -112,7 +112,7 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let articleAemImportData: RealmArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
+        let articleAemImportData: ArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
         viewModel.articleTapped(articleAemImportData: articleAemImportData)
     }
     
@@ -122,7 +122,7 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCell.reuseIdentifier,
             for: indexPath) as! ArticleCell
         
-        let articleAemImportData: RealmArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
+        let articleAemImportData: ArticleAemImportData = viewModel.articleAemImportData.value[indexPath.row]
         
         let cellViewModel = ArticleCellViewModel(
             articleAemImportData: articleAemImportData
@@ -139,7 +139,7 @@ extension ArticlesView: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ArticlesErrorMessageViewDelegate
 
 extension ArticlesView: ArticlesErrorMessageViewDelegate {
-    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView) {
         viewModel.downloadArticlesTapped()
     }
 }

@@ -20,7 +20,6 @@ class AppDiContainer {
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
-    private let articleAemImportService: ArticleAemImportService
     
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
@@ -29,11 +28,10 @@ class AppDiContainer {
     let resourcesService: ResourcesService
     let favoritedResourcesService: FavoritedResourcesService
     let languageSettingsService: LanguageSettingsService
-    let articlesService: ArticlesService
+    let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
-    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let languagesManager: LanguagesManager
     let localizationServices: LocalizationServices = LocalizationServices()
@@ -66,10 +64,8 @@ class AppDiContainer {
         
         languageSettingsService = LanguageSettingsService(resourcesCache: realmResourcesCache, languageSettingsCache: languageSettingsCache)
         
-        articleAemImportService = ArticleAemImportService(realmDatabase: realmDatabase)
-        
-        articlesService = ArticlesService(resourcesService: resourcesService, articleAemImportService: articleAemImportService)
-        
+        articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
+                
         isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
         
         loginClient = TheKeyOAuthClient.shared
@@ -82,9 +78,7 @@ class AppDiContainer {
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
-                          
-        resourceLatestTranslationServices = ResourcesLatestTranslationServices(translationsApi: translationsApi)
-                        
+                                                  
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
                 
         languagesManager = LanguagesManager()

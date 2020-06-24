@@ -11,11 +11,11 @@ import Foundation
 class ShareArticleViewModel: ShareArticleViewModelType {
     
     private let analytics: AnalyticsContainer
-    private let articleAemImportData: RealmArticleAemImportData
+    private let articleAemImportData: ArticleAemImportData
     
     let shareMessage: String
     
-    required init(articleAemImportData: RealmArticleAemImportData, analytics: AnalyticsContainer) {
+    required init(articleAemImportData: ArticleAemImportData, analytics: AnalyticsContainer) {
         
         self.analytics = analytics
         self.articleAemImportData = articleAemImportData

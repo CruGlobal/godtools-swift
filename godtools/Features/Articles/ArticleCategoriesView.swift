@@ -152,19 +152,16 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
             withIdentifier: ArticleCategoryCell.reuseIdentifier,
             for: indexPath) as! ArticleCategoryCell
         
-        /*
         let category: ArticleCategory = viewModel.categories.value[indexPath.row]
         
         let cellViewModel = ArticleCategoryCellViewModel(
             category: category,
-            godToolsResource: viewModel.godToolsResource,
-            resourcesFileCache: viewModel.resourceLatestTranslationServices.fileCache
+            translationsFileCache: viewModel.translationsFileCache
         )
         cell.configure(viewModel: cellViewModel)
  
         cell.selectionStyle = .none
         cell.backgroundColor = .lightGray
-        */
         
         return cell
     }
@@ -173,7 +170,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ArticlesErrorMessageViewDelegate
 
 extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
-    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView) {
         viewModel.downloadArticlesTapped()
     }
 }
