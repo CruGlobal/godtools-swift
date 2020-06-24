@@ -17,6 +17,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private let closeHandler: CallbackHandler
     private let fakeDownloadProgressInterval: TimeInterval = 1 / 60
     private let fakeDownloadProgressTotalTimeSeconds: TimeInterval = 3
+    private let progressNumberFormatter: NumberFormatter = NumberFormatter()
     
     private var fakeDownloadProgressTimer: Timer?
     private var downloadTranslationOperation: OperationQueue?
@@ -24,6 +25,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
+    let progressValue: ObservableValue<String> = ObservableValue(value: "0%")
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
     required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>>, closeHandler: CallbackHandler) {
@@ -35,7 +37,12 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         self.closeHandler = closeHandler
 
         super.init()
+        
+        progressNumberFormatter.alwaysShowsDecimalSeparator = false
+        progressNumberFormatter.numberStyle = .none
 
+        setProgress(progress: 0)
+        
         downloadTranslation()
     }
     
@@ -88,7 +95,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
             stopFakeDownloadProgressTimer()
         }
         
-        downloadProgress.accept(value: progress)
+        setProgress(progress: progress)
         
         handleProgressTimerAndDownloadRequestCompleted()
     }
@@ -98,10 +105,17 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         if fakeDownloadProgressTimer == nil, let downloadTranslationResult = self.downloadTranslationResult {
             
             isLoading.accept(value: false)
-            downloadProgress.accept(value: 1)
+            setProgress(progress: 1)
             
             completeHandler.handle(downloadTranslationResult)
         }
+    }
+    
+    private func setProgress(progress: Double) {
+        downloadProgress.accept(value: progress)
+        
+        let formattedProgress: String = progressNumberFormatter.string(from: NSNumber(value: progress * 100)) ?? "0"
+        progressValue.accept(value: formattedProgress + "%")
     }
     
     private func stopFakeDownloadProgressTimer() {

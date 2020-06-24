@@ -12,6 +12,7 @@ protocol LoadingToolViewModelType {
     
     var isLoading: ObservableValue<Bool> { get }
     var downloadProgress: ObservableValue<Double> { get }
+    var progressValue: ObservableValue<String> { get }
     var alertMessage: ObservableValue<AlertMessageType?> { get }
     
     func closeTapped()

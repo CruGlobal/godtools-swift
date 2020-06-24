@@ -63,6 +63,10 @@ class LoadingToolView: UIViewController {
             }, completion: nil)
         }
         
+        viewModel.progressValue.addObserver(self) { [weak self] (progressValue: String) in
+            self?.progressLabel.text = progressValue
+        }
+        
         viewModel.alertMessage.addObserver(self) { [weak self] (alertMessage: AlertMessageType?) in
             guard let alertMessage = alertMessage else {
                 return
