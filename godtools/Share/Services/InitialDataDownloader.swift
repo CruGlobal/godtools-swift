@@ -49,6 +49,10 @@ class InitialDataDownloader: NSObject {
         return attachmentsDownloader.progress
     }
     
+    var attachmentDownloaded: SignalValue<Result<AttachmentFile, AttachmentsDownloaderError>> {
+        return attachmentsDownloader.attachmentDownloaded
+    }
+    
     var attachmentsDownloaderCompleted: Signal {
         return attachmentsDownloader.completed
     }

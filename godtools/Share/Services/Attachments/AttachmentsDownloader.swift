@@ -17,6 +17,7 @@ class AttachmentsDownloader {
     let attachmentsFileCache: AttachmentsFileCache
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let progress: ObservableValue<Double> = ObservableValue(value: 0)
+    let attachmentDownloaded: SignalValue<Result<AttachmentFile, AttachmentsDownloaderError>> = SignalValue()
     let completed: Signal = Signal()
     
     required init(attachmentsFileCache: AttachmentsFileCache) {
@@ -42,16 +43,15 @@ class AttachmentsDownloader {
             return
         }
         
+        if result.latestAttachmentFiles.isEmpty {
+            return
+        }
+        
         started.accept(value: true)
                 
         let queue: OperationQueue = OperationQueue()
         
         self.currentQueue = queue
-        
-        if result.latestAttachmentFiles.isEmpty {
-            handleDownloadAndCacheAttachmentsCompleted()
-            return
-        }
         
         var numberOfAttachmentsDownloaded: Double = 0
         var totalNumberOfAttachmentsToDownload: Double = 0
@@ -67,27 +67,17 @@ class AttachmentsDownloader {
                 
                 attachmentOperation.completionHandler { [weak self] (response: RequestResponse) in
                     
-                    let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
-                    
-                    switch result {
-                    case .success( _, _):
-                        if let fileData = response.data {
-                            
-                            self?.attachmentsFileCache.cacheAttachmentFile(attachmentFile: attachmentFile, fileData: fileData, complete: { (error: Error?) in
-                                
-                            })
+                    self?.processDownloadedAttachment(attachmentFile: attachmentFile, response: response, complete: { [weak self] (result: Result<AttachmentFile, AttachmentsDownloaderError>) in
+                        
+                        self?.attachmentDownloaded.accept(value: result)
+                        
+                        numberOfAttachmentsDownloaded += 1
+                        self?.progress.accept(value: numberOfAttachmentsDownloaded / totalNumberOfAttachmentsToDownload)
+                        
+                        if queue.operations.isEmpty {
+                            self?.handleDownloadAndCacheAttachmentsCompleted()
                         }
-                    case .failure(let error):
-                        // TODO: Do we need error reporting for these? ~Levi
-                        print("\n Failed to download attachment: \(error)")
-                    }
-                    
-                    numberOfAttachmentsDownloaded += 1
-                    self?.progress.accept(value: numberOfAttachmentsDownloaded / totalNumberOfAttachmentsToDownload)
-                    
-                    if queue.operations.isEmpty {
-                        self?.handleDownloadAndCacheAttachmentsCompleted()
-                    }
+                    })
                 }
             }
             else {
@@ -105,6 +95,35 @@ class AttachmentsDownloader {
         }
         else {
             handleDownloadAndCacheAttachmentsCompleted()
+        }
+    }
+    
+    private func processDownloadedAttachment(attachmentFile: AttachmentFile, response: RequestResponse, complete: @escaping ((_ result: Result<AttachmentFile, AttachmentsDownloaderError>) -> Void)) {
+        
+        let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
+        
+        switch result {
+        
+        case .success( _, _):
+            
+            if let fileData = response.data {
+                
+                attachmentsFileCache.cacheAttachmentFile(attachmentFile: attachmentFile, fileData: fileData, complete: { (cacheError: Error?) in
+                    
+                    if let cacheError = cacheError {
+                        complete(.failure(.failedToCacheAttachment(error: cacheError)))
+                    }
+                    else {
+                        complete(.success(attachmentFile))
+                    }
+                })
+            }
+            else {
+                complete(.failure(.noAttachmentData(missingAttachmentData: NoAttachmentData(remoteFileUrl: attachmentFile.remoteFileUrl))))
+            }
+        
+        case .failure(let downloadError):
+            complete(.failure(.failedToDownloadAttachment(error: downloadError)))
         }
     }
     

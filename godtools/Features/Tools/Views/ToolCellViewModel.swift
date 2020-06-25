@@ -44,6 +44,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     deinit {
         dataDownloader.attachmentsDownloaderStarted.removeObserver(self)
         dataDownloader.attachmentsDownloaderProgress.removeObserver(self)
+        dataDownloader.attachmentDownloaded.removeObserver(self)
         dataDownloader.attachmentsDownloaderCompleted.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
@@ -60,6 +61,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         let supportsParallelLanguage: Bool = resource.languageIds.contains(userParallelLanguageId)
         
         guard let parallelLanguage = languageSettingsService.parallelLanguage.value else {
+            parallelLanguageName.accept(value: "")
             return
         }
         
@@ -80,14 +82,26 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             }
         }
         
-        dataDownloader.attachmentsDownloaderCompleted.addObserver(self) { [weak self] in
+        dataDownloader.attachmentDownloaded.addObserver(self) { [weak self] (result: Result<AttachmentFile, AttachmentsDownloaderError>) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadBannerImage()
+                guard let attachmentId = self?.resource.attrBanner else {
+                    return
+                }
+                switch result {
+                case .success(let attachmentFile):
+                    if attachmentFile.relatedAttachmentIds.contains(attachmentId) {
+                        self?.reloadBannerImage()
+                    }
+                case .failure( _):
+                    break
+                }
             }
         }
         
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            self?.reloadParallelLanguageName()
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadParallelLanguageName()
+            }
         }
     }
 }
