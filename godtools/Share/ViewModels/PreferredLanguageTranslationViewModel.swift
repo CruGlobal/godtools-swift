@@ -11,20 +11,20 @@ import RealmSwift
 
 class PreferredLanguageTranslationViewModel {
     
-    private let resourcesCache: RealmResourcesCache
+    private let realmDatabase: RealmDatabase
     private let languageSettingsCache: LanguageSettingsCacheType
     private let deviceLanguage: DeviceLanguageType
     
-    required init(resourcesCache: RealmResourcesCache, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
+    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
         
-        self.resourcesCache = resourcesCache
+        self.realmDatabase = realmDatabase
         self.languageSettingsCache = languageSettingsCache
         self.deviceLanguage = deviceLanguage
     }
     
     func getPreferredLanguageTranslation(resourceId: String, completeOnMain: @escaping ((_ result: PreferredLanguageTranslationResult) -> Void)) {
                         
-        resourcesCache.realmDatabase.background { [unowned self] (realm: Realm) in
+        realmDatabase.background { [unowned self] (realm: Realm) in
             
             let result: PreferredLanguageTranslationResult = self.getPreferredLanguageTranslation(realm: realm, resourceId: resourceId)
 
@@ -34,71 +34,63 @@ class PreferredLanguageTranslationViewModel {
         }
     }
     
-    func getPreferredLanguageTranslation(realm: Realm, resourceId: String) -> PreferredLanguageTranslationResult {
-         
-        let userPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let userPrimaryLanguage: RealmLanguage? = realm.object(ofType: RealmLanguage.self, forPrimaryKey: userPrimaryLanguageId)
-        let resourceSupportsPrimaryLanguage: Bool
-        let languageLocale: Locale
-        var fallbackLanguageCode: String = ""
-        let resourceLatestTranslations: List<RealmTranslation>
-        var realmTranslation: RealmTranslation?
-        
-        if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
-            resourceLatestTranslations = realmResource.latestTranslations
-        }
-        else {
-            resourceLatestTranslations = List<RealmTranslation>()
-        }
-        
-        if let userPrimaryLanguage = userPrimaryLanguage {
-            languageLocale = Locale(identifier: userPrimaryLanguage.code)
-        }
-        else {
-            languageLocale = Locale.current
+    private func getPreferredLanguageTranslation(realm: Realm, resourceId: String) -> PreferredLanguageTranslationResult {
+    
+        let primaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let realmPrimaryLanguage: RealmLanguage? = realm.object(ofType: RealmLanguage.self, forPrimaryKey: primaryLanguageId)
+        let resourceLatestTranslations: List<RealmTranslation> = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)?.latestTranslations ?? List<RealmTranslation>()
+
+        // check if resource supports settings primary language and return language and translation
+        if let realmPrimaryLanguage = realmPrimaryLanguage,
+            let realmPrimaryTranslation = resourceLatestTranslations.filter("language.id = '\(realmPrimaryLanguage.id)'").first {
+            
+            return PreferredLanguageTranslationResult(
+                resourceId: resourceId,
+                primaryLanguage: LanguageModel(realmLanguage: realmPrimaryLanguage),
+                primaryLanguageTranslation: TranslationModel(realmTranslation: realmPrimaryTranslation),
+                fallbackLanguage: nil,
+                fallbackLanguageTranslation: nil
+            )
         }
         
-        if let userPrimaryLanguage = userPrimaryLanguage, let userPrimaryLanguageTranslation = resourceLatestTranslations.filter("language.id = '\(userPrimaryLanguage.id)'").first {
-            realmTranslation = userPrimaryLanguageTranslation
-            resourceSupportsPrimaryLanguage = true
-        }
-        else {
+        // fallback to device locale language and translation if supported
+        let localeLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
+        
+        for code in localeLanguageCodes {
             
-            resourceSupportsPrimaryLanguage = false
-            
-            let localeLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: languageLocale)
-            
-            for code in localeLanguageCodes {
-                if let localeTranslation = resourceLatestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), code.lowercased())).first {
-                    realmTranslation = localeTranslation
-                    fallbackLanguageCode = code
-                    break
-                }
+            if let realmDeviceLocaleTranslation = resourceLatestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), code.lowercased())).first,
+                let realmDeviceLocaleLanguage = realmDeviceLocaleTranslation.language {
+                                
+                return PreferredLanguageTranslationResult(
+                    resourceId: resourceId,
+                    primaryLanguage: nil,
+                    primaryLanguageTranslation: nil,
+                    fallbackLanguage: LanguageModel(realmLanguage: realmDeviceLocaleLanguage),
+                    fallbackLanguageTranslation: TranslationModel(realmTranslation: realmDeviceLocaleTranslation)
+                )
             }
         }
         
-        if realmTranslation == nil, let englishTranslation = resourceLatestTranslations.filter("language.code = 'en'").first {
-            realmTranslation = englishTranslation
-            fallbackLanguageCode = "en"
+        // return English language and translation
+        if let realmEnglishTranslation = resourceLatestTranslations.filter("language.code = 'en'").first,
+            let realmEnglishLanguage = realmEnglishTranslation.language {
+            
+            return PreferredLanguageTranslationResult(
+                resourceId: resourceId,
+                primaryLanguage: nil,
+                primaryLanguageTranslation: nil,
+                fallbackLanguage: LanguageModel(realmLanguage: realmEnglishLanguage),
+                fallbackLanguageTranslation: TranslationModel(realmTranslation: realmEnglishTranslation)
+            )
         }
         
-        let translation: TranslationModel?
-        if let realmTranslation = realmTranslation {
-            translation = TranslationModel(realmTranslation: realmTranslation)
-        }
-        else {
-            translation = nil
-        }
-        
-        let result = PreferredLanguageTranslationResult(
+        // this is very unlikely and would only occur if data did not exist in realm
+        return PreferredLanguageTranslationResult(
             resourceId: resourceId,
-            primaryLanguageId: userPrimaryLanguageId,
-            primaryLanguageTranslation: resourceSupportsPrimaryLanguage ? translation : nil,
-            fallbackLanguageCode: fallbackLanguageCode,
-            fallbackLanguageTranslation: !resourceSupportsPrimaryLanguage ? translation : nil,
-            resourceSupportsPrimaryLanguage: resourceSupportsPrimaryLanguage
+            primaryLanguage: nil,
+            primaryLanguageTranslation: nil,
+            fallbackLanguage: nil,
+            fallbackLanguageTranslation: nil
         )
-        
-        return result
     }
 }

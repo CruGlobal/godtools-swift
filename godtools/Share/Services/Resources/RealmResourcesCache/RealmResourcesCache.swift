@@ -16,7 +16,7 @@ class RealmResourcesCache {
     typealias LanguageId = String
     typealias TranslationId = String
     
-    let realmDatabase: RealmDatabase
+    private let realmDatabase: RealmDatabase
     
     required init(realmDatabase: RealmDatabase) {
         
@@ -196,6 +196,26 @@ class RealmResourcesCache {
     
     func getLanguage(realm: Realm, id: String) -> RealmLanguage? {
         return realm.object(ofType: RealmLanguage.self, forPrimaryKey: id)
+    }
+    
+    func getResourceLanguages(resourceId: String, completeOnMain: @escaping ((_ languages: [LanguageModel]) -> Void)) {
+        
+        realmDatabase.background { (realm: Realm) in
+           
+            let languages: [LanguageModel]
+            
+            if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {
+                let realmLanguages: [RealmLanguage] = Array(realmResource.languages)
+                languages = realmLanguages.map({LanguageModel(realmLanguage: $0)})
+            }
+            else {
+                languages = Array()
+            }
+            
+            DispatchQueue.main.async {
+                completeOnMain(languages)
+            }
+        }
     }
     
     func getResourceLanguageTranslation(resourceId: String, languageId: String, completeOnMain: @escaping ((_ translation: TranslationModel?) -> Void)) {

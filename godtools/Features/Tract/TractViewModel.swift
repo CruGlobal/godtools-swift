@@ -15,6 +15,7 @@ class TractViewModel: TractViewModelType {
     private let primaryTranslationManifest: TranslationManifestData
     private let parallelLanguage: LanguageModel?
     private let languageSettingsService: LanguageSettingsService // TODO: Do we really need this service? ~Levi
+    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let viewsService: ViewsServiceType
     private let analytics: AnalyticsContainer
@@ -37,7 +38,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -45,6 +46,7 @@ class TractViewModel: TractViewModelType {
         self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.languageSettingsService = languageSettingsService
+        self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.tractManager = tractManager
         self.viewsService = viewsService
         self.analytics = analytics
@@ -72,11 +74,12 @@ class TractViewModel: TractViewModelType {
         //hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
         hidesChooseLanguageControl = true
         
-        chooseLanguageControlPrimaryLanguageTitle = LanguageNameTranslationViewModel(language: primaryLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        
+        chooseLanguageControlPrimaryLanguageTitle = translateLanguageNameViewModel.getTranslatedName(language: primaryLanguage, shouldFallbackToPrimaryLanguageLocale: false)
         
         let parallelLocalizedName: String
         if let parallelLanguage = parallelLanguage {
-            parallelLocalizedName = LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+            parallelLocalizedName = translateLanguageNameViewModel.getTranslatedName(language: parallelLanguage, shouldFallbackToPrimaryLanguageLocale: false)
         }
         else {
             parallelLocalizedName = ""

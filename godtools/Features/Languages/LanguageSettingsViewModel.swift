@@ -11,6 +11,7 @@ import Foundation
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
     private let languageSettingsService: LanguageSettingsService
+    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -19,10 +20,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.languageSettingsService = languageSettingsService
+        self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.analytics = analytics
         
         super.init()
@@ -51,7 +53,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let primaryLanguage = primaryLanguage {
-            title = LanguageNameTranslationViewModel(language: primaryLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+            title = translateLanguageNameViewModel.getTranslatedName(language: primaryLanguage, shouldFallbackToPrimaryLanguageLocale: false)
         }
         else {
             title = NSLocalizedString("select_primary_language", comment: "")
@@ -65,7 +67,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let parallelLanguage = parallelLanguage {
-            title = LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+            title = translateLanguageNameViewModel.getTranslatedName(language: parallelLanguage, shouldFallbackToPrimaryLanguageLocale: false)
         }
         else {
             title = NSLocalizedString("select_parallel_language", comment: "")

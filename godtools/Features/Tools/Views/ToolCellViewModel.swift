@@ -10,9 +10,13 @@ import UIKit
 
 class ToolCellViewModel: NSObject, ToolCellViewModelType {
     
+    private static let languageAvailableColor: UIColor = UIColor.hexColor(hexValue: 0x808284)
+    private static let languageNotAvailableColor: UIColor = UIColor.hexColor(hexValue: 0xF40036)
+    
     private let resource: ResourceModel
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -20,14 +24,18 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let title: String
     let resourceDescription: String
+    let primaryLanguageName: ObservableValue<String> = ObservableValue(value: "")
+    let primaryLanguageColor: ObservableValue<UIColor> = ObservableValue(value: ToolCellViewModel.languageAvailableColor)
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
+    let parallelLanguageColor: ObservableValue<UIColor> = ObservableValue(value: ToolCellViewModel.languageAvailableColor)
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService) {
+    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, favoritedResourcesService: FavoritedResourcesService) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
         
@@ -55,23 +63,49 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         }
     }
     
+    private func reloadPrimaryLanguageName() {
+        
+        let primaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
+        
+        primaryLanguageName.accept(value: getLanguageName(language: primaryLanguage))
+        primaryLanguageColor.accept(value: getLanguageColor(language: primaryLanguage))
+    }
+    
     private func reloadParallelLanguageName() {
 
-        let userParallelLanguageId: String = languageSettingsService.parallelLanguage.value?.id ?? ""
-        let supportsParallelLanguage: Bool = resource.languageIds.contains(userParallelLanguageId)
+        let parallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
+                
+        parallelLanguageName.accept(value: getLanguageName(language: parallelLanguage))
+        parallelLanguageColor.accept(value: getLanguageColor(language: parallelLanguage))
+    }
+    
+    private func getLanguageName(language: LanguageModelType?) -> String {
         
-        guard let parallelLanguage = languageSettingsService.parallelLanguage.value else {
-            parallelLanguageName.accept(value: "")
-            return
+        if let language = language {
+                        
+            let nameAvailablePrefix: String = resourceSupportsLanguage(languageId: language.id) ? "✓ " : "x "
+            let translatedName: String = translateLanguageNameViewModel.getTranslatedName(language: language, shouldFallbackToPrimaryLanguageLocale: false)
+            
+            return nameAvailablePrefix + translatedName
         }
+        return ""
+    }
+    
+    private func getLanguageColor(language: LanguageModelType?) -> UIColor {
         
-        if supportsParallelLanguage {
-            let name: String = "✓ " + LanguageNameTranslationViewModel(language: parallelLanguage, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
-            parallelLanguageName.accept(value: name)
+        if let language = language {
+            return resourceSupportsLanguage(languageId: language.id) ? ToolCellViewModel.languageAvailableColor : ToolCellViewModel.languageNotAvailableColor
         }
         else {
-            parallelLanguageName.accept(value: "")
+            return ToolCellViewModel.languageNotAvailableColor
         }
+    }
+    
+    private func resourceSupportsLanguage(languageId: String) -> Bool {
+        if !languageId.isEmpty {
+            return resource.languageIds.contains(languageId)
+        }
+        return false
     }
     
     private func setupBinding() {
@@ -98,6 +132,11 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             }
         }
         
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadPrimaryLanguageName()
+            }
+        }
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadParallelLanguageName()

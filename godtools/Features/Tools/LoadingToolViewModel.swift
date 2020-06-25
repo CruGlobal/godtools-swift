@@ -22,6 +22,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private var fakeDownloadProgressTimer: Timer?
     private var downloadTranslationOperation: OperationQueue?
     private var downloadTranslationResult: Result<TranslationManifestData, TranslationDownloaderError>?
+    private var downloadCancelled: Bool = false
         
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
@@ -102,7 +103,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     
     private func handleProgressTimerAndDownloadRequestCompleted() {
                 
-        if fakeDownloadProgressTimer == nil, let downloadTranslationResult = self.downloadTranslationResult {
+        if fakeDownloadProgressTimer == nil, let downloadTranslationResult = self.downloadTranslationResult, !downloadCancelled {
             
             isLoading.accept(value: false)
             setProgress(progress: 1)
@@ -124,6 +125,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     }
     
     func closeTapped() {
+        downloadCancelled = true
         stopFakeDownloadProgressTimer()
         cancelDownloadTranslation()
         closeHandler.handle()

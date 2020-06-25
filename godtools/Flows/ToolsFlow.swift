@@ -39,6 +39,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
@@ -47,6 +48,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
@@ -134,10 +136,10 @@ class ToolsFlow: Flow {
     private func loadToolTranslationManifest(resource: ResourceModel, completeOnMain: @escaping ((_ translationManifest: TranslationManifestData) -> Void)) {
         
         let appDiContainer: AppDiContainer = self.appDiContainer
-        let preferredLanguageTranslation: PreferredLanguageTranslationViewModel = appDiContainer.preferredLanguageTranslation
+        let preferredLanguageTranslationViewModel: PreferredLanguageTranslationViewModel = appDiContainer.preferredLanguageTranslationViewModel
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
 
-        preferredLanguageTranslation.getPreferredLanguageTranslation(resourceId: resource.id) { (preferredLanguageTranslationResult: PreferredLanguageTranslationResult) in
+        preferredLanguageTranslationViewModel.getPreferredLanguageTranslation(resourceId: resource.id) { (preferredLanguageTranslationResult: PreferredLanguageTranslationResult) in
                             
             let translation: TranslationModel? = preferredLanguageTranslationResult.preferredLanguageTranslation
             
@@ -235,6 +237,7 @@ class ToolsFlow: Flow {
                     primaryTranslationManifest: translationManifest,
                     parallelLanguage: languageSettingsService.parallelLanguage.value,
                     languageSettingsService: languageSettingsService,
+                    translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
                     tractManager: appDiContainer.tractManager,
                     viewsService: appDiContainer.viewsService,
                     analytics: appDiContainer.analytics,
@@ -269,7 +272,8 @@ class ToolsFlow: Flow {
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             languageSettingsService: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices,
-            preferredLanguageTranslation: appDiContainer.preferredLanguageTranslation,
+            preferredLanguageTranslationViewModel: appDiContainer.preferredLanguageTranslationViewModel,
+            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )

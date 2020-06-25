@@ -74,21 +74,20 @@ class InitialDataDownloader: NSObject {
             
             self?.choosePrimaryLanguageIfNeeded { [weak self] in
                 
-                self?.handleDownloadDataCompleted(result: resourceDownloadResult)
+                guard let dataDownloader = self else {
+                    return
+                }
+                
+                dataDownloader.resourcesDownloader.completed.removeObserver(dataDownloader)
+                dataDownloader.started.accept(value: false)
+                dataDownloader.completed.accept(value: result)
+                dataDownloader.downloadResourcesOperation = nil
             }
         }
         
         started.accept(value: true)
                 
         downloadResourcesOperation = resourcesDownloader.downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments()
-    }
-
-    private func handleDownloadDataCompleted(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
-        
-        resourcesDownloader.completed.removeObserver(self)
-        started.accept(value: false)
-        completed.accept(value: result)
-        downloadResourcesOperation = nil
     }
     
     private func downloadLatestAttachmentsIfNeeded(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
@@ -102,13 +101,16 @@ class InitialDataDownloader: NSObject {
     
     private func choosePrimaryLanguageIfNeeded(complete: @escaping (() -> Void)) {
         
-        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
-        let deviceLanguage: DeviceLanguageType = self.deviceLanguage
+        let cachedPrimaryLanguageId: String = languageSettingsService.languageSettingsCache.primaryLanguageId.value ?? ""
+        let primaryLanguageIsCached: Bool = !cachedPrimaryLanguageId.isEmpty
         
-        guard languageSettingsService.primaryLanguage.value == nil else {
+        if primaryLanguageIsCached {
             complete()
             return
         }
+        
+        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
+        let deviceLanguage: DeviceLanguageType = self.deviceLanguage
         
         realmDatabase.background { (realm: Realm) in
             

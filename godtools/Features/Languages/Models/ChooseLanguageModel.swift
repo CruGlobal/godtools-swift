@@ -13,8 +13,8 @@ struct ChooseLanguageModel {
     let languageId: String
     let languageName: String
     
-    init(language: LanguageModel, languageSettingsService: LanguageSettingsService) {
+    init(language: LanguageModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel) {
         languageId = language.id
-        languageName = LanguageNameTranslationViewModel(language: language, languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false).name
+        languageName = translateLanguageNameViewModel.getTranslatedName(language: language, shouldFallbackToPrimaryLanguageLocale: false)
     }
 }

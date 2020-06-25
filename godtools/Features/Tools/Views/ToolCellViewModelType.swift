@@ -16,6 +16,9 @@ protocol ToolCellViewModelType {
     var translationDownloadProgress: ObservableValue<Double> { get }
     var title: String { get }
     var resourceDescription: String { get }
+    var primaryLanguageName: ObservableValue<String> { get }
+    var primaryLanguageColor: ObservableValue<UIColor> { get }
     var parallelLanguageName: ObservableValue<String> { get }
+    var parallelLanguageColor: ObservableValue<UIColor> { get }
     var isFavorited: ObservableValue<Bool> { get }
 }

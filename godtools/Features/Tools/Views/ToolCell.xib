@@ -61,20 +61,26 @@
                                     <constraint firstAttribute="height" constant="2" id="sUC-ca-sZC"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
-                                <rect key="frame" x="12" y="95" width="219" height="21.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
+                                <rect key="frame" x="12" y="95" width="306" height="21.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
-                                <rect key="frame" x="12" y="119.5" width="342" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
+                                <rect key="frame" x="12" y="119.5" width="302" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="French" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVf-Mj-BIx" userLabel="parallelLanguageLabel">
-                                <rect key="frame" x="322" y="98.5" width="39" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw3-vm-5R1" userLabel="primaryLanguageLabel">
+                                <rect key="frame" x="333" y="98.5" width="41" height="15"/>
+                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
+                                <color key="textColor" red="0.50196078430000002" green="0.50980392159999999" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVf-Mj-BIx" userLabel="parallelLanguageLabel">
+                                <rect key="frame" x="329" y="117.5" width="45" height="15"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.50196078431372548" green="0.50980392156862742" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -110,10 +116,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Ihh-rW-qDU" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="0je-7W-eYy"/>
-                            <constraint firstAttribute="trailing" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="30" id="68U-LX-f5Q"/>
                             <constraint firstItem="HFT-6s-l9f" firstAttribute="leading" secondItem="bVm-eV-R3X" secondAttribute="trailing" constant="5" id="6Au-qm-6h4"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="trailing" secondItem="Bw3-vm-5R1" secondAttribute="trailing" id="AhE-YL-J7a"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="BAm-Xe-SFd"/>
                             <constraint firstAttribute="trailing" secondItem="zB8-IL-euH" secondAttribute="trailing" id="H7J-uw-N3e"/>
+                            <constraint firstItem="Bw3-vm-5R1" firstAttribute="leading" secondItem="39M-E6-07b" secondAttribute="trailing" constant="15" id="IAe-BM-DGJ"/>
                             <constraint firstItem="89C-rq-BCp" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="L19-ea-Fxb"/>
                             <constraint firstItem="39M-E6-07b" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" constant="15" id="QK7-z1-gHe"/>
                             <constraint firstItem="nJ0-BP-j0n" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="Qm8-s8-Uf8"/>
@@ -122,13 +129,15 @@
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="centerY" secondItem="HFT-6s-l9f" secondAttribute="centerY" id="VMc-KC-4Of"/>
                             <constraint firstItem="402-Hl-aIK" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" constant="10" id="WDK-2g-b7v"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="height" secondItem="HFT-6s-l9f" secondAttribute="height" id="XG2-To-12I"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="top" secondItem="Bw3-vm-5R1" secondAttribute="bottom" constant="4" id="XSG-xu-bbY"/>
                             <constraint firstItem="Ihh-rW-qDU" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="bML-Yh-rtT"/>
-                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="centerY" secondItem="39M-E6-07b" secondAttribute="centerY" id="c50-Dd-Vfc"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="leading" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="15" id="clW-co-IXg"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="top" secondItem="I2y-Ji-clW" secondAttribute="bottom" constant="31" id="csb-C7-y2B"/>
+                            <constraint firstItem="Bw3-vm-5R1" firstAttribute="centerY" secondItem="39M-E6-07b" secondAttribute="centerY" id="eVm-Jd-Rpp"/>
                             <constraint firstAttribute="trailing" secondItem="402-Hl-aIK" secondAttribute="trailing" constant="10" id="fL9-PE-vkB"/>
                             <constraint firstItem="nJ0-BP-j0n" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="gur-V2-s2z"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="kYF-0r-6nd"/>
-                            <constraint firstAttribute="trailing" secondItem="YVf-Mj-BIx" secondAttribute="trailing" constant="23" id="kmj-hG-6rx"/>
+                            <constraint firstAttribute="trailing" secondItem="Bw3-vm-5R1" secondAttribute="trailing" constant="10" id="lZ2-Da-GoQ"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="width" secondItem="HFT-6s-l9f" secondAttribute="width" id="m68-PT-6Io"/>
                             <constraint firstItem="89C-rq-BCp" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="q35-Tq-37M"/>
                             <constraint firstItem="I2y-Ji-clW" firstAttribute="top" secondItem="39M-E6-07b" secondAttribute="bottom" constant="3" id="u5V-p7-Tk1"/>
@@ -159,6 +168,7 @@
                 <outlet property="favoriteButton" destination="402-Hl-aIK" id="5jU-GQ-uCA"/>
                 <outlet property="openToolButton" destination="HFT-6s-l9f" id="hrM-gJ-oKg"/>
                 <outlet property="parallelLanguageLabel" destination="YVf-Mj-BIx" id="k1f-MU-bId"/>
+                <outlet property="primaryLanguageLabel" destination="Bw3-vm-5R1" id="AKN-ue-Nbi"/>
                 <outlet property="titleLabel" destination="39M-E6-07b" id="jWt-4t-QIx"/>
                 <outlet property="toolContentView" destination="ON1-CZ-kyr" id="sgO-2e-gBa"/>
                 <outlet property="toolShadowView" destination="5Nv-9X-2XM" id="UXE-lp-1Wg"/>
