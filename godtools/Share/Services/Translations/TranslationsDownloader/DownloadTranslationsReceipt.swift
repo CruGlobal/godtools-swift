@@ -13,7 +13,8 @@ class DownloadTranslationsReceipt {
     let translationIds: [String]
     let queue: OperationQueue
     let progress: ObservableValue<Double> = ObservableValue(value: 0)
-    let translationDownloaded: SignalValue<Result<TranslationManifestData, TranslationDownloaderError>> = SignalValue()
+    let translationDownloaded: SignalValue<DownloadedTranslationResult> = SignalValue()
+    let completed: Signal = Signal()
     
     required init(translationIds: [String], queue: OperationQueue) {
         

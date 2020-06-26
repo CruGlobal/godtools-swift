@@ -157,8 +157,7 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromRemote() -> Promise<Languages> {
-        showNetworkingIndicator()
-        
+                
         return issueGETRequest()
             .then { data -> Promise<Languages> in
                 DispatchQueue.global(qos: .userInitiated).async {
@@ -192,7 +191,7 @@ class LanguagesManager: GTDataManager {
                 return .value(self.loadFromDisk())
             }
             .ensure {
-                self.hideNetworkIndicator()
+
         }
     }
     

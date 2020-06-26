@@ -21,7 +21,6 @@ class DownloadedResourceManager: GTDataManager {
     }
     
     func loadFromRemote() -> Promise<DownloadedResources> {
-        showNetworkingIndicator()
         
         let params:[String: Any] = ["include": "latest-translations,attachments"]
 
@@ -40,8 +39,8 @@ class DownloadedResourceManager: GTDataManager {
                 return .value(self.loadFromDisk())
             }
             .ensure {
-                self.hideNetworkIndicator()
-            }
+
+        }
     }
 
     

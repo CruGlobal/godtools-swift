@@ -83,7 +83,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         
         if let language = language {
                         
-            let nameAvailablePrefix: String = resourceSupportsLanguage(languageId: language.id) ? "✓ " : "x "
+            let nameAvailablePrefix: String = resource.supportsLanguage(languageId: language.id) ? "✓ " : "x "
             let translatedName: String = translateLanguageNameViewModel.getTranslatedName(language: language, shouldFallbackToPrimaryLanguageLocale: false)
             
             return nameAvailablePrefix + translatedName
@@ -94,18 +94,11 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private func getLanguageColor(language: LanguageModelType?) -> UIColor {
         
         if let language = language {
-            return resourceSupportsLanguage(languageId: language.id) ? ToolCellViewModel.languageAvailableColor : ToolCellViewModel.languageNotAvailableColor
+            return resource.supportsLanguage(languageId: language.id) ? ToolCellViewModel.languageAvailableColor : ToolCellViewModel.languageNotAvailableColor
         }
         else {
             return ToolCellViewModel.languageNotAvailableColor
         }
-    }
-    
-    private func resourceSupportsLanguage(languageId: String) -> Bool {
-        if !languageId.isEmpty {
-            return resource.languageIds.contains(languageId)
-        }
-        return false
     }
     
     private func setupBinding() {

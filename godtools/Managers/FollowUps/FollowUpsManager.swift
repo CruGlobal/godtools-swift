@@ -18,7 +18,6 @@ enum FollowUpError: Error {
 class FollowUpsManager: GTDataManager {
     
     func createSubscriber(params: [String: String]) -> Promise<Void>? {
-        showNetworkingIndicator()
         
         if !validate(params: params) {
             return validationError()
@@ -89,7 +88,7 @@ class FollowUpsManager: GTDataManager {
             Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error creating subscriber."])
         }
         .finally {
-            self.hideNetworkIndicator()
+
         }
         return p
         

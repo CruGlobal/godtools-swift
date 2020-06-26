@@ -12,6 +12,7 @@ enum TranslationDownloaderError: Error {
     
     case failedToCacheTranslation(error: TranslationsFileCacheError)
     case failedToDownloadTranslation(error: ResponseError<NoClientApiErrorType>)
+    case internalErrorTriedDownloadingAnEmptyTranslationId
     case noTranslationZipData(missingTranslationZipData: NoTranslationZipData)
     
     var cancelled: Bool {

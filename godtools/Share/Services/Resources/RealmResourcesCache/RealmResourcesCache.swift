@@ -220,21 +220,43 @@ class RealmResourcesCache {
     
     func getResourceLanguageTranslation(resourceId: String, languageId: String, completeOnMain: @escaping ((_ translation: TranslationModel?) -> Void)) {
         
-        realmDatabase.background { (realm: Realm) in
+        realmDatabase.background { [weak self] (realm: Realm) in
             
-            let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
-            let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
-            let translation: TranslationModel?
-            if let realmTranslation = realmTranslation {
-                translation = TranslationModel(realmTranslation: realmTranslation)
-            }
-            else {
-                translation = nil
-            }
+            let translation: TranslationModel? = self?.getResourceLanguageTranslation(
+                realm: realm,
+                resourceId: resourceId,
+                languageId: languageId
+            )
             
             DispatchQueue.main.async {
                 completeOnMain(translation)
             }
         }
+    }
+    
+    func getResourceLanguageTranslation(realm: Realm, resourceId: String, languageId: String) -> TranslationModel? {
+        let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
+        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
+        let translation: TranslationModel?
+        if let realmTranslation = realmTranslation {
+            translation = TranslationModel(realmTranslation: realmTranslation)
+        }
+        else {
+            translation = nil
+        }
+        return translation
+    }
+    
+    func getResourceLanguageTranslation(realm: Realm, resourceId: String, languageCode: String) -> TranslationModel? {
+        let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
+        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.code = '\(languageCode)'").first
+        let translation: TranslationModel?
+        if let realmTranslation = realmTranslation {
+            translation = TranslationModel(realmTranslation: realmTranslation)
+        }
+        else {
+            translation = nil
+        }
+        return translation
     }
 }

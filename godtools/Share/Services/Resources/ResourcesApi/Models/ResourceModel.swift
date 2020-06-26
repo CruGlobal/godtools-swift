@@ -136,3 +136,12 @@ extension ResourceModel: Equatable {
         return lhs.id == rhs.id
     }
 }
+
+extension ResourceModel {
+    func supportsLanguage(languageId: String) -> Bool {
+        if !languageId.isEmpty {
+            return languageIds.contains(languageId)
+        }
+        return false
+    }
+}

@@ -14,6 +14,7 @@ class TractViewModel: TractViewModelType {
     private let primaryLanguage: LanguageModel
     private let primaryTranslationManifest: TranslationManifestData
     private let parallelLanguage: LanguageModel?
+    private let parallelTranslationManifest: TranslationManifestData?
     private let languageSettingsService: LanguageSettingsService // TODO: Do we really need this service? ~Levi
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
@@ -38,13 +39,14 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
+        self.parallelTranslationManifest = parallelTranslationManifest
         self.languageSettingsService = languageSettingsService
         self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.tractManager = tractManager
@@ -54,11 +56,8 @@ class TractViewModel: TractViewModelType {
         
         primaryTractXmlResource = tractManager.loadResource(translationManifest: primaryTranslationManifest)
         
-        if let parallelLanguage = self.parallelLanguage {
-            // TODO: Implement. ~Levi
-            //parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
-            //parallelTractXmlResource = TractXmlResource(pages: [], manifestProperties: ManifestProperties())
-            parallelTractXmlResource = nil
+        if let parallelTranslationManifest = parallelTranslationManifest {
+            parallelTractXmlResource = tractManager.loadResource(translationManifest: parallelTranslationManifest)
         }
         else {
             parallelTractXmlResource = nil
@@ -70,10 +69,7 @@ class TractViewModel: TractViewModelType {
             navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
         )
         
-        // TODO: Implement. ~Levi
-        //hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
-        hidesChooseLanguageControl = true
-        
+        hidesChooseLanguageControl = parallelLanguage == nil || primaryLanguage.id == parallelLanguage?.id
         
         chooseLanguageControlPrimaryLanguageTitle = translateLanguageNameViewModel.getTranslatedName(language: primaryLanguage, shouldFallbackToPrimaryLanguageLocale: false)
         

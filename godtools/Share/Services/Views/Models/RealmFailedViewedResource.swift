@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmFailedViewedResource: Object {
+class RealmFailedViewedResource: Object, FailedViewedResourceModelType {
     
     @objc dynamic var resourceId: String = ""
     @objc dynamic var failedViewsCount: Int = 0

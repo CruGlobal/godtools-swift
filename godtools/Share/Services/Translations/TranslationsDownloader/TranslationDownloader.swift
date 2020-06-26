@@ -22,7 +22,7 @@ class TranslationDownloader {
         self.translationsFileCache = translationsFileCache
     }
     
-    func downloadTranslation(translationId: String, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) -> OperationQueue {
+    func downloadTranslation(translationId: String, complete: @escaping ((_ result: DownloadedTranslationResult) -> Void)) -> OperationQueue {
         
         let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
                 
@@ -42,7 +42,7 @@ class TranslationDownloader {
         return queue
     }
     
-    func downloadTranslations(translationIds: [String]) -> DownloadTranslationsReceipt {
+    func downloadTranslations(translationIds: [String]) -> DownloadTranslationsReceipt? {
         
         let queue = OperationQueue()
         
@@ -60,13 +60,14 @@ class TranslationDownloader {
             
             operation.completionHandler { [weak self] (response: RequestResponse) in
                 
-                self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (result: Result<TranslationManifestData, TranslationDownloaderError>) in
+                self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (result: DownloadedTranslationResult) in
                     
-                    receipt.progress.accept(value: numberOfOperationsCompleted / totalOperationCount)
                     receipt.translationDownloaded.accept(value: result)
+                    receipt.progress.accept(value: numberOfOperationsCompleted / totalOperationCount)
                     
                     if queue.operations.isEmpty {
                         receipt.progress.accept(value: 1)
+                        receipt.completed.accept()
                     }
                 })
             }
@@ -77,15 +78,19 @@ class TranslationDownloader {
             totalOperationCount = Double(operations.count)
             receipt.progress.accept(value: 0)
             queue.addOperations(operations, waitUntilFinished: false)
+            return receipt
         }
         else {
-            receipt.progress.accept(value: 1)
+            return nil
         }
-        
-        return receipt
     }
     
-    private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationDownloaderError>) -> Void)) {
+    private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ result: DownloadedTranslationResult) -> Void)) {
+               
+        guard !translationId.isEmpty else {
+            complete(DownloadedTranslationResult(translationId: translationId, result: .failure(.internalErrorTriedDownloadingAnEmptyTranslationId)))
+            return
+        }
         
         let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
         
@@ -99,18 +104,18 @@ class TranslationDownloader {
                     
                     switch result {
                     case .success(let translationManifest):
-                        complete(.success(translationManifest))
+                        complete(DownloadedTranslationResult(translationId: translationId, result: .success(translationManifest)))
                     case .failure(let fileCacheError):
-                        complete(.failure(.failedToCacheTranslation(error: fileCacheError)))
+                        complete(DownloadedTranslationResult(translationId: translationId, result: .failure(.failedToCacheTranslation(error: fileCacheError))))
                     }
                 })
             }
             else {
-                complete(.failure(.noTranslationZipData(missingTranslationZipData: NoTranslationZipData(translationId: translationId))))
+                complete(DownloadedTranslationResult(translationId: translationId, result: .failure(.noTranslationZipData(missingTranslationZipData: NoTranslationZipData(translationId: translationId)))))
             }
        
         case .failure(let error):
-            complete(.failure(.failedToDownloadTranslation(error: error)))
+            complete(DownloadedTranslationResult(translationId: translationId, result: .failure(.failedToDownloadTranslation(error: error))))
         }
     }
 }

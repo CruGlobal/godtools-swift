@@ -16,7 +16,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let favoritedResourcesService: FavoritedResourcesService
     private let languageSettingsService: LanguageSettingsService
     private let localization: LocalizationServices
-    private let preferredLanguageTranslationViewModel: PreferredLanguageTranslationViewModel
+    private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
@@ -40,7 +40,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, preferredLanguageTranslationViewModel: PreferredLanguageTranslationViewModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -48,7 +48,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.favoritedResourcesService = favoritedResourcesService
         self.languageSettingsService = languageSettingsService
         self.localization = localization
-        self.preferredLanguageTranslationViewModel = preferredLanguageTranslationViewModel
+        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
@@ -110,19 +110,20 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
         let translateLanguageNameViewModel: TranslateLanguageNameViewModel = self.translateLanguageNameViewModel
         let localization: LocalizationServices = self.localization
+        let primaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         
-        preferredLanguageTranslationViewModel.getPreferredLanguageTranslation(resourceId: resource.id, completeOnMain: { [weak self] (preferredTranslationResult: PreferredLanguageTranslationResult) in
+        fetchLanguageTranslationViewModel.getLanguageTranslation(resourceId: resource.id, languageId: primaryLanguageId, supportedFallbackTypes: FetchLanguageTranslationFallbackType.all, completeOnMain: { [weak self] (primaryTranslationResult: FetchLanguageTranslationResult) in
             
             let languageBundle: Bundle
             
-            if let preferredLanguage = preferredTranslationResult.preferredLanguage {
+            if let preferredLanguage = primaryTranslationResult.language {
                 languageBundle = localization.bundleForLanguageElseMainBundle(languageCode: preferredLanguage.code)
             }
             else {
                 languageBundle = Bundle.main
             }
             
-            if let preferredTranslation = preferredTranslationResult.preferredLanguageTranslation {
+            if let preferredTranslation = primaryTranslationResult.translation {
                 self?.name.accept(value: preferredTranslation.translatedName)
                 self?.aboutDetails.accept(value: preferredTranslation.translatedDescription)
             }

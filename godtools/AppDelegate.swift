@@ -22,8 +22,7 @@ enum ShortcutItemType: String {
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
         
-    private let appDiContainer: AppDiContainer = AppDiContainer()
-    
+    private var appDiContainer: AppDiContainer = AppDiContainer()
     private var appFlow: AppFlow?
     
     var window: UIWindow?
@@ -35,7 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate let kAppAuthExampleAuthStateKey = "authState"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                
+           
+        appFlow = AppFlow(appDiContainer: appDiContainer)
+        
         appDiContainer.config.logConfiguration()
         
         appDiContainer.firebaseConfiguration.configure()
@@ -48,9 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-                
-        resetStateIfUITesting()
-        
+                        
         loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
                               clientID: kClientID,
                               redirectURI: URL(string: kRedirectURI)!)
@@ -67,21 +66,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        #if DEBUG
-            print(NSHomeDirectory())
-        #endif
-        
         _ = FollowUpsManager().syncCachedFollowUps()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
-        appFlow = AppFlow(appDiContainer: appDiContainer)
         window.rootViewController = appFlow?.rootController
         window.makeKeyAndVisible()
         self.window = window
         
-        initalizeAppState()
-
         return true
     }
     
@@ -107,90 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
     
-    }
-    
-    // MARK: App state initialization/refresh
-    private func initalizeAppState() {
-        let isFirstLaunch = !UserDefaults.standard.bool(forKey: GTConstants.kFirstLaunchKey)
-        let deviceLocaleHasBeenDownloaded = UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey)
-        
-        let languagesManager = LanguagesManager()
-        
-        if isFirstLaunch {
-            FirstLaunchInitializer().initializeAppState()
-        }
-        
-        let p = firstly {
-            LanguagesManager().loadFromRemote()
-        }.then {  (_) -> Promise<DownloadedResources> in
-            if isFirstLaunch {
-                languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
-            }
-            return DownloadedResourceManager().loadFromRemote()
-        }.then { (resources) -> Promise<DownloadedResources> in
-            if !isFirstLaunch, !deviceLocaleHasBeenDownloaded {
-                self.showDeviceLocaleDownloadedAndSwitchPrompt()
-            } else {
-                TranslationZipImporter().catchupMissedDownloads()
-            }
-            return .value(resources)
-        }
-
-        p.catch { (error) in
-            if isFirstLaunch {
-                self.showDeviceLocaleDownloadFailedAlert()
-            }
-        }
-    }
-    
-    private func resetStateIfUITesting() {
-        if ProcessInfo.processInfo.arguments.contains("UI-Testing") {
-            UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        }
-    }
-    
-    private func showDeviceLocaleDownloadedAndSwitchPrompt() {
-        let languagesManager = LanguagesManager()
-        
-        guard languagesManager.loadNonEnglishPreferredLanguageFromDisk() != nil else {
-            return
-        }
-        
-        let alert = UIAlertController(title: "",
-                                      message: "device_locale_download_success".localized,
-                                      preferredStyle: .alert)
-        
-        let yesAction = UIAlertAction(title: "yes".localized, style: .default) { (action) in
-            languagesManager.setPrimaryLanguageForInitialDeviceLanguageDownload()
-            TranslationZipImporter().catchupMissedDownloads()
-        }
-        
-        let noAction = UIAlertAction(title: "no".localized, style: .cancel)
-        
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
-        
-        appFlow?.navigationController.present(alert, animated: true, completion: nil)
-    }
-    
-    private func showDeviceLocaleDownloadFailedAlert() {
-        let languagesManager = LanguagesManager()
-
-        guard languagesManager.loadNonEnglishPreferredLanguageFromDisk() != nil else {
-            return
-        }
-        
-        
-        let alert = UIAlertController(title: "download_error".localized,
-                                      message: "device_locale_download_error".localized,
-                                      preferredStyle: .alert)
-        
-        let dismissAction = UIAlertAction(title: "dismiss".localized,
-                                          style: .default)
-        
-        alert.addAction(dismissAction)
-        
-        appFlow?.navigationController.present(alert, animated: true, completion: nil)
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -514,23 +422,4 @@ extension AppDelegate {
     func dismissLoadingScreen() {
         self.window?.rootViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    // MARK: - Analytics helper...criteria not yet defined.
-    
-    func sendAnalyticsData(from url: URL, usingKey: String) {
-        var linkDictionary: [String: Any] = [:]
-        
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else { return }
-        guard let componentItems = components.queryItems else { return }
-        
-        for item in componentItems {
-            linkDictionary[item.name] = item.value ?? ""
-        }
-        
-        let analyticsId = linkDictionary[usingKey] as? String ?? ""
-        
-        // Do something for analytics here?
-        debugPrint("\(analyticsId)")
-    }
-    
 }

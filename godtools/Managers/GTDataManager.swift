@@ -28,7 +28,7 @@ class GTDataManager: NSObject {
         documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         resourcesPath = documentsPath.appending("/").appending("Resources")
         bannersPath = URL(fileURLWithPath: documentsPath, isDirectory: true).appendingPathComponent("Banners")
-        realm = RealmDatabase.sharedMainThreadRealm
+        realm = LegacyRealmDatabase.sharedMainThreadRealm
         
         super.init()
     }
@@ -126,13 +126,5 @@ class GTDataManager: NSObject {
     func buildURL() -> URL? {
         assertionFailure("method must be overridden")
         return nil
-    }
-    
-    func showNetworkingIndicator() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    }
-    
-    func hideNetworkIndicator() {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }

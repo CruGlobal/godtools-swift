@@ -16,7 +16,7 @@ class ViewsService: ViewsServiceType {
     required init(config: ConfigType, realmDatabase: RealmDatabase) {
         
         viewsApi = ViewsApi(config: config)
-        failedViewedResourcesCache = RealmFailedViewedResourcesCache(mainThreadRealm: realmDatabase.mainThreadRealm)
+        failedViewedResourcesCache = RealmFailedViewedResourcesCache(realmDatabase: realmDatabase)
     }
     
     deinit {
@@ -49,10 +49,10 @@ class ViewsService: ViewsServiceType {
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
                                     
                 if !httpStatusCodeSuccess {
-                                        
-                    self?.failedViewedResourcesCache.cacheFailedViewedResource(resourceId: resourceId, incrementFailedViewCountBy: 1, complete: { (error: Error?) in
-                        
-                    })
+                    self?.failedViewedResourcesCache.cacheFailedViewedResource(
+                        resourceId: resourceId,
+                        incrementFailedViewCountBy: 1
+                    )
                 }
             }
         }
@@ -67,33 +67,21 @@ class ViewsService: ViewsServiceType {
         let queue = OperationQueue()
         let viewsApiRef: ViewsApiType = self.viewsApi
         
-        failedViewedResourcesCache.getCachedFailedViewedResources { [weak self] (cachedFailedViewedResources: [RealmFailedViewedResource]) in
+        failedViewedResourcesCache.getCachedFailedViewedResources(completeOnMain: { [weak self] (cachedFailedViewedResources: [FailedViewedResourceModel]) in
             
             guard !cachedFailedViewedResources.isEmpty else {
                 return
             }
             
-            var resourceViews: [ResourceView] = Array()
-            
-            for failedViewedResource in cachedFailedViewedResources {
-                            
-                let resouceView = ResourceView(
-                    resourceId: failedViewedResource.resourceId,
-                    quantity: failedViewedResource.failedViewsCount
-                )
-                
-                resourceViews.append(resouceView)
-            }
-            
             var operations: [RequestOperation] = Array()
             
-            for resourceView in resourceViews {
+            for resourceView in cachedFailedViewedResources {
                 
                 guard let resourceIdInt = Int(resourceView.resourceId) else {
                     continue
                 }
                 
-                let operation = viewsApiRef.newAddViewsOperation(resourceId: resourceIdInt, quantity: resourceView.quantity)
+                let operation = viewsApiRef.newAddViewsOperation(resourceId: resourceIdInt, quantity: resourceView.failedViewsCount)
                 
                 operations.append(operation)
                 
@@ -103,10 +91,9 @@ class ViewsService: ViewsServiceType {
                     let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
                     
                     if httpStatusCodeSuccess {
-                        
-                        self?.failedViewedResourcesCache.deleteFailedViewedResourceFromCache(resourceId: resourceView.resourceId, complete: { (error: Error?) in
-                            
-                        })
+                        self?.failedViewedResourcesCache.deleteFailedViewedResourceFromCache(
+                            resourceId: resourceView.resourceId
+                        )
                     }
                     else {
                         // If we fail to update the resource view count, leave it in the cache for next time.
@@ -115,7 +102,7 @@ class ViewsService: ViewsServiceType {
             }
             
             queue.addOperations(operations, waitUntilFinished: false)
-        }
+        })
         
         return queue
     }

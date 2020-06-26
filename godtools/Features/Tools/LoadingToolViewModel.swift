@@ -11,17 +11,17 @@ import Foundation
 class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     
     private let resource: ResourceModel
-    private let preferredTranslation: PreferredLanguageTranslationResult
     private let translationDownloader: TranslationDownloader
-    private let completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>>
+    private let completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>
     private let closeHandler: CallbackHandler
     private let fakeDownloadProgressInterval: TimeInterval = 1 / 60
     private let fakeDownloadProgressTotalTimeSeconds: TimeInterval = 3
     private let progressNumberFormatter: NumberFormatter = NumberFormatter()
     
     private var fakeDownloadProgressTimer: Timer?
-    private var downloadTranslationOperation: OperationQueue?
-    private var downloadTranslationResult: Result<TranslationManifestData, TranslationDownloaderError>?
+    private var downloadTranslationsReceipt: DownloadTranslationsReceipt?
+    private var downloadedTranslations: [DownloadedTranslationResult] = Array()
+    private var downloadCompleted: Bool = false
     private var downloadCancelled: Bool = false
         
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -29,10 +29,9 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     let progressValue: ObservableValue<String> = ObservableValue(value: "0%")
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(resource: ResourceModel, preferredTranslation: PreferredLanguageTranslationResult, translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<Result<TranslationManifestData, TranslationDownloaderError>>, closeHandler: CallbackHandler) {
+    required init(resource: ResourceModel, translationsToDownload: [TranslationModel], translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>, closeHandler: CallbackHandler) {
 
         self.resource = resource
-        self.preferredTranslation = preferredTranslation
         self.translationDownloader = translationDownloader
         self.completeHandler = completeHandler
         self.closeHandler = closeHandler
@@ -44,28 +43,32 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
 
         setProgress(progress: 0)
         
-        downloadTranslation()
+        downloadTranslations(translations: translationsToDownload)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
         stopFakeDownloadProgressTimer()
-        cancelDownloadTranslation()
+        destroyDownloadTranslationsReceipt()
     }
     
-    private func cancelDownloadTranslation() {
-        downloadTranslationOperation?.cancelAllOperations()
-    }
-    
-    private func downloadTranslation() {
-        
-        let translationId: String = preferredTranslation.preferredLanguageTranslation?.id ?? ""
-        
-        guard !translationId.isEmpty else {
-            alertMessage.accept(value: AlertMessage(title: "Error", message: "Translation does not exist."))
-            return
+    private func destroyDownloadTranslationsReceipt() {
+        if let receipt = downloadTranslationsReceipt {
+            receipt.translationDownloaded.removeObserver(self)
+            receipt.progress.removeObserver(self)
+            receipt.completed.removeObserver(self)
+            receipt.cancel()
+            downloadTranslationsReceipt = nil
         }
-        
+    }
+    
+    private func stopFakeDownloadProgressTimer() {
+        fakeDownloadProgressTimer?.invalidate()
+        fakeDownloadProgressTimer = nil
+    }
+    
+    private func downloadTranslations(translations: [TranslationModel]) {
+                               
         isLoading.accept(value: true)
                 
         fakeDownloadProgressTimer = Timer.scheduledTimer(
@@ -76,15 +79,28 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
             repeats: true
         )
         
-        downloadTranslationOperation = translationDownloader.downloadTranslation(translationId: translationId, complete: { [weak self] (result: Result<TranslationManifestData, TranslationDownloaderError>) in
-            
+        let translationIds: [String] = translations.map({$0.id})
+        let downloadReceipt: DownloadTranslationsReceipt? = translationDownloader.downloadTranslations(translationIds: translationIds)
+        
+        guard let receipt = downloadReceipt else {
+            handleProgressTimerAndDownloadRequestCompleted()
+            return
+        }
+        
+        receipt.translationDownloaded.addObserver(self) { (downloadResult: DownloadedTranslationResult) in
             DispatchQueue.main.async { [weak self] in
-            
-                self?.downloadTranslationResult = result
-                
+                self?.downloadedTranslations.append(downloadResult)
+            }
+        }
+        
+        receipt.completed.addObserver(self) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.downloadCompleted = true
                 self?.handleProgressTimerAndDownloadRequestCompleted()
             }
-        })
+        }
+        
+        self.downloadTranslationsReceipt = receipt
     }
     
     @objc func handleFakeDownloadProgressTimer() {
@@ -101,17 +117,6 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         handleProgressTimerAndDownloadRequestCompleted()
     }
     
-    private func handleProgressTimerAndDownloadRequestCompleted() {
-                
-        if fakeDownloadProgressTimer == nil, let downloadTranslationResult = self.downloadTranslationResult, !downloadCancelled {
-            
-            isLoading.accept(value: false)
-            setProgress(progress: 1)
-            
-            completeHandler.handle(downloadTranslationResult)
-        }
-    }
-    
     private func setProgress(progress: Double) {
         downloadProgress.accept(value: progress)
         
@@ -119,15 +124,25 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         progressValue.accept(value: formattedProgress + "%")
     }
     
-    private func stopFakeDownloadProgressTimer() {
-        fakeDownloadProgressTimer?.invalidate()
-        fakeDownloadProgressTimer = nil
+    private var progressTimerAndTranslationDownloadCompleted: Bool {
+        return fakeDownloadProgressTimer == nil && downloadCompleted
     }
     
+    private func handleProgressTimerAndDownloadRequestCompleted() {
+                
+        if progressTimerAndTranslationDownloadCompleted && !downloadCancelled {
+            
+            isLoading.accept(value: false)
+            setProgress(progress: 1)
+            
+            completeHandler.handle(downloadedTranslations)
+        }
+    }
+
     func closeTapped() {
         downloadCancelled = true
         stopFakeDownloadProgressTimer()
-        cancelDownloadTranslation()
+        destroyDownloadTranslationsReceipt()
         closeHandler.handle()
     }
 }

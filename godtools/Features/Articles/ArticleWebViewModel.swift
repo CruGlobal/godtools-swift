@@ -35,21 +35,13 @@ class ArticleWebViewModel: ArticleWebViewModelType {
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
         let translationZipFile: TranslationZipFileModel = translationManifest.translationZipFile
-        var cachedWebArchiveUrl: URL?
         let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
             resourceId: translationZipFile.resourceId,
             languageCode: translationZipFile.languageCode,
             filename: articleAemImportData.webArchiveFilename
         )
-        
-        switch articleAemImportDownloader.webArchiveFileCache.getFile(location: webArchiveLocation) {
-        case .success(let url):
-            cachedWebArchiveUrl = url
-        case .failure( _):
-            cachedWebArchiveUrl = nil
-        }
-        
-        if let cachedWebArchiveUrl = cachedWebArchiveUrl {
+                
+        if let cachedWebArchiveUrl = articleAemImportDownloader.getWebArchiveUrl(location: webArchiveLocation) {
             webArchiveUrl.accept(value: cachedWebArchiveUrl)
         }
         else if let articleWebUrl = URL(string: articleAemImportData.webUrl) {

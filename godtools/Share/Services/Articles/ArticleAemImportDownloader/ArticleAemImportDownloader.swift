@@ -17,12 +17,11 @@ class ArticleAemImportDownloader {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let realmCache: RealmArticleAemImportDataCache
     private let webArchiver: WebArchiveQueue = WebArchiveQueue()
+    private let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
     private let maxAemImportJsonTreeLevels: Int = 10
     private let errorDomain: String = String(describing: ArticleAemImportDownloader.self)
-        
-    private var currentDownloadReceipts: [TranslationId: ArticleAemImportDownloaderReceipt] = Dictionary()
     
-    let webArchiveFileCache: ArticleAemWebArchiveFileCache = ArticleAemWebArchiveFileCache()
+    private var currentDownloadReceipts: [TranslationId: ArticleAemImportDownloaderReceipt] = Dictionary()
     
     required init(realmDatabase: RealmDatabase) {
         
@@ -47,6 +46,16 @@ class ArticleAemImportDownloader {
         let languageCode: String = translationManifest.translationZipFile.languageCode
         
         realmCache.getArticlesWithTags(resourceId: resourceId, languageCode: languageCode, aemTags: aemTags, completeOnMain: completeOnMain)
+    }
+    
+    func getWebArchiveUrl(location: ArticleAemWebArchiveFileCacheLocation) -> URL? {
+        
+        switch webArchiveFileCache.getFile(location: location) {
+        case .success(let url):
+            return url
+        case .failure( _):
+            return nil
+        }
     }
     
     func getDownloadReceipt(translationManifest: TranslationManifestData) -> ArticleAemImportDownloaderReceipt {

@@ -13,6 +13,7 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
+    private let legacyRealmDatabase: LegacyRealmDatabase = LegacyRealmDatabase()
     private let realmDatabase: RealmDatabase
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
     private let languagesApi: LanguagesApiType
@@ -38,7 +39,8 @@ class AppDiContainer {
     let languagesManager: LanguagesManager
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
-    let preferredLanguageTranslationViewModel: PreferredLanguageTranslationViewModel
+    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
+    let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
     let translateLanguageNameViewModel: TranslateLanguageNameViewModel
         
     required init() {
@@ -96,8 +98,10 @@ class AppDiContainer {
                 
         languagesManager = LanguagesManager()
         
-        preferredLanguageTranslationViewModel = PreferredLanguageTranslationViewModel(realmDatabase: realmDatabase, languageSettingsCache: languageSettingsCache, deviceLanguage: deviceLanguage)
+        fetchLanguageTranslationViewModel = FetchLanguageTranslationViewModel(realmDatabase: realmDatabase, deviceLanguage: deviceLanguage)
         
+        fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(realmDatabase: realmDatabase, resourcesCache: resourcesCache, languageSettingsService: languageSettingsService, translationsFileCache: translationsFileCache)
+                
         translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService)
     }
     

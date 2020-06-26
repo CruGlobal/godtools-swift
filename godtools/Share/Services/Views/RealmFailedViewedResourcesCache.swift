@@ -11,29 +11,26 @@ import RealmSwift
 
 class RealmFailedViewedResourcesCache {
     
-    private let mainThreadRealm: Realm
+    private let realmDatabase: RealmDatabase
     
-    required init(mainThreadRealm: Realm) {
+    required init(realmDatabase: RealmDatabase) {
         
-        self.mainThreadRealm = mainThreadRealm
+        self.realmDatabase = realmDatabase
     }
     
-    func cacheFailedViewedResource(resourceId: String, incrementFailedViewCountBy: Int, complete: @escaping ((_ error: Error?) -> Void)) {
-                
-        DispatchQueue.main.async { [weak self] in
-            
-            var cacheError: Error?
-                                     
-            if let cachedFailedViewedResource = self?.mainThreadRealm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) {
+    func cacheFailedViewedResource(resourceId: String, incrementFailedViewCountBy: Int) {
+             
+        realmDatabase.background { (realm: Realm) in
+                                                 
+            if let existingFailedViewedResource = realm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) {
                 
                 do {
-                    try self?.mainThreadRealm.write {
-                        cachedFailedViewedResource.failedViewsCount += incrementFailedViewCountBy
+                    try realm.write {
+                        existingFailedViewedResource.failedViewsCount += incrementFailedViewCountBy
                     }
                 }
                 catch let error {
                     assertionFailure(error.localizedDescription)
-                    cacheError = error
                 }
             }
             else {
@@ -43,50 +40,41 @@ class RealmFailedViewedResourcesCache {
                 newFailedViewedResource.failedViewsCount = 1
                 
                 do {
-                    try self?.mainThreadRealm.write {
-                        self?.mainThreadRealm.add(newFailedViewedResource)
+                    try realm.write {
+                        realm.add(newFailedViewedResource)
                     }
                 }
                 catch let error {
                     assertionFailure(error.localizedDescription)
-                    cacheError = error
                 }
             }
-            
-            complete(cacheError)
         }
     }
     
-    func getCachedFailedViewedResources(complete: @escaping ((_ failedViewedResources: [RealmFailedViewedResource]) -> Void)) {
-        
-        DispatchQueue.main.async { [weak self] in
+    func getCachedFailedViewedResources(completeOnMain: @escaping ((_ failedViewedResources: [FailedViewedResourceModel]) -> Void)) {
+        realmDatabase.background { (realm: Realm) in
             
-            if let failedViewedResources = self?.mainThreadRealm.objects(RealmFailedViewedResource.self) {
-                complete(Array(failedViewedResources))
-            }
-            else {
-                complete([])
+            let realmFailedViewedResources: [RealmFailedViewedResource] = Array(realm.objects(RealmFailedViewedResource.self))
+            let failedViewedResources: [FailedViewedResourceModel] = realmFailedViewedResources.map({FailedViewedResourceModel(realmModel: $0)})
+            
+            DispatchQueue.main.async {
+                completeOnMain(failedViewedResources)
             }
         }
     }
     
-    func deleteFailedViewedResourceFromCache(resourceId: String, complete: @escaping ((_ error: Error?) -> Void)) {
-                
-        DispatchQueue.main.async { [weak self] in
-               
-            guard let object = self?.mainThreadRealm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) else {
+    func deleteFailedViewedResourceFromCache(resourceId: String) {
+        realmDatabase.background { (realm: Realm) in
+            guard let object = realm.object(ofType: RealmFailedViewedResource.self, forPrimaryKey: resourceId) else {
                 return
             }
-            
             do {
-                try self?.mainThreadRealm.write {
-                    self?.mainThreadRealm.delete(object)
-                    complete(nil)
+                try realm.write {
+                    realm.delete(object)
                 }
             }
             catch let error {
                 assertionFailure(error.localizedDescription)
-                complete(error)
             }
         }
     }
