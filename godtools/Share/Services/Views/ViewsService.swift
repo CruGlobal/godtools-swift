@@ -98,6 +98,10 @@ class ViewsService: ViewsServiceType {
                     else {
                         // If we fail to update the resource view count, leave it in the cache for next time.
                     }
+                    
+                    if queue.operations.isEmpty {
+                        
+                    }
                 }
             }
             

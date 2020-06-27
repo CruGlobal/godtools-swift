@@ -143,7 +143,7 @@ class LanguagesManager: GTDataManager {
         return nil
     }
     
-    func loadFromDisk() -> Languages {
+    func loadFromDisk() -> List<Language> {
         let languagesUnfiltered = findAllEntities(Language.self)
 
         let languages = languagesUnfiltered.filter { (lang) -> Bool in
@@ -151,15 +151,15 @@ class LanguagesManager: GTDataManager {
         }
         
         let lSeq = languages.sorted(by: { return $0.localizedName() < $1.localizedName() })
-        let ls = Languages()
+        let ls = List<Language>()
         ls.append(objectsIn: lSeq)
         return ls
     }
     
-    func loadFromRemote() -> Promise<Languages> {
+    func loadFromRemote() -> Promise<List<Language>> {
                 
         return issueGETRequest()
-            .then { data -> Promise<Languages> in
+            .then { data -> Promise<List<Language>> in
                 DispatchQueue.global(qos: .userInitiated).async {
                     // TODO: this should be using the jsonapi parser framework -DF
 //                    let remoteLanguages = JSONResourceFactory.initializeArrayFrom(data: data, type: LanguageResource.self)

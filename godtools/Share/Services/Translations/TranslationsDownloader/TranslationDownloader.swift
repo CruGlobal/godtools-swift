@@ -54,6 +54,10 @@ class TranslationDownloader {
         
         for translationId in translationIds {
             
+            guard !translationId.isEmpty else {
+                continue
+            }
+            
             let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
                     
             operations.append(operation)

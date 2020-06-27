@@ -47,6 +47,7 @@ class ToolsFlow: Flow {
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
+            resourcesTranslationsDownloader: appDiContainer.resourcesTranslationsDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
@@ -117,6 +118,23 @@ class ToolsFlow: Flow {
             
         case .homeTappedFromTract:
             flowDelegate?.navigate(step: .homeTappedFromTract)
+            
+        case .shareTappedFromTract(let resource, let language, let pageNumber):
+            
+            let viewModel = ShareToolViewModel(
+                resource: resource,
+                language: language,
+                pageNumber: pageNumber,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ShareToolView(viewModel: viewModel)
+            
+            navigationController.present(
+                view.controller,
+                animated: true,
+                completion: nil
+            )
             
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)
@@ -306,7 +324,6 @@ class ToolsFlow: Flow {
             primaryTranslationManifest: primaryTranslationManifest,
             parallelLanguage: parallelLanguage,
             parallelTranslationManifest: parallelTranslationManifest,
-            languageSettingsService: appDiContainer.languageSettingsService,
             translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             tractManager: appDiContainer.tractManager,
             viewsService: appDiContainer.viewsService,

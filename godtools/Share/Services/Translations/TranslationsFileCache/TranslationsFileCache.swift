@@ -135,39 +135,32 @@ class TranslationsFileCache {
                 // add translation references to realm sha256 files
                 var realmSHA256Files: [RealmSHA256File] = Array()
                 
-                for location in cachedSHA256FileLocations {
-                                        
-                    if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.sha256WithPathExtension) {
-                        
-                        do {
-                            try realm.write {
+                do {
+                    try realm.write {
+
+                        for location in cachedSHA256FileLocations {
+                                                
+                            if let existingRealmSHA256File = realm.object(ofType: RealmSHA256File.self, forPrimaryKey: location.sha256WithPathExtension) {
+                                
                                 if !existingRealmSHA256File.translations.contains(translation) {
                                     existingRealmSHA256File.translations.append(translation)
                                 }
                                 realmSHA256Files.append(existingRealmSHA256File)
                             }
-                        }
-                        catch let error {
-                            complete(.failure(.cacheError(error: error)))
-                            return
-                        }
-                    }
-                    else {
-                        let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
-                        newRealmSHA256File.sha256WithPathExtension = location.sha256WithPathExtension
-                        newRealmSHA256File.translations.append(translation)
-                        do {
-                            try realm.write {
+                            else {
+                                let newRealmSHA256File: RealmSHA256File = RealmSHA256File()
+                                newRealmSHA256File.sha256WithPathExtension = location.sha256WithPathExtension
+                                newRealmSHA256File.translations.append(translation)
                                 realm.add(newRealmSHA256File, update: .all)
+                                realmSHA256Files.append(newRealmSHA256File)
                             }
-                            realmSHA256Files.append(newRealmSHA256File)
-                        }
-                        catch let error {
-                            complete(.failure(.cacheError(error: error)))
-                            return
-                        }
-                    }
-                } // end add translation references to realm sha256 files
+                        } // end add translation references to realm sha256 files
+                    }// end write
+                }
+                catch let error {
+                    complete(.failure(.cacheError(error: error)))
+                    return
+                }
                 
                 // add realmTranslationZipFile to realm to track cached translation.zip files
                 let realmTranslationZipFile = RealmTranslationZipFile()

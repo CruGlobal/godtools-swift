@@ -11,28 +11,36 @@ import RealmSwift
 
 class RealmDatabase {
     
-    private let backgroundConfig: Realm.Configuration = RealmDatabase.createBackgroundConfig
+    private static let config: Realm.Configuration = RealmDatabase.createConfig
+    
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)
+    
+    let mainThreadRealm: Realm
     
     required init() {
         
+        do {
+            self.mainThreadRealm = try Realm(configuration: RealmDatabase.config)
+        }
+        catch let error {
+            assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
+            self.mainThreadRealm = try! Realm(configuration: RealmDatabase.config)
+        }
     }
     
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
-        
-        let configuration = backgroundConfig
-        
+                
         backgroundQueue.async {
             autoreleasepool {
                 
                 let realm: Realm
                
                 do {
-                    realm = try Realm(configuration: configuration)
+                    realm = try Realm(configuration: RealmDatabase.config)
                 }
                 catch let error {
                     assertionFailure("RealmDatabase: Did fail to initialize background realm with error: \(error.localizedDescription) ")
-                    realm = try! Realm(configuration: configuration)
+                    realm = try! Realm(configuration: RealmDatabase.config)
                 }
                 
                 async(realm)
@@ -40,7 +48,7 @@ class RealmDatabase {
         }
     }
     
-    private static var createBackgroundConfig: Realm.Configuration {
+    private static var createConfig: Realm.Configuration {
         
         var config = Realm.Configuration()
         config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("shared_background_realm")

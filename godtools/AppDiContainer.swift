@@ -23,12 +23,14 @@ class AppDiContainer {
     private let resourcesDownloader: ResourcesDownloader
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
+    private let favoritedResourcesCache: RealmFavoritedResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesService: FavoritedResourcesService
+    let resourcesTranslationsDownloader: ResourcesTranslationsDownloader
     let languageSettingsService: LanguageSettingsService
     let initialDataDownloader: InitialDataDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
@@ -66,8 +68,17 @@ class AppDiContainer {
         attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache)
-                        
-        favoritedResourcesService = FavoritedResourcesService(realmDatabase: realmDatabase)
+           
+        favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        
+        favoritedResourcesService = FavoritedResourcesService(realmDatabase: realmDatabase, favoritedResourcesCache: favoritedResourcesCache)
+        
+        resourcesTranslationsDownloader = ResourcesTranslationsDownloader(
+            realmDatabase: realmDatabase,
+            resourcesCache: resourcesCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            translationDownloader: translationDownloader
+        )
         
         languageSettingsService = LanguageSettingsService(resourcesCache: resourcesCache, languageSettingsCache: languageSettingsCache)
         

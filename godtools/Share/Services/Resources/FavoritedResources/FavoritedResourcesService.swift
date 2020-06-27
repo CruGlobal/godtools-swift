@@ -21,9 +21,9 @@ class FavoritedResourcesService {
     let resourceUnfavorited: SignalValue<ResourceId> = SignalValue()
     let resourceSorted: SignalValue<ResourceId> = SignalValue()
     
-    required init(realmDatabase: RealmDatabase) {
+    required init(realmDatabase: RealmDatabase, favoritedResourcesCache: RealmFavoritedResourcesCache) {
         
-        self.favoritedResourcesCache = RealmFavoritedResourcesCache(realmDatabase: realmDatabase)
+        self.favoritedResourcesCache = favoritedResourcesCache
     }
     
     func getFavoritedResources(completeOnMain: @escaping ((_ favoritedResources: [FavoritedResourceModel]) -> Void)) {

@@ -51,7 +51,7 @@ class ToolsTableView: UIView, NibBased {
             forCellReuseIdentifier: ToolCell.reuseIdentifier
         )
         
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
         tableView.estimatedRowHeight = 220
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none

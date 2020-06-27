@@ -9,8 +9,6 @@
 import Foundation
 import RealmSwift
 
-typealias Languages = List<Language>
-
 class Language: Object {
     @objc dynamic var code = ""
     @objc dynamic var remoteId = ""

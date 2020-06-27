@@ -15,7 +15,6 @@ class TractViewModel: TractViewModelType {
     private let primaryTranslationManifest: TranslationManifestData
     private let parallelLanguage: LanguageModel?
     private let parallelTranslationManifest: TranslationManifestData?
-    private let languageSettingsService: LanguageSettingsService // TODO: Do we really need this service? ~Levi
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let viewsService: ViewsServiceType
@@ -39,7 +38,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -47,7 +46,6 @@ class TractViewModel: TractViewModelType {
         self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.parallelTranslationManifest = parallelTranslationManifest
-        self.languageSettingsService = languageSettingsService
         self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.tractManager = tractManager
         self.viewsService = viewsService
@@ -101,6 +99,10 @@ class TractViewModel: TractViewModelType {
             shouldSetCurrentToolPageItemIndex: true,
             animated: false
         )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
     }
     
     private func loadTractXmlPages() {

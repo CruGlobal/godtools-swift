@@ -150,23 +150,6 @@ class AppFlow: NSObject, FlowDelegate {
             _ = navigationController.popToRootViewController(animated: true)
             resetNavigationControllerColorToDefault()
             
-        case .shareTappedFromTract(let resource, let language, let pageNumber):
-            
-            let viewModel = ShareToolViewModel(
-                resource: resource,
-                language: language,
-                pageNumber: pageNumber,
-                analytics: appDiContainer.analytics
-            )
-            
-            let view = ShareToolView(viewModel: viewModel)
-            
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
-            
         case .sendEmailTappedFromTract(let subject, let message, let isHtml):
             
             if MFMailComposeViewController.canSendMail() {
