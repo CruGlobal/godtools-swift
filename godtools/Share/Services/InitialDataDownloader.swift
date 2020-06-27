@@ -14,24 +14,26 @@ class InitialDataDownloader: NSObject {
     private let realmDatabase: RealmDatabase
     private let resourcesDownloader: ResourcesDownloader
     private let attachmentsDownloader: AttachmentsDownloader
-    private let languageSettingsService: LanguageSettingsService
+    private let languageSettingsCache: LanguageSettingsCacheType
     private let deviceLanguage: DeviceLanguageType
     
     private var downloadResourcesOperation: OperationQueue?
     
-    let resourcesCache: RealmResourcesCache
+    let resourcesCache: ResourcesCache
+    let languagesCache: LanguagesCache
     let attachmentsFileCache: AttachmentsFileCache
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<Result<ResourcesDownloaderResult, ResourcesDownloaderError>?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, resourcesDownloader: ResourcesDownloader, attachmentsDownloader: AttachmentsDownloader, languageSettingsService: LanguageSettingsService, deviceLanguage: DeviceLanguageType) {
+    required init(realmDatabase: RealmDatabase, resourcesDownloader: ResourcesDownloader, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
         
         self.realmDatabase = realmDatabase
         self.resourcesDownloader = resourcesDownloader
         self.attachmentsDownloader = attachmentsDownloader
-        self.languageSettingsService = languageSettingsService
+        self.languageSettingsCache = languageSettingsCache
         self.deviceLanguage = deviceLanguage
-        self.resourcesCache = resourcesDownloader.resourcesCache
+        self.resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
+        self.languagesCache = LanguagesCache(realmDatabase: realmDatabase)
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
         
         super.init()
@@ -65,18 +67,19 @@ class InitialDataDownloader: NSObject {
         }
         
         resourcesDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
-            
-            guard let resourceDownloadResult = result else {
-                return
-            }
-            
-            self?.downloadLatestAttachmentsIfNeeded(result: resourceDownloadResult)
-            
-            self?.choosePrimaryLanguageIfNeeded { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let resourceDownloadResult = result else {
+                    return
+                }
                 
                 guard let dataDownloader = self else {
                     return
                 }
+                
+                self?.downloadLatestAttachmentsIfNeeded(result: resourceDownloadResult)
+                
+                self?.choosePrimaryLanguageIfNeeded()
                 
                 dataDownloader.resourcesDownloader.completed.removeObserver(dataDownloader)
                 dataDownloader.started.accept(value: false)
@@ -99,50 +102,43 @@ class InitialDataDownloader: NSObject {
         }
     }
     
-    private func choosePrimaryLanguageIfNeeded(complete: @escaping (() -> Void)) {
+    private func choosePrimaryLanguageIfNeeded() {
         
-        let cachedPrimaryLanguageId: String = languageSettingsService.languageSettingsCache.primaryLanguageId.value ?? ""
+        let realm: Realm = realmDatabase.mainThreadRealm
+        
+        let cachedPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
         let primaryLanguageIsCached: Bool = !cachedPrimaryLanguageId.isEmpty
         
         if primaryLanguageIsCached {
-            complete()
             return
         }
+                
+        let realmLanguages: Results<RealmLanguage> = realm.objects(RealmLanguage.self)
+        let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
         
-        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
-        let deviceLanguage: DeviceLanguageType = self.deviceLanguage
+        var deviceLanguage: RealmLanguage?
         
-        realmDatabase.background { (realm: Realm) in
-            
-            let realmLanguages: Results<RealmLanguage> = realm.objects(RealmLanguage.self)
-            let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
-            
-            var deviceLanguage: RealmLanguage?
-            
-            for languageCode in preferredDeviceLanguageCodes {
-                if let language = realmLanguages.filter("code = '\(languageCode)'").first {
-                    deviceLanguage = language
-                    break
-                }
+        for languageCode in preferredDeviceLanguageCodes {
+            if let language = realmLanguages.filter("code = '\(languageCode)'").first {
+                deviceLanguage = language
+                break
             }
-            
-            let primaryLanguage: RealmLanguage?
-            
-            if let deviceLanguage = deviceLanguage {
-                primaryLanguage = deviceLanguage
-            }
-            else if let englishLanguage = realmLanguages.filter("code = 'en'").first {
-                primaryLanguage = englishLanguage
-            }
-            else {
-                primaryLanguage = nil
-            }
-            
-            if let primaryLanguage = primaryLanguage {
-                languageSettingsService.languageSettingsCache.cachePrimaryLanguageId(languageId: primaryLanguage.id)
-            }
-            
-            complete()
-        }// end realmDatabase.background
+        }
+        
+        let primaryLanguage: RealmLanguage?
+        
+        if let deviceLanguage = deviceLanguage {
+            primaryLanguage = deviceLanguage
+        }
+        else if let englishLanguage = realmLanguages.filter("code = 'en'").first {
+            primaryLanguage = englishLanguage
+        }
+        else {
+            primaryLanguage = nil
+        }
+        
+        if let primaryLanguage = primaryLanguage {
+            languageSettingsCache.cachePrimaryLanguageId(languageId: primaryLanguage.id)
+        }
     }
 }

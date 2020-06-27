@@ -14,11 +14,8 @@ protocol ToolCellViewModelType {
     var attachmentsDownloadProgress: ObservableValue<Double> { get }
     var articlesDownloadProgress: ObservableValue<Double> { get }
     var translationDownloadProgress: ObservableValue<Double> { get }
-    var title: String { get }
-    var resourceDescription: String { get }
-    var primaryLanguageName: ObservableValue<String> { get }
-    var primaryLanguageColor: ObservableValue<UIColor> { get }
+    var title: ObservableValue<String> { get }
+    var resourceDescription: ObservableValue<String> { get }
     var parallelLanguageName: ObservableValue<String> { get }
-    var parallelLanguageColor: ObservableValue<UIColor> { get }
     var isFavorited: ObservableValue<Bool> { get }
 }

@@ -12,18 +12,18 @@ class ResourcesDownloader {
     
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
+    private let realmResourcesCache: RealmResourcesCache
     
     private var currentQueue: OperationQueue?
             
-    let resourcesCache: RealmResourcesCache
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<Result<ResourcesDownloaderResult, ResourcesDownloaderError>?> = ObservableValue(value: nil)
     
-    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, resourcesCache: RealmResourcesCache) {
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, realmResourcesCache: RealmResourcesCache) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi
-        self.resourcesCache = resourcesCache
+        self.realmResourcesCache = realmResourcesCache
     }
 
     func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue? {
@@ -133,7 +133,7 @@ class ResourcesDownloader {
         }
         else {
             
-            resourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<ResourcesDownloaderResult, Error>) in
+            realmResourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<ResourcesDownloaderResult, Error>) in
                 
                 switch result {
                 

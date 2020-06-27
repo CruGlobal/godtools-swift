@@ -1,5 +1,5 @@
 //
-//  RealmFailedViewedResource.swift
+//  RealmFailedResourceView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/8/20.
@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class RealmFailedViewedResource: Object, FailedViewedResourceModelType {
+class RealmFailedResourceView: Object, FailedResourceViewModelType {
     
     @objc dynamic var resourceId: String = ""
     @objc dynamic var failedViewsCount: Int = 0

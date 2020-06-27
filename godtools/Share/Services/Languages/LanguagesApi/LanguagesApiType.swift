@@ -11,5 +11,6 @@ import Foundation
 protocol LanguagesApiType {
     
     func newGetLanguagesOperation() -> RequestOperation
+    func getLanguages(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
     func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
 }

@@ -12,15 +12,11 @@ import RealmSwift
 class ResourcesTranslationsDownloader {
     
     private let realmDatabase: RealmDatabase
-    private let resourcesCache: RealmResourcesCache
-    private let favoritedResourcesCache: RealmFavoritedResourcesCache
     private let translationDownloader: TranslationDownloader
     
-    required init(realmDatabase: RealmDatabase, resourcesCache: RealmResourcesCache, favoritedResourcesCache: RealmFavoritedResourcesCache, translationDownloader: TranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, translationDownloader: TranslationDownloader) {
         
         self.realmDatabase = realmDatabase
-        self.resourcesCache = resourcesCache
-        self.favoritedResourcesCache = favoritedResourcesCache
         self.translationDownloader = translationDownloader
     }
     

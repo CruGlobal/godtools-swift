@@ -171,7 +171,13 @@ class TranslationsFileCache {
                 realmTranslationZipFile.translationManifestFilename = translation.manifestName
                 realmTranslationZipFile.translationsVersion = translation.version
                 realmTranslationZipFile.sha256Files.append(objectsIn: realmSHA256Files)
-                                
+                     
+                print("\n TranslationsFileCache: cached translation zip file")
+                print("  translationId: \(realmTranslationZipFile.translationId)")
+                print("  resourceId: \(realmTranslationZipFile.resourceId)")
+                print("  languageId: \(realmTranslationZipFile.languageId)")
+                print("  languageCode: \(realmTranslationZipFile.languageCode)")
+                
                 do {
                     try realm.write {
                         realm.add(realmTranslationZipFile, update: .all)

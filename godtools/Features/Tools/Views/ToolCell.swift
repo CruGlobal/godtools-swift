@@ -33,7 +33,6 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var articlesDownloadProgressView: UIView!
     @IBOutlet weak private var translationsDownloadProgressView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var primaryLanguageLabel: UILabel!
     @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var descriptionLabel: UILabel!
     @IBOutlet weak private var aboutToolButton: UIButton!
@@ -111,24 +110,17 @@ class ToolCell: UITableViewCell {
             self?.setTranslationProgress(progress: progress, animated: true)
         }
         
-        viewModel.primaryLanguageName.addObserver(self) { [weak self] (name: String) in
-            self?.primaryLanguageLabel.text = name
-        }
-        
-        viewModel.primaryLanguageColor.addObserver(self) { [weak self] (color: UIColor) in
-            self?.primaryLanguageLabel.textColor = color
-        }
-        
         viewModel.parallelLanguageName.addObserver(self) { [weak self] (name: String) in
             self?.parallelLanguageLabel.text = name
         }
         
-        viewModel.parallelLanguageColor.addObserver(self) { [weak self] (color: UIColor) in
-            self?.parallelLanguageLabel.textColor = color
+        viewModel.title.addObserver(self) { [weak self] (title: String) in
+            self?.titleLabel.text = title
         }
         
-        titleLabel.text = viewModel.title
-        descriptionLabel.text = viewModel.resourceDescription
+        viewModel.resourceDescription.addObserver(self) { [weak self] (description: String) in
+            self?.descriptionLabel.text = description
+        }
         
         viewModel.isFavorited.addObserver(self) { [weak self] (isFavorited: Bool) in
             let favoritedImage: UIImage?

@@ -1,5 +1,5 @@
 //
-//  FailedViewedResourceModelType.swift
+//  FailedResourceViewModelType.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/25/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FailedViewedResourceModelType {
+protocol FailedResourceViewModelType {
     
     var resourceId: String { get }
     var failedViewsCount: Int { get }

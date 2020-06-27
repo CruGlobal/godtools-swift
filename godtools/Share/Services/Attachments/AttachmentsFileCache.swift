@@ -15,50 +15,33 @@ class AttachmentsFileCache {
     
     private let realmDatabase: RealmDatabase
     private let sha256FileCache: ResourcesSHA256FileCache
-    
-    private var bannerImageMemoryCache: [AttachmentId: UIImage] = Dictionary() // TODO: Would like to replace this with a purging cache. ~Levi
-    
+        
     required init(realmDatabase: RealmDatabase, sha256FileCache: ResourcesSHA256FileCache) {
         
         self.realmDatabase = realmDatabase
         self.sha256FileCache = sha256FileCache
     }
     
-    func getAttachmentBanner(attachmentId: String, complete: @escaping ((_ image: UIImage?) -> Void)) {
+    func getAttachmentBanner(attachmentId: String) -> UIImage? {
         
-        if let image = bannerImageMemoryCache[attachmentId] {
-            complete(image)
-        }
-        
+        let realm: Realm = realmDatabase.mainThreadRealm
         let sha256FileCacheRef: ResourcesSHA256FileCache = sha256FileCache
-        
-        realmDatabase.background { (realm: Realm) in
+                
+        let attachment: RealmAttachment? = realm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId)
             
-            var image: UIImage?
+        if let attachment = attachment {
             
-            let attachment: RealmAttachment? = realm.object(ofType: RealmAttachment.self, forPrimaryKey: attachmentId)
-                
-            if let attachment = attachment {
-                
-                let sha256FileLocation: SHA256FileLocation = attachment.sha256FileLocation
-                                
-                switch sha256FileCacheRef.getImage(location: sha256FileLocation) {
-                case .success(let cachedImage):
-                    image = cachedImage
-                case .failure( _):
-                    break
-                }
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                
-                if let image = image {
-                    self?.bannerImageMemoryCache[attachmentId] = image
-                }
-                
-                complete(image)
+            let sha256FileLocation: SHA256FileLocation = attachment.sha256FileLocation
+                            
+            switch sha256FileCacheRef.getImage(location: sha256FileLocation) {
+            case .success(let cachedImage):
+                return cachedImage
+            case .failure( _):
+                break
             }
         }
+        
+        return nil
     }
     
     func attachmentExists(location: SHA256FileLocation) -> Bool {

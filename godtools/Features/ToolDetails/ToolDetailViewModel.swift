@@ -13,7 +13,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private let resource: ResourceModel
     private let dataDownloader: InitialDataDownloader
-    private let favoritedResourcesService: FavoritedResourcesService
+    private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localization: LocalizationServices
     private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
@@ -40,12 +40,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
-        self.favoritedResourcesService = favoritedResourcesService
+        self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localization = localization
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
@@ -63,9 +63,8 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         else {
             hidesBannerImage.accept(value: false)
             hidesYoutubePlayer.accept(value: true)
-            dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout) { [weak self] (image: UIImage?) in
-                self?.topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: image, youtubePlayerId: ""))
-            }
+            let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
+            topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: toolDetailImage, youtubePlayerId: ""))
         }
         
         reloadFavorited()
@@ -75,94 +74,93 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        favoritedResourcesService.resourceFavorited.removeObserver(self)
-        favoritedResourcesService.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        favoritedResourcesService.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadFavorited()
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadFavorited()
+            }
         }
         
-        favoritedResourcesService.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadFavorited()
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadFavorited()
+            }
         }
     }
     
     private func reloadFavorited() {
                 
-        favoritedResourcesService.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
-            if isFavorited {
-                self?.hidesFavoriteButton.accept(value: true)
-                self?.hidesUnfavoriteButton.accept(value: false)
-            }
-            else {
-                self?.hidesFavoriteButton.accept(value: false)
-                self?.hidesUnfavoriteButton.accept(value: true)
-            }
+        if favoritedResourcesCache.isFavorited(resourceId: resource.id) {
+            hidesFavoriteButton.accept(value: true)
+            hidesUnfavoriteButton.accept(value: false)
+        }
+        else {
+            hidesFavoriteButton.accept(value: false)
+            hidesUnfavoriteButton.accept(value: true)
         }
     }
     
     private func reloadToolDetails() {
         
-        let resource: ResourceModel = self.resource
-        let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
-        let translateLanguageNameViewModel: TranslateLanguageNameViewModel = self.translateLanguageNameViewModel
-        let localization: LocalizationServices = self.localization
         let primaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         
-        fetchLanguageTranslationViewModel.getLanguageTranslation(resourceId: resource.id, languageId: primaryLanguageId, supportedFallbackTypes: FetchLanguageTranslationFallbackType.all, completeOnMain: { [weak self] (primaryTranslationResult: FetchLanguageTranslationResult) in
-            
-            let languageBundle: Bundle
-            
-            if let preferredLanguage = primaryTranslationResult.language {
-                languageBundle = localization.bundleForLanguageElseMainBundle(languageCode: preferredLanguage.code)
-            }
-            else {
-                languageBundle = Bundle.main
-            }
-            
-            if let preferredTranslation = primaryTranslationResult.translation {
-                self?.name.accept(value: preferredTranslation.translatedName)
-                self?.aboutDetails.accept(value: preferredTranslation.translatedDescription)
-            }
-            else {
-                self?.name.accept(value: resource.name)
-                self?.aboutDetails.accept(value: resource.resourceDescription)
-            }
-            
-            resourcesCache.getResourceLanguages(resourceId: resource.id, completeOnMain: { [weak self] (languages: [LanguageModel]) in
-                
-                let languageNames: [String] = languages.map({$0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)})
-                let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
-                
-                let languageDetails: String = sortedLanguageNames
-                let numberOfLanguages: Int = languages.count
-                
-                self?.totalViews.accept(value: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews))
-                self?.openToolTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool"))
-                self?.unfavoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "remove_from_favorites"))
-                self?.favoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "add_to_favorites"))
-                
-                // tool details
-                let aboutDetailsControl = ToolDetailControl(
-                    id: "about",
-                    title: localization.stringForBundle(bundle: languageBundle, key: "about"),
-                    controlId: .about
-                )
-                
-                let languageDetailsControl = ToolDetailControl(
-                    id: "language",
-                    title: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_languages"), numberOfLanguages),
-                    controlId: .languages
-                )
-                self?.toolDetailsControls.accept(value: [aboutDetailsControl, languageDetailsControl])
-                self?.selectedDetailControl.accept(value: aboutDetailsControl)
-                
-                self?.languageDetails.accept(value: languageDetails)
-            })
-        })
+        let primaryTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
+            resourceId: resource.id,
+            languageId: primaryLanguageId,
+            supportedFallbackTypes: [.englishLanguage]
+        )
+        
+        let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
+        
+        let languageBundle: Bundle
+        
+        if let preferredLanguage = primaryTranslationResult.language {
+            languageBundle = localization.bundleForLanguageElseMainBundle(languageCode: preferredLanguage.code)
+        }
+        else {
+            languageBundle = Bundle.main
+        }
+        
+        if let preferredTranslation = primaryTranslationResult.translation {
+            name.accept(value: preferredTranslation.translatedName)
+            aboutDetails.accept(value: preferredTranslation.translatedDescription)
+        }
+        else {
+            name.accept(value: resource.name)
+            aboutDetails.accept(value: resource.resourceDescription)
+        }
+        
+        let languageNames: [String] = languages.map({$0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)})
+        let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
+        
+        let numberOfLanguages: Int = languages.count
+        
+        totalViews.accept(value: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews))
+        openToolTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool"))
+        unfavoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "remove_from_favorites"))
+        favoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "add_to_favorites"))
+        
+        // tool details
+        let aboutDetailsControl = ToolDetailControl(
+            id: "about",
+            title: localization.stringForBundle(bundle: languageBundle, key: "about"),
+            controlId: .about
+        )
+        
+        let languageDetailsControl = ToolDetailControl(
+            id: "language",
+            title: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_languages"), numberOfLanguages),
+            controlId: .languages
+        )
+        toolDetailsControls.accept(value: [aboutDetailsControl, languageDetailsControl])
+        selectedDetailControl.accept(value: aboutDetailsControl)
+        
+        languageDetails.accept(value: sortedLanguageNames)
     }
     
     private var screenName: String {
@@ -187,12 +185,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     }
     
     func favoriteTapped() {
-        favoritedResourcesService.addToFavorites(resourceId: resource.id)
+        favoritedResourcesCache.addToFavorites(resourceId: resource.id)
         //resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func unfavoriteTapped() {
-        favoritedResourcesService.removeFromFavorites(resourceId: resource.id)
+        favoritedResourcesCache.removeFromFavorites(resourceId: resource.id)
     }
     
     func detailControlTapped(detailControl: ToolDetailControl) {

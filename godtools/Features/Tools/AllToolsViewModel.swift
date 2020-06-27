@@ -17,7 +17,8 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let dataDownloader: InitialDataDownloader
     let resourcesTranslationsDownloader: ResourcesTranslationsDownloader
     let languageSettingsService: LanguageSettingsService
-    let favoritedResourcesService: FavoritedResourcesService
+    let favoritedResourcesCache: FavoritedResourcesCache
+    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -26,13 +27,14 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, resourcesTranslationsDownloader: ResourcesTranslationsDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, resourcesTranslationsDownloader: ResourcesTranslationsDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.resourcesTranslationsDownloader = resourcesTranslationsDownloader
         self.languageSettingsService = languageSettingsService
-        self.favoritedResourcesService = favoritedResourcesService
+        self.favoritedResourcesCache = favoritedResourcesCache
+        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.analytics = analytics
         
         super.init()
@@ -46,8 +48,8 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         print("x deinit: \(type(of: self))")
         dataDownloader.started.removeObserver(self)
         dataDownloader.completed.removeObserver(self)
-        favoritedResourcesService.resourceFavorited.removeObserver(self)
-        favoritedResourcesService.resourceUnfavorited.removeObserver(self)
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
@@ -66,21 +68,24 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
             }
         }
         
-        favoritedResourcesService.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadTool(resourceId: resourceId)
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadTool(resourceId: resourceId)
+            }
         }
         
-        favoritedResourcesService.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
-            self?.reloadTool(resourceId: resourceId)
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadTool(resourceId: resourceId)
+            }
         }
     }
     
     private func reloadResourcesFromCache() {
-                
-        dataDownloader.resourcesCache.getResources(completeOnMain: { [weak self] (allResources: [ResourceModel]) in
-            self?.tools.accept(value: allResources)
-            self?.reloadIsLoading()
-        })
+               
+        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources()
+        tools.accept(value: resources)
+        reloadIsLoading()
     }
     
     private func reloadIsLoading() {
@@ -108,7 +113,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     func favoriteToolTapped(resource: ResourceModel) {
         
-        favoritedResourcesService.toggleFavorited(resourceId: resource.id)
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
         
         //resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }

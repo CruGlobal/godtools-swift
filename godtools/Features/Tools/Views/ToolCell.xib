@@ -61,26 +61,23 @@
                                     <constraint firstAttribute="height" constant="2" id="sUC-ca-sZC"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
-                                <rect key="frame" x="12" y="95" width="306" height="21.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
+                                <rect key="frame" x="12" y="95" width="297" height="21.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
-                                <rect key="frame" x="12" y="119.5" width="302" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
+                                <rect key="frame" x="12" y="119.5" width="297" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="English" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bw3-vm-5R1" userLabel="primaryLanguageLabel">
-                                <rect key="frame" x="333" y="98.5" width="41" height="15"/>
-                                <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
-                                <color key="textColor" red="0.50196078430000002" green="0.50980392159999999" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVf-Mj-BIx" userLabel="parallelLanguageLabel">
-                                <rect key="frame" x="329" y="117.5" width="45" height="15"/>
+                                <rect key="frame" x="314" y="98" width="60" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="14p-ro-rwe"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.50196078431372548" green="0.50980392156862742" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -105,10 +102,10 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="402-Hl-aIK" userLabel="favoriteButton">
-                                <rect key="frame" x="334" y="10" width="40" height="40"/>
+                                <rect key="frame" x="328" y="6" width="50" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="8FL-wk-Tec"/>
-                                    <constraint firstAttribute="width" constant="40" id="IzF-X6-IPf"/>
+                                    <constraint firstAttribute="height" constant="50" id="8FL-wk-Tec"/>
+                                    <constraint firstAttribute="width" constant="50" id="IzF-X6-IPf"/>
                                 </constraints>
                                 <state key="normal" image="not_favorited"/>
                             </button>
@@ -117,30 +114,28 @@
                         <constraints>
                             <constraint firstItem="Ihh-rW-qDU" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="0je-7W-eYy"/>
                             <constraint firstItem="HFT-6s-l9f" firstAttribute="leading" secondItem="bVm-eV-R3X" secondAttribute="trailing" constant="5" id="6Au-qm-6h4"/>
-                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="trailing" secondItem="Bw3-vm-5R1" secondAttribute="trailing" id="AhE-YL-J7a"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" id="BAm-Xe-SFd"/>
                             <constraint firstAttribute="trailing" secondItem="zB8-IL-euH" secondAttribute="trailing" id="H7J-uw-N3e"/>
-                            <constraint firstItem="Bw3-vm-5R1" firstAttribute="leading" secondItem="39M-E6-07b" secondAttribute="trailing" constant="15" id="IAe-BM-DGJ"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="top" secondItem="39M-E6-07b" secondAttribute="top" constant="3" id="HiR-pX-dQX"/>
                             <constraint firstItem="89C-rq-BCp" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="L19-ea-Fxb"/>
                             <constraint firstItem="39M-E6-07b" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" constant="15" id="QK7-z1-gHe"/>
                             <constraint firstItem="nJ0-BP-j0n" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="Qm8-s8-Uf8"/>
-                            <constraint firstAttribute="bottom" secondItem="HFT-6s-l9f" secondAttribute="bottom" constant="10" id="SMQ-Ak-33I"/>
+                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="leading" secondItem="39M-E6-07b" secondAttribute="trailing" constant="5" id="SjH-Pz-ANC"/>
                             <constraint firstItem="39M-E6-07b" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" constant="12" id="UwE-Li-ZHw"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="centerY" secondItem="HFT-6s-l9f" secondAttribute="centerY" id="VMc-KC-4Of"/>
-                            <constraint firstItem="402-Hl-aIK" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" constant="10" id="WDK-2g-b7v"/>
+                            <constraint firstItem="402-Hl-aIK" firstAttribute="top" secondItem="ON1-CZ-kyr" secondAttribute="top" constant="6" id="WDK-2g-b7v"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="height" secondItem="HFT-6s-l9f" secondAttribute="height" id="XG2-To-12I"/>
-                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="top" secondItem="Bw3-vm-5R1" secondAttribute="bottom" constant="4" id="XSG-xu-bbY"/>
+                            <constraint firstAttribute="trailing" secondItem="YVf-Mj-BIx" secondAttribute="trailing" constant="10" id="YnN-OM-0Qf"/>
                             <constraint firstItem="Ihh-rW-qDU" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="bML-Yh-rtT"/>
-                            <constraint firstItem="YVf-Mj-BIx" firstAttribute="leading" secondItem="I2y-Ji-clW" secondAttribute="trailing" constant="15" id="clW-co-IXg"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="top" secondItem="I2y-Ji-clW" secondAttribute="bottom" constant="31" id="csb-C7-y2B"/>
-                            <constraint firstItem="Bw3-vm-5R1" firstAttribute="centerY" secondItem="39M-E6-07b" secondAttribute="centerY" id="eVm-Jd-Rpp"/>
-                            <constraint firstAttribute="trailing" secondItem="402-Hl-aIK" secondAttribute="trailing" constant="10" id="fL9-PE-vkB"/>
+                            <constraint firstAttribute="trailing" secondItem="402-Hl-aIK" secondAttribute="trailing" constant="6" id="fL9-PE-vkB"/>
                             <constraint firstItem="nJ0-BP-j0n" firstAttribute="top" secondItem="zB8-IL-euH" secondAttribute="bottom" id="gur-V2-s2z"/>
                             <constraint firstItem="zB8-IL-euH" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="kYF-0r-6nd"/>
-                            <constraint firstAttribute="trailing" secondItem="Bw3-vm-5R1" secondAttribute="trailing" constant="10" id="lZ2-Da-GoQ"/>
+                            <constraint firstAttribute="bottom" secondItem="bVm-eV-R3X" secondAttribute="bottom" constant="10" id="l7L-ES-3MQ"/>
                             <constraint firstItem="bVm-eV-R3X" firstAttribute="width" secondItem="HFT-6s-l9f" secondAttribute="width" id="m68-PT-6Io"/>
                             <constraint firstItem="89C-rq-BCp" firstAttribute="leading" secondItem="ON1-CZ-kyr" secondAttribute="leading" id="q35-Tq-37M"/>
                             <constraint firstItem="I2y-Ji-clW" firstAttribute="top" secondItem="39M-E6-07b" secondAttribute="bottom" constant="3" id="u5V-p7-Tk1"/>
+                            <constraint firstItem="I2y-Ji-clW" firstAttribute="width" secondItem="39M-E6-07b" secondAttribute="width" id="viy-ej-bgi"/>
                             <constraint firstAttribute="trailing" secondItem="HFT-6s-l9f" secondAttribute="trailing" constant="10" id="wHn-FM-QB9"/>
                             <constraint firstItem="I2y-Ji-clW" firstAttribute="leading" secondItem="39M-E6-07b" secondAttribute="leading" id="wpz-eI-Vqb"/>
                         </constraints>
@@ -168,7 +163,6 @@
                 <outlet property="favoriteButton" destination="402-Hl-aIK" id="5jU-GQ-uCA"/>
                 <outlet property="openToolButton" destination="HFT-6s-l9f" id="hrM-gJ-oKg"/>
                 <outlet property="parallelLanguageLabel" destination="YVf-Mj-BIx" id="k1f-MU-bId"/>
-                <outlet property="primaryLanguageLabel" destination="Bw3-vm-5R1" id="AKN-ue-Nbi"/>
                 <outlet property="titleLabel" destination="39M-E6-07b" id="jWt-4t-QIx"/>
                 <outlet property="toolContentView" destination="ON1-CZ-kyr" id="sgO-2e-gBa"/>
                 <outlet property="toolShadowView" destination="5Nv-9X-2XM" id="UXE-lp-1Wg"/>

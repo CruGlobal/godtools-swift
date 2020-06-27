@@ -10,15 +10,15 @@ import Foundation
 
 class LanguageSettingsService: NSObject {
     
-    private let resourcesCache: RealmResourcesCache
+    private let dataDownloader: InitialDataDownloader
     
     let languageSettingsCache: LanguageSettingsCacheType
     let primaryLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     let parallelLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     
-    required init(resourcesCache: RealmResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(dataDownloader: InitialDataDownloader, languageSettingsCache: LanguageSettingsCacheType) {
         
-        self.resourcesCache = resourcesCache
+        self.dataDownloader = dataDownloader
         self.languageSettingsCache = languageSettingsCache
         
         super.init()
@@ -43,14 +43,12 @@ class LanguageSettingsService: NSObject {
     }
     
     private func reloadPrimaryLanguage() {
-        resourcesCache.getLanguage(id: languageSettingsCache.primaryLanguageId.value ?? "") { [weak self] (language: LanguageModel?) in
-            self?.primaryLanguage.accept(value: language)
-        }
+        let language: LanguageModel? = dataDownloader.languagesCache.getLanguage(id: languageSettingsCache.primaryLanguageId.value ?? "")
+        primaryLanguage.accept(value: language)
     }
     
     private func reloadParallelLanguage() {
-        resourcesCache.getLanguage(id: languageSettingsCache.parallelLanguageId.value ?? "") { [weak self] (language: LanguageModel?) in
-            self?.parallelLanguage.accept(value: language)
-        }
+        let language: LanguageModel? = dataDownloader.languagesCache.getLanguage(id: languageSettingsCache.parallelLanguageId.value ?? "")
+        parallelLanguage.accept(value: language)
     }
 }

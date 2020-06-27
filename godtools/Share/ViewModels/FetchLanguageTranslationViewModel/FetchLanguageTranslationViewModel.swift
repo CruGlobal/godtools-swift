@@ -19,26 +19,11 @@ class FetchLanguageTranslationViewModel {
         self.realmDatabase = realmDatabase
         self.deviceLanguage = deviceLanguage
     }
+
+    func getLanguageTranslation(resourceId: String, languageId: String, supportedFallbackTypes: [FetchLanguageTranslationFallbackType]) -> FetchLanguageTranslationResult {
     
-    func getLanguageTranslation(resourceId: String, languageId: String, supportedFallbackTypes: [FetchLanguageTranslationFallbackType], completeOnMain: @escaping ((_ translationResult: FetchLanguageTranslationResult) -> Void)) {
-                        
-        realmDatabase.background { [unowned self] (realm: Realm) in
-            
-            let primaryTranslationResult = self.getLanguageTranslation(
-                realm: realm,
-                resourceId: resourceId,
-                languageId: languageId,
-                supportedFallbackTypes: supportedFallbackTypes
-            )
-            
-            DispatchQueue.main.async {
-                completeOnMain(primaryTranslationResult)
-            }
-        }
-    }
-    
-    func getLanguageTranslation(realm: Realm, resourceId: String, languageId: String, supportedFallbackTypes: [FetchLanguageTranslationFallbackType]) -> FetchLanguageTranslationResult {
-    
+        let realm: Realm = realmDatabase.mainThreadRealm
+        
         guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return FetchLanguageTranslationResult(
                 resourceId: resourceId,

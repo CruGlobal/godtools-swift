@@ -44,6 +44,21 @@ class LanguagesApi: LanguagesApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
     
+    func getLanguages(complete: @escaping ((_ result: Result<Data?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
+        
+        let languagesOperation: RequestOperation = newGetLanguagesOperation()
+        
+        return SingleRequestOperation().execute(operation: languagesOperation, completeOnMainThread: false) { (response: RequestResponse, result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType>) in
+            
+            switch result {
+            case .success( _, _):
+                complete(.success(response.data))
+            case .failure(let error):
+                complete(.failure(error))
+            }
+        }
+    }
+    
     func getLanguages(complete: @escaping ((_ result: Result<[LanguageModel], ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
         let languagesOperation: RequestOperation = newGetLanguagesOperation()

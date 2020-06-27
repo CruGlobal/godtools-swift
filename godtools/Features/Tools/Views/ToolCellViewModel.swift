@@ -9,44 +9,38 @@
 import UIKit
 
 class ToolCellViewModel: NSObject, ToolCellViewModelType {
-    
-    private static let languageAvailableColor: UIColor = UIColor.hexColor(hexValue: 0x808284)
-    private static let languageNotAvailableColor: UIColor = UIColor.hexColor(hexValue: 0xF40036)
-    
+        
     private let resource: ResourceModel
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
+    private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     
     let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let attachmentsDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let articlesDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
-    let title: String
-    let resourceDescription: String
-    let primaryLanguageName: ObservableValue<String> = ObservableValue(value: "")
-    let primaryLanguageColor: ObservableValue<UIColor> = ObservableValue(value: ToolCellViewModel.languageAvailableColor)
+    let title: ObservableValue<String> = ObservableValue(value: "")
+    let resourceDescription: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
-    let parallelLanguageColor: ObservableValue<UIColor> = ObservableValue(value: ToolCellViewModel.languageAvailableColor)
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService) {
+    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
-        self.title = resource.name
-        self.resourceDescription = resource.attrCategory
+        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         
         super.init()
         
         reloadBannerImage()
+        reloadTitle()
         setupBinding()
         
-        favoritedResourcesService.isFavorited(resourceId: resource.id) { [weak self] (isFavorited: Bool) in
-            self?.isFavorited.accept(value: isFavorited)
-        }        
+        isFavorited.accept(value: favoritedResourcesCache.isFavorited(resourceId: resource.id))
+        resourceDescription.accept(value: resource.attrCategory)
     }
     
     deinit {
@@ -54,51 +48,8 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         dataDownloader.attachmentsDownloaderProgress.removeObserver(self)
         dataDownloader.attachmentDownloaded.removeObserver(self)
         dataDownloader.attachmentsDownloaderCompleted.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
-    }
-    
-    private func reloadBannerImage() {
-        dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner) { [weak self] (image: UIImage?) in
-            self?.bannerImage.accept(value: image)
-        }
-    }
-    
-    private func reloadPrimaryLanguageName() {
-        
-        let primaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
-        
-        primaryLanguageName.accept(value: getLanguageName(language: primaryLanguage))
-        primaryLanguageColor.accept(value: getLanguageColor(language: primaryLanguage))
-    }
-    
-    private func reloadParallelLanguageName() {
-
-        let parallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
-                
-        parallelLanguageName.accept(value: getLanguageName(language: parallelLanguage))
-        parallelLanguageColor.accept(value: getLanguageColor(language: parallelLanguage))
-    }
-    
-    private func getLanguageName(language: LanguageModelType?) -> String {
-        
-        if let language = language {
-                        
-            let nameAvailablePrefix: String = resource.supportsLanguage(languageId: language.id) ? "✓ " : "x "
-            let translatedName: String = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
-            
-            return nameAvailablePrefix + translatedName
-        }
-        return ""
-    }
-    
-    private func getLanguageColor(language: LanguageModelType?) -> UIColor {
-        
-        if let language = language {
-            return resource.supportsLanguage(languageId: language.id) ? ToolCellViewModel.languageAvailableColor : ToolCellViewModel.languageNotAvailableColor
-        }
-        else {
-            return ToolCellViewModel.languageNotAvailableColor
-        }
     }
     
     private func setupBinding() {
@@ -127,7 +78,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadPrimaryLanguageName()
+                self?.reloadTitle()
             }
         }
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
@@ -135,5 +86,48 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
                 self?.reloadParallelLanguageName()
             }
         }
+    }
+    
+    private func reloadBannerImage() {
+            
+        let image: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBanner)
+        bannerImage.accept(value: image)
+    }
+    
+    private func reloadTitle() {
+        
+        let languageTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
+            resourceId: resource.id,
+            languageId: languageSettingsService.primaryLanguage.value?.id ?? "",
+            supportedFallbackTypes: [.englishLanguage]
+        )
+        
+        if let translation = languageTranslationResult.translation {
+            title.accept(value: translation.translatedName)
+        }
+        else {
+            title.accept(value: resource.name)
+        }
+    }
+    
+    private func reloadParallelLanguageName() {
+
+        let parallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
+                
+        parallelLanguageName.accept(value: getLanguageName(language: parallelLanguage))
+    }
+    
+    private func getLanguageName(language: LanguageModelType?) -> String {
+        
+        if let language = language {
+            
+            if resource.supportsLanguage(languageId: language.id) {
+                let nameAvailablePrefix: String = "✓ "
+                let translatedName: String = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+                
+                return nameAvailablePrefix + translatedName
+            }
+        }
+        return ""
     }
 }

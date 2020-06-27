@@ -40,11 +40,15 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     private func setupBinding() {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
-            self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
+            }
         }
         
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
-            self?.reloadParallelLanguageButtonTitle(parallelLanguage: parallelLanguage)
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadParallelLanguageButtonTitle(parallelLanguage: parallelLanguage)
+            }
         }
     }
     

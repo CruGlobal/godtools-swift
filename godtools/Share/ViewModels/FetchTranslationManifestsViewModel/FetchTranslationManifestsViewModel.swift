@@ -14,11 +14,11 @@ class FetchTranslationManifestsViewModel {
     typealias LanguageId = String
     
     private let realmDatabase: RealmDatabase
-    private let resourcesCache: RealmResourcesCache
+    private let resourcesCache: ResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let translationsFileCache: TranslationsFileCache
     
-    required init(realmDatabase: RealmDatabase, resourcesCache: RealmResourcesCache, languageSettingsService: LanguageSettingsService, translationsFileCache: TranslationsFileCache) {
+    required init(realmDatabase: RealmDatabase, resourcesCache: ResourcesCache, languageSettingsService: LanguageSettingsService, translationsFileCache: TranslationsFileCache) {
         
         self.realmDatabase = realmDatabase
         self.resourcesCache = resourcesCache
@@ -26,26 +26,10 @@ class FetchTranslationManifestsViewModel {
         self.translationsFileCache = translationsFileCache
     }
     
-    func getTranslationManifests(resourceId: String, completeOnMain: @escaping ((_ result: FetchTranslationManifestResult) -> Void)) {
-                
-        realmDatabase.background { [weak self] (realm: Realm) in
-            guard let viewModel = self else {
-                return
-            }
+    func getTranslationManifests(resourceId: String) -> FetchTranslationManifestResult {
             
-            let result: FetchTranslationManifestResult = viewModel.getTranslationManifests(
-                realm: realm,
-                resourceId: resourceId
-            )
-            
-            DispatchQueue.main.async {
-                completeOnMain(result)
-            }
-        }
-    }
-    
-    private func getTranslationManifests(realm: Realm, resourceId: String) -> FetchTranslationManifestResult {
-            
+        let realm: Realm = realmDatabase.mainThreadRealm
+        
         guard let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) else {
             return .failedToGetInitialResourcesFromCache
         }
@@ -57,10 +41,10 @@ class FetchTranslationManifestsViewModel {
         let primaryLanguageId: String = languageSettingsService.languageSettingsCache.primaryLanguageId.value ?? ""
         let primaryTranslation: TranslationModel?
         
-        if let primaryLanguageTranslation = resourcesCache.getResourceLanguageTranslation(realm: realm, resourceId: resourceId, languageId: primaryLanguageId) {
+        if let primaryLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: primaryLanguageId) {
             primaryTranslation = primaryLanguageTranslation
         }
-        else if let englishLanguageTranslation = resourcesCache.getResourceLanguageTranslation(realm: realm, resourceId: resourceId, languageCode: "en") {
+        else if let englishLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageCode: "en") {
             primaryTranslation = englishLanguageTranslation
         }
         else {
@@ -102,7 +86,7 @@ class FetchTranslationManifestsViewModel {
             )
         }
         
-        guard let resourceParallelLanguageTranslation = resourcesCache.getResourceLanguageTranslation(realm: realm, resourceId: resourceId, languageId: parallelLanguageId) else {
+        guard let resourceParallelLanguageTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resourceId, languageId: parallelLanguageId) else {
             return .fetchedTranslationsFromCache(
                 primaryLanguage: resourcePrimaryLanguage,
                 primaryTranslation: resourcePrimaryTranslation,

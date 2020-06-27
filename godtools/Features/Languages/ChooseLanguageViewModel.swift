@@ -56,44 +56,37 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private func reloadLanguages() {
                 
-        let resourcesCache: RealmResourcesCache = dataDownloader.resourcesCache
-        let languageSettingsService: LanguageSettingsService = self.languageSettingsService
-        let translateLanguageNameViewModel: TranslateLanguageNameViewModel = self.translateLanguageNameViewModel
-        let chooseLanguageType: ChooseLanguageType = self.chooseLanguageType
         let userPrimaryLanguage: LanguageModel? = languageSettingsService.primaryLanguage.value
         let userParallelLanguage: LanguageModel? = languageSettingsService.parallelLanguage.value
         
-        resourcesCache.getLanguages(completeOnMain: { [weak self] (allLanguages: [LanguageModel]) in
-            
-            var availableLanguages: [LanguageModel] = allLanguages
+        var availableLanguages: [LanguageModel] = dataDownloader.languagesCache.getLanguages()
 
-            switch chooseLanguageType {
-            
-            case .primary:
-                // move primary to top of list
-                if let primaryLanguage = userPrimaryLanguage, let index = availableLanguages.firstIndex(of: primaryLanguage) {
-                    availableLanguages.remove(at: index)
-                    availableLanguages.insert(primaryLanguage, at: 0)
+        switch chooseLanguageType {
+        
+        case .primary:
+            // move primary to top of list
+            if let primaryLanguage = userPrimaryLanguage, let index = availableLanguages.firstIndex(of: primaryLanguage) {
+                availableLanguages.remove(at: index)
+                availableLanguages.insert(primaryLanguage, at: 0)
+            }
+        case .parallel:
+            // remove primary language from list of parallel languages
+            if let userPrimaryLanguage = userPrimaryLanguage {
+                let newAvailableLanguages: [LanguageModel] = availableLanguages.filter {
+                    $0.id != userPrimaryLanguage.id
                 }
-            case .parallel:
-                // remove primary language from list of parallel languages
-                if let userPrimaryLanguage = userPrimaryLanguage {
-                    let newAvailableLanguages: [LanguageModel] = availableLanguages.filter {
-                        $0.id != userPrimaryLanguage.id
-                    }
-                    availableLanguages = newAvailableLanguages
-                }
-                
-                // move parallel to top of list
-                if let parallelLanguage = userParallelLanguage, let index = availableLanguages.firstIndex(of: parallelLanguage) {
-                    availableLanguages.remove(at: index)
-                    availableLanguages.insert(parallelLanguage, at: 0)
-                }
+                availableLanguages = newAvailableLanguages
             }
             
-            self?.allLanguages = availableLanguages
-            self?.languages.accept(value: availableLanguages)
-        })
+            // move parallel to top of list
+            if let parallelLanguage = userParallelLanguage, let index = availableLanguages.firstIndex(of: parallelLanguage) {
+                availableLanguages.remove(at: index)
+                availableLanguages.insert(parallelLanguage, at: 0)
+            }
+        }
+        
+        allLanguages = availableLanguages
+        languages.accept(value: availableLanguages)
     }
     
     private func reloadSelectedLanguage() {

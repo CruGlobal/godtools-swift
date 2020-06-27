@@ -12,7 +12,8 @@ protocol ToolsViewModelType {
     
     var dataDownloader: InitialDataDownloader { get }
     var languageSettingsService: LanguageSettingsService { get }
-    var favoritedResourcesService: FavoritedResourcesService { get }
+    var favoritedResourcesCache: FavoritedResourcesCache { get }
+    var fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }
