@@ -39,7 +39,6 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
-            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
@@ -49,7 +48,6 @@ class ToolsFlow: Flow {
             dataDownloader: appDiContainer.initialDataDownloader,
             resourcesTranslationsDownloader: appDiContainer.resourcesTranslationsDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
-            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             favoritedResourcesService: appDiContainer.favoritedResourcesService,
             analytics: appDiContainer.analytics
         )
@@ -324,7 +322,7 @@ class ToolsFlow: Flow {
             primaryTranslationManifest: primaryTranslationManifest,
             parallelLanguage: parallelLanguage,
             parallelTranslationManifest: parallelTranslationManifest,
-            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
+            languageSettingsService: appDiContainer.languageSettingsService,
             tractManager: appDiContainer.tractManager,
             viewsService: appDiContainer.viewsService,
             analytics: appDiContainer.analytics,
@@ -346,7 +344,6 @@ class ToolsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localization: appDiContainer.localizationServices,
             fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
-            translateLanguageNameViewModel: appDiContainer.translateLanguageNameViewModel,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )

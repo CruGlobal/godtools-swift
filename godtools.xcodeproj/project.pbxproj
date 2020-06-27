@@ -92,7 +92,6 @@
 		451B9CE42475B6D0006ACD32 /* UIViewController+Containment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9CE32475B6D0006ACD32 /* UIViewController+Containment.swift */; };
 		451B9CE62475B812006ACD32 /* AppRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451B9CE52475B812006ACD32 /* AppRootController.swift */; };
 		451D77882497F38200B7C83D /* TranslateLanguageNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D77872497F38200B7C83D /* TranslateLanguageNameViewModel.swift */; };
-		451D778B2497FA1500B7C83D /* ChooseLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D778A2497FA1500B7C83D /* ChooseLanguageModel.swift */; };
 		451DB0C32461D90000FB14BF /* TractResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0672461D90000FB14BF /* TractResource.swift */; };
 		451DB0C42461D90000FB14BF /* TractBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0682461D90000FB14BF /* TractBindings.swift */; };
 		451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451DB0692461D90000FB14BF /* TractConfigurations.swift */; };
@@ -288,6 +287,7 @@
 		4568D15C244DFA1200328639 /* FirebaseAnalyticsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */; };
 		4568D164244E156C00328639 /* ArticlesFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568D163244E156C00328639 /* ArticlesFlow.swift */; };
 		456993A32479D78E003E58B6 /* WebArchiveError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456993A22479D78E003E58B6 /* WebArchiveError.swift */; };
+		456A145B24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456A145A24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift */; };
 		456BF691248F170B0094C6F8 /* ViewsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BF690248F170B0094C6F8 /* ViewsApi.swift */; };
 		456BF693248F171C0094C6F8 /* ViewsApiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456BF692248F171C0094C6F8 /* ViewsApiType.swift */; };
 		4573221424453EB200D653FF /* LanguageSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */; };
@@ -745,7 +745,6 @@
 		451B9CE32475B6D0006ACD32 /* UIViewController+Containment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Containment.swift"; sourceTree = "<group>"; };
 		451B9CE52475B812006ACD32 /* AppRootController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootController.swift; sourceTree = "<group>"; };
 		451D77872497F38200B7C83D /* TranslateLanguageNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateLanguageNameViewModel.swift; sourceTree = "<group>"; };
-		451D778A2497FA1500B7C83D /* ChooseLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLanguageModel.swift; sourceTree = "<group>"; };
 		451DB0672461D90000FB14BF /* TractResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractResource.swift; sourceTree = "<group>"; };
 		451DB0682461D90000FB14BF /* TractBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractBindings.swift; sourceTree = "<group>"; };
 		451DB0692461D90000FB14BF /* TractConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractConfigurations.swift; sourceTree = "<group>"; };
@@ -939,6 +938,7 @@
 		4568D15B244DFA1200328639 /* FirebaseAnalyticsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsType.swift; sourceTree = "<group>"; };
 		4568D163244E156C00328639 /* ArticlesFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesFlow.swift; sourceTree = "<group>"; };
 		456993A22479D78E003E58B6 /* WebArchiveError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebArchiveError.swift; sourceTree = "<group>"; };
+		456A145A24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LanguageModelType+TranslatedName.swift"; sourceTree = "<group>"; };
 		456BF690248F170B0094C6F8 /* ViewsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsApi.swift; sourceTree = "<group>"; };
 		456BF692248F171C0094C6F8 /* ViewsApiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsApiType.swift; sourceTree = "<group>"; };
 		4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1605,18 +1605,11 @@
 			children = (
 				45A1430D24A626AD00892200 /* FetchLanguageTranslationViewModel */,
 				45A1431424A62C0900892200 /* FetchTranslationManifestsViewModel */,
+				456A145A24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift */,
 				451D77872497F38200B7C83D /* TranslateLanguageNameViewModel.swift */,
 				45A97C7A24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		451D77892497F9FB00B7C83D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				451D778A2497FA1500B7C83D /* ChooseLanguageModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		451DB0662461D90000FB14BF /* TractClasses */ = {
@@ -2854,7 +2847,6 @@
 				45FCFF72243D0BE000865501 /* LanguageSettingsView.xib */,
 				4573221324453EB200D653FF /* LanguageSettingsViewModel.swift */,
 				4573221524453EC100D653FF /* LanguageSettingsViewModelType.swift */,
-				451D77892497F9FB00B7C83D /* Models */,
 				4573221D2445476A00D653FF /* Views */,
 			);
 			path = Languages;
@@ -3714,7 +3706,6 @@
 				4575C25623FB3F8900D3265B /* AccountItemCell.swift in Sources */,
 				45732E9D2421AF11006F0559 /* DeviceLanguageType.swift in Sources */,
 				45668E7323E0E1CC002728E7 /* OnboardingTutorialItem.swift in Sources */,
-				451D778B2497FA1500B7C83D /* ChooseLanguageModel.swift in Sources */,
 				45B5DA06249FE2FC00CB017B /* FavoritedResourcesMemoryCache.swift in Sources */,
 				45FFA1032493D2D900DD05F4 /* FileCache.swift in Sources */,
 				4FDFC8DF1EFB17CE00B8CC33 /* NavigationBarBackground.swift in Sources */,
@@ -3886,6 +3877,7 @@
 				451830ED246DC14C00DDF264 /* TractLanguageType.swift in Sources */,
 				4556AEDE23E22241002C15E8 /* ObservableValue.swift in Sources */,
 				450B671F249959AD00A54E50 /* FavoritedResourceModel.swift in Sources */,
+				456A145B24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift in Sources */,
 				45038D8824A2698E00345B42 /* NoTranslationZipData.swift in Sources */,
 				451DB0C52461D90000FB14BF /* TractConfigurations.swift in Sources */,
 				451DB1B12461DCAE00FB14BF /* TractEmails.swift in Sources */,

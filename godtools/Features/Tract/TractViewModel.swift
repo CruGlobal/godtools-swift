@@ -38,7 +38,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, translateLanguageNameViewModel: TranslateLanguageNameViewModel, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -46,7 +46,7 @@ class TractViewModel: TractViewModelType {
         self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.parallelTranslationManifest = parallelTranslationManifest
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.tractManager = tractManager
         self.viewsService = viewsService
         self.analytics = analytics
@@ -69,11 +69,11 @@ class TractViewModel: TractViewModelType {
         
         hidesChooseLanguageControl = parallelLanguage == nil || primaryLanguage.id == parallelLanguage?.id
         
-        chooseLanguageControlPrimaryLanguageTitle = translateLanguageNameViewModel.getTranslatedName(language: primaryLanguage, shouldFallbackToPrimaryLanguageLocale: false)
+        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         
         let parallelLocalizedName: String
         if let parallelLanguage = parallelLanguage {
-            parallelLocalizedName = translateLanguageNameViewModel.getTranslatedName(language: parallelLanguage, shouldFallbackToPrimaryLanguageLocale: false)
+            parallelLocalizedName = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
             parallelLocalizedName = ""

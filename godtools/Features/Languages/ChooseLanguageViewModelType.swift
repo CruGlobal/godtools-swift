@@ -10,14 +10,15 @@ import Foundation
 
 protocol ChooseLanguageViewModelType {
     
+    var translateLanguageNameViewModel: TranslateLanguageNameViewModel { get }
     var navTitle: ObservableValue<String> { get }
     var deleteLanguageButtonTitle: String { get }
     var hidesDeleteLanguageButton: ObservableValue<Bool> { get }
-    var languages: ObservableValue<[ChooseLanguageModel]> { get }
-    var selectedLanguage: ObservableValue<ChooseLanguageModel?> { get }
+    var languages: ObservableValue<[LanguageModel]> { get }
+    var selectedLanguage: ObservableValue<LanguageModel?> { get }
     
     func pageViewed()
     func deleteLanguageTapped()
-    func languageTapped(language: ChooseLanguageModel)
+    func languageTapped(language: LanguageModel)
     func searchLanguageTextInputChanged(text: String)
 }

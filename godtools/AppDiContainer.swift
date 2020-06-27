@@ -43,7 +43,6 @@ class AppDiContainer {
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
-    let translateLanguageNameViewModel: TranslateLanguageNameViewModel
         
     required init() {
         
@@ -112,8 +111,6 @@ class AppDiContainer {
         fetchLanguageTranslationViewModel = FetchLanguageTranslationViewModel(realmDatabase: realmDatabase, deviceLanguage: deviceLanguage)
         
         fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(realmDatabase: realmDatabase, resourcesCache: resourcesCache, languageSettingsService: languageSettingsService, translationsFileCache: translationsFileCache)
-                
-        translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

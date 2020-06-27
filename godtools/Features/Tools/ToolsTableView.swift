@@ -130,7 +130,6 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
             resource: resource,
             dataDownloader: viewModel.dataDownloader,
             languageSettingsService: viewModel.languageSettingsService,
-            translateLanguageNameViewModel: viewModel.translateLanguageNameViewModel,
             favoritedResourcesService: viewModel.favoritedResourcesService
         )
         

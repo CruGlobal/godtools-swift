@@ -16,7 +16,6 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     let dataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
-    let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     let favoritedResourcesService: FavoritedResourcesService
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
@@ -26,12 +25,11 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let findToolsTitle: String = "Find Tools"
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.favoritedResourcesService = favoritedResourcesService
         self.analytics = analytics
         

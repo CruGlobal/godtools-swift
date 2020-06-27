@@ -17,26 +17,26 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
-    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
     
-    private var allLanguages: [ChooseLanguageModel] = Array()
+    private var allLanguages: [LanguageModel] = Array()
     
     private weak var flowDelegate: FlowDelegate?
     
+    let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let deleteLanguageButtonTitle: String = NSLocalizedString("clear", comment: "")
     let hidesDeleteLanguageButton: ObservableValue<Bool> = ObservableValue(value: true)
-    let languages: ObservableValue<[ChooseLanguageModel]> = ObservableValue(value: [])
-    let selectedLanguage: ObservableValue<ChooseLanguageModel?> = ObservableValue(value: nil)
+    let languages: ObservableValue<[LanguageModel]> = ObservableValue(value: [])
+    let selectedLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         
@@ -91,9 +91,8 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
                 }
             }
             
-            let languages: [ChooseLanguageModel] = availableLanguages.map({ChooseLanguageModel(language: $0, translateLanguageNameViewModel: translateLanguageNameViewModel)})
-            self?.allLanguages = languages
-            self?.languages.accept(value: languages)
+            self?.allLanguages = availableLanguages
+            self?.languages.accept(value: availableLanguages)
         })
     }
     
@@ -109,7 +108,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         }
         
         if let language = language {
-            selectedLanguage.accept(value: ChooseLanguageModel(language: language, translateLanguageNameViewModel: translateLanguageNameViewModel))
+            selectedLanguage.accept(value: language)
         }
         else {
             selectedLanguage.accept(value: nil)
@@ -145,18 +144,18 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         }
     }
     
-    func languageTapped(language: ChooseLanguageModel) {
+    func languageTapped(language: LanguageModel) {
         
         selectedLanguage.accept(value: language)
         
         switch chooseLanguageType {
         case .primary:
-            languageSettingsService.languageSettingsCache.cachePrimaryLanguageId(languageId: language.languageId)
-            if language.languageId == languageSettingsService.languageSettingsCache.parallelLanguageId.value {
+            languageSettingsService.languageSettingsCache.cachePrimaryLanguageId(languageId: language.id)
+            if language.id == languageSettingsService.languageSettingsCache.parallelLanguageId.value {
                 languageSettingsService.languageSettingsCache.deleteParallelLanguageId()
             }
         case .parallel:
-            languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: language.languageId)
+            languageSettingsService.languageSettingsCache.cacheParallelLanguageId(languageId: language.id)
         }
                 
         flowDelegate?.navigate(step: .languageTappedFromChooseLanguage)
@@ -167,7 +166,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         if !text.isEmpty {
                         
             let filteredLanguages = allLanguages.filter {
-                $0.languageName.lowercased().contains(text.lowercased())
+                $0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel).lowercased().contains(text.lowercased())
             }
             languages.accept(value: filteredLanguages)
         }

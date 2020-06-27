@@ -30,12 +30,12 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let parallelLanguageColor: ObservableValue<UIColor> = ObservableValue(value: ToolCellViewModel.languageAvailableColor)
     let isFavorited: ObservableValue = ObservableValue(value: false)
     
-    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, favoritedResourcesService: FavoritedResourcesService) {
+    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.title = resource.name
         self.resourceDescription = resource.attrCategory
         
@@ -84,7 +84,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         if let language = language {
                         
             let nameAvailablePrefix: String = resource.supportsLanguage(languageId: language.id) ? "✓ " : "x "
-            let translatedName: String = translateLanguageNameViewModel.getTranslatedName(language: language, shouldFallbackToPrimaryLanguageLocale: false)
+            let translatedName: String = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
             
             return nameAvailablePrefix + translatedName
         }

@@ -20,11 +20,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
         
         super.init()
@@ -53,7 +53,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let primaryLanguage = primaryLanguage {
-            title = translateLanguageNameViewModel.getTranslatedName(language: primaryLanguage, shouldFallbackToPrimaryLanguageLocale: false)
+            title = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
             title = NSLocalizedString("select_primary_language", comment: "")
@@ -67,7 +67,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         let title: String
         
         if let parallelLanguage = parallelLanguage {
-            title = translateLanguageNameViewModel.getTranslatedName(language: parallelLanguage, shouldFallbackToPrimaryLanguageLocale: false)
+            title = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
             title = NSLocalizedString("select_parallel_language", comment: "")

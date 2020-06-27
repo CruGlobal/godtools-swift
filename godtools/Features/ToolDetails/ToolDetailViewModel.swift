@@ -40,7 +40,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesService: FavoritedResourcesService, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -49,7 +49,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.languageSettingsService = languageSettingsService
         self.localization = localization
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: true)
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -134,7 +134,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
             
             resourcesCache.getResourceLanguages(resourceId: resource.id, completeOnMain: { [weak self] (languages: [LanguageModel]) in
                 
-                let languageNames: [String] = languages.map({translateLanguageNameViewModel.getTranslatedName(language: $0, shouldFallbackToPrimaryLanguageLocale: true)})
+                let languageNames: [String] = languages.map({$0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)})
                 let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
                 
                 let languageDetails: String = sortedLanguageNames

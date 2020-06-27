@@ -17,7 +17,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let dataDownloader: InitialDataDownloader
     let resourcesTranslationsDownloader: ResourcesTranslationsDownloader
     let languageSettingsService: LanguageSettingsService
-    let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     let favoritedResourcesService: FavoritedResourcesService
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
@@ -27,13 +26,12 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, resourcesTranslationsDownloader: ResourcesTranslationsDownloader, languageSettingsService: LanguageSettingsService, translateLanguageNameViewModel: TranslateLanguageNameViewModel, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, resourcesTranslationsDownloader: ResourcesTranslationsDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesService: FavoritedResourcesService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.resourcesTranslationsDownloader = resourcesTranslationsDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = translateLanguageNameViewModel
         self.favoritedResourcesService = favoritedResourcesService
         self.analytics = analytics
         
