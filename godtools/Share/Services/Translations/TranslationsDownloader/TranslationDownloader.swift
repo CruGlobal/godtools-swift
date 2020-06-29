@@ -89,7 +89,11 @@ class TranslationDownloader {
     }
     
     private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ result: DownloadedTranslationResult) -> Void)) {
-               
+              
+        print("\n  Translation Downloaded Completed")
+        print("  translationId: \(translationId)")
+        response.log()
+        
         guard !translationId.isEmpty else {
             complete(DownloadedTranslationResult(translationId: translationId, result: .failure(.internalErrorTriedDownloadingAnEmptyTranslationId)))
             return

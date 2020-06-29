@@ -11,8 +11,6 @@ import RealmSwift
 
 typealias DownloadedResources = List<DownloadedResource>
 
-let TractURL = "TractURL"
-
 class DownloadedResource: Object {
     @objc dynamic var bannerRemoteId: String?
     @objc dynamic var aboutBannerRemoteId: String?
@@ -35,25 +33,7 @@ class DownloadedResource: Object {
     override static func primaryKey() -> String {
         return "remoteId"
     }
-    
-    func isReady() -> Bool {
-        let languagesManager = LanguagesManager()
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()
-        let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
-        
-        // If the primary and parallel translations are not available and either the device preferrred language or English is available return true
-        if !isAvailableInLanguage(primaryLanguage) && (!isAvailableInLanguage(parallelLanguage) || parallelLanguage == nil) {
-            return isDefaultLanguageReady()
-        }
-        // Verify primary and parallel translations are available and have been dowloaded
-        else if isPrimaryTranslationReady(language: primaryLanguage) && isParallelTranslationReady(language: parallelLanguage) {
-            return true
-        }
 
-        // If we get here, the primary and/or the parrallel language translations are available but not downloaded, so return false
-        return false
-    }
-    
     /// Returns true if the primary language translation is not available or is available and the download has completed
     private func isPrimaryTranslationReady(language: Language?) -> Bool {
         return !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language))
@@ -130,31 +110,5 @@ class DownloadedResource: Object {
         }
         
         return name
-    }
-
-    var quickActionUserInfo: [String: NSSecureCoding] {
-        let languagesManager = LanguagesManager()
-        let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk()?.code ?? "en"
-        let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()?.code
-        
-        var url = "GodTools://knowgod.com/" + primaryLanguage + "/" + code + "/0"
-        if let parallelLanguage = parallelLanguage {
-            url += "?parallelLanguage=" + parallelLanguage
-        }
-        
-        return [ TractURL: url as NSSecureCoding ]
-    }
-}
-
-extension DownloadedResource {
-    
-    enum ToolType: String {
-        case article = "article"
-        case tract = "tract"
-        case unknown = "unknown"
-    }
-    
-    var toolTypeEnum: ToolType {
-        return ToolType(rawValue: toolType) ?? .unknown
     }
 }

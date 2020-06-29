@@ -12,12 +12,11 @@ import Foundation
 import RealmSwift
 
 class Category: Object {
+
     @objc dynamic var remoteId = ""
     @objc dynamic var title = ""
-//TODO
     
     override static func primaryKey() -> String {
         return "remoteId"
     }
-
 }

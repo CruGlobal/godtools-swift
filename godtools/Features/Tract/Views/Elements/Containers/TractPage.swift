@@ -23,17 +23,17 @@ class TractPage: BaseTractElement {
     static var statusbarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
     
     //  * The only designated initializer for this class should be this one
-    override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
-        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+    override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, isPrimaryRightToLeft: Bool) {
+        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement, isPrimaryRightToLeft: isPrimaryRightToLeft)
         
         renderedView = render()
     }
     
-    override init(data: XMLIndexer, startOnY yPosition: CGFloat) { fatalError("init(coder:) has not been implemented") }
+    override init(data: XMLIndexer, startOnY yPosition: CGFloat, isPrimaryRightToLeft: Bool) { fatalError("init(coder:) has not been implemented") }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    required init(data: XMLIndexer, parent: BaseTractElement) { fatalError("init(data:parent:) has not been implemented") }
-    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
-    override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) { fatalError("init(children:yPosition:parent:) has not been implemented") }
+    required init(data: XMLIndexer, parent: BaseTractElement, isPrimaryRightToLeft: Bool) { fatalError("init(data:parent:) has not been implemented") }
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int, isPrimaryRightToLeft: Bool) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
+    override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement, isPrimaryRightToLeft: Bool) { fatalError("init(children:yPosition:parent:) has not been implemented") }
     
     override func reset() {
         super.reset()
@@ -79,7 +79,7 @@ class TractPage: BaseTractElement {
     
     func buildPageContainer(data: [XMLIndexer]) {
         self.elements = [BaseTractElement]()
-        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
+        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self, isPrimaryRightToLeft: isPrimaryRightToLeft)
         self.elements!.append(element)
         self.height = element.elementFrame.yEndPosition()
         self.pageContainer = element

@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class FollowUp: Object {
+    
     @objc dynamic var name: String?
     @objc dynamic var email: String?
     @objc dynamic var destinationId: String?

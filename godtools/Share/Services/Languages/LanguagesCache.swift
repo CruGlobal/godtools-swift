@@ -38,4 +38,16 @@ class LanguagesCache {
         }
         return nil
     }
+    
+    func getLanguage(code: String) -> LanguageModel? {
+        return getLanguage(realm: realmDatabase.mainThreadRealm, code: code)
+    }
+    
+    func getLanguage(realm: Realm, code: String) -> LanguageModel? {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        if let realmLanguage = realm.objects(RealmLanguage.self).filter("code = '\(code)'").first {
+            return LanguageModel(realmLanguage: realmLanguage)
+        }
+        return nil
+    }
 }

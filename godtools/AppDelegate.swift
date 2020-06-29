@@ -15,10 +15,6 @@ import AppAuth
 import TheKeyOAuthSwift
 import FBSDKCoreKit
 
-enum ShortcutItemType: String {
-    case tool = "ToolAction"
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
         
@@ -78,8 +74,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        
-        application.shortcutItems = shortCutItems()
+        appDiContainer.shortcutItemsService.getShortcutItems { (items: [UIApplicationShortcutItem]) in
+            DispatchQueue.main.async {
+                application.shortcutItems = items
+            }
+        }
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -106,30 +105,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegate.shared.application(app, open: url, options: options)
     }
     
-    func shortCutItems() -> [UIApplicationShortcutItem] {
-        let toolsManager = ToolsManager.shared
-        let languagesManager = LanguagesManager()
-        
-        var shortcuts: [UIApplicationShortcutItem] = []
-        
-        for resource in toolsManager.resources {
-            let localizedTitle = resource.localizedName(language: languagesManager.loadPrimaryLanguageFromDisk())
-            let shortcutItem = UIApplicationShortcutItem(type: ShortcutItemType.tool.rawValue,
-                                                         localizedTitle: localizedTitle,
-                                                         localizedSubtitle: nil,
-                                                         icon: nil,
-                                                         userInfo: resource.quickActionUserInfo)
-            shortcuts.append(shortcutItem)
-        }
-        
-        return shortcuts
-    }
-    
     /// Called when the user selects a Home screen quick action
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
-        if shortcutItem.type == ShortcutItemType.tool.rawValue, let urlString = shortcutItem.userInfo?[TractURL] as? String, let url = URL(string: urlString)  {
-            processForDeepLinking(from: url, shouldDisplayLoadingScreen: false)
+        guard let shortcutItemType = ShortcutItemType.shortcutItemType(shortcutItem: shortcutItem) else {
+            return
+        }
+        
+        switch shortcutItemType {
+            
+        case .tool:
+            if let toolShortcutItem = shortcutItem as? ToolShortcutItem, let tractUrl = toolShortcutItem.tractUrl {
+                processForDeepLinking(from: tractUrl, shouldDisplayLoadingScreen: false)
+            }
         }
     }
 }
@@ -182,6 +170,8 @@ extension AppDelegate {
 
     
     func processForDeepLinking(from url: URL, shouldDisplayLoadingScreen: Bool = true) {
+        
+        // TODO: Test deep linking. ~Levi
         
         let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
@@ -314,6 +304,7 @@ extension AppDelegate {
     }
     
     private func ensureResourceIsAvailable(resource: DownloadedResource, language: Language) -> Promise<Bool> {
+        
         guard let translation = resource.getTranslationForLanguage(language) else {
             return .value(false)
         }
@@ -384,25 +375,6 @@ extension AppDelegate {
         
         // Here we now have the array of ["ms-pse-x-Ogan", "ms-pse-x", "ms-pse", "ms"]
         return newComponents
-    }
-    
-
-    
-    // MARK: - If there is a parallel Language given in the query, this validates for that Language and downloads the translation (if needed).
-    
-    private func verifyResource(resource: DownloadedResource, language: Language)  {
-        
-        guard let translation = resource.getTranslationForLanguage(language) else {
-            return
-        }
-        
-        if translation.isDownloaded {
-            return
-        }
-        
-        let importer = TranslationZipImporter()
-        
-        let _ = importer.downloadSpecificTranslation(translation)
     }
     
     // MARK: - This is a streamlined way to return a known Language, or fallback and return English.

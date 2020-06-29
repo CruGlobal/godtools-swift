@@ -51,7 +51,7 @@ class RealmDatabase {
     private static var createConfig: Realm.Configuration {
         
         var config = Realm.Configuration()
-        config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("shared_background_realm")
+        config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("godtools_realm")
         config.schemaVersion = 1
         
         config.migrationBlock = { migration, oldSchemaVersion in

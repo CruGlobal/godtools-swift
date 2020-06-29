@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class Translation: Object {
+    
     @objc dynamic var isDownloadInProgress = false
     @objc dynamic var isDownloaded = false
     @objc dynamic var isPublished = false

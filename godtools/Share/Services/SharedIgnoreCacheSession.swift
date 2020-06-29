@@ -22,7 +22,7 @@ class SharedIgnoreCacheSession {
         configuration.httpShouldSetCookies = false
         configuration.httpCookieStorage = nil
         
-        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForRequest = 60
             
         session = URLSession(configuration: configuration)
     }

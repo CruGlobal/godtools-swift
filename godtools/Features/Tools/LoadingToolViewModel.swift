@@ -15,13 +15,15 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private let completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>
     private let closeHandler: CallbackHandler
     private let fakeDownloadProgressInterval: TimeInterval = 1 / 60
-    private let fakeDownloadProgressTotalTimeSeconds: TimeInterval = 3
+    private let displayLoaderForMinimumSeconds: TimeInterval = 3
     private let progressNumberFormatter: NumberFormatter = NumberFormatter()
     
     private var fakeDownloadProgressTimer: Timer?
+    private var displayLoaderForMinimumSecondsTimer: Timer?
     private var downloadTranslationsReceipt: DownloadTranslationsReceipt?
     private var downloadedTranslations: [DownloadedTranslationResult] = Array()
-    private var downloadCompleted: Bool = false
+    private var didDisplayLoaderForMinimumSeconds: Bool = false
+    private var didDownloadTranslations: Bool = false
     private var downloadCancelled: Bool = false
         
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -49,6 +51,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     deinit {
         print("x deinit: \(type(of: self))")
         stopFakeDownloadProgressTimer()
+        stopDisplayLoaderForMinimumSecondsTimer()
         destroyDownloadTranslationsReceipt()
     }
     
@@ -67,10 +70,23 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         fakeDownloadProgressTimer = nil
     }
     
+    private func stopDisplayLoaderForMinimumSecondsTimer() {
+        displayLoaderForMinimumSecondsTimer?.invalidate()
+        displayLoaderForMinimumSecondsTimer = nil
+    }
+    
     private func downloadTranslations(translations: [TranslationModel]) {
                                
         isLoading.accept(value: true)
-                
+            
+        displayLoaderForMinimumSecondsTimer = Timer.scheduledTimer(
+            timeInterval: displayLoaderForMinimumSeconds,
+            target: self,
+            selector: #selector(handleDisplayLoaderForMinimumSecondsTimer),
+            userInfo: nil,
+            repeats: false
+        )
+        
         fakeDownloadProgressTimer = Timer.scheduledTimer(
             timeInterval: fakeDownloadProgressInterval,
             target: self,
@@ -95,53 +111,76 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         
         receipt.completed.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
-                self?.downloadCompleted = true
-                self?.handleProgressTimerAndDownloadRequestCompleted()
+                self?.didDownloadTranslations = true
             }
         }
         
         self.downloadTranslationsReceipt = receipt
     }
     
+    private var displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted: Bool {
+        return didDisplayLoaderForMinimumSeconds && didDownloadTranslations
+    }
+    
+    @objc func handleDisplayLoaderForMinimumSecondsTimer() {
+        didDisplayLoaderForMinimumSeconds = true
+    }
+    
     @objc func handleFakeDownloadProgressTimer() {
         
+        let progressSpeedForMinimumLoaderDisplayLength: Double = (fakeDownloadProgressInterval * (1 / displayLoaderForMinimumSeconds))
         let currentProgress: Double = downloadProgress.value
-        let progress: Double = currentProgress + (fakeDownloadProgressInterval * (1 / fakeDownloadProgressTotalTimeSeconds))
-                
-        if progress >= 0.98 {
-            stopFakeDownloadProgressTimer()
+        
+        let progressSpeed: Double
+        
+        if displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted {
+            progressSpeed = progressSpeedForMinimumLoaderDisplayLength * 1.5
+        }
+        else {
+            progressSpeed = progressSpeedForMinimumLoaderDisplayLength * 0.8
+        }
+        
+        var progress: Double = currentProgress + progressSpeed
+        
+        if progress >= 0.99 && !displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted {
+            progress = 0.99
+        }
+        else if progress >= 1 && displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted {
+            progress = 1
         }
         
         setProgress(progress: progress)
         
-        handleProgressTimerAndDownloadRequestCompleted()
+        if progress == 1 {
+            handleProgressTimerAndDownloadRequestCompleted()
+        }
     }
     
     private func setProgress(progress: Double) {
+        
         downloadProgress.accept(value: progress)
         
         let formattedProgress: String = progressNumberFormatter.string(from: NSNumber(value: progress * 100)) ?? "0"
         progressValue.accept(value: formattedProgress + "%")
     }
     
-    private var progressTimerAndTranslationDownloadCompleted: Bool {
-        return fakeDownloadProgressTimer == nil && downloadCompleted
-    }
-    
     private func handleProgressTimerAndDownloadRequestCompleted() {
-                
-        if progressTimerAndTranslationDownloadCompleted && !downloadCancelled {
+        
+        if displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted && !downloadCancelled {
             
             isLoading.accept(value: false)
-            setProgress(progress: 1)
-            
             completeHandler.handle(downloadedTranslations)
+            
+            stopFakeDownloadProgressTimer()
+            stopDisplayLoaderForMinimumSecondsTimer()
+            destroyDownloadTranslationsReceipt()
         }
     }
 
     func closeTapped() {
         downloadCancelled = true
         stopFakeDownloadProgressTimer()
+        stopDisplayLoaderForMinimumSecondsTimer()
         destroyDownloadTranslationsReceipt()
         closeHandler.handle()
     }

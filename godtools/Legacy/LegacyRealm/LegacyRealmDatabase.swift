@@ -15,7 +15,7 @@ class LegacyRealmDatabase {
     // into GTDataManager. ~Levi
     static var sharedMainThreadRealm: Realm!
     
-    private static let schemaVersion: UInt64 = 14
+    private static let schemaVersion: UInt64 = 15
         
     let mainThreadRealm: Realm // TODO: Remove after switching to background realm.
     

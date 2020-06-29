@@ -44,6 +44,7 @@ class AppDiContainer {
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
+    let shortcutItemsService: ShortcutItemsService
         
     required init() {
         
@@ -126,6 +127,8 @@ class AppDiContainer {
             languageSettingsService: languageSettingsService,
             translationsFileCache: translationsFileCache
         )
+        
+        shortcutItemsService = ShortcutItemsService(realmDatabase: realmDatabase, languageSettingsCache: languageSettingsCache)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -168,17 +171,8 @@ class AppDiContainer {
         return GlobalActivityServices(config: config)
     }
     
-    var translationZipImporter: TranslationZipImporter {
-        return TranslationZipImporter()
-    }
-
     var tractManager: TractManager {
         return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
-    }
-    
-    var toolsManager: ToolsManager {
-        // TODO: Eventually want to remove ToolsManager and replace by using ToolsTableView and viewModels with services for populating tools lists. ~Levi
-        return ToolsManager.shared
     }
     
     var viewsService: ViewsServiceType {

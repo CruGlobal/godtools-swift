@@ -415,7 +415,8 @@ class TractViewModel: TractViewModelType {
                 height: UIScreen.main.bounds.size.height,
                 manifestProperties: tractManifest,
                 configurations: config,
-                parallelElement: parallelTractPage
+                parallelElement: parallelTractPage,
+                isPrimaryRightToLeft: isRightToLeftLanguage
             )
             
             return tractPage

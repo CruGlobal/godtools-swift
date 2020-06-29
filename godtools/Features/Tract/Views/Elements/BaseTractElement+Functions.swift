@@ -24,10 +24,10 @@ extension BaseTractElement {
             nodeClassType == TractEmails.self ||
             nodeClassType == TractEmail.self {
             
-            return nodeClassType.init(data: data, parent: self)
+            return nodeClassType.init(data: data, parent: self, isPrimaryRightToLeft: isPrimaryRightToLeft)
         }
         else {
-            let element = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            let element = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber, isPrimaryRightToLeft: isPrimaryRightToLeft)
             return element
         }
     }
