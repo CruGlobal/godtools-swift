@@ -11,7 +11,7 @@ import Foundation
 protocol ChooseLanguageCellViewModelType {
     
     var languageName: String { get }
-    var hidesDownloadButton: Bool { get }
+    var languageIsDownloaded: Bool { get }
     var hidesSelected: Bool { get }
     var hidesSeparator: Bool { get }
 }

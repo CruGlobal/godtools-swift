@@ -25,8 +25,10 @@ class FavoritedResourcesCache {
     }
     
     func getFavoritedResources() -> [FavoritedResourceModel] {
-        
-        let realm: Realm = realmDatabase.mainThreadRealm
+        return getFavoritedResources(realm: realmDatabase.mainThreadRealm)
+    }
+    
+    func getFavoritedResources(realm: Realm) -> [FavoritedResourceModel] {
         return Array(realm.objects(RealmFavoritedResource.self)).map({FavoritedResourceModel(model: $0)})
     }
     

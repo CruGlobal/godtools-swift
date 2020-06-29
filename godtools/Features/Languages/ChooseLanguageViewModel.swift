@@ -25,18 +25,20 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let translateLanguageNameViewModel: TranslateLanguageNameViewModel
+    let downloadedLanguagesCache: DownloadedLanguagesCache
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let deleteLanguageButtonTitle: String = NSLocalizedString("clear", comment: "")
     let hidesDeleteLanguageButton: ObservableValue<Bool> = ObservableValue(value: true)
     let languages: ObservableValue<[LanguageModel]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.downloadedLanguagesCache = downloadedLanguagesCache
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
         

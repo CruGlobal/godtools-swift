@@ -7,42 +7,36 @@
 //
 
 import Foundation
+import RealmSwift
 
 class TranslationDownloader {
     
     typealias TranslationId = String
     
+    private let realmDatabase: RealmDatabase
     private let translationsApi: TranslationsApiType
         
     let translationsFileCache: TranslationsFileCache
     
-    required init(translationsApi: TranslationsApiType, translationsFileCache: TranslationsFileCache) {
+    required init(realmDatabase: RealmDatabase, translationsApi: TranslationsApiType, translationsFileCache: TranslationsFileCache) {
         
+        self.realmDatabase = realmDatabase
         self.translationsApi = translationsApi
         self.translationsFileCache = translationsFileCache
     }
     
-    func downloadTranslation(translationId: String, complete: @escaping ((_ result: DownloadedTranslationResult) -> Void)) -> OperationQueue {
+    func downloadTranslations(translationIds: [String]) -> DownloadTranslationsReceipt? {
         
-        let operation: RequestOperation = translationsApi.newTranslationZipDataOperation(translationId: translationId)
-                
-        operation.completionHandler { [weak self] (response: RequestResponse) in
-            
-            self?.processDownloadedTranslation(
-                translationId: translationId,
-                response: response,
-                complete: complete
-            )
-        }
-        
-        let queue = OperationQueue()
-        
-        queue.addOperations([operation], waitUntilFinished: false)
-        
-        return queue
+        return downloadTranslations(realm: realmDatabase.mainThreadRealm, translationIds: translationIds)
     }
     
-    func downloadTranslations(translationIds: [String]) -> DownloadTranslationsReceipt? {
+    func downloadTranslations(realm: Realm, translationIds: [String]) -> DownloadTranslationsReceipt? {
+        
+        guard !translationIds.isEmpty else {
+            return nil
+        }
+        
+        print("\n TranslationsDownloader: downloadTranslations -> \(translationIds)")
         
         let queue = OperationQueue()
         
@@ -55,6 +49,11 @@ class TranslationDownloader {
         for translationId in translationIds {
             
             guard !translationId.isEmpty else {
+                continue
+            }
+            
+            guard !translationsFileCache.translationZipIsCached(realm: realm, translationId: translationId) else {
+                print("   translationId already downloaded: \(translationId)")
                 continue
             }
             

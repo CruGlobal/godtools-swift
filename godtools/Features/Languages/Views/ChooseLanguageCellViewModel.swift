@@ -11,14 +11,14 @@ import Foundation
 class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     
     let languageName: String
-    let hidesDownloadButton: Bool
+    let languageIsDownloaded: Bool
     let hidesSelected: Bool
     let hidesSeparator: Bool
     
-    required init(language: LanguageModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, hidesDownloadButton: Bool, hidesSelected: Bool) {
+    required init(language: LanguageModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, downloadedLanguagesCache: DownloadedLanguagesCache, hidesDownloadButton: Bool, hidesSelected: Bool) {
         
         self.languageName = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
-        self.hidesDownloadButton = hidesDownloadButton
+        self.languageIsDownloaded = downloadedLanguagesCache.isDownloaded(languageId: language.id)
         self.hidesSelected = hidesSelected
         self.hidesSeparator = !hidesSelected
     }

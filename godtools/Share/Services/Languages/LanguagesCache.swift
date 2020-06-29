@@ -19,12 +19,19 @@ class LanguagesCache {
     }
     
     func getLanguages() -> [LanguageModel] {
-        let realm: Realm = realmDatabase.mainThreadRealm
+        return getLanguages(realm: realmDatabase.mainThreadRealm)
+    }
+    
+    func getLanguages(realm: Realm) -> [LanguageModel] {
         let realmLanguages: [RealmLanguage] = Array(realm.objects(RealmLanguage.self))
         return realmLanguages.map({LanguageModel(realmLanguage: $0)})
     }
     
     func getLanguage(id: String) -> LanguageModel? {
+        return getLanguage(realm: realmDatabase.mainThreadRealm, id: id)
+    }
+    
+    func getLanguage(realm: Realm, id: String) -> LanguageModel? {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: id) {
             return LanguageModel(realmLanguage: realmLanguage)

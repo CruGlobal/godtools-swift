@@ -11,6 +11,7 @@ import Foundation
 protocol ChooseLanguageViewModelType {
     
     var translateLanguageNameViewModel: TranslateLanguageNameViewModel { get }
+    var downloadedLanguagesCache: DownloadedLanguagesCache { get }
     var navTitle: ObservableValue<String> { get }
     var deleteLanguageButtonTitle: String { get }
     var hidesDeleteLanguageButton: ObservableValue<Bool> { get }

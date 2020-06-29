@@ -115,6 +115,18 @@ class TranslationsFileCache {
         }
     }
     
+    func translationZipIsCached(translationId: String) -> Bool {
+        return translationZipIsCached(realm: realmDatabase.mainThreadRealm, translationId: translationId)
+    }
+    
+    func translationZipIsCached(realm: Realm, translationId: String) -> Bool {        
+        if let _ = realm.object(ofType: RealmTranslationZipFile.self, forPrimaryKey: translationId) {
+            return true
+        }
+        
+        return false
+    }
+    
     func cacheTranslationZipData(translationId: String, zipData: Data, complete: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
                 
         let sha256FileCache: SHA256FilesCache = self.sha256FileCache

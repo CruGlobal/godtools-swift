@@ -29,9 +29,11 @@ class AppDiContainer {
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
     let favoritedResourcesCache: FavoritedResourcesCache
-    let resourcesTranslationsDownloader: ResourcesTranslationsDownloader
+    let downloadedLanguagesCache: DownloadedLanguagesCache
+    let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
     let initialDataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let languageTranslationsDownloader: LanguageTranslationsDownloader
     let articleAemImportDownloader: ArticleAemImportDownloader
     let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
@@ -61,25 +63,41 @@ class AppDiContainer {
         
         translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
-        translationDownloader = TranslationDownloader(translationsApi: translationsApi, translationsFileCache: translationsFileCache)
+        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
         
         attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache)
            
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
+              
+        downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
                 
-        resourcesTranslationsDownloader = ResourcesTranslationsDownloader(realmDatabase: realmDatabase, translationDownloader: translationDownloader)
+        favoritedResourceTranslationDownloader = FavoritedResourceTranslationDownloader(
+            realmDatabase: realmDatabase,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            translationDownloader: translationDownloader
+        )
         
         initialDataDownloader = InitialDataDownloader(
             realmDatabase: realmDatabase,
             resourcesDownloader: resourcesDownloader,
             attachmentsDownloader: attachmentsDownloader,
             languageSettingsCache: languageSettingsCache,
-            deviceLanguage: deviceLanguage
+            deviceLanguage: deviceLanguage,
+            favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
         languageSettingsService = LanguageSettingsService(dataDownloader: initialDataDownloader, languageSettingsCache: languageSettingsCache)
+        
+        languageTranslationsDownloader = LanguageTranslationsDownloader(
+            realmDatabase: realmDatabase,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            translationDownloader: translationDownloader
+        )
         
         articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
                 

@@ -16,6 +16,7 @@ class InitialDataDownloader: NSObject {
     private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType
     private let deviceLanguage: DeviceLanguageType
+    private let favoritedResourceTranslationDownloader : FavoritedResourceTranslationDownloader
     
     private var downloadResourcesOperation: OperationQueue?
     
@@ -25,7 +26,7 @@ class InitialDataDownloader: NSObject {
     let started: ObservableValue<Bool> = ObservableValue(value: false)
     let completed: ObservableValue<Result<ResourcesDownloaderResult, ResourcesDownloaderError>?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, resourcesDownloader: ResourcesDownloader, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType) {
+    required init(realmDatabase: RealmDatabase, resourcesDownloader: ResourcesDownloader, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.resourcesDownloader = resourcesDownloader
@@ -35,6 +36,7 @@ class InitialDataDownloader: NSObject {
         self.resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         self.languagesCache = LanguagesCache(realmDatabase: realmDatabase)
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
+        self.favoritedResourceTranslationDownloader = favoritedResourceTranslationDownloader
         
         super.init()
     }
@@ -81,6 +83,8 @@ class InitialDataDownloader: NSObject {
                 
                 self?.choosePrimaryLanguageIfNeeded()
                 
+                self?.downloadLatestTranslationsForFavoritedResources()
+                
                 dataDownloader.resourcesDownloader.completed.removeObserver(dataDownloader)
                 dataDownloader.started.accept(value: false)
                 dataDownloader.completed.accept(value: result)
@@ -100,6 +104,11 @@ class InitialDataDownloader: NSObject {
         case .failure( _):
             break
         }
+    }
+    
+    private func downloadLatestTranslationsForFavoritedResources() {
+        
+        favoritedResourceTranslationDownloader.downloadAllDownloadedLanguagesTranslationsForAllFavoritedResources()
     }
     
     private func choosePrimaryLanguageIfNeeded() {

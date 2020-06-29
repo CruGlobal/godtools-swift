@@ -62,22 +62,19 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Knowing God Personally" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="39M-E6-07b" userLabel="titleLabel">
-                                <rect key="frame" x="12" y="95" width="297" height="21.5"/>
+                                <rect key="frame" x="12" y="95" width="219" height="21.5"/>
                                 <fontDescription key="fontDescription" name="SFProText-Bold" family="SF Pro Text" pointSize="18"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-Ji-clW" userLabel="descriptionLabel">
-                                <rect key="frame" x="12" y="119.5" width="297" height="17"/>
+                                <rect key="frame" x="12" y="119.5" width="219" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" red="0.3529411764705882" green="0.3529411764705882" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Spanish" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVf-Mj-BIx" userLabel="parallelLanguageLabel">
-                                <rect key="frame" x="314" y="98" width="60" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="14p-ro-rwe"/>
-                                </constraints>
+                                <rect key="frame" x="236" y="98" width="138" height="15"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="12"/>
                                 <color key="textColor" red="0.50196078431372548" green="0.50980392156862742" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

@@ -174,6 +174,7 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
         let cellViewModel = ChooseLanguageCellViewModel(
             language: language,
             translateLanguageNameViewModel: viewModel.translateLanguageNameViewModel,
+            downloadedLanguagesCache: viewModel.downloadedLanguagesCache,
             hidesDownloadButton: true,
             hidesSelected: language.id != viewModel.selectedLanguage.value?.id
         )

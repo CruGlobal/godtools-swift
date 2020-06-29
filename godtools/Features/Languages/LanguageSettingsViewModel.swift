@@ -10,6 +10,7 @@ import Foundation
 
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
+    private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
@@ -20,9 +21,10 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
+        self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
@@ -33,30 +35,41 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     }
     
     deinit {
+        dataDownloader.completed.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func setupBinding() {
         
+        dataDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
+            DispatchQueue.main.async { [weak self] in
+                if result == nil {
+                    return
+                }
+                self?.reloadPrimaryLanguageButtonTitle()
+                self?.reloadParallelLanguageButtonTitle()
+            }
+        }
+        
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
+                self?.reloadPrimaryLanguageButtonTitle()
             }
         }
         
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadParallelLanguageButtonTitle(parallelLanguage: parallelLanguage)
+                self?.reloadParallelLanguageButtonTitle()
             }
         }
     }
     
-    private func reloadPrimaryLanguageButtonTitle(primaryLanguage: LanguageModel?) {
+    private func reloadPrimaryLanguageButtonTitle() {
         
         let title: String
         
-        if let primaryLanguage = primaryLanguage {
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value {
             title = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
@@ -66,11 +79,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         primaryLanguageButtonTitle.accept(value: title)
     }
     
-    private func reloadParallelLanguageButtonTitle(parallelLanguage: LanguageModel?) {
+    private func reloadParallelLanguageButtonTitle() {
             
         let title: String
         
-        if let parallelLanguage = parallelLanguage {
+        if let parallelLanguage = languageSettingsService.parallelLanguage.value {
             title = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {

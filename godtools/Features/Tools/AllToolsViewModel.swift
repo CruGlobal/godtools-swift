@@ -15,7 +15,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
-    let resourcesTranslationsDownloader: ResourcesTranslationsDownloader
     let languageSettingsService: LanguageSettingsService
     let favoritedResourcesCache: FavoritedResourcesCache
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
@@ -27,11 +26,10 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, resourcesTranslationsDownloader: ResourcesTranslationsDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
-        self.resourcesTranslationsDownloader = resourcesTranslationsDownloader
         self.languageSettingsService = languageSettingsService
         self.favoritedResourcesCache = favoritedResourcesCache
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel

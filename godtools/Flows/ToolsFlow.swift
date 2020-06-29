@@ -47,7 +47,6 @@ class ToolsFlow: Flow {
         let allToolsViewModel = AllToolsViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
-            resourcesTranslationsDownloader: appDiContainer.resourcesTranslationsDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
