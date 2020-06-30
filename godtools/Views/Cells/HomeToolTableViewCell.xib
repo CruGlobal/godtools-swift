@@ -21,7 +21,7 @@
             <rect key="frame" x="0.0" y="0.0" width="341" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="341" height="156"/>
+                <rect key="frame" x="0.0" y="0.0" width="341" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2s-WS-dBD">
@@ -60,26 +60,17 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Language" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Juy-iE-Z5I" userLabel="Parallel Language">
-                                                <rect key="frame" x="227.5" y="4" width="46.5" height="12"/>
+                                                <rect key="frame" x="238.5" y="4" width="46.5" height="12"/>
                                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="10"/>
                                                 <color key="textColor" red="0.50196078431372548" green="0.50980392156862742" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="greyCheck" translatesAutoresizingMaskIntoConstraints="NO" id="Hmh-Rc-eR0">
-                                                <rect key="frame" x="278" y="7.5" width="7" height="5"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="7" id="JqV-H8-uAQ"/>
-                                                    <constraint firstAttribute="height" constant="5" id="jE8-m2-vtq"/>
-                                                </constraints>
-                                            </imageView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Hmh-Rc-eR0" firstAttribute="centerY" secondItem="DXN-cA-xVE" secondAttribute="centerY" id="9qK-Ul-8F4"/>
                                             <constraint firstItem="Juy-iE-Z5I" firstAttribute="centerY" secondItem="DXN-cA-xVE" secondAttribute="centerY" id="DpN-I7-R4S"/>
+                                            <constraint firstAttribute="trailing" secondItem="Juy-iE-Z5I" secondAttribute="trailing" id="JEx-kg-uYc"/>
                                             <constraint firstAttribute="height" constant="20" id="OM7-Ks-6Ef"/>
-                                            <constraint firstAttribute="trailing" secondItem="Hmh-Rc-eR0" secondAttribute="trailing" id="Os8-6O-MF0"/>
                                             <constraint firstItem="di8-K7-ZJa" firstAttribute="centerY" secondItem="DXN-cA-xVE" secondAttribute="centerY" id="cbs-uA-BHh"/>
-                                            <constraint firstItem="Hmh-Rc-eR0" firstAttribute="leading" secondItem="Juy-iE-Z5I" secondAttribute="trailing" constant="4" id="klv-E6-PuR"/>
                                             <constraint firstItem="di8-K7-ZJa" firstAttribute="leading" secondItem="DXN-cA-xVE" secondAttribute="leading" id="wUS-pu-Ypz"/>
                                         </constraints>
                                     </view>
@@ -216,6 +207,5 @@
     </objects>
     <resources>
         <image name="cell_banner_placeholder" width="318" height="60"/>
-        <image name="greyCheck" width="8" height="6.5"/>
     </resources>
 </document>

@@ -79,8 +79,8 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         if resource.isAvailableInLanguage(parallelLanguage)  {
-            let check: String = "✓ "
-            languageLabel.text = check + parallelLanguage.localizedName()
+            let check: String = " ✓"
+            languageLabel.text = parallelLanguage.localizedName() + check
         } else {
             languageLabel.text = nil
         }
@@ -90,11 +90,11 @@ class HomeToolTableViewCell: UITableViewCell {
         let languagesManager = LanguagesManager()
         
         guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource.descr ?? ""
+            return resource.category ?? ""
         }
 
         guard let translation = resource.getTranslationForLanguage(language) else {
-            return resource.descr ?? ""
+            return resource.category ?? ""
         }
         guard let tagline = translation.tagline else {
             return translation.localizedDescription ?? ""

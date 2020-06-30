@@ -36,6 +36,7 @@ extension DownloadedResourceJson {
         return ["descr": "description",
                 "bannerId": "attr-banner",
                 "aboutBannerId": "attr-banner-about",
+                "catrgory": "attr-category",
                 "totalViews": "total-views",
                 "toolType": "resource-type",
                 "aboutOverviewVideoYouTube": "attr-about-overview-video-youtube"
