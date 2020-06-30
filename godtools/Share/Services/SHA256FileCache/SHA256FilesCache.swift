@@ -171,6 +171,12 @@ class SHA256FilesCache {
                 return .failure(error)
             }
             
+            // check if unzipped contents contains single directory and move those items up
+            let moveError: Error? = moveChildDirectoryContentsIntoParentDirectoryIfNeeded(parentDirectory: contentsTempDirectory)
+            if let moveError = moveError {
+                return .failure(moveError)
+            }
+            
             // get zipfile contents
             let zipFileContents: [URL]
             
@@ -214,7 +220,7 @@ class SHA256FilesCache {
                     }
                 }
                 else {
-                    return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed, file data does not exist."]))
+                    //return .failure(NSError(domain: errorDomain, code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed, file data does not exist."]))
                 }
             }
             
@@ -266,5 +272,66 @@ class SHA256FilesCache {
         case.failure(let error):
             return error
         }
+    }
+    
+    private func moveChildDirectoryContentsIntoParentDirectoryIfNeeded(parentDirectory: URL) -> Error? {
+       
+        // check if the unzipped contents is a single directory and if it is, move contents of this directory up a level into the contents directory
+        do {
+            let contentsOfParentDirectory: [String] = try fileManager.contentsOfDirectory(atPath: parentDirectory.path)
+            
+            if contentsOfParentDirectory.count == 1 {
+                
+                let childDirectory: URL = parentDirectory.appendingPathComponent(contentsOfParentDirectory[0])
+                
+                if isDirectory(url: childDirectory) {
+                    
+                    if let moveItemsError = moveContentsOfDirectory(directory: childDirectory, toDirectory: parentDirectory) {
+                        return moveItemsError
+                    }
+                    
+                    // delete directory since contents were moved
+                    do {
+                       try fileManager.removeItem(at: childDirectory)
+                    }
+                    catch let error {
+                        return error
+                    }
+                }
+            }// end moving contents of single directory up a level
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
+    }
+    
+    private func isDirectory(url: URL) -> Bool {
+        var isDirectory: ObjCBool = false
+        if fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory){
+            return isDirectory.boolValue
+        }
+        return false
+    }
+    
+    private func moveContentsOfDirectory(directory: URL, toDirectory: URL) -> Error? {
+        
+        do {
+            let contents: [String] = try fileManager.contentsOfDirectory(atPath: directory.path)
+            for item in contents {
+                do {
+                    try fileManager.moveItem(atPath: directory.appendingPathComponent(item).path, toPath: toDirectory.appendingPathComponent(item).path)
+                }
+                catch let error {
+                    return error
+                }
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
     }
 }

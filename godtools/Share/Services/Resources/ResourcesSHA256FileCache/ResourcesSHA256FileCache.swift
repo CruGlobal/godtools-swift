@@ -10,7 +10,7 @@ import Foundation
 
 class ResourcesSHA256FileCache: SHA256FilesCache {
     
-    required init(rootDirectory: String = "resources_files") {
+    required init(rootDirectory: String = "godtools_resources_files") {
         
         super.init(rootDirectory: rootDirectory)
     }

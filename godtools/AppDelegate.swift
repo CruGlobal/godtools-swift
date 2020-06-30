@@ -108,6 +108,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /// Called when the user selects a Home screen quick action
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         
+        print("\n QUICK ACTION TAPPED")
+        
         guard let shortcutItemType = ShortcutItemType.shortcutItemType(shortcutItem: shortcutItem) else {
             return
         }
@@ -115,7 +117,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch shortcutItemType {
             
         case .tool:
-            if let toolShortcutItem = shortcutItem as? ToolShortcutItem, let tractUrl = toolShortcutItem.tractUrl {
+            print("  quick action is tool")
+            if let toolShortcutItem = shortcutItem as? ToolShortcutItem, let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
+                print("    process tract url: \(tractUrl.absoluteString)")
                 processForDeepLinking(from: tractUrl, shouldDisplayLoadingScreen: false)
             }
         }
@@ -172,7 +176,7 @@ extension AppDelegate {
     func processForDeepLinking(from url: URL, shouldDisplayLoadingScreen: Bool = true) {
         
         // TODO: Test deep linking. ~Levi
-        
+                
         let languageOptions = parseLanguagesFrom(url, usingKey: AppDelegate.kPrimaryLanguageKey)
         
         guard let resource = parseResourceFrom(url) else {

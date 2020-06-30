@@ -42,16 +42,6 @@ class DownloadedResourceManager: GTDataManager {
 
         }
     }
-
-    
-    func loadInitialContentFromDisk() {
-        guard let path = Bundle.main.path(forResource: "resources", ofType: "json") else { return }
-        let resourcesPath = URL(fileURLWithPath: path)
-        guard let resourcesData = try? Data(contentsOf: resourcesPath) else { return }
-        let resourcesDeserialized = JSONResourceFactory.initializeArrayFrom(data: resourcesData, type: DownloadedResourceJson.self)
-
-        saveToDisk(resourcesDeserialized)
-    }
     
     func download(_ resource: DownloadedResource) {
         safelyWriteToRealm {

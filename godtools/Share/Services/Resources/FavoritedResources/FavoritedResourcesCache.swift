@@ -57,8 +57,11 @@ class FavoritedResourcesCache {
     
     func addToFavorites(resourceId: String) {
         
-        let realm: Realm = realmDatabase.mainThreadRealm
-        
+        addToFavorites(realm: realmDatabase.mainThreadRealm, resourceId: resourceId)
+    }
+    
+    func addToFavorites(realm: Realm, resourceId: String) {
+                
         if realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil {
             return
         }
@@ -84,8 +87,11 @@ class FavoritedResourcesCache {
     
     func removeFromFavorites(resourceId: String) {
         
-        let realm: Realm = realmDatabase.mainThreadRealm
-        
+        removeFromFavorites(realm: realmDatabase.mainThreadRealm, resourceId: resourceId)
+    }
+    
+    func removeFromFavorites(realm: Realm, resourceId: String) {
+                
         guard let favoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) else {
             return
         }

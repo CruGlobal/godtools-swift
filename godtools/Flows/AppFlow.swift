@@ -9,6 +9,8 @@
 import UIKit
 import MessageUI
 
+import RealmSwift
+
 class AppFlow: NSObject, FlowDelegate {
     
     private let viewsService: ViewsServiceType
@@ -37,14 +39,11 @@ class AppFlow: NSObject, FlowDelegate {
         
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setViewControllers([LaunchView()], animated: false)
+        navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
-    }
-    
-    private func requestInitialData() {
         
-        appDiContainer.initialDataDownloader.downloadData()
+        appDiContainer.initialDataDownloader.downloadInitialData()
     }
     
     private func setupInitialNavigation() {
@@ -69,8 +68,6 @@ class AppFlow: NSObject, FlowDelegate {
 
             if shouldCreateNewInstance || toolsFlow == nil {
 
-                requestInitialData()
-                
                 let toolsFlow: ToolsFlow = ToolsFlow(
                     flowDelegate: self,
                     appDiContainer: appDiContainer,

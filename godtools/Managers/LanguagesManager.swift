@@ -195,15 +195,6 @@ class LanguagesManager: GTDataManager {
         }
     }
     
-    func loadInitialContentFromDisk() {
-        guard let path = Bundle.main.path(forResource: "languages", ofType: "json") else { return }
-        let languagesURL = URL(fileURLWithPath:path)
-        guard let languagesData = try? Data(contentsOf: languagesURL) else { return }
-        let languagesDeserialized = JSONResourceFactory.initializeArrayFrom(data: languagesData, type: LanguageResource.self)
-        
-        saveToDisk(languagesDeserialized)
-    }
-    
     func recordLanguageShouldDownload(language: Language) {
         safelyWriteToRealm {
             language.shouldDownload = true

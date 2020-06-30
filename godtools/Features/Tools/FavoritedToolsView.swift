@@ -23,6 +23,7 @@ class FavoritedToolsView: UIView, NibBased {
     @IBOutlet weak private var searchImageView: UIImageView!
     @IBOutlet weak private var findToolsButton: UIButton!
     @IBOutlet weak private var toolsView: ToolsTableView!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,6 +71,10 @@ class FavoritedToolsView: UIView, NibBased {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
                 self?.findToolsView.alpha = hidesFindToolsView ? 0 : 1
             }, completion: nil)
+        }
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
     }
     

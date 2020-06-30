@@ -96,12 +96,12 @@ struct TranslationModel: TranslationModelType, Decodable {
         }
 
         // attributes
-        isPublished = try attributesContainer?.decode(Bool.self, forKey: .isPublished) ?? false
-        manifestName = try attributesContainer?.decode(String.self, forKey: .manifestName) ?? ""
-        translatedDescription = try attributesContainer?.decode(String.self, forKey: .translatedDescription) ?? ""
-        translatedName = try attributesContainer?.decode(String.self, forKey: .translatedName) ?? ""
-        translatedTagline = try attributesContainer?.decode(String.self, forKey: .translatedTagline) ?? ""
-        version = try attributesContainer?.decode(Int.self, forKey: .version) ?? -1
+        isPublished = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .isPublished) ?? false
+        manifestName = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifestName) ?? ""
+        translatedDescription = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedDescription) ?? ""
+        translatedName = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedName) ?? ""
+        translatedTagline = try attributesContainer?.decodeIfPresent(String.self, forKey: .translatedTagline) ?? ""
+        version = try attributesContainer?.decodeIfPresent(Int.self, forKey: .version) ?? -1
         
         // relationships - resource
         resource = try resourceContainer?.decode(ResourceModel.self, forKey: .data)

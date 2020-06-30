@@ -33,31 +33,6 @@ class DownloadedResource: Object {
     override static func primaryKey() -> String {
         return "remoteId"
     }
-
-    /// Returns true if the primary language translation is not available or is available and the download has completed
-    private func isPrimaryTranslationReady(language: Language?) -> Bool {
-        return !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language))
-    }
-    
-    /// Returns true if the parallel language translation is not set or not available or is available and the download has completed
-    private func isParallelTranslationReady(language: Language?) -> Bool {
-        return language == nil || !isAvailableInLanguage(language) || (isAvailableInLanguage(language) && isDownloadedInLanguage(language)) 
-    }
-    
-    // Returns whether the device default language translation is available and downloaded.
-    // If default langauge is not available, returns whether the English translation is downloaded.
-    private func isDefaultLanguageReady() -> Bool {
-        let languagesManager = LanguagesManager()
-        let preferredLanguage = languagesManager.loadDevicePreferredLanguageFromDisk()
-        let englishLanguage = languagesManager.loadFromDisk(code: "en")
-        
-        if isAvailableInLanguage(preferredLanguage) {
-            return isDownloadedInLanguage(preferredLanguage)
-        }
-        else {
-            return isDownloadedInLanguage(englishLanguage)
-        }
-    }
     
     func numberOfAvailableLanguages() -> Int {
         return Set(translations.filter( {$0.isPublished} ) as [Translation]).count
@@ -91,6 +66,7 @@ class DownloadedResource: Object {
     }
     
     func getTranslationForLanguage(_ language: Language) -> Translation? {
+        
         let predicate = NSPredicate(format: "language.remoteId = %@ AND isPublished = true", language.remoteId)
         
         return translations.filter(predicate).first

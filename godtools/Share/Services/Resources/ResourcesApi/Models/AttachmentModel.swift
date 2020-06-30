@@ -79,10 +79,10 @@ struct AttachmentModel: AttachmentModelType, Decodable {
         }
         
         // attributes
-        file = try attributesContainer?.decode(String.self, forKey: .file) ?? ""
-        fileFilename = try attributesContainer?.decode(String.self, forKey: .fileFilename) ?? ""
-        isZipped = try attributesContainer?.decode(Bool.self, forKey: .isZipped) ?? false
-        sha256 = try attributesContainer?.decode(String.self, forKey: .sha256) ?? ""
+        file = try attributesContainer?.decodeIfPresent(String.self, forKey: .file) ?? ""
+        fileFilename = try attributesContainer?.decodeIfPresent(String.self, forKey: .fileFilename) ?? ""
+        isZipped = try attributesContainer?.decodeIfPresent(Bool.self, forKey: .isZipped) ?? false
+        sha256 = try attributesContainer?.decodeIfPresent(String.self, forKey: .sha256) ?? ""
                 
         // relationships - resource
         resource = try resourceContainer?.decode(ResourceModel.self, forKey: .data)

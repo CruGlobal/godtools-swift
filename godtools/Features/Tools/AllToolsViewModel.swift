@@ -20,6 +20,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
+    let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -44,6 +45,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        dataDownloader.initialDeviceResourcesCompleted.removeObserver(self)
         dataDownloader.started.removeObserver(self)
         dataDownloader.completed.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
@@ -52,17 +54,21 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     private func setupBinding() {
         
+        dataDownloader.initialDeviceResourcesCompleted.addObserver(self) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadResourcesFromCache()
+            }
+        }
+        
         dataDownloader.started.addObserver(self) { [weak self] (started: Bool) in
             DispatchQueue.main.async { [weak self] in
                 self?.reloadIsLoading()
             }
         }
         
-        dataDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
+        dataDownloader.completed.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
-                if result != nil {
-                    self?.reloadResourcesFromCache()
-                }
+                self?.reloadResourcesFromCache()
             }
         }
         
@@ -80,7 +86,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func reloadResourcesFromCache() {
-               
+        
         let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources()
         tools.accept(value: resources)
         reloadIsLoading()

@@ -12,6 +12,7 @@ import RealmSwift
 class RealmDatabase {
     
     private static let config: Realm.Configuration = RealmDatabase.createConfig
+    private static let schemaVersion: UInt64 = 1
     
     private let backgroundQueue: DispatchQueue = DispatchQueue(label: "realm.background_queue", attributes: .concurrent)
     
@@ -52,7 +53,7 @@ class RealmDatabase {
         
         var config = Realm.Configuration()
         config.fileURL = config.fileURL?.deletingLastPathComponent().appendingPathComponent("godtools_realm")
-        config.schemaVersion = 1
+        config.schemaVersion = RealmDatabase.schemaVersion
         
         config.migrationBlock = { migration, oldSchemaVersion in
             

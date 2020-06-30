@@ -32,6 +32,9 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         super.init()
                 
         setupBinding()
+        
+        reloadPrimaryLanguageButtonTitle()
+        reloadParallelLanguageButtonTitle()
     }
     
     deinit {
@@ -42,11 +45,8 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     
     private func setupBinding() {
         
-        dataDownloader.completed.addObserver(self) { [weak self] (result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>?) in
+        dataDownloader.completed.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
-                if result == nil {
-                    return
-                }
                 self?.reloadPrimaryLanguageButtonTitle()
                 self?.reloadParallelLanguageButtonTitle()
             }

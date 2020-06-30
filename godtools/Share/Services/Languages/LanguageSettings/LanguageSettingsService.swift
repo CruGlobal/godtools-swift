@@ -34,11 +34,15 @@ class LanguageSettingsService: NSObject {
     private func setupBinding() {
         
         languageSettingsCache.primaryLanguageId.addObserver(self) { [weak self] (primaryLanguageId: String?) in
-            self?.reloadPrimaryLanguage()
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadPrimaryLanguage()
+            }
         }
         
         languageSettingsCache.parallelLanguageId.addObserver(self) { [weak self] (parallelLanguageId: String?) in
-            self?.reloadParallelLanguage()
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadParallelLanguage()
+            }
         }
     }
     

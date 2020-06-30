@@ -14,6 +14,7 @@ class AppDiContainer {
     private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
     private let legacyRealmDatabase: LegacyRealmDatabase = LegacyRealmDatabase()
+    private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
     private let languagesApi: LanguagesApiType
@@ -24,6 +25,7 @@ class AppDiContainer {
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
     
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
@@ -81,8 +83,27 @@ class AppDiContainer {
             translationDownloader: translationDownloader
         )
         
+        legacyRealmMigration = LegacyRealmMigration(
+            legacyRealmDatabase: legacyRealmDatabase,
+            realmDatabase: realmDatabase,
+            languageSettingsCache: languageSettingsCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache
+        )
+        
+        initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
+            realmDatabase: realmDatabase,
+            legacyRealmMigration: legacyRealmMigration,
+            attachmentsFileCache: attachmentsFileCache,
+            translationsFileCache: translationsFileCache,
+            realmResourcesCache: realmResourcesCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsCache: languageSettingsCache
+        )
+        
         initialDataDownloader = InitialDataDownloader(
             realmDatabase: realmDatabase,
+            initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
             attachmentsDownloader: attachmentsDownloader,
             languageSettingsCache: languageSettingsCache,
@@ -90,7 +111,10 @@ class AppDiContainer {
             favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
-        languageSettingsService = LanguageSettingsService(dataDownloader: initialDataDownloader, languageSettingsCache: languageSettingsCache)
+        languageSettingsService = LanguageSettingsService(
+            dataDownloader: initialDataDownloader,
+            languageSettingsCache: languageSettingsCache
+        )
         
         languageTranslationsDownloader = LanguageTranslationsDownloader(
             realmDatabase: realmDatabase,

@@ -33,10 +33,6 @@ class ToolsTableView: UIView, NibBased {
         tableView.dataSource = self
     }
     
-    @objc func reloadTableView() {
-        tableView.reloadData()
-    }
-    
     func configure(viewModel: ToolsViewModelType) {
         
         self.viewModel = viewModel
@@ -62,13 +58,18 @@ class ToolsTableView: UIView, NibBased {
         
         viewModel.tools.addObserver(self) { [weak self] (tools: [ResourceModel]) in
             self?.tableView.reloadData()
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
-                self?.tableView.alpha = tools.isEmpty ? 0 : 1
-            }, completion: nil)
+            self?.animateToolsTableAlpha(alpha: tools.isEmpty ? 0 : 1)
         }
         
         viewModel.toolRefreshed.addObserver(self) { [weak self] (indexPath: IndexPath) in
             self?.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        
+        viewModel.toolsAdded.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
+            if !indexPaths.isEmpty {
+                self?.tableView.insertRows(at: indexPaths, with: .fade)
+                self?.animateToolsTableAlpha(alpha: 1)
+            }
         }
         
         viewModel.toolsRemoved.addObserver(self) { [weak self] (indexPaths: [IndexPath]) in
@@ -96,6 +97,12 @@ class ToolsTableView: UIView, NibBased {
         if gestureReconizer.state == UIGestureRecognizer.State.began {
             tableView.isEditing = !tableView.isEditing
         }
+    }
+    
+    private func animateToolsTableAlpha(alpha: CGFloat) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            self.tableView.alpha = alpha
+        }, completion: nil)
     }
 }
 

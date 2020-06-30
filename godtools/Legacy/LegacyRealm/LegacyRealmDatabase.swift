@@ -15,29 +15,66 @@ class LegacyRealmDatabase {
     // into GTDataManager. ~Levi
     static var sharedMainThreadRealm: Realm!
     
+    private static let config: Realm.Configuration = LegacyRealmDatabase.createConfig
     private static let schemaVersion: UInt64 = 15
         
-    let mainThreadRealm: Realm // TODO: Remove after switching to background realm.
+    let mainThreadRealm: Realm
     
     required init() {
-        
-        let config = LegacyRealmDatabase.createConfig
-        
+                
         do {
-            mainThreadRealm = try Realm(configuration: config)
+            mainThreadRealm = try Realm(configuration: LegacyRealmDatabase.config)
         }
         catch let error {
             assertionFailure("RealmDatabase: Did fail to initialize realm with error: \(error.localizedDescription) ")
-            mainThreadRealm = try! Realm(configuration: config)
+            mainThreadRealm = try! Realm(configuration: LegacyRealmDatabase.config)
         }
         
         LegacyRealmDatabase.sharedMainThreadRealm = mainThreadRealm
     }
     
-    var resourcesIsEmpty: Bool {
-        return mainThreadRealm.objects(DownloadedResource.self).isEmpty
+    var isEmpty: Bool {
+        return isEmpty(realm: mainThreadRealm)
     }
     
+    func isEmpty(realm: Realm) -> Bool {
+        return realm.objects(DownloadedResource.self).isEmpty || realm.objects(Language.self).isEmpty
+    }
+    
+    func deleteDatabase() {
+        
+        let realm: Realm = mainThreadRealm
+        
+        do {
+            try realm.write {
+                realm.deleteAll()
+            }
+        }
+        catch {
+
+        }
+        
+        let fileManager: FileManager = FileManager.default
+                
+        if let realmURL = LegacyRealmDatabase.config.fileURL {
+            
+            let realmURLs: [URL] = [
+                realmURL,
+                realmURL.appendingPathExtension("lock"),
+                realmURL.appendingPathExtension("note"),
+                realmURL.appendingPathExtension("management")
+            ]
+            
+            for URL in realmURLs {
+                do {
+                    try fileManager.removeItem(at: URL)
+                } catch {
+
+                }
+            }
+        }
+    }
+
     private static var createConfig: Realm.Configuration  {
         
         return Realm.Configuration(

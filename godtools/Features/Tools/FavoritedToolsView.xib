@@ -16,6 +16,7 @@
             <connections>
                 <outlet property="findToolsButton" destination="P2Q-BC-SVT" id="OaD-xs-sqS"/>
                 <outlet property="findToolsView" destination="jgm-cd-FPm" id="OnB-hg-39r"/>
+                <outlet property="loadingView" destination="t2W-QV-xap" id="pG0-L7-Ft0"/>
                 <outlet property="searchImageView" destination="UOx-hw-u0b" id="urn-YI-cP1"/>
                 <outlet property="toolsView" destination="8ja-u9-mhA" id="0Aa-KG-7b2"/>
             </connections>
@@ -58,9 +59,15 @@
                         <constraint firstItem="P2Q-BC-SVT" firstAttribute="top" secondItem="UOx-hw-u0b" secondAttribute="bottom" constant="24" id="xZx-6w-l4B"/>
                     </constraints>
                 </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="t2W-QV-xap" userLabel="loadingView">
+                    <rect key="frame" x="197" y="438" width="20" height="20"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="t2W-QV-xap" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Gk-zF-a36"/>
+                <constraint firstItem="t2W-QV-xap" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Hss-Qu-yF1"/>
                 <constraint firstAttribute="bottom" secondItem="jgm-cd-FPm" secondAttribute="bottom" id="J0v-6r-BgE"/>
                 <constraint firstItem="8ja-u9-mhA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OFj-Vo-OWV"/>
                 <constraint firstItem="jgm-cd-FPm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QGZ-qH-xsn"/>

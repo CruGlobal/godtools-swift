@@ -38,3 +38,9 @@ class AttachmentFile {
         }
     }
 }
+
+extension AttachmentFile: Equatable {
+    static func ==(lhs: AttachmentFile, rhs: AttachmentFile) -> Bool {
+        return lhs.sha256 == rhs.sha256 && lhs.pathExtension == rhs.pathExtension
+    }
+}

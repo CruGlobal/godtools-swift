@@ -16,6 +16,7 @@ protocol ToolsViewModelType {
     var fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
+    var toolsAdded: ObservableValue<[IndexPath]> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }
     var toolListIsEditable: Bool { get }
     var toolListIsEditing: ObservableValue<Bool> { get }
@@ -41,6 +42,17 @@ extension ToolsViewModelType {
     
     func reloadAllTools() {
         tools.accept(value: tools.value)
+    }
+    
+    func addTool(tool: ResourceModel) {
+        
+        var updatedToolsList: [ResourceModel] = tools.value
+        updatedToolsList.insert(tool, at: 0)
+        
+        let addedIndexPaths: [IndexPath] = [IndexPath(row: 0, section: 0)]
+        
+        tools.setValue(value: updatedToolsList)
+        toolsAdded.accept(value: addedIndexPaths)
     }
 
     func removeTools(toolIdsToRemove: [String]) {

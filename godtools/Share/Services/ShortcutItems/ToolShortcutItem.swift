@@ -12,7 +12,7 @@ class ToolShortcutItem: UIApplicationShortcutItem {
     
     private static let keyUserInfoTractUrl: String = "key_userinfo_tract_url"
     
-    required init(resource: RealmResource, primaryLanguageCode: String, parallelLanguageCode: String?) {
+    static func shortcutItem(resource: RealmResource, primaryLanguageCode: String, parallelLanguageCode: String?) -> UIApplicationShortcutItem {
         
         let shortcutName: String
 
@@ -33,7 +33,7 @@ class ToolShortcutItem: UIApplicationShortcutItem {
             urlString = primaryUrlString
         }
         
-        super.init(
+        return UIApplicationShortcutItem(
             type: ShortcutItemType.tool.rawValue,
             localizedTitle: shortcutName,
             localizedSubtitle: nil,
@@ -42,9 +42,8 @@ class ToolShortcutItem: UIApplicationShortcutItem {
         )
     }
     
-    var tractUrl: URL? {
-        
-        if let urlString = userInfo?[ToolShortcutItem.keyUserInfoTractUrl] as? String {
+    static func getTractUrl(shortcutItem: UIApplicationShortcutItem) -> URL? {
+        if let urlString = shortcutItem.userInfo?[ToolShortcutItem.keyUserInfoTractUrl] as? String {
             return URL(string: urlString)
         }
         return nil

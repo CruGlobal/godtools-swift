@@ -53,7 +53,7 @@ class ShortcutItemsService {
         
         for resource in resources {
             
-            shortcutItems.append(ToolShortcutItem(
+            shortcutItems.append(ToolShortcutItem.shortcutItem(
                 resource: resource,
                 primaryLanguageCode: primaryLanguageCode,
                 parallelLanguageCode: parallelLanguageCode
