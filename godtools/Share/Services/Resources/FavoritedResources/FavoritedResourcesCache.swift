@@ -202,7 +202,7 @@ class FavoritedResourcesCache {
         resourceSorted.accept(value: resourceId)
     }
     
-    private func flattenSortOrder(realm: Realm, startSortOrder: Int) {
+    private func flattenSortOrder(realm: Realm, startSortOrder: Int) -> Error? {
         
         let sortedFavorites: [RealmFavoritedResource] = Array(realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: "sortOrder"))
         
@@ -218,7 +218,35 @@ class FavoritedResourcesCache {
             }
         }
         catch let error {
-            assertionFailure(error.localizedDescription)
+            return error
         }
+        
+        return nil
+    }
+    
+    func bulkDeleteFavoritedResources(realm: Realm, resourceIds: [String]) -> Error? {
+        
+        var favoritedResourcesToDelete: [RealmFavoritedResource] = Array()
+        
+        for resourceId in resourceIds {
+            if let realmFavoritedResource = realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) {
+                favoritedResourcesToDelete.append(realmFavoritedResource)
+            }
+        }
+        
+        guard !favoritedResourcesToDelete.isEmpty else {
+            return nil
+        }
+        
+        do {
+            try realm.write {
+                realm.delete(favoritedResourcesToDelete)
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return flattenSortOrder(realm: realm, startSortOrder: 0)
     }
 }

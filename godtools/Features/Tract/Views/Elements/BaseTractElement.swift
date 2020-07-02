@@ -90,6 +90,7 @@ class BaseTractElement: UIView {
         return false
     }
     
+    private(set) var dependencyContainer: BaseTractElementDiContainer!
     let isPrimaryRightToLeft: Bool
     
     weak var parent: BaseTractElement?
@@ -142,8 +143,9 @@ class BaseTractElement: UIView {
         
     // MARK: - Initializers
     
-    init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement, isPrimaryRightToLeft: Bool) {
+    init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
+        self.dependencyContainer = dependencyContainer
         self.isPrimaryRightToLeft = isPrimaryRightToLeft
         super.init(frame: frame)
         self.parent = parent
@@ -155,7 +157,8 @@ class BaseTractElement: UIView {
         setupView(properties: [String: Any]())
     }
     
-    init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, isPrimaryRightToLeft: Bool) {
+    init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
+        self.dependencyContainer = dependencyContainer
         self.isPrimaryRightToLeft = isPrimaryRightToLeft
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
@@ -171,7 +174,8 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: 0.0)
     }
     
-    required init(data: XMLIndexer, parent: BaseTractElement, isPrimaryRightToLeft: Bool) {
+    required init(data: XMLIndexer, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
+        self.dependencyContainer = dependencyContainer
         self.isPrimaryRightToLeft = isPrimaryRightToLeft
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
@@ -179,14 +183,16 @@ class BaseTractElement: UIView {
         setupElement(data: data, startOnY: CGFloat(0.0))
     }
     
-    init(data: XMLIndexer, startOnY yPosition: CGFloat, isPrimaryRightToLeft: Bool) {
+    init(data: XMLIndexer, startOnY yPosition: CGFloat, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
+        self.dependencyContainer = dependencyContainer
         self.isPrimaryRightToLeft = isPrimaryRightToLeft
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
         setupElement(data: data, startOnY: yPosition)
     }
     
-    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int, isPrimaryRightToLeft: Bool) {
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
+        self.dependencyContainer = dependencyContainer
         self.isPrimaryRightToLeft = isPrimaryRightToLeft
         let frame = CGRect(x: 0.0, y: 0.0, width: 0.0, height: 0.0)
         super.init(frame: frame)
@@ -198,6 +204,7 @@ class BaseTractElement: UIView {
     required init?(coder aDecoder: NSCoder) {
         self.isPrimaryRightToLeft = false
         super.init(coder: aDecoder)
+        fatalError("Not implemented")
     }
     
     func reset() {
@@ -305,7 +312,7 @@ class BaseTractElement: UIView {
         }
         
         if self.isKind(of: TractPageContainer.self) && !self.didFindCallToAction && !(self.tractConfigurations!.pagination?.didReachEnd())! {
-            let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self, isPrimaryRightToLeft: isPrimaryRightToLeft)
+            let element = TractCallToAction(children: [XMLIndexer](), startOnY: currentYPosition, parent: self, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
             currentYPosition = element.elementFrame.yEndPosition()
             self.elements!.append(element)
         }

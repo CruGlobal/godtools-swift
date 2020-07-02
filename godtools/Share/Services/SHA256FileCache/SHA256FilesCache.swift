@@ -274,6 +274,27 @@ class SHA256FilesCache {
         }
     }
     
+    func removeFile(location: SHA256FileLocation) -> Error? {
+        
+        switch getFile(location: location) {
+        case .success(let fileUrl):
+            return removeItem(url: fileUrl)
+        case .failure(let error):
+            return error
+        }
+    }
+    
+    func removeItem(url: URL) -> Error? {
+        
+        do {
+            try fileManager.removeItem(at: url)
+            return nil
+        }
+        catch let error {
+            return error
+        }
+    }
+    
     private func moveChildDirectoryContentsIntoParentDirectoryIfNeeded(parentDirectory: URL) -> Error? {
        
         // check if the unzipped contents is a single directory and if it is, move contents of this directory up a level into the contents directory

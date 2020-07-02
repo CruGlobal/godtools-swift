@@ -17,7 +17,8 @@ class TractViewModel: TractViewModelType {
     private let parallelTranslationManifest: TranslationManifestData?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
-    private let viewsService: ViewsServiceType
+    private let followUpsService: FollowUpsService
+    private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
@@ -38,7 +39,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, viewsService: ViewsServiceType, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, followUpsService: FollowUpsService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -48,6 +49,7 @@ class TractViewModel: TractViewModelType {
         self.parallelTranslationManifest = parallelTranslationManifest
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.tractManager = tractManager
+        self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
@@ -83,8 +85,8 @@ class TractViewModel: TractViewModelType {
         
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
-        _ = viewsService.addNewResourceViews(resourceIds: [resource.id])
-        
+        _ = viewsService.postNewResourceView(resourceId: resource.id)
+                
         let startingTractPage: Int = tractPage ?? 0
         
         cacheTractPageIfNeeded(
@@ -398,6 +400,11 @@ class TractViewModel: TractViewModelType {
     
     private func buildTractPage(page: Int, language: LanguageModel, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
         
+        let dependencyContainer = BaseTractElementDiContainer(
+            followUpsService: followUpsService,
+            analytics: analytics
+        )
+        
         let pages: [XMLPage] = tractXmlResource.pages
         
         if page >= 0 && page < pages.count {
@@ -416,6 +423,7 @@ class TractViewModel: TractViewModelType {
                 manifestProperties: tractManifest,
                 configurations: config,
                 parallelElement: parallelTractPage,
+                dependencyContainer: dependencyContainer,
                 isPrimaryRightToLeft: isRightToLeftLanguage
             )
             

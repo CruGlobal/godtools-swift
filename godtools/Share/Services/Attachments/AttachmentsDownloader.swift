@@ -20,23 +20,13 @@ class AttachmentsDownloader {
     let attachmentDownloaded: SignalValue<Result<AttachmentFile, AttachmentsDownloaderError>> = SignalValue()
     let completed: Signal = Signal()
     
-    required init(attachmentsFileCache: AttachmentsFileCache) {
-        
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        self.session = URLSession(configuration: configuration)
+    required init(attachmentsFileCache: AttachmentsFileCache, sharedSession: SharedSessionType) {
+                    
+        self.session = sharedSession.session
         self.attachmentsFileCache = attachmentsFileCache
     }
     
-    func downloadAndCacheAttachments(from result: ResourcesDownloaderResult) {
+    func downloadAndCacheAttachments(from result: ResourcesCacheResult) {
         
         if currentQueue != nil {
             assertionFailure("ResourceAttachmentsDownloaderAndCache:  Download is already running, this process only needs to run once when reloading all resource attachments from the server.")

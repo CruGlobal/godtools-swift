@@ -28,7 +28,6 @@ class DownloadedResource: Object {
     
     let attachments = List<Attachment>()
     let translations = List<Translation>()
-    let categories =  List<Category>()
     
     override static func primaryKey() -> String {
         return "remoteId"

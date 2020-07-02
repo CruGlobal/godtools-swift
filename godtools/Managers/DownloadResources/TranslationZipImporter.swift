@@ -56,53 +56,7 @@ class TranslationZipImporter: GTDataManager {
     }
 
     private func addTranslationsToQueue(_ translations: List<Translation>) {
-        let translations = Array(translations)
-        
-        let primaryTranslations = translations.filter( {
-            $0.shouldDownload() && $0.language != nil && !languageManager.isPrimaryLanguage(language: $0.language!)
-        } )
-        
-        translationDownloadQueue.append(contentsOf: primaryTranslations.map({ (translation) -> Translation in
-            safelyWriteToRealm {
-                translation.isDownloadInProgress = true
-            }
-            return translation
-        }))
-        
-        let parallelTranslations = translations.filter( {
-            $0.shouldDownload() && $0.language != nil && !languageManager.isParallelLanguage(language: $0.language!)
-        } )
-        
-        translationDownloadQueue.append(contentsOf: parallelTranslations.map({ (translation) -> Translation in
-            safelyWriteToRealm {
-                translation.isDownloadInProgress = true
-            }
-            return translation
-        }))
-        
-        for translation in translations {
-            guard translation.shouldDownload() else {
-                continue
-            }
-            
-            guard translationDownloadQueue.contains(translation) == false else {
-                continue
-            }
-                        
-            guard let resource = translation.downloadedResource, resource.shouldDownload else {
-                continue
-            }
-            
-            guard let language = translation.language, language.shouldDownload else {
-                continue
-            }
-            
-            safelyWriteToRealm {
-                translation.isDownloadInProgress = true
-            }
 
-            translationDownloadQueue.append(translation)
-        }
     }
 
     private func processDownloadQueue() {
@@ -127,9 +81,7 @@ class TranslationZipImporter: GTDataManager {
             
             return .value(())
             }.ensure {
-                self.safelyWriteToRealm {
-                    translation.isDownloadInProgress = false
-                }
+
         }
     }
     
@@ -215,26 +167,7 @@ class TranslationZipImporter: GTDataManager {
     }
     
     private func recordReferencedFiles(directory: URL, translationId: String) throws {
-        guard let translation = findEntityByRemoteId(Translation.self, remoteId: translationId) else {
-            return
-        }
         
-        let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        
-        safelyWriteToRealm {
-            for file in files {
-                let filename = file.lastPathComponent
-                if let referencedFile = findEntity(ReferencedFile.self, byAttribute: "filename", withValue: filename) {
-                    referencedFile.translations.append(translation)
-                    continue
-                }
-                
-                let referencedFile = ReferencedFile()
-                referencedFile.filename = file.lastPathComponent
-                referencedFile.translations.append(translation)
-                realm.add(referencedFile)
-            }
-        }
     }
     
     private func moveFilesFrom(_ path: URL) throws {

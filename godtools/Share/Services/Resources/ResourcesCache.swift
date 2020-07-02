@@ -43,6 +43,14 @@ class ResourcesCache {
         return nil
     }
     
+    func getResource(abbreviation: String) -> ResourceModel? {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        if let realmResource = realm.objects(RealmResource.self).filter("abbreviation = '\(abbreviation)'").first {
+            return ResourceModel(realmResource: realmResource)
+        }
+        return nil
+    }
+    
     func getResourceLanguages(resourceId: String) -> [LanguageModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId) {

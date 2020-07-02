@@ -24,10 +24,10 @@ extension BaseTractElement {
             nodeClassType == TractEmails.self ||
             nodeClassType == TractEmail.self {
             
-            return nodeClassType.init(data: data, parent: self, isPrimaryRightToLeft: isPrimaryRightToLeft)
+            return nodeClassType.init(data: data, parent: self, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
         }
         else {
-            let element = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber, isPrimaryRightToLeft: isPrimaryRightToLeft)
+            let element = nodeClassType.init(data: data, startOnY: yPosition, parent: self, elementNumber: elementNumber, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
             return element
         }
     }
@@ -103,6 +103,7 @@ extension BaseTractElement {
     }
     
     func sendMessageToElement(listener: String) -> EventResult {
+        
         let relay = AnalyticsRelay.shared
         if TractBindings.bindings[listener] != nil {
             guard let view = TractBindings.bindings[listener] else { return .viewNotFound }
@@ -121,7 +122,79 @@ extension BaseTractElement {
             relay.viewListener = listener
         }
         
-        return GTGlobalTractBindings.listen(listener: listener, element: self)        
+        switch listener {
+        
+        case "followup:send":
+                        
+            guard let form = BaseTractElement.getFormForElement(self) else {
+                return .viewNotFound
+            }
+            
+            if(!form.validateForm()) {
+                return .failure
+            }
+            
+            let params = form.getFormData()
+            
+            let name: String? = params["name"]
+            let email: String? = params["email"]
+            let destinationId: Int?
+            let languageId: Int?
+            
+            if let destinationIdString = params["destination_id"] {
+                destinationId = Int(destinationIdString)
+            }
+            else {
+                destinationId = nil
+            }
+            
+            if let languageIdString = params["language_id"] {
+                languageId = Int(languageIdString)
+            }
+            else {
+                languageId = nil
+            }
+            
+            if let name = name, let email = email, let destinationId = destinationId, let languageId = languageId {
+                
+                let followUp = FollowUpModel(
+                    name: name,
+                    email: email,
+                    destinationId: Int(destinationId),
+                    languageId: Int(languageId)
+                )
+                
+                _ = dependencyContainer.followUpsService.postNewFollowUp(followUp: followUp)
+            }
+            
+            if let resource = form.tractConfigurations?.resource {
+                
+                let action: String?
+                
+                switch resource.abbreviation {
+                case "kgp":
+                    action = AdobeAnalyticsConstants.Values.kgpEmailSignUp
+                case "fourlaws":
+                    action = AdobeAnalyticsConstants.Values.fourLawsEmailSignUp
+                default :
+                    action = nil
+                }
+                
+                if let actionName = action {
+                    
+                    dependencyContainer.analytics.trackActionAnalytics.trackAction(
+                        screenName: nil,
+                        actionName: actionName,
+                        data: [:]
+                    )
+                }
+            }
+            
+        default: break
+
+        }
+        
+        return .success
     }
     
     @objc func receiveMessage() { }

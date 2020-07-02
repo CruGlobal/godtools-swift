@@ -1,5 +1,5 @@
 //
-//  RealmFailedResourceView.swift
+//  RealmResourceView.swift
 //  godtools
 //
 //  Created by Levi Eggert on 6/8/20.
@@ -9,10 +9,10 @@
 import Foundation
 import RealmSwift
 
-class RealmFailedResourceView: Object, FailedResourceViewModelType {
+class RealmResourceView: Object, ResourceViewModelType {
     
     @objc dynamic var resourceId: String = ""
-    @objc dynamic var failedViewsCount: Int = 0
+    @objc dynamic var quantity: Int = 0
     
     override static func primaryKey() -> String? {
         return "resourceId"

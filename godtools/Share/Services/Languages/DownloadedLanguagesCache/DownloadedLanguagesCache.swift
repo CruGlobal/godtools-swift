@@ -64,4 +64,30 @@ class DownloadedLanguagesCache {
         
         languageDownloaded.accept(value: languageId)
     }
+    
+    func bulkDeleteDownloadedLanguages(realm: Realm, languageIds: [String]) -> Error? {
+        
+        var downloadedLanguagesToDelete: [RealmDownloadedLanguage] = Array()
+        
+        for languageId in languageIds {
+            if let realmDownloadedLanguage = realm.object(ofType: RealmDownloadedLanguage.self, forPrimaryKey: languageId) {
+                downloadedLanguagesToDelete.append(realmDownloadedLanguage)
+            }
+        }
+        
+        guard !downloadedLanguagesToDelete.isEmpty else {
+            return nil
+        }
+        
+        do {
+            try realm.write {
+                realm.delete(downloadedLanguagesToDelete)
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
+    }
 }

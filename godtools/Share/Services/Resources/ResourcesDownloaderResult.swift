@@ -10,10 +10,12 @@ import Foundation
 
 class ResourcesDownloaderResult {
     
-    let latestAttachmentFiles: [AttachmentFile]
+    let languages: [LanguageModel]
+    let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel
     
-    required init(latestAttachmentFiles: [AttachmentFile]) {
+    required init(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel) {
         
-        self.latestAttachmentFiles = latestAttachmentFiles
+        self.languages = languages
+        self.resourcesPlusLatestTranslationsAndAttachments = resourcesPlusLatestTranslationsAndAttachments
     }
 }

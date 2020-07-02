@@ -59,46 +59,15 @@ class LanguagesManager: GTDataManager {
     }
     
     func loadFromDisk(id: String) -> Language? {
-        return findEntityByRemoteId(Language.self, remoteId: id)
+        return nil
     }
     
     func loadFromDisk(code: String) -> Language? {
-        return findEntity(Language.self, byAttribute: "code", withValue: code)
+        return nil
     }
     
     func loadFromDisk(locale: Locale) -> Language? {
-        
-        let separator: String = "-"
-        var possibleLocaleIdCombinations: [String] = Array()
-        
-        if let languageCode = locale.languageCode, let scriptCode = locale.scriptCode, let regionCode = locale.regionCode {
-            let code: String = [languageCode, scriptCode, regionCode].joined(separator: separator)
-            possibleLocaleIdCombinations.append(code)
-        }
-        
-        if let languageCode = locale.languageCode, let scriptCode = locale.scriptCode {
-            let code: String = [languageCode, scriptCode].joined(separator: separator)
-            possibleLocaleIdCombinations.append(code)
-        }
-        
-        if let languageCode = locale.languageCode, let regionCode = locale.regionCode {
-            let code: String = [languageCode, regionCode].joined(separator: separator)
-            possibleLocaleIdCombinations.append(code)
-        }
-        
-        if let languageCode = locale.languageCode {
-            possibleLocaleIdCombinations.append(languageCode)
-        }
-        
-        for id in possibleLocaleIdCombinations {
             
-            let languages = realm.objects(Language.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), id.lowercased()))
-            
-            if let language = languages.first {
-                return language
-            }
-        }
-                
         return nil
     }
     
@@ -131,29 +100,15 @@ class LanguagesManager: GTDataManager {
             return language
         }
         else {
-            // TOOD: Why is this needed? ~Levi
-            if GTSettings.shared.parallelLanguageCode == nil {
-                return nil
-            }
-            if let parallelLanguageCode = loadFromDisk(code: GTSettings.shared.parallelLanguageCode!) {
-                return parallelLanguageCode
-            }
+
         }
         
         return nil
     }
     
     func loadFromDisk() -> List<Language> {
-        let languagesUnfiltered = findAllEntities(Language.self)
-
-        let languages = languagesUnfiltered.filter { (lang) -> Bool in
-            return lang.translations.contains(where: { $0.isPublished })
-        }
         
-        let lSeq = languages.sorted(by: { return $0.localizedName() < $1.localizedName() })
-        let ls = List<Language>()
-        ls.append(objectsIn: lSeq)
-        return ls
+        return List<Language>()
     }
     
     func loadFromRemote() -> Promise<List<Language>> {
@@ -196,54 +151,15 @@ class LanguagesManager: GTDataManager {
     }
     
     func recordLanguageShouldDownload(language: Language) {
-        safelyWriteToRealm {
-            language.shouldDownload = true
-        }
+
     }
     
     private func saveToDisk(_ languages: [LanguageResource]) {
         
-        safelyWriteToRealm {
-            var cachedLanguages = [Language]()
-            for remoteLanguage in languages {
-            
-                // update language
-                if let cachedlanguage = findEntityByRemoteId(Language.self, remoteId: remoteLanguage.id) {
-                    cachedlanguage.code = remoteLanguage.code
-                    cachedlanguage.direction = remoteLanguage.direction
-                    cachedlanguage.name = remoteLanguage.name
-                    cachedLanguages.append(cachedlanguage)
-                    realm.add(cachedlanguage, update: .all)
-                }
-                // add language
-                else {
-                    let newCachedLanguage = Language()
-                    newCachedLanguage.remoteId = remoteLanguage.id
-                    newCachedLanguage.code = remoteLanguage.code
-                    newCachedLanguage.direction = remoteLanguage.direction  // IO: small bugfix
-                    newCachedLanguage.name = remoteLanguage.name
-                    cachedLanguages.append(newCachedLanguage)
-                    realm.add(newCachedLanguage)
-
-                }
-            }
-            
-            purgeDeletedLanguages(foundLanguages: cachedLanguages)
-        }
     }
     
     private func purgeDeletedLanguages(foundLanguages: [Language]) {
-        let allLanguages = findAllEntities(Language.self)
-        
-        if foundLanguages.count == allLanguages.count {
-            return
-        }
-        
-        for language in allLanguages {
-            if !foundLanguages.contains(where: { return $0.remoteId == language.remoteId }) {
-                realm.delete(language)
-            }
-        }
+
     }
     
     func updatePrimaryLanguage(language: Language) {
@@ -275,22 +191,6 @@ class LanguagesManager: GTDataManager {
         parallelLanguage.accept(value: nil)
     }
     
-    func setInitialPrimaryLanguage(forceEnglish: Bool = false) {
-        safelyWriteToRealm {
-            if !forceEnglish {
-                if let preferredLanguage = loadDevicePreferredLanguageFromDisk() {
-                    updatePrimaryLanguage(language: preferredLanguage)
-                    preferredLanguage.shouldDownload = true
-                    return
-                }
-            }
-            if let english = loadFromDisk(code: "en") {
-                english.shouldDownload = true
-                updatePrimaryLanguage(language: english)
-            }
-        }
-    }
-    
     func isPrimaryLanguage(language: Language) -> Bool {
         return true//return language.remoteId == languageSettingsCache.primaryLanguageId.value
     }
@@ -299,13 +199,6 @@ class LanguagesManager: GTDataManager {
         return true//return language.remoteId == languageSettingsCache.parallelLanguageId.value
     }
 
-    func setPrimaryLanguageForInitialDeviceLanguageDownload() {
-        if !UserDefaults.standard.bool(forKey: GTConstants.kDownloadDeviceLocaleKey) {
-            setInitialPrimaryLanguage()
-            UserDefaults.standard.set(true, forKey: GTConstants.kDownloadDeviceLocaleKey)
-        }
-    }
-    
     override func buildURL() -> URL? {
         let baseUrl: String = AppConfig().mobileContentApiBaseUrl
         let path: String = "/languages"

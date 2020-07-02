@@ -11,15 +11,14 @@ import RealmSwift
 
 class LegacyRealmMigration {
     
-    private let legacyRealmDatabase: LegacyRealmDatabase
+    private let legacyRealmDatabase: LegacyRealmDatabase = LegacyRealmDatabase()
     private let realmDatabase: RealmDatabase
     private let languageSettingsCache: LanguageSettingsCacheType
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     
-    required init(legacyRealmDatabase: LegacyRealmDatabase, realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
+    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
         
-        self.legacyRealmDatabase = legacyRealmDatabase
         self.realmDatabase = realmDatabase
         self.languageSettingsCache = languageSettingsCache
         self.favoritedResourcesCache = favoritedResourcesCache
@@ -32,13 +31,18 @@ class LegacyRealmMigration {
         
         DispatchQueue.main.async { [weak self] in
             
-            guard !legacyRealmDatabase.isEmpty else {
+            print("\n LegacyRealmMigration: legacyRealmDatabase.databaseExists: \(legacyRealmDatabase.databaseExists)")
+            
+            guard legacyRealmDatabase.databaseExists else {
                 complete(false)
                 return
             }
             
-            let legacyRealm: Realm = legacyRealmDatabase.mainThreadRealm
-            
+            guard let legacyRealm = legacyRealmDatabase.getMainThreadRealm() else {
+                complete(false)
+                return
+            }
+                        
             let sortedLegacyResources: [DownloadedResource] = Array(legacyRealm.objects(DownloadedResource.self).sorted(byKeyPath: "sortOrder", ascending: false))
             let legacyLanguages: [Language] = Array(legacyRealm.objects(Language.self))
             
@@ -67,7 +71,7 @@ class LegacyRealmMigration {
             }
             
             // delete legacy realm database and files
-            legacyRealmDatabase.deleteDatabase()
+            legacyRealmDatabase.deleteDatabase(realm: legacyRealm)
             
             // delete old attachments and translations directories
             let fileManager: FileManager = FileManager.default

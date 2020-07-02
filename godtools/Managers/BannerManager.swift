@@ -101,28 +101,11 @@ class BannerManager: GTDataManager {
     }
     
     func saveImageToDisk(_ image: Data, attachment: Attachment) {
-        let path = bannersPath.appendingPathComponent(attachment.sha!).appendingPathExtension(defaultExtension)
         
-        safelyWriteToRealm {
-            do {
-                try image.write(to: path)
-                
-                //NOTE: This could require a realm.write block, but I'm not sure. It's operating in a thread that *should*
-                //already be in a block, but given the nesting of promises, i'm not 100% sure. -RTC
-                attachment.isBanner = true
-                
-            } catch {
-                Crashlytics().recordError(error, withAdditionalUserInfo: ["customMessage": "Error writing banner."])
-            }
-        }
     }
     
     private func loadAttachment(remoteId: String?) -> Attachment? {
-        if remoteId == nil {
-            return nil
-        }
-        
-        return findEntityByRemoteId(Attachment.self, remoteId: remoteId!)
+        return nil
     }
     
     private func createBannersDirectoryIfNecessary() {

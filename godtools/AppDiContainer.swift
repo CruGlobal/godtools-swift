@@ -13,10 +13,10 @@ class AppDiContainer {
     
     private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
-    private let legacyRealmDatabase: LegacyRealmDatabase = LegacyRealmDatabase()
     private let legacyRealmMigration: LegacyRealmMigration
     private let realmDatabase: RealmDatabase
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
+    private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
     private let translationsApi: TranslationsApiType
@@ -25,8 +25,9 @@ class AppDiContainer {
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    private let resourcesCleanUp: ResourcesCleanUp
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
-    
+
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
     let translationDownloader: TranslationDownloader
@@ -46,7 +47,11 @@ class AppDiContainer {
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
+    let globalActivityServices: GlobalActivityServicesType
+    let followUpsService: FollowUpsService
+    let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService
+    let deepLinkingService: DeepLinkingService
         
     required init() {
         
@@ -54,15 +59,15 @@ class AppDiContainer {
         
         realmDatabase = RealmDatabase()
 
-        languagesApi = LanguagesApi(config: config)
+        languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
-        resourcesApi = ResourcesApi(config: config)
+        resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
         
-        translationsApi = TranslationsApi(config: config)
+        translationsApi = TranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
                         
         realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
         
-        resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi, realmResourcesCache: realmResourcesCache)
+        resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi)
         
         translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
@@ -70,7 +75,7 @@ class AppDiContainer {
         
         attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
         
-        attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache)
+        attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
            
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
               
@@ -84,9 +89,15 @@ class AppDiContainer {
         )
         
         legacyRealmMigration = LegacyRealmMigration(
-            legacyRealmDatabase: legacyRealmDatabase,
             realmDatabase: realmDatabase,
             languageSettingsCache: languageSettingsCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache
+        )
+        
+        resourcesCleanUp = ResourcesCleanUp(
+            translationsFileCache: translationsFileCache,
+            resourcesSHA256FileCache: resourcesSHA256FileCache,
             favoritedResourcesCache: favoritedResourcesCache,
             downloadedLanguagesCache: downloadedLanguagesCache
         )
@@ -105,6 +116,8 @@ class AppDiContainer {
             realmDatabase: realmDatabase,
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
+            realmResourcesCache: realmResourcesCache,
+            resourcesCleanUp: resourcesCleanUp,
             attachmentsDownloader: attachmentsDownloader,
             languageSettingsCache: languageSettingsCache,
             deviceLanguage: deviceLanguage,
@@ -152,7 +165,19 @@ class AppDiContainer {
             translationsFileCache: translationsFileCache
         )
         
-        shortcutItemsService = ShortcutItemsService(realmDatabase: realmDatabase, languageSettingsCache: languageSettingsCache)
+        globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
+        
+        followUpsService = FollowUpsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
+        
+        viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
+        
+        shortcutItemsService = ShortcutItemsService(
+            realmDatabase: realmDatabase,
+            dataDownloader: initialDataDownloader,
+            languageSettingsCache: languageSettingsCache
+        )
+        
+        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -191,15 +216,7 @@ class AppDiContainer {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
     }
     
-    var globalActivityServices: GlobalActivityServicesType {
-        return GlobalActivityServices(config: config)
-    }
-    
     var tractManager: TractManager {
         return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
-    }
-    
-    var viewsService: ViewsServiceType {
-        return ViewsService(config: config, realmDatabase: realmDatabase)
     }
 }

@@ -10,40 +10,46 @@ import Foundation
 import RealmSwift
 
 class LegacyRealmDatabase {
-    
-    // TODO: This static variable needs to be removed once Realm is injected properly
-    // into GTDataManager. ~Levi
-    static var sharedMainThreadRealm: Realm!
-    
-    private static let config: Realm.Configuration = LegacyRealmDatabase.createConfig
-    private static let schemaVersion: UInt64 = 15
         
-    let mainThreadRealm: Realm
-    
+    private static let schemaVersion: UInt64 = 14
+        
     required init() {
-                
+            
+        // NOTE: Should no longer be used.  Instead use RealmDatabase.swift.
+    }
+    
+    var databaseExists: Bool {
+        
+        let fileManager: FileManager = FileManager.default
+        let documentsPath: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+       
         do {
-            mainThreadRealm = try Realm(configuration: LegacyRealmDatabase.config)
+            let documentsContents: [String] = try fileManager.contentsOfDirectory(atPath: documentsPath)
+            return documentsContents.contains("default.realm") || documentsContents.contains("default.realm.lock")
+        }
+        catch {
+            return false
+        }
+    }
+    
+    func getMainThreadRealm() -> Realm? {
+        
+        let config: Realm.Configuration = LegacyRealmDatabase.createConfig
+        let realm: Realm
+        
+        do {
+            realm = try Realm(configuration: config)
+            return realm
         }
         catch let error {
-            assertionFailure("RealmDatabase: Did fail to initialize realm with error: \(error.localizedDescription) ")
-            mainThreadRealm = try! Realm(configuration: LegacyRealmDatabase.config)
+            assertionFailure(error.localizedDescription)
+            return nil
         }
-        
-        LegacyRealmDatabase.sharedMainThreadRealm = mainThreadRealm
     }
-    
-    var isEmpty: Bool {
-        return isEmpty(realm: mainThreadRealm)
-    }
-    
-    func isEmpty(realm: Realm) -> Bool {
-        return realm.objects(DownloadedResource.self).isEmpty || realm.objects(Language.self).isEmpty
-    }
-    
-    func deleteDatabase() {
-        
-        let realm: Realm = mainThreadRealm
+
+    func deleteDatabase(realm: Realm) {
+              
+        let config: Realm.Configuration = LegacyRealmDatabase.createConfig
         
         do {
             try realm.write {
@@ -56,7 +62,7 @@ class LegacyRealmDatabase {
         
         let fileManager: FileManager = FileManager.default
                 
-        if let realmURL = LegacyRealmDatabase.config.fileURL {
+        if let realmURL = config.fileURL {
             
             let realmURLs: [URL] = [
                 realmURL,
@@ -80,6 +86,7 @@ class LegacyRealmDatabase {
         return Realm.Configuration(
             schemaVersion: LegacyRealmDatabase.schemaVersion,
             migrationBlock: { migration, oldSchemaVersion in
+                
                 if oldSchemaVersion < 1 {
                     migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
                         new!["aboutBannerRemoteId"] = ""
@@ -88,14 +95,6 @@ class LegacyRealmDatabase {
                 
                 if oldSchemaVersion < 2 {
                     // removes Language.localizedName(), happens automatically, nothing to do here
-                }
-                
-                if oldSchemaVersion < 3 {
-                    migration.enumerateObjects(ofType: FollowUp.className(), { (old, new) in
-                        new!["responseStatusCode"] = nil
-                        new!["retryCount"] = 0
-                        new!["createdAtTime"] = NSDate(timeIntervalSince1970: 1)
-                    })
                 }
                 
                 if oldSchemaVersion < 4 {
@@ -136,14 +135,6 @@ class LegacyRealmDatabase {
                 }
                 if oldSchemaVersion < 10 {
                     migration.enumerateObjects(ofType: Language.className(), { (old, new) in
-                        // Nothing to do!
-                        // Realm will automatically detect new properties and removed properties
-                        // And will update the schema on disk automatically
-                    })
-                }
-
-                if oldSchemaVersion < 10 {
-                    migration.enumerateObjects(ofType: DownloadedResource.className(), { (old, new) in
                         // Nothing to do!
                         // Realm will automatically detect new properties and removed properties
                         // And will update the schema on disk automatically

@@ -61,9 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self, Answers.self])
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-        _ = FollowUpsManager().syncCachedFollowUps()
-        
+                
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
         window.rootViewController = appFlow?.rootController
@@ -74,11 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        appDiContainer.shortcutItemsService.getShortcutItems { (items: [UIApplicationShortcutItem]) in
-            DispatchQueue.main.async {
-                application.shortcutItems = items
-            }
-        }
+        
+        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -107,9 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// Called when the user selects a Home screen quick action
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        
-        print("\n QUICK ACTION TAPPED")
-        
+                
         guard let shortcutItemType = ShortcutItemType.shortcutItemType(shortcutItem: shortcutItem) else {
             return
         }
@@ -117,10 +110,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch shortcutItemType {
             
         case .tool:
-            print("  quick action is tool")
-            if let toolShortcutItem = shortcutItem as? ToolShortcutItem, let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
-                print("    process tract url: \(tractUrl.absoluteString)")
-                processForDeepLinking(from: tractUrl, shouldDisplayLoadingScreen: false)
+            if let tractUrl = ToolShortcutItem.getTractUrl(shortcutItem: shortcutItem) {
+                appDiContainer.deepLinkingService.processDeepLink(url: tractUrl)
             }
         }
     }
@@ -150,6 +141,7 @@ extension AppDelegate {
     // MARK: - This is for use when coming from Safari or Universal Links.
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
         if userActivity.activityType != NSUserActivityTypeBrowsingWeb {
             return false
         }
@@ -238,7 +230,7 @@ extension AppDelegate {
     private func shouldGoToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, pageNumber: Int, parallelLanguageCode: String? = nil) {
         dismissLoadingScreen()
 
-            appFlow?.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
+            //appFlow?.goToUniversalLinkedResource(resource, language: language, page: pageNumber, parallelLanguageCode: parallelLanguageCode)
     }
     
     private func getLanguageFor(resource: DownloadedResource, languageOptions: [Language]) -> Language? {
@@ -287,6 +279,9 @@ extension AppDelegate {
     }
     
     private func parseResourceFrom(_ url: URL) -> DownloadedResource? {
+        
+        return nil
+        /*
         let pathParts = url.pathComponents
         
         if pathParts.count < 3 {
@@ -294,7 +289,7 @@ extension AppDelegate {
         }
         
         let resourcesManager = DownloadedResourceManager()
-        return resourcesManager.loadFromDisk(code: pathParts[2])
+        return resourcesManager.loadFromDisk(code: pathParts[2])*/
     }
     
     private func parsePageNumberFrom(_ url: URL) -> Int? {

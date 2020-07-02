@@ -12,33 +12,17 @@ class ResourcesDownloader {
     
     private let languagesApi: LanguagesApiType
     private let resourcesApi: ResourcesApiType
-    private let realmResourcesCache: RealmResourcesCache
-    
-    private var currentQueue: OperationQueue?
-            
-    let started: ObservableValue<Bool> = ObservableValue(value: false)
-    let completed: ObservableValue<Result<ResourcesDownloaderResult, ResourcesDownloaderError>?> = ObservableValue(value: nil)
-    
-    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType, realmResourcesCache: RealmResourcesCache) {
+        
+    required init(languagesApi: LanguagesApiType, resourcesApi: ResourcesApiType) {
         
         self.languagesApi = languagesApi
         self.resourcesApi = resourcesApi
-        self.realmResourcesCache = realmResourcesCache
     }
 
-    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments() -> OperationQueue? {
+    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) -> OperationQueue? {
              
-        if currentQueue != nil {
-            assertionFailure("ResourcesDownloader: Download already started and only needs to run once at startup.")
-            return nil
-        }
-        
         let queue = OperationQueue()
-        
-        self.currentQueue = queue
-        
-        started.accept(value: true)
-                                
+                                        
         let languagesOperation: RequestOperation = languagesApi.newGetLanguagesOperation()
         let resourcesPlusLatestTranslationsAndAttachmentsOperation: RequestOperation = resourcesApi.newResourcesPlusLatestTranslationsAndAttachmentsOperation()
         
@@ -55,7 +39,8 @@ class ResourcesDownloader {
                 
                 self?.handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(
                     languagesResult: languagesResult,
-                    resourcesResult: resourcesResult
+                    resourcesResult: resourcesResult,
+                    complete: complete
                 )
             }
         }
@@ -68,7 +53,8 @@ class ResourcesDownloader {
                 
                 self?.handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(
                     languagesResult: languagesResult,
-                    resourcesResult: resourcesResult
+                    resourcesResult: resourcesResult,
+                    complete: complete
                 )
             }
         }
@@ -81,7 +67,7 @@ class ResourcesDownloader {
         return queue
     }
     
-    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?, resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?) {
+    private func handleDownloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachmentsCompleted(languagesResult: ResponseResult<LanguagesDataModel, NoClientApiErrorType>?, resourcesResult: ResponseResult<ResourcesPlusLatestTranslationsAndAttachmentsModel, NoClientApiErrorType>?, complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) {
         
         var languages: [LanguageModel] = Array()
         var resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = ResourcesPlusLatestTranslationsAndAttachmentsModel.emptyModel
@@ -128,29 +114,10 @@ class ResourcesDownloader {
         }
         
         if let downloaderError = downloaderError {
-            
-            handleDownloaderAndCacheCompleted(result: .failure(downloaderError))
+            complete(.failure(downloaderError))
         }
         else {
-            
-            realmResourcesCache.cacheResources(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments) { [weak self] (result: Result<ResourcesDownloaderResult, Error>) in
-                
-                switch result {
-                
-                case .success(let cacheResult):
-                    self?.handleDownloaderAndCacheCompleted(result: .success(cacheResult))
-                
-                case .failure(let cacheError):
-                    self?.handleDownloaderAndCacheCompleted(result: .failure(.failedToCacheResources(error: cacheError)))
-                }
-            }
+            complete(.success(ResourcesDownloaderResult(languages: languages, resourcesPlusLatestTranslationsAndAttachments: resourcesPlusLatestTranslationsAndAttachments)))
         }
-    }
-    
-    private func handleDownloaderAndCacheCompleted(result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) {
-        
-        currentQueue = nil
-        started.accept(value: false)
-        completed.accept(value: result)
     }
 }

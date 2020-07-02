@@ -23,16 +23,24 @@ class RealmResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
-    func cacheResources(languages: [LanguageModel], resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel, complete: @escaping ((_ result: Result<ResourcesDownloaderResult, Error>) -> Void)) {
-                
-        realmDatabase.background { (realm: Realm) in
+    func cacheResources(realm: Realm, downloaderResult: ResourcesDownloaderResult) -> Result<ResourcesCacheResult, Error> {
             
-            var realmObjectsToCache: [Object] = Array()
-            var realmLanguagesDictionary: [LanguageId: RealmLanguage] = Dictionary()
-            var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
-            var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
-            
-            var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
+        let languages: [LanguageModel] = downloaderResult.languages
+        let resourcesPlusLatestTranslationsAndAttachments: ResourcesPlusLatestTranslationsAndAttachmentsModel = downloaderResult.resourcesPlusLatestTranslationsAndAttachments
+        
+        var realmLanguagesDictionary: [LanguageId: RealmLanguage] = Dictionary()
+        var realmResourcesDictionary: [ResourceId: RealmResource] = Dictionary()
+        var realmTranslationsDictionary: [TranslationId: RealmTranslation] = Dictionary()
+        
+        var attachmentsGroupedBySHA256WithPathExtension: [SHA256PlusPathExtension: AttachmentFile] = Dictionary()
+        
+        var realmObjectsToCache: [Object] = Array()
+        
+        // parse langauges
+        
+        var languageIdsRemoved: [String] = Array(realm.objects(RealmLanguage.self)).map({$0.id})
+        
+        if !languages.isEmpty {
             
             for language in languages {
                 
@@ -40,7 +48,21 @@ class RealmResourcesCache {
                 realmLanguage.mapFrom(model: language)
                 realmLanguagesDictionary[realmLanguage.id] = realmLanguage
                 realmObjectsToCache.append(realmLanguage)
+                
+                if let index = languageIdsRemoved.firstIndex(of: language.id) {
+                    languageIdsRemoved.remove(at: index)
+                }
             }
+        }
+        else {
+            languageIdsRemoved = []
+        }
+        
+        // parse resources
+        
+        var resourceIdsRemoved: [String] = Array(realm.objects(RealmResource.self)).map({$0.id})
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.resources.isEmpty {
             
             for resource in resourcesPlusLatestTranslationsAndAttachments.resources {
                 
@@ -48,7 +70,21 @@ class RealmResourcesCache {
                 realmResource.mapFrom(model: resource)
                 realmResourcesDictionary[realmResource.id] = realmResource
                 realmObjectsToCache.append(realmResource)
+                
+                if let index = resourceIdsRemoved.firstIndex(of: resource.id) {
+                    resourceIdsRemoved.remove(at: index)
+                }
             }
+        }
+        else {
+            resourceIdsRemoved = []
+        }
+        
+        // parse latest translations
+        
+        var translationIdsRemoved: [String] = Array(realm.objects(RealmTranslation.self)).map({$0.id})
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.translations.isEmpty {
             
             for translation in resourcesPlusLatestTranslationsAndAttachments.translations {
                 
@@ -65,7 +101,21 @@ class RealmResourcesCache {
                 
                 realmTranslationsDictionary[realmTranslation.id] = realmTranslation
                 realmObjectsToCache.append(realmTranslation)
+                
+                if let index = translationIdsRemoved.firstIndex(of: translation.id) {
+                    translationIdsRemoved.remove(at: index)
+                }
             }
+        }
+        else {
+            translationIdsRemoved = []
+        }
+        
+        // parse latest attachments
+        
+        var attachmentIdsRemoved: [String] = Array(realm.objects(RealmAttachment.self)).map({$0.id})
+        
+        if !resourcesPlusLatestTranslationsAndAttachments.attachments.isEmpty {
             
             for attachment in resourcesPlusLatestTranslationsAndAttachments.attachments {
                 
@@ -91,30 +141,60 @@ class RealmResourcesCache {
                     )
                     attachmentFile.addAttachmentId(attachmentId: realmAttachment.id)
                     attachmentsGroupedBySHA256WithPathExtension[sha256WithPathExtension] = attachmentFile
-                }                
+                }
+                
+                if let index = attachmentIdsRemoved.firstIndex(of: attachment.id) {
+                    attachmentIdsRemoved.remove(at: index)
+                }
             }
-            
-            for ( _, realmResource) in realmResourcesDictionary {
-                for translationId in realmResource.latestTranslationIds {
-                    if let realmTranslation = realmTranslationsDictionary[translationId] {
-                        realmResource.latestTranslations.append(realmTranslation)
-                        if let realmLanguage = realmTranslation.language {
-                            realmResource.languages.append(realmLanguage)
-                        }
+        }
+        else {
+            attachmentIdsRemoved = []
+        }
+        
+        // add latest translations and add languages to resource
+        for ( _, realmResource) in realmResourcesDictionary {
+            for translationId in realmResource.latestTranslationIds {
+                if let realmTranslation = realmTranslationsDictionary[translationId] {
+                    realmResource.latestTranslations.append(realmTranslation)
+                    if let realmLanguage = realmTranslation.language {
+                        realmResource.languages.append(realmLanguage)
                     }
                 }
             }
+        }
+        
+        // delete realm objects that no longer exist
+        var realmObjectsToRemove: [Object] = Array()
+        
+        let resourcesToRemove: [RealmResource] = realmDatabase.getObjects(realm: realm, primaryKeys: resourceIdsRemoved)
+        let languagesToRemove: [RealmLanguage] = realmDatabase.getObjects(realm: realm, primaryKeys: languageIdsRemoved)
+        let translationsToRemove: [RealmTranslation] = realmDatabase.getObjects(realm: realm, primaryKeys: translationIdsRemoved)
+        let attachmentsToRemove: [RealmAttachment] = realmDatabase.getObjects(realm: realm, primaryKeys: attachmentIdsRemoved)
+        
+        realmObjectsToRemove.append(contentsOf: resourcesToRemove)
+        realmObjectsToRemove.append(contentsOf: languagesToRemove)
+        realmObjectsToRemove.append(contentsOf: translationsToRemove)
+        realmObjectsToRemove.append(contentsOf: attachmentsToRemove)
+
+        do {
+            try realm.write {
+                realm.add(realmObjectsToCache, update: .all)
+                realm.delete(realmObjectsToRemove)
+            }
             
-            do {
-                try realm.write {
-                    realm.add(realmObjectsToCache, update: .all)
-                }
-                complete(.success(ResourcesDownloaderResult(latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values))))
-            }
-            catch let error {
-                assertionFailure(error.localizedDescription)
-                complete(.failure(error))
-            }
+            let cacheResult = ResourcesCacheResult(
+                resourceIdsRemoved: resourceIdsRemoved,
+                languageIdsRemoved: languageIdsRemoved,
+                translationIdsRemoved: translationIdsRemoved,
+                attachmentIdsRemoved: attachmentIdsRemoved,
+                latestAttachmentFiles: Array(attachmentsGroupedBySHA256WithPathExtension.values)
+            )
+            
+            return .success(cacheResult)
+        }
+        catch let error {
+            return .failure(error)
         }
     }
 }

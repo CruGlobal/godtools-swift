@@ -34,15 +34,18 @@ class TranslationsFileCache {
         return sha256FileCache.getData(location: location)
     }
     
+    func getResourceLanguageTranslationManifestOnMainThread(resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+        
+        return getResourceLanguageTranslationManifest(realm: realmDatabase.mainThreadRealm, resourceId: resourceId, languageId: languageId)
+    }
+    
     func getResourceLanguageTranslationManifest(resourceId: String, languageId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
         
         realmDatabase.background { [weak self] (realm: Realm) in
             
-            let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
-            let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
             let translationManifestResult: Result<TranslationManifestData, TranslationsFileCacheError>
             
-            if let result = self?.getTranslationManifest(realm: realm, translationId: realmTranslation?.id ?? "") {
+            if let result = self?.getResourceLanguageTranslationManifest(realm: realm, resourceId: resourceId, languageId: languageId) {
                 translationManifestResult = result
             }
             else {
@@ -53,6 +56,19 @@ class TranslationsFileCache {
                 completeOnMain(translationManifestResult)
             }
         }
+    }
+    
+    func getResourceLanguageTranslationManifest(realm: Realm, resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+        
+        let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
+        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.id = '\(languageId)'").first
+
+        return getTranslationManifest(realm: realm, translationId: realmTranslation?.id ?? "")
+    }
+    
+    func getTranslationManifestOnMainThread(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
+        
+        return getTranslationManifest(realm: realmDatabase.mainThreadRealm, translationId: translationId)
     }
     
     func getTranslationManifest(translationId: String, completeOnMain: @escaping ((_ result: Result<TranslationManifestData, TranslationsFileCacheError>) -> Void)) {
@@ -227,5 +243,40 @@ class TranslationsFileCache {
         case .failure(let error):
             complete(.failure(.sha256FileCacheError(error: error)))
         }
+    }
+    
+    func bulkDeleteTranslationZipFiles(realm: Realm, resourceIds: [String], languageIds: [String], translationIds: [String]) -> Error? {
+                
+        var translationZipFilesToDelete: [RealmTranslationZipFile] = Array()
+        
+        for resourceId in resourceIds {
+            translationZipFilesToDelete.append(contentsOf: Array(realm.objects(RealmTranslationZipFile.self).filter("resourceId = '\(resourceId)'")))
+        }
+        
+        for languageId in languageIds {
+            translationZipFilesToDelete.append(contentsOf: Array(realm.objects(RealmTranslationZipFile.self).filter("languageId = '\(languageId)'")))
+        }
+        
+        for translationId in translationIds {
+            if let translationZipFile = realm.object(ofType: RealmTranslationZipFile.self, forPrimaryKey: translationId) {
+                translationZipFilesToDelete.append(translationZipFile)
+            }
+        }
+        
+        guard !translationZipFilesToDelete.isEmpty else {
+            return nil
+        }
+        
+        do {
+            try realm.write {
+                print("\n    -> deleting translationZipFiles: \(translationZipFilesToDelete.count)")
+                realm.delete(translationZipFilesToDelete)
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
     }
 }

@@ -43,14 +43,14 @@ class InitialDeviceResourcesLoader {
             return
         }
         
-        loadAndCacheLanguagesPlusResourcesPlusLatestAttachmentsAndTranslations { [weak self] (result: Result<ResourcesDownloaderResult, Error>?) in
+        loadAndCacheLanguagesPlusResourcesPlusLatestAttachmentsAndTranslations { [weak self] (result: Result<ResourcesCacheResult, Error>?) in
             
-            guard let downloadResult = result else {
+            guard let cacheResult = result else {
                 self?.handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: completeOnMain)
                 return
             }
             
-            self?.cacheAttachmentFiles(downloaderResult: downloadResult, complete: { [weak self] in
+            self?.cacheAttachmentFiles(cacheResult: cacheResult, complete: { [weak self] in
                 
                 self?.cacheTranslations { [weak self] in
                     
@@ -63,9 +63,11 @@ class InitialDeviceResourcesLoader {
         }
     }
     
-    private func loadAndCacheLanguagesPlusResourcesPlusLatestAttachmentsAndTranslations(complete: @escaping ((_ result: Result<ResourcesDownloaderResult, Error>?) -> Void)) {
-                
-        DispatchQueue.global().async { [weak self] in
+    private func loadAndCacheLanguagesPlusResourcesPlusLatestAttachmentsAndTranslations(complete: @escaping ((_ result: Result<ResourcesCacheResult, Error>?) -> Void)) {
+        
+        let realmResourcesCache: RealmResourcesCache = self.realmResourcesCache
+        
+        realmDatabase.background { (realm: Realm) in
             
             let jsonServices = JsonServices()
             
@@ -77,11 +79,14 @@ class InitialDeviceResourcesLoader {
                     
             if let languages = languagesResult?.data, let resources = resourcesResult {
                 
-                self?.realmResourcesCache.cacheResources(
+                let downloaderResult = ResourcesDownloaderResult(
                     languages: languages,
-                    resourcesPlusLatestTranslationsAndAttachments: resources,
-                    complete: complete
+                    resourcesPlusLatestTranslationsAndAttachments: resources
                 )
+                
+                let result: Result<ResourcesCacheResult, Error> = realmResourcesCache.cacheResources(realm: realm, downloaderResult: downloaderResult)
+                
+                complete(result)
             }
             else {
                 complete(nil)
@@ -89,9 +94,9 @@ class InitialDeviceResourcesLoader {
         }
     }
     
-    private func cacheAttachmentFiles(downloaderResult: Result<ResourcesDownloaderResult, Error>, complete: @escaping (() -> Void)) {
+    private func cacheAttachmentFiles(cacheResult: Result<ResourcesCacheResult, Error>, complete: @escaping (() -> Void)) {
         
-        switch downloaderResult {
+        switch cacheResult {
             
         case .success(let result):
             
@@ -267,7 +272,7 @@ class InitialDeviceResourcesLoader {
                 print("  content: \(content)")
             }
         }
-        catch let error {
+        catch {
             //assertionFailure(error.localizedDescription)
         }
     }

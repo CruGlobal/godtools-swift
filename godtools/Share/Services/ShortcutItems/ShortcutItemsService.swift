@@ -9,15 +9,43 @@
 import UIKit
 import RealmSwift
 
-class ShortcutItemsService {
+class ShortcutItemsService: NSObject {
     
     private let realmDatabase: RealmDatabase
+    private let dataDownloader: InitialDataDownloader
     private let languageSettingsCache: LanguageSettingsCacheType
     
-    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, dataDownloader: InitialDataDownloader, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
+        self.dataDownloader = dataDownloader
         self.languageSettingsCache = languageSettingsCache
+        
+        super.init()
+        
+        if dataDownloader.didComplete {
+            reloadShortcutItems(application: UIApplication.shared)
+        }
+        
+        setupBinding()
+    }
+    
+    deinit {
+        dataDownloader.completed.removeObserver(self)
+    }
+    
+    private func setupBinding() {
+        dataDownloader.completed.addObserver(self) { [weak self] in
+            self?.reloadShortcutItems(application: UIApplication.shared)
+        }
+    }
+    
+    func reloadShortcutItems(application: UIApplication) {
+        getShortcutItems { (shortcutItems: [UIApplicationShortcutItem]) in
+            DispatchQueue.main.async {
+                application.shortcutItems = shortcutItems
+            }
+        }
     }
     
     func getShortcutItems(complete: @escaping ((_ shortcutItems: [UIApplicationShortcutItem]) -> Void)) {

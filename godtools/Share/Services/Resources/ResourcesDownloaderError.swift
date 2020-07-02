@@ -10,7 +10,6 @@ import Foundation
 
 enum ResourcesDownloaderError: Error {
     
-    case failedToCacheResources(error: Error)
     case failedToDecodeLanguages(error: Error)
     case failedToDecodeResourcesPlusLatestTranslationsAndAttachments(error: Error)
     case failedToGetLanguages(error: ResponseError<NoClientApiErrorType>)

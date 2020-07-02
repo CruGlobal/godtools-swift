@@ -14,20 +14,9 @@ class ResourcesApi: ResourcesApiType {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    required init(config: ConfigType) {
-        
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
-        
+    required init(config: ConfigType, sharedSession: SharedSessionType) {
+                    
+        session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
     

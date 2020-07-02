@@ -14,20 +14,9 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    init(config: ConfigType) {
+    required init(config: ConfigType, sharedSession: SharedSessionType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
-        
+        session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
         

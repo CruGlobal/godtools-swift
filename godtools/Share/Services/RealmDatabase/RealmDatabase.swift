@@ -29,6 +29,16 @@ class RealmDatabase {
         }
     }
     
+    var isEmpty: Bool {
+        return isEmpty(realm: mainThreadRealm)
+    }
+    
+    func isEmpty(realm: Realm) -> Bool {
+        return realm.objects(RealmResource.self).isEmpty ||
+            realm.objects(RealmLanguage.self).isEmpty ||
+            realm.objects(RealmTranslation.self).isEmpty
+    }
+    
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
         backgroundQueue.async {
@@ -47,6 +57,19 @@ class RealmDatabase {
                 async(realm)
             }
         }
+    }
+    
+    func getObjects<T: Object>(realm: Realm, primaryKeys: [String]) -> [T] {
+        
+        var objects: [T] = Array()
+        
+        for key in primaryKeys {
+            if let object = realm.object(ofType: T.self, forPrimaryKey: key) {
+                objects.append(object)
+            }
+        }
+        
+        return objects
     }
     
     private static var createConfig: Realm.Configuration {

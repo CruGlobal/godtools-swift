@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SharedIgnoreCacheSession {
+class SharedIgnoreCacheSession: SharedSessionType {
     
     let session: URLSession
     

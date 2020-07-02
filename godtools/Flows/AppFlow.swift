@@ -13,7 +13,10 @@ import RealmSwift
 
 class AppFlow: NSObject, FlowDelegate {
     
-    private let viewsService: ViewsServiceType
+    private let dataDownloader: InitialDataDownloader
+    private let followUpsService: FollowUpsService
+    private let viewsService: ViewsService
+    private let deepLinkingService: DeepLinkingService
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
@@ -21,6 +24,7 @@ class AppFlow: NSObject, FlowDelegate {
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
     private var navigationStarted: Bool = false
+    private var isObservingDeepLinking: Bool = false
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
@@ -30,7 +34,10 @@ class AppFlow: NSObject, FlowDelegate {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
+        self.dataDownloader = appDiContainer.initialDataDownloader
+        self.followUpsService = appDiContainer.followUpsService
         self.viewsService = appDiContainer.viewsService
+        self.deepLinkingService = appDiContainer.deepLinkingService
         
         super.init()
         
@@ -42,8 +49,21 @@ class AppFlow: NSObject, FlowDelegate {
         navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
-        
-        appDiContainer.initialDataDownloader.downloadInitialData()
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        deepLinkingService.processing.removeObserver(self)
+        deepLinkingService.completed.removeObserver(self)
+    }
+    
+    func resetFlowToToolsFlow(animated: Bool) {
+        navigationController.popToRootViewController(animated: animated)
+        closeMenu(animated: animated)
+        navigationController.dismiss(animated: animated, completion: nil)
+        menuFlow = nil
+        languageSettingsFlow = nil
+        tutorialFlow = nil
     }
     
     private func setupInitialNavigation() {
@@ -53,6 +73,43 @@ class AppFlow: NSObject, FlowDelegate {
         }
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
+        }
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = viewsService.postFailedResourceViewsIfNeeded()
+    }
+    
+    private func addDeepLinkingObservers() {
+        
+        guard !isObservingDeepLinking else {
+            return
+        }
+        
+        isObservingDeepLinking = true
+        
+        deepLinkingService.processing.addObserver(self) { [weak self] (processing: Bool) in
+            DispatchQueue.main.async {
+                
+            }
+        }
+        
+        deepLinkingService.completed.addObserver(self) { [weak self] (deepLinkingType: DeepLinkingType) in
+            DispatchQueue.main.async { [weak self] in
+                
+                switch deepLinkingType {
+                
+                case .tool(let resource, let primaryLanguage, let parallelLanguage, let page):
+                    if let toolsFlow = self?.toolsFlow {
+                        self?.resetFlowToToolsFlow(animated: false)
+                        toolsFlow.navigateToTool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, page: page)
+                    }
+                case .none:
+                    break
+                }
+            }
         }
     }
     
@@ -82,6 +139,8 @@ class AppFlow: NSObject, FlowDelegate {
                         toolsView.alpha = 1
                     }, completion: nil)
                 }
+                
+                addDeepLinkingObservers()
             }
             
         case .showOnboardingTutorial(let animated):
@@ -233,7 +292,9 @@ class AppFlow: NSObject, FlowDelegate {
     private func closeMenu(animated: Bool) {
                 
         if let menuFlow = menuFlow {
-                        
+                     
+            menuFlow.navigationController.dismiss(animated: animated, completion: nil)
+            
             let screenWidth: CGFloat = UIScreen.main.bounds.size.width
             
             menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -258,43 +319,8 @@ class AppFlow: NSObject, FlowDelegate {
             }
         }
     }
-    
-    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
-        // TODO: Implement universal linking.
-        
-        /*
-        
-        // TODO: Is this needed? ~Levi
-        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
-        
-        let parallelLanguage: Language?
-        
-        if let parallelLanguageCode = parallelLanguageCode {
-            parallelLanguage = LanguagesManager().loadFromDisk(code: parallelLanguageCode)
-        }
-        else {
-            parallelLanguage = nil
-        }
-                
-        let viewModel = TractViewModel(
-            flowDelegate: self,
-            resource: resource,
-            primaryLanguage: language,
-            parallelLanguage: parallelLanguage,
-            tractManager: appDiContainer.tractManager,
-            viewsService: appDiContainer.viewsService,
-            analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-            tractPage: page
-        )
-        
-        let view = TractView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)*/
-    }
-        
-    // MARK: - Helpers
+    // MARK: - Navigation Bar
     
     func configureNavigation(navigationController: UINavigationController) {
         configureNavigationColor(navigationController: navigationController, color: .gtBlue)
@@ -318,11 +344,12 @@ extension AppFlow: UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         
-        _ = viewsService.addFailedResourceViewsIfNeeded()
-        
-        if !navigationStarted {
-            navigationStarted = true
-            setupInitialNavigation()
+        guard !navigationStarted else {
+            return
         }
+        
+        navigationStarted = true
+        
+        setupInitialNavigation()
     }
 }
