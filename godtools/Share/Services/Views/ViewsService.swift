@@ -62,8 +62,10 @@ class ViewsService {
                 
                 let httpStatusCode: Int = response.httpStatusCode ?? -1
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+                let isConnectedToNetwork: Bool = !response.notConnectedToInternet
+                let failedForBadRequest: Bool = !httpStatusCodeSuccess && isConnectedToNetwork
                 
-                if httpStatusCodeSuccess {
+                if httpStatusCodeSuccess || failedForBadRequest {
                     
                     successfulPostedResourceViews.append(resourceView)
                 }

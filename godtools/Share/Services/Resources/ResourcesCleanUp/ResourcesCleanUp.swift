@@ -11,25 +11,33 @@ import RealmSwift
 
 class ResourcesCleanUp {
     
+    private let realmDatabase: RealmDatabase
     private let translationsFileCache: TranslationsFileCache
     private let resourcesSHA256FileCache: ResourcesSHA256FileCache
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     
-    required init(translationsFileCache: TranslationsFileCache, resourcesSHA256FileCache: ResourcesSHA256FileCache, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
+    required init(realmDatabase: RealmDatabase, translationsFileCache: TranslationsFileCache, resourcesSHA256FileCache: ResourcesSHA256FileCache, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
         
+        self.realmDatabase = realmDatabase
         self.translationsFileCache = translationsFileCache
         self.resourcesSHA256FileCache = resourcesSHA256FileCache
         self.favoritedResourcesCache = favoritedResourcesCache
         self.downloadedLanguagesCache = downloadedLanguagesCache
     }
     
+    func bulkDeleteResourcesIfNeeded(cacheResult: ResourcesCacheResult) {
+        
+        realmDatabase.background { [weak self] (realm: Realm) in
+            
+            self?.bulkDeleteResourcesIfNeeded(realm: realm, cacheResult: cacheResult)
+        }
+    }
+    
     func bulkDeleteResourcesIfNeeded(realm: Realm, cacheResult: ResourcesCacheResult) {
         
-        guard cacheResult.didRemoveCachedResources else {
-            return
-        }
-                
+        print("\nResourcesCleanUp: bulkDeleteResourcesIfNeeded()")
+        
         translationsFileCache.bulkDeleteTranslationZipFiles(
             realm: realm,
             resourceIds: cacheResult.resourceIdsRemoved,
@@ -42,5 +50,17 @@ class ResourcesCleanUp {
         favoritedResourcesCache.bulkDeleteFavoritedResources(realm: realm, resourceIds: cacheResult.resourceIdsRemoved)
 
         downloadedLanguagesCache.bulkDeleteDownloadedLanguages(realm: realm, languageIds: cacheResult.languageIdsRemoved)
+        
+        translationsFileCache.deleteUnusedTranslationZipFiles(realm: realm)
+        
+        print("   total realm translation zip files: \(realm.objects(RealmTranslationZipFile.self).count)")
+        print("   total realm sha256 resource files: \(realm.objects(RealmSHA256File.self).count)")
+        
+        switch resourcesSHA256FileCache.getContentsOfRootDirectory() {
+        case .success(let contents):
+            print("   total resources files count: \(contents.count)")
+        case .failure(let error):
+            print("   fetch resources contents error: \(error)")
+        }
     }
 }

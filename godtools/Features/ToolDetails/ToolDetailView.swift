@@ -340,6 +340,8 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
     
     func playerViewDidBecomeReady(_ playerView: WKYTPlayerView) {
         
+        print("\n ToolDetailView player view did become ready")
+        
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
             self?.youTubeLoadingView.alpha = 0
         }) { [weak self] (finished: Bool) in

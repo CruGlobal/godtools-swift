@@ -40,7 +40,7 @@ class TranslationDownloader {
         
         let queue = OperationQueue()
         
-        let receipt = DownloadTranslationsReceipt(translationIds: translationIds, queue: queue)
+        let receipt = DownloadTranslationsReceipt(translationIds: translationIds)
         
         var operations: [RequestOperation] = Array()
         var numberOfOperationsCompleted: Double = 0
@@ -65,12 +65,13 @@ class TranslationDownloader {
                 
                 self?.processDownloadedTranslation(translationId: translationId, response: response, complete: { (result: DownloadedTranslationResult) in
                     
-                    receipt.translationDownloaded.accept(value: result)
-                    receipt.progress.accept(value: numberOfOperationsCompleted / totalOperationCount)
+                    numberOfOperationsCompleted += 1
+                    
+                    receipt.handleTranslationDownloaded(result: result)
+                    receipt.setProgress(value: numberOfOperationsCompleted / totalOperationCount)
                     
                     if queue.operations.isEmpty {
-                        receipt.progress.accept(value: 1)
-                        receipt.completed.accept()
+                        receipt.complete()
                     }
                 })
             }
@@ -79,7 +80,7 @@ class TranslationDownloader {
         if !operations.isEmpty {
             numberOfOperationsCompleted = 0
             totalOperationCount = Double(operations.count)
-            receipt.progress.accept(value: 0)
+            receipt.start(queue: queue)
             queue.addOperations(operations, waitUntilFinished: false)
             return receipt
         }

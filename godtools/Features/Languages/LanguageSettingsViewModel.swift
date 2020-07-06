@@ -30,25 +30,33 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.analytics = analytics
         
         super.init()
-                
+                                
         setupBinding()
-        
-        reloadPrimaryLanguageButtonTitle()
-        reloadParallelLanguageButtonTitle()
     }
     
     deinit {
-        dataDownloader.completed.removeObserver(self)
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         languageSettingsService.primaryLanguage.removeObserver(self)
         languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        dataDownloader.completed.addObserver(self) { [weak self] in
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadPrimaryLanguageButtonTitle()
-                self?.reloadParallelLanguageButtonTitle()
+                if cachedResourcesAvailable {
+                    self?.reloadData()
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                if error == nil {
+                    self?.reloadData()
+                }
             }
         }
         
@@ -63,6 +71,11 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
                 self?.reloadParallelLanguageButtonTitle()
             }
         }
+    }
+    
+    private func reloadData() {
+        reloadPrimaryLanguageButtonTitle()
+        reloadParallelLanguageButtonTitle()
     }
     
     private func reloadPrimaryLanguageButtonTitle() {

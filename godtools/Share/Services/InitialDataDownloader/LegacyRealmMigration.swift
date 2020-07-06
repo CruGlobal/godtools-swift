@@ -16,13 +16,15 @@ class LegacyRealmMigration {
     private let languageSettingsCache: LanguageSettingsCacheType
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let downloadedLanguagesCache: DownloadedLanguagesCache
+    private let failedFollowUpsCache: FailedFollowUpsCache
     
-    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache) {
+    required init(realmDatabase: RealmDatabase, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache, downloadedLanguagesCache: DownloadedLanguagesCache, failedFollowUpsCache: FailedFollowUpsCache) {
         
         self.realmDatabase = realmDatabase
         self.languageSettingsCache = languageSettingsCache
         self.favoritedResourcesCache = favoritedResourcesCache
         self.downloadedLanguagesCache = downloadedLanguagesCache
+        self.failedFollowUpsCache = failedFollowUpsCache
     }
     
     func migrateLegacyRealm(complete: @escaping ((_ didMigrateLegacyRealm: Bool) -> Void)) {
@@ -69,6 +71,24 @@ class LegacyRealmMigration {
                     self?.languageSettingsCache.cacheParallelLanguageId(languageId: parallelLanguage.remoteId)
                 }
             }
+            
+            let followUps: [FollowUp] = Array(legacyRealm.objects(FollowUp.self))
+            var followUpModels: [FollowUpModel] = Array()
+            
+            for followUp in followUps {
+                
+                if let name = followUp.name,
+                    let email = followUp.email,
+                    let destinationIdString = followUp.destinationId,
+                    let destinationId = Int(destinationIdString),
+                    let languageIdString = followUp.languageId,
+                    let languageId = Int(languageIdString) {
+                    
+                    followUpModels.append(FollowUpModel(name: name, email: email, destinationId: destinationId, languageId: languageId))
+                }
+            }
+            
+            self?.failedFollowUpsCache.cacheFailedFollowUps(followUps: followUpModels)
             
             // delete legacy realm database and files
             legacyRealmDatabase.deleteDatabase(realm: legacyRealm)

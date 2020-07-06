@@ -262,14 +262,48 @@ class TranslationsFileCache {
                 translationZipFilesToDelete.append(translationZipFile)
             }
         }
-        
+                
         guard !translationZipFilesToDelete.isEmpty else {
             return nil
         }
         
         do {
             try realm.write {
-                print("\n    -> deleting translationZipFiles: \(translationZipFilesToDelete.count)")
+                realm.delete(translationZipFilesToDelete)
+            }
+        }
+        catch let error {
+            return error
+        }
+        
+        return nil
+    }
+    
+    func deleteUnusedTranslationZipFiles(realm: Realm) -> Error? {
+        
+        var translationZipFilesToDelete: [RealmTranslationZipFile] = Array()
+        
+        let translationZipFiles: [RealmTranslationZipFile] = Array(realm.objects(RealmTranslationZipFile.self))
+        
+        for translationZipFile in translationZipFiles {
+            
+            if realm.object(ofType: RealmTranslation.self, forPrimaryKey: translationZipFile.translationId) == nil {
+                translationZipFilesToDelete.append(translationZipFile)
+            }
+            else if realm.object(ofType: RealmLanguage.self, forPrimaryKey: translationZipFile.languageId) == nil {
+                translationZipFilesToDelete.append(translationZipFile)
+            }
+            else if realm.object(ofType: RealmResource.self, forPrimaryKey: translationZipFile.resourceId) == nil {
+                translationZipFilesToDelete.append(translationZipFile)
+            }
+        }
+        
+        guard !translationZipFilesToDelete.isEmpty else {
+            return nil
+        }
+                
+        do {
+            try realm.write {
                 realm.delete(translationZipFilesToDelete)
             }
         }

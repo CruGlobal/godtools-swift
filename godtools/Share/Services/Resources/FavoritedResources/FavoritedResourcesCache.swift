@@ -40,6 +40,16 @@ class FavoritedResourcesCache {
         return nil
     }
     
+    func getSortedFavoritedResources() -> [FavoritedResourceModel] {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        return getSortedFavoritedResources(realm: realm)
+    }
+    
+    func getSortedFavoritedResources(realm: Realm) -> [FavoritedResourceModel] {
+        let realmFavoritedResource = realm.objects(RealmFavoritedResource.self).sorted(byKeyPath: "sortOrder", ascending: true)
+        return Array(realmFavoritedResource.map({FavoritedResourceModel(model: $0)}))
+    }
+    
     func isFavorited(resourceId: String) -> Bool {
         let realm: Realm = realmDatabase.mainThreadRealm
         return realm.object(ofType: RealmFavoritedResource.self, forPrimaryKey: resourceId) != nil

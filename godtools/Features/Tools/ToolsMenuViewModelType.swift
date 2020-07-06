@@ -15,6 +15,7 @@ protocol ToolsMenuViewModelType {
     var toolMenuItems: ObservableValue<[ToolMenuItem]> { get }
     var selectedToolMenuItem: ObservableValue<ToolMenuItem?> { get }
     
+    func resetMenu()
     func menuTapped()
     func languageTapped()
     func toolMenuItemTapped(menuItem: ToolMenuItem)

@@ -81,4 +81,8 @@ class FavoritedToolsView: UIView, NibBased {
     @objc func handleFindTools(button: UIButton) {
         delegate?.favoritedToolsViewFindToolsTapped(favoritedToolsView: self)
     }
+    
+    func scrollToTopOfTools(animated: Bool) {
+        toolsView.scrollToTopOfTools(animated: animated)
+    }
 }

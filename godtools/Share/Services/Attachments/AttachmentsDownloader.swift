@@ -11,14 +11,8 @@ import Foundation
 class AttachmentsDownloader {
     
     private let session: URLSession
-
-    private var currentQueue: OperationQueue?
     
     let attachmentsFileCache: AttachmentsFileCache
-    let started: ObservableValue<Bool> = ObservableValue(value: false)
-    let progress: ObservableValue<Double> = ObservableValue(value: 0)
-    let attachmentDownloaded: SignalValue<Result<AttachmentFile, AttachmentsDownloaderError>> = SignalValue()
-    let completed: Signal = Signal()
     
     required init(attachmentsFileCache: AttachmentsFileCache, sharedSession: SharedSessionType) {
                     
@@ -26,46 +20,39 @@ class AttachmentsDownloader {
         self.attachmentsFileCache = attachmentsFileCache
     }
     
-    func downloadAndCacheAttachments(from result: ResourcesCacheResult) {
+    func downloadAndCacheAttachments(attachmentFiles: [AttachmentFile]) -> DownloadAttachmentsReceipt? {
         
-        if currentQueue != nil {
-            assertionFailure("ResourceAttachmentsDownloaderAndCache:  Download is already running, this process only needs to run once when reloading all resource attachments from the server.")
-            return
+        guard !attachmentFiles.isEmpty else {
+            return nil
         }
-        
-        if result.latestAttachmentFiles.isEmpty {
-            return
-        }
-        
-        started.accept(value: true)
+                        
+        let queue = OperationQueue()
                 
-        let queue: OperationQueue = OperationQueue()
+        let receipt = DownloadAttachmentsReceipt()
+             
+        var operations: [RequestOperation] = Array()
+        var numberOfOperationsCompleted: Double = 0
+        var totalOperationCount: Double = 0
         
-        self.currentQueue = queue
-        
-        var numberOfAttachmentsDownloaded: Double = 0
-        var totalNumberOfAttachmentsToDownload: Double = 0
-        var attachmentDownloadOperations: [RequestOperation] = Array()
-        
-        for attachmentFile in result.latestAttachmentFiles {
+        for attachmentFile in attachmentFiles {
                                     
             if !attachmentsFileCache.attachmentExists(location: attachmentFile.location) {
                                 
-                let attachmentOperation = RequestOperation(session: session, urlRequest: URLRequest(url: attachmentFile.remoteFileUrl))
+                let operation = RequestOperation(session: session, urlRequest: URLRequest(url: attachmentFile.remoteFileUrl))
                 
-                attachmentDownloadOperations.append(attachmentOperation)
+                operations.append(operation)
                 
-                attachmentOperation.completionHandler { [weak self] (response: RequestResponse) in
+                operation.completionHandler { [weak self] (response: RequestResponse) in
                     
-                    self?.processDownloadedAttachment(attachmentFile: attachmentFile, response: response, complete: { [weak self] (result: Result<AttachmentFile, AttachmentsDownloaderError>) in
+                    self?.processDownloadedAttachment(attachmentFile: attachmentFile, response: response, complete: { (result: DownloadedAttachmentResult) in
                         
-                        self?.attachmentDownloaded.accept(value: result)
+                        numberOfOperationsCompleted += 1
                         
-                        numberOfAttachmentsDownloaded += 1
-                        self?.progress.accept(value: numberOfAttachmentsDownloaded / totalNumberOfAttachmentsToDownload)
+                        receipt.handleAttachmentDownloaded(result: result)
+                        receipt.setProgress(value: numberOfOperationsCompleted / totalOperationCount)
                         
                         if queue.operations.isEmpty {
-                            self?.handleDownloadAndCacheAttachmentsCompleted()
+                            receipt.complete()
                         }
                     })
                 }
@@ -77,18 +64,19 @@ class AttachmentsDownloader {
             }
         }
         
-        if !attachmentDownloadOperations.isEmpty {
-            numberOfAttachmentsDownloaded = 0
-            totalNumberOfAttachmentsToDownload = Double(attachmentDownloadOperations.count)
-            progress.accept(value: 0)
-            queue.addOperations(attachmentDownloadOperations, waitUntilFinished: false)
+        if !operations.isEmpty {
+            numberOfOperationsCompleted = 0
+            totalOperationCount = Double(operations.count)
+            receipt.start(queue: queue)
+            queue.addOperations(operations, waitUntilFinished: false)
+            return receipt
         }
         else {
-            handleDownloadAndCacheAttachmentsCompleted()
+            return nil
         }
     }
     
-    private func processDownloadedAttachment(attachmentFile: AttachmentFile, response: RequestResponse, complete: @escaping ((_ result: Result<AttachmentFile, AttachmentsDownloaderError>) -> Void)) {
+    private func processDownloadedAttachment(attachmentFile: AttachmentFile, response: RequestResponse, complete: @escaping ((_ result: DownloadedAttachmentResult) -> Void)) {
         
         let result: ResponseResult<NoResponseSuccessType, NoClientApiErrorType> = response.getResult()
         
@@ -100,27 +88,26 @@ class AttachmentsDownloader {
                 
                 attachmentsFileCache.cacheAttachmentFile(attachmentFile: attachmentFile, fileData: fileData, complete: { (cacheError: Error?) in
                     
+                    let downloadError: AttachmentsDownloaderError?
+                    
                     if let cacheError = cacheError {
-                        complete(.failure(.failedToCacheAttachment(error: cacheError)))
+                        downloadError = .failedToCacheAttachment(error: cacheError)
                     }
                     else {
-                        complete(.success(attachmentFile))
+                        downloadError = nil
                     }
+                    
+                    complete(DownloadedAttachmentResult(attachmentFile: attachmentFile, downloadError: downloadError))
                 })
             }
             else {
-                complete(.failure(.noAttachmentData(missingAttachmentData: NoAttachmentData(remoteFileUrl: attachmentFile.remoteFileUrl))))
+                let downloadError: AttachmentsDownloaderError = .noAttachmentData(missingAttachmentData: NoAttachmentData(remoteFileUrl: attachmentFile.remoteFileUrl))
+                complete(DownloadedAttachmentResult(attachmentFile: attachmentFile, downloadError: downloadError))
             }
         
         case .failure(let downloadError):
-            complete(.failure(.failedToDownloadAttachment(error: downloadError)))
+            let downloadError: AttachmentsDownloaderError = .failedToCacheAttachment(error: downloadError)
+            complete(DownloadedAttachmentResult(attachmentFile: attachmentFile, downloadError: downloadError))
         }
-    }
-    
-    private func handleDownloadAndCacheAttachmentsCompleted() {
-        currentQueue = nil
-        started.accept(value: false)
-        progress.accept(value: 0)
-        completed.accept()
     }
 }

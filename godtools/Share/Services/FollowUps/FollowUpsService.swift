@@ -13,10 +13,10 @@ class FollowUpsService {
     private let followUpsApi: FollowUpsApi
     private let failedFollowUpsCache: FailedFollowUpsCache
     
-    required init(config: ConfigType, realmDatabase: RealmDatabase, sharedSession: SharedSessionType) {
+    required init(config: ConfigType, sharedSession: SharedSessionType, failedFollowUpsCache: FailedFollowUpsCache) {
         
-        followUpsApi = FollowUpsApi(config: config, sharedSession: sharedSession)
-        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        self.followUpsApi = FollowUpsApi(config: config, sharedSession: sharedSession)
+        self.failedFollowUpsCache = failedFollowUpsCache
     }
     
     func postNewFollowUp(followUp: FollowUpModel) -> OperationQueue {
@@ -55,8 +55,10 @@ class FollowUpsService {
                 
                 let httpStatusCode: Int = response.httpStatusCode ?? -1
                 let httpStatusCodeSuccess: Bool = httpStatusCode >= 200 && httpStatusCode < 400
+                let isConnectedToNetwork: Bool = !response.notConnectedToInternet
+                let failedForBadRequest: Bool = !httpStatusCodeSuccess && isConnectedToNetwork
                 
-                if httpStatusCodeSuccess {
+                if httpStatusCodeSuccess || failedForBadRequest {
                     
                     successfulPostedFollowUps.append(followUp)
                 }

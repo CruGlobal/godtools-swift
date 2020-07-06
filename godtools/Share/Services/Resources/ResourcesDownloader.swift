@@ -19,7 +19,7 @@ class ResourcesDownloader {
         self.resourcesApi = resourcesApi
     }
 
-    func downloadAndCacheLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) -> OperationQueue? {
+    func downloadLanguagesPlusResourcesPlusLatestTranslationsAndAttachments(complete: @escaping ((_ result: Result<ResourcesDownloaderResult, ResourcesDownloaderError>) -> Void)) -> OperationQueue? {
              
         let queue = OperationQueue()
                                         

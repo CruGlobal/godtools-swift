@@ -24,6 +24,7 @@ class AppDiContainer {
     private let resourcesDownloader: ResourcesDownloader
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
+    private let failedFollowUpsCache: FailedFollowUpsCache
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     private let resourcesCleanUp: ResourcesCleanUp
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
@@ -52,6 +53,7 @@ class AppDiContainer {
     let viewsService: ViewsService
     let shortcutItemsService: ShortcutItemsService
     let deepLinkingService: DeepLinkingService
+    let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
         
     required init() {
         
@@ -77,6 +79,8 @@ class AppDiContainer {
         
         attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
            
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        
         favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
               
         downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
@@ -92,10 +96,12 @@ class AppDiContainer {
             realmDatabase: realmDatabase,
             languageSettingsCache: languageSettingsCache,
             favoritedResourcesCache: favoritedResourcesCache,
-            downloadedLanguagesCache: downloadedLanguagesCache
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            failedFollowUpsCache: failedFollowUpsCache
         )
         
         resourcesCleanUp = ResourcesCleanUp(
+            realmDatabase: realmDatabase,
             translationsFileCache: translationsFileCache,
             resourcesSHA256FileCache: resourcesSHA256FileCache,
             favoritedResourcesCache: favoritedResourcesCache,
@@ -167,14 +173,15 @@ class AppDiContainer {
         
         globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
         
-        followUpsService = FollowUpsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
+        followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
         
         viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
         
         shortcutItemsService = ShortcutItemsService(
             realmDatabase: realmDatabase,
             dataDownloader: initialDataDownloader,
-            languageSettingsCache: languageSettingsCache
+            languageSettingsCache: languageSettingsCache,
+            favoritedResourcesCache: favoritedResourcesCache
         )
         
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)

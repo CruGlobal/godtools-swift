@@ -26,12 +26,13 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private var didDownloadTranslations: Bool = false
     private var downloadCancelled: Bool = false
         
+    let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let downloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let progressValue: ObservableValue<String> = ObservableValue(value: "0%")
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(resource: ResourceModel, translationsToDownload: [TranslationModel], translationDownloader: TranslationDownloader, completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>, closeHandler: CallbackHandler) {
+    required init(resource: ResourceModel, translationsToDownload: [TranslationModel], translationDownloader: TranslationDownloader, favoritedResourcesCache: FavoritedResourcesCache, localizationServices: LocalizationServices, completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>, closeHandler: CallbackHandler) {
 
         self.resource = resource
         self.translationDownloader = translationDownloader
@@ -45,6 +46,13 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
 
         setProgress(progress: 0)
         
+        if favoritedResourcesCache.isFavorited(resourceId: resource.id) {
+            message.accept(value: localizationServices.string(mainBundleKey: "loading_favorited_tool"))
+        }
+        else {
+            message.accept(value: localizationServices.string(mainBundleKey: "loading_unfavorited_tool"))
+        }
+        
         downloadTranslations(translations: translationsToDownload)
     }
     
@@ -57,9 +65,9 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     
     private func destroyDownloadTranslationsReceipt() {
         if let receipt = downloadTranslationsReceipt {
-            receipt.translationDownloaded.removeObserver(self)
-            receipt.progress.removeObserver(self)
-            receipt.completed.removeObserver(self)
+            receipt.translationDownloadedSignal.removeObserver(self)
+            receipt.progressObserver.removeObserver(self)
+            receipt.completedSignal.removeObserver(self)
             receipt.cancel()
             downloadTranslationsReceipt = nil
         }
@@ -103,13 +111,13 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
             return
         }
         
-        receipt.translationDownloaded.addObserver(self) { (downloadResult: DownloadedTranslationResult) in
+        receipt.translationDownloadedSignal.addObserver(self) { (downloadResult: DownloadedTranslationResult) in
             DispatchQueue.main.async { [weak self] in
                 self?.downloadedTranslations.append(downloadResult)
             }
         }
         
-        receipt.completed.addObserver(self) { [weak self] in
+        receipt.completedSignal.addObserver(self) { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.didDownloadTranslations = true
             }

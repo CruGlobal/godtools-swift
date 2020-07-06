@@ -16,8 +16,10 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     let dataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let localizationServices: LocalizationServices
     let favoritedResourcesCache: FavoritedResourcesCache
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
+    let deviceAttachmentBanners: DeviceAttachmentBanners
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -27,48 +29,46 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
+        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
         
         super.init()
-        
-        reloadResourcesFromCache()
-         
+                 
         setupBinding()
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
-        dataDownloader.initialDeviceResourcesCompleted.removeObserver(self)
-        dataDownloader.started.removeObserver(self)
-        dataDownloader.completed.removeObserver(self)
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
     }
     
     private func setupBinding() {
         
-        dataDownloader.initialDeviceResourcesCompleted.addObserver(self) { [weak self] in
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadResourcesFromCache()
+                self?.isLoading.accept(value: !cachedResourcesAvailable)
+                if cachedResourcesAvailable {
+                    self?.reloadResourcesFromCache()
+                }
             }
         }
         
-        dataDownloader.started.addObserver(self) { [weak self] (started: Bool) in
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadIsLoading()
-            }
-        }
-        
-        dataDownloader.completed.addObserver(self) { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadResourcesFromCache()
+                if error == nil {
+                    self?.reloadResourcesFromCache()
+                }
             }
         }
         
@@ -86,16 +86,9 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     private func reloadResourcesFromCache() {
-        
-        let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources()
+        let resources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
         tools.accept(value: resources)
-        reloadIsLoading()
-    }
-    
-    private func reloadIsLoading() {
-        
-        let isLoadingTools: Bool = dataDownloader.started.value && tools.value.isEmpty
-        isLoading.accept(value: isLoadingTools)
+        isLoading.accept(value: false)
     }
     
     func pageViewed() {
@@ -118,8 +111,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     func favoriteToolTapped(resource: ResourceModel) {
         
         favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
-        
-        //resourcesService.translationsServices.downloadAndCacheTranslations(resource: resource)
     }
     
     func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {

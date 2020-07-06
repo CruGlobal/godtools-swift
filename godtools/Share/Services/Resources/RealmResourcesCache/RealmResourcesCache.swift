@@ -23,6 +23,14 @@ class RealmResourcesCache {
         self.realmDatabase = realmDatabase
     }
     
+    var resourcesAvailable: Bool {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        return !realm.objects(RealmResource.self).isEmpty &&
+            !realm.objects(RealmLanguage.self).isEmpty &&
+            !realm.objects(RealmTranslation.self).isEmpty &&
+            !realm.objects(RealmAttachment.self).isEmpty
+    }
+    
     func cacheResources(realm: Realm, downloaderResult: ResourcesDownloaderResult) -> Result<ResourcesCacheResult, Error> {
             
         let languages: [LanguageModel] = downloaderResult.languages
@@ -180,7 +188,8 @@ class RealmResourcesCache {
         do {
             try realm.write {
                 realm.add(realmObjectsToCache, update: .all)
-                realm.delete(realmObjectsToRemove)
+                // TODO: Will need to implement clean up of deleted resources. ~Levi
+                //realm.delete(realmObjectsToRemove)
             }
             
             let cacheResult = ResourcesCacheResult(

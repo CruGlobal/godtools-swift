@@ -54,6 +54,22 @@ class SHA256FilesCache {
         }
     }
     
+    func getContentsOfRootDirectory() -> Result<[String], Error> {
+        
+        switch getRootDirectory() {
+        case .success(let rootDirectory):
+            do {
+                let contents: [String] = try fileManager.contentsOfDirectory(atPath: rootDirectory.path)
+                return .success(contents)
+            }
+            catch let error{
+                return .failure(error)
+            }
+        case .failure(let error):
+            return .failure(error)
+        }
+    }
+    
     private func createRootDirectoryIfNotExists() -> Result<URL, Error> {
         
         switch getRootDirectory() {

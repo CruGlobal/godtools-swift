@@ -24,6 +24,12 @@ class ResourcesCache {
         return realmResources.map({ResourceModel(realmResource: $0)})
     }
     
+    func getSortedResources() -> [ResourceModel] {
+        let realm: Realm = realmDatabase.mainThreadRealm
+        let sortedRealmResources: [RealmResource] = Array(realm.objects(RealmResource.self).sorted(byKeyPath: "attrDefaultOrder", ascending: true))
+        return sortedRealmResources.map({ResourceModel(realmResource: $0)})
+    }
+    
     func getResources(resourceIds: [String]) -> [ResourceModel] {
         let realm: Realm = realmDatabase.mainThreadRealm
         var resources: [ResourceModel] = Array()
@@ -39,6 +45,13 @@ class ResourcesCache {
         let realm: Realm = realmDatabase.mainThreadRealm
         if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {
             return ResourceModel(realmResource: realmResource)
+        }
+        return nil
+    }
+    
+    func getRealmResource(realm: Realm, id: String) -> RealmResource? {
+        if let realmResource = realm.object(ofType: RealmResource.self, forPrimaryKey: id) {
+            return realmResource
         }
         return nil
     }

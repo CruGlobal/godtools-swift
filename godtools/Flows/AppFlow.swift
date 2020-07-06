@@ -23,6 +23,7 @@ class AppFlow: NSObject, FlowDelegate {
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
+    private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
     private var isObservingDeepLinking: Bool = false
     
@@ -53,11 +54,12 @@ class AppFlow: NSObject, FlowDelegate {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        deepLinkingService.processing.removeObserver(self)
         deepLinkingService.completed.removeObserver(self)
     }
     
     func resetFlowToToolsFlow(animated: Bool) {
+        configureNavigation(navigationController: navigationController)
+        toolsFlow?.resetToolsMenu()
         navigationController.popToRootViewController(animated: animated)
         closeMenu(animated: animated)
         navigationController.dismiss(animated: animated, completion: nil)
@@ -89,12 +91,6 @@ class AppFlow: NSObject, FlowDelegate {
         }
         
         isObservingDeepLinking = true
-        
-        deepLinkingService.processing.addObserver(self) { [weak self] (processing: Bool) in
-            DispatchQueue.main.async {
-                
-            }
-        }
         
         deepLinkingService.completed.addObserver(self) { [weak self] (deepLinkingType: DeepLinkingType) in
             DispatchQueue.main.async { [weak self] in
@@ -342,14 +338,49 @@ class AppFlow: NSObject, FlowDelegate {
 
 extension AppFlow: UIApplicationDelegate {
     
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         
-        guard !navigationStarted else {
-            return
+        if navigationStarted, let resignedActiveDate = resignedActiveDate {
+            
+            let currentDate: Date = Date()
+            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
+            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+            
+            if elapsedTimeInMinutes >= 120 {
+
+                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+                loadingView.addSubview(loadingImage)
+                loadingImage.image = UIImage(named: "LaunchImage")
+                loadingView.backgroundColor = .white
+                application.keyWindow?.addSubview(loadingView)
+                
+                resetFlowToToolsFlow(animated: false)
+                
+                UIView.animate(withDuration: 0.4, delay: 2, options: .curveEaseOut, animations: {
+                    loadingView.alpha = 0
+                }, completion: {(finished: Bool) in
+                    loadingView.removeFromSuperview()
+                })
+            }
         }
         
-        navigationStarted = true
+        resignedActiveDate = nil
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
         
-        setupInitialNavigation()
+        if !navigationStarted {
+            
+            navigationStarted = true
+            setupInitialNavigation()
+        }
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        
+        resignedActiveDate = Date()
+        
+        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 }

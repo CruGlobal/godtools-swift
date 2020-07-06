@@ -16,7 +16,7 @@ class RealmResource: Object, ResourceModelType {
     @objc dynamic var attrBanner: String = ""
     @objc dynamic var attrBannerAbout: String = ""
     @objc dynamic var attrCategory: String = ""
-    @objc dynamic var attrDefaultOrder: String = ""
+    @objc dynamic var attrDefaultOrder: Int = -1
     @objc dynamic var id: String = ""
     @objc dynamic var manifest: String = ""
     @objc dynamic var name: String = ""

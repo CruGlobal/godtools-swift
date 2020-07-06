@@ -132,6 +132,14 @@ class ToolCell: UITableViewCell {
             }
             self?.favoriteButton.setImage(favoritedImage, for: .normal)
         }
+        
+        viewModel.aboutTitle.addObserver(self) { [weak self] (aboutTitle: String) in
+            self?.aboutToolButton.setTitle(aboutTitle, for: .normal)
+        }
+        
+        viewModel.openTitle.addObserver(self) { [weak self] (openTitle: String) in
+            self?.openToolButton.setTitle(openTitle, for: .normal)
+        }
     }
     
     private func setBannerImage(image: UIImage?) {

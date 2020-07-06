@@ -14,29 +14,41 @@ class ShortcutItemsService: NSObject {
     private let realmDatabase: RealmDatabase
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsCache: LanguageSettingsCacheType
+    private let favoritedResourcesCache: FavoritedResourcesCache
     
-    required init(realmDatabase: RealmDatabase, dataDownloader: InitialDataDownloader, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, dataDownloader: InitialDataDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourcesCache: FavoritedResourcesCache) {
         
         self.realmDatabase = realmDatabase
         self.dataDownloader = dataDownloader
         self.languageSettingsCache = languageSettingsCache
+        self.favoritedResourcesCache = favoritedResourcesCache
         
         super.init()
-        
-        if dataDownloader.didComplete {
-            reloadShortcutItems(application: UIApplication.shared)
-        }
         
         setupBinding()
     }
     
     deinit {
-        dataDownloader.completed.removeObserver(self)
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
     }
     
     private func setupBinding() {
-        dataDownloader.completed.addObserver(self) { [weak self] in
-            self?.reloadShortcutItems(application: UIApplication.shared)
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                if cachedResourcesAvailable {
+                    self?.reloadShortcutItems(application: UIApplication.shared)
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                if error == nil {
+                    self?.reloadShortcutItems(application: UIApplication.shared)
+                }
+            }
         }
     }
     
@@ -77,15 +89,34 @@ class ShortcutItemsService: NSObject {
             languageId: parallelLanguageId
         )
 
-        let resources: [RealmResource] = Array(realm.objects(RealmResource.self))
+        let favoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getSortedFavoritedResources(realm: realm)
         
-        for resource in resources {
+        guard !favoritedResources.isEmpty else {
+            return []
+        }
+        
+        if !favoritedResources.isEmpty {
             
-            shortcutItems.append(ToolShortcutItem.shortcutItem(
-                resource: resource,
-                primaryLanguageCode: primaryLanguageCode,
-                parallelLanguageCode: parallelLanguageCode
-            ))
+            let maxShortcutCount: Int = 4
+            var currentShortcutCount: Int = 0
+            
+            for favoritedResource in favoritedResources {
+                
+                if let resource = dataDownloader.resourcesCache.getRealmResource(realm: realm, id: favoritedResource.resourceId) {
+                    
+                    shortcutItems.append(ToolShortcutItem.shortcutItem(
+                        resource: resource,
+                        primaryLanguageCode: primaryLanguageCode,
+                        parallelLanguageCode: parallelLanguageCode
+                    ))
+                    
+                    currentShortcutCount += 1
+                }
+                
+                if currentShortcutCount >= maxShortcutCount {
+                    break
+                }
+            }
         }
         
         return shortcutItems

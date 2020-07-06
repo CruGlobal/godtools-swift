@@ -27,13 +27,16 @@ class DeepLinkingService: NSObject {
     }
     
     deinit {
-        dataDownloader.completed.removeObserver(self)
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
     }
     
     private func setupBinding() {
-        dataDownloader.completed.addObserver(self) { [weak self] in
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.processDeepLinkIfNeeded()
+                if cachedResourcesAvailable {
+                    self?.processDeepLinkIfNeeded()
+                }
             }
         }
     }
@@ -49,8 +52,8 @@ class DeepLinkingService: NSObject {
         guard let host = url.host, !host.isEmpty else {
             return
         }
-        
-        guard dataDownloader.resourcesExistInDatabase else {
+                
+        guard dataDownloader.cachedResourcesAvailable.value else {
             deepLinkUrl = url
             processing.accept(value: true)
             return

@@ -99,6 +99,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
+"open" = "Open";
 "toolinfo_opentool" = "Open Tool";
 "add_to_favorites" = "Add to Favorites";
 "remove_from_favorites" = "Remove from Favorites";
@@ -187,3 +188,7 @@ The app can be downloaded from https://godtoolsapp.com";
 "articles.loadingView.downloadingArticles" = "Downloading articles...";
 "articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+
+// Loading Tool
+"loading_unfavorited_tool" = "The tool is currently downloading. To avoid waiting next time add this tool to your favorites so it will be available offline.";
+"loading_favorited_tool" = "Downloading translations for this tool.";

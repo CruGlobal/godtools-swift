@@ -18,9 +18,7 @@ class LanguageTranslationsDownloader: NSObject {
     private let languageSettingsService: LanguageSettingsService
     private let downloadedLanguagesCache: DownloadedLanguagesCache
     private let translationDownloader: TranslationDownloader
-    
-    private var downloadLanguageTranslationsReceipts: [LanguageId: DownloadTranslationsReceipt] = Dictionary()
-    
+        
     required init(realmDatabase: RealmDatabase, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, translationDownloader: TranslationDownloader) {
         
         self.realmDatabase = realmDatabase
@@ -60,11 +58,6 @@ class LanguageTranslationsDownloader: NSObject {
         }
     }
     
-    func getLanguageTranslationsDownloadReceipt(languageId: String) -> DownloadTranslationsReceipt? {
-        
-        return downloadLanguageTranslationsReceipts[languageId]
-    }
-    
     private func downloadLanguageTranslationsForAllFavoritedResources(realm: Realm, languageId: String) {
         
         guard !languageId.isEmpty else {
@@ -83,15 +76,6 @@ class LanguageTranslationsDownloader: NSObject {
             }
         }
         
-        if let receipt = translationDownloader.downloadTranslations(realm: realm, translationIds: translationIdsToDownload) {
-            
-            downloadLanguageTranslationsReceipts[languageId] = receipt
-            
-            receipt.completed.addObserver(self) { [weak self] in
-                DispatchQueue.main.async { [weak self] in
-                    self?.downloadLanguageTranslationsReceipts[languageId] = nil
-                }
-            }
-        }
+        _ = translationDownloader.downloadTranslations(realm: realm, translationIds: translationIdsToDownload)
     }
 }

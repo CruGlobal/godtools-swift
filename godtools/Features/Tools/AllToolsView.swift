@@ -60,4 +60,8 @@ class AllToolsView: UIView, NibBased {
             isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
         }
     }
+    
+    func scrollToTopOfTools(animated: Bool) {
+        toolsView.scrollToTopOfTools(animated: animated)
+    }
 }

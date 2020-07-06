@@ -35,8 +35,10 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
         
@@ -44,8 +46,10 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
         
@@ -64,6 +68,12 @@ class ToolsFlow: Flow {
     
     deinit {
         print("x deinit: \(type(of: self))")
+    }
+    
+    func resetToolsMenu() {
+        if let toolsMenu = navigationController.viewControllers.first as? ToolsMenuView {
+            toolsMenu.resetMenu()
+        }
     }
     
     func navigate(step: FlowStep) {
@@ -178,6 +188,8 @@ class ToolsFlow: Flow {
             resource: resource,
             translationsToDownload: translationsToDownload,
             translationDownloader: appDiContainer.translationDownloader,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            localizationServices: appDiContainer.localizationServices,
             completeHandler: completeHandler,
             closeHandler: closeHandler
         )

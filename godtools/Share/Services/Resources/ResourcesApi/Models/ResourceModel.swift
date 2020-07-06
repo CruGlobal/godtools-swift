@@ -15,7 +15,7 @@ struct ResourceModel: ResourceModelType, Decodable {
     let attrBanner: String
     let attrBannerAbout: String
     let attrCategory: String
-    let attrDefaultOrder: String
+    let attrDefaultOrder: Int
     let id: String
     let manifest: String
     let name: String
@@ -110,7 +110,13 @@ struct ResourceModel: ResourceModelType, Decodable {
         attrBanner = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBanner) ?? ""
         attrBannerAbout = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrBannerAbout) ?? ""
         attrCategory = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrCategory) ?? ""
-        attrDefaultOrder = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultOrder) ?? ""
+        let attrDefaultOrderString: String? = try attributesContainer?.decodeIfPresent(String.self, forKey: .attrDefaultOrder) ?? ""
+        if let attrDefaultOrderString = attrDefaultOrderString, let attrDefaultOrderIntValue = Int(attrDefaultOrderString) {
+            attrDefaultOrder = attrDefaultOrderIntValue
+        }
+        else {
+            attrDefaultOrder = -1
+        }
         manifest = try attributesContainer?.decodeIfPresent(String.self, forKey: .manifest) ?? ""
         name = try attributesContainer?.decodeIfPresent(String.self, forKey: .name) ?? ""
         oneskyProjectId = try attributesContainer?.decodeIfPresent(Int.self, forKey: .oneskyProjectId) ?? -1

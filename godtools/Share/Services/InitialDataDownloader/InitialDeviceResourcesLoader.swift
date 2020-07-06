@@ -18,9 +18,7 @@ class InitialDeviceResourcesLoader {
     private let realmResourcesCache: RealmResourcesCache
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsCache: LanguageSettingsCacheType
-    
-    let completed: Signal = Signal()
-    
+        
     required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
@@ -31,14 +29,9 @@ class InitialDeviceResourcesLoader {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsCache = languageSettingsCache    }
     
-    private var databaseIsEmpty: Bool {
-        let mainThreadRealm: Realm = realmDatabase.mainThreadRealm
-        return mainThreadRealm.objects(RealmResource.self).isEmpty || mainThreadRealm.objects(RealmLanguage.self).isEmpty
-    }
-    
     func loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: @escaping (() -> Void)) {
         
-        guard databaseIsEmpty else {
+        guard !realmResourcesCache.resourcesAvailable else {
             completeOnMain()
             return
         }
@@ -259,28 +252,8 @@ class InitialDeviceResourcesLoader {
         }
     }
     
-    private func logDocuemntsContents() {
-        
-        let documentsPath: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        
-        do {
-                        
-            let documentsContents: [String] = try FileManager.default.contentsOfDirectory(atPath: documentsPath)
-        
-            print("\nNUMBER OF DOCUMENTS: \(documentsContents.count)")
-            for content in documentsContents {
-                print("  content: \(content)")
-            }
-        }
-        catch {
-            //assertionFailure(error.localizedDescription)
-        }
-    }
-    
     private func handleLoadAndCacheInitialDeviceResourcesCompleted(completeOnMain: @escaping (() -> Void)) {
-                
-        completed.accept()
-        
+                        
         DispatchQueue.main.async {
             completeOnMain()
         }

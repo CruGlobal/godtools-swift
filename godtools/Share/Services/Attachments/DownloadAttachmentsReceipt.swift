@@ -1,43 +1,41 @@
 //
-//  DownloadTranslationsReceipts.swift
+//  DownloadAttachmentsReceipt.swift
 //  godtools
 //
-//  Created by Levi Eggert on 6/23/20.
+//  Created by Levi Eggert on 7/2/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
 import Foundation
 
-class DownloadTranslationsReceipt {
+class DownloadAttachmentsReceipt {
     
-    private let translationIds: [String]
     private let progress: ObservableValue<Double> = ObservableValue(value: 0)
-    private let translationDownloaded: SignalValue<DownloadedTranslationResult> = SignalValue()
+    private let attachmentDownloaded: SignalValue<DownloadedAttachmentResult> = SignalValue()
     private let completed: Signal = Signal()
     
     private var queue: OperationQueue?
     
     private(set) var isRunning: Bool = false
-    
-    required init(translationIds: [String]) {
         
-        self.translationIds = translationIds
+    required init() {
+        
     }
     
     var progressObserver: ObservableValue<Double> {
         return progress
     }
     
-    var translationDownloadedSignal: SignalValue<DownloadedTranslationResult> {
-        return translationDownloaded
+    var attachmentDownloadedSignal: SignalValue<DownloadedAttachmentResult> {
+        return attachmentDownloaded
     }
     
     var completedSignal: Signal {
         return completed
     }
     
-    func handleTranslationDownloaded(result: DownloadedTranslationResult) {
-        translationDownloaded.accept(value: result)
+    func handleAttachmentDownloaded(result: DownloadedAttachmentResult) {
+        attachmentDownloaded.accept(value: result)
     }
     
     func setProgress(value: Double) {

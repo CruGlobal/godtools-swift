@@ -10,6 +10,7 @@ import Foundation
 
 protocol LoadingToolViewModelType {
     
+    var message: ObservableValue<String> { get }
     var isLoading: ObservableValue<Bool> { get }
     var downloadProgress: ObservableValue<Double> { get }
     var progressValue: ObservableValue<String> { get }

@@ -25,8 +25,11 @@ class ToolsMenuViewModel: ToolsMenuViewModelType {
     }
     
     private func reloadToolMenu() {
-        
         toolMenuItems.accept(value: [favoritesMenuItem, allToolsMenuItem])
+        selectedToolMenuItem.accept(value: favoritesMenuItem)
+    }
+    
+    func resetMenu() {
         selectedToolMenuItem.accept(value: favoritesMenuItem)
     }
     

@@ -16,8 +16,10 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     let dataDownloader: InitialDataDownloader
     let languageSettingsService: LanguageSettingsService
+    let localizationServices: LocalizationServices
     let favoritedResourcesCache: FavoritedResourcesCache
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
+    let deviceAttachmentBanners: DeviceAttachmentBanners
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -28,13 +30,15 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let hidesFindToolsView: ObservableValue<Bool> = ObservableValue(value: true)
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
+        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
         
         super.init()
@@ -46,9 +50,8 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        dataDownloader.initialDeviceResourcesCompleted.removeObserver(self)
-        dataDownloader.started.removeObserver(self)
-        dataDownloader.completed.removeObserver(self)
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
         favoritedResourcesCache.resourceSorted.removeObserver(self)
@@ -56,31 +59,30 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     private func setupBinding() {
         
-        dataDownloader.initialDeviceResourcesCompleted.addObserver(self) { [weak self] in
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadFavoritedResourcesFromCache()
+                if !cachedResourcesAvailable {
+                    self?.isLoading.accept(value: true)
+                    self?.hidesFindToolsView.accept(value: true)
+                }
+                else {
+                    self?.isLoading.accept(value: false)
+                    self?.reloadFavoritedResourcesFromCache()
+                }
             }
         }
         
-        dataDownloader.started.addObserver(self) { [weak self] (started: Bool) in
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadIsLoading()
-            }
-        }
-        
-        dataDownloader.completed.addObserver(self) { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadFavoritedResourcesFromCache()
+                if error == nil {
+                    self?.reloadFavoritedResourcesFromCache()
+                }
             }
         }
         
         favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
             DispatchQueue.main.async { [weak self] in
-                if let tool = self?.dataDownloader.resourcesCache.getResource(id: resourceId) {
-                    self?.addTool(tool: tool)
-                    self?.reloadIsLoading()
-                    self?.reloadHidesFindToolsView()
-                }
+                self?.addFavoritedResource(resourceId: resourceId)
             }
         }
         
@@ -97,39 +99,27 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         }
     }
     
-    private var toolsAreCached: Bool {
-        return !dataDownloader.resourcesCache.getResources().isEmpty
-    }
-    
-    private var isLoadingTools: Bool {
-        return dataDownloader.started.value && !toolsAreCached
-    }
-    
-    private func reloadIsLoading() {
-        isLoading.accept(value: isLoadingTools)
+    private func addFavoritedResource(resourceId: String) {
+        if let tool = dataDownloader.resourcesCache.getResource(id: resourceId) {
+            addTool(tool: tool)
+            hidesFindToolsView.accept(value: !tools.value.isEmpty)
+        }
     }
     
     private func removeFavoritedResource(resourceIds: [String]) {
         removeTools(toolIdsToRemove: resourceIds)
-        reloadHidesFindToolsView()
+        hidesFindToolsView.accept(value: !tools.value.isEmpty)
     }
     
     private func reloadFavoritedResourcesFromCache() {
         
-        let favoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getFavoritedResources()
-        let sortedFavoritedResources: [FavoritedResourceModel] = favoritedResources.sorted(by: {$0.sortOrder < $1.sortOrder})
+        let sortedFavoritedResources: [FavoritedResourceModel] = favoritedResourcesCache.getSortedFavoritedResources()
         let sortedFavoritedResourcesIds: [String] = sortedFavoritedResources.map({$0.resourceId})
         
         let resources: [ResourceModel] = dataDownloader.resourcesCache.getResources(resourceIds: sortedFavoritedResourcesIds)
-        
         tools.accept(value: resources)
-        reloadHidesFindToolsView()
-        reloadIsLoading()
-    }
-    
-    private func reloadHidesFindToolsView() {
-        let hidesFindTools: Bool = !tools.value.isEmpty || isLoadingTools
-        hidesFindToolsView.accept(value: hidesFindTools)
+        hidesFindToolsView.accept(value: !resources.isEmpty)
+        isLoading.accept(value: false)
     }
     
     func pageViewed() {

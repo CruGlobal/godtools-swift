@@ -104,6 +104,10 @@ class ToolsTableView: UIView, NibBased {
             self.tableView.alpha = alpha
         }, completion: nil)
     }
+    
+    func scrollToTopOfTools(animated: Bool) {
+        tableView.setContentOffset(.zero, animated: animated)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -137,8 +141,10 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
             resource: resource,
             dataDownloader: viewModel.dataDownloader,
             languageSettingsService: viewModel.languageSettingsService,
+            localizationServices: viewModel.localizationServices,
             favoritedResourcesCache: viewModel.favoritedResourcesCache,
-            fetchLanguageTranslationViewModel: viewModel.fetchLanguageTranslationViewModel
+            fetchLanguageTranslationViewModel: viewModel.fetchLanguageTranslationViewModel,
+            deviceAttachmentBanners: viewModel.deviceAttachmentBanners
         )
         
         cell.configure(viewModel: cellViewModel, delegate: self)

@@ -29,16 +29,6 @@ class RealmDatabase {
         }
     }
     
-    var isEmpty: Bool {
-        return isEmpty(realm: mainThreadRealm)
-    }
-    
-    func isEmpty(realm: Realm) -> Bool {
-        return realm.objects(RealmResource.self).isEmpty ||
-            realm.objects(RealmLanguage.self).isEmpty ||
-            realm.objects(RealmTranslation.self).isEmpty
-    }
-    
     func background(async: @escaping ((_ realm: Realm) -> Void)) {
                 
         backgroundQueue.async {

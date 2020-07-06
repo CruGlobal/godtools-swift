@@ -19,6 +19,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     private let languageSettingsService: LanguageSettingsService
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
+    private let shouldDisplaySelectedLanguageAtTop: Bool = false
     
     private var allLanguages: [LanguageModel] = Array()
     
@@ -51,6 +52,38 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             navTitle.accept(value: NSLocalizedString("parallel_language", comment: ""))
         }
         
+        reloadData()
+        
+        setupBinding()
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+    }
+    
+    private func setupBinding() {
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                if cachedResourcesAvailable {
+                    self?.reloadData()
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                if error == nil {
+                    self?.reloadData()
+                }
+            }
+        }
+    }
+    
+    private func reloadData() {
+        
         reloadLanguages()
         reloadSelectedLanguage()
         reloadHidesDeleteLanguageButton()
@@ -67,7 +100,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         
         case .primary:
             // move primary to top of list
-            if let primaryLanguage = userPrimaryLanguage, let index = availableLanguages.firstIndex(of: primaryLanguage) {
+            if shouldDisplaySelectedLanguageAtTop, let primaryLanguage = userPrimaryLanguage, let index = availableLanguages.firstIndex(of: primaryLanguage) {
                 availableLanguages.remove(at: index)
                 availableLanguages.insert(primaryLanguage, at: 0)
             }
@@ -81,7 +114,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
             }
             
             // move parallel to top of list
-            if let parallelLanguage = userParallelLanguage, let index = availableLanguages.firstIndex(of: parallelLanguage) {
+            if shouldDisplaySelectedLanguageAtTop, let parallelLanguage = userParallelLanguage, let index = availableLanguages.firstIndex(of: parallelLanguage) {
                 availableLanguages.remove(at: index)
                 availableLanguages.insert(parallelLanguage, at: 0)
             }
