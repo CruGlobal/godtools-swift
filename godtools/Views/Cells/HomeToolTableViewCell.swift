@@ -87,20 +87,21 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     private func loadDescription(resource: DownloadedResource) -> String {
-        let languagesManager = LanguagesManager()
+        return "Category"
+        /*let languagesManager = LanguagesManager()
         
         guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
-            return resource.category ?? ""
+            return resource.descr ?? ""
         }
 
         guard let translation = resource.getTranslationForLanguage(language) else {
-            return resource.category ?? ""
+            return resource.descr ?? ""
         }
         guard let tagline = translation.tagline else {
             return translation.localizedDescription ?? ""
         }
 
-        return tagline
+        return tagline*/
     }
 
     // MARK: - Actions

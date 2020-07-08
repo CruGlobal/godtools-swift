@@ -16,7 +16,6 @@ let TractURL = "TractURL"
 class DownloadedResource: Object {
     @objc dynamic var bannerRemoteId: String?
     @objc dynamic var aboutBannerRemoteId: String?
-    @objc dynamic var category: String?
     @objc dynamic var code = ""
     @objc dynamic var copyrightDescription: String?
     @objc dynamic var name = ""
