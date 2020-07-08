@@ -22,6 +22,8 @@ class HomeToolTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var languageLabel: UILabel!
     @IBOutlet weak var downloadProgressView: UIProgressView!
+    @IBOutlet weak var AboutButton: UIButton!
+    @IBOutlet weak var OpenButton: UIButton!
     
     private (set) var resource: DownloadedResource?
     private (set) var cellDelegate: HomeToolTableViewCellDelegate?
@@ -116,6 +118,7 @@ class HomeToolTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.backgroundColor = .gtWhite
         self.setBorders()
+        self.setButtonBorders()
         self.setShadows()
         if let resource = self.resource {
            self.displayData(resource: resource)
@@ -128,6 +131,15 @@ class HomeToolTableViewCell: UITableViewCell {
         layer.masksToBounds = true
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    func setButtonBorders() {
+        let aboutLayer = AboutButton.layer
+        let openLayer = OpenButton.layer
+        aboutLayer.borderWidth = 1
+        aboutLayer.borderColor = #colorLiteral(red: 0.2773926258, green: 0.704554379, blue: 0.8870570064, alpha: 1)
+        aboutLayer.cornerRadius = 6
+        openLayer.cornerRadius = 6
     }
     
     func setShadows() {
