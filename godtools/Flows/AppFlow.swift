@@ -54,7 +54,7 @@ class AppFlow: NSObject, FlowDelegate {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        deepLinkingService.completed.removeObserver(self)
+        removeDeepLinkingObservers()
     }
     
     func resetFlowToToolsFlow(animated: Bool) {
@@ -76,6 +76,11 @@ class AppFlow: NSObject, FlowDelegate {
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
+        
+        loadInitialData()
+    }
+    
+    private func loadInitialData() {
         
         dataDownloader.downloadInitialData()
         
@@ -107,6 +112,12 @@ class AppFlow: NSObject, FlowDelegate {
                 }
             }
         }
+    }
+    
+    private func removeDeepLinkingObservers() {
+        
+        isObservingDeepLinking = false
+        deepLinkingService.completed.removeObserver(self)
     }
     
     func navigate(step: FlowStep) {
@@ -357,7 +368,9 @@ extension AppFlow: UIApplicationDelegate {
                 
                 resetFlowToToolsFlow(animated: false)
                 
-                UIView.animate(withDuration: 0.4, delay: 2, options: .curveEaseOut, animations: {
+                loadInitialData()
+                
+                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
                     loadingView.alpha = 0
                 }, completion: {(finished: Bool) in
                     loadingView.removeFromSuperview()
@@ -378,7 +391,7 @@ extension AppFlow: UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        
+                
         resignedActiveDate = Date()
         
         appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
