@@ -2,7 +2,7 @@
 //  ToolCell.swift
 //  godtools
 //
-//  Created by Levi Eggert on 5/27/20.
+//  Created by Levi Eggert on 7/09/20.
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
@@ -33,8 +33,8 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var articlesDownloadProgressView: UIView!
     @IBOutlet weak private var translationsDownloadProgressView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var descriptionLabel: UILabel!
+    @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var aboutToolButton: UIButton!
     @IBOutlet weak private var openToolButton: UIButton!
     @IBOutlet weak private var favoriteButton: UIButton!
@@ -42,7 +42,7 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var attachmentsDownloadProgressWidth: NSLayoutConstraint!
     @IBOutlet weak private var articlesDownloadProgressWidth: NSLayoutConstraint!
     @IBOutlet weak private var translationsDownloadProgressWidth: NSLayoutConstraint!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         setupLayout()
