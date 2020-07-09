@@ -9,7 +9,6 @@
 import UIKit
 
 protocol HomeToolTableViewCellDelegate {
-    func downloadButtonWasPressed(resource: DownloadedResource)
     func infoButtonWasPressed(resource: DownloadedResource)
 }
 
@@ -17,25 +16,14 @@ protocol HomeToolTableViewCellDelegate {
 class HomeToolTableViewCell: UITableViewCell {
     
     @IBOutlet weak var shadowView: UIView!
-    @IBOutlet weak var borderView: UIView!
-    @IBOutlet weak var contentTopView: UIView!
-    @IBOutlet weak var contentBottomView: UIView!
+    @IBOutlet weak var toolContentView: UIView!
     @IBOutlet weak var bannerImageView: UIImageView!
-    @IBOutlet weak var mainContentView: UIView!
-    @IBOutlet weak var downloadButton: UIButton!
-    @IBOutlet weak var greyVerticalLine: UIImageView!
-    @IBOutlet weak var titleLabel: GTLabel!
-    
-    // Now using this for description of Tract
-    @IBOutlet weak var tractDescriptionLabel: GTLabel!
-    
-    @IBOutlet weak var languageLabel: GTLabel!
-    @IBOutlet weak var titleLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var numberOfViewsLeadingConstraint: NSLayoutConstraint!
-    @IBInspectable var leftConstraintValue: CGFloat = 8.0
-    @IBInspectable var defaultTitleLeadingConstraint: CGFloat = 47.0
-    @IBInspectable var defaultNumberOfViewsLeadingConstraint: CGFloat = 47.0
-    @IBOutlet weak var downloadProgressView: GTProgressView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var languageLabel: UILabel!
+    @IBOutlet weak var downloadProgressView: UIProgressView!
+    @IBOutlet weak var AboutButton: UIButton!
+    @IBOutlet weak var OpenButton: UIButton!
     
     private (set) var resource: DownloadedResource?
     private (set) var cellDelegate: HomeToolTableViewCellDelegate?
@@ -46,13 +34,6 @@ class HomeToolTableViewCell: UITableViewCell {
         super.awakeFromNib()
         setupUI()
         registerProgressViewListener()
-    }
-    
-    override func prepareForReuse() {
-        downloadButton.isHidden = false
-        greyVerticalLine.isHidden = false
-        titleLeadingConstraint.constant = defaultTitleLeadingConstraint
-        numberOfViewsLeadingConstraint.constant = defaultNumberOfViewsLeadingConstraint
     }
     
     func configure(resource: DownloadedResource,
@@ -77,10 +58,6 @@ class HomeToolTableViewCell: UITableViewCell {
         
         isAvailable = isAvailableInPrimaryLanguage
         
-        if resource.shouldDownload || resource.numberOfAvailableLanguages() == 0 {
-            setCellAsDisplayOnly()
-        }
-        
         bannerImageView.image = banner ?? #imageLiteral(resourceName: "cell_banner_placeholder")
 
         accessibilityIdentifier = resource.name
@@ -95,7 +72,7 @@ class HomeToolTableViewCell: UITableViewCell {
         
         configureParallelLanguageLabel(parallelLanguage: parallelLanguage)
 
-        tractDescriptionLabel.text = loadDescription(resource: resource)
+        categoryLabel.text = loadDescription(resource: resource)
     }
     
     private func configureParallelLanguageLabel(parallelLanguage: Language?) {
@@ -104,22 +81,16 @@ class HomeToolTableViewCell: UITableViewCell {
             return
         }
         if resource.isAvailableInLanguage(parallelLanguage)  {
-            let check: String = "✓ "
-            languageLabel.text = check + parallelLanguage.localizedName()
+            let check: String = " ✓"
+            languageLabel.text = parallelLanguage.localizedName() + check
         } else {
             languageLabel.text = nil
         }
     }
     
-    private func setCellAsDisplayOnly() {
-        downloadButton.isHidden = true
-        greyVerticalLine.isHidden = true
-        titleLeadingConstraint.constant = leftConstraintValue
-        numberOfViewsLeadingConstraint.constant = leftConstraintValue
-    }
-    
     private func loadDescription(resource: DownloadedResource) -> String {
-        let languagesManager = LanguagesManager()
+        return "Category"
+        /*let languagesManager = LanguagesManager()
         
         guard let language = languagesManager.loadPrimaryLanguageFromDisk() else {
             return resource.descr ?? ""
@@ -132,14 +103,10 @@ class HomeToolTableViewCell: UITableViewCell {
             return translation.localizedDescription ?? ""
         }
 
-        return tagline
+        return tagline*/
     }
 
     // MARK: - Actions
-    
-    @IBAction func pressDownloadButton(_ sender: Any) {
-        cellDelegate?.downloadButtonWasPressed(resource: resource!)
-    }
     
     @IBAction func pressInfoButton(_ sender: Any) {
         cellDelegate?.infoButtonWasPressed(resource: resource!)
@@ -151,6 +118,7 @@ class HomeToolTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.backgroundColor = .gtWhite
         self.setBorders()
+        self.setButtonBorders()
         self.setShadows()
         if let resource = self.resource {
            self.displayData(resource: resource)
@@ -158,11 +126,20 @@ class HomeToolTableViewCell: UITableViewCell {
     }
     
     func setBorders() {
-        let layer = borderView.layer
+        let layer = toolContentView.layer
         layer.cornerRadius = 5.0
         layer.masksToBounds = true
         layer.borderWidth = 1.0
         layer.borderColor = UIColor.clear.cgColor
+    }
+    
+    func setButtonBorders() {
+        let aboutLayer = AboutButton.layer
+        let openLayer = OpenButton.layer
+        aboutLayer.borderWidth = 1
+        aboutLayer.borderColor = #colorLiteral(red: 0.2773926258, green: 0.704554379, blue: 0.8870570064, alpha: 1)
+        aboutLayer.cornerRadius = 6
+        openLayer.cornerRadius = 6
     }
     
     func setShadows() {
@@ -183,7 +160,7 @@ class HomeToolTableViewCell: UITableViewCell {
     // MARK: Present data
     
     fileprivate func displayData(resource: DownloadedResource) {
-        self.tractDescriptionLabel.text = loadDescription(resource: resource)
+        self.categoryLabel.text = loadDescription(resource: resource)
     }
     
     // MARK: Progress view listener
