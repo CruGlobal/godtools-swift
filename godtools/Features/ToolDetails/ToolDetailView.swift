@@ -64,6 +64,7 @@ class ToolDetailView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("view didload: \(type(of: self))")
         
         setupLayout()
         setupBinding()
