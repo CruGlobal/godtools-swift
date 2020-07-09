@@ -151,8 +151,8 @@ class ToolsMenuView: UIViewController {
             toolsMenuControl.insertSegment(withTitle: menuItem.title, at: index, animated: false)
         }
         
-        let titleFont: UIFont = UIFont.defaultFont(size: 15, weight: nil)
-                
+        let titleFont: UIFont = FontLibrary.sfProTextRegular.font(size: 15) ?? UIFont.systemFont(ofSize: 15)
+                        
         if #available(iOS 13.0, *) {
             toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor.white], for: .normal)
             toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)

@@ -10,6 +10,10 @@ import Foundation
 import Alamofire
 import PromiseKit
 
+enum DataManagerError: Error {
+    case StatusCodeError(Int)
+}
+
 class EmailSignUpManager {
     
     static let emailSignupURL = URL(string: "https://campaign-forms.cru.org/forms")!

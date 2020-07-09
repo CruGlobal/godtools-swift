@@ -11,6 +11,7 @@ import Foundation
 protocol AboutViewModelType {
     
     var navTitle: ObservableValue<String> { get }
+    var aboutTexts: ObservableValue<[AboutTextModel]> { get }
     
     func pageViewed()
 }

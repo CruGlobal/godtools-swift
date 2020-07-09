@@ -16,7 +16,7 @@ class MenuCell: UITableViewCell {
     private var viewModel: MenuCellViewModel?
     
     @IBOutlet weak private var selectedView: UIView!
-    @IBOutlet weak private var titleLabel: GTLabel!
+    @IBOutlet weak private var titleLabel: UILabel!
     @IBOutlet weak private var rightArrowImageView: UIImageView!
     @IBOutlet weak private var separatorLine: UIView!
     

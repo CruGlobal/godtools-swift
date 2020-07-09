@@ -53,10 +53,11 @@ extension UIFont {
     
     static func buildCustomGTFontWithSize(_ size: CGFloat, weight: CGFloat) -> UIFont {
         
-        let language = LanguagesManager.defaultLanguage
+        // TODO: Eventually need to remove LanguagesManager Singleton.  Need to use a service or viewmodel to change fonts based on language code. ~Levi
+        let languageCode: String? = LanguagesManager.shared.primaryLangauge?.code
         var customFont: UIFont?
         
-        if language?.code == "am" {
+        if languageCode == "am" {
             if (weight == UIFont.Weight.semibold.rawValue) || (weight == UIFont.Weight.bold.rawValue) {
                 customFont = FontLibrary.notoSansEthiopicBold.font(size: size)
             } else {
@@ -68,11 +69,11 @@ extension UIFont {
     }
     
     static func shouldTransformLanguage() -> Bool {
-        guard let language = LanguagesManager.defaultLanguage else {
-            return false
-        }
         
-        if language.code == "am" {
+        // TODO: Eventually need to remove LanguagesManager Singleton.  Need to use a service or viewmodel to change fonts based on language code. ~Levi
+        let languageCode: String? = LanguagesManager.shared.primaryLangauge?.code
+        
+        if languageCode == "am" {
             return true
         } else {
             return false

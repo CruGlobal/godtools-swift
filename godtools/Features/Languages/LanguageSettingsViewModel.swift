@@ -18,10 +18,14 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("language_settings", comment: ""))
+    let primaryLanguageTitle: String
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
+    let parallelLanguageTitle: String
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
+    let shareGodToolsInNativeLanguage: String
+    let languageAvailability: String
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
@@ -29,8 +33,15 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
         
+        primaryLanguageTitle = localizationServices.string(mainBundleKey: "primary_language")
+        parallelLanguageTitle = localizationServices.string(mainBundleKey: "parallel_language")
+        shareGodToolsInNativeLanguage = localizationServices.string(mainBundleKey: "share_god_tools_native_language")
+        languageAvailability = localizationServices.string(mainBundleKey: "not_every_tool_is_available")
+        
         super.init()
-                                
+                      
+        reloadData()
+        
         setupBinding()
     }
     

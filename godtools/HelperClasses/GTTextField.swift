@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Remove this class. ~Levi
 class GTTextField: UITextField {
     
     @IBInspectable var cornerRadius: CGFloat {

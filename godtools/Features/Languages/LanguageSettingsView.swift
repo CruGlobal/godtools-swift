@@ -13,13 +13,13 @@ class LanguageSettingsView: UIViewController {
     private let viewModel: LanguageSettingsViewModelType
             
     @IBOutlet weak private var languageImageView: UIImageView!
-    @IBOutlet weak private var primaryLanguageLabel: GTLabel!
-    @IBOutlet weak private var primaryLanguageButton: BlueButton!
-    @IBOutlet weak private var parallelLanguageLabel: GTLabel!
-    @IBOutlet weak private var shareGodToolsLabel: GTLabel!
-    @IBOutlet weak private var parallelLanguageButton: BlueButton!
+    @IBOutlet weak private var primaryLanguageTitleLabel: UILabel!
+    @IBOutlet weak private var primaryLanguageButton: UIButton!
+    @IBOutlet weak private var parallelLanguageTitleLabel: UILabel!
+    @IBOutlet weak private var shareGodToolsLabel: UILabel!
+    @IBOutlet weak private var parallelLanguageButton: UIButton!
     @IBOutlet weak private var exclamationImageView: UIImageView!
-    @IBOutlet weak private var languageAvailabilityLabel: GTLabel!
+    @IBOutlet weak private var languageAvailabilityLabel: UILabel!
     
     required init(viewModel: LanguageSettingsViewModelType) {
         self.viewModel = viewModel
@@ -63,6 +63,9 @@ class LanguageSettingsView: UIViewController {
     
     private func setupLayout() {
         
+        let buttonCornerRadius: CGFloat = 6
+        primaryLanguageButton.layer.cornerRadius = buttonCornerRadius
+        parallelLanguageButton.layer.cornerRadius = buttonCornerRadius
     }
     
     private func setupBinding() {
@@ -71,14 +74,22 @@ class LanguageSettingsView: UIViewController {
             self?.title = navTitle
         }
         
+        primaryLanguageTitleLabel.text = viewModel.primaryLanguageTitle
+        
         viewModel.primaryLanguageButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.primaryLanguageButton.setTitle(title, for: .normal)
         }
+        
+        parallelLanguageTitleLabel.text = viewModel.parallelLanguageTitle
+        
+        shareGodToolsLabel.text = viewModel.shareGodToolsInNativeLanguage
         
         viewModel.parallelLanguageButtonTitle.addObserver(self) { [weak self] (title: String) in
             self?.parallelLanguageButton.setTitle(title, for: .normal)
             self?.parallelLanguageButton.accessibilityIdentifier = "select_parallel_language"
         }
+        
+        languageAvailabilityLabel.text = viewModel.languageAvailability
     }
     
     @objc func handlePrimaryLanguage(button: UIButton) {

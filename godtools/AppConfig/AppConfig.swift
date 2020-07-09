@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct AppConfig: ConfigType {
+class AppConfig: ConfigType {
     
     let isDebug: Bool
     let appleAppId: String
     
-    init() {
+    required init() {
         
         // RELEASE and DEBUG flags need to be set under Build Settings > Other Swift Flags.  Add -DDEBUG for debug builds and -DRELEASE for release builds.
         #if RELEASE

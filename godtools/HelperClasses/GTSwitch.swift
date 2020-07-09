@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO: Remove this class. ~Levi
 @IBDesignable
 class GTSwitch: UISwitch {
     

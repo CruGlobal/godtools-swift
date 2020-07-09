@@ -43,7 +43,6 @@ class AppDiContainer {
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    let languagesManager: LanguagesManager
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
@@ -150,7 +149,7 @@ class AppDiContainer {
         loginClient = TheKeyOAuthClient.shared
                 
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug),
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: config.isDebug),
             appsFlyer: AppsFlyer(config: config, loggingEnabled: config.isDebug),
             firebaseAnalytics: FirebaseAnalytics(),
             snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: config.isDebug)
@@ -159,9 +158,7 @@ class AppDiContainer {
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
                                                   
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
-                
-        languagesManager = LanguagesManager()
-        
+                        
         fetchLanguageTranslationViewModel = FetchLanguageTranslationViewModel(realmDatabase: realmDatabase, deviceLanguage: deviceLanguage)
         
         fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
@@ -185,6 +182,10 @@ class AppDiContainer {
         )
         
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
+        
+        // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
+        // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
+        LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {

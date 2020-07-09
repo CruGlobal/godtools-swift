@@ -25,6 +25,7 @@ class LanguageSettingsFlow: Flow {
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         let view = LanguageSettingsView(viewModel: viewModel)
