@@ -67,7 +67,7 @@
                                 <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLY-Ty-4Kf" userLabel="descriptionLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gospel Invitation" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eLY-Ty-4Kf" userLabel="categoryLabel">
                                 <rect key="frame" x="12" y="105.5" width="219" height="17"/>
                                 <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="14"/>
                                 <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -156,7 +156,7 @@
                 <outlet property="attachmentsDownloadProgressView" destination="kAF-lf-56e" id="XE0-R4-igQ"/>
                 <outlet property="attachmentsDownloadProgressWidth" destination="eLg-0w-qMG" id="rJ9-oM-ZIN"/>
                 <outlet property="bannerImageView" destination="tUn-Jf-OvI" id="JQt-Jg-F1k"/>
-                <outlet property="descriptionLabel" destination="eLY-Ty-4Kf" id="2d4-6R-mlB"/>
+                <outlet property="categoryLabel" destination="eLY-Ty-4Kf" id="9i8-b9-CmH"/>
                 <outlet property="favoriteButton" destination="15F-sj-FAT" id="IEE-gY-57e"/>
                 <outlet property="openToolButton" destination="CxJ-gK-Gvk" id="ubS-kd-nlv"/>
                 <outlet property="parallelLanguageLabel" destination="R8R-RL-qvK" id="Hb9-Sq-nuV"/>

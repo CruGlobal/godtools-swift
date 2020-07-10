@@ -15,7 +15,7 @@ protocol ToolCellViewModelType {
     var articlesDownloadProgress: ObservableValue<Double> { get }
     var translationDownloadProgress: ObservableValue<Double> { get }
     var title: ObservableValue<String> { get }
-    var resourceDescription: ObservableValue<String> { get }
+    var category: ObservableValue<String> { get }
     var parallelLanguageName: ObservableValue<String> { get }
     var isFavorited: ObservableValue<Bool> { get }
     var aboutTitle: ObservableValue<String> { get }

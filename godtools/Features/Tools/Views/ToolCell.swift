@@ -33,7 +33,7 @@ class ToolCell: UITableViewCell {
     @IBOutlet weak private var articlesDownloadProgressView: UIView!
     @IBOutlet weak private var translationsDownloadProgressView: UIView!
     @IBOutlet weak private var titleLabel: UILabel!
-    @IBOutlet weak private var descriptionLabel: UILabel!
+    @IBOutlet weak private var categoryLabel: UILabel!
     @IBOutlet weak private var parallelLanguageLabel: UILabel!
     @IBOutlet weak private var aboutToolButton: UIButton!
     @IBOutlet weak private var openToolButton: UIButton!
@@ -118,8 +118,8 @@ class ToolCell: UITableViewCell {
             self?.titleLabel.text = title
         }
         
-        viewModel.resourceDescription.addObserver(self) { [weak self] (description: String) in
-            self?.descriptionLabel.text = description
+        viewModel.category.addObserver(self) { [weak self] (category: String) in
+            self?.categoryLabel.text = category
         }
         
         viewModel.isFavorited.addObserver(self) { [weak self] (isFavorited: Bool) in

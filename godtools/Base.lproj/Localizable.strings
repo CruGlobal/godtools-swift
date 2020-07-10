@@ -196,3 +196,10 @@ The app can be downloaded from https://godtoolsapp.com";
 // Favorites
 "remove_from_favorites_title" = "Remove From Favorites?";
 "remove_from_favorites_message" = "Are you sure you want to remove %@ from your favorites?";
+
+// Tool Categories
+"tool_category_gospel" = "Gospel Invitation";
+"tool_category_articles" = "Articles";
+"tool_category_conversation_starter" = "Conversation Starter";
+"tool_category_growth" = "Christian Growth";
+"tool_category_training" = "Training";

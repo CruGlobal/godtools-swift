@@ -26,7 +26,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let articlesDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let title: ObservableValue<String> = ObservableValue(value: "")
-    let resourceDescription: ObservableValue<String> = ObservableValue(value: "")
+    let category: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageName: ObservableValue = ObservableValue(value: "")
     let isFavorited: ObservableValue = ObservableValue(value: false)
     let aboutTitle: ObservableValue<String> = ObservableValue(value: "")
@@ -199,7 +199,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         let languageCode: String = languageTranslationResult.language?.code ?? ""
         let languageLocale: Bundle = localizationServices.bundleForLanguageElseMainBundle(languageCode: languageCode)
         
-        resourceDescription.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: resource.attrCategory))
+        category.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "tool_category_\(resource.attrCategory)"))
         aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "about"))
         openTitle.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "open"))
     }
