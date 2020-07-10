@@ -102,15 +102,16 @@ class ToolsFlow: Flow {
                 self?.navigationController.dismiss(animated: true, completion: nil)
             }
             
-            // TODO: Localize this text. ~Levi
-            let title: String = "Remove From Favorites?"
-            let message: String = "Are you sure you want to remove \(resource.name) from your favorites?"
-            let acceptedTitle: String = "YES"
+            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            
+            let title: String = localizationServices.string(mainBundleKey: "remove_from_favorites_title")
+            let message: String = localizationServices.string(mainBundleKey: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: resource.name)
+            let acceptedTitle: String = localizationServices.string(mainBundleKey: "yes")
             
             let viewModel = AlertMessageViewModel(
                 title: title,
                 message: message,
-                cancelTitle: "NO",
+                cancelTitle: localizationServices.string(mainBundleKey: "no"),
                 acceptTitle: acceptedTitle,
                 acceptHandler: handler
             )

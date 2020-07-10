@@ -22,7 +22,7 @@ target 'godtools' do
     
     pod 'AppsFlyerFramework', '5.1.0'
     pod 'SnowplowTracker', '~> 1.3'
-    pod 'RealmSwift', '4.3.0'
+    pod 'RealmSwift'
     pod 'SSZipArchive'
     pod 'SWXMLHash'
     pod 'Fuzi'

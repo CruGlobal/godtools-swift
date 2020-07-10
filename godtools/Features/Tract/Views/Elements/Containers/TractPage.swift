@@ -15,7 +15,7 @@ class TractPage: BaseTractElement {
     
     var pageContainer: TractPageContainer?
     
-    private(set) var renderedView: UIView!
+    private(set) var renderedView: UIView?
     
     // MARK: - Setup
     
@@ -34,6 +34,20 @@ class TractPage: BaseTractElement {
     required init(data: XMLIndexer, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(data:parent:) has not been implemented") }
     required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
     override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(children:yPosition:parent:) has not been implemented") }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func destroyPage() {
+        if let elements = elements {
+            for element in elements {
+                element.removeFromSuperview()
+            }
+        }
+        elements?.removeAll()
+        renderedView = nil
+    }
     
     override func reset() {
         super.reset()

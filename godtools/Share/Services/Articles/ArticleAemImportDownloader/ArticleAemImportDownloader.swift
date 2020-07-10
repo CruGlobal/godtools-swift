@@ -83,9 +83,7 @@ class ArticleAemImportDownloader {
     }
     
     func downloadAndCache(translationZipFile: TranslationZipFileModel, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
-                
-        print("\n DOWNLOAD TO CACHE AND WEB ARCHIVE")
-        
+                        
         let queue = OperationQueue()
         
         let receipt = getDownloadReceipt(translationZipFile: translationZipFile)
@@ -131,23 +129,17 @@ class ArticleAemImportDownloader {
                     }
                     
                     let cacheValidation = ArticlesCacheValidation(translationZipFile: translationZipFile)
-                    
-                    print("\n HANDLE DOWNLOAD COMPLETED")
-                    
+                                        
                     // Delete web archives and realm objects for resourceId, languageCode
-                    print("  DELETE WEB ARCHIVES")
                     let deleteWebArchiveDirectoryError: Error? = self?.webArchiveFileCache.deleteWebArchiveDirectory(
                         resourceId: resourceId,
                         languageCode: languageCode
                     )
                     
-                    print("  DELETE REALM AEM OBJECTS")
                     self?.realmCache.deleteAemImportDataObjects(resourceId: resourceId, languageCode: languageCode) { [weak self] (deleteArticleAemImportDataObjectsError: Error?) in
                         
-                        print("  CACHEING NEW REALM OBJECTS")
                         self?.realmCache.cache(articleAemImportDataObjects: articleAemImportDataObjects) { (cacheArticleAemImportDataObjectsError: Error?) in
                             
-                            print("  CACHE NEW WEB ARCHIVES")
                             _ = self?.archiveAemImportData(resourceId: resourceId, languageCode: languageCode, articleAemImportDataObjects: articleAemImportDataObjects, complete: { (cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], webArchiveQueueResult: WebArchiveQueueResult) in
                                 
                                 let result = ArticleAemImportDownloaderResult(
@@ -206,9 +198,7 @@ class ArticleAemImportDownloader {
     }
     
     private func archiveAemImportData(resourceId: String, languageCode: String, articleAemImportDataObjects: [ArticleAemImportData], complete: @escaping ((_ cacheWebArchivePlistDataErrors: [CacheArticleAemWebArchivePlistError], _ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
-                
-        print("\n ARCHIVE AEM IMPORT DATA")
-        
+                        
         var urls: [URL] = Array()
         var webArchiveFilenames: [String] = Array()
         

@@ -10,6 +10,8 @@ import UIKit
 
 class TractViewModel: TractViewModelType {
     
+    typealias PageNumber = Int
+    
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
     private let parallelLanguage: LanguageModel?
@@ -22,8 +24,8 @@ class TractViewModel: TractViewModelType {
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
-    private var cachedPrimaryTractPages: [Int: TractPage] = Dictionary()
-    private var cachedParallelTractPages: [Int: TractPage] = Dictionary()
+    private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
+    private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
     private var tractPage: Int = -1
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
@@ -101,6 +103,23 @@ class TractViewModel: TractViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
+        destroyTractPages()
+    }
+    
+    private func destroyTractPages() {
+        
+        // TODO: This shouldn't be necessary, but somehow TractPages are being retained so manually calling destroy on tract page
+        // to remove all elements and views. ~Levi
+        
+        for ( _, tractPage) in cachedPrimaryTractPages {
+            tractPage.destroyPage()
+        }
+        cachedPrimaryTractPages.removeAll()
+        
+        for ( _, tractPage) in cachedParallelTractPages {
+            tractPage.destroyPage()
+        }
+        cachedParallelTractPages.removeAll()
     }
     
     private func loadTractXmlPages() {

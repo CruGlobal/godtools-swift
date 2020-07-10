@@ -33,6 +33,7 @@ class TractView: UIViewController {
         UIApplication.shared.isIdleTimerDisabled = false
         // TODO: Find out what TractBindings does. ~Levi
         TractBindings.clearAllBindings()
+        removeObservers()
     }
     
     override func viewDidLoad() {
@@ -229,8 +230,20 @@ class TractView: UIViewController {
         }
     }
     
+    private func removeObservers() {
+        
+        if didAddObservers {
+            didAddObservers = false
+            
+            NotificationCenter.default.removeObserver(self, name: .moveToPageNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .moveToNextPageNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .moveToPreviousPageNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: .sendEmailFromTractForm, object: nil)
+        }
+    }
+    
     private func addObservers() {
-                
+        
         if !didAddObservers {
             didAddObservers = true
             

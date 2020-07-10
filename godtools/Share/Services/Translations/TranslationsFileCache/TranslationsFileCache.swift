@@ -34,6 +34,8 @@ class TranslationsFileCache {
         return sha256FileCache.getData(location: location)
     }
     
+    // MARK: - Get Translation Manifest By Resource and Language
+    
     func getResourceLanguageTranslationManifestOnMainThread(resourceId: String, languageId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
         return getResourceLanguageTranslationManifest(realm: realmDatabase.mainThreadRealm, resourceId: resourceId, languageId: languageId)
@@ -65,6 +67,8 @@ class TranslationsFileCache {
 
         return getTranslationManifest(realm: realm, translationId: realmTranslation?.id ?? "")
     }
+    
+    // MARK: - Get Translation Manifest By Translation Id
     
     func getTranslationManifestOnMainThread(translationId: String) -> Result<TranslationManifestData, TranslationsFileCacheError> {
         
@@ -131,11 +135,13 @@ class TranslationsFileCache {
         }
     }
     
+    // MARK: - Caching Translation ZipFile Data
+    
     func translationZipIsCached(translationId: String) -> Bool {
         return translationZipIsCached(realm: realmDatabase.mainThreadRealm, translationId: translationId)
     }
     
-    func translationZipIsCached(realm: Realm, translationId: String) -> Bool {        
+    func translationZipIsCached(realm: Realm, translationId: String) -> Bool {
         if let _ = realm.object(ofType: RealmTranslationZipFile.self, forPrimaryKey: translationId) {
             return true
         }
@@ -199,13 +205,7 @@ class TranslationsFileCache {
                 realmTranslationZipFile.translationManifestFilename = translation.manifestName
                 realmTranslationZipFile.translationsVersion = translation.version
                 realmTranslationZipFile.sha256Files.append(objectsIn: realmSHA256Files)
-                     
-                print("\n TranslationsFileCache: cached translation zip file")
-                print("  translationId: \(realmTranslationZipFile.translationId)")
-                print("  resourceId: \(realmTranslationZipFile.resourceId)")
-                print("  languageId: \(realmTranslationZipFile.languageId)")
-                print("  languageCode: \(realmTranslationZipFile.languageCode)")
-                
+                                     
                 do {
                     try realm.write {
                         realm.add(realmTranslationZipFile, update: .all)
@@ -244,6 +244,8 @@ class TranslationsFileCache {
             complete(.failure(.sha256FileCacheError(error: error)))
         }
     }
+    
+    // MARK: - Deleting Translation ZipFiles
     
     func bulkDeleteTranslationZipFiles(realm: Realm, resourceIds: [String], languageIds: [String], translationIds: [String]) -> Error? {
                 

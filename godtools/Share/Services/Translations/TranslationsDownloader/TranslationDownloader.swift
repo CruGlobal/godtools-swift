@@ -35,9 +35,7 @@ class TranslationDownloader {
         guard !translationIds.isEmpty else {
             return nil
         }
-        
-        print("\n TranslationsDownloader: downloadTranslations -> \(translationIds)")
-        
+                
         let queue = OperationQueue()
         
         let receipt = DownloadTranslationsReceipt(translationIds: translationIds)
@@ -53,7 +51,6 @@ class TranslationDownloader {
             }
             
             guard !translationsFileCache.translationZipIsCached(realm: realm, translationId: translationId) else {
-                print("   translationId already downloaded: \(translationId)")
                 continue
             }
             
@@ -95,10 +92,7 @@ class TranslationDownloader {
     }
     
     private func processDownloadedTranslation(translationId: String, response: RequestResponse, complete: @escaping ((_ downloadError: TranslationDownloaderError?) -> Void)) {
-              
-        print("\n  Translation Downloaded Completed")
-        print("  translationId: \(translationId)")
-        
+                      
         guard !translationId.isEmpty else {
             complete(.internalErrorTriedDownloadingAnEmptyTranslationId)
             return

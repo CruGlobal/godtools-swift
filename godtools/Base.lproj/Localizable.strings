@@ -191,4 +191,8 @@ The app can be downloaded from https://godtoolsapp.com";
 
 // Loading Tool
 "loading_unfavorited_tool" = "The tool is currently downloading. To avoid waiting next time add this tool to your favorites so it will be available offline.";
-"loading_favorited_tool" = "Downloading translations for this tool.";
+"loading_favorited_tool" = "Downloading the latest translation for this tool.";
+
+// Favorites
+"remove_from_favorites_title" = "Remove From Favorites?";
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your favorites?";

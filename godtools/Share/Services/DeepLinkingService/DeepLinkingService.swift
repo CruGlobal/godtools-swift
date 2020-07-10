@@ -103,15 +103,7 @@ class DeepLinkingService: NSObject {
                 parallelLanguage = queryParallelLanguage
             }
         }
-        
-        print("\n PROCESS DEEP LINK")
-        print("  host: \(url.host)")
-        print("  path components: \(url.pathComponents)")
-        print("  query: \(url.query)")
-        print("  primaryLanguage: \(primaryLanguage)")
-        print("  resource: \(resource)")
-        print("  page: \(page)")
-        
+                
         processing.accept(value: false)
         deepLinkUrl = nil
         
