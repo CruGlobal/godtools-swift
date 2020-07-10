@@ -58,7 +58,7 @@ class RealmArticleAemImportDataCache {
                 }
             }
             
-            let articleAemImportData: [ArticleAemImportData] = cachedArticleAemImportDataObjects.map({ArticleAemImportData(realmModel: $0)})
+            let articleAemImportData: [ArticleAemImportData] = articlesByTag.map({ArticleAemImportData(realmModel: $0)})
             
             DispatchQueue.main.async {
                 completeOnMain(articleAemImportData)

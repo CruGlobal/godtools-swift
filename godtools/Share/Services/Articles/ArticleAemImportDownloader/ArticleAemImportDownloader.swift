@@ -40,10 +40,10 @@ class ArticleAemImportDownloader {
         self.realmCache = RealmArticleAemImportDataCache(realmDatabase: realmDatabase)
     }
     
-    func getArticlesWithTags(translationManifest: TranslationManifestData, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
+    func getArticlesWithTags(translationZipFile: TranslationZipFileModel, aemTags: [String], completeOnMain: @escaping ((_ articleAemImportData: [ArticleAemImportData]) -> Void)) {
         
-        let resourceId: String = translationManifest.translationZipFile.resourceId
-        let languageCode: String = translationManifest.translationZipFile.languageCode
+        let resourceId: String = translationZipFile.resourceId
+        let languageCode: String = translationZipFile.languageCode
         
         realmCache.getArticlesWithTags(resourceId: resourceId, languageCode: languageCode, aemTags: aemTags, completeOnMain: completeOnMain)
     }
@@ -58,9 +58,9 @@ class ArticleAemImportDownloader {
         }
     }
     
-    func getDownloadReceipt(translationManifest: TranslationManifestData) -> ArticleAemImportDownloaderReceipt {
+    func getDownloadReceipt(translationZipFile: TranslationZipFileModel) -> ArticleAemImportDownloaderReceipt {
         
-        let translationId: String = translationManifest.translationZipFile.translationId
+        let translationId: String = translationZipFile.translationId
         
         if let receipt = currentDownloadReceipts[translationId] {
             return receipt
@@ -72,28 +72,28 @@ class ArticleAemImportDownloader {
         }
     }
     
-    func articlesCached(translationManifest: TranslationManifestData) -> Bool {
+    func articlesCached(translationZipFile: TranslationZipFileModel) -> Bool {
         
-        return ArticlesCacheValidation(translationManifest: translationManifest).isCached
+        return ArticlesCacheValidation(translationZipFile: translationZipFile).isCached
     }
     
-    func articlesCacheExpired(translationManifest: TranslationManifestData) -> Bool {
+    func articlesCacheExpired(translationZipFile: TranslationZipFileModel) -> Bool {
         
-        return ArticlesCacheValidation(translationManifest: translationManifest).cacheExpired
+        return ArticlesCacheValidation(translationZipFile: translationZipFile).cacheExpired
     }
     
-    func downloadAndCache(translationManifest: TranslationManifestData, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
+    func downloadAndCache(translationZipFile: TranslationZipFileModel, aemImportSrcs: [String]) -> ArticleAemImportDownloaderReceipt? {
                 
         print("\n DOWNLOAD TO CACHE AND WEB ARCHIVE")
         
         let queue = OperationQueue()
         
-        let receipt = getDownloadReceipt(translationManifest: translationManifest)
+        let receipt = getDownloadReceipt(translationZipFile: translationZipFile)
         
         var operations: [ArticleAemImportOperation] = Array()
         
-        let resourceId: String = translationManifest.translationZipFile.resourceId
-        let languageCode: String = translationManifest.translationZipFile.languageCode
+        let resourceId: String = translationZipFile.resourceId
+        let languageCode: String = translationZipFile.languageCode
         
         var articleAemImportDataObjects: [ArticleAemImportData] = Array()
         var articleAemImportErrors: [ArticleAemImportOperationError] = Array()
@@ -125,12 +125,12 @@ class ArticleAemImportDownloader {
                     
                     guard !receipt.isCancelled && !articleAemImportDataObjects.isEmpty else {
                         
-                        self?.handleReceiptCancelled(receipt: receipt, translationManifest: translationManifest)
+                        self?.handleReceiptCancelled(receipt: receipt, translationZipFile: translationZipFile)
                         
                         return
                     }
                     
-                    let cacheValidation = ArticlesCacheValidation(translationManifest: translationManifest)
+                    let cacheValidation = ArticlesCacheValidation(translationZipFile: translationZipFile)
                     
                     print("\n HANDLE DOWNLOAD COMPLETED")
                     
@@ -178,7 +178,7 @@ class ArticleAemImportDownloader {
         
         if !operations.isEmpty {
             receipt.startDownload(downloadAemImportsQueue: queue)
-            currentDownloadReceipts[translationManifest.translationZipFile.translationId] = receipt
+            currentDownloadReceipts[translationZipFile.translationId] = receipt
             queue.addOperations(operations, waitUntilFinished: false)
             return receipt
         }
@@ -187,11 +187,11 @@ class ArticleAemImportDownloader {
         }
     }
     
-    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationManifest: TranslationManifestData) {
+    private func handleReceiptCancelled(receipt: ArticleAemImportDownloaderReceipt, translationZipFile: TranslationZipFileModel) {
         
         let result = ArticleAemImportDownloaderResult(
-            resourceId: translationManifest.translationZipFile.resourceId,
-            languageCode: translationManifest.translationZipFile.languageCode,
+            resourceId: translationZipFile.resourceId,
+            languageCode: translationZipFile.languageCode,
             articleAemImportDataObjects: [],
             articleAemImportErrors: [],
             deleteWebArchiveDirectoryError: nil,

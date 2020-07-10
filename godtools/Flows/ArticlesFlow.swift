@@ -39,12 +39,12 @@ class ArticlesFlow: Flow {
         
         switch step {
             
-        case .articleCategoryTappedFromArticleCategories(let resource, let translationManifest, let category, let articleManifest):
+        case .articleCategoryTappedFromArticleCategories(let resource, let translationZipFile, let category, let articleManifest):
             
             let viewModel = ArticlesViewModel(
                 flowDelegate: self,
                 resource: resource,
-                translationManifest: translationManifest,
+                translationZipFile: translationZipFile,
                 category: category,
                 articleManifest: articleManifest,
                 articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
@@ -54,12 +54,12 @@ class ArticlesFlow: Flow {
             
             navigationController.pushViewController(view, animated: true)
                         
-        case .articleTappedFromArticles(let resource, let translationManifest, let articleAemImportData):
+        case .articleTappedFromArticles(let resource, let translationZipFile, let articleAemImportData):
             
             let viewModel = ArticleWebViewModel(
                 flowDelegate: self,
                 resource: resource,
-                translationManifest: translationManifest,
+                translationZipFile: translationZipFile,
                 articleAemImportData: articleAemImportData,
                 articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
                 analytics: appDiContainer.analytics

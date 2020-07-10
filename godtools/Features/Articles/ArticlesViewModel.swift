@@ -11,7 +11,7 @@ import Foundation
 class ArticlesViewModel: NSObject, ArticlesViewModelType {
     
     private let resource: ResourceModel
-    private let translationManifest: TranslationManifestData
+    private let translationZipFile: TranslationZipFileModel
     private let category: ArticleCategory
     private let articleManifest: ArticleManifestXmlParser
     private let articleAemImportDownloader: ArticleAemImportDownloader
@@ -25,16 +25,16 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationManifest = translationManifest
+        self.translationZipFile = translationZipFile
         self.category = category
         self.articleManifest = articleManifest
         self.articleAemImportDownloader = articleAemImportDownloader
         self.analytics = analytics
-        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationManifest: translationManifest)
+        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationZipFile: translationZipFile)
         
         super.init()
         
@@ -53,11 +53,11 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     }
     
     private var articlesCached: Bool {
-        return articleAemImportDownloader.articlesCached(translationManifest: translationManifest)
+        return articleAemImportDownloader.articlesCached(translationZipFile: translationZipFile)
     }
     
     private var articlesCacheExpired: Bool {
-        return articleAemImportDownloader.articlesCacheExpired(translationManifest: translationManifest)
+        return articleAemImportDownloader.articlesCacheExpired(translationZipFile: translationZipFile)
     }
     
     private var shouldShowArticlesList: Bool {
@@ -122,7 +122,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         if (!articlesCached || articlesCacheExpired || forceDownload) && !downloadRunning {
                                                 
             _ = articleAemImportDownloader.downloadAndCache(
-                translationManifest: translationManifest,
+                translationZipFile: translationZipFile,
                 aemImportSrcs: articleManifest.aemImportSrcs
             )
         }
@@ -135,7 +135,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
             return
         }
         
-        articleAemImportDownloader.getArticlesWithTags(translationManifest: translationManifest, aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
+        articleAemImportDownloader.getArticlesWithTags(translationZipFile: translationZipFile, aemTags: category.aemTags, completeOnMain: { [weak self] (cachedArticleImportDataArray: [ArticleAemImportData]) in
             
             let sortedArticles = cachedArticleImportDataArray.sorted {(rhs: ArticleAemImportData, lhs: ArticleAemImportData) in
                 rhs.articleJcrContent?.title?.lowercased() ?? "" < lhs.articleJcrContent?.title?.lowercased() ?? ""
@@ -152,7 +152,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     }
     
     func articleTapped(articleAemImportData: ArticleAemImportData) {
-        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, translationManifest: translationManifest, articleAemImportData: articleAemImportData))
+        flowDelegate?.navigate(step: .articleTappedFromArticles(resource: resource, translationZipFile: translationZipFile, articleAemImportData: articleAemImportData))
     }
     
     func downloadArticlesTapped() {

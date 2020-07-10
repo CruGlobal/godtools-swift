@@ -12,7 +12,7 @@ import RealmSwift
 class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     private let resource: ResourceModel
-    private let translationManifest: TranslationManifestData
+    private let translationZipFile: TranslationZipFileModel
     private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
     private let articleManifest: ArticleManifestXmlParser
@@ -31,12 +31,12 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationManifest = translationManifest
+        self.translationZipFile = translationManifest.translationZipFile
         self.articleAemImportDownloader = articleAemImportDownloader
         self.translationsFileCache = translationsFileCache
         self.analytics = analytics
-        self.articleManifest = ArticleManifestXmlParser(xmlData: translationManifest.manifestXml)
-        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationManifest: translationManifest)
+        self.articleManifest = ArticleManifestXmlParser(xmlData: translationManifest.manifestXmlData)
+        self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationZipFile: translationZipFile)
         
         super.init()
         
@@ -89,14 +89,14 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     
     private func reloadArticles(forceDownload: Bool) {
             
-        let articlesCached: Bool = articleAemImportDownloader.articlesCached(translationManifest: translationManifest)
-        let articlesCacheExpired: Bool = articleAemImportDownloader.articlesCacheExpired(translationManifest: translationManifest)
+        let articlesCached: Bool = articleAemImportDownloader.articlesCached(translationZipFile: translationZipFile)
+        let articlesCacheExpired: Bool = articleAemImportDownloader.articlesCacheExpired(translationZipFile: translationZipFile)
         let downloadRunning: Bool = downloadArticlesReceipt.started.value
         
         if (!articlesCached || articlesCacheExpired || forceDownload) && !downloadRunning {
                                     
             _ = articleAemImportDownloader.downloadAndCache(
-                translationManifest: translationManifest,
+                translationZipFile: translationZipFile,
                 aemImportSrcs: articleManifest.aemImportSrcs
             )
         }
@@ -119,6 +119,6 @@ class ArticleCategoriesViewModel: NSObject, ArticleCategoriesViewModelType {
     }
     
     func articleTapped(category: ArticleCategory) {
-        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, translationManifest: translationManifest, category: category, articleManifest: articleManifest))
+        flowDelegate?.navigate(step: .articleCategoryTappedFromArticleCategories(resource: resource, translationZipFile: translationZipFile, category: category, articleManifest: articleManifest))
     }
 }

@@ -310,6 +310,8 @@ class ToolsFlow: Flow {
     
     private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
         
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        
         var translationsToDownload: [TranslationModel] = Array()
         
         let shouldDownloadPrimaryTranslation: Bool = primaryTranslationManifest == nil
@@ -332,18 +334,25 @@ class ToolsFlow: Flow {
                                                
                 for downloadedTranslation in downloadedTranslationsResults {
                     
-                    switch downloadedTranslation.result {
-                        
-                    case .success(let translationManifestData):
-                        if downloadedTranslation.translationId == primaryTranslation.id {
-                            downloadedPrimaryTranslation = translationManifestData
-                        }
-                        else if (downloadedTranslation.translationId == parallelTranslation?.id) {
-                            downloadedParallelTranslation = translationManifestData
-                        }
-                    case .failure(let translationDownloaderError):
-                        self?.handleDownloadTranslationErrorFromLoadingToolView(downloadError: translationDownloaderError)
+                    if let downloadError = downloadedTranslation.downloadError {
+                        self?.handleDownloadTranslationErrorFromLoadingToolView(downloadError: downloadError)
                         return
+                    }
+                    else {
+                        
+                        let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(translationId: downloadedTranslation.translationId)
+                        
+                        switch result {
+                        case .success(let translationManifestData):
+                            if downloadedTranslation.translationId == primaryTranslation.id {
+                                downloadedPrimaryTranslation = translationManifestData
+                            }
+                            else if (downloadedTranslation.translationId == parallelTranslation?.id) {
+                                downloadedParallelTranslation = translationManifestData
+                            }
+                        case .failure(let translationDownloaderError):
+                            break
+                        }
                     }
                 }
                 

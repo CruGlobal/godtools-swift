@@ -11,11 +11,11 @@ import Foundation
 class DownloadedTranslationResult {
     
     let translationId: String
-    let result: Result<TranslationManifestData, TranslationDownloaderError>
+    let downloadError: TranslationDownloaderError?
     
-    required init(translationId: String, result: Result<TranslationManifestData, TranslationDownloaderError>) {
+    required init(translationId: String, downloadError: TranslationDownloaderError?) {
         
         self.translationId = translationId
-        self.result = result
+        self.downloadError = downloadError
     }
 }

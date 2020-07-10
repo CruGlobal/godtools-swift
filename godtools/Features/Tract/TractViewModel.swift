@@ -12,9 +12,7 @@ class TractViewModel: TractViewModelType {
     
     private let resource: ResourceModel
     private let primaryLanguage: LanguageModel
-    private let primaryTranslationManifest: TranslationManifestData
     private let parallelLanguage: LanguageModel?
-    private let parallelTranslationManifest: TranslationManifestData?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
     private let followUpsService: FollowUpsService
@@ -44,9 +42,7 @@ class TractViewModel: TractViewModelType {
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
-        self.primaryTranslationManifest = primaryTranslationManifest
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.parallelTranslationManifest = parallelTranslationManifest
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.tractManager = tractManager
         self.followUpsService = followUpsService

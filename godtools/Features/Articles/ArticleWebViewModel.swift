@@ -11,7 +11,7 @@ import Foundation
 class ArticleWebViewModel: ArticleWebViewModelType {
     
     private let resource: ResourceModel
-    private let translationManifest: TranslationManifestData
+    private let translationZipFile: TranslationZipFileModel
     private let articleAemImportData: ArticleAemImportData
     private let articleAemImportDownloader: ArticleAemImportDownloader
     private let analytics: AnalyticsContainer
@@ -23,18 +23,17 @@ class ArticleWebViewModel: ArticleWebViewModelType {
     let webUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     let webArchiveUrl: ObservableValue<URL?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationManifest: TranslationManifestData, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
-        self.translationManifest = translationManifest
+        self.translationZipFile = translationZipFile
         self.articleAemImportData = articleAemImportData
         self.articleAemImportDownloader = articleAemImportDownloader
         self.analytics = analytics
         
         navTitle.accept(value: articleAemImportData.articleJcrContent?.title ?? "")
         
-        let translationZipFile: TranslationZipFileModel = translationManifest.translationZipFile
         let webArchiveLocation = ArticleAemWebArchiveFileCacheLocation(
             resourceId: translationZipFile.resourceId,
             languageCode: translationZipFile.languageCode,

@@ -16,7 +16,7 @@ class TranslationManifestXmlParser: NSObject, TranslationManifestType {
     
     required init(translationManifest: TranslationManifestData) {
         
-        xmlHash = SWXMLHash.parse(translationManifest.manifestXml)
+        xmlHash = SWXMLHash.parse(translationManifest.manifestXmlData)
         errorDomain = String(describing: TranslationManifestXmlParser.self)
         
         super.init()

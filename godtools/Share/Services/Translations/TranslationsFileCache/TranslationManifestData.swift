@@ -11,11 +11,11 @@ import Foundation
 class TranslationManifestData {
     
     let translationZipFile: TranslationZipFileModel
-    let manifestXml: Data
+    let manifestXmlData: Data
     
-    required init(translationZipFile: TranslationZipFileModel, manifestXml: Data) {
+    required init(translationZipFile: TranslationZipFileModel, manifestXmlData: Data) {
         
         self.translationZipFile = translationZipFile
-        self.manifestXml = manifestXml
+        self.manifestXmlData = manifestXmlData
     }
 }

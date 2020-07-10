@@ -25,7 +25,7 @@ class TractManager {
         var pages = [XMLPage]()
         let manifestProperties = ManifestProperties(sha256FileCache: resourcesSHA256FileCache)
                 
-        let xmlData: XMLIndexer = SWXMLHash.parse(translationManifest.manifestXml)
+        let xmlData: XMLIndexer = SWXMLHash.parse(translationManifest.manifestXmlData)
         let manifest: XMLIndexer = xmlData["manifest"]
         
         let xmlManager = XMLManager()

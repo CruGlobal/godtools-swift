@@ -120,8 +120,8 @@ class TranslationsFileCache {
             fileCacheError = nil
         }
         
-        if let translationZipFile = translationZipFileModel, let manifestXml = manifestData {
-            return .success(TranslationManifestData(translationZipFile: translationZipFile, manifestXml: manifestXml))
+        if let translationZipFile = translationZipFileModel, let manifestXmlData = manifestData {
+            return .success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData))
         }
         else if let fileCacheError = fileCacheError {
             return .failure(fileCacheError)
@@ -231,7 +231,7 @@ class TranslationsFileCache {
                 }
                 
                 if let manifestXmlData = manifestXmlData {
-                    complete(.success(TranslationManifestData(translationZipFile: translationZipFile, manifestXml: manifestXmlData)))
+                    complete(.success(TranslationManifestData(translationZipFile: translationZipFile, manifestXmlData: manifestXmlData)))
                 }
                 else {
                     complete(.failure(.translationManifestDoesNotExistInFileCache))
