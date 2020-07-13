@@ -11,6 +11,9 @@
 
 "unavailable" = "Nicht verfügbar";
 
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "überspringen";
+
 // Onboarding
 "add_new_tools" = "Neue Tools hinzufügen";
 "set_your_languages" = "Sprache wählen";

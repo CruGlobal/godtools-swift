@@ -1,3 +1,10 @@
+"articles.downloadArticlesButton.title.retryDownload" = "重试下载";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "版本";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "文章下载中...";
 "language_onboard" = "超过 80 种语言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -22,21 +29,21 @@
 "menu_general" = "通用";
 "menu_account" = "账户";
 "menu_share" = "分享";
-"menu_legal" = "法律";
+"menu_legal" = "法律信息";
 "language_settings" = "语言设置";
 "menu.tutorial" = "教程";
 "menu.my_account" = "我的账户";
 
 // Login
 "login" = "登录";
-"logout" = "退出";
+"logout" = "退出登陆";
 "create_account" = "创建账户";
 "account_login" = "账户登录";
 
 // Tool Detail
 "about" = "关于";
 "help" = "常见问题";
-"contact_us" = "请联系我们";
+"contact_us" = "联系我们";
 "preview_mode_translators_only" = "预览模式（仅限译员）";
 "share_god_tools" = "分享GodTools应用";
 "share_a_story_with_us" = "和我们分享你的使用心得";
@@ -56,8 +63,8 @@
 // Language Settings
 "primary_language" = "主要语言";
 "select_primary_language" = "选择主要语言";
-"parallel_language" = "同步展示语言";
-"select_parallel_language" = "选择同步展示语言";
+"parallel_language" = "平行显示语言";
+"select_parallel_language" = "选择平行显示语言";
 "share_god_tools_native_language" = "用他人的母语与他们分享GodTools";
 "not_every_tool_is_available" = "有些工具暂未涵盖所有的语种";
 
@@ -84,13 +91,13 @@
 "no" = "否";
 
 // Tract - Sharing
-"tract_share_message" ="点击这个链接，您会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
+"tract_share_message" ="点击这个链接，您就会看到我们今天谈论内容的网页版：%@。让我们畅谈吧！
 
 应用下载地址： https://godtoolsapp.com";
 
 // Buttons
 "download" = "下载";
-"dismiss" = "取消";
+"dismiss" = "关闭";
 "done" = "完成";
 "remove" = "删除";
 "clear" = "清除";
@@ -141,7 +148,7 @@
 "onboardingTutorial.aboutAppItem.2.message" = "GodTools竭诚为你提供帮助，随时准备就绪";
 "onboardingTutorial.appUsageItem.0.message" = "为任何对话做好准备";
 "onboardingTutorial.appUsageItem.1.message" = "向某人传播福音";
-"onboardingTutorial.appUsageItem.2.message" = "同时运行两种语言";
+"onboardingTutorial.appUsageItem.2.message" = "平行查看两种语言";
 "onboardingTutorial.appUsageItem.3.message" = "超过80种语言可供选择";
 "onboardingTutorial.appUsageItem.4.message" = "帮助他人成为基督徒";
 "onboardingTutorial.continueButton.title" = "继续";
@@ -154,9 +161,11 @@
 
 (点击视频，设置字幕)";
 "tutorial.tutorialItem.1.title" = "准备";
-"tutorial.tutorialItem.1.message" = "熟悉一些工具。“教我分享”工具是很好的起点。";
+"tutorial.tutorialItem.1.message" = "试一试并熟悉这些工具吧。“学习如何分享福音”工具是一个很好的起点。
+
+点击每个工具旁边的信息“i”按钮可以查看该工具的更多信息。";
 "tutorial.tutorialItem.2.title" = "尝试";
-"tutorial.tutorialItem.2.message" = "人人都是从初学者开始的。尝试在对话中使用工具，看看自己学到了什么。";
+"tutorial.tutorialItem.2.message" = "人人都是从初学者开始的。尝试在对话中使用一个工具，看看自己学到了什么。";
 "tutorial.tutorialItem.3.title" = "可以在菜单中再次查看本教程";
 "tutorial.continueButton.title.continue" = "继续";
 "tutorial.continueButton.title.startUsingGodTools" = "开始使用GodTools";
