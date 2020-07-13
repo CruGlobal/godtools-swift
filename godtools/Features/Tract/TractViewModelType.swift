@@ -10,15 +10,12 @@ import UIKit
 
 protocol TractViewModelType {
     
-    var resource: DownloadedResource { get }
     var navTitle: ObservableValue<String> { get }
     var navBarAttributes: TractNavBarAttributes { get }
     var hidesChooseLanguageControl: Bool { get }
     var chooseLanguageControlPrimaryLanguageTitle: String { get }
     var chooseLanguageControlParallelLanguageTitle: String { get }
     var selectedTractLanguage: ObservableValue<TractLanguage> { get }
-    var primaryLanguage: Language { get }
-    var parallelLanguage: Language? { get }
     var primaryTractManifest: ManifestProperties { get }
     var primaryTractPages: [XMLPage] { get }
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }

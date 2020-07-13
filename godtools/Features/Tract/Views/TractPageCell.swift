@@ -16,13 +16,19 @@ class TractPageCell: UICollectionViewCell {
     private weak var primaryTract: UIView?
     private weak var parallelTract: UIView?
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
     func setTractPage(tractPage: TractPage) {
         
         for subview in contentView.subviews {
             subview.removeFromSuperview()
         }
         
-        contentView.addSubview(tractPage.renderedView)
+        if let renderedView = tractPage.renderedView {
+           contentView.addSubview(renderedView)
+        }
     }
     
     func configure(primaryTract: UIView, parallelTract: UIView?, language: TractLanguageType) {

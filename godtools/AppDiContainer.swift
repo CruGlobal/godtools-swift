@@ -11,52 +11,181 @@ import TheKeyOAuthSwift
 
 class AppDiContainer {
     
-    private let godToolsAnalytics: GodToolsAnaltyics
+    private let godToolsAnalytics: GodToolsAnaltyics // TODO: Remove GodToolsAnalytics, replaced by AnalyticsContainer. ~Levi
     
-    let realmDatabase: RealmDatabase
-    let isNewUserCache: IsNewUserCacheType
-    let isNewUserService: IsNewUserService
+    private let legacyRealmMigration: LegacyRealmMigration
+    private let realmDatabase: RealmDatabase
+    private let resourcesSHA256FileCache: ResourcesSHA256FileCache = ResourcesSHA256FileCache()
+    private let sharedIgnoringCacheSession: SharedIgnoreCacheSession = SharedIgnoreCacheSession()
+    private let languagesApi: LanguagesApiType
+    private let resourcesApi: ResourcesApiType
+    private let translationsApi: TranslationsApiType
+    private let realmResourcesCache: RealmResourcesCache
+    private let resourcesDownloader: ResourcesDownloader
+    private let attachmentsFileCache: AttachmentsFileCache
+    private let attachmentsDownloader: AttachmentsDownloader
+    private let failedFollowUpsCache: FailedFollowUpsCache
+    private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
+    private let resourcesCleanUp: ResourcesCleanUp
+    private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
+
     let config: ConfigType
+    let translationsFileCache: TranslationsFileCache
+    let translationDownloader: TranslationDownloader
+    let favoritedResourcesCache: FavoritedResourcesCache
+    let downloadedLanguagesCache: DownloadedLanguagesCache
+    let favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader
+    let initialDataDownloader: InitialDataDownloader
+    let languageSettingsService: LanguageSettingsService
+    let languageTranslationsDownloader: LanguageTranslationsDownloader
+    let articleAemImportDownloader: ArticleAemImportDownloader
+    let isNewUserService: IsNewUserService
     let loginClient: TheKeyOAuthClient
     let analytics: AnalyticsContainer
-    let translationsApi: TranslationsApiType
-    let resourceLatestTranslationServices: ResourcesLatestTranslationServices
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
-    let languagesManager: LanguagesManager
-    
+    let localizationServices: LocalizationServices = LocalizationServices()
+    let deviceLanguage: DeviceLanguageType = DeviceLanguage()
+    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
+    let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
+    let globalActivityServices: GlobalActivityServicesType
+    let followUpsService: FollowUpsService
+    let viewsService: ViewsService
+    let shortcutItemsService: ShortcutItemsService
+    let deepLinkingService: DeepLinkingService
+    let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
+        
     required init() {
-        
-        realmDatabase = RealmDatabase()
-        
-        isNewUserCache = IsNewUserDefaultsCache()
-        
-        isNewUserService = IsNewUserService(
-            determineNewUser: DetermineNewUserIfPrimaryLanguageSet(languageManager: LanguagesManager()),
-            isNewUserCache: isNewUserCache
-        )
         
         config = AppConfig()
         
+        realmDatabase = RealmDatabase()
+
+        languagesApi = LanguagesApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        
+        resourcesApi = ResourcesApi(config: config, sharedSession: sharedIgnoringCacheSession)
+        
+        translationsApi = TranslationsApi(config: config, sharedSession: sharedIgnoringCacheSession)
+                        
+        realmResourcesCache = RealmResourcesCache(realmDatabase: realmDatabase)
+        
+        resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi)
+        
+        translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+                
+        translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
+        
+        attachmentsFileCache = AttachmentsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
+        
+        attachmentsDownloader = AttachmentsDownloader(attachmentsFileCache: attachmentsFileCache, sharedSession: sharedIgnoringCacheSession)
+           
+        failedFollowUpsCache = FailedFollowUpsCache(realmDatabase: realmDatabase)
+        
+        favoritedResourcesCache = FavoritedResourcesCache(realmDatabase: realmDatabase)
+              
+        downloadedLanguagesCache = DownloadedLanguagesCache(realmDatabase: realmDatabase)
+                
+        favoritedResourceTranslationDownloader = FavoritedResourceTranslationDownloader(
+            realmDatabase: realmDatabase,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            translationDownloader: translationDownloader
+        )
+        
+        legacyRealmMigration = LegacyRealmMigration(
+            realmDatabase: realmDatabase,
+            languageSettingsCache: languageSettingsCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            failedFollowUpsCache: failedFollowUpsCache
+        )
+        
+        resourcesCleanUp = ResourcesCleanUp(
+            realmDatabase: realmDatabase,
+            translationsFileCache: translationsFileCache,
+            resourcesSHA256FileCache: resourcesSHA256FileCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            downloadedLanguagesCache: downloadedLanguagesCache
+        )
+        
+        initialDeviceResourcesLoader = InitialDeviceResourcesLoader(
+            realmDatabase: realmDatabase,
+            legacyRealmMigration: legacyRealmMigration,
+            attachmentsFileCache: attachmentsFileCache,
+            translationsFileCache: translationsFileCache,
+            realmResourcesCache: realmResourcesCache,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsCache: languageSettingsCache
+        )
+        
+        initialDataDownloader = InitialDataDownloader(
+            realmDatabase: realmDatabase,
+            initialDeviceResourcesLoader: initialDeviceResourcesLoader,
+            resourcesDownloader: resourcesDownloader,
+            realmResourcesCache: realmResourcesCache,
+            resourcesCleanUp: resourcesCleanUp,
+            attachmentsDownloader: attachmentsDownloader,
+            languageSettingsCache: languageSettingsCache,
+            deviceLanguage: deviceLanguage,
+            favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
+        )
+        
+        languageSettingsService = LanguageSettingsService(
+            dataDownloader: initialDataDownloader,
+            languageSettingsCache: languageSettingsCache
+        )
+        
+        languageTranslationsDownloader = LanguageTranslationsDownloader(
+            realmDatabase: realmDatabase,
+            favoritedResourcesCache: favoritedResourcesCache,
+            languageSettingsService: languageSettingsService,
+            downloadedLanguagesCache: downloadedLanguagesCache,
+            translationDownloader: translationDownloader
+        )
+        
+        articleAemImportDownloader = ArticleAemImportDownloader(realmDatabase: realmDatabase)
+                
+        isNewUserService = IsNewUserService(languageSettingsCache: languageSettingsCache)
+        
         loginClient = TheKeyOAuthClient.shared
-        
-        let analyticsLoggingEnabled: Bool = config.isDebug
-        
+                
         analytics = AnalyticsContainer(
-            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled),
-            appsFlyer: AppsFlyer(config: config, loggingEnabled: analyticsLoggingEnabled),
+            adobeAnalytics: AdobeAnalytics(config: config, keyAuthClient: loginClient, languageSettingsService: languageSettingsService, loggingEnabled: false),
+            appsFlyer: AppsFlyer(config: config, loggingEnabled: false),
             firebaseAnalytics: FirebaseAnalytics(),
-            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: analyticsLoggingEnabled)
+            snowplowAnalytics: SnowplowAnalytics(config: config, keyAuthClient: loginClient, loggingEnabled: false)
         )
         
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
-                
-        translationsApi = TranslationsApi(config: config)
-          
-        resourceLatestTranslationServices = ResourcesLatestTranslationServices(translationsApi: translationsApi)
-                        
+                                                  
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
-                
-        languagesManager = LanguagesManager()
+                        
+        fetchLanguageTranslationViewModel = FetchLanguageTranslationViewModel(realmDatabase: realmDatabase, deviceLanguage: deviceLanguage)
+        
+        fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
+            realmDatabase: realmDatabase,
+            resourcesCache: initialDataDownloader.resourcesCache,
+            languageSettingsService: languageSettingsService,
+            translationsFileCache: translationsFileCache
+        )
+        
+        globalActivityServices = GlobalActivityServices(config: config, sharedSession: sharedIgnoringCacheSession)
+        
+        followUpsService = FollowUpsService(config: config, sharedSession: sharedIgnoringCacheSession, failedFollowUpsCache: failedFollowUpsCache)
+        
+        viewsService = ViewsService(config: config, realmDatabase: realmDatabase, sharedSession: sharedIgnoringCacheSession)
+        
+        shortcutItemsService = ShortcutItemsService(
+            realmDatabase: realmDatabase,
+            dataDownloader: initialDataDownloader,
+            languageSettingsCache: languageSettingsCache,
+            favoritedResourcesCache: favoritedResourcesCache
+        )
+        
+        deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
+        
+        // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
+        // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
+        LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
     }
     
     var firebaseConfiguration: FirebaseConfiguration {
@@ -79,7 +208,7 @@ class AppDiContainer {
         return OnboardingTutorialAvailability(
             tutorialAvailability: tutorialAvailability,
             onboardingTutorialViewedCache: onboardingTutorialViewedCache,
-            isNewUserCache: isNewUserCache
+            isNewUserCache: isNewUserService.isNewUserCache
         )
     }
     
@@ -95,29 +224,7 @@ class AppDiContainer {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
     }
     
-    var deviceLanguage: DeviceLanguageType {
-        return DeviceLanguage()
-    }
-    
-    var globalActivityServices: GlobalActivityServicesType {
-        return GlobalActivityServices(
-            globalActivityApi: GlobalActivityAnalyticsApi(config: config),
-            globalActivityCache: GlobalActivityAnalyticsUserDefaultsCache()
-        )
-    }
-    
-    var translationZipImporter: TranslationZipImporter {
-        return TranslationZipImporter()
-    }
-
-    var articlesService: ArticlesService {
-        return ArticlesService(
-            resourceLatestTranslationServices: resourceLatestTranslationServices,
-            realm: realmDatabase.mainThreadRealm
-        )
-    }
-    
     var tractManager: TractManager {
-        return TractManager()
+        return TractManager(translationsFileCache: translationsFileCache, resourcesSHA256FileCache: resourcesSHA256FileCache)
     }
 }

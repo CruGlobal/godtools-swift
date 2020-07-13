@@ -10,7 +10,7 @@ import UIKit
 
 protocol AccountItemCellDelegate: class {
     
-    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessage)
+    func accountItemCellDidProcessAlertMessage(cell: AccountItemCell, alertMessage: AlertMessageType)
 }
 
 class AccountItemCell: UICollectionViewCell {
@@ -51,7 +51,7 @@ class AccountItemCell: UICollectionViewCell {
 // MARK: - AccountItemViewDelegate
 
 extension AccountItemCell: AccountItemViewDelegate {
-    func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessage) {
+    func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessageType) {
         delegate?.accountItemCellDidProcessAlertMessage(cell: self, alertMessage: alertMessage)
     }
 }

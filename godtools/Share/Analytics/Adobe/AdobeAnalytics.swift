@@ -14,15 +14,17 @@ class AdobeAnalytics: AdobeAnalyticsType {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
+    private let languageSettingsService: LanguageSettingsService
     private let loggingEnabled: Bool
     
     private var previousTrackedScreenName: String = ""
     private var isConfigured: Bool = false
         
-    required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, loggingEnabled: Bool) {
+    required init(config: ConfigType, keyAuthClient: TheKeyOAuthClient, languageSettingsService: LanguageSettingsService, loggingEnabled: Bool) {
         
         self.config = config
         self.keyAuthClient = keyAuthClient
+        self.languageSettingsService = languageSettingsService
         self.loggingEnabled = loggingEnabled
     }
     
@@ -139,8 +141,8 @@ class AdobeAnalytics: AdobeAnalyticsType {
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
         
         let appName: String = self.appName
-        let contentLanguage: String? = UserDefaults.standard.string(forKey: "kPrimaryLanguageCode")
-        let contentLanguageSecondary: String? = UserDefaults.standard.string(forKey: "kParallelLanguageCode")
+        let contentLanguage: String? = languageSettingsService.primaryLanguage.value?.code
+        let contentLanguageSecondary: String? = languageSettingsService.parallelLanguage.value?.code
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let loggedInStatus: String = self.loggedInStatus
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil

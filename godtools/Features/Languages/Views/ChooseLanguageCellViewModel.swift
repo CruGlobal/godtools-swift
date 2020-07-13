@@ -10,14 +10,16 @@ import Foundation
 
 class ChooseLanguageCellViewModel: ChooseLanguageCellViewModelType {
     
-    let languageText: ObservableValue<String> = ObservableValue(value: "")
-    let hidesDownloadButton: ObservableValue<Bool> = ObservableValue(value: false)
+    let languageName: String
+    let languageIsDownloaded: Bool
     let hidesSelected: Bool
+    let hidesSeparator: Bool
     
-    required init(language: Language, selectedLanguage: Language?) {
+    required init(language: LanguageModel, translateLanguageNameViewModel: TranslateLanguageNameViewModel, downloadedLanguagesCache: DownloadedLanguagesCache, hidesDownloadButton: Bool, hidesSelected: Bool) {
         
-        languageText.accept(value: language.localizedName())
-        hidesDownloadButton.accept(value: language.shouldDownload)
-        hidesSelected = language.remoteId != selectedLanguage?.remoteId
+        self.languageName = language.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+        self.languageIsDownloaded = downloadedLanguagesCache.isDownloaded(languageId: language.id)
+        self.hidesSelected = hidesSelected
+        self.hidesSeparator = !hidesSelected
     }
 }

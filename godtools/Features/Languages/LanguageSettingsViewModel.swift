@@ -10,65 +10,110 @@ import Foundation
 
 class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
 
-    private let languagesManager: LanguagesManager
+    private let dataDownloader: InitialDataDownloader
+    private let languageSettingsService: LanguageSettingsService
+    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("language_settings", comment: ""))
+    let primaryLanguageTitle: String
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
+    let parallelLanguageTitle: String
     let parallelLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
+    let shareGodToolsInNativeLanguage: String
+    let languageAvailability: String
     
-    required init(flowDelegate: FlowDelegate, languagesManager: LanguagesManager, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
-        self.languagesManager = languagesManager
+        self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
         
+        primaryLanguageTitle = localizationServices.string(mainBundleKey: "primary_language")
+        parallelLanguageTitle = localizationServices.string(mainBundleKey: "parallel_language")
+        shareGodToolsInNativeLanguage = localizationServices.string(mainBundleKey: "share_god_tools_native_language")
+        languageAvailability = localizationServices.string(mainBundleKey: "not_every_tool_is_available")
+        
         super.init()
+                      
+        reloadData()
         
-        _ = languagesManager.loadPrimaryLanguageFromDisk()
-        _ = languagesManager.loadParallelLanguageFromDisk()
-        
-        languagesManager.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: Language?) in
-            self?.reloadPrimaryLanguageButtonTitle(primaryLanguage: primaryLanguage)
-        }
-        
-        languagesManager.parallelLanguage.addObserver(self) { [weak self] (language: Language?) in
-            self?.reloadParallelLanguageButtonTitle(parallelLanguage: language)
-        }
+        setupBinding()
     }
     
     deinit {
-        languagesManager.primaryLanguage.removeObserver(self)
-        languagesManager.parallelLanguage.removeObserver(self)
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        languageSettingsService.primaryLanguage.removeObserver(self)
+        languageSettingsService.parallelLanguage.removeObserver(self)
     }
     
-    private func reloadPrimaryLanguageButtonTitle(primaryLanguage: Language?) {
+    private func setupBinding() {
+        
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                if cachedResourcesAvailable {
+                    self?.reloadData()
+                }
+            }
+        }
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                if error == nil {
+                    self?.reloadData()
+                }
+            }
+        }
+        
+        languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadPrimaryLanguageButtonTitle()
+            }
+        }
+        
+        languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadParallelLanguageButtonTitle()
+            }
+        }
+    }
+    
+    private func reloadData() {
+        reloadPrimaryLanguageButtonTitle()
+        reloadParallelLanguageButtonTitle()
+    }
+    
+    private func reloadPrimaryLanguageButtonTitle() {
         
         let title: String
         
-        if let primaryLanguage = primaryLanguage {
-            title = primaryLanguage.localizedName()
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value {
+            title = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
             title = NSLocalizedString("select_primary_language", comment: "")
         }
-        
+
         primaryLanguageButtonTitle.accept(value: title)
     }
     
-    private func reloadParallelLanguageButtonTitle(parallelLanguage: Language?) {
-        
+    private func reloadParallelLanguageButtonTitle() {
+            
         let title: String
         
-        if let parallelLanguage = parallelLanguage {
-            title = parallelLanguage.localizedName()
+        if let parallelLanguage = languageSettingsService.parallelLanguage.value {
+            title = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
             title = NSLocalizedString("select_parallel_language", comment: "")
         }
-        
+
         parallelLanguageButtonTitle.accept(value: title)
     }
     

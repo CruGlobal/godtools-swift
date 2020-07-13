@@ -156,8 +156,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
         
         let cellViewModel = ArticleCategoryCellViewModel(
             category: category,
-            godToolsResource: viewModel.godToolsResource,
-            resourcesFileCache: viewModel.resourceLatestTranslationServices.fileCache
+            translationsFileCache: viewModel.translationsFileCache
         )
         cell.configure(viewModel: cellViewModel)
  
@@ -171,7 +170,7 @@ extension ArticleCategoriesView: UITableViewDelegate, UITableViewDataSource {
 // MARK: - ArticlesErrorMessageViewDelegate
 
 extension ArticleCategoriesView: ArticlesErrorMessageViewDelegate {
-    func articlesErrorMessageViewDownloadArticlesButtonTapped() {
+    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView) {
         viewModel.downloadArticlesTapped()
     }
 }

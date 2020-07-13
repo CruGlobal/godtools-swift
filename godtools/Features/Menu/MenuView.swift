@@ -34,7 +34,7 @@ let kAppAuthExampleAuthStateKey: String = "authState";
 class MenuView: UIViewController {
     
     private let viewModel: MenuViewModelType
-    private let headerHeight: CGFloat = 40.0
+    private let headerHeight: CGFloat = 44
     private let rowHeight: CGFloat = 50
     
     @IBOutlet weak var tableView: UITableView!
@@ -163,17 +163,13 @@ extension MenuView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let section: MenuSection = viewModel.menuDataSource.value.sections[section]
-        let headerFrame = CGRect(x: 0.0, y: 0.0, width: tableView.frame.width, height: headerHeight)
-        let headerView:UIView = UIView(frame: headerFrame)
-        headerView.backgroundColor = .gtGreyLight
         
-        let labelFrame = CGRect(x: 20.0, y: 12.0, width: 100.0, height: 16.0)
-        let titleLabel:GTLabel = GTLabel(frame: labelFrame)
-        titleLabel.gtStyle = "blackTextSmall"
-        titleLabel.text = section.title.uppercased()
-        headerView.addSubview(titleLabel)
-        
-        return headerView
+        let menuSectionHeader = MenuSectionHeaderView(
+            size: CGSize(width: tableView.frame.size.width, height: headerHeight),
+            viewModel: MenuSectionHeaderViewModel(headerTitle: section.title)
+        )
+                
+        return menuSectionHeader
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

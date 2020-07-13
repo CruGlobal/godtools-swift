@@ -10,14 +10,14 @@ import UIKit
 
 class TractBindings: NSObject {
     
-    @nonobjc static var pageBindings = [String: Int]()
-    @nonobjc static var bindings = [String: BaseTractElement]()
-    @nonobjc static var dismissBindings = [String: BaseTractElement]()
+    static var pageBindings = [String: Int]()
+    static var bindings = [String: BaseTractElement]()
+    static var dismissBindings = [String: BaseTractElement]()
     
     static func clearAllBindings() {
-        pageBindings.removeAll()
-        bindings.removeAll()
-        dismissBindings.removeAll()
+        TractBindings.pageBindings.removeAll()
+        TractBindings.bindings.removeAll()
+        TractBindings.dismissBindings.removeAll()
     }
     
     static func setupBindings() {

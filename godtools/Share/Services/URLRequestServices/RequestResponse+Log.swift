@@ -16,9 +16,7 @@ extension RequestResponse {
     }
     
     static func log(urlRequest: URLRequest?, data: Data?, urlResponse: URLResponse?, requestError: Error?) {
-        
-        let httpStatusCode: Int = (urlResponse as? HTTPURLResponse)?.statusCode ?? -1
-        
+                
         print("\n \(String(describing: RequestResponse.self)) log() -----")
         
         print("  request.url: \(String(describing: urlRequest?.url?.absoluteString))")
@@ -35,8 +33,7 @@ extension RequestResponse {
         }
         
         print("  requestError: \(String(describing: requestError))")
-        print("  requestErrorOccurred: \(requestError != nil)")
-        print("  httpStatusCode: \(String(describing: httpStatusCode))")
+        print("  httpStatusCode: \(String(describing: (urlResponse as? HTTPURLResponse)?.statusCode))")
         
         if let mimeType = urlResponse?.mimeType {
             print("  mimeType: \(mimeType)")

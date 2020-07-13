@@ -36,16 +36,6 @@ class RequestOperation: Operation {
         super.init()
     }
     
-    func executeRequest(completion: @escaping Completion) -> OperationQueue {
-        
-        self.completion = completion
-        
-        let queue: OperationQueue = OperationQueue()
-        queue.addOperations([self], waitUntilFinished: false)
-                
-        return queue
-    }
-    
     func completionHandler(completion: @escaping Completion) {
         self.completion = completion
     }
@@ -86,13 +76,13 @@ class RequestOperation: Operation {
         
         state = .finished
         
-        let response: RequestResponse = RequestResponse(
+        let response = RequestResponse(
             urlRequest: urlRequest,
             data: data,
             urlResponse: urlResponse,
             requestError: requestError
         )
-                        
+        
         completion?(response)
     }
     

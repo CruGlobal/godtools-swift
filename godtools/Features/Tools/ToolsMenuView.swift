@@ -45,7 +45,7 @@ class ToolsMenuView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        favoritedTools.configure(viewModel: favoritedToolsViewModel)
+        favoritedTools.configure(viewModel: favoritedToolsViewModel, delegate: self)
         allTools.configure(viewModel: allToolsViewModel)
         
         setupLayout()
@@ -72,6 +72,12 @@ class ToolsMenuView: UIViewController {
             action: #selector(handleToolsMenuControlChanged(toolsControl:)),
             for: .valueChanged
         )
+    }
+    
+    func resetMenu() {
+        favoritedTools.scrollToTopOfTools(animated: false)
+        allTools.scrollToTopOfTools(animated: false)
+        viewModel.resetMenu()
     }
     
     private func setupLayout() {
@@ -110,10 +116,8 @@ class ToolsMenuView: UIViewController {
     @objc func handleToolsMenuControlChanged(toolsControl: UISegmentedControl) {
         
         let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
-        
+
         viewModel.toolMenuItemTapped(menuItem: menuItem)
-        
-        navigateToToolMenuItem(menuItem: menuItem, animated: true)
     }
     
     private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
@@ -147,8 +151,8 @@ class ToolsMenuView: UIViewController {
             toolsMenuControl.insertSegment(withTitle: menuItem.title, at: index, animated: false)
         }
         
-        let titleFont: UIFont = UIFont.defaultFont(size: 15, weight: nil)
-                
+        let titleFont: UIFont = FontLibrary.sfProTextRegular.font(size: 15) ?? UIFont.systemFont(ofSize: 15)
+                        
         if #available(iOS 13.0, *) {
             toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor.white], for: .normal)
             toolsMenuControl.setTitleTextAttributes([.font: titleFont, .foregroundColor: UIColor(red: 0 / 255, green: 173 / 255, blue: 218 / 255, alpha: 1)], for: .selected)
@@ -182,6 +186,19 @@ class ToolsMenuView: UIViewController {
         }
         else {
             view.layoutIfNeeded()
+        }
+    }
+}
+
+// MARK: - FavoritedToolsViewDelegate
+
+extension ToolsMenuView: FavoritedToolsViewDelegate {
+    
+    func favoritedToolsViewFindToolsTapped(favoritedToolsView: FavoritedToolsView) {
+                
+        if let index = viewModel.toolMenuItems.value.firstIndex(of: viewModel.allToolsMenuItem) {
+            toolsMenuControl.selectedSegmentIndex = index
+            handleToolsMenuControlChanged(toolsControl: toolsMenuControl)
         }
     }
 }

@@ -12,4 +12,6 @@ protocol DeviceLanguageType {
     
     var languageCode: String? { get }
     var isEnglish: Bool { get }
+    
+    func possibleLocaleCodes(locale: Locale) -> [String]
 }

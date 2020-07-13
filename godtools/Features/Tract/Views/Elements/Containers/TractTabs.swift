@@ -107,7 +107,7 @@ extension TractTabs {
         
         for tabData in self.tabs {
             
-            let element = TractTab(data: tabData, startOnY: currentYPosition, parent: self, elementNumber: elementIndex)
+            let element = TractTab(data: tabData, startOnY: currentYPosition, parent: self, elementNumber: elementIndex, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
             element.isHidden = elementIndex != 0
             
             if element.height > maxHeight {

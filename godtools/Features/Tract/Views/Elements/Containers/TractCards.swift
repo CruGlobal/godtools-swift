@@ -295,7 +295,7 @@ extension TractCards {
             let yDownPosition = self.elementFrame.y + (deltaChange * TractCards.constantYPaddingTop)
                 - (deltaChange * TractCards.constantYPaddingBottom)
             
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
             element.yDownPosition = yDownPosition - TractPage.navbarHeight
             element.cardProperties().cardNumber = cardNumber
             let letterName = cardNumber.convertToLetter()
@@ -328,7 +328,7 @@ extension TractCards {
         
         for dictionary in cards {
             let yPosition = self.initialCardPosition
-            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber)
+            let element = TractCard(data: dictionary, startOnY: yPosition, parent: self, elementNumber: elementNumber, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
             self.elements?.append(element)
             elementNumber += 1
         }

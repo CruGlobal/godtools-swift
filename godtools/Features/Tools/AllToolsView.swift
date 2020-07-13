@@ -10,10 +10,11 @@ import UIKit
 
 class AllToolsView: UIView, NibBased {
     
-    private var viewModel: AllToolsViewModelType?
+    private var viewModel: AllToolsViewModelType!
     
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
+    @IBOutlet weak private var loadingView: UIActivityIndicatorView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,9 +51,17 @@ class AllToolsView: UIView, NibBased {
     
     private func setupBinding() {
         
-        viewModel?.message.addObserver(self, onObserve: { [weak self] (message: String) in
+        viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
             self?.messageLabel.isHidden = message.isEmpty
             self?.messageLabel.text = message
         })
+        
+        viewModel.isLoading.addObserver(self) { [weak self] (isLoading: Bool) in
+            isLoading ? self?.loadingView.startAnimating() : self?.loadingView.stopAnimating()
+        }
+    }
+    
+    func scrollToTopOfTools(animated: Bool) {
+        toolsView.scrollToTopOfTools(animated: animated)
     }
 }

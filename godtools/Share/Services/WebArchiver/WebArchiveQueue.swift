@@ -31,77 +31,44 @@ class WebArchiveQueue {
 
     }
     
-    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void), complete: @escaping ((_ error: WebArchiveError?) -> Void)) -> OperationQueue {
+    func archive(urls: [URL], didArchivePlistData: @escaping ((_ result: Result<WebArchiveOperationResult, WebArchiveOperationError>) -> Void), complete: @escaping ((_ webArchiveQueueResult: WebArchiveQueueResult) -> Void)) -> OperationQueue {
         
         let queue = OperationQueue()
         
         var operations: [WebArchiveOperation] = Array()
         
-        let queueRef = queue
-        
-        var networkFailed: Bool = false
-        var cancelled: Bool = false
+        var successfulArchives: [WebArchiveOperationResult] = Array()
+        var failedArchives: [WebArchiveOperationError] = Array()
         
         for url in urls {
             
             let operation = WebArchiveOperation(session: session, url: url)
             
-            operation.completionHandler { [weak self] (result: Result<WebArchiveOperationResult, WebArchiveOperationError>) in
+            operation.completionHandler { (result: Result<WebArchiveOperationResult, WebArchiveOperationError>) in
                 
                 switch result {
-                case .success( _):
-                    break
+                case .success(let operationResult):
+                    successfulArchives.append(operationResult)
                 case .failure(let operationError):
-                    switch operationError {
-                    case .cancelled:
-                        cancelled = true
-                    case .failedEncodingPlistData( _):
-                        break
-                    case .failedFetchingHtmlDocument( _):
-                        break
-                    case .failedToParseHtmlDocument( _):
-                        break
-                    case .invalidHost( _):
-                        break
-                    case .invalidMimeType( _):
-                        break
-                    case .noNetworkConnection:
-                        networkFailed = true
-                    case .responseError( _):
-                        break
-                    case .unknownError( _):
-                        break
-                    }
+                    failedArchives.append(operationError)
                 }
                 
                 didArchivePlistData(result)
                                 
-                if queueRef.operations.isEmpty {
+                if queue.operations.isEmpty {
                    
-                    let error: WebArchiveError?
-                    
-                    if networkFailed {
-                        error = .noNetworkConnection
-                    }
-                    else if cancelled {
-                        error = .cancelled
-                    }
-                    else {
-                        error = nil
-                    }
-                    
-                    complete(error)
+                    complete(WebArchiveQueueResult(successfulArchives: successfulArchives, failedArchives: failedArchives, totalAttemptedArchives: operations.count))
                 }
             }
             
             operations.append(operation)
         }
         
-        if operations.count > 0 {
+        if !operations.isEmpty {
             queue.addOperations(operations, waitUntilFinished: false)
         }
         else {
-            complete(nil)
+            complete(WebArchiveQueueResult(successfulArchives: [], failedArchives: [], totalAttemptedArchives: 0))
         }
         
         return queue

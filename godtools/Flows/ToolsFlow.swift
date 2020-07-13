@@ -10,14 +10,12 @@ import UIKit
 
 class ToolsFlow: Flow {
     
+    private var articlesFlow: ArticlesFlow?
+    
     private weak var flowDelegate: FlowDelegate?
     
     let appDiContainer: AppDiContainer
     let navigationController: UINavigationController
-    
-    deinit {
-        print("x deinit: \(type(of: self))")
-    }
     
     required init(flowDelegate: FlowDelegate, appDiContainer: AppDiContainer, sharedNavigationController: UINavigationController) {
         print("init: \(type(of: self))")
@@ -25,7 +23,7 @@ class ToolsFlow: Flow {
         self.flowDelegate = flowDelegate
         self.appDiContainer = appDiContainer
         self.navigationController = sharedNavigationController
-             
+                     
         let openTutorialViewModel = OpenTutorialViewModel(
             flowDelegate: self,
             tutorialAvailability: appDiContainer.tutorialAvailability,
@@ -34,11 +32,24 @@ class ToolsFlow: Flow {
         )
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
         
         let allToolsViewModel = AllToolsViewModel(
-            realm: appDiContainer.realmDatabase.mainThreadRealm,
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
+            deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
         
@@ -55,6 +66,16 @@ class ToolsFlow: Flow {
         navigationController.setViewControllers([view], animated: false)
     }
     
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func resetToolsMenu() {
+        if let toolsMenu = navigationController.viewControllers.first as? ToolsMenuView {
+            toolsMenu.resetMenu()
+        }
+    }
+    
     func navigate(step: FlowStep) {
         
         switch step {
@@ -68,8 +89,373 @@ class ToolsFlow: Flow {
         case .openTutorialTapped:
             flowDelegate?.navigate(step: .openTutorialTapped)
             
+        case .toolTappedFromFavoritedTools(let resource):
+            navigateToTool(resource: resource)
+            
+        case .aboutToolTappedFromFavoritedTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .unfavoriteToolTappedFromFavoritedTools(let resource, let removeHandler):
+            
+            let handler = CallbackHandler { [weak self] in
+                removeHandler.handle()
+                self?.navigationController.dismiss(animated: true, completion: nil)
+            }
+            
+            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            
+            let title: String = localizationServices.string(mainBundleKey: "remove_from_favorites_title")
+            let message: String = localizationServices.string(mainBundleKey: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: resource.name)
+            let acceptedTitle: String = localizationServices.string(mainBundleKey: "yes")
+            
+            let viewModel = AlertMessageViewModel(
+                title: title,
+                message: message,
+                cancelTitle: localizationServices.string(mainBundleKey: "no"),
+                acceptTitle: acceptedTitle,
+                acceptHandler: handler
+            )
+            
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
+        case .toolTappedFromAllTools(let resource):
+            navigateToTool(resource: resource)
+            
+        case .aboutToolTappedFromAllTools(let resource):
+            navigateToToolDetail(resource: resource)
+            
+        case .homeTappedFromTract:
+            flowDelegate?.navigate(step: .homeTappedFromTract)
+            
+        case .shareTappedFromTract(let resource, let language, let pageNumber):
+            
+            let viewModel = ShareToolViewModel(
+                resource: resource,
+                language: language,
+                pageNumber: pageNumber,
+                analytics: appDiContainer.analytics
+            )
+            
+            let view = ShareToolView(viewModel: viewModel)
+            
+            navigationController.present(
+                view.controller,
+                animated: true,
+                completion: nil
+            )
+            
+        case .openToolTappedFromToolDetails(let resource):
+            navigateToTool(resource: resource)
+            
+        case .urlLinkTappedFromToolDetail(let url):
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+            
         default:
             break
         }
+    }
+    
+    private func navigateToToolDetail(resource: ResourceModel) {
+        
+        let viewModel = ToolDetailViewModel(
+            flowDelegate: self,
+            resource: resource,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localization: appDiContainer.localizationServices,
+            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
+            analytics: appDiContainer.analytics,
+            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
+        )
+        let view = ToolDetailView(viewModel: viewModel)
+        
+        navigationController.pushViewController(view, animated: true)
+    }
+    
+    private func navigateToLoadingToolView(resource: ResourceModel, translationsToDownload: [TranslationModel], completeHandler: CallbackValueHandler<[DownloadedTranslationResult]>) {
+        
+        let closeHandler: CallbackHandler = CallbackHandler { [weak self] in
+            self?.leaveLoadingToolView(animated: true, completion: nil)
+        }
+        
+        let viewModel = LoadingToolViewModel(
+            resource: resource,
+            translationsToDownload: translationsToDownload,
+            translationDownloader: appDiContainer.translationDownloader,
+            favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
+            localizationServices: appDiContainer.localizationServices,
+            completeHandler: completeHandler,
+            closeHandler: closeHandler
+        )
+        
+        let view = LoadingToolView(viewModel: viewModel)
+        
+        let modal = ModalNavigationController(rootView: view)
+        
+        navigationController.present(modal, animated: true, completion: nil)
+    }
+    
+    private func leaveLoadingToolView(animated: Bool, completion: (() -> Void)?) {
+        navigationController.dismiss(
+            animated: animated,
+            completion: completion
+        )
+    }
+    
+    private func handleDownloadTranslationErrorFromLoadingToolView(downloadError: TranslationDownloaderError) {
+        leaveLoadingToolView(animated: true, completion: { [weak self] in
+            if !downloadError.cancelled {
+                let downloadTranslationAlert = TranslationDownloaderErrorViewModel(translationDownloaderError: downloadError)
+                self?.navigationController.presentAlertMessage(alertMessage: downloadTranslationAlert)
+            }
+        })
+    }
+    
+    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, page: Int?) {
+        
+        let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        
+        let primaryTranslation: TranslationModel? = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id)
+        let parallelTranslation: TranslationModel?
+        
+        if let parallelLanguage = parallelLanguage {
+            parallelTranslation = dataDownloader.resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: parallelLanguage.id)
+        }
+        else {
+            parallelTranslation = nil
+        }
+        
+        let primaryTranslationManifest: TranslationManifestData?
+        let parallelTranslationManifest: TranslationManifestData?
+        
+        if let primaryTranslation = primaryTranslation {
+            
+            let primaryManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(translationId: primaryTranslation.id)
+            
+            switch primaryManifestResult {
+            
+            case .success(let translationManifest):
+                primaryTranslationManifest = translationManifest
+            case .failure(let error):
+                primaryTranslationManifest = nil
+            }
+        }
+        else {
+            primaryTranslationManifest = nil
+        }
+        
+        if let parallelTranslation = parallelTranslation {
+            
+            let parallelManifestResult: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(translationId: parallelTranslation.id)
+            
+            switch parallelManifestResult {
+            
+            case .success(let translationManifest):
+                parallelTranslationManifest = translationManifest
+            case .failure(let error):
+                parallelTranslationManifest = nil
+            }
+        }
+        else {
+            parallelTranslationManifest = nil
+        }
+        
+        if let primaryTranslation = primaryTranslation {
+            
+            navigateToToolFromFetchedCachedResources(
+                resource: resource,
+                primaryLanguage: primaryLanguage,
+                primaryTranslation: primaryTranslation,
+                primaryTranslationManifest: primaryTranslationManifest,
+                parallelLanguage: parallelLanguage,
+                parallelTranslation: parallelTranslation,
+                parallelTranslationManifest: parallelTranslationManifest,
+                page: page
+            )
+        }
+    }
+    
+    private func navigateToTool(resource: ResourceModel) {
+        
+        let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel = appDiContainer.fetchTranslationManifestsViewModel
+        
+        let result: FetchTranslationManifestResult = fetchTranslationManifestsViewModel.getTranslationManifests(resourceId: resource.id)
+        
+        switch result {
+        
+        case .failedToGetInitialResourcesFromCache:
+            break
+        
+        case .fetchedTranslationsFromCache(let primaryLanguage, let primaryTranslation, let primaryTranslationManifest, let parallelLanguage, let parallelTranslation, let parallelTranslationManifest):
+            
+            navigateToToolFromFetchedCachedResources(
+                resource: resource,
+                primaryLanguage: primaryLanguage,
+                primaryTranslation: primaryTranslation,
+                primaryTranslationManifest: primaryTranslationManifest,
+                parallelLanguage: parallelLanguage,
+                parallelTranslation: parallelTranslation,
+                parallelTranslationManifest: parallelTranslationManifest,
+                page: 0
+            )
+        }
+    }
+    
+    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+        
+        let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
+        
+        var translationsToDownload: [TranslationModel] = Array()
+        
+        let shouldDownloadPrimaryTranslation: Bool = primaryTranslationManifest == nil
+        let shouldDownloadParallelTranslation: Bool = parallelTranslationManifest == nil && parallelTranslation != nil
+        
+        if shouldDownloadPrimaryTranslation {
+            translationsToDownload.append(primaryTranslation)
+        }
+        
+        if shouldDownloadParallelTranslation, let parallelTranslation = parallelTranslation {
+            translationsToDownload.append(parallelTranslation)
+        }
+        
+        if !translationsToDownload.isEmpty {
+            
+            var downloadedPrimaryTranslation: TranslationManifestData?
+            var downloadedParallelTranslation: TranslationManifestData?
+            
+            let completeHandler: CallbackValueHandler<[DownloadedTranslationResult]> = CallbackValueHandler { [weak self] (downloadedTranslationsResults: [DownloadedTranslationResult]) in
+                                               
+                for downloadedTranslation in downloadedTranslationsResults {
+                    
+                    if let downloadError = downloadedTranslation.downloadError {
+                        self?.handleDownloadTranslationErrorFromLoadingToolView(downloadError: downloadError)
+                        return
+                    }
+                    else {
+                        
+                        let result: Result<TranslationManifestData, TranslationsFileCacheError> = translationsFileCache.getTranslationManifestOnMainThread(translationId: downloadedTranslation.translationId)
+                        
+                        switch result {
+                        case .success(let translationManifestData):
+                            if downloadedTranslation.translationId == primaryTranslation.id {
+                                downloadedPrimaryTranslation = translationManifestData
+                            }
+                            else if (downloadedTranslation.translationId == parallelTranslation?.id) {
+                                downloadedParallelTranslation = translationManifestData
+                            }
+                        case .failure(let translationDownloaderError):
+                            break
+                        }
+                    }
+                }
+                
+                guard let resourceTranslationPrimaryManifest = primaryTranslationManifest ?? downloadedPrimaryTranslation else {
+                    self?.navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Missing primary translation."))
+                    return
+                }
+                
+                self?.leaveLoadingToolView(
+                    animated: true,
+                    completion: nil
+                )
+                
+                self?.navigateToTool(
+                    resource: resource,
+                    primaryLanguage: primaryLanguage,
+                    primaryTranslationManifest: resourceTranslationPrimaryManifest,
+                    parallelLanguage: parallelLanguage,
+                    parallelTranslationManifest: parallelTranslationManifest ?? downloadedParallelTranslation,
+                    page: page
+                )
+                
+            }// loading tool completed
+            
+            navigateToLoadingToolView(
+                resource: resource,
+                translationsToDownload: translationsToDownload,
+                completeHandler: completeHandler
+            )
+        }
+        else if let primaryTranslationManifest = primaryTranslationManifest {
+            
+            navigateToTool(
+                resource: resource,
+                primaryLanguage: primaryLanguage,
+                primaryTranslationManifest: primaryTranslationManifest,
+                parallelLanguage: parallelLanguage,
+                parallelTranslationManifest: parallelTranslationManifest,
+                page: page
+            )
+        }
+    }
+    
+    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+        
+        let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
+        
+        switch resourceType {
+            
+        case .article:
+            navigateToArticlesFlow(
+                resource: resource,
+                translationManifest: primaryTranslationManifest
+            )
+            
+        case .tract:
+            navigateToTract(
+                resource: resource,
+                primaryLanguage: primaryLanguage,
+                primaryTranslationManifest: primaryTranslationManifest,
+                parallelLanguage: parallelLanguage,
+                parallelTranslationManifest: parallelTranslationManifest,
+                page: page
+            )
+            
+        case .unknown:
+            navigationController.presentAlertMessage(alertMessage: AlertMessage(title: "Internal Error", message: "Attempted to navigate to a tool with an unknown resource type."))
+        }
+    }
+    
+    private func navigateToArticlesFlow(resource: ResourceModel, translationManifest: TranslationManifestData) {
+        
+        let articlesFlow = ArticlesFlow(
+            flowDelegate: self,
+            appDiContainer: appDiContainer,
+            sharedNavigationController: navigationController,
+            resource: resource,
+            translationManifest: translationManifest
+        )
+        
+        self.articlesFlow = articlesFlow
+    }
+    
+    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+        
+        let viewModel = TractViewModel(
+            flowDelegate: self,
+            resource: resource,
+            primaryLanguage: primaryLanguage,
+            primaryTranslationManifest: primaryTranslationManifest,
+            parallelLanguage: parallelLanguage,
+            parallelTranslationManifest: parallelTranslationManifest,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            tractManager: appDiContainer.tractManager,
+            followUpsService: appDiContainer.followUpsService,
+            viewsService: appDiContainer.viewsService,
+            analytics: appDiContainer.analytics,
+            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            tractPage: page
+        )
+        let view = TractView(viewModel: viewModel)
+
+        navigationController.pushViewController(view, animated: true)
     }
 }

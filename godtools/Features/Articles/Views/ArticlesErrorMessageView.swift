@@ -10,7 +10,7 @@ import UIKit
 
 protocol ArticlesErrorMessageViewDelegate: class {
     
-    func articlesErrorMessageViewDownloadArticlesButtonTapped()
+    func articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: ArticlesErrorMessageView)
 }
 
 class ArticlesErrorMessageView: UIView, NibBased {
@@ -46,6 +46,6 @@ class ArticlesErrorMessageView: UIView, NibBased {
     }
     
     @objc func handleDownloadArticles(button: UIButton) {
-        delegate?.articlesErrorMessageViewDownloadArticlesButtonTapped()
+        delegate?.articlesErrorMessageViewDownloadArticlesButtonTapped(articlesErrorMessageView: self)
     }
 }
