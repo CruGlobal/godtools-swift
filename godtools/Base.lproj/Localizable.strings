@@ -4,10 +4,10 @@
 "no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My Tools";
+"my_tools" = "Favorites";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find Tools";
+"find_tools" = "All Tools";
 
 "unavailable" = "Unavailable";
 
@@ -99,7 +99,10 @@ The app can be downloaded from https://godtoolsapp.com";
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
+"open" = "Open";
 "toolinfo_opentool" = "Open Tool";
+"add_to_favorites" = "Add to Favorites";
+"remove_from_favorites" = "Remove from Favorites";
 
 // Alerts
 "error" = "Error";
@@ -185,3 +188,18 @@ The app can be downloaded from https://godtoolsapp.com";
 "articles.loadingView.downloadingArticles" = "Downloading articles...";
 "articles.downloadingArticles.errorMessage.title" = "Error Downloading Articles";
 "articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+
+// Loading Tool
+"loading_unfavorited_tool" = "The tool is currently downloading. To avoid waiting next time add this tool to your favorites so it will be available offline.";
+"loading_favorited_tool" = "Downloading the latest translation for this tool.";
+
+// Favorites
+"remove_from_favorites_title" = "Remove From Favorites?";
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your favorites?";
+
+// Tool Categories
+"tool_category_gospel" = "Gospel Invitation";
+"tool_category_articles" = "Articles";
+"tool_category_conversation_starter" = "Conversation Starter";
+"tool_category_growth" = "Christian Growth";
+"tool_category_training" = "Training";

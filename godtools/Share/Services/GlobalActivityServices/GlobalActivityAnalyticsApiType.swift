@@ -10,5 +10,5 @@ import Foundation
 
 protocol GlobalActivityAnalyticsApiType {
     
-    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue
 }

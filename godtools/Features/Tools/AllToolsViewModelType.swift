@@ -11,6 +11,7 @@ import Foundation
 protocol AllToolsViewModelType: ToolsViewModelType {
     
     var message: ObservableValue<String> { get }
+    var isLoading: ObservableValue<Bool> { get }
     
     func pageViewed()
 }

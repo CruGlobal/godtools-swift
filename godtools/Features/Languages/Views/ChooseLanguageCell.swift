@@ -16,12 +16,12 @@ class ChooseLanguageCell: UITableViewCell {
     private var viewModel: ChooseLanguageCellViewModelType?
         
     @IBOutlet weak private var selectedView: UIView!
-    @IBOutlet private weak var languageLabel: GTLabel!
-    @IBOutlet private weak var downloadButton: UIButton!
+    @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet weak private var downloadImageView: UIImageView!
+    @IBOutlet weak private var separatorLine: UIView!
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        downloadButton.isUserInteractionEnabled = false
     }
     
     override func prepareForReuse() {
@@ -33,14 +33,9 @@ class ChooseLanguageCell: UITableViewCell {
         
         self.viewModel = viewModel
         
-        viewModel.languageText.addObserver(self) { [weak self] (text: String) in
-            self?.languageLabel.text = text
-        }
-        
-        viewModel.hidesDownloadButton.addObserver(self) { [weak self] (hidden: Bool) in
-            self?.downloadButton.isHidden = hidden
-        }
-        
+        languageLabel.text = viewModel.languageName
+        downloadImageView.isHidden = viewModel.languageIsDownloaded
         selectedView.isHidden = viewModel.hidesSelected
+        separatorLine.isHidden = viewModel.hidesSeparator
     }
 }

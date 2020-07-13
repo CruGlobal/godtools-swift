@@ -10,19 +10,24 @@ import UIKit
 
 class TractViewModel: TractViewModelType {
     
-    private let tractManager: TractManager
+    typealias PageNumber = Int
+    
+    private let resource: ResourceModel
+    private let primaryLanguage: LanguageModel
+    private let parallelLanguage: LanguageModel?
+    private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
+    private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
+    private let followUpsService: FollowUpsService
+    private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
     private let toolOpenedAnalytics: ToolOpenedAnalytics
     private let primaryTractXmlResource: TractXmlResource
     private let parallelTractXmlResource: TractXmlResource?
     
-    private var cachedPrimaryTractPages: [Int: TractPage] = Dictionary()
-    private var cachedParallelTractPages: [Int: TractPage] = Dictionary()
+    private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
+    private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
     private var tractPage: Int = -1
     
-    let resource: DownloadedResource
-    let primaryLanguage: Language
-    let parallelLanguage: Language?
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
@@ -34,20 +39,23 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?, tractManager: TractManager, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, followUpsService: FollowUpsService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.tractManager = tractManager
+        self.followUpsService = followUpsService
+        self.viewsService = viewsService
         self.analytics = analytics
         self.toolOpenedAnalytics = toolOpenedAnalytics
         
-        primaryTractXmlResource = tractManager.loadResource(resource: resource, language: primaryLanguage)
+        primaryTractXmlResource = tractManager.loadResource(translationManifest: primaryTranslationManifest)
         
-        if let parallelLanguage = self.parallelLanguage {
-            parallelTractXmlResource = tractManager.loadResource(resource: resource, language: parallelLanguage)
+        if let parallelTranslationManifest = parallelTranslationManifest {
+            parallelTractXmlResource = tractManager.loadResource(translationManifest: parallelTranslationManifest)
         }
         else {
             parallelTractXmlResource = nil
@@ -59,11 +67,24 @@ class TractViewModel: TractViewModelType {
             navBarControlColor: primaryManifest.navbarControlColor ?? primaryManifest.primaryTextColor
         )
         
-        hidesChooseLanguageControl = !TractViewModel.parallelLanguageIsValid(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage)
-        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.localizedName()
-        chooseLanguageControlParallelLanguageTitle = parallelLanguage?.localizedName() ?? ""
+        hidesChooseLanguageControl = parallelLanguage == nil || primaryLanguage.id == parallelLanguage?.id
+        
+        chooseLanguageControlPrimaryLanguageTitle = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+        
+        let parallelLocalizedName: String
+        if let parallelLanguage = parallelLanguage {
+            parallelLocalizedName = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
+        }
+        else {
+            parallelLocalizedName = ""
+        }
+        
+        chooseLanguageControlParallelLanguageTitle = parallelLocalizedName
+        
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
+        _ = viewsService.postNewResourceView(resourceId: resource.id)
+                
         let startingTractPage: Int = tractPage ?? 0
         
         cacheTractPageIfNeeded(
@@ -78,6 +99,27 @@ class TractViewModel: TractViewModelType {
             shouldSetCurrentToolPageItemIndex: true,
             animated: false
         )
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        destroyTractPages()
+    }
+    
+    private func destroyTractPages() {
+        
+        // TODO: This shouldn't be necessary, but somehow TractPages are being retained so manually calling destroy on tract page
+        // to remove all elements and views. ~Levi
+        
+        for ( _, tractPage) in cachedPrimaryTractPages {
+            tractPage.destroyPage()
+        }
+        cachedPrimaryTractPages.removeAll()
+        
+        for ( _, tractPage) in cachedParallelTractPages {
+            tractPage.destroyPage()
+        }
+        cachedParallelTractPages.removeAll()
     }
     
     private func loadTractXmlPages() {
@@ -129,8 +171,8 @@ class TractViewModel: TractViewModelType {
         if previousToolPage != page {
             
             analytics.pageViewedAnalytics.trackPageView(
-                screenName: resource.code + "-" + String(page),
-                siteSection: resource.code,
+                screenName: resource.abbreviation + "-" + String(page),
+                siteSection: resource.abbreviation,
                 siteSubSection: ""
             )
         }
@@ -156,7 +198,12 @@ class TractViewModel: TractViewModelType {
     }
     
     var isRightToLeftLanguage: Bool {
-        return primaryLanguage.isRightToLeft()
+        switch LanguageDirection.direction(language: primaryLanguage) {
+        case .leftToRight:
+            return false
+        case .rightToLeft:
+            return true
+        }
     }
     
     var currentTractPage: Int {
@@ -201,12 +248,12 @@ class TractViewModel: TractViewModelType {
         selectedTractLanguage.accept(value: TractLanguage(languageType: .parallel, language: parallelLanguage))
     }
     
-    private func trackTappedLanguage(language: Language) {
+    private func trackTappedLanguage(language: LanguageModel) {
         
         let data: [AnyHashable: String] = [
             AdobeAnalyticsConstants.Keys.parallelLanguageToggle: "",
             AdobeAnalyticsProperties.CodingKeys.contentLanguageSecondary.rawValue: language.code,
-            AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.code
+            AdobeAnalyticsProperties.CodingKeys.siteSection.rawValue: resource.abbreviation
         ]
         
         analytics.trackActionAnalytics.trackAction(
@@ -366,7 +413,12 @@ class TractViewModel: TractViewModelType {
         return nil
     }
     
-    private func buildTractPage(page: Int, language: Language, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
+    private func buildTractPage(page: Int, language: LanguageModel, tractXmlResource: TractXmlResource, tractManifest: ManifestProperties, parallelTractPage: TractPage?) -> TractPage? {
+        
+        let dependencyContainer = BaseTractElementDiContainer(
+            followUpsService: followUpsService,
+            analytics: analytics
+        )
         
         let pages: [XMLPage] = tractXmlResource.pages
         
@@ -385,7 +437,9 @@ class TractViewModel: TractViewModelType {
                 height: UIScreen.main.bounds.size.height,
                 manifestProperties: tractManifest,
                 configurations: config,
-                parallelElement: parallelTractPage
+                parallelElement: parallelTractPage,
+                dependencyContainer: dependencyContainer,
+                isPrimaryRightToLeft: isRightToLeftLanguage
             )
             
             return tractPage

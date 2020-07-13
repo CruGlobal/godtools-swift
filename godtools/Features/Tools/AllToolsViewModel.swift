@@ -7,43 +7,113 @@
 //
 
 import Foundation
-import RealmSwift
 
-class AllToolsViewModel: AllToolsViewModelType {
+class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
-    private let realm: Realm
     private let analytics: AnalyticsContainer
     
-    let tools: ObservableValue<[DownloadedResource]> = ObservableValue(value: [])
-    let message: ObservableValue<String> = ObservableValue(value: "")
+    private weak var flowDelegate: FlowDelegate?
     
-    required init(realm: Realm, analytics: AnalyticsContainer) {
+    let dataDownloader: InitialDataDownloader
+    let languageSettingsService: LanguageSettingsService
+    let localizationServices: LocalizationServices
+    let favoritedResourcesCache: FavoritedResourcesCache
+    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
+    let deviceAttachmentBanners: DeviceAttachmentBanners
+    let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
+    let toolRefreshed: SignalValue<IndexPath> = SignalValue()
+    let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
+    let toolsRemoved: ObservableValue<[IndexPath]> = ObservableValue(value: [])
+    let message: ObservableValue<String> = ObservableValue(value: "")
+    let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
+    let toolListIsEditable: Bool = false
+    let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
+    
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
-        self.realm = realm
+        self.flowDelegate = flowDelegate
+        self.dataDownloader = dataDownloader
+        self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
+        self.favoritedResourcesCache = favoritedResourcesCache
+        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
+        self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
         
-        reloadTools()
+        super.init()
+                 
+        setupBinding()
     }
     
-    private func reloadTools() {
+    deinit {
+        print("x deinit: \(type(of: self))")
+        dataDownloader.cachedResourcesAvailable.removeObserver(self)
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.removeObserver(self)
+        favoritedResourcesCache.resourceFavorited.removeObserver(self)
+        favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+    }
+    
+    private func setupBinding() {
         
-        let predicate: NSPredicate = NSPredicate(format: "shouldDownload = false")
-
-        let allResources: Results<DownloadedResource> = realm.objects(DownloadedResource.self)
-        let filteredResources: Results<DownloadedResource> = allResources.filter(predicate)
-        let resources: [DownloadedResource] = Array(filteredResources)
-                
-        if resources.isEmpty {
-            message.accept(value: NSLocalizedString("You have downloaded all available tools.", comment: ""))
-            tools.accept(value: [])
+        dataDownloader.cachedResourcesAvailable.addObserver(self) { [weak self] (cachedResourcesAvailable: Bool) in
+            DispatchQueue.main.async { [weak self] in
+                self?.isLoading.accept(value: !cachedResourcesAvailable)
+                if cachedResourcesAvailable {
+                    self?.reloadResourcesFromCache()
+                }
+            }
         }
-        else {
-            tools.accept(value: resources)
+        
+        dataDownloader.resourcesUpdatedFromRemoteDatabase.addObserver(self) { [weak self] (error: InitialDataDownloaderError?) in
+            DispatchQueue.main.async { [weak self] in
+                if error == nil {
+                    self?.reloadResourcesFromCache()
+                }
+            }
         }
+        
+        favoritedResourcesCache.resourceFavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadTool(resourceId: resourceId)
+            }
+        }
+        
+        favoritedResourcesCache.resourceUnfavorited.addObserver(self) { [weak self] (resourceId: String) in
+            DispatchQueue.main.async { [weak self] in
+                self?.reloadTool(resourceId: resourceId)
+            }
+        }
+    }
+    
+    private func reloadResourcesFromCache() {
+        let resources: [ResourceModel] = dataDownloader.resourcesCache.getSortedResources()
+        tools.accept(value: resources)
+        isLoading.accept(value: false)
     }
     
     func pageViewed() {
         
         analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
+    }
+    
+    func toolTapped(resource: ResourceModel) {
+        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
+    }
+    
+    func aboutToolTapped(resource: ResourceModel) {
+        flowDelegate?.navigate(step: .aboutToolTappedFromAllTools(resource: resource))
+    }
+    
+    func openToolTapped(resource: ResourceModel) {
+        flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
+    }
+    
+    func favoriteToolTapped(resource: ResourceModel) {
+        
+        favoritedResourcesCache.toggleFavorited(resourceId: resource.id)
+    }
+    
+    func didEditToolList(movedResource: ResourceModel, movedSourceIndexPath: IndexPath, toDestinationIndexPath: IndexPath) {
+        // Do nothing because toolListIsEditable is currently set to false for all tools.
     }
 }

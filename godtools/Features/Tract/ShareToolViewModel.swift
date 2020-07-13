@@ -12,9 +12,9 @@ class ShareToolViewModel: ShareToolViewModelType {
         
     let shareMessage: String
     
-    required init(resource: DownloadedResource, language: Language, pageNumber: Int, analytics: AnalyticsContainer) {
+    required init(resource: ResourceModel, language: LanguageModel, pageNumber: Int, analytics: AnalyticsContainer) {
                 
-        var shareUrlString: String = "https://www.knowgod.com/\(language.code)/\(resource.code)"
+        var shareUrlString: String = "https://www.knowgod.com/\(language.code)/\(resource.abbreviation)"
 
         if pageNumber > 0 {
             shareUrlString = shareUrlString.appending("/").appending("\(pageNumber)")
@@ -27,11 +27,11 @@ class ShareToolViewModel: ShareToolViewModelType {
             shareUrlString
         )
         
-        let analyticsScreenName: String = resource.code + "-" + String(pageNumber)
+        let analyticsScreenName: String = resource.abbreviation + "-" + String(pageNumber)
         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: analyticsScreenName,
-            siteSection: resource.code,
+            siteSection: resource.abbreviation,
             siteSubSection: ""
         )
                 

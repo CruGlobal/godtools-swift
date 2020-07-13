@@ -9,16 +9,23 @@
 import UIKit
 import MessageUI
 
+import RealmSwift
+
 class AppFlow: NSObject, FlowDelegate {
+    
+    private let dataDownloader: InitialDataDownloader
+    private let followUpsService: FollowUpsService
+    private let viewsService: ViewsService
+    private let deepLinkingService: DeepLinkingService
     
     private var onboardingFlow: OnboardingFlow?
     private var menuFlow: MenuFlow?
     private var languageSettingsFlow: LanguageSettingsFlow?
     private var toolsFlow: ToolsFlow?
     private var tutorialFlow: TutorialFlow?
-    private var articlesFlow: ArticlesFlow?
-    
+    private var resignedActiveDate: Date?
     private var navigationStarted: Bool = false
+    private var isObservingDeepLinking: Bool = false
     
     let appDiContainer: AppDiContainer
     let rootController: AppRootController = AppRootController(nibName: nil, bundle: nil)
@@ -28,6 +35,10 @@ class AppFlow: NSObject, FlowDelegate {
         
         self.appDiContainer = appDiContainer
         self.navigationController = UINavigationController()
+        self.dataDownloader = appDiContainer.initialDataDownloader
+        self.followUpsService = appDiContainer.followUpsService
+        self.viewsService = appDiContainer.viewsService
+        self.deepLinkingService = appDiContainer.deepLinkingService
         
         super.init()
         
@@ -36,9 +47,25 @@ class AppFlow: NSObject, FlowDelegate {
         
         navigationController.view.backgroundColor = .white
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setViewControllers([LaunchView()], animated: false)
+        navigationController.setViewControllers([], animated: false)
         
         rootController.addChildController(child: navigationController)
+    }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+        removeDeepLinkingObservers()
+    }
+    
+    func resetFlowToToolsFlow(animated: Bool) {
+        configureNavigation(navigationController: navigationController)
+        toolsFlow?.resetToolsMenu()
+        navigationController.popToRootViewController(animated: animated)
+        closeMenu(animated: animated)
+        navigationController.dismiss(animated: animated, completion: nil)
+        menuFlow = nil
+        languageSettingsFlow = nil
+        tutorialFlow = nil
     }
     
     private func setupInitialNavigation() {
@@ -49,6 +76,48 @@ class AppFlow: NSObject, FlowDelegate {
         else {
             navigate(step: .showTools(animated: true, shouldCreateNewInstance: true))
         }
+        
+        loadInitialData()
+    }
+    
+    private func loadInitialData() {
+        
+        dataDownloader.downloadInitialData()
+        
+        _ = followUpsService.postFailedFollowUpsIfNeeded()
+        
+        _ = viewsService.postFailedResourceViewsIfNeeded()
+    }
+    
+    private func addDeepLinkingObservers() {
+        
+        guard !isObservingDeepLinking else {
+            return
+        }
+        
+        isObservingDeepLinking = true
+        
+        deepLinkingService.completed.addObserver(self) { [weak self] (deepLinkingType: DeepLinkingType) in
+            DispatchQueue.main.async { [weak self] in
+                
+                switch deepLinkingType {
+                
+                case .tool(let resource, let primaryLanguage, let parallelLanguage, let page):
+                    if let toolsFlow = self?.toolsFlow {
+                        self?.resetFlowToToolsFlow(animated: false)
+                        toolsFlow.navigateToTool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, page: page)
+                    }
+                case .none:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func removeDeepLinkingObservers() {
+        
+        isObservingDeepLinking = false
+        deepLinkingService.completed.removeObserver(self)
     }
     
     func navigate(step: FlowStep) {
@@ -57,62 +126,28 @@ class AppFlow: NSObject, FlowDelegate {
         
         case .showTools(let animated, let shouldCreateNewInstance):
             
-            // TODO: Eventually need to remove the old tools flow.  Everything within the useOldToolsFlow conditional. ~Levi
-            let useOldToolsFlow: Bool = true
-            
-            if useOldToolsFlow {
-                
-                navigationController.setNavigationBarHidden(false, animated: false)
-                
-                configureNavigation(navigationController: navigationController)
-                
-                let currentMasterView: MasterHomeViewController? = navigationController.viewControllers.first as? MasterHomeViewController
-                
-                if shouldCreateNewInstance || currentMasterView == nil {
-                    
-                    let viewModel = MasterHomeViewModel(
-                        flowDelegate: self,
-                        tutorialAvailability: appDiContainer.tutorialAvailability,
-                        openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
-                        analytics: appDiContainer.analytics
-                    )
-                    
-                    let masterView = MasterHomeViewController(viewModel: viewModel)
+            navigationController.setNavigationBarHidden(false, animated: false)
 
-                    navigationController.setViewControllers([masterView], animated: false)
-                    
-                    if animated {
-                        masterView.view.alpha = 0
-                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                            masterView.view.alpha = 1
-                        }, completion: nil)
-                    }
+            configureNavigation(navigationController: navigationController)
+
+            if shouldCreateNewInstance || toolsFlow == nil {
+
+                let toolsFlow: ToolsFlow = ToolsFlow(
+                    flowDelegate: self,
+                    appDiContainer: appDiContainer,
+                    sharedNavigationController: navigationController
+                )
+
+                self.toolsFlow = toolsFlow
+
+                if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
+                    toolsView.alpha = 0
+                    UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                        toolsView.alpha = 1
+                    }, completion: nil)
                 }
-            }
-            else {
                 
-                navigationController.setNavigationBarHidden(false, animated: false)
-
-                configureNavigation(navigationController: navigationController)
-
-                if shouldCreateNewInstance || toolsFlow == nil {
-
-                    let toolsFlow: ToolsFlow = ToolsFlow(
-                        flowDelegate: self,
-                        appDiContainer: appDiContainer,
-                        sharedNavigationController:
-                        navigationController
-                    )
-
-                    self.toolsFlow = toolsFlow
-
-                    if animated, let toolsView = toolsFlow.navigationController.viewControllers.first?.view {
-                        toolsView.alpha = 0
-                        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
-                            toolsView.alpha = 1
-                        }, completion: nil)
-                    }
-                }
+                addDeepLinkingObservers()
             }
             
         case .showOnboardingTutorial(let animated):
@@ -158,13 +193,6 @@ class AppFlow: NSObject, FlowDelegate {
         case .startUsingGodToolsTappedFromTutorial:
             dismissTutorial()
             
-        case .urlLinkTappedFromToolDetail(let url):
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-            
         case .showMenu:
             navigateToMenu(animated: true)
             
@@ -180,43 +208,10 @@ class AppFlow: NSObject, FlowDelegate {
             )
             
             self.languageSettingsFlow = languageSettingsFlow
-            
-        case .toolTappedFromMyTools(let resource):
-            navigateToTool(resource: resource)
-            
-        case .toolInfoTappedFromMyTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .toolTappedFromFindTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .toolInfoTappedFromFindTools(let resource):
-            navigateToToolDetail(resource: resource)
-            
-        case .openToolTappedFromToolDetails(let resource):
-            navigateToTool(resource: resource)
                    
-        // TODO: Would like to create a separate Flow for a Tracts. ~Levi
         case .homeTappedFromTract:
             _ = navigationController.popToRootViewController(animated: true)
             resetNavigationControllerColorToDefault()
-            
-        case .shareTappedFromTract(let resource, let language, let pageNumber):
-            
-            let viewModel = ShareToolViewModel(
-                resource: resource,
-                language: language,
-                pageNumber: pageNumber,
-                analytics: appDiContainer.analytics
-            )
-            
-            let view = ShareToolView(viewModel: viewModel)
-            
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
             
         case .sendEmailTappedFromTract(let subject, let message, let isHtml):
             
@@ -240,7 +235,7 @@ class AppFlow: NSObject, FlowDelegate {
             }
             else {
                 
-                let handler = AlertMessageViewAcceptHandler { [weak self] in
+                let handler = CallbackHandler { [weak self] in
                     self?.navigationController.dismiss(animated: true, completion: nil)
                 }
                 
@@ -251,8 +246,9 @@ class AppFlow: NSObject, FlowDelegate {
                 let viewModel = AlertMessageViewModel(
                     title: title,
                     message: message,
-                    acceptActionTitle: acceptedTitle,
-                    handler: handler
+                    cancelTitle: nil,
+                    acceptTitle: acceptedTitle,
+                    acceptHandler: handler
                 )
                 
                 let view = AlertMessageView(viewModel: viewModel)
@@ -263,91 +259,6 @@ class AppFlow: NSObject, FlowDelegate {
         default:
             break
         }
-    }
-    
-    private func navigateToTool(resource: DownloadedResource) {
-        
-        switch resource.toolTypeEnum {
-        
-        case .article:
-            
-            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-            let languagesManager: LanguagesManager = appDiContainer.languagesManager
-            var language: Language?
-            if let primaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                language = primaryLanguage
-            }
-            else {
-                language = languagesManager.loadFromDisk(code: "en")
-            }
-            
-            let articlesFlow = ArticlesFlow(
-                flowDelegate: self,
-                appDiContainer: appDiContainer,
-                sharedNavigationController: navigationController,
-                resource: resource,
-                language: language!
-            )
-            
-            self.articlesFlow = articlesFlow
-        
-        case .tract:
-            
-            // TODO: Need to fetch language from user's primary language settings. A primary language should never be null. ~Levi
-            let languagesManager: LanguagesManager = appDiContainer.languagesManager
-            var primaryLanguage: Language?
-            if let settingsPrimaryLanguage = languagesManager.loadPrimaryLanguageFromDisk() {
-                primaryLanguage = settingsPrimaryLanguage
-            }
-            
-            var resourceSupportsPrimaryLanguage: Bool = false
-            for translation in resource.translations {
-                if let code = translation.language?.code {
-                    if code == primaryLanguage?.code {
-                        resourceSupportsPrimaryLanguage = true
-                        break
-                    }
-                }
-            }
-                        
-            if primaryLanguage == nil || !resourceSupportsPrimaryLanguage {
-                primaryLanguage = languagesManager.loadFromDisk(code: "en")
-            }
-            
-            let parallelLanguage = languagesManager.loadParallelLanguageFromDisk()
-            
-            let viewModel = TractViewModel(
-                flowDelegate: self,
-                resource: resource,
-                primaryLanguage: primaryLanguage!,
-                parallelLanguage: parallelLanguage,
-                tractManager: appDiContainer.tractManager,
-                analytics: appDiContainer.analytics,
-                toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-                tractPage: 0
-            )
-            let view = TractView(viewModel: viewModel)
-
-            navigationController.pushViewController(view, animated: true)
-        
-        case .unknown:
-            let viewModel = AlertMessageViewModel(title: "Internal Error", message: "Unknown tool type for resource.", acceptActionTitle: "OK", handler: nil)
-            let view = AlertMessageView(viewModel: viewModel)
-            navigationController.present(view.controller, animated: true, completion: nil)
-        }
-    }
-    
-    private func navigateToToolDetail(resource: DownloadedResource) {
-        
-        let viewModel = ToolDetailViewModel(
-            flowDelegate: self,
-            resource: resource,
-            analytics: appDiContainer.analytics,
-            exitLinkAnalytics: appDiContainer.exitLinkAnalytics
-        )
-        let view = ToolDetailView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)
     }
     
     private func dismissTutorial() {
@@ -388,7 +299,9 @@ class AppFlow: NSObject, FlowDelegate {
     private func closeMenu(animated: Bool) {
                 
         if let menuFlow = menuFlow {
-                        
+                     
+            menuFlow.navigationController.dismiss(animated: animated, completion: nil)
+            
             let screenWidth: CGFloat = UIScreen.main.bounds.size.width
             
             menuFlow.view.transform = CGAffineTransform(translationX: 0, y: 0)
@@ -413,38 +326,8 @@ class AppFlow: NSObject, FlowDelegate {
             }
         }
     }
-    
-    func goToUniversalLinkedResource(_ resource: DownloadedResource, language: Language, page: Int, parallelLanguageCode: String? = nil) {
         
-        // TODO: Is this needed? ~Levi
-        GTSettings.shared.parallelLanguageCode = parallelLanguageCode
-        
-        let parallelLanguage: Language?
-        
-        if let parallelLanguageCode = parallelLanguageCode {
-            parallelLanguage = LanguagesManager().loadFromDisk(code: parallelLanguageCode)
-        }
-        else {
-            parallelLanguage = nil
-        }
-                
-        let viewModel = TractViewModel(
-            flowDelegate: self,
-            resource: resource,
-            primaryLanguage: language,
-            parallelLanguage: parallelLanguage,
-            tractManager: appDiContainer.tractManager,
-            analytics: appDiContainer.analytics,
-            toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
-            tractPage: page
-        )
-        
-        let view = TractView(viewModel: viewModel)
-        
-        navigationController.pushViewController(view, animated: true)
-    }
-        
-    // MARK: - Helpers
+    // MARK: - Navigation Bar
     
     func configureNavigation(navigationController: UINavigationController) {
         configureNavigationColor(navigationController: navigationController, color: .gtBlue)
@@ -465,10 +348,52 @@ class AppFlow: NSObject, FlowDelegate {
 }
 
 extension AppFlow: UIApplicationDelegate {
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        
+        if navigationStarted, let resignedActiveDate = resignedActiveDate {
+            
+            let currentDate: Date = Date()
+            let elapsedTimeInSeconds: TimeInterval = currentDate.timeIntervalSince(resignedActiveDate)
+            let elapsedTimeInMinutes: TimeInterval = elapsedTimeInSeconds / 60
+            
+            if elapsedTimeInMinutes >= 120 {
+
+                let loadingView: UIView = UIView(frame: UIScreen.main.bounds)
+                let loadingImage: UIImageView = UIImageView(frame: UIScreen.main.bounds)
+                loadingView.addSubview(loadingImage)
+                loadingImage.image = UIImage(named: "LaunchImage")
+                loadingView.backgroundColor = .white
+                application.keyWindow?.addSubview(loadingView)
+                
+                resetFlowToToolsFlow(animated: false)
+                
+                loadInitialData()
+                
+                UIView.animate(withDuration: 0.4, delay: 1.5, options: .curveEaseOut, animations: {
+                    loadingView.alpha = 0
+                }, completion: {(finished: Bool) in
+                    loadingView.removeFromSuperview()
+                })
+            }
+        }
+        
+        resignedActiveDate = nil
+    }
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
+        
         if !navigationStarted {
+            
             navigationStarted = true
             setupInitialNavigation()
         }
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+                
+        resignedActiveDate = Date()
+        
+        appDiContainer.shortcutItemsService.reloadShortcutItems(application: application)
     }
 }

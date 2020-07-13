@@ -10,5 +10,9 @@ import Foundation
 
 protocol FavoritedToolsViewModelType: ToolsViewModelType {
     
+    var findToolsTitle: String { get }
+    var hidesFindToolsView: ObservableValue<Bool> { get }
+    var isLoading: ObservableValue<Bool> { get }
+    
     func pageViewed()
 }

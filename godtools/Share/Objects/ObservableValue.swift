@@ -28,6 +28,10 @@ class ObservableValue<T> {
         self.value = value
         notifyAllObservers()
     }
+    
+    func setValue(value: T) {
+        self.value = value
+    }
 
     func addObserver(_ observer: NSObject, onObserve: @escaping Handler) {
         observers[observer.description] = onObserve

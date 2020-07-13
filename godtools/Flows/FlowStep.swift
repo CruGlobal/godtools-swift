@@ -16,11 +16,11 @@ enum FlowStep {
     case showLanguageSettings
     case showOnboardingTutorial(animated: Bool)
     case dismissOnboardingTutorial
-    case urlLinkTappedFromToolDetail(url: URL)
     
     // tools
     case menuTappedFromTools
     case languageSettingsTappedFromTools
+    case openTutorialTapped
     
     // onboarding
     case beginTappedFromOnboardingWelcome
@@ -28,23 +28,22 @@ enum FlowStep {
     case showMoreTappedFromOnboardingTutorial
     case getStartedTappedFromOnboardingTutorial
     
-    // home
-    case openTutorialTapped
+    // favoritedTools
+    case toolTappedFromFavoritedTools(resource: ResourceModel)
+    case aboutToolTappedFromFavoritedTools(resource: ResourceModel)
+    case unfavoriteToolTappedFromFavoritedTools(resource: ResourceModel, removeHandler: CallbackHandler)
     
-    // myTools
-    case toolTappedFromMyTools(resource: DownloadedResource)
-    case toolInfoTappedFromMyTools(resource: DownloadedResource)
-    
-    // findTools
-    case toolTappedFromFindTools(resource: DownloadedResource)
-    case toolInfoTappedFromFindTools(resource: DownloadedResource)
+    // allTools
+    case toolTappedFromAllTools(resource: ResourceModel)
+    case aboutToolTappedFromAllTools(resource: ResourceModel)
     
     // toolDetails
-    case openToolTappedFromToolDetails(resource: DownloadedResource)
-    
+    case openToolTappedFromToolDetails(resource: ResourceModel)
+    case urlLinkTappedFromToolDetail(url: URL)
+        
     // tract
     case homeTappedFromTract
-    case shareTappedFromTract(resource: DownloadedResource, language: Language, pageNumber: Int)
+    case shareTappedFromTract(resource: ResourceModel, language: LanguageModel, pageNumber: Int)
     case sendEmailTappedFromTract(subject: String, message: String, isHtml: Bool)
     
     // tutorial
@@ -69,9 +68,10 @@ enum FlowStep {
     case choosePrimaryLanguageTappedFromLanguageSettings
     case chooseParallelLanguageTappedFromLanguageSettings
     case languageTappedFromChooseLanguage
+    case deleteLanguageTappedFromChooseLanguage
     
     // articles
-    case articleCategoryTappedFromArticleCategories(resource: DownloadedResource, godToolsResource: GodToolsResource, category: ArticleCategory)
-    case articleTappedFromArticles(resource: DownloadedResource, godToolsResource: GodToolsResource, articleAemImportData: RealmArticleAemImportData)
-    case sharedTappedFromArticle(articleAemImportData: RealmArticleAemImportData)
+    case articleCategoryTappedFromArticleCategories(resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser)
+    case articleTappedFromArticles(resource: ResourceModel, translationZipFile: TranslationZipFileModel, articleAemImportData: ArticleAemImportData)
+    case sharedTappedFromArticle(articleAemImportData: ArticleAemImportData)
 }

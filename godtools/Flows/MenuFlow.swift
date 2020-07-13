@@ -105,7 +105,12 @@ class MenuFlow: Flow {
             
         case .aboutTappedFromMenu:
             
+            let aboutTextProvider = LocalizedAboutTextProvider(
+                localizationServices: appDiContainer.localizationServices
+            )
+            
             let viewModel = AboutViewModel(
+                aboutTextProvider: aboutTextProvider,
                 analytics: appDiContainer.analytics
             )
             let view = AboutView(viewModel: viewModel)

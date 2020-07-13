@@ -78,7 +78,7 @@ class TractTextContentProperties: TractProperties {
         }
     }
     
-    func scaledFont(language: Language) -> UIFont {
+    func scaledFont(language: LanguageModel) -> UIFont {
         return self.font.transformToAppropriateFontByLanguage(language, textScale: self.textScale)
     }
     

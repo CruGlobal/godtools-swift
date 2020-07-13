@@ -12,7 +12,7 @@ class ArticleCellViewModel: ArticleCellViewModelType {
     
     let title: String?
     
-    required init(articleAemImportData: RealmArticleAemImportData) {
+    required init(articleAemImportData: ArticleAemImportData) {
         
         title = articleAemImportData.articleJcrContent?.title
     }

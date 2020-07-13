@@ -23,7 +23,9 @@ class LanguageSettingsFlow: Flow {
         
         let viewModel = LanguageSettingsViewModel(
             flowDelegate: self,
-            languagesManager: appDiContainer.languagesManager,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         let view = LanguageSettingsView(viewModel: viewModel)
@@ -37,36 +39,37 @@ class LanguageSettingsFlow: Flow {
             
         case .choosePrimaryLanguageTappedFromLanguageSettings:
             
-            let viewModel = ChooseLanguageViewModel(
-                flowDelegate: self,
-                languagesManager: appDiContainer.languagesManager,
-                translationZipImporter: appDiContainer.translationZipImporter,
-                analytics: appDiContainer.analytics,
-                chooseLanguageType: .primary
-            )
-            let view = ChooseLanguageView(viewModel: viewModel)
-            
-            navigationController.pushViewController(view, animated: true)
+            navigateToChooseLanguageView(chooseLanguageType: .primary)
                         
         case .chooseParallelLanguageTappedFromLanguageSettings:
             
-            let viewModel = ChooseLanguageViewModel(
-                flowDelegate: self,
-                languagesManager: appDiContainer.languagesManager,
-                translationZipImporter: appDiContainer.translationZipImporter,
-                analytics: appDiContainer.analytics,
-                chooseLanguageType: .parallel
-            )
-            let view = ChooseLanguageView(viewModel: viewModel)
-                        
-            navigationController.pushViewController(view, animated: true)
+            navigateToChooseLanguageView(chooseLanguageType: .parallel)
             
         case .languageTappedFromChooseLanguage:
+            
+            navigationController.popViewController(animated: true)
+            
+        case .deleteLanguageTappedFromChooseLanguage:
             
             navigationController.popViewController(animated: true)
             
         default:
             break
         }
+    }
+    
+    private func navigateToChooseLanguageView(chooseLanguageType: ChooseLanguageViewModel.ChooseLanguageType) {
+        
+        let viewModel = ChooseLanguageViewModel(
+            flowDelegate: self,
+            dataDownloader: appDiContainer.initialDataDownloader,
+            languageSettingsService: appDiContainer.languageSettingsService,
+            downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
+            analytics: appDiContainer.analytics,
+            chooseLanguageType: chooseLanguageType
+        )
+        let view = ChooseLanguageView(viewModel: viewModel)
+                    
+        navigationController.pushViewController(view, animated: true)
     }
 }

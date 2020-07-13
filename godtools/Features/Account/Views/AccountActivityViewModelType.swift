@@ -11,5 +11,5 @@ import Foundation
 protocol AccountActivityViewModelType {
     
     var globalActivityResults: ObservableValue<GlobalActivityResults> { get }
-    var alertMessage: ObservableValue<AlertMessage?> { get }
+    var alertMessage: ObservableValue<AlertMessageType?> { get }
 }

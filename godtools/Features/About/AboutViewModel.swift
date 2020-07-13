@@ -10,13 +10,18 @@ import Foundation
 
 class AboutViewModel: AboutViewModelType {
     
+    private let aboutTextProvider: AboutTextProviderType
     private let analytics: AnalyticsContainer
     
     let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("about", comment: ""))
+    let aboutTexts: ObservableValue<[AboutTextModel]> = ObservableValue(value: [])
     
-    required init(analytics: AnalyticsContainer) {
+    required init(aboutTextProvider: AboutTextProviderType, analytics: AnalyticsContainer) {
         
-        self.analytics = analytics        
+        self.aboutTextProvider = aboutTextProvider
+        self.analytics = analytics
+        
+        aboutTexts.accept(value: aboutTextProvider.aboutTexts)
     }
     
     func pageViewed() {

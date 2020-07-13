@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AccountItemViewDelegate: class {
-    func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessage)
+    func accountItemViewDidProcessAlertMessage(itemView: AccountItemViewType, alertMessage: AlertMessageType)
 }
 
 protocol AccountItemViewType: UIView {

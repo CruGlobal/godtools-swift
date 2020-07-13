@@ -15,7 +15,7 @@ class TractPage: BaseTractElement {
     
     var pageContainer: TractPageContainer?
     
-    private(set) var renderedView: UIView!
+    private(set) var renderedView: UIView?
     
     // MARK: - Setup
     
@@ -23,17 +23,31 @@ class TractPage: BaseTractElement {
     static var statusbarHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
     
     //  * The only designated initializer for this class should be this one
-    override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?) {
-        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement)
+    override init(startWithData data: XMLIndexer, height: CGFloat, manifestProperties: ManifestProperties, configurations: TractConfigurations, parallelElement: BaseTractElement?, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) {
+        super.init(startWithData: data, height: height, manifestProperties: manifestProperties, configurations: configurations, parallelElement: parallelElement, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
         
         renderedView = render()
     }
     
-    override init(data: XMLIndexer, startOnY yPosition: CGFloat) { fatalError("init(coder:) has not been implemented") }
+    override init(data: XMLIndexer, startOnY yPosition: CGFloat, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(coder:) has not been implemented") }
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
-    required init(data: XMLIndexer, parent: BaseTractElement) { fatalError("init(data:parent:) has not been implemented") }
-    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
-    override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement) { fatalError("init(children:yPosition:parent:) has not been implemented") }
+    required init(data: XMLIndexer, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(data:parent:) has not been implemented") }
+    required init(data: XMLIndexer, startOnY yPosition: CGFloat, parent: BaseTractElement, elementNumber: Int, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(data:startOnY:parent:elementNumber:) has not been implemented") }
+    override init(children: [XMLIndexer], startOnY yPosition: CGFloat, parent: BaseTractElement, dependencyContainer: BaseTractElementDiContainer, isPrimaryRightToLeft: Bool) { fatalError("init(children:yPosition:parent:) has not been implemented") }
+    
+    deinit {
+        print("x deinit: \(type(of: self))")
+    }
+    
+    func destroyPage() {
+        if let elements = elements {
+            for element in elements {
+                element.removeFromSuperview()
+            }
+        }
+        elements?.removeAll()
+        renderedView = nil
+    }
     
     override func reset() {
         super.reset()
@@ -79,7 +93,7 @@ class TractPage: BaseTractElement {
     
     func buildPageContainer(data: [XMLIndexer]) {
         self.elements = [BaseTractElement]()
-        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self)
+        let element = TractPageContainer(children: data, startOnY: startingYPos(), parent: self, dependencyContainer: dependencyContainer, isPrimaryRightToLeft: isPrimaryRightToLeft)
         self.elements!.append(element)
         self.height = element.elementFrame.yEndPosition()
         self.pageContainer = element
@@ -115,15 +129,15 @@ class TractPage: BaseTractElement {
     }
 
     final func addBackgroundImageSubview(imageFilename: String, scaleType: TractImageConfig.ImageScaleType, aligns: [TractImageConfig.ImageAlign], parentView: UIView) {
+        
         if imageFilename == "" {
             return
         }
-        let imagePath = self.manifestProperties.getResourceForFile(filename: imageFilename)
-        guard let data = NSData(contentsOfFile: imagePath),
-            let image = UIImage(data: data as Data) else {
-                return
+        
+        guard let image = manifestProperties.getResourceForFile(filename: imageFilename) else {
+            return
         }
-
+    
         let scaleType = scaleType
         let imageView = buildScaledImageView(parentView: parentView, image: image, aligns: aligns, scaleType: scaleType)
 

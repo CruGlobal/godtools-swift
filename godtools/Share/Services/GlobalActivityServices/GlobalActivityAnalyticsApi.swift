@@ -14,24 +14,13 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
     private let requestBuilder: RequestBuilder = RequestBuilder()
     private let baseUrl: String
     
-    init(config: ConfigType) {
+    required init(config: ConfigType, sharedSession: SharedSessionType) {
         
-        let configuration = URLSessionConfiguration.ephemeral
-        configuration.requestCachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        configuration.urlCache = nil
-        
-        configuration.httpCookieAcceptPolicy = HTTPCookie.AcceptPolicy.never
-        configuration.httpShouldSetCookies = false
-        configuration.httpCookieStorage = nil
-        
-        configuration.timeoutIntervalForRequest = 60
-            
-        session = URLSession(configuration: configuration)
-        
+        session = sharedSession.session
         baseUrl = config.mobileContentApiBaseUrl
     }
         
-    private var globalAnalyticsOperation: RequestOperation {
+    private func newGlobalAnalyticsOperation() -> RequestOperation {
         
         let urlRequest: URLRequest = requestBuilder.build(
             session: session,
@@ -44,15 +33,20 @@ class GlobalActivityAnalyticsApi: GlobalActivityAnalyticsApiType {
         return RequestOperation(session: session, urlRequest: urlRequest)
     }
 
-    func getGlobalAnalytics(complete: @escaping ((_ response: RequestResponse, _ result: RequestResult<GlobalActivityAnalytics, RequestClientError>) -> Void)) -> OperationQueue {
+    func getGlobalAnalytics(complete: @escaping ((_ result: Result<GlobalActivityAnalytics?, ResponseError<NoClientApiErrorType>>) -> Void)) -> OperationQueue {
         
-        return globalAnalyticsOperation.executeRequest { (response: RequestResponse) in
-                        
-            let result: RequestResult<GlobalActivityAnalytics, RequestClientError> = response.getResult()
+        let globalAnalyticsOperation = newGlobalAnalyticsOperation()
+        
+        return SingleRequestOperation().execute(operation: globalAnalyticsOperation, completeOnMainThread: true) { (response: RequestResponse, result: ResponseResult<GlobalActivityAnalytics, NoClientApiErrorType>) in
             
-            DispatchQueue.main.async {
-                
-                complete(response, result)
+            switch result {
+            case .success(let globalActivityAnalytics, let decodeError):
+                complete(.success(globalActivityAnalytics))
+                if let decodeError = decodeError {
+                    assertionFailure("GlobalActivityAnalyticsApi failed to decode global activity analytics with error: \(decodeError)")
+                }
+            case .failure(let error):
+                complete(.failure(error))
             }
         }
     }

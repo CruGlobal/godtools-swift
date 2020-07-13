@@ -69,7 +69,8 @@ class ChooseLanguageView: UIViewController {
             UINib(nibName: ChooseLanguageCell.nibName, bundle: nil),
             forCellReuseIdentifier: ChooseLanguageCell.reuseIdentifier
         )
-        languagesTableView.rowHeight = 52
+        languagesTableView.rowHeight = 54
+        languagesTableView.separatorStyle = .none
     }
     
     private func setupBinding() {
@@ -90,11 +91,11 @@ class ChooseLanguageView: UIViewController {
             }
         }
         
-        viewModel.languages.addObserver(self) { [weak self] (languages: [Language]) in
+        viewModel.languages.addObserver(self) { [weak self] (languages: [LanguageModel]) in
             self?.languagesTableView.reloadData()
         }
         
-        viewModel.selectedLanguage.addObserver(self) { [weak self] (selectedLanguage: Language?) in
+        viewModel.selectedLanguage.addObserver(self) { [weak self] (selectedLanguage: LanguageModel?) in
             self?.languagesTableView.reloadData()
         }
     }
@@ -155,7 +156,7 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let language: Language = viewModel.languages.value[indexPath.row]
+        let language: LanguageModel = viewModel.languages.value[indexPath.row]
         
         viewModel.languageTapped(language: language)
         
@@ -168,11 +169,14 @@ extension ChooseLanguageView: UITableViewDelegate, UITableViewDataSource {
         withIdentifier: ChooseLanguageCell.reuseIdentifier,
         for: indexPath) as! ChooseLanguageCell
         
-        let language: Language = viewModel.languages.value[indexPath.row]
+        let language: LanguageModel = viewModel.languages.value[indexPath.row]
                
         let cellViewModel = ChooseLanguageCellViewModel(
             language: language,
-            selectedLanguage: viewModel.selectedLanguage.value
+            translateLanguageNameViewModel: viewModel.translateLanguageNameViewModel,
+            downloadedLanguagesCache: viewModel.downloadedLanguagesCache,
+            hidesDownloadButton: true,
+            hidesSelected: language.id != viewModel.selectedLanguage.value?.id
         )
         
         cell.configure(viewModel: cellViewModel)

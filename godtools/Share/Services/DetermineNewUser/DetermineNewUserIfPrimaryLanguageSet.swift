@@ -12,7 +12,7 @@ struct DetermineNewUserIfPrimaryLanguageSet: DetermineIfNewUserType {
     
     let isNewUser: Bool
     
-    init(languageManager: LanguagesManager) {
-        isNewUser = languageManager.loadPrimaryLanguageFromDisk() == nil
+    init(languageSettingsCache: LanguageSettingsCacheType) {
+        isNewUser = languageSettingsCache.primaryLanguageId.value == nil
     }
 }

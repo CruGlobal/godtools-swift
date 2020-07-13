@@ -10,14 +10,29 @@ import UIKit
 
 class ManifestProperties: TractProperties {
     
+    private let sha256FileCache: ResourcesSHA256FileCache
+    
     @objc var backgroundColor = GTAppDefaultStyle.backgroundManifestColorString.getRGBAColor()
     @objc var backgroundImage: String = ""
     var backgroundImageAlign: [TractImageConfig.ImageAlign] = [.center]
     var backgroundImageScaleType: TractImageConfig.ImageScaleType = .fill
     @objc var navbarColor: UIColor?
     @objc var navbarControlColor: UIColor?
-    @objc var resources = [String: String]()
+    var resources = [String: SHA256FileLocation]()
     @objc var cardBackgroundColor: UIColor?
+    
+    required init(sha256FileCache: ResourcesSHA256FileCache) {
+        
+        self.sha256FileCache = sha256FileCache
+        
+        super.init()
+    }
+    
+    required init() {
+        // TODO: Need to remove this initializer. ~Levi
+        sha256FileCache = ResourcesSHA256FileCache()
+        super.init()
+    }
     
     override func defineProperties() {
         self.properties = ["backgroundColor", "backgroundImage", "navbarColor",
@@ -57,11 +72,20 @@ class ManifestProperties: TractProperties {
         self.backgroundImageScaleType = TractImageConfig.getImageScaleType(string: kind)
     }
     
-    func getResourceForFile(filename: String) -> String {
-        guard let image = self.resources[filename] else {
-            return ""
+    func getResourceForFile(filename: String) -> UIImage? {
+        
+        if let location = resources[filename] {
+           
+            switch sha256FileCache.getImage(location: location) {
+            case .success(let image):
+                return image
+            case .failure(let error):
+                assertionFailure(error.localizedDescription)
+                return nil
+            }
         }
-        return image
+        
+        return nil
     }
     
 }

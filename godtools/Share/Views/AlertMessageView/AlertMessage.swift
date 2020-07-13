@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct AlertMessage {
+struct AlertMessage: AlertMessageType {
     let title: String
     let message: String
 }
