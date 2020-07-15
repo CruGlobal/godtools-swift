@@ -25,5 +25,6 @@ class FavoritingToolMessageViewModel: FavoritingToolMessageViewModelType {
     func closeTapped() {
         
         favoritingToolMessageCache.disableFavoritingToolMessage()
+        hidesMessage.accept(value: (hidden: true, animated: true))
     }
 }

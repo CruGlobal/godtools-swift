@@ -52,7 +52,7 @@ class AllToolsView: UIView, NibBased {
         
         toolsView.configure(viewModel: viewModel)
         
-        favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel, delegate: self)
+        favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel)
         
         setupBinding()
     }
@@ -106,15 +106,5 @@ class AllToolsView: UIView, NibBased {
             favoritingToolMessageView.isHidden = hidden
             layoutIfNeeded()
         }
-    }
-}
-
-// MARK: - FavoritingToolMessageViewDelegate
-
-extension AllToolsView: FavoritingToolMessageViewDelegate {
-    
-    func favoritingToolMessageCloseTapped() {
-        
-        setFavoritingToolMessageHidden(true, animated: true)
     }
 }
