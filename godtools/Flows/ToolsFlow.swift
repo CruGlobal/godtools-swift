@@ -31,7 +31,9 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics
         )
         
-        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel()
+        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel(
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache
+        )
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,

@@ -11,6 +11,7 @@ import Foundation
 protocol FavoritingToolMessageViewModelType {
     
     var message: String { get }
+    var hidesMessage: ObservableValue<(hidden: Bool, animated: Bool)> { get }
     
     func closeTapped()
 }

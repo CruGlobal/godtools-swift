@@ -47,6 +47,15 @@ class FavoritedToolsView: UIView, NibBased {
         findToolsButton.addTarget(self, action: #selector(handleFindTools(button:)), for: .touchUpInside)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setOpenTutorialHidden(
+            openTutorialViewModel.hidesOpenTutorial.value.hidden,
+            animated: false
+        )
+    }
+    
     func configure(viewModel: FavoritedToolsViewModelType, delegate: FavoritedToolsViewDelegate, openTutorialViewModel: OpenTutorialViewModelType) {
         
         self.viewModel = viewModel

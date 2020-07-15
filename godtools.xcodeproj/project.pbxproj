@@ -262,6 +262,8 @@
 		454D59FA24BF377200B8528B /* FavoritingToolMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 454D59F924BF377200B8528B /* FavoritingToolMessageView.xib */; };
 		454D59FC24BF39B900B8528B /* FavoritingToolMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D59FB24BF39B900B8528B /* FavoritingToolMessageViewModel.swift */; };
 		454D59FE24BF39C400B8528B /* FavoritingToolMessageViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D59FD24BF39C400B8528B /* FavoritingToolMessageViewModelType.swift */; };
+		454D5A0224BF552000B8528B /* SharedUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D5A0124BF552000B8528B /* SharedUserDefaultsCache.swift */; };
+		454D5A0424BF567A00B8528B /* FavoritingToolMessageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454D5A0324BF567A00B8528B /* FavoritingToolMessageCache.swift */; };
 		4556AEAF23E1D37F002C15E8 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */; };
 		4556AEBC23E1EADD002C15E8 /* TutorialInMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */; };
 		4556AEBE23E1EB78002C15E8 /* TutorialInMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */; };
@@ -899,6 +901,8 @@
 		454D59F924BF377200B8528B /* FavoritingToolMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavoritingToolMessageView.xib; sourceTree = "<group>"; };
 		454D59FB24BF39B900B8528B /* FavoritingToolMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageViewModel.swift; sourceTree = "<group>"; };
 		454D59FD24BF39C400B8528B /* FavoritingToolMessageViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageViewModelType.swift; sourceTree = "<group>"; };
+		454D5A0124BF552000B8528B /* SharedUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUserDefaultsCache.swift; sourceTree = "<group>"; };
+		454D5A0324BF567A00B8528B /* FavoritingToolMessageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritingToolMessageCache.swift; sourceTree = "<group>"; };
 		4556AEAE23E1D37F002C15E8 /* AppDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		4556AEBB23E1EADD002C15E8 /* TutorialInMenuView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialInMenuView.xib; sourceTree = "<group>"; };
 		4556AEBD23E1EB78002C15E8 /* TutorialInMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialInMenuViewModel.swift; sourceTree = "<group>"; };
@@ -1935,6 +1939,14 @@
 			path = FavoritingToolMessageView;
 			sourceTree = "<group>";
 		};
+		454D5A0024BF550400B8528B /* UserDefaultsCache */ = {
+			isa = PBXGroup;
+			children = (
+				454D5A0124BF552000B8528B /* SharedUserDefaultsCache.swift */,
+			);
+			path = UserDefaultsCache;
+			sourceTree = "<group>";
+		};
 		4556AEA923E1D1E7002C15E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1971,6 +1983,7 @@
 				455D7F40244E77C50059EC49 /* Translations */,
 				452036BB240057B2002B2453 /* URLRequestServices */,
 				451EE23B24ABF6D200BB799F /* URLSession */,
+				454D5A0024BF550400B8528B /* UserDefaultsCache */,
 				456BF68F248F17010094C6F8 /* Views */,
 				455F4B8D24527C2D00AE6007 /* WebArchiver */,
 			);
@@ -2448,6 +2461,7 @@
 			children = (
 				45ACBD0F247DBD3800514E75 /* ToolMenuItem.swift */,
 				45ACBD11247DBD5A00514E75 /* ToolMenuItemId.swift */,
+				454D5A0324BF567A00B8528B /* FavoritingToolMessageCache.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3539,6 +3553,7 @@
 				4556AEE023E23B19002C15E8 /* OnboardingTutorialBackgroundCell.swift in Sources */,
 				4549058B24AA75130038A1A8 /* ShortcutItemType.swift in Sources */,
 				451DB1C72461DDFA00FB14BF /* TractHero.swift in Sources */,
+				454D5A0224BF552000B8528B /* SharedUserDefaultsCache.swift in Sources */,
 				45FCFF77243D0BE000865501 /* ChooseLanguageView.swift in Sources */,
 				451B9CE22475AEE6006ACD32 /* AppFlow.swift in Sources */,
 				458EA1EE24291B660002C263 /* IsNewUserDefaultsCache.swift in Sources */,
@@ -3800,6 +3815,7 @@
 				45D3C92F23DF9C1800ECF70E /* TutorialItemProviderType.swift in Sources */,
 				4564723E244F6F4F00CB202D /* ArticleCategoriesViewModel.swift in Sources */,
 				4586D7E6246ECEE90062D988 /* TractEmail.swift in Sources */,
+				454D5A0424BF567A00B8528B /* FavoritingToolMessageCache.swift in Sources */,
 				4506DE9824B7972D00A1C50B /* AboutTextCell.swift in Sources */,
 				45732229244548A800D653FF /* ChooseLanguageCellViewModelType.swift in Sources */,
 				4530DCA824A3D4BD000DA516 /* JsonServicesType.swift in Sources */,

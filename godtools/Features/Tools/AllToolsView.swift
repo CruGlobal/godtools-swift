@@ -12,7 +12,7 @@ class AllToolsView: UIView, NibBased {
     
     private var viewModel: AllToolsViewModelType!
     private var favoritingToolMessageViewModel: FavoritingToolMessageViewModelType!
-    
+        
     @IBOutlet weak private var favoritingToolMessageView: FavoritingToolMessageView!
     @IBOutlet weak private var toolsView: ToolsTableView!
     @IBOutlet weak private var messageLabel: UILabel!
@@ -36,6 +36,15 @@ class AllToolsView: UIView, NibBased {
         setupLayout()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        setFavoritingToolMessageHidden(
+            favoritingToolMessageViewModel.hidesMessage.value.hidden,
+            animated: false
+        )
+    }
+    
     func configure(viewModel: AllToolsViewModelType, favoritingToolMessageViewModel: FavoritingToolMessageViewModelType) {
         
         self.viewModel = viewModel
@@ -43,7 +52,6 @@ class AllToolsView: UIView, NibBased {
         
         toolsView.configure(viewModel: viewModel)
         
-        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel()
         favoritingToolMessageView.configure(viewModel: favoritingToolMessageViewModel, delegate: self)
         
         setupBinding()
@@ -58,6 +66,10 @@ class AllToolsView: UIView, NibBased {
     }
     
     private func setupBinding() {
+        
+        favoritingToolMessageViewModel.hidesMessage.addObserver(self) { [weak self] (objectTuple: (hidden: Bool, animated: Bool)) in
+            self?.setFavoritingToolMessageHidden(objectTuple.hidden, animated: objectTuple.animated)
+        }
         
         viewModel.message.addObserver(self, onObserve: { [weak self] (message: String) in
             self?.messageLabel.isHidden = message.isEmpty

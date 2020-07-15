@@ -10,13 +10,20 @@ import Foundation
 
 class FavoritingToolMessageViewModel: FavoritingToolMessageViewModelType {
     
-    let message: String = "Make a tool available offline by tapping the heart icon which adds it to your favorites."
+    private let favoritingToolMessageCache: FavoritingToolMessageCache
     
-    required init() {
+    let message: String = "Make a tool available offline by tapping the heart icon which adds it to your favorites."
+    let hidesMessage: ObservableValue<(hidden: Bool, animated: Bool)> = ObservableValue(value: (hidden: false, animated: false))
+    
+    required init(favoritingToolMessageCache: FavoritingToolMessageCache) {
         
+        self.favoritingToolMessageCache = favoritingToolMessageCache
+        
+        hidesMessage.accept(value: (hidden: favoritingToolMessageCache.favoritingToolMessageDisabled, animated: false))
     }
     
     func closeTapped() {
         
+        favoritingToolMessageCache.disableFavoritingToolMessage()
     }
 }
