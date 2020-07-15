@@ -31,6 +31,8 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics
         )
         
+        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel()
+        
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
@@ -60,7 +62,8 @@ class ToolsFlow: Flow {
             viewModel: toolsMenuViewModel,
             openTutorialViewModel: openTutorialViewModel,
             favoritedToolsViewModel: favoritedToolsViewModel,
-            allToolsViewModel: allToolsViewModel
+            allToolsViewModel: allToolsViewModel,
+            favoritingToolMessageViewModel: favoritingToolMessageViewModel
         )
         
         navigationController.setViewControllers([view], animated: false)
