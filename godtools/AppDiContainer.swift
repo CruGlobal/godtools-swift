@@ -28,6 +28,7 @@ class AppDiContainer {
     private let languageSettingsCache: LanguageSettingsCacheType = LanguageSettingsUserDefaultsCache()
     private let resourcesCleanUp: ResourcesCleanUp
     private let initialDeviceResourcesLoader: InitialDeviceResourcesLoader
+    private let sharedUserDefaultsCache: SharedUserDefaultsCache = SharedUserDefaultsCache()
 
     let config: ConfigType
     let translationsFileCache: TranslationsFileCache
@@ -53,6 +54,7 @@ class AppDiContainer {
     let shortcutItemsService: ShortcutItemsService
     let deepLinkingService: DeepLinkingService
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
+    let favoritingToolMessageCache: FavoritingToolMessageCache
         
     required init() {
         
@@ -182,6 +184,8 @@ class AppDiContainer {
         )
         
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
+        
+        favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
         
         // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
