@@ -10,6 +10,8 @@ import Foundation
 
 class LocalizationServices {
     
+    private let shouldFallbackToMainBundleIfStringEqualsKey: Bool = true
+    
     required init() {
         
     }
@@ -22,7 +24,14 @@ class LocalizationServices {
     }
     
     func stringForBundle(bundle: Bundle, key: String, value: String? = nil, table: String? = nil) -> String {
-        return bundle.localizedString(forKey: key, value: value, table: table)
+        
+        let localizedString: String = bundle.localizedString(forKey: key, value: value, table: table)
+        
+        if localizedString == key && shouldFallbackToMainBundleIfStringEqualsKey {
+            return string(mainBundleKey: key)
+        }
+        
+        return localizedString
     }
 
     func string(mainBundleKey key: String) -> String {
