@@ -33,10 +33,10 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.analytics = analytics
         
-        primaryLanguageTitle = localizationServices.string(mainBundleKey: "primary_language")
-        parallelLanguageTitle = localizationServices.string(mainBundleKey: "parallel_language")
-        shareGodToolsInNativeLanguage = localizationServices.string(mainBundleKey: "share_god_tools_native_language")
-        languageAvailability = localizationServices.string(mainBundleKey: "not_every_tool_is_available")
+        primaryLanguageTitle = localizationServices.stringForMainBundle(key: "primary_language")
+        parallelLanguageTitle = localizationServices.stringForMainBundle(key: "parallel_language")
+        shareGodToolsInNativeLanguage = localizationServices.stringForMainBundle(key: "share_god_tools_native_language")
+        languageAvailability = localizationServices.stringForMainBundle(key: "not_every_tool_is_available")
         
         super.init()
                       

@@ -47,10 +47,10 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         setProgress(progress: 0)
         
         if favoritedResourcesCache.isFavorited(resourceId: resource.id) {
-            message.accept(value: localizationServices.string(mainBundleKey: "loading_favorited_tool"))
+            message.accept(value: localizationServices.stringForMainBundle(key: "loading_favorited_tool"))
         }
         else {
-            message.accept(value: localizationServices.string(mainBundleKey: "loading_unfavorited_tool"))
+            message.accept(value: localizationServices.stringForMainBundle(key: "loading_unfavorited_tool"))
         }
         
         downloadTranslations(translations: translationsToDownload)
