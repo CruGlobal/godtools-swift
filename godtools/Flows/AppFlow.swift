@@ -102,10 +102,16 @@ class AppFlow: NSObject, FlowDelegate {
                 
                 switch deepLinkingType {
                 
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let page):
+                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
                     if let toolsFlow = self?.toolsFlow {
                         self?.resetFlowToToolsFlow(animated: false)
-                        toolsFlow.navigateToTool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, page: page)
+                        toolsFlow.navigateToTool(
+                            resource: resource,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage,
+                            liveShareStream: liveShareStream,
+                            page: page
+                        )
                     }
                 case .none:
                     break

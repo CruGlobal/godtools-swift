@@ -55,6 +55,7 @@ class AppDiContainer {
     let deepLinkingService: DeepLinkingService
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
+    let tractRemoteShareSubscriber: TractRemoteShareSubscriber
         
     required init() {
         
@@ -186,6 +187,8 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
+        
+        tractRemoteShareSubscriber = TractRemoteShareSubscriber(config: config)
         
         // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractViewModel: TractViewModelType {
+class TractViewModel: NSObject, TractViewModelType {
     
     typealias PageNumber = Int
     
@@ -17,6 +17,7 @@ class TractViewModel: TractViewModelType {
     private let parallelLanguage: LanguageModel?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
+    private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
@@ -39,7 +40,7 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, followUpsService: FollowUpsService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -47,6 +48,7 @@ class TractViewModel: TractViewModelType {
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
         self.tractManager = tractManager
+        self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.analytics = analytics
@@ -83,6 +85,10 @@ class TractViewModel: TractViewModelType {
         
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
+        super.init()
+        
+        setupBinding()
+        
         _ = viewsService.postNewResourceView(resourceId: resource.id)
                 
         let startingTractPage: Int = tractPage ?? 0
@@ -99,10 +105,14 @@ class TractViewModel: TractViewModelType {
             shouldSetCurrentToolPageItemIndex: true,
             animated: false
         )
+        
+        subscribeToLiveShareStream(liveShareStream: liveShareStream)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        tractRemoteShareSubscriber.unsubscribeChannel()
+        tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
         destroyTractPages()
     }
     
@@ -120,6 +130,28 @@ class TractViewModel: TractViewModelType {
             tractPage.destroyPage()
         }
         cachedParallelTractPages.removeAll()
+    }
+    
+    private func setupBinding() {
+        
+        tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
+            DispatchQueue.main.async { [weak self] in
+                if let page = navigationEvent.page {
+                    self?.setTractPage(page: page, shouldSetCurrentToolPageItemIndex: true, animated: true)
+                }
+            }
+        }
+    }
+    
+    private func subscribeToLiveShareStream(liveShareStream: String?) {
+        
+        guard let channelId = liveShareStream, !channelId.isEmpty else {
+            return
+        }
+        
+        print("\n TractViewModel: subscribeToLiveShareStream() channelId: \(channelId)")
+        
+        tractRemoteShareSubscriber.subscribeToChannel(liveShareStream: channelId)
     }
     
     private func loadTractXmlPages() {

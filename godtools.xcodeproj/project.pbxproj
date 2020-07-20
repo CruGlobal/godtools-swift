@@ -451,6 +451,8 @@
 		4595F44424A2AF4200B3733E /* ArticlesCacheValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F44324A2AF4200B3733E /* ArticlesCacheValidation.swift */; };
 		4595F44624A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4595F44524A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift */; };
 		459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */; };
+		459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */; };
+		459C3FE324C5F2ED006E81CA /* TractRemoteShareNavigationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FE224C5F2ED006E81CA /* TractRemoteShareNavigationEvent.swift */; };
 		459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */; };
 		45A1431124A626AD00892200 /* FetchLanguageTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1430E24A626AD00892200 /* FetchLanguageTranslationResult.swift */; };
 		45A1431224A626AD00892200 /* FetchLanguageTranslationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1430F24A626AD00892200 /* FetchLanguageTranslationViewModel.swift */; };
@@ -1089,6 +1091,8 @@
 		4595F44324A2AF4200B3733E /* ArticlesCacheValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticlesCacheValidation.swift; sourceTree = "<group>"; };
 		4595F44524A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleAemImportDownloaderReceipt.swift; sourceTree = "<group>"; };
 		459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
+		459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
+		459C3FE224C5F2ED006E81CA /* TractRemoteShareNavigationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteShareNavigationEvent.swift; sourceTree = "<group>"; };
 		459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
 		45A1430E24A626AD00892200 /* FetchLanguageTranslationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationResult.swift; sourceTree = "<group>"; };
 		45A1430F24A626AD00892200 /* FetchLanguageTranslationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationViewModel.swift; sourceTree = "<group>"; };
@@ -1980,6 +1984,7 @@
 				455D7F47244E82370059EC49 /* Resources */,
 				45B881C4249AAC35004DC491 /* SHA256FileCache */,
 				4549058724AA75010038A1A8 /* ShortcutItems */,
+				457F3FEC24C352E700D8F9B1 /* TractRemoteShare */,
 				455D7F40244E77C50059EC49 /* Translations */,
 				452036BB240057B2002B2453 /* URLRequestServices */,
 				451EE23B24ABF6D200BB799F /* URLSession */,
@@ -2341,6 +2346,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		457F3FEC24C352E700D8F9B1 /* TractRemoteShare */ = {
+			isa = PBXGroup;
+			children = (
+				459C3FDE24C5F296006E81CA /* TractRemoteShareSubscriber */,
+			);
+			path = TractRemoteShare;
+			sourceTree = "<group>";
+		};
 		45869EBF24530B9800733B0C /* FileCache */ = {
 			isa = PBXGroup;
 			children = (
@@ -2426,6 +2439,23 @@
 				457551E924A5853D0091652F /* LegacyRealm */,
 			);
 			path = Legacy;
+			sourceTree = "<group>";
+		};
+		459C3FDE24C5F296006E81CA /* TractRemoteShareSubscriber */ = {
+			isa = PBXGroup;
+			children = (
+				459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */,
+				459C3FE124C5F2C2006E81CA /* Models */,
+			);
+			path = TractRemoteShareSubscriber;
+			sourceTree = "<group>";
+		};
+		459C3FE124C5F2C2006E81CA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				459C3FE224C5F2ED006E81CA /* TractRemoteShareNavigationEvent.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		459C8690247A2A170077AB7F /* ViewModels */ = {
@@ -3430,6 +3460,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-godtools/Pods-godtools-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ActionCableClient/ActionCableClient.framework",
 				"${BUILT_PRODUCTS_DIR}/AdobeMobileSDK/AdobeMobileSDK.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework",
@@ -3448,6 +3479,7 @@
 				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
 				"${BUILT_PRODUCTS_DIR}/SWXMLHash/SWXMLHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnowplowTracker/SnowplowTracker.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TTTAttributedLabel/TTTAttributedLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/TheKeyOAuthSwift/TheKeyOAuthSwift.framework",
@@ -3456,6 +3488,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ActionCableClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AdobeMobileSDK.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AppAuth.framework",
@@ -3474,6 +3507,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SWXMLHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnowplowTracker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TTTAttributedLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TheKeyOAuthSwift.framework",
@@ -3615,6 +3649,7 @@
 				4573221C244546A300D653FF /* ChooseLanguageViewModelType.swift in Sources */,
 				45038D8624A2698E00345B42 /* TranslationDownloader.swift in Sources */,
 				45F6E01A249D44270077C7D9 /* LanguagesApiType.swift in Sources */,
+				459C3FE324C5F2ED006E81CA /* TractRemoteShareNavigationEvent.swift in Sources */,
 				45249D1524ACC62B00E139AD /* ResourceViewModel.swift in Sources */,
 				45647251244F782300CB202D /* ArticleCell.swift in Sources */,
 				4575C26323FB45E600D3265B /* GlobalActivityServices.swift in Sources */,
@@ -3995,6 +4030,7 @@
 				45DED9582478401700B0A71D /* WebArchiveOperationError.swift in Sources */,
 				45668E8323E0E1CC002728E7 /* OnboardingTutorialView.swift in Sources */,
 				4506DED424B7A78700A1C50B /* EmailSignUpManager.swift in Sources */,
+				459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */,
 				45D5693524931E0F003E5798 /* RequestReceipt.swift in Sources */,
 				4586D7E8246ECEE90062D988 /* TractButton.swift in Sources */,
 				45F6E026249D4BE30077C7D9 /* LanguageSettingsService.swift in Sources */,
