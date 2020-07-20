@@ -15,7 +15,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let dataDownloader: InitialDataDownloader
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
-    private let localization: LocalizationServices
+    private let localizationServices: LocalizationServices
     private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
@@ -40,14 +40,14 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localization: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
-        self.localization = localization
+        self.localizationServices = localizationServices
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: true)
         self.analytics = analytics
@@ -120,7 +120,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         let languageBundle: Bundle
         
         if let preferredLanguage = primaryTranslationResult.language {
-            languageBundle = localization.bundleForLanguageElseMainBundle(languageCode: preferredLanguage.code)
+            languageBundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: preferredLanguage.code)
         }
         else {
             languageBundle = Bundle.main
@@ -140,21 +140,21 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let numberOfLanguages: Int = languages.count
         
-        totalViews.accept(value: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews))
-        openToolTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool"))
-        unfavoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "remove_from_favorites"))
-        favoriteTitle.accept(value: localization.stringForBundle(bundle: languageBundle, key: "add_to_favorites"))
+        totalViews.accept(value: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews))
+        openToolTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool"))
+        unfavoriteTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites"))
+        favoriteTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "add_to_favorites"))
         
         // tool details
         let aboutDetailsControl = ToolDetailControl(
             id: "about",
-            title: localization.stringForBundle(bundle: languageBundle, key: "about"),
+            title: localizationServices.stringForBundle(bundle: languageBundle, key: "about"),
             controlId: .about
         )
         
         let languageDetailsControl = ToolDetailControl(
             id: "language",
-            title: String.localizedStringWithFormat(localization.stringForBundle(bundle: languageBundle, key: "total_languages"), numberOfLanguages),
+            title: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_languages"), numberOfLanguages),
             controlId: .languages
         )
         toolDetailsControls.accept(value: [aboutDetailsControl, languageDetailsControl])

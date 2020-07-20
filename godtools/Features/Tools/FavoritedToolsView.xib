@@ -17,6 +17,8 @@
                 <outlet property="findToolsButton" destination="P2Q-BC-SVT" id="OaD-xs-sqS"/>
                 <outlet property="findToolsView" destination="jgm-cd-FPm" id="OnB-hg-39r"/>
                 <outlet property="loadingView" destination="t2W-QV-xap" id="pG0-L7-Ft0"/>
+                <outlet property="openTutorialTop" destination="Xr2-yJ-vxG" id="sWd-Zq-gFf"/>
+                <outlet property="openTutorialView" destination="Dc5-HE-dIi" id="T3Q-vH-IO2"/>
                 <outlet property="searchImageView" destination="UOx-hw-u0b" id="urn-YI-cP1"/>
                 <outlet property="toolsView" destination="8ja-u9-mhA" id="0Aa-KG-7b2"/>
             </connections>
@@ -26,8 +28,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dc5-HE-dIi" userLabel="openTutorialView" customClass="OpenTutorialView" customModule="godtools" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="500" constant="100" id="LJd-pJ-YkK"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ja-u9-mhA" userLabel="toolsView" customClass="ToolsTableView" customModule="godtools" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="100" width="414" height="796"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jgm-cd-FPm" userLabel="findToolsView">
@@ -67,14 +76,17 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="t2W-QV-xap" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2Gk-zF-a36"/>
+                <constraint firstAttribute="trailing" secondItem="Dc5-HE-dIi" secondAttribute="trailing" id="Fdh-cM-Tfi"/>
                 <constraint firstItem="t2W-QV-xap" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Hss-Qu-yF1"/>
                 <constraint firstAttribute="bottom" secondItem="jgm-cd-FPm" secondAttribute="bottom" id="J0v-6r-BgE"/>
-                <constraint firstItem="8ja-u9-mhA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="OFj-Vo-OWV"/>
                 <constraint firstItem="jgm-cd-FPm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QGZ-qH-xsn"/>
                 <constraint firstAttribute="bottom" secondItem="8ja-u9-mhA" secondAttribute="bottom" id="TWV-nz-26d"/>
                 <constraint firstAttribute="trailing" secondItem="8ja-u9-mhA" secondAttribute="trailing" id="TdO-vv-Vi2"/>
+                <constraint firstItem="Dc5-HE-dIi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Xr2-yJ-vxG"/>
                 <constraint firstItem="jgm-cd-FPm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YVb-mj-Mvg"/>
                 <constraint firstItem="8ja-u9-mhA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jgZ-t4-CPh"/>
+                <constraint firstItem="Dc5-HE-dIi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qR0-0q-Dwy"/>
+                <constraint firstItem="8ja-u9-mhA" firstAttribute="top" secondItem="Dc5-HE-dIi" secondAttribute="bottom" id="wJl-lC-IU2"/>
                 <constraint firstAttribute="trailing" secondItem="jgm-cd-FPm" secondAttribute="trailing" id="yMB-o8-d5g"/>
             </constraints>
             <point key="canvasLocation" x="139" y="153"/>

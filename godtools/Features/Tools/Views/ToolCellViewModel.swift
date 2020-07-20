@@ -197,10 +197,10 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         }
         
         let languageCode: String = languageTranslationResult.language?.code ?? ""
-        let languageLocale: Bundle = localizationServices.bundleForLanguageElseMainBundle(languageCode: languageCode)
+        let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageCode)
         
-        category.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "tool_category_\(resource.attrCategory)"))
-        aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "about"))
-        openTitle.accept(value: localizationServices.stringForBundle(bundle: languageLocale, key: "open"))
+        category.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"))
+        aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "about"))
+        openTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "open"))
     }
 }

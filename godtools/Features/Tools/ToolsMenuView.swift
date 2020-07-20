@@ -14,22 +14,21 @@ class ToolsMenuView: UIViewController {
     private let openTutorialViewModel: OpenTutorialViewModelType
     private let favoritedToolsViewModel: FavoritedToolsViewModelType
     private let allToolsViewModel: AllToolsViewModelType
+    private let favoritingToolMessageViewModel: FavoritingToolMessageViewModelType
     
     private var toolsMenuControl: UISegmentedControl = UISegmentedControl()
                 
-    @IBOutlet weak private var openTutorialView: OpenTutorialView!
     @IBOutlet weak private var favoritedTools: FavoritedToolsView!
     @IBOutlet weak private var allTools: AllToolsView!
-    
-    @IBOutlet weak private var openTutorialTop: NSLayoutConstraint!
-    @IBOutlet weak private var openTutorialHeight: NSLayoutConstraint!
+        
     @IBOutlet weak private var favoritedToolsLeading: NSLayoutConstraint!
     
-    required init(viewModel: ToolsMenuViewModelType, openTutorialViewModel: OpenTutorialViewModelType, favoritedToolsViewModel: FavoritedToolsViewModelType, allToolsViewModel: AllToolsViewModelType) {
+    required init(viewModel: ToolsMenuViewModelType, openTutorialViewModel: OpenTutorialViewModelType, favoritedToolsViewModel: FavoritedToolsViewModelType, allToolsViewModel: AllToolsViewModelType, favoritingToolMessageViewModel: FavoritingToolMessageViewModelType) {
         self.viewModel = viewModel
         self.openTutorialViewModel = openTutorialViewModel
         self.favoritedToolsViewModel = favoritedToolsViewModel
         self.allToolsViewModel = allToolsViewModel
+        self.favoritingToolMessageViewModel = favoritingToolMessageViewModel
         super.init(nibName: String(describing: ToolsMenuView.self), bundle: nil)
     }
     
@@ -45,8 +44,8 @@ class ToolsMenuView: UIViewController {
         super.viewDidLoad()
         print("view didload: \(type(of: self))")
         
-        favoritedTools.configure(viewModel: favoritedToolsViewModel, delegate: self)
-        allTools.configure(viewModel: allToolsViewModel)
+        favoritedTools.configure(viewModel: favoritedToolsViewModel, delegate: self, openTutorialViewModel: openTutorialViewModel)
+        allTools.configure(viewModel: allToolsViewModel, favoritingToolMessageViewModel: favoritingToolMessageViewModel)
         
         setupLayout()
         setupBinding()
@@ -88,11 +87,6 @@ class ToolsMenuView: UIViewController {
     
     private func setupBinding() {
         
-        openTutorialView.configure(viewModel: openTutorialViewModel)
-        openTutorialViewModel.hidesOpenTutorial.addObserver(self) { [weak self] (tuple: (hidden: Bool, animated: Bool)) in
-            self?.setOpenTutorialHidden(tuple.hidden, animated: tuple.animated)
-        }
-        
         viewModel.toolMenuItems.addObserver(self) { [weak self] (toolMenuItems: [ToolMenuItem]) in
             self?.reloadToolsMenuControl()
         }
@@ -118,28 +112,6 @@ class ToolsMenuView: UIViewController {
         let menuItem: ToolMenuItem = viewModel.toolMenuItems.value[toolsControl.selectedSegmentIndex]
 
         viewModel.toolMenuItemTapped(menuItem: menuItem)
-    }
-    
-    private func setOpenTutorialHidden(_ hidden: Bool, animated: Bool) {
-        openTutorialTop.constant = hidden ? (openTutorialHeight.constant * -1) : 0
-        
-        if animated {
-            if !hidden {
-                openTutorialView.isHidden = false
-            }
-            
-            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: { [weak self] in
-                self?.view.layoutIfNeeded()
-                }, completion: { [weak self] (finished: Bool) in
-                    if hidden {
-                        self?.openTutorialView.isHidden = true
-                    }
-            })
-        }
-        else {
-            openTutorialView.isHidden = hidden
-            view.layoutIfNeeded()
-        }
     }
     
     private func reloadToolsMenuControl() {

@@ -31,6 +31,10 @@ class ToolsFlow: Flow {
             analytics: appDiContainer.analytics
         )
         
+        let favoritingToolMessageViewModel = FavoritingToolMessageViewModel(
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache
+        )
+        
         let favoritedToolsViewModel = FavoritedToolsViewModel(
             flowDelegate: self,
             dataDownloader: appDiContainer.initialDataDownloader,
@@ -60,7 +64,8 @@ class ToolsFlow: Flow {
             viewModel: toolsMenuViewModel,
             openTutorialViewModel: openTutorialViewModel,
             favoritedToolsViewModel: favoritedToolsViewModel,
-            allToolsViewModel: allToolsViewModel
+            allToolsViewModel: allToolsViewModel,
+            favoritingToolMessageViewModel: favoritingToolMessageViewModel
         )
         
         navigationController.setViewControllers([view], animated: false)
@@ -104,14 +109,14 @@ class ToolsFlow: Flow {
             
             let localizationServices: LocalizationServices = appDiContainer.localizationServices
             
-            let title: String = localizationServices.string(mainBundleKey: "remove_from_favorites_title")
-            let message: String = localizationServices.string(mainBundleKey: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: resource.name)
-            let acceptedTitle: String = localizationServices.string(mainBundleKey: "yes")
+            let title: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_title")
+            let message: String = localizationServices.stringForMainBundle(key: "remove_from_favorites_message").replacingOccurrences(of: "%@", with: resource.name)
+            let acceptedTitle: String = localizationServices.stringForMainBundle(key: "yes")
             
             let viewModel = AlertMessageViewModel(
                 title: title,
                 message: message,
-                cancelTitle: localizationServices.string(mainBundleKey: "no"),
+                cancelTitle: localizationServices.stringForMainBundle(key: "no"),
                 acceptTitle: acceptedTitle,
                 acceptHandler: handler
             )
@@ -169,7 +174,7 @@ class ToolsFlow: Flow {
             dataDownloader: appDiContainer.initialDataDownloader,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
-            localization: appDiContainer.localizationServices,
+            localizationServices: appDiContainer.localizationServices,
             fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
