@@ -13,11 +13,10 @@ class OnboardingTutorialView: UIViewController {
     private let viewModel: OnboardingTutorialViewModelType
     
     private var skipButton: UIBarButtonItem?
-    private var didLayoutSubviews: Bool = false
     
     @IBOutlet weak private var footerView: UIView!
-    @IBOutlet weak private var backgroundCollectionView: UICollectionView!
-    @IBOutlet weak private var tutorialCollectionView: UICollectionView!
+    @IBOutlet weak private var backgroundPagesView: PageNavigationCollectionView!
+    @IBOutlet weak private var tutorialPagesView: PageNavigationCollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var showMoreButton: OnboardPrimaryButton!
     @IBOutlet weak private var getStartedButton: OnboardPrimaryButton!
@@ -53,47 +52,38 @@ class OnboardingTutorialView: UIViewController {
         continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
         showMoreButton.addTarget(self, action: #selector(handleShowMore(button:)), for: .touchUpInside)
         getStartedButton.addTarget(self, action: #selector(handleGetStarted(button:)), for: .touchUpInside)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            
-            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
-            backgroundCollectionView.delegate = self
-            backgroundCollectionView.dataSource = self
-            tutorialCollectionView.delegate = self
-            tutorialCollectionView.dataSource = self
-            
-            viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [OnboardingTutorialItem]) in
-                self?.pageControl.numberOfPages = tutorialItems.count
-                self?.tutorialCollectionView.reloadData()
-            }
-            
-            viewModel.currentTutorialItemIndex.addObserver(self) { [weak self] (index: Int) in
-                self?.scrollToTutorialItem(item: index, animated: true)
-            }
-        }
+        
+        backgroundPagesView.delegate = self
+        tutorialPagesView.delegate = self
     }
     
     private func setupLayout() {
         
-        backgroundCollectionView.register(
-            UINib(nibName: OnboardingTutorialBackgroundCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier
+        // backgroundPagesView
+        backgroundPagesView.pageBackgroundColor = .white
+        backgroundPagesView.registerPageCell(
+            nib: UINib(nibName: OnboardingTutorialBackgroundCell.nibName, bundle: nil),
+            cellReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier
         )
-        backgroundCollectionView.isScrollEnabled = false
+        backgroundPagesView.gestureScrollingEnabled = false
+        backgroundPagesView.isUserInteractionEnabled = false
         
-        tutorialCollectionView.register(
-            UINib(nibName: MainOnboardingTutorialCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier
+        // tutorialPagesView
+        tutorialPagesView.pageBackgroundColor = .clear
+        tutorialPagesView.registerPageCell(
+            nib: UINib(nibName: MainOnboardingTutorialCell.nibName, bundle: nil),
+            cellReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier
         )
-        tutorialCollectionView.register(
-            UINib(nibName: OnboardingTutorialUsageListCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier
+        tutorialPagesView.registerPageCell(
+            nib: UINib(nibName: OnboardingTutorialUsageListCell.nibName, bundle: nil),
+            cellReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier
         )
-        enableSwipeInteractionWithTutorial(enable: true)
+        
+        //
+        setTutorialButtonState(state: .continueButton, animated: false)
+        
+        //
+        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
@@ -102,109 +92,115 @@ class OnboardingTutorialView: UIViewController {
         showMoreButton.setTitle(viewModel.showMoreButtonTitle, for: .normal)
         getStartedButton.setTitle(viewModel.getStartedButtonTitle, for: .normal)
         
-        viewModel.currentPage.addObserver(self) { [weak self] (page: Int) in
-            self?.pageControl.currentPage = page
-        }
-        
-        viewModel.hidesSkipButton.addObserver(self) { [weak self] (hidden: Bool) in
-            
-            let skipButtonPosition: ButtonItemPosition = .right
-            
-            if let view = self {
-                if view.skipButton == nil && !hidden {
-                    view.skipButton = view.addBarButtonItem(
-                        to: skipButtonPosition,
-                        title: view.viewModel.skipButtonTitle,
-                        style: .plain,
-                        color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
-                        target: self,
-                        action: #selector(view.handleSkip(barButtonItem:))
-                    )
-                }
-                else if let skipButton = view.skipButton {
-                    hidden ? view.removeBarButtonItem(item: skipButton, barPosition: skipButtonPosition) : view.addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
-                }
-            }
-        }
-        
-        viewModel.tutorialButtonLayout.addObserver(self) { [weak self] (layout: OnboardingTutorialButtonLayout) in
-            
-            if let controller = self {
-            
-                let layoutView: UIView = controller.footerView
-                let animationDuration: TimeInterval = 0.28
-                let safeAreaHeight: CGFloat = 50
-                let hidden: CGFloat = controller.footerAreaHeight.constant + safeAreaHeight
-                let visible: CGFloat = 0
-                
-                switch layout.state {
-                    
-                case .continueButton:
-                    controller.showMoreButtonTop.constant = hidden
-                    controller.getStartedButtonTop.constant = hidden
-                    if layout.animated {
-                        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
-                            layoutView.layoutIfNeeded()
-                        }, completion: { (finished: Bool) in
-                            controller.showMoreButton.alpha = 0
-                            controller.getStartedButton.alpha = 0
-                        })
-                    }
-                    else {
-                        controller.showMoreButton.alpha = 0
-                        controller.getStartedButton.alpha = 0
-                        layoutView.layoutIfNeeded()
-                    }
-                    
-                    controller.continueButtonTop.constant = visible
-                    controller.continueButton.alpha = 1
-                    if layout.animated {
-                        UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
-                            layoutView.layoutIfNeeded()
-                        }, completion: nil)
-                    }
-                    else {
-                        layoutView.layoutIfNeeded()
-                    }
-                                        
-                case .showMoreAndGetStarted:
-                    
-                    controller.continueButtonTop.constant = hidden
-                    if layout.animated {
-                        UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
-                            layoutView.layoutIfNeeded()
-                        }, completion: { (finished: Bool) in
-                            controller.continueButton.alpha = 0
-                        })
-                    }
-                    else {
-                        controller.continueButton.alpha = 0
-                        layoutView.layoutIfNeeded()
-                    }
-                    
-                    controller.showMoreButtonTop.constant = visible
-                    controller.showMoreButton.alpha = 1
-                    controller.getStartedButtonTop.constant = visible
-                    controller.getStartedButton.alpha = 1
-                    if layout.animated {
-                        UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
-                            layoutView.layoutIfNeeded()
-                        }, completion: nil)
-                    }
-                    else {
-                        layoutView.layoutIfNeeded()
-                    }
-                }
-            }
+        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [OnboardingTutorialItem]) in
+            self?.pageControl.numberOfPages = tutorialItems.count
+            self?.reloadData()
         }
     }
     
-    private func scrollToTutorialItem(item: Int, animated: Bool) {
-        let numberOfTutorialItems: Int = tutorialCollectionView.numberOfItems(inSection: 0)
-        if numberOfTutorialItems > 0 {
-            let indexPath: IndexPath = IndexPath(item: item, section: 0)
-            let scrollPosition: UICollectionView.ScrollPosition = .centeredHorizontally
-            tutorialCollectionView.scrollToItem(at: indexPath, at: scrollPosition, animated: animated)
+    private func reloadData() {
+        backgroundPagesView.reloadData()
+        tutorialPagesView.reloadData()
+    }
+    
+    private func handleTutorialPageChange(page: Int) {
+        
+        pageControl.currentPage = page
+        
+        if tutorialPagesView.isOnLastPage {
+            setSkipButton(hidden: true)
+            setTutorialButtonState(state: .showMoreAndGetStarted, animated: true)
+        }
+        else {
+            setSkipButton(hidden: false)
+            setTutorialButtonState(state: .continueButton, animated: true)
+        }
+    }
+    
+    private func setSkipButton(hidden: Bool) {
+        
+        let skipButtonPosition: ButtonItemPosition = .right
+        
+        if skipButton == nil && !hidden {
+            skipButton = addBarButtonItem(
+                to: skipButtonPosition,
+                title: viewModel.skipButtonTitle,
+                style: .plain,
+                color: UIColor(red: 0.231, green: 0.643, blue: 0.859, alpha: 1),
+                target: self,
+                action: #selector(handleSkip(barButtonItem:))
+            )
+        }
+        else if let skipButton = skipButton {
+            hidden ? removeBarButtonItem(item: skipButton, barPosition: skipButtonPosition) : addBarButtonItem(item: skipButton, barPosition: skipButtonPosition)
+        }
+    }
+    
+    private func setTutorialButtonState(state: OnboardingTutorialButtonState, animated: Bool) {
+        
+        let layoutView: UIView = footerView
+        let animationDuration: TimeInterval = 0.28
+        let safeAreaHeight: CGFloat = 50
+        let hidden: CGFloat = footerAreaHeight.constant + safeAreaHeight
+        let visible: CGFloat = 0
+        
+        switch state {
+            
+        case .continueButton:
+            showMoreButtonTop.constant = hidden
+            getStartedButtonTop.constant = hidden
+            if animated {
+                UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
+                    layoutView.layoutIfNeeded()
+                }, completion: { (finished: Bool) in
+                    self.showMoreButton.alpha = 0
+                    self.getStartedButton.alpha = 0
+                })
+            }
+            else {
+                showMoreButton.alpha = 0
+                getStartedButton.alpha = 0
+                layoutView.layoutIfNeeded()
+            }
+            
+            continueButtonTop.constant = visible
+            continueButton.alpha = 1
+            if animated {
+                UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
+                    layoutView.layoutIfNeeded()
+                }, completion: nil)
+            }
+            else {
+                layoutView.layoutIfNeeded()
+            }
+                                
+        case .showMoreAndGetStarted:
+            
+            continueButtonTop.constant = hidden
+            if animated {
+                UIView.animate(withDuration: animationDuration, delay: 0, options: .curveEaseOut, animations: {
+                    layoutView.layoutIfNeeded()
+                }, completion: { (finished: Bool) in
+                    self.continueButton.alpha = 0
+                })
+            }
+            else {
+                continueButton.alpha = 0
+                layoutView.layoutIfNeeded()
+            }
+            
+            showMoreButtonTop.constant = visible
+            showMoreButton.alpha = 1
+            getStartedButtonTop.constant = visible
+            getStartedButton.alpha = 1
+            if animated {
+                UIView.animate(withDuration: animationDuration, delay: 0.14, options: .curveEaseOut, animations: {
+                    layoutView.layoutIfNeeded()
+                }, completion: nil)
+            }
+            else {
+                layoutView.layoutIfNeeded()
+            }
         }
     }
     
@@ -213,10 +209,11 @@ class OnboardingTutorialView: UIViewController {
     }
     
     @objc func handlePageControlChanged() {
-        viewModel.pageTapped(page: pageControl.currentPage)
+        tutorialPagesView.scrollToPage(page: pageControl.currentPage, animated: true)
     }
     
     @objc func handleContinue(button: UIButton) {
+        tutorialPagesView.scrollToNextPage(animated: true)
         viewModel.continueTapped()
     }
     
@@ -227,50 +224,23 @@ class OnboardingTutorialView: UIViewController {
     @objc func handleGetStarted(button: UIButton) {
         viewModel.getStartedTapped()
     }
-    
-    private func enableSwipeInteractionWithTutorial(enable: Bool) {
-        
-        tutorialCollectionView.isScrollEnabled = enable
-        tutorialCollectionView.isPagingEnabled = enable
-    }
-    
-    private func updatePageControlPageWithCurrentTutorialCollectionViewItem() {
-        
-        tutorialCollectionView.layoutIfNeeded()
-        
-        if let visibleCell = tutorialCollectionView.visibleCells.first {
-            if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
-                viewModel.didScrollToPage(page: indexPath.item)
-            }
-        }
-    }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
+// MARK: - PageNavigationCollectionViewDelegate
 
-extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
-            return 1
-        }
-        return 1
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
+        return viewModel.tutorialItems.value.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
-            return viewModel.tutorialItems.value.count
-        }
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-          
-        if collectionView == backgroundCollectionView {
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if pageNavigation == backgroundPagesView {
             
-            let cell: OnboardingTutorialBackgroundCell = backgroundCollectionView.dequeueReusableCell(
-                withReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier,
-                for: indexPath) as! OnboardingTutorialBackgroundCell
+            let cell: OnboardingTutorialBackgroundCell = backgroundPagesView.getReusablePageCell(
+                cellReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier,
+                indexPath: indexPath) as! OnboardingTutorialBackgroundCell
             
             let tutorialItem: OnboardingTutorialItem = viewModel.tutorialItems.value[indexPath.item]
             let viewModel = OnboardingTutorialBackgroundCellViewModel(item: tutorialItem)
@@ -278,15 +248,15 @@ extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollecti
             
             return cell
         }
-        else if collectionView == tutorialCollectionView {
+        else if pageNavigation == tutorialPagesView {
             
             let tutorialItem: OnboardingTutorialItem = viewModel.tutorialItems.value[indexPath.item]
             
             if let mainTutorialItem = tutorialItem as? MainOnboardingTutorialItem {
                 
-                let cell = tutorialCollectionView.dequeueReusableCell(
-                    withReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier,
-                    for: indexPath) as! MainOnboardingTutorialCell
+                let cell = tutorialPagesView.getReusablePageCell(
+                    cellReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier,
+                    indexPath: indexPath) as! MainOnboardingTutorialCell
                     
                 let viewModel = MainOnboardingTutorialCellViewModel(item: mainTutorialItem)
                 cell.configure(viewModel: viewModel)
@@ -295,9 +265,9 @@ extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollecti
             }
             else if let usageListItem = tutorialItem as? OnboardingTutorialUsageListItem {
                 
-                let cell = tutorialCollectionView.dequeueReusableCell(
-                               withReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier,
-                               for: indexPath) as! OnboardingTutorialUsageListCell
+                let cell = tutorialPagesView.getReusablePageCell(
+                    cellReuseIdentifier: OnboardingTutorialUsageListCell.reuseIdentifier,
+                    indexPath: indexPath) as! OnboardingTutorialUsageListCell
                            
                 cell.configure(viewModel: OnboardingTutorialUsageListCellViewModel(usageListItem: usageListItem))
                 
@@ -308,58 +278,29 @@ extension OnboardingTutorialView: UICollectionViewDelegateFlowLayout, UICollecti
         return UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == backgroundCollectionView {
-            return backgroundCollectionView.bounds.size
-        }
-        else if collectionView == tutorialCollectionView {
-            return tutorialCollectionView.bounds.size
-        }
-        return CGSize(width: 50, height: 50)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
-            return 0
-        }
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        if collectionView == backgroundCollectionView || collectionView == tutorialCollectionView {
-            return 0
-        }
-        return 0
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension OnboardingTutorialView: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == tutorialCollectionView {
-            backgroundCollectionView.setContentOffset(tutorialCollectionView.contentOffset, animated: false)
+    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        
+        if pageNavigation == tutorialPagesView {
+            
+            handleTutorialPageChange(page: page)
+            
+            viewModel.pageDidChange(page: page)
         }
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == tutorialCollectionView {
-            if !decelerate {
-                updatePageControlPageWithCurrentTutorialCollectionViewItem()
-            }
+    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        
+        if pageNavigation == tutorialPagesView {
+           
+            pageControl.currentPage = page
+            
+            viewModel.pageDidAppear(page: page)
         }
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == tutorialCollectionView {
-            updatePageControlPageWithCurrentTutorialCollectionViewItem()
-        }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == tutorialCollectionView {
-            updatePageControlPageWithCurrentTutorialCollectionViewItem()
+    func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView) {
+        if pageNavigation == tutorialPagesView {
+            backgroundPagesView.pagesCollectionView.setContentOffset(tutorialPagesView.pagesCollectionView.contentOffset, animated: false)
         }
     }
 }
