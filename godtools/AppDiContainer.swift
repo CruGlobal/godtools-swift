@@ -117,6 +117,7 @@ class AppDiContainer {
             translationsFileCache: translationsFileCache,
             realmResourcesCache: realmResourcesCache,
             favoritedResourcesCache: favoritedResourcesCache,
+            deviceLanguage: deviceLanguage,
             languageSettingsCache: languageSettingsCache
         )
         
@@ -128,7 +129,6 @@ class AppDiContainer {
             resourcesCleanUp: resourcesCleanUp,
             attachmentsDownloader: attachmentsDownloader,
             languageSettingsCache: languageSettingsCache,
-            deviceLanguage: deviceLanguage,
             favoritedResourceTranslationDownloader: favoritedResourceTranslationDownloader
         )
         
