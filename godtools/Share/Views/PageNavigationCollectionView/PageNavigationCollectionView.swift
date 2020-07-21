@@ -147,7 +147,8 @@ class PageNavigationCollectionView: UIView, NibBased {
     }
     
     var isOnLastPage: Bool {
-        return currentPage >= numberOfPages - 1
+        let numberOfPages: Int = self.numberOfPages
+        return currentPage >= numberOfPages - 1 && numberOfPages > 0
     }
     
     var numberOfPages: Int {

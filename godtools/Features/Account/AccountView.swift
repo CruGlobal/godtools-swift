@@ -130,7 +130,7 @@ extension AccountView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
-        
+        viewModel.accountPageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {

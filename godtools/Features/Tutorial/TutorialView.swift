@@ -62,37 +62,50 @@ class TutorialView: UIViewController {
             nib: UINib(nibName: TutorialCell.nibName, bundle: nil),
             cellReuseIdentifier: TutorialCell.reuseIdentifier
         )
+        
+        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
-        
-        viewModel.hidesBackButton.addObserver(self) { [weak self] (hidden: Bool) in
-            
-            let backButtonPosition: ButtonItemPosition = .left
-            
-            if let view = self {
-                if view.backButton == nil && !hidden {
-                    view.backButton = view.addBarButtonItem(
-                        to: backButtonPosition,
-                        image: UIImage(named: "nav_item_back"),
-                        color: nil,
-                        target: self,
-                        action: #selector(view.handleBack(barButtonItem:))
-                    )
-                }
-                else if let backButton = view.backButton {
-                    hidden ? view.removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : view.addBarButtonItem(item: backButton, barPosition: backButtonPosition)
-                }
-            }
-        }
         
         viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
             self?.pageControl.numberOfPages = tutorialItems.count
             self?.tutorialPagesView.reloadData()
         }
+    }
+    
+    private func handleTutorialPageChange(page: Int) {
         
-        viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
-            self?.continueButton.setTitle(title, for: .normal)
+        pageControl.currentPage = page
+        
+        setBackButton(hidden: page == 0)
+              
+        let continueTitle: String
+        if tutorialPagesView.isOnLastPage {
+            continueTitle = viewModel.startUsingGodToolsTitle
+        }
+        else {
+            continueTitle = viewModel.continueTitle
+        }
+        
+        continueButton.setTitle(continueTitle, for: .normal)
+    }
+    
+    private func setBackButton(hidden: Bool) {
+        
+        let backButtonPosition: ButtonItemPosition = .left
+        
+        if backButton == nil && !hidden {
+            backButton = addBarButtonItem(
+                to: backButtonPosition,
+                image: UIImage(named: "nav_item_back"),
+                color: nil,
+                target: self,
+                action: #selector(handleBack(barButtonItem:))
+            )
+        }
+        else if let backButton = backButton {
+            hidden ? removeBarButtonItem(item: backButton, barPosition: backButtonPosition) : addBarButtonItem(item: backButton, barPosition: backButtonPosition)
         }
     }
     
@@ -151,10 +164,15 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
 
+        handleTutorialPageChange(page: page)
+        
+        viewModel.pageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        
         pageControl.currentPage = page
+        
         viewModel.pageDidAppear(page: page)
     }
 }

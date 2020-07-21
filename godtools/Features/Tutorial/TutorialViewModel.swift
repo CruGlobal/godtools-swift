@@ -18,15 +18,17 @@ class TutorialViewModel: TutorialViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let deviceLanguage: DeviceLanguageType
-    let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
-    let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
+    let continueTitle: String
+    let startUsingGodToolsTitle: String
     
     required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.analytics = analytics
         self.deviceLanguage = deviceLanguage
+        self.continueTitle = NSLocalizedString("tutorial.continueButton.title.continue", comment: "")
+        self.startUsingGodToolsTitle = NSLocalizedString("tutorial.continueButton.title.startUsingGodTools", comment: "")
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         
@@ -41,21 +43,17 @@ class TutorialViewModel: TutorialViewModelType {
         flowDelegate?.navigate(step: .closeTappedFromTutorial)
     }
     
+    func pageDidChange(page: Int) {
+                
+        self.page = page
+    }
+    
     func pageDidAppear(page: Int) {
                     
         let isFirstPage: Bool = page == 0
         let isLastPage: Bool = page == tutorialItems.value.count - 1
         
         self.page = page
-        
-        hidesBackButton.accept(value: page == 0)
-        
-        if isLastPage {
-            continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.startUsingGodTools", comment: ""))
-        }
-        else {
-            continueButtonTitle.accept(value: NSLocalizedString("tutorial.continueButton.title.continue", comment: ""))
-        }
         
         analytics.pageViewedAnalytics.trackPageView(
             screenName: analyticsScreenName,

@@ -11,11 +11,12 @@ import Foundation
 protocol TutorialViewModelType {
     
     var deviceLanguage: DeviceLanguageType { get }
-    var hidesBackButton: ObservableValue<Bool> { get }
     var tutorialItems: ObservableValue<[TutorialItem]> { get }
-    var continueButtonTitle: ObservableValue<String> { get }
+    var continueTitle: String { get }
+    var startUsingGodToolsTitle: String { get }
     
     func closeTapped()
+    func pageDidChange(page: Int)
     func pageDidAppear(page: Int)
     func continueTapped()
     func tutorialVideoPlayTapped()

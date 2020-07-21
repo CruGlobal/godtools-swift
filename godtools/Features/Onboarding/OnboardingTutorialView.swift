@@ -81,6 +81,9 @@ class OnboardingTutorialView: UIViewController {
         
         //
         setTutorialButtonState(state: .continueButton, animated: false)
+        
+        //
+        handleTutorialPageChange(page: 0)
     }
     
     private func setupBinding() {
@@ -98,6 +101,20 @@ class OnboardingTutorialView: UIViewController {
     private func reloadData() {
         backgroundPagesView.reloadData()
         tutorialPagesView.reloadData()
+    }
+    
+    private func handleTutorialPageChange(page: Int) {
+        
+        pageControl.currentPage = page
+        
+        if tutorialPagesView.isOnLastPage {
+            setSkipButton(hidden: true)
+            setTutorialButtonState(state: .showMoreAndGetStarted, animated: true)
+        }
+        else {
+            setSkipButton(hidden: false)
+            setTutorialButtonState(state: .continueButton, animated: true)
+        }
     }
     
     private func setSkipButton(hidden: Bool) {
@@ -265,16 +282,7 @@ extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
         
         if pageNavigation == tutorialPagesView {
             
-            pageControl.currentPage = page
-            
-            if pageNavigation.isOnLastPage {
-                setSkipButton(hidden: true)
-                setTutorialButtonState(state: .showMoreAndGetStarted, animated: true)
-            }
-            else {
-                setSkipButton(hidden: false)
-                setTutorialButtonState(state: .continueButton, animated: true)
-            }
+            handleTutorialPageChange(page: page)
             
             viewModel.pageDidChange(page: page)
         }

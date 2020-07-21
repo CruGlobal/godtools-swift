@@ -18,5 +18,6 @@ protocol AccountViewModelType {
     var currentAccountItemIndex: ObservableValue<Int> { get }
     
     func settingsTapped()
+    func accountPageDidChange(page: Int)
     func accountPageDidAppear(page: Int)
 }

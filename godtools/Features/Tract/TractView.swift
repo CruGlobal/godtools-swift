@@ -342,6 +342,7 @@ extension TractView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
+        viewModel.tractPageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {

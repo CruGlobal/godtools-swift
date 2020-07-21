@@ -54,6 +54,10 @@ class AccountViewModel: AccountViewModelType {
         print("TODO: AccountViewModel Implement settings.")
     }
     
+    func accountPageDidChange(page: Int) {
+        
+    }
+    
     func accountPageDidAppear(page: Int) {
         
         let accountItem: AccountItem = accountItems.value[page]
