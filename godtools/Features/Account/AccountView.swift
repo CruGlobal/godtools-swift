@@ -11,14 +11,12 @@ import UIKit
 class AccountView: UIViewController {
     
     private let viewModel: AccountViewModelType
-    
-    private var didLayoutSubviews: Bool = false
-    
+        
     @IBOutlet weak private var headerView: UIView!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var loadingProfileView: UIActivityIndicatorView!
+    @IBOutlet weak private var accountItemsPagesView: PageNavigationCollectionView!
     @IBOutlet weak private var itemsControl: GTSegmentedControl!
-    @IBOutlet weak private var itemsCollectionView: UICollectionView!
     
     required init(viewModel: AccountViewModelType) {
         self.viewModel = viewModel
@@ -41,43 +39,8 @@ class AccountView: UIViewController {
         setupBinding()
         
         addDefaultNavBackItem()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            
-            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
-            
-            itemsCollectionView.delegate = self
-            itemsCollectionView.dataSource = self
-            
-            viewModel.accountItems.addObserver(self) { [weak self] (items: [AccountItem]) in
-                
-                self?.itemsControl.configure(
-                    segments: items,
-                    delegate: nil
-                )
-                
-                self?.itemsCollectionView.reloadData()
-            }
-            
-            viewModel.currentAccountItemIndex.addObserver(self) { [weak self] (index: Int) in
-                
-                if let itemsCollectionView = self?.itemsCollectionView {
-                    let numberOfItems: Int = itemsCollectionView.numberOfItems(inSection: 0)
-                    if numberOfItems > 0 {
-                        itemsCollectionView.scrollToItem(
-                            at: IndexPath(item: index, section: 0),
-                            at: .centeredHorizontally,
-                            animated: true
-                        )
-                    }
-                }
-            }
-        }
+        accountItemsPagesView.delegate = self
     }
     
     private func setupLayout() {
@@ -89,11 +52,11 @@ class AccountView: UIViewController {
         itemsControl.layer.shadowRadius = 5
         itemsControl.layer.shadowOpacity = 0.3
         
-        itemsCollectionView.register(
-            UINib(nibName: AccountItemCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: AccountItemCell.reuseIdentifier
+        accountItemsPagesView.registerPageCell(
+            nib: UINib(nibName: AccountItemCell.nibName, bundle: nil),
+            cellReuseIdentifier: AccountItemCell.reuseIdentifier
         )
-        
+
         // TODO: Add navigation gear icon in the future.  Disabling for now.  02/24/20.
 //        _ = addBarButtonItem(
 //            to: .right,
@@ -122,6 +85,16 @@ class AccountView: UIViewController {
         viewModel.isLoadingProfile.addObserver(self) { [weak self] (isLoading: Bool) in
             isLoading ? self?.loadingProfileView.startAnimating() : self?.loadingProfileView.stopAnimating()
         }
+        
+        viewModel.accountItems.addObserver(self) { [weak self] (items: [AccountItem]) in
+            
+            self?.itemsControl.configure(
+                segments: items,
+                delegate: nil
+            )
+            
+            self?.accountItemsPagesView.reloadData()
+        }
     }
     
     @objc func handleSettings(barButtonItem: UIBarButtonItem) {
@@ -129,21 +102,19 @@ class AccountView: UIViewController {
     }
 }
 
-extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+// MARK: - PageNavigationCollectionViewDelegate
+
+extension AccountView: PageNavigationCollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         return viewModel.accountItems.value.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                   
-        let cell: AccountItemCell = itemsCollectionView.dequeueReusableCell(
-            withReuseIdentifier: AccountItemCell.reuseIdentifier,
-            for: indexPath) as! AccountItemCell
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: AccountItemCell = accountItemsPagesView.getReusablePageCell(
+            cellReuseIdentifier: AccountItemCell.reuseIdentifier,
+            indexPath: indexPath) as! AccountItemCell
         
         cell.configure(
             viewModel: AccountItemCellViewModel(
@@ -158,56 +129,12 @@ extension AccountView: UICollectionViewDelegateFlowLayout, UICollectionViewDataS
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
+    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        viewModel.accountPageDidChange(page: page)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return itemsCollectionView.bounds.size
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension AccountView: UIScrollViewDelegate {
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == itemsCollectionView {
-            if !decelerate {
-                handleDidScrollToItemInItemsCollectionView()
-            }
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == itemsCollectionView {
-            handleDidScrollToItemInItemsCollectionView()
-        }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == itemsCollectionView {
-            handleDidScrollToItemInItemsCollectionView()
-        }
-    }
-    
-    private func handleDidScrollToItemInItemsCollectionView() {
-        
-        itemsCollectionView.layoutIfNeeded()
-        
-        if let visibleCell = itemsCollectionView.visibleCells.first {
-            if let indexPath = itemsCollectionView.indexPath(for: visibleCell) {
-                viewModel.didScrollToAccountItem(item: indexPath.item)
-            }
-        }
+    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        viewModel.accountPageDidAppear(page: page)
     }
 }
 

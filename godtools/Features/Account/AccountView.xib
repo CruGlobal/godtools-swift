@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,8 +15,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccountView" customModule="godtools" customModuleProvider="target">
             <connections>
+                <outlet property="accountItemsPagesView" destination="NuE-uJ-1aJ" id="Dpu-vU-00a"/>
                 <outlet property="headerView" destination="KOR-bH-3TB" id="0mi-US-xTs"/>
-                <outlet property="itemsCollectionView" destination="hdt-A5-OWM" id="bVS-Dx-8Hd"/>
                 <outlet property="itemsControl" destination="PDz-tb-0NA" id="HZv-Ry-VuH"/>
                 <outlet property="loadingProfileView" destination="GdP-lz-QhQ" id="SRd-7p-htJ"/>
                 <outlet property="nameLabel" destination="heM-pu-rNx" id="ZuU-Vc-mhl"/>
@@ -28,16 +28,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hdt-A5-OWM" userLabel="itemsCollectionView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NuE-uJ-1aJ" userLabel="accountItemsPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="235" width="414" height="627"/>
-                    <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5tC-as-FK0">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PDz-tb-0NA" userLabel="itemsControl" customClass="GTSegmentedControl" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="191" width="414" height="44"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -79,13 +73,13 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="PDz-tb-0NA" firstAttribute="top" secondItem="KOR-bH-3TB" secondAttribute="bottom" id="1di-JV-V7I"/>
-                <constraint firstItem="hdt-A5-OWM" firstAttribute="top" secondItem="PDz-tb-0NA" secondAttribute="bottom" id="4r2-kY-BXl"/>
+                <constraint firstItem="NuE-uJ-1aJ" firstAttribute="top" secondItem="PDz-tb-0NA" secondAttribute="bottom" id="7CI-6d-HDH"/>
+                <constraint firstItem="NuE-uJ-1aJ" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="8PR-gM-Ylx"/>
+                <constraint firstItem="NuE-uJ-1aJ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="JSW-Tk-TV1"/>
                 <constraint firstItem="PDz-tb-0NA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="LaD-cD-90g"/>
-                <constraint firstItem="hdt-A5-OWM" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="PV6-US-hhC"/>
-                <constraint firstItem="hdt-A5-OWM" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.7" id="R0S-Pd-w22"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hdt-A5-OWM" secondAttribute="trailing" id="Sbd-P2-UZw"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="hdt-A5-OWM" secondAttribute="bottom" id="USO-MY-QpC"/>
+                <constraint firstItem="NuE-uJ-1aJ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="RHX-wn-1VY"/>
                 <constraint firstItem="KOR-bH-3TB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="Yaz-Ek-YRw"/>
+                <constraint firstItem="NuE-uJ-1aJ" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="0.7" id="jB7-Ky-qY2"/>
                 <constraint firstItem="KOR-bH-3TB" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="kVv-7s-L1e"/>
                 <constraint firstItem="KOR-bH-3TB" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="oXz-Vd-6rU"/>
                 <constraint firstItem="PDz-tb-0NA" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="vq0-Is-SQe"/>

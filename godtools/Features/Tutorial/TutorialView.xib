@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,7 @@
             <connections>
                 <outlet property="continueButton" destination="FYq-Ao-geV" id="rM8-Ff-HFy"/>
                 <outlet property="pageControl" destination="IT0-YP-MBv" id="Lrk-8P-SJC"/>
-                <outlet property="tutorialCollectionView" destination="eoG-6l-06D" id="2Ql-KB-4Gc"/>
+                <outlet property="tutorialPagesView" destination="iy1-Fd-YHM" id="rWU-MX-HDG"/>
                 <outlet property="view" destination="yes-YK-of5" id="Gvc-TX-BSE"/>
             </connections>
         </placeholder>
@@ -21,16 +21,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="eoG-6l-06D" userLabel="tutorialCollectionView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iy1-Fd-YHM" userLabel="tutorialPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="702"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tEW-W6-TmK">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYq-Ao-geV" userLabel="continueButton" customClass="OnboardPrimaryButton" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="50" y="746" width="314" height="50"/>
                     <constraints>
@@ -47,15 +41,15 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="puk-z2-CzR" firstAttribute="bottom" secondItem="IT0-YP-MBv" secondAttribute="bottom" constant="10" id="2aI-gn-0Bp"/>
-                <constraint firstItem="FYq-Ao-geV" firstAttribute="top" secondItem="eoG-6l-06D" secondAttribute="bottom" id="3ww-Ej-qmV"/>
+                <constraint firstItem="FYq-Ao-geV" firstAttribute="top" secondItem="iy1-Fd-YHM" secondAttribute="bottom" id="3Jd-4Q-kdb"/>
+                <constraint firstItem="iy1-Fd-YHM" firstAttribute="trailing" secondItem="puk-z2-CzR" secondAttribute="trailing" id="3jQ-ia-oOl"/>
                 <constraint firstItem="IT0-YP-MBv" firstAttribute="leading" secondItem="puk-z2-CzR" secondAttribute="leading" constant="30" id="40b-x2-Flg"/>
-                <constraint firstItem="puk-z2-CzR" firstAttribute="trailing" secondItem="eoG-6l-06D" secondAttribute="trailing" id="BnX-G4-aJm"/>
-                <constraint firstItem="eoG-6l-06D" firstAttribute="top" secondItem="puk-z2-CzR" secondAttribute="top" id="FXu-rg-2FB"/>
                 <constraint firstItem="puk-z2-CzR" firstAttribute="trailing" secondItem="IT0-YP-MBv" secondAttribute="trailing" constant="30" id="OO8-Q6-LGd"/>
-                <constraint firstItem="eoG-6l-06D" firstAttribute="leading" secondItem="puk-z2-CzR" secondAttribute="leading" id="RW8-hz-syg"/>
+                <constraint firstItem="iy1-Fd-YHM" firstAttribute="top" secondItem="puk-z2-CzR" secondAttribute="top" id="dcA-cO-fJt"/>
                 <constraint firstItem="IT0-YP-MBv" firstAttribute="top" secondItem="FYq-Ao-geV" secondAttribute="bottom" constant="19" id="eAd-Ec-cKd"/>
                 <constraint firstItem="FYq-Ao-geV" firstAttribute="leading" secondItem="puk-z2-CzR" secondAttribute="leading" constant="50" id="hUW-aB-cC2"/>
                 <constraint firstItem="puk-z2-CzR" firstAttribute="trailing" secondItem="FYq-Ao-geV" secondAttribute="trailing" constant="50" id="itG-uG-zs1"/>
+                <constraint firstItem="iy1-Fd-YHM" firstAttribute="leading" secondItem="puk-z2-CzR" secondAttribute="leading" id="pMj-eA-w2e"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="puk-z2-CzR"/>
             <point key="canvasLocation" x="141" y="131"/>

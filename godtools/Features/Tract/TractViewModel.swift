@@ -26,7 +26,7 @@ class TractViewModel: TractViewModelType {
     
     private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
-    private var tractPage: Int = -1
+    private var tractPage: Int = 0
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
     let navBarAttributes: TractNavBarAttributes
@@ -35,7 +35,7 @@ class TractViewModel: TractViewModelType {
     let chooseLanguageControlParallelLanguageTitle: String
     let selectedTractLanguage: ObservableValue<TractLanguage>
     let tractXmlPageItems: ObservableValue<[TractXmlPageItem]> = ObservableValue(value: [])
-    let currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
+    let currentTractPage: ObservableValue<AnimatableValue<Int>> = ObservableValue(value: AnimatableValue(value: 0, animated: false))
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -94,11 +94,8 @@ class TractViewModel: TractViewModelType {
         
         loadTractXmlPages()
         
-        setTractPage(
-            page: startingTractPage,
-            shouldSetCurrentToolPageItemIndex: true,
-            animated: false
-        )
+        tractPageDidChange(page: startingTractPage)
+        tractPageDidAppear(page: startingTractPage)
     }
     
     deinit {
@@ -144,40 +141,6 @@ class TractViewModel: TractViewModelType {
         tractXmlPageItems.accept(value: tractItems)
     }
     
-    private func setTractPage(page: Int, shouldSetCurrentToolPageItemIndex: Bool, animated: Bool) {
-        
-        guard page >= 0 && page < tractXmlPageItems.value.count else {
-            return
-        }
-                        
-        cacheSurroundingTractPagesIfNeeded(
-            languageType: selectedTractLanguage.value.languageType,
-            page: page
-        )
-        
-        resetTractPagesOutsideOfBuffer(
-            buffer: 1,
-            currentPage: page
-        )
-                        
-        let previousToolPage: Int = tractPage
-        
-        self.tractPage = page
-        
-        if shouldSetCurrentToolPageItemIndex {
-            currentTractPageItemIndex.accept(value: AnimatableValue(value: page, animated: animated))
-        }
-        
-        if previousToolPage != page {
-            
-            analytics.pageViewedAnalytics.trackPageView(
-                screenName: resource.abbreviation + "-" + String(page),
-                siteSection: resource.abbreviation,
-                siteSubSection: ""
-            )
-        }
-    }
-    
     static private func parallelLanguageIsValid(resource: DownloadedResource, primaryLanguage: Language, parallelLanguage: Language?) -> Bool {
                 
         let parallelLanguageIsPrimaryLanguage: Bool = primaryLanguage.code == parallelLanguage?.code
@@ -204,10 +167,6 @@ class TractViewModel: TractViewModelType {
         case .rightToLeft:
             return true
         }
-    }
-    
-    var currentTractPage: Int {
-        return tractPage
     }
     
     var primaryTractManifest: ManifestProperties {
@@ -269,27 +228,30 @@ class TractViewModel: TractViewModelType {
         toolOpenedAnalytics.trackToolOpened()
     }
     
-    func didScrollToTractPage(page: Int) {
-                
-        setTractPage(page: page, shouldSetCurrentToolPageItemIndex: false, animated: false)
+    func tractPageDidChange(page: Int) {
+        
+        self.tractPage = page
+        
+        cacheSurroundingTractPagesIfNeeded(
+            languageType: selectedTractLanguage.value.languageType,
+            page: page
+        )
+        
+        resetTractPagesOutsideOfBuffer(
+            buffer: 1,
+            currentPage: page
+        )
     }
     
-    func navigateToNextPageTapped() {
-        let nextPage: Int = tractPage + 1
-        if nextPage < tractXmlPageItems.value.count {
-            setTractPage(page: nextPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
-        }
-    }
-    
-    func navigateToPreviousPageTapped() {
-        let previousPage: Int = tractPage - 1
-        if previousPage > 0 {
-            setTractPage(page: previousPage, shouldSetCurrentToolPageItemIndex: true, animated: true)
-        }
-    }
-    
-    func navigateToPageTapped(page: Int) {
-        setTractPage(page: page, shouldSetCurrentToolPageItemIndex: true, animated: true)
+    func tractPageDidAppear(page: Int) {
+                      
+        self.tractPage = page
+                        
+        analytics.pageViewedAnalytics.trackPageView(
+            screenName: resource.abbreviation + "-" + String(page),
+            siteSection: resource.abbreviation,
+            siteSubSection: ""
+        )
     }
     
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?) {
