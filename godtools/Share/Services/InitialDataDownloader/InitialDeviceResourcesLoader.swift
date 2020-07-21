@@ -238,10 +238,10 @@ class InitialDeviceResourcesLoader {
             // legacy realm was not migrated so setup data from initial device resources
             realmDatabase.background { [weak self] (realm: Realm) in
                 
-                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "2") //satisfied
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "1") //knowing god personally
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "4") //fourlaws
+                self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
 
                 if let englishLanguage = realm.objects(RealmLanguage.self).filter("code = 'en'").first {
                     self?.languageSettingsCache.cachePrimaryLanguageId(languageId: englishLanguage.id)
