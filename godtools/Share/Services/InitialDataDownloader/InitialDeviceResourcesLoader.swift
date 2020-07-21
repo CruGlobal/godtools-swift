@@ -17,9 +17,10 @@ class InitialDeviceResourcesLoader {
     private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
     private let favoritedResourcesCache: FavoritedResourcesCache
+    private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
         self.legacyRealmMigration = legacyRealmMigration
@@ -27,7 +28,9 @@ class InitialDeviceResourcesLoader {
         self.translationsFileCache = translationsFileCache
         self.realmResourcesCache = realmResourcesCache
         self.favoritedResourcesCache = favoritedResourcesCache
-        self.languageSettingsCache = languageSettingsCache    }
+        self.deviceLanguage = deviceLanguage
+        self.languageSettingsCache = languageSettingsCache
+    }
     
     func loadAndCacheInitialDeviceResourcesIfNeeded(completeOnMain: @escaping (() -> Void)) {
         
@@ -242,10 +245,8 @@ class InitialDeviceResourcesLoader {
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "1") //knowing god personally
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "4") //fourlaws
                 self?.favoritedResourcesCache.addToFavorites(realm: realm, resourceId: "8") //teach me to share
-
-                if let englishLanguage = realm.objects(RealmLanguage.self).filter("code = 'en'").first {
-                    self?.languageSettingsCache.cachePrimaryLanguageId(languageId: englishLanguage.id)
-                }
+                
+                self?.choosePrimaryLanguageIfNeeded(realm: realm)
                 
                 complete()
             }
@@ -256,6 +257,44 @@ class InitialDeviceResourcesLoader {
                         
         DispatchQueue.main.async {
             completeOnMain()
+        }
+    }
+    
+    func choosePrimaryLanguageIfNeeded(realm: Realm) {
+                
+        let cachedPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
+        let primaryLanguageIsCached: Bool = !cachedPrimaryLanguageId.isEmpty
+        
+        if primaryLanguageIsCached {
+            return
+        }
+                
+        let realmLanguages: Results<RealmLanguage> = realm.objects(RealmLanguage.self)
+        let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
+        
+        var deviceLanguage: RealmLanguage?
+        
+        for languageCode in preferredDeviceLanguageCodes {
+            if let language = realmLanguages.filter("code = '\(languageCode)'").first {
+                deviceLanguage = language
+                break
+            }
+        }
+        
+        let primaryLanguage: RealmLanguage?
+        
+        if let deviceLanguage = deviceLanguage {
+            primaryLanguage = deviceLanguage
+        }
+        else if let englishLanguage = realmLanguages.filter("code = 'en'").first {
+            primaryLanguage = englishLanguage
+        }
+        else {
+            primaryLanguage = nil
+        }
+        
+        if let primaryLanguage = primaryLanguage {
+            languageSettingsCache.cachePrimaryLanguageId(languageId: primaryLanguage.id)
         }
     }
 }
