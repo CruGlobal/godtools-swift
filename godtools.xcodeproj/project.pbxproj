@@ -500,6 +500,7 @@
 		45C2CFF72409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C2CFF62409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift */; };
 		45C42F6624A84EDE0046B474 /* LanguageTranslationsDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C42F6524A84EDE0046B474 /* LanguageTranslationsDownloader.swift */; };
 		45C42F6824A858AD0046B474 /* FavoritedResourceTranslationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C42F6724A858AD0046B474 /* FavoritedResourceTranslationDownloader.swift */; };
+		45C47E4A24C7483C00BC42BA /* OnboardingTutorialButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C47E4924C7483C00BC42BA /* OnboardingTutorialButtonState.swift */; };
 		45C5386124B8EFA700CABDAC /* godtoolsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */; };
 		45D3C8CD23DF942100ECF70E /* UIViewController+NavItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */; };
 		45D3C8CE23DF942100ECF70E /* UIKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */; };
@@ -1140,6 +1141,7 @@
 		45C2CFF62409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityAnalyticsUserDefaultsCache.swift; sourceTree = "<group>"; };
 		45C42F6524A84EDE0046B474 /* LanguageTranslationsDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTranslationsDownloader.swift; sourceTree = "<group>"; };
 		45C42F6724A858AD0046B474 /* FavoritedResourceTranslationDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritedResourceTranslationDownloader.swift; sourceTree = "<group>"; };
+		45C47E4924C7483C00BC42BA /* OnboardingTutorialButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTutorialButtonState.swift; sourceTree = "<group>"; };
 		45C5386024B8EFA700CABDAC /* godtoolsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = godtoolsUITests.swift; sourceTree = "<group>"; };
 		45D3C8AD23DF942100ECF70E /* UIViewController+NavItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+NavItem.swift"; sourceTree = "<group>"; };
 		45D3C8AE23DF942100ECF70E /* UIKit+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit+Extensions.swift"; sourceTree = "<group>"; };
@@ -2154,6 +2156,7 @@
 			children = (
 				45668E5823E0E1CC002728E7 /* MainOnboardingTutorialItem.swift */,
 				4556AEE723E240EC002C15E8 /* OnboardingTutorialBackgroundItem.swift */,
+				45C47E4924C7483C00BC42BA /* OnboardingTutorialButtonState.swift */,
 				45668E5B23E0E1CC002728E7 /* OnboardingTutorialItem.swift */,
 				45668E5923E0E1CC002728E7 /* OnboardingTutorialProvider.swift */,
 				45668E5C23E0E1CC002728E7 /* OnboardingTutorialProviderType.swift */,
@@ -3623,6 +3626,7 @@
 				4586D7D2246ECBDB0062D988 /* TractTabs.swift in Sources */,
 				4530DCAB24A3D4DA000DA516 /* AttachmentsDownloader.swift in Sources */,
 				4595F43224A294EE00B3733E /* ArticleAemImportOperation.swift in Sources */,
+				45C47E4A24C7483C00BC42BA /* OnboardingTutorialButtonState.swift in Sources */,
 				4517377D24A7FBD90097FB15 /* RealmDownloadedLanguage.swift in Sources */,
 				4506DE9C24B797F700A1C50B /* AboutTextCellViewModel.swift in Sources */,
 				45732E932421A798006F0559 /* TutorialAvailabilityType.swift in Sources */,

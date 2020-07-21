@@ -16,6 +16,7 @@ import UIKit
     @objc optional func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath)
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int)
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int)
+    @objc optional func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView)
 }
 
 class PageNavigationCollectionView: UIView, NibBased {
@@ -59,12 +60,7 @@ class PageNavigationCollectionView: UIView, NibBased {
         collectionView.reloadData()
     }
     
-    var gestureScrollingEnabled: Bool = true {
-        didSet {
-            collectionView.isScrollEnabled = gestureScrollingEnabled
-            collectionView.isPagingEnabled = gestureScrollingEnabled
-        }
-    }
+    // MARK: -
     
     func registerPageCell(nib: UINib?, cellReuseIdentifier: String) {
         collectionView.register(nib, forCellWithReuseIdentifier: cellReuseIdentifier)
@@ -77,6 +73,8 @@ class PageNavigationCollectionView: UIView, NibBased {
     func reloadData() {
         collectionView.reloadData()
     }
+    
+    // MARK: -
     
     func scrollToPreviousPage(animated: Bool) {
         if !isOnFirstPage {
@@ -101,6 +99,15 @@ class PageNavigationCollectionView: UIView, NibBased {
             at: .centeredHorizontally,
             animated: animated
         )
+    }
+    
+    // MARK: -
+    
+    var gestureScrollingEnabled: Bool = true {
+        didSet {
+            collectionView.isScrollEnabled = gestureScrollingEnabled
+            collectionView.isPagingEnabled = gestureScrollingEnabled
+        }
     }
     
     var currentPage: Int {
@@ -145,6 +152,10 @@ class PageNavigationCollectionView: UIView, NibBased {
     
     var numberOfPages: Int {
         return collectionView.numberOfItems(inSection: 0)
+    }
+    
+    var pagesCollectionView: UICollectionView {
+        return collectionView
     }
     
     private func didEndPageScrolling() {
@@ -199,33 +210,28 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
 extension PageNavigationCollectionView: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            
-            let currentPage: Int = self.currentPage
-            if internalCurrentChangedPage != currentPage {
-                internalCurrentChangedPage = currentPage
-                delegate?.pageNavigationDidChangePage(pageNavigation: self, page: internalCurrentChangedPage)
-            }
+        
+        delegate?.pageNavigationDidScrollPage?(pageNavigation: self)
+        
+        let currentPage: Int = self.currentPage
+        if internalCurrentChangedPage != currentPage {
+            internalCurrentChangedPage = currentPage
+            delegate?.pageNavigationDidChangePage(pageNavigation: self, page: internalCurrentChangedPage)
         }
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == collectionView {
-            if !decelerate {
-                didEndPageScrolling()
-            }
+        
+        if !decelerate {
+            didEndPageScrolling()
         }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            didEndPageScrolling()
-        }
+        didEndPageScrolling()
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == collectionView {
-            didEndPageScrolling()
-        }
+        didEndPageScrolling()
     }
 }

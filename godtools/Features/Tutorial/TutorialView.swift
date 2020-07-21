@@ -51,6 +51,8 @@ class TutorialView: UIViewController {
         pageControl.addTarget(self, action: #selector(handlePageControlChanged), for: .valueChanged)
         
         continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
+        
+        tutorialPagesView.delegate = self
     }
     
     private func setupLayout() {
@@ -60,7 +62,6 @@ class TutorialView: UIViewController {
             nib: UINib(nibName: TutorialCell.nibName, bundle: nil),
             cellReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        tutorialPagesView.delegate = self
     }
     
     private func setupBinding() {
@@ -88,10 +89,6 @@ class TutorialView: UIViewController {
         viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
             self?.pageControl.numberOfPages = tutorialItems.count
             self?.tutorialPagesView.reloadData()
-        }
-                
-        viewModel.changePage.addObserver(self) { [weak self] (page: Int) in
-            self?.tutorialPagesView.scrollToPage(page: page, animated: true)
         }
         
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
@@ -153,7 +150,7 @@ extension TutorialView: PageNavigationCollectionViewDelegate {
     }
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
-        pageControl.currentPage = page
+
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {

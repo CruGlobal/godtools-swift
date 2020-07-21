@@ -20,7 +20,6 @@ class TutorialViewModel: TutorialViewModelType {
     let deviceLanguage: DeviceLanguageType
     let hidesBackButton: ObservableValue<Bool> = ObservableValue(value: true)
     let tutorialItems: ObservableValue<[TutorialItem]> = ObservableValue(value: [])
-    let changePage: SignalValue<Int> = SignalValue()
     let continueButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     
     required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {

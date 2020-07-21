@@ -13,7 +13,6 @@ protocol TutorialViewModelType {
     var deviceLanguage: DeviceLanguageType { get }
     var hidesBackButton: ObservableValue<Bool> { get }
     var tutorialItems: ObservableValue<[TutorialItem]> { get }
-    var changePage: SignalValue<Int> { get }
     var continueButtonTitle: ObservableValue<String> { get }
     
     func closeTapped()

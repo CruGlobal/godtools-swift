@@ -17,7 +17,7 @@ class TractView: UIViewController {
            
     private weak var languageControl: UISegmentedControl?
     
-    @IBOutlet weak private var tractPagesCollectionView: UICollectionView!
+    @IBOutlet weak private var tractPagesView: PageNavigationCollectionView!
     
     required init(viewModel: TractViewModelType) {
         self.viewModel = viewModel
@@ -51,6 +51,8 @@ class TractView: UIViewController {
         loadPagesIds()
         
         addObservers()
+        
+        tractPagesView.delegate = self
         
         _ = addBarButtonItem(
             to: .left,
@@ -87,27 +89,11 @@ class TractView: UIViewController {
             // TODO: Eventually I'd like to do something different here rather than set a global on TractPage.
             // Instead tool pages can have a contentInset top, bottom to move content in which can be injected. ~Levi
             TractPage.navbarHeight = navigationBarHeight
-               
-            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
-            tractPagesCollectionView.delegate = self
-            tractPagesCollectionView.dataSource = self
             
-            viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
-                self?.tractPagesCollectionView.reloadData()
-            }
             
-            viewModel.currentTractPageItemIndex.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
-                
-                if let tractPagesCollectionView = self?.tractPagesCollectionView {
-                    let numberOfItems: Int = tractPagesCollectionView.numberOfItems(inSection: 0)
-                    if numberOfItems > 0 {
-                        tractPagesCollectionView.scrollToItem(
-                            at: IndexPath(item: animatableValue.value, section: 0),
-                            at: .centeredHorizontally,
-                            animated: animatableValue.animated
-                        )
-                    }
-                }
+            viewModel.currentTractPage.addObserver(self) { [weak self] (animatableValue: AnimatableValue<Int>) in
+
+                self?.tractPagesView.scrollToPage(page: animatableValue.value, animated: animatableValue.animated)
             }
         }
     }
@@ -120,18 +106,15 @@ class TractView: UIViewController {
         
         setupChooseLanguageControl()
         
-        tractPagesCollectionView.register(
-            UINib(nibName: TractPageCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: TractPageCell.reuseIdentifier
+        // tractPagesView
+        tractPagesView.registerPageCell(
+            nib: UINib(nibName: TractPageCell.nibName, bundle: nil),
+            cellReuseIdentifier: TractPageCell.reuseIdentifier
         )
-        tractPagesCollectionView.isScrollEnabled = true
-        tractPagesCollectionView.isPagingEnabled = true
-        tractPagesCollectionView.showsVerticalScrollIndicator = false
-        tractPagesCollectionView.showsHorizontalScrollIndicator = false
-        tractPagesCollectionView.contentInset = UIEdgeInsets.zero
+        tractPagesView.pagesCollectionView.contentInset = UIEdgeInsets.zero
         automaticallyAdjustsScrollViewInsets = false
         if viewModel.isRightToLeftLanguage {
-            tractPagesCollectionView.semanticContentAttribute = .forceRightToLeft
+            tractPagesView.pagesCollectionView.semanticContentAttribute = .forceRightToLeft
         }
     }
     
@@ -150,7 +133,11 @@ class TractView: UIViewController {
                 self?.languageControl?.selectedSegmentIndex = 1
             }
             
-            self?.tractPagesCollectionView.reloadData()
+            self?.tractPagesView.reloadData()
+        }
+        
+        viewModel.tractXmlPageItems.addObserver(self) { [weak self] (tractPageItems: [TractXmlPageItem]) in
+            self?.tractPagesView.reloadData()
         }
     }
     
@@ -275,15 +262,15 @@ class TractView: UIViewController {
         guard let pageListener = dictionary["pageListener"] else { return }
         guard let page = TractBindings.pageBindings[pageListener] else { return }
         
-        viewModel.navigateToPageTapped(page: page)
+        tractPagesView.scrollToPage(page: page, animated: true)
     }
     
     @objc func moveToNextPage() {
-        viewModel.navigateToNextPageTapped()
+        tractPagesView.scrollToNextPage(animated: true)
     }
     
     @objc func moveToPreviousPage() {
-        viewModel.navigateToPreviousPageTapped()
+        tractPagesView.scrollToPreviousPage(animated: true)
     }
     
     @objc func sendEmail(notification: Notification) {
@@ -328,23 +315,19 @@ extension TractView {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
+// MARK: - PageNavigationCollectionViewDelegate
 
-extension TractView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension TractView: PageNavigationCollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         return viewModel.tractXmlPageItems.value.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: TractPageCell = tractPagesCollectionView.dequeueReusableCell(
-            withReuseIdentifier: TractPageCell.reuseIdentifier,
-            for: indexPath) as! TractPageCell
+        let cell: TractPageCell = tractPagesView.getReusablePageCell(
+            cellReuseIdentifier: TractPageCell.reuseIdentifier,
+            indexPath: indexPath) as! TractPageCell
                 
         let tractPage: TractPage? = viewModel.getTractPage(page: indexPath.item)
                 
@@ -357,59 +340,12 @@ extension TractView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSou
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-               
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return tractPagesCollectionView.bounds.size
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension TractView: UIScrollViewDelegate {
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == tractPagesCollectionView {
-            if !decelerate {
-                handleDidScrollToItemInTractPagesCollectionView()
-            }
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == tractPagesCollectionView {
-            handleDidScrollToItemInTractPagesCollectionView()
-        }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == tractPagesCollectionView {
-            handleDidScrollToItemInTractPagesCollectionView()
-        }
-    }
-    
-    private func handleDidScrollToItemInTractPagesCollectionView() {
+    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        tractPagesCollectionView.layoutIfNeeded()
-        
-        if let visibleCell = tractPagesCollectionView.visibleCells.first {
-            if let indexPath = tractPagesCollectionView.indexPath(for: visibleCell) {
-                viewModel.didScrollToTractPage(page: indexPath.item)
-            }
-        }
+        viewModel.tractPageDidAppear(page: page)
     }
 }

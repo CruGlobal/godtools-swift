@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingTutorialView" customModule="godtools" customModuleProvider="target">
             <connections>
-                <outlet property="backgroundCollectionView" destination="fWO-E3-LWG" id="GB9-Xn-tTt"/>
+                <outlet property="backgroundPagesView" destination="ndD-CX-ZJp" id="fJc-5E-Hgh"/>
                 <outlet property="continueButton" destination="jW2-bF-HU2" id="XMJ-WL-CWq"/>
                 <outlet property="continueButtonTop" destination="1eu-uq-USw" id="ZNb-i8-e50"/>
                 <outlet property="footerAreaHeight" destination="TP2-6J-f57" id="Ky0-xL-n2u"/>
@@ -20,7 +20,7 @@
                 <outlet property="pageControl" destination="j0K-Ic-YXA" id="5Tc-tb-vUv"/>
                 <outlet property="showMoreButton" destination="G1h-Ms-VKr" id="VdC-S7-4YL"/>
                 <outlet property="showMoreButtonTop" destination="hiX-vW-XFu" id="fYp-KW-JrW"/>
-                <outlet property="tutorialCollectionView" destination="sy8-Oe-Rck" id="Lsx-zZ-He1"/>
+                <outlet property="tutorialPagesView" destination="4Ta-fE-0DZ" id="65y-e7-9ck"/>
                 <outlet property="view" destination="iN0-l3-epB" id="RBL-KY-stT"/>
             </connections>
         </placeholder>
@@ -36,26 +36,14 @@
                         <constraint firstAttribute="width" constant="3" id="pKR-hN-7yX"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fWO-E3-LWG" userLabel="backgroundCollectionView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndD-CX-ZJp" userLabel="backgroundPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fWw-N2-FJR">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sy8-Oe-Rck" userLabel="tutorialCollectionView">
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ta-fE-0DZ" userLabel="tutorialPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="702"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7eL-Je-TRG">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbi-tY-u8T" userLabel="footerView">
                     <rect key="frame" x="0.0" y="746" width="414" height="116"/>
                     <subviews>
@@ -102,24 +90,24 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="j0K-Ic-YXA" secondAttribute="bottom" constant="10" id="3su-VN-wPd"/>
+                <constraint firstItem="ndD-CX-ZJp" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="4PJ-fh-wMj"/>
+                <constraint firstItem="ndD-CX-ZJp" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="5W9-6m-OJX"/>
                 <constraint firstItem="gbi-tY-u8T" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="66L-5B-JRf"/>
-                <constraint firstItem="sy8-Oe-Rck" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="FVt-8P-FSa"/>
                 <constraint firstItem="j0K-Ic-YXA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="30" id="FeR-9z-2Y0"/>
-                <constraint firstAttribute="bottom" secondItem="fWO-E3-LWG" secondAttribute="bottom" id="ILf-Yo-pqA"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="cjD-ic-OwZ" secondAttribute="bottom" id="JFi-FJ-zxw"/>
+                <constraint firstItem="4Ta-fE-0DZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="KEp-Sh-pin"/>
+                <constraint firstItem="gbi-tY-u8T" firstAttribute="top" secondItem="4Ta-fE-0DZ" secondAttribute="bottom" id="LQg-ht-9jY"/>
                 <constraint firstItem="cjD-ic-OwZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="M89-c7-9Xn"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="sy8-Oe-Rck" secondAttribute="trailing" id="MWF-e1-1jp"/>
-                <constraint firstItem="fWO-E3-LWG" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="OAg-wb-x6h"/>
-                <constraint firstItem="fWO-E3-LWG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="T9a-Vb-LfE"/>
+                <constraint firstAttribute="bottom" secondItem="ndD-CX-ZJp" secondAttribute="bottom" id="Qae-7t-P7N"/>
+                <constraint firstItem="ndD-CX-ZJp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="TEc-Ey-8xa"/>
+                <constraint firstItem="4Ta-fE-0DZ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="U3j-3k-4Vy"/>
                 <constraint firstItem="G1h-Ms-VKr" firstAttribute="trailing" secondItem="cjD-ic-OwZ" secondAttribute="trailing" constant="-8" id="Ulb-Zy-rWP"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="j0K-Ic-YXA" secondAttribute="trailing" constant="30" id="Voj-wI-MCW"/>
-                <constraint firstItem="gbi-tY-u8T" firstAttribute="top" secondItem="sy8-Oe-Rck" secondAttribute="bottom" id="hqN-Qv-yxZ"/>
                 <constraint firstItem="gbi-tY-u8T" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="iEn-wt-pUa"/>
                 <constraint firstItem="cjD-ic-OwZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="sG9-3W-bgJ"/>
-                <constraint firstItem="fWO-E3-LWG" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="saR-4h-fl3"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gbi-tY-u8T" secondAttribute="bottom" id="uea-bf-B3y"/>
                 <constraint firstItem="auS-Hg-i5C" firstAttribute="leading" secondItem="cjD-ic-OwZ" secondAttribute="leading" constant="8" id="w2I-GK-p7h"/>
-                <constraint firstItem="sy8-Oe-Rck" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="wBY-sf-xm3"/>
+                <constraint firstItem="4Ta-fE-0DZ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="yh0-69-OPR"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="140.57971014492756" y="130.58035714285714"/>
