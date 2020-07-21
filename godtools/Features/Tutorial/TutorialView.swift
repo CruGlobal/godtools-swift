@@ -15,9 +15,8 @@ class TutorialView: UIViewController {
     
     private var backButton: UIBarButtonItem?
     private var closeButton: UIBarButtonItem?
-    private var didLayoutSubviews: Bool = false
     
-    @IBOutlet weak private var tutorialCollectionView: UICollectionView!
+    @IBOutlet weak private var tutorialPagesView: PageNavigationCollectionView!
     @IBOutlet weak private var continueButton: OnboardPrimaryButton!
     @IBOutlet weak private var pageControl: UIPageControl!
     
@@ -54,43 +53,14 @@ class TutorialView: UIViewController {
         continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !didLayoutSubviews {
-            didLayoutSubviews = true
-            
-            // NOTE: Waiting for view to finish laying out in order for the collection sizeForItem to return the correct bounds size.
-            tutorialCollectionView.delegate = self
-            tutorialCollectionView.dataSource = self
-            
-            viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
-                self?.pageControl.numberOfPages = tutorialItems.count
-                self?.tutorialCollectionView.reloadData()
-            }
-            
-            viewModel.currentTutorialItemIndex.addObserver(self) { [weak self] (index: Int) in
-                
-                if let tutorialCollectionView = self?.tutorialCollectionView {
-                    let numberOfItems: Int = tutorialCollectionView.numberOfItems(inSection: 0)
-                    if numberOfItems > 0 {
-                        tutorialCollectionView.scrollToItem(
-                            at: IndexPath(item: index, section: 0),
-                            at: .centeredHorizontally,
-                            animated: true
-                        )
-                    }
-                }
-            }
-        }
-    }
-    
     private func setupLayout() {
         
-        tutorialCollectionView.register(
-            UINib(nibName: TutorialCell.nibName, bundle: nil),
-            forCellWithReuseIdentifier: TutorialCell.reuseIdentifier
+        // tutorialPagesView
+        tutorialPagesView.registerPageCell(
+            nib: UINib(nibName: TutorialCell.nibName, bundle: nil),
+            cellReuseIdentifier: TutorialCell.reuseIdentifier
         )
-        enableSwipeInteractionWithTutorial(enable: true)
+        tutorialPagesView.delegate = self
     }
     
     private func setupBinding() {
@@ -115,8 +85,13 @@ class TutorialView: UIViewController {
             }
         }
         
-        viewModel.currentPage.addObserver(self) { [weak self] (page: Int) in
-            self?.pageControl.currentPage = page
+        viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [TutorialItem]) in
+            self?.pageControl.numberOfPages = tutorialItems.count
+            self?.tutorialPagesView.reloadData()
+        }
+                
+        viewModel.changePage.addObserver(self) { [weak self] (page: Int) in
+            self?.tutorialPagesView.scrollToPage(page: page, animated: true)
         }
         
         viewModel.continueButtonTitle.addObserver(self) { [weak self] (title: String) in
@@ -124,25 +99,8 @@ class TutorialView: UIViewController {
         }
     }
     
-    private func enableSwipeInteractionWithTutorial(enable: Bool) {
-        
-        tutorialCollectionView.isScrollEnabled = enable
-        tutorialCollectionView.isPagingEnabled = enable
-    }
-    
-    private func updatePageControlPageWithCurrentTutorialCollectionViewItem() {
-        
-        tutorialCollectionView.layoutIfNeeded()
-        
-        if let visibleCell = tutorialCollectionView.visibleCells.first {
-            if let indexPath = tutorialCollectionView.indexPath(for: visibleCell) {
-                viewModel.didScrollToPage(page: indexPath.item)
-            }
-        }
-    }
-    
     @objc func handleBack(barButtonItem: UIBarButtonItem) {
-        viewModel.backTapped()
+        tutorialPagesView.scrollToPreviousPage(animated: true)
     }
     
     @objc func handleClose(barButtonItem: UIBarButtonItem) {
@@ -150,31 +108,28 @@ class TutorialView: UIViewController {
     }
     
     @objc func handlePageControlChanged() {
-        viewModel.pageTapped(page: pageControl.currentPage)
+        tutorialPagesView.scrollToPage(page: pageControl.currentPage, animated: true)
     }
     
     @objc func handleContinue(button: UIButton) {
+        tutorialPagesView.scrollToNextPage(animated: true)
         viewModel.continueTapped()
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout, UICollectionViewDataSource
+// MARK: - PageNavigationCollectionViewDelegate
 
-extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+extension TutorialView: PageNavigationCollectionViewDelegate {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func pageNavigationNumberOfPages(pageNavigation: PageNavigationCollectionView) -> Int {
         return viewModel.tutorialItems.value.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                    
-        let cell: TutorialCell = tutorialCollectionView.dequeueReusableCell(
-            withReuseIdentifier: TutorialCell.reuseIdentifier,
-            for: indexPath) as! TutorialCell
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, cellForPageAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell: TutorialCell = tutorialPagesView.getReusablePageCell(
+            cellReuseIdentifier: TutorialCell.reuseIdentifier,
+            indexPath: indexPath) as! TutorialCell
         
         let tutorialItem: TutorialItem = viewModel.tutorialItems.value[indexPath.item]
         let cellViewModel = TutorialCellViewModel(
@@ -187,47 +142,23 @@ extension TutorialView: UICollectionViewDelegateFlowLayout, UICollectionViewData
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let tutorialCell = cell as? TutorialCell {
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, willDisplay pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
+
+    }
+    
+    func pageNavigation(pageNavigation: PageNavigationCollectionView, didEndDisplaying pageCell: UICollectionViewCell, forPageAt indexPath: IndexPath) {
+        if let tutorialCell = pageCell as? TutorialCell {
             tutorialCell.stopVideo()
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return tutorialCollectionView.bounds.size
+    func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        pageControl.currentPage = page
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
-// MARK: - UIScrollViewDelegate
-
-extension TutorialView: UIScrollViewDelegate {
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView == tutorialCollectionView {
-            if !decelerate {
-                updatePageControlPageWithCurrentTutorialCollectionViewItem()
-            }
-        }
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView == tutorialCollectionView {
-            updatePageControlPageWithCurrentTutorialCollectionViewItem()
-        }
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        if scrollView == tutorialCollectionView {
-            updatePageControlPageWithCurrentTutorialCollectionViewItem()
-        }
+    func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
+        pageControl.currentPage = page
+        viewModel.pageDidAppear(page: page)
     }
 }
 

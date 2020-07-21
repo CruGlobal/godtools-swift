@@ -13,14 +13,11 @@ protocol TutorialViewModelType {
     var deviceLanguage: DeviceLanguageType { get }
     var hidesBackButton: ObservableValue<Bool> { get }
     var tutorialItems: ObservableValue<[TutorialItem]> { get }
-    var currentTutorialItemIndex: ObservableValue<Int> { get }
-    var currentPage: ObservableValue<Int> { get }
+    var changePage: SignalValue<Int> { get }
     var continueButtonTitle: ObservableValue<String> { get }
     
     func closeTapped()
-    func pageTapped(page: Int)
-    func didScrollToPage(page: Int)
-    func backTapped()
+    func pageDidAppear(page: Int)
     func continueTapped()
     func tutorialVideoPlayTapped()
 }
