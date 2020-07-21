@@ -158,6 +158,15 @@ class PageNavigationCollectionView: UIView, NibBased {
         return collectionView
     }
     
+    var pageBackgroundColor: UIColor = UIColor.white {
+        didSet {
+            backgroundColor = pageBackgroundColor
+            subviews.first?.backgroundColor = pageBackgroundColor
+            collectionView.backgroundColor = pageBackgroundColor
+            collectionView.reloadData()
+        }
+    }
+    
     private func didEndPageScrolling() {
         
         let currentPage: Int = self.currentPage
@@ -181,7 +190,13 @@ extension PageNavigationCollectionView: UICollectionViewDelegateFlowLayout, UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return delegate?.pageNavigation(pageNavigation: self, cellForPageAt: indexPath) ?? UICollectionViewCell()
+        
+        let cell: UICollectionViewCell? = delegate?.pageNavigation(pageNavigation: self, cellForPageAt: indexPath)
+        
+        cell?.backgroundColor = pageBackgroundColor
+        cell?.contentView.backgroundColor = pageBackgroundColor
+        
+        return cell ?? UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

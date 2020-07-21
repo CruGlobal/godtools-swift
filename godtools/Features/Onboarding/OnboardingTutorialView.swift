@@ -53,12 +53,14 @@ class OnboardingTutorialView: UIViewController {
         showMoreButton.addTarget(self, action: #selector(handleShowMore(button:)), for: .touchUpInside)
         getStartedButton.addTarget(self, action: #selector(handleGetStarted(button:)), for: .touchUpInside)
         
+        backgroundPagesView.delegate = self
         tutorialPagesView.delegate = self
     }
     
     private func setupLayout() {
         
         // backgroundPagesView
+        backgroundPagesView.pageBackgroundColor = .white
         backgroundPagesView.registerPageCell(
             nib: UINib(nibName: OnboardingTutorialBackgroundCell.nibName, bundle: nil),
             cellReuseIdentifier: OnboardingTutorialBackgroundCell.reuseIdentifier
@@ -67,6 +69,7 @@ class OnboardingTutorialView: UIViewController {
         backgroundPagesView.isUserInteractionEnabled = false
         
         // tutorialPagesView
+        tutorialPagesView.pageBackgroundColor = .clear
         tutorialPagesView.registerPageCell(
             nib: UINib(nibName: MainOnboardingTutorialCell.nibName, bundle: nil),
             cellReuseIdentifier: MainOnboardingTutorialCell.reuseIdentifier
@@ -88,8 +91,13 @@ class OnboardingTutorialView: UIViewController {
         
         viewModel.tutorialItems.addObserver(self) { [weak self] (tutorialItems: [OnboardingTutorialItem]) in
             self?.pageControl.numberOfPages = tutorialItems.count
-            self?.tutorialPagesView.reloadData()
+            self?.reloadData()
         }
+    }
+    
+    private func reloadData() {
+        backgroundPagesView.reloadData()
+        tutorialPagesView.reloadData()
     }
     
     private func setSkipButton(hidden: Bool) {
@@ -255,25 +263,31 @@ extension OnboardingTutorialView: PageNavigationCollectionViewDelegate {
     
     func pageNavigationDidChangePage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        pageControl.currentPage = page
-        
-        if pageNavigation.isOnLastPage {
-            setSkipButton(hidden: true)
-            setTutorialButtonState(state: .showMoreAndGetStarted, animated: true)
+        if pageNavigation == tutorialPagesView {
+            
+            pageControl.currentPage = page
+            
+            if pageNavigation.isOnLastPage {
+                setSkipButton(hidden: true)
+                setTutorialButtonState(state: .showMoreAndGetStarted, animated: true)
+            }
+            else {
+                setSkipButton(hidden: false)
+                setTutorialButtonState(state: .continueButton, animated: true)
+            }
+            
+            viewModel.pageDidChange(page: page)
         }
-        else {
-            setSkipButton(hidden: false)
-            setTutorialButtonState(state: .continueButton, animated: true)
-        }
-        
-        viewModel.pageDidChange(page: page)
     }
     
     func pageNavigationDidStopOnPage(pageNavigation: PageNavigationCollectionView, page: Int) {
         
-        pageControl.currentPage = page
-        
-        viewModel.pageDidAppear(page: page)
+        if pageNavigation == tutorialPagesView {
+           
+            pageControl.currentPage = page
+            
+            viewModel.pageDidAppear(page: page)
+        }
     }
     
     func pageNavigationDidScrollPage(pageNavigation: PageNavigationCollectionView) {

@@ -42,7 +42,7 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ta-fE-0DZ" userLabel="tutorialPagesView" customClass="PageNavigationCollectionView" customModule="godtools" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="44" width="414" height="702"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbi-tY-u8T" userLabel="footerView">
                     <rect key="frame" x="0.0" y="746" width="414" height="116"/>
