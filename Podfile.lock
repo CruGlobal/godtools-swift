@@ -1,6 +1,4 @@
 PODS:
-  - ActionCableClient (4.2.0):
-    - Starscream (~> 3.0.6)
   - AdobeMobileSDK (4.19.0):
     - AdobeMobileSDK/iOS (= 4.19.0)
   - AdobeMobileSDK/iOS (4.19.0)
@@ -134,7 +132,7 @@ PODS:
   - SnowplowTracker (1.3.0):
     - FMDB (~> 2.6)
   - SSZipArchive (2.2.2)
-  - Starscream (3.0.6)
+  - Starscream (4.0.3)
   - SwiftyJSON (5.0.0)
   - SWXMLHash (5.0.1)
   - TheKeyOAuthSwift (0.5.5):
@@ -144,7 +142,6 @@ PODS:
   - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
-  - ActionCableClient (from `https://github.com/Kaakati/Swift-ActionCableClient.git`, branch `master`)
   - AdobeMobileSDK (~> 4.19)
   - Alamofire (~> 4.8)
   - AppsFlyerFramework (= 5.1.0)
@@ -162,6 +159,7 @@ DEPENDENCIES:
   - RealmSwift
   - SnowplowTracker (~> 1.3)
   - SSZipArchive
+  - Starscream (~> 4.0.0)
   - SwiftyJSON
   - SWXMLHash
   - TheKeyOAuthSwift
@@ -212,18 +210,7 @@ SPEC REPOS:
     - TTTAttributedLabel
     - YoutubePlayer-in-WKWebView
 
-EXTERNAL SOURCES:
-  ActionCableClient:
-    :branch: master
-    :git: https://github.com/Kaakati/Swift-ActionCableClient.git
-
-CHECKOUT OPTIONS:
-  ActionCableClient:
-    :commit: 7df5754d33e25e091b12384b2b43c84362675a3f
-    :git: https://github.com/Kaakati/Swift-ActionCableClient.git
-
 SPEC CHECKSUMS:
-  ActionCableClient: 863a9279628dd025746433a2e65c59c1086aace0
   AdobeMobileSDK: 5bd937b6baadb8c4cb095f4633062220f8f4a4d9
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AppAuth: 3f4f1d6d85ad631d0bbf15ffcdc10c447face97a
@@ -258,13 +245,13 @@ SPEC CHECKSUMS:
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   SnowplowTracker: 91259853f3c0de00dc93aa67492e3d0166659643
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
-  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  Starscream: ef06f0961fff0880bca0604416d61141e4faca67
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   SWXMLHash: 9cc0c2e4807926c74377724aa8722ee5707a0485
   TheKeyOAuthSwift: e5e9ba7c9e9a22b4ddfe586c6b30cb91463410c0
   TTTAttributedLabel: 8cffe8e127e4e82ff3af1e5386d4cd0ad000b656
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 7a483b0abf2360ac0babf52800e4fbf3a6e57332
+PODFILE CHECKSUM: 491fd412ff716c43b4426114b84667cb4c0b8225
 
 COCOAPODS: 1.9.1

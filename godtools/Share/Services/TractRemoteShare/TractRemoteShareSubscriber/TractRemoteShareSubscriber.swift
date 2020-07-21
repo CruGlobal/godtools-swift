@@ -7,144 +7,160 @@
 //
 
 import Foundation
-import ActionCableClient
+import Starscream
 
 class TractRemoteShareSubscriber {
         
-    private let client: ActionCableClient
+    private let socket: WebSocket
     private let jsonServices: JsonServices = JsonServices()
     
-    private var currentChannel: Channel?
-    
+    private var subscribeToChannel: String?
+    private var isConnected: Bool = false
+        
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
     
     required init(config: ConfigType) {
         
         let remoteUrl: URL? = URL(string: config.mobileContentApiBaseUrl + "/" + "cable")
         
-        client = ActionCableClient(url: remoteUrl!)
+        socket = WebSocket(request: URLRequest(url: remoteUrl!))
+        socket.onEvent = { [weak self] event in
+            self?.handleWebSocketEvent(event: event)
+        }
     }
     
     deinit {
         
-        unsubscribeCurrentChannel()
-        disconnectClient()
+        //unsubscribeCurrentChannel()
+        //disconnectClient()
     }
     
-    private func connectClient(complete: @escaping (() -> Void)) {
+    private func handleWebSocketEvent(event: WebSocketEvent) {
         
-        guard !client.isConnected else {
-            complete()
+        print("\n TractRemoteShareSubscriber: handleWebSocketEvent() event: \(event)")
+        
+        switch event {
+        
+        case .connected(let headers):
+            
+            isConnected = true
+            handleSocketConnected()
+            print("websocket is connected: \(headers)")
+        
+        case .disconnected(let reason, let code):
+            
+            isConnected = false
+            print("websocket is disconnected: \(reason) with code: \(code)")
+        
+        case .text(let string):
+            
+            let data: Data? = string.data(using: .utf8)
+            let jsonObject: Any? = jsonServices.getJsonObject(data: data)
+            handleReceivedMessage(json: jsonObject)
+        
+        case .binary( _):
+            break
+        
+        case .ping(_):
+            break
+        
+        case .pong(_):
+            break
+        
+        case .viabilityChanged(_):
+            break
+        
+        case .reconnectSuggested(_):
+            break
+        
+        case .cancelled:
+            isConnected = false
+        
+        case .error(let error):
+            isConnected = false
+            print("\n TractRemoteShareSubscriber: handleWebSocketEvent() Error: \(String(describing: error))")
+        }
+    }
+    
+    private func handleSocketConnected() {
+        
+        print("\n WebSocket Connected - subscribe to channel.")
+        
+        guard let channelId = subscribeToChannel else {
             return
         }
         
-        client.onConnected = {
-            print("\nTractRemoteShareSubscriber: connected")
-            complete()
-        }
-        
-        client.connect()
-    }
-    
-    private func disconnectClient() {
-        
-        client.onDisconnected = {(error: Error?) in
+        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
+        let message = ["command" : "subscribe","identifier": strChannel]
+
+        do {
+            let data = try JSONSerialization.data(withJSONObject: message)
+            if let dataString = String(data: data, encoding: .utf8){
+                socket.write(string: dataString)
+            }
             
-            print("\nTractRemoteShareSubscriber disconnectClient() error:\(String(describing: error))")
+        } catch let error {
+
         }
-        
-        client.disconnect()
-    }
-    
-    private func unsubscribeCurrentChannel() {
-        
-        currentChannel?.unsubscribe()
-        currentChannel = nil
-    }
-    
-    func unsubscribeChannel() {
-        unsubscribeCurrentChannel()
-        disconnectClient()
     }
     
     func subscribeToChannel(liveShareStream: String) {
-                
-        connectClient { [weak self] in
-            
-            self?.internalSubscribeToChannel(liveShareStream: liveShareStream)
+               
+        subscribeToChannel = liveShareStream
+        
+        if !isConnected {
+            socket.connect()
+        }
+        else {
+            handleSocketConnected()
         }
     }
     
-    private func internalSubscribeToChannel(liveShareStream: String) {
+    func unsubscribeChannel() {
         
-        print("\nTractRemoteShareSubscriber: internalSubscribeToChannel() \(liveShareStream)")
-        
-        unsubscribeCurrentChannel()
-        
-        let channelId: [String: String] = ["channelId": liveShareStream]
-        
-        let channel: Channel = client.create(
-            "SubscribeChannel",
-            identifier: channelId,
-            autoSubscribe: false,
-            bufferActions: true
-        )
-        
-        // Receive a message from the server. Typically a Dictionary.
-        channel.onReceive = { [weak self] (json : Any?, error : Error?) in
-            self?.handleChannelReceivedData(json: json, error: error)
-        }
-
-        // A channel has successfully been subscribed to.
-        channel.onSubscribed = {
-            print("\nTractRemoteShareSubscriber Channel Subscribed!")
-        }
-        
-        // A channel was unsubscribed, either manually or from a client disconnect.
-        channel.onUnsubscribed = {
-            print("\nTractRemoteShareSubscriber Channel Unsubscribed")
-        }
-
-        // The attempt at subscribing to a channel was rejected by the server.
-        channel.onRejected = {
-            print("\nTractRemoteShareSubscriber Channel Rejected")
-        }
-        
-        channel.subscribe()
-        
-        currentChannel = channel
+        subscribeToChannel = nil
+        socket.disconnect()
     }
     
-    private func handleChannelReceivedData(json: Any?, error : Error?) {
+    private func handleReceivedMessage(json: Any?) {
         
-        guard error == nil else {
+        print("\n TractRemoteShareSubscriber: handleReceivedMessage()")
+        
+        guard let jsonObject = json as? [String: Any] else {
             return
         }
         
-        guard let jsonData = (json as? [String: Any])?["data"] as? [String: Any] else {
-            return
-        }
-        
-        guard let eventType = jsonData["type"] as? String, let attributes = jsonData["attributes"] as? [String: Any] else {
-            return
-        }
-        
-        let data: Data? = jsonServices.getJsonData(json: attributes)
-                
-        print("\nTractRemoteShareSubscriber: handleChannelReceivedData()  EVENT TYPE: \(eventType)")
-        
-        if eventType == "navigation-event" {
+        if let type = jsonObject["type"] as? String {
+            print("  TYPE: \(type)")
             
-            let navigationEvent: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: data)
-            
-            if let event = navigationEvent {
-                navigationEventSignal.accept(value: event)
+            if type == "welcome" {
+                // sent when subscribing to a channel
             }
+            else if type == "confirm_subscription" {
+                // sent when subscribing to a channel
+            }
+        }
+        else if let messageObject = jsonObject["message"] as? [String: Any], let dataObject = messageObject["data"] as? [String: Any] {
             
-            print("  navigationEvent.page: \(String(describing: navigationEvent?.page))")
-            print("  navigationEvent.card: \(String(describing: navigationEvent?.card))")
-            print("  navigationEvent.locale: \(String(describing: navigationEvent?.locale))")
-            print("  navigationEvent.tool: \(String(describing: navigationEvent?.tool))")
+            guard let eventType = dataObject["type"] as? String, let attributes = dataObject["attributes"] as? [String: Any] else {
+                return
+            }
+                        
+            let attributesData: Data? = jsonServices.getJsonData(json: attributes)
+            
+            if eventType == "navigation-event" {
+                
+                let navigationEvent: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: attributesData)
+                
+                if let event = navigationEvent {
+                    navigationEventSignal.accept(value: event)
+                }
+                
+                print("  navigationEvent.page: \(String(describing: navigationEvent?.page))")
+                print("  navigationEvent.card: \(String(describing: navigationEvent?.card))")
+                print("  navigationEvent.locale: \(String(describing: navigationEvent?.locale))")
+                print("  navigationEvent.tool: \(String(describing: navigationEvent?.tool))")
+            }
         }
     }
 }

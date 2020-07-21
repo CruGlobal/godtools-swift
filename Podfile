@@ -20,7 +20,6 @@ target 'godtools' do
     pod 'Firebase/InAppMessaging', '6.16.0'
     pod 'Firebase/Analytics', '6.16.0'
     
-    pod 'ActionCableClient', :git => 'https://github.com/Kaakati/Swift-ActionCableClient.git', :branch => 'master'
     pod 'AdobeMobileSDK', '~> 4.19'
     pod 'AppsFlyerFramework', '5.1.0'
     pod 'Crashlytics'
@@ -31,6 +30,7 @@ target 'godtools' do
     pod 'RealmSwift'
     pod 'SnowplowTracker', '~> 1.3'
     pod 'SSZipArchive'
+    pod 'Starscream', '~> 4.0.0'
     pod 'SWXMLHash'
     pod 'SwiftyJSON'
     pod 'TTTAttributedLabel'
