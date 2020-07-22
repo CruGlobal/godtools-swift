@@ -19,19 +19,16 @@ protocol TractViewModelType {
     var primaryTractManifest: ManifestProperties { get }
     var primaryTractPages: [XMLPage] { get }
     var tractXmlPageItems: ObservableValue<[TractXmlPageItem]> { get }
-    var currentTractPageItemIndex: ObservableValue<AnimatableValue<Int>> { get }
+    var currentTractPage: ObservableValue<AnimatableValue<Int>> { get }
     var isRightToLeftLanguage: Bool { get }
-    var currentTractPage: Int { get }
     
     func navHomeTapped()
     func shareTapped()
     func primaryLanguageTapped()
     func parallelLanguagedTapped()
     func viewLoaded()
-    func didScrollToTractPage(page: Int)
-    func navigateToNextPageTapped()
-    func navigateToPreviousPageTapped()
-    func navigateToPageTapped(page: Int)
+    func tractPageDidChange(page: Int)
+    func tractPageDidAppear(page: Int)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
     func getTractPage(page: Int) -> TractPage?
 }

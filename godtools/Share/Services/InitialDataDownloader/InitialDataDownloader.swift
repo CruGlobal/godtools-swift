@@ -18,7 +18,6 @@ class InitialDataDownloader: NSObject {
     private let resourcesCleanUp: ResourcesCleanUp
     private let attachmentsDownloader: AttachmentsDownloader
     private let languageSettingsCache: LanguageSettingsCacheType
-    private let deviceLanguage: DeviceLanguageType
     private let favoritedResourceTranslationDownloader : FavoritedResourceTranslationDownloader
     
     private var downloadResourcesOperation: OperationQueue?
@@ -35,7 +34,7 @@ class InitialDataDownloader: NSObject {
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, deviceLanguage: DeviceLanguageType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
@@ -44,7 +43,6 @@ class InitialDataDownloader: NSObject {
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
         self.languageSettingsCache = languageSettingsCache
-        self.deviceLanguage = deviceLanguage
         self.resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
         self.languagesCache = LanguagesCache(realmDatabase: realmDatabase)
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
@@ -112,7 +110,7 @@ class InitialDataDownloader: NSObject {
                     
                     case .success(let resourcesCacheResult):
                         
-                        self?.choosePrimaryLanguageIfNeeded(realm: realm)
+                        self?.initialDeviceResourcesLoader.choosePrimaryLanguageIfNeeded(realm: realm)
                         
                         self?.handleDownloadInitialDataCompleted(error: nil)
                         
@@ -138,44 +136,6 @@ class InitialDataDownloader: NSObject {
         downloadResourcesOperation = nil
         
         resourcesUpdatedFromRemoteDatabase.accept(value: error)
-    }
-    
-    private func choosePrimaryLanguageIfNeeded(realm: Realm) {
-                
-        let cachedPrimaryLanguageId: String = languageSettingsCache.primaryLanguageId.value ?? ""
-        let primaryLanguageIsCached: Bool = !cachedPrimaryLanguageId.isEmpty
-        
-        if primaryLanguageIsCached {
-            return
-        }
-                
-        let realmLanguages: Results<RealmLanguage> = realm.objects(RealmLanguage.self)
-        let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
-        
-        var deviceLanguage: RealmLanguage?
-        
-        for languageCode in preferredDeviceLanguageCodes {
-            if let language = realmLanguages.filter("code = '\(languageCode)'").first {
-                deviceLanguage = language
-                break
-            }
-        }
-        
-        let primaryLanguage: RealmLanguage?
-        
-        if let deviceLanguage = deviceLanguage {
-            primaryLanguage = deviceLanguage
-        }
-        else if let englishLanguage = realmLanguages.filter("code = 'en'").first {
-            primaryLanguage = englishLanguage
-        }
-        else {
-            primaryLanguage = nil
-        }
-        
-        if let primaryLanguage = primaryLanguage {
-            languageSettingsCache.cachePrimaryLanguageId(languageId: primaryLanguage.id)
-        }
     }
     
     private func downloadLatestAttachments(resourcesCacheResult: ResourcesCacheResult) {

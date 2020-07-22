@@ -12,9 +12,7 @@ import TheKeyOAuthSwift
 class AccountViewModel: AccountViewModelType {
     
     private let analytics: AnalyticsContainer
-    
-    private var internalAccountItemIndex: Int = -1
-    
+        
     let globalActivityServices: GlobalActivityServicesType
     let navTitle: String
     let profileName: ObservableValue<(name: String, animated: Bool)> = ObservableValue(value: (name: "", animated: false))
@@ -49,41 +47,25 @@ class AccountViewModel: AccountViewModelType {
         
         accountItems.accept(value: items)
         
-        setAccountItemIndex(index: 0)
+        accountPageDidAppear(page: 0)
     }
     
     func settingsTapped() {
         print("TODO: AccountViewModel Implement settings.")
     }
     
-    func didScrollToAccountItem(item: Int) {
-                
-        setAccountItemIndex(index: item, shouldSetCurrentAccountItemIndex: false)
+    func accountPageDidChange(page: Int) {
+        
     }
     
-    private func setAccountItemIndex(index: Int, shouldSetCurrentAccountItemIndex: Bool = true) {
-                
-        guard index >= 0 && index < accountItems.value.count else {
-            return
-        }
+    func accountPageDidAppear(page: Int) {
         
-        let previousAccountItemIndex: Int = internalAccountItemIndex
+        let accountItem: AccountItem = accountItems.value[page]
         
-        internalAccountItemIndex = index
-                        
-        if shouldSetCurrentAccountItemIndex {
-            currentAccountItemIndex.accept(value: index)
-        }
-                
-        if previousAccountItemIndex != index {
-            
-            let accountItem: AccountItem = accountItems.value[index]
-            
-            analytics.pageViewedAnalytics.trackPageView(
-                screenName: accountItem.analyticsScreenName,
-                siteSection: "",
-                siteSubSection: ""
-            )
-        }
+        analytics.pageViewedAnalytics.trackPageView(
+            screenName: accountItem.analyticsScreenName,
+            siteSection: "",
+            siteSubSection: ""
+        )
     }
 }
