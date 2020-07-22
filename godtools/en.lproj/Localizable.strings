@@ -95,7 +95,9 @@ An online version can be found at https://knowgod.com/";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!
+"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@. 
+
+Let's talk more!
 
 The app can be downloaded from https://godtoolsapp.com";
 
