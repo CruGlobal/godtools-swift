@@ -99,6 +99,71 @@ class TractPage: BaseTractElement {
         self.pageContainer = element
     }
     
+    private var tractCards: TractCards? {
+        if let elements = self.elements {
+            for element in elements {
+                if let tractCards = searchTractCards(element: element) {
+                    return tractCards
+                }
+            }
+        }
+        return nil
+    }
+    
+    private func searchTractCards(element: BaseTractElement) -> TractCards? {
+        if let elements = element.elements {
+            for element in elements {
+                if let tractCards = element as? TractCards {
+                    return tractCards
+                }
+                else if let tractCards = searchTractCards(element: element) {
+                    return tractCards
+                }
+            }
+        }
+        return nil
+    }
+    
+    func setCard(card: Int?, animated: Bool) {
+        
+        let tractCards: TractCards? = self.tractCards
+        var tractCardsArray: [TractCard] = Array()
+        
+        if let cardsElements = tractCards?.elements {
+            for cardElement in cardsElements {
+                if let tractCard = cardElement as? TractCard {
+                    tractCardsArray.append(tractCard)
+                }
+            }
+        }
+        
+        guard !tractCardsArray.isEmpty else {
+            return
+        }
+        
+        if let card = card {
+            
+            for index in card ..< tractCardsArray.count {
+                
+                let tractCard: TractCard = tractCardsArray[index]
+                
+                if index == card {
+                    tractCard.processSwipeUp(animated: animated)
+                }
+                else if index > card {
+                    let cardState = tractCard.cardProperties().cardState
+                    if cardState != .close || cardState != .hidden {
+                        tractCard.processSwipeDown()
+                    }
+                }
+            }
+        }
+        else if let tractCards = tractCards {
+            tractCards.reset()
+            tractCards.hideCallToAction()
+        }
+    }
+    
     // MARK: - Helpers
     
     func pageProperties() -> TractPageProperties {

@@ -10,9 +10,7 @@ import Foundation
 import Starscream
 
 class StarscreamWebSocket: NSObject, WebSocketType {
-    
-    private let remoteUrl: URL
-    
+        
     private var socket: WebSocket?
     
     private(set) var isConnected: Bool = false
@@ -23,10 +21,7 @@ class StarscreamWebSocket: NSObject, WebSocketType {
     let didReceiveJsonSignal: SignalValue<[String : Any]> = SignalValue()
     let didReceiveEventSignal: SignalValue<WebSocketEvent> = SignalValue()
     
-    required init(config: ConfigType) {
-        
-        remoteUrl = URL(string: config.tractRemoteShareConnectionUrl)!
-                
+    override init() {
         super.init()
     }
     
@@ -34,13 +29,13 @@ class StarscreamWebSocket: NSObject, WebSocketType {
         socket?.disconnect()
     }
     
-    func connect() {
+    func connect(url: URL) {
         
         guard !isConnected else {
             return
         }
         
-        socket = WebSocket(request: URLRequest(url: remoteUrl))
+        socket = WebSocket(request: URLRequest(url: url))
         socket?.onEvent = { [weak self] event in
             self?.handleWebSocketEvent(event: event)
         }

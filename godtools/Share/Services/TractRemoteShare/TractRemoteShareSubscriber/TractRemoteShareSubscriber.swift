@@ -12,6 +12,7 @@ class TractRemoteShareSubscriber: NSObject {
             
     static let timeoutIntervalSeconds: TimeInterval = 10
     
+    private let remoteUrl: URL
     private let webSocket: WebSocketType
     private let webSocketChannelSubscriber: WebSocketChannelSubscriberType
     private let loggingEnabled: Bool
@@ -22,8 +23,9 @@ class TractRemoteShareSubscriber: NSObject {
         
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
     
-    required init(webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
+    required init(config: ConfigType, webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
         
+        self.remoteUrl = URL(string: config.tractRemoteShareConnectionUrl)!
         self.webSocket = webSocket
         self.webSocketChannelSubscriber = webSocketChannelSubscriber
         self.loggingEnabled = loggingEnabled
@@ -52,7 +54,7 @@ class TractRemoteShareSubscriber: NSObject {
         didSubscribeToChannelClosure = complete
         addObservers()
         startTimeoutTimer()
-        webSocketChannelSubscriber.subscribe(channelId: channelId)
+        webSocketChannelSubscriber.subscribe(url: remoteUrl, channelId: channelId)
     }
     
     func unsubscribe(disconnectSocket: Bool) {

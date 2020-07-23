@@ -15,6 +15,6 @@ protocol WebSocketChannelSubscriberType {
     var didSubscribeToChannelSignal: SignalValue<String> { get }
     var isSubscribedToChannel: Bool { get }
     
-    func subscribe(channelId: String)
+    func subscribe(url: URL, channelId: String)
     func unsubscribe()
 }

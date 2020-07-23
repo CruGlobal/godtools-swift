@@ -27,8 +27,9 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
+    private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
     private var tractPage: Int = 0
-    
+        
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
@@ -131,11 +132,14 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private func setupBinding() {
         
-        // TODO: Only bind this if we've successfully subscribed to a live share stream. ~Levi
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
                 if let page = navigationEvent.page {
+                    self?.cachedTractRemoteShareNavigationEvents[page] = navigationEvent
                     self?.currentTractPage.accept(value: AnimatableValue(value: page, animated: true))
+                    if let cachedTractPage = self?.getTractPageItem(page: page).tractPage {
+                        cachedTractPage.setCard(card: navigationEvent.card, animated: true)
+                    }
                 }
             }
         }
@@ -146,11 +150,9 @@ class TractViewModel: NSObject, TractViewModelType {
         guard let channelId = liveShareStream, !channelId.isEmpty else {
             return
         }
-        
-        print("\n TractViewModel: subscribeToLiveShareStream() channelId: \(channelId)")
-        
+                
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
-            
+
         }
     }
     
@@ -497,37 +499,39 @@ class TractViewModel: NSObject, TractViewModelType {
         }
     }
     
-    func getTractPage(page: Int) -> TractPage? {
+    func getTractPageItem(page: Int) -> TractPageItem {
             
         let selectedLanguageType: TractLanguageType = selectedTractLanguage.value.languageType
         
-        let cachedTractPage: TractPage? = getCachedTractPage(
-            languageType: selectedLanguageType,
-            page: page
-        )
+        let tractPage: TractPage?
+        let navigationEvent: TractRemoteShareNavigationEvent?
         
-        if let cachedTractPage = cachedTractPage {
+        if let cachedTractPage = getCachedTractPage(languageType: selectedLanguageType, page: page) {
             
-            return cachedTractPage
+            tractPage = cachedTractPage
         }
-        
-        let newTractPage: TractPage? = buildTractPageForLanguage(
-            languageType: selectedLanguageType,
-            page: page,
-            parallelTractPage: nil
-        )
-        
-        if let newTractPage = newTractPage {
+        else if let newTractPage = buildTractPageForLanguage(languageType: selectedLanguageType, page: page, parallelTractPage: nil) {
+            
+            tractPage = newTractPage
             
             cacheTractPage(
                 languageType: selectedLanguageType,
                 page: page,
                 tractPage: newTractPage
             )
+        }
+        else {
             
-            return newTractPage
+            tractPage = nil
         }
         
-        return nil
+        if let cachedNavigationEvent = cachedTractRemoteShareNavigationEvents[page] {
+            navigationEvent = cachedNavigationEvent
+        }
+        else {
+            navigationEvent = nil
+        }
+        
+        return TractPageItem(tractPage: tractPage, navigationEvent: navigationEvent)
     }
 }

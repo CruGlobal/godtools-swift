@@ -229,8 +229,9 @@ class AppDiContainer {
     }
     
     var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
-        let webSocket: WebSocketType = StarscreamWebSocket(config: config)
+        let webSocket: WebSocketType = StarscreamWebSocket()
         return TractRemoteShareSubscriber(
+            config: config,
             webSocket: webSocket,
             webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
             loggingEnabled: true

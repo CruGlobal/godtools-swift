@@ -15,10 +15,8 @@ protocol WebSocketType {
     var didReceiveTextSignal: SignalValue<String> { get }
     var didReceiveJsonSignal: SignalValue<[String: Any]> { get }
     var isConnected: Bool { get }
-    
-    init(config: ConfigType)
-    
-    func connect()
+        
+    func connect(url: URL)
     func disconnect()
     func write(string: String)
 }

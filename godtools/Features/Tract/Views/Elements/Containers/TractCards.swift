@@ -139,7 +139,7 @@ extension TractCards {
                 if foundCard {
                     elementCard.hideCard()
                 } else {
-                    elementCard.showCard()
+                    elementCard.showCard(animated: true)
                 }
             } else {
                 foundCard = true
@@ -163,7 +163,7 @@ extension TractCards {
                 continue
             }
             if foundCard {
-                elementCard.showCard()
+                elementCard.showCard(animated: true)
                 
                 
                 if elementCard == self.lastCard {
@@ -366,14 +366,14 @@ extension TractCards {
     
     @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
-            self.lastCardOpened?.processSwipeUp()
+            self.lastCardOpened?.processSwipeUp(animated: true)
         } else if sender.direction == .down {
             self.lastCardOpened?.processSwipeDown()
         }
     }
     
     @objc func handlePressGesture(sender: UITapGestureRecognizer) {
-        self.lastCardOpened?.processSwipeUp()
+        self.lastCardOpened?.processSwipeUp(animated: true)
     }
 }
 

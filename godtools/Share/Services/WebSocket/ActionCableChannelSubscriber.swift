@@ -37,7 +37,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
         return subscribedToChannel != nil
     }
     
-    func subscribe(channelId: String) {
+    func subscribe(url: URL, channelId: String) {
         
         removeJsonSignalObserver()
         
@@ -54,7 +54,7 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
                 channelSubscriber.handleDidConnectToWebsocket()
             }
             
-            webSocket.connect()
+            webSocket.connect(url: url)
         }
         else {
             
