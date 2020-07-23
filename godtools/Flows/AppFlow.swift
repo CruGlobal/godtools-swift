@@ -59,6 +59,7 @@ class AppFlow: NSObject, FlowDelegate {
     
     func resetFlowToToolsFlow(animated: Bool) {
         configureNavigation(navigationController: navigationController)
+        toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
         navigationController.popToRootViewController(animated: animated)
         closeMenu(animated: animated)

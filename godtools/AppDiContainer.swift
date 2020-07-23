@@ -55,7 +55,6 @@ class AppDiContainer {
     let deepLinkingService: DeepLinkingService
     let deviceAttachmentBanners: DeviceAttachmentBanners = DeviceAttachmentBanners()
     let favoritingToolMessageCache: FavoritingToolMessageCache
-    let tractRemoteShareSubscriber: TractRemoteShareSubscriber
         
     required init() {
         
@@ -187,9 +186,7 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-        
-        tractRemoteShareSubscriber = TractRemoteShareSubscriber(config: config)
-        
+                
         // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
@@ -229,6 +226,15 @@ class AppDiContainer {
     
     var tutorialAvailability: TutorialAvailabilityType {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }
+    
+    var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
+        let webSocket: WebSocketType = StarscreamWebSocket(config: config)
+        return TractRemoteShareSubscriber(
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
+            loggingEnabled: true
+        )
     }
     
     var tractManager: TractManager {

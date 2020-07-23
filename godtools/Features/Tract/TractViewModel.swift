@@ -108,8 +108,8 @@ class TractViewModel: NSObject, TractViewModelType {
     
     deinit {
         print("x deinit: \(type(of: self))")
-        tractRemoteShareSubscriber.unsubscribeChannel()
         tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
+        tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
         destroyTractPages()
     }
     
@@ -149,7 +149,9 @@ class TractViewModel: NSObject, TractViewModelType {
         
         print("\n TractViewModel: subscribeToLiveShareStream() channelId: \(channelId)")
         
-        tractRemoteShareSubscriber.subscribeToChannel(liveShareStream: channelId)
+        tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
+            
+        }
     }
     
     private func loadTractXmlPages() {

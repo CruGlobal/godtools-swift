@@ -7,144 +7,157 @@
 //
 
 import Foundation
-import Starscream
 
-class TractRemoteShareSubscriber {
-        
-    private let socket: WebSocket
-    private let jsonServices: JsonServices = JsonServices()
+class TractRemoteShareSubscriber: NSObject {
+            
+    static let timeoutIntervalSeconds: TimeInterval = 10
     
-    private var subscribeToChannel: String?
-    private var isConnected: Bool = false
+    private let webSocket: WebSocketType
+    private let webSocketChannelSubscriber: WebSocketChannelSubscriberType
+    private let loggingEnabled: Bool
+    
+    private var timeoutTimer: Timer?
+    private var didSubscribeToChannelClosure: ((_ error: TractRemoteShareSubscriberError?) -> Void)?
+    private var isObservingSignals: Bool = false
         
     let navigationEventSignal: SignalValue<TractRemoteShareNavigationEvent> = SignalValue()
     
-    required init(config: ConfigType) {
+    required init(webSocket: WebSocketType, webSocketChannelSubscriber: WebSocketChannelSubscriberType, loggingEnabled: Bool) {
         
-        let remoteUrl: URL? = URL(string: config.mobileContentApiBaseUrl + "/" + "cable")
+        self.webSocket = webSocket
+        self.webSocketChannelSubscriber = webSocketChannelSubscriber
+        self.loggingEnabled = loggingEnabled
         
-        socket = WebSocket(request: URLRequest(url: remoteUrl!))
-        socket.onEvent = { [weak self] event in
-            self?.handleWebSocketEvent(event: event)
-        }
+        super.init()
     }
     
     deinit {
-        
-        //unsubscribeCurrentChannel()
-        //disconnectClient()
+        unsubscribe(disconnectSocket: true)
     }
     
-    private func handleWebSocketEvent(event: WebSocketEvent) {
-        
-        print("\n TractRemoteShareSubscriber: handleWebSocketEvent() event: \(event)")
-        
-        switch event {
-        
-        case .connected(let headers):
+    var webSocketIsConnected: Bool {
+        return webSocket.isConnected
+    }
+    
+    var isSubscribedToChannel: Bool {
+        return webSocketChannelSubscriber.isSubscribedToChannel
+    }
+    
+    func subscribe(channelId: String, complete: @escaping ((_ error: TractRemoteShareSubscriberError?) -> Void)) {
             
-            isConnected = true
-            handleSocketConnected()
-            print("websocket is connected: \(headers)")
+        log(method: "subscribe()", label: "channelId", labelValue: channelId)
         
-        case .disconnected(let reason, let code):
+        unsubscribe(disconnectSocket: false)
             
-            isConnected = false
-            print("websocket is disconnected: \(reason) with code: \(code)")
+        didSubscribeToChannelClosure = complete
+        addObservers()
+        startTimeoutTimer()
+        webSocketChannelSubscriber.subscribe(channelId: channelId)
+    }
+    
+    func unsubscribe(disconnectSocket: Bool) {
         
-        case .text(let string):
-            
-            let data: Data? = string.data(using: .utf8)
-            let jsonObject: Any? = jsonServices.getJsonObject(data: data)
-            handleReceivedMessage(json: jsonObject)
+        webSocketChannelSubscriber.unsubscribe()
+        removeObsevers()
+        stopTimeoutTimer()
+        didSubscribeToChannelClosure = nil
         
-        case .binary( _):
-            break
-        
-        case .ping(_):
-            break
-        
-        case .pong(_):
-            break
-        
-        case .viabilityChanged(_):
-            break
-        
-        case .reconnectSuggested(_):
-            break
-        
-        case .cancelled:
-            isConnected = false
-        
-        case .error(let error):
-            isConnected = false
-            print("\n TractRemoteShareSubscriber: handleWebSocketEvent() Error: \(String(describing: error))")
+        if disconnectSocket {
+            webSocket.disconnect()
         }
     }
     
-    private func handleSocketConnected() {
+    private func handleDidSubscribeToChannel(channelId: String?, error: TractRemoteShareSubscriberError?) {
         
-        print("\n WebSocket Connected - subscribe to channel.")
+        log(method: "handleDidSubscribeToChannel()", label: "channelId", labelValue: channelId)
         
-        guard let channelId = subscribeToChannel else {
-            return
+        stopTimeoutTimer()
+        didSubscribeToChannelClosure?(error)
+        didSubscribeToChannelClosure = nil
+    }
+    
+    // MARK: - Observers
+    
+    private func addObservers() {
+        
+        if !isObservingSignals {
+            
+            isObservingSignals = true
+            
+            webSocketChannelSubscriber.didSubscribeToChannelSignal.addObserver(self) { [weak self] (channelId: String) in
+                self?.handleDidSubscribeToChannel(channelId: channelId, error: nil)
+            }
+            
+            webSocket.didReceiveJsonSignal.addObserver(self) { [weak self] (json: [String : Any]) in
+                self?.handleDidReceiveJson(json: json)
+            }
         }
+    }
+    
+    private func removeObsevers() {
         
-        let strChannel = "{ \"channel\": \"SubscribeChannel\",\"channelId\": \"\(channelId)\" }"
-        let message = ["command" : "subscribe","identifier": strChannel]
+        if isObservingSignals {
+            
+            isObservingSignals = false
+            
+            webSocketChannelSubscriber.didSubscribeToChannelSignal.removeObserver(self)
+            webSocket.didReceiveJsonSignal.removeObserver(self)
+        }
+    }
+    
+    // MARK:  Timeout Timer
+    
+    private func startTimeoutTimer() {
+        
+        stopTimeoutTimer()
+        
+        timeoutTimer = Timer.scheduledTimer(
+            timeInterval: TractRemoteShareSubscriber.timeoutIntervalSeconds,
+            target: self,
+            selector: #selector(handleTimeoutTimer),
+            userInfo: nil,
+            repeats: false
+        )
+    }
+    
+    @objc func handleTimeoutTimer() {
+        stopTimeoutTimer()
+        if !isSubscribedToChannel {
+            handleDidSubscribeToChannel(channelId: nil, error: .timedOut)
+        }
+    }
+    
+    private func stopTimeoutTimer() {
+        timeoutTimer?.invalidate()
+        timeoutTimer = nil
+    }
+    
+    // MARK: - Log
+    
+    private func log(method: String, label: String?, labelValue: String?) {
+        
+        if loggingEnabled {
+            print("\n TractRemoteShareSubscriber \(method)")
+            if let label = label, let labelValue = labelValue {
+               print("  \(label): \(labelValue)")
+            }
+        }
+    }
+}
 
-        do {
-            let data = try JSONSerialization.data(withJSONObject: message)
-            if let dataString = String(data: data, encoding: .utf8){
-                socket.write(string: dataString)
-            }
-            
-        } catch let error {
+// MARK: - Events
 
-        }
-    }
+extension TractRemoteShareSubscriber {
     
-    func subscribeToChannel(liveShareStream: String) {
-               
-        subscribeToChannel = liveShareStream
-        
-        if !isConnected {
-            socket.connect()
-        }
-        else {
-            handleSocketConnected()
-        }
-    }
-    
-    func unsubscribeChannel() {
-        
-        subscribeToChannel = nil
-        socket.disconnect()
-    }
-    
-    private func handleReceivedMessage(json: Any?) {
-        
-        print("\n TractRemoteShareSubscriber: handleReceivedMessage()")
-        
-        guard let jsonObject = json as? [String: Any] else {
-            return
-        }
-        
-        if let type = jsonObject["type"] as? String {
-            print("  TYPE: \(type)")
-            
-            if type == "welcome" {
-                // sent when subscribing to a channel
-            }
-            else if type == "confirm_subscription" {
-                // sent when subscribing to a channel
-            }
-        }
-        else if let messageObject = jsonObject["message"] as? [String: Any], let dataObject = messageObject["data"] as? [String: Any] {
+    private func handleDidReceiveJson(json: [String: Any]) {
+                
+        if let messageObject = json["message"] as? [String: Any], let dataObject = messageObject["data"] as? [String: Any] {
             
             guard let eventType = dataObject["type"] as? String, let attributes = dataObject["attributes"] as? [String: Any] else {
                 return
             }
+            
+            let jsonServices = JsonServices()
                         
             let attributesData: Data? = jsonServices.getJsonData(json: attributes)
             
@@ -155,11 +168,6 @@ class TractRemoteShareSubscriber {
                 if let event = navigationEvent {
                     navigationEventSignal.accept(value: event)
                 }
-                
-                print("  navigationEvent.page: \(String(describing: navigationEvent?.page))")
-                print("  navigationEvent.card: \(String(describing: navigationEvent?.card))")
-                print("  navigationEvent.locale: \(String(describing: navigationEvent?.locale))")
-                print("  navigationEvent.tool: \(String(describing: navigationEvent?.tool))")
             }
         }
     }
