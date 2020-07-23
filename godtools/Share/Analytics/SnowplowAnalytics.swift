@@ -142,7 +142,8 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
             data: [
                 "grMasterPersonID": grMasterPersonID ?? "",
                 "marketingCloudID": marketingCloudID ?? "",
-                "ssoguid": ssoguid ?? ""
+                "ssoguid": ssoguid ?? "",
+                "isAuthenticated": keyAuthClient.isAuthenticated()
             ]
         )
         
