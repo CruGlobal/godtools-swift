@@ -137,7 +137,7 @@ extension TractCards {
             let elementCard = element as! TractCard
             if card != elementCard {
                 if foundCard {
-                    elementCard.hideCard()
+                    elementCard.hideCard(animated: true)
                 } else {
                     elementCard.showCard(animated: true)
                 }
@@ -368,7 +368,7 @@ extension TractCards {
         if sender.direction == .up {
             self.lastCardOpened?.processSwipeUp(animated: true)
         } else if sender.direction == .down {
-            self.lastCardOpened?.processSwipeDown()
+            self.lastCardOpened?.processSwipeDown(animated: true)
         }
     }
     

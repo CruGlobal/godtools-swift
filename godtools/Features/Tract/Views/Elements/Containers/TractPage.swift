@@ -143,17 +143,20 @@ class TractPage: BaseTractElement {
         
         if let card = card {
             
-            for index in card ..< tractCardsArray.count {
-                
+            for index in 0 ..< tractCardsArray.count {
+                                
                 let tractCard: TractCard = tractCardsArray[index]
-                
-                if index == card {
-                    tractCard.processSwipeUp(animated: animated)
+                let cardState = tractCard.cardProperties().cardState
+                                
+                if index <= card {
+                    if cardState != .open {
+                        tractCard.processSwipeUp(animated: animated)
+                    }
                 }
-                else if index > card {
-                    let cardState = tractCard.cardProperties().cardState
-                    if cardState != .close || cardState != .hidden {
-                        tractCard.processSwipeDown()
+                else {
+                    if cardState == .open {
+                        let animated: Bool = cardState == .open
+                        tractCard.processSwipeDown(animated: animated)
                     }
                 }
             }
