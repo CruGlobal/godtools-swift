@@ -165,6 +165,11 @@ extension TractRemoteShareSubscriber {
             
             if eventType == "navigation-event" {
                 
+                if loggingEnabled {
+                    log(method: "handleDidReceiveJson()", label: nil, labelValue: nil)
+                    print("  navigationEvent: \(json)")
+                }
+                
                 let navigationEvent: TractRemoteShareNavigationEvent? = jsonServices.decodeObject(data: attributesData)
                 
                 if let event = navigationEvent {

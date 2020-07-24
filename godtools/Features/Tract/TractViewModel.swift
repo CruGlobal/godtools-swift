@@ -134,13 +134,7 @@ class TractViewModel: NSObject, TractViewModelType {
         
         tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
             DispatchQueue.main.async { [weak self] in
-                if let page = navigationEvent.page {
-                    self?.cachedTractRemoteShareNavigationEvents[page] = navigationEvent
-                    self?.currentTractPage.accept(value: AnimatableValue(value: page, animated: true))
-                    if let cachedTractPage = self?.getTractPageItem(page: page).tractPage {
-                        cachedTractPage.setCard(card: navigationEvent.card, animated: true)
-                    }
-                }
+                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent)
             }
         }
     }
@@ -153,6 +147,32 @@ class TractViewModel: NSObject, TractViewModelType {
                 
         tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
 
+        }
+    }
+    
+    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent) {
+        
+        if let page = navigationEvent.page {
+            cachedTractRemoteShareNavigationEvents[page] = navigationEvent
+            currentTractPage.accept(value: AnimatableValue(value: page, animated: true))
+            if let cachedTractPage = getTractPageItem(page: page).tractPage {
+                cachedTractPage.setCard(card: navigationEvent.card, animated: true)
+            }
+        }
+        
+        if let locale = navigationEvent.locale, !locale.isEmpty {
+            
+            let currentTractLanguage: TractLanguage = selectedTractLanguage.value
+            let localeChanged: Bool = locale != currentTractLanguage.language.code
+            
+            if localeChanged {
+                if locale == primaryLanguage.code {
+                    primaryLanguageTapped()
+                }
+                else if locale == parallelLanguage?.code {
+                    parallelLanguagedTapped()
+                }
+            }
         }
     }
     

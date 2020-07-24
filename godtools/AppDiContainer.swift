@@ -234,7 +234,7 @@ class AppDiContainer {
             config: config,
             webSocket: webSocket,
             webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
-            loggingEnabled: true
+            loggingEnabled: false
         )
     }
     
