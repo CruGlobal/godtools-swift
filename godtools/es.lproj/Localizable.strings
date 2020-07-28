@@ -1,13 +1,57 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Iniciar conversación";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Crecimiento cristiano";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Entrenamiento";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Abrir";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Añadir a favoritos";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Eliminar de favoritos";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "La herramienta se está descargando. Para evitar espera en el futuro, marca esta herramienta como favorita para que esté disponible en línea.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Descargando la traducción más reciente para esta herramienta.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Eliminar de favoritos?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "¿Seguro que quieres eliminar %@ de tus favoritos? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Invitación al Evangelio";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artículos";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Volver a intentar descarga";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Versión";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Descargando artículos...";
 "language_onboard" = "Más de 80 idiomas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Has descargado todas las herramientas disponibles.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mis herramientas";
+"my_tools" = "Favoritos";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Encontrar herramientas";
+"find_tools" = "Todas las herramientas";
 
 "unavailable" = "No disponible";
 
@@ -84,7 +128,9 @@ Puedes acceer a una versión online en https://knowgod.com/";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="Este enlace te llevará a la versión web de la página que estábamos mirando juntos hoy: %@. ¡Conversemos más!
+"tract_share_message" ="Este enlace te llevará a una versión web de la página que la que hablábamos juntos hoy: %@.
+
+¡Conversemos más!
 
 La aplicación se puede descargar en https://godtoolsapp.com";
 
@@ -150,9 +196,13 @@ La aplicación se puede descargar en https://godtoolsapp.com";
 
 // Tutorial
 "tutorial.tutorialItem.0.title" = "Ver";
-"tutorial.tutorialItem.0.message" = "Mira lo que ofrece GodTools en nuestro vídeo de demostración.";
+"tutorial.tutorialItem.0.message" = "Mira lo que ofrece GodTools en nuestro vídeo de demostración.
+
+(Toca el vídeo para que aparezca la configuración de subtítulos)";
 "tutorial.tutorialItem.1.title" = "Prepárate";
-"tutorial.tutorialItem.1.message" = "Familiarízate con algunas de nuestras herramientas. La herramienta \"Enséñame a compartir\" es un buen punto de partida. ";
+"tutorial.tutorialItem.1.message" = "Familiarízate con algunas de nuestras herramientas. La herramienta \"Enséñame a compartir\" es un buen punto de partida. 
+
+Pulsa el botón de información en cualquier herramienta para obtener más información.";
 "tutorial.tutorialItem.2.title" = "Pruébate";
 "tutorial.tutorialItem.2.message" = "Todo el mundo empieza como principiante. Prueba a usar una herramienta en una conversación y observa lo que aprendes.";
 "tutorial.tutorialItem.3.title" = "Este tutorial está disponible para volver a verlo en el menú.";

@@ -1,3 +1,38 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Začenjanje pogovora";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Krščanska rast";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Učenje";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Odpri";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Dodaj med priljubljene";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Odstrani iz priljubljenih";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Orodje se prenaša. Da se izognete čakanju, dodajte orodje med priljubljene, da bo na voljo brez povezave.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Prenašanje najnovejšega prevoda za to orodje.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Odstrani iz priljubljenih?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Ali res želite odstraniti %@ iz priljubljenih?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Povabilo k evangeliju";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Članki";
 "language_onboard" = "Več kot 80 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

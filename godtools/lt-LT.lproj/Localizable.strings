@@ -1,13 +1,48 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Pokalbiui pradėti";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Krikščionio augimas";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Mokymas";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Atidaryti";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Pridėti prie Mėgstamiausių";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Pašalinti iš Mėgstamiausių";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Įrankis atsiunčiamas. Kad ateityje nereikėtų laukti, priskirkite šį įrankį prie Mėgstamiausių ir pasieksite jį neprisijungę.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Atsiunčiamas naujausias šio įrankio vertimas.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Ar pašalinti iš Mėgstamiausių?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Ar tikrai norite pašalinti %@ iš savo Mėgstamiausių? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelijos kvietimas";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Straipsniai";
 "language_onboard" = "80+ kalbų";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mano įrankiai";
+"my_tools" = "Mėgstamiausi";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Rasti įrankius";
+"find_tools" = "Visi įrankiai";
 
 "unavailable" = "Nėra";
 

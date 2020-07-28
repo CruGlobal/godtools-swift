@@ -1,15 +1,53 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "ผู้เริ่มบทสนทนา";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "ชีวิตคริสเตียนเจริญขึ้น";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "การฝึกซ้อม";
+
+/* This is an invitation for a user to open a tool */
+"open" = "เปิด";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "เพิ่มไปยังรายการโปรด";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "ลบออกจากรายการโปรด";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "กำลังดาวน์โหลดเครื่องมือ เพื่อหลีกเลี่ยงการรอในอนาคต เพิ่มเครื่องมือนี้ในรายการโปรดเพื่อทำให้เครื่องมือพร้อมใช้งานแบบออฟไลน์";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "กำลังดาวน์โหลดการแปลล่าสุดจากเครื่องมือนี้";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ลบออกจากรายการโปรดหรือไม่";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "แน่ใจหรือไม่ว่าต้องการลบ%@ออกจากรายการโปรด";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "คำเชิญพระกิตติคุณ";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "บทความ";
 "language_onboard" = "กว่า 80 ภาษา";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "คุณดาวน์โหลดเครื่องมือทั้งหมดแล้ว";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "เครื่องมือของฉัน";
+"my_tools" = "รายการโปรด";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "ค้นหาเครื่องมือ";
+"find_tools" = "เครื่องมือทั้งหมด";
 
 "unavailable" = "ใช้ไม่ได้";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "ข้าม";
 
 // Onboarding
 "add_new_tools" = "เพิ่มเครื่องมือใหม่";

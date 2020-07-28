@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Temat do rozmów";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Rozwój Chrześcijanina";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Szkolenie";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Otwórz";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Dodaj do ulubionych";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Usuń z ulubionych";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Narzędzie jest pobierane. Aby uniknąć czekania w przyszłości, dodaj narzędzie do ulubionych, dzięki czemu będzie dostępne offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Pobieranie bieżącego tłumaczenia tego narzędzia.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Usunąć z ulubionych? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Czy na pewno chcesz usunąć %@ z ulubionych? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Zaproszenie do Ewangelii";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artykuły";
 "language_onboard" = "80+ języków";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Pobrałeś(aś) już wszystkie dostępne materiały.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Moje Prezentacje";
+"my_tools" = "Ulubione";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Znajdź Prezentacje";
+"find_tools" = "Wszystkie narzędzia";
 
 "unavailable" = "Niedostępne";
 

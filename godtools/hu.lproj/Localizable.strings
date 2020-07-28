@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Beszélgetés indító";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Hitbeli növekedés";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Képzés";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Megnyitás";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Hozzáadás Kedvencekhez";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Eltávolítás Kedvencek közül";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Az eszköz letöltés alatt. A jövőben a várakozás elkerülése érdekében az eszköz kedvencelésével offline is elérhető lesz.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Az eszköz legfrissebb fordításának letöltése.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Eltávolítás Kedvencek közül?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Biztos szeretnéd eltávolítani ezt: %@ a Kedvencek közül? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospel meghívás";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Cikkek";
 "language_onboard" = "80+ nyelv";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Az összes elérhető eszközt letöltötted.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Saját eszközeim";
+"my_tools" = "Kedvencek";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Eszközök keresése";
+"find_tools" = "Minden eszköz";
 
 "unavailable" = "Nem elérhető";
 

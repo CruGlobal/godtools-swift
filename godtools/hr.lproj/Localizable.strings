@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Poticaj na razgovor";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Kršćanski rast";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Učenje";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Otvori";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Dodaj u favorite";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Ukloni iz favorita";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Alat se trenutačno preuzima. Da biste ubuduće izbjegli čekanje, označite ovaj alat kao omiljeni i bit će vam dostupan i izvan mreže.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Trenutačno se preuzima najnoviji prijevod ovog alata.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Ukloni iz favorita?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Jeste li sigurni da želite ukloniti %@ iz omiljenih alata? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Poziv Evanđelja";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Članci";
 "language_onboard" = "Više od 80 jezika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Preuzeli ste sve raspoložive alate.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Moji alati";
+"my_tools" = "Favoriti";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Pronađi alate";
+"find_tools" = "Svi alati";
 
 "unavailable" = "Nedostupno";
 

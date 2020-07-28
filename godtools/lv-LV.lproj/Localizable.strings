@@ -1,13 +1,48 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Sarunas sākšanai";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Kristīgā izaugsme";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Apmācība";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Atvērt";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Pievienot Izlasei";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Dzēst no Izlases";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde. Lai nākotnē izvairītos no gaidīšanas, atzīmējiet šo rīku kā izlases rīku.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Dzēst no Izlases?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Vai tiešām vēlaties dzēstu %@ no izlases? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospeļa uzaicinājums";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Raksti";
 "language_onboard" = "80+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mani rīki";
+"my_tools" = "Izlase";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Atrast rīkus";
+"find_tools" = "Visi rīki";
 
 "unavailable" = "Nav pieejams";
 

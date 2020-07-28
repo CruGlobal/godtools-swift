@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Konuşma Başlatıcı";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Hristiyan Büyümesi";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Eğitim";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Aç";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Favorilere Ekle";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Favorilerden Kaldır";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Araç indiriliyor. Gelecekte beklemeyi önlemek için bu aracı favorilere ekle, böylelikle araç çevrim dışı kullanılabilir.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Bu araç için en güncel çeviri indiriliyor.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Favorilerden Kaldırılsın mı? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "%@ aracını Favorilerinden kaldırmak istediğinden emin misin? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "İncil Daveti";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Makaleler";
 "language_onboard" = "80'i Aşkın Dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Araçlarım";
+"my_tools" = "Favoriler";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Araçlar Bul";
+"find_tools" = "Tüm Araçlar";
 
 "unavailable" = "Mevcut Değil";
 

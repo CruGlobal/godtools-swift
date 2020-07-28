@@ -1,13 +1,48 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Gesprekinleiding";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Christelike groei";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Opleiding";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Maak oop";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Voeg by Gunstelinge";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Verwyder van Gunstelinge";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Die gereedskap laai af. Om te verhoed om in die toekoms te wag, merk as gunsteling sodat hierdie gereedskap aflyn  beskikbaar is.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Besig om die mees onlangse vertaling vir hierdie gereedskap af te laai.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Verwyder van Gunstelinge?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Is jy seker jy wil %@ van jou gunstelinglys afhaal? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelie uitnodiging";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikels";
 "language_onboard" = "80+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My hulpmiddels";
+"my_tools" = "Gunstelinge";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Vind hulpmiddels";
+"find_tools" = "Alle hulpmiddels";
 
 "unavailable" = "Nie beskikbaar";
 

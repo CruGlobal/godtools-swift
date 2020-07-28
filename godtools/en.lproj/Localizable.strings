@@ -1,3 +1,40 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Conversation Starter";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Christian Growth";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Training";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Open";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Add to Favorites";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Remove from Favorites";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Remove from Favorites? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospel Invitation";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Articles";
+
 "articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
 
 /* This is to let users know which version of the app is installed on their phone */
@@ -11,10 +48,10 @@
 "no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My Tools";
+"my_tools" = "Favorites";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find Tools";
+"find_tools" = "All Tools";
 
 "unavailable" = "Unavailable";
 

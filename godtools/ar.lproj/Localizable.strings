@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "باديء المحادثة";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "النمو المسيحي";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "التدريب";
+
+/* This is an invitation for a user to open a tool */
+"open" = "فتح";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "إضافة إلى المفضلة";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "إزالة من المفضلة";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "يجري تنزيل الأداة. أضف هذه الأداة إلى المفضلة لتجنب الانتظار في المستقبل ولتكون متاحة في وضع عدم الاتصال.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "جارٍ تنزيل أحدث ترجمة لهذه الأداة.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "إزالة من المفضلة؟ ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "هل أنت متأكد من أنك ترغب في إزالة %@ من المفضلة؟ ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "دعوة إلى الإنجيل";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "المقالات";
 "language_onboard" = "أكثر من 80 لغة";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "لقد حملت كل الأدوات المتوفرة.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "أدواتي";
+"my_tools" = "المفضلة";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "إيجاد أدوات";
+"find_tools" = "كل الأدوات";
 
 "unavailable" = "غير متوفر";
 

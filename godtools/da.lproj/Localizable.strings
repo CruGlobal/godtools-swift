@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Samtalestarter";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Kristen vækst";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Træning";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Åbn";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Føj til Favoritter";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Fjern fra Favoritter";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Værktøjet downloades. Hvis du vil undgå dette fremover, skal du gøre dette værktøj til en favorit, så vil det være tilgængeligt offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloader den nyeste oversættelse af dette værktøj.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Fjern fra Favoritter?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Er du sikker på, at du vil fjerne %@ fra dine favoritter? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelieinvitation";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikler";
 "language_onboard" = "Over 80 sprog";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har hentet alle tilgængelige værktøjer.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mine værktøjer";
+"my_tools" = "Favoritter";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find værktøjer";
+"find_tools" = "Alle værktøjer";
 
 "unavailable" = "Ikke tilgængelig";
 

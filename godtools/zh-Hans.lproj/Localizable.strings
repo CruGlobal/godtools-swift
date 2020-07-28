@@ -1,3 +1,39 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "对话开场白";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "基督徒成长";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "培训";
+
+/* This is an invitation for a user to open a tool */
+"open" = "打开";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "加入收藏夹";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "移出收藏夹";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "正在下载该工具。为了避免今后需要等待，请收藏该工具，以便离线使用。";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "下载该工具的最新翻译。";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "从收藏夹中删除？";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "确定要从收藏夹中删除%@吗？";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "福音邀请";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "文章";
+
 "articles.downloadArticlesButton.title.retryDownload" = "重试下载";
 
 /* This is to let users know which version of the app is installed on their phone */
@@ -11,10 +47,10 @@
 "no_more_tools" = "您已下载所有可用工具。";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "我的工具";
+"my_tools" = "收藏夹";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "查找工具";
+"find_tools" = "所有工具";
 
 "unavailable" = "不可用";
 

@@ -1,3 +1,38 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Söhbət başladıcı";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Məsihçilikdə böyümə";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Təlim";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Aç";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Sevimlilərə əlavə et";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Sevimlilərdən çıxar";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Alət yüklənir. Gələcəkdə gözləməmək üçün, bu aləti sevimli edib oflayn rejimdə istifadə edin.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Bu alət üçün ən yeni tərcümə yüklənir.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Sevimlilərdən çıxarılsın?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "%@ Sevimlilərinizdən çıxarmaqdan əminsiniz?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Müqəddəs həqiqətə dəvət";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Məqalələr";
 "language_onboard" = "80-dən çox dil";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */

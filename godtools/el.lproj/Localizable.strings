@@ -1,13 +1,49 @@
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Εκκίνηση Συζήτησης";
+
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Πνευματική Ανάπτυξη";
+
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Εξάσκηση";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Άνοιγμα";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Προσθήκη στα Αγαπημένα";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Αφαίρεση από τα Αγαπημένα";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Το εργαλείο πραγματοποιεί λήψη. Για να αποφύγετε την αναμονή στο μέλλον, βάλτε αυτό το εργαλείο στα αγαπημένα, ώστε να είναι διαθέσιμο offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Πραγματοποιείται λήψη της πιο πρόσφατης μετάφρασης γι' αυτό το εργαλείο.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Αφαίρεση από τα Αγαπημένα?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Σίγουρα επιθυμείτε να αφαιρέσετε το %@ από τα Αγαπημένα σας; ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Πρόσκληση στο Ευαγγέλιο";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Άρθρα";
 "language_onboard" = "80+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Τα Εργαλεία μου";
+"my_tools" = "Αγαπημένα";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Βρείτε Εργαλεία";
+"find_tools" = "Όλα τα Εργαλεία";
 
 "unavailable" = "Μη διαθέσιμο";
 
