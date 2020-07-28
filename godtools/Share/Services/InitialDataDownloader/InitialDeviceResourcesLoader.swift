@@ -17,10 +17,11 @@ class InitialDeviceResourcesLoader {
     private let translationsFileCache: TranslationsFileCache
     private let realmResourcesCache: RealmResourcesCache
     private let favoritedResourcesCache: FavoritedResourcesCache
+    private let languagesCache: LanguagesCache
     private let deviceLanguage: DeviceLanguageType
     private let languageSettingsCache: LanguageSettingsCacheType
         
-    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
+    required init(realmDatabase: RealmDatabase, legacyRealmMigration: LegacyRealmMigration, attachmentsFileCache: AttachmentsFileCache, translationsFileCache: TranslationsFileCache, realmResourcesCache: RealmResourcesCache, favoritedResourcesCache: FavoritedResourcesCache, languagesCache: LanguagesCache, deviceLanguage: DeviceLanguageType, languageSettingsCache: LanguageSettingsCacheType) {
         
         self.realmDatabase = realmDatabase
         self.legacyRealmMigration = legacyRealmMigration
@@ -28,6 +29,7 @@ class InitialDeviceResourcesLoader {
         self.translationsFileCache = translationsFileCache
         self.realmResourcesCache = realmResourcesCache
         self.favoritedResourcesCache = favoritedResourcesCache
+        self.languagesCache = languagesCache
         self.deviceLanguage = deviceLanguage
         self.languageSettingsCache = languageSettingsCache
     }
@@ -269,24 +271,23 @@ class InitialDeviceResourcesLoader {
             return
         }
                 
-        let realmLanguages: Results<RealmLanguage> = realm.objects(RealmLanguage.self)
         let preferredDeviceLanguageCodes: [String] = deviceLanguage.possibleLocaleCodes(locale: Locale.current)
         
-        var deviceLanguage: RealmLanguage?
+        var deviceLanguage: LanguageModel?
         
         for languageCode in preferredDeviceLanguageCodes {
-            if let language = realmLanguages.filter("code = '\(languageCode)'").first {
+            if let language = languagesCache.getLanguage(realm: realm, code: languageCode) {
                 deviceLanguage = language
                 break
             }
         }
         
-        let primaryLanguage: RealmLanguage?
+        let primaryLanguage: LanguageModel?
         
         if let deviceLanguage = deviceLanguage {
             primaryLanguage = deviceLanguage
         }
-        else if let englishLanguage = realmLanguages.filter("code = 'en'").first {
+        else if let englishLanguage = languagesCache.getLanguage(realm: realm, code: "en") {
             primaryLanguage = englishLanguage
         }
         else {
