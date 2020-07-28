@@ -16,12 +16,14 @@ protocol ToolsViewModelType {
     var favoritedResourcesCache: FavoritedResourcesCache { get }
     var fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel { get }
     var deviceAttachmentBanners: DeviceAttachmentBanners { get }
+    var analytics: AnalyticsContainer { get }
     var tools: ObservableValue<[ResourceModel]> { get }
     var toolRefreshed: SignalValue<IndexPath> { get }
     var toolsAdded: ObservableValue<[IndexPath]> { get }
     var toolsRemoved: ObservableValue<[IndexPath]> { get }
     var toolListIsEditable: Bool { get }
     var toolListIsEditing: ObservableValue<Bool> { get }
+    var analyticsScreenName: String { get }
     
     func toolTapped(resource: ResourceModel)
     func aboutToolTapped(resource: ResourceModel)
@@ -80,5 +82,13 @@ extension ToolsViewModelType {
         
         tools.setValue(value: updatedToolsList)
         toolsRemoved.accept(value: removedIndexPaths)
+    }
+    
+    func trackToolTappedAnalytics() {
+        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tool Open Tap", data: ["cru.tool_open_tap": 1])
+    }
+    
+    func trackOpenToolButtonAnalytics() {
+        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "Tool Open Button", data: ["cru.tool_open_button": 1])
     }
 }

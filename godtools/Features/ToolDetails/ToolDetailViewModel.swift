@@ -163,7 +163,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         languageDetails.accept(value: sortedLanguageNames)
     }
     
-    private var screenName: String {
+    private var analyticsScreenName: String {
         return resource.abbreviation + "-" + "tool-info"
     }
     
@@ -177,10 +177,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
+        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection)
     }
     
     func openToolTapped() {
+        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "About Tool Open Button", data: ["cru.tool_about_button": 1])
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
@@ -201,7 +202,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     func urlTapped(url: URL) {
                 
         exitLinkAnalytics.trackExitLink(
-            screenName: screenName,
+            screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
             url: url
