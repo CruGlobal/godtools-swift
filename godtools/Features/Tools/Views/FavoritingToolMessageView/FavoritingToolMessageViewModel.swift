@@ -11,13 +11,16 @@ import Foundation
 class FavoritingToolMessageViewModel: FavoritingToolMessageViewModelType {
     
     private let favoritingToolMessageCache: FavoritingToolMessageCache
+    private let localizationServices: LocalizationServices
     
-    let message: String = "Make a tool available offline by tapping the heart icon which adds it to your favorites."
+    let message: String
     let hidesMessage: ObservableValue<(hidden: Bool, animated: Bool)> = ObservableValue(value: (hidden: false, animated: false))
     
-    required init(favoritingToolMessageCache: FavoritingToolMessageCache) {
+    required init(favoritingToolMessageCache: FavoritingToolMessageCache, localizationServices: LocalizationServices) {
         
         self.favoritingToolMessageCache = favoritingToolMessageCache
+        self.localizationServices = localizationServices
+        self.message = localizationServices.stringForMainBundle(key: "tool_offline_favorite_message")
         
         hidesMessage.accept(value: (hidden: favoritingToolMessageCache.favoritingToolMessageDisabled, animated: false))
     }

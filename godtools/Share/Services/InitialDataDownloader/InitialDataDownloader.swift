@@ -34,7 +34,7 @@ class InitialDataDownloader: NSObject {
     let attachmentsDownload: ObservableValue<DownloadAttachmentsReceipt?> = ObservableValue(value: nil)
     let latestTranslationsDownload: ObservableValue<DownloadResourceTranslationsReceipts?> = ObservableValue(value: nil)
     
-    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
+    required init(realmDatabase: RealmDatabase, initialDeviceResourcesLoader: InitialDeviceResourcesLoader, resourcesDownloader: ResourcesDownloader, realmResourcesCache: RealmResourcesCache, resourcesCache: ResourcesCache, languagesCache: LanguagesCache, resourcesCleanUp: ResourcesCleanUp, attachmentsDownloader: AttachmentsDownloader, languageSettingsCache: LanguageSettingsCacheType, favoritedResourceTranslationDownloader: FavoritedResourceTranslationDownloader) {
         
         self.realmDatabase = realmDatabase
         self.initialDeviceResourcesLoader = initialDeviceResourcesLoader
@@ -43,8 +43,8 @@ class InitialDataDownloader: NSObject {
         self.resourcesCleanUp = resourcesCleanUp
         self.attachmentsDownloader = attachmentsDownloader
         self.languageSettingsCache = languageSettingsCache
-        self.resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
-        self.languagesCache = LanguagesCache(realmDatabase: realmDatabase)
+        self.resourcesCache = resourcesCache
+        self.languagesCache = languagesCache
         self.attachmentsFileCache = attachmentsDownloader.attachmentsFileCache
         self.favoritedResourceTranslationDownloader = favoritedResourceTranslationDownloader
         

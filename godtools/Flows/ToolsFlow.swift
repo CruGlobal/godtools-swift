@@ -32,7 +32,8 @@ class ToolsFlow: Flow {
         )
         
         let favoritingToolMessageViewModel = FavoritingToolMessageViewModel(
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            localizationServices: appDiContainer.localizationServices
         )
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
@@ -223,7 +224,7 @@ class ToolsFlow: Flow {
         })
     }
     
-    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, page: Int?) {
+    func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, page: Int?) {
         
         let dataDownloader: InitialDataDownloader = appDiContainer.initialDataDownloader
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
@@ -283,6 +284,7 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
+                liveShareStream: liveShareStream,
                 page: page
             )
         }
@@ -309,12 +311,13 @@ class ToolsFlow: Flow {
                 parallelLanguage: parallelLanguage,
                 parallelTranslation: parallelTranslation,
                 parallelTranslationManifest: parallelTranslationManifest,
+                liveShareStream: nil,
                 page: 0
             )
         }
     }
     
-    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+    private func navigateToToolFromFetchedCachedResources(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslation: TranslationModel, primaryTranslationManifest: TranslationManifestData?, parallelLanguage: LanguageModel?, parallelTranslation: TranslationModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
         
         let translationsFileCache: TranslationsFileCache = appDiContainer.translationsFileCache
         
@@ -378,6 +381,7 @@ class ToolsFlow: Flow {
                     primaryTranslationManifest: resourceTranslationPrimaryManifest,
                     parallelLanguage: parallelLanguage,
                     parallelTranslationManifest: parallelTranslationManifest ?? downloadedParallelTranslation,
+                    liveShareStream: liveShareStream,
                     page: page
                 )
                 
@@ -397,12 +401,13 @@ class ToolsFlow: Flow {
                 primaryTranslationManifest: primaryTranslationManifest,
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
+                liveShareStream: liveShareStream,
                 page: page
             )
         }
     }
     
-    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+    private func navigateToTool(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
         
         let resourceType: ResourceType = ResourceType.resourceType(resource: resource)
         
@@ -421,6 +426,7 @@ class ToolsFlow: Flow {
                 primaryTranslationManifest: primaryTranslationManifest,
                 parallelLanguage: parallelLanguage,
                 parallelTranslationManifest: parallelTranslationManifest,
+                liveShareStream: liveShareStream,
                 page: page
             )
             
@@ -442,7 +448,7 @@ class ToolsFlow: Flow {
         self.articlesFlow = articlesFlow
     }
     
-    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, page: Int?) {
+    private func navigateToTract(resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, liveShareStream: String?, page: Int?) {
         
         let viewModel = TractViewModel(
             flowDelegate: self,
@@ -453,10 +459,12 @@ class ToolsFlow: Flow {
             parallelTranslationManifest: parallelTranslationManifest,
             languageSettingsService: appDiContainer.languageSettingsService,
             tractManager: appDiContainer.tractManager,
+            tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
+            liveShareStream: liveShareStream,
             tractPage: page
         )
         let view = TractView(viewModel: viewModel)

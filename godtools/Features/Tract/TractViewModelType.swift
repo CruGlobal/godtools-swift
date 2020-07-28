@@ -30,5 +30,5 @@ protocol TractViewModelType {
     func tractPageDidChange(page: Int)
     func tractPageDidAppear(page: Int)
     func sendEmailTapped(subject: String?, message: String?, isHtml: Bool?)
-    func getTractPage(page: Int) -> TractPage?
+    func getTractPageItem(page: Int) -> TractPageItem
 }

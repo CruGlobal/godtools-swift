@@ -10,8 +10,6 @@ import Foundation
 
 class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
-    private let analytics: AnalyticsContainer
-    
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
@@ -20,6 +18,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let favoritedResourcesCache: FavoritedResourcesCache
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let deviceAttachmentBanners: DeviceAttachmentBanners
+    let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -43,6 +42,10 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
         super.init()
                  
         setupBinding()
+    }
+    
+    var analyticsScreenName: String {
+        return "All Tools"
     }
     
     deinit {
@@ -93,10 +96,11 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Find Tools", siteSection: "tools", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "tools", siteSubSection: "")
     }
     
     func toolTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
@@ -105,6 +109,7 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     }
     
     func openToolTapped(resource: ResourceModel) {
+        trackOpenToolButtonAnalytics()
         flowDelegate?.navigate(step: .toolTappedFromAllTools(resource: resource))
     }
     
