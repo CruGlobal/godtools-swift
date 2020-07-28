@@ -84,6 +84,7 @@ class DeepLinkingService: NSObject {
         }
         
         var parallelLanguage: LanguageModel?
+        var liveShareStream: String?
         
         let queryComponents: [String] = url.query?.components(separatedBy: "&") ?? []
         
@@ -102,13 +103,20 @@ class DeepLinkingService: NSObject {
             if parallelLanguage == nil && key == "parallelLanguage" && !value.isEmpty, let queryParallelLanguage = dataDownloader.languagesCache.getLanguage(code: value) {
                 parallelLanguage = queryParallelLanguage
             }
+            else if key == "liveShareStream" {
+                liveShareStream = value
+            }
         }
                 
         processing.accept(value: false)
         deepLinkUrl = nil
         
+        print("\n DeepLinkingService: processDeepLink() url: \(url.absoluteString)")
+        print("  parallelLanguage: \(String(describing: parallelLanguage?.code))")
+        print("  liveShareStream: \(String(describing: liveShareStream))")
+        
         if let resource = resource, let primaryLanguage = primaryLanguage {
-            completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, page: page))
+            completed.accept(value: .tool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, liveShareStream: liveShareStream, page: page))
         }
         else {
             completed.accept(value: .none)

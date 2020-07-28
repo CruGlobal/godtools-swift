@@ -11,5 +11,5 @@ import Foundation
 enum DeepLinkingType {
     
     case none
-    case tool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, page: Int?)
+    case tool(resource: ResourceModel, primaryLanguage: LanguageModel, parallelLanguage: LanguageModel?, liveShareStream: String?, page: Int?)
 }
