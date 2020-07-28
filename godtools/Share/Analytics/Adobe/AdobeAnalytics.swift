@@ -164,9 +164,22 @@ class AdobeAnalytics: AdobeAnalyticsType {
                 siteSubSection: siteSubSection,
                 ssoguid: ssoguid
             )
-            
+                        
             complete(defaultProperties)
         }
+    }
+    
+    private func setVisitorID() {
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+        
+        let mcid: String? = self.visitorMarketingCloudID
+        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
+
+        
+        let visitorId: String? = mcid ?? ssoguid
+        let authState: ADBMobileVisitorAuthenticationState = visitorId == nil ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+        
+        ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
     }
     
     private var appName: String {
