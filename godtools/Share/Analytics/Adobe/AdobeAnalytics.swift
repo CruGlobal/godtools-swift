@@ -89,7 +89,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
         let previousScreenName: String = self.previousTrackedScreenName
         
         previousTrackedScreenName = screenName
-        
+                
         createDefaultProperties(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection, previousScreenName: previousScreenName) { [weak self] (defaultProperties: AdobeAnalyticsProperties) in
             
             let data: [AnyHashable: Any] = JsonServices().encode(object: defaultProperties)
@@ -139,13 +139,16 @@ class AdobeAnalytics: AdobeAnalyticsType {
     }
     
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
         let appName: String = self.appName
         let contentLanguage: String? = languageSettingsService.primaryLanguage.value?.code
         let contentLanguageSecondary: String? = languageSettingsService.parallelLanguage.value?.code
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let loggedInStatus: String = self.loggedInStatus
-        let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
+        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
+        
+        setVisitorID()
         
         DispatchQueue.global().async { [weak self] in
             
@@ -171,12 +174,11 @@ class AdobeAnalytics: AdobeAnalyticsType {
     
     private func setVisitorID() {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
-        
-        let mcid: String? = self.visitorMarketingCloudID
+
+        let grMasterPersonID: String? = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
         let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
 
-        
-        let visitorId: String? = mcid ?? ssoguid
+        let visitorId: String? = grMasterPersonID ?? ssoguid
         let authState: ADBMobileVisitorAuthenticationState = visitorId == nil ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
         
         ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
