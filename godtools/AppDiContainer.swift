@@ -22,6 +22,8 @@ class AppDiContainer {
     private let translationsApi: TranslationsApiType
     private let realmResourcesCache: RealmResourcesCache
     private let resourcesDownloader: ResourcesDownloader
+    private let resourcesCache: ResourcesCache
+    private let languagesCache: LanguagesCache
     private let attachmentsFileCache: AttachmentsFileCache
     private let attachmentsDownloader: AttachmentsDownloader
     private let failedFollowUpsCache: FailedFollowUpsCache
@@ -72,6 +74,10 @@ class AppDiContainer {
         
         resourcesDownloader = ResourcesDownloader(languagesApi: languagesApi, resourcesApi: resourcesApi)
         
+        resourcesCache = ResourcesCache(realmDatabase: realmDatabase)
+        
+        languagesCache = LanguagesCache(realmDatabase: realmDatabase)
+        
         translationsFileCache = TranslationsFileCache(realmDatabase: realmDatabase, sha256FileCache: resourcesSHA256FileCache)
                 
         translationDownloader = TranslationDownloader(realmDatabase: realmDatabase, translationsApi: translationsApi, translationsFileCache: translationsFileCache)
@@ -116,6 +122,7 @@ class AppDiContainer {
             translationsFileCache: translationsFileCache,
             realmResourcesCache: realmResourcesCache,
             favoritedResourcesCache: favoritedResourcesCache,
+            languagesCache: languagesCache,
             deviceLanguage: deviceLanguage,
             languageSettingsCache: languageSettingsCache
         )
@@ -125,6 +132,8 @@ class AppDiContainer {
             initialDeviceResourcesLoader: initialDeviceResourcesLoader,
             resourcesDownloader: resourcesDownloader,
             realmResourcesCache: realmResourcesCache,
+            resourcesCache: resourcesCache,
+            languagesCache: languagesCache,
             resourcesCleanUp: resourcesCleanUp,
             attachmentsDownloader: attachmentsDownloader,
             languageSettingsCache: languageSettingsCache,
@@ -186,7 +195,7 @@ class AppDiContainer {
         deepLinkingService = DeepLinkingService(dataDownloader: initialDataDownloader)
         
         favoritingToolMessageCache = FavoritingToolMessageCache(userDefaultsCache: sharedUserDefaultsCache)
-        
+                
         // TODO: Need to remove this singleton once UIFont extension is properly refactored. ~Levi
         // UIFont extension currently depends on the primary language for picking appropriate UIFont to display.
         LanguagesManager.shared.setup(languageSettingsService: languageSettingsService)
@@ -226,6 +235,16 @@ class AppDiContainer {
     
     var tutorialAvailability: TutorialAvailabilityType {
         return TutorialAvailability(tutorialSupportedLanguages: tutorialSupportedLanguages)
+    }
+    
+    var tractRemoteShareSubscriber: TractRemoteShareSubscriber {
+        let webSocket: WebSocketType = StarscreamWebSocket()
+        return TractRemoteShareSubscriber(
+            config: config,
+            webSocket: webSocket,
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
+            loggingEnabled: false
+        )
     }
     
     var tractManager: TractManager {

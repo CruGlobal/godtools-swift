@@ -229,18 +229,19 @@ extension TractCard {
     
     override func receiveMessage() {
         if isHiddenKindCard() {
-            showCard()
+            showCard(animated: true)
         }
     }
     
     override func receiveDismissMessage() {
-        hideCard()
+        hideCard(animated: true)
     }
     
-    func processSwipeUp() {
+    func processSwipeUp(animated: Bool) {
+        
         let properties = cardProperties()
         if properties.cardState == .preview || properties.cardState == .close {
-            showCardAndPreviousCards()
+            showCardAndPreviousCards(animated: animated)
         } else if properties.cardState == .open {
             self.cardsParentView.showFollowingCardToCard(self)
             
@@ -254,11 +255,12 @@ extension TractCard {
         NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
     }
     
-    func processSwipeDown() {
+    func processSwipeDown(animated: Bool) {
         let properties = cardProperties()
         
         if properties.cardState == .open || properties.cardState == .enable {
-            hideCard()
+            
+            hideCard(animated: animated)
             
             // Need to adjust the Card number/letterName for proper analytics tracking
             let adjustedLetterName = (properties.cardNumber - 1).convertToLetter()
@@ -275,18 +277,18 @@ extension TractCard {
         
         switch properties.cardState {
         case .preview:
-            showCardAndPreviousCards()
+            showCardAndPreviousCards(animated: true)
         case .open:
             hideAllCards()
         case .close:
-            showCardAndPreviousCards()
+            showCardAndPreviousCards(animated: true)
         case .enable:
-            hideCard()
+            hideCard(animated: true)
         default: break
         }
     }
     
-    func showCardAndPreviousCards() {
+    func showCardAndPreviousCards(animated: Bool) {
         let properties = cardProperties()
         
         if properties.cardState == .open {
@@ -295,11 +297,11 @@ extension TractCard {
         NotificationCenter.default.post(name: .tractCardStateChangedNotification, object: nil, userInfo: nil)
 
         self.cardsParentView.setEnvironmentForDisplayingCard(self)
-        showCard()
+        showCard(animated: animated)
         processCardForAnalytics(cardLetterName: properties.cardLetterName)
     }
     
-    func showCard() {
+    func showCard(animated: Bool) {
         let properties = cardProperties()
         if properties.cardState == .open {
             return
@@ -312,13 +314,18 @@ extension TractCard {
         }
         
         showTexts()
-        showCardAnimation()
+        if animated {
+            showCardAnimation()
+        }
+        else {
+            showCardWithoutAnimation()
+        }
         enableScrollview()
         
         self.cardsParentView.lastCardOpened = self
     }
     
-    func hideCard() {
+    func hideCard(animated: Bool) {
         let properties = cardProperties()
         
         if properties.cardState == .close || properties.cardState == .hidden {
@@ -333,7 +340,12 @@ extension TractCard {
         
         hideTexts()
         self.cardsParentView.hideCallToAction()
-        hideCardAnimation()
+        if animated {
+            hideCardAnimation()
+        }
+        else {
+            hideCardWithoutAnimation()
+        }
         disableScrollview()
 
     }
@@ -470,11 +482,11 @@ extension TractCard {
     }
     
     @IBAction func prevButtonTapped(_ sender: UIButton) {
-        processSwipeDown()
+        processSwipeDown(animated: true)
     }
 
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        processSwipeUp()
+        processSwipeUp(animated: true)
     }
 }
 
@@ -621,9 +633,9 @@ extension TractCard: UIGestureRecognizerDelegate {
     
     @objc func handleGesture(sender: UISwipeGestureRecognizer) {
         if sender.direction == .up {
-            processSwipeUp()
+            processSwipeUp(animated: true)
         } else if sender.direction == .down {
-            processSwipeDown()
+            processSwipeDown(animated: true)
         }
     }
     
@@ -679,7 +691,7 @@ extension TractCard : UIScrollViewDelegate {
         
         if translation.y > 0 {
             if scrollOffset == 0 {
-                hideCard()
+                hideCard(animated: true)
             }
         } else {
             if scrollOffset + scrollViewHeight == scrollContentSizeHeight {

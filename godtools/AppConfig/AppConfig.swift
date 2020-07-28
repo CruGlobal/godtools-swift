@@ -69,6 +69,11 @@ class AppConfig: ConfigType {
         }
     }
     
+    var tractRemoteShareConnectionUrl: String {
+        
+        return mobileContentApiBaseUrl + "/" + "cable"
+    }
+    
     var appsFlyerDevKey: String {
         return "QdbVaVHi9bHRchUTWtoaij"
     }

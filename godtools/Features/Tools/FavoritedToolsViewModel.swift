@@ -9,9 +9,7 @@
 import Foundation
 
 class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
-    
-    private let analytics: AnalyticsContainer
-    
+        
     private weak var flowDelegate: FlowDelegate?
     
     let dataDownloader: InitialDataDownloader
@@ -20,6 +18,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     let favoritedResourcesCache: FavoritedResourcesCache
     let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let deviceAttachmentBanners: DeviceAttachmentBanners
+    let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
     let toolRefreshed: SignalValue<IndexPath> = SignalValue()
     let toolsAdded: ObservableValue<[IndexPath]> = ObservableValue(value: [])
@@ -55,6 +54,10 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
         favoritedResourcesCache.resourceSorted.removeObserver(self)
+    }
+    
+    var analyticsScreenName: String {
+        return "Favorites"
     }
     
     private func setupBinding() {
@@ -124,10 +127,11 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: "Home", siteSection: "", siteSubSection: "")
+        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: "", siteSubSection: "")
     }
     
     func toolTapped(resource: ResourceModel) {
+        trackToolTappedAnalytics()
         toolListIsEditing.accept(value: false)
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
@@ -138,6 +142,7 @@ class FavoritedToolsViewModel: NSObject, FavoritedToolsViewModelType {
     }
     
     func openToolTapped(resource: ResourceModel) {
+        trackOpenToolButtonAnalytics()
         toolListIsEditing.accept(value: false)
         flowDelegate?.navigate(step: .toolTappedFromFavoritedTools(resource: resource))
     }
