@@ -32,7 +32,8 @@ class ToolsFlow: Flow {
         )
         
         let favoritingToolMessageViewModel = FavoritingToolMessageViewModel(
-            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache
+            favoritingToolMessageCache: appDiContainer.favoritingToolMessageCache,
+            localizationServices: appDiContainer.localizationServices
         )
         
         let favoritedToolsViewModel = FavoritedToolsViewModel(
