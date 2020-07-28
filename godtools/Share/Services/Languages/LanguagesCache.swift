@@ -44,11 +44,9 @@ class LanguagesCache {
     
     func getLanguage(realm: Realm, code: String) -> LanguageModel? {
         
-        if code.contains("_") {
-            assertionFailure("LanguagesCache code contains invalid symbol '_', codes should be separated by a hyphen '-'.")
-        }
+        let lowercasedCode: String = code.lowercased()
         
-        if let realmLanguage = realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), code.lowercased())).first {
+        if let realmLanguage = realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first {
             return LanguageModel(realmLanguage: realmLanguage)
         }
         
