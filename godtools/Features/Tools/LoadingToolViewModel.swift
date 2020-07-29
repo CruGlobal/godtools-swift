@@ -24,7 +24,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     private var downloadedTranslations: [DownloadedTranslationResult] = Array()
     private var didDisplayLoaderForMinimumSeconds: Bool = false
     private var didDownloadTranslations: Bool = false
-    private var downloadCancelled: Bool = false
+    private var userCancelledDownload: Bool = false
         
     let message: ObservableValue<String> = ObservableValue(value: "")
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
@@ -114,6 +114,9 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
         receipt.translationDownloadedSignal.addObserver(self) { (downloadResult: DownloadedTranslationResult) in
             DispatchQueue.main.async { [weak self] in
                 self?.downloadedTranslations.append(downloadResult)
+                if downloadResult.downloadError != nil {
+                    self?.forceProgressTimerAndDownloadRequestCompleted()
+                }
             }
         }
         
@@ -174,7 +177,7 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
     
     private func handleProgressTimerAndDownloadRequestCompleted() {
         
-        if displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted && !downloadCancelled {
+        if displayLoaderForMinimumSecondsTimerAndTranslationDownloadCompleted && !userCancelledDownload {
             
             isLoading.accept(value: false)
             completeHandler.handle(downloadedTranslations)
@@ -184,9 +187,19 @@ class LoadingToolViewModel: NSObject, LoadingToolViewModelType {
             destroyDownloadTranslationsReceipt()
         }
     }
+    
+    private func forceProgressTimerAndDownloadRequestCompleted() {
+        
+        stopFakeDownloadProgressTimer()
+        stopDisplayLoaderForMinimumSecondsTimer()
+        destroyDownloadTranslationsReceipt()
+        didDisplayLoaderForMinimumSeconds = true
+        didDownloadTranslations = true
+        handleProgressTimerAndDownloadRequestCompleted()
+    }
 
     func closeTapped() {
-        downloadCancelled = true
+        userCancelledDownload = true
         stopFakeDownloadProgressTimer()
         stopDisplayLoaderForMinimumSecondsTimer()
         destroyDownloadTranslationsReceipt()
