@@ -90,8 +90,8 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
 
     func trackScreenView(screenName: String) {
-                    
-        serialQueue.async { [weak self] in
+           
+        serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
             guard let snowplow = self else {
                 return
@@ -111,7 +111,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
 
     func trackAction(action: String) {
         
-        serialQueue.async { [weak self] in
+        serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
             guard let snowplow = self else {
                 return
