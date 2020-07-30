@@ -10,6 +10,7 @@ import Foundation
 
 protocol AccountActivityViewModelType {
     
+    var localizationServices: LocalizationServices { get }
     var globalActivityResults: ObservableValue<GlobalActivityResults> { get }
     var alertMessage: ObservableValue<AlertMessageType?> { get }
 }

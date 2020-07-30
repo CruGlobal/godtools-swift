@@ -10,7 +10,12 @@ import Foundation
 
 struct CopyrightInfoWebContent: WebContentType {
     
-    let navTitle: String = NSLocalizedString("copyright_info", comment: "")
+    let navTitle: String
     let url: URL? = URL(string: "http://www.godtoolsapp.com/copyright")
     let analyticsScreenName: String = "Copyright Info"
+    
+    init(localizationServices: LocalizationServices) {
+        
+        navTitle = localizationServices.stringForMainBundle(key: "copyright_info")
+    }
 }

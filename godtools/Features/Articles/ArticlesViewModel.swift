@@ -20,12 +20,13 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         
     private weak var flowDelegate: FlowDelegate?
     
+    let localizationServices: LocalizationServices
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let articleAemImportData: ObservableValue<[ArticleAemImportData]> = ObservableValue(value: [])
     let isLoading: ObservableValue<Bool> = ObservableValue(value: false)
     let errorMessage: ObservableValue<ArticlesErrorMessage> = ObservableValue(value: ArticlesErrorMessage(message: "", hidesErrorMessage: true, shouldAnimate: false))
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, translationZipFile: TranslationZipFileModel, category: ArticleCategory, articleManifest: ArticleManifestXmlParser, articleAemImportDownloader: ArticleAemImportDownloader, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -33,6 +34,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
         self.category = category
         self.articleManifest = articleManifest
         self.articleAemImportDownloader = articleAemImportDownloader
+        self.localizationServices = localizationServices
         self.analytics = analytics
         self.downloadArticlesReceipt = articleAemImportDownloader.getDownloadReceipt(translationZipFile: translationZipFile)
         
@@ -69,7 +71,9 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
     }
     
     private func setupBinding() {
-                     
+              
+        let localizationServices: LocalizationServices = self.localizationServices
+        
         downloadArticlesReceipt.started.addObserver(self) { [weak self] (started: Bool) in
             DispatchQueue.main.async { [weak self] in
                 let showLoadingArticles: Bool = self?.showLoadingArticles ?? false
@@ -91,7 +95,7 @@ class ArticlesViewModel: NSObject, ArticlesViewModelType {
                     
                     if let downloadError = result.downloadError, showDownloadError {
                         
-                        let errorViewModel = DownloadArticlesErrorViewModel(error: downloadError)
+                        let errorViewModel = DownloadArticlesErrorViewModel(localizationServices: localizationServices, error: downloadError)
                         
                         self?.errorMessage.accept(
                             value: ArticlesErrorMessage(

@@ -14,18 +14,20 @@ class AccountViewModel: AccountViewModelType {
     private let analytics: AnalyticsContainer
         
     let globalActivityServices: GlobalActivityServicesType
+    let localizationServices: LocalizationServices
     let navTitle: String
     let profileName: ObservableValue<(name: String, animated: Bool)> = ObservableValue(value: (name: "", animated: false))
     let isLoadingProfile: ObservableValue<Bool> = ObservableValue(value: false)
     let accountItems: ObservableValue<[AccountItem]> = ObservableValue(value: [])
     let currentAccountItemIndex: ObservableValue<Int> = ObservableValue(value: 0)
     
-    required init(loginClient: TheKeyOAuthClient, globalActivityServices: GlobalActivityServicesType, analytics: AnalyticsContainer) {
+    required init(loginClient: TheKeyOAuthClient, globalActivityServices: GlobalActivityServicesType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.globalActivityServices = globalActivityServices
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
-        navTitle = NSLocalizedString("account.navTitle", comment: "")
+        navTitle = localizationServices.stringForMainBundle(key: "account.navTitle")
         
         isLoadingProfile.accept(value: true)
         loginClient.fetchAttributes { [weak self] (attributes: [String: String]?, error: Error?) in
@@ -40,7 +42,7 @@ class AccountViewModel: AccountViewModelType {
         let items: [AccountItem] = [
             AccountItem(
                 itemId: .activity,
-                title: NSLocalizedString("account.activity.title", comment: ""),
+                title: localizationServices.stringForMainBundle(key: "account.activity.title"),
                 analyticsScreenName: "Global Dashboard"
             )
         ]

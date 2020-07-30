@@ -10,19 +10,22 @@ import Foundation
 
 class TranslateLanguageNameViewModel {
 
+    private let localizationServices: LocalizationServices
+    
     let languageSettingsService: LanguageSettingsService
     let shouldFallbackToPrimaryLanguageLocale: Bool
     
-    required init(languageSettingsService: LanguageSettingsService, shouldFallbackToPrimaryLanguageLocale: Bool) {
+    required init(languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, shouldFallbackToPrimaryLanguageLocale: Bool) {
         
         self.languageSettingsService = languageSettingsService
+        self.localizationServices = localizationServices
         self.shouldFallbackToPrimaryLanguageLocale = shouldFallbackToPrimaryLanguageLocale
     }
     
     func getTranslatedName(language: LanguageModelType) -> String {
         
         let localizedNameKey: String = "language_name_" + language.code
-        let localizedName: String = NSLocalizedString(localizedNameKey, comment: "")
+        let localizedName: String = localizationServices.stringForMainBundle(key: localizedNameKey)
                 
         if !localizedName.isEmpty && localizedName != localizedNameKey {
             

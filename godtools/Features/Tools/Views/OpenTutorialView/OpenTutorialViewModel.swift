@@ -12,6 +12,7 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -20,15 +21,16 @@ class OpenTutorialViewModel: NSObject, OpenTutorialViewModelType {
     let openTutorialTitle: String
     let hidesOpenTutorial: ObservableValue<(hidden: Bool, animated: Bool)>
     
-    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.tutorialAvailability = tutorialAvailability
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
-        showTutorialTitle = NSLocalizedString("openTutorial.showTutorialLabel.text", comment: "")
-        openTutorialTitle = NSLocalizedString("openTutorial.openTutorialButton.title", comment: "")
+        showTutorialTitle = localizationServices.stringForMainBundle(key: "openTutorial.showTutorialLabel.text")
+        openTutorialTitle = localizationServices.stringForMainBundle(key: "openTutorial.openTutorialButton.title")
         
         let hidesOpenTutorialCallout: Bool = !tutorialAvailability.tutorialIsAvailable || openTutorialCalloutCache.openTutorialCalloutDisabled
         hidesOpenTutorial = ObservableValue(value: (hidden: hidesOpenTutorialCallout, animated: false))

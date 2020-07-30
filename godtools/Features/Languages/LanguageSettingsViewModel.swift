@@ -13,11 +13,12 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
-    let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("language_settings", comment: ""))
+    let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let primaryLanguageTitle: String
     let primaryLanguageButtonTitle: ObservableValue<String> = ObservableValue(value: "")
     let parallelLanguageTitle: String
@@ -30,7 +31,12 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: false
+        )
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
         primaryLanguageTitle = localizationServices.stringForMainBundle(key: "primary_language")
@@ -39,6 +45,8 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         languageAvailability = localizationServices.stringForMainBundle(key: "not_every_tool_is_available")
         
         super.init()
+        
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "language_settings"))
                       
         reloadData()
         
@@ -97,7 +105,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
             title = primaryLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
-            title = NSLocalizedString("select_primary_language", comment: "")
+            title = localizationServices.stringForMainBundle(key: "select_primary_language")
         }
 
         primaryLanguageButtonTitle.accept(value: title)
@@ -111,7 +119,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
             title = parallelLanguage.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)
         }
         else {
-            title = NSLocalizedString("select_parallel_language", comment: "")
+            title = localizationServices.stringForMainBundle(key: "select_parallel_language")
         }
 
         parallelLanguageButtonTitle.accept(value: title)

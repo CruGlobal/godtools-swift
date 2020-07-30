@@ -10,7 +10,12 @@ import Foundation
 
 struct ShareAStoryWithUsWebContent: WebContentType {
     
-    let navTitle: String = NSLocalizedString("share_a_story_with_us", comment: "")
+    let navTitle: String
     let url: URL? = URL(string: "http://www.godtoolsapp.com/#contact")
     let analyticsScreenName: String = "Share Story"
+    
+    init(localizationServices: LocalizationServices) {
+        
+        navTitle = localizationServices.stringForMainBundle(key: "share_a_story_with_us")
+    }
 }

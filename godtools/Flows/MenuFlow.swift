@@ -38,10 +38,11 @@ class MenuFlow: Flow {
             flowDelegate: self,
             config: appDiContainer.config,
             loginClient: appDiContainer.loginClient,
-            menuDataProvider: MenuDataProvider(),
+            menuDataProvider: MenuDataProvider(localizationServices: appDiContainer.localizationServices),
             deviceLanguage: appDiContainer.deviceLanguage,
             tutorialAvailability: appDiContainer.tutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         let view = MenuView(viewModel: viewModel)
@@ -97,6 +98,7 @@ class MenuFlow: Flow {
             let viewModel = AccountViewModel(
                 loginClient: appDiContainer.loginClient,
                 globalActivityServices: appDiContainer.globalActivityServices,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
             let view = AccountView(viewModel: viewModel)
@@ -111,6 +113,7 @@ class MenuFlow: Flow {
             
             let viewModel = AboutViewModel(
                 aboutTextProvider: aboutTextProvider,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
             let view = AboutView(viewModel: viewModel)
@@ -118,8 +121,10 @@ class MenuFlow: Flow {
             navigationController.pushViewController(view, animated: true)
             
         case .helpTappedFromMenu:
-                        
-            navigateToWebContentView(webContent: HelpWebContent())
+                 
+            let helpWebContent = HelpWebContent(localizationServices: appDiContainer.localizationServices)
+            
+            navigateToWebContentView(webContent: helpWebContent)
             
         case .contactUsTappedFromMenu:
            
@@ -142,12 +147,13 @@ class MenuFlow: Flow {
                 navigationController.present(view, animated: true, completion: nil)
             }
             else {
-                navigateToWebContentView(webContent: ContactUsWebContent())
+                let contactUsWebContent = ContactUsWebContent(localizationServices: appDiContainer.localizationServices)
+                navigateToWebContentView(webContent: contactUsWebContent)
             }
             
         case .shareGodToolsTappedFromMenu:
             
-            let textToShare: String = NSLocalizedString("share_god_tools_share_sheet_text", comment: "")
+            let textToShare: String = appDiContainer.localizationServices.stringForMainBundle(key: "share_god_tools_share_sheet_text")
             let view = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
             
             navigationController.present(view, animated: true, completion: nil)
@@ -173,20 +179,29 @@ class MenuFlow: Flow {
                 navigationController.present(view, animated: true, completion: nil)
             }
             else {
-                navigateToWebContentView(webContent: ShareAStoryWithUsWebContent())
+                
+                let shareStoryWebContent = ShareAStoryWithUsWebContent(localizationServices: appDiContainer.localizationServices)
+                
+                navigateToWebContentView(webContent: shareStoryWebContent)
             }
             
         case .termsOfUseTappedFromMenu:
             
-            navigateToWebContentView(webContent: TermsOfUseWebContent())
+            let termsOfUserWebContent = TermsOfUseWebContent(localizationServices: appDiContainer.localizationServices)
+            
+            navigateToWebContentView(webContent: termsOfUserWebContent)
             
         case .privacyPolicyTappedFromMenu:
             
-            navigateToWebContentView(webContent: PrivacyPolicyWebContent())
+            let privacyPolicyWebContent = PrivacyPolicyWebContent(localizationServices: appDiContainer.localizationServices)
+            
+            navigateToWebContentView(webContent: privacyPolicyWebContent)
             
         case .copyrightInfoTappedFromMenu:
             
-            navigateToWebContentView(webContent: CopyrightInfoWebContent())
+            let copyrightInfoWebContent = CopyrightInfoWebContent(localizationServices: appDiContainer.localizationServices)
+            
+            navigateToWebContentView(webContent: copyrightInfoWebContent)
             
         default:
             break

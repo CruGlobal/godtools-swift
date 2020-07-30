@@ -104,6 +104,7 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
         
         let cellViewModel = GlobalActivityCellViewModel(
             globalActivityAttribute: globalActivityAttribute,
+            localizationServices: viewModel.localizationServices,
             isLoading: globalActivityResults.isLoading,
             errorOccurred: globalActivityResults.didFail
         )
@@ -143,7 +144,7 @@ extension AccountActivityView: UICollectionViewDelegateFlowLayout, UICollectionV
                 for: indexPath
             ) as! GlobalActivityHeaderView
             
-            headerView.configure(viewModel: GlobalActivityHeaderViewModel())
+            headerView.configure(viewModel: GlobalActivityHeaderViewModel(localizationServices: viewModel.localizationServices))
             
             return headerView
         }
