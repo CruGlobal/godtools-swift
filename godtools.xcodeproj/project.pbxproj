@@ -563,7 +563,6 @@
 		45EDC547249BC1F40020DC62 /* GTSegmentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC546249BC1F40020DC62 /* GTSegmentType.swift */; };
 		45EDC54A249BC2440020DC62 /* ToolDetailControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC549249BC2440020DC62 /* ToolDetailControl.swift */; };
 		45EDC54C249BC47C0020DC62 /* ToolDetailControlId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC54B249BC47C0020DC62 /* ToolDetailControlId.swift */; };
-		45EDC54E249BC8AA0020DC62 /* ToolDetailMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EDC54D249BC8AA0020DC62 /* ToolDetailMedia.swift */; };
 		45EE3326246E237B003CC641 /* TractPageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EE3325246E237B003CC641 /* TractPageCache.swift */; };
 		45F4450124A403BE00162C48 /* TranslationManifestXmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4450024A403BE00162C48 /* TranslationManifestXmlParser.swift */; };
 		45F4450324A4050B00162C48 /* TranslationManifestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F4450224A4050B00162C48 /* TranslationManifestType.swift */; };
@@ -1212,7 +1211,6 @@
 		45EDC546249BC1F40020DC62 /* GTSegmentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GTSegmentType.swift; sourceTree = "<group>"; };
 		45EDC549249BC2440020DC62 /* ToolDetailControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailControl.swift; sourceTree = "<group>"; };
 		45EDC54B249BC47C0020DC62 /* ToolDetailControlId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailControlId.swift; sourceTree = "<group>"; };
-		45EDC54D249BC8AA0020DC62 /* ToolDetailMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolDetailMedia.swift; sourceTree = "<group>"; };
 		45EE3325246E237B003CC641 /* TractPageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageCache.swift; sourceTree = "<group>"; };
 		45F4450024A403BE00162C48 /* TranslationManifestXmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestXmlParser.swift; sourceTree = "<group>"; };
 		45F4450224A4050B00162C48 /* TranslationManifestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManifestType.swift; sourceTree = "<group>"; };
@@ -2819,7 +2817,6 @@
 			children = (
 				45EDC549249BC2440020DC62 /* ToolDetailControl.swift */,
 				45EDC54B249BC47C0020DC62 /* ToolDetailControlId.swift */,
-				45EDC54D249BC8AA0020DC62 /* ToolDetailMedia.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3982,7 +3979,6 @@
 				45038D7B24A25C0000345B42 /* TranslationsFileCacheError.swift in Sources */,
 				45F66CB323E4C82F0053CB5B /* MenuCell.swift in Sources */,
 				4517377B24A7F56A0097FB15 /* DownloadedLanguageModel.swift in Sources */,
-				45EDC54E249BC8AA0020DC62 /* ToolDetailMedia.swift in Sources */,
 				45249D0924ACB12600E139AD /* FollowUpModel.swift in Sources */,
 				451DB1A62461DC3100FB14BF /* TractImage.swift in Sources */,
 				45647257244F784500CB202D /* ArticleCellViewModelType.swift in Sources */,
