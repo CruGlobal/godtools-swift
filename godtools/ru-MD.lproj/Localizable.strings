@@ -1,10 +1,3 @@
-"language_name_fa" = "Персидский (фарси)";
-"downloadprogress" = "Выполняется загрузка";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Назад";
-
-"card_status2" = "Далее";
 "language_onboard" = "Более 80 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -27,7 +20,6 @@
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
-
 // Tool Detail
 "about" = "О приложении";
 "help" = "Справка";
@@ -80,7 +72,6 @@
 "done" = "Готово";
 "remove" = "Удалить";
 "clear" = "Очистить";
-
 // Alerts
 "error" = "Ошибка";
 "ok" = "ОК";
@@ -98,3 +89,14 @@
 "general_about_8" = "Посетите godtoolsapp.com для получения более подробной информации.";
 "general_about_9" = "Когда вы проявляете инициативу и решаетесь поделиться верой, помните, что только Бог может менять сердца. Проявляйте любовь ко всем, слушая их и пытаясь понять.";
 "general_about_10" = "«Слово ваше (да будет) всегда с благодатию, приправлено солью, дабы вы знали, как отвечать каждому». — К Колоссянам 4:6";
+
+// Downloads
+"Download in progress" = "Выполняется загрузка";
+
+// Navigation
+"card_status1" = "Назад";
+"card_status2" = "Далее";
+
+// Language Name Strings
+"language_name_fa" = "Персидский (фарси)";
+

@@ -1,10 +1,3 @@
-"language_name_fa" = "Персиски (персиски)";
-"downloadprogress" = "Преземање во тек";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "претходниот";
-
-"card_status2" = "Следно";
 "language_onboard" = "80+ јазиците";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
@@ -22,7 +15,6 @@
 "menu_share" = "Сподели";
 "menu_legal" = "Правно";
 "language_settings" = "Јазични поставки";
-
 // Tool Detail
 "about" = "За";
 "help" = "Помош";
@@ -68,7 +60,6 @@
 "done" = "Завршено";
 "remove" = "Отстрани";
 "clear" = "Избриши";
-
 // Alerts
 "error" = "Грешка";
 "ok" = "Добро";
@@ -84,3 +75,14 @@
 "general_about_8" = "Посети ја godtoolsapp.com за повеќе информации.";
 "general_about_9" = "Со оглед на тоа што преземаш иницијатива да ја шириш верата, запомни дека Бог е оној што ти го менува срцето. Сакај ги сите луѓе слушајќи ги за да ги разбереш.";
 "general_about_10" = "„Нека разговорот секогаш биде исполнет со милост, зачинет со сол, така што би знаел/а како да одговориш секому.“ Послание до Колосјаните 4:6";
+
+// Downloads
+"Download in progress" = "Преземање во тек";
+
+// Navigation
+"card_status1" = "претходниот";
+"card_status2" = "Следно";
+
+// Language Name Strings
+"language_name_fa" = "Персиски (персиски)";
+

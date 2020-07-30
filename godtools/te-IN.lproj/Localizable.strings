@@ -1,23 +1,49 @@
-"language_name_fa" = "పర్షియన్ (ఫార్సీ)";
-"downloadprogress" = "డౌన్‌లోడ్ పురోగతిలో ఉంది";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "సంభాషణ స్టార్టర్";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "పరికరం తెరవండి";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "క్రిస్టియన్ ఎదుగుదల";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "మునుపటి";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "శిక్షణ";
 
-"card_status2" = "తదుపరి";
+/* This is an invitation for a user to open a tool */
+"open" = "తెరవండి";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "ఇష్టాలకు జోడించండి";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "ఇష్టాల నుంచి తొలగించండి";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "పరికరం డౌన్‌లోడ్ అవుతోంది. భవిష్యత్తులో వేచి ఉండటంను తప్పించుకునేందుకు, ఈ పరికరాన్ని ఇష్టపడండి అప్పుడు ఇది ఆఫ్‌లైన్‌లో అందుబాటులో ఉంటుంది.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "ఈ పరికరం కోసం ఇటీవలి అనువాదాన్ని డౌన్‌లోడ్ చేస్తోంది.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ఇష్టమైనవి నుండి తొలగించేదా?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "మీ ఇష్టమైన వాటి నుండి %@ ను తొలగించాలని మీరు నిశ్చయంగా ఉన్నారా?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "సువార్త ఆహ్వానం";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "వస్తువులు";
 "language_onboard" = "80+ భాషలు";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "అందుబాటులో ఉన్న అన్నిసాధనాలను మీరు డౌన్‌లోడ్ చేశారు.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "నా సాధనాలు";
+"my_tools" = "ఇష్టాలు";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "సాధనాలను కనుగొనండి";
+"find_tools" = "అన్ని పరికరాలు";
 
 "unavailable" = "అందుబాటులో లేదు";
 
@@ -30,7 +56,6 @@
 "menu_share" = "షేర్ చెయ్యండి";
 "menu_legal" = "చట్టపరమైన";
 "language_settings" = "భాష సెట్టింగ్స్";
-
 // Login
 "login" = "లాగిన్";
 "logout" = "లాగౌట్";
@@ -98,6 +123,8 @@
 "done" = "అయ్యిపోయింది";
 "remove" = "తొలగించు";
 "clear" = "క్లియర్";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "పరికరం తెరవండి";
 
 // Alerts
 "error" = "error";
@@ -118,3 +145,14 @@
 "general_about_8" = "అధిక సమాచారం కొరకు చూడండి godtoolsapp.com";
 "general_about_9" = "మీ విశ్వాసమును పంచుకొనుటకు మీరు సిద్ధపడుచుండగా, హృదయాలను మార్చువాడు దేవుడని గుర్తుంచుకోండి. ప్రతి వ్యక్తిని అర్థము చేసుకొనుటకు వినుట ద్వారా వారిని ప్రేమించండి. ";
 "general_about_10" = "\"ప్రతి మనుష్యునికి ఏలాగు ప్రత్యుత్తరమియ్య వలెనో అది మీరు తెలిసికొనుటకై మీ సంభాషణ ఉప్పు వేసినట్టు ఎల్లప్పుడు రుచిగలదిగాను కృపాసహితముగాను ఉండనియ్యుడి.\" కొలస్సి. 4:6";
+
+// Downloads
+"Download in progress" = "డౌన్‌లోడ్ పురోగతిలో ఉంది";
+
+// Navigation
+"card_status1" = "మునుపటి";
+"card_status2" = "తదుపరి";
+
+// Language Name Strings
+"language_name_fa" = "పర్షియన్ (ఫార్సీ)";
+
