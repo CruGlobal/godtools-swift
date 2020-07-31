@@ -192,7 +192,7 @@ extension MenuView: UITableViewDelegate {
         
         case .logout:
             DispatchQueue.main.async { [weak self] in
-                self?.presentLogoutConfirmation()
+                self?.viewModel.logoutTapped()
             }
             
         case .login:
@@ -253,28 +253,10 @@ extension MenuView {
         })
     }
     
-    fileprivate func presentLogoutConfirmation() {
-       
-        let dialogMessage = UIAlertController(title: "Proceed with GodTools logout?".localized, message: "You are about to logout of your GodTools account".localized, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "ok".localized, style: .default, handler: { [weak self] (_) in
-
-            self?.viewModel.loginClient.logout()
-            self?.viewModel.reloadMenuDataSource()
-        })
-        
-        let cancel = UIAlertAction(title: "cancel".localized, style: .cancel) { (_) in }
-        
-        dialogMessage.addAction(ok)
-        dialogMessage.addAction(cancel)
-        
-        present(dialogMessage, animated: true, completion: nil)
-    }
-    
     fileprivate func openLoginWindow() {
         if viewModel.loginClient.isAuthenticated() {
-            DispatchQueue.main.async {
-                self.presentLogoutConfirmation()
+            DispatchQueue.main.async { [weak self] in
+                self?.viewModel.logoutTapped()
             }
         } else {
             initiateLogin()

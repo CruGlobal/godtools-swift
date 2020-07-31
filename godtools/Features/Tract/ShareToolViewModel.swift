@@ -12,7 +12,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         
     let shareMessage: String
     
-    required init(resource: ResourceModel, language: LanguageModel, pageNumber: Int, analytics: AnalyticsContainer) {
+    required init(resource: ResourceModel, language: LanguageModel, pageNumber: Int, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
                 
         var shareUrlString: String = "https://www.knowgod.com/\(language.code)/\(resource.abbreviation)"
 
@@ -23,7 +23,7 @@ class ShareToolViewModel: ShareToolViewModelType {
         shareUrlString = shareUrlString.replacingOccurrences(of: " ", with: "").appending("?icid=gtshare ")
         
         shareMessage = String.localizedStringWithFormat(
-            "tract_share_message".localized,
+            localizationServices.stringForMainBundle(key: "tract_share_message"),
             shareUrlString
         )
         

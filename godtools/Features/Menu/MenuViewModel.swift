@@ -171,6 +171,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
         flowDelegate?.navigate(step: .contactUsTappedFromMenu)
     }
     
+    func logoutTapped() {
+        
+        let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
+            self?.loginClient.logout()
+            self?.reloadMenuDataSource()
+        }
+        
+        flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
+    }
+    
     func shareGodToolsTapped() {
         
         flowDelegate?.navigate(step: .shareGodToolsTappedFromMenu)

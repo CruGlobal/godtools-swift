@@ -143,6 +143,7 @@ class ToolsFlow: Flow {
                 resource: resource,
                 language: language,
                 pageNumber: pageNumber,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
             

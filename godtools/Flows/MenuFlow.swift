@@ -203,6 +203,21 @@ class MenuFlow: Flow {
             
             navigateToWebContentView(webContent: copyrightInfoWebContent)
             
+        case .logoutTappedFromMenu(let logoutHandler):
+            
+            let localizationServices: LocalizationServices = appDiContainer.localizationServices
+            
+            let viewModel = AlertMessageViewModel(
+                title: "Proceed with GodTools logout?",
+                message: "You are about to logout of your GodTools account",
+                cancelTitle: localizationServices.stringForMainBundle(key: "cancel"),
+                acceptTitle: localizationServices.stringForMainBundle(key: "OK"),
+                acceptHandler: logoutHandler
+            )
+            let view = AlertMessageView(viewModel: viewModel)
+            
+            navigationController.present(view.controller, animated: true, completion: nil)
+            
         default:
             break
         }

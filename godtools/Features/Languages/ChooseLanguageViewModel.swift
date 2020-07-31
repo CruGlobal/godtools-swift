@@ -30,6 +30,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let deleteLanguageButtonTitle: String
+    let closeKeyboardTitle: String
     let hidesDeleteLanguageButton: ObservableValue<Bool> = ObservableValue(value: true)
     let languages: ObservableValue<[LanguageModel]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
@@ -50,6 +51,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         self.chooseLanguageType = chooseLanguageType
         
         deleteLanguageButtonTitle = localizationServices.stringForMainBundle(key: "clear")
+        closeKeyboardTitle = localizationServices.stringForMainBundle(key: "dismiss")
         
         super.init()
                 
