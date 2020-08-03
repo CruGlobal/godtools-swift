@@ -29,7 +29,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
            
-        appFlow = AppFlow(appDiContainer: appDiContainer)
+        // Login Client
+        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
+                              clientID: kClientID,
+                              redirectURI: URL(string: kRedirectURI)!)
+        
+        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
+        if !hasRegisteredEmail && loginClient.isAuthenticated() {
+            loginClient.fetchAttributes() { (attributes, _) in
+                let signupManager = EmailSignUpManager()
+                signupManager.signUpUserForEmailRegistration(attributes: attributes)
+            }
+        }
         
         appDiContainer.config.logConfiguration()
         
@@ -43,23 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appDiContainer.googleAdwordsAnalytics.recordAdwordsConversion()
         
         appDiContainer.analytics.snowplowAnalytics.configure(adobeAnalytics: appDiContainer.analytics.adobeAnalytics)
-                        
-        loginClient.configure(baseCasURL: URL(string: "https://thekey.me/cas")!,
-                              clientID: kClientID,
-                              redirectURI: URL(string: kRedirectURI)!)
-        
-        let hasRegisteredEmail = UserDefaults.standard.bool(forKey: GTConstants.kUserEmailIsRegistered)
-        if !hasRegisteredEmail && loginClient.isAuthenticated() {
-            loginClient.fetchAttributes() { (attributes, _) in
-                let signupManager = EmailSignUpManager()
-                signupManager.signUpUserForEmailRegistration(attributes: attributes)
-            }
-        }
         
         Fabric.with([Crashlytics.self, Answers.self])
 
         ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-                
+           
+        appFlow = AppFlow(appDiContainer: appDiContainer)
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = UIColor.white
         window.rootViewController = appFlow?.rootController
