@@ -10,6 +10,7 @@ import Foundation
 
 protocol ArticleCategoriesViewModelType {
     
+    var localizationServices: LocalizationServices { get }
     var translationsFileCache: TranslationsFileCache { get }
     var categories: ObservableValue<[ArticleCategory]> { get }
     var navTitle: ObservableValue<String> { get }

@@ -130,7 +130,7 @@ extension ChooseLanguageView: UISearchBarDelegate {
     fileprivate func toolBarViewForKeyboard() -> UIToolbar {
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let dismissButton = UIBarButtonItem(title: "dismiss".localized, style: .plain, target: self, action: #selector(hideKeyboard))
+        let dismissButton = UIBarButtonItem(title: viewModel.closeKeyboardTitle, style: .plain, target: self, action: #selector(hideKeyboard))
         toolbar.setItems([flexSpace, dismissButton], animated: false)
         toolbar.sizeToFit()
         return toolbar

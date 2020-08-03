@@ -12,11 +12,12 @@ class AccountItemCellViewModel {
     
     let itemView: AccountItemViewType
     
-    required init(item: AccountItem, globalActivityServices: GlobalActivityServicesType) {
+    required init(item: AccountItem, localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServicesType) {
         
         switch item.itemId {
         case .activity:
             let viewModel = AccountActivityViewModel(
+                localizationServices: localizationServices,
                 globalActivityServices: globalActivityServices
             )
             itemView = AccountActivityView(viewModel: viewModel)

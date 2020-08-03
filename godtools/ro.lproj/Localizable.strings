@@ -1,23 +1,49 @@
-"language_name_fa" = "Persană (Farsi)";
-"downloadprogress" = "Descărcare în curs";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Ajutoare pentru inițierea conversațiilor";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Deschide instrumentul";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Creșterea în credință";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Ant.";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Instruire";
 
-"card_status2" = "Următor";
+/* This is an invitation for a user to open a tool */
+"open" = "Deschide";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Adaugă la Favorite";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Elimină din Favorite";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Instrumentul se descarcă. Pentru a evita să aștepți pe viitor, adaugă acest instrument la Favorite, iar în acest caz va fi disponibil offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Se descarcă cea mai nouă traducere pentru acest instrument.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Elimini din Favorite? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Sigur vrei să elimini %@ din Favorite?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Invitație să descoperi Biblia";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Articole";
 "language_onboard" = "Peste 75 de limbi";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Ai descărcat toate instrumentele disponibile.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Instrumentele mele";
+"my_tools" = "Favorite";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Găsește instrumente";
+"find_tools" = "Toate instrumentele";
 
 "unavailable" = "Indisponibil";
 
@@ -30,7 +56,6 @@
 "menu_share" = "Distribuie";
 "menu_legal" = "Juridic";
 "language_settings" = "Setări de limbă";
-
 // Login
 "login" = "Conectare";
 "logout" = "Deconectare";
@@ -98,6 +123,8 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 "done" = "Terminat";
 "remove" = "Elimină";
 "clear" = "Șterge";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Deschide instrumentul";
 
 // Alerts
 "error" = "Eroare";
@@ -118,3 +145,14 @@ Aplicația poate fi descărcată de pe https://godtoolsapp.com";
 "general_about_8" = "Vizitați godtoolsapp.com pentru mai multe informații.";
 "general_about_9" = "Atunci când adopți inițiativa de a-ți împărtăși credința, nu uita că Dumnezeu este cel care schimbă inimile. Iubește fiecare persoană și ascult-o pentru a o înțelege.";
 "general_about_10" = "„Vorbirea voastră să fie totdeauna cu har, dreasă cu sare, ca să ştiţi cum trebuie să răspundeţi fiecăruia.” Coloseni 4:6";
+
+// Downloads
+"Download in progress" = "Descărcare în curs";
+
+// Navigation
+"card_status1" = "Ant.";
+"card_status2" = "Următor";
+
+// Language Name Strings
+"language_name_fa" = "Persană (Farsi)";
+

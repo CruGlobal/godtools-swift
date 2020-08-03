@@ -10,6 +10,7 @@ import Foundation
 
 class TutorialViewModel: TutorialViewModelType {
     
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private var trackedAnalyticsForYouTubeVideoIds: [String] = Array()
@@ -22,13 +23,14 @@ class TutorialViewModel: TutorialViewModelType {
     let continueTitle: String
     let startUsingGodToolsTitle: String
     
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, tutorialItemsProvider: TutorialItemProviderType, deviceLanguage: DeviceLanguageType) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
         self.analytics = analytics
         self.deviceLanguage = deviceLanguage
-        self.continueTitle = NSLocalizedString("tutorial.continueButton.title.continue", comment: "")
-        self.startUsingGodToolsTitle = NSLocalizedString("tutorial.continueButton.title.startUsingGodTools", comment: "")
+        self.continueTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.continue")
+        self.startUsingGodToolsTitle = localizationServices.stringForMainBundle(key: "tutorial.continueButton.title.startUsingGodTools")
         
         tutorialItems.accept(value: tutorialItemsProvider.tutorialItems)
         

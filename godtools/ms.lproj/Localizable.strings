@@ -1,23 +1,48 @@
-"language_name_fa" = "Bahasa Parsi (Parsi)";
-"downloadprogress" = "Muat turun sedang berjalan";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Pemula Pembualan";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buka Alat";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Kemajuan Kristian";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Sblmnya";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Latihan";
 
-"card_status2" = "Seterusnya";
+/* This is an invitation for a user to open a tool */
+"open" = "Buka";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Tambah ke Kegemaran";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Buang daripada Kegemaran";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Alat sedang dimuat turun. Bagi mengelak menunggu pada masa hadapan, jadikan alat ini kegemaran supaya ia akan tersedia semasa luar talian.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Memuat turun terjemahan terkini untuk alat ini.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Alih Keluar daripada Kegemaran?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Adakah anda pasti mahu mengalih keluar %@ daripada Kegemaran anda?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Jemputan Gospel";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Makalah";
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Anda telah memuat turun semua alat yang tersedia.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Alat Saya";
+"my_tools" = "Kegemaran";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Cari Alat";
+"find_tools" = "Semua Alat";
 
 "unavailable" = "Tidak tersedia";
 
@@ -30,7 +55,6 @@
 "menu_share" = "Kongsi";
 "menu_legal" = "Sah";
 "language_settings" = "Tetapan Bahasa";
-
 // Login
 "login" = "Log masuk";
 "logout" = "Log keluar";
@@ -98,6 +122,8 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 "done" = "Selesai";
 "remove" = "Alih Keluar";
 "clear" = "Kosongkan";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
 
 // Alerts
 "error" = "Ralat";
@@ -118,3 +144,14 @@ Aplikasi boleh dimuat turun daripada https://godtoolsapp.com";
 "general_about_8" = "Lawati godtoolsapp.com untuk maklumat lanjut.";
 "general_about_9" = "Apabila anda mengambil inisiatif untuk berkongsi kepercayaan anda, jangan lupa bahawa Tuhanlah yang mengubah hati. Sayang setiap orang dengan mendengar untuk memahami.";
 "general_about_10" = "\"Biarkan perbualan anda sentiasa penuh dengan rahmat, ditambah perisa, supaya anda tahu cara untuk menjawab semua orang.\" Colossians 4:6";
+
+// Downloads
+"Download in progress" = "Muat turun sedang berjalan";
+
+// Navigation
+"card_status1" = "Sblmnya";
+"card_status2" = "Seterusnya";
+
+// Language Name Strings
+"language_name_fa" = "Bahasa Parsi (Parsi)";
+

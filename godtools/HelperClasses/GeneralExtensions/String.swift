@@ -36,7 +36,7 @@ extension String {
         }
         return bundle.localizedString(forKey: self, value: nil, table: nil)
     }
-    
+ 
     func removeBreaklines() -> String {
         let regex = try! NSRegularExpression(pattern: "\n", options: .caseInsensitive)
         let range = NSMakeRange(0, self.count)

@@ -1,13 +1,3 @@
-"language_name_fa" = "Persian (Farsi)";
-"downloadprogress" = "Shkarkoni në vazhdim";
-
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Hape materialin";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Prapa";
-
-"card_status2" = "Përpara";
 "language_onboard" = "80+ Gjuhë";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +20,6 @@
 "menu_share" = "Ndaj";
 "menu_legal" = "Ligjore";
 "language_settings" = "Kushtet e gjuhës";
-
 // Tool Detail
 "about" = "Rreth";
 "help" = "Ndihmë";
@@ -84,6 +73,8 @@
 "done" = "E kryer";
 "remove" = "Fshij";
 "clear" = "E qartë";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Hape materialin";
 
 // Alerts
 "error" = "Gabim";
@@ -102,3 +93,14 @@
 "general_about_8" = "Vizito godtoolsapp.com për më shumë informacion.";
 "general_about_9" = "Ndërsa merr iniciativën të ndash besimin tënd,kujto që Perëndia është Ai që ndryshon zemrën.Trego dashuri ndaj cdo personi duke i dëgjuar që t`i kuptosh.";
 "general_about_10" = "\"Fjala juaj të jetë me hir,e ndrequr me kripë ,që të dini si duhet t`i përgjigjeni gjithsecilit.\"Kolosianëve 4:6";
+
+// Downloads
+"Download in progress" = "Shkarkoni në vazhdim";
+
+// Navigation
+"card_status1" = "Prapa";
+"card_status2" = "Përpara";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";
+

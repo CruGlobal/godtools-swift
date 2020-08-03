@@ -1,10 +1,3 @@
-"language_name_fa" = "પર્સિયન (ફારસી)";
-"downloadprogress" = "ડાઉનલોડ ચાલુ છે";
-
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "અગાઉના";
-
-"card_status2" = "આગળ";
 "language_onboard" = "80 થી વધારે ભાષાઓ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -27,7 +20,6 @@
 "menu_share" = "વહેંચો";
 "menu_legal" = "કાનૂની";
 "language_settings" = "ભાષા સુયોજન";
-
 // Tool Detail
 "about" = "વિશે/આશરે";
 "help" = "મદદ";
@@ -80,7 +72,6 @@ http://godtoolsapp.com";
 "done" = "સમાપ્ત";
 "remove" = "દૂર કરો";
 "clear" = "હટાવી દો";
-
 // Alerts
 "error" = "ભૂલ";
 "ok" = "બરાબર";
@@ -98,3 +89,14 @@ http://godtoolsapp.com";
 "general_about_8" = "વધુ માહિતી માટે જાઓ godtoolsapp.com પર";
 "general_about_9" = "તમે અન્ય સાથે તમારો વિશ્વાસ વહેંચવાની પહેલ કરો ત્યારે યાદ રાખો કે હૃદય પરિવર્તન તો ઈશ્વર જ કરી શકે. દરેક વ્યક્તિને સમજવા પહેલા પ્રેમથી તેનું સાંભળો.";
 "general_about_10" = "તમારું બોલવું હંમેશાં કૃપાયુક્ત સલૂણું હોય કે, જેથી દરેકને યોગ્ય ઉત્તર આપવો એ તમે જાણો. કલોસીઓને પત્ર ૪:૬";
+
+// Downloads
+"Download in progress" = "ડાઉનલોડ ચાલુ છે";
+
+// Navigation
+"card_status1" = "અગાઉના";
+"card_status2" = "આગળ";
+
+// Language Name Strings
+"language_name_fa" = "પર્સિયન (ફારસી)";
+

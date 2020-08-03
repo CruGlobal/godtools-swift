@@ -12,10 +12,13 @@ class AccountActivityViewModel: AccountActivityViewModelType {
     
     private var getGlobalAnalyticsOperation: OperationQueue?
     
+    let localizationServices: LocalizationServices
     let globalActivityResults: ObservableValue<GlobalActivityResults> = ObservableValue(value: GlobalActivityResults(isLoading: true, didFail: false, globalActivityAttributes: []))
     let alertMessage: ObservableValue<AlertMessageType?> = ObservableValue(value: nil)
     
-    required init(globalActivityServices: GlobalActivityServicesType) {
+    required init(localizationServices: LocalizationServices, globalActivityServices: GlobalActivityServicesType) {
+        
+        self.localizationServices = localizationServices
         
         let cachedAttributes: GlobalActivityAnalytics.Data.Attributes? = globalActivityServices.cachedGlobalAnalytics?.data.attributes
         
@@ -41,7 +44,7 @@ class AccountActivityViewModel: AccountActivityViewModelType {
                 self?.globalActivityResults.accept(value: GlobalActivityResults(isLoading: false, didFail: true, globalActivityAttributes: globalActivityAttributes))
                 
                 if !error.cancelled {
-                    self?.alertMessage.accept(value: ResponseErrorAlertMessage(error: error))
+                    self?.alertMessage.accept(value: ResponseErrorAlertMessage(localizationServices: localizationServices, error: error))
                 }
             }
         })

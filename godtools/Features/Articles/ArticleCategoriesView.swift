@@ -100,13 +100,17 @@ class ArticleCategoriesView: UIViewController {
         
         viewModel.errorMessage.addObserver(self) { [weak self] (errorMessage: ArticlesErrorMessage) in
                 
+            guard let viewModel = self?.viewModel else {
+                return
+            }
+            
             if errorMessage.hidesErrorMessage {
                 self?.errorMessageView.animateHidden(hidden: true, animated: errorMessage.shouldAnimate)
             }
             else {
                 
                 self?.errorMessageView.configure(
-                    viewModel: ArticlesErrorMessageViewModel(message: errorMessage.message),
+                    viewModel: ArticlesErrorMessageViewModel(localizationServices: viewModel.localizationServices, message: errorMessage.message),
                     delegate: self
                 )
                 self?.errorMessageView.animateHidden(hidden: false, animated: errorMessage.shouldAnimate)

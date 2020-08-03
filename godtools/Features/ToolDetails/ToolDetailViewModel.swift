@@ -49,7 +49,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: true)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: true
+        )
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 

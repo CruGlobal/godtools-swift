@@ -10,6 +10,7 @@ import UIKit
 
 class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
@@ -18,14 +19,15 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     let title: ObservableValue<String>
     let beginTitle: ObservableValue<String>
         
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
         logo = ObservableValue(value: UIImage(named: "onboarding_welcome_logo"))
-        title = ObservableValue(value: NSLocalizedString("onboardingWelcome.titleLabel.welcome", comment: ""))
-        beginTitle = ObservableValue(value: NSLocalizedString("onboardingWelcome.beginButton", comment: ""))
+        title = ObservableValue(value: localizationServices.stringForMainBundle(key: "onboardingWelcome.titleLabel.welcome"))
+        beginTitle = ObservableValue(value: localizationServices.stringForMainBundle(key: "onboardingWelcome.beginButton"))
     }
     
     private var analyticsScreenName: String {
@@ -42,7 +44,7 @@ class OnboardingWelcomeViewModel: OnboardingWelcomeViewModelType {
     }
     
     func changeTitleToTagline() {
-        title.accept(value: NSLocalizedString("onboardingWelcome.titleLabel.tagline", comment: ""))
+        title.accept(value: localizationServices.stringForMainBundle(key: "onboardingWelcome.titleLabel.tagline"))
     }
     
     func beginTapped() {
