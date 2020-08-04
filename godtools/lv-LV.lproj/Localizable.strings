@@ -1,23 +1,48 @@
-"language_name_fa" = "Persiešu (Farsi)";
-"downloadprogress" = "Notiek lejupielāde";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Sarunas sākšanai";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Atvērt rīku";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Kristīgā izaugsme";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Atpakaļ";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Apmācība";
 
-"card_status2" = "Tālāk";
+/* This is an invitation for a user to open a tool */
+"open" = "Atvērt";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Pievienot Izlasei";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Dzēst no Izlases";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Notiek rīka lejupielāde. Lai nākotnē izvairītos no gaidīšanas, atzīmējiet šo rīku kā izlases rīku.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Notiek šī rīka jaunākā tulkojuma lejupielāde.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Dzēst no Izlases?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Vai tiešām vēlaties dzēstu %@ no izlases? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospeļa uzaicinājums";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Raksti";
 "language_onboard" = "80+ valodas";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jūs lejupielādējāt visus pieejamos rīkus.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mani rīki";
+"my_tools" = "Izlase";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Atrast rīkus";
+"find_tools" = "Visi rīki";
 
 "unavailable" = "Nav pieejams";
 
@@ -30,7 +55,6 @@
 "menu_share" = "Dalīties";
 "menu_legal" = "Jurisprudence";
 "language_settings" = "Valodas iestatījumi";
-
 // Login
 "login" = "Pierakstīties";
 "logout" = "Izrakstīties";
@@ -98,6 +122,8 @@ Lietotni ir iespējams lejupielādēt šeit: https://godtoolsapp.com";
 "done" = "Labi";
 "remove" = "Noņemt";
 "clear" = "Dzēst";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Atvērt rīku";
 
 // Alerts
 "error" = "Kļūda";
@@ -119,3 +145,14 @@ Izmantojiet tos savā interneta vietnē!";
 "general_about_8" = "Apmeklējiet godtoolsapp.com, lai uzzinātu vairāk.";
 "general_about_9" = "Uzņemoties iniciatīvu dalīties savā ticībā, atcerieties, ka Dievs pārliecina cilvēku. Mīliet ikvienu, uzklausot un meklējot sapratni.";
 "general_about_10" = "\"Lai tava runa vienmēr ir labvēlīga, pieredzes bagāta, lai tu vienmēr spētu atbildēt ikvienam.\" Kolosieši 4:6";
+
+// Downloads
+"Download in progress" = "Notiek lejupielāde";
+
+// Navigation
+"card_status1" = "Atpakaļ";
+"card_status2" = "Tālāk";
+
+// Language Name Strings
+"language_name_fa" = "Persiešu (Farsi)";
+

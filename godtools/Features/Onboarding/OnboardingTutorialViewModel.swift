@@ -10,6 +10,7 @@ import Foundation
 
 class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
         
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     
@@ -18,16 +19,22 @@ class OnboardingTutorialViewModel: OnboardingTutorialViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let tutorialItems: ObservableValue<[OnboardingTutorialItem]> = ObservableValue(value: [])
-    let skipButtonTitle: String = NSLocalizedString("navigationBar.navigationItem.skip", comment: "")
-    let continueButtonTitle: String = NSLocalizedString("onboardingTutorial.continueButton.title", comment: "")
-    let showMoreButtonTitle: String = NSLocalizedString("onboardingTutorial.showMoreButton.title", comment: "")
-    let getStartedButtonTitle: String = NSLocalizedString("onboardingTutorial.getStartedButton.title", comment: "")
+    let skipButtonTitle: String
+    let continueButtonTitle: String
+    let showMoreButtonTitle: String
+    let getStartedButtonTitle: String
         
-    required init(flowDelegate: FlowDelegate, analytics: AnalyticsContainer, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices, analytics: AnalyticsContainer, onboardingTutorialProvider: OnboardingTutorialProviderType, onboardingTutorialAvailability: OnboardingTutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
         self.analytics = analytics
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        
+        skipButtonTitle = localizationServices.stringForMainBundle(key: "navigationBar.navigationItem.skip")
+        continueButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.continueButton.title")
+        showMoreButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.showMoreButton.title")
+        getStartedButtonTitle = localizationServices.stringForMainBundle(key: "onboardingTutorial.getStartedButton.title")
         
         var tutorialItemsArray: [OnboardingTutorialItem] = Array()
         tutorialItemsArray.append(contentsOf: onboardingTutorialProvider.aboutTheAppItems)

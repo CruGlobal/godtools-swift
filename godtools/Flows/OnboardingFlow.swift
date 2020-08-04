@@ -34,6 +34,7 @@ class OnboardingFlow: Flow {
         
         let viewModel = OnboardingWelcomeViewModel(
             flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         let view = OnboardingWelcomeView(viewModel: viewModel)
@@ -51,8 +52,9 @@ extension OnboardingFlow: FlowDelegate {
            
             let viewModel = OnboardingTutorialViewModel(
                 flowDelegate: self,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics,
-                onboardingTutorialProvider: OnboardingTutorialProvider(),
+                onboardingTutorialProvider: OnboardingTutorialProvider(localizationServices: appDiContainer.localizationServices),
                 onboardingTutorialAvailability: appDiContainer.onboardingTutorialAvailability,
                 openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache
             )

@@ -1,23 +1,48 @@
-"language_name_fa" = "Persies (Farsi)";
-"downloadprogress" = "Besig om af te laai";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Gesprekinleiding";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Maak hulpmiddel oop";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Christelike groei";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Vorige";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Opleiding";
 
-"card_status2" = "Volgende";
+/* This is an invitation for a user to open a tool */
+"open" = "Maak oop";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Voeg by Gunstelinge";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Verwyder van Gunstelinge";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Die gereedskap laai af. Om te verhoed om in die toekoms te wag, merk as gunsteling sodat hierdie gereedskap aflyn  beskikbaar is.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Besig om die mees onlangse vertaling vir hierdie gereedskap af te laai.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Verwyder van Gunstelinge?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Is jy seker jy wil %@ van jou gunstelinglys afhaal? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelie uitnodiging";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikels";
 "language_onboard" = "80+ Tale";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Jy het alle beskikbare hulpmiddels afgelaai.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My hulpmiddels";
+"my_tools" = "Gunstelinge";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Vind hulpmiddels";
+"find_tools" = "Alle hulpmiddels";
 
 "unavailable" = "Nie beskikbaar";
 
@@ -30,7 +55,6 @@
 "menu_share" = "Deel";
 "menu_legal" = "Wetlik";
 "language_settings" = "Taalinstellings";
-
 // Login
 "login" = "Meld aan";
 "logout" = "Teken uit";
@@ -98,6 +122,8 @@ https://godtoolsapp.com";
 "done" = "Gedoen";
 "remove" = "Verwyder";
 "clear" = "Maak skoon";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Maak hulpmiddel oop";
 
 // Alerts
 "error" = "Fout";
@@ -118,3 +144,14 @@ https://godtoolsapp.com";
 "general_about_8" = "Besoek godtoolsapp.com vir meer inligting.";
 "general_about_9" = "Terwyl jy die inisiatief neem om jou geloof te deel, onthou God is die een wat die hart verander. Wees lief vir elke persoon deur goed te luister vir begrip.";
 "general_about_10" = "\"Wat julle sê, moet altyd vriendelik wees en van goeie smaak getuig; en julle moet weet hoe julle elkeen behoort te antwoord.\" Kolossense 4:6";
+
+// Downloads
+"Download in progress" = "Besig om af te laai";
+
+// Navigation
+"card_status1" = "Vorige";
+"card_status2" = "Volgende";
+
+// Language Name Strings
+"language_name_fa" = "Persies (Farsi)";
+

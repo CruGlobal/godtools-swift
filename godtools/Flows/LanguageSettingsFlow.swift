@@ -65,6 +65,7 @@ class LanguageSettingsFlow: Flow {
             dataDownloader: appDiContainer.initialDataDownloader,
             languageSettingsService: appDiContainer.languageSettingsService,
             downloadedLanguagesCache: appDiContainer.downloadedLanguagesCache,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             chooseLanguageType: chooseLanguageType
         )

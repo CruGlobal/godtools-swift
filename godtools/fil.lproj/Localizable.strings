@@ -1,23 +1,48 @@
-"language_name_fa" = "Persian (Farsi)";
-"downloadprogress" = "Kasalukuyang dina-download";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Nagsisimula ng Pag-uusap";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buksan ang Tool";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Pag-unlad ng Kristiyano";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Nauna";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Pagsasanay";
 
-"card_status2" = "Susunod";
+/* This is an invitation for a user to open a tool */
+"open" = "Buksan";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Idagdag sa Mga Paborito";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Alisin sa Mga Paborito";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Dina-download ang tool na ito. Para maiwasang maghintay, gawing paborito ang tool na ito para magamit ito offline.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Dina-download ang pinakabagong translation para sa tool na ito.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Alisin sa Mga Paborito?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Sigurado ka bang gusto mong alisin ang %@ sa Iyong Mga Paborito? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Imbitasyon ng Ebanghelyo";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Mga Artikulo";
 "language_onboard" = "80+ na Wika";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Na-download mo na ang lahat ng available na tool.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mga Tool Ko";
+"my_tools" = "Mga Paborito";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Makahanap ng Mga Tool";
+"find_tools" = "Lahat ng Tool";
 
 "unavailable" = "Hindi available";
 
@@ -30,7 +55,6 @@
 "menu_share" = "Pagbabahagi";
 "menu_legal" = "Ayon sa Batas";
 "language_settings" = "Mga Setting ng Wika";
-
 // Login
 "login" = "Mag-log in";
 "logout" = "Mag-log out";
@@ -98,6 +122,8 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "done" = "Tapos na";
 "remove" = "Alisin";
 "clear" = "I-clear";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buksan ang Tool";
 
 // Alerts
 "error" = "Error";
@@ -118,3 +144,14 @@ Maaaring ma-download ang app mula sa https://godtoolsapp.com";
 "general_about_8" = "Pumunta sa godtoolsapp.com para sa karagdagang impormasyon.";
 "general_about_9" = "Habang ginagawa mo ang inisiyatiba para ibahagi ang iyong pananalampalataya, tandaan na ang Diyos ang siyang nagbabago sa puso. Mahaling mabuti ang bawat tao sa pamamagitan ng pakikinig para magkaunawaan.";
 "general_about_10" = "\"Hayaang maging puno ng grasya ang iyong pag-uusap, na binudburan ng asin, para malaman mo kung paano sasagutin ang lahat.\" Taga-Colosas 4:6";
+
+// Downloads
+"Download in progress" = "Kasalukuyang dina-download";
+
+// Navigation
+"card_status1" = "Nauna";
+"card_status2" = "Susunod";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";
+

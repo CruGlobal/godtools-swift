@@ -11,6 +11,7 @@ import Foundation
 protocol AccountViewModelType {
     
     var globalActivityServices: GlobalActivityServicesType { get }
+    var localizationServices: LocalizationServices { get }
     var navTitle: String { get }
     var profileName: ObservableValue<(name: String, animated: Bool)> { get }
     var isLoadingProfile: ObservableValue<Bool> { get }

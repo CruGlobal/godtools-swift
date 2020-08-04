@@ -1,13 +1,39 @@
-"language_name_fa" = "Pärsia (farsi)";
-"downloadprogress" = "Toimub allalaadimine";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Vestluse alustaja";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Ava tööriist";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Areng kristlasena";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Tagasi";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Ettevalmistus";
 
-"card_status2" = "Edasi";
+/* This is an invitation for a user to open a tool */
+"open" = "Ava";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Lisa lemmikutesse";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Eemalda lemmikutest";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Laadime praegu tööriista alla. Et sa tulevikus ootama ei peaks, on su lemmiktööriist kättesaadav võrguühenduseta. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Laadime alla tööriista viimase versiooni.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Kas eemaldada lemmikutest? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Kas soovid kindlasti üksuse %@ lemmikutest eemaldada? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangeeliumi kutse";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artiklid";
 "language_onboard" = "80+ keelt";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +56,6 @@
 "menu_share" = "Jagamine";
 "menu_legal" = "Juriidiline teave";
 "language_settings" = "Keeleseaded";
-
 // Login
 "login" = "Logi sisse";
 "logout" = "Logi välja";
@@ -98,6 +123,8 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 "done" = "Valmis";
 "remove" = "Eemalda";
 "clear" = "Kustuta";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Ava tööriist";
 
 // Alerts
 "error" = "Viga";
@@ -118,3 +145,14 @@ Rakenduse saab alla laadida lehelt godtoolsapp.com";
 "general_about_8" = "Lisateavet saad godtoolsapp.com-ist.";
 "general_about_9" = "Kui jagad oma usku kellegagi, pea meeles, et inimese meelt muudab jumal. Näita oma armastust, kuulates inimesi, et mõistaksid neid.";
 "general_about_10" = "\"Teie kõne olgu alati armu sees, soolaga soolatud, et te teaksite, kuidas teil tuleb igaühele kosta.\" Koloslastele 4:6";
+
+// Downloads
+"Download in progress" = "Toimub allalaadimine";
+
+// Navigation
+"card_status1" = "Tagasi";
+"card_status2" = "Edasi";
+
+// Language Name Strings
+"language_name_fa" = "Pärsia (farsi)";
+

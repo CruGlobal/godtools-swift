@@ -1,23 +1,49 @@
-"language_name_fa" = "Perzština (fársí)";
-"downloadprogress" = "Prebieha sťahovanie";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Téma na začatie konverzácie";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Otvoriť nástroj";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Rozvoj kresťanstva";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Späť";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Tréning";
 
-"card_status2" = "Ďalej";
+/* This is an invitation for a user to open a tool */
+"open" = "Otvoriť";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Pridať medzi obľúbené";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Odstrániť z obľúbených";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Nástroj sa sťahuje. Ak v budúcnosti nechceš čakať, pridaj si nástroj medzi obľúbené a bude dostupný aj offline. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Sťahuje sa najnovší preklad pre nástroj.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Odstrániť z obľúbených?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Naozaj chceš odstrániť %@ z obľúbených? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Pozvanie na gospel";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Články";
 "language_onboard" = "Vyše 80 jazykov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Stiahli ste si všetky dostupné nástroje.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Moje nástroje";
+"my_tools" = "Obľúbené";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Nájsť nástroje";
+"find_tools" = "Všetky nástroje";
 
 "unavailable" = "Nedostupné";
 
@@ -30,7 +56,6 @@
 "menu_share" = "Zdieľanie";
 "menu_legal" = "Právne informácie";
 "language_settings" = "Nastavenia jazyka";
-
 // Login
 "login" = "Prihlásiť sa";
 "logout" = "Odhlásiť sa";
@@ -98,6 +123,8 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 "done" = "Hotovo";
 "remove" = "Odstrániť";
 "clear" = "Vymazať";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otvoriť nástroj";
 
 // Alerts
 "error" = "Chyba";
@@ -118,3 +145,14 @@ Aplikácia sa dá stiahnuť na https://godtoolsapp.com";
 "general_about_8" = "Ďalšie informácie nájdete na godtoolsapp.com.";
 "general_about_9" = "Keď prevezmete iniciatívu a začnete sa deliť o svoju vieru, nezabúdajte, že boh je ten, kto mení srdcia. Milujte všetkých ľudí a vnímajte porozumenie.";
 "general_about_10" = "„Nech je vaša reč vždy ľúbezná, okorenená soľou, aby ste vedeli, ako by ste mali každému odpovedať.“ List Kolosanom 4:6";
+
+// Downloads
+"Download in progress" = "Prebieha sťahovanie";
+
+// Navigation
+"card_status1" = "Späť";
+"card_status2" = "Ďalej";
+
+// Language Name Strings
+"language_name_fa" = "Perzština (fársí)";
+

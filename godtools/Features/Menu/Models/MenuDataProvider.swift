@@ -8,10 +8,13 @@
 
 import Foundation
 
-struct MenuDataProvider: MenuDataProviderType {
+class MenuDataProvider: MenuDataProviderType {
+     
+    private let localizationServices: LocalizationServices
+    
+    required init(localizationServices: LocalizationServices) {
         
-    init() {
-        
+        self.localizationServices = localizationServices
     }
     
     func getMenuSection(id: MenuSectionId) -> MenuSection {
@@ -21,31 +24,31 @@ struct MenuDataProvider: MenuDataProviderType {
         case .general:
             return MenuSection(
                 id: id,
-                title: NSLocalizedString("menu_general", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu_general")
             )
             
         case .account:
             return MenuSection(
                 id: id,
-                title: NSLocalizedString("menu_account", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu_account")
             )
             
         case .share:
             return MenuSection(
                 id: id,
-                title: NSLocalizedString("menu_share", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu_share")
             )
             
         case .legal:
             return MenuSection(
                 id: id,
-                title: NSLocalizedString("menu_legal", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu_legal")
             )
             
         case .version:
             return MenuSection(
                 id: id,
-                title: NSLocalizedString("menu_version", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu_version")
             )
         }
     }
@@ -57,85 +60,85 @@ struct MenuDataProvider: MenuDataProviderType {
         case .languageSettings:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("language_settings", comment: "")
+                title: localizationServices.stringForMainBundle(key: "language_settings")
             )
             
         case .about:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("about", comment: "")
+                title: localizationServices.stringForMainBundle(key: "about")
             )
             
         case .help:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("help", comment: "")
+                title: localizationServices.stringForMainBundle(key: "help")
             )
             
         case .contactUs:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("contact_us", comment: "")
+                title: localizationServices.stringForMainBundle(key: "contact_us")
             )
             
         case .logout:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("logout", comment: "")
+                title: localizationServices.stringForMainBundle(key: "logout")
             )
             
         case .login:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("login", comment: "")
+                title: localizationServices.stringForMainBundle(key: "login")
             )
             
         case .createAccount:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("create_account", comment: "")
+                title: localizationServices.stringForMainBundle(key: "create_account")
             )
             
         case .myAccount:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("menu.my_account", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu.my_account")
             )
             
         case .shareGodTools:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("share_god_tools", comment: "")
+                title: localizationServices.stringForMainBundle(key: "share_god_tools")
             )
             
         case .shareAStoryWithUs:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("share_a_story_with_us", comment: "")
+                title: localizationServices.stringForMainBundle(key: "share_a_story_with_us")
             )
             
         case .termsOfUse:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("terms_of_use", comment: "")
+                title: localizationServices.stringForMainBundle(key: "terms_of_use")
             )
             
         case .privacyPolicy:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("privacy_policy", comment: "")
+                title: localizationServices.stringForMainBundle(key: "privacy_policy")
             )
             
         case .copyrightInfo:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("copyright_info", comment: "")
+                title: localizationServices.stringForMainBundle(key: "copyright_info")
             )
             
         case .tutorial:
             return MenuItem(
                 id: id,
-                title: NSLocalizedString("menu.tutorial", comment: "")
+                title: localizationServices.stringForMainBundle(key: "menu.tutorial")
             )
             
         case .version:

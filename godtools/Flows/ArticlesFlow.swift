@@ -27,6 +27,7 @@ class ArticlesFlow: Flow {
             translationManifest: translationManifest,
             articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
             translationsFileCache: appDiContainer.translationsFileCache,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         
@@ -48,6 +49,7 @@ class ArticlesFlow: Flow {
                 category: category,
                 articleManifest: articleManifest,
                 articleAemImportDownloader: appDiContainer.articleAemImportDownloader,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
             let view = ArticlesView(viewModel: viewModel)

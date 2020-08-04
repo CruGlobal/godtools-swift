@@ -65,6 +65,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
     
     func configure (adobeAnalytics: AdobeAnalyticsType) {
+        
         if isConfigured || isConfiguring {
             return
         }
@@ -72,6 +73,7 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
         isConfiguring = true
         
         serialQueue.async { [weak self] in
+            
             self?.visitorMarketingCloudID = adobeAnalytics.visitorMarketingCloudID
             
             self?.isConfigured = true
@@ -88,35 +90,62 @@ class SnowplowAnalytics: SnowplowAnalyticsType  {
     }
 
     func trackScreenView(screenName: String) {
-        let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
-            builder.setName(screenName)
-            builder.setContexts([ self.idContext(), self.screenURI(screenName: screenName) ])
-        }
+           
+        serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
             
-        serialQueue.async { [weak self] in
-            self?.tracker.trackScreenViewEvent(event)
+            guard let snowplow = self else {
+                return
+            }
+            
+            snowplow.assertFailureIfNotConfigured()
+            snowplow.log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
+            
+            let event = SPScreenView.build { (builder: SPScreenViewBuilder) in
+                builder.setName(screenName)
+                builder.setContexts([ snowplow.idContext(), snowplow.screenURI(screenName: screenName) ])
+            }
+            
+            snowplow.tracker.trackScreenViewEvent(event)
         }
-        
-        log(method: "trackScreenView()", label: "screenName", labelValue: screenName, data: nil)
     }
 
     func trackAction(action: String) {
-        let event = SPStructured.build { (builder: SPStructuredBuilder) in
-            builder.setAction(action)
-            builder.setContexts([ self.idContext(), self.actionURI(action: action) ])
-        }
         
-        serialQueue.async { [weak self] in
-            self?.tracker.trackStructuredEvent(event)
+        serialQueue.asyncAfter(deadline: .now() + 1) { [weak self] in
+            
+            guard let snowplow = self else {
+                return
+            }
+            
+            snowplow.assertFailureIfNotConfigured()
+            snowplow.log(method: "trackAction()", label: "action", labelValue: action, data: nil)
+            
+            let event = SPStructured.build { (builder: SPStructuredBuilder) in
+                builder.setAction(action)
+                builder.setContexts([ snowplow.idContext(), snowplow.actionURI(action: action) ])
+            }
+            
+            snowplow.tracker.trackStructuredEvent(event)
         }
-        
-        log(method: "trackAction()", label: "action", labelValue: action, data: nil)
     }
 
     private func idContext() -> SPSelfDescribingJson {
+                
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let marketingCloudID: String? = visitorMarketingCloudID
         let ssoguid: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.guid : nil
+        
+        log(
+            method: "idContext()",
+            label: nil,
+            labelValue: nil,
+            data: [
+                "grMasterPersonID": grMasterPersonID ?? "",
+                "marketingCloudID": marketingCloudID ?? "",
+                "ssoguid": ssoguid ?? "",
+                "isAuthenticated": keyAuthClient.isAuthenticated()
+            ]
+        )
         
         return SPSelfDescribingJson(schema: idSchema, andData: [
             "gr_master_person_id": grMasterPersonID,

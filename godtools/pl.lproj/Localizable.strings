@@ -1,23 +1,49 @@
-"language_name_fa" = "Perski (Farsi)";
-"downloadprogress" = "Pobieranie w toku";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Temat do rozmów";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Otwórz narzędzie";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Rozwój Chrześcijanina";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Poprz.";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Szkolenie";
 
-"card_status2" = "Następny";
+/* This is an invitation for a user to open a tool */
+"open" = "Otwórz";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Dodaj do ulubionych";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Usuń z ulubionych";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Narzędzie jest pobierane. Aby uniknąć czekania w przyszłości, dodaj narzędzie do ulubionych, dzięki czemu będzie dostępne offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Pobieranie bieżącego tłumaczenia tego narzędzia.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Usunąć z ulubionych? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Czy na pewno chcesz usunąć %@ z ulubionych? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Zaproszenie do Ewangelii";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artykuły";
 "language_onboard" = "80+ języków";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Pobrałeś(aś) już wszystkie dostępne materiały.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Moje Prezentacje";
+"my_tools" = "Ulubione";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Znajdź Prezentacje";
+"find_tools" = "Wszystkie narzędzia";
 
 "unavailable" = "Niedostępne";
 
@@ -30,7 +56,6 @@
 "menu_share" = "Udostępnij";
 "menu_legal" = "Prawne";
 "language_settings" = "Ustawienia języka";
-
 // Login
 "login" = "Zaloguj";
 "logout" = "Wyloguj";
@@ -99,6 +124,8 @@ Możesz pobrać tę aplikację z https://godtoolsapp.com";
 "done" = "Gotowe";
 "remove" = "Usuń";
 "clear" = "Wyczyść";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otwórz narzędzie";
 
 // Alerts
 "error" = "Błąd";
@@ -120,3 +147,14 @@ Możesz pobrać tę aplikację z https://godtoolsapp.com";
 "general_about_9" = "Wraz z tym jak podejmujesz inicjatywę dzielenia się własną wiarą, pamiętaj, że Bóg jest siłą zdolna odmieniać serca. Wyrażaj miłość do każdego człowieka wysłuchując go ze zrozumieniem.";
 "general_about_10" = "\"Mowa wasza, zawsze miła, niech będzie zaprawiona solą, tak byście wiedzieli, jak należy każdemu odpowiadać.\"
 List do Kolosan 4, 6";
+
+// Downloads
+"Download in progress" = "Pobieranie w toku";
+
+// Navigation
+"card_status1" = "Poprz.";
+"card_status2" = "Następny";
+
+// Language Name Strings
+"language_name_fa" = "Perski (Farsi)";
+

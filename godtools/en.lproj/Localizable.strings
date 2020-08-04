@@ -1,25 +1,62 @@
-"language_name_fa" = "Persian (Farsi)";
-"downloadprogress" = "Download in progress";
+/* Means you will use this tool to start a conversation */
+"tool_category_conversation_starter" = "Conversation Starter";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Open Tool";
+/* Means this tool contains content that will help you grow as a Christian */
+"tool_category_growth" = "Christian Growth";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Prev";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Training";
 
-"card_status2" = "Next";
+/* This is an invitation for a user to open a tool */
+"open" = "Open";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Add to Favorites";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Remove from Favorites";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "The tool is downloading. To avoid waiting in the future, favorite this tool so it will be available offline. 
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloading the most recent translation for this tool.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Remove from Favorites? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Are you sure you want to remove %@ from your Favorites? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospel Invitation";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Articles";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Retry Download";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Version";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Downloading Articles ...";
 "language_onboard" = "80+ Languages";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "You have downloaded all available tools.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "My Tools";
+"my_tools" = "Favorites";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find Tools";
+"find_tools" = "All Tools";
 
 "unavailable" = "Unavailable";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Skip";
 
 // Onboarding
 "add_new_tools" = "Add New Tools";
@@ -31,9 +68,12 @@
 
 // Menu
 "menu_general" = "General";
+"menu_account" = "Account";
 "menu_share" = "Share";
 "menu_legal" = "Legal";
 "language_settings" = "Language Settings";
+"menu.tutorial" = "Tutorial";
+"menu.my_account" = "My Account";
 
 // Login
 "login" = "Login";
@@ -92,7 +132,9 @@ An online version can be found at https://knowgod.com/";
 "no" = "No";
 
 // Tract - Sharing
-"tract_share_message" ="This link will take you to the web version of the page we were last looking at together today: %@. Let's talk more!
+"tract_share_message" ="This link will take you to a web version of what we were talking about today: %@. 
+
+Let's talk more!
 
 The app can be downloaded from https://godtoolsapp.com";
 
@@ -102,6 +144,8 @@ The app can be downloaded from https://godtoolsapp.com";
 "done" = "Done";
 "remove" = "Remove";
 "clear" = "Clear";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Open Tool";
 
 // Alerts
 "error" = "Error";
@@ -122,3 +166,66 @@ The app can be downloaded from https://godtoolsapp.com";
 "general_about_8" = "Visit godtoolsapp.com for more information.";
 "general_about_9" = "As you take the initiative to share your faith, remember that God is the one who changes the heart. Love each person well by listening for understanding.";
 "general_about_10" = "\"Let your conversation always be full of grace, seasoned with salt, so that you may know how to answer everyone.\" Colossians 4:6";
+
+// Downloads
+"Download in progress" = "Download in progress";
+
+// Navigation
+"card_status1" = "Prev";
+"card_status2" = "Next";
+
+// Language Name Strings
+"language_name_fa" = "Persian (Farsi)";
+
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Welcome";
+"onboardingWelcome.titleLabel.tagline" = "Helping You Share Your Faith";
+"onboardingWelcome.beginButton" = "Begin";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Share With Others";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools is built to guide your faith conversations";
+"onboardingTutorial.aboutAppItem.1.title" = "Choose Your Tools";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools helps you before, during, and after a spiritual conversation";
+"onboardingTutorial.aboutAppItem.2.title" = "Always Ready";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools is here to help and is ready when you are";
+"onboardingTutorial.appUsageItem.0.message" = "Prepare for any conversation";
+"onboardingTutorial.appUsageItem.1.message" = "Walk someone through the gospel";
+"onboardingTutorial.appUsageItem.2.message" = "View two languages side by side";
+"onboardingTutorial.appUsageItem.3.message" = "Choose from over 80 languages";
+"onboardingTutorial.appUsageItem.4.message" = "Help someone get started as a Christian";
+"onboardingTutorial.continueButton.title" = "Continue";
+"onboardingTutorial.showMoreButton.title" = "Show Me More";
+"onboardingTutorial.getStartedButton.title" = "Get Started";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Watch";
+"tutorial.tutorialItem.0.message" = "See what GodTools offers in our demo video
+(Tap on the video to bring up settings for subtitles)";
+"tutorial.tutorialItem.1.title" = "Prepare";
+"tutorial.tutorialItem.1.message" = "Get familiar with some of your tools. The \"Teach Me to Share\" tool is a good place to start.
+
+Press the information button on any tool for more info.";
+"tutorial.tutorialItem.2.title" = "Try";
+"tutorial.tutorialItem.2.message" = "Everyone starts as a beginner. Try using a tool in a conversation and see what you learn.";
+"tutorial.tutorialItem.3.title" = "This tutorial is available to see again in the menu";
+"tutorial.continueButton.title.continue" = "Continue";
+"tutorial.continueButton.title.startUsingGodTools" = "Start Using GodTools";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Show Me A Tutorial";
+"openTutorial.openTutorialButton.title" = "Open Tutorial";
+
+// Account
+"account.navTitle" = "My Profile";
+"account.activity.title" = "Activity";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Global Activity";
+"accountActivity.globalAnalytics.users.title" = "Unique\nUsers";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Gospel\nPresentations";
+"accountActivity.globalAnalytics.launches.title" = "Sessions";
+"accountActivity.globalAnalytics.countries.title" = "Countries";
+
+// Alerts
+"alert.action.ok" = "OK";

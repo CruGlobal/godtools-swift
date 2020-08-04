@@ -14,6 +14,7 @@ protocol ChooseLanguageViewModelType {
     var downloadedLanguagesCache: DownloadedLanguagesCache { get }
     var navTitle: ObservableValue<String> { get }
     var deleteLanguageButtonTitle: String { get }
+    var closeKeyboardTitle: String { get }
     var hidesDeleteLanguageButton: ObservableValue<Bool> { get }
     var languages: ObservableValue<[LanguageModel]> { get }
     var selectedLanguage: ObservableValue<LanguageModel?> { get }
