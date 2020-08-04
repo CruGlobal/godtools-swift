@@ -1,0 +1,152 @@
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Eğitim";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Aç";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Favorilere Ekle";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Favorilerden Kaldır";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Araç indiriliyor. Gelecekte beklemeyi önlemek için bu aracı favorilere ekle, böylelikle araç çevrim dışı kullanılabilir.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Bu araç için en güncel çeviri indiriliyor.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Favorilerden Kaldırılsın mı? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "%@ aracını Favorilerinden kaldırmak istediğinden emin misin? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "İncil Daveti";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Makaleler";
+"language_onboard" = "80'i Aşkın Dil";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Kullanılabilir tüm araçları indirdiniz.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Favoriler";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Tüm Araçlar";
+
+"unavailable" = "Mevcut Değil";
+
+// Onboarding
+"add_new_tools" = "Yeni Araçlar Ekle";
+"set_your_languages" = "Dillerinizi Ayarlayın";
+"okay" = "Tamam";
+// Menu
+"menu_general" = "Genel";
+"menu_share" = "Paylaş";
+"menu_legal" = "Yasal";
+"language_settings" = "Dil Ayarları";
+// Login
+"login" = "Oturum Aç";
+"logout" = "Oturumu Kapat";
+"create_account" = "Hesap Oluştur";
+"account_login" = "Hesapta Oturum Açma";
+
+// Tool Detail
+"about" = "Hakkında";
+"help" = "Yardım";
+"contact_us" = "Bize Ulaşın";
+"preview_mode_translators_only" = "Ön İzleme Modu (Yalnızca Çevirmenler)";
+"share_god_tools" = "GodTools Uygulamasını Paylaş";
+"share_a_story_with_us" = "Bizimle bir Hikâye Paylaşın";
+"terms_of_use" = "Kullanım Koşulları";
+"privacy_policy" = "Gizlilik Politikası";
+"copyright_info" = "Telif Hakkı Bilgisi";
+"share_god_tools_share_sheet_text" = "GodTools uygulamasını indirin: https://godtoolsapp.com
+
+Çevrim içi bir sürüm https://knowgod.com/ adresinde bulunabilir";
+
+// Add Tools
+"add_tools" = "Araçlar Ekle";
+
+"total_views" = "%d görüntüleme";
+"total_languages" = "%d dil";
+
+// Language Settings
+"primary_language" = "Birincil Dil";
+"select_primary_language" = "Bir Birincil Dil Seçin";
+"parallel_language" = "Paralel Dil";
+"select_parallel_language" = "Paralel bir Dil Seçin";
+"share_god_tools_native_language" = "GodTools'u birisiyle kendi ana dilinde paylaşın";
+"not_every_tool_is_available" = "Her araç her dilde kullanıma hazır değildir";
+
+// Settings
+"settings" = "Ayarlar";
+
+// Alert & Info Controllers
+"download_error" = "İndirme Hatası";
+"language_download_error" = "Mevcut diller bu kez indirilemedi. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+"tract_loading_error_message" = "Bu kaynağın açılmasında bir sorun oluştu. Kaynağı tekrar indirmek genelde bu sorunu çözer.\n\nKaynağı tekrar indirmek ister misiniz?";
+"no_internet_title" = "İnternet bağlantısı yok";
+"no_internet" = "Lütfen internet bağlantınızı kontrol edip yeniden deneyin.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "En güncel Türkçe araçlar bu seferlik indirilemedi. Türkçe araçlar kullanıma hazır. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "En güncel Türkçe araçlar indirilebilir.\n\nBirincil dilinizi Türkçeye ayarlayıp bu kaynakları indirmek ister misiniz?";
+"the_tool_you_requested_is_loading" = "Talep ettiğiniz araç yükleniyor...";
+"loading" = "Yükleniyor";
+
+// Actions
+"yes" = "Evet";
+"no" = "Hayır";
+
+// Tract - Sharing
+"tract_share_message" ="Bu bağlantı, sizi bugün en son birlikte baktığımız sayfanın web sürümüne götürecek: %@. Daha çok konuşalım!
+
+Uygulama http://godtoolsapp.com adresinden indirilebilir";
+
+// Buttons
+"download" = "İndir";
+"dismiss" = "Bırak";
+"done" = "Bitti";
+"remove" = "Kaldır";
+"clear" = "Temizle";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Aracı Aç";
+
+// Alerts
+"error" = "Hata";
+"ok" = "Tamam";
+"OK" = "Tamam";
+"cancel" = "İptal";
+"error_can_not_send_email" = "Cihazınızda yapılandırılmış bir e-posta yok.";
+"required_field_missing" = "\"%@\" gerekli bir alandır.";
+
+// About
+"general_about_1" = "GodTools, inancınızı kolay ve açık bir biçimde paylaşmanıza yardımcı olur.";
+"general_about_2" = "Bu araçlar, daha önce inancınızı hiç paylaşmamış olsanız veya onlar farklı bir dil konuşuyor olsalar bile birilerine İsa Mesih aracılığıyla Tanrı'yla nasıl bir ilişki başlatabileceklerini güvenli biçimde açıklamanıza yardımcı olur.";
+"general_about_3" = "Tercihinize ve seyirci kitlenize bağlı olarak çeşitli araçların arasından seçim yapın. Her araç, her dilde mevcut değildir.";
+"general_about_4" = "Her aracın sonunda diğer kaynaklara bağlantılar eklenmiştir.";
+"general_about_5" = "Her yeni araç ve/veya dili indirmek için çevrim içi bağlantı gerekir. İndirildikten sonra bunlar çevrim dışı olarak kullanılabilir.";
+"general_about_6" = "Sorularınız, önerileriniz, talepleriniz mi var? support@godtoolsapp.com adresinden bize ulaşın";
+"general_about_7" = "Bu araçların çevrim içi versiyonu, knowgod.com adresinde bulunabilir. Bunu kendi sitenize ekleyin!";
+"general_about_8" = "Daha fazla bilgi için godtoolsapp.com adresini ziyaret edin.";
+"general_about_9" = "İnancınızı paylaşma inisiyatifi alırken, Tanrı'nın kalbi değiştiren olduğunu aklınızda bulundurun. Anlamak için dinleyerek, her kişiyi güzelce sevin.";
+"general_about_10" = "\"Sözünüz tuzla terbiye edilmiş gibi, her zaman lütufkâr olsun. Böylece herkese nasıl karşılık vermek gerektiğini bileceksiniz.\" Koloseliler 4:6";
+
+// Downloads
+"Download in progress" = "İndirme sürüyor";
+
+// Navigation
+"card_status1" = "Önce.";
+"card_status2" = "Sonraki";
+
+// Language Name Strings
+"language_name_fa" = "Persçe (Farsça)";
+
