@@ -1,9 +1,3 @@
-/* Means you will use this tool to start a conversation */
-"tool_category_conversation_starter" = "Začenjanje pogovora";
-
-/* Means this tool contains content that will help you grow as a Christian */
-"tool_category_growth" = "Krščanska rast";
-
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Učenje";
 

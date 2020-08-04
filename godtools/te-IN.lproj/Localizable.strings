@@ -1,9 +1,3 @@
-/* Means you will use this tool to start a conversation */
-"tool_category_conversation_starter" = "సంభాషణ స్టార్టర్";
-
-/* Means this tool contains content that will help you grow as a Christian */
-"tool_category_growth" = "క్రిస్టియన్ ఎదుగుదల";
-
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "శిక్షణ";
 
