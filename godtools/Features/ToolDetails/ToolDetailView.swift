@@ -374,6 +374,12 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
         @unknown default:
             print("default")
         }
+        
+        if state == .ended, let youTubePlayerId = viewModel.youTubePlayerId.value {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.loadYoutubePlayerVideo(videoId: youTubePlayerId)
+            }
+        }
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {
