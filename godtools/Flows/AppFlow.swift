@@ -246,9 +246,10 @@ class AppFlow: NSObject, FlowDelegate {
                     self?.navigationController.dismiss(animated: true, completion: nil)
                 }
                 
+                let localizationServices: LocalizationServices = appDiContainer.localizationServices
                 let title: String = "GodTools"
-                let message: String = NSLocalizedString("error_can_not_send_email", comment: "")
-                let acceptedTitle: String = NSLocalizedString("ok", comment: "")
+                let message: String = localizationServices.stringForMainBundle(key: "error_can_not_send_email")
+                let acceptedTitle: String = localizationServices.stringForMainBundle(key: "ok")
                 
                 let viewModel = AlertMessageViewModel(
                     title: title,

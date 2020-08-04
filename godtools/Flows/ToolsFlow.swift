@@ -28,6 +28,7 @@ class ToolsFlow: Flow {
             flowDelegate: self,
             tutorialAvailability: appDiContainer.tutorialAvailability,
             openTutorialCalloutCache: appDiContainer.openTutorialCalloutCache,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics
         )
         
@@ -59,7 +60,8 @@ class ToolsFlow: Flow {
         )
         
         let toolsMenuViewModel = ToolsMenuViewModel(
-            flowDelegate: self
+            flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices
         )
         let view = ToolsMenuView(
             viewModel: toolsMenuViewModel,
@@ -141,6 +143,7 @@ class ToolsFlow: Flow {
                 resource: resource,
                 language: language,
                 pageNumber: pageNumber,
+                localizationServices: appDiContainer.localizationServices,
                 analytics: appDiContainer.analytics
             )
             
@@ -216,9 +219,15 @@ class ToolsFlow: Flow {
     }
     
     private func handleDownloadTranslationErrorFromLoadingToolView(downloadError: TranslationDownloaderError) {
+        
+        let localizationServices: LocalizationServices = appDiContainer.localizationServices
+        
         leaveLoadingToolView(animated: true, completion: { [weak self] in
             if !downloadError.cancelled {
-                let downloadTranslationAlert = TranslationDownloaderErrorViewModel(translationDownloaderError: downloadError)
+                let downloadTranslationAlert = TranslationDownloaderErrorViewModel(
+                    localizationServices: localizationServices,
+                    translationDownloaderError: downloadError
+                )
                 self?.navigationController.presentAlertMessage(alertMessage: downloadTranslationAlert)
             }
         })
@@ -462,6 +471,7 @@ class ToolsFlow: Flow {
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
             toolOpenedAnalytics: appDiContainer.toolOpenedAnalytics,
             liveShareStream: liveShareStream,

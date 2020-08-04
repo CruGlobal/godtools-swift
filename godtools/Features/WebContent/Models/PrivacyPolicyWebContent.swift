@@ -10,7 +10,12 @@ import Foundation
 
 struct PrivacyPolicyWebContent: WebContentType {
     
-    let navTitle: String = NSLocalizedString("privacy_policy", comment: "")
+    let navTitle: String
     let url: URL? = URL(string: "https://www.cru.org/about/privacy.html")
     let analyticsScreenName: String = "Privacy Policy"
+    
+    init(localizationServices: LocalizationServices) {
+        
+        navTitle = localizationServices.stringForMainBundle(key: "privacy_policy")
+    }
 }

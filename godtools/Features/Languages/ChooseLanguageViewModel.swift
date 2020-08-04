@@ -17,6 +17,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     
     private let dataDownloader: InitialDataDownloader
     private let languageSettingsService: LanguageSettingsService
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     private let chooseLanguageType: ChooseLanguageType
     private let shouldDisplaySelectedLanguageAtTop: Bool = false
@@ -28,28 +29,37 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
     let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     let downloadedLanguagesCache: DownloadedLanguagesCache
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let deleteLanguageButtonTitle: String = NSLocalizedString("clear", comment: "")
+    let deleteLanguageButtonTitle: String
+    let closeKeyboardTitle: String
     let hidesDeleteLanguageButton: ObservableValue<Bool> = ObservableValue(value: true)
     let languages: ObservableValue<[LanguageModel]> = ObservableValue(value: [])
     let selectedLanguage: ObservableValue<LanguageModel?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, downloadedLanguagesCache: DownloadedLanguagesCache, localizationServices: LocalizationServices, analytics: AnalyticsContainer, chooseLanguageType: ChooseLanguageType) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
+        self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: false
+        )
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType
+        
+        deleteLanguageButtonTitle = localizationServices.stringForMainBundle(key: "clear")
+        closeKeyboardTitle = localizationServices.stringForMainBundle(key: "dismiss")
         
         super.init()
                 
         switch chooseLanguageType {
         case .primary:
-            navTitle.accept(value: NSLocalizedString("primary_language", comment: ""))
+            navTitle.accept(value: localizationServices.stringForMainBundle(key: "primary_language"))
         case .parallel:
-            navTitle.accept(value: NSLocalizedString("parallel_language", comment: ""))
+            navTitle.accept(value: localizationServices.stringForMainBundle(key: "parallel_language"))
         }
         
         reloadData()

@@ -38,7 +38,11 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: false
+        )
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.deviceAttachmentBanners = deviceAttachmentBanners
         

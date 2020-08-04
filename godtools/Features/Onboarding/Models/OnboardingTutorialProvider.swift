@@ -8,34 +8,34 @@
 
 import Foundation
 
-struct OnboardingTutorialProvider: OnboardingTutorialProviderType {
+class OnboardingTutorialProvider: OnboardingTutorialProviderType {
     
     let aboutTheAppItems: [MainOnboardingTutorialItem]
     let appUsageListItem: OnboardingTutorialUsageListItem
     
-    init() {
+    required init(localizationServices: LocalizationServices) {
         
         aboutTheAppItems = [
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_0",
                 backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_cups",
-                title: NSLocalizedString("onboardingTutorial.aboutAppItem.0.title", comment: ""),
-                message: NSLocalizedString("onboardingTutorial.aboutAppItem.0.message", comment: "")
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.0.message")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_1",
                 backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_knife",
-                title: NSLocalizedString("onboardingTutorial.aboutAppItem.1.title", comment: ""),
-                message: NSLocalizedString("onboardingTutorial.aboutAppItem.1.message", comment: "")
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.1.message")
             ),
             MainOnboardingTutorialItem(
                 backgroundImageName: "onboarding_tutorial_background_2",
                 backgroundCustomViewId: nil,
                 imageName: "onboarding_tutorial_rocket",
-                title: NSLocalizedString("onboardingTutorial.aboutAppItem.2.title", comment: ""),
-                message: NSLocalizedString("onboardingTutorial.aboutAppItem.2.message", comment: "")
+                title: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.title"),
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.aboutAppItem.2.message")
             )
         ]
         
@@ -44,19 +44,19 @@ struct OnboardingTutorialProvider: OnboardingTutorialProviderType {
             backgroundCustomViewId: "onboarding_tutorial_gradient_background",
             usageItems: [
             OnboardingTutorialUsageItem(
-                message: NSLocalizedString("onboardingTutorial.appUsageItem.0.message", comment: "")
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.0.message")
             ),
             OnboardingTutorialUsageItem(
-                message: NSLocalizedString("onboardingTutorial.appUsageItem.1.message", comment: "")
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.1.message")
             ),
             OnboardingTutorialUsageItem(
-                message: NSLocalizedString("onboardingTutorial.appUsageItem.2.message", comment: "")
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.2.message")
             ),
             OnboardingTutorialUsageItem(
-                message: NSLocalizedString("onboardingTutorial.appUsageItem.3.message", comment: "")
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.3.message")
             ),
             OnboardingTutorialUsageItem(
-                message: NSLocalizedString("onboardingTutorial.appUsageItem.4.message", comment: "")
+                message: localizationServices.stringForMainBundle(key: "onboardingTutorial.appUsageItem.4.message")
             )]
         )
     }

@@ -34,8 +34,9 @@ class TutorialFlow: Flow {
         
         let viewModel = TutorialViewModel(
             flowDelegate: self,
+            localizationServices: appDiContainer.localizationServices,
             analytics: appDiContainer.analytics,
-            tutorialItemsProvider: TutorialItemProvider(),
+            tutorialItemsProvider: TutorialItemProvider(localizationServices: appDiContainer.localizationServices),
             deviceLanguage: appDiContainer.deviceLanguage
         )
         let view = TutorialView(viewModel: viewModel)

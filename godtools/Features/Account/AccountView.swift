@@ -119,6 +119,7 @@ extension AccountView: PageNavigationCollectionViewDelegate {
         cell.configure(
             viewModel: AccountItemCellViewModel(
                 item: viewModel.accountItems.value[indexPath.row],
+                localizationServices: viewModel.localizationServices,
                 globalActivityServices: viewModel.globalActivityServices
             ),
             delegate: self

@@ -10,6 +10,7 @@ import Foundation
 
 protocol ArticlesViewModelType {
     
+    var localizationServices: LocalizationServices { get }
     var navTitle: ObservableValue<String> { get }
     var articleAemImportData: ObservableValue<[ArticleAemImportData]> { get }
     var isLoading: ObservableValue<Bool> { get }

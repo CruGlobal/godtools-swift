@@ -10,7 +10,12 @@ import Foundation
 
 struct HelpWebContent: WebContentType {
     
-    let navTitle: String = NSLocalizedString("help", comment: "")
+    let navTitle: String
     let url: URL? = URL(string: "http://www.godtoolsapp.com/faq")
     let analyticsScreenName: String = "Help"
+    
+    init(localizationServices: LocalizationServices) {
+        
+        navTitle = localizationServices.stringForMainBundle(key: "help")
+    }
 }

@@ -13,7 +13,7 @@ class TranslationDownloaderErrorViewModel: AlertMessageType {
     let title: String
     let message: String
     
-    required init(translationDownloaderError: TranslationDownloaderError) {
+    required init(localizationServices: LocalizationServices, translationDownloaderError: TranslationDownloaderError) {
         
         switch translationDownloaderError {
             
@@ -36,7 +36,7 @@ class TranslationDownloaderErrorViewModel: AlertMessageType {
             }
         
         case .failedToDownloadTranslation(let responseError):
-            let responseAlert = ResponseErrorAlertMessage(error: responseError)
+            let responseAlert = ResponseErrorAlertMessage(localizationServices: localizationServices, error: responseError)
             title = responseAlert.title
             message = responseAlert.message
             

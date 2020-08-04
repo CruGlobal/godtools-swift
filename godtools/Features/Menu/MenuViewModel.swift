@@ -18,16 +18,17 @@ class MenuViewModel: NSObject, MenuViewModelType {
     private let tutorialAvailability: TutorialAvailabilityType
     private let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     private let supportedLanguageCodesForAccountCreation: [String] = ["en"]
+    private let localizationServices: LocalizationServices
     private let analytics: AnalyticsContainer
     
     private weak var flowDelegate: FlowDelegate?
     
     let loginClient: TheKeyOAuthClient
-    let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("settings", comment: ""))
-    let navDoneButtonTitle: String = NSLocalizedString("done", comment: "")
+    let navTitle: ObservableValue<String> = ObservableValue(value: "")
+    let navDoneButtonTitle: String
     let menuDataSource: ObservableValue<MenuDataSource> = ObservableValue(value: MenuDataSource.emptyData)
     
-    required init(flowDelegate: FlowDelegate, config: ConfigType, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, config: ConfigType, loginClient: TheKeyOAuthClient, menuDataProvider: MenuDataProviderType, deviceLanguage: DeviceLanguageType, tutorialAvailability: TutorialAvailabilityType, openTutorialCalloutCache: OpenTutorialCalloutCacheType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.config = config
@@ -36,9 +37,14 @@ class MenuViewModel: NSObject, MenuViewModelType {
         self.deviceLanguage = deviceLanguage
         self.tutorialAvailability = tutorialAvailability
         self.openTutorialCalloutCache = openTutorialCalloutCache
+        self.localizationServices = localizationServices
         self.analytics = analytics
         
+        navDoneButtonTitle = localizationServices.stringForMainBundle(key: "done")
+        
         super.init()
+        
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "settings"))
                 
         reloadMenuDataSource()
     }
@@ -163,6 +169,16 @@ class MenuViewModel: NSObject, MenuViewModelType {
     
     func contactUsTapped() {
         flowDelegate?.navigate(step: .contactUsTappedFromMenu)
+    }
+    
+    func logoutTapped() {
+        
+        let loggedOutHandler: CallbackHandler = CallbackHandler { [weak self] in
+            self?.loginClient.logout()
+            self?.reloadMenuDataSource()
+        }
+        
+        flowDelegate?.navigate(step: .logoutTappedFromMenu(logoutHandler: loggedOutHandler))
     }
     
     func shareGodToolsTapped() {

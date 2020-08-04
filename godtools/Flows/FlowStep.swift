@@ -63,6 +63,7 @@ enum FlowStep {
     case termsOfUseTappedFromMenu
     case privacyPolicyTappedFromMenu
     case copyrightInfoTappedFromMenu
+    case logoutTappedFromMenu(logoutHandler: CallbackHandler)
     
     // language settings
     case choosePrimaryLanguageTappedFromLanguageSettings

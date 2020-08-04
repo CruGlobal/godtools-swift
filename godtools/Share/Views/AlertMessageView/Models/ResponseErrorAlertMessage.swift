@@ -13,24 +13,24 @@ struct ResponseErrorAlertMessage: AlertMessageType {
     let title: String
     let message: String
     
-    init(error: ResponseError<NoClientApiErrorType>) {
+    init(localizationServices: LocalizationServices, error: ResponseError<NoClientApiErrorType>) {
         
         switch error {
             
-        case .httpClientError(let error):
-            title = NSLocalizedString("error", comment: "")
+        case .httpClientError(let clientError):
+            title = localizationServices.stringForMainBundle(key: "error")
             message = "An unknown error occurred on the client api."
         
         case .noNetworkConnection:
-            title = NSLocalizedString("no_internet_title", comment: "")
-            message = NSLocalizedString("no_internet", comment: "")
+            title = localizationServices.stringForMainBundle(key: "no_internet_title")
+            message = localizationServices.stringForMainBundle(key: "no_internet")
         
         case .requestCancelled:
-            title = NSLocalizedString("error", comment: "")
+            title = localizationServices.stringForMainBundle(key: "error")
             message = "The request was cancelled."
         
         case .requestFailed(let error):
-            title = NSLocalizedString("error", comment: "")
+            title = localizationServices.stringForMainBundle(key: "error")
             message = error.localizedDescription
         }
     }

@@ -156,7 +156,7 @@ class godtoolsUIRecording: XCTestCase {
     
     func localized(_ key: String) -> String {
         let uiTestBundle = Bundle(for: godtoolsUIRecording.self)
-        return NSLocalizedString(key, bundle: uiTestBundle, comment: "")
+        return localizationServices.stringForMainBundle(key: key, bundle: uiTestBundle)
     }
     
     func scrollToCell(with identifer: String) {
