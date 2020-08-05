@@ -1,0 +1,152 @@
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Opplæring";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Åpne";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Legg til i Favoritter";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Fjern fra Favoritter";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Verktøyet lastes ned. For å unngå å vente i framtiden kan du lagre verktøyet som favoritt, så blir det tilgjengelig offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Laster ned den nyeste oversettelsen for verktøyet.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Fjern fra Favoritter?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Er du sikker på at du vil fjerne %@ fra Favoritter? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Gospel-invitasjon";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikler";
+"language_onboard" = "Over 80 språk";
+
+/* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
+"no_more_tools" = "Du har lastet ned alle tilgjengelige verktøy.";
+
+/* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
+"my_tools" = "Favoritter";
+
+/* The user will click this toggle switch to go find a library of more offerings or "Tools". */
+"find_tools" = "Alle verktøy";
+
+"unavailable" = "Utilgjengelig";
+
+// Onboarding
+"add_new_tools" = "Legg til nye verktøy";
+"set_your_languages" = "Angi språk";
+"okay" = "Ok";
+// Menu
+"menu_general" = "Generelt";
+"menu_share" = "Del";
+"menu_legal" = "Juridisk";
+"language_settings" = "Språkinnstillinger";
+// Login
+"login" = "Logg på";
+"logout" = "Logg av";
+"create_account" = "Opprett konto";
+"account_login" = "Logg på konto";
+
+// Tool Detail
+"about" = "Om";
+"help" = "Hjelp";
+"contact_us" = "Kontakt oss";
+"preview_mode_translators_only" = "Forhåndsvisning (kun oversettere)";
+"share_god_tools" = "Del GodTools-appen";
+"share_a_story_with_us" = "Del en historie med oss";
+"terms_of_use" = "Betingelser for bruk";
+"privacy_policy" = "Personvern";
+"copyright_info" = "Opphavsrettslig informasjon";
+"share_god_tools_share_sheet_text" = "Last ned GodTools-appen: https://godtoolsapp.com
+
+Du finner en nettversjon på https://knowgod.com/";
+
+// Add Tools
+"add_tools" = "Legg til verktøy";
+
+"total_views" = "%d visninger";
+"total_languages" = "%d språk";
+
+// Language Settings
+"primary_language" = "Hovedspråk";
+"select_primary_language" = "Velg hovedspråk";
+"parallel_language" = "Parallellspråk";
+"select_parallel_language" = "Velg parallellspråk";
+"share_god_tools_native_language" = "Del GodTools med noen på morsmålet deres";
+"not_every_tool_is_available" = "Ikke alle verktøy er tilgjengelig på alle språk";
+
+// Settings
+"settings" = "Innstillinger";
+
+// Alert & Info Controllers
+"download_error" = "Nedlastingsfeil";
+"language_download_error" = "De tilgjengelige språkene kunne ikke lastes ned nå. Sjekk tilkoblingen din eller prøv igjen senere.";
+"tract_loading_error_message" = "Et problem oppstod med åpning av ressursen. En ny nedlasting løser ofte problemet. \n\n Vil du last den ned igjen?";
+"no_internet_title" = "Ingen internettilkobling";
+"no_internet" = "Sjekk internettilkoblingen og prøv igjen.";
+
+// the first occurence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing tools. the second occurence of "English" is also a noun, but should remain "English" translated into this translation's language.
+"device_locale_download_error" = "De nyeste engelske verktøyene kunne ikke lastes ned nå. Engelske verktøy er tilgjengelig. Sjekk tilkoblingen din eller prøv igjen senere.";
+
+// the first occurrence of "English" is an adjective describing tools and should be replaced with the localized name of this translation's language as an adjective describing resources. the second occurence of "English" is a noun and should be replaced with the localized name of this translation's language.
+"device_locale_download_success" = "De nyeste engelske verktøyene kan lastes ned. \n\n Vil du angi engelsk som hovedspråk og laste ned disse ressursene?";
+"the_tool_you_requested_is_loading" = "Verktøyet du forespurte lastes inn …";
+"loading" = "Laster inn …";
+
+// Actions
+"yes" = "Ja";
+"no" = "Nei";
+
+// Tract - Sharing
+"tract_share_message" ="Denne lenken tar deg til nettversjonen av siden vi så på sammen i dag: %@. La oss snakke mer!
+
+Appen kan lastes ned på https://godtoolsapp.com";
+
+// Buttons
+"download" = "Last ned";
+"dismiss" = "Avbryt";
+"done" = "Ferdig";
+"remove" = "Fjern";
+"clear" = "Fjern";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Åpne verktøy";
+
+// Alerts
+"error" = "Feil";
+"ok" = "Ok";
+"OK" = "Ok";
+"cancel" = "Avbryt";
+"error_can_not_send_email" = "Det finnes ingen konfigurert e-post på enheten.";
+"required_field_missing" = "«%@» er et obligatorisk felt.";
+
+// About
+"general_about_1" = "GodTools hjelper deg å dele troen din på en enkel og klar måte.";
+"general_about_2" = "Med disse verktøyene kan du forklare til andre hvordan de kan starte en relasjon med Gud gjennom Jesus Kristus, også om du aldri før har delt troen din og med mennesker som snakker andre språk.";
+"general_about_3" = "Velg blant en rekke verktøy basert på dine preferanser og målgruppen din. Ikke alle verktøy er tilgjengelig på alle språk.";
+"general_about_4" = "Koblinger til andre ressurser er inkludert ved slutten av verktøyet.";
+"general_about_5" = "Internettilkobling er nødvendig for å laste ned nye verktøy og/eller språk. Etter at den er lastet ned, kan den brukes i frakoblet modus.";
+"general_about_6" = "Spørsmål? Forslag? Forespørsler? Ta kontakt på support@godtoolsapp.com";
+"general_about_7" = "Du kan finne en nettversjon av disse verktøyene på knowgod.com. Bygg inn på nettsiden din!";
+"general_about_8" = "Gå til godtoolsapp.com for mer informasjon.";
+"general_about_9" = "Når du tar initiativ til å dele troen din, må du huske at Gud er den eneste som endrer hjertet. Elsk alle ved å lytte og forstå.";
+"general_about_10" = "«La deres tale alltid være vennlig, men krydret med salt, så dere vet hvordan dere skal svare enhver.» Kolosserne 4:6";
+
+// Downloads
+"Download in progress" = "Laster ned …";
+
+// Navigation
+"card_status1" = "Forrige";
+"card_status2" = "Neste";
+
+// Language Name Strings
+"language_name_fa" = "Persisk (farsi)";
+
