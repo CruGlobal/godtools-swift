@@ -200,7 +200,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             title.accept(value: resource.name)
         }
         
-        let languageCode: String = languageTranslationResult.language?.code ?? ""
+        let languageCode: String = languageSettingsService.primaryLanguage.value?.code ?? ""
         let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageCode)
         
         category.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"))

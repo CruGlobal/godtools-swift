@@ -129,14 +129,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
         
-        let languageBundle: Bundle
-        
-        if let preferredLanguage = primaryTranslationResult.language {
-            languageBundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: preferredLanguage.code)
-        }
-        else {
-            languageBundle = Bundle.main
-        }
+        let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageSettingsService.primaryLanguage.value?.code ?? "")
         
         if let preferredTranslation = primaryTranslationResult.translation {
             name.accept(value: preferredTranslation.translatedName)
