@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Offline elérhetővé teheted az eszközt a szív ikonra kattintva, amivel hozzáadod a kedvenceidhez.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Beszélgetés indító";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Hitbeli növekedés";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Képzés";
 

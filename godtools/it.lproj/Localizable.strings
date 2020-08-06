@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Tocca l'icona a cuore per aggiungere uno strumento ai preferiti e renderlo disponibile offline.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Per rompere il ghiaccio";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Crescita di vita cristiana";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Apprendimento";
 

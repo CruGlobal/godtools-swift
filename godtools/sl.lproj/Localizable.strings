@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Začenjanje pogovora";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Krščanska rast";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Učenje";
 

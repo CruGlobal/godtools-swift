@@ -1,3 +1,12 @@
+"tool_offline_favorite_message" = "Menjadikan sesuatu alat tersedia semasa luar talian dengan mengetik pada ikon hati yang akan menambahkannya ke kegemaran anda.
+";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Pemula Pembualan";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kemajuan Kristian";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Latihan";
 

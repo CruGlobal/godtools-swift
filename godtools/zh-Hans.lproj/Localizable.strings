@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "点击工具的心形图标，将其添加到收藏夹，使该工具可离线使用。";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "对话开场白";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "基督徒成长";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "培训";
 

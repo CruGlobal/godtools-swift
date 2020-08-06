@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Maak een hulpprogramma ook offline beschikbaar door op het hartje te tikken en het toe te voegen aan je favorieten.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Gespreksstarter";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Christelijke groei";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Training";
 

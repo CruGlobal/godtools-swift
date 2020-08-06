@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Rendez un outil disponible hors connexion en touchant l'icône cœur. Cette action permet de l'ajouter à vos favoris.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Lanceur de conversation";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Croissance chrétienne";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Formation";
 
