@@ -1,7 +1,9 @@
-/* Means you will use this tool to start a conversation */
+"tool_offline_favorite_message" = "ເຮັດໃຫ້ສາມາດໃຊ້ເຄື່ອງມືແບບອອບລາຍໂດຍການແຕະໄອຄອນຫົວໃຈ ເຊິ່ງຈະເປັນການເພີ່ມເຄື່ອງມືໃສ່ລາຍການທີ່ມັກຂອງທ່ານ.";
+
+/* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "ຜູ້ເລີ່ມການສົນທະນາ";
 
-/* Means this tool contains content that will help you grow as a Christian */
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "ການເຕີບໃຫຍ່ຂອງຊາວຄຣິດ";
 
 /* This is a category. The content will include training of how to share your faith. */
@@ -15,6 +17,18 @@
 
 /* A user will be selecting this option to remove the tool from their Favorites screen */
 "remove_from_favorites" = "ລືບອອກຈາກລາຍການທີ່ມັກ";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "ກໍາລັງດາວໂຫຼດເຄື່ອງມື. ເພື່ອບໍ່ໄດ້ຖ້າໃນອະນາຄົດ, ກະລຸນາເພີ່ມເຄື່ອງມືນີ້ໃສ່ລາຍການທີ່ມັກ ເພື່ອຈະສາມາດນໍາໃຊ້ອອບລາຍໄດ້.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "ກໍາລັງດາວໂຫຼດການແປພາສາຫຼ້າສຸດສໍາລັບເຄື່ອງມືນີ້.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ລຶບຈາກລາຍການທີ່ມັກບໍ?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "ທ່ານແນ່ໃຈທີ່ຈະລຶບ %@ ຈາກລາຍການທີ່ມັກຂອງທ່ານບໍ?";
 
 /* Gospel indicates the gospel of Jesus Christ */
 "tool_category_gospel" = "ຄໍາເຊີນຮັບຟັງຂ່າວປະເສີດ";
