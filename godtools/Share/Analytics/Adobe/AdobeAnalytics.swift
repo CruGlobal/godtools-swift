@@ -9,8 +9,9 @@
 import Foundation
 import AdobeMobileSDK
 import TheKeyOAuthSwift
+import GTMAppAuth
 
-class AdobeAnalytics: AdobeAnalyticsType {
+class AdobeAnalytics: NSObject, AdobeAnalyticsType {
     
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
@@ -60,6 +61,8 @@ class AdobeAnalytics: AdobeAnalyticsType {
         ))
         
         isConfigured = true
+        
+        keyAuthClient.addStateChangeDelegate(delegate: self)
         
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
@@ -138,6 +141,18 @@ class AdobeAnalytics: AdobeAnalyticsType {
         }
     }
     
+    func setVisitorID() {
+        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
+
+        let grMasterPersonID: String? = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
+        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
+
+        let visitorId: String? = grMasterPersonID ?? ssoguid
+        let authState: ADBMobileVisitorAuthenticationState = visitorId == nil ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+        
+        ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
+    }
+    
     private func createDefaultProperties(screenName: String?, siteSection: String?, siteSubSection: String?, previousScreenName: String?, complete: @escaping ((_ properties: AdobeAnalyticsProperties) -> Void)) {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
         
@@ -147,9 +162,7 @@ class AdobeAnalytics: AdobeAnalyticsType {
         let grMasterPersonID: String? = keyAuthClient.isAuthenticated() ? keyAuthClient.grMasterPersonId : nil
         let loggedInStatus: String = self.loggedInStatus
         let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
-        
-        setVisitorID()
-        
+                
         DispatchQueue.global().async { [weak self] in
             
             let visitorMarketingCloudID: String? = self?.visitorMarketingCloudID
@@ -172,18 +185,6 @@ class AdobeAnalytics: AdobeAnalyticsType {
         }
     }
     
-    private func setVisitorID() {
-        let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
-
-        let grMasterPersonID: String? = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
-        let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
-
-        let visitorId: String? = grMasterPersonID ?? ssoguid
-        let authState: ADBMobileVisitorAuthenticationState = visitorId == nil ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
-        
-        ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
-    }
-    
     private var appName: String {
         return AdobeAnalyticsConstants.Values.godTools
     }
@@ -203,5 +204,19 @@ class AdobeAnalytics: AdobeAnalyticsType {
                 print("  data: \(data)")
             }
         }
+    }
+}
+
+// MARK: - OIDAuthStateChangeDelegate
+
+extension AdobeAnalytics: OIDAuthStateChangeDelegate {
+    func didChange(_ state: OIDAuthState) {
+        print("auth state changed")
+    }
+}
+
+extension AdobeAnalytics: UIApplicationDelegate {
+    func applicationDidBecomeActive(_ app: UIApplication) {
+        print("Active")
     }
 }
