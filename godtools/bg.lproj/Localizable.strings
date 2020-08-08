@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Направете инструмента достъпен офлайн чрез докосване на иконката сърце, което ще го добави към Вашите любими.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Започване на разговор";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Християнско израстване";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Обучение";
 

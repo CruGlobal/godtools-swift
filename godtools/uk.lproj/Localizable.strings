@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Інструмент буде доступним у режимі офлайн, якщо торкнутись значка серця. Його буде додано до улюбленого.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Початок розмови";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Духовний ріст";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Тренування";
 

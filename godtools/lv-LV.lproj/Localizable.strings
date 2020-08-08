@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Nospiediet uz sirds ikonas, lai pievienotu rīku izlasei un padarītu to pieejamu bezsaistē.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Sarunas sākšanai";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kristīgā izaugsme";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Apmācība";
 

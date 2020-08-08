@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "하트 아이콘을 탭하여 즐겨찾기에 추가해서 오프라인에서도 도구를 사용하세요.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "대화 시작";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "그리스도인 성장";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "훈련";
 

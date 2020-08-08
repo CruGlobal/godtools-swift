@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "با ضربه زدن روی آیکون قلب، که ابزار را به موارد دلخواه اضافه می‌کند، آن را به صورت آفلاین در دسترس قرار دهید.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "آغازگر مکالمه";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "کریستین گروث";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "تمرین";
 

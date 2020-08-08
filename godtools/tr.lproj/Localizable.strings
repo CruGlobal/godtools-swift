@@ -1,3 +1,11 @@
+"tool_offline_favorite_message" = "Kalp simgesine dokunup favorilerine ekleyerek bir aracı çevrim dışı kullanılabilir hâle getir.";
+
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Konuşma Başlatıcı";
+
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Hristiyan Büyümesi";
+
 /* This is a category. The content will include training of how to share your faith. */
 "tool_category_training" = "Eğitim";
 
