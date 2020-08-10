@@ -1,7 +1,9 @@
-/* Means you will use this tool to start a conversation */
+"tool_offline_favorite_message" = "ਦਿਲ ਦੇ ਆਈਕਨ ਨੂੰ ਟੈਪ ਕਰਕੇ ਇੱਕ ਟੂਲ ਨੂੰ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਕਰੋ ਜੋ ਇਸਨੂੰ ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜਦਾ ਹੈ।";
+
+/* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਵਾਲਾ";
 
-/* Means this tool contains content that will help you grow as a Christian */
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "ਮਸੀਹੀ ਵਿਕਾਸ";
 
 /* This is a category. The content will include training of how to share your faith. */

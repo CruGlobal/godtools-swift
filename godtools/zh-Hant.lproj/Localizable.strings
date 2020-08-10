@@ -1,7 +1,9 @@
-/* Means you will use this tool to start a conversation */
+"tool_offline_favorite_message" = "點擊愛心圖示，將工具新增至你的最愛，就能離線使用工具。";
+
+/* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "開場白";
 
-/* Means this tool contains content that will help you grow as a Christian */
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "基督徒靈命成長";
 
 /* This is a category. The content will include training of how to share your faith. */

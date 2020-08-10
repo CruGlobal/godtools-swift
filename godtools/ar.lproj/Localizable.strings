@@ -1,7 +1,9 @@
-/* Means you will use this tool to start a conversation */
+"tool_offline_favorite_message" = "اجعل الأداة متوفرة في وضع عدم الاتصال بالضغط على أيقونة القلب مما يضيفها إلى المفضلة.";
+
+/* This is a category description of a tool that helps you start a conversation */
 "tool_category_conversation_starter" = "باديء المحادثة";
 
-/* Means this tool contains content that will help you grow as a Christian */
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
 "tool_category_growth" = "النمو المسيحي";
 
 /* This is a category. The content will include training of how to share your faith. */
