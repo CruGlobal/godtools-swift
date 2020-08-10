@@ -22,12 +22,21 @@ class TranslateLanguageNameViewModel {
         self.shouldFallbackToPrimaryLanguageLocale = shouldFallbackToPrimaryLanguageLocale
     }
     
+    func getLocalizedLanguageNameForLanguage(language: LanguageModelType, localizedBundle: Bundle) -> String? {
+        
+        let key: String = "language_name_" + language.code
+        let localizedName: String = localizationServices.stringForBundle(bundle: localizedBundle, key: key)
+        
+        if !localizedName.isEmpty && localizedName != key {
+            return localizedName
+        }
+        
+        return nil
+    }
+    
     func getTranslatedName(language: LanguageModelType) -> String {
         
-        let localizedNameKey: String = "language_name_" + language.code
-        let localizedName: String = localizationServices.stringForMainBundle(key: localizedNameKey)
-                
-        if !localizedName.isEmpty && localizedName != localizedNameKey {
+        if let localizedName = getLocalizedLanguageNameForLanguage(language: language, localizedBundle: Bundle.main) {
             
             return localizedName
         }
