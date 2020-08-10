@@ -190,19 +190,39 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         let languageTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
             resourceId: resource.id,
             languageId: languageSettingsService.primaryLanguage.value?.id ?? "",
-            supportedFallbackTypes: [.englishLanguage]
+            supportedFallbackTypes: [.deviceLocaleLanguage, .englishLanguage]
         )
         
-        if let translation = languageTranslationResult.translation {
-            title.accept(value: translation.translatedName)
+        let shouldDisplayInEnglish: Bool
+                
+        switch languageTranslationResult.type {
+            
+        case .languageSupported:
+            shouldDisplayInEnglish = false
+        case .languageNotSupportedFallingBackToDeviceLocaleLanguage:
+            shouldDisplayInEnglish = false
+        case .languageNotSupportedFallingBackToEnglish:
+            shouldDisplayInEnglish = true
+        case .languageNotSupported:
+            shouldDisplayInEnglish = true
+        case .unableToLocateDataInCache:
+            shouldDisplayInEnglish = true
+        }
+        
+        let toolName: String
+        let languageBundle: Bundle
+        
+        if !shouldDisplayInEnglish, let translation = languageTranslationResult.translation, let language = languageTranslationResult.language {
+            toolName = translation.translatedName
+            languageBundle = localizationServices.bundleForResource(resourceName: language.code) ?? Bundle.main
         }
         else {
-            title.accept(value: resource.name)
+            toolName = resource.name
+            languageBundle = localizationServices.englishBundle ?? Bundle.main
         }
         
-        let languageCode: String = languageSettingsService.primaryLanguage.value?.code ?? ""
-        let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageCode)
-        
+        title.accept(value: toolName)
+                
         category.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"))
         aboutTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "about"))
         openTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "open"))

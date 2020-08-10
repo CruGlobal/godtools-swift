@@ -113,30 +113,51 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let primaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
         
-        let primaryTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
+        let languageTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
             resourceId: resource.id,
             languageId: primaryLanguageId,
-            supportedFallbackTypes: [.englishLanguage]
+            supportedFallbackTypes: [.deviceLocaleLanguage, .englishLanguage]
         )
         
-        let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
+        let shouldDisplayInEnglish: Bool
+                
+        switch languageTranslationResult.type {
+            
+        case .languageSupported:
+            shouldDisplayInEnglish = false
+        case .languageNotSupportedFallingBackToDeviceLocaleLanguage:
+            shouldDisplayInEnglish = false
+        case .languageNotSupportedFallingBackToEnglish:
+            shouldDisplayInEnglish = true
+        case .languageNotSupported:
+            shouldDisplayInEnglish = true
+        case .unableToLocateDataInCache:
+            shouldDisplayInEnglish = true
+        }
         
-        let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageSettingsService.primaryLanguage.value?.code ?? "")
+        let toolName: String
+        let toolAboutDetails: String
+        let languageBundle: Bundle
         
-        if let preferredTranslation = primaryTranslationResult.translation {
-            name.accept(value: preferredTranslation.translatedName)
-            aboutDetails.accept(value: preferredTranslation.translatedDescription)
+        if !shouldDisplayInEnglish, let translation = languageTranslationResult.translation, let language = languageTranslationResult.language {
+            toolName = translation.translatedName
+            toolAboutDetails = translation.translatedDescription
+            languageBundle = localizationServices.bundleForResource(resourceName: language.code) ?? Bundle.main
         }
         else {
-            name.accept(value: resource.name)
-            aboutDetails.accept(value: resource.resourceDescription)
+            toolName = resource.name
+            toolAboutDetails = resource.resourceDescription
+            languageBundle = localizationServices.englishBundle ?? Bundle.main
         }
         
+        let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
         let languageNames: [String] = languages.map({$0.translatedName(translateLanguageNameViewModel: translateLanguageNameViewModel)})
         let sortedLanguageNames: String = languageNames.sorted(by: { $0 < $1 }).joined(separator: ", ")
         
         let numberOfLanguages: Int = languages.count
         
+        name.accept(value: toolName)
+        aboutDetails.accept(value: toolAboutDetails)
         totalViews.accept(value: String.localizedStringWithFormat(localizationServices.stringForBundle(bundle: languageBundle, key: "total_views"), resource.totalViews))
         openToolTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "toolinfo_opentool"))
         unfavoriteTitle.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "remove_from_favorites"))
