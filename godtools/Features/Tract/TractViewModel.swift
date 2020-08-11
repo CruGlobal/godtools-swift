@@ -47,11 +47,7 @@ class TractViewModel: NSObject, TractViewModelType {
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            shouldFallbackToPrimaryLanguageLocale: false
-        )
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.tractManager = tractManager
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.followUpsService = followUpsService

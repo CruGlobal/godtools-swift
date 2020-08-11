@@ -462,11 +462,7 @@
 		459AA42524A5296F00CAA69C /* DownloadedTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */; };
 		459C3FE024C5F296006E81CA /* TractRemoteShareSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */; };
 		459C8692247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */; };
-		45A1431124A626AD00892200 /* FetchLanguageTranslationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1430E24A626AD00892200 /* FetchLanguageTranslationResult.swift */; };
-		45A1431224A626AD00892200 /* FetchLanguageTranslationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1430F24A626AD00892200 /* FetchLanguageTranslationViewModel.swift */; };
-		45A1431324A626AD00892200 /* FetchLanguageTranslationResultType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431024A626AD00892200 /* FetchLanguageTranslationResultType.swift */; };
 		45A1431624A62C1900892200 /* FetchTranslationManifestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */; };
-		45A1432024A63C7C00892200 /* FetchLanguageTranslationFallbackType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1431F24A63C7C00892200 /* FetchLanguageTranslationFallbackType.swift */; };
 		45A1432424A64DFA00892200 /* FetchTranslationManifestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */; };
 		45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E724A042B8009BA210 /* ResourceType.swift */; };
 		45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */; };
@@ -1114,11 +1110,7 @@
 		459AA42424A5296F00CAA69C /* DownloadedTranslationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedTranslationResult.swift; sourceTree = "<group>"; };
 		459C3FDF24C5F296006E81CA /* TractRemoteShareSubscriber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TractRemoteShareSubscriber.swift; sourceTree = "<group>"; };
 		459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadArticlesErrorViewModel.swift; sourceTree = "<group>"; };
-		45A1430E24A626AD00892200 /* FetchLanguageTranslationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationResult.swift; sourceTree = "<group>"; };
-		45A1430F24A626AD00892200 /* FetchLanguageTranslationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationViewModel.swift; sourceTree = "<group>"; };
-		45A1431024A626AD00892200 /* FetchLanguageTranslationResultType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationResultType.swift; sourceTree = "<group>"; };
 		45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestsViewModel.swift; sourceTree = "<group>"; };
-		45A1431F24A63C7C00892200 /* FetchLanguageTranslationFallbackType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLanguageTranslationFallbackType.swift; sourceTree = "<group>"; };
 		45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestResult.swift; sourceTree = "<group>"; };
 		45A1B5E724A042B8009BA210 /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ProgressView.swift"; sourceTree = "<group>"; };
@@ -1598,7 +1590,6 @@
 		451D77862497F37500B7C83D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				45A1430D24A626AD00892200 /* FetchLanguageTranslationViewModel */,
 				45A1431424A62C0900892200 /* FetchTranslationManifestsViewModel */,
 				456A145A24A7BEF20084D450 /* LanguageModelType+TranslatedName.swift */,
 				451D77872497F38200B7C83D /* TranslateLanguageNameViewModel.swift */,
@@ -2520,17 +2511,6 @@
 				459C8691247A2A240077AB7F /* DownloadArticlesErrorViewModel.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		45A1430D24A626AD00892200 /* FetchLanguageTranslationViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				45A1431F24A63C7C00892200 /* FetchLanguageTranslationFallbackType.swift */,
-				45A1430E24A626AD00892200 /* FetchLanguageTranslationResult.swift */,
-				45A1431024A626AD00892200 /* FetchLanguageTranslationResultType.swift */,
-				45A1430F24A626AD00892200 /* FetchLanguageTranslationViewModel.swift */,
-			);
-			path = FetchLanguageTranslationViewModel;
 			sourceTree = "<group>";
 		};
 		45A1431424A62C0900892200 /* FetchTranslationManifestsViewModel */ = {
@@ -3778,7 +3758,6 @@
 				4595F44624A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift in Sources */,
 				451DB1412461DA4200FB14BF /* TractNumberProperties.swift in Sources */,
 				4586D7DC246ECD810062D988 /* TractCard.swift in Sources */,
-				45A1431324A626AD00892200 /* FetchLanguageTranslationResultType.swift in Sources */,
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
@@ -3884,7 +3863,6 @@
 				4506DED324B7A78700A1C50B /* GTButton.swift in Sources */,
 				45FCFF42243D07B800865501 /* OnboardingFlow.swift in Sources */,
 				45F4450124A403BE00162C48 /* TranslationManifestXmlParser.swift in Sources */,
-				45A1432024A63C7C00892200 /* FetchLanguageTranslationFallbackType.swift in Sources */,
 				455BF70D23F6F643004A4854 /* GTSegment.swift in Sources */,
 				45EDC53D249BAB970020DC62 /* ToolDetailViewModel.swift in Sources */,
 				451EE23A24ABC66200BB799F /* DeepLinkingType.swift in Sources */,
@@ -3925,7 +3903,6 @@
 				4506DE9824B7972D00A1C50B /* AboutTextCell.swift in Sources */,
 				45732229244548A800D653FF /* ChooseLanguageCellViewModelType.swift in Sources */,
 				4530DCA824A3D4BD000DA516 /* JsonServicesType.swift in Sources */,
-				45A1431224A626AD00892200 /* FetchLanguageTranslationViewModel.swift in Sources */,
 				45249D2724AD0B1800E139AD /* ResourcesCacheResult.swift in Sources */,
 				45FCFF3F243D07B800865501 /* Flow.swift in Sources */,
 				45F6E01B249D44270077C7D9 /* LanguagesApi.swift in Sources */,
@@ -4067,7 +4044,6 @@
 				45B881E4249AACED004DC491 /* RealmAttachment.swift in Sources */,
 				457C8584242E4B1D0025E079 /* FirebaseConfiguration.swift in Sources */,
 				457719A823E863A50049D236 /* MenuSectionId.swift in Sources */,
-				45A1431124A626AD00892200 /* FetchLanguageTranslationResult.swift in Sources */,
 				4530DCB524A3DEAD000DA516 /* ResourcesDownloaderError.swift in Sources */,
 				455F4BA22452809300AE6007 /* ArticleWebViewModelType.swift in Sources */,
 				4537455124857B3200F672A1 /* ResponseResult.swift in Sources */,

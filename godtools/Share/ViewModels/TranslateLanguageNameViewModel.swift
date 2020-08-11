@@ -11,15 +11,10 @@ import Foundation
 class TranslateLanguageNameViewModel {
 
     private let localizationServices: LocalizationServices
-    
-    let languageSettingsService: LanguageSettingsService
-    let shouldFallbackToPrimaryLanguageLocale: Bool
-    
-    required init(languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, shouldFallbackToPrimaryLanguageLocale: Bool) {
         
-        self.languageSettingsService = languageSettingsService
+    required init(localizationServices: LocalizationServices) {
+        
         self.localizationServices = localizationServices
-        self.shouldFallbackToPrimaryLanguageLocale = shouldFallbackToPrimaryLanguageLocale
     }
     
     func getLocalizedLanguageNameForLanguage(language: LanguageModelType, localizedBundle: Bundle) -> String? {
@@ -36,21 +31,16 @@ class TranslateLanguageNameViewModel {
     
     func getTranslatedName(language: LanguageModelType) -> String {
         
-        if let localizedName = getLocalizedLanguageNameForLanguage(language: language, localizedBundle: Bundle.main) {
+        let deviceBundle: Bundle = Bundle.main
+        
+        if let localizedName = getLocalizedLanguageNameForLanguage(language: language, localizedBundle: deviceBundle) {
             
             return localizedName
         }
         
-        let locale: Locale
+        let deviceLocale: Locale = Locale.current
         
-        if shouldFallbackToPrimaryLanguageLocale, let primaryLanguage = languageSettingsService.primaryLanguage.value {
-            locale = Locale(identifier: primaryLanguage.code)
-        }
-        else {
-            locale = Locale.current
-        }
-        
-        if let localeName = locale.localizedString(forIdentifier: language.code), !localeName.isEmpty {
+        if let localeName = deviceLocale.localizedString(forIdentifier: language.code), !localeName.isEmpty {
             return localeName
         }
         

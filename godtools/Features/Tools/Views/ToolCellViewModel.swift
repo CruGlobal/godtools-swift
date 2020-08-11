@@ -15,7 +15,6 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
-    private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     private let deviceAttachmentBanners: DeviceAttachmentBanners
     
     private var downloadAttachmentsReceipt: DownloadAttachmentsReceipt?
@@ -32,24 +31,19 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
     let aboutTitle: ObservableValue<String> = ObservableValue(value: "")
     let openTitle: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, deviceAttachmentBanners: DeviceAttachmentBanners) {
+    required init(resource: ResourceModel, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners) {
         
         self.resource = resource
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            shouldFallbackToPrimaryLanguageLocale: false
-        )
-        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.deviceAttachmentBanners = deviceAttachmentBanners
         
         super.init()
         
         reloadBannerImage()
-        reloadLocaleForPrimaryLanguage()
+        reloadDataForPrimaryLanguage()
 
         setupBinding()
         
@@ -85,7 +79,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         
         languageSettingsService.primaryLanguage.addObserver(self) { [weak self] (primaryLanguage: LanguageModel?) in
             DispatchQueue.main.async { [weak self] in
-                self?.reloadLocaleForPrimaryLanguage()
+                self?.reloadDataForPrimaryLanguage()
             }
         }
         languageSettingsService.parallelLanguage.addObserver(self) { [weak self] (parallelLanguage: LanguageModel?) in
@@ -185,38 +179,25 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         return ""
     }
     
-    private func reloadLocaleForPrimaryLanguage() {
-        
-        let languageTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
-            resourceId: resource.id,
-            languageId: languageSettingsService.primaryLanguage.value?.id ?? "",
-            supportedFallbackTypes: [.deviceLocaleLanguage, .englishLanguage]
-        )
-        
-        let shouldDisplayInEnglish: Bool
-                
-        switch languageTranslationResult.type {
-            
-        case .languageSupported:
-            shouldDisplayInEnglish = false
-        case .languageNotSupportedFallingBackToDeviceLocaleLanguage:
-            shouldDisplayInEnglish = false
-        case .languageNotSupportedFallingBackToEnglish:
-            shouldDisplayInEnglish = true
-        case .languageNotSupported:
-            shouldDisplayInEnglish = true
-        case .unableToLocateDataInCache:
-            shouldDisplayInEnglish = true
-        }
-        
+    private func reloadDataForPrimaryLanguage() {
+         
+        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
+             
         let toolName: String
         let languageBundle: Bundle
         
-        if !shouldDisplayInEnglish, let translation = languageTranslationResult.translation, let language = languageTranslationResult.language {
-            toolName = translation.translatedName
-            languageBundle = localizationServices.bundleForResource(resourceName: language.code) ?? Bundle.main
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            
+            toolName = primaryTranslation.translatedName
+            languageBundle = localizationServices.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+        }
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+            
+            toolName = englishTranslation.translatedName
+            languageBundle = localizationServices.englishBundle ?? Bundle.main
         }
         else {
+            
             toolName = resource.name
             languageBundle = localizationServices.englishBundle ?? Bundle.main
         }

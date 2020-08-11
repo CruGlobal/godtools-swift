@@ -16,7 +16,6 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private let favoritedResourcesCache: FavoritedResourcesCache
     private let languageSettingsService: LanguageSettingsService
     private let localizationServices: LocalizationServices
-    private let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let analytics: AnalyticsContainer
     private let exitLinkAnalytics: ExitLinkAnalytics
@@ -41,7 +40,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     let aboutDetails: ObservableValue<String> = ObservableValue(value: "")
     let languageDetails: ObservableValue<String> = ObservableValue(value: "")
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, dataDownloader: InitialDataDownloader, favoritedResourcesCache: FavoritedResourcesCache, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, exitLinkAnalytics: ExitLinkAnalytics) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -49,12 +48,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.favoritedResourcesCache = favoritedResourcesCache
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            shouldFallbackToPrimaryLanguageLocale: true
-        )
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -119,40 +113,26 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     private func reloadToolDetails() {
         
-        let primaryLanguageId: String = languageSettingsService.primaryLanguage.value?.id ?? ""
-        
-        let languageTranslationResult: FetchLanguageTranslationResult = fetchLanguageTranslationViewModel.getLanguageTranslation(
-            resourceId: resource.id,
-            languageId: primaryLanguageId,
-            supportedFallbackTypes: [.deviceLocaleLanguage, .englishLanguage]
-        )
-        
-        let shouldDisplayInEnglish: Bool
-                
-        switch languageTranslationResult.type {
-            
-        case .languageSupported:
-            shouldDisplayInEnglish = false
-        case .languageNotSupportedFallingBackToDeviceLocaleLanguage:
-            shouldDisplayInEnglish = false
-        case .languageNotSupportedFallingBackToEnglish:
-            shouldDisplayInEnglish = true
-        case .languageNotSupported:
-            shouldDisplayInEnglish = true
-        case .unableToLocateDataInCache:
-            shouldDisplayInEnglish = true
-        }
-        
+        let resourcesCache: ResourcesCache = dataDownloader.resourcesCache
+
         let toolName: String
         let toolAboutDetails: String
         let languageBundle: Bundle
         
-        if !shouldDisplayInEnglish, let translation = languageTranslationResult.translation, let language = languageTranslationResult.language {
-            toolName = translation.translatedName
-            toolAboutDetails = translation.translatedDescription
-            languageBundle = localizationServices.bundleForResource(resourceName: language.code) ?? Bundle.main
+        if let primaryLanguage = languageSettingsService.primaryLanguage.value, let primaryTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageId: primaryLanguage.id) {
+            
+            toolName = primaryTranslation.translatedName
+            toolAboutDetails = primaryTranslation.translatedDescription
+            languageBundle = localizationServices.bundleForResource(resourceName: primaryLanguage.code) ?? Bundle.main
+        }
+        else if let englishTranslation = resourcesCache.getResourceLanguageTranslation(resourceId: resource.id, languageCode: "en") {
+            
+            toolName = englishTranslation.translatedName
+            toolAboutDetails = englishTranslation.translatedDescription
+            languageBundle = localizationServices.englishBundle ?? Bundle.main
         }
         else {
+            
             toolName = resource.name
             toolAboutDetails = resource.resourceDescription
             languageBundle = localizationServices.englishBundle ?? Bundle.main
