@@ -1,23 +1,51 @@
-"language_name_fa" = "ਫ਼ਾਰਸੀ (ਫਾਰਸੀ)";
-"downloadprogress" = "ਡਾਊਨਲੋਡ ਜਾਰੀ ਹੈ";
+"tool_offline_favorite_message" = "ਦਿਲ ਦੇ ਆਈਕਨ ਨੂੰ ਟੈਪ ਕਰਕੇ ਇੱਕ ਟੂਲ ਨੂੰ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਕਰੋ ਜੋ ਇਸਨੂੰ ਤੁਹਾਡੇ ਮਨਪਸੰਦ ਵਿੱਚ ਜੋੜਦਾ ਹੈ।";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "ਟੂਲ ਨੂੰ ਖੋਲੋ";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "ਗੱਲਬਾਤ ਸ਼ੁਰੂ ਕਰਨ ਵਾਲਾ";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "ਪਿਛਲੇ";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "ਮਸੀਹੀ ਵਿਕਾਸ";
 
-"card_status2" = "ਅਗਲਾ";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "ਸਿਖਲਾਈ";
+
+/* This is an invitation for a user to open a tool */
+"open" = "ਖੋਲੋ";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "ਮਨਪਸੰਦ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "ਮਨਪਸੰਦ ਤੋਂ ਹਟਾਓ";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "ਟੂਲ ਡਾਉਨਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਭਵਿੱਖ ਵਿੱਚ ਇੰਤਜ਼ਾਰ ਤੋਂ ਬਚਣ ਲਈ, ਇਸ ਟੂਲ ਨੂੰ ਮਨਪਸੰਦ ਕਰੋ ਤਾਂ ਕਿ ਇਹ ਆਫਲਾਈਨ ਉਪਲੱਬਧ ਹੋ ਜਾਵੇ।
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "ਇਸ ਟੂਲ ਲਈ ਸਭ ਤੋਂ ਤਾਜ਼ਾ ਅਨੁਵਾਦ ਡਾਉਨਲੋਡ ਕਰ ਰਹੇ ਹਾਂ।";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "ਮਨਪਸੰਦ ਤੋਂ ਹਟਾਉਣਾ ਹੈ? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "ਕੀ ਤੁਸੀਂ ਯਕੀਨਨ %@ ਨੂੰ ਮਨਪਸੰਦ ਤੋਂ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "ਇੰਜੀਲ ਦਾ ਸੱਦਾ";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "ਲੇਖ";
 "language_onboard" = "80+ ਭਾਸ਼ਾਵਾਂ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "ਤੁਸੀਂ ਸਾਰੇ ਉਪਲਬਧ ਟੂਲਸ ਡਾਉਨਲੋਡ ਕੀਤੇ ਹਨ।";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "ਮੇਰੇ ਟੂਲ";
+"my_tools" = "ਮਨਪਸੰਦ";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "ਟੂਲ ਲੱਭੋ";
+"find_tools" = "ਸਾਰੇ ਟੂਲ";
 
 "unavailable" = "ਅਣਉਪਲਬਧ";
 
@@ -30,7 +58,6 @@
 "menu_share" = "ਦੱਸੋ";
 "menu_legal" = "ਕਾਨੂੰਨੀ";
 "language_settings" = "ਭਾਸ਼ਾ ਦੀ ਚੋਂਣ ਕਰੋ";
-
 // Login
 "login" = "ਲਾਗਿਨ";
 "logout" = "ਲਾੱਗ ਆਊਟ";
@@ -96,6 +123,8 @@
 "done" = "ਹੋ ਗਿਆ";
 "remove" = "ਹਟਾਓ";
 "clear" = "ਸਾਫ਼";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ਟੂਲ ਨੂੰ ਖੋਲੋ";
 
 // Alerts
 "error" = "ਗਲਤੀ";
@@ -116,3 +145,14 @@
 "general_about_8" = "ਹੋਰ ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ godtoolsapp.com ਨੂੰ ਵੇਖੋ।";
 "general_about_9" = "ਜਦੋਂ ਤੁਸੀਂ ਆਪਣੇ ਵਿਸ਼ਵਾਸ ਸਾਂਝਿਆਂ ਕਰਨ ਲਈ ਪਹਿਲ ਕਰਦੇ ਹੋ, ਤਾਂ ਯਾਦ ਰੱਖੋ ਕਿ ਪਰਮੇਸ਼ੁਰ ਹੀ ਹੈ ਜਿਹੜਾ ਦਿਲ ਨੂੰ ਬਦਲਦਾ ਹੈ। ਹਰੇਕ ਵਿਅਕਤੀ ਨੂੰ ਚੰਗੀ ਤਰ੍ਹਾਂ ਸੁਣ ਕੇ ਸਮਝਦੇ ਹੋ ਏ ਪਿਆਰ ਕਰੋ।";
 "general_about_10" = "“ਤੁਹਾਡੀ ਗੱਲ ਬਾਤ ਸਦਾ ਕਿਰਪਾਮਈ ਅਤੇ ਸਲੂਣੀ ਹੋਵੇ ਤਾਂ ਜੋ ਤੁਸੀ ਜਾਣੋ ਭਈ ਹਰੋਕ ਨੂੰ ਕਿਵੇਂ ਉੱਤਰ ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।” (ਕੁਲੁੱਸੀਆਂ 4:6)";
+
+// Downloads
+"Download in progress" = "ਡਾਊਨਲੋਡ ਜਾਰੀ ਹੈ";
+
+// Navigation
+"card_status1" = "ਪਿਛਲੇ";
+"card_status2" = "ਅਗਲਾ";
+
+// Language Name Strings
+"language_name_fa" = "ਫ਼ਾਰਸੀ (ਫਾਰਸੀ)";
+

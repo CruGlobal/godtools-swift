@@ -8,37 +8,37 @@
 
 import Foundation
 
-struct TutorialItemProvider: TutorialItemProviderType {
+class TutorialItemProvider: TutorialItemProviderType {
     
     let tutorialItems: [TutorialItem]
     
-    init() {
+    required init(localizationServices: LocalizationServices) {
         
         tutorialItems = [
             
             TutorialItem(
-                title: NSLocalizedString("tutorial.tutorialItem.0.title", comment: ""),
-                message: NSLocalizedString("tutorial.tutorialItem.0.message", comment: ""),
+                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.0.message"),
                 imageName: nil,
                 youTubeVideoId: "Us2psJs8izU",
                 customViewId: nil
             ),
             TutorialItem(
-                title: NSLocalizedString("tutorial.tutorialItem.1.title", comment: ""),
-                message: NSLocalizedString("tutorial.tutorialItem.1.message", comment: ""),
+                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.1.message"),
                 imageName: nil,
                 youTubeVideoId: nil,
                 customViewId: "tutorial_tools"
             ),
             TutorialItem(
-                title: NSLocalizedString("tutorial.tutorialItem.2.title", comment: ""),
-                message: NSLocalizedString("tutorial.tutorialItem.2.message", comment: ""),
+                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.title"),
+                message: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.2.message"),
                 imageName: "tutorial_people",
                 youTubeVideoId: nil,
                 customViewId: nil
             ),
             TutorialItem(
-                title: NSLocalizedString("tutorial.tutorialItem.3.title", comment: ""),
+                title: localizationServices.stringForMainBundle(key: "tutorial.tutorialItem.3.title"),
                 message: "",
                 imageName: nil,
                 youTubeVideoId: nil,

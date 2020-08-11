@@ -1,23 +1,51 @@
-"language_name_fa" = "Perština (fársí)";
-"downloadprogress" = "Probíhá stahování";
+"tool_offline_favorite_message" = "Klepnutím na ikonu srdíčka přidáte nástroj do svých oblíbených a budete jej mít k dispozici offline.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Otevřít nástroj";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Zahájení konverzace";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Předch";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Křesťanský růst ve víře";
 
-"card_status2" = "Další";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Školení";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Otevřít";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Přidat do oblíbených";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Odstranit z oblíbených";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Nástroj se stahuje. Chcete-li se v budoucnosti vyvarovat čekání, uložte si tento nástroj do oblíbených, čímž bude dostupný offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Stahování nejnovějšího překladu tohoto nástroje.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Odstranit z oblíbených? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Opravdu chcete odstranit %@ z oblíbených? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Pozvánka k evangeliu";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Články";
 "language_onboard" = "80+ jazyků";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Máte staženy všechny dostupné nástroje.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Moje nástroje";
+"my_tools" = "Oblíbené";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Najít nástroje";
+"find_tools" = "Všechny nástroje";
 
 "unavailable" = "Nedostupný";
 
@@ -30,7 +58,6 @@
 "menu_share" = "Sdílet";
 "menu_legal" = "Pravidla užívání a ochrany soukromí";
 "language_settings" = "Jazyková nastavení";
-
 // Login
 "login" = "Přihlášení";
 "logout" = "Odhlášení";
@@ -97,6 +124,8 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "done" = "Hotovo";
 "remove" = "Odstranit";
 "clear" = "Smazat";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Otevřít nástroj";
 
 // Alerts
 "error" = "Chyba";
@@ -117,3 +146,14 @@ Aplikaci si můžete stáhnout z https://godtoolsapp.com";
 "general_about_8" = "Více informací naleznete na stránce godtoolsapp.com.";
 "general_about_9" = "Při chopení se iniciativy o sdílení vaší víry si pamatujte, že Bůh je ten, kdo mění srdce. Miluj všechny posloucháním, které vede k porozumění.";
 "general_about_10" = "„Vaše slova ať jsou vždy vlídná a ochucená solí, ať víte, jak máte mluvit s každým člověkem.“ Koloským 4:6";
+
+// Downloads
+"Download in progress" = "Probíhá stahování";
+
+// Navigation
+"card_status1" = "Předch";
+"card_status2" = "Další";
+
+// Language Name Strings
+"language_name_fa" = "Perština (fársí)";
+

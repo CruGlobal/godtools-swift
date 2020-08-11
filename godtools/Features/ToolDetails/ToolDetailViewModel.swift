@@ -24,8 +24,9 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let topToolDetailMedia: ObservableValue<ToolDetailMedia?> = ObservableValue(value: nil)
+    let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let hidesBannerImage: ObservableValue<Bool> = ObservableValue(value: false)
+    let youTubePlayerId: ObservableValue<String?> = ObservableValue(value: nil)
     let hidesYoutubePlayer: ObservableValue<Bool> = ObservableValue(value: false)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let name: ObservableValue<String> = ObservableValue(value: "")
@@ -49,7 +50,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: true)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: true
+        )
         self.analytics = analytics
         self.exitLinkAnalytics = exitLinkAnalytics
                 
@@ -58,14 +63,15 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
             hidesBannerImage.accept(value: true)
             hidesYoutubePlayer.accept(value: false)
-            topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: nil, youtubePlayerId: resource.attrAboutOverviewVideoYoutube))
+            youTubePlayerId.accept(value: resource.attrAboutOverviewVideoYoutube)
         }
         else {
             hidesBannerImage.accept(value: false)
             hidesYoutubePlayer.accept(value: true)
-            let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
-            topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: toolDetailImage, youtubePlayerId: ""))
         }
+        
+        let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
+        bannerImage.accept(value: toolDetailImage)
         
         reloadFavorited()
         reloadToolDetails()
@@ -76,6 +82,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         print("x deinit: \(type(of: self))")
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+    }
+    
+    var youtubePlayerParameters: [String : Any]? {
+        return [
+            "playsinline": 1
+        ]
     }
     
     private func setupBinding() {
@@ -117,14 +129,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         
         let languages: [LanguageModel] =  dataDownloader.resourcesCache.getResourceLanguages(resourceId: resource.id)
         
-        let languageBundle: Bundle
-        
-        if let preferredLanguage = primaryTranslationResult.language {
-            languageBundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: preferredLanguage.code)
-        }
-        else {
-            languageBundle = Bundle.main
-        }
+        let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageSettingsService.primaryLanguage.value?.code ?? "")
         
         if let preferredTranslation = primaryTranslationResult.translation {
             name.accept(value: preferredTranslation.translatedName)
@@ -163,7 +168,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         languageDetails.accept(value: sortedLanguageNames)
     }
     
-    private var screenName: String {
+    private var analyticsScreenName: String {
         return resource.abbreviation + "-" + "tool-info"
     }
     
@@ -177,10 +182,11 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     
     func pageViewed() {
         
-        analytics.pageViewedAnalytics.trackPageView(screenName: screenName, siteSection: siteSection, siteSubSection: siteSubSection)
+        analytics.pageViewedAnalytics.trackPageView(screenName: analyticsScreenName, siteSection: siteSection, siteSubSection: siteSubSection)
     }
     
     func openToolTapped() {
+        analytics.trackActionAnalytics.trackAction(screenName: analyticsScreenName, actionName: "About Tool Open Button", data: ["cru.tool_about_button": 1])
         flowDelegate?.navigate(step: .openToolTappedFromToolDetails(resource: resource))
     }
     
@@ -201,7 +207,7 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     func urlTapped(url: URL) {
                 
         exitLinkAnalytics.trackExitLink(
-            screenName: screenName,
+            screenName: analyticsScreenName,
             siteSection: siteSection,
             siteSubSection: siteSubSection,
             url: url

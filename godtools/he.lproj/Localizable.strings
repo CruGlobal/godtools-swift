@@ -1,23 +1,50 @@
-"language_name_fa" = "פרסית (פרסית)";
-"downloadprogress" = "ההורדה בתהליך";
+"tool_offline_favorite_message" = "הפוך כלי לזמין במצב לא מקוון על ידי הקשה על סמל הלב שמוסיף אותו למועדפים שלך.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "פתח כלי";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "מתחיל שיחה";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "קודם";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "גדילה נוצרית";
 
-"card_status2" = "הבא";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "הדרכה";
+
+/* This is an invitation for a user to open a tool */
+"open" = "פתח";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "הוסף למועדפים";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "הסר מהמועדפים";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "הכלי מורד כעת. כדי להימנע מהמתנה בעתיד, סמנו כלי זה כמועדף כך שהוא יהיה זמין במצב לא מקוון.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "מוריד את התרגום העדכני ביותר לכלי זה.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "הסר מהמועדפים?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "האם אתה בטוח שברצונך להסיר את %@ מהמועדפים שלך?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "הזמנה לבשורה";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "מאמרים";
 "language_onboard" = "80+ שפות";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "הורדתם את כל הכלים הזמינים.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "הכלים שלי";
+"my_tools" = "מועדפים";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "חפש כלים";
+"find_tools" = "כל הכלים";
 
 "unavailable" = "לא זמין";
 
@@ -30,7 +57,6 @@
 "menu_share" = "שתף";
 "menu_legal" = "חוקיות";
 "language_settings" = "הגדרות שפה";
-
 // Login
 "login" = "כניסה";
 "logout" = "יציאה";
@@ -97,6 +123,8 @@
 "done" = "סיים";
 "remove" = "הסר";
 "clear" = "נקה";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "פתח כלי";
 
 // Alerts
 "error" = "שגיאה";
@@ -119,3 +147,14 @@ support@godtoolsapp.com";
 "general_about_9" = "כאשר אתה לוקח את היוזמה לחלוק את האמונה שלך, זכור כי אלוהים הוא אשר משנה את הלב. אהוב כל אדם טוב על ידי הקשבה להבנה.";
 "general_about_10" = "\"יהיו נא דבריכם מלווים תמיד בחן ומתבלים במלח, באפן שתדעו איך להשיב לכל שואל.\"
 קולוסים 4:6";
+
+// Downloads
+"Download in progress" = "ההורדה בתהליך";
+
+// Navigation
+"card_status1" = "קודם";
+"card_status2" = "הבא";
+
+// Language Name Strings
+"language_name_fa" = "פרסית (פרסית)";
+

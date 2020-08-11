@@ -38,7 +38,11 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: false
+        )
         self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.deviceAttachmentBanners = deviceAttachmentBanners
         
@@ -196,7 +200,7 @@ class ToolCellViewModel: NSObject, ToolCellViewModelType {
             title.accept(value: resource.name)
         }
         
-        let languageCode: String = languageTranslationResult.language?.code ?? ""
+        let languageCode: String = languageSettingsService.primaryLanguage.value?.code ?? ""
         let languageBundle: Bundle = localizationServices.bundleForResourceElseFallbackBundle(resourceName: languageCode)
         
         category.accept(value: localizationServices.stringForBundle(bundle: languageBundle, key: "tool_category_\(resource.attrCategory)"))

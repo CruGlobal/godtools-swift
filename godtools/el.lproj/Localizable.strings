@@ -1,23 +1,51 @@
-"language_name_fa" = "Περσικά (Φαρσί)";
-"downloadprogress" = "Λήψη σε εξέλιξη";
+"tool_offline_favorite_message" = "Κάντε το εργαλείο διαθέσιμο offline πατώντας το εικονίδιο με την καρδιά που το προσθέτει στα αγαπημένα σας.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Εκκίνηση Συζήτησης";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Προηγ";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Πνευματική Ανάπτυξη";
 
-"card_status2" = "Επόμενο";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Εξάσκηση";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Άνοιγμα";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Προσθήκη στα Αγαπημένα";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Αφαίρεση από τα Αγαπημένα";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Το εργαλείο πραγματοποιεί λήψη. Για να αποφύγετε την αναμονή στο μέλλον, βάλτε αυτό το εργαλείο στα αγαπημένα, ώστε να είναι διαθέσιμο offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Πραγματοποιείται λήψη της πιο πρόσφατης μετάφρασης γι' αυτό το εργαλείο.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Αφαίρεση από τα Αγαπημένα?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Σίγουρα επιθυμείτε να αφαιρέσετε το %@ από τα Αγαπημένα σας; ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Πρόσκληση στο Ευαγγέλιο";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Άρθρα";
 "language_onboard" = "80+ Γλώσσες";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Κάνατε λήψη όλων των διαθέσιμων εργαλείων.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Τα Εργαλεία μου";
+"my_tools" = "Αγαπημένα";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Βρείτε Εργαλεία";
+"find_tools" = "Όλα τα Εργαλεία";
 
 "unavailable" = "Μη διαθέσιμο";
 
@@ -30,7 +58,6 @@
 "menu_share" = "Κοινοποίηση";
 "menu_legal" = "Νομικά";
 "language_settings" = "Ρυθμίσεις Γλώσσας";
-
 // Login
 "login" = "Σύνδεση";
 "logout" = "Αποσύνδεση";
@@ -98,6 +125,8 @@
 "done" = "Έγινε";
 "remove" = "Αφαίρεση";
 "clear" = "Καθαρισμός";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Άνοιγμα Εργαλείου";
 
 // Alerts
 "error" = "Σφάλμα";
@@ -118,3 +147,14 @@
 "general_about_8" = "Επισκεφθείτε το godtoolsapp.com για περισσότερες πληροφορίες.";
 "general_about_9" = "Καθώς αναλαμβάνετε την πρωτοβουλία να μοιραστείτε την πίστη σας, θυμηθείτε ότι ο Θεός είναι αυτός που αλλάζει την καρδιά. Αγαπήστε το κάθε άτομο καλά ακούγοντας και κατανοώντας.";
 "general_about_10" = "\"Τα λόγια σας ας είναι πάντοτε γεμάτα χάρη, αρτυμένα με το αλατι της καλοσύνης και της διακρίσεως, ώστε να ξέρετε πώς πρέπει να αποκρίνεστε στον καθένα.\" Προς Κολοσσαείς 4:6";
+
+// Downloads
+"Download in progress" = "Λήψη σε εξέλιξη";
+
+// Navigation
+"card_status1" = "Προηγ";
+"card_status2" = "Επόμενο";
+
+// Language Name Strings
+"language_name_fa" = "Περσικά (Φαρσί)";
+

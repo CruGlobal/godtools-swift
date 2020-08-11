@@ -1,25 +1,56 @@
-"language_name_fa" = "Persia (Farsi)";
-"downloadprogress" = "Undulant sedang berlangsung";
+"tool_offline_favorite_message" = "Jadikan alat tersedia secara offline dengan mengetuk ikon hati yang menambahkannya ke favorit Anda.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Buka Alat";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Permulaan Percakapan";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Sebel.";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Pertumbuhan Kristen";
 
-"card_status2" = "Berikutnya";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Latihan";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Buka";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Tambahkan ke Favorit";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Hapus dari Favorit";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Alat sedang mengunduh. Untuk menghindari menunggu di masa depan, favorit alat ini sehingga akan tersedia offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Mengunduh terjemahan terbaru untuk alat ini.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Hapus dari Favorit? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Apakah Anda yakin ingin menghapus %@ dari Favorit Anda? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Undangan Injil";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikel";
 "language_onboard" = "80+ Bahasa";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Anda sudah mengunduh semua tool yang tersedia.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Alat Saya";
+"my_tools" = "Favorit";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Cari Alat";
+"find_tools" = "Semua Alat";
 
 "unavailable" = "Tidak tersedia";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Lewati";
 
 // Onboarding
 "add_new_tools" = "Tambah Alat Baru";
@@ -30,7 +61,6 @@
 "menu_share" = "Berbagi";
 "menu_legal" = "Legal";
 "language_settings" = "Pengaturan Bahasa";
-
 // Login
 "login" = "Masuk";
 "logout" = "Keluar";
@@ -99,6 +129,8 @@ Aplikasi dapat diunduh dari https://godtoolsapp.com";
 "done" = "Selesai";
 "remove" = "Hapus";
 "clear" = "Hapus";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Buka Alat";
 
 // Alerts
 "error" = "Kesalahan";
@@ -120,3 +152,14 @@ Aplikasi dapat diunduh dari https://godtoolsapp.com";
 "general_about_9" = "Sewaktu Anda mengambil inisiatif untuk membagikan keyakinan Anda, ingatlah bahwa Tuhanlah yang mengubah hati. Cintai setiap orang dengan baik dengan mendengarkan untuk dapat memahami.";
 "general_about_10" = "\"Hendaklah kata-katamu senantiasa penuh kasih, jangan hambar, sehingga kamu tahu, bagaimana kamu harus memberi jawab kepada setiap orang.\"
 Kolose 4:6";
+
+// Downloads
+"Download in progress" = "Undulant sedang berlangsung";
+
+// Navigation
+"card_status1" = "Sebel.";
+"card_status2" = "Berikutnya";
+
+// Language Name Strings
+"language_name_fa" = "Persia (Farsi)";
+

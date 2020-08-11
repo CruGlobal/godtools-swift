@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TractViewModel: TractViewModelType {
+class TractViewModel: NSObject, TractViewModelType {
     
     typealias PageNumber = Int
     
@@ -17,6 +17,7 @@ class TractViewModel: TractViewModelType {
     private let parallelLanguage: LanguageModel?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
+    private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
     private let analytics: AnalyticsContainer
@@ -26,8 +27,9 @@ class TractViewModel: TractViewModelType {
     
     private var cachedPrimaryTractPages: [PageNumber: TractPage] = Dictionary()
     private var cachedParallelTractPages: [PageNumber: TractPage] = Dictionary()
+    private var cachedTractRemoteShareNavigationEvents: [PageNumber: TractRemoteShareNavigationEvent] = Dictionary()
     private var tractPage: Int = 0
-    
+        
     let navTitle: ObservableValue<String> = ObservableValue(value: "God Tools")
     let navBarAttributes: TractNavBarAttributes
     let hidesChooseLanguageControl: Bool
@@ -39,14 +41,19 @@ class TractViewModel: TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, followUpsService: FollowUpsService, viewsService: ViewsService, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
         self.primaryLanguage = primaryLanguage
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(languageSettingsService: languageSettingsService, shouldFallbackToPrimaryLanguageLocale: false)
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
+            languageSettingsService: languageSettingsService,
+            localizationServices: localizationServices,
+            shouldFallbackToPrimaryLanguageLocale: false
+        )
         self.tractManager = tractManager
+        self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.followUpsService = followUpsService
         self.viewsService = viewsService
         self.analytics = analytics
@@ -83,6 +90,10 @@ class TractViewModel: TractViewModelType {
         
         selectedTractLanguage = ObservableValue(value: TractLanguage(languageType: .primary, language: primaryLanguage))
         
+        super.init()
+        
+        setupBinding()
+        
         _ = viewsService.postNewResourceView(resourceId: resource.id)
                 
         let startingTractPage: Int = tractPage ?? 0
@@ -96,10 +107,14 @@ class TractViewModel: TractViewModelType {
         
         tractPageDidChange(page: startingTractPage)
         tractPageDidAppear(page: startingTractPage)
+        
+        subscribeToLiveShareStream(liveShareStream: liveShareStream)
     }
     
     deinit {
         print("x deinit: \(type(of: self))")
+        tractRemoteShareSubscriber.navigationEventSignal.removeObserver(self)
+        tractRemoteShareSubscriber.unsubscribe(disconnectSocket: true)
         destroyTractPages()
     }
     
@@ -117,6 +132,52 @@ class TractViewModel: TractViewModelType {
             tractPage.destroyPage()
         }
         cachedParallelTractPages.removeAll()
+    }
+    
+    private func setupBinding() {
+        
+        tractRemoteShareSubscriber.navigationEventSignal.addObserver(self) { [weak self] (navigationEvent: TractRemoteShareNavigationEvent) in
+            DispatchQueue.main.async { [weak self] in
+                self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent)
+            }
+        }
+    }
+    
+    private func subscribeToLiveShareStream(liveShareStream: String?) {
+        
+        guard let channelId = liveShareStream, !channelId.isEmpty else {
+            return
+        }
+                
+        tractRemoteShareSubscriber.subscribe(channelId: channelId) { [weak self] (error: TractRemoteShareSubscriberError?) in
+
+        }
+    }
+    
+    private func handleDidReceiveRemoteShareNavigationEvent(navigationEvent: TractRemoteShareNavigationEvent) {
+        
+        if let page = navigationEvent.page {
+            cachedTractRemoteShareNavigationEvents[page] = navigationEvent
+            currentTractPage.accept(value: AnimatableValue(value: page, animated: true))
+            if let cachedTractPage = getTractPageItem(page: page).tractPage {
+                cachedTractPage.setCard(card: navigationEvent.card, animated: true)
+            }
+        }
+        
+        if let locale = navigationEvent.locale, !locale.isEmpty {
+            
+            let currentTractLanguage: TractLanguage = selectedTractLanguage.value
+            let localeChanged: Bool = locale != currentTractLanguage.language.code
+            
+            if localeChanged {
+                if locale == primaryLanguage.code {
+                    primaryLanguageTapped()
+                }
+                else if locale == parallelLanguage?.code {
+                    parallelLanguagedTapped()
+                }
+            }
+        }
     }
     
     private func loadTractXmlPages() {
@@ -462,37 +523,39 @@ class TractViewModel: TractViewModelType {
         }
     }
     
-    func getTractPage(page: Int) -> TractPage? {
+    func getTractPageItem(page: Int) -> TractPageItem {
             
         let selectedLanguageType: TractLanguageType = selectedTractLanguage.value.languageType
         
-        let cachedTractPage: TractPage? = getCachedTractPage(
-            languageType: selectedLanguageType,
-            page: page
-        )
+        let tractPage: TractPage?
+        let navigationEvent: TractRemoteShareNavigationEvent?
         
-        if let cachedTractPage = cachedTractPage {
+        if let cachedTractPage = getCachedTractPage(languageType: selectedLanguageType, page: page) {
             
-            return cachedTractPage
+            tractPage = cachedTractPage
         }
-        
-        let newTractPage: TractPage? = buildTractPageForLanguage(
-            languageType: selectedLanguageType,
-            page: page,
-            parallelTractPage: nil
-        )
-        
-        if let newTractPage = newTractPage {
+        else if let newTractPage = buildTractPageForLanguage(languageType: selectedLanguageType, page: page, parallelTractPage: nil) {
+            
+            tractPage = newTractPage
             
             cacheTractPage(
                 languageType: selectedLanguageType,
                 page: page,
                 tractPage: newTractPage
             )
+        }
+        else {
             
-            return newTractPage
+            tractPage = nil
         }
         
-        return nil
+        if let cachedNavigationEvent = cachedTractRemoteShareNavigationEvents[page] {
+            navigationEvent = cachedNavigationEvent
+        }
+        else {
+            navigationEvent = nil
+        }
+        
+        return TractPageItem(tractPage: tractPage, navigationEvent: navigationEvent)
     }
 }

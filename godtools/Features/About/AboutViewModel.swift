@@ -13,13 +13,15 @@ class AboutViewModel: AboutViewModelType {
     private let aboutTextProvider: AboutTextProviderType
     private let analytics: AnalyticsContainer
     
-    let navTitle: ObservableValue<String> = ObservableValue(value: NSLocalizedString("about", comment: ""))
+    let navTitle: ObservableValue<String> = ObservableValue(value: "")
     let aboutTexts: ObservableValue<[AboutTextModel]> = ObservableValue(value: [])
     
-    required init(aboutTextProvider: AboutTextProviderType, analytics: AnalyticsContainer) {
+    required init(aboutTextProvider: AboutTextProviderType, localizationServices: LocalizationServices, analytics: AnalyticsContainer) {
         
         self.aboutTextProvider = aboutTextProvider
         self.analytics = analytics
+        
+        navTitle.accept(value: localizationServices.stringForMainBundle(key: "about"))
         
         aboutTexts.accept(value: aboutTextProvider.aboutTexts)
     }

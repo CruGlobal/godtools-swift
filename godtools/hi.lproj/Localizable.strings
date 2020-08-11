@@ -1,25 +1,64 @@
-"language_name_fa" = "फ़ारसी";
-"downloadprogress" = "डाउनलोड प्रगति पर";
+"tool_offline_favorite_message" = "टूल को पसंदीदा में जोड़ने वाले 'दिल' चिन्ह को टैप करके आप उस टूल को ऑफलाइन उपलब्ध कर सकते हैं।";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "टूल खोलें";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "वार्तालाप आरंभक";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "पिछला";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "मसीही विकास";
 
-"card_status2" = "अगला";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "प्रशिक्षण";
+
+/* This is an invitation for a user to open a tool */
+"open" = "खोलें";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "पसंदीदा में जोड़ें";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "पसंदीदा से निकालें";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "टूल डाउनलोड हो रहा है। आगे से देरी से बचने के लिए इस टूल को पसंदीदा में जोड़ें जिससे यह ऑफलाइन उपलब्ध रहेगा।
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "इस टूल के लिए नवीनतम अनुवााद डाउनलोड कर रहे।";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "पसंदीदा से निकालें? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "निश्चित %@ को आपके पसंदीदा से निकालें? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "इंजील आमंत्रण";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "लेख";
+
+"articles.downloadArticlesButton.title.retryDownload" = "डाउनलोड पुनःप्रयास";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "संस्करण";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "लेख डाउनलोड कर रहे…";
 "language_onboard" = "80+ भाषाएँ";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "आपने सभी उपलब्ध टूल्स डाउनलोड कर लिए हैं।";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "मेरे टूल्स";
+"my_tools" = "पसंदीदा";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "टूल्स खोजें";
+"find_tools" = "सभी टूल्स";
 
 "unavailable" = "अनुपलब्ध";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "छोड़ें";
 
 // Onboarding
 "add_new_tools" = "नए टूल जोड़ें";
@@ -27,9 +66,12 @@
 "okay" = "ठीक";
 // Menu
 "menu_general" = "सामान्य";
+"menu_account" = "खाता";
 "menu_share" = "शेयर करें";
 "menu_legal" = "कानूनी";
 "language_settings" = "भाषा सेटिंग्स";
+"menu.tutorial" = "ट्यूटोरियल";
+"menu.my_account" = "मेरा खाता";
 
 // Login
 "login" = "लॉग-इन";
@@ -39,7 +81,7 @@
 
 // Tool Detail
 "about" = "परिचय";
-"help" = "मदद";
+"help" = "अक्सर पूछे जाने वाले प्रश्न";
 "contact_us" = "हमसे संपर्क करें";
 "preview_mode_translators_only" = "प्रीव्यू मोड (केवल अनुवादक)";
 "share_god_tools" = "GodTools ऐप शेयर करें";
@@ -88,9 +130,11 @@
 "no" = "नहीं";
 
 // Tract - Sharing
-"tract_share_message" ="यह लिंक आपको उस पेज पर ले जाएगा जिसे हम पहले देख रहे थे: %@. चलिए और बात करते हैं!
+"tract_share_message" ="यह लिंक आपको हमारे आज के विषय के वेब संस्करण पर ले जाएगी: %@
 
-ऐप यहां से डाउनलोड कीजिए: https://godtoolsapp.com";
+चलो और बात करते हैं!
+
+ऐप यहां से डाउनलोड की जा सकती है https://godtoolsapp.com";
 
 // Buttons
 "download" = "डाउनलोड";
@@ -98,6 +142,8 @@
 "done" = "पूरा हुआ";
 "remove" = "हटाएं";
 "clear" = "साफ करें";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "टूल खोलें";
 
 // Alerts
 "error" = "त्रुटि";
@@ -118,3 +164,65 @@
 "general_about_8" = "अधिक जानकारी के लिए godtoolsapp.com पर जाएं।";
 "general_about_9" = "अपना विश्वास प्रकट करने के दौरान याद रखें कि केवल भगवान ही हृदय परिवर्तन कराता है। समझने के लिए सुनकर हरेक व्यक्ति से प्रेम करें।";
 "general_about_10" = "\"अपनी बातचीत को हमेशा भावपूर्ण बनाएं रखें, परिपक्व रखें, ताकि आप समझ सकें हरेक व्यक्ति को कैसे उत्तर देना है।\" कोलोसियन्स 4:6";
+
+// Downloads
+"Download in progress" = "डाउनलोड प्रगति पर";
+
+// Navigation
+"card_status1" = "पिछला";
+"card_status2" = "अगला";
+
+// Language Name Strings
+"language_name_fa" = "फ़ारसी";
+
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "स्वागतम";
+"onboardingWelcome.titleLabel.tagline" = "आपके विश्वास को शेयर करने में सहायक";
+"onboardingWelcome.beginButton" = "शुरू करें";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "अन्यों से शेयर करें";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools को आपके विश्वास वार्तालापों में मदद के लिए बनाया गया है";
+"onboardingTutorial.aboutAppItem.1.title" = "अपने टूल चुनें";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools आपको आध्यात्मिक वार्तालाप से पहले, उसेक दौरान और उसके बाद मदद करता है";
+"onboardingTutorial.aboutAppItem.2.title" = "हमेशा तैयार";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools आपकी मदद के लिए है और आपके साथ ही तैयार है";
+"onboardingTutorial.appUsageItem.0.message" = "किसी भी वार्तालाप की तैयारी करें";
+"onboardingTutorial.appUsageItem.1.message" = "किसी को इंजील के बारे में विस्तार से बताएं";
+"onboardingTutorial.appUsageItem.2.message" = "दो भाषाएं एक साथ देखें";
+"onboardingTutorial.appUsageItem.3.message" = "80 से अधिक भाषाओं में से चुनें";
+"onboardingTutorial.appUsageItem.4.message" = "किसी को ईसाई के रूप में शुरुआत करने में मदद करें";
+"onboardingTutorial.continueButton.title" = "जारी रखें";
+"onboardingTutorial.showMoreButton.title" = "अधिक दिखाएं";
+"onboardingTutorial.getStartedButton.title" = "शुरू हो जाएं";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "देखें";
+"tutorial.tutorialItem.0.message" = "हमारे डेमो वीडियो में देखें कि GodTools में क्या है (उप-शीर्षक सेटिंग के लिए वीडियो पर टैप करें)";
+"tutorial.tutorialItem.1.title" = "तैयारी करें";
+"tutorial.tutorialItem.1.message" = "अपने कुछ टूल्स को जानें। \"मुझे शेयर करना सिखाएं\" टूल एक अच्छी शुरुआत होगी।
+
+किसी भी टूल की अधिक जानकारी हेतु उस पर जानकारी बटन दबाएं।";
+"tutorial.tutorialItem.2.title" = "कोशिश करें";
+"tutorial.tutorialItem.2.message" = "सबकी शुरुआत नौसिखिए की तरह होती है। किसी वार्तालाप में एक टूल का उपयोग करके देखें कि आप क्या सीखते हैं।";
+"tutorial.tutorialItem.3.title" = "दुबारा देखने के लिए यह ट्यूटोरियल मेन्यु में उपलब्ध है";
+"tutorial.continueButton.title.continue" = "जारी रखें";
+"tutorial.continueButton.title.startUsingGodTools" = "GodTools का उपयोग शुरू करें";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "मुझे एक ट्यूटोरियल दिखाएं";
+"openTutorial.openTutorialButton.title" = "ट्यूटोरियल खोलें";
+
+// Account
+"account.navTitle" = "मेरी प्रोफाइल";
+"account.activity.title" = "गतिविधि";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "वैश्विक गतिविधि";
+"accountActivity.globalAnalytics.users.title" = "खास\nउपयोगकर्ता";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "इंजील\nप्रस्तुतिकरण";
+"accountActivity.globalAnalytics.launches.title" = "सत्र";
+"accountActivity.globalAnalytics.countries.title" = "देश";
+
+// Alerts
+"alert.action.ok" = "ठीक";

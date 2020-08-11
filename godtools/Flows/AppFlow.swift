@@ -59,6 +59,7 @@ class AppFlow: NSObject, FlowDelegate {
     
     func resetFlowToToolsFlow(animated: Bool) {
         configureNavigation(navigationController: navigationController)
+        toolsFlow?.navigationController.popToRootViewController(animated: animated)
         toolsFlow?.resetToolsMenu()
         navigationController.popToRootViewController(animated: animated)
         closeMenu(animated: animated)
@@ -102,10 +103,16 @@ class AppFlow: NSObject, FlowDelegate {
                 
                 switch deepLinkingType {
                 
-                case .tool(let resource, let primaryLanguage, let parallelLanguage, let page):
+                case .tool(let resource, let primaryLanguage, let parallelLanguage, let liveShareStream, let page):
                     if let toolsFlow = self?.toolsFlow {
                         self?.resetFlowToToolsFlow(animated: false)
-                        toolsFlow.navigateToTool(resource: resource, primaryLanguage: primaryLanguage, parallelLanguage: parallelLanguage, page: page)
+                        toolsFlow.navigateToTool(
+                            resource: resource,
+                            primaryLanguage: primaryLanguage,
+                            parallelLanguage: parallelLanguage,
+                            liveShareStream: liveShareStream,
+                            page: page
+                        )
                     }
                 case .none:
                     break
@@ -239,9 +246,10 @@ class AppFlow: NSObject, FlowDelegate {
                     self?.navigationController.dismiss(animated: true, completion: nil)
                 }
                 
+                let localizationServices: LocalizationServices = appDiContainer.localizationServices
                 let title: String = "GodTools"
-                let message: String = NSLocalizedString("error_can_not_send_email", comment: "")
-                let acceptedTitle: String = NSLocalizedString("ok", comment: "")
+                let message: String = localizationServices.stringForMainBundle(key: "error_can_not_send_email")
+                let acceptedTitle: String = localizationServices.stringForMainBundle(key: "ok")
                 
                 let viewModel = AlertMessageViewModel(
                     title: title,

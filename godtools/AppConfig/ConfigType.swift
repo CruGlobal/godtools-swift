@@ -15,6 +15,7 @@ protocol ConfigType {
     var appleAppId: String { get }
     var versionLabel: String { get }
     var mobileContentApiBaseUrl: String { get }
+    var tractRemoteShareConnectionUrl: String { get }
     var appsFlyerDevKey: String { get }
     var googleAdwordsConversionId: String { get }
     var googleAdwordsLabel: String { get }

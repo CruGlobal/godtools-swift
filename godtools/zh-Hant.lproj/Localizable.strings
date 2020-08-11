@@ -1,25 +1,64 @@
-"language_name_fa" = "波斯文";
-"downloadprogress" = "正在下載中";
+"tool_offline_favorite_message" = "點擊愛心圖示，將工具新增至你的最愛，就能離線使用工具。";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "開啟工具";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "開場白";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "前一頁";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "基督徒靈命成長";
 
-"card_status2" = "下一頁";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "培訓";
+
+/* This is an invitation for a user to open a tool */
+"open" = "開啟";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "新增至我的最愛";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "從我的最愛移除";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "正在下載此工具。為免在未來需要再次等待，請收藏此工具，這樣就能離線使用工具。
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "正在下載為這工具而設的最新翻譯。";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "從我的最愛移除？ ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "您確定從我的最愛移除 %@ 嗎？";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "福音邀請";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "文章";
+
+"articles.downloadArticlesButton.title.retryDownload" = "重新下載";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "版本";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "正在下載文章...";
 "language_onboard" = "超過 80 種語言";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "您已經下載所有可用工具了。";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "我的工具";
+"my_tools" = "我的最愛";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "搜尋工具";
+"find_tools" = "所有工具";
 
 "unavailable" = "無法使用";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "跳過";
 
 // Onboarding
 "add_new_tools" = "添加新工具";
@@ -27,9 +66,12 @@
 "okay" = "好";
 // Menu
 "menu_general" = "一般";
+"menu_account" = "帳號";
 "menu_share" = "分享";
 "menu_legal" = "法律條款";
 "language_settings" = "語言選項";
+"menu.tutorial" = "教學";
+"menu.my_account" = "我的帳號";
 
 // Login
 "login" = "登入";
@@ -39,7 +81,7 @@
 
 // Tool Detail
 "about" = "關於";
-"help" = "協助";
+"help" = "常見問題";
 "contact_us" = "聯絡我們";
 "preview_mode_translators_only" = "預覽模式（只適用於譯者）";
 "share_god_tools" = "分享 GodTools 應用程式";
@@ -88,9 +130,11 @@
 "no" = "不好";
 
 // Tract - Sharing
-"tract_share_message" ="還記得我們今天一起查看的頁面嗎？點擊此連結，可看到網路版本：%@。快去看看，我們再一起討論吧！
+"tract_share_message" ="點擊此連結可看到我們今天談論內容的網路版本：%@。
 
-前往這裡下載應用程式：http://godtoolsapp.com";
+讓我們更深入討論吧！
+
+前往這裡下載應用程式：https://godtoolsapp.com";
 
 // Buttons
 "download" = "下載";
@@ -98,6 +142,8 @@
 "done" = "完成";
 "remove" = "移除";
 "clear" = "清空";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "開啟工具";
 
 // Alerts
 "error" = "錯誤";
@@ -118,3 +164,66 @@
 "general_about_8" = "如需更多資訊，請前往godtoolsapp.com。";
 "general_about_9" = "在您踏出第一步分享您的信仰同時，也別忘了只有上帝能夠改變人心。請愛每個人，仔細聆聽對方的話，確認對方是否理解。";
 "general_about_10" = "「你們的話語總要帶著恩惠，像用鹽調和過的，好使你們知道該怎樣回答每一個人。」—歌羅西書 4:6";
+
+// Downloads
+"Download in progress" = "正在下載中";
+
+// Navigation
+"card_status1" = "前一頁";
+"card_status2" = "下一頁";
+
+// Language Name Strings
+"language_name_fa" = "波斯文";
+
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "歡迎";
+"onboardingWelcome.titleLabel.tagline" = "幫助你分享信念";
+"onboardingWelcome.beginButton" = "開始";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "與他人分享";
+"onboardingTutorial.aboutAppItem.0.message" = "GodTools 為引導您的信仰對話而設";
+"onboardingTutorial.aboutAppItem.1.title" = "選擇工具";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools 協助您準備、進行及回顧靈性對話";
+"onboardingTutorial.aboutAppItem.2.title" = "隨時就緒";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools 隨時就緒為您提供協助";
+"onboardingTutorial.appUsageItem.0.message" = "為任何對話而設";
+"onboardingTutorial.appUsageItem.1.message" = "帶領他人參與福音";
+"onboardingTutorial.appUsageItem.2.message" = "兩種語言並列顯示";
+"onboardingTutorial.appUsageItem.3.message" = "共有超過 80 種語言可選";
+"onboardingTutorial.appUsageItem.4.message" = "引導他人成為教徒";
+"onboardingTutorial.continueButton.title" = "繼續";
+"onboardingTutorial.showMoreButton.title" = "展示更多";
+"onboardingTutorial.getStartedButton.title" = "開始使用";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "觀看";
+"tutorial.tutorialItem.0.message" = "在演示影片中查看 GodTools 的功能
+（點按影片可顯示字幕設定）";
+"tutorial.tutorialItem.1.title" = "準備";
+"tutorial.tutorialItem.1.message" = "了解工具的特點。建議由「教我如何分享」工具開始。
+
+點按任何工具上的資訊按鈕以獲取詳情。";
+"tutorial.tutorialItem.2.title" = "嘗試";
+"tutorial.tutorialItem.2.message" = "所有人都是從初學者開始。嘗試在對話中使用工具，看看自己學會了什麼。";
+"tutorial.tutorialItem.3.title" = "您可在選單再次觀看教學";
+"tutorial.continueButton.title.continue" = "繼續";
+"tutorial.continueButton.title.startUsingGodTools" = "開始使用 GodTools";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "展示教學";
+"openTutorial.openTutorialButton.title" = "打開教學";
+
+// Account
+"account.navTitle" = "我的個人檔案";
+"account.activity.title" = "活動";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "全球活動";
+"accountActivity.globalAnalytics.users.title" = "獨特\n用戶";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "福音演示";
+"accountActivity.globalAnalytics.launches.title" = "節";
+"accountActivity.globalAnalytics.countries.title" = "國家或地區";
+
+// Alerts
+"alert.action.ok" = "好";

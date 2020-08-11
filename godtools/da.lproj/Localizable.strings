@@ -1,23 +1,51 @@
-"language_name_fa" = "Persisk (Farsi)";
-"downloadprogress" = "Download i gang";
+"tool_offline_favorite_message" = "Gør et værktøj tilgængeligt offline ved at trykke på hjerteikonet, som tilføjer det til dine favoritter.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Åbn værktøj";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Samtalestarter";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Forr.";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Kristen vækst";
 
-"card_status2" = "Næste";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Træning";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Åbn";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Føj til Favoritter";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Fjern fra Favoritter";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Værktøjet downloades. Hvis du vil undgå dette fremover, skal du gøre dette værktøj til en favorit, så vil det være tilgængeligt offline.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Downloader den nyeste oversættelse af dette værktøj.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Fjern fra Favoritter?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Er du sikker på, at du vil fjerne %@ fra dine favoritter? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelieinvitation";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Artikler";
 "language_onboard" = "Over 80 sprog";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Du har hentet alle tilgængelige værktøjer.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mine værktøjer";
+"my_tools" = "Favoritter";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Find værktøjer";
+"find_tools" = "Alle værktøjer";
 
 "unavailable" = "Ikke tilgængelig";
 
@@ -30,7 +58,6 @@
 "menu_share" = "Del";
 "menu_legal" = "Juridisk";
 "language_settings" = "Sprogindstillinger";
-
 // Login
 "login" = "Log på";
 "logout" = "Log af";
@@ -98,6 +125,8 @@ Appen kan downloades fra https://godtoolsapp.com";
 "done" = "Fuldfør";
 "remove" = "Fjern";
 "clear" = "Ryd";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Åbn værktøj";
 
 // Alerts
 "error" = "Fejl";
@@ -118,3 +147,14 @@ Appen kan downloades fra https://godtoolsapp.com";
 "general_about_8" = "Besøg godtoolsapp.com for at få flere oplysninger.";
 "general_about_9" = "Når du tager initiativ til at dele din tro, skal du huske, at Gud er den, som ændrer hjertet. Elsk alle personer ved at lytte og forstå dem.";
 "general_about_10" = "\"Eders Tale være altid med Ynde, krydret med Salt, saa I vide, hvorledes I bør svare enhver især.\" Kolossenserne 4:6";
+
+// Downloads
+"Download in progress" = "Download i gang";
+
+// Navigation
+"card_status1" = "Forr.";
+"card_status2" = "Næste";
+
+// Language Name Strings
+"language_name_fa" = "Persisk (Farsi)";
+

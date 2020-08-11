@@ -14,7 +14,7 @@ class GlobalActivityCellViewModel {
     let title: String
     let isLoading: Bool
     
-    required init(globalActivityAttribute: GlobalActivityAttribute, isLoading: Bool, errorOccurred: Bool) {
+    required init(globalActivityAttribute: GlobalActivityAttribute, localizationServices: LocalizationServices, isLoading: Bool, errorOccurred: Bool) {
         
         if isLoading && globalActivityAttribute.count == 0 {
             count = "-"
@@ -30,13 +30,13 @@ class GlobalActivityCellViewModel {
         
         switch globalActivityAttribute.activityType {
         case .users:
-            title = NSLocalizedString("accountActivity.globalAnalytics.users.title", comment: "")
+            title = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.users.title")
         case .countries:
-            title = NSLocalizedString("accountActivity.globalAnalytics.countries.title", comment: "")
+            title = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.countries.title")
         case .launches:
-            title = NSLocalizedString("accountActivity.globalAnalytics.launches.title", comment: "")
+            title = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.launches.title")
         case .gospelPresentation:
-            title = NSLocalizedString("accountActivity.globalAnalytics.gospelPresentation.title", comment: "")
+            title = localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.gospelPresentation.title")
         }
         
         self.isLoading = isLoading

@@ -329,12 +329,15 @@ extension TractView: PageNavigationCollectionViewDelegate {
             cellReuseIdentifier: TractPageCell.reuseIdentifier,
             indexPath: indexPath) as! TractPageCell
                 
-        let tractPage: TractPage? = viewModel.getTractPage(page: indexPath.item)
-                
-        tractPage?.setDelegate(self)
+        let tractPageItem: TractPageItem = viewModel.getTractPageItem(page: indexPath.item)
+                        
+        tractPageItem.tractPage?.setDelegate(self)
 
-        if let tractPage = tractPage {
+        if let tractPage = tractPageItem.tractPage {
             cell.setTractPage(tractPage: tractPage)
+            if let navigationEvent = tractPageItem.navigationEvent {
+                tractPage.setCard(card: navigationEvent.card, animated: false)
+            }
         }
                                         
         return cell

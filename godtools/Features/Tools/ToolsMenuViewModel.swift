@@ -10,16 +10,22 @@ import Foundation
 
 class ToolsMenuViewModel: ToolsMenuViewModelType {
     
+    private let localizationServices: LocalizationServices
+    
     private weak var flowDelegate: FlowDelegate?
     
-    let favoritesMenuItem: ToolMenuItem = ToolMenuItem(id: .favorites, title: NSLocalizedString("my_tools", comment: ""), accessibilityLabel: "my_tools")
-    let allToolsMenuItem: ToolMenuItem = ToolMenuItem(id: .allTools, title: NSLocalizedString("find_tools", comment: ""), accessibilityLabel: "find_tools")
+    let favoritesMenuItem: ToolMenuItem
+    let allToolsMenuItem: ToolMenuItem
     let toolMenuItems: ObservableValue<[ToolMenuItem]> = ObservableValue(value: [])
     let selectedToolMenuItem: ObservableValue<ToolMenuItem?> = ObservableValue(value: nil)
     
-    required init(flowDelegate: FlowDelegate) {
+    required init(flowDelegate: FlowDelegate, localizationServices: LocalizationServices) {
         
         self.flowDelegate = flowDelegate
+        self.localizationServices = localizationServices
+        
+        favoritesMenuItem = ToolMenuItem(id: .favorites, title: localizationServices.stringForMainBundle(key: "my_tools"), accessibilityLabel: "my_tools")
+        allToolsMenuItem = ToolMenuItem(id: .allTools, title: localizationServices.stringForMainBundle(key: "find_tools"), accessibilityLabel: "find_tools")
         
         reloadToolMenu()
     }

@@ -12,7 +12,7 @@ class GlobalActivityHeaderViewModel {
     
     let headerTitle: String
     
-    required init() {
+    required init(localizationServices: LocalizationServices) {
         
         let todaysDate: Date = Date()
         let components: DateComponents = Calendar.current.dateComponents([.year], from: todaysDate)
@@ -24,6 +24,6 @@ class GlobalActivityHeaderViewModel {
             currentYear = ""
         }
         
-        headerTitle = currentYear + " " + NSLocalizedString("accountActivity.globalAnalytics.header.title", comment: "")
+        headerTitle = currentYear + " " + localizationServices.stringForMainBundle(key: "accountActivity.globalAnalytics.header.title")
     }
 }

@@ -1,25 +1,64 @@
-"language_name_fa" = "Персидский (фарси)";
-"downloadprogress" = "Выполняется загрузка";
+"tool_offline_favorite_message" = "Нажав на значок сердца, вы добавите инструмент в избранное, что сделает его доступным, даже когда вы не в сети.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Открыть инструмент";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Помощник в диалоге";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Назад";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Духовный рост";
 
-"card_status2" = "Далее";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Обучение";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Открыть";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Добавить в избранное";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Удалить из избранного";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Инструмент загружается. Чтобы в будущем не тратить время на ожидание, добавьте этот инструмент в избранное, и он будет доступен, даже когда вы не в сети.
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Загрузка наиболее актуального перевода для этого инструмента.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Удалить из избранного? ";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Вы действительно хотите удалить %@ из избранного? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Приглашение на проповедь";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Статьи";
+
+"articles.downloadArticlesButton.title.retryDownload" = "Повторить загрузку";
+
+/* This is to let users know which version of the app is installed on their phone */
+"menu_version" = "Версия";
+
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Загружаем статьи...";
 "language_onboard" = "Более 80 языков";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Все доступные инструменты загружены.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Мои инструменты";
+"my_tools" = "Избранное";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Другие";
+"find_tools" = "Все инструменты";
 
 "unavailable" = "Недоступно";
+
+// Navigation Bar
+"navigationBar.navigationItem.skip" = "Пропустить";
 
 // Onboarding
 "add_new_tools" = "Добавить новые инструменты";
@@ -27,9 +66,12 @@
 "okay" = "Хорошо";
 // Menu
 "menu_general" = "Общие настройки";
+"menu_account" = "Учетная запись";
 "menu_share" = "Поделиться";
 "menu_legal" = "Юридическая информация";
 "language_settings" = "Языковые настройки";
+"menu.tutorial" = "Обучение";
+"menu.my_account" = "Учетная запись";
 
 // Login
 "login" = "Войти";
@@ -39,7 +81,7 @@
 
 // Tool Detail
 "about" = "О приложении";
-"help" = "Справка";
+"help" = "Частые вопросы";
 "contact_us" = "Связаться с нами";
 "preview_mode_translators_only" = "Режим предпросмотра (только для переводчиков)";
 "share_god_tools" = "Поделиться приложением GodTools";
@@ -88,7 +130,9 @@
 "no" = "Нет";
 
 // Tract - Sharing
-"tract_share_message" ="Ссылка переведет вас на веб-страницу, которую мы просматривали сегодня вместе: %@. Приглашаем вас к общению!
+"tract_share_message" ="Ссылка переведет вас на веб-страницу с информацией, которую мы обсуждали сегодня: %@. 
+
+Приглашаем вас к общению!
 
 Приложение можно загрузить по ссылке https://godtoolsapp.com";
 
@@ -98,6 +142,8 @@
 "done" = "Готово";
 "remove" = "Удалить";
 "clear" = "Очистить";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Открыть инструмент";
 
 // Alerts
 "error" = "Ошибка";
@@ -118,3 +164,66 @@
 "general_about_8" = "Посетите godtoolsapp.com для получения более подробной информации.";
 "general_about_9" = "Когда вы проявляете инициативу и решаетесь поделиться верой, помните, что только Бог может менять сердца. Проявляйте любовь ко всем, слушая их и пытаясь понять.";
 "general_about_10" = "«Слово ваше (да будет) всегда с благодатию, приправлено солью, дабы вы знали, как отвечать каждому». — К Колоссянам 4:6";
+
+// Downloads
+"Download in progress" = "Выполняется загрузка";
+
+// Navigation
+"card_status1" = "Назад";
+"card_status2" = "Далее";
+
+// Language Name Strings
+"language_name_fa" = "Персидский (фарси)";
+
+// OnboardingWelcome
+"onboardingWelcome.titleLabel.welcome" = "Добро пожаловать";
+"onboardingWelcome.titleLabel.tagline" = "Помогаем делиться верой";
+"onboardingWelcome.beginButton" = "Начать";
+
+// OnboardingTutorial
+"onboardingTutorial.aboutAppItem.0.title" = "Поделиться с другими";
+"onboardingTutorial.aboutAppItem.0.message" = "Приложение GodTools создано для помощи в беседах о вашей вере";
+"onboardingTutorial.aboutAppItem.1.title" = "Выберите свои инструменты";
+"onboardingTutorial.aboutAppItem.1.message" = "GodTools помогает вам до духовной беседы, во время и после нее";
+"onboardingTutorial.aboutAppItem.2.title" = "Постоянная готовность";
+"onboardingTutorial.aboutAppItem.2.message" = "GodTools в полной готовности помочь вам, когда это необходимо";
+"onboardingTutorial.appUsageItem.0.message" = "Подготовьтесь к любой беседе";
+"onboardingTutorial.appUsageItem.1.message" = "Помогите ближнему разобраться в проповеди";
+"onboardingTutorial.appUsageItem.2.message" = "Просмотр двух языков одновременно";
+"onboardingTutorial.appUsageItem.3.message" = "Выбор из более чем 80 языков";
+"onboardingTutorial.appUsageItem.4.message" = "Помогите ближнему встать на путь христианина";
+"onboardingTutorial.continueButton.title" = "Продолжить";
+"onboardingTutorial.showMoreButton.title" = "Показать больше";
+"onboardingTutorial.getStartedButton.title" = "Начать";
+
+// Tutorial
+"tutorial.tutorialItem.0.title" = "Смотрите";
+"tutorial.tutorialItem.0.message" = "Узнайте в демонстрационном видео, что предлагает GodTools
+(нажмите на видео для открытия настроек субтитров)";
+"tutorial.tutorialItem.1.title" = "Подготовьтесь";
+"tutorial.tutorialItem.1.message" = "Ознакомьтесь с некоторыми из инструментов. Полезно начать с инструмента «Научитесь делиться».
+
+Чтобы изучить инструмент подробнее, нажмите на кнопку информации.";
+"tutorial.tutorialItem.2.title" = "Попробовать";
+"tutorial.tutorialItem.2.message" = "Каждый когда-то был новичком. Попробуйте использовать инструмент в беседе и узнайте, что вы изучаете.";
+"tutorial.tutorialItem.3.title" = "Эта инструкция доступна для повторного просмотра в меню";
+"tutorial.continueButton.title.continue" = "Продолжить";
+"tutorial.continueButton.title.startUsingGodTools" = "Начать использование GodTools";
+
+// OpenTutorial
+"openTutorial.showTutorialLabel.text" = "Показать мне инструкцию";
+"openTutorial.openTutorialButton.title" = "Открыть инструкцию";
+
+// Account
+"account.navTitle" = "Мой профиль";
+"account.activity.title" = "Активность";
+
+// Account Activity
+"accountActivity.globalAnalytics.header.title" = "Глобальная активность";
+"accountActivity.globalAnalytics.users.title" = "Уникальные\nПользователи";
+"accountActivity.globalAnalytics.gospelPresentation.title" = "Презентации\nПроповедей";
+"accountActivity.globalAnalytics.launches.title" = "Сеансы";
+"accountActivity.globalAnalytics.countries.title" = "Страны";
+
+// Alerts
+"alert.action.ok" = "ОК";

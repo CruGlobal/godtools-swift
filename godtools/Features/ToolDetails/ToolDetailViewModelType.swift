@@ -6,13 +6,14 @@
 //  Copyright © 2020 Cru. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol ToolDetailViewModelType {
     
     var navTitle: ObservableValue<String> { get }
-    var topToolDetailMedia: ObservableValue<ToolDetailMedia?> { get }
+    var bannerImage: ObservableValue<UIImage?> { get }
     var hidesBannerImage: ObservableValue<Bool> { get }
+    var youTubePlayerId: ObservableValue<String?> { get }
     var hidesYoutubePlayer: ObservableValue<Bool> { get }
     var translationDownloadProgress: ObservableValue<Double> { get }
     var name: ObservableValue<String> { get }
@@ -26,6 +27,7 @@ protocol ToolDetailViewModelType {
     var selectedDetailControl: ObservableValue<ToolDetailControl?> { get }
     var aboutDetails: ObservableValue<String> { get }
     var languageDetails: ObservableValue<String> { get }
+    var youtubePlayerParameters: [String: Any]? { get }
     
     func pageViewed()
     func openToolTapped()

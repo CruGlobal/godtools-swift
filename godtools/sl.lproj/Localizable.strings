@@ -1,13 +1,40 @@
-"language_name_fa" = "Perzijščina (farsi)";
-"downloadprogress" = "Poteka prenos";
+"tool_offline_favorite_message" = "Če želite, da bo orodje na voljo brez povezave, se dotaknite ikone srca in jo dodajte med priljubljene.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Odpri orodje";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Začenjanje pogovora";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Nazaj";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Krščanska rast";
 
-"card_status2" = "Naprej";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Učenje";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Odpri";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Dodaj med priljubljene";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Odstrani iz priljubljenih";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Orodje se prenaša. Da se izognete čakanju, dodajte orodje med priljubljene, da bo na voljo brez povezave.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Prenašanje najnovejšega prevoda za to orodje.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Odstrani iz priljubljenih?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Ali res želite odstraniti %@ iz priljubljenih?";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Povabilo k evangeliju";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Članki";
 "language_onboard" = "Več kot 80 jezikov";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +57,6 @@
 "menu_share" = "Deli";
 "menu_legal" = "Zakonito";
 "language_settings" = "Jezikovne nastavitve";
-
 // Login
 "login" = "Prijava";
 "logout" = "Odjava";
@@ -99,6 +125,8 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "done" = "Zaključi";
 "remove" = "Odstrani";
 "clear" = "Izbriši";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Odpri orodje";
 
 // Alerts
 "error" = "Napaka";
@@ -119,3 +147,14 @@ Aplikacijo lahko preneseš na https://godtoolsapp.com";
 "general_about_8" = "Obišči godtoolsapp.com za več informacij.";
 "general_about_9" = "Pri prevzemanju pobude za deljenje svoje vere ne pozabi, da je le Bog tisti, ki spreminja srca ljudi. Izrazi skrb za vsako osebo s poslušanjem z namenom razumevanja.";
 "general_about_10" = "»Vaše govorjenje naj bo zmeraj ljubeznivo, začinjeno s soljo, da boste vedeli, kako morate odgovarjati komur koli.« Pismo Kološanom 4,6";
+
+// Downloads
+"Download in progress" = "Poteka prenos";
+
+// Navigation
+"card_status1" = "Nazaj";
+"card_status2" = "Naprej";
+
+// Language Name Strings
+"language_name_fa" = "Perzijščina (farsi)";
+

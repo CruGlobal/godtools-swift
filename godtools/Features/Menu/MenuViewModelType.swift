@@ -25,6 +25,7 @@ protocol MenuViewModelType {
     func aboutTapped()
     func helpTapped()
     func contactUsTapped()
+    func logoutTapped()
     func shareGodToolsTapped()
     func shareAStoryWithUsTapped()
     func termsOfUseTapped()

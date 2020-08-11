@@ -1,23 +1,50 @@
-"language_name_fa" = "Persų (Farsi)";
-"downloadprogress" = "Atsisiunčiama";
+"tool_offline_favorite_message" = "Įrankį galima naudoti atsijungus, paspaudus širdelės piktogramą, kuri prideda ją prie mėgstamiausių.";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "Atidaryti įrankį";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "Pokalbiui pradėti";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "Ankst";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "Krikščionio augimas";
 
-"card_status2" = "Kitas";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "Mokymas";
+
+/* This is an invitation for a user to open a tool */
+"open" = "Atidaryti";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "Pridėti prie Mėgstamiausių";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "Pašalinti iš Mėgstamiausių";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "Įrankis atsiunčiamas. Kad ateityje nereikėtų laukti, priskirkite šį įrankį prie Mėgstamiausių ir pasieksite jį neprisijungę.";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "Atsiunčiamas naujausias šio įrankio vertimas.";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "Ar pašalinti iš Mėgstamiausių?";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "Ar tikrai norite pašalinti %@ iš savo Mėgstamiausių? ";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "Evangelijos kvietimas";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "Straipsniai";
 "language_onboard" = "80+ kalbų";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
 "no_more_tools" = "Parsisiuntėte visus siūlomus įrankius.";
 
 /* Each offering inside the app listed on the Home Screen is considered a "Tool". You might look a few phrases down to phrase #31884901 to see how the word Tool was previously translated. */
-"my_tools" = "Mano įrankiai";
+"my_tools" = "Mėgstamiausi";
 
 /* The user will click this toggle switch to go find a library of more offerings or "Tools". */
-"find_tools" = "Rasti įrankius";
+"find_tools" = "Visi įrankiai";
 
 "unavailable" = "Nėra";
 
@@ -30,7 +57,6 @@
 "menu_share" = "Dalytis";
 "menu_legal" = "Teisė";
 "language_settings" = "Kalbos nustatymai";
-
 // Login
 "login" = "Prisijungti";
 "logout" = "Atsijungti";
@@ -97,6 +123,8 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "done" = "Atlikta";
 "remove" = "Pašalinti";
 "clear" = "Išvalyti";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Atidaryti įrankį";
 
 // Alerts
 "error" = "Klaida";
@@ -117,3 +145,14 @@ Programėlę galima atsisiųsti adresu https://godtoolsapp.com";
 "general_about_8" = "Jei norite daugiau informacijos, apsilankykite godtoolsapp.com.";
 "general_about_9" = "Imdamiesi iniciatyvos pasidalyti savo tikėjimu, nepamirškite, kad tai Dievas keičia širdį. Suteikite kiekvienam asmeniui meilės išklausydami ir suprasdami.";
 "general_about_10" = "„Jūsų kalba visada tebūna maloni, druska pasūdyta, kad žinotumėte, kaip turite kiekvienam atsakyti.“ Kolosiečiams 4:6";
+
+// Downloads
+"Download in progress" = "Atsisiunčiama";
+
+// Navigation
+"card_status1" = "Ankst";
+"card_status2" = "Kitas";
+
+// Language Name Strings
+"language_name_fa" = "Persų (Farsi)";
+

@@ -1,13 +1,41 @@
-"language_name_fa" = "ペルシア語（ファールシー語）";
-"downloadprogress" = "ダウンロードが進行中です";
+"tool_offline_favorite_message" = "ハートアイコンをタップすると、お気に入りに追加され、オフラインで利用できるようになります。";
 
-/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
-"toolinfo_opentool" = "ツールを開く";
+/* This is a category description of a tool that helps you start a conversation */
+"tool_category_conversation_starter" = "会話のきっかけ";
 
-/* Prev as an abbreviation for Previous. The user will press this to go back to the previous screen. */
-"card_status1" = "前";
+/* This phrase describes a category of tool that helps someone grow in their Christian faith */
+"tool_category_growth" = "クリスチャンとしての成長";
 
-"card_status2" = "次";
+/* This is a category. The content will include training of how to share your faith. */
+"tool_category_training" = "トレーニング";
+
+/* This is an invitation for a user to open a tool */
+"open" = "開く";
+
+/* A user will be selecting a heart to indicated that it is one of their favorite tools. */
+"add_to_favorites" = "お気に入りに追加";
+
+/* A user will be selecting this option to remove the tool from their Favorites screen */
+"remove_from_favorites" = "お気に入りから削除";
+
+/* This is a loading screen */
+"loading_unfavorited_tool" = "ツールをダウンロードしています。このツールをお気に入りに追加するとオフラインで使用できるようになり、今後ダウンロードを待つ必要がなくなります。
+";
+
+/* This is a loading screen */
+"loading_favorited_tool" = "このツールの最新の翻訳をダウンロードしています";
+
+/* Adds a question mark */
+"remove_from_favorites_title" = "お気に入りからを削除しますか？";
+
+/* No translation needed for %@ - just use it as it is. It will be substituted with the name of the tool. */
+"remove_from_favorites_message" = "「お気に入り」から%@を削除して本当によろしいですか？　";
+
+/* Gospel indicates the gospel of Jesus Christ */
+"tool_category_gospel" = "ゴスペルへの招待";
+
+/* Describes a format of content - like a newspaper article. */
+"tool_category_articles" = "記事";
 "language_onboard" = "80 種類以上の言語";
 
 /* This is to indicate to the user that there are no additional tools or resources available for download because they have already downloaded everything. */
@@ -30,7 +58,6 @@
 "menu_share" = "シェア";
 "menu_legal" = "法定事項";
 "language_settings" = "言語設定";
-
 // Login
 "login" = "ログイン";
 "logout" = "ログアウト";
@@ -98,6 +125,8 @@
 "done" = "完了";
 "remove" = "削除";
 "clear" = "消去";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "ツールを開く";
 
 // Alerts
 "error" = "エラー";
@@ -118,3 +147,14 @@
 "general_about_8" = "詳しくは、godtoolsapp.comをご覧ください。";
 "general_about_9" = "率先して信仰をシェアするために、神が心を変える存在であることを思い出してください。理解するために耳を傾け、一人一人を愛してください。";
 "general_about_10" = "「あなたがたの会話が、良識に富み、善意にあふれるよう心がけなさい。そうすれば、相手の一人一人に適切な答えができます。 」コロサイ人への手紙4:6";
+
+// Downloads
+"Download in progress" = "ダウンロードが進行中です";
+
+// Navigation
+"card_status1" = "前";
+"card_status2" = "次";
+
+// Language Name Strings
+"language_name_fa" = "ペルシア語（ファールシー語）";
+

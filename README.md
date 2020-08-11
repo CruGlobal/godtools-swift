@@ -1,7 +1,1 @@
-# God Tools
-
-# Note to developers:
-
-
-
-
+# GodTools

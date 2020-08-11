@@ -10,12 +10,14 @@ import Foundation
 
 class ArticlesErrorMessageViewModel {
     
-    let title: String = NSLocalizedString("download_error", comment: "")
+    let title: String
     let message: String
-    let downloadArticlesButtonTitle: String = NSLocalizedString("articles.downloadArticlesButton.title.retryDownload", comment: "")
+    let downloadArticlesButtonTitle: String
     
-    required init(message: String) {
+    required init(localizationServices: LocalizationServices, message: String) {
         
+        title = localizationServices.stringForMainBundle(key: "download_error")
         self.message = message
+        downloadArticlesButtonTitle = localizationServices.stringForMainBundle(key: "articles.downloadArticlesButton.title.retryDownload")
     }
 }

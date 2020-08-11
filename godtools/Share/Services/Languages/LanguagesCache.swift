@@ -32,7 +32,6 @@ class LanguagesCache {
     }
     
     func getLanguage(realm: Realm, id: String) -> LanguageModel? {
-        let realm: Realm = realmDatabase.mainThreadRealm
         if let realmLanguage = realm.object(ofType: RealmLanguage.self, forPrimaryKey: id) {
             return LanguageModel(realmLanguage: realmLanguage)
         }
@@ -44,10 +43,13 @@ class LanguagesCache {
     }
     
     func getLanguage(realm: Realm, code: String) -> LanguageModel? {
-        let realm: Realm = realmDatabase.mainThreadRealm
-        if let realmLanguage = realm.objects(RealmLanguage.self).filter("code = '\(code)'").first {
+        
+        let lowercasedCode: String = code.lowercased()
+        
+        if let realmLanguage = realm.objects(RealmLanguage.self).filter(NSPredicate(format: "code".appending(" = [c] %@"), lowercasedCode)).first {
             return LanguageModel(realmLanguage: realmLanguage)
         }
+        
         return nil
     }
 }
