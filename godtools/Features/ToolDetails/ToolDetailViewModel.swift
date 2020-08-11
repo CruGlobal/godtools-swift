@@ -24,8 +24,9 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
     private weak var flowDelegate: FlowDelegate?
     
     let navTitle: ObservableValue<String> = ObservableValue(value: "")
-    let topToolDetailMedia: ObservableValue<ToolDetailMedia?> = ObservableValue(value: nil)
+    let bannerImage: ObservableValue<UIImage?> = ObservableValue(value: nil)
     let hidesBannerImage: ObservableValue<Bool> = ObservableValue(value: false)
+    let youTubePlayerId: ObservableValue<String?> = ObservableValue(value: nil)
     let hidesYoutubePlayer: ObservableValue<Bool> = ObservableValue(value: false)
     let translationDownloadProgress: ObservableValue<Double> = ObservableValue(value: 0)
     let name: ObservableValue<String> = ObservableValue(value: "")
@@ -62,14 +63,15 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         if !resource.attrAboutOverviewVideoYoutube.isEmpty {
             hidesBannerImage.accept(value: true)
             hidesYoutubePlayer.accept(value: false)
-            topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: nil, youtubePlayerId: resource.attrAboutOverviewVideoYoutube))
+            youTubePlayerId.accept(value: resource.attrAboutOverviewVideoYoutube)
         }
         else {
             hidesBannerImage.accept(value: false)
             hidesYoutubePlayer.accept(value: true)
-            let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
-            topToolDetailMedia.accept(value: ToolDetailMedia(bannerImage: toolDetailImage, youtubePlayerId: ""))
         }
+        
+        let toolDetailImage: UIImage? = dataDownloader.attachmentsFileCache.getAttachmentBanner(attachmentId: resource.attrBannerAbout)
+        bannerImage.accept(value: toolDetailImage)
         
         reloadFavorited()
         reloadToolDetails()
@@ -80,6 +82,12 @@ class ToolDetailViewModel: NSObject, ToolDetailViewModelType {
         print("x deinit: \(type(of: self))")
         favoritedResourcesCache.resourceFavorited.removeObserver(self)
         favoritedResourcesCache.resourceUnfavorited.removeObserver(self)
+    }
+    
+    var youtubePlayerParameters: [String : Any]? {
+        return [
+            "playsinline": 1
+        ]
     }
     
     private func setupBinding() {
