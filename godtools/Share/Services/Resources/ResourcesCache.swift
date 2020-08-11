@@ -92,7 +92,7 @@ class ResourcesCache {
         
         let realm: Realm = realmDatabase.mainThreadRealm
         let realmResource: RealmResource? = realm.object(ofType: RealmResource.self, forPrimaryKey: resourceId)
-        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter("language.code = '\(languageCode)'").first
+        let realmTranslation: RealmTranslation? = realmResource?.latestTranslations.filter(NSPredicate(format: "language.code".appending(" = [c] %@"), languageCode.lowercased())).first
         let translation: TranslationModel?
         if let realmTranslation = realmTranslation {
             translation = TranslationModel(realmTranslation: realmTranslation)
