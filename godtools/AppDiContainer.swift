@@ -239,7 +239,7 @@ class AppDiContainer {
         return TractRemoteShareSubscriber(
             config: config,
             webSocket: webSocket,
-            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket),
+            webSocketChannelSubscriber: ActionCableChannelSubscriber(webSocket: webSocket, loggingEnabled: config.isDebug),
             loggingEnabled: false
         )
     }
