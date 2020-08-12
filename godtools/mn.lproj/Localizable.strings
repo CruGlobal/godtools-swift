@@ -1,4 +1,19 @@
+/* Phrase will appear along with a visual spinning indicator that their selection is downloading. */
+"articles.loadingView.downloadingArticles" = "Татан авалт үргэлжилж байна";
+"menu_share" = "ХУВААЛЦ";
+"contact_us" = "Бидэнтэй холбоо барих";
+"privacy_policy" = "Нууцлалын бодлого";
+"the_tool_you_requested_is_loading" = "Татан авалт үргэлжилж байна";
+/* Please be aware that the word Tool has been used in other places in this project. Check for consistency. */
+"toolinfo_opentool" = "Нээлттэй";
+
+// Downloads
+"Download in progress" = "Татан авалт үргэлжилж байна";
+
 // Navigation
 "card_status1" = "өмнөх";
 "card_status2" = "Дараах";
+
+// Language Name Strings
+"language_name_fa" = "перс (фарси хэл)";
 
