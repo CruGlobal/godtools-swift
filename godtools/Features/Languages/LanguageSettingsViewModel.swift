@@ -31,11 +31,7 @@ class LanguageSettingsViewModel: NSObject, LanguageSettingsViewModelType {
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            shouldFallbackToPrimaryLanguageLocale: false
-        )
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.localizationServices = localizationServices
         self.analytics = analytics
         

@@ -41,11 +41,7 @@ class ChooseLanguageViewModel: NSObject, ChooseLanguageViewModelType {
         self.dataDownloader = dataDownloader
         self.localizationServices = localizationServices
         self.languageSettingsService = languageSettingsService
-        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(
-            languageSettingsService: languageSettingsService,
-            localizationServices: localizationServices,
-            shouldFallbackToPrimaryLanguageLocale: false
-        )
+        self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.downloadedLanguagesCache = downloadedLanguagesCache
         self.analytics = analytics
         self.chooseLanguageType = chooseLanguageType

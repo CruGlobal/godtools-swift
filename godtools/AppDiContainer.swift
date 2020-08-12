@@ -48,7 +48,6 @@ class AppDiContainer {
     let openTutorialCalloutCache: OpenTutorialCalloutCacheType
     let localizationServices: LocalizationServices = LocalizationServices()
     let deviceLanguage: DeviceLanguageType = DeviceLanguage()
-    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let fetchTranslationManifestsViewModel: FetchTranslationManifestsViewModel
     let globalActivityServices: GlobalActivityServicesType
     let followUpsService: FollowUpsService
@@ -169,9 +168,7 @@ class AppDiContainer {
         godToolsAnalytics = GodToolsAnaltyics(analytics: analytics)
                                                   
         openTutorialCalloutCache = OpenTutorialCalloutUserDefaultsCache()
-                        
-        fetchLanguageTranslationViewModel = FetchLanguageTranslationViewModel(realmDatabase: realmDatabase, deviceLanguage: deviceLanguage)
-        
+                                
         fetchTranslationManifestsViewModel = FetchTranslationManifestsViewModel(
             realmDatabase: realmDatabase,
             resourcesCache: initialDataDownloader.resourcesCache,

@@ -143,7 +143,6 @@ extension ToolsTableView: UITableViewDelegate, UITableViewDataSource {
             languageSettingsService: viewModel.languageSettingsService,
             localizationServices: viewModel.localizationServices,
             favoritedResourcesCache: viewModel.favoritedResourcesCache,
-            fetchLanguageTranslationViewModel: viewModel.fetchLanguageTranslationViewModel,
             deviceAttachmentBanners: viewModel.deviceAttachmentBanners
         )
         

@@ -128,18 +128,18 @@ class ToolDetailView: UIViewController {
             self?.title = navTitle
         }
         
-        viewModel.topToolDetailMedia.addObserver(self) { [weak self] (toolDetailMedia: ToolDetailMedia?) in
-                      
-            if let newBannerImage = toolDetailMedia?.bannerImage {
-                self?.setTopBannerImage(image: newBannerImage)
-            }
-            else if let youtubePlayerId = toolDetailMedia?.youtubePlayerId, !youtubePlayerId.isEmpty {
-                self?.loadYoutubePlayerVideo(videoId: youtubePlayerId)
-            }
+        viewModel.bannerImage.addObserver(self) { [weak self] (image: UIImage?) in
+            self?.setTopBannerImage(image: image)
         }
         
         viewModel.hidesBannerImage.addObserver(self) { [weak self] (isHidden: Bool) in
             self?.bannerImageView.isHidden = isHidden
+        }
+        
+        viewModel.youTubePlayerId.addObserver(self) { [weak self] (youTubePlayerId: String?) in
+            if let youTubePlayerId = youTubePlayerId {
+                self?.loadYoutubePlayerVideo(videoId: youTubePlayerId)
+            }
         }
         
         viewModel.hidesYoutubePlayer.addObserver(self) { [weak self] (isHidden: Bool) in
@@ -246,7 +246,7 @@ class ToolDetailView: UIViewController {
         }
     }
     
-    private func setTopBannerImage(image: UIImage) {
+    private func setTopBannerImage(image: UIImage?) {
         
         let previousBannerImage: UIImage? = bannerImageView.image
         
@@ -263,7 +263,7 @@ class ToolDetailView: UIViewController {
     private func loadYoutubePlayerVideo(videoId: String) {
         youTubeActivityIndicator.startAnimating()
         youTubePlayerView.delegate = self
-        youTubePlayerView.load(withVideoId: videoId, playerVars: ["playsinline": 1])
+        youTubePlayerView.load(withVideoId: videoId, playerVars: viewModel.youtubePlayerParameters)
     }
 
     private func reloadDetailsTextViews() {
@@ -355,6 +355,31 @@ extension ToolDetailView: WKYTPlayerViewDelegate {
     func playerView(_ playerView: WKYTPlayerView, didChangeTo state: WKYTPlayerState) {
         
         print("\n ToolDetailView playerView didChangeTo state")
+        switch state {
+            
+        case .unstarted:
+            print("unstarted")
+        case .ended:
+            print("ended")
+        case .playing:
+            print("playing")
+        case .paused:
+            print("paused")
+        case .buffering:
+            print("buffering")
+        case .queued:
+            print("queued")
+        case .unknown:
+            print("unknown")
+        @unknown default:
+            print("default")
+        }
+        
+        if state == .ended, let youTubePlayerId = viewModel.youTubePlayerId.value {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.loadYoutubePlayerVideo(videoId: youTubePlayerId)
+            }
+        }
     }
     
     func playerView(_ playerView: WKYTPlayerView, didChangeTo quality: WKYTPlaybackQuality) {

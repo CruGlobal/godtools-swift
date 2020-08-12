@@ -16,7 +16,6 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let languageSettingsService: LanguageSettingsService
     let localizationServices: LocalizationServices
     let favoritedResourcesCache: FavoritedResourcesCache
-    let fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel
     let deviceAttachmentBanners: DeviceAttachmentBanners
     let analytics: AnalyticsContainer
     let tools: ObservableValue<[ResourceModel]> = ObservableValue(value: [])
@@ -28,14 +27,13 @@ class AllToolsViewModel: NSObject, AllToolsViewModelType {
     let toolListIsEditable: Bool = false
     let toolListIsEditing: ObservableValue<Bool> = ObservableValue(value: false)
     
-    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
+    required init(flowDelegate: FlowDelegate, dataDownloader: InitialDataDownloader, languageSettingsService: LanguageSettingsService, localizationServices: LocalizationServices, favoritedResourcesCache: FavoritedResourcesCache, deviceAttachmentBanners: DeviceAttachmentBanners, analytics: AnalyticsContainer) {
         
         self.flowDelegate = flowDelegate
         self.dataDownloader = dataDownloader
         self.languageSettingsService = languageSettingsService
         self.localizationServices = localizationServices
         self.favoritedResourcesCache = favoritedResourcesCache
-        self.fetchLanguageTranslationViewModel = fetchLanguageTranslationViewModel
         self.deviceAttachmentBanners = deviceAttachmentBanners
         self.analytics = analytics
         

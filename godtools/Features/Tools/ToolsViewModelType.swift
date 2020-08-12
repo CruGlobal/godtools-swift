@@ -14,7 +14,6 @@ protocol ToolsViewModelType {
     var languageSettingsService: LanguageSettingsService { get }
     var localizationServices: LocalizationServices { get }
     var favoritedResourcesCache: FavoritedResourcesCache { get }
-    var fetchLanguageTranslationViewModel: FetchLanguageTranslationViewModel { get }
     var deviceAttachmentBanners: DeviceAttachmentBanners { get }
     var analytics: AnalyticsContainer { get }
     var tools: ObservableValue<[ResourceModel]> { get }

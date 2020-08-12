@@ -43,7 +43,6 @@ class ToolsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
@@ -54,7 +53,6 @@ class ToolsFlow: Flow {
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
-            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
             deviceAttachmentBanners: appDiContainer.deviceAttachmentBanners,
             analytics: appDiContainer.analytics
         )
@@ -179,7 +177,6 @@ class ToolsFlow: Flow {
             favoritedResourcesCache: appDiContainer.favoritedResourcesCache,
             languageSettingsService: appDiContainer.languageSettingsService,
             localizationServices: appDiContainer.localizationServices,
-            fetchLanguageTranslationViewModel: appDiContainer.fetchLanguageTranslationViewModel,
             analytics: appDiContainer.analytics,
             exitLinkAnalytics: appDiContainer.exitLinkAnalytics
         )

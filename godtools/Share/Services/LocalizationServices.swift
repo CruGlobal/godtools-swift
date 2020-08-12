@@ -10,7 +10,9 @@ import Foundation
 
 class LocalizationServices {
     
-    private let fallbackLocalizationResourceNames: [String] = ["Base"]
+    private static let BaseLocalization: String = "Base"
+    
+    private let fallbackLocalizationResourceNames: [String] = [LocalizationServices.BaseLocalization]
     
     required init() {
         
@@ -18,15 +20,6 @@ class LocalizationServices {
     
     var shouldFallbackToBundleIfStringEqualsKey: Bool {
         return !fallbackLocalizationResourceNames.isEmpty
-    }
-    
-    private func bundleForResource(resourceName: String) -> Bundle? {
-        
-        if !resourceName.isEmpty, let path = Bundle.main.path(forResource: resourceName, ofType: "lproj"), let bundle: Bundle = Bundle(path: path) {
-            return bundle
-        }
-        
-        return nil
     }
     
     private func localizedStringForBundle(bundle: Bundle, key: String, value: String?, table: String?) -> String? {
@@ -38,6 +31,26 @@ class LocalizationServices {
         }
         
         return localizedString
+    }
+    
+    var englishBundle: Bundle? {
+        if let englishBundle = bundleForResource(resourceName: LocalizationServices.BaseLocalization) {
+            return englishBundle
+        }
+        return nil
+    }
+    
+    func bundleForResource(resourceName: String) -> Bundle? {
+        
+        if resourceName == "en" {
+            return englishBundle
+        }
+        
+        if !resourceName.isEmpty, let path = Bundle.main.path(forResource: resourceName, ofType: "lproj"), let bundle: Bundle = Bundle(path: path) {
+            return bundle
+        }
+                
+        return nil
     }
     
     func bundleForResourceElseFallbackBundle(resourceName: String) -> Bundle {
