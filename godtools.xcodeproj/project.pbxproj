@@ -75,9 +75,6 @@
 		450E21C32491A4B400D489A1 /* AttachmentModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E21C22491A4B400D489A1 /* AttachmentModelType.swift */; };
 		450E21C52491A52200D489A1 /* TranslationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E21C42491A52200D489A1 /* TranslationModel.swift */; };
 		450E21C72491A52900D489A1 /* TranslationModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E21C62491A52900D489A1 /* TranslationModelType.swift */; };
-		450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18C246C586E00B78FA3 /* ShareToolView.swift */; };
-		450EA18F246C587800B78FA3 /* ShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */; };
-		450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */; };
 		450EA193246C6E9400B78FA3 /* TractPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EA192246C6E9400B78FA3 /* TractPageCell.swift */; };
 		450EA195246C6E9E00B78FA3 /* TractPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 450EA194246C6E9E00B78FA3 /* TractPageCell.xib */; };
 		450EF817247E9C9600978926 /* ToolsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450EF816247E9C9600978926 /* ToolsTableView.swift */; };
@@ -178,6 +175,13 @@
 		451EE23D24ABF6D200BB799F /* SharedIgnoreCacheSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE23C24ABF6D200BB799F /* SharedIgnoreCacheSession.swift */; };
 		451EE23F24ABF6DD00BB799F /* SharedSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE23E24ABF6DD00BB799F /* SharedSessionType.swift */; };
 		451EE24224ABFB7800BB799F /* FollowUpsApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451EE24124ABFB7800BB799F /* FollowUpsApi.swift */; };
+		451F3F1324E44E4100A25D11 /* ShareToolMenuFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1224E44E4100A25D11 /* ShareToolMenuFlow.swift */; };
+		451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1524E458A000A25D11 /* ShareToolMenuViewModel.swift */; };
+		451F3F1C24E458A000A25D11 /* ShareToolMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1624E458A000A25D11 /* ShareToolMenuView.swift */; };
+		451F3F1D24E458A000A25D11 /* ShareToolMenuViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1724E458A000A25D11 /* ShareToolMenuViewModelType.swift */; };
+		451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1824E458A000A25D11 /* ShareToolView.swift */; };
+		451F3F1F24E458A000A25D11 /* ShareToolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1924E458A000A25D11 /* ShareToolViewModel.swift */; };
+		451F3F2024E458A000A25D11 /* ShareToolViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451F3F1A24E458A000A25D11 /* ShareToolViewModelType.swift */; };
 		452036C3240057B2002B2453 /* RequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036BE240057B2002B2453 /* RequestBuilder.swift */; };
 		452036C4240057B2002B2453 /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036BF240057B2002B2453 /* RequestMethod.swift */; };
 		452036C7240057F3002B2453 /* RequestOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452036C6240057F3002B2453 /* RequestOperation.swift */; };
@@ -721,9 +725,6 @@
 		450E21C22491A4B400D489A1 /* AttachmentModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentModelType.swift; sourceTree = "<group>"; };
 		450E21C42491A52200D489A1 /* TranslationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationModel.swift; sourceTree = "<group>"; };
 		450E21C62491A52900D489A1 /* TranslationModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationModelType.swift; sourceTree = "<group>"; };
-		450EA18C246C586E00B78FA3 /* ShareToolView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolView.swift; sourceTree = "<group>"; };
-		450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModel.swift; sourceTree = "<group>"; };
-		450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolViewModelType.swift; sourceTree = "<group>"; };
 		450EA192246C6E9400B78FA3 /* TractPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractPageCell.swift; sourceTree = "<group>"; };
 		450EA194246C6E9E00B78FA3 /* TractPageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TractPageCell.xib; sourceTree = "<group>"; };
 		450EF816247E9C9600978926 /* ToolsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsTableView.swift; sourceTree = "<group>"; };
@@ -824,6 +825,13 @@
 		451EE23C24ABF6D200BB799F /* SharedIgnoreCacheSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedIgnoreCacheSession.swift; sourceTree = "<group>"; };
 		451EE23E24ABF6DD00BB799F /* SharedSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedSessionType.swift; sourceTree = "<group>"; };
 		451EE24124ABFB7800BB799F /* FollowUpsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowUpsApi.swift; sourceTree = "<group>"; };
+		451F3F1224E44E4100A25D11 /* ShareToolMenuFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareToolMenuFlow.swift; sourceTree = "<group>"; };
+		451F3F1524E458A000A25D11 /* ShareToolMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolMenuViewModel.swift; sourceTree = "<group>"; };
+		451F3F1624E458A000A25D11 /* ShareToolMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolMenuView.swift; sourceTree = "<group>"; };
+		451F3F1724E458A000A25D11 /* ShareToolMenuViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolMenuViewModelType.swift; sourceTree = "<group>"; };
+		451F3F1824E458A000A25D11 /* ShareToolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolView.swift; sourceTree = "<group>"; };
+		451F3F1924E458A000A25D11 /* ShareToolViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolViewModel.swift; sourceTree = "<group>"; };
+		451F3F1A24E458A000A25D11 /* ShareToolViewModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareToolViewModelType.swift; sourceTree = "<group>"; };
 		452036BE240057B2002B2453 /* RequestBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestBuilder.swift; sourceTree = "<group>"; };
 		452036BF240057B2002B2453 /* RequestMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		452036C6240057F3002B2453 /* RequestOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestOperation.swift; sourceTree = "<group>"; };
@@ -1793,6 +1801,19 @@
 			path = FollowUps;
 			sourceTree = "<group>";
 		};
+		451F3F1424E458A000A25D11 /* ShareTool */ = {
+			isa = PBXGroup;
+			children = (
+				451F3F1624E458A000A25D11 /* ShareToolMenuView.swift */,
+				451F3F1524E458A000A25D11 /* ShareToolMenuViewModel.swift */,
+				451F3F1724E458A000A25D11 /* ShareToolMenuViewModelType.swift */,
+				451F3F1824E458A000A25D11 /* ShareToolView.swift */,
+				451F3F1924E458A000A25D11 /* ShareToolViewModel.swift */,
+				451F3F1A24E458A000A25D11 /* ShareToolViewModelType.swift */,
+			);
+			path = ShareTool;
+			sourceTree = "<group>";
+		};
 		452036BB240057B2002B2453 /* URLRequestServices */ = {
 			isa = PBXGroup;
 			children = (
@@ -2663,6 +2684,7 @@
 				45B2AE42245886B100253BAD /* Mail */,
 				45F66CA223E4C3620053CB5B /* Menu */,
 				45668E5323E0E1CC002728E7 /* Onboarding */,
+				451F3F1424E458A000A25D11 /* ShareTool */,
 				45EDC538249BAB960020DC62 /* ToolDetails */,
 				45FCFF45243D09C700865501 /* Tools */,
 				45FCFF7A243D0C9200865501 /* Tract */,
@@ -2913,6 +2935,7 @@
 				4573221724453FC300D653FF /* LanguageSettingsFlow.swift */,
 				45FCFF38243D07B800865501 /* MenuFlow.swift */,
 				45FCFF3A243D07B800865501 /* OnboardingFlow.swift */,
+				451F3F1224E44E4100A25D11 /* ShareToolMenuFlow.swift */,
 				45ACBD0C247DB13E00514E75 /* ToolsFlow.swift */,
 				45FCFF39243D07B800865501 /* TutorialFlow.swift */,
 			);
@@ -2979,9 +3002,6 @@
 		45FCFF7A243D0C9200865501 /* Tract */ = {
 			isa = PBXGroup;
 			children = (
-				450EA18C246C586E00B78FA3 /* ShareToolView.swift */,
-				450EA18E246C587800B78FA3 /* ShareToolViewModel.swift */,
-				450EA190246C58DE00B78FA3 /* ShareToolViewModelType.swift */,
 				45FCFF80243D0C9200865501 /* TractView.swift */,
 				45ED1E8C246B1BEF00CF0AB0 /* TractView.xib */,
 				45FCFF7D243D0C9200865501 /* TractViewModel.swift */,
@@ -3732,6 +3752,7 @@
 				454526CD243E138B00B84B29 /* AnalyticsContainer.swift in Sources */,
 				4595F42E24A294EE00B3733E /* ArticleJcrContentParser.swift in Sources */,
 				451DB0CE2461D90000FB14BF /* ManifestProperties.swift in Sources */,
+				451F3F1324E44E4100A25D11 /* ShareToolMenuFlow.swift in Sources */,
 				45C2CFF72409B74900683A98 /* GlobalActivityAnalyticsUserDefaultsCache.swift in Sources */,
 				453DBA7D247485560000BA85 /* ArticlesErrorMessage.swift in Sources */,
 				452036CB24005AF0002B2453 /* RequestResponse+Log.swift in Sources */,
@@ -3830,7 +3851,6 @@
 				45B2AE4124587BB500253BAD /* ShareArticleViewModelType.swift in Sources */,
 				45249D0B24ACB13300E139AD /* FollowUpModelType.swift in Sources */,
 				45EC83822451E1EA00E8DE48 /* ArticleCategory.swift in Sources */,
-				450EA18F246C587800B78FA3 /* ShareToolViewModel.swift in Sources */,
 				454526D6243E17A400B84B29 /* ContactUsWebContent.swift in Sources */,
 				455F4B9C2452806D00AE6007 /* ArticleWebView.swift in Sources */,
 				4556AEC023E1EBD4002C15E8 /* TutorialInMenuView.swift in Sources */,
@@ -3871,6 +3891,7 @@
 				4595F44424A2AF4200B3733E /* ArticlesCacheValidation.swift in Sources */,
 				451DB0C62461D90000FB14BF /* TractEventHelper.swift in Sources */,
 				451DB1342461DA4200FB14BF /* TractModalsProperties.swift in Sources */,
+				451F3F1C24E458A000A25D11 /* ShareToolMenuView.swift in Sources */,
 				45D3C92D23DF9C1000ECF70E /* TutorialItemProvider.swift in Sources */,
 				451DB0C32461D90000FB14BF /* TractResource.swift in Sources */,
 				45D5692D2492EDF3003E5798 /* ToolCellViewModelType.swift in Sources */,
@@ -3956,7 +3977,9 @@
 				451DB0CD2461D90000FB14BF /* TractEvent.swift in Sources */,
 				4506DEDE24B7A78700A1C50B /* TractXmlResource.swift in Sources */,
 				45B881C8249AAC35004DC491 /* SHA256FileLocation.swift in Sources */,
+				451F3F1F24E458A000A25D11 /* ShareToolViewModel.swift in Sources */,
 				45DED956247826CF00B0A71D /* HTMLDocumentData.swift in Sources */,
+				451F3F1E24E458A000A25D11 /* ShareToolView.swift in Sources */,
 				4595F42F24A294EE00B3733E /* ArticleAemImportDataParser.swift in Sources */,
 				45249D1B24ACCD1400E139AD /* BaseTractElementDiContainer.swift in Sources */,
 				45ACBD0D247DB13E00514E75 /* ToolsFlow.swift in Sources */,
@@ -3969,7 +3992,6 @@
 				451DB13F2461DA4200FB14BF /* TractCardsProperties.swift in Sources */,
 				4586D7D9246ECCE00062D988 /* TractTextContent.swift in Sources */,
 				4575C24023FAEBFF00D3265B /* AccountViewModelType.swift in Sources */,
-				450EA191246C58DE00B78FA3 /* ShareToolViewModelType.swift in Sources */,
 				450EF823247EA85F00978926 /* AllToolsViewModelType.swift in Sources */,
 				45EDC54A249BC2440020DC62 /* ToolDetailControl.swift in Sources */,
 				4506DEDA24B7A78700A1C50B /* XMLManager.swift in Sources */,
@@ -3978,7 +4000,6 @@
 				4593FF4A24B35F44001CEC5A /* DeviceAttachmentBanners.swift in Sources */,
 				45732E7724218997006F0559 /* OnboardingTutorialViewedCacheType.swift in Sources */,
 				45F66CA623E4C3C20053CB5B /* MenuView.swift in Sources */,
-				450EA18D246C586E00B78FA3 /* ShareToolView.swift in Sources */,
 				450B6721249959D400A54E50 /* FavoritedResourceModelType.swift in Sources */,
 				4556AEDB23E2221E002C15E8 /* FontLibrary.swift in Sources */,
 				45038D7524A25BB100345B42 /* TranslationZipFileModel.swift in Sources */,
@@ -3999,9 +4020,11 @@
 				4506DEB424B7A69F00A1C50B /* ModalNavigationController.swift in Sources */,
 				4595F41C24A27DFB00B3733E /* ArticleAemImportDownloader.swift in Sources */,
 				455F4B9624527C2D00AE6007 /* WebArchive.swift in Sources */,
+				451F3F2024E458A000A25D11 /* ShareToolViewModelType.swift in Sources */,
 				451DB0C72461D90000FB14BF /* TractPagination.swift in Sources */,
 				4564723D244F6F4F00CB202D /* ArticleCategoriesView.swift in Sources */,
 				45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */,
+				451F3F1D24E458A000A25D11 /* ShareToolMenuViewModelType.swift in Sources */,
 				451DB1462461DA4200FB14BF /* TractTabProperties.swift in Sources */,
 				4508F7A92429669700ECA950 /* AdobeAnalyticsConstants.swift in Sources */,
 				45732227244548A000D653FF /* ChooseLanguageCellViewModel.swift in Sources */,
@@ -4096,6 +4119,7 @@
 				45EDC545249BB2650020DC62 /* LocalizationServices.swift in Sources */,
 				4506DEA524B79CD100A1C50B /* MenuSectionHeaderView.swift in Sources */,
 				451DB1442461DA4200FB14BF /* TractCallToActionProperties.swift in Sources */,
+				451F3F1B24E458A000A25D11 /* ShareToolMenuViewModel.swift in Sources */,
 				45C2CFF32409B61000683A98 /* GlobalActivityAnalytics.swift in Sources */,
 				4564724D244F723300CB202D /* ArticlesViewModel.swift in Sources */,
 			);

@@ -11,6 +11,7 @@ import UIKit
 class ToolsFlow: Flow {
     
     private var articlesFlow: ArticlesFlow?
+    private var shareToolMenuFlow: ShareToolMenuFlow?
     
     private weak var flowDelegate: FlowDelegate?
     
@@ -135,23 +136,17 @@ class ToolsFlow: Flow {
         case .homeTappedFromTract:
             flowDelegate?.navigate(step: .homeTappedFromTract)
             
-        case .shareTappedFromTract(let resource, let language, let pageNumber):
+        case .shareMenuTappedFromTract(let resource, let language, let pageNumber):
             
-            let viewModel = ShareToolViewModel(
+            let shareToolMenuFlow = ShareToolMenuFlow(
+                appDiContainer: appDiContainer,
+                navigationController: navigationController,
                 resource: resource,
                 language: language,
-                pageNumber: pageNumber,
-                localizationServices: appDiContainer.localizationServices,
-                analytics: appDiContainer.analytics
+                pageNumber: pageNumber
             )
             
-            let view = ShareToolView(viewModel: viewModel)
-            
-            navigationController.present(
-                view.controller,
-                animated: true,
-                completion: nil
-            )
+            self.shareToolMenuFlow = shareToolMenuFlow
             
         case .openToolTappedFromToolDetails(let resource):
             navigateToTool(resource: resource)

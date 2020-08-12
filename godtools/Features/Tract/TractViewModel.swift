@@ -239,7 +239,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func shareTapped() {
-        flowDelegate?.navigate(step: .shareTappedFromTract(resource: resource, language: selectedTractLanguage.value.language, pageNumber: tractPage))
+        flowDelegate?.navigate(step: .shareMenuTappedFromTract(resource: resource, language: selectedTractLanguage.value.language, pageNumber: tractPage))
     }
     
     func primaryLanguageTapped() {
