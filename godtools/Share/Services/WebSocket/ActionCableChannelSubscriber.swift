@@ -11,6 +11,7 @@ import Foundation
 class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     private let webSocket: WebSocketType
+    private let loggingEnabled: Bool
     
     private var channelToSubscribeTo: String?
     private var isSubscribingToChannel: String?
@@ -19,9 +20,10 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     
     let didSubscribeToChannelSignal: SignalValue<String> = SignalValue()
     
-    required init(webSocket: WebSocketType) {
+    required init(webSocket: WebSocketType, loggingEnabled: Bool) {
         
         self.webSocket = webSocket
+        self.loggingEnabled = loggingEnabled
         
         super.init()
     }
@@ -96,7 +98,11 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     }
     
     private func handleDidConnectToWebsocket() {
-                
+               
+        if loggingEnabled {
+            print("\n ActionCableChannelSubscriber: handleDidConnectToWebsocket()")
+        }
+        
         guard let channelId = channelToSubscribeTo else {
             return
         }
@@ -121,6 +127,10 @@ class ActionCableChannelSubscriber: NSObject, WebSocketChannelSubscriberType {
     }
     
     private func handleDidReceiveJson(json: [String: Any]) {
+        
+        if loggingEnabled {
+            print("\n ActionCableChannelSubscriber: handleDidReceiveJson() \(json)")
+        }
         
         if let type = json["type"] as? String {
             
