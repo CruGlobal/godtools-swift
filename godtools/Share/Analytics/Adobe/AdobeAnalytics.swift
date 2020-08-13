@@ -12,7 +12,6 @@ import TheKeyOAuthSwift
 import GTMAppAuth
 
 class AdobeAnalytics: NSObject, AdobeAnalyticsType {
-    
     private let config: ConfigType
     private let keyAuthClient: TheKeyOAuthClient
     private let languageSettingsService: LanguageSettingsService
@@ -61,9 +60,7 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         ))
         
         isConfigured = true
-        
-        keyAuthClient.addStateChangeDelegate(delegate: self)
-        
+                
         log(method: "configure()", label: nil, labelValue: nil, data: nil)
     }
     
@@ -141,15 +138,16 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
         }
     }
     
-    func setVisitorID() {
+    func syncVisitorId() {
         let isLoggedIn: Bool = keyAuthClient.isAuthenticated()
 
         let grMasterPersonID: String? = isLoggedIn ? keyAuthClient.grMasterPersonId : nil
         let ssoguid: String? = isLoggedIn ? keyAuthClient.guid : nil
-
-        let visitorId: String? = grMasterPersonID ?? ssoguid
-        let authState: ADBMobileVisitorAuthenticationState = visitorId == nil ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
         
+        let visitorId: String? = grMasterPersonID ?? ssoguid ?? visitorMarketingCloudID
+        
+        let authState: ADBMobileVisitorAuthenticationState = ((grMasterPersonID ?? ssoguid) == nil) ? ADBMobileVisitorAuthenticationState.unknown : (isLoggedIn ? ADBMobileVisitorAuthenticationState.authenticated : ADBMobileVisitorAuthenticationState.loggedOut)
+
         ADBMobile.visitorSyncIdentifier(withType: "cru_visitor_id", identifier: visitorId, authenticationState: authState)
     }
     
@@ -204,19 +202,5 @@ class AdobeAnalytics: NSObject, AdobeAnalyticsType {
                 print("  data: \(data)")
             }
         }
-    }
-}
-
-// MARK: - OIDAuthStateChangeDelegate
-
-extension AdobeAnalytics: OIDAuthStateChangeDelegate {
-    func didChange(_ state: OIDAuthState) {
-        print("auth state changed")
-    }
-}
-
-extension AdobeAnalytics: UIApplicationDelegate {
-    func applicationDidBecomeActive(_ app: UIApplication) {
-        print("Active")
     }
 }
