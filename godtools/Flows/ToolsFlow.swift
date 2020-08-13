@@ -133,8 +133,8 @@ class ToolsFlow: Flow {
         case .aboutToolTappedFromAllTools(let resource):
             navigateToToolDetail(resource: resource)
             
-        case .homeTappedFromTract:
-            flowDelegate?.navigate(step: .homeTappedFromTract)
+        case .homeTappedFromTract(let isScreenSharing):
+            flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
             
         case .shareMenuTappedFromTract(let resource, let language, let pageNumber):
             
@@ -464,6 +464,7 @@ class ToolsFlow: Flow {
             parallelTranslationManifest: parallelTranslationManifest,
             languageSettingsService: appDiContainer.languageSettingsService,
             tractManager: appDiContainer.tractManager,
+            tractRemoteSharePublisher: appDiContainer.tractRemoteSharePublisher,
             tractRemoteShareSubscriber: appDiContainer.tractRemoteShareSubscriber,
             followUpsService: appDiContainer.followUpsService,
             viewsService: appDiContainer.viewsService,

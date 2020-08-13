@@ -10,13 +10,13 @@ import Foundation
 
 class AlertMessageViewModel: AlertMessageViewModelType {
     
-    let title: String
-    let message: String
+    let title: String?
+    let message: String?
     let cancelTitle: String?
     let acceptTitle: String
     let acceptHandler: CallbackHandler?
     
-    required init(title: String, message: String, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
+    required init(title: String?, message: String?, cancelTitle: String?, acceptTitle: String, acceptHandler: CallbackHandler?) {
         
         self.title = title
         self.message = message

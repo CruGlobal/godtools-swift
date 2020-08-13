@@ -479,6 +479,9 @@
 		45A1432424A64DFA00892200 /* FetchTranslationManifestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */; };
 		45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E724A042B8009BA210 /* ResourceType.swift */; };
 		45A1B5EA24A053AB009BA210 /* UIView+ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */; };
+		45A6E6C724E5C8E900AE5673 /* TractRemoteSharePublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */; };
+		45A6E6C924E5CD8700AE5673 /* ActionCableChannelPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */; };
+		45A6E6CB24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */; };
 		45A97C7B24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A97C7A24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift */; };
 		45ABE320240D51A500E05AE2 /* GlobalActivityResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */; };
 		45ACBD05247DB0C700514E75 /* ToolsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45ACBD04247DB0C700514E75 /* ToolsMenuView.swift */; };
@@ -1140,6 +1143,9 @@
 		45A1432324A64DFA00892200 /* FetchTranslationManifestResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchTranslationManifestResult.swift; sourceTree = "<group>"; };
 		45A1B5E724A042B8009BA210 /* ResourceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceType.swift; sourceTree = "<group>"; };
 		45A1B5E924A053AB009BA210 /* UIView+ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ProgressView.swift"; sourceTree = "<group>"; };
+		45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TractRemoteSharePublisher.swift; sourceTree = "<group>"; };
+		45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCableChannelPublisher.swift; sourceTree = "<group>"; };
+		45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketChannelPublisherType.swift; sourceTree = "<group>"; };
 		45A97C7A24A3A5C2008D782E /* TranslationDownloaderErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationDownloaderErrorViewModel.swift; sourceTree = "<group>"; };
 		45ABE31F240D51A500E05AE2 /* GlobalActivityResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalActivityResults.swift; sourceTree = "<group>"; };
 		45ACBD04247DB0C700514E75 /* ToolsMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsMenuView.swift; sourceTree = "<group>"; };
@@ -2436,6 +2442,7 @@
 		457F3FEC24C352E700D8F9B1 /* TractRemoteShare */ = {
 			isa = PBXGroup;
 			children = (
+				45A6E6C524E5C8D800AE5673 /* TractRemoteSharePublisher */,
 				459C3FDE24C5F296006E81CA /* TractRemoteShareSubscriber */,
 			);
 			path = TractRemoteShare;
@@ -2532,9 +2539,11 @@
 		459A71DF24C9C4F500B77942 /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
+				45A6E6C824E5CD8700AE5673 /* ActionCableChannelPublisher.swift */,
 				459A71E424C9CAF500B77942 /* ActionCableChannelSubscriber.swift */,
 				459A71E024C9C50300B77942 /* StarscreamWebSocket.swift */,
 				459A71E224C9C50A00B77942 /* WebSocketType.swift */,
+				45A6E6CA24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift */,
 				459A71E624C9CFAB00B77942 /* WebSocketChannelSubscriberType.swift */,
 			);
 			path = WebSocket;
@@ -2573,6 +2582,14 @@
 				45A1431524A62C1900892200 /* FetchTranslationManifestsViewModel.swift */,
 			);
 			path = FetchTranslationManifestsViewModel;
+			sourceTree = "<group>";
+		};
+		45A6E6C524E5C8D800AE5673 /* TractRemoteSharePublisher */ = {
+			isa = PBXGroup;
+			children = (
+				45A6E6C624E5C8E900AE5673 /* TractRemoteSharePublisher.swift */,
+			);
+			path = TractRemoteSharePublisher;
 			sourceTree = "<group>";
 		};
 		45ACBD0E247DBD2500514E75 /* Models */ = {
@@ -3820,6 +3837,7 @@
 				4595F44624A2B6FD00B3733E /* ArticleAemImportDownloaderReceipt.swift in Sources */,
 				451DB1412461DA4200FB14BF /* TractNumberProperties.swift in Sources */,
 				4586D7DC246ECD810062D988 /* TractCard.swift in Sources */,
+				45A6E6C724E5C8E900AE5673 /* TractRemoteSharePublisher.swift in Sources */,
 				451DB13E2461DA4200FB14BF /* TractHeadingProperties.swift in Sources */,
 				D15CD14A246C2431008EB17B /* SnowplowAnalyticsType.swift in Sources */,
 				45D3C92423DF998C00ECF70E /* TutorialViewModel.swift in Sources */,
@@ -4020,6 +4038,7 @@
 				450EA193246C6E9400B78FA3 /* TractPageCell.swift in Sources */,
 				451DB0CD2461D90000FB14BF /* TractEvent.swift in Sources */,
 				4506DEDE24B7A78700A1C50B /* TractXmlResource.swift in Sources */,
+				45A6E6CB24E5CDA100AE5673 /* WebSocketChannelPublisherType.swift in Sources */,
 				45B881C8249AAC35004DC491 /* SHA256FileLocation.swift in Sources */,
 				451F3F1F24E458A000A25D11 /* ShareToolViewModel.swift in Sources */,
 				45DED956247826CF00B0A71D /* HTMLDocumentData.swift in Sources */,
@@ -4133,6 +4152,7 @@
 				45A1B5E824A042B8009BA210 /* ResourceType.swift in Sources */,
 				450EF81D247E9F5200978926 /* FavoritedToolsViewModel.swift in Sources */,
 				4506DEE824B7A78700A1C50B /* UIFont.swift in Sources */,
+				45A6E6C924E5CD8700AE5673 /* ActionCableChannelPublisher.swift in Sources */,
 				45732E7824218997006F0559 /* OnboardingTutorialViewedUserDefaultsCache.swift in Sources */,
 				4556AEE623E23FC6002C15E8 /* OnboardingTutorialGradientBackgroundView.swift in Sources */,
 				457551EB24A5853D0091652F /* LegacyRealmDatabase.swift in Sources */,

@@ -213,3 +213,6 @@ The app can be downloaded from https://godtoolsapp.com";
 "share_tool_screen_tutorial.mirrored_experience.message" = "As you scroll the tool on your phone, your friend's screen will respond in the same way. This allows you to walk through a tool together on 2 devices at the same time.";
 "share_tool_screen_tutorial.get_started.title" = "Get started";
 "share_tool_screen_tutorial.get_started.message" = "Send the link to one or more people to start a screen sharing session now.\nHave them download the GodTools app first before opening the link";
+
+// Exit Tract Remote Share Session
+"exit_tract_remote_share_session.message" = "Exit the remote share session now?";

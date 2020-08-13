@@ -17,6 +17,7 @@ class TractViewModel: NSObject, TractViewModelType {
     private let parallelLanguage: LanguageModel?
     private let translateLanguageNameViewModel: TranslateLanguageNameViewModel
     private let tractManager: TractManager // TODO: Eventually would like to remove this class. ~Levi
+    private let tractRemoteSharePublisher: TractRemoteSharePublisher
     private let tractRemoteShareSubscriber: TractRemoteShareSubscriber
     private let followUpsService: FollowUpsService
     private let viewsService: ViewsService
@@ -41,7 +42,7 @@ class TractViewModel: NSObject, TractViewModelType {
     
     private weak var flowDelegate: FlowDelegate?
     
-    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
+    required init(flowDelegate: FlowDelegate, resource: ResourceModel, primaryLanguage: LanguageModel, primaryTranslationManifest: TranslationManifestData, parallelLanguage: LanguageModel?, parallelTranslationManifest: TranslationManifestData?, languageSettingsService: LanguageSettingsService, tractManager: TractManager, tractRemoteSharePublisher: TractRemoteSharePublisher, tractRemoteShareSubscriber: TractRemoteShareSubscriber, followUpsService: FollowUpsService, viewsService: ViewsService, localizationServices: LocalizationServices, analytics: AnalyticsContainer, toolOpenedAnalytics: ToolOpenedAnalytics, liveShareStream: String?, tractPage: Int?) {
         
         self.flowDelegate = flowDelegate
         self.resource = resource
@@ -49,6 +50,7 @@ class TractViewModel: NSObject, TractViewModelType {
         self.parallelLanguage = parallelLanguage?.code != primaryLanguage.code ? parallelLanguage : nil
         self.translateLanguageNameViewModel = TranslateLanguageNameViewModel(localizationServices: localizationServices)
         self.tractManager = tractManager
+        self.tractRemoteSharePublisher = tractRemoteSharePublisher
         self.tractRemoteShareSubscriber = tractRemoteShareSubscriber
         self.followUpsService = followUpsService
         self.viewsService = viewsService
@@ -137,6 +139,11 @@ class TractViewModel: NSObject, TractViewModelType {
                 self?.handleDidReceiveRemoteShareNavigationEvent(navigationEvent: navigationEvent)
             }
         }
+    }
+    
+    private var isScreenSharing: Bool {
+        // TODO: Return true if in tool remote share. ~Levi
+        return false
     }
     
     private func subscribeToLiveShareStream(liveShareStream: String?) {
@@ -235,7 +242,7 @@ class TractViewModel: NSObject, TractViewModelType {
     }
     
     func navHomeTapped() {
-        flowDelegate?.navigate(step: .homeTappedFromTract)
+        flowDelegate?.navigate(step: .homeTappedFromTract(isScreenSharing: isScreenSharing))
     }
     
     func shareTapped() {

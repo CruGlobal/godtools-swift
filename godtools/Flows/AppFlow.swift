@@ -216,9 +216,32 @@ class AppFlow: NSObject, FlowDelegate {
             
             self.languageSettingsFlow = languageSettingsFlow
                    
-        case .homeTappedFromTract:
-            _ = navigationController.popToRootViewController(animated: true)
-            resetNavigationControllerColorToDefault()
+        case .homeTappedFromTract(let isScreenSharing):
+            
+            if isScreenSharing {
+                
+                let acceptHandler = CallbackHandler { [weak self] in
+                    self?.closeTract()
+                }
+                
+                let localizationServices: LocalizationServices = appDiContainer.localizationServices
+                                
+                let viewModel = AlertMessageViewModel(
+                    title: nil,
+                    message: localizationServices.stringForMainBundle(key: "exit_tract_remote_share_session.message"),
+                    cancelTitle: localizationServices.stringForMainBundle(key: "no").uppercased(),
+                    acceptTitle: localizationServices.stringForMainBundle(key: "yes").uppercased(),
+                    acceptHandler: acceptHandler
+                )
+                
+                let view = AlertMessageView(viewModel: viewModel)
+                
+                navigationController.present(view.controller, animated: true, completion: nil)
+            }
+            else {
+                
+                closeTract()
+            }
             
         case .sendEmailTappedFromTract(let subject, let message, let isHtml):
             
@@ -267,6 +290,11 @@ class AppFlow: NSObject, FlowDelegate {
         default:
             break
         }
+    }
+    
+    private func closeTract() {
+        _ = navigationController.popToRootViewController(animated: true)
+        resetNavigationControllerColorToDefault()
     }
     
     private func dismissTutorial() {
